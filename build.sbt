@@ -10,12 +10,9 @@ lazy val amf = crossProject.in(file(".")).
   settings(
       name := "amf",
       version := "0.1",
-      libraryDependencies += "com.lihaoyi" %%% "utest" % "0.4.7" % "test",
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
   ).
   jvmSettings(
-      // Add JVM-specific settings here
-      libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
   ).
   jsSettings(
       libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
