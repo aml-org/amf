@@ -15,8 +15,8 @@ class YamlLexerTest extends FunSuite with ListAssertions{
     val input= "a: 1"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)
-    val expected = List((YamlToken.StartMap,": "), (YamlToken.StringToken,"a"),
-    (YamlToken.StringToken,"1"),(YamlToken.EndMap,""),(YamlToken.Eof,""))
+    val expected = List((StartMap,": "), (StringToken,"a"),
+    (StringToken,"1"),(EndMap,""),(Eof,""))
 
     assert(actual,expected)
   }
@@ -25,8 +25,8 @@ class YamlLexerTest extends FunSuite with ListAssertions{
     val input= "a : 1"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)
-    val expected = List((YamlToken.StartMap,": "), (YamlToken.StringToken,"a "),
-      (YamlToken.StringToken,"1"),(YamlToken.EndMap,""),(YamlToken.Eof,""))
+    val expected = List((StartMap,": "), (StringToken,"a "),
+      (StringToken,"1"),(EndMap,""),(Eof,""))
     assert(actual,expected)
   }
 

@@ -16,8 +16,8 @@ class JsonLexerTest extends FunSuite with ListAssertions{
     val actual: List[(Token, String)] = JsonLexer(input).lex()
     println(actual.toString)
     val expected = List((StartMap, "{"), (JsonToken.StringToken, "\"a\""),
-      (JsonToken.Colon, ":"),(JsonToken.WhiteSpace, " "), (JsonToken.StringToken, "\"b\"")
-      , (JsonToken.EndMap, "}"), (JsonToken.Eof, ""))
+      (Colon, ":"),(WhiteSpace, " "), (StringToken, "\"b\"")
+      , (EndMap, "}"), (Eof, ""))
 
     assert(actual,expected)
   }
@@ -26,9 +26,9 @@ class JsonLexerTest extends FunSuite with ListAssertions{
     val input = "{\"a \": \"b\"}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
     println(actual.toString)
-    val expected = List((StartMap, "{"), (JsonToken.StringToken, "\"a \""),
-      (JsonToken.Colon, ":"),(JsonToken.WhiteSpace, " "), (JsonToken.StringToken, "\"b\"")
-      , (JsonToken.EndMap, "}"), (JsonToken.Eof, ""))
+    val expected = List((StartMap, "{"), (StringToken, "\"a \""),
+      (Colon, ":"),(WhiteSpace, " "), (StringToken, "\"b\"")
+      , (EndMap, "}"), (Eof, ""))
     assert(actual,expected)
   }
 
@@ -44,15 +44,15 @@ class JsonLexerTest extends FunSuite with ListAssertions{
           |  ]
           |}""".stripMargin
     val actual: List[(Token,String)] = JsonLexer(input).lex()
-    val expected = List((StartMap,"{"),(JsonToken.WhiteSpace,escape("\n  ")),(JsonToken.StringToken,"\"a\""),
-      (JsonToken.Colon,":"),(JsonToken.WhiteSpace," "),(JsonToken.Number,"1"),(JsonToken.Comma,","),
-      (JsonToken.WhiteSpace,"\\n  "),(JsonToken.StringToken,"\"b\""),(JsonToken.Colon,":"),(JsonToken.WhiteSpace," "),
-      (StartMap,"{"),(JsonToken.WhiteSpace,"\\n    "),(JsonToken.Link,"\"$ref\""),(JsonToken.Colon,":"),
-      (JsonToken.WhiteSpace," "),(JsonToken.StringToken,"\"file://include1.json\""),(JsonToken.WhiteSpace,"\\n  "),
-      (JsonToken.EndMap,"}"),(JsonToken.Comma,","),(JsonToken.WhiteSpace,"\\n  "),(JsonToken.StringToken,"\"c\""),
-      (JsonToken.Colon,":"),(JsonToken.WhiteSpace," "),(JsonToken.StartSequence,"["),(JsonToken.WhiteSpace,"\\n    "),
-      (JsonToken.Number,"2"),(JsonToken.WhiteSpace,"\\n  "),(JsonToken.EndSequence,"]"),(JsonToken.WhiteSpace,"\\n"),
-      (JsonToken.EndMap,"}"),(JsonToken.Eof,""))
+    val expected = List((StartMap,"{"),(WhiteSpace,escape("\n  ")),(StringToken,"\"a\""),
+      (Colon,":"),(WhiteSpace," "),(Number,"1"),(Comma,","),
+      (WhiteSpace,"\\n  "),(StringToken,"\"b\""),(Colon,":"),(WhiteSpace," "),
+      (StartMap,"{"),(WhiteSpace,"\\n    "),(Link,"\"$ref\""),(Colon,":"),
+      (WhiteSpace," "),(StringToken,"\"file://include1.json\""),(WhiteSpace,"\\n  "),
+      (EndMap,"}"),(Comma,","),(WhiteSpace,"\\n  "),(StringToken,"\"c\""),
+      (Colon,":"),(WhiteSpace," "),(StartSequence,"["),(WhiteSpace,"\\n    "),
+      (Number,"2"),(WhiteSpace,"\\n  "),(EndSequence,"]"),(WhiteSpace,"\\n"),
+      (EndMap,"}"),(Eof,""))
     assert(actual,expected)
   }
 }
