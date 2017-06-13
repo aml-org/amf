@@ -4,6 +4,7 @@ import amf.lexer.CharStream.EOF_CHAR
 import amf.lexer.Token.Consume
 import amf.parser.Position
 import amf.parser.Position.ZERO
+import amf.common.Strings.escape
 
 /**
   * Abstract common lexer
@@ -133,31 +134,17 @@ abstract class AbstractLexer[T <: Token](var stream: CharStream) extends Lexer[T
     /** Process all pending tokens */
     protected def processPending(finalToken:T): T = finalToken
 
-    def lex(): String = {
-        val tokens = new StringBuilder
+    def lex(): List[(T,String)] = {
+        var result =List[(T,String)]()
         while (true) {
             val t = currentToken
             if (t == eofToken) {
-                return tokens.toString()
+                result= result :+ (t,"")
+                return result
             }
-            if (tokens.nonEmpty) tokens.append(", ")
-            tokens.append(t).append(":").append(escape(currentTokenText.toString))
+            result = result :+ (t,escape(currentTokenText.toString))
             advance()
         }
-        ""
-    }
-
-    def escape(str: String): String = {
-        val result = new StringBuilder()
-        result.append('\"')
-        for (c <- str) {
-            result.append(c match {
-                case '\n' => "\\n"
-                case _ if c.isControl => "\\u" + Integer.toHexString(c)
-                case _ => c
-            })
-        }
-        result.append('\"')
-        result.toString()
+        result
     }
 }

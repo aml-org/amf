@@ -24,4 +24,17 @@ object Strings {
     implicit def strings(s: String): Strings = new Strings(s)
 
     def isNotEmpty(s: String): Boolean = s != null && s.trim.nonEmpty
+
+    def escape(str: String): String = {
+        val result = new StringBuilder()
+        for (c <- str) {
+            result.append(c match {
+                case '\n' => "\\n"
+                case '"' => "\""
+                case _ if c.isControl => "\\u" + Integer.toHexString(c)
+                case _ => c
+            })
+        }
+        result.toString()
+    }
 }
