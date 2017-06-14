@@ -75,7 +75,7 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
         while (isJavaIdentifierPart(currentChar)) {
             consume()
         }
-        findKeyword(currentTokenText.toString)
+        findKeyword(currentText.toString)
     }
 
     override protected val states: Array[Int => T] = Array({

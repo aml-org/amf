@@ -54,6 +54,9 @@ abstract class AbstractLexer[T <: Token](var stream: CharStream) extends Lexer[T
     /** Get the current Token String.  */
     override def currentTokenText: CharSequence = stream.subSequence(_currentTokenStart, _currentTokenEnd)
 
+    /** Get the current String.  */
+    override def currentText: CharSequence = stream.subSequence(_currentTokenStart, stream.index())
+
     /** Ge the current state of the Lexer (0 = default state).  */
     override def state: Int = _state
 

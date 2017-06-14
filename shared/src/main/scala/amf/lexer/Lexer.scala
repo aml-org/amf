@@ -29,6 +29,9 @@ trait Lexer[T <: Token] {
     /** Get the current Token String.  */
     def currentTokenText: CharSequence
 
+    /** Get the current String.  */
+    def currentText: CharSequence
+
     /** Ge the current state of the Lexer (0 = default state).  */
     def state: Int
 
