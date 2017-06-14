@@ -31,7 +31,7 @@ class YamlLexerTest extends FunSuite with ListAssertions{
     assert(actual,expected)
   }
 
-  test("Simple doble quoted mapping parse test"){
+  test("Simple double quoted mapping parse test"){
     val input= "\"a\": 1"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)
@@ -50,7 +50,7 @@ class YamlLexerTest extends FunSuite with ListAssertions{
     assert(actual,expected)
   }
 
-  test("Simple doble quoted mapping with white space parses test"){
+  test("Simple double quoted mapping with white space parses test"){
     val input= "\"a\" : 1"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)
@@ -58,18 +58,22 @@ class YamlLexerTest extends FunSuite with ListAssertions{
       (StringToken,"1"),(EndMap,""),(Eof,""))
     assert(actual,expected)
   }
-  //TODO: with { tokens, the lexer not respond
-  ignore("Simple flow mapping with white space parses test"){
-    val input= "a : {1,2}"
+
+  test("Simple flow mapping parses test"){
+    val input= "a : {b: 1,c: 2}"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)
-    val expected = List((StartMap,": "), (StringToken,"a "),
-        (StartMap,"{"),(StringToken,"1"),(Comma,","),(StringToken,"2"),
-        (EndMap,"}"),(EndMap,""),(Eof,""))
+    val expected = List(
+      (StartMap,": "), (StringToken,"a "),
+        (StartMap,"{"),(StringToken,"b:"),(WhiteSpace," "),(StringToken,"1"),
+        (Comma,","),(StringToken,"c:"),(WhiteSpace," "),(StringToken,"2"),
+        (EndMap,"}"),
+      (EndMap,""),(Eof,""))
+
     assert(actual,expected)
   }
 
-  ignore("flow sequence parse test"){
+  test("flow sequence parse test"){
     val input= "a: [1,2,3]"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)

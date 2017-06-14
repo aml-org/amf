@@ -91,6 +91,9 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
         while (true) {
             currentChar match {
                 case '\n' | EOF_CHAR => return scalarToken
+                case ':' if isWhitespace(lookAhead(1)) && flowLevel > 0 =>
+                    consume()
+                    return endPlainScalar
                 case ':' if isWhitespace(lookAhead(1)) =>
                     pushToken(endPlainScalar)
                     val result = startItem(StartMap, startColumn)
@@ -132,15 +135,20 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
     private val flow: Int => YamlToken = {
         case c@('[' | '{') =>
             flowLevel += 1
+            consume()
             if (c == '[') StartSequence else StartMap
         case c@(']' | '}') =>
             flowLevel -= 1
+            consume()
             if (flowLevel == 0) state = State.TopLevel
             if (c == ']') EndSequence else EndMap
         case ',' =>
+            consume()
             Comma
         case ' ' | '\t' | '\n' =>
             whiteSpace()
+        case _ =>
+            scalar()
 
     }
 
