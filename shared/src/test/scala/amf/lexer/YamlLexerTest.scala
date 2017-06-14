@@ -60,6 +60,34 @@ class YamlLexerTest extends FunSuite with ListAssertions{
   }
 
   test("Simple flow mapping parses test"){
+    val input= "{b: 1,c: 2}"
+    val actual: List[(Token,String)] = YamlLexer(input).lex()
+    println(actual.toString)
+    val expected = List(
+      (StartMap,"{"),(StringToken,"b:"),(WhiteSpace," "),(StringToken,"1"),
+      (Comma,","),(StringToken,"c:"),(WhiteSpace," "),(StringToken,"2"),
+      (EndMap,"}"), (Eof,""))
+
+    assert(actual,expected)
+  }
+
+  test("flow mapping of flow mapping parses test"){
+    val input= "{{a: 1,b: 2},c: 3}"
+    val actual: List[(Token,String)] = YamlLexer(input).lex()
+    println(actual.toString)
+    val expected = List(
+      (StartMap,"{"),
+        (StartMap,"{"),(StringToken,"a:"),(WhiteSpace," "),(StringToken,"1"),
+          (Comma,","),(StringToken,"b:"),(WhiteSpace," "),(StringToken,"2"),
+        (EndMap,"}"),(Comma,","),
+        (StringToken,"c:"),(WhiteSpace," "),(StringToken,"3"),
+      (EndMap,"}"),
+      (Eof,""))
+
+    assert(actual,expected)
+  }
+
+  test("map of flow mapping parses test"){
     val input= "a : {b: 1,c: 2}"
     val actual: List[(Token,String)] = YamlLexer(input).lex()
     println(actual.toString)
@@ -69,6 +97,35 @@ class YamlLexerTest extends FunSuite with ListAssertions{
         (Comma,","),(StringToken,"c:"),(WhiteSpace," "),(StringToken,"2"),
         (EndMap,"}"),
       (EndMap,""),(Eof,""))
+
+    assert(actual,expected)
+  }
+
+  test("Simple flow sequence parse test"){
+    val input= "[1,2,3]"
+    val actual: List[(Token,String)] = YamlLexer(input).lex()
+    println(actual.toString)
+    val expected = List(
+      (StartSequence,"["),
+      (StringToken,"1"),(Comma,","),(StringToken,"2"),(Comma,","),(StringToken,"3"),
+      (EndSequence,"]"),
+      (Eof,""))
+
+    assert(actual,expected)
+  }
+
+  test("flow sequence with flow sequence parse test"){
+    val input= "[[1,2],3]"
+    val actual: List[(Token,String)] = YamlLexer(input).lex()
+    println(actual.toString)
+    val expected = List(
+      (StartSequence,"["),
+        (StartSequence,"["),
+          (StringToken,"1"),(Comma,","),(StringToken,"2"),
+        (EndSequence,"]"),(Comma,","),
+        (StringToken,"3"),
+      (EndSequence,"]"),
+      (Eof,""))
 
     assert(actual,expected)
   }
