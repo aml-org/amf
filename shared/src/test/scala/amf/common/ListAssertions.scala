@@ -8,6 +8,8 @@ import org.scalatest.Assertions
 trait ListAssertions  extends Assertions{
 
   def assert[E](left: List[E], right: List[E]) = {
+    println("Actual: ", left.toString)
+    println("Expect: ", right.toString)
     if (left.size == right.size) {
       left.zipWithIndex.foreach {
         case (actual, index) =>

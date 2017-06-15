@@ -30,7 +30,7 @@ class CharSequenceStream(val data: CharSequence, val startOffset: Int, val endOf
     override def length: Int = endOffset - startOffset
 
     override def subSequence(start: Int, end: Int): CharSequence = {
-        if (!(start >= startOffset && end <= endOffset && start <= end)) throw new IllegalArgumentException("Invalid sub-sequence")
+        if (!(start >= startOffset && end <= endOffset && start <= end)) throw new IllegalArgumentException(s"Invalid sub-sequence start: $start, end: $end")
         data.subSequence(start, end)
     }
 
