@@ -4,7 +4,9 @@ import java.lang.Character.isWhitespace
 
 import amf.lexer.CharStream.EOF_CHAR
 import amf.lexer.{AbstractLexer, CharSequenceStream, CharStream}
+import amf.yaml.YamlLexer._
 import amf.yaml.YamlToken._
+
 
 /**
   * A Yaml simple lexer
@@ -79,39 +81,45 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
 
   }
 
-  private var inValue = true
+    private var inValue = true
+  private def scalarToken: YamlToken = {
+        inValue = false
+        // Quick and dirty fix to recognize types in scalars
+        currentTokenText match {
+            case IntPattern() => IntToken
+            case FloatPattern() => FloatToken
+            case "true" | "false" => BooleanToken
+       //     case "" => EmptyToken
+            case _ => StringToken
+        }
+    }  private def scalar(): YamlToken = {
+        val startColumn = column
 
-  private def scalar(): YamlToken = {
-    val startColumn = column
 
-    def scalarToken = {
-      inValue = false
-      StringToken
-    }
 
-    while (true) {
-      currentChar match {
-        case '\n' | EOF_CHAR => return scalarToken
-        case ':' if isWhitespace(lookAhead(1)) && flowLevel > 0 =>
+        while (true) {
+            currentChar match {
+                case '\n' | EOF_CHAR => return scalarToken
+                case ':' if isWhitespace(lookAhead(1)) && flowLevel > 0 =>
           consume()
           return endPlainScalar
-        case ':' if isWhitespace(lookAhead(1)) =>
-          pushToken(endPlainScalar)
-          val result = startItem(StartMap, startColumn)
-          consume(2)
-          inValue = true
-          return result
-        case ' ' =>
-          if (lookAhead(1) == '#') return scalarToken else consume()
-        case '[' | ']' | '{' | '}' | ',' if flowLevel > 0 => return scalarToken
-        case '!' => // Belongs to RAML lexer. Proof of concept...
-          consume(9)
-          return Link
-        case _ => consume()
-      }
+        case ':' if isWhitespace(lookAhead(1))=>
+                    pushToken(endPlainScalar)
+                    val result = startItem(StartMap, startColumn)
+                    consume(2)
+                    inValue = true
+                    return result
+                case ' ' =>
+                    if (lookAhead(1) == '#') return scalarToken else consume()
+                case '[' | ']' | '{' | '}' | ',' if flowLevel > 0 => return scalarToken
+                case '!' => // Belongs to RAML lexer. Proof of concept...
+                    consume(9)
+                    return Link
+                case _ => consume()
+            }
+        }
+        scalarToken
     }
-    scalarToken
-  }
 
   private def startPlainScalar() = {
     scalarStartColumn = column
@@ -234,5 +242,9 @@ object YamlLexer {
   def apply(input: String) = new YamlLexer(new CharSequenceStream(input))
 
   def apply(stream: CharStream) = new YamlLexer(stream)
+
+    private final val num = "(?:0|-?[1-9][0-9]*)"
+    private final val IntPattern = num.r
+    private final val FloatPattern =  (num + "(?:\\.[0-9]*[1-9])?(?:e[-+][1-9][0-9]*)?").r
 }
 

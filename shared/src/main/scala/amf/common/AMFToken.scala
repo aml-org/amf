@@ -14,6 +14,7 @@ object AMFToken {
     case class Entry() extends NamedToken("Entry") with JsonToken
     case class SequenceToken() extends NamedToken("Seq") with JsonToken
     case class StringToken() extends Token.StringToken with JsonToken
+    case class BooleanToken() extends Token.BooleanToken with JsonToken
     abstract class Number(override val name: String = "Number") extends Token.Number(name) with JsonToken
     case class Link() extends NamedToken("Link") with JsonToken
 

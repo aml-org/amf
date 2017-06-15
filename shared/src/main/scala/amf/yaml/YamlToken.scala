@@ -15,7 +15,9 @@ object YamlToken {
 
     object Identifier extends Identifier with YamlToken
 
+
     object StringToken extends AMFToken.StringToken with YamlToken
+    object BooleanToken extends AMFToken.BooleanToken with YamlToken
 
     object Eof extends Eof with YamlToken
 
@@ -23,7 +25,8 @@ object YamlToken {
 
     object Comment extends Comment with YamlToken
 
-    object Int extends AMFToken.Number with YamlToken
+    object IntToken extends AMFToken.Number with YamlToken
+    object FloatToken extends AMFToken.Number with YamlToken
 
     object StartDocument extends Operator("---") with YamlToken
 
