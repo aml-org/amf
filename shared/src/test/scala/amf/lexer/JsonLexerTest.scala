@@ -292,4 +292,22 @@ class JsonLexerTest extends FunSuite with ListAssertions{
     assert(actual,expected)
   }
 
+  test("Simple json-ld parse test with more than one annotated words") {
+    val input =
+      """{
+        |  "@context": "http://schema.org/",
+        |  "@type": "Person"
+        |}""".stripMargin
+    val actual: List[(Token, String)] = JsonLexer(input).lex()
+    println(actual.toString)
+    val expected = List((StartMap, "{"),(WhiteSpace,"\\n  "),
+      (JsonToken.StringToken, "\"@context\""),
+      (Colon, ":"),(WhiteSpace, " "), (StringToken, "\"http://schema.org/\""),(Comma,","),(WhiteSpace,"\\n  "),
+      (JsonToken.StringToken, "\"@type\""),
+      (Colon, ":"),(WhiteSpace, " "), (StringToken, "\"Person\""),(WhiteSpace,"\\n"),
+      (EndMap, "}"), (Eof, ""))
+
+    assert(actual,expected)
+  }
+
 }
