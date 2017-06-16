@@ -306,7 +306,6 @@ class JsonLexerTest extends FunSuite with ListAssertions{
       (JsonToken.StringToken, "\"@type\""),
       (Colon, ":"),(WhiteSpace, " "), (StringToken, "\"Person\""),(WhiteSpace,"\\n"),
       (EndMap, "}"), (Eof, ""))
-
     assert(actual,expected)
   }
 
