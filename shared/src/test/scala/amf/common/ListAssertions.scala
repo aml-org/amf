@@ -1,7 +1,6 @@
 package amf.common
 
 import org.scalatest.Assertions
-import org.scalatest.Matchers._
 
 /**
   * Created by hernan.najles on 6/13/17.
@@ -9,6 +8,8 @@ import org.scalatest.Matchers._
 trait ListAssertions  extends Assertions{
 
   def assert[E](left: List[E], right: List[E]):Unit = {
+    println("Actual: ", left.toString)
+    println("Expect: ", right.toString)
     if (left.size == right.size) {
       left.zipWithIndex.foreach {
         case (actual, index) =>
@@ -17,6 +18,6 @@ trait ListAssertions  extends Assertions{
             fail(s"$actual did not equal $expected at index $index")
           }
       }
-    } else left should contain theSameElementsInOrderAs right
+    } else fail(s"$left did not contain the same elements that \n$right")
   }
 }

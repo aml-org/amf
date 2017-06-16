@@ -68,12 +68,53 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartMap, "{"),
       (StringToken, "b:"),
       (WhiteSpace, " "),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (Comma, ","),
       (StringToken, "c:"),
       (WhiteSpace, " "),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (EndMap, "}"),
+      (Eof, "")
+    )
+
+    assert(actual, expected)
+  }
+
+  test("Map with diff tipes of numbers") {
+    val input                         = "b: 1\nc: \"2\"\nd: 2.4"
+    val actual: List[(Token, String)] = YamlLexer(input).lex()
+    val expected = List(
+      (StartMap, ": "),
+        (StringToken, "b"),
+        (IntToken, "1"),
+        (WhiteSpace,"\\n"),
+      (Comma, ": "),
+        (StringToken, "c"),
+        (StringToken, "\"2\""),
+        (WhiteSpace,"\\n"),
+      (Comma, ": "),
+        (StringToken, "d"),
+        (FloatToken, "2.4"),
+      (EndMap, ""),
+      (Eof, "")
+    )
+
+    assert(actual, expected)
+  }
+
+  test("Sequence with diff tipes of numbers") {
+    val input                         = "- 1\n- \"2\"\n- 2.4"
+    val actual: List[(Token, String)] = YamlLexer(input).lex()
+    val expected = List(
+      (StartSequence, "- "),
+        (IntToken, "1"),
+        (WhiteSpace,"\\n"),
+      (Comma, "- "),
+        (StringToken, "\"2\""),
+        (WhiteSpace,"\\n"),
+      (Comma, "- "),
+        (FloatToken, "2.4"),
+      (EndSequence, ""),
       (Eof, "")
     )
 
@@ -88,16 +129,16 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartMap, "{"),
       (StringToken, "a:"),
       (WhiteSpace, " "),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (Comma, ","),
       (StringToken, "b:"),
       (WhiteSpace, " "),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (EndMap, "}"),
       (Comma, ","),
       (StringToken, "c:"),
       (WhiteSpace, " "),
-      (StringToken, "3"),
+      (IntToken, "3"),
       (EndMap, "}"),
       (Eof, "")
     )
@@ -114,11 +155,11 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartMap, "{"),
       (StringToken, "b:"),
       (WhiteSpace, " "),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (Comma, ","),
       (StringToken, "c:"),
       (WhiteSpace, " "),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (EndMap, "}"),
       (EndMap, ""),
       (Eof, "")
@@ -131,11 +172,11 @@ class YamlLexerTest extends FunSuite with ListAssertions {
     val input                         = "[1,2,3]"
     val actual: List[(Token, String)] = YamlLexer(input).lex()
     val expected = List((StartSequence, "["),
-                        (StringToken, "1"),
+                        (IntToken, "1"),
                         (Comma, ","),
-                        (StringToken, "2"),
+                        (IntToken, "2"),
                         (Comma, ","),
-                        (StringToken, "3"),
+                        (IntToken, "3"),
                         (EndSequence, "]"),
                         (Eof, ""))
 
@@ -148,12 +189,12 @@ class YamlLexerTest extends FunSuite with ListAssertions {
     val expected = List(
       (StartSequence, "["),
       (StartSequence, "["),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (Comma, ","),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (EndSequence, "]"),
       (Comma, ","),
-      (StringToken, "3"),
+      (IntToken, "3"),
       (EndSequence, "]"),
       (Eof, "")
     )
@@ -168,11 +209,11 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartMap, ": "),
       (StringToken, "a"),
       (StartSequence, "["),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (Comma, ","),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (Comma, ","),
-      (StringToken, "3"),
+      (IntToken, "3"),
       (EndSequence, "]"),
       (EndMap, ""),
       (Eof, "")
@@ -246,18 +287,18 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StringToken, "a"),
       (WhiteSpace, " "),
       (StartSequence, "- "),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (WhiteSpace, "\\n"),
       (WhiteSpace, " "),
       (Comma, "- "),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (WhiteSpace, "\\n"),
       (EndSequence, ":\\n"),
       (Comma, ""),
       (StringToken, "b"),
       (WhiteSpace, " "),
       (StartSequence, "- "),
-      (StringToken, "3"),
+      (IntToken, "3"),
       (EndSequence, ""),
       (EndMap, ""),
       (Eof, "")
@@ -278,17 +319,17 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartSequence, "-\\n"),
       (WhiteSpace, " "),
       (StartSequence, "- "),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (WhiteSpace, "\\n"),
       (WhiteSpace, " "),
       (Comma, "- "),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (WhiteSpace, "\\n"),
       (EndSequence, ""),
       (Comma, "-\\n"),
       (WhiteSpace, " "),
       (StartSequence, "- "),
-      (StringToken, "3"),
+      (IntToken, "3"),
       (EndSequence, ""),
       (EndSequence, ""),
       (Eof, "")
@@ -496,7 +537,7 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartSequence, "- "),
       (StartMap, ": "),
       (StringToken, "c"),
-      (StringToken, "3"),
+      (IntToken, "3"),
       (WhiteSpace, "\\n"),
       (WhiteSpace, "    "),
       (EndMap, ""),
@@ -524,7 +565,7 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StartSequence, "- "),
       (StartMap, ": "),
       (StringToken, "a"),
-      (StringToken, "1"),
+      (IntToken, "1"),
       (WhiteSpace, "\\n"),
       (WhiteSpace, "  "),
       (Comma, ": "),
@@ -609,7 +650,7 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (StringToken, "c"),
       (WhiteSpace, "  "),
       (StartSequence, "- "),
-      (StringToken, "2"),
+      (IntToken, "2"),
       (WhiteSpace, "\\n"),
       (WhiteSpace, " "),
       (EndSequence, "---"),

@@ -84,7 +84,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream())
   private def scalarToken: YamlToken = {
     inValue = false
     // Quick and dirty fix to recognize types in scalars
-    currentTokenText match {
+    currentText match {
       case IntPattern()     => IntToken
       case FloatPattern()   => FloatToken
       case "true" | "false" => BooleanToken
