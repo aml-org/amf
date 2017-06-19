@@ -10,8 +10,7 @@ import amf.yaml.YamlToken._
 /**
   * A Yaml simple lexer
   */
-class YamlLexer(stream: CharStream = new CharSequenceStream())
-    extends AbstractLexer[YamlToken](stream) {
+class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractLexer[YamlToken](stream) {
   // The number of unclosed '{' and '['. flow_level 0 means block context.
   private var flowLevel = 0
   // Current indentColumn
@@ -84,7 +83,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream())
   private def scalarToken: YamlToken = {
     inValue = false
     // Quick and dirty fix to recognize types in scalars
-    currentText match {
+    currentTokenText match {
       case IntPattern()     => IntToken
       case FloatPattern()   => FloatToken
       case "true" | "false" => BooleanToken

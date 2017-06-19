@@ -8,33 +8,31 @@ import amf.parser.Range
   * Specific lexer grammars are implementations of this interface this object.
   */
 trait Lexer[T <: Token] {
-    /** Advance the lexer to the next token.  */
-    def advance()
 
-    /** Get the start position of the current token.  */
-    def currentStart: Position
+  /** Advance the lexer to the next token.  */
+  def advance()
 
-    /** Get range of current token.  */
-    def currentRange: Range = Range(currentStart, currentTokenEnd - currentTokenStart)
+  /** Get the start position of the current token.  */
+  def currentStart: Position
 
-    /** get the current token in the input stream.  */
-    def currentToken: T
+  /** Get range of current token.  */
+  def currentRange: Range = Range(currentStart, currentTokenEnd - currentTokenStart)
 
-    /** Get the index of the end position if the current token.  */
-    def currentTokenEnd: Int
+  /** get the current token in the input stream.  */
+  def currentToken: T
 
-    /** Get the index of the start position if the current token.  */
-    def currentTokenStart: Int
+  /** Get the index of the end position if the current token.  */
+  def currentTokenEnd: Int
 
-    /** Get the current Token String.  */
-    def currentTokenText: CharSequence
+  /** Get the index of the start position if the current token.  */
+  def currentTokenStart: Int
 
-    /** Get the current String.  */
-    def currentText: CharSequence
+  /** Get the current Token String.  */
+  def currentTokenText: CharSequence
 
-    /** Ge the current state of the Lexer (0 = default state).  */
-    def state: Int
+  /** Ge the current state of the Lexer (0 = default state).  */
+  def state: Int
 
-    /** Set the current state of the Lexer (0 = default state).  */
-    def state_=(initialState: Int): Unit
+  /** Set the current state of the Lexer (0 = default state).  */
+  def state_=(initialState: Int): Unit
 }
