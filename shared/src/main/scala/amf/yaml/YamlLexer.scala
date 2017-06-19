@@ -2,15 +2,16 @@ package amf.yaml
 
 import java.lang.Character.isWhitespace
 
+import amf.common.AMFToken
+import amf.common.AMFToken._
 import amf.lexer.CharStream.EOF_CHAR
 import amf.lexer.{AbstractLexer, CharSequenceStream, CharStream}
 import amf.yaml.YamlLexer._
-import amf.yaml.YamlToken._
 
 /**
   * A Yaml simple lexer
   */
-class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractLexer[YamlToken](stream) {
+class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractLexer[AMFToken](stream) {
   // The number of unclosed '{' and '['. flow_level 0 means block context.
   private var flowLevel = 0
   // Current indentColumn
@@ -18,7 +19,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   // The start column of last scalar
   private var scalarStartColumn = -1
   // The Stack of previous indentations
-  private var indentStack: List[(Int, YamlToken)] = Nil
+  private var indentStack: List[(Int, AMFToken)] = Nil
 
   override protected val eofToken        = Eof
   override protected val whiteSpaceToken = WhiteSpace
@@ -28,7 +29,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   /** Is this character consider a whitespace */
   override protected def isWhiteSpace(chr: Int): Boolean = chr == ' ' || chr == '\t'
 
-  private def directive(): YamlToken = {
+  private def directive(): AMFToken = {
     while (Character.isLetter(currentChar)) {
       consume()
     }
@@ -36,7 +37,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   }
 
   /** Get a Token at the topLevel State */
-  private val topLevel: Int => YamlToken = {
+  private val topLevel: Int => AMFToken = {
     // WhiteSpace
     case ' ' | '\t' =>
       whiteSpace()
@@ -80,7 +81,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   }
 
   private var inValue = true
-  private def scalarToken: YamlToken = {
+  private def scalarToken: AMFToken = {
     inValue = false
     // Quick and dirty fix to recognize types in scalars
     currentTokenText match {
@@ -92,7 +93,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
     }
   }
 
-  private def scalar(): YamlToken = {
+  private def scalar(): AMFToken = {
     val startColumn = column
 
     while (true) {
@@ -125,7 +126,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   }
 
   /** Get a Token at the Plain Scalar State */
-  private val plainScalar: Int => YamlToken = {
+  private val plainScalar: Int => AMFToken = {
     case '\n'     => endPlainScalar
     case EOF_CHAR => endPlainScalar
     case ':' if isWhitespace(lookAhead(1)) =>
@@ -139,7 +140,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   }
 
   /** Get a Token at the Flow State */
-  private val flow: Int => YamlToken = {
+  private val flow: Int => AMFToken = {
     case c @ ('[' | '{') =>
       flowLevel += 1
       consume()
@@ -164,14 +165,14 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
     StringToken
   }
 
-  override protected val states: Array[Int => YamlToken] = Array(topLevel, plainScalar, flow)
+  override protected val states: Array[Int => AMFToken] = Array(topLevel, plainScalar, flow)
 
   private def startState(newState: Int) = {
     state = newState
     findToken()
   }
 
-  override protected def processPending(finalToken: YamlToken): YamlToken = {
+  override protected def processPending(finalToken: AMFToken): AMFToken = {
     if (indentStack == Nil) finalToken
     else {
       val (prevCol, endToken) = indentStack.head
@@ -181,7 +182,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
     }
   }
 
-  private def startItem(startToken: YamlToken, col: Int): YamlToken = {
+  private def startItem(startToken: AMFToken, col: Int): AMFToken = {
     val endToken = if (startToken == StartSequence) EndSequence else EndMap
     if (col > indentColumn) {
       indentStack = (indentColumn, endToken) :: indentStack
@@ -192,7 +193,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
       return Comma
     }
 
-    var tokens: List[YamlToken] = Nil
+    var tokens: List[AMFToken] = Nil
 
     while (col <= indentStack.head._1) {
       val (_, actualEnd) = indentStack.head
@@ -215,17 +216,17 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
     throw new Exception()
   }
 
-  private def startDocument(): YamlToken = {
+  private def startDocument(): AMFToken = {
     consume(3)
     processPending(StartDocument)
   }
 
-  private def endDocument(): YamlToken = {
+  private def endDocument(): AMFToken = {
     consume(3)
     processPending(EndDocument)
   }
 
-  private val directives: Map[CharSequence, YamlToken] = Map()
+  private val directives: Map[CharSequence, AMFToken] = Map()
 
   object State {
     val TopLevel    = 0

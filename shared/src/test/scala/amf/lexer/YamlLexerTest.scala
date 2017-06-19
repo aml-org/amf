@@ -1,7 +1,7 @@
 package amf.lexer
 
+import amf.common.AMFToken._
 import amf.common.ListAssertions
-import amf.yaml.YamlToken._
 import amf.yaml.YamlLexer
 import org.scalatest.FunSuite
 
