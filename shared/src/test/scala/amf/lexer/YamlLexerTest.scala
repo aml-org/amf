@@ -80,21 +80,21 @@ class YamlLexerTest extends FunSuite with ListAssertions {
     assert(actual, expected)
   }
 
-  test("Map with diff tipes of numbers") {
+  test("Map with diff types of numbers") {
     val input                         = "b: 1\nc: \"2\"\nd: 2.4"
     val actual: List[(Token, String)] = YamlLexer(input).lex()
     val expected = List(
       (StartMap, ": "),
-        (StringToken, "b"),
-        (IntToken, "1"),
-        (WhiteSpace,"\\n"),
+      (StringToken, "b"),
+      (IntToken, "1"),
+      (WhiteSpace, "\\n"),
       (Comma, ": "),
-        (StringToken, "c"),
-        (StringToken, "\"2\""),
-        (WhiteSpace,"\\n"),
+      (StringToken, "c"),
+      (StringToken, "\"2\""),
+      (WhiteSpace, "\\n"),
       (Comma, ": "),
-        (StringToken, "d"),
-        (FloatToken, "2.4"),
+      (StringToken, "d"),
+      (FloatToken, "2.4"),
       (EndMap, ""),
       (Eof, "")
     )
@@ -102,18 +102,18 @@ class YamlLexerTest extends FunSuite with ListAssertions {
     assert(actual, expected)
   }
 
-  test("Sequence with diff tipes of numbers") {
+  test("Sequence with diff types of numbers") {
     val input                         = "- 1\n- \"2\"\n- 2.4"
     val actual: List[(Token, String)] = YamlLexer(input).lex()
     val expected = List(
       (StartSequence, "- "),
-        (IntToken, "1"),
-        (WhiteSpace,"\\n"),
+      (IntToken, "1"),
+      (WhiteSpace, "\\n"),
       (Comma, "- "),
-        (StringToken, "\"2\""),
-        (WhiteSpace,"\\n"),
+      (StringToken, "\"2\""),
+      (WhiteSpace, "\\n"),
       (Comma, "- "),
-        (FloatToken, "2.4"),
+      (FloatToken, "2.4"),
       (EndSequence, ""),
       (Eof, "")
     )
