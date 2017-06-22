@@ -1,0 +1,21 @@
+package amf.remote
+
+/**
+  * Created by hernan.najles on 6/22/17.
+  */
+object Mimes {
+  val `APPLICATION/JSON`: String         = "application/json"
+  val `APPLICATION/YAML`: String         = "application/yaml"
+  val `APPLICATION/RAML+YAML`: String    = "application/raml+yaml"
+  val `APPLICATION/RAML+JSON`: String    = "application/raml+json"
+  val `APPLICATION/RAML`: String         = "application/raml"
+  val `APPLICATION/OPENAPI+JSON`: String = "application/openapi+json"
+  val `APPLICATION/SWAGGER+JSON`: String = "application/swagger+json"
+  val `APPLICATION/OPENAPI+YAML`: String = "application/openapi+yaml"
+  val `APPLICATION/SWAGGER+YAML`: String = "application/swagger+yaml"
+  val `APPLICATION/OPENAPI`: String      = "application/openapi"
+  val `APPLICATION/SWAGGER`: String      = "application/swagger"
+
+  def isJson(mime: String): Unit = {}
+
+}

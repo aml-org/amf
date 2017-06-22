@@ -4,12 +4,12 @@ import java.util.function.Consumer
 
 import amf.common.AMFAST.EMPTY_NODE
 import amf.common.AMFToken.{Eof, Link}
+import amf.compiler.AMFCompiler
 import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, Document, IncludeAnnotation, Range}
 import amf.remote.{Context, Platform}
 import amf.visitor.ASTNodeVisitor
-import amf.yaml.YamlCompiler
-import scala.concurrent.ExecutionContext.Implicits.global
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 /**
@@ -43,7 +43,7 @@ class AMFASTLink(include: String, range: Range)
   private var document: Document = _
 
   def resolve(remote: Platform, context: Context): Future[AMFAST] = {
-    YamlCompiler(include, remote, Some(context))
+    AMFCompiler(include, remote, Some(context))
       .build()
       .map(root => {
         document = Document(root, include)

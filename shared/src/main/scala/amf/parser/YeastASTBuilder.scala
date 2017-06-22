@@ -5,11 +5,11 @@ import amf.common.Strings.strings
 import amf.common.{AMFAST, AMFASTLink, AMFASTNode, AMFToken}
 import amf.lexer.Lexer
 
+import scala.collection.mutable.ListBuffer
+
 class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AMFToken, AMFAST](lexer) {
 
-//    val remote : Platform
-//    val context : Context
-//    val includes: ListBuffer[Future[AMFAST]]
+  val references: ListBuffer[AMFASTLink] = ListBuffer()
 
   override protected def createNode(token: AMFToken, content: String, range: Range): AMFAST =
     new AMFASTNode(token, content, range)
@@ -27,8 +27,10 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
   }
 
   private def createLinkNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {
-    val url = children.head.content.unquote
-    new AMFASTLink(url, range)
+    val url  = children.head.content.unquote
+    val link = new AMFASTLink(url, range)
+    references += link
+    link
   }
 
   private def createYamlNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {

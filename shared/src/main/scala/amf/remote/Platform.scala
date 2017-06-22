@@ -11,7 +11,7 @@ import scala.concurrent.Future
 trait Platform {
 
   /** Resolve remote url. */
-  def resolve(url: String, context: Option[Context]): Future[CharStream] = {
+  def resolve(url: String, context: Option[Context]): Future[Content] = {
     url match {
       case Http(_)                             => fetchHttp(url)
       case File(path)                          => fetchFile(path)
@@ -21,10 +21,10 @@ trait Platform {
   }
 
   /** Resolve specified file. */
-  protected def fetchFile(path: String): Future[CharStream]
+  protected def fetchFile(path: String): Future[Content]
 
   /** Resolve specified url. */
-  protected def fetchHttp(url: String): Future[CharStream]
+  protected def fetchHttp(url: String): Future[Content]
 
   /** Write specified content on given url. */
   def write(url: String, content: String): Future[Unit] = {

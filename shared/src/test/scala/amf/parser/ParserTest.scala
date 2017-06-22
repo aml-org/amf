@@ -5,7 +5,7 @@ import amf.common.{AMFAST, AMFToken}
 import amf.json.JsonLexer
 import amf.lexer.{CharSequenceStream, CharStream}
 import amf.oas.OASParser
-import amf.remote.{Context, Platform}
+import amf.remote.{Content, Context, Platform}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import amf.common.Strings.strings
@@ -212,37 +212,37 @@ class ParserTest extends FunSuite {
   private class TestMemoryPlatform extends Platform {
 
     /** Resolve specified file. */
-    override protected def fetchFile(path: String): Future[CharStream] = {
+    override protected def fetchFile(path: String): Future[Content] = {
       path match {
         case "input.yaml" =>
           Future {
-            new CharSequenceStream(`RAML/yaml`)
+            Content(new CharSequenceStream(`RAML/yaml`))
           }
         case "include1.yaml" =>
           Future {
-            new CharSequenceStream("aa: 0")
+            Content(new CharSequenceStream("aa: 0"))
           }
         case "include2.yaml" =>
           Future {
-            new CharSequenceStream("dd: 0")
+            Content(new CharSequenceStream("dd: 0"))
           }
         case "input.json" =>
           Future {
-            new CharSequenceStream(`OAS/json`)
+            Content(new CharSequenceStream(`OAS/json`))
           }
         case "include1.json" =>
           Future {
-            new CharSequenceStream("{\"aa\": 0}")
+            Content(new CharSequenceStream("{\"aa\": 0}"))
           }
         case "include2.json" =>
           Future {
-            new CharSequenceStream("{\"dd\": 0}")
+            Content(new CharSequenceStream("{\"dd\": 0}"))
           }
         case _ => Future.failed(new Exception(s"[TEST] Unable to load $path"))
       }
     }
 
-    override protected def fetchHttp(url: String): Future[CharStream] =
+    override protected def fetchHttp(url: String): Future[Content] =
       Future.failed(new Exception(s"[TEST] Unable to fetch url $url"))
 
     override protected def writeFile(path: String, content: String): Future[Unit] =
