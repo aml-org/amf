@@ -26,12 +26,12 @@ class JsonCompiler private (val url: String, val remote: Platform, val base: Opt
 
   private def parse(stream: CharStream): Future[AMFAST] = {
     val builder = new JsonASTBuilder(JsonLexer(stream))
-    val parser  = new JsonParser(builder)
+//    val parser  = new JsonParser(builder)
 
     if (root == null) {
-      root = builder.root() {
-        parser.parse
-      }
+//      root = builder.root() {
+////        parser.parse
+//      }
     }
 
     Future.sequence(includes).map(_ => root)
@@ -59,7 +59,7 @@ class JsonCompiler private (val url: String, val remote: Platform, val base: Opt
   private def createLinkNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {
     val include = children.head
     val url     = include.content.unquote
-    new AMFASTLink(url, include.range, remote, context).resolve(future => includes += future)
+    new AMFASTLink(url, include.range)
   }
 
   private def createJsonNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {

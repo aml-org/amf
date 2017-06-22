@@ -105,7 +105,7 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
         badChar()
   })
 
-  protected def strings(chr: Int): T = {
+  private def strings(chr: Int) = {
     val c1 = lookAhead(1)
     val c2 = lookAhead(2)
     if (c1 == '"' && c2 == '"') multiLineString(chr) else string(chr)

@@ -5,9 +5,7 @@ import amf.lexer.Token
 /**
   * Base parser
   */
-abstract class BaseParser[T <: Token, N <: ASTNode[T]](
-    private val builder: ASTBuilder[T, N])
-    extends Parser {
+abstract class BaseParser[T <: Token, N <: ASTNode[T]](private val builder: ASTBuilder[T, N]) extends Parser {
 
   /** Get current token. */
   protected final def current: T = builder.currentToken
@@ -52,7 +50,7 @@ abstract class BaseParser[T <: Token, N <: ASTNode[T]](
 
   protected def currentOrError(token: T): Boolean = current match {
     case `token` => true
-    case _ =>
+    case _       =>
       // todo Error
       println(s"Error: expected '$token' but '$current' found")
       false
@@ -62,14 +60,14 @@ abstract class BaseParser[T <: Token, N <: ASTNode[T]](
                           leftToken: T,
                           sepToken: T,
                           rightToken: T,
-                          elementParser: Parser): Boolean = {
+                          elementParse: () => Boolean): Boolean = {
     val started = currentEq(leftToken)
     if (started) {
       beginTree()
       discard()
       while (currentNotEq(rightToken)) {
         // add loopCheck()
-        elementParser.parse()
+        if (!elementParse()) return false
         if (currentNotEq(rightToken) && currentOrError(sepToken)) {
           discard()
         }

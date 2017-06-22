@@ -36,15 +36,6 @@ class JsonLexer(stream: CharStream = new CharSequenceStream()) extends BaseLexer
   override protected def findKeyword(text: String): AMFToken = keywords(text)
 
   override protected def findOperator(chr: Int): AMFToken = operators(chr.toChar)
-
-  override protected def strings(chr: Int): AMFToken = {
-    if (lookAhead(1) == '$') {
-      consume(6)
-      Link
-    } else {
-      super.strings(chr)
-    }
-  }
 }
 
 object JsonLexer {

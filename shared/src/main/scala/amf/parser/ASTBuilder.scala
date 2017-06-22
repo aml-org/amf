@@ -8,36 +8,39 @@ import amf.lexer.{Lexer, Token}
   */
 abstract class ASTBuilder[T <: Token, N <: ASTNode[T]](val lexer: Lexer[T]) {
 
-    /** Build and return root node. */
-    def root()(parse:() => Unit): N
+  /** Build and return root node. */
+  def root()(parse: () => Unit): N
 
-    /** Adds the current input token to the sub-tree under construction. */
-    def addChild(): Unit
+  /** Adds the current input token to the sub-tree under construction. */
+  def addChild(): Unit
 
-    /** Advance the Lexer to the next position. */
-    def advanceLexer(): Unit
+  /** Advance the Lexer to the next position. */
+  def advanceLexer(): Unit
 
-    /** Starts the building of a new tree node. Every call to addChild will place a new child under the current sub-tree. */
-    def beginNode(): Unit
+  /** Starts the building of a new tree node. Every call to addChild will place a new child under the current sub-tree. */
+  def beginNode(): Unit
 
-    /** Discard selected token and advance. */
-    def discard(): Unit
+  /** Discard selected token and advance. */
+  def discard(): Unit
 
-    /**
-      * Instruct the Builder to end the building of the current sub-tree. The provided token will be
-      * used as the root of the constructed sub-tree
-      */
-    def endNode(token: T): Unit
+  /** Instruct the builder to drop the current node being built. */
+  def dropNode(): Unit
 
-    /** Returns true if the token source is exhausted. */
-    def eof: Boolean
+  /**
+    * Instruct the Builder to end the building of the current sub-tree. The provided token will be
+    * used as the root of the constructed sub-tree
+    */
+  def endNode(token: T): Unit
 
-    /** Token 'n' positions ahead. */
-    def lookAhead(n: Int): T
+  /** Returns true if the token source is exhausted. */
+  def eof: Boolean
 
-    /** Returns current token text. */
-    def currentText: String
+  /** Token 'n' positions ahead. */
+  def lookAhead(n: Int): T
 
-    /** The token type of the current token. */
-    def currentToken: T
+  /** Returns current token text. */
+  def currentText: String
+
+  /** The token type of the current token. */
+  def currentToken: T
 }

@@ -29,26 +29,26 @@ class AMFASTNode(token: AMFToken,
   override val empty = AMFAST.EMPTY_NODE
 }
 
-class AMFASTLink(include: String, range: Range, remote: Platform, context: Context)
+class AMFASTLink(include: String, range: Range)
     extends BaseASTNode[AMFToken](Link, include, range)
     with ASTLinkNode[AMFToken]
     with AMFAST {
+
   override val annotations: Seq[Annotation] = Seq(IncludeAnnotation(include))
-  override def children: Seq[AMFAST]        = Seq()
-  override def target: Document             = document
+
+  override def children: Seq[AMFAST] = Seq()
+
+  override def target: Document = document
 
   private var document: Document = _
 
-  def resolve(futures: Consumer[Future[AMFAST]]): AMFASTLink = {
-    futures.accept({
-      YamlCompiler(include, remote, Some(context))
-        .build()
-        .map(root => {
-          document = Document(root, include)
-          root
-        })
-    })
-    this
+  def resolve(remote: Platform, context: Context): Future[AMFAST] = {
+    YamlCompiler(include, remote, Some(context))
+      .build()
+      .map(root => {
+        document = Document(root, include)
+        root
+      })
   }
 
   /** Accept given node visitor. */

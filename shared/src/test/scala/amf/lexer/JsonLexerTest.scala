@@ -14,7 +14,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Simple key value parse test") {
     val input                         = "{\"a\": \"b\"}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"a\""),
                         (Colon, ":"),
@@ -29,7 +28,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Simple key numeric value parse test") {
     val input                         = "{\"a\": 2}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"a\""),
                         (Colon, ":"),
@@ -44,7 +42,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Simple key value with white space parse test") {
     val input                         = "{\"a \": \"b\"}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"a \""),
                         (Colon, ":"),
@@ -81,7 +78,7 @@ class JsonLexerTest extends FunSuite with ListAssertions {
       (WhiteSpace, " "),
       (StartMap, "{"),
       (WhiteSpace, "\\n    "),
-      (Link, "\"$ref\""),
+      (StringToken, "\"$ref\""),
       (Colon, ":"),
       (WhiteSpace, " "),
       (StringToken, "\"file://include1.json\""),
@@ -107,7 +104,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("object with string sequence parse test") {
     val input                         = "{\"a\": [\"b\",\"c\",\"d\",\"e\"]}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartMap, "{"),
       (StringToken, "\"a\""),
@@ -132,7 +128,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("object with number sequence parse test") {
     val input                         = "{\"a\": [1,2,3,4]}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartMap, "{"),
       (StringToken, "\"a\""),
@@ -157,7 +152,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("object with object sequence parse test") {
     val input                         = "{\"a\": [{\"b\":1},{\"c\":2},{\"d\":3}]}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartMap, "{"),
       (StringToken, "\"a\""),
@@ -192,7 +186,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("sequence of sequence parse test") {
     val input                         = "{\"a\": [[\"b\",\"c\",\"d\"],[\"e\",\"f\",\"g\"]]}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartMap, "{"),
       (StringToken, "\"a\""),
@@ -225,7 +218,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("only sequence parse test") {
     val input                         = "[\"b\",\"c\",\"d\"]"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartSequence, "["),
                         (StringToken, "\"b\""),
                         (Comma, ","),
@@ -241,7 +233,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("mixed types sequences parse test") {
     val input                         = "[[\"b\",\"c\",\"d\"],{\"key\":\"value\"}]"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartSequence, "["),
       (StartSequence, "["),
@@ -267,7 +258,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("mixed types sequences with ws parse test") {
     val input                         = " [\n[\" b\" , \"c \" , \"d\" ] , { \"key \" : \" value\" } ]"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (WhiteSpace, " "),
       (StartSequence, "["),
@@ -315,7 +305,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
                    |  }
                    |}""".stripMargin
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartMap, "{"),
       (WhiteSpace, "\\n  "),
@@ -385,7 +374,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Null value parse test") {
     val input                         = "{\"a\": null}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"a\""),
                         (Colon, ":"),
@@ -400,7 +388,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Boolean value parse test") {
     val input                         = "{\"a\": true}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"a\""),
                         (Colon, ":"),
@@ -415,7 +402,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("String with boolean value parse test") {
     val input                         = "{\"a\": \"true\"}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"a\""),
                         (Colon, ":"),
@@ -430,7 +416,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Sequence of keywords parse test") {
     val input                         = "[null,true,false]"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartSequence, "["),
                         (Null, "null"),
                         (Comma, ","),
@@ -447,7 +432,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Simple json-ld parse test with @context") {
     val input                         = "{\"@context\": \"http://schema.org/\"}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"@context\""),
                         (Colon, ":"),
@@ -462,7 +446,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
   test("Simple json-ld parse test with @type") {
     val input                         = "{\"@type\": \"Car\"}"
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List((StartMap, "{"),
                         (StringToken, "\"@type\""),
                         (Colon, ":"),
@@ -481,7 +464,6 @@ class JsonLexerTest extends FunSuite with ListAssertions {
         |  "@type": "Person"
         |}""".stripMargin
     val actual: List[(Token, String)] = JsonLexer(input).lex()
-    println(actual.toString)
     val expected = List(
       (StartMap, "{"),
       (WhiteSpace, "\\n  "),

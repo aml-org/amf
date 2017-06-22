@@ -5,11 +5,11 @@ import org.scalatest.Assertions
 /**
   * Created by hernan.najles on 6/13/17.
   */
-trait ListAssertions  extends Assertions{
+trait ListAssertions extends Assertions {
 
-  def assert[E](left: List[E], right: List[E]):Unit = {
-    println("Actual: ", left.toString)
-    println("Expect: ", right.toString)
+  def assert[E](left: List[E], right: List[E]): Unit = {
+//    println("Actual: ", left.toString)
+//    println("Expect: ", right.toString)
     if (left.size == right.size) {
       left.zipWithIndex.foreach {
         case (actual, index) =>

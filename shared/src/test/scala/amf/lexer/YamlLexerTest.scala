@@ -22,7 +22,6 @@ class YamlLexerTest extends FunSuite with ListAssertions {
   test("Simple key value with white space parse test") {
     val input                         = "a : 1"
     val actual: List[(Token, String)] = YamlLexer(input).lex()
-    println(actual.toString)
     val expected =
       List((StartMap, ": "), (StringToken, "a "), (IntToken, "1"), (EndMap, ""), (Eof, ""))
     assert(actual, expected)
@@ -637,8 +636,7 @@ class YamlLexerTest extends FunSuite with ListAssertions {
       (WhiteSpace, " "),
       (Comma, ": "),
       (StringToken, "b"),
-      (Link, "!include "),
-      (StringToken, "file://include1.yaml"),
+      (StringToken, "!include file://include1.yaml"),
       (WhiteSpace, "\\n"),
       (WhiteSpace, " "),
       (Comma, ": "),

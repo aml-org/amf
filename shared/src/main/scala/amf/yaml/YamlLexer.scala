@@ -111,10 +111,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
         case ' ' =>
           if (lookAhead(1) == '#') return scalarToken else consume()
         case '[' | ']' | '{' | '}' | ',' if flowLevel > 0 => return scalarToken
-        case '!' => // Belongs to RAML lexer. Proof of concept...
-          consume(9)
-          return Link
-        case _ => consume()
+        case _                                            => consume()
       }
     }
     scalarToken

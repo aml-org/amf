@@ -26,12 +26,12 @@ class YamlCompiler private (val url: String, val remote: Platform, val base: Opt
 
   private def parse(stream: CharStream): Future[AMFAST] = {
     val builder = new YamlASTBuilder(YamlLexer(stream))
-    val parser  = new YamlParser(builder)
+//    val parser  = new YamlParser(builder)
 
     if (root == null) {
-      root = builder.root() {
-        parser.parse
-      }
+//      root = builder.root() {
+//        parser.parse
+//      }
     }
 
     Future.sequence(includes).map(_ => root)
@@ -56,7 +56,7 @@ class YamlCompiler private (val url: String, val remote: Platform, val base: Opt
 
   private def createLinkNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {
     val url = children.head.content.unquote
-    new AMFASTLink(url, range, remote, context).resolve(future => includes += future)
+    new AMFASTLink(url, range) /*.resolve(future => includes += future)*/
   }
 
   private def createYamlNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {
