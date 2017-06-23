@@ -7,13 +7,14 @@ class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
   private def link(): Boolean = {
     beginTree()
+    discard()
     consume()
     endTree(Link)
     true
   }
 
-  override protected def parseValue(): Boolean = currentText match {
-    case text if text.startsWith("!include ") => link()
+  override protected def parseValue(): Unit = current match {
+    case Tag if currentText equals "!include" => link()
     case _                                    => super.parseValue()
   }
 }

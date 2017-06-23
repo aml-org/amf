@@ -71,7 +71,7 @@ class ParserTest extends FunSuite {
     assertDocumentRoot(root)
   }
 
-  test("Test RamlParser with RAML/json") {
+  ignore("Test RamlParser with RAML/json") {
     val builder = YeastASTBuilder(JsonLexer(`RAML/json`))
     val parser  = new RamlParser(builder)
 
@@ -150,7 +150,7 @@ class ParserTest extends FunSuite {
 
     val second = content.child(1)
     typed(second.head) shouldBe "b"
-    typed(second.last).toString should include("include1.")
+    typed(second.last).toString should startWith("include1.")
 
     val third = content.child(2)
     assert(third.content == null)
@@ -159,7 +159,7 @@ class ParserTest extends FunSuite {
 
     val fourth = content.child(3)
     typed(fourth.head) shouldBe "d"
-    typed(fourth.last).toString should include("include2.")
+    typed(fourth.last).toString should startWith("include2.")
 
     assert(content.child(4) eq root.empty)
   }

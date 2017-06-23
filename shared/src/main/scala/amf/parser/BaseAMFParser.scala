@@ -15,7 +15,11 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
     }
   }
 
-  private def parseSequence(): Unit = parseList(SequenceToken, StartSequence, Comma, EndSequence, parseValue)
+  private def parseSequence(): Unit =
+    parseList(SequenceToken, StartSequence, Comma, EndSequence, () => {
+      parseValue()
+      true
+    })
 
   private def parseMapping(): Unit = parseList(MapToken, StartMap, Comma, EndMap, parseEntry)
 
@@ -30,11 +34,10 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
     true
   }
 
-  protected def parseValue(): Boolean = {
+  protected def parseValue(): Unit = {
     current match {
       case StringToken | IntToken | FloatToken | True | False | Null => consume()
       case _                                                         => parse()
     }
-    true
   }
 }

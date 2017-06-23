@@ -74,6 +74,9 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
     case '[' | '{' =>
       startState(State.Flow)
 
+    case '!' =>
+      tag()
+
     case _ =>
       scalar()
     // startPlainScalar()
@@ -81,6 +84,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
   }
 
   private var inValue = true
+
   private def scalarToken: AMFToken = {
     inValue = false
     // Quick and dirty fix to recognize types in scalars
@@ -115,6 +119,12 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
       }
     }
     scalarToken
+  }
+
+  private def tag() = {
+    consume()
+    while (Character.isLetter(currentChar)) consume()
+    Tag
   }
 
   private def startPlainScalar() = {

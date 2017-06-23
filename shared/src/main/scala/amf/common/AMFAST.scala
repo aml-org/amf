@@ -5,7 +5,6 @@ import amf.compiler.AMFCompiler
 import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, Document, IncludeAnnotation, Range}
 import amf.remote.{Context, Hint, Platform}
 import amf.visitor.ASTNodeVisitor
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
