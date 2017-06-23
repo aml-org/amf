@@ -1,7 +1,7 @@
 package amf.remote
 
 import java.io.FileWriter
-import java.net.{HttpURLConnection, URL}
+import java.net.{HttpURLConnection, URI, URL}
 
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 
@@ -63,8 +63,10 @@ class JvmPlatform extends Platform {
       writer.close()
     }
   }
+
+  override def resolvePath(path: String): String = new URI(path).normalize.toString
 }
 
-object JvmPlatform {
+object PlatformBuilder {
   def apply(): JvmPlatform = new JvmPlatform()
 }

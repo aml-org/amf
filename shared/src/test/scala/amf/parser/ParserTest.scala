@@ -1,16 +1,16 @@
 package amf.parser
 
 import amf.common.AMFToken._
+import amf.common.Strings.strings
 import amf.common.{AMFAST, AMFToken}
 import amf.json.JsonLexer
-import amf.lexer.{CharSequenceStream, CharStream}
+import amf.lexer.CharSequenceStream
 import amf.oas.OASParser
-import amf.remote.{Content, Context, Platform}
+import amf.raml.RamlParser
+import amf.remote.{Content, Platform}
+import amf.yaml.YamlLexer
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
-import amf.common.Strings.strings
-import amf.raml.RamlParser
-import amf.yaml.YamlLexer
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -102,29 +102,6 @@ class ParserTest extends FunSuite {
     }
 
     assertDocumentRoot(root)
-  }
-
-  test("Test context URL resolutions") {
-    val c1 = Context("http://localhost:3000/input.yaml")
-    assert(c1.qualify("include.yaml") equals "http://localhost:3000/include.yaml")
-    assert(c1.qualify("nested/include.yaml") equals "http://localhost:3000/nested/include.yaml")
-
-    val c2 = Context("http://localhost:3000/path/input.yaml")
-    assert(c2.qualify("include.yaml") equals "http://localhost:3000/path/include.yaml")
-    assert(c2.qualify("nested/include.yaml") equals "http://localhost:3000/path/nested/include.yaml")
-
-    val c3 = Context("file://input.yaml")
-    assert(c3.qualify("include.yaml") equals "file://include.yaml")
-
-    val c4 = Context("file://path/input.yaml")
-    assert(c4.qualify("include.yaml") equals "file://path/include.yaml")
-
-    // Update to support nested includes
-    val c11 = c1.update("relative/include.yaml")
-    assert(c11.qualify("other.yaml") equals "http://localhost:3000/relative/other.yaml")
-
-    val c31 = c3.update("relative/include.yaml")
-    assert(c31.qualify("other.yaml") equals "file://relative/other.yaml")
   }
 
   def typed(head: AMFAST): Any = head.`type` match {
@@ -247,6 +224,8 @@ class ParserTest extends FunSuite {
 
     override protected def writeFile(path: String, content: String): Future[Unit] =
       Future.failed(new Exception(s"[TEST] Unsupported write operation $path"))
+
+    override def resolvePath(path: String): String = path
   }
 
 }

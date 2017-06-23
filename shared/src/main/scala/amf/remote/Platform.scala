@@ -1,8 +1,5 @@
 package amf.remote
 
-import amf.lexer.CharStream
-import amf.remote.Context.context
-
 import scala.concurrent.Future
 
 /**
@@ -15,10 +12,12 @@ trait Platform {
     url match {
       case Http(_)                             => fetchHttp(url)
       case File(path)                          => fetchFile(path)
-      case Relative(path) if context.isDefined => resolve(context.get qualify path, None)
+      case Relative(path) if context.isDefined => resolve(context.get resolve path, None)
       case _                                   => Future.failed(new Exception(s"Unsupported url: $url"))
     }
   }
+
+  def resolvePath(path: String): String
 
   /** Resolve specified file. */
   protected def fetchFile(path: String): Future[Content]
@@ -40,29 +39,6 @@ trait Platform {
 
 object Platform {
   def base(url: String): Option[String] = Some(url.substring(0, url.lastIndexOf('/')))
-}
-
-case class Context(private val base: String) {
-  def qualify(path: String): String = base + path
-
-  def update(url: String): Context = {
-    url match {
-      case Relative(path) => context(base + path)
-      case _              => Context(url)
-    }
-  }
-}
-
-object Context {
-  def apply(url: String): Context = {
-    url match {
-      case Http(_)    => context(url)
-      case File(path) => if (path.contains('/')) context(url) else new Context("file://")
-      case _          => throw new Exception(s"Cannot create context for $url")
-    }
-  }
-
-  private def context(url: String) = new Context(url.substring(0, url.lastIndexOf('/') + 1))
 }
 
 private object Http {

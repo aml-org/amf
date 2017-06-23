@@ -16,7 +16,7 @@ import scala.concurrent.Future
 
 class AMFCompiler private (val url: String, val remote: Platform, val base: Option[Context], hint: Option[Hint]) {
 
-  private lazy val context: Context                  = base.map(_.update(url)).getOrElse(Context(url))
+  private lazy val context: Context                  = base.map(_.update(url)).getOrElse(Context(remote, url))
   private var root: AMFAST                           = _
   private val references: ListBuffer[Future[AMFAST]] = ListBuffer()
 
