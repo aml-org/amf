@@ -14,14 +14,28 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AMFCompiler private (val url: String, val remote: Platform, val base: Option[Context], hint: Option[Hint]) {
+class AMFCompiler private (val url: String,
+                           val remote: Platform,
+                           val base: Option[Context],
+                           hint: Option[Hint],
+                           val cacheOption: Option[Cache]) {
 
   private lazy val context: Context                  = base.map(_.update(url)).getOrElse(Context(remote, url))
+  private lazy val cache: Cache                      = cacheOption.getOrElse(Cache())
   private var root: AMFAST                           = _
   private val references: ListBuffer[Future[AMFAST]] = ListBuffer()
 
   def build(): Future[AMFAST] = {
-    remote.resolve(url, base).flatMap(parse)
+    val url = context.current
+    if (context.hasCycles) cache.update(url, Future.failed(new Exception(s"Url has cycles($url)")))
+    else {
+      if (!cache.exists(url)) {
+
+        val eventualAmfast = remote.resolve(url, base).flatMap(parse)
+        cache.update(context.current, eventualAmfast)
+      }
+    }
+    cache.getAST(url)
   }
 
   def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
@@ -54,8 +68,8 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
             new OASParser(builder)
           case _ =>
             hint.getOrElse("") match {
-              case RamlYamlHint | RamlJsonHint => new OASParser(builder)
-              case OasYamlHint | OasJsonHint   => new RamlParser(builder)
+              case RamlYamlHint | RamlJsonHint => new RamlParser(builder)
+              case OasYamlHint | OasJsonHint   => new OASParser(builder)
               case _                           => new RamlParser(builder)
             }
         }
@@ -73,7 +87,7 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
     }
 
     builder.references.foreach(link => {
-      references += link.resolve(remote, context, hint)
+      references += link.resolve(remote, context, cache, hint)
     })
 
     Future.sequence(references).map(_ => root)
@@ -81,6 +95,10 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
 }
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, hint: Option[Hint], context: Option[Context] = None) =
-    new AMFCompiler(url, remote, context, hint)
+  def apply(url: String,
+            remote: Platform,
+            hint: Option[Hint],
+            context: Option[Context] = None,
+            cache: Option[Cache] = None) =
+    new AMFCompiler(url, remote, context, hint, cache)
 }
