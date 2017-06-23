@@ -5,6 +5,7 @@ import java.util.Scanner
 
 import amf.generator.{JsonGenerator, YamlGenerator}
 import amf.parser.{ASTNodePrinter, Document}
+import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
 
 class Repl(val in: InputStream, val out: PrintStream) {
 
@@ -17,8 +18,8 @@ class Repl(val in: InputStream, val out: PrintStream) {
     while (scanner.hasNextLine) {
       scanner.nextLine() match {
         case Exit()           => return
-        case Json(url)        => remote(url, "json", (doc) => document = doc)
-        case Yaml(url)        => remote(url, "yaml", (doc) => document = doc)
+        case Json(url)        => remote(url, Option(OasJsonHint), (doc) => document = doc)
+        case Yaml(url)        => remote(url, Option(RamlYamlHint), (doc) => document = doc)
         case Ast(_)           => document.foreach(doc => out.println(ASTNodePrinter.print(doc.root)))
         case Generate(syntax) => document.foreach(doc => generate(doc, syntax))
         case line             => out.println(s"... $line")
@@ -34,10 +35,10 @@ class Repl(val in: InputStream, val out: PrintStream) {
     }
   }
 
-  private def remote(url: String, syntax: String, callback: (Option[Document]) => Unit): Unit = {
+  private def remote(url: String, hint: Option[Hint], callback: (Option[Document]) => Unit): Unit = {
     new JvmClient().generate(
       url,
-      syntax,
+      hint,
       new Handler {
         override def success(doc: Document): Unit = {
           out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")

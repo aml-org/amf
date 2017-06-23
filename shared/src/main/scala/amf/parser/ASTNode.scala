@@ -3,7 +3,7 @@ package amf.parser
 import amf.common.{AMFAST, AMFASTLink}
 import amf.lexer.Token
 import amf.parser.ASTNodePrinter.print
-import amf.remote.{Context, Platform}
+import amf.remote.{Context, Hint, Platform}
 import amf.visitor.ASTNodeVisitor
 
 import scala.concurrent.Future
@@ -58,7 +58,7 @@ trait ASTLinkNode[T <: Token] extends ASTNode[T] {
 
   /** Return node target. */
   def target: Document
-  def resolve(remote: Platform, context: Context): Future[AMFAST]
+  def resolve(remote: Platform, context: Context, hint: Option[Hint]): Future[AMFAST]
 
 }
 

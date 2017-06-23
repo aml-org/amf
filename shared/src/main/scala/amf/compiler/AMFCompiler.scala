@@ -7,14 +7,14 @@ import amf.oas.OASParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
 import amf.remote.Mimes._
-import amf.remote.{Content, Context, Platform}
+import amf.remote._
 import amf.yaml.YamlLexer
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AMFCompiler private (val url: String, val remote: Platform, val base: Option[Context]) {
+class AMFCompiler private (val url: String, val remote: Platform, val base: Option[Context], hint: Option[Hint]) {
 
   private lazy val context: Context                  = base.map(_.update(url)).getOrElse(Context(url))
   private var root: AMFAST                           = _
@@ -26,9 +26,18 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
 
   def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
     content.mime match {
-      case Some(`APPLICATION/JSON`) | Some(`APPLICATION/RAML+JSON`) => JsonLexer(content.stream)
-      case Some(`APPLICATION/YAML`) | Some(`APPLICATION/RAML+YAML`) => YamlLexer(content.stream)
-      case _                                                        => YamlLexer(content.stream)
+      case Some(`APPLICATION/JSON`) | Some(`APPLICATION/RAML+JSON`) | Some(`APPLICATION/OPENAPI+JSON`) | Some(
+            `APPLICATION/SWAGGER+JSON`) =>
+        JsonLexer(content.stream)
+      case Some(`APPLICATION/YAML`) | Some(`APPLICATION/RAML+YAML`) | Some(`APPLICATION/OPENAPI+YAML`) | Some(
+            `APPLICATION/SWAGGER+YAML`) =>
+        YamlLexer(content.stream)
+      case _ =>
+        hint.getOrElse("") match {
+          case RamlYamlHint | OasYamlHint => YamlLexer(content.stream)
+          case RamlJsonHint | OasJsonHint => JsonLexer(content.stream)
+          case _                          => ??? //TODO handler unkown
+        }
     }
   }
 
@@ -43,7 +52,12 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
           case Some(`APPLICATION/OPENAPI+JSON`) | Some(`APPLICATION/SWAGGER+JSON`) | Some(`APPLICATION/OPENAPI+YAML`) |
               Some(`APPLICATION/SWAGGER+YAML`) | Some(`APPLICATION/OPENAPI`) | Some(`APPLICATION/SWAGGER`) =>
             new OASParser(builder)
-          case _ => new RamlParser(builder)
+          case _ =>
+            hint.getOrElse("") match {
+              case RamlYamlHint | RamlJsonHint => new OASParser(builder)
+              case OasYamlHint | OasJsonHint   => new RamlParser(builder)
+              case _                           => new RamlParser(builder)
+            }
         }
     }
   }
@@ -59,7 +73,7 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
     }
 
     builder.references.foreach(link => {
-      references += link.resolve(remote, context)
+      references += link.resolve(remote, context, hint)
     })
 
     Future.sequence(references).map(_ => root)
@@ -67,5 +81,6 @@ class AMFCompiler private (val url: String, val remote: Platform, val base: Opti
 }
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, context: Option[Context] = None) = new AMFCompiler(url, remote, context)
+  def apply(url: String, remote: Platform, hint: Option[Hint], context: Option[Context] = None) =
+    new AMFCompiler(url, remote, context, hint)
 }

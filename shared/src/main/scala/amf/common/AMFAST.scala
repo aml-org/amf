@@ -1,12 +1,9 @@
 package amf.common
 
-import java.util.function.Consumer
-
-import amf.common.AMFAST.EMPTY_NODE
 import amf.common.AMFToken.{Eof, Link}
 import amf.compiler.AMFCompiler
 import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, Document, IncludeAnnotation, Range}
-import amf.remote.{Context, Platform}
+import amf.remote.{Context, Hint, Platform}
 import amf.visitor.ASTNodeVisitor
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -42,8 +39,8 @@ class AMFASTLink(include: String, range: Range)
 
   private var document: Document = _
 
-  def resolve(remote: Platform, context: Context): Future[AMFAST] = {
-    AMFCompiler(include, remote, Some(context))
+  def resolve(remote: Platform, context: Context, hint: Option[Hint]): Future[AMFAST] = {
+    AMFCompiler(include, remote, hint, Some(context))
       .build()
       .map(root => {
         document = Document(root, include)
