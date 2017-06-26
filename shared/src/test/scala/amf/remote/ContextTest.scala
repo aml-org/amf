@@ -19,7 +19,7 @@ class ContextTest extends FunSuite with PlatformSecrets {
     c2.resolve("nested/include.yaml") should be("http://localhost:3000/path/nested/include.yaml")
 
     val c3 = Context(platform, "file://input.yaml")
-//        c3.resolve("include.yaml") should be ("file://include.yaml")
+    c3.resolve("include.yaml") should be("file://include.yaml")
 
     val c4 = Context(platform, "file://path/input.yaml")
     c4.resolve("include.yaml") should be("file://path/include.yaml")
@@ -28,8 +28,8 @@ class ContextTest extends FunSuite with PlatformSecrets {
     val c11 = c1.update("relative/include.yaml")
     c11.resolve("other.yaml") should be("http://localhost:3000/relative/other.yaml")
 
-//        val c31 = c3.update("relative/include.yaml")
-//        c31.resolve("other.yaml") should be ("file://relative/other.yaml")
+    val c31 = c3.update("relative/include.yaml")
+    c31.resolve("other.yaml") should be("file://relative/other.yaml")
   }
 
   test("Absolute include") {
@@ -38,10 +38,10 @@ class ContextTest extends FunSuite with PlatformSecrets {
     httpContext.current should be("http://localhost:3000/input.yaml")
     httpContext.resolve("include.yaml") should be("http://localhost:3000/include.yaml")
 
-    val fileContext = Context(platform, "file:///path/input.yaml")
-    fileContext.root should be("file:///path/input.yaml")
-    fileContext.current should be("file:///path/input.yaml")
-    fileContext.resolve("include.yaml") should be("file:///path/include.yaml")
+    val fileContext = Context(platform, "file://path/input.yaml")
+    fileContext.root should be("file://path/input.yaml")
+    fileContext.current should be("file://path/input.yaml")
+    fileContext.resolve("include.yaml") should be("file://path/include.yaml")
   }
 
   test("Include two levels") {
@@ -80,7 +80,28 @@ class ContextTest extends FunSuite with PlatformSecrets {
     c2.current should be("http://localhost:3000/intermediate/inter.raml")
   }
 
-  test("Mapping resolutions") {}
+  test("Mapping resolutions") {
+    val c  = Context(platform, "file://localhost:3000/some/input.yaml")
+    val c2 = c.update("level2/level3/inter.raml")
+    val c3 = c2.update("./inter2.raml")
+    val c4 = c3.update("../..//input.yaml")
 
-  test("Cyclic references") {}
+    c2.root should be("file://localhost:3000/some/input.yaml")
+    c2.current should be("file://localhost:3000/some/level2/level3/inter.raml")
+
+    c3.root should be("file://localhost:3000/some/input.yaml")
+    c3.current should be("file://localhost:3000/some/level2/level3/inter2.raml")
+
+    c4.root should be("file://localhost:3000/some/input.yaml")
+    c4.current should be("file://localhost:3000/some/input.yaml")
+
+  }
+
+  test("Cyclic references") {
+    val c  = Context(platform, "http://localhost:3000/some/input.yaml")
+    val c2 = c.update("../intermediate/inter.raml")
+    val c3 = c.update("../some/input.yaml")
+
+    c3.hasCycles should be(true)
+  }
 }

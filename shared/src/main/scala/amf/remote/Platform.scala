@@ -41,21 +41,26 @@ object Platform {
   def base(url: String): Option[String] = Some(url.substring(0, url.lastIndexOf('/')))
 }
 
-private object Http {
-  def unapply(url: String): Option[String] = {
-    url match {
-      case s if s.startsWith("http://") || s.startsWith("https://") => Some(s)
-      case _                                                        => None
-    }
+protected object Http {
+  def unapply(uri: String): Option[(String, String, String)] = uri match {
+    case url if url.startsWith("http://") || url.startsWith("https://") =>
+      val protocol        = url.substring(0, url.indexOf("://") + 3)
+      val rightOfProtocol = url.stripPrefix(protocol)
+      val host            = rightOfProtocol.substring(0, rightOfProtocol.indexOf("/"))
+      val path            = rightOfProtocol.replace(host, "")
+      Some(protocol, host, path)
+    case _ => None
   }
 }
 
-private object File {
-  def unapply(url: String): Option[String] = {
-    url match {
-      case s if s.startsWith("file://") => Some(s.stripPrefix("file://"))
-      case _                            => None
-    }
+protected object File {
+  val FILE_PROTOCOL = "file://"
+
+  def unapply(url: String): Option[String] = url match {
+    case s if s.startsWith(FILE_PROTOCOL) =>
+      val path = s.stripPrefix(FILE_PROTOCOL)
+      Some(path)
+    case _ => None
   }
 }
 

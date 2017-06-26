@@ -1,8 +1,9 @@
 package amf.remote.server
 
-import amf.interop._
+import amf.interop.{Path, _}
 import amf.lexer.CharSequenceStream
-import amf.remote.{Content, Platform}
+import amf.remote.File.FILE_PROTOCOL
+import amf.remote.{Content, File, Http, Platform}
 
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
@@ -34,7 +35,7 @@ class JsServerPlatform extends Platform {
   override protected def fetchHttp(url: String): Future[Content] = {
     val promise: Promise[Content] = Promise()
 
-    Http.get(
+    amf.interop.Http.get(
       url,
       (response: ServerResponse) => {
         var str = ""
@@ -66,8 +67,10 @@ class JsServerPlatform extends Platform {
     promise.future
   }
 
-  override def resolvePath(path: String): String = { //TODO redo: file://include.yaml doesn't work..
-    val url: ParsedURL = URL.parse(path)
-    url.protocol.get + "//" + url.host.get + Path.resolve(url.path.get)
+  override def resolvePath(uri: String): String = uri match {
+    case File(path)                 => FILE_PROTOCOL + Path.resolve(withTrailingSlash(path)).substring(1)
+    case Http(protocol, host, path) => protocol + host + Path.resolve(withTrailingSlash(path))
   }
+
+  private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
 }
