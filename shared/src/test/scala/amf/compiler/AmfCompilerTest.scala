@@ -18,9 +18,9 @@ import scala.util.{Failure, Success, Try}
   */
 class AmfCompilerTest extends FunSuite with PlatformSecrets {
 
-  private def callback(handler: Handler, url: String, containerType: ContainerType)(t: Try[ASTNode[_ <: Token]]) =
+  private def callback(handler: Handler, url: String, containerType: AMFUnitType)(t: Try[ASTNode[_ <: Token]]) =
     t match {
-      case Success(value)     => handler.success(Container(value, url, containerType))
+      case Success(value)     => handler.success(AMFUnit(value, url, containerType))
       case Failure(exception) => handler.error(exception)
     }
 
@@ -30,7 +30,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .build()
       .onComplete(callback(
         new Handler {
-          override def success(doc: Container): Unit = {
+          override def success(doc: AMFUnit): Unit = {
             println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
             //TODO assert what?
           }
@@ -51,7 +51,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .build()
       .onComplete(callback(
         new Handler {
-          override def success(doc: Container): Unit = {
+          override def success(doc: AMFUnit): Unit = {
             println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
 
           }
@@ -74,7 +74,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .build()
       .onComplete(callback(
         new Handler {
-          override def success(doc: Container): Unit = {
+          override def success(doc: AMFUnit): Unit = {
             println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
             cache.assertCacheSize(2)
           }
@@ -94,7 +94,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .build()
       .onComplete(callback(
         new Handler {
-          override def success(doc: Container): Unit = {
+          override def success(doc: AMFUnit): Unit = {
             println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
             cache.assertCacheSize(3)
           }
@@ -118,7 +118,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .build()
       .onComplete(callback(
         new Handler {
-          override def success(doc: Container): Unit = {
+          override def success(doc: AMFUnit): Unit = {
             println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
             doc.`type` should be(Document)
             val root = doc.root

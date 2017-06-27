@@ -15,7 +15,7 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
     new AMFASTNode(token, content, range)
 
   override protected def createNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = token match {
-    case Link | LibraryToken => createLinkNode(range, children, ContainerType(token))
+    case Link | LibraryToken => createLinkNode(range, children, AMFUnitType(token))
     case _                   => createYamlNode(token, range, children)
   }
 
@@ -26,7 +26,7 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
     buildAST(Root)
   }
 
-  private def createLinkNode(range: Range, children: Seq[AMFAST], containerType: ContainerType): AMFAST = {
+  private def createLinkNode(range: Range, children: Seq[AMFAST], containerType: AMFUnitType): AMFAST = {
     val url  = children.head.content.unquote
     val link = new AMFASTLink(url, range, containerType)
     references += link

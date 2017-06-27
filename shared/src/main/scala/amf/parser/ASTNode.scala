@@ -57,7 +57,7 @@ trait ASTNode[T <: Token] {
 trait ASTLinkNode[T <: Token] extends ASTNode[T] {
 
   /** Return node target. */
-  def target: Container
+  def target: AMFUnit
   def resolve(remote: Platform, context: Context, cache: Cache, hint: Option[Hint]): Future[AMFAST]
 
 }
