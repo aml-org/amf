@@ -1,8 +1,8 @@
 package amf.parser
 
-import amf.common.AMFToken.{Link, Root}
+import amf.common.AMFToken.{LibraryToken, Link, Root}
 import amf.common.Strings.strings
-import amf.common.{AMFAST, AMFASTLink, AMFASTNode, AMFToken}
+import amf.common._
 import amf.lexer.Lexer
 
 import scala.collection.mutable.ListBuffer
@@ -15,8 +15,8 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
     new AMFASTNode(token, content, range)
 
   override protected def createNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = token match {
-    case Link => createLinkNode(token, range, children)
-    case _    => createYamlNode(token, range, children)
+    case Link | LibraryToken => createLinkNode(range, children, ContainerType(token))
+    case _                   => createYamlNode(token, range, children)
   }
 
   /** Build and return root node. */
@@ -26,9 +26,9 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
     buildAST(Root)
   }
 
-  private def createLinkNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {
+  private def createLinkNode(range: Range, children: Seq[AMFAST], containerType: ContainerType): AMFAST = {
     val url  = children.head.content.unquote
-    val link = new AMFASTLink(url, range)
+    val link = new AMFASTLink(url, range, containerType)
     references += link
     link
   }

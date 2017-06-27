@@ -2,7 +2,7 @@ package amf.common
 
 import amf.common.AMFToken.{Eof, Link}
 import amf.compiler.AMFCompiler
-import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, Document, IncludeAnnotation, Range}
+import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, Container, ContainerType, IncludeAnnotation, Range}
 import amf.remote.{Cache, Context, Hint, Platform}
 import amf.visitor.ASTNodeVisitor
 
@@ -26,7 +26,7 @@ class AMFASTNode(token: AMFToken,
   override val empty = AMFAST.EMPTY_NODE
 }
 
-class AMFASTLink(include: String, range: Range)
+class AMFASTLink(include: String, range: Range, containerType: ContainerType)
     extends BaseASTNode[AMFToken](Link, include, range)
     with ASTLinkNode[AMFToken]
     with AMFAST {
@@ -35,15 +35,15 @@ class AMFASTLink(include: String, range: Range)
 
   override def children: Seq[AMFAST] = Seq()
 
-  override def target: Document = document
+  override def target: Container = container
 
-  private var document: Document = _
+  private var container: Container = _
 
   def resolve(remote: Platform, context: Context, cache: Cache, hint: Option[Hint]): Future[AMFAST] = {
     AMFCompiler(include, remote, hint, Some(context), Some(cache))
       .build()
       .map(root => {
-        document = Document(root, include)
+        container = Container(root, include, containerType)
         root
       })
   }

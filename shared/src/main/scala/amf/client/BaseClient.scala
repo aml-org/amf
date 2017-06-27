@@ -2,7 +2,7 @@ package amf.client
 
 import amf.compiler.AMFCompiler
 import amf.lexer.Token
-import amf.parser.{ASTNode, Document}
+import amf.parser.{ASTNode, Container, Document}
 import amf.remote.Hint
 import amf.unsafe.PlatformSecrets
 
@@ -22,7 +22,7 @@ abstract class BaseClient extends PlatformSecrets {
   }
 
   private def callback(handler: Handler, url: String)(t: Try[ASTNode[_ <: Token]]) = t match {
-    case Success(value)     => handler.success(Document(value, url))
+    case Success(value)     => handler.success(Container(value, url, Document))
     case Failure(exception) => handler.error(exception)
   }
 }

@@ -25,7 +25,7 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
 
   protected def parseEntry(): Boolean = entry()
 
-  protected def entry(): Boolean = {
+  protected def entry(parseValue: () => Unit = parseValue): Boolean = {
     beginTree()
     matchOrError(StringToken)
     if (currentEq(Colon)) discard()

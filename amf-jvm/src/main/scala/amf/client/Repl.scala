@@ -4,7 +4,7 @@ import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
 import amf.generator.{JsonGenerator, YamlGenerator}
-import amf.parser.{ASTNodePrinter, Document}
+import amf.parser.{ASTNodePrinter, Container}
 import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
 
 class Repl(val in: InputStream, val out: PrintStream) {
@@ -12,8 +12,8 @@ class Repl(val in: InputStream, val out: PrintStream) {
   init()
 
   private def init(): Unit = {
-    val scanner                    = new Scanner(in)
-    var document: Option[Document] = None
+    val scanner                     = new Scanner(in)
+    var document: Option[Container] = None
 
     while (scanner.hasNextLine) {
       scanner.nextLine() match {
@@ -27,7 +27,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
     }
   }
 
-  private def generate(document: Document, syntax: String): Unit = {
+  private def generate(document: Container, syntax: String): Unit = {
     syntax match {
       case "json" => out.println(new JsonGenerator().generate(document.root))
       case "yaml" => out.println(new YamlGenerator().generate(document.root))
@@ -35,12 +35,12 @@ class Repl(val in: InputStream, val out: PrintStream) {
     }
   }
 
-  private def remote(url: String, hint: Option[Hint], callback: (Option[Document]) => Unit): Unit = {
+  private def remote(url: String, hint: Option[Hint], callback: (Option[Container]) => Unit): Unit = {
     new JvmClient().generate(
       url,
       hint,
       new Handler {
-        override def success(doc: Document): Unit = {
+        override def success(doc: Container): Unit = {
           out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
           callback(Some(doc))
         }

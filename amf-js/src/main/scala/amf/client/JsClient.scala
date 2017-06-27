@@ -1,6 +1,6 @@
 package amf.client
 
-import amf.parser.Document
+import amf.parser.Container
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
@@ -21,7 +21,7 @@ class JsClient extends BaseClient {
 
 @js.native
 trait JsHandler extends js.Object {
-  def success(document: Document): Unit = js.native
+  def success(document: Container): Unit = js.native
 
   def error(exception: Throwable): Unit = js.native
 }
