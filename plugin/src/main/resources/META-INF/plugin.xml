@@ -1,0 +1,37 @@
+<idea-plugin>
+  <name>My YAML</name>
+  <id>org.yaml.plugins.yaml</id>
+  <vendor>Org Yaml</vendor>
+  <description>YAML support</description>
+
+  <depends>com.intellij.modules.lang</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- YAML -->
+    <lang.parserDefinition language="yaml" implementationClass="org.yaml.YamlParserDefinition"/>
+    <lang.commenter language="yaml" implementationClass="org.yaml.YamlCommenter"/>
+    <lang.syntaxHighlighterFactory language="yaml" implementationClass="org.yaml.YamlSyntaxHighlighterFactory"/>
+    <colorSettingsPage implementation="org.yaml.YamlColorsPage"/>
+    <lang.braceMatcher language="yaml" implementationClass="org.yaml.YamlPairedBraceMatcher"/>
+    <lang.foldingBuilder language="yaml" implementationClass="yaml.folding.YAMLFoldingBuilder"/>
+    <fileTypeFactory implementation="org.yaml.YamlFileTypeLoader"/>
+    <editor.backspaceModeOverride language="yaml" implementationClass="com.intellij.codeInsight.editorActions.SmartBackspaceDisabler"/>
+    <lang.psiStructureViewFactory language="yaml" implementationClass="yaml.structureView.YAMLStructureViewFactory"/>
+    <langCodeStyleSettingsProvider implementation="org.yaml.YamlLanguageCodeStyleSettingsProvider"/>
+    <codeStyleSettingsProvider implementation="org.yaml.YamlCodeStyleSettingsProvider"/>
+    
+    <psi.treeChangePreprocessor implementation="org.yaml.psi.YAMLPsiManager"/>
+
+    <projectService serviceImplementation="org.yaml.YamlElementGenerator"/>
+
+    <lang.elementManipulator forClass="yaml.psi.impl.YAMLScalarImpl"
+                             implementationClass="yaml.psi.impl.YAMLScalarElementManipulator"/>
+    <breadcrumbsInfoProvider implementation="yaml.breadcrumbs.YAMLBreadcrumbsInfoProvider"/>
+  </extensions>
+  
+  <extensions defaultExtensionNs="com.intellij.spellchecker">
+    <support language="yaml" implementationClass="org.yaml.YamlSpellcheckerStrategy"/>
+  </extensions>
+
+
+</idea-plugin>
