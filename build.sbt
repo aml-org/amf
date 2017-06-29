@@ -15,7 +15,8 @@ lazy val amf = crossProject
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
   )
   .jvmSettings(
-    )
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided"
+  )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
