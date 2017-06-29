@@ -12,15 +12,8 @@ import scala.util.{Failure, Success, Try}
 
 abstract class BaseClient extends PlatformSecrets {
 
-  def generate(url: String, hint: Option[Hint], handler: Handler): Unit = {
+  def generate(url: String, hint: Option[Hint], handler: Handler): Unit =
     AMFCompiler(url, platform, hint).build().onComplete(callback(handler, url))
-//    syntax match {
-//      case "yaml" =>
-//        YamlCompiler(url, remote).build().onComplete(callback(handler, url))
-//      case "json" =>
-//        JsonCompiler(url, remote).build().onComplete(callback(handler, url))
-//    }
-  }
 
   def webApiParserSuperCopado(): Unit = {
     AMFCompiler("file://shared/src/test/resources/webApi.raml", platform, Option(RamlYamlHint))

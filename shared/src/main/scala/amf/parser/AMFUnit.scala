@@ -12,7 +12,6 @@ case class AMFUnit(root: ASTNode[_ <: Token], url: String, `type`: AMFUnitType, 
 
 class AMFUnitType(name: String)
 object AMFUnitType {
-
   def apply(token: AMFToken): AMFUnitType = token match {
     case Link    => Document
     case Library => Module
@@ -20,8 +19,8 @@ object AMFUnitType {
   }
 }
 
-object Document extends AMFUnitType("document")
+object Document extends AMFUnitType("document") //encodes & declares
 
-object Module extends AMFUnitType("module")
+object Fragment extends AMFUnitType("fragment") //encodes
 
-object Fragment extends AMFUnitType("fragment")
+object Module extends AMFUnitType("module") //declares

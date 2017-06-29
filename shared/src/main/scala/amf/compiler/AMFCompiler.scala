@@ -13,29 +13,28 @@ import amf.yaml.YamlLexer
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.concurrent.Future.failed
 
 class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
                            hint: Option[Hint],
-                           val cacheOption: Option[Cache]) {
+                           private val cache: Cache) {
 
   private lazy val context: Context                            = base.map(_.update(url)).getOrElse(Context(remote, url))
-  private lazy val cache: Cache                                = cacheOption.getOrElse(Cache())
   private var root: AMFAST                                     = _
   private val references: ListBuffer[Future[(AMFAST, Vendor)]] = ListBuffer()
 
   def build(): Future[(AMFAST, Vendor)] = {
     val url = context.current
-    if (context.hasCycles) cache.update(url, Future.failed(new Exception(s"Url has cycles($url)")))
-    else {
-      if (!cache.exists(url)) {
 
-        val eventualAmfast = remote.resolve(url, base).flatMap(parse)
-        cache.update(context.current, eventualAmfast)
+    cache.getOrUpdate(url) { () =>
+      if (context.hasCycles) {
+        failed(new Exception(s"Url has cycles($url)"))
+      } else {
+        remote.resolve(url, base).flatMap(parse)
       }
     }
-    cache.getAST(url)
   }
 
   def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
@@ -59,7 +58,7 @@ class AMFCompiler private (val url: String,
   def resolveParser(builder: YeastASTBuilder, content: Content): BaseAMFParser = {
     //TODO
     builder.currentText match {
-      case s if s.startsWith("#%RAML") => new RamlParser(builder)
+      case s if s.startsWith("#%RAML 1.0") => new RamlParser(builder)
       case _ =>
         content.mime match {
           case Some(`APPLICATION/RAML`) | Some(`APPLICATION/RAML+JSON`) | Some(`APPLICATION/RAML+YAML`) =>
@@ -101,5 +100,5 @@ object AMFCompiler {
             hint: Option[Hint],
             context: Option[Context] = None,
             cache: Option[Cache] = None) =
-    new AMFCompiler(url, remote, context, hint, cache)
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()))
 }

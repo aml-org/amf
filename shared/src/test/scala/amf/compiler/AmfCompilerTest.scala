@@ -149,7 +149,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
 
   class TestCache extends Cache {
     def assertCacheSize(expectedSize: Int): Unit = {
-      map.size should be(expectedSize)
+      size should be(expectedSize)
     }
   }
 }

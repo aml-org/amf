@@ -17,7 +17,4 @@ object Mimes {
   val `APPLICATION/SWAGGER+YAML`: String = "application/swagger+yaml"
   val `APPLICATION/OPENAPI`: String      = "application/openapi"
   val `APPLICATION/SWAGGER`: String      = "application/swagger"
-
-  def isJson(mime: String): Unit = {}
-
 }

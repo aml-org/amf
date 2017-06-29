@@ -5,27 +5,27 @@ package amf.document
   */
 object Fragment {
 
-  sealed trait TypedFragment
+  sealed trait Fragment
 
-  case object DocumentationItem extends TypedFragment
+  case object DocumentationItem extends Fragment
 
-  case object DataType extends TypedFragment
+  case object DataType extends Fragment
 
-  case object NamedExample extends TypedFragment
+  case object NamedExample extends Fragment
 
-  case object ResourceType extends TypedFragment
+  case object ResourceType extends Fragment
 
-  case object Trait extends TypedFragment
+  case object Trait extends Fragment
 
-  case object AnnotationTypeDeclaration extends TypedFragment
+  case object AnnotationTypeDeclaration extends Fragment
 
-  case object Library extends TypedFragment
+  case object Library extends Fragment
 
-  case object Overlay extends TypedFragment
+  case object Overlay extends Fragment
 
-  case object Extension extends TypedFragment
+  case object Extension extends Fragment
 
-  case object SecurityScheme extends TypedFragment
+  case object SecurityScheme extends Fragment
 
   val fragments = Seq(DocumentationItem,
                       DataType,
