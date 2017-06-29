@@ -34,5 +34,18 @@ class WebApi(val name: String,
     extends DomainElement[WebApi, WebApiBuilder]
     with RootDomainElement {
 
-  override def toBuilder: WebApiBuilder = ???
+  override def toBuilder: WebApiBuilder =
+    WebApiBuilder()
+      .withName(name)
+      .withDescription(description)
+      .withHost(host)
+      .withScheme(scheme)
+      .withBasePath(basePath)
+      .withAccepts(accepts)
+      .withContentType(contentType)
+      .withVersion(version)
+      .withTermsOfService(termsOfService)
+      .withProvider(provider)
+      .withLicense(license)
+      .withDocumentation(documentation)
 }

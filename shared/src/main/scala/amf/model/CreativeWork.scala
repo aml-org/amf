@@ -10,5 +10,5 @@ import amf.builder.CreativeWorkBuilder
   *     - schema-org:description
   */
 class CreativeWork(val url: String, val description: String) extends DomainElement[CreativeWork, CreativeWorkBuilder] {
-  override def toBuilder: CreativeWorkBuilder = ???
+  override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder().withUrl(url).withDescription(description)
 }

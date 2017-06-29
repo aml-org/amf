@@ -10,5 +10,5 @@ import amf.builder.LicenseBuilder
   *     - schema-org:name
   */
 class License(val url: String, val name: String) extends DomainElement[License, LicenseBuilder] {
-  override def toBuilder: LicenseBuilder = ???
+  override def toBuilder: LicenseBuilder = LicenseBuilder().withUrl(url).withName(name)
 }

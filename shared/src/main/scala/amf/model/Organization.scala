@@ -11,5 +11,5 @@ import amf.builder.{Builder, OrganizationBuilder}
   */
 class Organization(val url: String, val name: String, val email: String)
     extends DomainElement[Organization, OrganizationBuilder] {
-  override def toBuilder: OrganizationBuilder = ???
+  override def toBuilder: OrganizationBuilder = OrganizationBuilder().withUrl(url).withName(name).withEmail(email)
 }
