@@ -7,6 +7,7 @@ import amf.oas.OASParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
 import amf.remote.Mimes._
+import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.yaml.YamlLexer
 
@@ -38,19 +39,14 @@ class AMFCompiler private (val url: String,
   }
 
   def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
-
     content.mime match {
-      case Some(`APPLICATION/JSON`) | Some(`APPLICATION/RAML+JSON`) | Some(`APPLICATION/OPENAPI+JSON`) | Some(
-            `APPLICATION/SWAGGER+JSON`) =>
-        JsonLexer(content.stream)
-      case Some(`APPLICATION/YAML`) | Some(`APPLICATION/RAML+YAML`) | Some(`APPLICATION/OPENAPI+YAML`) | Some(
-            `APPLICATION/SWAGGER+YAML`) =>
-        YamlLexer(content.stream)
+      case Syntax(Yaml) => YamlLexer(content.stream)
+      case Syntax(Json) => JsonLexer(content.stream)
       case _ =>
-        hint match {
-          case Some(RamlYamlHint) | Some(OasYamlHint) => YamlLexer(content.stream)
-          case Some(RamlJsonHint) | Some(OasJsonHint) => JsonLexer(content.stream)
-          case _                                      => ??? //TODO handler unkown
+        hint.map(_.syntax) match {
+          case Some(Yaml) => YamlLexer(content.stream)
+          case Some(Json) => JsonLexer(content.stream)
+          case _          => ???
         }
     }
   }
