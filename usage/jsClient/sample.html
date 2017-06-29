@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--<script src="../amf-js/target/scala-2.12/jquery-3.2.1.min.js"></script>-->
+</head>
+
+<script>
+    $(document).ready(function(){
+        $("#parse").click(function () {
+            $.post("parse", $("#url").val(),
+                function (data) {
+                    alert(data)
+                    $("#webApiInfContainer").html(data)
+                }
+            ).done(function () {
+                alert(data)
+            })
+        })
+    })
+</script>
+<body>
+
+    <div >
+        <label>WebApp to string</label>
+        <div id="webApiInfContainer">
+
+        </div>
+    </div>
+
+    <div>
+        <label>Url:</label><input type="text" id="url"/>
+        <input type="submit" id="parse" value="Parse" />
+    </div>
+</body>
+
+</html>
