@@ -4,6 +4,8 @@ package amf.remote
   * Created by hernan.najles on 6/22/17.
   */
 object Mimes {
+  val `TEXT/YAML`: String                = "text/yaml"
+  val `TEXT/X-YAML`: String              = "text/x-yaml"
   val `APPLICATION/JSON`: String         = "application/json"
   val `APPLICATION/YAML`: String         = "application/yaml"
   val `APPLICATION/RAML+YAML`: String    = "application/raml+yaml"

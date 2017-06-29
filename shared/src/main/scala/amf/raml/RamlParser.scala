@@ -6,18 +6,17 @@ import amf.parser.{BaseAMFParser, YeastASTBuilder}
 
 class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
-  private def link(linkToken: AMFToken = Link): Boolean = {
+  private def link(token: AMFToken = Link): Boolean = {
     beginTree()
-    if (linkToken != LibraryToken) discard()
+    discard(Tag)
     consume()
-    endTree(linkToken)
-
+    endTree(token)
     true
   }
 
-  def parseLibrary(): Unit = link(LibraryToken)
+  def parseLibrary(): Unit = link(Library)
 
-  private def library(): Boolean = parseList(MapToken, StartMap, Comma, EndMap, () => entry(parseLibrary))
+  private def library(): Unit = parseList(MapToken, StartMap, Comma, EndMap, () => entry(parseLibrary))
 
   override protected def parseValue(): Unit = current match {
     case Tag if currentText equals "!include" => link()

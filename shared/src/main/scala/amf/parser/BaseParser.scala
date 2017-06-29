@@ -30,9 +30,13 @@ abstract class BaseParser[T <: Token, N <: ASTNode[T]](private val builder: ASTB
   /** Starts the construction of a new tree. */
   def beginTree(): Unit = builder.beginNode()
 
-  /** Discard the current token. */
+  /** Discard current token. */
   def discard(): Unit = builder.discard()
 
+  /** Discard current token if matches specified token. */
+  def discard(token: T): Unit = if (currentEq(token)) discard()
+
+  /** Discard current token if matches specified token or throw error. */
   def discardOrError(token: T): Unit = if (currentOrError(token)) discard()
 
   /** Finish the construction of the current tree. */

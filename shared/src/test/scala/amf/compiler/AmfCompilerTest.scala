@@ -136,7 +136,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
             libraryEntry.children(1) shouldBe a[AMFASTLink]
             val linkNode = libraryEntry.children(1)
             val link     = linkNode.asInstanceOf[AMFASTLink]
-            link.target.`type` should be(Library)
+            link.target.`type` should be(Module)
             link.target.root.children.length should be(1)
             link.target.root.children.head.`type` should be(AMFToken.SequenceToken)
             link.target.root.children.head.children.length should be(2)

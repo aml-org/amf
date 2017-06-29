@@ -62,7 +62,7 @@ object AMFToken {
 
   object Link extends NamedToken("Link") with AMFToken
 
-  object LibraryToken extends NamedToken("Library") with AMFToken
+  object Library extends NamedToken("Library") with AMFToken
 
   object MapToken extends NamedToken("Map") with AMFToken
 

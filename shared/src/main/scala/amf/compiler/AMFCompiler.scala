@@ -39,6 +39,7 @@ class AMFCompiler private (val url: String,
   }
 
   def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
+
     content.mime match {
       case Some(`APPLICATION/JSON`) | Some(`APPLICATION/RAML+JSON`) | Some(`APPLICATION/OPENAPI+JSON`) | Some(
             `APPLICATION/SWAGGER+JSON`) =>
@@ -47,10 +48,10 @@ class AMFCompiler private (val url: String,
             `APPLICATION/SWAGGER+YAML`) =>
         YamlLexer(content.stream)
       case _ =>
-        hint.getOrElse("") match {
-          case RamlYamlHint | OasYamlHint => YamlLexer(content.stream)
-          case RamlJsonHint | OasJsonHint => JsonLexer(content.stream)
-          case _                          => ??? //TODO handler unkown
+        hint match {
+          case Some(RamlYamlHint) | Some(OasYamlHint) => YamlLexer(content.stream)
+          case Some(RamlJsonHint) | Some(OasJsonHint) => JsonLexer(content.stream)
+          case _                                      => ??? //TODO handler unkown
         }
     }
   }
