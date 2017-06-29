@@ -3,6 +3,7 @@ package amf.raml
 import amf.common.AMFToken
 import amf.common.AMFToken._
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
+import amf.remote.{Raml, Vendor}
 
 class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
@@ -27,4 +28,6 @@ class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
     case "uses" => entry(library)
     case _      => super.parseEntry()
   }
+
+  override def vendor(): Vendor = Raml
 }

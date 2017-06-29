@@ -1,6 +1,7 @@
 package amf.parser
 
 import amf.common.AMFToken._
+import amf.remote.Vendor
 
 abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
 
@@ -40,4 +41,6 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
       case _                                                         => parse()
     }
   }
+
+  def vendor(): Vendor
 }

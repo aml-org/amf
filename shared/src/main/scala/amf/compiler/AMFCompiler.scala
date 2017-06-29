@@ -20,12 +20,12 @@ class AMFCompiler private (val url: String,
                            hint: Option[Hint],
                            val cacheOption: Option[Cache]) {
 
-  private lazy val context: Context                  = base.map(_.update(url)).getOrElse(Context(remote, url))
-  private lazy val cache: Cache                      = cacheOption.getOrElse(Cache())
-  private var root: AMFAST                           = _
-  private val references: ListBuffer[Future[AMFAST]] = ListBuffer()
+  private lazy val context: Context                            = base.map(_.update(url)).getOrElse(Context(remote, url))
+  private lazy val cache: Cache                                = cacheOption.getOrElse(Cache())
+  private var root: AMFAST                                     = _
+  private val references: ListBuffer[Future[(AMFAST, Vendor)]] = ListBuffer()
 
-  def build(): Future[AMFAST] = {
+  def build(): Future[(AMFAST, Vendor)] = {
     val url = context.current
     if (context.hasCycles) cache.update(url, Future.failed(new Exception(s"Url has cycles($url)")))
     else {
@@ -77,7 +77,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def parse(content: Content): Future[AMFAST] = {
+  private def parse(content: Content): Future[(AMFAST, Vendor)] = {
     val builder = YeastASTBuilder(resolveLexer(content))
     val parser  = resolveParser(builder, content)
 
@@ -91,7 +91,7 @@ class AMFCompiler private (val url: String,
       references += link.resolve(remote, context, cache, hint)
     })
 
-    Future.sequence(references).map(_ => root)
+    Future.sequence(references).map(_ => (root, parser.vendor()))
   }
 }
 

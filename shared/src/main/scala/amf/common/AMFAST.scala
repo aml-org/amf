@@ -39,11 +39,11 @@ class AMFASTLink(include: String, range: Range, containerType: AMFUnitType)
 
   private var container: AMFUnit = _
 
-  def resolve(remote: Platform, context: Context, cache: Cache, hint: Option[Hint]): Future[AMFAST] = {
+  def resolve(remote: Platform, context: Context, cache: Cache, hint: Option[Hint]): Future[(AMFAST, Vendor)] = {
     AMFCompiler(include, remote, hint, Some(context), Some(cache))
       .build()
       .map(root => {
-        container = AMFUnit(root, include, containerType, hint.map(_.vendor).getOrElse(Raml))
+        container = AMFUnit(root._1, include, containerType, root._2)
         root
       })
   }

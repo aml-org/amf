@@ -4,7 +4,7 @@ import amf.client.Handler
 import amf.common.{AMFASTLink, AMFToken}
 import amf.lexer.Token
 import amf.parser._
-import amf.remote.{Cache, OasJsonHint, Raml, RamlYamlHint}
+import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.FunSuite
 
@@ -18,9 +18,10 @@ import scala.util.{Failure, Success, Try}
   */
 class AmfCompilerTest extends FunSuite with PlatformSecrets {
 
-  private def callback(handler: Handler, url: String, containerType: AMFUnitType)(t: Try[ASTNode[_ <: Token]]) =
+  private def callback(handler: Handler, url: String, containerType: AMFUnitType)(
+      t: Try[(ASTNode[_ <: Token], Vendor)]) =
     t match {
-      case Success(value)     => handler.success(AMFUnit(value, url, containerType, Raml)) //TODO dynamic vendor
+      case Success(tuple)     => handler.success(AMFUnit(tuple._1, url, containerType, tuple._2))
       case Failure(exception) => handler.error(exception)
     }
 

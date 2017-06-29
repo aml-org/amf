@@ -29,7 +29,7 @@ class JsClient extends BaseClient {
   def webApiClass(url: String, handler: JsWebApiHandler): Unit = {
     val eventualAmfast = AMFCompiler(url, platform, Option(RamlYamlHint)).build()
     eventualAmfast
-      .map(amfast => new WebApiMaker(AMFUnit(amfast, url, Document, Raml)).make)
+      .map(amfast => new WebApiMaker(AMFUnit(amfast._1, url, Document, amfast._2)).make)
       .onComplete(callbackForWebApi(
         new WebApiHandler {
           override def error(exception: Throwable): Unit = handler.error(exception)

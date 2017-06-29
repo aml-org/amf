@@ -2,6 +2,7 @@ package amf.oas
 
 import amf.common.AMFToken._
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
+import amf.remote.{Oas, Vendor}
 
 class OASParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
@@ -21,4 +22,6 @@ class OASParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
       case _                   => entry()
     }
   }
+
+  override def vendor(): Vendor = Oas
 }
