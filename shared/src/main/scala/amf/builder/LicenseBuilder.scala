@@ -3,8 +3,25 @@ package amf.builder
 import amf.model.License
 
 /**
-  * Created by martin.gutierrez on 6/29/17.
+  * License domain element builder.
   */
 class LicenseBuilder extends Builder[License] {
-  override def build: License = ???
+  var url: String  = _
+  var name: String = _
+
+  def withUrl(url: String): LicenseBuilder = {
+    this.url = url
+    this
+  }
+
+  def withName(name: String): LicenseBuilder = {
+    this.name = name
+    this
+  }
+
+  override def build: License = new License(url, name)
+}
+
+object LicenseBuilder {
+  def apply(): LicenseBuilder = new LicenseBuilder()
 }
