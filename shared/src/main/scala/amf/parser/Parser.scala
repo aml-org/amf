@@ -6,4 +6,3 @@ trait Parser {
   /** Parse current input. */
   def parse()
 }
-
