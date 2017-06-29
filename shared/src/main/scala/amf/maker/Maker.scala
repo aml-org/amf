@@ -2,22 +2,22 @@ package amf.maker
 
 import amf.common.AMFToken.SequenceToken
 import amf.model.DomainElement
-import amf.parser.{AMFUnit, ASTNode}
-import amf.remote.{Raml, Vendor}
+import amf.parser.ASTNode
+import amf.remote.Vendor
 
 /**
   * Maker class.
   */
-abstract class Maker[T <: DomainElement](vendor: Vendor) {
+abstract class Maker[T <: DomainElement[_, _]](val vendor: Vendor) {
 
   def make: T
 
-  protected def findValues(doc: AMFUnit, path: String): List[String] = {
-    findValues(doc.root.children.head, path.split('/').toList)
+  protected def findValues(node: ASTNode[_], path: String): List[String] = {
+    findValues(node, path.split('/').toList)
   }
 
-  protected def findValue(doc: AMFUnit, path: String): String = {
-    findValues(doc.root.children.head, path.split('/').toList).headOption.orNull
+  protected def findValue(node: ASTNode[_], path: String): String = {
+    findValues(node, path.split('/').toList).headOption.orNull
   }
 
   protected def findValues(node: ASTNode[_], remainingPath: List[String]): List[String] = remainingPath match {
