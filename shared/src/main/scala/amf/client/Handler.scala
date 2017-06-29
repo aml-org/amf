@@ -1,5 +1,6 @@
 package amf.client
 
+import amf.model.WebApi
 import amf.parser.AMFUnit
 
 /**
@@ -7,5 +8,10 @@ import amf.parser.AMFUnit
   */
 trait Handler {
   def success(document: AMFUnit)
+  def error(exception: Throwable)
+}
+
+trait WebApiHandler {
+  def success(document: WebApi)
   def error(exception: Throwable)
 }

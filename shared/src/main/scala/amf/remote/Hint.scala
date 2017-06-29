@@ -1,21 +1,16 @@
 package amf.remote
 
-import amf.remote.Syntax.{json, yaml}
-import amf.remote.Vendor.{oas, raml}
+case class Hint(vendor: Vendor, syntax: Syntax)
 
-case class Hint(syntax: String, vendor: String)
+object RamlYamlHint extends Hint(Raml, Yaml)
+object RamlJsonHint extends Hint(Raml, Json)
+object OasYamlHint  extends Hint(Oas, Yaml)
+object OasJsonHint  extends Hint(Oas, Json)
 
-object RamlYamlHint extends Hint(raml, yaml)
-object RamlJsonHint extends Hint(raml, json)
-object OasYamlHint  extends Hint(oas, yaml)
-object OasJsonHint  extends Hint(oas, json)
+case class Syntax(syntax: String)
+object Yaml extends Syntax("yaml")
+object Json extends Syntax("json")
 
-object Syntax {
-  val yaml = "yaml"
-  val json = "json"
-}
-
-object Vendor {
-  val oas  = "oas"
-  val raml = " raml"
-}
+case class Vendor(vendor: String)
+object Raml extends Vendor("raml")
+object Oas  extends Vendor("oas")

@@ -3,14 +3,14 @@ package amf.parser
 import amf.common.AMFToken
 import amf.common.AMFToken.{Library, Link}
 import amf.lexer.Token
+import amf.remote.Vendor
 
 /**
-  * Created by pedro.colunga on 5/19/17.
+  * raml:unit from the document model.
   */
-case class AMFUnit(root: ASTNode[_ <: Token], url: String, `type`: AMFUnitType)
+case class AMFUnit(root: ASTNode[_ <: Token], url: String, `type`: AMFUnitType, vendor: Vendor)
 
-case class AMFUnitType(name: String)
-
+class AMFUnitType(name: String)
 object AMFUnitType {
 
   def apply(token: AMFToken): AMFUnitType = token match {

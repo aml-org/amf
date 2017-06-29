@@ -2,8 +2,8 @@ package amf.common
 
 import amf.common.AMFToken.{Eof, Link}
 import amf.compiler.AMFCompiler
-import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, AMFUnit, AMFUnitType, IncludeAnnotation, Range}
-import amf.remote.{Cache, Context, Hint, Platform}
+import amf.parser.{AMFUnit, AMFUnitType, ASTLinkNode, ASTNode, Annotation, BaseASTNode, IncludeAnnotation, Range}
+import amf.remote._
 import amf.visitor.ASTNodeVisitor
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -43,7 +43,7 @@ class AMFASTLink(include: String, range: Range, containerType: AMFUnitType)
     AMFCompiler(include, remote, hint, Some(context), Some(cache))
       .build()
       .map(root => {
-        container = AMFUnit(root, include, containerType)
+        container = AMFUnit(root, include, containerType, hint.map(_.vendor).getOrElse(Raml))
         root
       })
   }

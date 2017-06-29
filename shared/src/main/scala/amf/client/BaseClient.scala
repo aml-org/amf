@@ -2,8 +2,9 @@ package amf.client
 
 import amf.compiler.AMFCompiler
 import amf.lexer.Token
-import amf.parser.{ASTNode, AMFUnit, Document}
-import amf.remote.Hint
+import amf.maker.WebApiMaker
+import amf.parser.{AMFUnit, ASTNode, Document}
+import amf.remote.{Hint, Raml, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -21,8 +22,26 @@ abstract class BaseClient extends PlatformSecrets {
 //    }
   }
 
+  def webApiParserSuperCopado(): Unit = {
+    AMFCompiler("file://shared/src/test/resources/webApi.raml", platform, Option(RamlYamlHint))
+      .build()
+      .onComplete(callback(
+        new Handler {
+          override def error(exception: Throwable): Unit = {}
+
+          override def success(document: AMFUnit): Unit = {
+
+            val webApi = new WebApiMaker(document).make
+
+            println(webApi)
+          }
+        },
+        ""
+      ))
+  }
+
   private def callback(handler: Handler, url: String)(t: Try[ASTNode[_ <: Token]]) = t match {
-    case Success(value)     => handler.success(AMFUnit(value, url, Document))
+    case Success(value)     => handler.success(AMFUnit(value, url, Document, Raml)) //TODO dynamic vendor
     case Failure(exception) => handler.error(exception)
   }
 }

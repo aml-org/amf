@@ -4,7 +4,7 @@ import amf.client.Handler
 import amf.common.{AMFASTLink, AMFToken}
 import amf.lexer.Token
 import amf.parser._
-import amf.remote.{Cache, OasJsonHint, RamlYamlHint}
+import amf.remote.{Cache, OasJsonHint, Raml, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.FunSuite
 
@@ -20,7 +20,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
 
   private def callback(handler: Handler, url: String, containerType: AMFUnitType)(t: Try[ASTNode[_ <: Token]]) =
     t match {
-      case Success(value)     => handler.success(AMFUnit(value, url, containerType))
+      case Success(value)     => handler.success(AMFUnit(value, url, containerType, Raml)) //TODO dynamic vendor
       case Failure(exception) => handler.error(exception)
     }
 
@@ -31,7 +31,6 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .onComplete(callback(
         new Handler {
           override def success(doc: AMFUnit): Unit = {
-            println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
             //TODO assert what?
           }
 
@@ -51,10 +50,7 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .build()
       .onComplete(callback(
         new Handler {
-          override def success(doc: AMFUnit): Unit = {
-            println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
-
-          }
+          override def success(doc: AMFUnit): Unit = {}
 
           override def error(exception: Throwable): Unit = {
             exception.getMessage should be("Url has cycles(file://shared/src/test/resources/inputWithCycle.json)")
@@ -72,40 +68,40 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
                 Option(OasJsonHint),
                 cache = Some(cache))
       .build()
-      .onComplete(callback(
-        new Handler {
-          override def success(doc: AMFUnit): Unit = {
-            println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
-            cache.assertCacheSize(2)
-          }
+      .onComplete(
+        callback(
+          new Handler {
+            override def success(doc: AMFUnit): Unit = {
+              cache.assertCacheSize(2)
+            }
 
-          override def error(exception: Throwable): Unit = {
-            fail(exception)
-          }
-        },
-        "",
-        Document
-      ))
+            override def error(exception: Throwable): Unit = {
+              fail(exception)
+            }
+          },
+          "",
+          Document
+        ))
   }
 
   test("test cache two diff imports") {
     val cache = new TestCache()
     AMFCompiler("file://shared/src/test/resources/input.json", platform, Option(OasJsonHint), cache = Some(cache))
       .build()
-      .onComplete(callback(
-        new Handler {
-          override def success(doc: AMFUnit): Unit = {
-            println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
-            cache.assertCacheSize(3)
-          }
+      .onComplete(
+        callback(
+          new Handler {
+            override def success(doc: AMFUnit): Unit = {
+              cache.assertCacheSize(3)
+            }
 
-          override def error(exception: Throwable): Unit = {
-            fail(exception)
-          }
-        },
-        "",
-        Document
-      ))
+            override def error(exception: Throwable): Unit = {
+              fail(exception)
+            }
+          },
+          "",
+          Document
+        ))
   }
 
   test("test library") {
@@ -119,7 +115,6 @@ class AmfCompilerTest extends FunSuite with PlatformSecrets {
       .onComplete(callback(
         new Handler {
           override def success(doc: AMFUnit): Unit = {
-            println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
             doc.`type` should be(Document)
             val root = doc.root
             root.children.size should be(1)
