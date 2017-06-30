@@ -4,11 +4,11 @@ import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.model.{CreativeWork, License, Organization, WebApi}
 import amf.parser._
-import amf.remote.RamlYamlHint
+import amf.remote.{OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFlatSpec}
 import org.scalatest.Matchers._
-
+import amf.common.Strings.strings
 import scala.concurrent.ExecutionContext
 
 class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssertions {
@@ -67,6 +67,31 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
     }
   }
 
+  "generate partial json" should "succeed " in {
+    val eventualApi = AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
+      .build()
+      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.json", Document, t._2)).make)
+
+    val expected = List(
+      ("name", "test"),
+      ("description", "testDescription"),
+      ("host", "api.example.com"),
+      ("scheme", List("http", "https")),
+      ("basePath", "http://api.example.com/path"),
+      ("contentType", "application/json"),
+      ("accepts", "application/json"),
+      ("version", "1.1"),
+      ("termsOfService", "terminos"),
+      ("provider", new Organization("urlContact", "nameContact", "emailContact")),
+      ("license", new License("urlLicense", "nameLicense")),
+      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    eventualApi map { api =>
+      assertWebApiValues(api, expected)
+    }
+  }
+
   "edit complete " should "succeed " in {
     val eventualApi = AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
       .build()
@@ -110,6 +135,59 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
       val licenseBuilder = builder.license.toBuilder
       licenseBuilder.withName("changed")
       builder.withLicense(licenseBuilder.build)
+      val newWebApi = builder.build
+
+      assertWebApiValues(newWebApi, expectedAfter)
+    }
+  }
+
+  "edit complete json" should "succeed " in {
+    val eventualApi = AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
+      .build()
+      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.json", Document, t._2)).make)
+
+    val expected = List(
+      ("name", "test"),
+      ("description", "testDescription"),
+      ("host", "api.example.com"),
+      ("scheme", List("http", "https")),
+      ("basePath", "http://api.example.com/path"),
+      ("contentType", "application/json"),
+      ("accepts", "application/json"),
+      ("version", "1.1"),
+      ("termsOfService", "terminos"),
+      ("provider", new Organization("urlContact", "nameContact", "emailContact")),
+      ("license", new License("urlLicense", "nameLicense")),
+      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    eventualApi map { api =>
+      assertWebApiValues(api, expected)
+    }
+
+    val expectedAfter = List(
+      ("name", "test"),
+      ("description", "changed"),
+      ("host", "api.example.com"),
+      ("scheme", List("http", "https")),
+      ("basePath", "http://api.example.com/path"),
+      ("contentType", "application/json"),
+      ("accepts", "application/json"),
+      ("version", "1.1"),
+      ("termsOfService", "terminos"),
+      ("provider", new Organization("urlContact", "nameContact", "changed")),
+      ("license", new License("urlLicense", "nameLicense")),
+      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    eventualApi map { api =>
+      assertWebApiValues(api, expected)
+
+      val builder = api.toBuilder
+      builder.withDescription("changed")
+      val providerBuilder = builder.provider.toBuilder
+      providerBuilder.withEmail("changed")
+      builder.withProvider(providerBuilder.build)
       val newWebApi = builder.build
 
       assertWebApiValues(newWebApi, expectedAfter)

@@ -1,0 +1,26 @@
+{
+  "info":{
+    "title": "test",
+    "description": "testDescription",
+    "version": "1.1",
+    "termsOfService" : "terminos",
+    "license": {
+      "url": "urlLicense",
+      "name": "nameLicense"
+    },
+  },
+  "host": "api.example.com",
+  "schemes": ["http","https"],
+  "basePath": "http://api.example.com/path",
+  "consumes": "application/json",
+  "produces": "application/json",
+  "contact" : {
+    "url" : "urlContact",
+    "name": "nameContact",
+    "email": "emailContact"
+  },
+  "externalDocs":{
+    "url": "urlExternalDocs",
+    "description": "descriptionExternalDocs"
+  }
+}
