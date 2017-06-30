@@ -8,7 +8,6 @@ import amf.remote.{OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFlatSpec}
 import org.scalatest.Matchers._
-import amf.common.Strings.strings
 import scala.concurrent.ExecutionContext
 
 class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssertions {
