@@ -29,10 +29,9 @@ class AMFCompiler private (val url: String,
   def build(): Future[(AMFAST, Vendor)] = {
     val url = context.current
 
-    cache.getOrUpdate(url) { () =>
-      if (context.hasCycles) {
-        failed(new Exception(s"Url has cycles($url)"))
-      } else {
+    if (context.hasCycles) failed(new Exception(s"Url has cycles($url)"))
+    else {
+      cache.getOrUpdate(url) { () =>
         remote.resolve(url, base).flatMap(parse)
       }
     }

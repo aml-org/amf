@@ -1,13 +1,13 @@
 package amf.common
 
-import org.scalatest.Assertions
+import org.scalatest.{Assertion, Assertions}
 
 /**
   * Created by hernan.najles on 6/13/17.
   */
 trait ListAssertions extends Assertions {
 
-  def assert[E](left: List[E], right: List[E]): Unit = {
+  def assert[E](left: List[E], right: List[E]): Assertion = {
 //    println("Actual: ", left.toString)
 //    println("Expect: ", right.toString)
     if (left.size == right.size) {
@@ -18,6 +18,7 @@ trait ListAssertions extends Assertions {
             fail(s"$actual did not equal $expected at index $index")
           }
       }
+      succeed
     } else fail(s"$left did not contain the same elements that \n$right")
   }
 }
