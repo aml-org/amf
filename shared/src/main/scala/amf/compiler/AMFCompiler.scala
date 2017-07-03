@@ -1,6 +1,7 @@
 package amf.compiler
 
 import amf.common.{AMFAST, AMFToken}
+import amf.exception.CyclicReferenceException
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
 import amf.oas.OASParser
@@ -29,7 +30,7 @@ class AMFCompiler private (val url: String,
   def build(): Future[(AMFAST, Vendor)] = {
     val url = context.current
 
-    if (context.hasCycles) failed(new Exception(s"Url has cycles($url)"))
+    if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else {
       cache.getOrUpdate(url) { () =>
         remote.resolve(url, base).flatMap(parse)

@@ -7,10 +7,16 @@ import amf.remote.Mimes._
   */
 object Syntax {
 
-  sealed trait Syntax
+  sealed trait Syntax {
+    val extension: String
+  }
 
-  case object Yaml extends Syntax
-  case object Json extends Syntax
+  case object Yaml extends Syntax {
+    override val extension: String = "yaml"
+  }
+  case object Json extends Syntax {
+    override val extension: String = "json"
+  }
 
   /** Attempt to resolve [[Syntax]] from [[Mimes]]. */
   def unapply(mime: Option[String]): Option[Syntax] = mime match {

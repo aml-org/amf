@@ -1,0 +1,5 @@
+a: 1
+b: !include includes/include-cycle.yaml
+c:
+  - 2
+d: !include includes/include2.yaml
