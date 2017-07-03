@@ -1,6 +1,8 @@
 package amf.model
 
-import amf.builder.WebApiBuilder
+import amf.builder.BaseWebApiBuilder
+
+import scala.scalajs.js.annotation.JSExportAll
 
 /**
   * Domain model of type schema-org:WebApi
@@ -19,27 +21,30 @@ import amf.builder.WebApiBuilder
   *     - schema-org:license => instance of type raml-http:License
   *     - schema-org:documentation => instance of type schema-org:CreativeWork
   */
-class WebApi(val name: String,
-             val description: String,
-             val host: String,
-             val scheme: List[String],
-             val basePath: String,
-             val accepts: String,
-             val contentType: String,
-             val version: String,
-             val termsOfService: String,
-             val provider: Organization,
-             val license: License,
-             val documentation: CreativeWork)
-    extends DomainElement[WebApi, WebApiBuilder]
-    with RootDomainElement {
+@JSExportAll
+trait WebApiModel extends ApiDocumentation[WebApiModel, BaseWebApiBuilder] with RootDomainElement {
 
-  override def toBuilder: WebApiBuilder =
-    WebApiBuilder()
+  val name: String
+  val description: String
+  val host: String
+  protected val schemeList: List[String]
+  val basePath: String
+  val accepts: String
+  val contentType: String
+  val version: String
+  val termsOfService: String
+  val provider: Organization
+  val license: License
+  val documentation: CreativeWork
+
+  protected def createBuilder(): BaseWebApiBuilder
+
+  override def toBuilder: BaseWebApiBuilder =
+    createBuilder()
       .withName(name)
       .withDescription(description)
       .withHost(host)
-      .withScheme(scheme)
+      .withScheme(schemeList)
       .withBasePath(basePath)
       .withAccepts(accepts)
       .withContentType(contentType)

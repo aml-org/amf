@@ -1,23 +1,27 @@
 package amf.builder
 
-import amf.model.{CreativeWork, License, Organization, WebApi}
+import amf.model.{WebApi, _}
+
+import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * Created by martin.gutierrez on 6/29/17.
+  * Created by martin.gutierrez on 7/3/17.
   */
-class WebApiBuilder extends Builder[WebApi] {
-  var name: String                = _
-  var description: String         = _
-  var host: String                = _
-  var scheme: List[String]        = _
-  var basePath: String            = _
-  var accepts: String             = _
-  var contentType: String         = _
-  var version: String             = _
-  var termsOfService: String      = _
-  var provider: Organization      = _
-  var license: License            = _
-  var documentation: CreativeWork = _
+@JSExportAll
+trait BaseWebApiBuilder extends Builder[WebApiModel] {
+
+  protected var name: String                = _
+  protected var description: String         = _
+  protected var host: String                = _
+  protected var scheme: List[String]        = _
+  protected var basePath: String            = _
+  protected var accepts: String             = _
+  protected var contentType: String         = _
+  protected var version: String             = _
+  protected var termsOfService: String      = _
+  protected var provider: Organization      = _
+  protected var license: License            = _
+  protected var documentation: CreativeWork = _
 
   def withName(name: String): this.type = {
     this.name = name
@@ -94,21 +98,17 @@ class WebApiBuilder extends Builder[WebApi] {
     this
   }
 
-  override def build: WebApi =
-    new WebApi(name,
-               description,
-               host,
-               scheme,
-               basePath,
-               accepts,
-               contentType,
-               version,
-               termsOfService,
-               provider,
-               license,
-               documentation)
-}
-
-object WebApiBuilder {
-  def apply(): WebApiBuilder = new WebApiBuilder()
+  override def build: WebApiModel =
+    WebApi(name,
+           description,
+           host,
+           scheme,
+           basePath,
+           accepts,
+           contentType,
+           version,
+           termsOfService,
+           provider,
+           license,
+           documentation)
 }

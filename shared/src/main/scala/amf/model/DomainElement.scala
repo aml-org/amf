@@ -13,3 +13,8 @@ trait DomainElement[T <: DomainElement[T, B], B <: Builder[T]] {
   * Domain model of type raml-doc:RootDomainElement
   */
 trait RootDomainElement
+
+/**
+  * Domain model of type raml-doc:ApiDocumentation
+  */
+trait ApiDocumentation[T <: DomainElement[T, B], B <: Builder[T]] extends DomainElement[T, B]

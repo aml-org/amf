@@ -1,18 +1,18 @@
 package amf.maker
 
-import amf.builder.WebApiBuilder
-import amf.model.WebApi
+import amf.builder.{WebApiBuilder, BaseWebApiBuilder}
+import amf.model.WebApiModel
 import amf.parser.AMFUnit
 import amf.remote.{Amf, Oas, Raml, Vendor}
 
 /**
   * Domain model WebApi Maker.
   */
-class WebApiMaker(unit: AMFUnit) extends Maker[WebApi](unit.vendor) {
+class WebApiMaker(unit: AMFUnit) extends Maker[WebApiModel](unit.vendor) {
 
-  override def make: WebApi = {
-    val builder = WebApiBuilder()
-    val root    = unit.root.children.head
+  override def make: WebApiModel = {
+    val builder: BaseWebApiBuilder = new WebApiBuilder()
+    val root                       = unit.root.children.head
 
     vendor match {
       case Oas =>
