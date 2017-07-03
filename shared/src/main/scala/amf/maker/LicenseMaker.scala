@@ -18,12 +18,12 @@ class LicenseMaker(node: ASTNode[_], vendor: Vendor) extends Maker[License](vend
     vendor match {
       case Raml =>
         builder
-          .withUrl(findValue(node, "license/url"))
-          .withName(findValue(node, "license/name"))
+          .withUrl(findValue(node, "license", "url"))
+          .withName(findValue(node, "license", "name"))
       case Oas =>
         builder
-          .withUrl(findValue(node, "info/license/url"))
-          .withName(findValue(node, "info/license/name"))
+          .withUrl(findValue(node, "info", "license", "url"))
+          .withName(findValue(node, "info", "license", "name"))
       case Vendor(_) =>
     }
 

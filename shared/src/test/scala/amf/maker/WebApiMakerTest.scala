@@ -4,19 +4,20 @@ import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.model.{CreativeWork, License, Organization, WebApi}
 import amf.parser._
-import amf.remote.{OasJsonHint, RamlYamlHint}
+import amf.remote.{Amf, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFlatSpec}
+import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
+
 import scala.concurrent.ExecutionContext
 
-class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssertions {
+class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssertions {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "file://shared/src/test/resources/maker/"
 
-  "generate complete web api instance" should "succeed " in {
+  test("generate complete web api instance") {
     val eventualApi = AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
       .build()
       .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.raml", Document, t._2)).make)
@@ -41,7 +42,7 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
     }
   }
 
-  "generate partial " should "succeed " in {
+  test("generate partial succeed") {
     val eventualApi = AMFCompiler(basePath + "partialExample.raml", platform, Some(RamlYamlHint))
       .build()
       .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.raml", Document, t._2)).make)
@@ -66,7 +67,27 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
     }
   }
 
-  "generate partial json" should "succeed " in {
+  test("basic jsonld example") {
+    val expected = List(
+      ("name", "test"),
+      ("description", null),
+      ("host", "api.example.com"),
+      ("scheme", List("http", "https")),
+      ("basePath", null),
+      ("termsOfService", null),
+      ("provider", null),
+      ("license", null),
+      ("documentation", null)
+    )
+
+    AMFCompiler(basePath + "basicExample.jsonld", platform, Some(OasJsonHint))
+      .build()
+      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "basicExample.jsonld", Document, Amf)).make) map { api =>
+      assertWebApiValues(api, expected)
+    }
+  }
+
+  test("generate partial json") {
     val eventualApi = AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
       .build()
       .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.json", Document, t._2)).make)
@@ -91,7 +112,7 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
     }
   }
 
-  "edit complete " should "succeed " in {
+  test("edit complete yaml") {
     val eventualApi = AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
       .build()
       .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.raml", Document, t._2)).make)
@@ -140,7 +161,7 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
     }
   }
 
-  "edit complete json" should "succeed " in {
+  test("edit complete json") {
     val eventualApi = AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
       .build()
       .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.json", Document, t._2)).make)
@@ -225,9 +246,15 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
   }
 
   def assertProvider(provider: Organization, expected: Organization): Assertion = {
-    provider.email should be(expected.email)
-    provider.url should be(expected.url)
-    provider.name should be(expected.name)
+    if (expected == null) {
+      provider.email should be(null)
+      provider.url should be(null)
+      provider.name should be(null)
+    } else {
+      provider.email should be(expected.email)
+      provider.url should be(expected.url)
+      provider.name should be(expected.name)
+    }
   }
 
   def assertLicence(license: License, expected: License): Assertion = {
@@ -241,8 +268,13 @@ class WebApiMakerTest extends AsyncFlatSpec with PlatformSecrets with ListAssert
   }
 
   def assertDocumentation(documentation: CreativeWork, expected: CreativeWork): Assertion = {
-    documentation.url should be(expected.url)
-    documentation.description should be(expected.description)
+    if (expected == null) {
+      documentation.url should be(null)
+      documentation.description should be(null)
+    } else {
+      documentation.url should be(expected.url)
+      documentation.description should be(expected.description)
+    }
   }
 
   def throwFail(field: String, expected: String, actual: String): Assertion = {

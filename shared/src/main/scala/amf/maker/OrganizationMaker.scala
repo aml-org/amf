@@ -15,14 +15,14 @@ class OrganizationMaker(node: ASTNode[_], vendor: Vendor) extends Maker[Organiza
     vendor match {
       case Raml =>
         builder
-          .withUrl(findValue(node, "contact/url"))
-          .withName(findValue(node, "contact/name"))
-          .withEmail(findValue(node, "contact/email"))
+          .withUrl(findValue(node, "contact", "url"))
+          .withName(findValue(node, "contact", "name"))
+          .withEmail(findValue(node, "contact", "email"))
       case Oas =>
         builder
-          .withUrl(findValue(node, "contact/url"))
-          .withName(findValue(node, "contact/name"))
-          .withEmail(findValue(node, "contact/email"))
+          .withUrl(findValue(node, "contact", "url"))
+          .withName(findValue(node, "contact", "name"))
+          .withEmail(findValue(node, "contact", "email"))
       case Vendor(_) =>
     }
 

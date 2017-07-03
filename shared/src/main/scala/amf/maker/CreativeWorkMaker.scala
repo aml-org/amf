@@ -15,12 +15,12 @@ class CreativeWorkMaker(node: ASTNode[_], vendor: Vendor) extends Maker[Creative
     vendor match {
       case Raml =>
         builder
-          .withUrl(findValue(node, "externalDocs/url"))
-          .withDescription(findValue(node, "externalDocs/description"))
+          .withUrl(findValue(node, "externalDocs", "url"))
+          .withDescription(findValue(node, "externalDocs", "description"))
       case Oas =>
         builder
-          .withUrl(findValue(node, "externalDocs/url"))
-          .withDescription(findValue(node, "externalDocs/description"))
+          .withUrl(findValue(node, "externalDocs", "url"))
+          .withDescription(findValue(node, "externalDocs", "description"))
       case Vendor(_) =>
     }
 
