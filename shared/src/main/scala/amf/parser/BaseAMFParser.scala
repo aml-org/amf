@@ -1,5 +1,6 @@
 package amf.parser
 
+import amf.common.AMFToken
 import amf.common.AMFToken._
 import amf.remote.Vendor
 
@@ -24,14 +25,14 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
 
   private def parseMapping(): Unit = parseList(MapToken, StartMap, Comma, EndMap, parseEntry)
 
-  protected def parseEntry(): Boolean = entry(parseValue)
+  protected def parseEntry(): Boolean = entry()
 
-  protected def entry(value: () => Unit = parseValue): Boolean = {
+  protected def entry(value: () => Unit = parseValue, token: AMFToken = Entry): Boolean = {
     beginTree()
     matchOrError(StringToken)
-    if (currentEq(Colon)) discard()
+    discard(Colon)
     value()
-    endTree(Entry)
+    endTree(token)
     true
   }
 

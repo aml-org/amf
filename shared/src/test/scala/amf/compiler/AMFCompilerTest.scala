@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.common.{AMFASTLink, AMFToken}
+import amf.common.{AMFAST, AMFASTLink, AMFToken}
 import amf.exception.CyclicReferenceException
 import amf.parser._
 import amf.remote.Syntax.{Json, Syntax, Yaml}
@@ -52,30 +52,46 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Module") {
+  test("Libraries (raml)") {
     val cache = new TestCache()
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, Option(RamlYamlHint), cache = Some(cache))
-      .build() map { result =>
-      val root = result._1
-      root.children.size should be(1)
-      val bodyMap = root.children.head
-      bodyMap.children.size should be(2)
-      val usesEntry = bodyMap.children(1)
-      usesEntry.children.length should be(2)
-      usesEntry.children.head.content should be("uses")
-      val libraryMap = usesEntry.children(1)
-      libraryMap.children.length should be(2)
-      val libraryEntry = libraryMap.children.head
-      libraryEntry.children.size should be(2)
-
-      libraryEntry.children(1) shouldBe a[AMFASTLink]
-      val linkNode = libraryEntry.children(1)
-      val link     = linkNode.asInstanceOf[AMFASTLink]
-      link.target.`type` should be(Module)
-      link.target.root.children.length should be(1)
-      link.target.root.children.head.`type` should be(AMFToken.SequenceToken)
-      link.target.root.children.head.children.length should be(2)
+      .build() map {
+      case (root, _) =>
+        root.children.size should be(1)
+        val bodyMap = root.children.head
+        bodyMap.children.size should be(2)
+        val uses = bodyMap.children(1)
+        assertUses(uses)
     }
+  }
+
+  test("Libraries (oas)") {
+    val cache = new TestCache()
+    AMFCompiler("file://shared/src/test/resources/modules.json", platform, Option(OasJsonHint), cache = Some(cache))
+      .build() map {
+      case (root, _) =>
+        root.children.size should be(1)
+        val bodyMap = root.children.head
+        bodyMap.children.size should be(3)
+        val uses = bodyMap.children(2)
+        assertUses(uses)
+    }
+  }
+
+  private def assertUses(uses: AMFAST) = {
+    uses.children.length should be(2)
+    uses.children.head.content should include("uses")
+    val libraries = uses.children(1)
+    libraries.children.length should be(2)
+
+    val library = libraries.children.head
+    library.children.size should be(2)
+    library.children(1) shouldBe a[AMFASTLink]
+    val link = library.children(1).asInstanceOf[AMFASTLink]
+    link.target.`type` should be(Module)
+    link.target.root.children.length should be(1)
+    link.target.root.children.head.`type` should be(AMFToken.SequenceToken)
+    link.target.root.children.head.children.length should be(2)
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {

@@ -23,7 +23,8 @@ class JsServerPlatform extends Platform {
         if (err != null) {
           promise.failure(new Exception(s"Could not load file $path from fs"))
         } else {
-          promise.success(Content(new CharSequenceStream(path, content.toString)))
+          promise.success(
+            Content(new CharSequenceStream(path, content.toString), extension(path).flatMap(mimeFromExtension)))
         }
       }
     )

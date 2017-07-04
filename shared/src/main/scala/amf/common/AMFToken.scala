@@ -69,4 +69,6 @@ object AMFToken {
   object Entry extends NamedToken("Entry") with AMFToken
 
   object SequenceToken extends NamedToken("Seq") with AMFToken
+
+  object Extension extends NamedToken("Extension") with AMFToken
 }

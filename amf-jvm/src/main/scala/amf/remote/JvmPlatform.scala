@@ -34,24 +34,9 @@ class JvmPlatform extends Platform {
 
   }
 
-  private def mimeFromExtension(extension: Option[String]): Option[String] =
-    extension.flatMap({
-      case "json"         => Option(Mimes.`APPLICATION/JSON`)
-      case "yaml" | "yam" => Option(Mimes.`APPLICATION/YAML`)
-      case "raml"         => Option(Mimes.`APPLICATION/RAML`)
-      case _              => None
-    })
-
-  private def extractExtension(path: String): Option[String] = {
-    val dot = path.lastIndexOf(".")
-    if (dot > 0) {
-      Option(path.substring(dot))
-    } else None
-  }
-
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = Future {
-    Content(new FileStream(path), mimeFromExtension(extractExtension(path)))
+    Content(new FileStream(path), extension(path).flatMap(mimeFromExtension))
   }
 
   /** Write specified content on specified file path. */

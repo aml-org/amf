@@ -7,7 +7,7 @@ import amf.remote.{Raml, Vendor}
 
 class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
-  private def link(token: AMFToken = Link): Boolean = {
+  private def link(token: AMFToken): Boolean = {
     beginTree()
     discard(Tag)
     consume()
@@ -15,17 +15,17 @@ class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
     true
   }
 
-  def parseLibrary(): Unit = link(Library)
+  private def library(): Unit = link(Library)
 
-  private def library(): Unit = parseList(MapToken, StartMap, Comma, EndMap, () => entry(parseLibrary))
+  private def libraries = parseList(MapToken, StartMap, Comma, EndMap, () => entry(library))
 
   override protected def parseValue(): Unit = current match {
-    case Tag if currentText equals "!include" => link()
+    case Tag if currentText equals "!include" => link(Link)
     case _                                    => super.parseValue()
   }
 
   override protected def parseEntry(): Boolean = currentText match {
-    case "uses" => entry(library)
+    case "uses" => entry(() => libraries)
     case _      => super.parseEntry()
   }
 

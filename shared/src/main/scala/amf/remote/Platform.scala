@@ -35,6 +35,18 @@ trait Platform {
 
   /** Write specified content on specified file path. */
   protected def writeFile(path: String, content: String): Future[Unit]
+
+  protected def mimeFromExtension(extension: String): Option[String] =
+    extension match {
+      case "json"         => Option(Mimes.`APPLICATION/JSON`)
+      case "yaml" | "yam" => Option(Mimes.`APPLICATION/YAML`)
+      case "raml"         => Option(Mimes.`APPLICATION/RAML+YAML`)
+      case _              => None
+    }
+
+  protected def extension(path: String): Option[String] = {
+    Some(path.lastIndexOf(".")).filter(_ > 0).map(dot => path.substring(dot + 1))
+  }
 }
 
 object Platform {
