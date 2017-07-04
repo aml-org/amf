@@ -38,19 +38,4 @@ trait WebApiModel extends ApiDocumentation[WebApiModel, BaseWebApiBuilder] with 
   val documentation: CreativeWork
 
   protected def createBuilder(): BaseWebApiBuilder
-
-  override def toBuilder: BaseWebApiBuilder =
-    createBuilder()
-      .withName(name)
-      .withDescription(description)
-      .withHost(host)
-      .withScheme(schemeList)
-      .withBasePath(basePath)
-      .withAccepts(accepts)
-      .withContentType(contentType)
-      .withVersion(version)
-      .withTermsOfService(termsOfService)
-      .withProvider(provider)
-      .withLicense(license)
-      .withDocumentation(documentation)
 }

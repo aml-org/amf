@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.builder.WebApiBuilder
+import amf.builder.{WebApiBuilder}
 
 import scala.annotation.meta.field
 import scala.scalajs.js
@@ -28,4 +28,19 @@ case class WebApi(name: String,
 
   @(JSExport @field)
   val scheme: js.Array[String] = schemeList.toJSArray
+
+  override def toBuilder: WebApiBuilder =
+    createBuilder()
+      .withName(name)
+      .withDescription(description)
+      .withHost(host)
+      .withScheme(schemeList)
+      .withBasePath(basePath)
+      .withAccepts(accepts)
+      .withContentType(contentType)
+      .withVersion(version)
+      .withTermsOfService(termsOfService)
+      .withProvider(provider)
+      .withLicense(license)
+      .withDocumentation(documentation)
 }

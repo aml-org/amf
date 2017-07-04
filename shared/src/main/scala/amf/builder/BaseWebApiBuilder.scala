@@ -97,18 +97,4 @@ trait BaseWebApiBuilder extends Builder[WebApiModel] {
     documentation = new CreativeWork(url, description)
     this
   }
-
-  override def build: WebApiModel =
-    WebApi(name,
-           description,
-           host,
-           scheme,
-           basePath,
-           accepts,
-           contentType,
-           version,
-           termsOfService,
-           provider,
-           license,
-           documentation)
 }

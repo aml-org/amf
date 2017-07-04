@@ -2,7 +2,8 @@ package amf.model
 
 import java.util
 
-import amf.builder.WebApiBuilder
+import amf.builder.{WebApiBuilder}
+
 import scala.collection.JavaConverters._
 
 /**
@@ -25,4 +26,19 @@ case class WebApi(name: String,
   override protected def createBuilder(): WebApiBuilder = new WebApiBuilder
 
   val scheme: util.List[String] = schemeList.asJava
+
+  override def toBuilder: WebApiBuilder =
+    createBuilder()
+      .withName(name)
+      .withDescription(description)
+      .withHost(host)
+      .withScheme(schemeList)
+      .withBasePath(basePath)
+      .withAccepts(accepts)
+      .withContentType(contentType)
+      .withVersion(version)
+      .withTermsOfService(termsOfService)
+      .withProvider(provider)
+      .withLicense(license)
+      .withDocumentation(documentation)
 }
