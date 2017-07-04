@@ -13,3 +13,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile files('../../amf-jvm/target/scala-2.12/amf-assembly-0.1.jar')
 }
+
+task runApp(type:JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = "TestMainClass"
+}
