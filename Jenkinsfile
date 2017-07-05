@@ -5,6 +5,7 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
+                sh 'mvn -version'
                 sh 'sbt compile'
             }
         }
