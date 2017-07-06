@@ -6,7 +6,7 @@ import scala.concurrent.Future
 
 class Cache {
 
-  private var cache: Map[String, Future[(AMFAST, Vendor)]] = Map[String, Future[(AMFAST, Vendor)]]()
+  private var cache: Map[String, Future[(AMFAST, Vendor)]] = Map()
 
   def getOrUpdate(url: String)(supplier: () => Future[(AMFAST, Vendor)]): Future[(AMFAST, Vendor)] = {
     cache.get(url) match {

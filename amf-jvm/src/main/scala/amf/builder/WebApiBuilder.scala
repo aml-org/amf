@@ -11,7 +11,7 @@ import scala.collection.JavaConverters._
   */
 class WebApiBuilder extends BaseWebApiBuilder {
 
-  def withScheme(scheme: util.List[String]): this.type = super.withScheme(scheme.asScala.toList)
+  def withScheme(scheme: util.List[String]): this.type = super.withSchemes(scheme.asScala.toList)
 
   override def withName(name: String): this.type = super.withName(name)
 
@@ -27,35 +27,15 @@ class WebApiBuilder extends BaseWebApiBuilder {
 
   override def withVersion(version: String): WebApiBuilder.this.type = super.withVersion(version)
 
-  override def withTermsOfService(termsOfService: String): WebApiBuilder.this.type =
-    super.withTermsOfService(termsOfService)
+  override def withTermsOfService(tos: String): WebApiBuilder.this.type =
+    super.withTermsOfService(tos)
 
   override def withProvider(provider: Organization): WebApiBuilder.this.type = super.withProvider(provider)
 
-  override def withProvider(url: String, name: String, email: String): WebApiBuilder.this.type =
-    super.withProvider(url, name, email)
-
   override def withLicense(license: License): WebApiBuilder.this.type = super.withLicense(license)
-
-  override def withLicense(url: String, name: String): WebApiBuilder.this.type = super.withLicense(url, name)
 
   override def withDocumentation(documentation: CreativeWork): WebApiBuilder.this.type =
     super.withDocumentation(documentation)
 
-  override def withDocumentation(url: String, description: String): WebApiBuilder.this.type =
-    super.withDocumentation(url, description)
-
-  override def build: WebApi =
-    WebApi(name,
-           description,
-           host,
-           scheme,
-           basePath,
-           accepts,
-           contentType,
-           version,
-           termsOfService,
-           provider,
-           license,
-           documentation)
+  override def build: WebApi = WebApi(fields)
 }

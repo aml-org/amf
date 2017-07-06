@@ -3,7 +3,7 @@ package amf.client
 import amf.compiler.AMFCompiler
 import amf.lexer.Token
 import amf.maker.WebApiMaker
-import amf.model.WebApiModel
+import amf.model.BaseWebApi
 import amf.parser.{AMFUnit, ASTNode, Document}
 import amf.remote.{Raml, RamlYamlHint}
 
@@ -34,7 +34,7 @@ class JsClient extends BaseClient {
         new WebApiHandler {
           override def error(exception: Throwable): Unit = handler.error(exception)
 
-          override def success(document: WebApiModel): Unit = handler.success(document)
+          override def success(document: BaseWebApi): Unit = handler.success(document)
         },
         ""
       ))
@@ -45,7 +45,7 @@ class JsClient extends BaseClient {
     case Failure(exception) => handler.error(exception)
   }
 
-  private def callbackForWebApi(handler: WebApiHandler, url: String)(t: Try[WebApiModel]) = t match {
+  private def callbackForWebApi(handler: WebApiHandler, url: String)(t: Try[BaseWebApi]) = t match {
     case Success(value)     => handler.success(value)
     case Failure(exception) => handler.error(exception)
   }
@@ -61,7 +61,7 @@ trait JsHandler extends js.Object {
 
 @js.native
 trait JsWebApiHandler extends js.Object {
-  def success(document: WebApiModel): Unit = js.native
+  def success(document: BaseWebApi): Unit = js.native
 
   def error(exception: Throwable): Unit = js.native
 }

@@ -1,7 +1,7 @@
 package amf.maker
 
 import amf.builder.BaseWebApiBuilder
-import amf.model.WebApiModel
+import amf.model.BaseWebApi
 import amf.parser.AMFUnit
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.unsafe.BuilderFactory.webApiBuilder
@@ -9,9 +9,9 @@ import amf.unsafe.BuilderFactory.webApiBuilder
 /**
   * Domain model WebApi Maker.
   */
-class WebApiMaker(unit: AMFUnit) extends Maker[WebApiModel](unit.vendor) {
+class WebApiMaker(unit: AMFUnit) extends Maker[BaseWebApi](unit.vendor) {
 
-  override def make: WebApiModel = {
+  override def make: BaseWebApi = {
     val builder: BaseWebApiBuilder = webApiBuilder
     val root                       = unit.root.children.head
 
@@ -21,7 +21,7 @@ class WebApiMaker(unit: AMFUnit) extends Maker[WebApiModel](unit.vendor) {
           .withName(findValue(root, "info", "title"))
           .withDescription(findValue(root, "info", "description"))
           .withHost(findValue(root, "host"))
-          .withScheme(findValues(root, "schemes"))
+          .withSchemes(findValues(root, "schemes"))
           .withBasePath(findValue(root, "basePath"))
           .withAccepts(findValue(root, "consumes"))
           .withContentType(findValue(root, "produces"))
@@ -35,7 +35,7 @@ class WebApiMaker(unit: AMFUnit) extends Maker[WebApiModel](unit.vendor) {
           .withName(findValue(root, "title"))
           .withDescription(findValue(root, "description"))
           .withHost(urls.url())
-          .withScheme(if (protocolsList.isEmpty) List(urls.protocol) else protocolsList)
+          .withSchemes(if (protocolsList.isEmpty) List(urls.protocol) else protocolsList)
           .withBasePath(urls.path)
           .withAccepts(findValue(root, "mediaType"))
           .withContentType(findValue(root, "mediaType"))
@@ -50,7 +50,7 @@ class WebApiMaker(unit: AMFUnit) extends Maker[WebApiModel](unit.vendor) {
                       "http://raml.org/vocabularies/document#encodes",
                       "http://raml.org/vocabularies/http#host",
                       "@value"))
-          .withScheme(
+          .withSchemes(
             findValues(root,
                        "http://raml.org/vocabularies/document#encodes",
                        "http://raml.org/vocabularies/http#scheme",

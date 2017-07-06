@@ -2,43 +2,16 @@ package amf.model
 
 import java.util
 
-import amf.builder.{WebApiBuilder}
+import amf.builder.WebApiBuilder
 
 import scala.collection.JavaConverters._
 
 /**
   * Created by martin.gutierrez on 7/3/17.
   */
-case class WebApi(name: String,
-                  description: String,
-                  host: String,
-                  schemeList: List[String],
-                  basePath: String,
-                  accepts: String,
-                  contentType: String,
-                  version: String,
-                  termsOfService: String,
-                  provider: Organization,
-                  license: License,
-                  documentation: CreativeWork)
-    extends WebApiModel {
+case class WebApi(private val fields: Fields) extends BaseWebApi(fields) {
 
-  override protected def createBuilder(): WebApiBuilder = new WebApiBuilder
+  val schemesArray: util.List[String] = schemes.asJava
 
-  val scheme: util.List[String] = schemeList.asJava
-
-  override def toBuilder: WebApiBuilder =
-    createBuilder()
-      .withName(name)
-      .withDescription(description)
-      .withHost(host)
-      .withScheme(schemeList)
-      .withBasePath(basePath)
-      .withAccepts(accepts)
-      .withContentType(contentType)
-      .withVersion(version)
-      .withTermsOfService(termsOfService)
-      .withProvider(provider)
-      .withLicense(license)
-      .withDocumentation(documentation)
+  override def toBuilder: WebApiBuilder = new WebApiBuilder().copy(fields)
 }
