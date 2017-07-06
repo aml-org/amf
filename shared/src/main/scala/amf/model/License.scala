@@ -14,4 +14,19 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 class License(val url: String, val name: String) extends DomainElement[License, LicenseBuilder] {
   override def toBuilder: LicenseBuilder = LicenseBuilder().withUrl(url).withName(name)
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[License]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: License =>
+      (that canEqual this) &&
+        url == that.url &&
+        name == that.name
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(url, name)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

@@ -1,7 +1,7 @@
 package amf.builder
 
 import amf.metadata.model.WebApiModel._
-import amf.model._
+import amf.model.{BaseWebApi, CreativeWork, License, Organization}
 
 import scala.scalajs.js.annotation.JSExportAll
 

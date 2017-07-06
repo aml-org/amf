@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
   *     - schema-org:email
   */
 @JSExportAll
-class Organization(val url: String, val name: String, val email: String)
+case class Organization(url: String, name: String, email: String)
     extends DomainElement[Organization, OrganizationBuilder] {
   override def toBuilder: OrganizationBuilder = OrganizationBuilder().withUrl(url).withName(name).withEmail(email)
 }

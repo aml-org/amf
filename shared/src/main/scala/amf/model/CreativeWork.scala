@@ -12,6 +12,6 @@ import scala.scalajs.js.annotation.JSExportAll
   *     - schema-org:description
   */
 @JSExportAll
-class CreativeWork(val url: String, val description: String) extends DomainElement[CreativeWork, CreativeWorkBuilder] {
+case class CreativeWork(url: String, description: String) extends DomainElement[CreativeWork, CreativeWorkBuilder] {
   override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder().withUrl(url).withDescription(description)
 }

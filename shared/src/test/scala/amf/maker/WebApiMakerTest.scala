@@ -2,14 +2,16 @@ package amf.maker
 
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
-import amf.model.{CreativeWork, License, Organization, BaseWebApi}
+import amf.metadata.Field
+import amf.metadata.model.WebApiModel._
+import amf.model.{BaseWebApi, CreativeWork, License, Organization}
 import amf.parser._
-import amf.remote.{Amf, OasJsonHint, RamlYamlHint}
+import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
+import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssertions {
 
@@ -18,266 +20,204 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   val basePath = "file://shared/src/test/resources/maker/"
 
   test("generate complete web api instance") {
-    val eventualApi = AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
-      .build()
-      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.raml", Document, t._2)).make)
 
-    val expected = List(
-      ("name", "test"),
-      ("description", "testDescription"),
-      ("host", "http://api.example.com/path"),
-      ("scheme", List("http", "https")),
-      ("basePath", "/path"),
-      ("contentType", "application/yaml"),
-      ("accepts", "application/yaml"),
-      ("version", "1.1"),
-      ("termsOfService", "terminos"),
-      ("provider", new Organization("urlContacto", "nombreContacto", "mailContacto")),
-      ("license", new License("urlLicense", "nameLicense")),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    val fixture = List(
+      (Name, "test"),
+      (Description, "testDescription"),
+      (Host, "http://api.example.com/path"),
+      (Schemes, List("http", "https")),
+      (BasePath, "/path"),
+      (ContentType, "application/yaml"),
+      (Accepts, "application/yaml"),
+      (Version, "1.1"),
+      (TermsOfService, "terminos"),
+      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
+      (License, new License("urlLicense", "nameLicense")),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
     )
 
-    eventualApi map { api =>
-      assertWebApiValues(api, expected)
-    }
+    assertFixture(fixture, "completeExample.raml", Some(RamlYamlHint))
   }
 
   test("generate partial succeed") {
-    val eventualApi = AMFCompiler(basePath + "partialExample.raml", platform, Some(RamlYamlHint))
-      .build()
-      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.raml", Document, t._2)).make)
-
-    val expected = List(
-      ("name", "test"),
-      ("description", null),
-      ("host", "http://api.example.com/path"),
-      ("scheme", List("http", "https")),
-      ("basePath", "/path"),
-      ("contentType", "application/yaml"),
-      ("accepts", "application/yaml"),
-      ("version", "1.1"),
-      ("termsOfService", null),
-      ("provider", new Organization("urlContacto", "nombreContacto", "mailContacto")),
-      ("license", null),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    val fixture = List(
+      (Name, "test"),
+      (Description, null),
+      (Host, "http://api.example.com/path"),
+      (Schemes, List("http", "https")),
+      (BasePath, "/path"),
+      (ContentType, "application/yaml"),
+      (Accepts, "application/yaml"),
+      (Version, "1.1"),
+      (TermsOfService, null),
+      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
+      (License, null),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
     )
 
-    eventualApi map { api =>
-      assertWebApiValues(api, expected)
-    }
+    assertFixture(fixture, "partialExample.raml", Some(RamlYamlHint))
   }
 
   test("basic jsonld example") {
-    val expected = List(
-      ("name", "test"),
-      ("description", null),
-      ("host", "api.example.com"),
-      ("scheme", List("http", "https")),
-      ("basePath", null),
-      ("termsOfService", null),
-      ("provider", null),
-      ("license", null),
-      ("documentation", null)
+    val fixture = List(
+      (Name, "test"),
+      (Description, null),
+      (Host, "api.example.com"),
+      (Schemes, List("http", "https")),
+      (BasePath, null),
+      (TermsOfService, null),
+      (Provider, null),
+      (License, null),
+      (Documentation, null)
     )
 
-    AMFCompiler(basePath + "basicExample.jsonld", platform, Some(OasJsonHint))
-      .build()
-      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "basicExample.jsonld", Document, Amf)).make) map { api =>
-      assertWebApiValues(api, expected)
-    }
+    assertFixture(fixture, "basicExample.jsonld", Some(RamlYamlHint))
   }
 
   test("generate partial json") {
-    val eventualApi = AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
-      .build()
-      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.json", Document, t._2)).make)
 
-    val expected = List(
-      ("name", "test"),
-      ("description", "testDescription"),
-      ("host", "api.example.com"),
-      ("scheme", List("http", "https")),
-      ("basePath", "http://api.example.com/path"),
-      ("contentType", "application/json"),
-      ("accepts", "application/json"),
-      ("version", "1.1"),
-      ("termsOfService", "terminos"),
-      ("provider", new Organization("urlContact", "nameContact", "emailContact")),
-      ("license", new License("urlLicense", "nameLicense")),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    val fixture = List(
+      (Name, "test"),
+      (Description, "testDescription"),
+      (Host, "api.example.com"),
+      (Schemes, List("http", "https")),
+      (BasePath, "http://api.example.com/path"),
+      (ContentType, "application/json"),
+      (Accepts, "application/json"),
+      (Version, "1.1"),
+      (TermsOfService, "terminos"),
+      (Provider, Organization("urlContact", "nameContact", "emailContact")),
+      (License, new License("urlLicense", "nameLicense")),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
     )
 
-    eventualApi map { api =>
-      assertWebApiValues(api, expected)
-    }
+    assertFixture(fixture, "completeExample.json", Some(RamlYamlHint))
   }
 
-  test("edit complete yaml") {
-    val eventualApi = AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
+  test("edit complete raml") {
+
+    val before = List(
+      (Name, "test"),
+      (Description, "testDescription"),
+      (Host, "http://api.example.com/path"),
+      (Schemes, List("http", "https")),
+      (BasePath, "/path"),
+      (ContentType, "application/yaml"),
+      (Accepts, "application/yaml"),
+      (Version, "1.1"),
+      (TermsOfService, "terminos"),
+      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
+      (License, new License("urlLicense", "nameLicense")),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    val after = List(
+      (Name, "test"),
+      (Description, "changed"),
+      (Host, "http://api.example.com/path"),
+      (Schemes, List("http", "https")),
+      (BasePath, "/path"),
+      (ContentType, "application/yaml"),
+      (Accepts, "application/yaml"),
+      (Version, "1.1"),
+      (TermsOfService, "terminos"),
+      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
+      (License, new License("urlLicense", "changed")),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
       .build()
-      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.raml", Document, t._2)).make)
-
-    val expected = List(
-      ("name", "test"),
-      ("description", "testDescription"),
-      ("host", "http://api.example.com/path"),
-      ("scheme", List("http", "https")),
-      ("basePath", "/path"),
-      ("contentType", "application/yaml"),
-      ("accepts", "application/yaml"),
-      ("version", "1.1"),
-      ("termsOfService", "terminos"),
-      ("provider", new Organization("urlContacto", "nombreContacto", "mailContacto")),
-      ("license", new License("urlLicense", "nameLicense")),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
-    )
-
-    val expectedAfter = List(
-      ("name", "test"),
-      ("description", "changed"),
-      ("host", "http://api.example.com/path"),
-      ("scheme", List("http", "https")),
-      ("basePath", "/path"),
-      ("contentType", "application/yaml"),
-      ("accepts", "application/yaml"),
-      ("version", "1.1"),
-      ("termsOfService", "terminos"),
-      ("provider", new Organization("urlContacto", "nombreContacto", "mailContacto")),
-      ("license", new License("urlLicense", "changed")),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
-    )
-
-    eventualApi map { api =>
-      assertWebApiValues(api, expected)
-
-      val builder = api.toBuilder
-      builder.withDescription("changed")
-      val licenseBuilder = api.license.toBuilder
-      licenseBuilder.withName("changed")
-      builder.withLicense(licenseBuilder.build)
-      val newWebApi = builder.build
-
-      assertWebApiValues(newWebApi, expectedAfter)
-    }
+      .map {
+        case (root, vendor) => WebApiMaker(AMFUnit(root, basePath + "completeExample.raml", Document, vendor)).make
+      }
+      .map { api =>
+        assertWebApiValues(api, before)
+        val builder = api.toBuilder
+        builder.withDescription("changed")
+        val license = api.license.toBuilder
+        license.withName("changed")
+        builder.withLicense(license.build)
+        assertWebApiValues(builder.build, after)
+      }
   }
 
   test("edit complete json") {
-    val eventualApi = AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
+    val before = List(
+      (Name, "test"),
+      (Description, "testDescription"),
+      (Host, "api.example.com"),
+      (Schemes, List("http", "https")),
+      (BasePath, "http://api.example.com/path"),
+      (ContentType, "application/json"),
+      (Accepts, "application/json"),
+      (Version, "1.1"),
+      (TermsOfService, "terminos"),
+      (Provider, Organization("urlContact", "nameContact", "emailContact")),
+      (License, new License("urlLicense", "nameLicense")),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    val after = List(
+      (Name, "test"),
+      (Description, "changed"),
+      (Host, "api.example.com"),
+      (Schemes, List("http", "https")),
+      (BasePath, "http://api.example.com/path"),
+      (ContentType, "application/json"),
+      (Accepts, "application/json"),
+      (Version, "1.1"),
+      (TermsOfService, "terminos"),
+      (Provider, Organization("urlContact", "nameContact", "changed")),
+      (License, new License("urlLicense", "nameLicense")),
+      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+    )
+
+    AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
       .build()
-      .map(t => WebApiMaker(AMFUnit(t._1, basePath + "completeExample.json", Document, t._2)).make)
+      .map {
+        case (root, vendor) => WebApiMaker(AMFUnit(root, basePath + "completeExample.json", Document, vendor)).make
+      }
+      .map { api =>
+        assertWebApiValues(api, before)
+        val builder = api.toBuilder
+        builder.withDescription("changed")
+        val license = api.license.toBuilder
+        license.withName("changed")
+        builder.withLicense(license.build)
+        assertWebApiValues(builder.build, after)
+      }
+  }
 
-    val expected = List(
-      ("name", "test"),
-      ("description", "testDescription"),
-      ("host", "api.example.com"),
-      ("scheme", List("http", "https")),
-      ("basePath", "http://api.example.com/path"),
-      ("contentType", "application/json"),
-      ("accepts", "application/json"),
-      ("version", "1.1"),
-      ("termsOfService", "terminos"),
-      ("provider", new Organization("urlContact", "nameContact", "emailContact")),
-      ("license", new License("urlLicense", "nameLicense")),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
-    )
-
-    eventualApi map { api =>
-      assertWebApiValues(api, expected)
+  def assertWebApiValues(api: BaseWebApi, assertions: List[(Field, Any)]): Assertion = {
+    assertions.foreach {
+      case (Name, expected)           => assertField(Name, api.name, expected)
+      case (Description, expected)    => assertField(Description, api.description, expected)
+      case (Host, expected)           => assertField(Host, api.host, expected)
+      case (Schemes, expected)        => assertField(Schemes, api.schemes, expected)
+      case (BasePath, expected)       => assertField(BasePath, api.basePath, expected)
+      case (ContentType, expected)    => assertField(ContentType, api.contentType, expected)
+      case (Accepts, expected)        => assertField(Accepts, api.accepts, expected)
+      case (Version, expected)        => assertField(Version, api.version, expected)
+      case (TermsOfService, expected) => assertField(TermsOfService, api.termsOfService, expected)
+      case (Provider, expected)       => assertField(Provider, api.provider, expected)
+      case (License, expected)        => assertField(License, api.license, expected)
+      case (Documentation, expected)  => assertField(Documentation, api.documentation, expected)
     }
-
-    val expectedAfter = List(
-      ("name", "test"),
-      ("description", "changed"),
-      ("host", "api.example.com"),
-      ("scheme", List("http", "https")),
-      ("basePath", "http://api.example.com/path"),
-      ("contentType", "application/json"),
-      ("accepts", "application/json"),
-      ("version", "1.1"),
-      ("termsOfService", "terminos"),
-      ("provider", new Organization("urlContact", "nameContact", "changed")),
-      ("license", new License("urlLicense", "nameLicense")),
-      ("documentation", new CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
-    )
-
-    eventualApi map { api =>
-      assertWebApiValues(api, expected)
-
-      val builder = api.toBuilder
-      builder.withDescription("changed")
-      val providerBuilder = api.provider.toBuilder
-      providerBuilder.withEmail("changed")
-      builder.withProvider(providerBuilder.build)
-      val newWebApi = builder.build
-
-      assertWebApiValues(newWebApi, expectedAfter)
-    }
+    succeed
   }
 
-  def assertWebApiValues(webApi: BaseWebApi, assertions: List[(String, Any)]): Assertion = {
-    assertions
-      .map(t =>
-        t._1 match {
-          case "name" if t._2 != webApi.name => throwFail("name", t._2.toString, webApi.name)
-          case "description" if t._2 != webApi.description =>
-            throwFail("description", t._2.toString, webApi.description)
-          case "host" if t._2 != webApi.host => throwFail("host", t._2.toString, webApi.host)
-          // case "scheme" =>
-          // assertWebApiSchemes(webApi.schemeList, t._2.asInstanceOf[List[String]]) //throwFail("scheme",t._2.toString,webApi.name)
-          case "basePath" if t._2 != webApi.basePath => throwFail("basePath", t._2.toString, webApi.basePath)
-          case "host" if t._2 != webApi.host         => throwFail("host", t._2.toString, webApi.host)
-          case "accepts" if t._2 != webApi.accepts   => throwFail("accepts", t._2.toString, webApi.accepts)
-          case "contentType" if t._2 != webApi.contentType =>
-            throwFail("contentType", t._2.toString, webApi.contentType)
-          case "version" if t._2 != webApi.version => throwFail("version", t._2.toString, webApi.version)
-          case "termsOfService" if t._2 != webApi.termsOfService =>
-            throwFail("termsOfService", t._2.toString, webApi.termsOfService)
-          case "provider"      => assertProvider(webApi.provider, t._2.asInstanceOf[Organization])
-          case "license"       => assertLicence(webApi.license, t._2.asInstanceOf[License])
-          case "documentation" => assertDocumentation(webApi.documentation, t._2.asInstanceOf[CreativeWork])
-          case _               => succeed
-      })
-      .count(a => a == succeed) should be(assertions.size)
-  }
+  private def assertField(field: Field, actual: Any, expected: Any) =
+    if (expected != actual) fail(s"Expected $expected but $actual found for field ${field.name}")
 
-  def assertWebApiSchemes(schemes: List[String], expected: List[String]): Assertion = {
-    assert(schemes, expected)
-
-  }
-
-  def assertProvider(provider: Organization, expected: Organization): Assertion = {
-    if (expected == null) {
-      provider.email should be(null)
-      provider.url should be(null)
-      provider.name should be(null)
-    } else {
-      provider.email should be(expected.email)
-      provider.url should be(expected.url)
-      provider.name should be(expected.name)
-    }
-  }
-
-  def assertLicence(license: License, expected: License): Assertion = {
-    if (expected == null) {
-      license.url should be(null)
-      license.name should be(null)
-    } else {
-      license.url should be(expected.url)
-      license.name should be(expected.name)
-    }
-  }
-
-  def assertDocumentation(documentation: CreativeWork, expected: CreativeWork): Assertion = {
-    if (expected == null) {
-      documentation.url should be(null)
-      documentation.description should be(null)
-    } else {
-      documentation.url should be(expected.url)
-      documentation.description should be(expected.description)
-    }
-  }
-
-  def throwFail(field: String, expected: String, actual: String): Assertion = {
-    fail(s"Field $field expected: $expected but actual: $actual")
+  private def assertFixture(fixture: List[(Field, Object)], file: String, hint: Some[Hint]): Future[Assertion] = {
+    AMFCompiler(basePath + file, platform, hint)
+      .build()
+      .map {
+        case (root, vendor) => WebApiMaker(AMFUnit(root, basePath + file, Document, vendor)).make
+      }
+      .map {
+        assertWebApiValues(_, fixture)
+      }
   }
 }
