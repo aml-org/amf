@@ -27,6 +27,8 @@ class License(val url: String, val name: String) extends DomainElement[License, 
 
   override def hashCode(): Int = {
     val state = Seq(url, name)
-    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+    state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
   }
+
+  override def toString = s"License($url, $name)"
 }

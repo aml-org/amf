@@ -13,6 +13,8 @@ class BaseUriSplitter(val protocol: String, val domain: String, val path: String
 
 object BaseUriSplitter {
   def apply(s: String): BaseUriSplitter = {
+    if (s == null) return new BaseUriSplitter("", "", "")
+
     var tail = ""
     var host = ""
     if (s.contains("://")) {
