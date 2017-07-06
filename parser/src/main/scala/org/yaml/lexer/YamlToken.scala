@@ -17,6 +17,12 @@ sealed class YamlToken(name: String, val abbreviation: String) extends Token(nam
 object YamlToken {
   private final val tokens = new mutable.HashMap[String, YamlToken]()
 
+  /** Begins anchor */
+  final val BeginAnchor = new YamlToken("BeginAnchor", "A")
+
+  /** Ends anchor */
+  final val EndAnchor = new YamlToken("EndAnchor", "a")
+
   /** Separation line break. */
   final val LineBreak = new YamlToken("LineBreak", "b")
 
@@ -32,6 +38,12 @@ object YamlToken {
   /** Ends directive */
   final val EndDirective = new YamlToken("EndDirective", "d")
 
+  /** Begins escape sequence. */
+  final val BeginEscape = new YamlToken("BeginEscape", "E")
+
+  /** Ends escape sequence. */
+  final val EndEscape = new YamlToken("EndScape", "e")
+
   /** Character indicating structure. */
   final val Indicator = new YamlToken("Indicator", "I")
 
@@ -40,6 +52,12 @@ object YamlToken {
 
   /** Document start marker (Directives End). */
   final val DirectivesEnd = new YamlToken("DirectivesEnd", "K")
+
+  /** Document end marker */
+  final val DocumentEnd = new YamlToken("DocumentEnd", "k")
+
+  /* Line break normalized to content line feed */
+  final val LineFeed = new YamlToken("LineFeed", "L")
 
   /** Line break folded to content space. */
   final val LineFold = new YamlToken("LineFold", "l")
@@ -55,6 +73,18 @@ object YamlToken {
 
   /** Ends document */
   final val EndDocument = new YamlToken("EndDocument", "o")
+
+  /** Begins node properties */
+  final val BeginProperties = new YamlToken("BeginProperties", "P")
+
+  /** Ends node properties */
+  final val EndProperties = new YamlToken("EndProperties", "p")
+
+  /** Begins alias */
+  final val BeginAlias = new YamlToken("BeginAlias", "R")
+
+  /** Ends alias */
+  final val EndAlias = new YamlToken("EndAlias", "r")
 
   /** Begins sequence content */
   final val BeginSequence = new YamlToken("BeginSequence", "Q")
@@ -86,6 +116,12 @@ object YamlToken {
   /** Separation white space. */
   final val WhiteSpace = new YamlToken("WhiteSpace", "w")
 
+  /** Begins mapping key:value pair */
+  final val BeginPair = new YamlToken("BeginPair", "X")
+
+  /** Ends mapping key:value pair */
+  final val EndPair = new YamlToken("EndPair", "x")
+
   /** Ends Yaml Stream */
   final val EndStream = new YamlToken("EndStream", "")
 
@@ -95,6 +131,12 @@ object YamlToken {
   /** Parsing error at this point */
   final val Error = new YamlToken("Error", "!")
 
+  /** UnParsed due to errors (or at end of test) */
+  final val UnParsed = new YamlToken("UnParsed", "-")
+
   def apply(abbreviation: String): YamlToken =
-    tokens.apply(abbreviation)
+    tokens.getOrElse(abbreviation, {
+        println(abbreviation)
+        null
+    })
 }

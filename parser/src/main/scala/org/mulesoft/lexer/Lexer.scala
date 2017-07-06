@@ -5,7 +5,6 @@ package org.mulesoft.lexer
   * Specific lexer grammars are implementations of this interface this object.
   */
 trait Lexer[T <: Token] {
-
   /** get the current token in the input stream.  */
   def token: T = tokenData.token
 
@@ -21,6 +20,6 @@ trait Lexer[T <: Token] {
   /** Get the current Token String.  */
   def tokenString: String = tokenText.toString
 
-  /** Ge the current state of the Lexer (0 = default state).  */
-  def state: LexerState
+//  /** Ge the current state of the Lexer.  */
+//  def state: S
 }

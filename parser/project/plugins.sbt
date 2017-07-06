@@ -1,1 +1,0 @@
-addSbtPlugin("laughedelic" % "literator" % "0.7.1")
