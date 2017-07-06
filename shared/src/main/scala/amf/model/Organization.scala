@@ -1,5 +1,5 @@
 package amf.model
-import amf.builder.{Builder, OrganizationBuilder}
+import amf.builder.OrganizationBuilder
 
 import scala.scalajs.js.annotation.JSExportAll
 

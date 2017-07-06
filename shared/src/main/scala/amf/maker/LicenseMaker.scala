@@ -1,9 +1,9 @@
 package amf.maker
 
-import amf.builder.LicenseBuilder
 import amf.model.License
 import amf.parser.ASTNode
 import amf.remote.{Oas, Raml, Vendor}
+import amf.unsafe.BuilderFactory.licenseBuilder
 
 /**
   * Created by martin.gutierrez on 6/29/17.
@@ -13,7 +13,7 @@ import amf.remote.{Oas, Raml, Vendor}
   */
 class LicenseMaker(node: ASTNode[_], vendor: Vendor) extends Maker[License](vendor) {
   override def make: License = {
-    val builder = LicenseBuilder()
+    val builder = licenseBuilder
 
     vendor match {
       case Raml =>

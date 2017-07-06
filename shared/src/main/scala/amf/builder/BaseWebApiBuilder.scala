@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.model.{WebApi, _}
+import amf.model._
 
 import scala.scalajs.js.annotation.JSExportAll
 

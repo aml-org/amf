@@ -1,9 +1,10 @@
 package amf.maker
 
-import amf.builder.{WebApiBuilder, BaseWebApiBuilder}
+import amf.builder.BaseWebApiBuilder
 import amf.model.WebApiModel
 import amf.parser.AMFUnit
 import amf.remote.{Amf, Oas, Raml, Vendor}
+import amf.unsafe.BuilderFactory.webApiBuilder
 
 /**
   * Domain model WebApi Maker.
@@ -11,7 +12,7 @@ import amf.remote.{Amf, Oas, Raml, Vendor}
 class WebApiMaker(unit: AMFUnit) extends Maker[WebApiModel](unit.vendor) {
 
   override def make: WebApiModel = {
-    val builder: BaseWebApiBuilder = new WebApiBuilder()
+    val builder: BaseWebApiBuilder = webApiBuilder
     val root                       = unit.root.children.head
 
     vendor match {
