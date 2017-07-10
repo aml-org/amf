@@ -1,3 +1,5 @@
+import scoverage.ScoverageKeys
+
 name := "AMF scala proof of concept"
 
 scalaVersion in ThisBuild := "2.12.2"
@@ -25,9 +27,3 @@ lazy val amf = crossProject
 
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))
 lazy val amfJS  = amf.js.in(file("amf-js"))
-
-lazy val coverage = taskKey[Unit]("Prints '...Future coverage...'")
-coverage := println("..Future coverage task...")
-
-lazy val coverageReport = taskKey[Unit]("Prints '...Future coverage report...'")
-coverageReport := println("..Future coverage report task...")
