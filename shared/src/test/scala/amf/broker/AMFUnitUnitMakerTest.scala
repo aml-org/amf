@@ -1,15 +1,12 @@
 package amf.broker
 
-import amf.builder.{CreativeWorkBuilder, LicenseBuilder, OrganizationBuilder}
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
-import amf.model.BaseWebApi
-import amf.parser.{AMFUnit, ASTNode, Document}
-import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.unsafe.BuilderFactory.webApiBuilder
+import amf.parser.{ASTNode, Document}
+import amf.remote.{Amf, Oas, Raml}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 
-class AMFUnitMakerTest extends FunSuite {
+class AMFUnitUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
 
   test("test simple raml generation") {
     val unit = buildSimpleUnit(Raml)
@@ -157,51 +154,7 @@ class AMFUnitMakerTest extends FunSuite {
                 )))
   }
 
-  def buildCompleteUnit(vendor: Vendor): AMFUnit = {
-    val webApi  = buildWebApiClass()
-    val builder = webApi.toBuilder
-    val newWebApi = builder
-      .withProvider(
-        OrganizationBuilder()
-          .withEmail("test@test")
-          .withName("organizationName")
-          .withUrl("organizationUrl")
-          .build
-      )
-      .withLicense(
-        LicenseBuilder()
-          .withName("licenseName")
-          .withUrl("licenseUrl")
-          .build
-      )
-      .withDocumentation(
-        CreativeWorkBuilder()
-          .withUrl("creativoWorkUrl")
-          .withDescription("creativeWorkDescription")
-          .build
-      )
-      .build
-    AMFUnitMaker(newWebApi, vendor)
-  }
 
-  def buildSimpleUnit(vendor: Vendor): AMFUnit = {
-    val webApi = buildWebApiClass()
-    AMFUnitMaker(webApi, vendor)
-  }
-
-  def buildWebApiClass(): BaseWebApi = {
-    webApiBuilder
-      .withName("test")
-      .withDescription("test description")
-      .withHost("http://localhost.com/api")
-      .withSchemes(List("http", "https"))
-      .withBasePath("api")
-      .withAccepts("application/json")
-      .withContentType("application/json")
-      .withVersion("1.1")
-      .withTermsOfService("termsOfService")
-      .build
-  }
 
 //list of triple key -> value
   def assertRamlTree(root: ASTNode[_], expected: (List[(String, String)])): Assertion = {
@@ -234,20 +187,6 @@ class AMFUnitMakerTest extends FunSuite {
       //TODO hanlde secuences
     }
   }
-
-//  def assertRamlNode(conainter:ASTNode[_], expected:(String,Any)):Assertion = {
-//    val infoNode = conainter.children
-//      .find(c => c.children.head.content.startsWith(expected._1))
-//    if(infoNode.isEmpty) throwNotFound(expected._1)
-//    expected._2 match {
-//      case x:String => infoNode.get.children(1).content should be(x)
-//      case x:List[(String,Any)] =>
-//        x.map(e=> {assertNode(infoNode.get.children(1),e)})
-//          .count(e=> e!=succeed) should be(0)
-//      case _ => ???
-//      //TODO hanlde secuences
-//    }
-//  }
 
   def throwFail(field: String, expected: String, actual: String): Assertion = {
     fail(s"Field $field expected: $expected but actual: $actual")
