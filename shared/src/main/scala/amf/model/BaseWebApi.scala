@@ -21,6 +21,7 @@ import scala.scalajs.js.annotation.JSExportAll
   *     - schema-org:provider => instance of type schema-org:Organization
   *     - schema-org:license => instance of type raml-http:License
   *     - schema-org:documentation => instance of type schema-org:CreativeWork
+  *     - raml-http:endpoint => instances of type raml-http:EndPoint
   */
 @JSExportAll
 abstract class BaseWebApi(val fields: Fields)
@@ -39,5 +40,5 @@ abstract class BaseWebApi(val fields: Fields)
   val provider: Organization      = fields get Provider
   val license: License            = fields get License
   val documentation: CreativeWork = fields get Documentation
-
+  val endPoints: List[EndPoint]   = fields get EndPoints
 }

@@ -1,7 +1,7 @@
 package amf.builder
 
 import amf.metadata.model.WebApiModel._
-import amf.model.{BaseWebApi, CreativeWork, License, Organization}
+import amf.model.{BaseWebApi, CreativeWork, License, Organization, EndPoint}
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -18,6 +18,8 @@ trait BaseWebApiBuilder extends Builder[BaseWebApi] {
   def withHost(host: String): this.type = set(Host, host)
 
   def withSchemes(schemes: List[String]): this.type = set(Schemes, schemes)
+
+  def withEndPoints(endPoints: List[EndPoint]): this.type = set(EndPoints, endPoints)
 
   def withBasePath(path: String): this.type = set(BasePath, path)
 

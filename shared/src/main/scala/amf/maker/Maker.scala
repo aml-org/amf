@@ -43,3 +43,7 @@ abstract class Maker[T <: DomainElement[_, _]](val vendor: Vendor) {
       }
   }
 }
+
+abstract class ListMaker[T <: DomainElement[_, _]](override val vendor: Vendor) extends Maker[T](vendor) {
+  def makeList: List[T]
+}

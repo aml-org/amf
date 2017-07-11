@@ -1,10 +1,12 @@
 package amf.maker
 
 import amf.builder.BaseWebApiBuilder
-import amf.model.BaseWebApi
-import amf.parser.AMFUnit
+import amf.model.{BaseWebApi, EndPoint}
+import amf.parser.{AMFUnit, ASTNode}
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.unsafe.BuilderFactory.webApiBuilder
+
+import scala.util.matching.Regex
 
 /**
   * Domain model WebApi Maker.
@@ -41,6 +43,7 @@ class WebApiMaker(unit: AMFUnit) extends Maker[BaseWebApi](unit.vendor) {
           .withContentType(findValue(root, "mediaType"))
           .withVersion(findValue(root, "version"))
           .withTermsOfService(findValue(root, "termsOfService"))
+          .withEndPoints(EndPointMaker(root, vendor).makeList)
       case Amf =>
         builder
           .withName(

@@ -1,10 +1,11 @@
 package amf.maker
 
+import amf.builder.EndPointBuilder
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.metadata.Field
 import amf.metadata.model.WebApiModel._
-import amf.model.{BaseWebApi, CreativeWork, License, Organization}
+import amf.model.{BaseWebApi, CreativeWork, License, Organization, EndPoint}
 import amf.parser._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
@@ -36,6 +37,28 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     )
 
     assertFixture(fixture, "completeExample.raml", Some(RamlYamlHint))
+  }
+
+  test("WebApi with nested endpoints - RAML.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/somesome")
+        .withChildren(
+          EndPointBuilder()
+            .withPath("/level-one")
+            .withName("One display name")
+            .withDescription("and this description!"),
+          EndPointBuilder().withPath("/another-level-one").withName("some other display name")
+        )
+        .build)
+    val fixture = List(
+      (Name, "API"),
+      (Host, "/some/base/uri"),
+      (BasePath, "/some/base/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "nested-endpoints.raml", Some(RamlYamlHint))
   }
 
   test("generate partial succeed") {
@@ -202,6 +225,17 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       case (Provider, expected)       => assertField(Provider, api.provider, expected)
       case (License, expected)        => assertField(License, api.license, expected)
       case (Documentation, expected)  => assertField(Documentation, api.documentation, expected)
+      case (EndPoints, expected) => {
+        val expectedEndPoints = expected.asInstanceOf[List[EndPoint]]
+        if (api.endPoints.size != expectedEndPoints.size)
+          fail(
+            s"Expected $expected has size ${expectedEndPoints.size} and actual ${api.endPoints} has size ${api.endPoints.size}")
+
+        (api.endPoints zip expectedEndPoints).foreach {
+          case (c, d) =>
+            assertField(EndPoints, c, d)
+        }
+      }
     }
     succeed
   }

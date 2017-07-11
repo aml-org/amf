@@ -2,16 +2,18 @@ package amf.builder
 
 import java.util
 
-import amf.model._
+import amf.model.{EndPoint, _}
 
 import scala.collection.JavaConverters._
 
 /**
-  * Created by martin.gutierrez on 7/3/17.
+  * JVM WebApiBuilder class.
   */
 class WebApiBuilder extends BaseWebApiBuilder {
 
   def withScheme(scheme: util.List[String]): this.type = super.withSchemes(scheme.asScala.toList)
+
+  def withEndPoint(endPoints: util.List[EndPoint]): this.type = super.withEndPoints(endPoints.asScala.toList)
 
   override def withName(name: String): this.type = super.withName(name)
 
