@@ -5,7 +5,8 @@ package amf.document
   */
 object Fragment {
 
-  sealed trait Fragment
+  /** Units encoding domain fragments */
+  sealed trait Fragment extends Unit
 
   case object DocumentationItem extends Fragment
 
@@ -27,6 +28,8 @@ object Fragment {
 
   case object SecurityScheme extends Fragment
 
+  case object Default extends Fragment
+
   val fragments = Seq(DocumentationItem,
                       DataType,
                       NamedExample,
@@ -36,5 +39,6 @@ object Fragment {
                       Library,
                       Overlay,
                       Extension,
-                      SecurityScheme)
+                      SecurityScheme,
+                      Default)
 }

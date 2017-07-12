@@ -1,7 +1,5 @@
 package amf.parser
 
-import java.lang.Math.{max, min}
-
 import amf.parser.Position.ZERO
 
 /** Defines a position on an input */

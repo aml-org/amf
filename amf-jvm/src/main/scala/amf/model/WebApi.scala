@@ -9,9 +9,9 @@ import scala.collection.JavaConverters._
 /**
   * Created by martin.gutierrez on 7/3/17.
   */
-case class WebApi(private val fields: Fields) extends BaseWebApi(fields) {
+case class WebApi(private val fs: Fields) extends BaseWebApi(fs) {
 
   val schemesArray: util.List[String] = schemes.asJava
 
-  override def toBuilder: WebApiBuilder = new WebApiBuilder().copy(fields)
+  override def toBuilder: WebApiBuilder = new WebApiBuilder().copy(fs)
 }

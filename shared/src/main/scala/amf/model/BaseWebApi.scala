@@ -23,7 +23,7 @@ import scala.scalajs.js.annotation.JSExportAll
   *     - schema-org:documentation => instance of type schema-org:CreativeWork
   */
 @JSExportAll
-abstract class BaseWebApi(private val fields: Fields)
+abstract class BaseWebApi(val fields: Fields)
     extends ApiDocumentation[BaseWebApi, BaseWebApiBuilder]
     with RootDomainElement {
 

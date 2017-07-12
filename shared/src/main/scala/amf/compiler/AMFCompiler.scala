@@ -33,7 +33,7 @@ class AMFCompiler private (val url: String,
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else {
       cache.getOrUpdate(url) { () =>
-        remote.resolve(url, base).flatMap(parse)
+        remote.resolve(url, base).flatMap(content => parse(content, url))
       }
     }
   }
@@ -72,7 +72,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def parse(content: Content): Future[(AMFAST, Vendor)] = {
+  private def parse(content: Content, url: String): Future[(AMFAST, Vendor)] = {
     val builder = YeastASTBuilder(resolveLexer(content))
     val parser  = resolveParser(builder, content)
 
