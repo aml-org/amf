@@ -4,12 +4,12 @@ import amf.builder.{CreativeWorkBuilder, LicenseBuilder, OrganizationBuilder}
 import amf.model.BaseWebApi
 import amf.parser.AMFUnit
 import amf.remote.Vendor
-import amf.unsafe.BuilderFactory.webApiBuilder
+import amf.unsafe.PlatformSecrets
 
 /**
   * Created by hernan.najles on 7/11/17.
   */
-trait AMFUnitFixtureTest {
+trait AMFUnitFixtureTest extends PlatformSecrets {
 
   def buildCompleteUnit(vendor: Vendor): AMFUnit = {
     val webApi  = buildWebApiClass()
@@ -44,7 +44,7 @@ trait AMFUnitFixtureTest {
   }
 
   def buildWebApiClass(): BaseWebApi = {
-    webApiBuilder
+    builders.webApi
       .withName("test")
       .withDescription("test description")
       .withHost("http://localhost.com/api")

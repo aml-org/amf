@@ -29,7 +29,7 @@ class EndPointBuilder extends Builder[EndPoint] {
 
   def build(parentPath: String): EndPoint = {
     val nodePath: String = fields get Path
-    fields set (Path, parentPath + nodePath)
+//    fields set (Path, parentPath + nodePath)
     EndPoint(fields, nodePath, children.map(_.build(parentPath + nodePath)))
   }
 }

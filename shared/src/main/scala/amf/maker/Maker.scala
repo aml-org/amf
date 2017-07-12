@@ -5,13 +5,14 @@ import amf.model.DomainElement
 import amf.parser.ASTNode
 import amf.remote.Vendor
 import amf.common.Strings.strings
+import amf.unsafe.PlatformSecrets
 
 import scala.collection.mutable.ListBuffer
 
 /**
   * Maker class.
   */
-abstract class Maker[T <: DomainElement[_, _]](val vendor: Vendor) {
+abstract class Maker[T <: DomainElement[_, _]](val vendor: Vendor) extends PlatformSecrets {
 
   def make: T
 

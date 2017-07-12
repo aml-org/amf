@@ -15,6 +15,4 @@ object EndPointModel extends Type {
   val Description = Field(Str, "description")
 
   val Operations = Field(Array(OperationModel), "operations")
-
-  val Parent = Field(EndPointModel, "parent")
 }

@@ -3,14 +3,13 @@ package amf.maker
 import amf.model.Organization
 import amf.parser.ASTNode
 import amf.remote.{Oas, Raml, Vendor}
-import amf.unsafe.BuilderFactory.organizationBuilder
 
 /**
   * Domain model Organization Maker.
   */
 class OrganizationMaker(node: ASTNode[_], vendor: Vendor) extends Maker[Organization](vendor) {
   override def make: Organization = {
-    val builder = organizationBuilder
+    val builder = builders.organization
 
     vendor match {
       case Raml =>

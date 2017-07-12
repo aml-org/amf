@@ -4,7 +4,6 @@ import amf.builder.EndPointBuilder
 import amf.model.EndPoint
 import amf.parser.ASTNode
 import amf.remote.Vendor
-import amf.unsafe.BuilderFactory.endPointBuilder
 
 import scala.util.matching.Regex
 
@@ -22,7 +21,7 @@ class EndPointMaker(content: ASTNode[_], vendor: Vendor) extends ListMaker[EndPo
   }
 
   private def getBuilder(entry: ASTNode[_], parent: Option[EndPointBuilder]): EndPointBuilder = {
-    val builder = endPointBuilder
+    val builder = builders.endPoint
     val key     = entry.child(0).content
     val value   = entry.child(1)
     builder

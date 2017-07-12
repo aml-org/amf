@@ -1,65 +1,27 @@
 package amf.maker
 
 import amf.builder.BaseWebApiBuilder
-import amf.model.{BaseWebApi, EndPoint}
+import amf.model.BaseWebApi
 import amf.parser.{AMFUnit, ASTNode}
-import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.unsafe.BuilderFactory.webApiBuilder
-
-import scala.util.matching.Regex
+import amf.spec.Spec
 
 /**
   * Domain model WebApi Maker.
   */
 class WebApiMaker(unit: AMFUnit) extends Maker[BaseWebApi](unit.vendor) {
 
+  def matcher(builder: BaseWebApiBuilder, entry: ASTNode[_]): Unit = {
+    Spec(vendor).fields.find(_.matcher.matches(entry)) match {
+      case Some(field) => field.parse(field, entry, builder)
+      case _           => // Unknown node...
+    }
+  }
+
   override def make: BaseWebApi = {
-    val builder: BaseWebApiBuilder = webApiBuilder
+    val builder: BaseWebApiBuilder = builders.webApi
     val root                       = unit.root.children.head
 
-    vendor match {
-      case Oas =>
-        builder
-          .withName(findValue(root, "info", "title"))
-          .withDescription(findValue(root, "info", "description"))
-          .withHost(findValue(root, "host"))
-          .withSchemes(findValues(root, "schemes"))
-          .withBasePath(findValue(root, "basePath"))
-          .withAccepts(findValue(root, "consumes"))
-          .withContentType(findValue(root, "produces"))
-          .withVersion(findValue(root, "info", "version"))
-          .withTermsOfService(findValue(root, "info", "termsOfService"))
-
-      case Raml =>
-        val urls          = BaseUriSplitter(findValue(root, "baseUri"))
-        val protocolsList = findValues(root, "protocols")
-        builder
-          .withName(findValue(root, "title"))
-          .withDescription(findValue(root, "description"))
-          .withHost(urls.url())
-          .withSchemes(if (protocolsList.isEmpty) List(urls.protocol) else protocolsList)
-          .withBasePath(urls.path)
-          .withAccepts(findValue(root, "mediaType"))
-          .withContentType(findValue(root, "mediaType"))
-          .withVersion(findValue(root, "version"))
-          .withTermsOfService(findValue(root, "termsOfService"))
-          .withEndPoints(EndPointMaker(root, vendor).makeList)
-      case Amf =>
-        builder
-          .withName(
-            findValue(root, "http://raml.org/vocabularies/document#encodes", "http://schema.org/name", "@value"))
-          .withHost(
-            findValue(root,
-                      "http://raml.org/vocabularies/document#encodes",
-                      "http://raml.org/vocabularies/http#host",
-                      "@value"))
-          .withSchemes(
-            findValues(root,
-                       "http://raml.org/vocabularies/document#encodes",
-                       "http://raml.org/vocabularies/http#scheme",
-                       "@value"))
-      case Vendor(_) =>
-    }
+    root.children.foreach(matcher(builder, _))
 
     builder
       .withProvider(OrganizationMaker(root, vendor).make)
