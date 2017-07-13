@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.builder.CreativeWorkBuilder
-import amf.metadata.model.CreativeWorkModel.{Url, Description}
+import amf.metadata.domain.CreativeWorkModel.{Url, Description}
 
 import scala.scalajs.js.annotation.JSExportAll
 

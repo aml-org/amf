@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.builder.LicenseBuilder
-import amf.metadata.model.LicenseModel.{Name, Url}
+import amf.metadata.domain.LicenseModel.{Name, Url}
 
 import scala.scalajs.js.annotation.JSExportAll
 

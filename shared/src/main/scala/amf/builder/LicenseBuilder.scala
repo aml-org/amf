@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.metadata.model.LicenseModel.{Url, Name}
+import amf.metadata.domain.LicenseModel.{Url, Name}
 import amf.model.License
 
 /**

@@ -1,6 +1,6 @@
 package amf.model
 import amf.builder.OrganizationBuilder
-import amf.metadata.model.OrganizationModel.{Email, Name, Url}
+import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 
 import scala.scalajs.js.annotation.JSExportAll
 

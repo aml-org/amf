@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.metadata.model.OrganizationModel.{Url, Name, Email}
+import amf.metadata.domain.OrganizationModel.{Url, Name, Email}
 import amf.model.Organization
 
 /**

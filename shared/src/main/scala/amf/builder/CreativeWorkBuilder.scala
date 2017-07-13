@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.metadata.model.CreativeWorkModel.{Description, Url}
+import amf.metadata.domain.CreativeWorkModel.{Description, Url}
 import amf.model.CreativeWork
 
 /**
