@@ -118,13 +118,13 @@ object SpecFieldParser {
   case class StringListParser(field: Field*) extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.children.map(c => c.content).toList, annotations(entry)))
+      field.foreach(builder.set(_, entry.last.children.map(c => c.content), annotations(entry)))
   }
 
   case class StringJsonListParser(field: Field*) extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.children.map(c => c.head.last.content).toList, annotations(entry)))
+      field.foreach(builder.set(_, entry.last.children.map(c => c.head.last.content), annotations(entry)))
   }
 
   case class ChildrenParser() extends SpecFieldParser {

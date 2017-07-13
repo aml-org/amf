@@ -44,7 +44,7 @@ abstract class AMFTreeMaker[T] {
     new AMFASTNode(Entry, "", null, Seq(new AMFASTNode(StringToken, key, null), value))
   }
 
-  def makeListNode(name: String, values: List[String]): AMFASTNode = {
+  def makeListNode(name: String, values: Seq[String]): AMFASTNode = {
     new AMFASTNode(Entry,
                    "",
                    null,
