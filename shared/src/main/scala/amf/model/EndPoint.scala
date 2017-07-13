@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.builder.EndPointBuilder
-import amf.metadata.model.EndPointModel._
+import amf.metadata.domain.EndPointModel._
 
 /**
   * Domain model of type raml-http:EndPoint

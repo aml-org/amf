@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.metadata.model.EndPointModel._
+import amf.metadata.domain.EndPointModel._
 import amf.model.EndPoint
 
 /**

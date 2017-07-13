@@ -1,15 +1,15 @@
-package amf.metadata.model
+package amf.metadata.domain
 
 import amf.metadata.Type.Str
 import amf.metadata.{Field, Type}
 import amf.vocabulary.Namespace.Schema
 
 /**
-  * Creative work metamodel
+  * License metamodel
   */
-object CreativeWorkModel extends Type {
+object LicenseModel extends Type {
 
   val Url = Field(Str, Schema, "url")
 
-  val Description = Field(Str, Schema, "description")
+  val Name = Field(Str, Schema, "name")
 }

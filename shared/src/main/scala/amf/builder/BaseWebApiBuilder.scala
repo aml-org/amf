@@ -1,8 +1,8 @@
 package amf.builder
 
 import amf.maker.BaseUriSplitter
-import amf.metadata.model.WebApiModel
-import amf.metadata.model.WebApiModel._
+import amf.metadata.domain.WebApiModel
+import amf.metadata.domain.WebApiModel._
 import amf.model.{BaseWebApi, CreativeWork, License, Organization, EndPoint, Fields}
 
 import scala.scalajs.js.annotation.JSExportAll

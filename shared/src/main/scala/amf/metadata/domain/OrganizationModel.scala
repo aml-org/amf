@@ -1,4 +1,4 @@
-package amf.metadata.model
+package amf.metadata.domain
 
 import amf.metadata.Type.Str
 import amf.metadata.{Field, Type}

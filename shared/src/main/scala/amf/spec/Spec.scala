@@ -3,9 +3,9 @@ package amf.spec
 import amf.builder._
 import amf.common.Strings.strings
 import amf.metadata.Field
-import amf.metadata.model.EndPointModel.Path
-import amf.metadata.model.WebApiModel._
-import amf.metadata.model._
+import amf.metadata.domain.EndPointModel.Path
+import amf.metadata.domain.WebApiModel._
+import amf.metadata.domain._
 import amf.model.Annotation.{LexicalInformation, ParentEndPoint}
 import amf.model.{Annotation, EndPoint}
 import amf.parser.ASTNode

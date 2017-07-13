@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.builder.BaseWebApiBuilder
-import amf.metadata.model.WebApiModel._
+import amf.metadata.domain.WebApiModel._
 
 import scala.scalajs.js.annotation.JSExportAll
 

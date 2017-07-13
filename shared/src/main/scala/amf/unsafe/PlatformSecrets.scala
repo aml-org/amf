@@ -1,5 +1,6 @@
 package amf.unsafe
 
+import amf.PlatformTypes
 import amf.remote._
 import amf.builder._
 

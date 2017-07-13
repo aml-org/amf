@@ -2,11 +2,12 @@ package amf.model
 
 import amf.metadata.Field
 import amf.metadata.Type._
+import amf.unsafe.PlatformSecrets
 
 /**
   * Field values
   */
-class Fields {
+class Fields extends PlatformSecrets {
 
   private var fs: Map[Field, Value] = Map()
 
@@ -38,6 +39,7 @@ class Fields {
 
   def into(other: Fields): Unit = other.fs = other.fs ++ fs
 
+  def apply[T](field: Field): T = get(field)
 }
 
 case class Value(value: Any, annotations: List[Annotation]) {

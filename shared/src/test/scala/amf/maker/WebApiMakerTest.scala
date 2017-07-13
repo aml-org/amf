@@ -4,7 +4,7 @@ import amf.builder.{CreativeWorkBuilder, EndPointBuilder, LicenseBuilder, Organi
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.metadata.Field
-import amf.metadata.model.WebApiModel._
+import amf.metadata.domain.WebApiModel._
 import amf.model.BaseWebApi
 import amf.parser._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}

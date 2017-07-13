@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.metadata.model.WebApiModel._
+import amf.metadata.domain.WebApiModel._
 import amf.model.Annotation.LexicalInformation
 import amf.parser.Range
 import amf.unsafe.PlatformSecrets
