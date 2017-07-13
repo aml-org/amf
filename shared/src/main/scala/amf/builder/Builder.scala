@@ -17,8 +17,9 @@ trait Builder[T <: DomainElement[T, _]] {
 
   def add(field: Field, value: Any, annotations: List[Annotation] = Nil): this.type = {
     if (field.`type`.isInstanceOf[Type.Array]) {
-      val elements: List[_] = fields get field
-      fields set (field, elements :+ value, annotations)
+      val elements: Seq[_]  = fields get field
+      val castValue: Seq[_] = value.asInstanceOf[List[_]]
+      fields set (field, elements ++ castValue, annotations)
     } else {
       //Illegal!
     }

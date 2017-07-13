@@ -11,6 +11,7 @@ import amf.parser.ASTNode
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}
 import amf.spec.SpecFieldParser._
+import amf.common.Strings.strings
 
 import scala.collection.mutable.ListBuffer
 import scala.util.matching.Regex
@@ -67,12 +68,22 @@ object Spec {
     SpecField(KeyMatcher("consumes"), StringValueParser(Accepts), null),
     SpecField(KeyMatcher("produces"), StringValueParser(ContentType), null),
     SpecField(KeyMatcher("schemes"), StringListParser(Schemes), null),
-    SpecField(KeyMatcher("paths"),
-              ChildrenParser(),
-              null,
-              List(
-                SpecField(RegExpMatcher("/.*"), StringValueParser(Name), null)
-              ))
+    SpecField(
+      KeyMatcher("paths"),
+      ChildrenParser(),
+      null,
+      List(
+        SpecField(
+          RegExpMatcher("/.*"),
+          new EndPointParser(),
+          null,
+          List(
+            SpecField(KeyMatcher("displayName"), StringValueParser(EndPointModel.Name), null),
+            SpecField(KeyMatcher("description"), StringValueParser(EndPointModel.Description), null)
+          )
+        )
+      )
+    )
   )
 
   val JsonLdSpec = Spec(
@@ -112,19 +123,19 @@ object SpecFieldParser {
   case class StringValueParser(field: Field*) extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.content, annotations(entry)))
+      field.foreach(builder.set(_, entry.last.content.unquote, annotations(entry)))
   }
 
   case class StringListParser(field: Field*) extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.children.map(c => c.content), annotations(entry)))
+      field.foreach(builder.set(_, entry.last.children.map(c => c.content.unquote), annotations(entry)))
   }
 
   case class StringJsonListParser(field: Field*) extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.children.map(c => c.head.last.content), annotations(entry)))
+      field.foreach(builder.set(_, entry.last.children.map(c => c.head.last.content.unquote), annotations(entry)))
   }
 
   case class ChildrenParser() extends SpecFieldParser {
@@ -160,20 +171,18 @@ object SpecFieldParser {
                       node: ASTNode[_],
                       parent: Option[EndPoint],
                       collector: ListBuffer[EndPoint]): Unit = {
-      val endpoint = EndPointBuilder()
-      endpoint.set(Path,
-                   parent.map(_.path).getOrElse("") + node.head.content,
-                   annotations(node.head) :+ ParentEndPoint(parent))
+
+      val endpoint = EndPointBuilder().set(Path,
+                                           parent.map(_.path).getOrElse("") + node.head.content.unquote,
+                                           annotations(node.head) :+ ParentEndPoint(parent))
       super.parse(spec, node, endpoint)
 
       val actual = endpoint.build
       collector += actual
-      val regex = RegExpMatcher("/.*")
+
       node.last.children
-        .filter(regex.matches)
-        .foreach(e => {
-          parse(spec, e, Some(actual), collector)
-        })
+        .filter(RegExpMatcher("/.*").matches)
+        .foreach(parse(spec, _, Some(actual), collector))
     }
   }
 
@@ -189,14 +198,13 @@ object Matcher {
   }
 
   case class KeyMatcher(key: String) extends Matcher {
-    override def matches(entry: ASTNode[_]): Boolean = key == entry.head.content
+    override def matches(entry: ASTNode[_]): Boolean = key == entry.head.content.unquote
   }
 
   case class RegExpMatcher(expr: String) extends Matcher {
-
     val path: Regex = expr.r
 
-    override def matches(entry: ASTNode[_]): Boolean = entry.head.content match {
+    override def matches(entry: ASTNode[_]): Boolean = entry.head.content.unquote match {
       case path() => true
       case _      => false
     }

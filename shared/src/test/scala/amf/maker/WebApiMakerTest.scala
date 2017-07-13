@@ -39,25 +39,49 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(fixture, "completeExample.raml", Some(RamlYamlHint))
   }
 
-  ignore("WebApi with nested endpoints - RAML.") {
+  test("WebApi with nested endpoints - RAML.") {
     val endpoints = List(
       EndPointBuilder()
-        .withPath("/somesome")
+        .withPath("/levelzero")
         .build,
       EndPointBuilder()
-        .withPath("/level-one")
+        .withPath("/levelzero/level-one")
         .withName("One display name")
-        .withDescription("and this description!"),
-      EndPointBuilder().withPath("/another-level-one").withName("some other display name")
+        .withDescription("and this description!")
+        .build,
+      EndPointBuilder().withPath("/levelzero/another-level-one").withName("some other display name").build,
+      EndPointBuilder().withPath("/another-levelzero").withName("Root name").build
     )
     val fixture = List(
       (Name, "API"),
-      (Host, "/some/base/uri"),
       (BasePath, "/some/base/uri"),
       (EndPoints, endpoints)
     )
 
     assertFixture(fixture, "nested-endpoints.raml", Some(RamlYamlHint))
+  }
+
+  test("WebApi with nested endpoints - OAS.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .withName("Name")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .build,
+      EndPointBuilder().withPath("/levelzero/another-level-one").withName("some other display name").build,
+      EndPointBuilder().withPath("/another-levelzero").withName("Root name").build
+    )
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/base/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "nested-endpoints.json", Some(OasJsonHint))
   }
 
   test("generate partial succeed") {
@@ -224,7 +248,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       case (Provider, expected)       => assertField(Provider, api.provider, expected)
       case (License, expected)        => assertField(License, api.license, expected)
       case (Documentation, expected)  => assertField(Documentation, api.documentation, expected)
-      case (EndPoints, expected) => {
+      case (EndPoints, expected) =>
         val expectedEndPoints = expected.asInstanceOf[List[EndPoint]]
         if (api.endPoints.size != expectedEndPoints.size)
           fail(
@@ -234,7 +258,6 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
           case (c, d) =>
             assertField(EndPoints, c, d)
         }
-      }
     }
     succeed
   }
