@@ -1,7 +1,9 @@
 package amf.builder
 
+import amf.maker.BaseUriSplitter
+import amf.metadata.model.WebApiModel
 import amf.metadata.model.WebApiModel._
-import amf.model.{BaseWebApi, CreativeWork, License, Organization, EndPoint}
+import amf.model.{BaseWebApi, CreativeWork, License, Organization, EndPoint, Fields}
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -36,4 +38,14 @@ trait BaseWebApiBuilder extends Builder[BaseWebApi] {
   def withLicense(license: License): this.type = set(License, license)
 
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
+
+  protected def fixFields(fields: Fields): Fields = {
+    //TODO resolve other builders
+    val basePath = Option(fields.get(WebApiModel.BasePath))
+    val host     = Option(fields.get(WebApiModel.Host))
+    if (basePath.isEmpty && host.isDefined) {
+      fields.set(WebApiModel.BasePath, BaseUriSplitter(host.get).path, List())
+    }
+    fields
+  }
 }

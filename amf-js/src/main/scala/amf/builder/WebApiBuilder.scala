@@ -14,5 +14,5 @@ class WebApiBuilder extends BaseWebApiBuilder {
   def withScheme(scheme: js.Array[String]): this.type        = super.withSchemes(scheme.toList)
   def withEndPoint(endPoints: js.Array[EndPoint]): this.type = super.withEndPoints(endPoints.toList)
 
-  override def build: WebApi = WebApi(fields)
+  override def build: WebApi = WebApi(fixFields(fields))
 }

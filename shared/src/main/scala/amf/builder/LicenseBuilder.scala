@@ -1,25 +1,18 @@
 package amf.builder
 
+import amf.metadata.model.LicenseModel.{Url, Name}
 import amf.model.License
 
 /**
   * License domain element builder.
   */
 class LicenseBuilder extends Builder[License] {
-  var url: String  = _
-  var name: String = _
 
-  def withUrl(url: String): LicenseBuilder = {
-    this.url = url
-    this
-  }
+  def withUrl(url: String): LicenseBuilder = set(Url, url)
 
-  def withName(name: String): LicenseBuilder = {
-    this.name = name
-    this
-  }
+  def withName(name: String): LicenseBuilder = set(Name, name)
 
-  override def build: License = new License(url, name)
+  override def build: License = new License(fields)
 }
 
 object LicenseBuilder {

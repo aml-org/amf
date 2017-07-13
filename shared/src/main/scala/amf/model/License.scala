@@ -1,6 +1,7 @@
 package amf.model
 
 import amf.builder.LicenseBuilder
+import amf.metadata.model.LicenseModel.{Name, Url}
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -12,7 +13,7 @@ import scala.scalajs.js.annotation.JSExportAll
   *     - schema-org:name
   */
 @JSExportAll
-class License(val url: String, val name: String) extends DomainElement[License, LicenseBuilder] {
+class License(val fields: Fields) extends DomainElement[License, LicenseBuilder] {
   override def toBuilder: LicenseBuilder = LicenseBuilder().withUrl(url).withName(name)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[License]
@@ -29,6 +30,9 @@ class License(val url: String, val name: String) extends DomainElement[License, 
     val state = Seq(url, name)
     state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
   }
+
+  val url: String  = fields get Url
+  val name: String = fields get Name
 
   override def toString = s"License($url, $name)"
 }

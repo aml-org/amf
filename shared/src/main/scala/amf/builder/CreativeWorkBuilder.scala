@@ -1,25 +1,18 @@
 package amf.builder
 
+import amf.metadata.model.CreativeWorkModel.{Description, Url}
 import amf.model.CreativeWork
 
 /**
   * CreativeWork domain element builder.
   */
 class CreativeWorkBuilder extends Builder[CreativeWork] {
-  var url: String         = _
-  var description: String = _
 
-  def withUrl(url: String): CreativeWorkBuilder = {
-    this.url = url
-    this
-  }
+  def withUrl(url: String): CreativeWorkBuilder = set(Url, url)
 
-  def withDescription(description: String): CreativeWorkBuilder = {
-    this.description = description
-    this
-  }
+  def withDescription(description: String): CreativeWorkBuilder = set(Description, description)
 
-  override def build: CreativeWork = new CreativeWork(url, description)
+  override def build: CreativeWork = CreativeWork(fields)
 }
 
 object CreativeWorkBuilder {

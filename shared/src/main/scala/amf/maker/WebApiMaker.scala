@@ -22,12 +22,7 @@ class WebApiMaker(unit: AMFUnit) extends Maker[BaseWebApi](unit.vendor) {
     val root                       = unit.root.children.head
 
     root.children.foreach(matcher(builder, _))
-
-    builder
-      .withProvider(OrganizationMaker(root, vendor).make)
-      .withLicense(LicenseMaker(root, vendor).make)
-      .withDocumentation(CreativeWorkMaker(root, vendor).make)
-      .build
+    builder.build
   }
 }
 

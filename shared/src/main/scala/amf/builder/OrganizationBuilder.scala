@@ -1,31 +1,20 @@
 package amf.builder
 
+import amf.metadata.model.OrganizationModel.{Url, Name, Email}
 import amf.model.Organization
 
 /**
   * Created by martin.gutierrez on 6/29/17.
   */
 class OrganizationBuilder extends Builder[Organization] {
-  var url: String   = _
-  var name: String  = _
-  var email: String = _
 
-  def withUrl(url: String): OrganizationBuilder = {
-    this.url = url
-    this
-  }
+  def withUrl(url: String): OrganizationBuilder = set(Url, url)
 
-  def withName(name: String): OrganizationBuilder = {
-    this.name = name
-    this
-  }
+  def withName(name: String): OrganizationBuilder = set(Name, name)
 
-  def withEmail(email: String): OrganizationBuilder = {
-    this.email = email
-    this
-  }
+  def withEmail(email: String): OrganizationBuilder = set(Email, email)
 
-  override def build: Organization = new Organization(url, name, email)
+  override def build: Organization = Organization(fields)
 }
 
 object OrganizationBuilder {

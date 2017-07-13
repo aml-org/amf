@@ -1,11 +1,11 @@
 package amf.maker
 
-import amf.builder.EndPointBuilder
+import amf.builder.{CreativeWorkBuilder, EndPointBuilder, LicenseBuilder, OrganizationBuilder}
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.metadata.Field
 import amf.metadata.model.WebApiModel._
-import amf.model.{BaseWebApi, CreativeWork, License, Organization, EndPoint}
+import amf.model.{BaseWebApi, EndPoint}
 import amf.parser._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
@@ -31,9 +31,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/yaml"),
       (Version, "1.1"),
       (TermsOfService, "terminos"),
-      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
-      (License, new License("urlLicense", "nameLicense")),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider,
+       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
+      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     assertFixture(fixture, "completeExample.raml", Some(RamlYamlHint))
@@ -95,9 +97,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/yaml"),
       (Version, "1.1"),
       (TermsOfService, null),
-      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
-      (License, new License(null, null)),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider,
+       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     assertFixture(fixture, "partialExample.raml", Some(RamlYamlHint))
@@ -131,9 +134,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/json"),
       (Version, "1.1"),
       (TermsOfService, "terminos"),
-      (Provider, Organization("urlContact", "nameContact", "emailContact")),
-      (License, new License("urlLicense", "nameLicense")),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider, OrganizationBuilder().withUrl("urlContact").withName("nameContact").withEmail("emailContact").build),
+      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     assertFixture(fixture, "completeExample.json", Some(OasJsonHint))
@@ -151,9 +155,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/yaml"),
       (Version, "1.1"),
       (TermsOfService, "terminos"),
-      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
-      (License, new License("urlLicense", "nameLicense")),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider,
+       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
+      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     val after = List(
@@ -166,9 +172,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/yaml"),
       (Version, "1.1"),
       (TermsOfService, "terminos"),
-      (Provider, Organization("urlContacto", "nombreContacto", "mailContacto")),
-      (License, new License("urlLicense", "changed")),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider,
+       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
+      (License, LicenseBuilder().withUrl("urlLicense").withName("changed").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
@@ -198,9 +206,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/json"),
       (Version, "1.1"),
       (TermsOfService, "terminos"),
-      (Provider, Organization("urlContact", "nameContact", "emailContact")),
-      (License, new License("urlLicense", "nameLicense")),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider, OrganizationBuilder().withUrl("urlContact").withName("nameContact").withEmail("emailContact").build),
+      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     val after = List(
@@ -213,9 +222,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Accepts, "application/json"),
       (Version, "1.1"),
       (TermsOfService, "terminos"),
-      (Provider, Organization("urlContact", "nameContact", "emailContact")),
-      (License, new License("urlLicense", "changed")),
-      (Documentation, CreativeWork("urlExternalDocs", "descriptionExternalDocs"))
+      (Provider, OrganizationBuilder().withUrl("urlContact").withName("nameContact").withEmail("emailContact").build),
+      (License, LicenseBuilder().withUrl("urlLicense").withName("changed").build),
+      (Documentation,
+       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
     AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))

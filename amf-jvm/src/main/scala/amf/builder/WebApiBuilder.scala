@@ -39,5 +39,5 @@ class WebApiBuilder extends BaseWebApiBuilder {
   override def withDocumentation(documentation: CreativeWork): WebApiBuilder.this.type =
     super.withDocumentation(documentation)
 
-  override def build: WebApi = WebApi(fields)
+  override def build: WebApi = WebApi(fixFields(fields))
 }
