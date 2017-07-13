@@ -5,7 +5,7 @@ import amf.metadata.Field
 import amf.metadata.model.EndPointModel
 import amf.metadata.model.EndPointModel.Path
 import amf.metadata.model.WebApiModel._
-import amf.model.Annotation.LexicalInformation
+import amf.model.Annotation.{LexicalInformation, ParentEndPoint}
 import amf.model.{Annotation, EndPoint}
 import amf.parser.ASTNode
 import amf.remote.{Amf, Oas, Raml, Vendor}
@@ -161,7 +161,9 @@ object SpecFieldParser {
                       parent: Option[EndPoint],
                       collector: ListBuffer[EndPoint]): Unit = {
       val endpoint = EndPointBuilder()
-      endpoint.set(Path, node.head.content, annotations(node.head) :+ Annotation.ParentEndPoint(parent))
+      endpoint.set(Path,
+                   parent.map(_.path).getOrElse("") + node.head.content,
+                   annotations(node.head) :+ ParentEndPoint(parent))
       super.parse(spec, node, endpoint)
 
       val actual = endpoint.build

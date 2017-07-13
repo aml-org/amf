@@ -44,7 +44,3 @@ abstract class Maker[T <: DomainElement[_, _]](val vendor: Vendor) extends Platf
       }
   }
 }
-
-abstract class ListMaker[T <: DomainElement[_, _]](override val vendor: Vendor) extends Maker[T](vendor) {
-  def makeList: List[T]
-}

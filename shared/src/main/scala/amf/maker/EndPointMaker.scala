@@ -10,10 +10,9 @@ import scala.util.matching.Regex
 /**
   * Created by martin.gutierrez on 7/10/17.
   */
-class EndPointMaker(content: ASTNode[_], vendor: Vendor) extends ListMaker[EndPoint](vendor) {
+class EndPointMaker(content: ASTNode[_], vendor: Vendor) extends Maker[EndPoint](vendor) {
 
-  override def make: EndPoint           = ???
-  override def makeList: List[EndPoint] = extractFromChildren(content).map(_.build).toList
+  override def make: EndPoint = ???
 
   def extractFromChildren(endPoint: ASTNode[_], parent: Option[EndPointBuilder] = None): Seq[EndPointBuilder] = {
     endPointPathEntries(endPoint)
@@ -28,7 +27,6 @@ class EndPointMaker(content: ASTNode[_], vendor: Vendor) extends ListMaker[EndPo
       .withPath(key)
       .withName(findValue(value, "displayName"))
       .withDescription(findValue(value, "description"))
-      .withChildren(extractFromChildren(value, Some(builder)).toList)
   }
 
   private def endPointPathEntries(endPoint: ASTNode[_]): Seq[ASTNode[_]] = {
