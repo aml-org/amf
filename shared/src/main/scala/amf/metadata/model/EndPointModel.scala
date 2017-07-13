@@ -1,18 +1,19 @@
 package amf.metadata.model
 
-import amf.metadata.{Field, Type}
 import amf.metadata.Type._
+import amf.metadata.{Field, Type}
+import amf.vocabulary.Namespace.{Http, Hydra, Schema}
 
 /**
-  * EndPoint
+  * EndPoint metamodel
   */
 object EndPointModel extends Type {
 
-  val Path = Field(RegExp, "path")
+  val Path = Field(RegExp, Http, "path")
 
-  val Name = Field(Str, "name")
+  val Name = Field(Str, Schema, "name")
 
-  val Description = Field(Str, "description")
+  val Description = Field(Str, Schema, "description")
 
-  val Operations = Field(Array(OperationModel), "operations")
+  val Operations = Field(Array(OperationModel), Hydra, "supportedOperation")
 }

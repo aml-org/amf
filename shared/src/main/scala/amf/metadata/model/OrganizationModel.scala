@@ -1,16 +1,17 @@
 package amf.metadata.model
 
-import amf.metadata.{Field, Type}
 import amf.metadata.Type.Str
+import amf.metadata.{Field, Type}
+import amf.vocabulary.Namespace.Schema
 
 /**
-  * Organization
+  * Organization metamodel
   */
 object OrganizationModel extends Type {
 
-  val Url = Field(Str, "url")
+  val Url = Field(Str, Schema, "url")
 
-  val Name = Field(Str, "name")
+  val Name = Field(Str, Schema, "name")
 
-  val Email = Field(Str, "email")
+  val Email = Field(Str, Schema, "email")
 }

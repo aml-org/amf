@@ -1,25 +1,26 @@
 package amf.metadata.model
 
-import amf.metadata.{Field, Type}
 import amf.metadata.Type._
+import amf.metadata.{Field, Type}
+import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 
 /**
-  * Operation
+  * Operation metamodel
   */
 object OperationModel extends Type {
 
-  val Method = Field(Enum, "method")
+  val Method = Field(Enum, Hydra, "method")
 
-  val Name = Field(Str, "name")
+  val Name = Field(Str, Schema, "name")
 
-  val Description = Field(Str, "description")
+  val Description = Field(Str, Schema, "description")
 
-  val Deprecated = Field(Bool, "deprecated")
+  val Deprecated = Field(Bool, Document, "deprecated")
 
-  val Summary = Field(Bool, "summary")
+  val Summary = Field(Bool, Http, "summary")
 
-  val Documentation = Field(CreativeWorkModel, "documentation")
+  val Documentation = Field(CreativeWorkModel, Schema, "documentation")
 
-  val Schemes = Field(Array(Str), "schemes")
+  val Schemes = Field(Array(Str), Http, "scheme")
 
 }
