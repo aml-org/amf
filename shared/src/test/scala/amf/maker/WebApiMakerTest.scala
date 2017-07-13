@@ -5,7 +5,7 @@ import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.metadata.Field
 import amf.metadata.model.WebApiModel._
-import amf.model.{BaseWebApi, EndPoint}
+import amf.model.BaseWebApi
 import amf.parser._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
@@ -258,16 +258,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       case (Provider, expected)       => assertField(Provider, api.provider, expected)
       case (License, expected)        => assertField(License, api.license, expected)
       case (Documentation, expected)  => assertField(Documentation, api.documentation, expected)
-      case (EndPoints, expected) =>
-        val expectedEndPoints = expected.asInstanceOf[List[EndPoint]]
-        if (api.endPoints.size != expectedEndPoints.size)
-          fail(
-            s"Expected $expected has size ${expectedEndPoints.size} and actual ${api.endPoints} has size ${api.endPoints.size}")
-
-        (api.endPoints zip expectedEndPoints).foreach {
-          case (c, d) =>
-            assertField(EndPoints, c, d)
-        }
+      case (EndPoints, expected)      => assertField(EndPoints, api.endPoints, expected)
     }
     succeed
   }

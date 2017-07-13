@@ -34,6 +34,8 @@ class EndPoint(val fields: Fields) extends DomainElement[EndPoint, EndPointBuild
     val state = Seq(name, description, path)
     state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
   }
+
+  override def toString = s"EndPoint($name, $description, $path)"
 }
 
 object EndPoint {
