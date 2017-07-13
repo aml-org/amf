@@ -8,10 +8,10 @@ import amf.spec.Spec
 /**
   * Domain model WebApi Maker.
   */
-class WebApiMaker(unit: AMFUnit) extends Maker[BaseWebApi](unit.vendor) {
+class WebApiMaker(unit: AMFUnit) extends Maker[BaseWebApi] {
 
   def matcher(builder: BaseWebApiBuilder, entry: ASTNode[_]): Unit = {
-    Spec(vendor).fields.find(_.matcher.matches(entry)) match {
+    Spec(unit.vendor).fields.find(_.matcher.matches(entry)) match {
       case Some(field) => field.parse(field, entry, builder)
       case _           => // Unknown node...
     }

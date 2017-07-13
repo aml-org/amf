@@ -38,7 +38,6 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |  }
         |}""".stripMargin
     dumper.dump() map { s =>
-      println("output is : " + s)
       s should be(expected)
     }
   }
@@ -60,7 +59,6 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |  - https
         |baseUri: http://localhost.com/api""".stripMargin
     dumper.dump() map { s =>
-      println("output is : " + s)
       s should be(expected)
     }
   }
@@ -97,7 +95,6 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |  ]
         |}""".stripMargin
     dumper.dump() map { s =>
-      println("output is : " + s)
       s should be(expected)
     }
   }
