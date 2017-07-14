@@ -6,14 +6,14 @@ import amf.domain.{FieldHolder, Fields}
 import amf.metadata.Field
 import amf.parser.Range.NONE
 import amf.spec.Matcher.KeyMatcher
-import amf.spec.SpecFieldEmitter.StringValueEmitter.key
+import amf.spec.FieldEmitter.StringValueEmitter.key
 
 import scala.collection.mutable.ListBuffer
 
 /**
   * Node emitters.
   */
-object SpecFieldEmitter {
+object FieldEmitter {
 
   case class SpecEmitter(map: Map[Field, (SpecField, Option[SpecFieldEmitter])]) {
 
