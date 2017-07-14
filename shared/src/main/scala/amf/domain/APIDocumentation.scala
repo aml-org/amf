@@ -4,12 +4,12 @@ import amf.builder.APIDocumentationBuilder
 import amf.metadata.domain.APIDocumentationModel
 import amf.metadata.domain.APIDocumentationModel._
 
-import scala.scalajs.js.annotation.JSExportAll
-
 /**
   * API documentation internal model
   */
-class APIDocumentation(val fields: Fields) extends DomainElement[APIDocumentation, APIDocumentationBuilder] {
+class APIDocumentation(val fields: Fields) extends DomainElement {
+
+  override type This = APIDocumentation
 
   val name: String                = fields get Name
   val description: String         = fields get Description

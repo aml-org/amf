@@ -6,7 +6,7 @@ import amf.unsafe.PlatformSecrets
 /**
   * Maker class.
   */
-trait Maker[T <: DomainElement[_, _]] extends PlatformSecrets {
+trait Maker[T <: DomainElement] extends PlatformSecrets {
 
   def make: T
 }

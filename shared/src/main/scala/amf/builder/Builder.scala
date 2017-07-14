@@ -1,12 +1,12 @@
 package amf.builder
 
+import amf.domain.{Annotation, DomainElement, Fields}
 import amf.metadata.{Field, Type}
-import amf.domain.{Annotation, DomainElement, EndPoint, Fields}
 
 /**
-  *
+  * Builder for [[DomainElement]]s
   */
-trait Builder[T <: DomainElement[T, _]] {
+trait Builder[T <: DomainElement] {
 
   protected val fields: Fields = new Fields()
 

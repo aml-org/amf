@@ -6,7 +6,9 @@ import amf.metadata.domain.CreativeWorkModel.{Url, Description}
 /**
   * Creative work internal model
   */
-case class CreativeWork(fields: Fields) extends DomainElement[CreativeWork, CreativeWorkBuilder] {
+case class CreativeWork(fields: Fields) extends DomainElement {
+
+  override type This = CreativeWork
 
   val url: String         = fields get Url
   val description: String = fields get Description

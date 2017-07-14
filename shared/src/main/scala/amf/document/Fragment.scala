@@ -1,44 +1,46 @@
 package amf.document
 
+import java.net.URL
+
+import amf.domain.DomainElement
+
 /**
   * RAML Fragments
   */
 object Fragment {
 
   /** Units encoding domain fragments */
-  sealed trait Fragment extends Unit
+  sealed trait Fragment extends Unit with EncodesModel {
 
-  case object DocumentationItem extends Fragment
+    /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
+    override def references(): List[URL] = Nil
+  }
 
-  case object DataType extends Fragment
+  case class DocumentationItem(location: URL, encodes: DomainElement) extends Fragment
 
-  case object NamedExample extends Fragment
+  case class DataType(location: URL, encodes: DomainElement) extends Fragment
 
-  case object ResourceType extends Fragment
+  case class NamedExample(location: URL, encodes: DomainElement) extends Fragment
 
-  case object Trait extends Fragment
+  case class ResourceType(location: URL, encodes: DomainElement) extends Fragment
 
-  case object AnnotationTypeDeclaration extends Fragment
+  case class Trait(location: URL, encodes: DomainElement) extends Fragment
 
-  case object Library extends Fragment
+  case class AnnotationTypeDeclaration(location: URL, encodes: DomainElement) extends Fragment
 
-  case object Overlay extends Fragment
+  case class Library(location: URL, encodes: DomainElement) extends Fragment
 
-  case object Extension extends Fragment
+  case class Overlay(location: URL, encodes: DomainElement) extends Fragment
 
-  case object SecurityScheme extends Fragment
+  case class Extension(location: URL, encodes: DomainElement) extends Fragment
 
-  case object Default extends Fragment
+  case class SecurityScheme(location: URL, encodes: DomainElement) extends Fragment
 
-  val fragments = Seq(DocumentationItem,
-                      DataType,
-                      NamedExample,
-                      ResourceType,
-                      Trait,
-                      AnnotationTypeDeclaration,
-                      Library,
-                      Overlay,
-                      Extension,
-                      SecurityScheme,
-                      Default)
+  case class Default(location: URL, encodes: DomainElement) extends Fragment
+}
+
+trait EncodesModel {
+
+  /** Encoded [[DomainElement]] described in the document element. */
+  def encodes(): DomainElement
 }

@@ -6,7 +6,9 @@ import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 /**
   * Organization internal model
   */
-case class Organization(fields: Fields) extends DomainElement[Organization, OrganizationBuilder] {
+case class Organization(fields: Fields) extends DomainElement {
+
+  override type This = Organization
 
   val url: String   = fields get Url
   val name: String  = fields get Name

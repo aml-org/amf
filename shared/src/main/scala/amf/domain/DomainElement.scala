@@ -5,8 +5,11 @@ import amf.builder.Builder
 /**
   * Internal model for any domain element
   */
-trait DomainElement[T <: DomainElement[T, B], B <: Builder[T]] {
-  def toBuilder: B
+trait DomainElement {
+
+  type This <: DomainElement
+
+  def toBuilder: Builder[This]
 }
 
 /**

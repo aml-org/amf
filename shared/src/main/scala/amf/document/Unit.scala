@@ -6,8 +6,8 @@ import java.net.URL
 trait Unit {
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
-//  def references(): List[URL]
+  def references(): List[URL]
 
   /** Returns the file location for the document that has been parsed to generate this model */
-//  def location(): URL
+  def location(): URL
 }
