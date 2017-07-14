@@ -4,12 +4,14 @@ import amf.metadata.Field
 import amf.metadata.Type._
 import amf.unsafe.PlatformSecrets
 
+import scala.collection.immutable.ListMap
+
 /**
   * Field values
   */
 class Fields extends PlatformSecrets {
 
-  private var fs: Map[Field, Value] = Map()
+  private var fs: Map[Field, Value] = ListMap()
 
   def default(field: Field): Any = field.`type` match {
     case Array(_) => Nil
@@ -40,6 +42,10 @@ class Fields extends PlatformSecrets {
   def into(other: Fields): Unit = other.fs = other.fs ++ fs
 
   def apply[T](field: Field): T = get(field)
+
+  def foreach(fn: ((Field, Value)) => Unit): Unit = {
+    fs.foreach(fn)
+  }
 }
 
 case class Value(value: Any, annotations: List[Annotation]) {

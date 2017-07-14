@@ -6,7 +6,7 @@ import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 /**
   * Organization internal model
   */
-case class Organization(fields: Fields) extends DomainElement {
+case class Organization(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
 
   override type This = Organization
 
@@ -33,4 +33,8 @@ case class Organization(fields: Fields) extends DomainElement {
   override def toString = s"Organization($url, $name, $email)"
 
   override def toBuilder: OrganizationBuilder = OrganizationBuilder(fields)
+}
+
+object Organization {
+  def apply(fields: Fields): Organization = new Organization(fields)
 }

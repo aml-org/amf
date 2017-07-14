@@ -16,3 +16,5 @@ trait DomainElement {
   * Domain model of type raml-doc:RootDomainElement
   */
 trait RootDomainElement
+
+abstract class FieldHolder(val fields: Fields) {}

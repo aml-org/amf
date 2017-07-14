@@ -6,7 +6,7 @@ import amf.metadata.domain.LicenseModel.{Name, Url}
 /**
   * License internal model
   */
-case class License(fields: Fields) extends DomainElement {
+case class License(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
 
   override type This = License
 

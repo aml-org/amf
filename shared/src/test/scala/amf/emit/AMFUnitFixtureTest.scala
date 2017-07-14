@@ -1,4 +1,4 @@
-package amf.broker
+package amf.emit
 
 import amf.builder.{APIDocumentationBuilder, CreativeWorkBuilder, LicenseBuilder, OrganizationBuilder}
 import amf.domain.APIDocumentation
@@ -47,7 +47,7 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .withDescription("test description")
       .withHost("http://localhost.com/api")
       .withSchemes(List("http", "https"))
-      .withBasePath("api")
+      .withBasePath("http://localhost.com/api")
       .withAccepts("application/json")
       .withContentType("application/json")
       .withVersion("1.1")

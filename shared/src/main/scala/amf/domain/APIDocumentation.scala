@@ -7,7 +7,7 @@ import amf.metadata.domain.APIDocumentationModel._
 /**
   * API documentation internal model
   */
-class APIDocumentation(val fields: Fields) extends DomainElement {
+class APIDocumentation(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
 
   override type This = APIDocumentation
 

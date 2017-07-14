@@ -1,4 +1,4 @@
-package amf.broker
+package amf.emit
 
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.parser.{ASTNode, Document}
@@ -6,7 +6,7 @@ import amf.remote.{Amf, Oas, Raml}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 
-class AMFUnitUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
+class AMFUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
 
   test("test simple raml generation") {
     val unit = buildSimpleUnit(Raml)
@@ -23,7 +23,7 @@ class AMFUnitUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
 
   }
 
-  test("test simple JSONLD generation") {
+  ignore("test simple JSONLD generation") {
     val unit = buildSimpleUnit(Amf)
 
     unit.`type` should be(Document)

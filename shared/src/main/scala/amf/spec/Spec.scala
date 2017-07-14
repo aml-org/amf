@@ -11,6 +11,13 @@ import amf.domain.{Annotation, EndPoint}
 import amf.parser.ASTNode
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}
+import amf.spec.SpecFieldEmitter.{
+  ObjectEmitter,
+  SpecEmitter,
+  SpecFieldEmitter,
+  StringListValueEmitter,
+  StringValueEmitter
+}
 import amf.spec.SpecFieldParser._
 
 import scala.collection.mutable.ListBuffer
@@ -28,143 +35,164 @@ object Spec {
     case _    => Spec()
   }
 
-  case class Spec(fields: SpecField*)
+  implicit def fieldAsList(field: Field): List[Field] = List(field)
+
+  case class Spec(fields: SpecField*) {
+    def emitter: SpecEmitter = SpecEmitter(fields.toList)
+  }
 
   val RamlSpec = Spec(
-    SpecField(KeyMatcher("title"), StringValueParser(Name), null),
-    SpecField(KeyMatcher("baseUri"), StringValueParser(Host), null),
-    SpecField(KeyMatcher("description"), StringValueParser(Description), null),
-    SpecField(KeyMatcher("mediaType"), StringValueParser(ContentType, Accepts), null),
-    SpecField(KeyMatcher("version"), StringValueParser(Version), null),
-    SpecField(KeyMatcher("termsOfService"), StringValueParser(TermsOfService), null),
-    SpecField(KeyMatcher("protocols"), StringListParser(Schemes), null),
+    SpecField(Name, KeyMatcher("title"), StringValueParser, StringValueEmitter),
+    SpecField(Host, KeyMatcher("baseUri"), StringValueParser, StringValueEmitter),
+    SpecField(Description, KeyMatcher("description"), StringValueParser, StringValueEmitter),
+    SpecField(List(ContentType, Accepts), KeyMatcher("mediaType"), StringValueParser, StringValueEmitter),
+    SpecField(Version, KeyMatcher("version"), StringValueParser, StringValueEmitter),
+    SpecField(TermsOfService, KeyMatcher("termsOfService"), StringValueParser, StringValueEmitter),
+    SpecField(Schemes, KeyMatcher("protocols"), StringListParser(Schemes), StringListValueEmitter),
     SpecField(
+      EndPoints,
       RegExpMatcher("/.*"),
       new EndPointParser(),
-      null,
+      ObjectEmitter,
       List(
-        SpecField(KeyMatcher("displayName"), StringValueParser(EndPointModel.Name), null),
-        SpecField(KeyMatcher("description"), StringValueParser(EndPointModel.Description), null)
+        SpecField(EndPointModel.Name, KeyMatcher("displayName"), StringValueParser, StringValueEmitter),
+        SpecField(EndPointModel.Description, KeyMatcher("description"), StringValueParser, StringValueEmitter)
       )
     ),
     SpecField(
+      Provider,
       KeyMatcher("contact"),
       new BuilderParser(OrganizationBuilder.apply, Provider),
-      null,
+      ObjectEmitter,
       List(
-        SpecField(KeyMatcher("url"), StringValueParser(OrganizationModel.Url), null),
-        SpecField(KeyMatcher("name"), StringValueParser(OrganizationModel.Name), null),
-        SpecField(KeyMatcher("email"), StringValueParser(OrganizationModel.Email), null)
+        SpecField(OrganizationModel.Url, KeyMatcher("url"), StringValueParser, StringValueEmitter),
+        SpecField(OrganizationModel.Name, KeyMatcher("name"), StringValueParser, StringValueEmitter),
+        SpecField(OrganizationModel.Email, KeyMatcher("email"), StringValueParser, StringValueEmitter)
       )
     ),
     SpecField(
+      Documentation,
       KeyMatcher("externalDocs"),
       new BuilderParser(CreativeWorkBuilder.apply, Documentation),
-      null,
+      ObjectEmitter,
       List(
-        SpecField(KeyMatcher("url"), StringValueParser(CreativeWorkModel.Url), null),
-        SpecField(KeyMatcher("description"), StringValueParser(CreativeWorkModel.Description), null)
+        SpecField(CreativeWorkModel.Url, KeyMatcher("url"), StringValueParser, StringValueEmitter),
+        SpecField(CreativeWorkModel.Description, KeyMatcher("description"), StringValueParser, StringValueEmitter)
       )
     ),
     SpecField(
+      License,
       KeyMatcher("license"),
       new BuilderParser(LicenseBuilder.apply, License),
-      null,
+      ObjectEmitter,
       List(
-        SpecField(KeyMatcher("url"), StringValueParser(LicenseModel.Url), null),
-        SpecField(KeyMatcher("name"), StringValueParser(LicenseModel.Name), null)
+        SpecField(LicenseModel.Url, KeyMatcher("url"), StringValueParser, StringValueEmitter),
+        SpecField(LicenseModel.Name, KeyMatcher("name"), StringValueParser, StringValueEmitter)
       )
     )
   )
 
   val OasSpec = Spec(
     SpecField(
+      Nil,
       KeyMatcher("info"),
       ChildrenParser(),
       null,
       List(
-        SpecField(KeyMatcher("title"), StringValueParser(Name), null),
-        SpecField(KeyMatcher("description"), StringValueParser(Description), null),
-        SpecField(KeyMatcher("termsOfService"), StringValueParser(TermsOfService), null),
-        SpecField(KeyMatcher("version"), StringValueParser(Version), null),
+        SpecField(Name, KeyMatcher("title"), StringValueParser, StringValueEmitter),
+        SpecField(Description, KeyMatcher("description"), StringValueParser, StringValueEmitter),
+        SpecField(TermsOfService, KeyMatcher("termsOfService"), StringValueParser, StringValueEmitter),
+        SpecField(Version, KeyMatcher("version"), StringValueParser, StringValueEmitter),
         SpecField(
+          License,
           KeyMatcher("license"),
           new BuilderParser(LicenseBuilder.apply, License),
-          null,
+          ObjectEmitter,
           List(
-            SpecField(KeyMatcher("url"), StringValueParser(LicenseModel.Url), null),
-            SpecField(KeyMatcher("name"), StringValueParser(LicenseModel.Name), null)
+            SpecField(LicenseModel.Url, KeyMatcher("url"), StringValueParser, StringValueEmitter),
+            SpecField(LicenseModel.Name, KeyMatcher("name"), StringValueParser, StringValueEmitter)
           )
         )
       )
     ),
-    SpecField(KeyMatcher("host"), StringValueParser(Host), null),
-    SpecField(KeyMatcher("basePath"), StringValueParser(BasePath), null),
-    SpecField(KeyMatcher("consumes"), StringValueParser(Accepts), null),
-    SpecField(KeyMatcher("produces"), StringValueParser(ContentType), null),
-    SpecField(KeyMatcher("schemes"), StringListParser(Schemes), null),
+    SpecField(Host, KeyMatcher("host"), StringValueParser, StringValueEmitter),
+    SpecField(BasePath, KeyMatcher("basePath"), StringValueParser, StringValueEmitter),
+    SpecField(Accepts, KeyMatcher("consumes"), StringValueParser, StringValueEmitter),
+    SpecField(ContentType, KeyMatcher("produces"), StringValueParser, StringValueEmitter),
+    SpecField(Schemes, KeyMatcher("schemes"), StringListParser(Schemes), StringListValueEmitter),
     SpecField(
+      Nil,
       KeyMatcher("paths"),
       ChildrenParser(),
       null,
       List(
         SpecField(
+          EndPoints,
           RegExpMatcher("/.*"),
           new EndPointParser(),
           null,
           List(
-            SpecField(KeyMatcher("displayName"), StringValueParser(EndPointModel.Name), null),
-            SpecField(KeyMatcher("description"), StringValueParser(EndPointModel.Description), null)
+            SpecField(EndPointModel.Name, KeyMatcher("displayName"), StringValueParser, StringValueEmitter),
+            SpecField(EndPointModel.Description, KeyMatcher("description"), StringValueParser, StringValueEmitter)
           )
         )
       )
     ),
     SpecField(
+      Provider,
       KeyMatcher("contact"),
       new BuilderParser(OrganizationBuilder.apply, Provider),
-      null,
+      ObjectEmitter,
       List(
-        SpecField(KeyMatcher("url"), StringValueParser(OrganizationModel.Url), null),
-        SpecField(KeyMatcher("name"), StringValueParser(OrganizationModel.Name), null),
-        SpecField(KeyMatcher("email"), StringValueParser(OrganizationModel.Email), null)
+        SpecField(OrganizationModel.Url, KeyMatcher("url"), StringValueParser, StringValueEmitter),
+        SpecField(OrganizationModel.Name, KeyMatcher("name"), StringValueParser, StringValueEmitter),
+        SpecField(OrganizationModel.Email, KeyMatcher("email"), StringValueParser, StringValueEmitter)
       )
     ),
     SpecField(
+      Documentation,
       KeyMatcher("externalDocs"),
       new BuilderParser(CreativeWorkBuilder.apply, Documentation),
-      null,
+      ObjectEmitter,
       List(
-        SpecField(KeyMatcher("url"), StringValueParser(CreativeWorkModel.Url), null),
-        SpecField(KeyMatcher("description"), StringValueParser(CreativeWorkModel.Description), null)
+        SpecField(CreativeWorkModel.Url, KeyMatcher("url"), StringValueParser, StringValueEmitter),
+        SpecField(CreativeWorkModel.Description, KeyMatcher("description"), StringValueParser, StringValueEmitter)
       )
     )
   )
 
   val JsonLdSpec = Spec(
     SpecField(
+      Nil,
       RegExpMatcher(".*#encodes"),
       ChildrenParser(),
       null,
       List(
-        SpecField(RegExpMatcher(".*name"),
+        SpecField(Nil,
+                  RegExpMatcher(".*name"),
                   ChildrenJsonLdParser(),
                   null,
                   List(
-                    SpecField(KeyMatcher("@value"), StringValueParser(Name), null)
+                    SpecField(Name, KeyMatcher("@value"), StringValueParser, StringValueEmitter)
                   )),
-        SpecField(RegExpMatcher(".*host"),
+        SpecField(Nil,
+                  RegExpMatcher(".*host"),
                   ChildrenJsonLdParser(),
                   null,
                   List(
-                    SpecField(KeyMatcher("@value"), StringValueParser(Host), null)
+                    SpecField(Host, KeyMatcher("@value"), StringValueParser, StringValueEmitter)
                   )),
-        SpecField(RegExpMatcher(".*scheme"), StringJsonListParser(), null)
+        SpecField(Schemes, RegExpMatcher(".*scheme"), StringJsonListParser(), null)
       )
     )
   )
 }
 
-case class SpecField(matcher: Matcher, parse: SpecFieldParser, emit: () => Unit, children: List[SpecField] = Nil)
+case class SpecField(fields: List[Field],
+                     matcher: Matcher,
+                     parse: SpecFieldParser,
+                     emitter: SpecFieldEmitter,
+                     children: List[SpecField] = Nil)
 
 object SpecFieldParser {
 
@@ -174,10 +202,10 @@ object SpecFieldParser {
     def apply(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit = parse(spec, node, builder)
   }
 
-  case class StringValueParser(field: Field*) extends SpecFieldParser {
+  object StringValueParser extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.content.unquote, annotations(entry)))
+      spec.fields.foreach(builder.set(_, entry.last.content.unquote, annotations(entry)))
   }
 
   case class StringListParser(field: Field*) extends SpecFieldParser {

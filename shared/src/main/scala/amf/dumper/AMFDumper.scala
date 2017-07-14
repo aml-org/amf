@@ -1,6 +1,6 @@
 package amf.dumper
 
-import amf.broker.AMFUnitMaker
+import amf.emit.AMFUnitMaker
 import amf.generator.{JsonGenerator, YamlGenerator}
 import amf.domain.APIDocumentation
 import amf.parser.{AMFUnit, Document, Fragment, Module}

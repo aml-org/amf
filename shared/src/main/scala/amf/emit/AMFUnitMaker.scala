@@ -1,4 +1,4 @@
-package amf.broker
+package amf.emit
 
 import amf.domain.APIDocumentation
 import amf.parser.{AMFUnit, Document}

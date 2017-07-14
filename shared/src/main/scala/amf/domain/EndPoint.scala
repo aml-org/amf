@@ -6,7 +6,7 @@ import amf.metadata.domain.EndPointModel._
 /**
   * EndPoint internal model
   */
-case class EndPoint(fields: Fields) extends DomainElement {
+case class EndPoint(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
 
   override type This = EndPoint
 
