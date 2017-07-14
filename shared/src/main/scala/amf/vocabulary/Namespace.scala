@@ -7,19 +7,19 @@ case class Namespace(base: String)
 
 object Namespace {
 
-  val Document = Namespace("http://raml.org/vocabularies/document")
+  val Document = Namespace("http://raml.org/vocabularies/document#")
 
-  val Http = Namespace("http://raml.org/vocabularies/http")
+  val Http = Namespace("http://raml.org/vocabularies/http#")
 
-  val Shapes = Namespace("http://raml.org/vocabularies/shapes")
+  val Shapes = Namespace("http://raml.org/vocabularies/shapes#")
 
-  val Shacl = Namespace("http://www.w3.org/ns/shacl")
+  val Shacl = Namespace("http://www.w3.org/ns/shacl#")
 
   val Schema = Namespace("http://schema.org/")
 
-  val Hydra = Namespace("http://www.w3.org/ns/hydra/core")
+  val Hydra = Namespace("http://www.w3.org/ns/hydra/core#")
 
-  val Xsd = Namespace("http://www.w3.org/2001/XMLSchema")
+  val Xsd = Namespace("http://www.w3.org/2001/XMLSchema#")
 
-  val AnonShapes = Namespace("http://raml.org/vocabularies/shapes/anon")
+  val AnonShapes = Namespace("http://raml.org/vocabularies/shapes/anon#")
 }

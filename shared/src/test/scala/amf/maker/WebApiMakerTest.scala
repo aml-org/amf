@@ -4,8 +4,8 @@ import amf.builder.{CreativeWorkBuilder, EndPointBuilder, LicenseBuilder, Organi
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.metadata.Field
-import amf.metadata.domain.WebApiModel._
-import amf.model.BaseWebApi
+import amf.metadata.domain.APIDocumentationModel._
+import amf.domain.APIDocumentation
 import amf.parser._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
@@ -244,7 +244,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       }
   }
 
-  def assertWebApiValues(api: BaseWebApi, assertions: List[(Field, Any)]): Assertion = {
+  def assertWebApiValues(api: APIDocumentation, assertions: List[(Field, Any)]): Assertion = {
     assertions.foreach {
       case (Name, expected)           => assertField(Name, api.name, expected)
       case (Description, expected)    => assertField(Description, api.description, expected)

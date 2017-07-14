@@ -1,7 +1,7 @@
 package amf.remote
 
 /**
-  * Created by hernan.najles on 6/22/17.
+  *
   */
 object Mimes {
   val `TEXT/YAML`: String                = "text/yaml"

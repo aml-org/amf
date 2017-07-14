@@ -1,10 +1,10 @@
 package amf.builder
 
-import amf.metadata.domain.OrganizationModel.{Url, Name, Email}
-import amf.model.Organization
+import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
+import amf.domain.{Fields, Organization}
 
 /**
-  * Created by martin.gutierrez on 6/29/17.
+  *
   */
 class OrganizationBuilder extends Builder[Organization] {
 
@@ -19,4 +19,6 @@ class OrganizationBuilder extends Builder[Organization] {
 
 object OrganizationBuilder {
   def apply(): OrganizationBuilder = new OrganizationBuilder()
+
+  def apply(fields: Fields): OrganizationBuilder = apply().copy(fields)
 }

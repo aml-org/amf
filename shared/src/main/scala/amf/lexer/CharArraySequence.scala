@@ -3,7 +3,7 @@ package amf.lexer
 import java.io.{File, FileInputStream, InputStream, InputStreamReader}
 
 /**
-  * Created by pedro.colunga on 5/22/17.
+  *
   */
 final class CharArraySequence(val data: Array[Char], val offset: Int, val length: Int) extends CharSequence {
 

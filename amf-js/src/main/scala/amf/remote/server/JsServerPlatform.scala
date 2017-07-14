@@ -9,7 +9,7 @@ import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
 
 /**
-  * Created by pedro.colunga on 5/28/17.
+  *
   */
 class JsServerPlatform extends Platform {
 

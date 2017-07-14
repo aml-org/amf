@@ -1,9 +1,9 @@
-package amf.model
+package amf.domain
 
 import amf.parser.Range
 
 /**
-  * Created by pedro.colunga on 7/12/17.
+  *
   */
 trait Annotation
 

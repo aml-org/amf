@@ -5,7 +5,7 @@ import amf.metadata.{Field, Type}
 import amf.vocabulary.Namespace.Document
 
 /**
-  * Created by pedro.colunga on 7/14/17.
+  * Domain element metamodel
   */
 trait DomainElementModel extends Type {
 

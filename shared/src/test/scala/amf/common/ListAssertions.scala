@@ -3,7 +3,7 @@ package amf.common
 import org.scalatest.{Assertion, Assertions}
 
 /**
-  * Created by hernan.najles on 6/13/17.
+  *
   */
 trait ListAssertions extends Assertions {
 

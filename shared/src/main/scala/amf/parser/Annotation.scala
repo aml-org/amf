@@ -1,7 +1,7 @@
 package amf.parser
 
 /**
-  * Created by pedro.colunga on 5/18/17.
+  *
   */
 trait Annotation {
   def name(): String

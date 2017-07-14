@@ -5,7 +5,7 @@ import amf.parser.{ASTLinkNode, ASTNode}
 import amf.visitor.ASTNodeVisitor
 
 /**
-  * Created by pedro.colunga on 5/30/17.
+  *
   */
 class YamlGenerator extends ASTNodeVisitor {
 

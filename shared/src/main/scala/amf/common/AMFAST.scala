@@ -10,7 +10,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 /**
-  * Created by hernan.najles on 6/16/17.
+  *
   */
 trait AMFAST extends ASTNode[AMFToken] {
   override type N = AMFAST

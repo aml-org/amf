@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 
 /**
-  * Created by martin.gutierrez on 6/19/17.
+  *
   */
 class DiffTest extends FunSuite with ListAssertions {
 

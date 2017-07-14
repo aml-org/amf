@@ -4,10 +4,10 @@ import amf.builder._
 import amf.common.Strings.strings
 import amf.metadata.Field
 import amf.metadata.domain.EndPointModel.Path
-import amf.metadata.domain.WebApiModel._
+import amf.metadata.domain.APIDocumentationModel._
 import amf.metadata.domain._
-import amf.model.Annotation.{LexicalInformation, ParentEndPoint}
-import amf.model.{Annotation, EndPoint}
+import amf.domain.Annotation.{LexicalInformation, ParentEndPoint}
+import amf.domain.{Annotation, EndPoint}
 import amf.parser.ASTNode
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}

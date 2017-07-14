@@ -2,14 +2,14 @@ package amf.broker
 
 import amf.common.AMFASTNode
 import amf.common.AMFToken._
-import amf.model.BaseWebApi
+import amf.domain.APIDocumentation
 import amf.remote.{Amf, Oas, Raml, Vendor}
 
 import scala.collection.mutable.ListBuffer
 
-class AMFRootNodeMaker extends AMFTreeMaker[BaseWebApi] {
+class AMFRootNodeMaker extends AMFTreeMaker[APIDocumentation] {
 
-  def make(webApi: BaseWebApi, vendor: Vendor): AMFASTNode = {
+  def make(webApi: APIDocumentation, vendor: Vendor): AMFASTNode = {
     var rootChilds = vendor match {
       case Raml =>
         if (webApi.license != null) makeRamlContent(webApi) :+ LicenseTreeMaker(webApi.license)
@@ -26,7 +26,7 @@ class AMFRootNodeMaker extends AMFTreeMaker[BaseWebApi] {
     new AMFASTNode(Root, "", null, List(new AMFASTNode(MapToken, "", null, rootChilds)))
   }
 
-  def makeAmfContent(webApi: BaseWebApi): List[AMFASTNode] = {
+  def makeAmfContent(webApi: APIDocumentation): List[AMFASTNode] = {
     val children: ListBuffer[AMFASTNode] = new ListBuffer[AMFASTNode]
 
     children += makeJsonPropertyNode("http://schema.org/name", webApi.name)
@@ -38,7 +38,7 @@ class AMFRootNodeMaker extends AMFTreeMaker[BaseWebApi] {
     nodes
   }
 
-  def makeRamlContent(webApi: BaseWebApi): List[AMFASTNode] = {
+  def makeRamlContent(webApi: APIDocumentation): List[AMFASTNode] = {
     val children: ListBuffer[AMFASTNode] = new ListBuffer[AMFASTNode]
     children += makePropertyNode("title", webApi.name)
     children += makePropertyNode("description", webApi.description)
@@ -52,7 +52,7 @@ class AMFRootNodeMaker extends AMFTreeMaker[BaseWebApi] {
     children.toList
   }
 
-  def makeOasContent(webApi: BaseWebApi): List[AMFASTNode] = {
+  def makeOasContent(webApi: APIDocumentation): List[AMFASTNode] = {
     //TODO
 
     val children: ListBuffer[AMFASTNode] = new ListBuffer[AMFASTNode]
@@ -81,6 +81,6 @@ class AMFRootNodeMaker extends AMFTreeMaker[BaseWebApi] {
 }
 
 object AMFRootNodeMaker {
-  def apply(webApi: BaseWebApi, vendor: Vendor): AMFASTNode = new AMFRootNodeMaker().make(webApi, vendor)
+  def apply(webApi: APIDocumentation, vendor: Vendor): AMFASTNode = new AMFRootNodeMaker().make(webApi, vendor)
 
 }

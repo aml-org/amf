@@ -1,11 +1,11 @@
 package amf.broker
 
 import amf.common.AMFASTNode
-import amf.model.Organization
+import amf.domain.Organization
 import amf.remote.Vendor
 
 /**
-  * Created by hernan.najles on 7/6/17.
+  *
   */
 class OrganizationTreeMaker extends AMFTreeMaker[Organization] {
 

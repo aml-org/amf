@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.model.DomainElement
+import amf.domain.DomainElement
 import amf.unsafe.PlatformSecrets
 
 /**

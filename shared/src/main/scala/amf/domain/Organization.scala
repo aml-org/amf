@@ -1,20 +1,12 @@
-package amf.model
+package amf.domain
+
 import amf.builder.OrganizationBuilder
 import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 
-import scala.scalajs.js.annotation.JSExportAll
-
 /**
-  * Domain element of type schema-org:Organization
-  *
-  * Properties ->
-  *     - schema-org:url
-  *     - schema-org:name
-  *     - schema-org:email
+  * Organization internal model
   */
-@JSExportAll
 case class Organization(fields: Fields) extends DomainElement[Organization, OrganizationBuilder] {
-  override def toBuilder: OrganizationBuilder = OrganizationBuilder().withUrl(url).withName(name).withEmail(email)
 
   val url: String   = fields get Url
   val name: String  = fields get Name
@@ -38,4 +30,5 @@ case class Organization(fields: Fields) extends DomainElement[Organization, Orga
 
   override def toString = s"Organization($url, $name, $email)"
 
+  override def toBuilder: OrganizationBuilder = OrganizationBuilder(fields)
 }

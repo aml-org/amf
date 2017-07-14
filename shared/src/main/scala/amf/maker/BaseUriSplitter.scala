@@ -1,7 +1,7 @@
 package amf.maker
 
 /**
-  * Created by hernan.najles on 6/29/17.
+  *
   */
 class BaseUriSplitter(val protocol: String, val domain: String, val path: String) {
 

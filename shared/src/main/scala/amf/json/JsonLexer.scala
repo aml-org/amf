@@ -5,7 +5,7 @@ import amf.common.AMFToken._
 import amf.lexer.{BaseLexer, CharSequenceStream, CharStream}
 
 /**
-  * Created by pedro.colunga on 5/29/17.
+  *
   */
 class JsonLexer(stream: CharStream = new CharSequenceStream()) extends BaseLexer[AMFToken](stream) {
 

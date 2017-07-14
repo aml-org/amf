@@ -6,7 +6,7 @@ import amf.lexer.Token.NamedToken
 import amf.visitor.ASTNodeVisitor
 
 /**
-  * Created by pedro.colunga on 5/22/17.
+  *
   */
 object ASTNodePrinter {
   def print(node: ASTNode[_]): String = new ASTPrinter().generate(node).toString

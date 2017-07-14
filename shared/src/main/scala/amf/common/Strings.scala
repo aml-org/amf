@@ -1,7 +1,7 @@
 package amf.common
 
 /**
-  * Created by pedro.colunga on 5/23/17.
+  *
   */
 class Strings(val str: String) {
 

@@ -5,7 +5,7 @@ import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.remote.Vendor
 
 /**
-  * Created by hernan.najles on 7/6/17.
+  *
   */
 abstract class AMFTreeMaker[T] {
 

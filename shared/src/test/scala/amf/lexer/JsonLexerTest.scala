@@ -7,7 +7,7 @@ import org.scalatest.FunSuite
 import amf.common.Strings.escape
 
 /**
-  * Created by hernan.najles on 6/12/17.
+  *
   */
 class JsonLexerTest extends FunSuite with ListAssertions {
 

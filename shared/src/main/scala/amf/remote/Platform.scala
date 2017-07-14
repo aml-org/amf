@@ -3,7 +3,7 @@ package amf.remote
 import scala.concurrent.Future
 
 /**
-  * Created by pedro.colunga on 5/19/17.
+  *
   */
 trait Platform {
 

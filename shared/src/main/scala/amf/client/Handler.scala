@@ -1,10 +1,10 @@
 package amf.client
 
-import amf.model.BaseWebApi
+import amf.domain.APIDocumentation
 import amf.parser.AMFUnit
 
 /**
-  * Created by pedro.colunga on 5/26/17.
+  *
   */
 trait Handler {
   def success(document: AMFUnit)
@@ -12,6 +12,6 @@ trait Handler {
 }
 
 trait WebApiHandler {
-  def success(document: BaseWebApi)
+  def success(document: APIDocumentation)
   def error(exception: Throwable)
 }

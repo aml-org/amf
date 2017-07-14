@@ -12,7 +12,7 @@ import org.scalatest.{Assertion, AsyncFunSuite}
 import scala.concurrent.ExecutionContext
 
 /**
-  * Created by hernan.najles on 6/23/17.
+  *
   */
 class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 

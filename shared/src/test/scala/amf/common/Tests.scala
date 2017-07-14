@@ -8,7 +8,7 @@ import org.scalatest.Matchers._
 import scala.util.Random
 
 /**
-  * Created by martin.gutierrez on 6/21/17.
+  *
   */
 object Tests {
 

@@ -9,14 +9,14 @@ import org.scalatest.Matchers._
 import scala.concurrent.ExecutionContext
 
 /**
-  * Created by hernan.najles on 7/10/17.
+  *
   */
 class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test simple oas/json dump from given tree") {
-    val webApi = buildWebApiClass()
+    val webApi = api()
 
     val dumper = new AMFDumper(webApi, Oas)
 
@@ -44,7 +44,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
 
   test("test simple raml/yaml dump from given tree") {
 
-    val webApi = buildWebApiClass()
+    val webApi = api()
     val dumper = new AMFDumper(webApi, Raml)
 
     val expected =
@@ -65,7 +65,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
 
   test("test simple amf/jsonld dump from given tree") {
 
-    val webApi = buildWebApiClass()
+    val webApi = api()
 
     val dumper = new AMFDumper(webApi, Amf)
 

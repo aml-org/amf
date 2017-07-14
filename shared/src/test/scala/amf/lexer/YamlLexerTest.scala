@@ -6,7 +6,7 @@ import amf.yaml.YamlLexer
 import org.scalatest.FunSuite
 
 /**
-  * Created by pedro.colunga on 5/12/17.
+  *
   */
 class YamlLexerTest extends FunSuite with ListAssertions {
 

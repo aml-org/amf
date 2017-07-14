@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 /**
-  * Created by pedro.colunga on 5/19/17.
+  *
   */
 class JsBrowserPlatform extends Platform {
 

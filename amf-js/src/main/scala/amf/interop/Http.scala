@@ -4,7 +4,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 /**
-  * Created by pedro.colunga on 5/29/17.
+  *
   */
 @js.native
 trait Http extends js.Object {

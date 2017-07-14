@@ -4,7 +4,7 @@ import amf.lexer.Token
 import amf.lexer.Token._
 
 /**
-  * Created by pedro.colunga on 5/30/17.
+  *
   */
 trait AMFToken extends Token
 

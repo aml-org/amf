@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 
 /**
-  * Created by martin.gutierrez on 6/22/17.
+  *
   */
 class ContextTest extends FunSuite with PlatformSecrets {
 

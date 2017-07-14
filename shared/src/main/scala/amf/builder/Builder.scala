@@ -1,10 +1,10 @@
 package amf.builder
 
 import amf.metadata.{Field, Type}
-import amf.model.{Annotation, DomainElement, EndPoint, Fields}
+import amf.domain.{Annotation, DomainElement, EndPoint, Fields}
 
 /**
-  * Created by martin.gutierrez on 6/29/17.
+  *
   */
 trait Builder[T <: DomainElement[T, _]] {
 
@@ -26,7 +26,7 @@ trait Builder[T <: DomainElement[T, _]] {
     this
   }
 
-  def copy(fs: Fields): this.type = {
+  protected def copy(fs: Fields): this.type = {
     fs.into(fields)
     this
   }

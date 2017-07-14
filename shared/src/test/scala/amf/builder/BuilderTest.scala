@@ -1,20 +1,20 @@
 package amf.builder
 
-import amf.metadata.domain.WebApiModel._
-import amf.model.Annotation.LexicalInformation
+import amf.metadata.domain.APIDocumentationModel._
+import amf.domain.Annotation.LexicalInformation
 import amf.parser.Range
 import amf.unsafe.PlatformSecrets
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 
 /**
-  * Created by pedro.colunga on 7/12/17.
+  *
   */
 class BuilderTest extends FunSuite with PlatformSecrets {
 
   test("Annotations") {
 
-    val api = builders.webApi
+    val api = APIDocumentationBuilder()
 
     api.set(Name, "Altoids", List(LexicalInformation(Range((1, 1), (1, 8)))))
 

@@ -1,23 +1,14 @@
-package amf.model
+package amf.domain
 
 import amf.builder.CreativeWorkBuilder
 import amf.metadata.domain.CreativeWorkModel.{Url, Description}
 
-import scala.scalajs.js.annotation.JSExportAll
-
 /**
-  * Domain element of type schema-org:CreativeWork
-  *
-  * Properties ->
-  *     - schema-org:url
-  *     - schema-org:description
+  * Creative work internal model
   */
-@JSExportAll
 case class CreativeWork(fields: Fields) extends DomainElement[CreativeWork, CreativeWorkBuilder] {
-  override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder().withUrl(url).withDescription(description)
 
-  val url: String = fields get Url
-
+  val url: String         = fields get Url
   val description: String = fields get Description
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[CreativeWork]
@@ -37,4 +28,5 @@ case class CreativeWork(fields: Fields) extends DomainElement[CreativeWork, Crea
 
   override def toString = s"CreativeWork($url, $description)"
 
+  override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder(fields)
 }

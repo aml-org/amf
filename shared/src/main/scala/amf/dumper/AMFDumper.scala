@@ -2,14 +2,14 @@ package amf.dumper
 
 import amf.broker.AMFUnitMaker
 import amf.generator.{JsonGenerator, YamlGenerator}
-import amf.model.BaseWebApi
+import amf.domain.APIDocumentation
 import amf.parser.{AMFUnit, Document, Fragment, Module}
 import amf.remote._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AMFDumper(webApi: BaseWebApi, vendor: Vendor) {
+class AMFDumper(webApi: APIDocumentation, vendor: Vendor) {
   val unitF = Future { AMFUnitMaker(webApi, vendor) }
 
   def dump(): Future[String] = {

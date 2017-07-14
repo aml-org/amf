@@ -3,7 +3,7 @@ package amf.generator
 import amf.common.Strings.strings
 
 /**
-  * Created by pedro.colunga on 5/30/17.
+  *
   */
 class IndentedWriter {
 

@@ -6,7 +6,7 @@ import amf.parser.AMFUnit
 import scala.util.{Failure, Success, Try}
 
 /**
-  * Created by pedro.colunga on 5/29/17.
+  *
   */
 abstract class BaseGenerator {
 

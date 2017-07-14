@@ -1,7 +1,7 @@
 package amf.interop
 
 /**
-  * Created by martin.gutierrez on 6/22/17.
+  *
   */
 import scala.scalajs.js
 

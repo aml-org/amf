@@ -1,7 +1,7 @@
 package amf.metadata
 
 /**
-  * Created by pedro.colunga on 7/5/17.
+  *
   */
 trait Type
 

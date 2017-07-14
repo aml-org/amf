@@ -1,23 +1,16 @@
-package amf.model
+package amf.domain
 
 import amf.builder.EndPointBuilder
 import amf.metadata.domain.EndPointModel._
 
 /**
-  * Domain model of type raml-http:EndPoint
-  *
-  * Properties ->
-  *     - raml-http:path
-  *     - schema-org:name
-  *     - schema-org:description
+  * EndPoint internal model
   */
-class EndPoint(val fields: Fields) extends DomainElement[EndPoint, EndPointBuilder] {
+case class EndPoint(fields: Fields) extends DomainElement[EndPoint, EndPointBuilder] {
+
   val name: String        = fields get Name
   val description: String = fields get Description
   val path: String        = fields get Path
-
-  override def toBuilder: EndPointBuilder =
-    EndPointBuilder().copy(fields)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
 
@@ -36,9 +29,6 @@ class EndPoint(val fields: Fields) extends DomainElement[EndPoint, EndPointBuild
   }
 
   override def toString = s"EndPoint($name, $description, $path)"
-}
 
-object EndPoint {
-  def apply(fields: Fields): EndPoint =
-    new EndPoint(fields)
+  override def toBuilder: EndPointBuilder = EndPointBuilder(fields)
 }
