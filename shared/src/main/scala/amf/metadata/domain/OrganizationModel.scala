@@ -7,7 +7,7 @@ import amf.vocabulary.Namespace.Schema
 /**
   * Organization metamodel
   */
-object OrganizationModel extends Type {
+object OrganizationModel extends DomainElementModel {
 
   val Url = Field(Str, Schema, "url")
 

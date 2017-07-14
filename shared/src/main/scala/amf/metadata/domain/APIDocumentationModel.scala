@@ -5,9 +5,9 @@ import amf.metadata.Type.{Array, Str}
 import amf.vocabulary.Namespace._
 
 /**
-  * WebApi metamodel
+  * API documentation metamodel
   */
-object WebApiModel extends Type {
+object APIDocumentationModel extends DomainElementModel {
 
   val Name = Field(Str, Schema, "name")
 

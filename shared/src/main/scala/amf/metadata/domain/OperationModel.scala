@@ -7,7 +7,7 @@ import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 /**
   * Operation metamodel
   */
-object OperationModel extends Type {
+object OperationModel extends DomainElementModel {
 
   val Method = Field(Enum, Hydra, "method")
 

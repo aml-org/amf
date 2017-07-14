@@ -7,7 +7,7 @@ import amf.vocabulary.Namespace.Schema
 /**
   * License metamodel
   */
-object LicenseModel extends Type {
+object LicenseModel extends DomainElementModel {
 
   val Url = Field(Str, Schema, "url")
 

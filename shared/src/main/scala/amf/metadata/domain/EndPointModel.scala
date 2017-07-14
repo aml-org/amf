@@ -7,7 +7,7 @@ import amf.vocabulary.Namespace.{Http, Hydra, Schema}
 /**
   * EndPoint metamodel
   */
-object EndPointModel extends Type {
+object EndPointModel extends DomainElementModel {
 
   val Path = Field(RegExp, Http, "path")
 

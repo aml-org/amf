@@ -7,7 +7,7 @@ import amf.vocabulary.Namespace.Schema
 /**
   * Creative work metamodel
   */
-object CreativeWorkModel extends Type {
+object CreativeWorkModel extends DomainElementModel {
 
   val Url = Field(Str, Schema, "url")
 
