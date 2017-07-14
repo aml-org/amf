@@ -46,7 +46,7 @@ class APIDocumentationBuilder extends Builder[APIDocumentation] {
     fields
   }
 
-  override def build: APIDocumentation = new APIDocumentation(fields)
+  override def build: APIDocumentation = new APIDocumentation(fixFields(fields))
 }
 
 object APIDocumentationBuilder {

@@ -2,8 +2,8 @@ package amf.spec
 
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.{AMFAST, AMFASTNode, AMFToken}
+import amf.domain.{FieldHolder, Fields}
 import amf.metadata.Field
-import amf.model._
 import amf.parser.Range.NONE
 import amf.spec.Matcher.KeyMatcher
 import amf.spec.SpecFieldEmitter.StringValueEmitter.key
