@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.metadata.Field
 import amf.metadata.Type._
+import amf.spec.FieldEmitter.{LazyBuilder, NodeBuilder}
 import amf.unsafe.PlatformSecrets
 
 import scala.collection.immutable.ListMap

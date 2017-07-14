@@ -19,23 +19,21 @@ object FieldEmitter {
 
     def emit(fields: Fields): NodeBuilder = {
       val principal = new LazyBuilder(MapToken) {
-        override def build(): AMFAST = {
-          new AMFASTNode(MapToken, "", NONE, nodes.map(_.build()))
+        override def build: AMFAST = {
+          new AMFASTNode(MapToken, "", NONE, nodes.map(_.build))
         }
       }
 
-      fields.foreach(entry => {
-        val specField = map.get(entry._1)
-        if (entry._2 != null && specField.isDefined) {
-          if (specField.get._2.isDefined) {
-            val builder = specField.get._2.get.emit(specField.get._1, entry._1, entry._2.value)
-            if (!principal.nodes.contains(builder)) principal.add(builder)
-          } else {
-            val builder = specField.get._1.emitter.emit(specField.get._1, entry._1, entry._2.value)
-            if (!principal.nodes.contains(builder)) principal.add(builder)
+      fields.foreach {
+        case (key, value) if value != null =>
+          map.get(key).foreach {
+            case (specField, emitter) =>
+              val builder =
+                emitter.fold(specField.emitter.emit(specField, key, value.value))(_.emit(specField, key, value.value))
+
+              if (!principal.nodes.contains(builder)) principal.add(builder)
           }
-        }
-      })
+      }
       principal
     }
   }
@@ -85,8 +83,8 @@ object FieldEmitter {
       if (parent.isEmpty)
         parent = Some(new LazyBuilder(Entry) {
 
-          override def build(): AMFAST = {
-            entry(spec, map(nodes.map(_.build())))
+          override def build: AMFAST = {
+            entry(spec, map(nodes.map(_.build)))
           }
         })
 
@@ -104,8 +102,8 @@ object FieldEmitter {
 
       val parent = new LazyBuilder(Entry) {
 
-        override def build(): AMFAST = {
-          entry(spec, nodes.map(_.build()).head)
+        override def build: AMFAST = {
+          entry(spec, nodes.map(_.build).head)
         }
       }
       parent.add(SpecEmitter(spec.children).emit(fields))
@@ -135,8 +133,8 @@ object FieldEmitter {
         if (parent.isEmpty)
           parent = Some(new LazyBuilder(Entry) {
 
-            override def build(): AMFAST = {
-              entry(spec, map(nodes.map(_.build())))
+            override def build: AMFAST = {
+              entry(spec, map(nodes.map(_.build)))
             }
           })
 
@@ -168,16 +166,16 @@ object FieldEmitter {
   }
 
   trait NodeBuilder {
-    def build(): AMFAST
+    def build: AMFAST
   }
 
   abstract class LazyBuilder(token: AMFToken, val nodes: ListBuffer[NodeBuilder] = ListBuffer()) extends NodeBuilder {
     def add(n: NodeBuilder): Unit = nodes += n
 
-    override def build(): AMFAST
+    override def build: AMFAST
   }
 
   case class Resolved(node: AMFAST) extends NodeBuilder {
-    override def build(): AMFAST = node
+    override def build: AMFAST = node
   }
 }

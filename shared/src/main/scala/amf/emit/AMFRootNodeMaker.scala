@@ -9,7 +9,7 @@ import amf.spec.Spec
 class AMFRootNodeMaker {
 
   def make(webApi: APIDocumentation, vendor: Vendor): AMFASTNode = {
-    val amfast = Spec(vendor).emitter.emit(webApi.fields).build()
+    val amfast = Spec(vendor).emitter.emit(webApi.fields).build
     new AMFASTNode(Root, "", null, List(amfast))
   }
 
