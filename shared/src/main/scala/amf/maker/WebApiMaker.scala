@@ -12,7 +12,7 @@ class WebApiMaker(unit: AMFUnit) extends Maker[APIDocumentation] {
 
   def matcher(builder: APIDocumentationBuilder, entry: ASTNode[_]): Unit = {
     Spec(unit.vendor).fields.find(_.matcher.matches(entry)) match {
-      case Some(field) => field.parse(field, entry, builder)
+      case Some(field) => field.parser(field, entry, builder)
       case _           => // Unknown node...
     }
   }
