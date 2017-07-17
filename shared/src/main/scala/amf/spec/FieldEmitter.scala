@@ -58,7 +58,7 @@ object FieldEmitter {
 
   }
 
-  object StringListValueEmitter extends SpecFieldEmitter {
+  object StringListEmitter extends SpecFieldEmitter {
 
     override def emit(spec: SpecField, field: Field, value: Any): NodeBuilder = {
       Resolved(

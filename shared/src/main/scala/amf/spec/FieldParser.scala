@@ -64,7 +64,7 @@ object FieldParser {
     }
   }
 
-  class EndPointParser() extends ChildrenParser {
+  object EndPointParser extends ChildrenParser {
     override def parse(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit = {
       val result: ListBuffer[EndPoint] = ListBuffer()
       parse(spec, node, None, result)

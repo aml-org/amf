@@ -1,11 +1,11 @@
 package amf.spec
 
+import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
-import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
-import amf.metadata.{Field, Type}
-import amf.spec.FieldEmitter.{ObjectEmitter, SpecFieldEmitter, StringListValueEmitter, StringValueEmitter}
-import amf.spec.FieldParser.{ObjectParser, SpecFieldParser, StringListParser, StringValueParser}
-import amf.spec.Matcher.{KeyMatcher, Matcher}
+import amf.metadata.domain.{CreativeWorkModel, EndPointModel, LicenseModel, OrganizationModel}
+import amf.spec.FieldEmitter.{ObjectEmitter, SpecFieldEmitter, StringListEmitter, StringValueEmitter}
+import amf.spec.FieldParser._
+import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}
 
 /**
   * Spec field
@@ -19,7 +19,7 @@ protected case class SpecField(fields: List[Field],
   def ->(specs: SpecField*): SpecField = copy(children = specs.toList)
 }
 
-protected case class SpecNode(symbol: Symbol) {
+protected trait SpecNode {
 
   def ~(field: Field): SpecField = createSpecField(List(field))
 
@@ -28,13 +28,32 @@ protected case class SpecNode(symbol: Symbol) {
   private def createSpecField(fields: List[Field]) = {
     fields.head.`type` match {
       case Str        => SpecField(fields, matcher(), StringValueParser, StringValueEmitter)
-      case Array(Str) => SpecField(fields, matcher(), StringListParser, StringListValueEmitter)
+      case Array(Str) => SpecField(fields, matcher(), StringListParser, StringListEmitter)
       case OrganizationModel | CreativeWorkModel | LicenseModel =>
         SpecField(fields, matcher(), ObjectParser, ObjectEmitter)
+      case Array(EndPointModel) =>
+        SpecField(fields, matcher(), EndPointParser, ObjectEmitter)
     }
   }
 
-  private def matcher() = KeyMatcher(symbol.name)
+  def matcher(): Matcher
+}
+
+protected case class SpecRegexNode(regex: String) extends SpecNode {
+  override def matcher(): Matcher = RegExpMatcher(regex)
+}
+
+protected case class SpecKeyNode(symbol: Symbol) extends SpecNode {
+  override def matcher(): Matcher = KeyMatcher(symbol.name)
+
+  /** Virtual node (no mapping to field). */
+  def ->(specs: SpecField*): SpecField = SpecField(
+    Nil,
+    matcher(),
+    ChildrenParser(),
+    null,
+    specs.toList
+  )
 }
 
 protected case class FieldLike(field: Field) {
