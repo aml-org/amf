@@ -8,7 +8,7 @@ import amf.vocabulary.Namespace.Document
 /**
   * Fragment metamodel
   */
-trait FragmentModel extends UnitModel {
+trait FragmentModel extends BaseUnitModel {
 
   val Encodes = Field(Array(DomainElementModel), Document, "encodes")
 

@@ -24,7 +24,7 @@ class JsServerPlatform extends Platform {
           promise.failure(new Exception(s"Could not load file $path from fs"))
         } else {
           promise.success(
-            Content(new CharSequenceStream(path, content.toString), extension(path).flatMap(mimeFromExtension)))
+            Content(new CharSequenceStream(path, content.toString), path, extension(path).flatMap(mimeFromExtension)))
         }
       }
     )
@@ -48,7 +48,7 @@ class JsServerPlatform extends Platform {
 
         //The whole response has been received
         response.on("end", () => {
-          promise.success(Content(new CharSequenceStream(url, str)))
+          promise.success(Content(new CharSequenceStream(url, str), url))
         })
       }
     )

@@ -1,7 +1,7 @@
 package amf.remote
 
 import java.io.FileWriter
-import java.net.{HttpURLConnection, URI, URL}
+import java.net.{HttpURLConnection, URI}
 
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 
@@ -12,7 +12,7 @@ class JvmPlatform extends Platform {
 
   /** Resolve specified url. */
   override protected def fetchHttp(url: String): Future[Content] = {
-    val u: URL     = new URL(url)
+    val u          = new java.net.URL(url)
     val connection = u.openConnection.asInstanceOf[HttpURLConnection]
     connection.setRequestMethod("GET")
 
@@ -20,15 +20,16 @@ class JvmPlatform extends Platform {
       connection.connect()
       connection.getResponseCode match {
         case 200 =>
-          createContent(connection)
+          createContent(connection, url)
         case s => throw new Exception(s"Unhandled status code $s")
       }
     }
   }
 
-  private def createContent(connection: HttpURLConnection): Content = {
+  private def createContent(connection: HttpURLConnection, url: String): Content = {
     Content(
       new CharSequenceStream(CharArraySequence(connection.getInputStream, connection.getContentLength, None)),
+      url,
       Option(connection.getHeaderField("Content-Type"))
     )
 
@@ -36,7 +37,7 @@ class JvmPlatform extends Platform {
 
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = Future {
-    Content(new FileStream(path), extension(path).flatMap(mimeFromExtension))
+    Content(new FileStream(path), path, extension(path).flatMap(mimeFromExtension))
   }
 
   /** Write specified content on specified file path. */

@@ -1,6 +1,8 @@
 package amf.parser
 
 import amf.common.AMFAST
+import amf.compiler.Root
+import amf.document.BaseUnit
 import amf.lexer.Token
 import amf.parser.ASTNodePrinter.print
 import amf.remote._
@@ -57,8 +59,10 @@ trait ASTNode[T <: Token] {
 trait ASTLinkNode[T <: Token] extends ASTNode[T] {
 
   /** Return node target. */
-  def target: AMFUnit
-  def resolve(remote: Platform, context: Context, cache: Cache, hint: Option[Hint]): Future[(AMFAST, Vendor)]
+  def target: BaseUnit
+
+  /** Resolve node target. */
+  def resolve(remote: Platform, context: Context, cache: Cache, hint: Hint): Future[BaseUnit]
 
 }
 

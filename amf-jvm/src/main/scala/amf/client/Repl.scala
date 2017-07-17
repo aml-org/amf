@@ -3,8 +3,9 @@ package amf.client
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
+import amf.document.BaseUnit
 import amf.generator.{JsonGenerator, YamlGenerator}
-import amf.parser.{ASTNodePrinter, AMFUnit}
+import amf.parser.AMFUnit
 import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
 
 class Repl(val in: InputStream, val out: PrintStream) {
@@ -12,17 +13,17 @@ class Repl(val in: InputStream, val out: PrintStream) {
   init()
 
   private def init(): Unit = {
-    val scanner                   = new Scanner(in)
-    var document: Option[AMFUnit] = None
+    val scanner                    = new Scanner(in)
+    var document: Option[BaseUnit] = None
 
     while (scanner.hasNextLine) {
       scanner.nextLine() match {
-        case Exit()           => return
-        case Json(url)        => remote(url, Option(OasJsonHint), (doc) => document = doc)
-        case Yaml(url)        => remote(url, Option(RamlYamlHint), (doc) => document = doc)
-        case Ast(_)           => document.foreach(doc => out.println(ASTNodePrinter.print(doc.root)))
-        case Generate(syntax) => document.foreach(doc => generate(doc, syntax))
-        case line             => out.println(s"... $line")
+        case Exit()    => return
+        case Json(url) => remote(url, OasJsonHint, (doc) => document = doc)
+        case Yaml(url) => remote(url, RamlYamlHint, (doc) => document = doc)
+//        case Ast(_)           => document.foreach(doc => out.println(ASTNodePrinter.print(doc.root)))
+//        case Generate(syntax) => document.foreach(doc => generate(doc, syntax))
+        case line => out.println(s"... $line")
       }
     }
   }
@@ -35,12 +36,12 @@ class Repl(val in: InputStream, val out: PrintStream) {
     }
   }
 
-  private def remote(url: String, hint: Option[Hint], callback: (Option[AMFUnit]) => Unit): Unit = {
+  private def remote(url: String, hint: Hint, callback: (Option[BaseUnit]) => Unit): Unit = {
     new JvmClient().generate(
       url,
       hint,
       new Handler {
-        override def success(doc: AMFUnit): Unit = {
+        override def success(doc: BaseUnit): Unit = {
           out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
           callback(Some(doc))
         }

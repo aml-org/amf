@@ -1,7 +1,6 @@
 package amf.unsafe
 
 import amf.remote._
-import amf.builder._
 
 trait PlatformSecrets {
   val platform: Platform = PlatformBuilder()

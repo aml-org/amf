@@ -38,7 +38,16 @@ class JsonGenerator extends ASTNodeVisitor {
   }
 
   override def visit(node: ASTLinkNode[_]): Unit = {
-    writer.write('{').line().indent().quoted("$ref").write(": ").quoted(node.target.url).outdent().line().write('}')
+    writer
+      .write('{')
+      .line()
+      .indent()
+      .quoted("$ref")
+      .write(": ")
+      .quoted(node.target.location().input)
+      .outdent()
+      .line()
+      .write('}')
   }
 
   override def after(node: ASTNode[_]): Unit = {

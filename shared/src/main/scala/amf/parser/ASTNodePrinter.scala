@@ -34,7 +34,7 @@ class ASTPrinter extends ASTNodeVisitor {
     dump(node)
     writer.line().write("target -> ").line().indent()
     if (node.target != null) {
-      generate(node.target.root)
+//      generate(node.target.root) TODO include source AST ?
     }
     writer.outdent()
   }

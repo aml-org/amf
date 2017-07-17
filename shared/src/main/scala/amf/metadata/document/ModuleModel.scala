@@ -8,7 +8,7 @@ import amf.vocabulary.Namespace.Document
 /**
   * Module metamodel
   */
-trait ModuleModel extends UnitModel {
+trait ModuleModel extends BaseUnitModel {
 
   val Declares = Field(Array(DomainElementModel), Document, "declares")
 

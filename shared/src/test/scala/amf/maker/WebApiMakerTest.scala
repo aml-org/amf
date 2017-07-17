@@ -3,10 +3,10 @@ package amf.maker
 import amf.builder.{CreativeWorkBuilder, EndPointBuilder, LicenseBuilder, OrganizationBuilder}
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
+import amf.document.Document
+import amf.domain.APIDocumentation
 import amf.metadata.Field
 import amf.metadata.domain.APIDocumentationModel._
-import amf.domain.APIDocumentation
-import amf.parser._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -38,7 +38,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
        CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
-    assertFixture(fixture, "completeExample.raml", Some(RamlYamlHint))
+    assertFixture(fixture, "completeExample.raml", RamlYamlHint)
   }
 
   test("WebApi with nested endpoints - RAML.") {
@@ -60,7 +60,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (EndPoints, endpoints)
     )
 
-    assertFixture(fixture, "nested-endpoints.raml", Some(RamlYamlHint))
+    assertFixture(fixture, "nested-endpoints.raml", RamlYamlHint)
   }
 
   test("WebApi with nested endpoints - OAS.") {
@@ -83,7 +83,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (EndPoints, endpoints)
     )
 
-    assertFixture(fixture, "nested-endpoints.json", Some(OasJsonHint))
+    assertFixture(fixture, "nested-endpoints.json", OasJsonHint)
   }
 
   test("generate partial succeed") {
@@ -103,7 +103,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
        CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
-    assertFixture(fixture, "partialExample.raml", Some(RamlYamlHint))
+    assertFixture(fixture, "partialExample.raml", RamlYamlHint)
   }
 
   ignore("basic jsonld example") {
@@ -119,7 +119,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       (Documentation, null)
     )
 
-    assertFixture(fixture, "basicExample.jsonld", Some(AmfJsonLdHint))
+    assertFixture(fixture, "basicExample.jsonld", AmfJsonLdHint)
   }
 
   test("generate partial json") {
@@ -140,7 +140,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
        CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
-    assertFixture(fixture, "completeExample.json", Some(OasJsonHint))
+    assertFixture(fixture, "completeExample.json", OasJsonHint)
   }
 
   test("edit complete raml") {
@@ -179,12 +179,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
        CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
-    AMFCompiler(basePath + "completeExample.raml", platform, Some(RamlYamlHint))
+    AMFCompiler(basePath + "completeExample.raml", platform, RamlYamlHint)
       .build()
-      .map {
-        case (root, vendor) => WebApiMaker(AMFUnit(root, basePath + "completeExample.raml", Document, vendor)).make
-      }
-      .map { api =>
+      .map { unit =>
+        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[APIDocumentation]
         assertWebApiValues(api, before)
         val builder = api.toBuilder
         builder.withDescription("changed")
@@ -228,12 +226,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
        CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
     )
 
-    AMFCompiler(basePath + "completeExample.json", platform, Some(OasJsonHint))
+    AMFCompiler(basePath + "completeExample.json", platform, OasJsonHint)
       .build()
-      .map {
-        case (root, vendor) => WebApiMaker(AMFUnit(root, basePath + "completeExample.json", Document, vendor)).make
-      }
-      .map { api =>
+      .map { unit =>
+        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[APIDocumentation]
         assertWebApiValues(api, before)
         val builder = api.toBuilder
         builder.withDescription("changed")
@@ -266,14 +262,12 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   private def assertField(field: Field, actual: Any, expected: Any) =
     if (expected != actual) fail(s"Expected $expected but $actual found for field ${field.name}")
 
-  private def assertFixture(fixture: List[(Field, Object)], file: String, hint: Some[Hint]): Future[Assertion] = {
+  private def assertFixture(fixture: List[(Field, Object)], file: String, hint: Hint): Future[Assertion] = {
     AMFCompiler(basePath + file, platform, hint)
       .build()
-      .map {
-        case (root, vendor) => WebApiMaker(AMFUnit(root, basePath + file, Document, vendor)).make
-      }
-      .map {
-        assertWebApiValues(_, fixture)
+      .map { unit =>
+        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[APIDocumentation]
+        assertWebApiValues(api, fixture)
       }
   }
 }

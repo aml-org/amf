@@ -2,7 +2,8 @@ package amf.common
 
 import amf.common.AMFToken.{Eof, Link}
 import amf.compiler.AMFCompiler
-import amf.parser.{AMFUnit, AMFUnitType, ASTLinkNode, ASTNode, Annotation, BaseASTNode, IncludeAnnotation, Range}
+import amf.document.BaseUnit
+import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, IncludeAnnotation, Range}
 import amf.remote._
 import amf.visitor.ASTNodeVisitor
 
@@ -26,7 +27,7 @@ class AMFASTNode(token: AMFToken,
   override val empty = AMFAST.EMPTY_NODE
 }
 
-class AMFASTLink(include: String, range: Range, containerType: AMFUnitType)
+class AMFASTLink(include: String, range: Range, source: Kind)
     extends BaseASTNode[AMFToken](Link, include, range)
     with ASTLinkNode[AMFToken]
     with AMFAST {
@@ -35,15 +36,13 @@ class AMFASTLink(include: String, range: Range, containerType: AMFUnitType)
 
   override def children: Seq[AMFAST] = Seq()
 
-  override def target: AMFUnit = container
+  var target: BaseUnit = _
 
-  private var container: AMFUnit = _
-
-  def resolve(remote: Platform, context: Context, cache: Cache, hint: Option[Hint]): Future[(AMFAST, Vendor)] = {
-    AMFCompiler(include, remote, hint, Some(context), Some(cache))
+  def resolve(remote: Platform, context: Context, cache: Cache, hint: Hint): Future[BaseUnit] = {
+    AMFCompiler(include, remote, hint + source, Some(context), Some(cache))
       .build()
       .map(root => {
-        container = AMFUnit(root._1, include, containerType, root._2)
+        target = root
         root
       })
   }

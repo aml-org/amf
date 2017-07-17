@@ -193,27 +193,27 @@ class ParserTest extends FunSuite {
       path match {
         case "input.yaml" =>
           Future {
-            Content(new CharSequenceStream(`RAML/yaml`))
+            Content(new CharSequenceStream(`RAML/yaml`), path)
           }
         case "include1.yaml" =>
           Future {
-            Content(new CharSequenceStream("aa: 0"))
+            Content(new CharSequenceStream("aa: 0"), path)
           }
         case "include2.yaml" =>
           Future {
-            Content(new CharSequenceStream("dd: 0"))
+            Content(new CharSequenceStream("dd: 0"), path)
           }
         case "input.json" =>
           Future {
-            Content(new CharSequenceStream(`OAS/json`))
+            Content(new CharSequenceStream(`OAS/json`), path)
           }
         case "include1.json" =>
           Future {
-            Content(new CharSequenceStream("{\"aa\": 0}"))
+            Content(new CharSequenceStream("{\"aa\": 0}"), path)
           }
         case "include2.json" =>
           Future {
-            Content(new CharSequenceStream("{\"dd\": 0}"))
+            Content(new CharSequenceStream("{\"dd\": 0}"), path)
           }
         case _ => Future.failed(new Exception(s"[TEST] Unable to load $path"))
       }

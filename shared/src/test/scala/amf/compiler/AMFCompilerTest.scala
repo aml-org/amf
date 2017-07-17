@@ -1,8 +1,8 @@
 package amf.compiler
 
-import amf.common.{AMFAST, AMFASTLink, AMFToken}
+import amf.common.{AMFAST, AMFASTLink}
+import amf.document.Document
 import amf.exception.CyclicReferenceException
-import amf.parser._
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
@@ -19,7 +19,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Simple import") {
-    AMFCompiler("file://shared/src/test/resources/input.json", platform, Option(OasJsonHint))
+    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint)
       .build() map {
       _ should not be null
     }
@@ -37,7 +37,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     val cache = new TestCache()
     AMFCompiler("file://shared/src/test/resources/input-duplicate-includes.json",
                 platform,
-                Option(OasJsonHint),
+                OasJsonHint,
                 cache = Some(cache))
       .build() map { _ =>
       cache.assertCacheSize(2)
@@ -46,7 +46,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Cache different imports") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/input.json", platform, Option(OasJsonHint), cache = Some(cache))
+    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint, cache = Some(cache))
       .build() map { _ =>
       cache.assertCacheSize(3)
     }
@@ -54,9 +54,9 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Libraries (raml)") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, Option(RamlYamlHint), cache = Some(cache))
-      .build() map {
-      case (root, _) =>
+    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, cache = Some(cache))
+      .root() map {
+      case Root(root, _, _, _) =>
         root.children.size should be(1)
         val bodyMap = root.children.head
         bodyMap.children.size should be(2)
@@ -67,9 +67,9 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Libraries (oas)") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/modules.json", platform, Option(OasJsonHint), cache = Some(cache))
-      .build() map {
-      case (root, _) =>
+    AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, cache = Some(cache))
+      .root() map {
+      case Root(root, _, _, _) =>
         root.children.size should be(1)
         val bodyMap = root.children.head
         bodyMap.children.size should be(3)
@@ -88,15 +88,12 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     library.children.size should be(2)
     library.children(1) shouldBe a[AMFASTLink]
     val link = library.children(1).asInstanceOf[AMFASTLink]
-    link.target.`type` should be(Module)
-    link.target.root.children.length should be(1)
-    link.target.root.children.head.`type` should be(AMFToken.SequenceToken)
-    link.target.root.children.head.children.length should be(2)
+    link.target shouldBe a[Document]
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[CyclicReferenceException] {
-      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}", platform, Option(hint))
+      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}", platform, hint)
         .build()
     } map { ex =>
       assert(ex.getMessage ==

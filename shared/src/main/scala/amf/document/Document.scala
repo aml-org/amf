@@ -1,16 +1,16 @@
 package amf.document
 
-import java.net.URL
-
 import amf.domain.DomainElement
+import amf.remote.URL
 
 /**
-  * Document
+  * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
+  * [[DomainElement]]s that reference from the encoded [[DomainElement]]
   */
-case class Document(location: URL, references: List[URL], encodes: DomainElement)
-    extends Unit
+case class Document(location: URL, references: Seq[URL], encodes: DomainElement)
+    extends BaseUnit
     with EncodesModel
     with DeclaresModel {
 
-  val declares: List[DomainElement] = List(encodes)
+  val declares: Seq[DomainElement] = List(encodes)
 }

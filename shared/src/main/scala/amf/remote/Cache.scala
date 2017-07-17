@@ -1,14 +1,14 @@
 package amf.remote
 
-import amf.common.AMFAST
+import amf.document.BaseUnit
 
 import scala.concurrent.Future
 
 class Cache {
 
-  private var cache: Map[String, Future[(AMFAST, Vendor)]] = Map()
+  private var cache: Map[String, Future[BaseUnit]] = Map()
 
-  def getOrUpdate(url: String)(supplier: () => Future[(AMFAST, Vendor)]): Future[(AMFAST, Vendor)] = {
+  def getOrUpdate(url: String)(supplier: () => Future[BaseUnit]): Future[BaseUnit] = {
     cache.get(url) match {
       case Some(value) => value
       case None =>

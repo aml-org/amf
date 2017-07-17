@@ -1,13 +1,13 @@
 package amf.client
 
+import amf.document.BaseUnit
 import amf.domain.APIDocumentation
-import amf.parser.AMFUnit
 
 /**
   *
   */
 trait Handler {
-  def success(document: AMFUnit)
+  def success(document: BaseUnit)
   def error(exception: Throwable)
 }
 

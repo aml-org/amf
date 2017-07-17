@@ -1,31 +1,33 @@
 package amf.maker
 
 import amf.builder.APIDocumentationBuilder
+import amf.compiler.Root
 import amf.domain.APIDocumentation
-import amf.parser.{AMFUnit, ASTNode}
+import amf.parser.ASTNode
 import amf.spec.Spec
 
 /**
   * API Documentation maker.
   */
-class WebApiMaker(unit: AMFUnit) extends Maker[APIDocumentation] {
-
-  def matcher(builder: APIDocumentationBuilder, entry: ASTNode[_]): Unit = {
-    Spec(unit.vendor).fields.find(_.matcher.matches(entry)) match {
-      case Some(field) => field.parser(field, entry, builder)
-      case _           => // Unknown node...
-    }
-  }
+class WebApiMaker(root: Root) extends Maker[APIDocumentation] {
 
   override def make: APIDocumentation = {
     val builder: APIDocumentationBuilder = APIDocumentationBuilder()
-    val root                             = unit.root.children.head
-
-    root.children.foreach(matcher(builder, _))
+    val map                              = root.ast.children.head
+    map.children.foreach(matcher(builder, _))
     builder.build
+  }
+
+  private def matcher(builder: APIDocumentationBuilder, entry: ASTNode[_]): Unit = {
+    if (entry.children.nonEmpty) {
+      Spec(root.vendor).fields.find(_.matcher.matches(entry)) match {
+        case Some(field) => field.parser(field, entry, builder)
+        case _           => // Unknown node...
+      }
+    }
   }
 }
 
 object WebApiMaker {
-  def apply(unit: AMFUnit): WebApiMaker = new WebApiMaker(unit)
+  def apply(root: Root): WebApiMaker = new WebApiMaker(root)
 }

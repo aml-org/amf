@@ -1,11 +1,10 @@
 package amf.client
 
 import amf.compiler.AMFCompiler
-import amf.lexer.Token
-import amf.maker.WebApiMaker
+import amf.document.{BaseUnit, Document}
 import amf.domain.APIDocumentation
-import amf.parser.{AMFUnit, ASTNode, Document}
-import amf.remote.{Raml, RamlYamlHint}
+import amf.parser.AMFUnit
+import amf.remote.RamlYamlHint
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -27,10 +26,9 @@ class JsClient extends BaseClient {
 
   @JSExport
   def webApiClass(url: String, handler: JsWebApiHandler): Unit = {
-    val eventualAmfast = AMFCompiler(url, platform, Option(RamlYamlHint)).build()
-    eventualAmfast
-      .map(amfast => new WebApiMaker(AMFUnit(amfast._1, url, Document, amfast._2)).make)
-      .onComplete(callbackForWebApi(
+    AMFCompiler(url, platform, RamlYamlHint)
+      .build()
+      .onComplete(callback(
         new WebApiHandler {
           override def error(exception: Throwable): Unit = handler.error(exception)
 
@@ -40,13 +38,13 @@ class JsClient extends BaseClient {
       ))
   }
 
-  private def callback(handler: Handler, url: String)(t: Try[ASTNode[_ <: Token]]) = t match {
-    case Success(value)     => handler.success(AMFUnit(value, url, Document, Raml)) //TODO hint
-    case Failure(exception) => handler.error(exception)
-  }
-
-  private def callbackForWebApi(handler: WebApiHandler, url: String)(t: Try[APIDocumentation]) = t match {
-    case Success(value)     => handler.success(value)
+  private def callback(handler: WebApiHandler, url: String)(t: Try[BaseUnit]) = t match {
+    case Success(value) =>
+      value match {
+        case Document(_, _, encoded) if encoded.isInstanceOf[APIDocumentation] =>
+          handler.success(encoded.asInstanceOf[APIDocumentation])
+        case _ => handler.error(new Exception(s"Unhandled type $value"))
+      }
     case Failure(exception) => handler.error(exception)
   }
 

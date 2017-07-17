@@ -17,7 +17,7 @@ class JsBrowserPlatform extends Platform {
       .get(url)
       .flatMap(xhr =>
         xhr.status match {
-          case 200 => Future { Content(new CharSequenceStream(xhr.responseText)) }
+          case 200 => Future { Content(new CharSequenceStream(xhr.responseText), url) }
           case s   => Future.failed(new Exception(s"Unhandled status code $s with ${xhr.statusText}"))
       })
   }

@@ -1,8 +1,7 @@
 package amf.document
 
-import java.net.URL
-
 import amf.domain.DomainElement
+import amf.remote.URL
 
 /**
   * RAML Fragments
@@ -10,10 +9,10 @@ import amf.domain.DomainElement
 object Fragment {
 
   /** Units encoding domain fragments */
-  sealed trait Fragment extends Unit with EncodesModel {
+  sealed trait Fragment extends BaseUnit with EncodesModel {
 
     /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
-    override def references(): List[URL] = Nil
+    override def references(): Seq[URL] = Nil
   }
 
   case class DocumentationItem(location: URL, encodes: DomainElement) extends Fragment

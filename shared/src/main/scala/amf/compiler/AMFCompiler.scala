@@ -1,9 +1,11 @@
 package amf.compiler
 
 import amf.common.{AMFAST, AMFToken}
+import amf.document.{BaseUnit, Document}
 import amf.exception.CyclicReferenceException
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
+import amf.maker.WebApiMaker
 import amf.oas.OASParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
@@ -20,22 +22,30 @@ import scala.concurrent.Future.failed
 class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
-                           hint: Option[Hint],
+                           hint: Hint,
                            private val cache: Cache) {
 
-  private lazy val context: Context                            = base.map(_.update(url)).getOrElse(Context(remote, url))
-  private var root: AMFAST                                     = _
-  private val references: ListBuffer[Future[(AMFAST, Vendor)]] = ListBuffer()
+  private lazy val context: Context                    = base.map(_.update(url)).getOrElse(Context(remote, url))
+  private lazy val location                            = context.current
+  private var ast: AMFAST                              = _
+  private val references: ListBuffer[Future[BaseUnit]] = ListBuffer()
 
-  def build(): Future[(AMFAST, Vendor)] = {
-    val url = context.current
-
+  def build(): Future[BaseUnit] = {
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else {
-      cache.getOrUpdate(url) { () =>
-        remote.resolve(url, base).flatMap(content => parse(content, url))
+      cache.getOrUpdate(location) {
+        compile
       }
     }
+  }
+
+  private def compile() = root().map(build)
+
+  /** Usage at tests. */
+  private[compiler] def root(): Future[Root] = {
+    remote
+      .resolve(location, base)
+      .flatMap(parse)
   }
 
   def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
@@ -43,41 +53,56 @@ class AMFCompiler private (val url: String,
       case Syntax(Yaml) => YamlLexer(content.stream)
       case Syntax(Json) => JsonLexer(content.stream)
       case _ =>
-        hint.map(_.syntax) match {
-          case Some(Yaml) => YamlLexer(content.stream)
-          case Some(Json) => JsonLexer(content.stream)
-          case _          => ???
+        hint.syntax match {
+          case Yaml => YamlLexer(content.stream)
+          case Json => JsonLexer(content.stream)
+          case _    => ???
         }
     }
   }
 
   def resolveParser(builder: YeastASTBuilder, content: Content): BaseAMFParser = {
-    //TODO
-    builder.currentText match {
-      case s if s.startsWith("#%RAML 1.0") => new RamlParser(builder)
+    content.mime match {
+      case Some(`APPLICATION/RAML` | `APPLICATION/RAML+JSON` | `APPLICATION/RAML+YAML`) => new RamlParser(builder)
+      case Some(
+          `APPLICATION/OPENAPI+JSON` | `APPLICATION/SWAGGER+JSON` | `APPLICATION/OPENAPI+YAML` |
+          `APPLICATION/SWAGGER+YAML` | `APPLICATION/OPENAPI` | `APPLICATION/SWAGGER`) =>
+        new OASParser(builder)
       case _ =>
-        content.mime match {
-          case Some(`APPLICATION/RAML`) | Some(`APPLICATION/RAML+JSON`) | Some(`APPLICATION/RAML+YAML`) =>
-            new RamlParser(builder)
-          case Some(`APPLICATION/OPENAPI+JSON`) | Some(`APPLICATION/SWAGGER+JSON`) | Some(`APPLICATION/OPENAPI+YAML`) |
-              Some(`APPLICATION/SWAGGER+YAML`) | Some(`APPLICATION/OPENAPI`) | Some(`APPLICATION/SWAGGER`) =>
-            new OASParser(builder)
-          case _ =>
-            hint.getOrElse("") match {
-              case RamlYamlHint | RamlJsonHint => new RamlParser(builder)
-              case OasYamlHint | OasJsonHint   => new OASParser(builder)
-              case _                           => new RamlParser(builder)
-            }
+        hint.vendor match {
+          case Raml => new RamlParser(builder)
+          case Oas  => new OASParser(builder)
+          case _    => new RamlParser(builder)
         }
     }
   }
 
-  private def parse(content: Content, url: String): Future[(AMFAST, Vendor)] = {
-    val builder = YeastASTBuilder(resolveLexer(content))
+  private def build(root: Root): BaseUnit = {
+    root match {
+      case Root(_, _, _, Oas)  => createOasDocument(root)
+      case Root(_, _, _, Raml) => createRamlDocument(root)
+    }
+  }
+
+  private def createRamlDocument(root: Root): Document = {
+    hint.kind match {
+      case Library     => Document(root.location, root.references, WebApiMaker(root).make) // TODO libraries
+      case Link        => Document(root.location, root.references, WebApiMaker(root).make) // TODO includes
+      case Unspecified => Document(root.location, root.references, WebApiMaker(root).make)
+    }
+  }
+
+  private def createOasDocument(root: Root): Document = {
+    Document(root.location, root.references, WebApiMaker(root).make)
+  }
+
+  private def parse(content: Content) = {
+    val lexer   = resolveLexer(content)
+    val builder = YeastASTBuilder(lexer)
     val parser  = resolveParser(builder, content)
 
-    if (root == null) {
-      root = builder.root() {
+    if (ast == null) {
+      ast = builder.root() {
         parser.parse
       }
     }
@@ -86,15 +111,13 @@ class AMFCompiler private (val url: String,
       references += link.resolve(remote, context, cache, hint)
     })
 
-    Future.sequence(references).map(_ => (root, parser.vendor()))
+    Future.sequence(references).map(rs => Root(ast, URL(content.url), rs.map(_.location()), parser.vendor()))
   }
 }
 
+case class Root(ast: AMFAST, location: URL, references: Seq[URL], vendor: Vendor)
+
 object AMFCompiler {
-  def apply(url: String,
-            remote: Platform,
-            hint: Option[Hint],
-            context: Option[Context] = None,
-            cache: Option[Cache] = None) =
+  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()))
 }

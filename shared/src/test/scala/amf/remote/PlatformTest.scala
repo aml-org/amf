@@ -8,7 +8,7 @@ import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecrets {
 
@@ -17,7 +17,7 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
   test("File") {
     platform
       .resolve("file://shared/src/test/resources/input.yaml", None) map {
-      case Content(content, mime) =>
+      case Content(content, url, mime) =>
         mime should contain(`APPLICATION/YAML`)
 
         content.toString should be
@@ -47,6 +47,15 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
                  |  - 2
                  |d: !include http://amf.us-2.evennode.com/include2.yaml/4000""".stripMargin)
       })
+  }
+
+  test("Path resolution") {
+    Future.successful({
+      val url = "file://shared/src/test/resources/input.yaml"
+
+      platform.resolvePath(url) should be(url)
+      platform.resolvePath("file://shared/src/test/resources/ignored/../input.yaml") should be(url)
+    })
   }
 
   ignore("Write") {

@@ -17,9 +17,10 @@ trait Platform {
     }
   }
 
+  /** Test path resolution. */
   def resolvePath(path: String): String
 
-  /** Resolve specified file. */
+  /** Resolve file on specified path. */
   protected def fetchFile(path: String): Future[Content]
 
   /** Resolve specified url. */

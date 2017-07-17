@@ -7,10 +7,10 @@ import amf.vocabulary.Namespace.Document
 /**
   * Unit metamodel
   */
-trait UnitModel extends Type {
+trait BaseUnitModel extends Type {
 
-  val References = Field(Array(UnitModel), Document, "references")
+  val References = Field(Array(BaseUnitModel), Document, "references")
 
 }
 
-object UnitModel extends UnitModel
+object BaseUnitModel extends BaseUnitModel
