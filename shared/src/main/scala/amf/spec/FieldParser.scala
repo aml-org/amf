@@ -1,15 +1,15 @@
 package amf.spec
 
 import amf.builder._
+import amf.common.Strings.strings
 import amf.domain.Annotation.{LexicalInformation, ParentEndPoint}
 import amf.domain.{Annotation, EndPoint}
-import amf.metadata.{Field, Type}
+import amf.metadata.Type
 import amf.metadata.domain.APIDocumentationModel.EndPoints
 import amf.metadata.domain.EndPointModel.Path
+import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
 import amf.parser.ASTNode
 import amf.spec.Matcher.RegExpMatcher
-import amf.common.Strings.strings
-import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
 
 import scala.collection.mutable.ListBuffer
 
@@ -36,26 +36,9 @@ object FieldParser {
       spec.fields.foreach(builder.set(_, entry.last.children.map(c => c.content.unquote), annotations(entry)))
   }
 
-  case class StringJsonListParser(field: Field*) extends SpecFieldParser {
-
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      field.foreach(builder.set(_, entry.last.children.map(c => c.head.last.content.unquote), annotations(entry)))
-  }
-
   case class ChildrenParser() extends SpecFieldParser {
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
       entry.last.children.foreach(child => {
-        spec.children.find(_.matcher.matches(child)) match {
-          case Some(field) => field.parser(field, child, builder)
-          case _           => // Unknown node...
-        }
-      })
-    }
-  }
-
-  case class ChildrenJsonLdParser() extends SpecFieldParser {
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
-      entry.last.head.children.foreach(child => {
         spec.children.find(_.matcher.matches(child)) match {
           case Some(field) => field.parser(field, child, builder)
           case _           => // Unknown node...
