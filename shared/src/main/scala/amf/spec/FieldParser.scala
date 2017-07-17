@@ -59,9 +59,11 @@ object FieldParser {
                       parent: Option[EndPoint],
                       collector: ListBuffer[EndPoint]): Unit = {
 
-      val endpoint = EndPointBuilder().set(Path,
-                                           parent.map(_.path).getOrElse("") + node.head.content.unquote,
-                                           annotations(node.head) :+ ParentEndPoint(parent))
+      val annotation = annotations(node.head)
+      val endpoint = EndPointBuilder().set(
+        Path,
+        parent.map(_.path).getOrElse("") + node.head.content.unquote,
+        if (parent.isDefined) annotation :+ ParentEndPoint(parent.get) else annotation)
       super.parse(spec, node, endpoint)
 
       val actual = endpoint.build

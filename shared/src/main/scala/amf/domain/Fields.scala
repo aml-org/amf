@@ -2,7 +2,6 @@ package amf.domain
 
 import amf.metadata.Field
 import amf.metadata.Type._
-import amf.spec.FieldEmitter.{LazyBuilder, NodeBuilder}
 import amf.unsafe.PlatformSecrets
 
 import scala.collection.immutable.ListMap
@@ -33,6 +32,10 @@ class Fields extends PlatformSecrets {
       case Some(value) => value
       case _           => null
     }
+  }
+
+  def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] = {
+    fs.get(field).flatMap(_.annotations.find(classType.isInstance(_))).asInstanceOf[Option[T]]
   }
 
   def set(field: Field, value: Any, annotations: List[Annotation]): this.type = {

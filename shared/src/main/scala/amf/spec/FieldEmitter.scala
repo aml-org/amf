@@ -2,12 +2,14 @@ package amf.spec
 
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.{AMFAST, AMFASTNode, AMFToken}
-import amf.domain.{FieldHolder, Fields}
+import amf.domain.{EndPoint, FieldHolder, Fields}
 import amf.metadata.Field
 import amf.parser.Range.NONE
+import amf.remote.Raml
 import amf.spec.Matcher.KeyMatcher
 import amf.spec.FieldEmitter.StringValueEmitter.key
 
+import scala.collection.immutable.ListMap
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -28,10 +30,10 @@ object FieldEmitter {
         case (key, value) if value != null =>
           map.get(key).foreach {
             case (specField, emitter) =>
-              val builder =
+              val builders =
                 emitter.fold(specField.emitter.emit(specField, key, value.value))(_.emit(specField, key, value.value))
 
-              if (!principal.nodes.contains(builder)) principal.add(builder)
+              builders.filter(!principal.nodes.contains(_)).foreach(principal.add)
           }
       }
       principal
@@ -42,7 +44,7 @@ object FieldEmitter {
   }
 
   trait SpecFieldEmitter {
-    def emit(spec: SpecField, field: Field, value: Any): NodeBuilder
+    def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder]
 
     def key(spec: SpecField): String = spec.matcher match {
       case KeyMatcher(key) => key
@@ -52,52 +54,33 @@ object FieldEmitter {
 
   object StringValueEmitter extends SpecFieldEmitter {
 
-    override def emit(spec: SpecField, field: Field, value: Any): NodeBuilder = {
-      Resolved(entry(spec, stringNode(value.toString)))
+    override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
+      List(Resolved(entry(spec, stringNode(value.toString))))
     }
 
   }
 
   object StringListEmitter extends SpecFieldEmitter {
 
-    override def emit(spec: SpecField, field: Field, value: Any): NodeBuilder = {
-      Resolved(
-        entry(spec,
-              new AMFASTNode(SequenceToken,
-                             "",
-                             NONE,
-                             value
-                               .asInstanceOf[List[String]]
-                               .map(sc => {
-                                 stringNode(sc)
-                               }))))
+    override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
+      List(
+        Resolved(
+          entry(spec,
+                new AMFASTNode(SequenceToken,
+                               "",
+                               NONE,
+                               value
+                                 .asInstanceOf[List[String]]
+                                 .map(sc => {
+                                   stringNode(sc)
+                                 })))))
     }
 
-  }
-
-  class VirtualNodeEmitter extends SpecFieldEmitter {
-
-    var parent: Option[LazyBuilder] = None
-
-    override def emit(spec: SpecField, field: Field, value: Any): NodeBuilder = {
-      if (parent.isEmpty)
-        parent = Some(new LazyBuilder(Entry) {
-
-          override def build: AMFAST = {
-            entry(spec, map(nodes.map(_.build)))
-          }
-        })
-
-      val sonSpec = spec.children.find(sp => sp.fields.head == field).get
-      parent.get.add(sonSpec.emitter.emit(sonSpec, field, value))
-
-      parent.get
-    }
   }
 
   object ObjectEmitter extends SpecFieldEmitter {
 
-    override def emit(spec: SpecField, field: Field, value: Any): NodeBuilder = {
+    override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
       val fields = value.asInstanceOf[FieldHolder].fields
 
       val parent = new LazyBuilder(Entry) {
@@ -107,18 +90,49 @@ object FieldEmitter {
         }
       }
       parent.add(SpecEmitter(spec.children).emit(fields))
-      parent
+      List(parent)
+    }
+  }
+
+  object EndPointEmitter extends SpecFieldEmitter {
+    override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
+      var eps: Map[EndPoint, LazyBuilder] = ListMap()
+      val endPoints                       = value.asInstanceOf[List[EndPoint]]
+      val vendor                          = spec.vendor
+
+      endPoints.foreach(endPoint => {
+        val builder: LazyBuilder = endPointBuilder(endPoint, spec)
+
+        if (vendor == Raml) endPoint.parent.foreach(eps(_).add(builder))
+
+        eps = eps + (endPoint -> builder)
+      })
+
+      if (vendor == Raml) eps.filterKeys(_.parent.isEmpty).values.toList
+      else eps.values.toList
+    }
+
+    private def endPointBuilder(endPoint: EndPoint, spec: SpecField): LazyBuilder = new LazyBuilder(Entry) {
+      override def build: AMFAST =
+        entry(
+          if (spec.vendor == Raml) endPoint.simplePath else endPoint.path,
+          map(
+            List
+              .concat(SpecEmitter(spec.children).emit(endPoint.fields).asInstanceOf[LazyBuilder].nodes, nodes)
+              .map(_.build))
+        )
     }
   }
 
   private def map(entries: Seq[AMFAST]): AMFAST = new AMFASTNode(MapToken, "", NONE, entries)
 
-  private def entry(spec: SpecField, value: AMFAST): AMFAST = {
+  private def entry(spec: SpecField, value: AMFAST): AMFAST = entry(key(spec), value)
+  private def entry(key: String, value: AMFAST): AMFAST = {
     new AMFASTNode(Entry,
                    "",
                    NONE,
                    List(
-                     stringNode(key(spec)),
+                     stringNode(key),
                      value
                    ))
   }
@@ -129,7 +143,7 @@ object FieldEmitter {
 
     lazy val virtualNodeEmitter = new SpecFieldEmitter {
       var parent: Option[LazyBuilder] = None
-      override def emit(spec: SpecField, field: Field, value: Any): NodeBuilder = {
+      override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
         if (parent.isEmpty)
           parent = Some(new LazyBuilder(Entry) {
 
@@ -141,7 +155,7 @@ object FieldEmitter {
         val sonSpec = spec.children.find(sp => sp.fields.head == field).get
         parent.get.add(sonSpec.emitter.emit(sonSpec, field, value))
 
-        parent.get
+        List(parent.get)
       }
     }
 
@@ -170,7 +184,8 @@ object FieldEmitter {
   }
 
   abstract class LazyBuilder(token: AMFToken, val nodes: ListBuffer[NodeBuilder] = ListBuffer()) extends NodeBuilder {
-    def add(n: NodeBuilder): Unit = nodes += n
+    def add(n: NodeBuilder): Unit       = nodes += n
+    def add(n: List[NodeBuilder]): Unit = nodes ++= n
 
     override def build: AMFAST
   }

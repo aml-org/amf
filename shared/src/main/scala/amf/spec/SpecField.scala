@@ -3,7 +3,8 @@ package amf.spec
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
 import amf.metadata.domain.{CreativeWorkModel, EndPointModel, LicenseModel, OrganizationModel}
-import amf.spec.FieldEmitter.{ObjectEmitter, SpecFieldEmitter, StringListEmitter, StringValueEmitter}
+import amf.remote.{Amf, Vendor}
+import amf.spec.FieldEmitter._
 import amf.spec.FieldParser._
 import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}
 
@@ -14,7 +15,8 @@ protected case class SpecField(fields: List[Field],
                                matcher: Matcher,
                                parser: SpecFieldParser,
                                emitter: SpecFieldEmitter,
-                               children: List[SpecField] = Nil) {
+                               children: List[SpecField] = Nil,
+                               vendor: Vendor = Amf) {
 
   def ->(specs: SpecField*): SpecField = copy(children = specs.toList)
 }
@@ -32,7 +34,7 @@ protected trait SpecNode {
       case OrganizationModel | CreativeWorkModel | LicenseModel =>
         SpecField(fields, matcher(), ObjectParser, ObjectEmitter)
       case Array(EndPointModel) =>
-        SpecField(fields, matcher(), EndPointParser, ObjectEmitter)
+        SpecField(fields, matcher(), EndPointParser, EndPointEmitter)
     }
   }
 

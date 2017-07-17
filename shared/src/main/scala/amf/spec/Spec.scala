@@ -21,15 +21,16 @@ object Spec {
   def apply(vendor: Vendor): Spec = vendor match {
     case Raml => RamlSpec
     case Oas  => OasSpec
-    case Amf  => JsonLdSpec
-    case _    => Spec()
   }
 
-  case class Spec(fields: SpecField*) {
-    def emitter: SpecEmitter = SpecEmitter(fields.toList)
+  case class Spec(vendor: Vendor, private val fs: SpecField*) {
+    val fields: Seq[SpecField] = fs.map(_.copy(vendor = vendor))
+
+    val emitter: SpecEmitter = SpecEmitter(fields.toList)
   }
 
   val RamlSpec = Spec(
+    Raml,
     'title ~ Name,
     'baseUri ~ Host,
     'description ~ Description,
@@ -57,6 +58,7 @@ object Spec {
   )
 
   val OasSpec = Spec(
+    Oas,
     'info -> (
       'title ~ Name,
       'description ~ Description,
@@ -88,6 +90,4 @@ object Spec {
       )
     )
   )
-
-  val JsonLdSpec = Spec()
 }

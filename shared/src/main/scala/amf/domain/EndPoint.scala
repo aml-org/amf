@@ -1,6 +1,7 @@
 package amf.domain
 
 import amf.builder.EndPointBuilder
+import amf.domain.Annotation.ParentEndPoint
 import amf.metadata.domain.EndPointModel._
 
 /**
@@ -13,6 +14,16 @@ case class EndPoint(override val fields: Fields) extends FieldHolder(fields) wit
   val name: String        = fields get Name
   val description: String = fields get Description
   val path: String        = fields get Path
+
+  def simplePath: String = {
+    val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
+    parent.map(p => path.stripPrefix(p.parent.path)).getOrElse(path)
+  }
+
+  def parent: Option[EndPoint] = {
+    val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
+    parent.map(_.parent)
+  }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
 
