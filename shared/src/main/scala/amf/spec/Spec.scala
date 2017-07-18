@@ -19,8 +19,8 @@ import amf.spec.SpecImplicits._
 object Spec {
 
   def apply(vendor: Vendor): Spec = vendor match {
-    case Raml => RamlSpec
-    case Oas  => OasSpec
+    case Raml => ramlSpec
+    case Oas  => oasSpec
   }
 
   case class Spec(vendor: Vendor, private val fs: SpecField*) {
@@ -29,65 +29,69 @@ object Spec {
     val emitter: SpecEmitter = SpecEmitter(fields.toList)
   }
 
-  val RamlSpec = Spec(
-    Raml,
-    'title ~ Name,
-    'baseUri ~ Host,
-    'description ~ Description,
-    'mediaType ~ (ContentType | Accepts),
-    'version ~ Version,
-    'termsOfService ~ TermsOfService,
-    'protocols ~ Schemes,
-    'contact ~ Provider -> (
-      'url ~ OrganizationUrl,
-      'name ~ OrganizationName,
-      'email ~ OrganizationEmail
-    ),
-    'externalDocs ~ Documentation -> (
-      'url ~ CreativeWorkUrl,
-      'description ~ CreativeWorkDescription
-    ),
-    'license ~ License -> (
-      'url ~ LicenseUrl,
-      'name ~ LicenseName
-    ),
-    "/.*" ~ EndPoints -> (
-      'displayName ~ EndPointName,
-      'description ~ EndPointDescription
-    )
-  )
-
-  val OasSpec = Spec(
-    Oas,
-    'info -> (
+  def ramlSpec: Spec = {
+    Spec(
+      Raml,
       'title ~ Name,
+      'baseUri ~ Host,
       'description ~ Description,
-      'termsOfService ~ TermsOfService,
+      'mediaType ~ (ContentType | Accepts),
       'version ~ Version,
+      'termsOfService ~ TermsOfService,
+      'protocols ~ Schemes,
+      'contact ~ Provider -> (
+        'url ~ OrganizationUrl,
+        'name ~ OrganizationName,
+        'email ~ OrganizationEmail
+      ),
+      'externalDocs ~ Documentation -> (
+        'url ~ CreativeWorkUrl,
+        'description ~ CreativeWorkDescription
+      ),
       'license ~ License -> (
         'url ~ LicenseUrl,
         'name ~ LicenseName
-      )
-    ),
-    'host ~ Host,
-    'basePath ~ BasePath,
-    'consumes ~ Accepts,
-    'produces ~ ContentType,
-    'schemes ~ Schemes,
-    'contact ~ Provider -> (
-      'url ~ OrganizationUrl,
-      'name ~ OrganizationName,
-      'email ~ OrganizationEmail
-    ),
-    'externalDocs ~ Documentation -> (
-      'url ~ CreativeWorkUrl,
-      'description ~ CreativeWorkDescription
-    ),
-    'paths -> (
+      ),
       "/.*" ~ EndPoints -> (
         'displayName ~ EndPointName,
         'description ~ EndPointDescription
       )
     )
-  )
+  }
+
+  def oasSpec: Spec = {
+    Spec(
+      Oas,
+      'info -> (
+        'title ~ Name,
+        'description ~ Description,
+        'termsOfService ~ TermsOfService,
+        'version ~ Version,
+        'license ~ License -> (
+          'url ~ LicenseUrl,
+          'name ~ LicenseName
+        )
+      ),
+      'host ~ Host,
+      'basePath ~ BasePath,
+      'consumes ~ Accepts,
+      'produces ~ ContentType,
+      'schemes ~ Schemes,
+      'contact ~ Provider -> (
+        'url ~ OrganizationUrl,
+        'name ~ OrganizationName,
+        'email ~ OrganizationEmail
+      ),
+      'externalDocs ~ Documentation -> (
+        'url ~ CreativeWorkUrl,
+        'description ~ CreativeWorkDescription
+      ),
+      'paths -> (
+        "/.*" ~ EndPoints -> (
+          'displayName ~ EndPointName,
+          'description ~ EndPointDescription
+        )
+      )
+    )
+  }
 }

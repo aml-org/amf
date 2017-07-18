@@ -27,9 +27,9 @@ class YamlGenerator extends ASTNodeVisitor {
 
   override def visit(node: ASTNode[_]): Unit = {
     node.`type` match {
-      case Root                  => visitChildren(node.head)
+      case Root                  => visitChildren(node.head, forceLine = false)
       case MapToken              => visitChildren(node)
-      case SequenceToken         => visitChildren(node, "-")
+      case SequenceToken         => visitChildren(node, "-", forceLine = false)
       case Entry                 => visitEntry(node)
       case IntToken | FloatToken => writer.write(' ').write(node.content)
       case StringToken           => writer.write(' ').write(node.content)
@@ -53,10 +53,10 @@ class YamlGenerator extends ASTNodeVisitor {
     entry.last.accept(this)
   }
 
-  def visitChildren(parent: ASTNode[_], prefix: String = "", first: Boolean = true): Unit = {
+  def visitChildren(parent: ASTNode[_], prefix: String = "", forceLine: Boolean = true): Unit = {
     var first = true
     parent.children.foreach(c => {
-      if (!first) { writer.line() }
+      if (!first || forceLine) { writer.line() }
       writer.write(prefix)
       c.accept(this)
       first = false
