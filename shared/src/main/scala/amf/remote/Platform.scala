@@ -42,6 +42,7 @@ trait Platform {
       case "json"         => Option(Mimes.`APPLICATION/JSON`)
       case "yaml" | "yam" => Option(Mimes.`APPLICATION/YAML`)
       case "raml"         => Option(Mimes.`APPLICATION/RAML+YAML`)
+      case "openapi"      => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
       case _              => None
     }
 

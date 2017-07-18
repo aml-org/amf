@@ -94,4 +94,6 @@ object Spec {
       )
     )
   }
+
+  val RAML_10: String = "#%RAML 1.0\n"
 }

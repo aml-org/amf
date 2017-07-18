@@ -4,7 +4,9 @@ import amf.domain.DomainElement
 import amf.remote.URL
 
 /** Units containing abstract fragments that can be referenced from other fragments */
-case class Module(declares: Seq[DomainElement], references: Seq[URL], location: URL) extends DeclaresModel
+case class Module(declares: Seq[DomainElement], references: Seq[URL], location: URL)
+    extends BaseUnit
+    with DeclaresModel
 
 trait DeclaresModel {
 

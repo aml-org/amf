@@ -1,6 +1,7 @@
 package amf.maker
 
 import amf.builder.APIDocumentationBuilder
+import amf.common.AMFToken.MapToken
 import amf.compiler.Root
 import amf.domain.APIDocumentation
 import amf.parser.ASTNode
@@ -13,7 +14,7 @@ class WebApiMaker(root: Root) extends Maker[APIDocumentation] {
 
   override def make: APIDocumentation = {
     val builder: APIDocumentationBuilder = APIDocumentationBuilder()
-    val map                              = root.ast.children.head
+    val map                              = root.ast > MapToken
     map.children.foreach(matcher(builder, _))
     builder.build
   }

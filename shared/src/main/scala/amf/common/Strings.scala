@@ -22,6 +22,7 @@ class Strings(val str: String) {
 }
 
 object Strings {
+
   implicit def strings(s: String): Strings = new Strings(s)
 
   def isNotEmpty(s: String): Boolean = s != null && s.trim.nonEmpty
