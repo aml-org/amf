@@ -4,7 +4,8 @@ import amf.common.AMFToken._
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.remote.{Oas, Vendor}
 
-class OASParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
+/** [[Oas]] parser. */
+class OasParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
   private def link(): Boolean = {
     discardOrError(StringToken)

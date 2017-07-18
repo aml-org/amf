@@ -5,7 +5,7 @@ import amf.common.Strings.strings
 import amf.common.{AMFAST, AMFToken}
 import amf.json.JsonLexer
 import amf.lexer.CharSequenceStream
-import amf.oas.OASParser
+import amf.oas.OasParser
 import amf.raml.RamlParser
 import amf.remote.{Content, Platform}
 import amf.yaml.YamlLexer
@@ -84,7 +84,7 @@ class ParserTest extends FunSuite {
 
   test("Test OASParser with OAS/json") {
     val builder = YeastASTBuilder(JsonLexer(`OAS/json`))
-    val parser  = new OASParser(builder)
+    val parser  = new OasParser(builder)
 
     val root = builder.root() {
       parser.parse
@@ -95,7 +95,7 @@ class ParserTest extends FunSuite {
 
   test("Test OASParser with OAS/yaml") {
     val builder = YeastASTBuilder(YamlLexer(`OAS/yaml`))
-    val parser  = new OASParser(builder)
+    val parser  = new OasParser(builder)
 
     val root = builder.root() {
       parser.parse

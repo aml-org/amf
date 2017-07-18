@@ -6,12 +6,13 @@ import amf.exception.CyclicReferenceException
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
 import amf.maker.WebApiMaker
-import amf.oas.OASParser
+import amf.oas.OasParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
 import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
+import amf.serialization.AmfParser
 import amf.yaml.YamlLexer
 
 import scala.collection.mutable.ListBuffer
@@ -67,12 +68,12 @@ class AMFCompiler private (val url: String,
       case Some(
           `APPLICATION/OPENAPI+JSON` | `APPLICATION/SWAGGER+JSON` | `APPLICATION/OPENAPI+YAML` |
           `APPLICATION/SWAGGER+YAML` | `APPLICATION/OPENAPI` | `APPLICATION/SWAGGER`) =>
-        new OASParser(builder)
+        new OasParser(builder)
       case _ =>
         hint.vendor match {
           case Raml => new RamlParser(builder)
-          case Oas  => new OASParser(builder)
-          case _    => new RamlParser(builder)
+          case Oas  => new OasParser(builder)
+          case Amf  => new AmfParser(builder)
         }
     }
   }

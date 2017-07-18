@@ -4,6 +4,7 @@ import amf.common.AMFToken
 import amf.common.AMFToken._
 import amf.remote.Vendor
 
+/** Parse tokens into ast tree. */
 abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
 
   /** Parse current input. */
