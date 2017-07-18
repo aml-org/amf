@@ -52,6 +52,4 @@ class Fields extends PlatformSecrets {
   }
 }
 
-case class Value(value: Any, annotations: List[Annotation]) {
-  def cast[T](): T = value.asInstanceOf[T]
-}
+case class Value(value: Any, annotations: List[Annotation])
