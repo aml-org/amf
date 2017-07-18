@@ -7,6 +7,8 @@ lazy val root = project
   .in(file("."))
   .aggregate(amfJS, amfJVM)
   .settings(
+      // Redefining publish for valkyr pipeline, which includes a publish task
+      publish := { }
     )
 
 lazy val amf = crossProject
@@ -14,7 +16,9 @@ lazy val amf = crossProject
   .settings(
     name := "amf",
     version := "0.1",
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
+    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
+    // Redefining publish for valkyr pipeline, which includes a publish task
+    publish := { }
   )
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided"
