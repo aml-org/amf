@@ -15,7 +15,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("test simple oas/json dump from given tree") {
+  ignore("test simple oas/json dump from given tree") {
     val webApi = api()
 
     val dumper = new AMFDumper(webApi, Oas)
