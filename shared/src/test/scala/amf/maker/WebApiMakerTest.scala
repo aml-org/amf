@@ -260,7 +260,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   }
 
   private def assertField(field: Field, actual: Any, expected: Any) =
-    if (expected != actual) fail(s"Expected $expected but $actual found for field ${field.name}")
+    if (expected != actual) fail(s"Expected $expected but $actual found for field $field")
 
   private def assertFixture(fixture: List[(Field, Object)], file: String, hint: Hint): Future[Assertion] = {
     AMFCompiler(basePath + file, platform, hint)

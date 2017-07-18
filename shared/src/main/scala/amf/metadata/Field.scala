@@ -1,8 +1,8 @@
 package amf.metadata
 
-import amf.vocabulary.Namespace
+import amf.vocabulary.ValueType
 
 /**
   * Field
   */
-case class Field(`type`: Type, namespace: Namespace, name: String)
+case class Field(`type`: Type, value: ValueType)

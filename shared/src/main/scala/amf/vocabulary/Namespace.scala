@@ -3,7 +3,9 @@ package amf.vocabulary
 /**
   * Namespaces
   */
-case class Namespace(base: String)
+case class Namespace(base: String) {
+  def +(id: String): ValueType = ValueType(this, id)
+}
 
 object Namespace {
 
@@ -23,3 +25,6 @@ object Namespace {
 
   val AnonShapes = Namespace("http://raml.org/vocabularies/shapes/anon#")
 }
+
+/** Value type. */
+case class ValueType(ns: Namespace, name: String)
