@@ -1,6 +1,6 @@
 import scoverage.ScoverageKeys
 
-name := "AMF scala proof of concept"
+name := "AMF"
 
 scalaVersion in ThisBuild := "2.12.2"
 lazy val root = project

@@ -1,37 +1,40 @@
 package amf.metadata.domain
 
-import amf.metadata.{Field, Type}
+import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
 import amf.vocabulary.Namespace._
+import amf.vocabulary.ValueType
 
 /**
   * API documentation metamodel
   */
 object APIDocumentationModel extends DomainElementModel {
 
-  val Name = Field(Str, Schema, "name")
+  val Name = Field(Str, Schema + "name")
 
-  val Description = Field(Str, Schema, "description")
+  val Description = Field(Str, Schema + "description")
 
-  val Host = Field(Str, Http, "host")
+  val Host = Field(Str, Http + "host")
 
-  val Schemes = Field(Array(Str), Http, "schemes")
+  val Schemes = Field(Array(Str), Http + "schemes")
 
-  val BasePath = Field(Str, Http, "basePath")
+  val BasePath = Field(Str, Http + "basePath")
 
-  val Accepts = Field(Str, Http, "accepts")
+  val Accepts = Field(Str, Http + "accepts")
 
-  val ContentType = Field(Str, Http, "contentType")
+  val ContentType = Field(Str, Http + "contentType")
 
-  val Version = Field(Str, Schema, "version")
+  val Version = Field(Str, Schema + "version")
 
-  val TermsOfService = Field(Str, Schema, "termsOfService")
+  val TermsOfService = Field(Str, Schema + "termsOfService")
 
-  val Provider = Field(OrganizationModel, Schema, "provider")
+  val Provider = Field(OrganizationModel, Schema + "provider")
 
-  val License = Field(LicenseModel, Schema, "license")
+  val License = Field(LicenseModel, Schema + "license")
 
-  val Documentation = Field(CreativeWorkModel, Schema, "documentation")
+  val Documentation = Field(CreativeWorkModel, Schema + "documentation")
 
-  val EndPoints = Field(Array(EndPointModel), Http, "endpoint")
+  val EndPoints = Field(Array(EndPointModel), Http + "endpoint")
+
+  override val `type`: List[ValueType] = Schema + "WebAPI" :: DomainElementModel.`type`
 }

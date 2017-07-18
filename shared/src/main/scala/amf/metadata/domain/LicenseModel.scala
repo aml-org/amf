@@ -1,15 +1,18 @@
 package amf.metadata.domain
 
+import amf.metadata.Field
 import amf.metadata.Type.Str
-import amf.metadata.{Field, Type}
-import amf.vocabulary.Namespace.Schema
+import amf.vocabulary.Namespace.{Http, Schema}
+import amf.vocabulary.ValueType
 
 /**
   * License metamodel
   */
 object LicenseModel extends DomainElementModel {
 
-  val Url = Field(Str, Schema, "url")
+  val Url = Field(Str, Schema + "url")
 
-  val Name = Field(Str, Schema, "name")
+  val Name = Field(Str, Schema + "name")
+
+  override val `type`: List[ValueType] = Http + "License" :: DomainElementModel.`type`
 }
