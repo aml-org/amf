@@ -1,17 +1,21 @@
 package amf.compiler
 
+import amf.common.AMFToken.{Comment, Entry}
 import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
 import amf.exception.CyclicReferenceException
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
 import amf.maker.WebApiMaker
-import amf.oas.OASParser
+import amf.oas.OasParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
 import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
+import amf.serialization.AmfParser
+import amf.common.Strings.strings
+import amf.spec.Spec.RAML_10
 import amf.yaml.YamlLexer
 
 import scala.collection.mutable.ListBuffer
@@ -67,33 +71,48 @@ class AMFCompiler private (val url: String,
       case Some(
           `APPLICATION/OPENAPI+JSON` | `APPLICATION/SWAGGER+JSON` | `APPLICATION/OPENAPI+YAML` |
           `APPLICATION/SWAGGER+YAML` | `APPLICATION/OPENAPI` | `APPLICATION/SWAGGER`) =>
-        new OASParser(builder)
+        new OasParser(builder)
       case _ =>
         hint.vendor match {
           case Raml => new RamlParser(builder)
-          case Oas  => new OASParser(builder)
-          case _    => new RamlParser(builder)
+          case Oas  => new OasParser(builder)
+          case Amf  => new AmfParser(builder)
         }
     }
   }
 
   private def build(root: Root): BaseUnit = {
     root match {
-      case Root(_, _, _, Oas)  => createOasDocument(root)
-      case Root(_, _, _, Raml) => createRamlDocument(root)
+      case Root(_, _, _, Oas)  => createOasUnit(root)
+      case Root(_, _, _, Raml) => createRamlUnit(root)
+      case Root(_, _, _, Amf)  => ???
     }
   }
 
-  private def createRamlDocument(root: Root): Document = {
+  private def createAmfUnit(root: Root): BaseUnit = null
+
+  private def createRamlUnit(root: Root): BaseUnit = {
     hint.kind match {
       case Library     => Document(root.location, root.references, WebApiMaker(root).make) // TODO libraries
       case Link        => Document(root.location, root.references, WebApiMaker(root).make) // TODO includes
-      case Unspecified => Document(root.location, root.references, WebApiMaker(root).make)
+      case Unspecified => resolveRamlUnit(root)
     }
   }
 
-  private def createOasDocument(root: Root): Document = {
-    Document(root.location, root.references, WebApiMaker(root).make)
+  private def resolveRamlUnit(root: Root) = {
+    root.ast.head match {
+      case c if c.is(Comment) && RAML_10 == c.content =>
+        Document(root.location, root.references, WebApiMaker(root).make)
+      case _ => ???
+    }
+  }
+
+  private def createOasUnit(root: Root): BaseUnit = {
+    root.ast.head.children.find(e =>
+      e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
+      case Some(_) => Document(root.location, root.references, WebApiMaker(root).make)
+      case _       => ???
+    }
   }
 
   private def parse(content: Content) = {

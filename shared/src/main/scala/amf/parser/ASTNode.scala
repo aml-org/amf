@@ -1,7 +1,5 @@
 package amf.parser
 
-import amf.common.AMFAST
-import amf.compiler.Root
 import amf.document.BaseUnit
 import amf.lexer.Token
 import amf.parser.ASTNodePrinter.print
@@ -42,6 +40,12 @@ trait ASTNode[T <: Token] {
 
   /** Returns the type of the Node. */
   def `type`: T
+
+  /** Return true if given type matches the type of the Node. */
+  def is(t: T): Boolean = t == `type`
+
+  /** Select first child of specified type. */
+  def >(t: T): N = children.find(_.is(t)).get
 
   /** Empty node. */
   val empty: N

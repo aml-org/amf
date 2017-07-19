@@ -70,7 +70,7 @@ object FieldEmitter {
                                "",
                                NONE,
                                value
-                                 .asInstanceOf[List[String]]
+                                 .asInstanceOf[Seq[String]]
                                  .map(sc => {
                                    stringNode(sc)
                                  })))))

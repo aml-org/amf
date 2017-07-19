@@ -36,8 +36,8 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
   }
 
   private def createYamlNode(token: AMFToken, range: Range, children: Seq[AMFAST]): AMFAST = {
-    val start = children.head.range
-    val end   = children.last.range
+    val start = if (children.nonEmpty) children.head.range else range
+    val end   = if (children.nonEmpty) children.last.range else range
     new AMFASTNode(token, null, start.extent(end), children)
   }
 }

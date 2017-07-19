@@ -4,6 +4,7 @@ import amf.common.AMFToken
 import amf.common.AMFToken._
 import amf.remote.Vendor
 
+/** Parse tokens into ast tree. */
 abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
 
   /** Parse current input. */
@@ -12,7 +13,7 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
       current match {
         case StartMap      => parseMapping()
         case StartSequence => parseSequence()
-        case _             => discard()
+        case Comment       => parseComment()
       }
     }
   }
@@ -44,4 +45,6 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
   }
 
   def vendor(): Vendor
+
+  private def parseComment(): Unit = matchOrError(Comment)
 }

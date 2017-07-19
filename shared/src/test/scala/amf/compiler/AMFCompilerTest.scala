@@ -1,7 +1,9 @@
 package amf.compiler
 
+import amf.common.AMFToken.MapToken
 import amf.common.{AMFAST, AMFASTLink}
 import amf.document.Document
+import amf.domain.APIDocumentation
 import amf.exception.CyclicReferenceException
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
@@ -17,6 +19,26 @@ import scala.concurrent.ExecutionContext
 class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  test("Api (raml)") {
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", platform, RamlYamlHint)
+      .build() map {
+      case d: Document =>
+        d.encodes match {
+          case api: APIDocumentation => api.host should be("api.example.com")
+        }
+    }
+  }
+
+  test("Api (oas)") {
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", platform, OasJsonHint)
+      .build() map {
+      case d: Document =>
+        d.encodes match {
+          case api: APIDocumentation => api.host should be("api.example.com")
+        }
+    }
+  }
 
   test("Simple import") {
     AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint)
@@ -57,8 +79,8 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, cache = Some(cache))
       .root() map {
       case Root(root, _, _, _) =>
-        root.children.size should be(1)
-        val bodyMap = root.children.head
+        root.children.size should be(2)
+        val bodyMap = root > MapToken
         bodyMap.children.size should be(2)
         val uses = bodyMap.children(1)
         assertUses(uses)
@@ -106,4 +128,5 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       size should be(expectedSize)
     }
   }
+
 }
