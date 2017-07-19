@@ -18,7 +18,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
   test("test simple oas/json dump from given tree") {
     val webApi = api()
 
-    val dumper = new AMFDumper(webApi, Oas)
+    val amfDumper = new AMFDumper(webApi, Oas)
 
     val expected =
       """{
@@ -37,7 +37,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |  "consumes": "application/json",
         |  "produces": "application/json"
         |}""".stripMargin
-    dumper.dump() map { s =>
+    amfDumper.dump() map { s =>
       s should be(expected)
     }
   }
