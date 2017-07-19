@@ -131,22 +131,22 @@ class AMFUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
     val unit = buildCompleteUnit(Raml)
 
     unit.`type` should be(Document)
-    assertNode(unit.root.children.head, ("title", "test"))
-    assertNode(unit.root.children.head, ("description", "test description"))
+    assertNode(unit.root.last, ("title", "test"))
+    assertNode(unit.root.last, ("description", "test description"))
 
-    assertNode(unit.root.children.head, ("version", "1.1"))
-    assertNode(unit.root.children.head, ("termsOfService", "termsOfService"))
-    assertNode(unit.root.children.head, ("license", List(("url", "licenseUrl"), ("name", "licenseName"))))
+    assertNode(unit.root.last, ("version", "1.1"))
+    assertNode(unit.root.last, ("termsOfService", "termsOfService"))
+    assertNode(unit.root.last, ("license", List(("url", "licenseUrl"), ("name", "licenseName"))))
 
-    assertNode(unit.root.children.head, ("protocols", List("http", "http")))
-    assertNode(unit.root.children.head, ("baseUri", "http://localhost.com/api"))
+    assertNode(unit.root.last, ("protocols", List("http", "http")))
+    assertNode(unit.root.last, ("baseUri", "http://localhost.com/api"))
 
-    assertNode(unit.root.children.head, ("mediaType", "application/json"))
+    assertNode(unit.root.last, ("mediaType", "application/json"))
 
-    assertNode(unit.root.children.head,
+    assertNode(unit.root.last,
                ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
 
-    assertNode(unit.root.children.head,
+    assertNode(unit.root.last,
                ("externalDocs",
                 List(
                   ("url", "creativoWorkUrl"),
@@ -154,13 +154,11 @@ class AMFUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
                 )))
   }
 
-
-
 //list of triple key -> value
   def assertRamlTree(root: ASTNode[_], expected: (List[(String, String)])): Assertion = {
     expected
       .map(e => {
-        val value = root.children.head.children
+        val value = root.last.children
           .find(c => c.children.head.content.startsWith(e._1))
         if (value.isEmpty) throwNotFound(e._1)
         value.get.children(1).content should be(e._2)

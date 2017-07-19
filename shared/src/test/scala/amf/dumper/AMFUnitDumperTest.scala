@@ -22,6 +22,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
 
     val expected =
       """{
+        |  "swagger": "2.0",
         |  "info": {
         |    "title": "test",
         |    "description": "test description",
@@ -48,7 +49,8 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
     val dumper = new AMFDumper(webApi, Raml)
 
     val expected =
-      """title: test
+      """#%RAML 1.0
+        |title: test
         |description: test description
         |baseUri: http://localhost.com/api
         |protocols:

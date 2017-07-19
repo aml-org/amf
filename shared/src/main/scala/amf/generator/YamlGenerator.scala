@@ -27,12 +27,16 @@ class YamlGenerator extends ASTNodeVisitor {
 
   override def visit(node: ASTNode[_]): Unit = {
     node.`type` match {
-      case Root                  => visitChildren(node.head, forceLine = false)
+      case Root =>
+        visit(node.head)
+        writer.line()
+        visitChildren(node.last, forceLine = false)
       case MapToken              => visitChildren(node)
       case SequenceToken         => visitChildren(node, "-", forceLine = false)
       case Entry                 => visitEntry(node)
       case IntToken | FloatToken => writer.write(' ').write(node.content)
       case StringToken           => writer.write(' ').write(node.content)
+      case Comment               => writer.write('#').write(node.content)
       case _                     => ???
     }
   }
