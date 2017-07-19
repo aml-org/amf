@@ -2,14 +2,26 @@ package amf.spec
 
 import amf.metadata.domain.APIDocumentationModel._
 import amf.metadata.domain.CreativeWorkModel.{Description => CreativeWorkDescription, Url => CreativeWorkUrl}
-import amf.metadata.domain.EndPointModel.{Description => EndPointDescription, Name => EndPointName}
+import amf.metadata.domain.EndPointModel.{
+  Description => EndPointDescription,
+  Name => EndPointName,
+  Operations => EndPointOperations
+}
 import amf.metadata.domain.LicenseModel.{Name => LicenseName, Url => LicenseUrl}
+import amf.metadata.domain.OperationModel.{
+  Name => OperationName,
+  Description => OperationDescription,
+  Deprecated => OperationDeprecated,
+  Summary => OperationSummary,
+  Documentation => OperationDocumentation,
+  Schemes => OperationSchemes
+}
 import amf.metadata.domain.OrganizationModel.{
   Email => OrganizationEmail,
   Name => OrganizationName,
   Url => OrganizationUrl
 }
-import amf.remote.{Amf, Oas, Raml, Vendor}
+import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.FieldEmitter.SpecEmitter
 import amf.spec.SpecImplicits._
 
@@ -54,7 +66,18 @@ object Spec {
       ),
       "/.*" ~ EndPoints -> (
         'displayName ~ EndPointName,
-        'description ~ EndPointDescription
+        'description ~ EndPointDescription,
+        "get|patch|put|post|delete|options|head" ~ EndPointOperations -> (
+          'title ~ OperationName,
+          'description ~ OperationDescription,
+          'deprecated ~ OperationDeprecated,
+          'summary ~ OperationSummary,
+          'externalDocs ~ OperationDocumentation -> (
+            'url ~ CreativeWorkUrl,
+            'description ~ CreativeWorkDescription
+          ),
+          'protocols ~ OperationSchemes
+        )
       )
     )
   }
@@ -89,7 +112,18 @@ object Spec {
       'paths -> (
         "/.*" ~ EndPoints -> (
           'displayName ~ EndPointName,
-          'description ~ EndPointDescription
+          'description ~ EndPointDescription,
+          "get|patch|put|post|delete|options|head" ~ EndPointOperations -> (
+            'operationId ~ OperationName,
+            'description ~ OperationDescription,
+            'deprecated ~ OperationDeprecated,
+            'summary ~ OperationSummary,
+            'externalDocs ~ OperationDocumentation -> (
+              'url ~ CreativeWorkUrl,
+              'description ~ CreativeWorkDescription
+            ),
+            'schemes ~ OperationSchemes
+          )
         )
       )
     )

@@ -1,8 +1,8 @@
 package amf.spec
 
 import amf.metadata.Field
-import amf.metadata.Type.{Array, Str}
-import amf.metadata.domain.{CreativeWorkModel, EndPointModel, LicenseModel, OrganizationModel}
+import amf.metadata.Type.{Array, Bool, Str}
+import amf.metadata.domain._
 import amf.remote.{Amf, Vendor}
 import amf.spec.FieldEmitter._
 import amf.spec.FieldParser._
@@ -30,11 +30,14 @@ protected trait SpecNode {
   private def createSpecField(fields: List[Field]) = {
     fields.head.`type` match {
       case Str        => SpecField(fields, matcher(), StringValueParser, StringValueEmitter)
+      case Bool       => SpecField(fields, matcher(), BoolValueParser, StringValueEmitter) //TODO change emitter.
       case Array(Str) => SpecField(fields, matcher(), StringListParser, StringListEmitter)
       case OrganizationModel | CreativeWorkModel | LicenseModel =>
         SpecField(fields, matcher(), ObjectParser, ObjectEmitter)
       case Array(EndPointModel) =>
         SpecField(fields, matcher(), EndPointParser, EndPointEmitter)
+      case Array(OperationModel) =>
+        SpecField(fields, matcher(), EndPointParser, EndPointEmitter) //TODO change parser and emitter.
     }
   }
 

@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.domain.{EndPoint, Fields}
+import amf.domain.{EndPoint, Fields, Operation}
 import amf.metadata.domain.EndPointModel._
 
 /**
@@ -13,9 +13,9 @@ class EndPointBuilder extends Builder[EndPoint] {
 
   def withPath(path: String): this.type = set(Path, path)
 
-  override def build: EndPoint = EndPoint(fields)
+  def withOperations(operations: Seq[Operation]): this.type = set(Operations, operations)
 
-  def build(parentPath: String): EndPoint = EndPoint(fields)
+  override def build: EndPoint = EndPoint(fields)
 }
 
 object EndPointBuilder {

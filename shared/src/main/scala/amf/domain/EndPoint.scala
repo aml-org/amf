@@ -11,9 +11,10 @@ case class EndPoint(override val fields: Fields) extends FieldHolder(fields) wit
 
   override type This = EndPoint
 
-  val name: String        = fields get Name
-  val description: String = fields get Description
-  val path: String        = fields get Path
+  val name: String               = fields get Name
+  val description: String        = fields get Description
+  val path: String               = fields get Path
+  val operations: Seq[Operation] = fields get Operations
 
   def simplePath: String = {
     val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])

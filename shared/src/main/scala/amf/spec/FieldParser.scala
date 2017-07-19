@@ -24,10 +24,20 @@ object FieldParser {
     def apply(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit = parse(spec, node, builder)
   }
 
-  object StringValueParser extends SpecFieldParser {
+  trait ValueParser[T] extends SpecFieldParser {
+    def value(content: String): T
 
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
-      spec.fields.foreach(builder.set(_, entry.last.content.unquote, annotations(entry)))
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
+      spec.fields.foreach(builder.set(_, value(entry.last.content.unquote), annotations(entry)))
+    }
+  }
+
+  object StringValueParser extends ValueParser[String] {
+    override def value(content: String): String = content
+  }
+
+  object BoolValueParser extends ValueParser[Boolean] {
+    override def value(content: String): Boolean = content.toBoolean
   }
 
   object StringListParser extends SpecFieldParser {

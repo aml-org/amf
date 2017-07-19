@@ -18,7 +18,7 @@ object OperationModel extends DomainElementModel {
 
   val Deprecated = Field(Bool, Document + "deprecated")
 
-  val Summary = Field(Bool, Http + "summary")
+  val Summary = Field(Str, Http + "guiSummary")
 
   val Documentation = Field(CreativeWorkModel, Schema + "documentation")
 
