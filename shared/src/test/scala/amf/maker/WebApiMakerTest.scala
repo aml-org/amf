@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.builder.{CreativeWorkBuilder, EndPointBuilder, LicenseBuilder, OrganizationBuilder}
+import amf.builder._
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.document.Document
@@ -84,6 +84,87 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     )
 
     assertFixture(fixture, "nested-endpoints.json", OasJsonHint)
+  }
+
+  test("WebApi with multiple operations - RAML.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .withOperations(List(
+          OperationBuilder()
+            .withMethod("get")
+            .withName("Some title")
+            .withDescription("Some description")
+            .isDeprecated(true)
+            .withSummary("This is a summary")
+            .withDocumentation(
+              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
+            .withSchemes(List("http", "https"))
+            .build,
+          OperationBuilder()
+            .withMethod("post")
+            .withName("Some title")
+            .withDescription("Some description")
+            .withDocumentation(
+              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
+            .withSchemes(List("http", "https"))
+            .build
+        ))
+        .build
+    )
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/base/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "endpoint-operations.raml", RamlYamlHint)
+  }
+
+  test("WebApi with multiple operations - OAS.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .withName("Name")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .withOperations(List(
+          OperationBuilder()
+            .withMethod("get")
+            .withName("Some title")
+            .withDescription("Some description")
+            .isDeprecated(true)
+            .withSummary("This is a summary")
+            .withDocumentation(
+              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
+            .withSchemes(List("http", "https"))
+            .build,
+          OperationBuilder()
+            .withMethod("post")
+            .withName("Some title")
+            .withDescription("Some description")
+            .withDocumentation(
+              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
+            .withSchemes(List("http", "https"))
+            .build
+        ))
+        .build
+    )
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/base/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "endpoint-operations.json", OasJsonHint)
   }
 
   test("generate partial succeed") {
@@ -263,6 +344,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     if (expected != actual) fail(s"Expected $expected but $actual found for field $field")
 
   private def assertFixture(fixture: List[(Field, Object)], file: String, hint: Hint): Future[Assertion] = {
+
     AMFCompiler(basePath + file, platform, hint)
       .build()
       .map { unit =>

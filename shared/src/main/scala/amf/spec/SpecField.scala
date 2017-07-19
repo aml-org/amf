@@ -37,7 +37,7 @@ protected trait SpecNode {
       case Array(EndPointModel) =>
         SpecField(fields, matcher(), EndPointParser, EndPointEmitter)
       case Array(OperationModel) =>
-        SpecField(fields, matcher(), EndPointParser, EndPointEmitter) //TODO change parser and emitter.
+        SpecField(fields, matcher(), OperationParser, EndPointEmitter) //TODO change emitter.
     }
   }
 

@@ -7,7 +7,7 @@ import amf.domain.{Annotation, EndPoint}
 import amf.metadata.Type
 import amf.metadata.domain.APIDocumentationModel.EndPoints
 import amf.metadata.domain.EndPointModel.Path
-import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
+import amf.metadata.domain._
 import amf.parser.ASTNode
 import amf.spec.Matcher.RegExpMatcher
 
@@ -82,6 +82,14 @@ object FieldParser {
       node.last.children
         .filter(RegExpMatcher("/.*").matches)
         .foreach(parse(spec, _, Some(actual), collector))
+    }
+  }
+
+  object OperationParser extends ChildrenParser {
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
+      val b = OperationBuilder().set(OperationModel.Method, entry.head.content.unquote, annotations(entry))
+      super.parse(spec, entry, b)
+      builder add (EndPointModel.Operations, List(b.build))
     }
   }
 

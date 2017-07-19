@@ -14,7 +14,7 @@ case class Operation(override val fields: Fields) extends FieldHolder(fields) wi
   val deprecated: Boolean         = fields get Deprecated
   val summary: String             = fields get Summary
   val documentation: CreativeWork = fields get Documentation
-  val schemes: CreativeWork       = fields get Schemes
+  val schemes: Seq[String]        = fields get Schemes
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Operation]
 

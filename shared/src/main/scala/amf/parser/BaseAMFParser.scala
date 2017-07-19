@@ -39,8 +39,8 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
 
   protected def parseValue(): Unit = {
     current match {
-      case StringToken | IntToken | FloatToken | True | False | Null => consume()
-      case _                                                         => parse()
+      case StringToken | IntToken | FloatToken | BooleanToken | True | False | Null => consume()
+      case _                                                                        => parse()
     }
   }
 

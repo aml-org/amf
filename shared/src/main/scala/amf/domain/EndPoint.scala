@@ -33,16 +33,17 @@ case class EndPoint(override val fields: Fields) extends FieldHolder(fields) wit
       (that canEqual this) &&
         name == that.name &&
         description == that.description &&
-        path == that.path
+        path == that.path &&
+        operations == that.operations
     case _ => false
   }
 
   override def hashCode(): Int = {
-    val state = Seq(name, description, path)
+    val state = Seq(name, description, path, operations)
     state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
   }
 
-  override def toString = s"EndPoint($name, $description, $path)"
+  override def toString = s"EndPoint($name, $description, $path, $operations)"
 
   override def toBuilder: EndPointBuilder = EndPointBuilder(fields)
 }
