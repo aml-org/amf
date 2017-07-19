@@ -1,8 +1,8 @@
 package amf.spec
 
-import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
+import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFASTNode, AMFToken}
-import amf.domain.{EndPoint, FieldHolder, Fields}
+import amf.domain.{EndPoint, FieldHolder, Fields, Operation}
 import amf.metadata.Field
 import amf.parser.Range.NONE
 import amf.remote.Raml
@@ -52,10 +52,23 @@ object FieldEmitter {
     }
   }
 
-  object StringValueEmitter extends SpecFieldEmitter {
+  abstract class PairValueEmmiter extends SpecFieldEmitter {
+
+    def token: AMFToken
+
     override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
-      List(Resolved(entry(spec, stringNode(value.toString))))
+      List(Resolved(entry(spec, valueNode(value, token))))
     }
+  }
+
+  object StringValueEmitter extends PairValueEmmiter {
+
+    override def token: AMFToken = StringToken
+  }
+
+  object BooleanValueEmitter extends PairValueEmmiter {
+
+    override def token: AMFToken = BooleanToken
   }
 
   object StringListEmitter extends SpecFieldEmitter {
@@ -70,7 +83,7 @@ object FieldEmitter {
                                value
                                  .asInstanceOf[Seq[String]]
                                  .map(sc => {
-                                   stringNode(sc)
+                                   valueNode(sc)
                                  })))))
     }
 
@@ -122,6 +135,25 @@ object FieldEmitter {
     }
   }
 
+  object OperationEmitter extends SpecFieldEmitter {
+    override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
+      val operations = value.asInstanceOf[List[Operation]]
+      operations.map(operation => {
+        operationBuilder(operation, spec)
+      })
+    }
+
+    private def operationBuilder(operation: Operation, spec: SpecField): LazyBuilder = new LazyBuilder(Entry) {
+      override def build: AMFAST =
+        entry(operation.method,
+              map(
+                List
+                  .concat(SpecEmitter(spec.children).emit(operation.fields).asInstanceOf[LazyBuilder].nodes, nodes)
+                  .map(_.build)
+              ))
+    }
+  }
+
   private def map(entries: Seq[AMFAST]): AMFAST = new AMFASTNode(MapToken, "", NONE, entries)
 
   private def entry(spec: SpecField, value: AMFAST): AMFAST = entry(key(spec), value)
@@ -130,12 +162,12 @@ object FieldEmitter {
                    "",
                    NONE,
                    List(
-                     stringNode(key),
+                     valueNode(key),
                      value
                    ))
   }
 
-  private def stringNode(value: String) = new AMFASTNode(StringToken, value, NONE)
+  private def valueNode(value: Any, token: AMFToken = StringToken) = new AMFASTNode(token, value.toString, NONE)
 
   def nested(sf: SpecField): Seq[(Field, (SpecField, Option[SpecFieldEmitter]))] = {
 

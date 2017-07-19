@@ -30,14 +30,14 @@ protected trait SpecNode {
   private def createSpecField(fields: List[Field]) = {
     fields.head.`type` match {
       case Str        => SpecField(fields, matcher(), StringValueParser, StringValueEmitter)
-      case Bool       => SpecField(fields, matcher(), BoolValueParser, StringValueEmitter) //TODO change emitter.
+      case Bool       => SpecField(fields, matcher(), BoolValueParser, BooleanValueEmitter)
       case Array(Str) => SpecField(fields, matcher(), StringListParser, StringListEmitter)
       case OrganizationModel | CreativeWorkModel | LicenseModel =>
         SpecField(fields, matcher(), ObjectParser, ObjectEmitter)
       case Array(EndPointModel) =>
         SpecField(fields, matcher(), EndPointParser, EndPointEmitter)
       case Array(OperationModel) =>
-        SpecField(fields, matcher(), OperationParser, EndPointEmitter) //TODO change emitter.
+        SpecField(fields, matcher(), OperationParser, OperationEmitter)
     }
   }
 

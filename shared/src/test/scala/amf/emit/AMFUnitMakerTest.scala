@@ -154,6 +154,24 @@ class AMFUnitMakerTest extends FunSuite with AMFUnitFixtureTest {
                 )))
   }
 
+  test("test raml generation with operations") {
+    val unit = buildExtendedUnit(Raml)
+    unit.`type` should be(Document)
+
+    assertNode(unit.root.last,
+               ("/endpoint", List(("get", List(("description", "test operation get"), ("title", "test get"))))))
+  }
+
+  test("test oas generation with operations") {
+    val unit = buildExtendedUnit(Oas)
+    unit.`type` should be(Document)
+
+    assertNode(
+      unit.root.last,
+      ("paths",
+       List(("/endpoint", List(("get", List(("description", "test operation get"), ("operationId", "test get"))))))))
+  }
+
 //list of triple key -> value
   def assertRamlTree(root: ASTNode[_], expected: (List[(String, String)])): Assertion = {
     expected
