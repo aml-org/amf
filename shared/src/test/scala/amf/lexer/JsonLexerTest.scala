@@ -392,7 +392,7 @@ class JsonLexerTest extends FunSuite with ListAssertions {
                         (StringToken, "\"a\""),
                         (Colon, ":"),
                         (WhiteSpace, " "),
-                        (True, "true"),
+                        (BooleanToken, "true"),
                         (EndMap, "}"),
                         (Eof, ""))
 
@@ -419,9 +419,9 @@ class JsonLexerTest extends FunSuite with ListAssertions {
     val expected = List((StartSequence, "["),
                         (Null, "null"),
                         (Comma, ","),
-                        (True, "true"),
+                        (BooleanToken, "true"),
                         (Comma, ","),
-                        (False, "false"),
+                        (BooleanToken, "false"),
                         (EndSequence, "]"),
                         (Eof, ""))
 

@@ -19,8 +19,8 @@ class JsonLexer(stream: CharStream = new CharSequenceStream()) extends BaseLexer
   override protected val decimalToken: AMFToken       = FloatToken
 
   private val keywords: Map[String, AMFToken] = Map(
-    ("true", True),
-    ("false", False),
+    ("true", BooleanToken),
+    ("false", BooleanToken),
     ("null", Null)
   )
 

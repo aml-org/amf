@@ -18,10 +18,6 @@ object AMFToken {
 
   object BooleanToken extends BooleanToken with AMFToken
 
-  object True extends NamedToken("True") with AMFToken
-
-  object False extends NamedToken("False") with AMFToken
-
   object Null extends NamedToken("Null") with AMFToken
 
   object Eof extends Eof with AMFToken
