@@ -31,13 +31,13 @@ class YamlGenerator extends ASTNodeVisitor {
         visit(node.head)
         writer.line()
         visitChildren(node.last, forceLine = false)
-      case MapToken              => visitChildren(node)
-      case SequenceToken         => visitChildren(node, "-", forceLine = false)
-      case Entry                 => visitEntry(node)
-      case IntToken | FloatToken => writer.write(' ').write(node.content)
-      case StringToken           => writer.write(' ').write(node.content)
-      case Comment               => writer.write('#').write(node.content)
-      case _                     => ???
+      case MapToken                             => visitChildren(node)
+      case SequenceToken                        => visitChildren(node, "-", forceLine = false)
+      case Entry                                => visitEntry(node)
+      case IntToken | FloatToken | BooleanToken => writer.write(' ').write(node.content)
+      case StringToken                          => writer.write(' ').write(node.content)
+      case Comment                              => writer.write('#').write(node.content)
+      case _                                    => ???
     }
   }
 

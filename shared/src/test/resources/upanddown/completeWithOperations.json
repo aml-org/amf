@@ -1,0 +1,97 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1",
+    "license": {
+      "url": "licenseUrl",
+      "name": "licenseName"
+    }
+  },
+  "host": "http://api.example.com/path",
+  "produces": "application/yaml",
+  "consumes": "application/yaml",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "contact": {
+    "url": "contactUrl",
+    "name": "contactName",
+    "email": "contactEmail"
+  },
+  "externalDocs": {
+    "url": "externalDocsUrl",
+    "description": "externalDocsDescription"
+  },
+  "paths": {
+    "/levelzero": {
+      "displayName": "Name",
+      "get": {
+        "operationId": "Some title",
+        "description": "Some description",
+        "deprecated": true,
+        "summary": "This is a summary",
+        "externalDocs": {
+          "url": "urlExternalDocs",
+          "description": "descriptionExternalDocs"
+        },
+        "schemes": [
+          "http",
+          "https"
+        ]
+      },
+      "post": {
+        "operationId": "Some title",
+        "description": "Some description",
+        "externalDocs": {
+          "url": "urlExternalDocs",
+          "description": "descriptionExternalDocs"
+        },
+        "schemes": [
+          "http",
+          "https"
+        ]
+      }
+    },
+    "/levelzero/level-one": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title level one",
+        "description": "Some description level one",
+        "deprecated": true,
+        "summary": "This is a summary level one",
+        "externalDocs": {
+          "url": "urlExternalDocs lvel one",
+          "description": "descriptionExternalDocs level one"
+        },
+        "schemes": [
+          "http",
+          "https"
+        ]
+      }
+    },
+    "/levelzero/another-level-one": {
+      "displayName": "some other display name"
+    },
+    "/another-levelzero": {
+      "displayName": "Root name",
+      "post": {
+        "operationId": "Some title another level 0",
+        "description": "Some description another level 0",
+        "externalDocs": {
+          "url": "urlExternalDocs another level 0",
+          "description": "descriptionExternalDocs another level 0"
+        },
+        "schemes": [
+          "http",
+          "https"
+        ]
+      }
+    }
+  },
+  "basePath": "/path"
+}

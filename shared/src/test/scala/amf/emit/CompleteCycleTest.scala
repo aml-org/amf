@@ -68,6 +68,27 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
     assertCycle(basePath + "completeWithEndpoints.json", basePath + "completeWithEndpoints.json", OasJsonHint, Oas)
   }
 
+  //---operations
+
+  test("complete with operations raml to oas test") {
+    assertCycle(basePath + "completeWithOperations.raml", basePath + "completeWithOperations.json", RamlYamlHint, Oas)
+  }
+
+  test("complete with operations raml to raml test") {
+    assertCycle(basePath + "completeWithOperations.raml", basePath + "completeWithOperations.raml", RamlYamlHint, Raml)
+  }
+
+  test("complete with operations oas to raml test") {
+    assertCycle(basePath + "completeWithOperations.json",
+                basePath + "completeWithOperationsPlain.raml",
+                OasJsonHint,
+                Raml)
+  }
+
+  test("complete with operations oas to oas test") {
+    assertCycle(basePath + "completeWithOperations.json", basePath + "completeWithOperations.json", OasJsonHint, Oas)
+  }
+
   def assertCycle(pathOrigin: String,
                   pathExpected: String,
                   originHint: Hint,
@@ -86,7 +107,7 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
         new AMFDumper(api, dumperVendor).dump()
       })
 
-    future.flatMap(s2 => eventualString.map(s => s should be(s2)))
+    future.flatMap(c => eventualString.map(e => e should be(c)))
   }
 
 }
