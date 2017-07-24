@@ -25,4 +25,7 @@ object OperationModel extends DomainElementModel {
   val Schemes = Field(Array(Str), Http + "scheme")
 
   override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`
+
+  override val fields
+    : List[Field] = Method :: Name :: Description :: Deprecated :: Summary :: Documentation :: Schemes :: DomainElementModel.fields
 }

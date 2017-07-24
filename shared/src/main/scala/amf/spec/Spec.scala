@@ -1,18 +1,14 @@
 package amf.spec
 
-import amf.metadata.domain.APIDocumentationModel._
+import amf.metadata.domain.WebApiModel._
 import amf.metadata.domain.CreativeWorkModel.{Description => CreativeWorkDescription, Url => CreativeWorkUrl}
-import amf.metadata.domain.EndPointModel.{
-  Description => EndPointDescription,
-  Name => EndPointName,
-  Operations => EndPointOperations
-}
+import amf.metadata.domain.EndPointModel.{Description => EndPointDescription, Name => EndPointName, Operations}
 import amf.metadata.domain.LicenseModel.{Name => LicenseName, Url => LicenseUrl}
 import amf.metadata.domain.OperationModel.{
   Name => OperationName,
   Description => OperationDescription,
-  Deprecated => OperationDeprecated,
-  Summary => OperationSummary,
+  Deprecated,
+  Summary,
   Documentation => OperationDocumentation,
   Schemes => OperationSchemes
 }
@@ -67,11 +63,11 @@ object Spec {
       "/.*" ~ EndPoints -> (
         'displayName ~ EndPointName,
         'description ~ EndPointDescription,
-        "get|patch|put|post|delete|options|head" ~ EndPointOperations -> (
+        "get|patch|put|post|delete|options|head" ~ Operations -> (
           'title ~ OperationName,
           'description ~ OperationDescription,
-          'deprecated ~ OperationDeprecated,
-          'summary ~ OperationSummary,
+          'deprecated ~ Deprecated,
+          'summary ~ Summary,
           'externalDocs ~ OperationDocumentation -> (
             'url ~ CreativeWorkUrl,
             'description ~ CreativeWorkDescription
@@ -113,11 +109,11 @@ object Spec {
         "/.*" ~ EndPoints -> (
           'displayName ~ EndPointName,
           'description ~ EndPointDescription,
-          "get|patch|put|post|delete|options|head" ~ EndPointOperations -> (
+          "get|patch|put|post|delete|options|head" ~ Operations -> (
             'operationId ~ OperationName,
             'description ~ OperationDescription,
-            'deprecated ~ OperationDeprecated,
-            'summary ~ OperationSummary,
+            'deprecated ~ Deprecated,
+            'summary ~ Summary,
             'externalDocs ~ OperationDocumentation -> (
               'url ~ CreativeWorkUrl,
               'description ~ CreativeWorkDescription

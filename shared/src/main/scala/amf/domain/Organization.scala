@@ -8,7 +8,7 @@ import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
   */
 case class Organization(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
 
-  override type This = Organization
+  override type T = Organization
 
   val url: String   = fields get Url
   val name: String  = fields get Name

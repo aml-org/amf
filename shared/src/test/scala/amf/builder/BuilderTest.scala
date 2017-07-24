@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.metadata.domain.APIDocumentationModel._
+import amf.metadata.domain.WebApiModel._
 import amf.domain.Annotation.{LexicalInformation, ParentEndPoint}
 import amf.parser.Range
 import amf.unsafe.PlatformSecrets
@@ -14,7 +14,7 @@ class BuilderTest extends FunSuite with PlatformSecrets {
 
   test("Test builder annotations.") {
 
-    val api = APIDocumentationBuilder()
+    val api = WebApiBuilder()
 
     api.set(Name, "Altoids", List(LexicalInformation(Range((1, 1), (1, 8)))))
 

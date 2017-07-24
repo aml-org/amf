@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.compiler.AMFCompiler
 import amf.document.Document
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 import amf.dumper.AMFDumper
 import amf.remote._
 import amf.unsafe.PlatformSecrets
@@ -103,7 +103,7 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
       .build()
       .flatMap(baseUnit => {
         val document = baseUnit.asInstanceOf[Document]
-        val api      = document.encodes.asInstanceOf[APIDocumentation]
+        val api      = document.encodes.asInstanceOf[WebApi]
         new AMFDumper(api, dumperVendor).dump()
       })
 

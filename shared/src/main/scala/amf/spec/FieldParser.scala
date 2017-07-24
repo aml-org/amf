@@ -5,7 +5,7 @@ import amf.common.Strings.strings
 import amf.domain.Annotation.{LexicalInformation, ParentEndPoint}
 import amf.domain.{Annotation, EndPoint}
 import amf.metadata.Type
-import amf.metadata.domain.APIDocumentationModel.EndPoints
+import amf.metadata.domain.WebApiModel.EndPoints
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain._
 import amf.parser.ASTNode
@@ -19,15 +19,15 @@ import scala.collection.mutable.ListBuffer
 object FieldParser {
 
   trait SpecFieldParser {
-    def parse(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit
+    def parse(spec: SpecField, node: ASTNode[_], builder: Builder): Unit
 
-    def apply(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit = parse(spec, node, builder)
+    def apply(spec: SpecField, node: ASTNode[_], builder: Builder): Unit = parse(spec, node, builder)
   }
 
   trait ValueParser[T] extends SpecFieldParser {
     def value(content: String): T
 
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
       spec.fields.foreach(builder.set(_, value(entry.last.content.unquote), annotations(entry)))
     }
   }
@@ -42,12 +42,12 @@ object FieldParser {
 
   object StringListParser extends SpecFieldParser {
 
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit =
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit =
       spec.fields.foreach(builder.set(_, entry.last.children.map(c => c.content.unquote), annotations(entry)))
   }
 
   case class ChildrenParser() extends SpecFieldParser {
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
       entry.last.children.foreach(child => {
         spec.children.find(_.matcher.matches(child)) match {
           case Some(field) => field.parser(field, child, builder)
@@ -58,7 +58,7 @@ object FieldParser {
   }
 
   object EndPointParser extends ChildrenParser {
-    override def parse(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit = {
+    override def parse(spec: SpecField, node: ASTNode[_], builder: Builder): Unit = {
       val result: ListBuffer[EndPoint] = ListBuffer()
       parse(spec, node, None, result)
       builder.add(EndPoints, result.toList)
@@ -86,7 +86,7 @@ object FieldParser {
   }
 
   object OperationParser extends ChildrenParser {
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder[_]): Unit = {
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
       val b = OperationBuilder().set(OperationModel.Method, entry.head.content.unquote, annotations(entry))
       super.parse(spec, entry, b)
       builder add (EndPointModel.Operations, List(b.build))
@@ -95,15 +95,15 @@ object FieldParser {
 
   object ObjectParser extends ChildrenParser {
 
-    def builderForType(t: Type): Builder[_] = t match {
+    def builderForType(t: Type): Builder = t match {
       case OrganizationModel => OrganizationBuilder()
       case LicenseModel      => LicenseBuilder()
       case CreativeWorkModel => CreativeWorkBuilder()
     }
 
-    override def parse(spec: SpecField, node: ASTNode[_], builder: Builder[_]): Unit = {
-      val field                    = spec.fields.head
-      val innerBuilder: Builder[_] = builderForType(field.`type`)
+    override def parse(spec: SpecField, node: ASTNode[_], builder: Builder): Unit = {
+      val field                 = spec.fields.head
+      val innerBuilder: Builder = builderForType(field.`type`)
       super.parse(spec, node, innerBuilder)
       builder.set(field, innerBuilder.build)
     }

@@ -12,8 +12,11 @@ import amf.vocabulary.ValueType
 trait ModuleModel extends BaseUnitModel {
 
   val Declares = Field(Array(DomainElementModel), Document + "declares")
-
-  override val `type`: List[ValueType] = List(Document + "Module") ++ BaseUnitModel.`type`
 }
 
-object ModuleModel extends ModuleModel
+object ModuleModel extends ModuleModel {
+
+  override val `type`: List[ValueType] = List(Document + "Module") ++ BaseUnitModel.`type`
+
+  override val fields: List[Field] = Declares :: BaseUnitModel.fields
+}

@@ -2,14 +2,14 @@ package amf.emit
 
 import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFASTNode}
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 import amf.parser.Range.NONE
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.Spec
 
 class AMFRootNodeMaker {
 
-  def make(webApi: APIDocumentation, vendor: Vendor): AMFASTNode = {
+  def make(webApi: WebApi, vendor: Vendor): AMFASTNode = {
     val amfast = Spec(vendor).emitter.emit(webApi.fields).build
 
     vendor match {
@@ -35,6 +35,6 @@ class AMFRootNodeMaker {
 }
 
 object AMFRootNodeMaker {
-  def apply(webApi: APIDocumentation, vendor: Vendor): AMFASTNode = new AMFRootNodeMaker().make(webApi, vendor)
+  def apply(webApi: WebApi, vendor: Vendor): AMFASTNode = new AMFRootNodeMaker().make(webApi, vendor)
 
 }

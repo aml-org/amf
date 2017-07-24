@@ -1,9 +1,13 @@
 package amf.compiler
 
+import amf.builder.DocumentBuilder
 import amf.common.AMFToken.{Comment, Entry}
+import amf.common.Strings.strings
 import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
+import amf.domain.DomainElement
 import amf.exception.CyclicReferenceException
+import amf.graph.GraphParser
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
 import amf.maker.WebApiMaker
@@ -14,7 +18,6 @@ import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.serialization.AmfParser
-import amf.common.Strings.strings
 import amf.spec.Spec.RAML_10
 import amf.yaml.YamlLexer
 
@@ -43,7 +46,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def compile() = root().map(build)
+  private def compile() = root().map(make)
 
   /** Usage at tests. */
   private[compiler] def root(): Future[Root] = {
@@ -81,20 +84,20 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def build(root: Root): BaseUnit = {
+  private def make(root: Root): BaseUnit = {
     root match {
-      case Root(_, _, _, Oas)  => createOasUnit(root)
-      case Root(_, _, _, Raml) => createRamlUnit(root)
-      case Root(_, _, _, Amf)  => ???
+      case Root(_, _, _, Oas)  => makeOasUnit(root)
+      case Root(_, _, _, Raml) => makeRamlUnit(root)
+      case Root(_, _, _, Amf)  => makeAmfUnit(root)
     }
   }
 
   private def createAmfUnit(root: Root): BaseUnit = null
 
-  private def createRamlUnit(root: Root): BaseUnit = {
+  private def makeRamlUnit(root: Root): BaseUnit = {
     hint.kind match {
-      case Library     => Document(root.location, root.references, WebApiMaker(root).make) // TODO libraries
-      case Link        => Document(root.location, root.references, WebApiMaker(root).make) // TODO includes
+      case Library     => document(root.location, root.references, WebApiMaker(root).make) // TODO libraries
+      case Link        => document(root.location, root.references, WebApiMaker(root).make) // TODO includes
       case Unspecified => resolveRamlUnit(root)
     }
   }
@@ -102,18 +105,28 @@ class AMFCompiler private (val url: String,
   private def resolveRamlUnit(root: Root) = {
     root.ast.head match {
       case c if c.is(Comment) && RAML_10 == c.content =>
-        Document(root.location, root.references, WebApiMaker(root).make)
+        document(root.location, root.references, WebApiMaker(root).make)
       case _ => ???
     }
   }
 
-  private def createOasUnit(root: Root): BaseUnit = {
+  private def document(location: String, references: Seq[BaseUnit], element: DomainElement): Document = {
+    DocumentBuilder()
+      .withLocation(location)
+      .withReferences(references)
+      .withEncodes(element)
+      .build
+  }
+
+  private def makeOasUnit(root: Root): BaseUnit = {
     root.ast.head.children.find(e =>
       e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
-      case Some(_) => Document(root.location, root.references, WebApiMaker(root).make)
+      case Some(_) => document(root.location, root.references, WebApiMaker(root).make)
       case _       => ???
     }
   }
+
+  private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root)
 
   private def parse(content: Content) = {
     val lexer   = resolveLexer(content)
@@ -130,11 +143,11 @@ class AMFCompiler private (val url: String,
       references += link.resolve(remote, context, cache, hint)
     })
 
-    Future.sequence(references).map(rs => Root(ast, URL(content.url), rs.map(_.location()), parser.vendor()))
+    Future.sequence(references).map(rs => Root(ast, content.url, rs, parser.vendor()))
   }
 }
 
-case class Root(ast: AMFAST, location: URL, references: Seq[URL], vendor: Vendor)
+case class Root(ast: AMFAST, location: String, references: Seq[BaseUnit], vendor: Vendor)
 
 object AMFCompiler {
   def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =

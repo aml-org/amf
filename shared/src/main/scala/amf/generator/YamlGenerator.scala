@@ -42,7 +42,7 @@ class YamlGenerator extends ASTNodeVisitor {
   }
 
   override def visit(node: ASTLinkNode[_]): Unit = {
-    writer.write(" !include ").write(node.target.location().input)
+    writer.write(" !include ").write(node.target.location)
   }
 
   override def after(node: ASTNode[_]): Unit = {

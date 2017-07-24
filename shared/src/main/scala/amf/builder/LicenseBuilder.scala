@@ -6,7 +6,9 @@ import amf.domain.{Fields, License}
 /**
   * License domain element builder.
   */
-class LicenseBuilder extends Builder[License] {
+class LicenseBuilder extends Builder {
+
+  override type T = License
 
   def withUrl(url: String): LicenseBuilder = set(Url, url)
 

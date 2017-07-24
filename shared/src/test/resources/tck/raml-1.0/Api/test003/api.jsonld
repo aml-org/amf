@@ -1,5 +1,5 @@
 {
-    "@id": "file:///Users/antoniogarrote/Development/api-modeling-framework/resources/tck/raml-1.0/Api/test003/api.raml",
+    "@id": "file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
     "@type": [
         "http://raml.org/vocabularies/document#Document",
         "http://raml.org/vocabularies/document#Fragment",
@@ -8,9 +8,9 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
         {
-            "@id": "file:///Users/antoniogarrote/Development/api-modeling-framework/resources/tck/raml-1.0/Api/test003/api.raml#/api-documentation",
+            "@id": "file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml#/api-documentation",
             "@type": [
-                "http://raml.org/vocabularies/http#APIDocumentation",
+                "http://schema.org/WebAPI",
                 "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://raml.org/vocabularies/http#host": [

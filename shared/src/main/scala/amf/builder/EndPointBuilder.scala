@@ -6,7 +6,10 @@ import amf.metadata.domain.EndPointModel._
 /**
   * EndPoint builder.
   */
-class EndPointBuilder extends Builder[EndPoint] {
+class EndPointBuilder extends Builder {
+
+  override type T = EndPoint
+
   def withName(name: String): this.type = set(Name, name)
 
   def withDescription(description: String): this.type = set(Description, description)

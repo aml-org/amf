@@ -2,7 +2,7 @@ package amf.client
 
 import amf.compiler.AMFCompiler
 import amf.document.{BaseUnit, Document}
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 import amf.parser.AMFUnit
 import amf.remote.RamlYamlHint
 
@@ -32,7 +32,7 @@ class JsClient extends BaseClient {
         new WebApiHandler {
           override def error(exception: Throwable): Unit = handler.error(exception)
 
-          override def success(document: APIDocumentation): Unit = handler.success(document)
+          override def success(document: WebApi): Unit = handler.success(document)
         },
         ""
       ))
@@ -41,8 +41,8 @@ class JsClient extends BaseClient {
   private def callback(handler: WebApiHandler, url: String)(t: Try[BaseUnit]) = t match {
     case Success(value) =>
       value match {
-        case Document(_, _, encoded) if encoded.isInstanceOf[APIDocumentation] =>
-          handler.success(encoded.asInstanceOf[APIDocumentation])
+        case d: Document if d.encodes.isInstanceOf[WebApi] =>
+          handler.success(d.encodes.asInstanceOf[WebApi])
         case _ => handler.error(new Exception(s"Unhandled type $value"))
       }
     case Failure(exception) => handler.error(exception)
@@ -59,7 +59,7 @@ trait JsHandler extends js.Object {
 
 @js.native
 trait JsWebApiHandler extends js.Object {
-  def success(document: APIDocumentation): Unit = js.native
+  def success(document: WebApi): Unit = js.native
 
   def error(exception: Throwable): Unit = js.native
 }

@@ -27,4 +27,6 @@ object Namespace {
 }
 
 /** Value type. */
-case class ValueType(ns: Namespace, name: String)
+case class ValueType(ns: Namespace, name: String) {
+  def iri(): String = ns.base + name
+}

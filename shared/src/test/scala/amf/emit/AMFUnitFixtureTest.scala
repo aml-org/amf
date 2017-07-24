@@ -1,7 +1,7 @@
 package amf.emit
 
 import amf.builder._
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 import amf.parser.AMFUnit
 import amf.remote.Vendor
 import amf.unsafe.PlatformSecrets
@@ -58,8 +58,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
     AMFUnitMaker(api(), vendor)
   }
 
-  def api(): APIDocumentation = {
-    APIDocumentationBuilder()
+  def api(): WebApi = {
+    WebApiBuilder()
       .withName("test")
       .withDescription("test description")
       .withHost("http://localhost.com/api")
@@ -72,7 +72,7 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .build
   }
 
-  def apiComplete(): APIDocumentation = {
+  def apiComplete(): WebApi = {
     val builder = api().toBuilder
     builder
       .withProvider(

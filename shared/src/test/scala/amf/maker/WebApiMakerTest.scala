@@ -4,9 +4,9 @@ import amf.builder._
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.document.Document
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 import amf.metadata.Field
-import amf.metadata.domain.APIDocumentationModel._
+import amf.metadata.domain.WebApiModel._
 import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -263,7 +263,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     AMFCompiler(basePath + "completeExample.raml", platform, RamlYamlHint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[APIDocumentation]
+        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         assertWebApiValues(api, before)
         val builder = api.toBuilder
         builder.withDescription("changed")
@@ -310,7 +310,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     AMFCompiler(basePath + "completeExample.json", platform, OasJsonHint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[APIDocumentation]
+        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         assertWebApiValues(api, before)
         val builder = api.toBuilder
         builder.withDescription("changed")
@@ -321,7 +321,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       }
   }
 
-  def assertWebApiValues(api: APIDocumentation, assertions: List[(Field, Any)]): Assertion = {
+  def assertWebApiValues(api: WebApi, assertions: List[(Field, Any)]): Assertion = {
     assertions.foreach {
       case (Name, expected)           => assertField(Name, api.name, expected)
       case (Description, expected)    => assertField(Description, api.description, expected)
@@ -348,7 +348,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     AMFCompiler(basePath + file, platform, hint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[APIDocumentation]
+        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         assertWebApiValues(api, fixture)
       }
   }

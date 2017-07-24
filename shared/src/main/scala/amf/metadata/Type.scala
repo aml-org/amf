@@ -10,6 +10,10 @@ trait Type {
   val `type`: List[ValueType]
 }
 
+trait Obj extends Type {
+  val fields: List[Field]
+}
+
 object Type {
 
   case class Scalar(id: String) extends Type {

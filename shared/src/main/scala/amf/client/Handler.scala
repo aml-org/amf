@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.document.BaseUnit
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 
 /**
   *
@@ -12,6 +12,6 @@ trait Handler {
 }
 
 trait WebApiHandler {
-  def success(document: APIDocumentation)
+  def success(document: WebApi)
   def error(exception: Throwable)
 }

@@ -8,7 +8,7 @@ import amf.metadata.domain.CreativeWorkModel.{Url, Description}
   */
 case class CreativeWork(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
 
-  override type This = CreativeWork
+  override type T = CreativeWork
 
   val url: String         = fields get Url
   val description: String = fields get Description

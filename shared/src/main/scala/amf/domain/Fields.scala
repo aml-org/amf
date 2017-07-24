@@ -43,7 +43,7 @@ class Fields extends PlatformSecrets {
     this
   }
 
-  def into(other: Fields): Unit = other.fs = other.fs ++ fs
+  def into(other: Fields): Unit = other.fs = other.fs ++ fs //TODO array copy with references instead of instance
 
   def apply[T](field: Field): T = get(field)
 

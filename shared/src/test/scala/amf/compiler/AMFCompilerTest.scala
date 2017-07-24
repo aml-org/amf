@@ -3,7 +3,7 @@ package amf.compiler
 import amf.common.AMFToken.MapToken
 import amf.common.{AMFAST, AMFASTLink}
 import amf.document.Document
-import amf.domain.APIDocumentation
+import amf.domain.WebApi
 import amf.exception.CyclicReferenceException
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
@@ -25,7 +25,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       .build() map {
       case d: Document =>
         d.encodes match {
-          case api: APIDocumentation => api.host should be("api.example.com")
+          case api: WebApi => api.host should be("api.example.com")
         }
     }
   }
@@ -35,7 +35,17 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       .build() map {
       case d: Document =>
         d.encodes match {
-          case api: APIDocumentation => api.host should be("api.example.com")
+          case api: WebApi => api.host should be("api.example.com")
+        }
+    }
+  }
+
+  test("Api (amf)") {
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonLdHint)
+      .build() map {
+      case d: Document =>
+        d.encodes match {
+          case api: WebApi => api.host should be("api.example.com")
         }
     }
   }

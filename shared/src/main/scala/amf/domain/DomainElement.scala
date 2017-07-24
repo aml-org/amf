@@ -7,9 +7,9 @@ import amf.builder.Builder
   */
 trait DomainElement {
 
-  type This <: DomainElement
+  type T
 
-  def toBuilder: Builder[This]
+  def toBuilder: Builder
 }
 
 /**

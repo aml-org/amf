@@ -1,5 +1,6 @@
 package amf.parser
 
+import amf.common.Strings.strings
 import amf.document.BaseUnit
 import amf.lexer.Token
 import amf.parser.ASTNodePrinter.print
@@ -44,9 +45,6 @@ trait ASTNode[T <: Token] {
   /** Return true if given type matches the type of the Node. */
   def is(t: T): Boolean = t == `type`
 
-  /** Select first child of specified type. */
-  def >(t: T): N = children.find(_.is(t)).get
-
   /** Empty node. */
   val empty: N
 
@@ -58,6 +56,12 @@ trait ASTNode[T <: Token] {
   }
 
   override def toString: String = print(this)
+
+  /** Select first child of specified type. */
+  def >(t: T): N = children.find(_.is(t)).get
+
+  /** Return true if given text matches content. */
+  def ?(c: String): Boolean = content.unquote == c
 }
 
 trait ASTLinkNode[T <: Token] extends ASTNode[T] {

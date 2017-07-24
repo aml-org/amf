@@ -15,4 +15,6 @@ object CreativeWorkModel extends DomainElementModel {
   val Description = Field(Str, Schema + "description")
 
   override val `type`: List[ValueType] = Schema + "CreativeWork" :: DomainElementModel.`type`
+
+  override val fields: List[Field] = Url :: Description :: DomainElementModel.fields
 }

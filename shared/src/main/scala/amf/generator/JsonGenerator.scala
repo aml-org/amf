@@ -45,7 +45,7 @@ class JsonGenerator extends ASTNodeVisitor {
       .indent()
       .quoted("$ref")
       .write(": ")
-      .quoted(node.target.location().input)
+      .quoted(node.target.location)
       .outdent()
       .line()
       .write('}')

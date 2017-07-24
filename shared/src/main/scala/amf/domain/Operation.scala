@@ -6,7 +6,8 @@ import amf.metadata.domain.OperationModel._
   * Operation internal model.
   */
 case class Operation(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
-  override type This = Operation
+
+  override type T = Operation
 
   val method: String              = fields get Method
   val name: String                = fields get Name
@@ -38,5 +39,5 @@ case class Operation(override val fields: Fields) extends FieldHolder(fields) wi
 
   override def toString = s"Operation($method, $name, $description, $deprecated, $summary, $documentation, $schemes)"
 
-  override def toBuilder: Builder[Operation] = OperationBuilder(fields)
+  override def toBuilder: Builder = OperationBuilder(fields)
 }

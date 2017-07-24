@@ -6,9 +6,9 @@ import amf.vocabulary.Namespace._
 import amf.vocabulary.ValueType
 
 /**
-  * API documentation metamodel
+  * Web Api metamodel
   */
-object APIDocumentationModel extends DomainElementModel {
+object WebApiModel extends DomainElementModel {
 
   val Name = Field(Str, Schema + "name")
 
@@ -37,4 +37,7 @@ object APIDocumentationModel extends DomainElementModel {
   val EndPoints = Field(Array(EndPointModel), Http + "endpoint")
 
   override val `type`: List[ValueType] = Schema + "WebAPI" :: DomainElementModel.`type`
+
+  override val fields
+    : List[Field] = Name :: Description :: Host :: Schemes :: BasePath :: Accepts :: ContentType :: Version :: TermsOfService :: Provider :: License :: Documentation :: EndPoints :: DomainElementModel.fields
 }

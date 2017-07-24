@@ -6,7 +6,10 @@ import amf.metadata.domain.OperationModel._
 /**
   * Operation builder.
   */
-class OperationBuilder extends Builder[Operation] {
+class OperationBuilder extends Builder {
+
+  override type T = Operation
+
   def withMethod(method: String): this.type = set(Method, method)
 
   def withName(name: String): this.type = set(Name, name)

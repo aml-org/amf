@@ -1,18 +1,23 @@
 package amf.metadata.document
 
-import amf.metadata.Type.Array
-import amf.metadata.{Field, Type}
+import amf.metadata.Type.{Array, Str}
+import amf.metadata.{Field, Obj}
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType
 
 /**
   * Unit metamodel
   */
-trait BaseUnitModel extends Type {
+trait BaseUnitModel extends Obj {
+
+  val Location = Field(Str, Document + "location")
 
   val References = Field(Array(BaseUnitModel), Document + "references")
-
-  override val `type`: List[ValueType] = List(Document + "Unit")
 }
 
-object BaseUnitModel extends BaseUnitModel
+object BaseUnitModel extends BaseUnitModel {
+
+  override val `type`: List[ValueType] = List(Document + "Unit")
+
+  override val fields: List[Field] = List(References)
+}

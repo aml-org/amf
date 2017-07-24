@@ -6,7 +6,9 @@ import amf.domain.{Fields, Organization}
 /**
   *
   */
-class OrganizationBuilder extends Builder[Organization] {
+class OrganizationBuilder extends Builder {
+
+  override type T = Organization
 
   def withUrl(url: String): OrganizationBuilder = set(Url, url)
 
