@@ -25,7 +25,9 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       .build() map {
       case d: Document =>
         d.encodes match {
-          case api: WebApi => api.host should be("api.example.com")
+          case api: WebApi =>
+            api.host should be("api.example.com")
+            api.name should be("test")
         }
     }
   }
@@ -35,7 +37,9 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       .build() map {
       case d: Document =>
         d.encodes match {
-          case api: WebApi => api.host should be("api.example.com")
+          case api: WebApi =>
+            api.host should be("api.example.com")
+            api.name should be("test")
         }
     }
   }
@@ -45,7 +49,9 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       .build() map {
       case d: Document =>
         d.encodes match {
-          case api: WebApi => api.host should be("api.example.com")
+          case api: WebApi =>
+            api.host should be("api.example.com")
+            api.name should be("test")
         }
     }
   }

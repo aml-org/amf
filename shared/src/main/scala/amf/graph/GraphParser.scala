@@ -97,10 +97,5 @@ object GraphParser {
     OperationModel    -> OperationBuilder.apply
   )
 
-  private val types: Map[String, Obj] = builders.keys
-    .map(t => t.`type`.head.iri() -> t)
-    .toMap
-    .withDefault(t => {
-      throw new Exception(s"No type defined for $t, types include ${types.keys}")
-    })
+  private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap
 }

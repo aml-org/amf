@@ -50,7 +50,7 @@ class GraphParserTest extends FunSuite {
       |    "@context": {
       |        "raml-doc": "http://raml.org/vocabularies/document#",
       |        "raml-http": "http://raml.org/vocabularies/http#",
-      |        "schema-org": "http://schema.org/",
+      |        "schema-org": "http://schema.org/"
       |    },
       |    "@id": "file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
       |    "@type": [
