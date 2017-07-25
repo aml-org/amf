@@ -1,6 +1,6 @@
 package amf.document
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.{DomainElement, FieldsInstance, Fields}
 import amf.metadata.document.DocumentModel._
 
 /**

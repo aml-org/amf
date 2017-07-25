@@ -126,7 +126,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root)
+  private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.ast)
 
   private def parse(content: Content) = {
     val lexer   = resolveLexer(content)

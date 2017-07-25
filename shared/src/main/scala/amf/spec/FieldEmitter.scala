@@ -2,7 +2,7 @@ package amf.spec
 
 import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFASTNode, AMFToken}
-import amf.domain.{EndPoint, FieldHolder, Fields, Operation}
+import amf.domain.{EndPoint, FieldsInstance, Fields, Operation}
 import amf.metadata.Field
 import amf.parser.Range.NONE
 import amf.remote.Raml
@@ -92,7 +92,7 @@ object FieldEmitter {
   object ObjectEmitter extends SpecFieldEmitter {
 
     override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
-      val fields = value.asInstanceOf[FieldHolder].fields
+      val fields = value.asInstanceOf[FieldsInstance].fields
 
       val parent = new LazyBuilder(Entry) {
 

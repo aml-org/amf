@@ -1,7 +1,6 @@
 package amf.document
 
-import amf.domain.DomainElement
-import amf.remote.URL
+import amf.domain.{DomainElement, Fields}
 
 /**
   * RAML Fragments
@@ -13,6 +12,8 @@ object Fragment {
 
     /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
     override val references: Seq[BaseUnit] = Nil
+
+    override val fields: Fields = new Fields()
   }
 
   case class DocumentationItem(location: String, encodes: DomainElement) extends Fragment

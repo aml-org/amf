@@ -6,7 +6,7 @@ import amf.metadata.domain.ParameterModel._
 /**
   * Parameter internal model.
   */
-case class Parameter(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
+case class Parameter(fields: Fields) extends DomainElement {
   override type T = Parameter
 
   val name: String        = fields get Name

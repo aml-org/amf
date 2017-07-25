@@ -1,11 +1,9 @@
 package amf.graph
 
-import amf.compiler.Root
 import amf.document.Document
 import amf.domain.WebApi
 import amf.json.JsonLexer
 import amf.parser.YeastASTBuilder
-import amf.remote.Amf
 import amf.serialization.AmfParser
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
@@ -85,10 +83,7 @@ class GraphParserTest extends FunSuite {
       parser.parse
     }
 
-    val root =
-      Root(ast, "file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", Nil, Amf)
-
-    val unit = GraphParser.parse(root)
+    val unit = GraphParser.parse(ast)
     unit shouldBe a[Document]
 
     val document = unit.asInstanceOf[Document]

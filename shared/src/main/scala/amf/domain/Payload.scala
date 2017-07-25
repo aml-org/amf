@@ -6,7 +6,7 @@ import amf.metadata.domain.PayloadModel._
 /**
   * Payload internal model.
   */
-class Payload(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
+case class Payload(fields: Fields) extends DomainElement {
   override type T = Payload
 
   val mediaType: String = fields get MediaType

@@ -6,7 +6,7 @@ import amf.metadata.domain.WebApiModel.{License => WebApiLicense, _}
 /**
   * Web Api internal model
   */
-class WebApi(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
+case class WebApi(fields: Fields) extends DomainElement {
 
   override type T = WebApi
 

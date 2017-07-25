@@ -5,7 +5,7 @@ import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 /**
   * Operation internal model.
   */
-case class Operation(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
+case class Operation(fields: Fields) extends DomainElement {
 
   override type T = Operation
 

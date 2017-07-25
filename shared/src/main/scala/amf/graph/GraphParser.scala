@@ -4,11 +4,10 @@ import amf.builder._
 import amf.common.AMFAST
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.Strings.strings
-import amf.compiler.Root
 import amf.document.BaseUnit
+import amf.metadata.Type.{Array, Scalar, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
-import amf.metadata.Type.{Array, Scalar, Str}
 import amf.metadata.{Field, Obj, Type}
 import amf.vocabulary.Namespace
 
@@ -17,26 +16,29 @@ import amf.vocabulary.Namespace
   */
 object GraphParser {
 
-  def parse(root: Root): BaseUnit = {
-    val ast = root.ast > MapToken
+  def parse(ast: AMFAST): BaseUnit = {
+    val root = ast > MapToken
 
-    val ctx = context(ast)
-    val t   = typed(ast, ctx)
-    parse(ast, ctx, t).asInstanceOf[BaseUnit]
+    val ctx = context(root)
+
+    parse(root, ctx).asInstanceOf[BaseUnit]
   }
 
-  private def typed(ast: AMFAST, ctx: GraphContext): Obj = types(ctx.expand(types(ast).head))
+  private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj = types(ctx.expand(types(ast).head))
 
-  private def parse(ast: AMFAST, ctx: GraphContext, t: Obj): Any = {
-    val builder  = builders(t)()
-    val children = ast.children
-    t.fields.foreach(f => {
+  private def parse(node: AMFAST, ctx: GraphContext): Any = {
+    val model    = retrieveType(node, ctx)
+    val builder  = builders(model)()
+    val children = node.children
+
+    model.fields.foreach(f => {
       val k = ctx.reduce(f.value)
       children.find(key(k)) match {
         case Some(entry) => traverse(ctx, builder, f, value(f.`type`, entry.last))
         case _           =>
       }
     })
+
     builder.build
   }
 
@@ -58,7 +60,7 @@ object GraphParser {
 
   private def traverse(ctx: GraphContext, builder: Builder, f: Field, node: AMFAST) = {
     f.`type` match {
-      case _: Obj => builder.set(f, parse(node, ctx, typed(node, ctx)))
+      case _: Obj => builder.set(f, parse(node, ctx))
       case Str    => builder.set(f, node.content.unquote)
     }
   }

@@ -6,7 +6,7 @@ import amf.metadata.domain.RequestModel._
 /**
   * Request internal model.
   */
-class Request(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
+case class Request(fields: Fields) extends DomainElement {
   override type T = Request
 
   val queryParameters: Seq[Parameter] = fields get QueryParameters

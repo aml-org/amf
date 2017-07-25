@@ -1,10 +1,9 @@
 package amf.document
 
-import amf.domain.DomainElement
-import amf.remote.URL
+import amf.domain.{DomainElement, Fields}
 
 /** Units containing abstract fragments that can be referenced from other fragments */
-case class Module(declares: Seq[DomainElement], references: Seq[BaseUnit], location: String)
+case class Module(declares: Seq[DomainElement], references: Seq[BaseUnit], location: String, fields: Fields)
     extends BaseUnit
     with DeclaresModel
 

@@ -6,7 +6,7 @@ import amf.metadata.domain.ResponseModel._
 /**
   * Response internal model.
   */
-class Response(override val fields: Fields) extends FieldHolder(fields) with DomainElement {
+case class Response(fields: Fields) extends DomainElement {
   override type T = Response
 
   val name: String            = fields get Name

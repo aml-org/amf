@@ -23,9 +23,6 @@ abstract class ASTBuilder[T <: Token, N <: ASTNode[T]](val lexer: Lexer[T]) {
   /** Discard selected token and advance. */
   def discard(): Unit
 
-  /** Instruct the builder to drop the current node being built. */
-  def dropNode(): Unit
-
   /**
     * Instruct the Builder to end the building of the current sub-tree. The provided token will be
     * used as the root of the constructed sub-tree

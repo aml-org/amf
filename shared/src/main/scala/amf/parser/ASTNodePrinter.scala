@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.common.Strings.isNotEmpty
-import amf.generator.IndentedWriter
+import amf.generator.{IndentedWriter, JsonGenerator}
 import amf.lexer.Token.NamedToken
 import amf.visitor.ASTNodeVisitor
 
@@ -9,7 +9,7 @@ import amf.visitor.ASTNodeVisitor
   *
   */
 object ASTNodePrinter {
-  def print(node: ASTNode[_]): String = new ASTPrinter().generate(node).toString
+  def print(node: ASTNode[_]): String = new JsonGenerator().generate(node).toString
 }
 
 class ASTPrinter extends ASTNodeVisitor {

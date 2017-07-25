@@ -5,9 +5,10 @@ import amf.vocabulary.{Namespace, ValueType}
 /**
   * Graph context
   */
-private trait GraphContext {
+trait GraphContext {
   def expand(iri: String): String
   def reduce(value: ValueType): String
+  def mappings(each: ((String, Namespace)) => Unit): Unit
 }
 
 private case class MapGraphContext(context: Map[String, Namespace]) extends GraphContext {
@@ -35,9 +36,12 @@ private case class MapGraphContext(context: Map[String, Namespace]) extends Grap
   private def undefined(iri: String, ns: Any) = {
     throw new Exception(s"Undefined namespace $ns for $iri. Defined context: $context")
   }
+
+  override def mappings(each: ((String, Namespace)) => Unit): Unit = context.foreach(each)
 }
 
 private object EmptyGraphContext extends GraphContext {
-  override def expand(iri: String): String      = iri
-  override def reduce(value: ValueType): String = value.iri()
+  override def expand(iri: String): String                         = iri
+  override def reduce(value: ValueType): String                    = value.iri()
+  override def mappings(each: ((String, Namespace)) => Unit): Unit = {}
 }

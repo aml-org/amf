@@ -5,7 +5,7 @@ import amf.builder.Builder
 /**
   * Internal model for any domain element
   */
-trait DomainElement {
+trait DomainElement extends FieldsInstance {
 
   type T
 
@@ -17,4 +17,6 @@ trait DomainElement {
   */
 trait RootDomainElement
 
-abstract class FieldHolder(val fields: Fields) {}
+trait FieldsInstance {
+  val fields: Fields
+}
