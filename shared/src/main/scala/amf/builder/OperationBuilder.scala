@@ -1,7 +1,7 @@
 package amf.builder
 
-import amf.domain.{CreativeWork, Fields, Operation}
-import amf.metadata.domain.OperationModel._
+import amf.domain._
+import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
   * Operation builder.
@@ -23,6 +23,10 @@ class OperationBuilder extends Builder {
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
 
   def withSchemes(schemes: Seq[String]): this.type = set(Schemes, schemes)
+
+  def withRequest(request: Request): this.type = set(OperationRequest, request)
+
+  def withResponses(responses: Seq[Response]): this.type = set(Responses, responses)
 
   override def build: Operation = Operation(fields)
 }

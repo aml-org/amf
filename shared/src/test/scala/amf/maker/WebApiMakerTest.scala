@@ -167,6 +167,103 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(fixture, "endpoint-operations.json", OasJsonHint)
   }
 
+  test("Operation request - RAML.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .withOperations(List(
+          OperationBuilder()
+            .withMethod("get")
+            .withName("Some title")
+            .withRequest(RequestBuilder()
+              .withQueryParameters(List(
+                ParameterBuilder().withName("param1").withDescription("Some descr").withRequired(true).build,
+                ParameterBuilder().withName("param2?").withSchema("string").withRequired(false).build
+              ))
+              .build)
+            .build,
+          OperationBuilder()
+            .withMethod("post")
+            .withName("Some title")
+            .withDescription("Some description")
+            .withRequest(RequestBuilder()
+              .withHeaders(List(
+                ParameterBuilder().withName("Header-One").withRequired(false).build
+              ))
+              .build)
+            .build
+        ))
+        .build
+    )
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/base/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "operation-request.raml", RamlYamlHint)
+  }
+
+  test("Operation request - OAS.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .withName("Name")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .withOperations(List(
+          OperationBuilder()
+            .withMethod("get")
+            .withName("Some title")
+            .withRequest(
+              RequestBuilder()
+                .withQueryParameters(
+                  List(
+                    ParameterBuilder()
+                      .withName("param1")
+                      .withDescription("Some descr")
+                      .withRequired(true)
+                      .withBinding("query")
+                      .build
+                  ))
+                .withHeaders(List(ParameterBuilder()
+                  .withName("param2?")
+                  .withSchema("string")
+                  .withRequired(false)
+                  .withBinding("header")
+                  .build))
+                .build)
+            .build,
+          OperationBuilder()
+            .withMethod("post")
+            .withName("Some title")
+            .withDescription("Some description")
+            .withRequest(RequestBuilder()
+              .withHeaders(List(
+                ParameterBuilder().withName("Header-One").withRequired(false).withBinding("header").build
+              ))
+              .build)
+            .build
+        ))
+        .build
+    )
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/base/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "operation-request.json", OasJsonHint)
+  }
+
   test("generate partial succeed") {
     val fixture = List(
       (Name, "test"),

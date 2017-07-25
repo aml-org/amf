@@ -56,8 +56,8 @@ object FieldParser {
     protected def parseMap(spec: SpecField, mapNode: ASTNode[_], builder: Builder): Unit = {
       mapNode.children.foreach(entry => {
         spec.children
-          .map(_.copy(vendor = spec.vendor))
-          .find(_.matcher.matches(entry)) match { //TODO copying parent vendor to children here...
+          .map(_.copy(vendor = spec.vendor)) //TODO copying parent vendor to children here...
+          .find(_.matcher.matches(entry)) match {
           case Some(field) => field.parser(field, entry, builder)
           case _           => // Unknown node...
         }
@@ -72,12 +72,12 @@ object FieldParser {
           entry.last.children.foreach(paramEntry => {
             val param = ParameterBuilder()
             val name  = paramEntry.head.content
-            param set (Required, name.endsWith("?"))
+            param set (Required, !name.endsWith("?"))
             param set (ParameterModel.Name, name)
 
             super.parse(spec, paramEntry, param)
 
-            builder set (spec.fields.head, param.build, annotations(paramEntry))
+            builder add (spec.fields.head, List(param.build), annotations(paramEntry))
           })
         case Oas =>
           entry.last.children.foreach(paramMap => {
@@ -89,7 +89,7 @@ object FieldParser {
 
             val field = if (param.binding == "header") RequestModel.Headers else RequestModel.QueryParameters
 
-            builder set (field, param, annotations(paramMap))
+            builder add (field, List(param), annotations(paramMap))
           })
       }
     }

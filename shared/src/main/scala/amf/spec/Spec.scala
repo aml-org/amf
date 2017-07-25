@@ -17,14 +17,14 @@ import amf.metadata.domain.OrganizationModel.{
   Url => OrganizationUrl
 }
 import amf.metadata.domain.ParameterModel.{
+  Required,
+  Schema,
   Binding => ParameterBinding,
   Description => ParameterDescription,
-  Name => ParameterName,
-  Required,
-  Schema
+  Name => ParameterName
 }
 import amf.metadata.domain.RequestModel
-import amf.metadata.domain.RequestModel.Headers
+import amf.metadata.domain.RequestModel.{Headers, QueryParameters}
 import amf.metadata.domain.WebApiModel._
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.FieldEmitter.SpecEmitter
@@ -137,7 +137,7 @@ object Spec {
         'required ~ Required,
         'type ~ Schema
       ),
-      'queryParameters ~ RequestModel.QueryParameters -> (
+      'queryParameters ~ QueryParameters -> (
         'description ~ ParameterDescription,
         'required ~ Required,
         'type ~ Schema
@@ -147,7 +147,7 @@ object Spec {
 
   private val OasRequestSpec =
     Spec(
-      'parameters -> (
+      'parameters ~ (QueryParameters | Headers) -> (
         'name ~ ParameterName,
         'description ~ ParameterDescription,
         'required ~ Required,

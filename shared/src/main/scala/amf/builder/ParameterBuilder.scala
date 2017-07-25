@@ -11,7 +11,7 @@ class ParameterBuilder extends Builder {
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
-  def withRequired(required: String): this.type       = set(Required, required)
+  def withRequired(required: Boolean): this.type      = set(Required, required)
   def withBinding(binding: String): this.type         = set(Binding, binding)
   def withSchema(schema: String): this.type           = set(Schema, schema)
 
