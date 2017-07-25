@@ -38,6 +38,10 @@ protected trait SpecNode {
         SpecField(fields, matcher(), EndPointParser, EndPointEmitter)
       case Array(OperationModel) =>
         SpecField(fields, matcher(), OperationParser, OperationEmitter)
+      case Array(ParameterModel) =>
+        SpecField(fields, matcher(), ParametersParser, null)
+      case Array(PayloadModel) =>
+        SpecField(fields, matcher(), PayloadsParser, null)
     }
   }
 
@@ -62,7 +66,5 @@ protected case class SpecKeyNode(symbol: Symbol) extends SpecNode {
 }
 
 protected case class FieldLike(field: Field) {
-
   def |(other: Field): List[Field] = List(field, other)
-
 }

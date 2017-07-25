@@ -39,7 +39,6 @@ class WebApiBuilder extends Builder {
   def withDocumentation(documentation: CreativeWork): WebApiBuilder = set(Documentation, documentation)
 
   protected def fixFields(fields: Fields): Fields = {
-    //TODO resolve other builders
     val basePath = Option(fields.get(BasePath))
     val host     = Option(fields.get(Host))
     if (basePath.isEmpty && host.isDefined) {

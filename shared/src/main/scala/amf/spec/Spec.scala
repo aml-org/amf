@@ -1,15 +1,14 @@
 package amf.spec
 
-import amf.metadata.domain.WebApiModel._
 import amf.metadata.domain.CreativeWorkModel.{Description => CreativeWorkDescription, Url => CreativeWorkUrl}
-import amf.metadata.domain.EndPointModel.{Description => EndPointDescription, Name => EndPointName, Operations}
+import amf.metadata.domain.EndPointModel.{Operations, Description => EndPointDescription, Name => EndPointName}
 import amf.metadata.domain.LicenseModel.{Name => LicenseName, Url => LicenseUrl}
 import amf.metadata.domain.OperationModel.{
-  Name => OperationName,
-  Description => OperationDescription,
   Deprecated,
   Summary,
+  Description => OperationDescription,
   Documentation => OperationDocumentation,
+  Name => OperationName,
   Schemes => OperationSchemes
 }
 import amf.metadata.domain.OrganizationModel.{
@@ -17,6 +16,16 @@ import amf.metadata.domain.OrganizationModel.{
   Name => OrganizationName,
   Url => OrganizationUrl
 }
+import amf.metadata.domain.ParameterModel.{
+  Binding => ParameterBinding,
+  Description => ParameterDescription,
+  Name => ParameterName,
+  Required,
+  Schema
+}
+import amf.metadata.domain.RequestModel
+import amf.metadata.domain.RequestModel.Headers
+import amf.metadata.domain.WebApiModel._
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.FieldEmitter.SpecEmitter
 import amf.spec.SpecImplicits._
@@ -27,19 +36,18 @@ import amf.spec.SpecImplicits._
 object Spec {
 
   def apply(vendor: Vendor): Spec = vendor match {
-    case Raml => ramlSpec
-    case Oas  => oasSpec
+    case Raml => RamlSpec
+    case Oas  => OasSpec
   }
 
-  case class Spec(vendor: Vendor, private val fs: SpecField*) {
+  case class Spec(private val fs: SpecField*)(vendor: Vendor) {
     val fields: Seq[SpecField] = fs.map(_.copy(vendor = vendor))
 
-    val emitter: SpecEmitter = SpecEmitter(fields.toList)
+    def emitter: SpecEmitter = SpecEmitter(fields.toList)
   }
 
-  def ramlSpec: Spec = {
+  private val RamlSpec: Spec =
     Spec(
-      Raml,
       'title ~ Name,
       'baseUri ~ Host,
       'description ~ Description,
@@ -75,12 +83,10 @@ object Spec {
           'protocols ~ OperationSchemes
         )
       )
-    )
-  }
+    )(Raml)
 
-  def oasSpec: Spec = {
+  private val OasSpec: Spec =
     Spec(
-      Oas,
       'info -> (
         'title ~ Name,
         'description ~ Description,
@@ -122,7 +128,38 @@ object Spec {
           )
         )
       )
-    )
+    )(Oas)
+
+  private val RamlRequestSpec =
+    Spec(
+      'headers ~ Headers -> (
+        'description ~ ParameterDescription,
+        'required ~ Required,
+        'type ~ Schema
+      ),
+      'queryParameters ~ RequestModel.QueryParameters -> (
+        'description ~ ParameterDescription,
+        'required ~ Required,
+        'type ~ Schema
+      ),
+      'body ~ RequestModel.Payloads
+    )(Raml)
+
+  private val OasRequestSpec =
+    Spec(
+      'parameters -> (
+        'name ~ ParameterName,
+        'description ~ ParameterDescription,
+        'required ~ Required,
+        'in ~ ParameterBinding,
+        'schema ~ Schema
+      ),
+      'body ~ RequestModel.Payloads
+    )(Oas)
+
+  private[spec] val RequestSpec: (Vendor) => Spec = {
+    case Raml => RamlRequestSpec
+    case Oas  => OasRequestSpec
   }
 
   val RAML_10: String = "#%RAML 1.0\n"
