@@ -5,13 +5,11 @@ import amf.common.Strings.strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.Type.Str
-import amf.metadata.{Field, Obj}
+import amf.metadata.Type.{Array, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
-import amf.parser
-import amf.parser.{ASTEmitter, ASTFactory, Range}
-import amf.remote.Kind
+import amf.metadata.{Obj, Type}
+import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.vocabulary.Namespace
 
 import scala.collection.immutable.ListMap
@@ -22,7 +20,7 @@ import scala.collection.immutable.ListMap
 object GraphEmitter {
 
   def emit(unit: BaseUnit, expanded: Boolean = false): AMFAST = {
-    val emitter = Emitter(ASTEmitter(new AMFASTFactory), expanded)
+    val emitter = Emitter(ASTEmitter(AMFASTFactory()), expanded)
     emitter.root(unit)
   }
 
@@ -48,12 +46,22 @@ object GraphEmitter {
         case (f, v) =>
           entry { () =>
             scalar(ctx.reduce(f.value))
-            f.`type` match {
-              case _: Obj =>
-                map { () =>
-                  traverse(v.value)
-                }
-              case Str => scalar(v.value.asInstanceOf[String])
+            value(f.`type`, v)
+          }
+      }
+    }
+
+    private def value(t: Type, v: Value) = {
+      t match {
+        case _: Obj =>
+          map { () =>
+            traverse(v.value)
+          }
+        case Str => scalar(v.value.asInstanceOf[String])
+        case a: Array =>
+          array { () =>
+            a.element match {
+              case Str => v.value.asInstanceOf[List[String]].foreach(scalar(_))
             }
           }
       }
@@ -136,31 +144,4 @@ object GraphEmitter {
     case _: Operation    => OperationModel
     case _               => throw new Exception(s"Missing metadata mapping for $instance")
   }
-
-  private class AMFASTFactory extends ASTFactory[AMFToken, AMFAST] {
-
-    /** Create [[AMFAST]] node with given content. */
-    override def createNode(token: AMFToken, content: String, range: parser.Range): AMFAST =
-      new AMFASTNode(token, content, range)
-
-    /** Create [[AMFAST]] node with given children. */
-    override def createNode(token: AMFToken, range: parser.Range, children: Seq[AMFAST]): AMFAST = token match {
-      case Link | Library => createLinkNode(range, children, Kind(token))
-      case _              => createYamlNode(token, range, children)
-    }
-
-    private def createYamlNode(token: AMFToken, range: parser.Range, children: Seq[AMFAST]): AMFAST = {
-      val start = if (children.nonEmpty) children.head.range else range
-      val end   = if (children.nonEmpty) children.last.range else range
-      new AMFASTNode(token, null, start.extent(end), children)
-    }
-
-    private def createLinkNode(range: Range, children: Seq[AMFAST], source: Kind): AMFAST = {
-      val url  = children.head.content.unquote
-      val link = new AMFASTLink(url, range, source)
-      //      references += link
-      link
-    }
-  }
-
 }

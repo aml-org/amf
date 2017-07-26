@@ -31,7 +31,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  "produces": "application/json"
         |}""".stripMargin
 
-    new AMFDumper(doc(api()), Oas).dump should be(expected)
+    new AMFDumper(`document/api/bare`, Oas).dump should be(expected)
   }
 
   test("Test simple raml/yaml") {
@@ -47,36 +47,47 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |version: 1.1
         |termsOfService: termsOfService""".stripMargin
 
-    new AMFDumper(doc(api()), Raml).dump should be(expected)
+    new AMFDumper(`document/api/bare`, Raml).dump should be(expected)
   }
 
-  ignore("Test simple amf/jsonld") {
+  test("Test simple amf/jsonld") {
     val expected =
       """{
-        |  "http://raml.org/vocabularies/document#encodes": [
-        |    {
-        |      "http://schema.org/name": [
-        |        {
-        |          "@value": "test"
-        |        }
-        |      ],
-        |      "http://raml.org/vocabularies/http#host": [
-        |        {
-        |          "@value": "http://localhost.com/api"
-        |        }
-        |      ],
-        |      "http://raml.org/vocabularies/http#scheme": [
-        |        {
-        |          "@value": "http"
-        |        },
-        |        {
-        |          "@value": "https"
-        |        }
-        |      ]
-        |    }
-        |  ]
+        |  "@context": {
+        |    "raml-doc": "http://raml.org/vocabularies/document#",
+        |    "raml-http": "http://raml.org/vocabularies/http#",
+        |    "raml-shapes": "http://raml.org/vocabularies/shapes#",
+        |    "hydra": "http://www.w3.org/ns/hydra/core#",
+        |    "shacl": "http://www.w3.org/ns/shacl#",
+        |    "schema-org": "http://schema.org/",
+        |    "xsd": "http://www.w3.org/2001/XMLSchema#"
+        |  },
+        |  "@type": [
+        |    "raml-doc:Document",
+        |    "raml-doc:Fragment",
+        |    "raml-doc:Module",
+        |    "raml-doc:Unit"
+        |  ],
+        |  "raml-doc:encodes": {
+        |    "@type": [
+        |      "schema-org:WebAPI",
+        |      "raml-doc:DomainElement"
+        |    ],
+        |    "schema-org:name": "test",
+        |    "schema-org:description": "test description",
+        |    "raml-http:host": "http://localhost.com/api",
+        |    "raml-http:schemes": [
+        |      "http",
+        |      "https"
+        |    ],
+        |    "raml-http:basePath": "http://localhost.com/api",
+        |    "raml-http:accepts": "application/json",
+        |    "raml-http:contentType": "application/json",
+        |    "schema-org:version": "1.1",
+        |    "schema-org:termsOfService": "termsOfService"
+        |  }
         |}""".stripMargin
 
-    new AMFDumper(doc(api()), Amf).dump should be(expected)
+    new AMFDumper(`document/api/bare`, Amf).dump should be(expected)
   }
 }

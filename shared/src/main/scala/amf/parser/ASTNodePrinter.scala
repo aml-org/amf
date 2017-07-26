@@ -9,7 +9,7 @@ import amf.visitor.ASTNodeVisitor
   *
   */
 object ASTNodePrinter {
-  def print(node: ASTNode[_]): String = new JsonGenerator().generate(node).toString
+  def print(node: ASTNode[_]): String = new ASTPrinter().generate(node).toString
 }
 
 class ASTPrinter extends ASTNodeVisitor {
@@ -23,7 +23,7 @@ class ASTPrinter extends ASTNodeVisitor {
 
   override def before(node: ASTNode[_]): Unit = {
     node.`type` match {
-      case t: NamedToken => writer.write('(').write(t.name).line().indent()
+      case t: NamedToken => writer.write('(').write(t.name).indent()
       case _             => ???
     }
   }
@@ -40,16 +40,18 @@ class ASTPrinter extends ASTNodeVisitor {
   }
 
   private def dump(node: ASTNode[_]) = {
-    if (isNotEmpty(node.content)) {
-      writer.write("content -> ").write(node.content).line()
+    if (node.range != Range.NONE) {
+      writer.write(" ").write(node.range.toString)
     }
 
-    writer.write("range -> ").write(node.range.toString)
+    if (isNotEmpty(node.content)) {
+      writer.line().write("content -> ").write(node.content)
+    }
 
     if (node.children.nonEmpty) {
-      writer.line().write("children -> [").line().indent()
+      writer.write(" {").line().indent()
       node.children.foreach(c => c.accept(this))
-      writer.write("]").outdent()
+      writer.write("}").outdent()
     }
   }
 

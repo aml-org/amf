@@ -1,96 +1,26 @@
 package amf.emit
 
-import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.parser.ASTNode
-import amf.remote.{Amf, Oas, Raml}
+import amf.remote.{Oas, Raml}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 
 class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
 
-  test("Test simple raml generation") {
-    val root = buildSimpleUnit(Raml)
+  test("Test simple Raml generation") {
+    val root = ast(`document/api/bare`, Raml)
     assertRamlTree(root, List(("title", "test"), ("description", "test description")))
 
   }
 
-  test("test simple oas generation") {
-    val root = buildSimpleUnit(Oas)
+  test("Test simple Oas generation") {
+    val root = ast(`document/api/bare`, Oas)
     assertNode(root.children.head, ("info", List(("title", "test"), ("description", "test description"))))
 
   }
 
-  ignore("test simple JSONLD generation") {
-    val root = buildSimpleUnit(Amf)
-
-    //root-map-entry
-    root.children.head.children.size should be(1)
-    val encodes = root.children.head.children.head
-    encodes.`type` should be(Entry)
-    encodes.children.size should be(2)
-    encodes.children.head.content should be("http://raml.org/vocabularies/document#encodes")
-    encodes.children(1).`type` should be(SequenceToken)
-    encodes.children(1).children.size should be(1)
-    val encodesMap = encodes.children(1).children.head
-    encodesMap.`type` should be(MapToken)
-    encodesMap.children.size should be(3)
-
-    val nameEntry = encodesMap.children.head
-    assertJsonLdEntry("http://schema.org/name", "test", nameEntry)
-
-    val hostEntry = encodesMap.children(1)
-    assertJsonLdEntry("http://raml.org/vocabularies/http#host", "http://localhost.com/api", hostEntry)
-
-    val schemesEntry = encodesMap.children(2)
-    assertJsonLdSequence("http://raml.org/vocabularies/http#scheme", List("http", "https"), schemesEntry)
-  }
-
-  def assertJsonLdSequence(key: String, values: List[String], entryNode: ASTNode[_]): Assertion = {
-    assertEntryKey(key, entryNode)
-    val content = entryNode.children(1)
-    content.`type` should be(SequenceToken)
-    content.children.size should be(values.size)
-    val mapValues = content.children
-    mapValues.head.`type` should be(MapToken)
-    values
-      .map(v => {
-        val value1 = mapValues.find(c => c.children.head.children(1).content == v).get
-        value1.children.size should be(1)
-        val container = value1.children.head
-        container.`type` should be(Entry)
-        container.children.size should be(2)
-        container.head.content should be("@value")
-        container.children(1).content should be(v)
-      })
-      .count(s => s != succeed) should be(0)
-
-  }
-
-  def assertEntryKey(key: String, entryNode: ASTNode[_]): Assertion = {
-    entryNode.`type` should be(Entry)
-    entryNode.children.size should be(2)
-    val head = entryNode.children.head
-    head.content should be(key)
-    head.`type` should be(StringToken)
-  }
-
-  def assertJsonLdEntry(key: String, value: String, entryNode: ASTNode[_]): Assertion = {
-    assertEntryKey(key, entryNode)
-    val content = entryNode.children(1)
-    content.`type` should be(SequenceToken)
-    content.children.size should be(1)
-    val mapContent = content.children.head
-    mapContent.children.size should be(1)
-    mapContent.children.head.`type` should be(Entry)
-    val entry = mapContent.children.head
-    entry.children.head.content should be("@value")
-    val entryValue = entry.children(1)
-    entryValue.content should be(value)
-
-  }
-
-  test("test complete oas generation") {
-    val root = buildCompleteUnit(Oas)
+  test("Test complete Oas generation") {
+    val root = ast(`document/api/basic`, Oas)
 
     assertNode(
       root.children.head,
@@ -120,8 +50,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
 
   }
 
-  test("test complete raml generation") {
-    val root = buildCompleteUnit(Raml)
+  test("Test complete Raml generation") {
+    val root = ast(`document/api/basic`, Raml)
     assertNode(root.last, ("title", "test"))
     assertNode(root.last, ("description", "test description"))
 
@@ -145,14 +75,14 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
                 )))
   }
 
-  test("test raml generation with operations") {
-    val root = buildExtendedUnit(Raml)
+  test("Test Raml generation with operations") {
+    val root = ast(`document/api/advanced`, Raml)
     assertNode(root.last,
                ("/endpoint", List(("get", List(("description", "test operation get"), ("title", "test get"))))))
   }
 
-  test("test oas generation with operations") {
-    val root = buildExtendedUnit(Oas)
+  test("Test Oas generation with operations") {
+    val root = ast(`document/api/advanced`, Oas)
     assertNode(
       root.last,
       ("paths",

@@ -19,7 +19,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
   val basePath = "file://shared/src/test/resources/maker/"
 
-  test("generate complete web api instance") {
+  test("Generate complete web api instance") {
 
     val fixture = List(
       (Name, "test"),

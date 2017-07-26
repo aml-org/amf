@@ -12,52 +12,14 @@ import amf.unsafe.PlatformSecrets
   */
 trait AMFUnitFixtureTest extends PlatformSecrets {
 
-  def buildExtendedUnit(vendor: Vendor): AMFAST = {
-    val builder = apiComplete().toBuilder
-    val documentation = new CreativeWorkBuilder()
-      .withDescription("documentation operation")
-      .withUrl("localhost:8080/endpoint/operation")
-      .build
+  def `document/api/bare`: Document     = doc(bare)
+  def `document/api/basic`: Document    = doc(basic)
+  def `document/api/advanced`: Document = doc(advanced)
+  def `document/api/full`: Document     = doc(advanced)
 
-    val operationGet = new OperationBuilder()
-      .withDescription("test operation get")
-      .withDocumentation(documentation)
-      .withMethod("get")
-      .withName("test get")
-      .withSchemes(List("http"))
-      .withSummary("summary of operation get")
-      .build
+  def ast(document: Document, vendor: Vendor): AMFAST = AMFUnitMaker(document, vendor)
 
-    val operationPost = new OperationBuilder()
-      .withDescription("test operation post")
-      .withDocumentation(documentation)
-      .withMethod("post")
-      .withName("test post")
-      .withSchemes(List("http"))
-      .withSummary("summary of operation post")
-      .build
-
-    val endpoint = new EndPointBuilder()
-      .withDescription("test endpoint")
-      .withName("endpoint")
-      .withPath("/endpoint")
-      .withOperations(List(operationGet, operationPost))
-      .build
-
-    val api = builder
-      .withEndPoints(List(endpoint))
-      .build
-
-    AMFUnitMaker(doc(api), vendor)
-  }
-
-  def buildSimpleUnit(vendor: Vendor): AMFAST = AMFUnitMaker(doc(api()), vendor)
-
-  def buildCompleteUnit(vendor: Vendor): AMFAST = AMFUnitMaker(doc(apiComplete()), vendor)
-
-  def doc(api: WebApi): Document = DocumentBuilder().withEncodes(api).build
-
-  def api(): WebApi = {
+  private def bare(): WebApi = {
     WebApiBuilder()
       .withName("test")
       .withDescription("test description")
@@ -71,8 +33,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .build
   }
 
-  def apiComplete(): WebApi = {
-    val builder = api().toBuilder
+  private def basic(): WebApi = {
+    val builder = bare().toBuilder
     builder
       .withProvider(
         OrganizationBuilder()
@@ -94,6 +56,44 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
           .build
       )
       .build
-
   }
+
+  private def advanced(): WebApi = {
+    val builder = basic().toBuilder
+    val documentation = new CreativeWorkBuilder()
+      .withDescription("documentation operation")
+      .withUrl("localhost:8080/endpoint/operation")
+      .build
+
+    val get = new OperationBuilder()
+      .withDescription("test operation get")
+      .withDocumentation(documentation)
+      .withMethod("get")
+      .withName("test get")
+      .withSchemes(List("http"))
+      .withSummary("summary of operation get")
+      .build
+
+    val post = new OperationBuilder()
+      .withDescription("test operation post")
+      .withDocumentation(documentation)
+      .withMethod("post")
+      .withName("test post")
+      .withSchemes(List("http"))
+      .withSummary("summary of operation post")
+      .build
+
+    val endpoint = new EndPointBuilder()
+      .withDescription("test endpoint")
+      .withName("endpoint")
+      .withPath("/endpoint")
+      .withOperations(List(get, post))
+      .build
+
+    builder
+      .withEndPoints(List(endpoint))
+      .build
+  }
+
+  private def doc(api: () => WebApi): Document = DocumentBuilder().withEncodes(api()).build
 }
