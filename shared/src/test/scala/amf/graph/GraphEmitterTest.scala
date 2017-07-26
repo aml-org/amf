@@ -1,6 +1,5 @@
 package amf.graph
 
-import amf.builder.{DocumentBuilder, WebApiBuilder}
 import amf.common.Tests
 import amf.emit.AMFUnitFixtureTest
 import org.scalatest.FunSuite
@@ -159,7 +158,7 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
   }
 
   test("Document encoding simple WebApi (expanded)") {
-    val ast = GraphEmitter.emit(createDocument, expanded = true)
+    val ast = GraphEmitter.emit(`document/api/bare`, expanded = true)
     Tests.checkDiff(
       ast.toString,
       """ |(Root {
@@ -194,21 +193,61 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
           |                    })
           |                (Entry {
           |                    (Str
-          |                      content -> "http://raml.org/vocabularies/http#host")
-          |                    (Str
-          |                      content -> "api.example.com")
-          |                    })
-          |                (Entry {
-          |                    (Str
           |                      content -> "http://schema.org/name")
           |                    (Str
           |                      content -> "test")
           |                    })
           |                (Entry {
           |                    (Str
+          |                      content -> "http://schema.org/description")
+          |                    (Str
+          |                      content -> "test description")
+          |                    })
+          |                (Entry {
+          |                    (Str
+          |                      content -> "http://raml.org/vocabularies/http#host")
+          |                    (Str
+          |                      content -> "http://localhost.com/api")
+          |                    })
+          |                (Entry {
+          |                    (Str
+          |                      content -> "http://raml.org/vocabularies/http#schemes")
+          |                    (Seq {
+          |                        (Str
+          |                          content -> "http")
+          |                        (Str
+          |                          content -> "https")
+          |                        })
+          |                    })
+          |                (Entry {
+          |                    (Str
           |                      content -> "http://raml.org/vocabularies/http#basePath")
           |                    (Str
-          |                      content -> "")
+          |                      content -> "http://localhost.com/api")
+          |                    })
+          |                (Entry {
+          |                    (Str
+          |                      content -> "http://raml.org/vocabularies/http#accepts")
+          |                    (Str
+          |                      content -> "application/json")
+          |                    })
+          |                (Entry {
+          |                    (Str
+          |                      content -> "http://raml.org/vocabularies/http#contentType")
+          |                    (Str
+          |                      content -> "application/json")
+          |                    })
+          |                (Entry {
+          |                    (Str
+          |                      content -> "http://schema.org/version")
+          |                    (Str
+          |                      content -> "1.1")
+          |                    })
+          |                (Entry {
+          |                    (Str
+          |                      content -> "http://schema.org/termsOfService")
+          |                    (Str
+          |                      content -> "termsOfService")
           |                    })
           |                })
           |            })
@@ -216,12 +255,5 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
           |    })
       """.stripMargin
     )
-  }
-
-  private def createDocument = {
-    val document = DocumentBuilder()
-      .withEncodes(WebApiBuilder().withHost("api.example.com").withName("test").build)
-      .build
-    document
   }
 }

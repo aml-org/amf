@@ -9,11 +9,11 @@ import amf.metadata.domain.ParameterModel._
 case class Parameter(fields: Fields) extends DomainElement {
   override type T = Parameter
 
-  val name: String        = fields get Name
-  val description: String = fields get Description
-  val required: Boolean   = fields get Required
-  val binding: String     = fields get Binding
-  val schema: String      = fields get Schema
+  val name: String        = fields(Name)
+  val description: String = fields(Description)
+  val required: Boolean   = fields(Required)
+  val binding: String     = fields(Binding)
+  val schema: String      = fields(Schema)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Parameter]
 

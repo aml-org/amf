@@ -440,7 +440,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     AMFCompiler(basePath + "completeExample.raml", platform, RamlYamlHint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+        val api = unit.asInstanceOf[Document].encodes
         assertWebApiValues(api, before)
         val builder = api.toBuilder
         builder.withDescription("changed")
@@ -487,7 +487,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     AMFCompiler(basePath + "completeExample.json", platform, OasJsonHint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+        val api = unit.asInstanceOf[Document].encodes
         assertWebApiValues(api, before)
         val builder = api.toBuilder
         builder.withDescription("changed")
@@ -526,7 +526,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     AMFCompiler(basePath + file, platform, hint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+        val api = unit.asInstanceOf[Document].encodes
         assertWebApiValues(api, fixture)
       }
   }

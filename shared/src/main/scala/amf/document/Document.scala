@@ -1,6 +1,6 @@
 package amf.document
 
-import amf.domain.{DomainElement, FieldsInstance, Fields}
+import amf.domain.{DomainElement, Fields, WebApi}
 import amf.metadata.document.DocumentModel._
 
 /**
@@ -13,7 +13,7 @@ case class Document(fields: Fields) extends BaseUnit with EncodesModel with Decl
 
   override val location: String = fields(Location)
 
-  override val encodes: DomainElement = fields(Encodes)
+  override val encodes: WebApi = fields(Encodes)
 
   val declares: Seq[DomainElement] = fields(Declares)
 }

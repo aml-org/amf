@@ -9,15 +9,15 @@ case class Operation(fields: Fields) extends DomainElement {
 
   override type T = Operation
 
-  val method: String              = fields get Method
-  val name: String                = fields get Name
-  val description: String         = fields get Description
-  val deprecated: Boolean         = fields get Deprecated
-  val summary: String             = fields get Summary
-  val documentation: CreativeWork = fields get Documentation
-  val schemes: Seq[String]        = fields get Schemes
-  val request: Request            = fields get OperationRequest
-  val responses: Seq[Response]    = fields get Responses
+  val method: String              = fields(Method)
+  val name: String                = fields(Name)
+  val description: String         = fields(Description)
+  val deprecated: Boolean         = fields(Deprecated)
+  val summary: String             = fields(Summary)
+  val documentation: CreativeWork = fields(Documentation)
+  val schemes: Seq[String]        = fields(Schemes)
+  val request: Request            = fields(OperationRequest)
+  val responses: Seq[Response]    = fields(Responses)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Operation]
 

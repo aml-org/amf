@@ -41,8 +41,8 @@ class WebApiBuilder extends Builder {
   def withParameters(parameters: Seq[Parameter]): WebApiBuilder = set(Parameters, parameters)
 
   protected def fixFields(fields: Fields): Fields = {
-    val basePath = Option(fields.get(BasePath))
-    val host     = Option(fields.get(Host))
+    val basePath = Option(fields(BasePath))
+    val host     = Option(fields(Host))
     if (basePath.isEmpty && host.isDefined) {
       fields.set(BasePath, BaseUriSplitter(host.get).path, List())
     }

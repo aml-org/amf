@@ -79,17 +79,13 @@ class GraphParserTest extends FunSuite {
   private def testWebApiGraphParser(builder: YeastASTBuilder) = {
     val parser = new AmfParser(builder)
 
-    val ast = builder.root() {
-      parser.parse
-    }
+    val ast = builder.root()(parser.parse)
 
     val unit = GraphParser.parse(ast)
     unit shouldBe a[Document]
 
     val document = unit.asInstanceOf[Document]
-    document.encodes shouldBe a[WebApi]
-
-    val api = document.encodes.asInstanceOf[WebApi]
+    val api      = document.encodes
     api.host should be("api.example.com")
     api.name should be("test")
   }

@@ -9,6 +9,7 @@ import amf.metadata.Type.{Array, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
 import amf.metadata.{Obj, Type}
+import amf.model.AmfElement
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.vocabulary.Namespace
 
@@ -37,12 +38,12 @@ object GraphEmitter {
       }
     }
 
-    def traverse(unit: Any /*BaseUnit | DomainElement*/ ): Unit = {
+    def traverse(unit: AmfElement): Unit = {
       val obj = metamodel(unit)
       //      createIdNode(obj)
       createTypeNode(obj)
 
-      unit.asInstanceOf[FieldsInstance].fields.foreach {
+      unit.fields.foreach {
         case (f, v) =>
           entry { () =>
             scalar(ctx.reduce(f.value))
@@ -55,7 +56,7 @@ object GraphEmitter {
       t match {
         case _: Obj =>
           map { () =>
-            traverse(v.value)
+            traverse(v.value.asInstanceOf[AmfElement])
           }
         case Str => scalar(v.value.asInstanceOf[String])
         case a: Array =>

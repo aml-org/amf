@@ -11,11 +11,11 @@ case class EndPoint(fields: Fields) extends DomainElement {
 
   override type T = EndPoint
 
-  val name: String               = fields get Name
-  val description: String        = fields get Description
-  val path: String               = fields get Path
-  val operations: Seq[Operation] = fields get Operations
-  val parameters: Seq[Parameter] = fields get Parameters
+  val name: String               = fields(Name)
+  val description: String        = fields(Description)
+  val path: String               = fields(Path)
+  val operations: Seq[Operation] = fields(Operations)
+  val parameters: Seq[Parameter] = fields(Parameters)
 
   def simplePath: String = {
     val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])

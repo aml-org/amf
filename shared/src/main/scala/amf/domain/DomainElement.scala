@@ -1,22 +1,14 @@
 package amf.domain
 
 import amf.builder.Builder
+import amf.model.AmfElement
 
 /**
   * Internal model for any domain element
   */
-trait DomainElement extends FieldsInstance {
+trait DomainElement extends AmfElement {
 
   type T
 
   def toBuilder: Builder
-}
-
-/**
-  * Domain model of type raml-doc:RootDomainElement
-  */
-trait RootDomainElement
-
-trait FieldsInstance {
-  val fields: Fields
 }

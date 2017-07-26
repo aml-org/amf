@@ -9,8 +9,8 @@ import amf.metadata.domain.PayloadModel._
 case class Payload(fields: Fields) extends DomainElement {
   override type T = Payload
 
-  val mediaType: String = fields get MediaType
-  val schema: String    = fields get Schema
+  val mediaType: String = fields(MediaType)
+  val schema: String    = fields(Schema)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Payload]
 

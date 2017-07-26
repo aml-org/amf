@@ -9,11 +9,11 @@ import amf.metadata.domain.ResponseModel._
 case class Response(fields: Fields) extends DomainElement {
   override type T = Response
 
-  val name: String            = fields get Name
-  val description: String     = fields get Description
-  val statusCode: String      = fields get StatusCode
-  val headers: Seq[Parameter] = fields get Headers
-  val payloads: Seq[Payload]  = fields get Payloads
+  val name: String            = fields(Name)
+  val description: String     = fields(Description)
+  val statusCode: String      = fields(StatusCode)
+  val headers: Seq[Parameter] = fields(Headers)
+  val payloads: Seq[Payload]  = fields(Payloads)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Response]
 

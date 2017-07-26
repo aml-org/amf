@@ -23,10 +23,7 @@ class AMFUnitMaker {
 
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): AMFAST = {
     unit match {
-      case document: Document =>
-        document.encodes match {
-          case api: WebApi => makeWebApiWithSpec(api, vendor)
-        }
+      case document: Document => makeWebApiWithSpec(document.encodes, vendor)
     }
   }
 

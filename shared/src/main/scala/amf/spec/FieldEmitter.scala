@@ -2,12 +2,13 @@ package amf.spec
 
 import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFASTNode, AMFToken}
-import amf.domain.{EndPoint, FieldsInstance, Fields, Operation}
+import amf.domain.{EndPoint, Fields, Operation}
 import amf.metadata.Field
+import amf.model.AmfElement
 import amf.parser.Range.NONE
 import amf.remote.Raml
-import amf.spec.Matcher.KeyMatcher
 import amf.spec.FieldEmitter.StringValueEmitter.key
+import amf.spec.Matcher.KeyMatcher
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable.ListBuffer
@@ -92,7 +93,7 @@ object FieldEmitter {
   object ObjectEmitter extends SpecFieldEmitter {
 
     override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
-      val fields = value.asInstanceOf[FieldsInstance].fields
+      val fields = value.asInstanceOf[AmfElement].fields
 
       val parent = new LazyBuilder(Entry) {
 

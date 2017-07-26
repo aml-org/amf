@@ -10,8 +10,8 @@ case class CreativeWork(fields: Fields) extends DomainElement {
 
   override type T = CreativeWork
 
-  val url: String         = fields get Url
-  val description: String = fields get Description
+  val url: String         = fields(Url)
+  val description: String = fields(Description)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[CreativeWork]
 

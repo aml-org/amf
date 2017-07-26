@@ -2,8 +2,7 @@ package amf.compiler
 
 import amf.common.AMFToken.MapToken
 import amf.common.{AMFAST, AMFASTLink}
-import amf.document.Document
-import amf.domain.WebApi
+import amf.document.{BaseUnit, Document}
 import amf.exception.CyclicReferenceException
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
@@ -22,38 +21,17 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Api (raml)") {
     AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", platform, RamlYamlHint)
-      .build() map {
-      case d: Document =>
-        d.encodes match {
-          case api: WebApi =>
-            api.host should be("api.example.com")
-            api.name should be("test")
-        }
-    }
+      .build() map assertDocument
   }
 
   test("Api (oas)") {
     AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", platform, OasJsonHint)
-      .build() map {
-      case d: Document =>
-        d.encodes match {
-          case api: WebApi =>
-            api.host should be("api.example.com")
-            api.name should be("test")
-        }
-    }
+      .build() map assertDocument
   }
 
   test("Api (amf)") {
     AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonLdHint)
-      .build() map {
-      case d: Document =>
-        d.encodes match {
-          case api: WebApi =>
-            api.host should be("api.example.com")
-            api.name should be("test")
-        }
-    }
+      .build() map assertDocument
   }
 
   test("Simple import") {
@@ -114,6 +92,12 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
         val uses = bodyMap.children(2)
         assertUses(uses)
     }
+  }
+
+  private def assertDocument(unit: BaseUnit): Assertion = unit match {
+    case d: Document =>
+      d.encodes.host should be("api.example.com")
+      d.encodes.name should be("test")
   }
 
   private def assertUses(uses: AMFAST) = {

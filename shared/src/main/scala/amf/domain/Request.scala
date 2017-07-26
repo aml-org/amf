@@ -9,9 +9,9 @@ import amf.metadata.domain.RequestModel._
 case class Request(fields: Fields) extends DomainElement {
   override type T = Request
 
-  val queryParameters: Seq[Parameter] = fields get QueryParameters
-  val headers: Seq[Parameter]         = fields get Headers
-  val payloads: Seq[Payload]          = fields get Payloads
+  val queryParameters: Seq[Parameter] = fields(QueryParameters)
+  val headers: Seq[Parameter]         = fields(Headers)
+  val payloads: Seq[Payload]          = fields(Payloads)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Request]
 

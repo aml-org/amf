@@ -10,9 +10,9 @@ case class Organization(fields: Fields) extends DomainElement {
 
   override type T = Organization
 
-  val url: String   = fields get Url
-  val name: String  = fields get Name
-  val email: String = fields get Email
+  val url: String   = fields(Url)
+  val name: String  = fields(Name)
+  val email: String = fields(Email)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Organization]
 

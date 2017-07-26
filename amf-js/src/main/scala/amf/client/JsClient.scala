@@ -38,15 +38,10 @@ class JsClient extends BaseClient {
   }
 
   private def callback(handler: WebApiHandler, url: String)(t: Try[BaseUnit]) = t match {
-    case Success(value) =>
-      value match {
-        case d: Document if d.encodes.isInstanceOf[WebApi] =>
-          handler.success(d.encodes.asInstanceOf[WebApi])
-        case _ => handler.error(new Exception(s"Unhandled type $value"))
-      }
-    case Failure(exception) => handler.error(exception)
+    case Success(d: Document) => handler.success(d.encodes.asInstanceOf[WebApi])
+    case Success(unit)        => handler.error(new Exception(s"Unhandled unit $unit"))
+    case Failure(exception)   => handler.error(exception)
   }
-
 }
 
 @js.native

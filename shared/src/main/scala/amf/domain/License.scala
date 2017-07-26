@@ -10,8 +10,8 @@ case class License(fields: Fields) extends DomainElement {
 
   override type T = License
 
-  val url: String  = fields get Url
-  val name: String = fields get Name
+  val url: String  = fields(Url)
+  val name: String = fields(Name)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[License]
 
