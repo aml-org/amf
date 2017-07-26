@@ -9,9 +9,11 @@ import amf.metadata.domain.RequestModel._
 class RequestBuilder extends Builder {
   override type T = Request
 
-  def withQueryParameters(queryParameters: Seq[Parameter]): this.type = set(QueryParameters, queryParameters)
-  def withHeaders(headers: Seq[Parameter]): this.type                 = set(Headers, headers)
-  def withPayloads(payloads: Seq[Payload]): this.type                 = set(Payloads, payloads)
+  def withQueryParameters(queryParameters: Seq[Parameter]): RequestBuilder = set(QueryParameters, queryParameters)
+
+  def withHeaders(headers: Seq[Parameter]): RequestBuilder = set(Headers, headers)
+
+  def withPayloads(payloads: Seq[Payload]): RequestBuilder = set(Payloads, payloads)
 
   override def build: Request = Request(fields)
 }

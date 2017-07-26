@@ -38,6 +38,8 @@ class WebApiBuilder extends Builder {
 
   def withDocumentation(documentation: CreativeWork): WebApiBuilder = set(Documentation, documentation)
 
+  def withParameters(parameters: Seq[Parameter]): WebApiBuilder = set(Parameters, parameters)
+
   protected def fixFields(fields: Fields): Fields = {
     val basePath = Option(fields.get(BasePath))
     val host     = Option(fields.get(Host))
@@ -47,7 +49,7 @@ class WebApiBuilder extends Builder {
     fields
   }
 
-  override def build: WebApi = new WebApi(fixFields(fields))
+  override def build: WebApi = WebApi(fixFields(fields))
 }
 
 object WebApiBuilder {

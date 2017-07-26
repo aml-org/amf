@@ -9,8 +9,9 @@ import amf.metadata.domain.PayloadModel._
 class PayloadBuilder extends Builder {
   override type T = Payload
 
-  def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
-  def withSchema(schema: String): this.type       = set(Schema, schema)
+  def withMediaType(mediaType: String): PayloadBuilder = set(MediaType, mediaType)
+
+  def withSchema(schema: String): PayloadBuilder = set(Schema, schema)
 
   override def build: Payload = Payload(fields)
 }

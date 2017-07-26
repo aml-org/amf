@@ -167,13 +167,14 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(fixture, "endpoint-operations.json", OasJsonHint)
   }
 
-  test("Operation request - RAML.") {
+  test("Parameters - RAML.") {
     val endpoints = List(
       EndPointBuilder()
-        .withPath("/levelzero")
+        .withPath("/levelzero/some{two}")
+        .withParameters(List(ParameterBuilder().withName("two").withRequired(false).build))
         .build,
       EndPointBuilder()
-        .withPath("/levelzero/level-one")
+        .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(List(
@@ -202,14 +203,16 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     )
     val fixture = List(
       (Name, "API"),
-      (BasePath, "/some/base/uri"),
+      (BasePath, "/some/{one}/uri"),
+      (Parameters,
+       List(ParameterBuilder().withName("one").withRequired(true).withDescription("One base uri param").build)),
       (EndPoints, endpoints)
     )
 
     assertFixture(fixture, "operation-request.raml", RamlYamlHint)
   }
 
-  test("Operation request - OAS.") {
+  test("Parameters - OAS.") {
     val endpoints = List(
       EndPointBuilder()
         .withPath("/levelzero")
@@ -433,6 +436,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       case (License, expected)        => assertField(License, api.license, expected)
       case (Documentation, expected)  => assertField(Documentation, api.documentation, expected)
       case (EndPoints, expected)      => assertField(EndPoints, api.endPoints, expected)
+      case (Parameters, expected)     => assertField(Parameters, api.parameters, expected)
     }
     succeed
   }

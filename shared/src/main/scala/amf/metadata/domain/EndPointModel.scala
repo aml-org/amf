@@ -18,7 +18,10 @@ object EndPointModel extends DomainElementModel {
 
   val Operations = Field(Array(OperationModel), Hydra + "supportedOperation")
 
+  val Parameters = Field(Array(ParameterModel), Http + "parameter")
+
   override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
 
-  override val fields: List[Field] = Path :: Name :: Description :: Operations :: DomainElementModel.fields
+  override val fields
+    : List[Field] = Path :: Name :: Description :: Operations :: Parameters :: DomainElementModel.fields
 }

@@ -23,6 +23,7 @@ case class WebApi(fields: Fields) extends DomainElement {
   val license: License            = fields(WebApiLicense)
   val documentation: CreativeWork = fields(Documentation)
   val endPoints: Seq[EndPoint]    = fields(EndPoints)
+  val parameters: Seq[Parameter]  = fields(Parameters)
 
   override def toBuilder: WebApiBuilder = WebApiBuilder(fields)
 }

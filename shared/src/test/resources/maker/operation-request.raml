@@ -1,9 +1,15 @@
 #%RAML 1.0
 title: API
 
-baseUri: /some/base/uri
+baseUri: /some/{one}/uri
 
-/levelzero:
+baseUriParameters:
+  one:
+    description: One base uri param
+/levelzero/some{two}:
+  uriParameters:
+    two:
+      required: false
   /level-one:
     displayName: One display name
     description: and this description!

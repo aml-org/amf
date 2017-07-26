@@ -10,23 +10,23 @@ class OperationBuilder extends Builder {
 
   override type T = Operation
 
-  def withMethod(method: String): this.type = set(Method, method)
+  def withMethod(method: String): OperationBuilder = set(Method, method)
 
-  def withName(name: String): this.type = set(Name, name)
+  def withName(name: String): OperationBuilder = set(Name, name)
 
-  def withDescription(description: String): this.type = set(Description, description)
+  def withDescription(description: String): OperationBuilder = set(Description, description)
 
-  def isDeprecated(deprecated: Boolean): this.type = set(Deprecated, deprecated)
+  def isDeprecated(deprecated: Boolean): OperationBuilder = set(Deprecated, deprecated)
 
-  def withSummary(summary: String): this.type = set(Summary, summary)
+  def withSummary(summary: String): OperationBuilder = set(Summary, summary)
 
-  def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
+  def withDocumentation(documentation: CreativeWork): OperationBuilder = set(Documentation, documentation)
 
-  def withSchemes(schemes: Seq[String]): this.type = set(Schemes, schemes)
+  def withSchemes(schemes: Seq[String]): OperationBuilder = set(Schemes, schemes)
 
-  def withRequest(request: Request): this.type = set(OperationRequest, request)
+  def withRequest(request: Request): OperationBuilder = set(OperationRequest, request)
 
-  def withResponses(responses: Seq[Response]): this.type = set(Responses, responses)
+  def withResponses(responses: Seq[Response]): OperationBuilder = set(Responses, responses)
 
   override def build: Operation = Operation(fields)
 }

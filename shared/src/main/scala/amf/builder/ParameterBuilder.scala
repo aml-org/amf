@@ -9,11 +9,15 @@ import amf.metadata.domain.ParameterModel._
 class ParameterBuilder extends Builder {
   override type T = Parameter
 
-  def withName(name: String): this.type               = set(Name, name)
-  def withDescription(description: String): this.type = set(Description, description)
-  def withRequired(required: Boolean): this.type      = set(Required, required)
-  def withBinding(binding: String): this.type         = set(Binding, binding)
-  def withSchema(schema: String): this.type           = set(Schema, schema)
+  def withName(name: String): ParameterBuilder = set(Name, name)
+
+  def withDescription(description: String): ParameterBuilder = set(Description, description)
+
+  def withRequired(required: Boolean): ParameterBuilder = set(Required, required)
+
+  def withBinding(binding: String): ParameterBuilder = set(Binding, binding)
+
+  def withSchema(schema: String): ParameterBuilder = set(Schema, schema)
 
   override def build: Parameter = Parameter(fields)
 }

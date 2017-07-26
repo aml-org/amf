@@ -15,6 +15,7 @@ case class EndPoint(fields: Fields) extends DomainElement {
   val description: String        = fields get Description
   val path: String               = fields get Path
   val operations: Seq[Operation] = fields get Operations
+  val parameters: Seq[Parameter] = fields get Parameters
 
   def simplePath: String = {
     val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
@@ -34,16 +35,17 @@ case class EndPoint(fields: Fields) extends DomainElement {
         name == that.name &&
         description == that.description &&
         path == that.path &&
-        operations == that.operations
+        operations == that.operations &&
+        parameters == that.parameters
     case _ => false
   }
 
   override def hashCode(): Int = {
-    val state = Seq(name, description, path, operations)
+    val state = Seq(name, description, path, operations, parameters)
     state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
   }
 
-  override def toString = s"EndPoint($name, $description, $path, $operations)"
+  override def toString = s"EndPoint($name, $description, $path, $operations, $parameters)"
 
   override def toBuilder: EndPointBuilder = EndPointBuilder(fields)
 }

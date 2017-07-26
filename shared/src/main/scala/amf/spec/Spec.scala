@@ -1,7 +1,12 @@
 package amf.spec
 
 import amf.metadata.domain.CreativeWorkModel.{Description => CreativeWorkDescription, Url => CreativeWorkUrl}
-import amf.metadata.domain.EndPointModel.{Operations, Description => EndPointDescription, Name => EndPointName}
+import amf.metadata.domain.EndPointModel.{
+  Operations,
+  Description => EndPointDescription,
+  Name => EndPointName,
+  Parameters => EndPointParameters
+}
 import amf.metadata.domain.LicenseModel.{Name => LicenseName, Url => LicenseUrl}
 import amf.metadata.domain.OperationModel.{
   Deprecated,
@@ -50,6 +55,11 @@ object Spec {
     Spec(
       'title ~ Name,
       'baseUri ~ Host,
+      'baseUriParameters ~ Parameters -> (
+        'description ~ ParameterDescription,
+        'required ~ Required,
+        'type ~ Schema
+      ),
       'description ~ Description,
       'mediaType ~ (ContentType | Accepts),
       'version ~ Version,
@@ -71,6 +81,11 @@ object Spec {
       "/.*" ~ EndPoints -> (
         'displayName ~ EndPointName,
         'description ~ EndPointDescription,
+        'uriParameters ~ EndPointParameters -> (
+          'description ~ ParameterDescription,
+          'required ~ Required,
+          'type ~ Schema
+        ),
         "get|patch|put|post|delete|options|head" ~ Operations -> (
           'title ~ OperationName,
           'description ~ OperationDescription,
