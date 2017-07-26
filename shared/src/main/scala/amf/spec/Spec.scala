@@ -10,6 +10,7 @@ import amf.metadata.domain.EndPointModel.{
 import amf.metadata.domain.LicenseModel.{Name => LicenseName, Url => LicenseUrl}
 import amf.metadata.domain.OperationModel.{
   Deprecated,
+  Responses,
   Summary,
   Description => OperationDescription,
   Documentation => OperationDocumentation,
@@ -30,6 +31,7 @@ import amf.metadata.domain.ParameterModel.{
 }
 import amf.metadata.domain.RequestModel
 import amf.metadata.domain.RequestModel.{Headers, QueryParameters}
+import amf.metadata.domain.ResponseModel.{Description => ResponseDescription, Headers => ResponseHeaders}
 import amf.metadata.domain.WebApiModel._
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.FieldEmitter.SpecEmitter
@@ -51,15 +53,16 @@ object Spec {
     def emitter: SpecEmitter = SpecEmitter(fields.toList)
   }
 
+  private val RamlParam = List(
+    'description ~ ParameterDescription,
+    'required ~ Required,
+    'type ~ Schema
+  )
   private val RamlSpec: Spec =
     Spec(
       'title ~ Name,
       'baseUri ~ Host,
-      'baseUriParameters ~ Parameters -> (
-        'description ~ ParameterDescription,
-        'required ~ Required,
-        'type ~ Schema
-      ),
+      'baseUriParameters ~ Parameters -> RamlParam,
       'description ~ Description,
       'mediaType ~ (ContentType | Accepts),
       'version ~ Version,
@@ -78,14 +81,10 @@ object Spec {
         'url ~ LicenseUrl,
         'name ~ LicenseName
       ),
-      "/.*" ~ EndPoints -> (
+      "^/.*" ~ EndPoints -> (
         'displayName ~ EndPointName,
         'description ~ EndPointDescription,
-        'uriParameters ~ EndPointParameters -> (
-          'description ~ ParameterDescription,
-          'required ~ Required,
-          'type ~ Schema
-        ),
+        'uriParameters ~ EndPointParameters -> RamlParam,
         "get|patch|put|post|delete|options|head" ~ Operations -> (
           'title ~ OperationName,
           'description ~ OperationDescription,
@@ -95,10 +94,24 @@ object Spec {
             'url ~ CreativeWorkUrl,
             'description ~ CreativeWorkDescription
           ),
-          'protocols ~ OperationSchemes
+          'protocols ~ OperationSchemes,
+          'responses -> (
+            "\\d{3}" ~ Responses -> (
+              'description ~ ResponseDescription,
+              'headers ~ ResponseHeaders -> RamlParam
+            )
+          )
         )
       )
     )(Raml)
+
+  private val OasParam = List(
+    'name ~ ParameterName,
+    'description ~ ParameterDescription,
+    'required ~ Required,
+    'in ~ ParameterBinding,
+    'schema ~ Schema
+  )
 
   private val OasSpec: Spec =
     Spec(
@@ -114,6 +127,7 @@ object Spec {
       ),
       'host ~ Host,
       'basePath ~ BasePath,
+      'parameters ~ Parameters -> OasParam,
       'consumes ~ Accepts,
       'produces ~ ContentType,
       'schemes ~ Schemes,
@@ -127,9 +141,10 @@ object Spec {
         'description ~ CreativeWorkDescription
       ),
       'paths -> (
-        "/.*" ~ EndPoints -> (
+        "^/.*" ~ EndPoints -> (
           'displayName ~ EndPointName,
           'description ~ EndPointDescription,
+          'parameters ~ EndPointParameters -> OasParam,
           "get|patch|put|post|delete|options|head" ~ Operations -> (
             'operationId ~ OperationName,
             'description ~ OperationDescription,
@@ -139,7 +154,13 @@ object Spec {
               'url ~ CreativeWorkUrl,
               'description ~ CreativeWorkDescription
             ),
-            'schemes ~ OperationSchemes
+            'schemes ~ OperationSchemes,
+            'responses -> (
+              "default|\\d{3}" ~ Responses -> (
+                'description ~ ResponseDescription,
+                'headers ~ ResponseHeaders -> RamlParam
+              )
+            )
           )
         )
       )
@@ -147,28 +168,14 @@ object Spec {
 
   private val RamlRequestSpec =
     Spec(
-      'headers ~ Headers -> (
-        'description ~ ParameterDescription,
-        'required ~ Required,
-        'type ~ Schema
-      ),
-      'queryParameters ~ QueryParameters -> (
-        'description ~ ParameterDescription,
-        'required ~ Required,
-        'type ~ Schema
-      ),
+      'headers ~ Headers                 -> RamlParam,
+      'queryParameters ~ QueryParameters -> RamlParam,
       'body ~ RequestModel.Payloads
     )(Raml)
 
   private val OasRequestSpec =
     Spec(
-      'parameters ~ (QueryParameters | Headers) -> (
-        'name ~ ParameterName,
-        'description ~ ParameterDescription,
-        'required ~ Required,
-        'in ~ ParameterBinding,
-        'schema ~ Schema
-      ),
+      'parameters ~ (QueryParameters | Headers) -> OasParam,
       'body ~ RequestModel.Payloads
     )(Oas)
 

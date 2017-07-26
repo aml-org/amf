@@ -5,9 +5,9 @@ import amf.common.Strings.strings
 import amf.domain.Annotation.{LexicalInformation, ParentEndPoint}
 import amf.domain.{Annotation, EndPoint}
 import amf.metadata.Type
-import amf.metadata.domain.WebApiModel.EndPoints
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.ParameterModel.Required
+import amf.metadata.domain.WebApiModel.EndPoints
 import amf.metadata.domain._
 import amf.parser.ASTNode
 import amf.remote.{Oas, Raml, Vendor}
@@ -67,18 +67,22 @@ object FieldParser {
 
   object ParametersParser extends ChildrenParser {
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
+      def parseParametersFromEntries() = {
+        entry.last.children.foreach(paramEntry => {
+          val param = ParameterBuilder()
+          val name  = paramEntry.head.content.unquote
+          param set (Required, !name.endsWith("?"))
+          param set (ParameterModel.Name, name)
+
+          super.parse(spec, paramEntry, param)
+
+          builder add (spec.fields.head, List(param.build), annotations(paramEntry))
+        })
+      }
+
       spec.vendor match {
-        case Raml =>
-          entry.last.children.foreach(paramEntry => {
-            val param = ParameterBuilder()
-            val name  = paramEntry.head.content
-            param set (Required, !name.endsWith("?"))
-            param set (ParameterModel.Name, name)
-
-            super.parse(spec, paramEntry, param)
-
-            builder add (spec.fields.head, List(param.build), annotations(paramEntry))
-          })
+        case Raml                                                  => parseParametersFromEntries()
+        case Oas if spec.fields.head.equals(ResponseModel.Headers) => parseParametersFromEntries()
         case Oas =>
           entry.last.children.foreach(paramMap => {
             val b = ParameterBuilder()
@@ -87,11 +91,32 @@ object FieldParser {
 
             val param = b.build
 
-            val field = if (param.binding == "header") RequestModel.Headers else RequestModel.QueryParameters
+            val field =
+              if (spec.fields.size == 1) spec.fields.head
+              else if (param.binding == "header") RequestModel.Headers
+              else RequestModel.QueryParameters
 
             builder add (field, List(param), annotations(paramMap))
           })
       }
+    }
+  }
+
+  object ResponseParser extends ChildrenParser {
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
+      val statusCode = entry.head.content.unquote
+
+      val response = ResponseBuilder()
+        .set(ResponseModel.Name, statusCode, annotations(entry.head))
+        .set(
+          ResponseModel.StatusCode,
+          if (statusCode == "default") "200" else statusCode,
+          annotations(entry.head)
+        )
+
+      super.parse(spec, entry, response)
+
+      builder add (spec.fields.head, List(response.build), annotations(entry))
     }
   }
 
@@ -144,14 +169,9 @@ object FieldParser {
       if (add) op set (OperationModel.Request, req.build, annotations(entry))
     }
 
-    def addResponses(op: OperationBuilder, entry: ASTNode[_]): Unit = {
-      //TODO responses...
-    }
-
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
       val op: OperationBuilder = operationBuilder(spec, entry)
       setRequest(op, entry, spec.vendor)
-      addResponses(op, entry)
 
       builder add (EndPointModel.Operations, List(op.build))
     }

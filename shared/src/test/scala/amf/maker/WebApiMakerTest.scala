@@ -267,6 +267,83 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(fixture, "operation-request.json", OasJsonHint)
   }
 
+  test("Responses - RAML.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .withOperations(
+          List(
+            OperationBuilder()
+              .withMethod("get")
+              .withName("Some title")
+              .withResponses(List(
+                ResponseBuilder()
+                  .withDescription("200 descr")
+                  .withStatusCode("200")
+                  .withName("200")
+                  .withHeaders(List(
+                    ParameterBuilder().withName("Time-Ago").withSchema("integer").withRequired(true).build
+                  ))
+                  .build,
+                ResponseBuilder().withName("404").withStatusCode("404").withDescription("Not found!").build
+              ))
+              .build))
+        .build
+    )
+
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "operation-response.raml", RamlYamlHint)
+  }
+
+  test("Responses - OAS.") {
+    val endpoints = List(
+      EndPointBuilder()
+        .withPath("/levelzero")
+        .withName("Name")
+        .build,
+      EndPointBuilder()
+        .withPath("/levelzero/level-one")
+        .withName("One display name")
+        .withDescription("and this description!")
+        .withOperations(
+          List(
+            OperationBuilder()
+              .withMethod("get")
+              .withName("Some title")
+              .withResponses(List(
+                ResponseBuilder()
+                  .withDescription("200 descr")
+                  .withStatusCode("200")
+                  .withName("default")
+                  .withHeaders(List(
+                    ParameterBuilder().withName("Time-Ago").withSchema("integer").withRequired(true).build
+                  ))
+                  .build,
+                ResponseBuilder().withName("404").withStatusCode("404").withDescription("Not found!").build
+              ))
+              .build))
+        .build
+    )
+
+    val fixture = List(
+      (Name, "API"),
+      (BasePath, "/some/uri"),
+      (EndPoints, endpoints)
+    )
+
+    assertFixture(fixture, "operation-response.json", OasJsonHint)
+  }
+
   test("generate partial succeed") {
     val fixture = List(
       (Name, "test"),

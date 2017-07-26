@@ -18,7 +18,8 @@ protected case class SpecField(fields: List[Field],
                                children: List[SpecField] = Nil,
                                vendor: Vendor = Amf) {
 
-  def ->(specs: SpecField*): SpecField = copy(children = specs.toList)
+  def ->(specs: SpecField*): SpecField      = copy(children = specs.toList)
+  def ->(specs: List[SpecField]): SpecField = copy(children = specs)
 }
 
 protected trait SpecNode {
@@ -42,6 +43,8 @@ protected trait SpecNode {
         SpecField(fields, matcher(), ParametersParser, null)
       case Array(PayloadModel) =>
         SpecField(fields, matcher(), PayloadsParser, null)
+      case Array(ResponseModel) =>
+        SpecField(fields, matcher(), ResponseParser, null)
     }
   }
 
