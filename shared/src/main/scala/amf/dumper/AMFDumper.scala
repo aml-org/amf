@@ -1,44 +1,20 @@
 package amf.dumper
 
+import amf.document.BaseUnit
 import amf.emit.AMFUnitMaker
 import amf.generator.{JsonGenerator, YamlGenerator}
-import amf.domain.WebApi
-import amf.parser.{AMFUnit, Document, Fragment, Module}
 import amf.remote._
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AMFDumper(webApi: WebApi, vendor: Vendor) {
-  val unitF = Future { AMFUnitMaker(webApi, vendor) }
+class AMFDumper(unit: BaseUnit, vendor: Vendor) {
 
-  def dump(): Future[String] = {
-    unitF.map(u =>
-      u.`type` match {
-        case Document =>
-          dumpDocument(u)
-        case Fragment => ???
-        case Module   => ???
-    })
+  val ast = AMFUnitMaker(unit, vendor)
 
+  def dump: String = vendor match {
+    case Raml      => new YamlGenerator().generate(ast).toString
+    case Oas | Amf => new JsonGenerator().generate(ast).toString
   }
 
-  def dumpToFile(remote: Platform, path: String): Unit = {
-    dump().map(d => {
-      remote.write(path, d)
-    })
-  }
-
-  private def dumpDocument(unit: AMFUnit): String = { //TODO case for syntax instead of vendor?
-    unit.vendor match {
-      case Raml =>
-        val yamlWritter = new YamlGenerator().generate(unit.root)
-        yamlWritter.toString
-      case Oas | Amf =>
-        val oasWritter = new JsonGenerator().generate(unit.root)
-        oasWritter.toString
-      case _ => ???
-
-    }
-  }
+  def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump)
 }

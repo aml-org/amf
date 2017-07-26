@@ -1,8 +1,9 @@
 package amf.emit
 
 import amf.builder._
+import amf.common.AMFAST
+import amf.document.Document
 import amf.domain.WebApi
-import amf.parser.AMFUnit
 import amf.remote.Vendor
 import amf.unsafe.PlatformSecrets
 
@@ -11,12 +12,7 @@ import amf.unsafe.PlatformSecrets
   */
 trait AMFUnitFixtureTest extends PlatformSecrets {
 
-  def buildCompleteUnit(vendor: Vendor): AMFUnit = {
-
-    AMFUnitMaker(apiComplete(), vendor)
-  }
-
-  def buildExtendedUnit(vendor: Vendor): AMFUnit = {
+  def buildExtendedUnit(vendor: Vendor): AMFAST = {
     val builder = apiComplete().toBuilder
     val documentation = new CreativeWorkBuilder()
       .withDescription("documentation operation")
@@ -51,12 +47,15 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
     val api = builder
       .withEndPoints(List(endpoint))
       .build
-    AMFUnitMaker(api, vendor)
+
+    AMFUnitMaker(doc(api), vendor)
   }
 
-  def buildSimpleUnit(vendor: Vendor): AMFUnit = {
-    AMFUnitMaker(api(), vendor)
-  }
+  def buildSimpleUnit(vendor: Vendor): AMFAST = AMFUnitMaker(doc(api()), vendor)
+
+  def buildCompleteUnit(vendor: Vendor): AMFAST = AMFUnitMaker(doc(apiComplete()), vendor)
+
+  def doc(api: WebApi): Document = DocumentBuilder().withEncodes(api).build
 
   def api(): WebApi = {
     WebApiBuilder()

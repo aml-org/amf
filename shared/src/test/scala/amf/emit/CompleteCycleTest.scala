@@ -89,25 +89,19 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
     assertCycle(basePath + "completeWithOperations.json", basePath + "completeWithOperations.json", OasJsonHint, Oas)
   }
 
-  def assertCycle(pathOrigin: String,
-                  pathExpected: String,
-                  originHint: Hint,
-                  dumperVendor: Vendor): Future[Assertion] = {
-    val eventualString = platform
-      .resolve(pathExpected, None)
-      .map(expected => {
-        expected.stream.toString
-      })
+  def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
+    val expected = platform
+      .resolve(golden, None)
+      .map(_.stream.toString)
 
-    val future = AMFCompiler(pathOrigin, platform, originHint)
+    val actual = AMFCompiler(source, platform, hint)
       .build()
-      .flatMap(baseUnit => {
-        val document = baseUnit.asInstanceOf[Document]
-        val api      = document.encodes.asInstanceOf[WebApi]
-        new AMFDumper(api, dumperVendor).dump()
+      .map(new AMFDumper(_, target).dump)
+
+    actual
+      .zip(expected)
+      .map({
+        case (dump, exp) => dump should be(exp)
       })
-
-    future.flatMap(c => eventualString.map(e => e should be(c)))
   }
-
 }

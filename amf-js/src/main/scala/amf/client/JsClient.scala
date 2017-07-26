@@ -3,7 +3,6 @@ package amf.client
 import amf.compiler.AMFCompiler
 import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
-import amf.parser.AMFUnit
 import amf.remote.RamlYamlHint
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -52,7 +51,7 @@ class JsClient extends BaseClient {
 
 @js.native
 trait JsHandler extends js.Object {
-  def success(document: AMFUnit): Unit = js.native
+  def success(document: BaseUnit): Unit = js.native
 
   def error(exception: Throwable): Unit = js.native
 }

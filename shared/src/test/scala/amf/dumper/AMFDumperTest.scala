@@ -6,20 +6,12 @@ import amf.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 
-import scala.concurrent.ExecutionContext
-
 /**
-  * AMFUnitDumperTest
+  * AMF Unit DumperTest
   */
-class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
+class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  test("test simple oas/json dump from given tree") {
-    val webApi = api()
-
-    val amfDumper = new AMFDumper(webApi, Oas)
-
+  test("Test simple oas/json") {
     val expected =
       """{
         |  "swagger": "2.0",
@@ -38,16 +30,11 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |  "consumes": "application/json",
         |  "produces": "application/json"
         |}""".stripMargin
-    amfDumper.dump() map { s =>
-      s should be(expected)
-    }
+
+    new AMFDumper(doc(api()), Oas).dump should be(expected)
   }
 
-  test("test simple raml/yaml dump from given tree") {
-
-    val webApi = api()
-    val dumper = new AMFDumper(webApi, Raml)
-
+  test("Test simple raml/yaml") {
     val expected =
       """#%RAML 1.0
         |title: test
@@ -59,17 +46,11 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |mediaType: application/json
         |version: 1.1
         |termsOfService: termsOfService""".stripMargin
-    dumper.dump() map { s =>
-      s should be(expected)
-    }
+
+    new AMFDumper(doc(api()), Raml).dump should be(expected)
   }
 
-  ignore("test simple amf/jsonld dump from given tree") {
-
-    val webApi = api()
-
-    val dumper = new AMFDumper(webApi, Amf)
-
+  ignore("Test simple amf/jsonld") {
     val expected =
       """{
         |  "http://raml.org/vocabularies/document#encodes": [
@@ -95,8 +76,7 @@ class AMFUnitDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitF
         |    }
         |  ]
         |}""".stripMargin
-    dumper.dump() map { s =>
-      s should be(expected)
-    }
+
+    new AMFDumper(doc(api()), Amf).dump should be(expected)
   }
 }
