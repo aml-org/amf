@@ -1,9 +1,10 @@
 package amf.spec
 
 import amf.builder._
+import amf.common.AMFToken.Entry
 import amf.common.Strings.strings
-import amf.domain.Annotation.{ArrayFieldAnnotations, LexicalInformation, ParentEndPoint}
-import amf.domain.{Annotation, EndPoint, Parameter}
+import amf.domain.Annotation.{ExplicitField, LexicalInformation, ParentEndPoint, UriParameter}
+import amf.domain.{Annotation, EndPoint}
 import amf.metadata.Type
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.ParameterModel.Required
@@ -95,14 +96,15 @@ object FieldParser {
 
     private def parseParamsFromMap(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
       entry.last.children.foreach(paramEntry => {
-        val param = ParameterBuilder()
         val name  = paramEntry.head.content.unquote
-        param set (Required, !name.endsWith("?"))
-        param set (ParameterModel.Name, name)
+        val param = ParameterBuilder().set(Required, !name.endsWith("?")).set(ParameterModel.Name, name)
 
         super.parse(spec, paramEntry, param)
 
-        builder add (spec.fields.head, List(param.build), annotations(paramEntry))
+        val paramAnnotations =
+          if (spec.vendor == Raml) annotations(paramEntry) :+ UriParameter() else annotations(paramEntry)
+
+        builder add (spec.fields.head, List(param.build), paramAnnotations)
       })
     }
   }
@@ -204,7 +206,8 @@ object FieldParser {
     }
   }
 
-  def annotations(node: ASTNode[_]): List[Annotation] = {
-    List(LexicalInformation(node.range))
+  def annotations(node: ASTNode[_]): List[Annotation] = node.`type` match {
+    case Entry if node.head.content == "required" => List(LexicalInformation(node.range), ExplicitField())
+    case _                                        => List(LexicalInformation(node.range))
   }
 }
