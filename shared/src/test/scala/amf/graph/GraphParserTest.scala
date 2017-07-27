@@ -68,7 +68,7 @@ class GraphParserTest extends FunSuite {
       |    }
       |}""".stripMargin
 
-  test("Document encoding simple WebApi (using @context)") {
+  test("Document encoding simple WebApi") {
     testWebApiGraphParser(YeastASTBuilder(JsonLexer(`Document/WebApi/jsonld`)))
   }
 

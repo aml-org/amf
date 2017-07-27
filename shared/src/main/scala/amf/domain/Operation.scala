@@ -45,4 +45,6 @@ case class Operation(fields: Fields) extends DomainElement {
     s"Operation($method, $name, $description, $deprecated, $summary, $documentation, $schemes, $request, $responses)"
 
   override def toBuilder: Builder = OperationBuilder(fields)
+
+  override def id(parent: String): String = parent + "/" + method
 }

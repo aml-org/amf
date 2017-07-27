@@ -33,6 +33,8 @@ case class Organization(fields: Fields) extends DomainElement {
   override def toString = s"Organization($url, $name, $email)"
 
   override def toBuilder: OrganizationBuilder = OrganizationBuilder(fields)
+
+  override def id(parent: String): String = parent + "/organization"
 }
 
 object Organization {

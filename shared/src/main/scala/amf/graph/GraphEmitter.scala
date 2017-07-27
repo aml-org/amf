@@ -5,7 +5,7 @@ import amf.common.Strings.strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.Type.{Array, Str}
+import amf.metadata.Type.{Array, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
 import amf.metadata.{Obj, Type}
@@ -33,38 +33,44 @@ object GraphEmitter {
       e.root(Root) { () =>
         map { () =>
           createContextNode()
-          traverse(unit)
+          traverse(unit, unit.location)
         }
       }
     }
 
-    def traverse(unit: AmfElement): Unit = {
-      val obj = metamodel(unit)
-      //      createIdNode(obj)
-      createTypeNode(obj)
+    def traverse(element: AmfElement, parent: String): Unit = {
+      val id = element.id(parent)
 
-      unit.fields.foreach {
+      createIdNode(element, id)
+      createTypeNode(element)
+
+      element.fields.foreach {
         case (f, v) =>
           entry { () =>
             scalar(ctx.reduce(f.value))
-            value(f.`type`, v)
+            value(f.`type`, v, id)
           }
       }
     }
 
-    private def value(t: Type, v: Value) = {
+    private def value(t: Type, v: Value, parent: String) = {
       t match {
-        case _: Obj =>
-          map { () =>
-            traverse(v.value.asInstanceOf[AmfElement])
-          }
-        case Str => scalar(v.value.asInstanceOf[String])
+        case _: Obj => obj(v.value.asInstanceOf[AmfElement], parent)
+        case Str    => scalar(v.value.asInstanceOf[String])
+        case RegExp => scalar(v.value.asInstanceOf[String])
         case a: Array =>
           array { () =>
             a.element match {
-              case Str => v.value.asInstanceOf[List[String]].foreach(scalar(_))
+              case _: Obj => v.value.asInstanceOf[List[AmfElement]].foreach(e => obj(e, parent))
+              case Str    => v.value.asInstanceOf[List[String]].foreach(scalar(_))
             }
           }
+      }
+    }
+
+    private def obj(element: AmfElement, parent: String) = {
+      map { () =>
+        traverse(element, parent)
       }
     }
 
@@ -72,10 +78,13 @@ object GraphEmitter {
       e.value(StringToken, if (quoted) { content.quote } else content)
     }
 
-    private def createTypeNode(obj: Obj) = {
+    private def createIdNode(element: AmfElement, id: String) = entry("@id", id)
+
+    private def createTypeNode(element: AmfElement) = {
       entry { () =>
         scalar("@type")
         array { () =>
+          val obj = metamodel(element)
           obj.`type`.foreach(t => scalar(ctx.reduce(t)))
         }
       }

@@ -31,4 +31,6 @@ case class License(fields: Fields) extends DomainElement {
   override def toString = s"License($url, $name)"
 
   override def toBuilder: LicenseBuilder = LicenseBuilder(fields)
+
+  override def id(parent: String): String = parent + "/license"
 }

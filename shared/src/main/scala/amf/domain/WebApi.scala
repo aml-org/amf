@@ -26,4 +26,6 @@ case class WebApi(fields: Fields) extends DomainElement {
   val parameters: Seq[Parameter]  = fields(Parameters)
 
   override def toBuilder: WebApiBuilder = WebApiBuilder(fields)
+
+  override def id(parent: String): String = parent + "#/web-api"
 }

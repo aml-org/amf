@@ -17,6 +17,11 @@ class Strings(val str: String) {
     else "\"" + str + "\"" // Should escape inner quotes if any...
   }
 
+  /** Url encoded string. */
+  def urlEncoded: String = {
+    str.replaceAll("/", "%2F") //todo encode
+  }
+
   private def isQuoted =
     str != null && ((str.startsWith("\"") && str.endsWith("\"")) || (str.startsWith("'") && str.endsWith("'")))
 }

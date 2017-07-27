@@ -31,6 +31,8 @@ case class CreativeWork(fields: Fields) extends DomainElement {
   override def toString = s"CreativeWork($url, $description)"
 
   override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder(fields)
+
+  override def id(parent: String): String = parent + "/creative-work"
 }
 
 object CreativeWork {

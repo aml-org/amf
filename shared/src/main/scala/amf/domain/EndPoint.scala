@@ -3,6 +3,7 @@ package amf.domain
 import amf.builder.EndPointBuilder
 import amf.domain.Annotation.ParentEndPoint
 import amf.metadata.domain.EndPointModel._
+import amf.common.Strings.strings
 
 /**
   * EndPoint internal model
@@ -48,4 +49,6 @@ case class EndPoint(fields: Fields) extends DomainElement {
   override def toString = s"EndPoint($name, $description, $path, $operations, $parameters)"
 
   override def toBuilder: EndPointBuilder = EndPointBuilder(fields)
+
+  override def id(parent: String): String = parent + "/end-points/" + path.urlEncoded
 }

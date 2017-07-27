@@ -95,5 +95,6 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .build
   }
 
-  private def doc(api: () => WebApi): Document = DocumentBuilder().withEncodes(api()).build
+  private def doc(api: () => WebApi): Document =
+    DocumentBuilder().withLocation("file:///tmp/test").withEncodes(api()).build
 }

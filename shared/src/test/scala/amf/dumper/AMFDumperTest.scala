@@ -1,15 +1,15 @@
 package amf.dumper
 
+import amf.common.Tests
 import amf.emit.AMFUnitFixtureTest
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import org.scalatest.AsyncFunSuite
-import org.scalatest.Matchers._
+import org.scalatest.FunSuite
 
 /**
   * AMF Unit DumperTest
   */
-class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
+class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTest {
 
   test("Test simple oas/json") {
     val expected =
@@ -31,7 +31,8 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  "produces": "application/json"
         |}""".stripMargin
 
-    new AMFDumper(`document/api/bare`, Oas).dump should be(expected)
+    val actual = new AMFDumper(`document/api/bare`, Oas).dump
+    Tests.checkDiff(actual, expected)
   }
 
   test("Test simple raml/yaml") {
@@ -47,7 +48,8 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |version: 1.1
         |termsOfService: termsOfService""".stripMargin
 
-    new AMFDumper(`document/api/bare`, Raml).dump should be(expected)
+    val actual = new AMFDumper(`document/api/bare`, Raml).dump
+    Tests.checkDiff(actual, expected)
   }
 
   test("Test simple amf/jsonld") {
@@ -62,13 +64,16 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |    "schema-org": "http://schema.org/",
         |    "xsd": "http://www.w3.org/2001/XMLSchema#"
         |  },
+        |  "@id": "file:///tmp/test",
         |  "@type": [
         |    "raml-doc:Document",
         |    "raml-doc:Fragment",
         |    "raml-doc:Module",
         |    "raml-doc:Unit"
         |  ],
+        |  "raml-doc:location": "file:///tmp/test",
         |  "raml-doc:encodes": {
+        |    "@id": "file:///tmp/test#/web-api",
         |    "@type": [
         |      "schema-org:WebAPI",
         |      "raml-doc:DomainElement"
@@ -88,6 +93,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |}""".stripMargin
 
-    new AMFDumper(`document/api/bare`, Amf).dump should be(expected)
+    val actual = new AMFDumper(`document/api/bare`, Amf).dump
+    Tests.checkDiff(actual, expected)
   }
 }

@@ -10,6 +10,6 @@ trait AmfElement {
   /** Set of fields composing object. */
   val fields: Fields
 
-  /** Element unique identifier .*/
-//  val id: String
+  /** Return element unique identifier given parent id.*/
+  def id(parent: String): String = ???
 }
