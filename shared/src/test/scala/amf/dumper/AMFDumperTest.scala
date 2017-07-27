@@ -203,7 +203,9 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |              "hydra:Operation",
         |              "raml-doc:DomainElement"
         |            ],
+        |            "hydra:method": "post",
         |            "schema-org:description": "test operation post",
+        |            "raml-doc:deprecated": true,
         |            "schema-org:documentation": {
         |              "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work",
         |              "@type": [
@@ -213,7 +215,6 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |              "schema-org:description": "documentation operation",
         |              "schema-org:url": "localhost:8080/endpoint/operation"
         |            },
-        |            "hydra:method": "post",
         |            "schema-org:name": "test post",
         |            "raml-http:scheme": [
         |              "http"

@@ -16,7 +16,7 @@ class OperationBuilder extends Builder {
 
   def withDescription(description: String): OperationBuilder = set(Description, description)
 
-  def isDeprecated(deprecated: Boolean): OperationBuilder = set(Deprecated, deprecated)
+  def withDeprecated(deprecated: Boolean): OperationBuilder = set(Deprecated, deprecated)
 
   def withSummary(summary: String): OperationBuilder = set(Summary, summary)
 

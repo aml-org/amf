@@ -75,9 +75,10 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .build
 
     val post = new OperationBuilder()
-      .withDescription("test operation post")
-      .withDocumentation(documentation)
       .withMethod("post")
+      .withDescription("test operation post")
+      .withDeprecated(true)
+      .withDocumentation(documentation)
       .withName("test post")
       .withSchemes(List("http"))
       .withSummary("summary of operation post")

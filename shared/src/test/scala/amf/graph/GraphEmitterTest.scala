@@ -705,9 +705,21 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
           |                                            })
           |                                        (Entry {
           |                                            (Str
+          |                                              content -> "hydra:method")
+          |                                            (Str
+          |                                              content -> "post")
+          |                                            })
+          |                                        (Entry {
+          |                                            (Str
           |                                              content -> "schema-org:description")
           |                                            (Str
           |                                              content -> "test operation post")
+          |                                            })
+          |                                        (Entry {
+          |                                            (Str
+          |                                              content -> "raml-doc:deprecated")
+          |                                            (Bool
+          |                                              content -> true)
           |                                            })
           |                                        (Entry {
           |                                            (Str
@@ -742,12 +754,6 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
           |                                                      content -> "localhost:8080/endpoint/operation")
           |                                                    })
           |                                                })
-          |                                            })
-          |                                        (Entry {
-          |                                            (Str
-          |                                              content -> "hydra:method")
-          |                                            (Str
-          |                                              content -> "post")
           |                                            })
           |                                        (Entry {
           |                                            (Str

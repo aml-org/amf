@@ -5,7 +5,7 @@ import amf.common.AMFAST
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.Strings.strings
 import amf.document.BaseUnit
-import amf.metadata.Type.{Array, RegExp, Scalar, Str}
+import amf.metadata.Type.{Array, Bool, RegExp, Scalar, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
 import amf.metadata.{Field, Obj, Type}
@@ -63,6 +63,7 @@ object GraphParser {
     f.`type` match {
       case _: Obj       => builder.set(f, parse(node, ctx))
       case Str | RegExp => builder.set(f, node.content.unquote)
+      case Bool         => builder.set(f, node.content.toBoolean)
       case a: Array =>
         val values: Seq[_] = a.element match {
           case _: Obj => node.children.map(n => parse(n, ctx))

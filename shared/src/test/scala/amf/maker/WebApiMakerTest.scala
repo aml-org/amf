@@ -100,7 +100,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withMethod("get")
             .withName("Some title")
             .withDescription("Some description")
-            .isDeprecated(true)
+            .withDeprecated(true)
             .withSummary("This is a summary")
             .withDocumentation(
               CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
@@ -141,7 +141,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withMethod("get")
             .withName("Some title")
             .withDescription("Some description")
-            .isDeprecated(true)
+            .withDeprecated(true)
             .withSummary("This is a summary")
             .withDocumentation(
               CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)

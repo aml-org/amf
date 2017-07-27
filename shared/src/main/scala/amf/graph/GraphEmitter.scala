@@ -5,7 +5,7 @@ import amf.common.Strings.strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.Type.{Array, RegExp, Str}
+import amf.metadata.Type.{Array, Bool, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
 import amf.metadata.{Obj, Type}
@@ -57,6 +57,7 @@ object GraphEmitter {
       t match {
         case _: Obj       => obj(v.value.asInstanceOf[AmfElement], parent)
         case Str | RegExp => scalar(v.value.asInstanceOf[String])
+        case Bool         => scalar(v.value.asInstanceOf[Boolean].toString, BooleanToken)
         case a: Array =>
           array { () =>
             a.element match {
@@ -73,8 +74,8 @@ object GraphEmitter {
       }
     }
 
-    private def scalar(content: String, quoted: Boolean = true) = {
-      e.value(StringToken, if (quoted) { content.quote } else content)
+    private def scalar(content: String, token: AMFToken = StringToken) = {
+      e.value(token, if (token == StringToken) { content.quote } else content)
     }
 
     private def createIdNode(element: AmfElement, id: String) = entry("@id", id)
