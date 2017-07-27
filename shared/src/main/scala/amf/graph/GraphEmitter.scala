@@ -55,9 +55,8 @@ object GraphEmitter {
 
     private def value(t: Type, v: Value, parent: String) = {
       t match {
-        case _: Obj => obj(v.value.asInstanceOf[AmfElement], parent)
-        case Str    => scalar(v.value.asInstanceOf[String])
-        case RegExp => scalar(v.value.asInstanceOf[String])
+        case _: Obj       => obj(v.value.asInstanceOf[AmfElement], parent)
+        case Str | RegExp => scalar(v.value.asInstanceOf[String])
         case a: Array =>
           array { () =>
             a.element match {

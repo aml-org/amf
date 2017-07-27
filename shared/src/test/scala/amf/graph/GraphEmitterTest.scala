@@ -295,7 +295,6 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
 
   test("Document encoding full WebApi") {
     val ast = GraphEmitter.emit(`document/api/full`)
-    println(ast.toString)
     Tests.checkDiff(
       ast.toString,
       """ |(Root {
