@@ -47,7 +47,7 @@ object GraphEmitter {
       element.fields.foreach {
         case (f, v) =>
           entry { () =>
-            scalar(ctx.reduce(f.value))
+            raw(ctx.reduce(f.value))
             value(f.`type`, v, id)
           }
       }
@@ -74,18 +74,29 @@ object GraphEmitter {
       }
     }
 
-    private def scalar(content: String, token: AMFToken = StringToken) = {
+    private def raw(content: String, token: AMFToken = StringToken): Unit = {
       e.value(token, if (token == StringToken) { content.quote } else content)
+    }
+
+    private def scalar(content: String, token: AMFToken = StringToken): Unit = {
+      if (expanded) {
+        map { () =>
+          entry { () =>
+            raw("@value")
+            raw(content, token)
+          }
+        }
+      } else raw(content, token)
     }
 
     private def createIdNode(element: AmfElement, id: String) = entry("@id", id)
 
     private def createTypeNode(element: AmfElement) = {
       entry { () =>
-        scalar("@type")
+        raw("@type")
         array { () =>
           val obj = metamodel(element)
-          obj.`type`.foreach(t => scalar(ctx.reduce(t)))
+          obj.`type`.foreach(t => raw(ctx.reduce(t)))
         }
       }
     }
@@ -93,7 +104,7 @@ object GraphEmitter {
     private def createContextNode() = {
       if (ctx != EmptyGraphContext) {
         entry { () =>
-          scalar("@context")
+          raw("@context")
           map { () =>
             ctx.mappings {
               case (alias, ns) => entry(alias, ns.base)
@@ -104,8 +115,8 @@ object GraphEmitter {
     }
 
     private def entry(k: String, v: String): Unit = entry { () =>
-      scalar(k)
-      scalar(v)
+      raw(k)
+      raw(v)
     }
 
     private def entry(inner: () => Unit): Unit = node(Entry)(inner)

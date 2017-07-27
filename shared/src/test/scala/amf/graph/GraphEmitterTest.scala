@@ -180,115 +180,181 @@ class GraphEmitterTest extends FunSuite with AMFUnitFixtureTest {
     Tests.checkDiff(
       ast.toString,
       """ |(Root {
-          |    (Map {
-          |        (Entry {
-          |            (Str
-          |              content -> "@id")
-          |            (Str
-          |              content -> "file:///tmp/test")
-          |            })
-          |        (Entry {
-          |            (Str
-          |              content -> "@type")
-          |            (Seq {
-          |                (Str
-          |                  content -> "http://raml.org/vocabularies/document#Document")
-          |                (Str
-          |                  content -> "http://raml.org/vocabularies/document#Fragment")
-          |                (Str
-          |                  content -> "http://raml.org/vocabularies/document#Module")
-          |                (Str
-          |                  content -> "http://raml.org/vocabularies/document#Unit")
-          |                })
-          |            })
-          |        (Entry {
-          |            (Str
-          |              content -> "http://raml.org/vocabularies/document#location")
-          |            (Str
-          |              content -> "file:///tmp/test")
-          |            })
-          |        (Entry {
-          |            (Str
-          |              content -> "http://raml.org/vocabularies/document#encodes")
-          |            (Map {
-          |                (Entry {
-          |                    (Str
-          |                      content -> "@id")
-          |                    (Str
-          |                      content -> "file:///tmp/test#/web-api")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "@type")
-          |                    (Seq {
-          |                        (Str
-          |                          content -> "http://schema.org/WebAPI")
-          |                        (Str
-          |                          content -> "http://raml.org/vocabularies/document#DomainElement")
-          |                        })
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://schema.org/name")
-          |                    (Str
-          |                      content -> "test")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://schema.org/description")
-          |                    (Str
-          |                      content -> "test description")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://raml.org/vocabularies/http#host")
-          |                    (Str
-          |                      content -> "http://localhost.com/api")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://raml.org/vocabularies/http#schemes")
-          |                    (Seq {
-          |                        (Str
-          |                          content -> "http")
-          |                        (Str
-          |                          content -> "https")
-          |                        })
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://raml.org/vocabularies/http#basePath")
-          |                    (Str
-          |                      content -> "http://localhost.com/api")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://raml.org/vocabularies/http#accepts")
-          |                    (Str
-          |                      content -> "application/json")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://raml.org/vocabularies/http#contentType")
-          |                    (Str
-          |                      content -> "application/json")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://schema.org/version")
-          |                    (Str
-          |                      content -> "1.1")
-          |                    })
-          |                (Entry {
-          |                    (Str
-          |                      content -> "http://schema.org/termsOfService")
-          |                    (Str
-          |                      content -> "termsOfService")
-          |                    })
-          |                })
-          |            })
-          |        })
-          |    })
+        |    (Map {
+        |        (Entry {
+        |            (Str
+        |              content -> "@id")
+        |            (Str
+        |              content -> "file:///tmp/test")
+        |            })
+        |        (Entry {
+        |            (Str
+        |              content -> "@type")
+        |            (Seq {
+        |                (Str
+        |                  content -> "http://raml.org/vocabularies/document#Document")
+        |                (Str
+        |                  content -> "http://raml.org/vocabularies/document#Fragment")
+        |                (Str
+        |                  content -> "http://raml.org/vocabularies/document#Module")
+        |                (Str
+        |                  content -> "http://raml.org/vocabularies/document#Unit")
+        |                })
+        |            })
+        |        (Entry {
+        |            (Str
+        |              content -> "http://raml.org/vocabularies/document#location")
+        |            (Map {
+        |                (Entry {
+        |                    (Str
+        |                      content -> "@value")
+        |                    (Str
+        |                      content -> "file:///tmp/test")
+        |                    })
+        |                })
+        |            })
+        |        (Entry {
+        |            (Str
+        |              content -> "http://raml.org/vocabularies/document#encodes")
+        |            (Map {
+        |                (Entry {
+        |                    (Str
+        |                      content -> "@id")
+        |                    (Str
+        |                      content -> "file:///tmp/test#/web-api")
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "@type")
+        |                    (Seq {
+        |                        (Str
+        |                          content -> "http://schema.org/WebAPI")
+        |                        (Str
+        |                          content -> "http://raml.org/vocabularies/document#DomainElement")
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://schema.org/name")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "test")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://schema.org/description")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "test description")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://raml.org/vocabularies/http#host")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "http://localhost.com/api")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://raml.org/vocabularies/http#schemes")
+        |                    (Seq {
+        |                        (Map {
+        |                            (Entry {
+        |                                (Str
+        |                                  content -> "@value")
+        |                                (Str
+        |                                  content -> "http")
+        |                                })
+        |                            })
+        |                        (Map {
+        |                            (Entry {
+        |                                (Str
+        |                                  content -> "@value")
+        |                                (Str
+        |                                  content -> "https")
+        |                                })
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://raml.org/vocabularies/http#basePath")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "http://localhost.com/api")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://raml.org/vocabularies/http#accepts")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "application/json")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://raml.org/vocabularies/http#contentType")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "application/json")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://schema.org/version")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "1.1")
+        |                            })
+        |                        })
+        |                    })
+        |                (Entry {
+        |                    (Str
+        |                      content -> "http://schema.org/termsOfService")
+        |                    (Map {
+        |                        (Entry {
+        |                            (Str
+        |                              content -> "@value")
+        |                            (Str
+        |                              content -> "termsOfService")
+        |                            })
+        |                        })
+        |                    })
+        |                })
+        |            })
+        |        })
+        |    })
       """.stripMargin
     )
   }
