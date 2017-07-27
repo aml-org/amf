@@ -2,11 +2,12 @@ package amf.spec
 
 import amf.builder._
 import amf.common.Strings.strings
-import amf.domain.Annotation.{LexicalInformation, ParentEndPoint}
-import amf.domain.{Annotation, EndPoint}
+import amf.domain.Annotation.{ArrayFieldAnnotations, LexicalInformation, ParentEndPoint}
+import amf.domain.{Annotation, EndPoint, Parameter}
 import amf.metadata.Type
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.ParameterModel.Required
+import amf.metadata.domain.ResponseModel.Headers
 import amf.metadata.domain.WebApiModel.EndPoints
 import amf.metadata.domain._
 import amf.parser.ASTNode
@@ -67,38 +68,42 @@ object FieldParser {
 
   object ParametersParser extends ChildrenParser {
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
-      def parseParametersFromEntries() = {
-        entry.last.children.foreach(paramEntry => {
-          val param = ParameterBuilder()
-          val name  = paramEntry.head.content.unquote
-          param set (Required, !name.endsWith("?"))
-          param set (ParameterModel.Name, name)
-
-          super.parse(spec, paramEntry, param)
-
-          builder add (spec.fields.head, List(param.build), annotations(paramEntry))
-        })
-      }
-
       spec.vendor match {
-        case Raml                                                  => parseParametersFromEntries()
-        case Oas if spec.fields.head.equals(ResponseModel.Headers) => parseParametersFromEntries()
-        case Oas =>
-          entry.last.children.foreach(paramMap => {
-            val b = ParameterBuilder()
-
-            super.parseMap(spec, paramMap, b)
-
-            val param = b.build
-
-            val field =
-              if (spec.fields.size == 1) spec.fields.head
-              else if (param.binding == "header") RequestModel.Headers
-              else RequestModel.QueryParameters
-
-            builder add (field, List(param), annotations(paramMap))
-          })
+        case Raml => parseParamsFromMap(spec, entry, builder)
+        case Oas if spec.fields.head.equals(Headers) =>
+          parseParamsFromMap(spec, entry, builder) //Special case where params in oas have raml structure
+        case Oas => parseParamsFromSequence(spec, entry, builder)
       }
+    }
+
+    private def parseParamsFromSequence(spec: SpecField, entry: ASTNode[_], builder: Builder) = {
+      entry.last.children.foreach(paramMap => {
+        val b = ParameterBuilder()
+
+        super.parseMap(spec, paramMap, b)
+
+        val param = b.build
+
+        val field =
+          if (spec.fields.size == 1) spec.fields.head
+          else if (param.binding == "header") RequestModel.Headers
+          else RequestModel.QueryParameters
+
+        builder add (field, List(param), annotations(paramMap))
+      })
+    }
+
+    private def parseParamsFromMap(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
+      entry.last.children.foreach(paramEntry => {
+        val param = ParameterBuilder()
+        val name  = paramEntry.head.content.unquote
+        param set (Required, !name.endsWith("?"))
+        param set (ParameterModel.Name, name)
+
+        super.parse(spec, paramEntry, param)
+
+        builder add (spec.fields.head, List(param.build), annotations(paramEntry))
+      })
     }
   }
 

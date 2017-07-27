@@ -1,6 +1,7 @@
 package amf.builder
 
 import amf.document.BaseUnit
+import amf.domain.Annotation.ArrayFieldAnnotations
 import amf.domain.{Annotation, DomainElement, Fields}
 import amf.metadata.{Field, Type}
 
@@ -22,11 +23,16 @@ trait Builder {
     if (field.`type`.isInstanceOf[Type.Array]) {
       val elements: Seq[_]  = fields(field)
       val castValue: Seq[_] = value.asInstanceOf[List[_]]
-      fields.set(field, elements ++ castValue, annotations)
+
+      fields.set(field, elements ++ castValue, List(arrayAnnotation(field) + (value, annotations)))
     } else {
       //Illegal!
     }
     this
+  }
+
+  private def arrayAnnotation(field: Field): ArrayFieldAnnotations = {
+    fields.getAnnotation(field, classOf[ArrayFieldAnnotations]).getOrElse(ArrayFieldAnnotations())
   }
 
   protected def copy(fs: Fields): this.type = {
