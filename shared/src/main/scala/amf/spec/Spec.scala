@@ -29,8 +29,7 @@ import amf.metadata.domain.ParameterModel.{
   Description => ParameterDescription,
   Name => ParameterName
 }
-import amf.metadata.domain.RequestModel
-import amf.metadata.domain.RequestModel.{Headers, QueryParameters}
+import amf.metadata.domain.RequestModel.{Headers, Payloads, QueryParameters}
 import amf.metadata.domain.ResponseModel.{Description => ResponseDescription, Headers => ResponseHeaders}
 import amf.metadata.domain.WebApiModel._
 import amf.remote.{Oas, Raml, Vendor}
@@ -62,7 +61,7 @@ object Spec {
     Spec(
       'title ~ Name,
       'baseUri ~ Host,
-      'baseUriParameters ~ Parameters -> RamlParam,
+      'baseUriParameters ~ BaseUriParameters -> RamlParam,
       'description ~ Description,
       'mediaType ~ (ContentType | Accepts),
       'version ~ Version,
@@ -98,7 +97,8 @@ object Spec {
           'responses -> (
             "\\d{3}" ~ Responses -> (
               'description ~ ResponseDescription,
-              'headers ~ ResponseHeaders -> RamlParam
+              'headers ~ ResponseHeaders -> RamlParam,
+              'body ~ Responses
             )
           )
         )
@@ -127,7 +127,7 @@ object Spec {
       ),
       'host ~ Host,
       'basePath ~ BasePath,
-      'parameters ~ Parameters -> OasParam,
+      Symbol("x-baseUriParameters") ~ BaseUriParameters -> OasParam,
       'consumes ~ Accepts,
       'produces ~ ContentType,
       'schemes ~ Schemes,
@@ -170,13 +170,13 @@ object Spec {
     Spec(
       'headers ~ Headers                 -> RamlParam,
       'queryParameters ~ QueryParameters -> RamlParam,
-      'body ~ RequestModel.Payloads
+      'body ~ Payloads
     )(Raml)
 
   private val OasRequestSpec =
     Spec(
       'parameters ~ (QueryParameters | Headers) -> OasParam,
-      'body ~ RequestModel.Payloads
+      'body ~ Payloads
     )(Oas)
 
   private[spec] val RequestSpec: (Vendor) => Spec = {

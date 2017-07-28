@@ -204,7 +204,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     val fixture = List(
       (Name, "API"),
       (BasePath, "/some/{one}/uri"),
-      (Parameters,
+      (BaseUriParameters,
        List(ParameterBuilder().withName("one").withRequired(true).withDescription("One base uri param").build)),
       (EndPoints, endpoints)
     )
@@ -500,20 +500,20 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
   def assertWebApiValues(api: WebApi, assertions: List[(Field, Any)]): Assertion = {
     assertions.foreach {
-      case (Name, expected)           => assertField(Name, api.name, expected)
-      case (Description, expected)    => assertField(Description, api.description, expected)
-      case (Host, expected)           => assertField(Host, api.host, expected)
-      case (Schemes, expected)        => assertField(Schemes, api.schemes, expected)
-      case (BasePath, expected)       => assertField(BasePath, api.basePath, expected)
-      case (ContentType, expected)    => assertField(ContentType, api.contentType, expected)
-      case (Accepts, expected)        => assertField(Accepts, api.accepts, expected)
-      case (Version, expected)        => assertField(Version, api.version, expected)
-      case (TermsOfService, expected) => assertField(TermsOfService, api.termsOfService, expected)
-      case (Provider, expected)       => assertField(Provider, api.provider, expected)
-      case (License, expected)        => assertField(License, api.license, expected)
-      case (Documentation, expected)  => assertField(Documentation, api.documentation, expected)
-      case (EndPoints, expected)      => assertField(EndPoints, api.endPoints, expected)
-      case (Parameters, expected)     => assertField(Parameters, api.parameters, expected)
+      case (Name, expected)              => assertField(Name, api.name, expected)
+      case (Description, expected)       => assertField(Description, api.description, expected)
+      case (Host, expected)              => assertField(Host, api.host, expected)
+      case (Schemes, expected)           => assertField(Schemes, api.schemes, expected)
+      case (BasePath, expected)          => assertField(BasePath, api.basePath, expected)
+      case (ContentType, expected)       => assertField(ContentType, api.contentType, expected)
+      case (Accepts, expected)           => assertField(Accepts, api.accepts, expected)
+      case (Version, expected)           => assertField(Version, api.version, expected)
+      case (TermsOfService, expected)    => assertField(TermsOfService, api.termsOfService, expected)
+      case (Provider, expected)          => assertField(Provider, api.provider, expected)
+      case (License, expected)           => assertField(License, api.license, expected)
+      case (Documentation, expected)     => assertField(Documentation, api.documentation, expected)
+      case (EndPoints, expected)         => assertField(EndPoints, api.endPoints, expected)
+      case (BaseUriParameters, expected) => assertField(BaseUriParameters, api.baseUriParameters, expected)
     }
     succeed
   }

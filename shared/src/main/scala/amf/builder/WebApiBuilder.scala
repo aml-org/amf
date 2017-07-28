@@ -38,7 +38,7 @@ class WebApiBuilder extends Builder {
 
   def withDocumentation(documentation: CreativeWork): WebApiBuilder = set(Documentation, documentation)
 
-  def withParameters(parameters: Seq[Parameter]): WebApiBuilder = set(Parameters, parameters)
+  def withBaseUriParameters(parameters: Seq[Parameter]): WebApiBuilder = set(BaseUriParameters, parameters)
 
   protected def fixFields(fields: Fields): Fields = {
     val basePath = Option(fields(BasePath))
