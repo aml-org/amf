@@ -47,7 +47,12 @@ object Tests {
   /** Diff between 2 strings. */
   def checkDiff(val1: String, val2: String): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(val1, val2)
-    if (diffs.nonEmpty) fail("\n" + Diff.makeString(diffs))
+    if (diffs.nonEmpty) {
+      println("---------------------------------------------------------------------------------")
+      println(val1)
+      println("---------------------------------------------------------------------------------")
+      fail("\n" + Diff.makeString(diffs))
+    }
   }
 
   /** Check against a specified golden File. */

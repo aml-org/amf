@@ -54,44 +54,74 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
 
   test("Test simple amf/jsonld") {
     val expected =
-      """{
-        |  "@context": {
-        |    "raml-doc": "http://raml.org/vocabularies/document#",
-        |    "raml-http": "http://raml.org/vocabularies/http#",
-        |    "raml-shapes": "http://raml.org/vocabularies/shapes#",
-        |    "hydra": "http://www.w3.org/ns/hydra/core#",
-        |    "shacl": "http://www.w3.org/ns/shacl#",
-        |    "schema-org": "http://schema.org/",
-        |    "xsd": "http://www.w3.org/2001/XMLSchema#"
-        |  },
-        |  "@id": "file:///tmp/test",
-        |  "@type": [
-        |    "raml-doc:Document",
-        |    "raml-doc:Fragment",
-        |    "raml-doc:Module",
-        |    "raml-doc:Unit"
-        |  ],
-        |  "raml-doc:location": "file:///tmp/test",
-        |  "raml-doc:encodes": {
-        |    "@id": "file:///tmp/test#/web-api",
+      """[
+        |  {
+        |    "@id": "file:///tmp/test",
         |    "@type": [
-        |      "schema-org:WebAPI",
-        |      "raml-doc:DomainElement"
+        |      "http://raml.org/vocabularies/document#Document",
+        |      "http://raml.org/vocabularies/document#Fragment",
+        |      "http://raml.org/vocabularies/document#Module",
+        |      "http://raml.org/vocabularies/document#Unit"
         |    ],
-        |    "schema-org:name": "test",
-        |    "schema-org:description": "test description",
-        |    "raml-http:host": "http://localhost.com/api",
-        |    "raml-http:schemes": [
-        |      "http",
-        |      "https"
-        |    ],
-        |    "raml-http:basePath": "http://localhost.com/api",
-        |    "raml-http:accepts": "application/json",
-        |    "raml-http:contentType": "application/json",
-        |    "schema-org:version": "1.1",
-        |    "schema-org:termsOfService": "termsOfService"
+        |    "http://raml.org/vocabularies/document#encodes": [
+        |      {
+        |        "@id": "file:///tmp/test#/web-api",
+        |        "@type": [
+        |          "http://schema.org/WebAPI",
+        |          "http://raml.org/vocabularies/document#DomainElement"
+        |        ],
+        |        "http://schema.org/name": [
+        |          {
+        |            "@value": "test"
+        |          }
+        |        ],
+        |        "http://schema.org/description": [
+        |          {
+        |            "@value": "test description"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#host": [
+        |          {
+        |            "@value": "http://localhost.com/api"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#schemes": [
+        |          {
+        |            "@value": "http"
+        |          },
+        |          {
+        |            "@value": "https"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#basePath": [
+        |          {
+        |            "@value": "http://localhost.com/api"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#accepts": [
+        |          {
+        |            "@value": "application/json"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#contentType": [
+        |          {
+        |            "@value": "application/json"
+        |          }
+        |        ],
+        |        "http://schema.org/version": [
+        |          {
+        |            "@value": "1.1"
+        |          }
+        |        ],
+        |        "http://schema.org/termsOfService": [
+        |          {
+        |            "@value": "termsOfService"
+        |          }
+        |        ]
+        |      }
+        |    ]
         |  }
-        |}""".stripMargin
+        |]""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Amf).dump
     Tests.checkDiff(actual, expected)
@@ -99,133 +129,269 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
 
   test("Test full amf/jsonld") {
     val expected =
-      """{
-        |  "@context": {
-        |    "raml-doc": "http://raml.org/vocabularies/document#",
-        |    "raml-http": "http://raml.org/vocabularies/http#",
-        |    "raml-shapes": "http://raml.org/vocabularies/shapes#",
-        |    "hydra": "http://www.w3.org/ns/hydra/core#",
-        |    "shacl": "http://www.w3.org/ns/shacl#",
-        |    "schema-org": "http://schema.org/",
-        |    "xsd": "http://www.w3.org/2001/XMLSchema#"
-        |  },
-        |  "@id": "file:///tmp/test",
-        |  "@type": [
-        |    "raml-doc:Document",
-        |    "raml-doc:Fragment",
-        |    "raml-doc:Module",
-        |    "raml-doc:Unit"
-        |  ],
-        |  "raml-doc:location": "file:///tmp/test",
-        |  "raml-doc:encodes": {
-        |    "@id": "file:///tmp/test#/web-api",
+      """[
+        |  {
+        |    "@id": "file:///tmp/test",
         |    "@type": [
-        |      "schema-org:WebAPI",
-        |      "raml-doc:DomainElement"
+        |      "http://raml.org/vocabularies/document#Document",
+        |      "http://raml.org/vocabularies/document#Fragment",
+        |      "http://raml.org/vocabularies/document#Module",
+        |      "http://raml.org/vocabularies/document#Unit"
         |    ],
-        |    "schema-org:name": "test",
-        |    "schema-org:description": "test description",
-        |    "raml-http:host": "http://localhost.com/api",
-        |    "raml-http:schemes": [
-        |      "http",
-        |      "https"
-        |    ],
-        |    "raml-http:basePath": "http://localhost.com/api",
-        |    "raml-http:accepts": "application/json",
-        |    "raml-http:contentType": "application/json",
-        |    "schema-org:version": "1.1",
-        |    "schema-org:termsOfService": "termsOfService",
-        |    "schema-org:provider": {
-        |      "@id": "file:///tmp/test#/web-api/organization",
-        |      "@type": [
-        |        "schema-org:Organization",
-        |        "raml-doc:DomainElement"
-        |      ],
-        |      "schema-org:email": "test@test",
-        |      "schema-org:name": "organizationName",
-        |      "schema-org:url": "organizationUrl"
-        |    },
-        |    "schema-org:license": {
-        |      "@id": "file:///tmp/test#/web-api/license",
-        |      "@type": [
-        |        "raml-http:License",
-        |        "raml-doc:DomainElement"
-        |      ],
-        |      "schema-org:name": "licenseName",
-        |      "schema-org:url": "licenseUrl"
-        |    },
-        |    "schema-org:documentation": {
-        |      "@id": "file:///tmp/test#/web-api/creative-work",
-        |      "@type": [
-        |        "schema-org:CreativeWork",
-        |        "raml-doc:DomainElement"
-        |      ],
-        |      "schema-org:url": "creativoWorkUrl",
-        |      "schema-org:description": "creativeWorkDescription"
-        |    },
-        |    "raml-http:endpoint": [
+        |    "http://raml.org/vocabularies/document#encodes": [
         |      {
-        |        "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint",
+        |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
-        |          "raml-http:EndPoint",
-        |          "raml-doc:DomainElement"
+        |          "http://schema.org/WebAPI",
+        |          "http://raml.org/vocabularies/document#DomainElement"
         |        ],
-        |        "schema-org:description": "test endpoint",
-        |        "schema-org:name": "endpoint",
-        |        "raml-http:path": "/endpoint",
-        |        "hydra:supportedOperation": [
+        |        "http://schema.org/name": [
         |          {
-        |            "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get",
-        |            "@type": [
-        |              "hydra:Operation",
-        |              "raml-doc:DomainElement"
-        |            ],
-        |            "schema-org:description": "test operation get",
-        |            "schema-org:documentation": {
-        |              "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work",
-        |              "@type": [
-        |                "schema-org:CreativeWork",
-        |                "raml-doc:DomainElement"
-        |              ],
-        |              "schema-org:description": "documentation operation",
-        |              "schema-org:url": "localhost:8080/endpoint/operation"
-        |            },
-        |            "hydra:method": "get",
-        |            "schema-org:name": "test get",
-        |            "raml-http:scheme": [
-        |              "http"
-        |            ],
-        |            "raml-http:guiSummary": "summary of operation get"
+        |            "@value": "test"
+        |          }
+        |        ],
+        |        "http://schema.org/description": [
+        |          {
+        |            "@value": "test description"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#host": [
+        |          {
+        |            "@value": "http://localhost.com/api"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#schemes": [
+        |          {
+        |            "@value": "http"
         |          },
         |          {
-        |            "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post",
+        |            "@value": "https"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#basePath": [
+        |          {
+        |            "@value": "http://localhost.com/api"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#accepts": [
+        |          {
+        |            "@value": "application/json"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#contentType": [
+        |          {
+        |            "@value": "application/json"
+        |          }
+        |        ],
+        |        "http://schema.org/version": [
+        |          {
+        |            "@value": "1.1"
+        |          }
+        |        ],
+        |        "http://schema.org/termsOfService": [
+        |          {
+        |            "@value": "termsOfService"
+        |          }
+        |        ],
+        |        "http://schema.org/provider": [
+        |          {
+        |            "@id": "file:///tmp/test#/web-api/organization",
         |            "@type": [
-        |              "hydra:Operation",
-        |              "raml-doc:DomainElement"
+        |              "http://schema.org/Organization",
+        |              "http://raml.org/vocabularies/document#DomainElement"
         |            ],
-        |            "hydra:method": "post",
-        |            "schema-org:description": "test operation post",
-        |            "raml-doc:deprecated": true,
-        |            "schema-org:documentation": {
-        |              "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work",
-        |              "@type": [
-        |                "schema-org:CreativeWork",
-        |                "raml-doc:DomainElement"
-        |              ],
-        |              "schema-org:description": "documentation operation",
-        |              "schema-org:url": "localhost:8080/endpoint/operation"
-        |            },
-        |            "schema-org:name": "test post",
-        |            "raml-http:scheme": [
-        |              "http"
+        |            "http://schema.org/url": [
+        |              {
+        |                "@id": "organizationUrl"
+        |              }
         |            ],
-        |            "raml-http:guiSummary": "summary of operation post"
+        |            "http://schema.org/name": [
+        |              {
+        |                "@value": "organizationName"
+        |              }
+        |            ],
+        |            "http://schema.org/email": [
+        |              {
+        |                "@value": "test@test"
+        |              }
+        |            ]
+        |          }
+        |        ],
+        |        "http://schema.org/license": [
+        |          {
+        |            "@id": "file:///tmp/test#/web-api/license",
+        |            "@type": [
+        |              "http://raml.org/vocabularies/http#License",
+        |              "http://raml.org/vocabularies/document#DomainElement"
+        |            ],
+        |            "http://schema.org/url": [
+        |              {
+        |                "@id": "licenseUrl"
+        |              }
+        |            ],
+        |            "http://schema.org/name": [
+        |              {
+        |                "@value": "licenseName"
+        |              }
+        |            ]
+        |          }
+        |        ],
+        |        "http://schema.org/documentation": [
+        |          {
+        |            "@id": "file:///tmp/test#/web-api/creative-work",
+        |            "@type": [
+        |              "http://schema.org/CreativeWork",
+        |              "http://raml.org/vocabularies/document#DomainElement"
+        |            ],
+        |            "http://schema.org/url": [
+        |              {
+        |                "@id": "creativoWorkUrl"
+        |              }
+        |            ],
+        |            "http://schema.org/description": [
+        |              {
+        |                "@value": "creativeWorkDescription"
+        |              }
+        |            ]
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#endpoint": [
+        |          {
+        |            "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint",
+        |            "@type": [
+        |              "http://raml.org/vocabularies/http#EndPoint",
+        |              "http://raml.org/vocabularies/document#DomainElement"
+        |            ],
+        |            "http://raml.org/vocabularies/http#path": [
+        |              {
+        |                "@value": "/endpoint"
+        |              }
+        |            ],
+        |            "http://schema.org/name": [
+        |              {
+        |                "@value": "endpoint"
+        |              }
+        |            ],
+        |            "http://schema.org/description": [
+        |              {
+        |                "@value": "test endpoint"
+        |              }
+        |            ],
+        |            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+        |              {
+        |                "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get",
+        |                "@type": [
+        |                  "http://www.w3.org/ns/hydra/core#Operation",
+        |                  "http://raml.org/vocabularies/document#DomainElement"
+        |                ],
+        |                "http://www.w3.org/ns/hydra/core#method": [
+        |                  {
+        |                    "@value": "get"
+        |                  }
+        |                ],
+        |                "http://schema.org/name": [
+        |                  {
+        |                    "@value": "test get"
+        |                  }
+        |                ],
+        |                "http://schema.org/description": [
+        |                  {
+        |                    "@value": "test operation get"
+        |                  }
+        |                ],
+        |                "http://raml.org/vocabularies/http#guiSummary": [
+        |                  {
+        |                    "@value": "summary of operation get"
+        |                  }
+        |                ],
+        |                "http://schema.org/documentation": [
+        |                  {
+        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work",
+        |                    "@type": [
+        |                      "http://schema.org/CreativeWork",
+        |                      "http://raml.org/vocabularies/document#DomainElement"
+        |                    ],
+        |                    "http://schema.org/url": [
+        |                      {
+        |                        "@id": "localhost:8080/endpoint/operation"
+        |                      }
+        |                    ],
+        |                    "http://schema.org/description": [
+        |                      {
+        |                        "@value": "documentation operation"
+        |                      }
+        |                    ]
+        |                  }
+        |                ],
+        |                "http://raml.org/vocabularies/http#scheme": [
+        |                  {
+        |                    "@value": "http"
+        |                  }
+        |                ]
+        |              },
+        |              {
+        |                "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post",
+        |                "@type": [
+        |                  "http://www.w3.org/ns/hydra/core#Operation",
+        |                  "http://raml.org/vocabularies/document#DomainElement"
+        |                ],
+        |                "http://www.w3.org/ns/hydra/core#method": [
+        |                  {
+        |                    "@value": "post"
+        |                  }
+        |                ],
+        |                "http://schema.org/name": [
+        |                  {
+        |                    "@value": "test post"
+        |                  }
+        |                ],
+        |                "http://schema.org/description": [
+        |                  {
+        |                    "@value": "test operation post"
+        |                  }
+        |                ],
+        |                "http://raml.org/vocabularies/document#deprecated": [
+        |                  {
+        |                    "@value": true
+        |                  }
+        |                ],
+        |                "http://raml.org/vocabularies/http#guiSummary": [
+        |                  {
+        |                    "@value": "summary of operation post"
+        |                  }
+        |                ],
+        |                "http://schema.org/documentation": [
+        |                  {
+        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work",
+        |                    "@type": [
+        |                      "http://schema.org/CreativeWork",
+        |                      "http://raml.org/vocabularies/document#DomainElement"
+        |                    ],
+        |                    "http://schema.org/url": [
+        |                      {
+        |                        "@id": "localhost:8080/endpoint/operation"
+        |                      }
+        |                    ],
+        |                    "http://schema.org/description": [
+        |                      {
+        |                        "@value": "documentation operation"
+        |                      }
+        |                    ]
+        |                  }
+        |                ],
+        |                "http://raml.org/vocabularies/http#scheme": [
+        |                  {
+        |                    "@value": "http"
+        |                  }
+        |                ]
+        |              }
+        |            ]
         |          }
         |        ]
         |      }
         |    ]
         |  }
-        |}""".stripMargin
+        |]""".stripMargin
 
     val actual = new AMFDumper(`document/api/full`, Amf).dump
     Tests.checkDiff(actual, expected)

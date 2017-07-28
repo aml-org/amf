@@ -47,6 +47,14 @@ class Fields extends PlatformSecrets {
 
   def apply[T](field: Field): T = get(field)
 
+  /** Return optional entry for a given [[Field]]. */
+  def entry(f: Field): Option[(Field, Value)] = {
+    fs.get(f) match {
+      case Some(value) => Some((f, value))
+      case _           => None
+    }
+  }
+
   def foreach(fn: ((Field, Value)) => Unit): Unit = {
     fs.foreach(fn)
   }

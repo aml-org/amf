@@ -1,7 +1,7 @@
 package amf.metadata.domain
 
 import amf.metadata.Field
-import amf.metadata.Type.Str
+import amf.metadata.Type.{Iri, Str}
 import amf.vocabulary.Namespace.Schema
 import amf.vocabulary.ValueType
 
@@ -10,7 +10,7 @@ import amf.vocabulary.ValueType
   */
 object OrganizationModel extends DomainElementModel {
 
-  val Url = Field(Str, Schema + "url")
+  val Url = Field(Iri, Schema + "url")
 
   val Name = Field(Str, Schema + "name")
 

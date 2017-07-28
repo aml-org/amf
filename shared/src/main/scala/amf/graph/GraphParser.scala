@@ -5,11 +5,10 @@ import amf.common.AMFAST
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.Strings.strings
 import amf.document.BaseUnit
-import amf.metadata.Type.{Array, Bool, RegExp, Scalar, Str}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, Scalar, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
 import amf.metadata.{Field, Obj, Type}
-import amf.model.AmfElement
 import amf.vocabulary.Namespace
 
 /**
@@ -52,8 +51,9 @@ object GraphParser {
         }
       case MapToken =>
         t match {
-          case Scalar(_) => node.children.find(key("@value")).get.last
-          case _         => node
+          case Iri                 => node.children.find(key("@id")).get.last
+          case Str | RegExp | Bool => node.children.find(key("@value")).get.last
+          case _                   => node
         }
       case _ => node
     }
@@ -61,11 +61,11 @@ object GraphParser {
 
   private def traverse(ctx: GraphContext, builder: Builder, f: Field, node: AMFAST) = {
     f.`type` match {
-      case _: Obj       => builder.set(f, parse(node, ctx))
-      case Str | RegExp => builder.set(f, node.content.unquote)
-      case Bool         => builder.set(f, node.content.toBoolean)
+      case _: Obj             => builder.set(f, parse(node, ctx))
+      case Str | RegExp | Iri => builder.set(f, node.content.unquote)
+      case Bool               => builder.set(f, node.content.toBoolean)
       case a: Array =>
-        val values: Seq[_] = a.element match {
+        val values = a.element match {
           case _: Obj => node.children.map(n => parse(n, ctx))
           case Str    => node.children.map(n => node.content.unquote)
         }

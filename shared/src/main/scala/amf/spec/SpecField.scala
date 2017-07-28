@@ -1,7 +1,7 @@
 package amf.spec
 
 import amf.metadata.Field
-import amf.metadata.Type.{Array, Bool, Str}
+import amf.metadata.Type.{Array, Bool, Iri, Str}
 import amf.metadata.domain._
 import amf.remote.{Amf, Vendor}
 import amf.spec.FieldEmitter._
@@ -30,7 +30,7 @@ protected trait SpecNode {
 
   private def createSpecField(fields: List[Field]) = {
     fields.head.`type` match {
-      case Str        => SpecField(fields, matcher(), StringValueParser, StringValueEmitter)
+      case Str | Iri  => SpecField(fields, matcher(), StringValueParser, StringValueEmitter)
       case Bool       => SpecField(fields, matcher(), BoolValueParser, BooleanValueEmitter)
       case Array(Str) => SpecField(fields, matcher(), StringListParser, StringListEmitter)
       case OrganizationModel | CreativeWorkModel | LicenseModel =>

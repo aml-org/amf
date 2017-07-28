@@ -22,6 +22,8 @@ object Type {
 
   object Str extends Scalar("string")
 
+  object Iri extends Scalar("url")
+
   object Bool extends Scalar("boolean")
 
   object RegExp extends Scalar("token")

@@ -5,10 +5,10 @@ import amf.common.Strings.strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.Type.{Array, Bool, RegExp, Str}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain._
-import amf.metadata.{Obj, Type}
+import amf.metadata.{Field, Obj, Type}
 import amf.model.AmfElement
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.vocabulary.Namespace
@@ -20,7 +20,7 @@ import scala.collection.immutable.ListMap
   */
 object GraphEmitter {
 
-  def emit(unit: BaseUnit, expanded: Boolean = false): AMFAST = {
+  def emit(unit: BaseUnit, expanded: Boolean = true): AMFAST = {
     val emitter = Emitter(ASTEmitter(AMFASTFactory()), expanded)
     emitter.root(unit)
   }
@@ -30,47 +30,64 @@ object GraphEmitter {
     private val ctx = context()
 
     def root(unit: BaseUnit): AMFAST = {
-      e.root(Root) { () =>
+
+      val content = () =>
         map { () =>
           createContextNode()
           traverse(unit, unit.location)
-        }
       }
+
+      e.root(Root)(if (expanded) { () =>
+        array { () =>
+          content()
+        }
+      } else content)
     }
 
     def traverse(element: AmfElement, parent: String): Unit = {
       val id = element.id(parent)
-
       createIdNode(element, id)
-      createTypeNode(element)
 
-      element.fields.foreach {
-        case (f, v) =>
+      val obj = metamodel(element)
+      createTypeNode(element, obj)
+
+      obj.fields.map(element.fields.entry).foreach {
+        case Some((f, v)) =>
           entry { () =>
             raw(ctx.reduce(f.value))
             value(f.`type`, v, id)
           }
+        case None => // Missing field
       }
     }
 
     private def value(t: Type, v: Value, parent: String) = {
       t match {
         case _: Obj       => obj(v.value.asInstanceOf[AmfElement], parent)
+        case Iri          => iri(v.value.asInstanceOf[String])
         case Str | RegExp => scalar(v.value.asInstanceOf[String])
         case Bool         => scalar(v.value.asInstanceOf[Boolean].toString, BooleanToken)
         case a: Array =>
           array { () =>
             a.element match {
-              case _: Obj => v.value.asInstanceOf[List[AmfElement]].foreach(e => obj(e, parent))
-              case Str    => v.value.asInstanceOf[List[String]].foreach(scalar(_))
+              case _: Obj => v.value.asInstanceOf[List[AmfElement]].foreach(e => obj(e, parent, inArray = true))
+              case Str    => v.value.asInstanceOf[List[String]].foreach(scalar(_, inArray = true))
             }
           }
       }
     }
 
-    private def obj(element: AmfElement, parent: String) = {
-      map { () =>
-        traverse(element, parent)
+    private def obj(element: AmfElement, parent: String, inArray: Boolean = false) = {
+      val obj = () =>
+        map { () =>
+          traverse(element, parent)
+      }
+      if (inArray) {
+        obj()
+      } else {
+        array { () =>
+          obj()
+        }
       }
     }
 
@@ -78,24 +95,49 @@ object GraphEmitter {
       e.value(token, if (token == StringToken) { content.quote } else content)
     }
 
-    private def scalar(content: String, token: AMFToken = StringToken): Unit = {
+    private def iri(content: String): Unit = {
+      val e = () =>
+        entry { () =>
+          raw("@id")
+          raw(content)
+      }
+
       if (expanded) {
-        map { () =>
-          entry { () =>
-            raw("@value")
-            raw(content, token)
+        array { () =>
+          map { () =>
+            e()
+          }
+        }
+      } else e()
+    }
+
+    private def scalar(content: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
+      if (expanded) {
+        if (inArray) {
+          value(content, token)
+        } else {
+          array { () =>
+            value(content, token)
           }
         }
       } else raw(content, token)
     }
 
+    private def value(content: String, token: AMFToken) = {
+      map { () =>
+        entry { () =>
+          raw("@value")
+          raw(content, token)
+        }
+      }
+    }
+
     private def createIdNode(element: AmfElement, id: String) = entry("@id", id)
 
-    private def createTypeNode(element: AmfElement) = {
+    private def createTypeNode(element: AmfElement, obj: Obj) = {
       entry { () =>
         raw("@type")
         array { () =>
-          val obj = metamodel(element)
           obj.`type`.foreach(t => raw(ctx.reduce(t)))
         }
       }
