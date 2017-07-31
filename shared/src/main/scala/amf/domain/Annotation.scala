@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.metadata.Field
 import amf.parser.Range
 
 /**

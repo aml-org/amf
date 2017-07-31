@@ -281,6 +281,9 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             OperationBuilder()
               .withMethod("get")
               .withName("Some title")
+              .withRequest(RequestBuilder()
+                .withPayloads(List(PayloadBuilder().withMediaType("application/json").build))
+                .build)
               .withResponses(List(
                 ResponseBuilder()
                   .withDescription("200 descr")
@@ -290,7 +293,13 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                     ParameterBuilder().withName("Time-Ago").withSchema("integer").withRequired(true).build
                   ))
                   .build,
-                ResponseBuilder().withName("404").withStatusCode("404").withDescription("Not found!").build
+                ResponseBuilder()
+                  .withName("404")
+                  .withStatusCode("404")
+                  .withDescription("Not found!")
+                  .withPayloads(List(PayloadBuilder().withMediaType("application/json").build,
+                                     PayloadBuilder().withMediaType("application/xml").build))
+                  .build
               ))
               .build))
         .build
@@ -320,6 +329,9 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             OperationBuilder()
               .withMethod("get")
               .withName("Some title")
+              .withRequest(RequestBuilder()
+                .withPayloads(List(PayloadBuilder().withMediaType("application/json").build))
+                .build)
               .withResponses(List(
                 ResponseBuilder()
                   .withDescription("200 descr")
@@ -329,7 +341,13 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                     ParameterBuilder().withName("Time-Ago").withSchema("integer").withRequired(true).build
                   ))
                   .build,
-                ResponseBuilder().withName("404").withStatusCode("404").withDescription("Not found!").build
+                ResponseBuilder()
+                  .withName("404")
+                  .withStatusCode("404")
+                  .withDescription("Not found!")
+                  .withPayloads(List(PayloadBuilder().withMediaType("application/json").build,
+                                     PayloadBuilder().withMediaType("application/xml").build))
+                  .build
               ))
               .build))
         .build

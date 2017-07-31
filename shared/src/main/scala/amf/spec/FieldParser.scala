@@ -14,7 +14,7 @@ import amf.metadata.domain._
 import amf.parser.ASTNode
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.Matcher.RegExpMatcher
-import amf.spec.Spec.RequestSpec
+import amf.spec.Spec.{RequestSpec, Spec}
 
 import scala.collection.mutable.ListBuffer
 
@@ -123,13 +123,61 @@ object FieldParser {
 
       super.parse(spec, entry, response)
 
+      //if OAS, check for default payload and add it
+
+      if (spec.vendor == Oas) {
+        val rootPayload = PayloadBuilder()
+        if (traverseAndParse(Spec.OasPayload, entry, rootPayload))
+          response add (ResponseModel.Payloads, List(rootPayload.build))
+      }
+
       builder add (spec.fields.head, List(response.build), annotations(entry))
     }
   }
 
   object PayloadsParser extends ChildrenParser {
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {}
+    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {
+      spec.vendor match {
+        case Raml =>
+          //TODO this is the root. Search for a raml-type here and add a payload to the builder without mediaType.
+
+          entry.last.children
+            .filter(RegExpMatcher(".*/.*").matches)
+            .foreach(e => {
+              val somePayload =
+                PayloadBuilder().set(PayloadModel.MediaType, e.head.content.unquote, annotations(e.head))
+
+              //TODO match a raml-type inside of node e.. . .. .... ?
+
+              builder add (spec.fields.head, List(somePayload.build))
+            })
+        case Oas =>
+          //This will parse only payloads from extensions (in a sequence)
+          //TODO .last.last to avoid extension node.
+          entry.last.last.children.foreach(payloadMap => {
+            val payload = PayloadBuilder()
+            if (traverseAndParseMap(Spec.OasExtensionPayload, payloadMap, payload))
+              builder add (spec.fields.head, List(payload.build))
+          })
+      }
+    }
   }
+
+  private def traverseAndParseMap(spec: Spec, map: ASTNode[_], builder: Builder): Boolean = {
+    var add = false
+    map.children.foreach(entry => {
+      spec.fields.find(_.matcher.matches(entry)) match {
+        case Some(field) =>
+          field.parser(field, entry, builder)
+          add = true
+        case _ => // Unknown node...
+      }
+    })
+    add
+  }
+
+  private def traverseAndParse(spec: Spec, entry: ASTNode[_], builder: Builder): Boolean =
+    traverseAndParseMap(spec, entry.last, builder)
 
   object EndPointParser extends ChildrenParser {
     override def parse(spec: SpecField, node: ASTNode[_], builder: Builder): Unit = {
@@ -163,17 +211,8 @@ object FieldParser {
 
     def setRequest(op: OperationBuilder, entry: ASTNode[_], vendor: Vendor): Unit = {
       val req: RequestBuilder = RequestBuilder()
-      var add                 = false
-      entry.last.children.foreach(e => {
-        RequestSpec(vendor).fields.find(_.matcher.matches(e)) match {
-          case Some(field) =>
-            add = true
-            field.parser(field, e, req)
-          case _ => // Unknown node...
-        }
-      })
-
-      if (add) op set (OperationModel.Request, req.build, annotations(entry))
+      if (traverseAndParse(RequestSpec(vendor), entry, req))
+        op set (OperationModel.Request, req.build, annotations(entry))
     }
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder): Unit = {

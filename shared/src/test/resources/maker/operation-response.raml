@@ -10,6 +10,9 @@ baseUri: /some/uri
     get:
       title: Some title
 
+      body:
+        application/json:
+
       responses:
         200:
           description: 200 descr
@@ -18,3 +21,6 @@ baseUri: /some/uri
               type: integer
         404:
           description: Not found!
+          body:
+            application/json: someType
+            application/xml: someType
