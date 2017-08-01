@@ -5,41 +5,50 @@ import amf.common.AMFAST
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.Strings.strings
 import amf.document.BaseUnit
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, Scalar, Str}
+import amf.domain.Annotation
+import amf.metadata.SourceMapModel.{Element, Value}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
+import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
+import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.{Field, Obj, Type}
+import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.vocabulary.Namespace
+import amf.vocabulary.Namespace.Document
+
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * AMF Graph parser
   */
 object GraphParser {
 
-  def parse(ast: AMFAST): BaseUnit = {
-    val root = ast > MapToken
-
-    val ctx = context(root)
-
-    parse(root, ctx).asInstanceOf[BaseUnit]
+  def parse(ast: AMFAST, location: String): BaseUnit = {
+    val root = ast > SequenceToken > MapToken
+    val ctx  = context(root)
+    parse(root, ctx).set(Location, location).build.asInstanceOf[BaseUnit]
   }
 
   private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj = types(ctx.expand(types(ast).head))
 
-  private def parse(node: AMFAST, ctx: GraphContext): Any = {
-    val model    = retrieveType(node, ctx)
-    val builder  = builders(model)()
+  private def parse(node: AMFAST, ctx: GraphContext): Builder = {
+    val id      = retrieveId(node)
+    val sources = retrieveSources(id, node)
+    val model   = retrieveType(node, ctx)
+
+    val builder  = builders(model)(annotations(sources, id))
     val children = node.children
 
     model.fields.foreach(f => {
       val k = ctx.reduce(f.value)
       children.find(key(k)) match {
-        case Some(entry) => traverse(ctx, builder, f, value(f.`type`, entry.last))
+        case Some(entry) => traverse(ctx, builder, f, value(f.`type`, entry.last), sources, k)
         case _           =>
       }
     })
 
-    builder.build
+    builder
   }
 
   private def value(t: Type, node: AMFAST): AMFAST = {
@@ -59,15 +68,15 @@ object GraphParser {
     }
   }
 
-  private def traverse(ctx: GraphContext, builder: Builder, f: Field, node: AMFAST) = {
+  private def traverse(ctx: GraphContext, builder: Builder, f: Field, node: AMFAST, sources: SourceMap, key: String) = {
     f.`type` match {
-      case _: Obj             => builder.set(f, parse(node, ctx))
-      case Str | RegExp | Iri => builder.set(f, node.content.unquote)
+      case _: Obj             => builder.set(f, parse(node, ctx).build)
+      case Str | RegExp | Iri => builder.set(f, node.content.unquote, annotations(sources, key))
       case Bool               => builder.set(f, node.content.toBoolean)
       case a: Array =>
         val values = a.element match {
-          case _: Obj => node.children.map(n => parse(n, ctx))
-          case Str    => node.children.map(n => node.content.unquote)
+          case _: Obj => node.children.map(n => parse(n, ctx).build)
+          case Str    => node.children.map(n => value(a.element, n).content.unquote)
         }
         builder.set(f, values)
     }
@@ -86,10 +95,56 @@ object GraphParser {
     }
   }
 
+  private def retrieveSources(id: String, ast: AMFAST): SourceMap = {
+    ast.children.find(key(Sources.value.iri())) match {
+      case Some(entry) => parseSourceNode(value(SourceMapModel, entry.last))
+      case _           => SourceMap.empty
+    }
+  }
+
+  private def parseSourceNode(node: AMFAST): SourceMap = {
+    val result = SourceMap()
+    node.children.foreach(entry => {
+      entry.head.content.unquote match {
+        case AnnotationName(annotation) =>
+          val consumer = result.annotation(annotation)
+          entry.last.children.foreach(node => {
+            consumer(value(Value.`type`, node.head.last).content.unquote,
+                     value(Element.`type`, node.last.last).content.unquote)
+          })
+        case _ => // Unknown annotation identifier
+      }
+    })
+    result
+  }
+
+  private def annotations(sources: SourceMap, key: String): List[Annotation] = {
+    if (sources.nonEmpty) {
+      val result = ListBuffer[Annotation]()
+      sources.annotations.foreach {
+        case (annotation, values: mutable.Map[String, String]) =>
+          annotation match {
+            case Annotation(deserialize) if values.contains(key) => result += deserialize(values(key))
+            case _                                               =>
+          }
+      }
+      result.toList
+    } else {
+      Nil
+    }
+  }
+
+  private def retrieveId(ast: AMFAST): String = {
+    ast.children.find(key("@id")) match {
+      case Some(entry) => entry.last.content.unquote
+      case _           => throw new Exception(s"No @id declaration on node $ast")
+    }
+  }
+
   private def types(ast: AMFAST): Seq[String] = {
     ast.children.find(key("@type")) match {
-      case Some(t) => (t > SequenceToken).children.map(_.content.unquote)
-      case _       => throw new Exception(s"No @type declaration on node $ast")
+      case Some(entry) => (entry > SequenceToken).children.map(_.content.unquote)
+      case _           => throw new Exception(s"No @type declaration on node $ast")
     }
   }
 
@@ -97,7 +152,7 @@ object GraphParser {
   private def key(key: String)(n: AMFAST): Boolean = (n is Entry) && (n > StringToken) ? key
 
   /** Object Type builders. */
-  private val builders: Map[Obj, () => Builder] = Map(
+  private val builders: Map[Obj, (List[Annotation]) => Builder] = Map(
     DocumentModel     -> DocumentBuilder.apply,
     WebApiModel       -> WebApiBuilder.apply,
     OrganizationModel -> OrganizationBuilder.apply,
@@ -108,4 +163,11 @@ object GraphParser {
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap
+
+  private object AnnotationName {
+    def unapply(uri: String): Option[String] = uri match {
+      case url if url.startsWith(Document.base) => Some(url.substring(url.indexOf("#") + 1))
+      case _                                    => None
+    }
+  }
 }

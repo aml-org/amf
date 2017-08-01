@@ -13,7 +13,7 @@ import amf.spec.Spec
 class WebApiMaker(root: Root) extends Maker[WebApi] {
 
   override def make: WebApi = {
-    val builder: WebApiBuilder = WebApiBuilder()
+    val builder: WebApiBuilder = WebApiBuilder(root.annotations())
     val map                    = root.ast > MapToken
     map.children.foreach(matcher(builder, _))
     builder.build

@@ -8,7 +8,7 @@ import amf.metadata.domain.WebApiModel._
 /**
   * Web Api builder
   */
-class WebApiBuilder extends Builder {
+class WebApiBuilder(val annotations: List[Annotation]) extends Builder {
 
   override type T = WebApi
 
@@ -49,11 +49,13 @@ class WebApiBuilder extends Builder {
     fields
   }
 
-  override def build: WebApi = WebApi(fixFields(fields))
+  override def build: WebApi = WebApi(fixFields(fields), annotations)
 }
 
 object WebApiBuilder {
-  def apply(): WebApiBuilder = new WebApiBuilder()
+  def apply(): WebApiBuilder = apply(Nil)
 
-  def apply(fields: Fields): WebApiBuilder = apply().copy(fields)
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): WebApiBuilder = apply(annotations).copy(fields)
+
+  def apply(annotations: List[Annotation]): WebApiBuilder = new WebApiBuilder(annotations)
 }

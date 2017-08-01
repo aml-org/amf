@@ -1,7 +1,7 @@
 package amf.builder
 
 import amf.metadata.domain.LicenseModel.{Name, Url}
-import amf.domain.{Fields, License}
+import amf.domain.{Annotation, Fields, License}
 
 /**
   * License domain element builder.
@@ -19,6 +19,8 @@ class LicenseBuilder extends Builder {
 
 object LicenseBuilder {
   def apply(): LicenseBuilder = new LicenseBuilder()
+
+  def apply(annotations: List[Annotation]): LicenseBuilder = new LicenseBuilder()
 
   def apply(fields: Fields): LicenseBuilder = apply().copy(fields)
 }

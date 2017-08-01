@@ -1,7 +1,7 @@
 package amf.builder
 
 import amf.document.{BaseUnit, Document}
-import amf.domain.DomainElement
+import amf.domain.{Annotation, DomainElement}
 import amf.metadata.document.DocumentModel._
 
 /**
@@ -22,4 +22,6 @@ class DocumentBuilder extends Builder {
 
 object DocumentBuilder {
   def apply(): DocumentBuilder = new DocumentBuilder()
+
+  def apply(annotations: List[Annotation]): DocumentBuilder = new DocumentBuilder()
 }

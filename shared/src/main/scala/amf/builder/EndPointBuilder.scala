@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.domain.{EndPoint, Fields, Operation, Parameter}
+import amf.domain._
 import amf.metadata.domain.EndPointModel._
 
 /**
@@ -25,6 +25,8 @@ class EndPointBuilder extends Builder {
 
 object EndPointBuilder {
   def apply(): EndPointBuilder = new EndPointBuilder()
+
+  def apply(annotations: List[Annotation]): EndPointBuilder = new EndPointBuilder()
 
   def apply(fields: Fields): EndPointBuilder = apply().copy(fields)
 }

@@ -5,7 +5,8 @@ import amf.common.AMFToken.{Comment, Entry}
 import amf.common.Strings.strings
 import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
-import amf.domain.DomainElement
+import amf.domain.Annotation.LexicalInformation
+import amf.domain.{Annotation, DomainElement}
 import amf.exception.CyclicReferenceException
 import amf.graph.GraphParser
 import amf.json.JsonLexer
@@ -126,7 +127,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.ast)
+  private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.ast, root.location)
 
   private def parse(content: Content) = {
     val lexer   = resolveLexer(content)
@@ -147,7 +148,9 @@ class AMFCompiler private (val url: String,
   }
 }
 
-case class Root(ast: AMFAST, location: String, references: Seq[BaseUnit], vendor: Vendor)
+case class Root(ast: AMFAST, location: String, references: Seq[BaseUnit], vendor: Vendor) {
+  def annotations(): List[Annotation] = List(LexicalInformation(ast.range))
+}
 
 object AMFCompiler {
   def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =

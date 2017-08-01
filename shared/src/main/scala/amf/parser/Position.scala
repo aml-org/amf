@@ -38,4 +38,11 @@ object Range {
   def apply(start: Position, delta: Int): Range = new Range(start, Position(start.line, start.column + delta))
 
   def apply(start: (Int, Int), end: (Int, Int)): Range = new Range(Position(start), Position(end))
+
+  def apply(serialized: String): Range = {
+    val Pattern = "\\[\\(([0-9]*),([0-9]*)\\)-\\(([0-9]*),([0-9]*)\\)\\]".r
+    serialized match {
+      case Pattern(l1, c1, l2, c2) => Range((l1.toInt, c1.toInt), (l2.toInt, c2.toInt))
+    }
+  }
 }

@@ -1,7 +1,7 @@
 package amf.builder
 
 import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
-import amf.domain.{Fields, Organization}
+import amf.domain.{Annotation, Fields, Organization}
 
 /**
   *
@@ -21,6 +21,8 @@ class OrganizationBuilder extends Builder {
 
 object OrganizationBuilder {
   def apply(): OrganizationBuilder = new OrganizationBuilder()
+
+  def apply(annotations: List[Annotation]): OrganizationBuilder = new OrganizationBuilder()
 
   def apply(fields: Fields): OrganizationBuilder = apply().copy(fields)
 }

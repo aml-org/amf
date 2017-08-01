@@ -1,12 +1,14 @@
 package amf.emit
 
+import amf.common.Tests
+import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.document.Document
 import amf.domain.WebApi
 import amf.dumper.AMFDumper
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 import org.scalatest.Matchers._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -16,6 +18,14 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "file://shared/src/test/resources/upanddown/"
+
+  test("basic raml to amf test") {
+    assertCycle(basePath + "basic.raml", basePath + "basic.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("basic amf to amf test") {
+    assertCycle(basePath + "basic.jsonld", basePath + "basic.jsonld", AmfJsonLdHint, Amf)
+  }
 
   test("basic raml to oas test") {
     assertCycle(basePath + "basic.raml", basePath + "basic.json", RamlYamlHint, Oas)
@@ -101,7 +111,9 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
     actual
       .zip(expected)
       .map({
-        case (dump, exp) => dump should be(exp)
+        case (dump, exp) =>
+          checkDiff(dump, exp)
+          Succeeded
       })
   }
 }

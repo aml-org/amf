@@ -1,7 +1,7 @@
 package amf.builder
 
 import amf.metadata.domain.CreativeWorkModel.{Description, Url}
-import amf.domain.{CreativeWork, Fields}
+import amf.domain.{Annotation, CreativeWork, Fields}
 
 /**
   * CreativeWork domain element builder.
@@ -19,6 +19,8 @@ class CreativeWorkBuilder extends Builder {
 
 object CreativeWorkBuilder {
   def apply(): CreativeWorkBuilder = new CreativeWorkBuilder()
+
+  def apply(annotations: List[Annotation]): CreativeWorkBuilder = new CreativeWorkBuilder()
 
   def apply(fields: Fields): CreativeWorkBuilder = apply().copy(fields)
 }

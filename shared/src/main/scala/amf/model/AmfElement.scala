@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.domain.Fields
+import amf.domain.{Annotation, Fields}
 
 /**
   * Amf element including DomainElements and BaseUnits
@@ -9,6 +9,9 @@ trait AmfElement {
 
   /** Set of fields composing object. */
   val fields: Fields
+
+  /** Set of annotations for object. */
+  val annotations: List[Annotation] = Nil
 
   /** Return element unique identifier given parent id.*/
   def id(parent: String): String = ???

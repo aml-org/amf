@@ -7,71 +7,74 @@ import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.DocumentModel
+import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.{Field, Obj, Type}
+import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.AmfElement
 import amf.parser.{AMFASTFactory, ASTEmitter}
-import amf.vocabulary.Namespace
-
-import scala.collection.immutable.ListMap
+import amf.vocabulary.{Namespace, ValueType}
 
 /**
   * AMF Graph emitter
   */
 object GraphEmitter {
 
-  def emit(unit: BaseUnit, expanded: Boolean = true): AMFAST = {
-    val emitter = Emitter(ASTEmitter(AMFASTFactory()), expanded)
+  def emit(unit: BaseUnit): AMFAST = {
+    val emitter = Emitter(ASTEmitter(AMFASTFactory()))
     emitter.root(unit)
   }
 
-  case class Emitter(e: ASTEmitter[AMFToken, AMFAST], expanded: Boolean) {
-
-    private val ctx = context()
+  case class Emitter(e: ASTEmitter[AMFToken, AMFAST]) {
 
     def root(unit: BaseUnit): AMFAST = {
-
-      val content = () =>
-        map { () =>
-          createContextNode()
-          traverse(unit, unit.location)
-      }
-
-      e.root(Root)(if (expanded) { () =>
+      e.root(Root) { () =>
         array { () =>
-          content()
+          map { () =>
+            traverse(unit, unit.location)
+          }
         }
-      } else content)
+      }
     }
 
     def traverse(element: AmfElement, parent: String): Unit = {
       val id = element.id(parent)
-      createIdNode(element, id)
+      createIdNode(id)
 
       val obj = metamodel(element)
-      createTypeNode(element, obj)
+      createTypeNode(obj)
+
+      val sources = SourceMap(id, element)
 
       obj.fields.map(element.fields.entry).foreach {
         case Some((f, v)) =>
           entry { () =>
-            raw(ctx.reduce(f.value))
-            value(f.`type`, v, id)
+            val url = f.value.iri()
+            raw(url)
+            value(f.`type`, v, id, sources.property(url))
           }
         case None => // Missing field
       }
+
+      createSourcesNode(id + "/source-map", sources)
     }
 
-    private def value(t: Type, v: Value, parent: String) = {
+    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit) = {
       t match {
-        case _: Obj       => obj(v.value.asInstanceOf[AmfElement], parent)
-        case Iri          => iri(v.value.asInstanceOf[String])
-        case Str | RegExp => scalar(v.value.asInstanceOf[String])
-        case Bool         => scalar(v.value.asInstanceOf[Boolean].toString, BooleanToken)
+        case _: Obj => obj(v.value.asInstanceOf[AmfElement], parent)
+        case Iri =>
+          iri(v.value.asInstanceOf[String])
+          sources(v)
+        case Str | RegExp =>
+          scalar(v.value.asInstanceOf[String])
+          sources(v)
+        case Bool =>
+          scalar(v.value.asInstanceOf[Boolean].toString, BooleanToken)
+          sources(v)
         case a: Array =>
           array { () =>
             a.element match {
-              case _: Obj => v.value.asInstanceOf[List[AmfElement]].foreach(e => obj(e, parent, inArray = true))
-              case Str    => v.value.asInstanceOf[List[String]].foreach(scalar(_, inArray = true))
+              case _: Obj => v.value.asInstanceOf[Seq[AmfElement]].foreach(e => obj(e, parent, inArray = true))
+              case Str    => v.value.asInstanceOf[Seq[String]].foreach(scalar(_, inArray = true))
             }
           }
       }
@@ -92,35 +95,30 @@ object GraphEmitter {
     }
 
     private def raw(content: String, token: AMFToken = StringToken): Unit = {
-      e.value(token, if (token == StringToken) { content.quote } else content)
+      e.value(token, if (token == StringToken) {
+        content.quote
+      } else content)
     }
 
     private def iri(content: String): Unit = {
-      val e = () =>
-        entry { () =>
-          raw("@id")
-          raw(content)
-      }
-
-      if (expanded) {
-        array { () =>
-          map { () =>
-            e()
+      array { () =>
+        map { () =>
+          entry { () =>
+            raw("@id")
+            raw(content)
           }
         }
-      } else e()
+      }
     }
 
     private def scalar(content: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
-      if (expanded) {
-        if (inArray) {
+      if (inArray) {
+        value(content, token)
+      } else {
+        array { () =>
           value(content, token)
-        } else {
-          array { () =>
-            value(content, token)
-          }
         }
-      } else raw(content, token)
+      }
     }
 
     private def value(content: String, token: AMFToken) = {
@@ -132,26 +130,13 @@ object GraphEmitter {
       }
     }
 
-    private def createIdNode(element: AmfElement, id: String) = entry("@id", id)
+    private def createIdNode(id: String) = entry("@id", id)
 
-    private def createTypeNode(element: AmfElement, obj: Obj) = {
+    private def createTypeNode(obj: Obj) = {
       entry { () =>
         raw("@type")
         array { () =>
-          obj.`type`.foreach(t => raw(ctx.reduce(t)))
-        }
-      }
-    }
-
-    private def createContextNode() = {
-      if (ctx != EmptyGraphContext) {
-        entry { () =>
-          raw("@context")
-          map { () =>
-            ctx.mappings {
-              case (alias, ns) => entry(alias, ns.base)
-            }
-          }
+          obj.`type`.foreach(t => raw(t.iri()))
         }
       }
     }
@@ -173,27 +158,46 @@ object GraphEmitter {
       e.endNode(t)
     }
 
-    private def context(): GraphContext = {
-      if (expanded) {
-        EmptyGraphContext
-      } else {
-        MapGraphContext(
-          ListMap(
-            "raml-doc"    -> Namespace.Document,
-            "raml-http"   -> Namespace.Http,
-            "raml-shapes" -> Namespace.Shapes,
-            "hydra"       -> Namespace.Hydra,
-            "shacl"       -> Namespace.Shacl,
-            "schema-org"  -> Namespace.Schema,
-            "xsd"         -> Namespace.Xsd
-          ))
+    private def createSourcesNode(id: String, sources: SourceMap): Unit = {
+      if (sources.nonEmpty) {
+        entry { () =>
+          raw(Sources.value.iri())
+          array { () =>
+            map { () =>
+              createIdNode(id)
+              createTypeNode(SourceMapModel)
+              createAnnotationNodes(sources)
+            }
+          }
+        }
       }
     }
-  }
 
-  private def emit(e: ASTEmitter[AMFToken, AMFAST], unit: BaseUnit, context: GraphContext): Unit = {
-    e.beginNode()
+    private def createAnnotationNodes(sources: SourceMap) = {
+      sources.annotations.foreach({
+        case (a, values) =>
+          entry { () =>
+            raw(ValueType(Namespace.Document, a).iri())
+            array { () =>
+              values.foreach(createAnnotationValueNode)
+            }
+          }
+      })
+    }
 
+    private def createAnnotationValueNode(tuple: (String, String)): Unit = tuple match {
+      case (iri, v) =>
+        map { () =>
+          entry { () =>
+            raw(SourceMapModel.Element.value.iri())
+            scalar(iri)
+          }
+          entry { () =>
+            raw(SourceMapModel.Value.value.iri())
+            scalar(v)
+          }
+        }
+    }
   }
 
   /** Metadata Type references. */

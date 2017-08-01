@@ -34,5 +34,7 @@ class OperationBuilder extends Builder {
 object OperationBuilder {
   def apply(): OperationBuilder = new OperationBuilder()
 
+  def apply(annotations: List[Annotation]): OperationBuilder = new OperationBuilder()
+
   def apply(fields: Fields): OperationBuilder = apply().copy(fields)
 }

@@ -3,7 +3,7 @@ package amf.common
 import amf.common.AMFToken.{Eof, Link}
 import amf.compiler.AMFCompiler
 import amf.document.BaseUnit
-import amf.parser.{ASTLinkNode, ASTNode, Annotation, BaseASTNode, IncludeAnnotation, Range}
+import amf.parser.{ASTLinkNode, ASTNode, BaseASTNode, Range}
 import amf.remote._
 import amf.visitor.ASTNodeVisitor
 
@@ -17,11 +17,7 @@ trait AMFAST extends ASTNode[AMFToken] {
   override type N = AMFAST
 }
 
-class AMFASTNode(token: AMFToken,
-                 content: String,
-                 range: Range,
-                 override val children: Seq[AMFAST] = Seq(),
-                 override val annotations: Seq[Annotation] = Seq())
+class AMFASTNode(token: AMFToken, content: String, range: Range, override val children: Seq[AMFAST] = Seq())
     extends BaseASTNode[AMFToken](token, content, range)
     with AMFAST {
   override val empty = AMFAST.EMPTY_NODE
@@ -31,8 +27,6 @@ class AMFASTLink(include: String, range: Range, source: Kind)
     extends BaseASTNode[AMFToken](Link, include, range)
     with ASTLinkNode[AMFToken]
     with AMFAST {
-
-  override val annotations: Seq[Annotation] = Seq(IncludeAnnotation(include))
 
   override def children: Seq[AMFAST] = Seq()
 

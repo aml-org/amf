@@ -18,9 +18,6 @@ trait ASTNode[T <: Token] {
   /** Return node range on input (start and end position). */
   val range: Range
 
-  /** Returns node annotations. */
-  val annotations: Seq[Annotation]
-
   /** Returns node children. */
   def children: Seq[N]
 
