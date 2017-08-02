@@ -1,0 +1,53 @@
+{
+  "swagger" : "2.0",
+  "info": {
+    "title": "API"
+  },
+  "paths": {
+    "/levelzero": {
+      "displayName": "Name"
+    },
+    "/levelzero/level-one": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "parameters": [
+        {
+          "name": "param1",
+          "description": "Some descr",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "param2",
+          "description": "Some descr",
+          "in": "header",
+          "required": true
+        },
+        {
+          "name": "param2Endpoint",
+          "schema": "string",
+          "in": "header",
+          "required": false
+        }
+      ],
+      "get": {
+        "operationId": "Some title",
+        "parameters": [
+          {
+            "name": "param1",
+            "description": "Some descr",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "param2",
+            "schema": "string",
+            "description": "pisado",
+            "in": "header",
+            "required": false
+          }
+        ]
+      }
+    }
+  }
+}

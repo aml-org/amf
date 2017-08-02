@@ -1,0 +1,61 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API"
+  },
+  "x-baseUriParameters": [
+    {
+      "name": "one",
+      "required": true,
+      "description": "One base uri param"
+    }
+  ],
+  "paths": {
+    "/levelzero/some{two}": {
+      "parameters": [
+        {
+          "name": "two",
+          "required": false,
+          "in": "path"
+        }
+      ]
+    },
+    "/levelzero/some{two}/level-one": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "parameters": [
+          {
+            "required": true,
+            "name": "param1",
+            "description": "Some descr",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "name": "param2?",
+            "schema": "string",
+            "in": "query"
+          }
+        ]
+      },
+      "post": {
+        "operationId": "Some title",
+        "description": "Some description",
+        "parameters": [
+          {
+            "name": "Header-One",
+            "required": false,
+            "in": "header"
+          },
+          {
+            "name": "Header-Two",
+            "required": true,
+            "in": "header"
+          }
+        ]
+      }
+    }
+  }
+}

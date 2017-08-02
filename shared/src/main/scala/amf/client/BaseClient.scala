@@ -10,10 +10,10 @@ import scala.util.{Failure, Success, Try}
 
 abstract class BaseClient extends PlatformSecrets {
 
-  def generate(url: String, hint: Hint, handler: Handler): Unit =
+  def generate(url: String, hint: Hint, handler: Handler[BaseUnit]): Unit =
     AMFCompiler(url, platform, hint).build().onComplete(callback(handler, url))
 
-  private def callback(handler: Handler, url: String)(t: Try[BaseUnit]) = t match {
+  private def callback(handler: Handler[BaseUnit], url: String)(t: Try[BaseUnit]) = t match {
     case Success(value)     => handler.success(value)
     case Failure(exception) => handler.error(exception)
   }

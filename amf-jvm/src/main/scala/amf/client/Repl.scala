@@ -42,7 +42,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
     new JvmClient().generate(
       url,
       hint,
-      new Handler {
+      new Handler[BaseUnit] {
         override def success(unit: BaseUnit): Unit = {
           out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
           callback(Some(unit))
