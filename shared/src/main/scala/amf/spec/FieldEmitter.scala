@@ -243,10 +243,14 @@ object FieldEmitter {
 
   object ResponseEmitter extends SpecFieldEmitter {
     override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
-      val response = value.asInstanceOf[Response]
+      val responses: List[Response] = value.asInstanceOf[List[Response]]
 
-      List(new LazyBuilder(Entry) {
-        override def build: AMFAST = entry(spec, map(buildChildrens(spec, response.fields)))
+      responses.map(r => {
+        new LazyBuilder(Entry) {
+          override def build: AMFAST = {
+            entry(if (spec.vendor == Raml) r.statusCode else r.name, map(buildChildrens(spec, r.fields)))
+          }
+        }
       })
     }
   }

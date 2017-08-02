@@ -1,0 +1,43 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1"
+  },
+  "host": "http://api.example.com/path",
+  "produces": "application/yaml",
+  "consumes": "application/yaml",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "basePath": "/path",
+  "paths": {
+    "/levelzero": {
+      "displayName": "Name"
+    },
+    "/levelzero/level-one": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "responses": {
+          "200": {
+            "description": "200 descr",
+            "headers": {
+              "Time-Ago": {
+                "type": "integer",
+                "required": true
+              }
+            }
+          },
+          "404": {
+            "description": "Not found!"
+          }
+        }
+      }
+    }
+  }
+}
