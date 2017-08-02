@@ -243,17 +243,20 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                   .withRequired(false)
                   .withBinding("header")
                   .build))
+                .withPayloads(List(PayloadBuilder().withSchema("string").withMediaType("application/xml").build))
                 .build)
             .build,
           OperationBuilder()
             .withMethod("post")
             .withName("Some title")
             .withDescription("Some description")
-            .withRequest(RequestBuilder()
-              .withHeaders(List(
-                ParameterBuilder().withName("Header-One").withRequired(false).withBinding("header").build
-              ))
-              .build)
+            .withRequest(
+              RequestBuilder()
+                .withHeaders(List(
+                  ParameterBuilder().withName("Header-One").withRequired(false).withBinding("header").build
+                ))
+                .withPayloads(List(PayloadBuilder().withSchema("number").withMediaType("application/json").build))
+                .build)
             .build
         ))
         .build

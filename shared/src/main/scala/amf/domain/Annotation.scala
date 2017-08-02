@@ -40,6 +40,11 @@ object Annotation {
     override val value: String = null
   }
 
+  case class EndPointBodyParameter(asParameter: Parameter) extends Annotation
+
+  case class OperationBodyParameter(asParameter: Parameter, overrides: Option[(Parameter, Payload)] = None)
+      extends Annotation
+
   case class ArrayFieldAnnotations(holder: Map[Any, List[Annotation]] = Map()) extends Annotation {
     def +(fieldValue: Any, annotations: List[Annotation]) = ArrayFieldAnnotations(holder + (fieldValue -> annotations))
 

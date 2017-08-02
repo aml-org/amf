@@ -5,7 +5,7 @@ import amf.common.AMFToken.MapToken
 import amf.compiler.Root
 import amf.domain.WebApi
 import amf.parser.ASTNode
-import amf.spec.Spec
+import amf.spec.{ParserContext, Spec}
 
 /**
   * API Documentation maker.
@@ -15,14 +15,15 @@ class WebApiMaker(root: Root) extends Maker[WebApi] {
   override def make: WebApi = {
     val builder: WebApiBuilder = WebApiBuilder(root.annotations())
     val map                    = root.ast > MapToken
-    map.children.foreach(matcher(builder, _))
+    val context                = ParserContext()
+    map.children.foreach(matcher(builder, _, context))
     builder.build
   }
 
-  private def matcher(builder: WebApiBuilder, entry: ASTNode[_]): Unit = {
+  private def matcher(builder: WebApiBuilder, entry: ASTNode[_], context: ParserContext): Unit = {
     if (entry.children.nonEmpty) {
       Spec(root.vendor).fields.find(_.matcher.matches(entry)) match {
-        case Some(field) => field.parser(field, entry, builder)
+        case Some(field) => field.parser(field, entry, builder, context)
         case _           => // Unknown node...
       }
     }

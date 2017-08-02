@@ -1,5 +1,3 @@
-import scoverage.ScoverageKeys
-
 name := "AMF"
 
 scalaVersion in ThisBuild := "2.12.2"
