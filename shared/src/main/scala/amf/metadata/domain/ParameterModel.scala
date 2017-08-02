@@ -2,7 +2,7 @@ package amf.metadata.domain
 import amf.metadata.Field
 import amf.metadata.Type.{Bool, Str}
 import amf.vocabulary.Namespace.{Http, Hydra, Schema => SchemaNamespace}
-import amf.vocabulary.{Namespace, ValueType}
+import amf.vocabulary.ValueType
 
 /**
   * Parameter metamodel.

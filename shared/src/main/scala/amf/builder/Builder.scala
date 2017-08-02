@@ -21,8 +21,11 @@ trait Builder {
 
   def add(field: Field, value: Any, annotations: List[Annotation] = Nil): this.type = {
     if (field.`type`.isInstanceOf[Type.Array]) {
-      val elements: Seq[_]  = fields(field)
-      val castValue: Seq[_] = value.asInstanceOf[List[_]]
+      val elements: Seq[_] = fields(field)
+      val castValue: Seq[_] = value match {
+        case _: List[_] => value.asInstanceOf[List[_]]
+        case _          => List(value)
+      }
 
       fields.set(field, elements ++ castValue, List(arrayAnnotation(field) + (value, annotations)))
     } else {

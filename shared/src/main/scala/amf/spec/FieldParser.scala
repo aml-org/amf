@@ -4,7 +4,7 @@ import amf.builder._
 import amf.common.AMFToken.{Entry, Extension}
 import amf.common.Strings.strings
 import amf.domain.Annotation.{ExplicitField, LexicalInformation, ParentEndPoint, UriParameter}
-import amf.domain.{Annotation, EndPoint, Parameter, Payload}
+import amf.domain.{Annotation, EndPoint, Parameter, Payload, EndPointPath}
 import amf.metadata.Type
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.ParameterModel.Required
@@ -99,7 +99,7 @@ object FieldParser {
         } else {
           param.binding match {
             case "header"         => builder add (RequestModel.Headers, List(param), annotations(paramMap))
-            case "path" | "query" => builder add (RequestModel.QueryParameters, List(param), annotations(paramMap))
+            case "path" | "query" => builder add (RequestModel.QueryParameters, param, annotations(paramMap))
             case "body" =>
               context set (OperationBodyParameter, (param, PayloadsParser.parsePayload(paramMap, context)))
             case _ => //Invalid binding in endpoint parameter
@@ -121,7 +121,7 @@ object FieldParser {
         val paramAnnotations =
           if (spec.vendor == Raml) annotations(paramEntry) :+ UriParameter() else annotations(paramEntry)
 
-        builder add (spec.fields.head, List(param.build), paramAnnotations)
+        builder add (spec.fields.head, param.build, paramAnnotations)
       })
     }
   }
@@ -148,7 +148,7 @@ object FieldParser {
           response add (ResponseModel.Payloads, List(rootPayload.build))
       }
 
-      builder add (spec.fields.head, List(response.build), annotations(entry))
+      builder add (spec.fields.head, response.build, annotations(entry))
     }
   }
 
@@ -203,7 +203,10 @@ object FieldParser {
       val endpoint = EndPointBuilder().set(
         Path,
         parent.map(_.path).getOrElse("") + node.head.content.unquote,
-        if (parent.isDefined) annotation :+ ParentEndPoint(parent.get) else annotation)
+        if (parent.isDefined)
+          annotation :+ ParentEndPoint(parent.map(p => EndPointPath(p.parentPath, p.simplePath)).get)
+        else annotation
+      )
       super.parse(spec, node, endpoint, context)
 
       val actual = endpoint.build
@@ -255,7 +258,7 @@ object FieldParser {
       val op: OperationBuilder = operationBuilder(spec, entry, opContext)
       setRequest(op, entry, spec.vendor, opContext)
 
-      builder add (EndPointModel.Operations, List(op.build))
+      builder add (EndPointModel.Operations, op.build)
     }
 
     private def operationBuilder(spec: SpecField, entry: ASTNode[_], context: ParserContext) = {
@@ -282,8 +285,8 @@ object FieldParser {
   }
 
   def annotations(node: ASTNode[_]): List[Annotation] = node.`type` match {
-    case Entry if node.head.content == "required" => List(LexicalInformation(node.range), ExplicitField())
-    case _                                        => List(LexicalInformation(node.range))
+    case Entry if node.head.content.unquote == "required" => List(LexicalInformation(node.range), ExplicitField())
+    case _                                                => List(LexicalInformation(node.range))
   }
 
   private def traverseAndParseMap(spec: Spec, map: ASTNode[_], builder: Builder, context: ParserContext): Boolean = {

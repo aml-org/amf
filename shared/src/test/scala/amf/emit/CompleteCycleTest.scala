@@ -1,15 +1,11 @@
 package amf.emit
 
-import amf.common.Tests
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.document.Document
-import amf.domain.WebApi
 import amf.dumper.AMFDumper
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
-import org.scalatest.Matchers._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -97,6 +93,18 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
 
   test("complete with operations oas to oas test") {
     assertCycle(basePath + "completeWithOperations.json", basePath + "completeWithOperations.json", OasJsonHint, Oas)
+  }
+
+  test("complete with request raml to raml test") {
+    assertCycle(basePath + "operation-request.raml", basePath + "operation-request.raml", RamlYamlHint, Raml)
+  }
+
+  test("complete with request oas to raml test") {
+    assertCycle(basePath + "operation-request.json", basePath + "operation-request.json.raml", OasJsonHint, Raml)
+  }
+
+  test("complete with request raml to oas test") {
+    assertCycle(basePath + "operation-request.raml", basePath + "operation-request.raml.json", RamlYamlHint, Oas)
   }
 
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {

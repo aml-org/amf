@@ -20,26 +20,11 @@ http.createServer(function (request, response) {
             console.log("Json value: "+ jsonString)
 
             var client =new amf.JsClient();
-            client.webApiClass(jsonString,{
+
+            client.convert(jsonString,"json","raml",{
                 success: function(doc){
-                    console.log("Respondio")
-                    console.log("Doc response: "+doc)
                     response.writeHead(200, {'Content-Type': 'text/html'});
-                    response.write(JSON.stringify(doc))
-
-                  console.log("NAME: " + doc.name)
-                  console.log("DESCR: " + doc.description)
-                  console.log("PROVIDER: " + doc.provider)
-                  console.log("PROVIDER URL: " + doc.provider.url)
-                  console.log("PROVIDER SCHEME: " + doc.scheme)
-
-                  var builder = doc.toBuilder
-
-                  builder.withName("Some other name")
-
-                  var newWebApi = builder.build
-                  console.log("NEW NAME: " + newWebApi.name)
-                  console.log("OLD DESCR: " + newWebApi.description)
+                    response.write(doc)
 
                     response.end()
                 },

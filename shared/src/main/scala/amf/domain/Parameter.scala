@@ -37,6 +37,10 @@ case class Parameter(fields: Fields) extends DomainElement {
   override def toString = s"Parameter($name, $description, $required, $binding, $schema)"
 
   override def toBuilder: ParameterBuilder = ParameterBuilder(fields)
+
+  def isHeaderType: Boolean = binding == "header"
+
+  def isQueryType: Boolean = binding == "query"
 }
 
 object Parameter {

@@ -21,10 +21,8 @@ object Annotation {
 
     override val value: String = range.toString
   }
-
-  case class ParentEndPoint(parent: EndPoint) extends Annotation {
-    override val name: String = "parent-end-point"
-
+  case class ParentEndPoint(parentPath: EndPointPath) extends Annotation {
+    override val name: String  = "parent-end-point"
     override val value: String = null
   }
 
@@ -60,7 +58,11 @@ object Annotation {
   }
 
   case class ArrayFieldAnnotations(holder: Map[Any, List[Annotation]] = Map()) extends Annotation {
-    def +(fieldValue: Any, annotations: List[Annotation]) = ArrayFieldAnnotations(holder + (fieldValue -> annotations))
+    def +(value: Any, annotations: List[Annotation]): ArrayFieldAnnotations =
+      ArrayFieldAnnotations(value match {
+        case l: List[_] => l.foldLeft(holder)((newHolder, v) => newHolder + (v -> annotations))
+        case _          => holder + (value -> annotations)
+      })
 
     def apply(fieldValue: Any): List[Annotation] = holder.getOrElse(fieldValue, Nil)
 
@@ -73,4 +75,10 @@ object Annotation {
     case "lexical" => Some((value: String) => LexicalInformation(Range.apply(value)))
     case _         => None // Unknown annotation
   }
+
+}
+
+case class EndPointPath(parent: Option[EndPointPath] = None, path: String) {
+
+  def completePath: String = if (parent.isDefined) parent.get.completePath else "" + path
 }

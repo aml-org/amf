@@ -20,12 +20,12 @@ case class EndPoint(fields: Fields) extends DomainElement {
 
   def simplePath: String = {
     val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
-    parent.map(p => path.stripPrefix(p.parent.path)).getOrElse(path)
+    parent.map(p => path.stripPrefix(p.parentPath.completePath)).getOrElse(path)
   }
 
-  def parent: Option[EndPoint] = {
+  def parentPath: Option[EndPointPath] = {
     val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
-    parent.map(_.parent)
+    parent.map(_.parentPath)
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]

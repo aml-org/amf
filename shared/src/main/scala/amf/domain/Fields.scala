@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.domain.Annotation.ArrayFieldAnnotations
 import amf.metadata.Field
 import amf.metadata.Type._
 import amf.unsafe.PlatformSecrets
@@ -38,8 +39,17 @@ class Fields extends PlatformSecrets {
     fs.get(field).flatMap(_.annotations.find(classType.isInstance(_))).asInstanceOf[Option[T]]
   }
 
+  def getAnnotationForValue[T <: Annotation](field: Field, value: Any, classType: Class[T]): Option[T] = {
+    getAnnotation(field, classOf[ArrayFieldAnnotations])
+      .flatMap(_(value).find(classType.isInstance(_)))
+      .asInstanceOf[Option[T]]
+  }
+
   def set(field: Field, value: Any, annotations: List[Annotation]): this.type = {
+
+    if (fs.get(field).isDefined) fs = fs - field
     fs = fs + (field -> Value(value, annotations))
+
     this
   }
 
@@ -58,6 +68,12 @@ class Fields extends PlatformSecrets {
   def foreach(fn: ((Field, Value)) => Unit): Unit = {
     fs.foreach(fn)
   }
+
+  def filter(fn: ((Field, Value)) => Boolean): Fields = {
+    fs = fs.filter(fn)
+    this
+  }
+
 }
 
 case class Value(value: Any, annotations: List[Annotation])

@@ -40,11 +40,11 @@ protected trait SpecNode {
       case Array(OperationModel) =>
         SpecField(fields, matcher(), OperationParser, OperationEmitter)
       case Array(ParameterModel) =>
-        SpecField(fields, matcher(), ParametersParser, null)
+        SpecField(fields, matcher(), ParametersParser, ParametersEmitter)
       case Array(PayloadModel) =>
         SpecField(fields, matcher(), PayloadsParser, null)
       case Array(ResponseModel) =>
-        SpecField(fields, matcher(), ResponseParser, null)
+        SpecField(fields, matcher(), ResponseParser, ResponseEmitter)
     }
   }
 
