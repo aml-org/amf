@@ -202,19 +202,20 @@ object FieldParser {
       val as = annotations(node) ++ parent
         .map(p => List(ParentEndPoint(EndPointPath(p.parentPath, p.relativePath))))
         .getOrElse(Nil)
-
+      val endpointContext = context.copy
       val endpoint = EndPointBuilder(as).set(Path,
                                              parent.map(_.path).getOrElse("") + node.head.content.unquote,
                                              annotations(node.head))
 
-      super.parse(spec, node, endpoint, context)
+      super.parse(spec, node, endpoint, endpointContext)
 
       val actual = endpoint.build
       collector += actual
 
-      node.last.children
-        .filter(RegExpMatcher("/.*").matches)
-        .foreach(parse(spec, _, Some(actual), collector, context))
+      if (spec.vendor == Raml)
+        node.last.children
+          .filter(RegExpMatcher("/.*").matches)
+          .foreach(parse(spec, _, Some(actual), collector, endpointContext))
     }
   }
 
@@ -227,18 +228,18 @@ object FieldParser {
         case Some((opParam: Parameter, opPayload: Payload)) =>
           context(EndPointBodyParameter) match {
             case Some((endPointParam: Parameter, endPointPayload: Payload)) =>
-              request add (RequestModel.Payloads, List(opPayload), annotations ++ List(
+              request add (RequestModel.Payloads, opPayload, annotations ++ List(
                 Annotation.OperationBodyParameter(opParam),
                 OverrideEndPointBodyParameter(endPointParam, endPointPayload)))
             case None =>
-              request add (RequestModel.Payloads, List(opPayload), annotations ++ List(
+              request add (RequestModel.Payloads, opPayload, annotations ++ List(
                 Annotation.OperationBodyParameter(opParam)))
           }
           return true
         case None =>
           context(EndPointBodyParameter) match {
             case Some((endPointParam: Parameter, endPointPayload: Payload)) =>
-              request add (RequestModel.Payloads, List(endPointPayload), annotations ++ List(
+              request add (RequestModel.Payloads, endPointPayload, annotations ++ List(
                 Annotation.EndPointBodyParameter(endPointParam)))
               return true
             case None =>
