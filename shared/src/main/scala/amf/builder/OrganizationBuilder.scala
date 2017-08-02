@@ -16,13 +16,14 @@ class OrganizationBuilder extends Builder {
 
   def withEmail(email: String): OrganizationBuilder = set(Email, email)
 
-  override def build: Organization = Organization(fields)
+  override def build: Organization = Organization(fields, annotations)
 }
 
 object OrganizationBuilder {
-  def apply(): OrganizationBuilder = new OrganizationBuilder()
+  def apply(): OrganizationBuilder = apply(Nil)
 
-  def apply(annotations: List[Annotation]): OrganizationBuilder = new OrganizationBuilder()
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): OrganizationBuilder = apply(annotations).copy(fields)
 
-  def apply(fields: Fields): OrganizationBuilder = apply().copy(fields)
+  def apply(annotations: List[Annotation]): OrganizationBuilder =
+    new OrganizationBuilder().withAnnotations(annotations)
 }

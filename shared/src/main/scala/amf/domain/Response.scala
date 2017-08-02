@@ -6,7 +6,7 @@ import amf.metadata.domain.ResponseModel._
 /**
   * Response internal model.
   */
-case class Response(fields: Fields) extends DomainElement {
+case class Response(fields: Fields, annotations: List[Annotation]) extends DomainElement {
   override type T = Response
 
   val name: String            = fields(Name)
@@ -36,9 +36,9 @@ case class Response(fields: Fields) extends DomainElement {
 
   override def toString = s"Response($name, $description, $statusCode, $headers, $payloads)"
 
-  override def toBuilder: ResponseBuilder = ResponseBuilder(fields)
+  override def toBuilder: ResponseBuilder = ResponseBuilder(fields, annotations)
 }
 
 object Response {
-  def apply(fields: Fields): Response = new Response(fields)
+  def apply(fields: Fields, annotations: List[Annotation]): Response = new Response(fields, annotations)
 }

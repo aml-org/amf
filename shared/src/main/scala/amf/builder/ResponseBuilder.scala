@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.domain.{Fields, Parameter, Payload, Response}
+import amf.domain._
 import amf.metadata.domain.ResponseModel._
 
 /**
@@ -20,11 +20,13 @@ class ResponseBuilder extends Builder {
 
   def withPayloads(payloads: Seq[Payload]): ResponseBuilder = set(Payloads, payloads)
 
-  override def build: Response = Response(fields)
+  override def build: Response = Response(fields, annotations)
 }
 
 object ResponseBuilder {
-  def apply(): ResponseBuilder = new ResponseBuilder()
+  def apply(): ResponseBuilder = apply(Nil)
 
-  def apply(fields: Fields): ResponseBuilder = apply().copy(fields)
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): ResponseBuilder = apply(annotations).copy(fields)
+
+  def apply(annotations: List[Annotation]): ResponseBuilder = new ResponseBuilder().withAnnotations(annotations)
 }

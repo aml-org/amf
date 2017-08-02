@@ -6,7 +6,7 @@ import amf.metadata.domain.PayloadModel._
 /**
   * Payload internal model.
   */
-case class Payload(fields: Fields) extends DomainElement {
+case class Payload(fields: Fields, annotations: List[Annotation]) extends DomainElement {
   override type T = Payload
 
   val mediaType: String = fields(MediaType)
@@ -30,9 +30,9 @@ case class Payload(fields: Fields) extends DomainElement {
 
   override def toString = s"Payload($mediaType, $schema)"
 
-  override def toBuilder: PayloadBuilder = PayloadBuilder(fields)
+  override def toBuilder: PayloadBuilder = PayloadBuilder(fields, annotations)
 }
 
 object Payload {
-  def apply(fields: Fields): Payload = new Payload(fields)
+  def apply(fields: Fields, annotations: List[Annotation]): Payload = new Payload(fields, annotations)
 }

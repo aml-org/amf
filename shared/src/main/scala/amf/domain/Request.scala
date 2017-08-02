@@ -6,7 +6,7 @@ import amf.metadata.domain.RequestModel._
 /**
   * Request internal model.
   */
-case class Request(fields: Fields) extends DomainElement {
+case class Request(fields: Fields, annotations: List[Annotation]) extends DomainElement {
   override type T = Request
 
   val queryParameters: Seq[Parameter] = fields(QueryParameters)
@@ -32,9 +32,9 @@ case class Request(fields: Fields) extends DomainElement {
 
   override def toString = s"Request($queryParameters, $headers, $payloads)"
 
-  override def toBuilder: RequestBuilder = RequestBuilder(fields)
+  override def toBuilder: RequestBuilder = RequestBuilder(fields, annotations)
 }
 
 object Request {
-  def apply(fields: Fields): Request = new Request(fields)
+  def apply(fields: Fields, annotations: List[Annotation]): Request = new Request(fields, annotations)
 }

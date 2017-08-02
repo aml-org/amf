@@ -14,6 +14,8 @@ trait Builder {
 
   protected val fields: Fields = new Fields()
 
+  protected var annotations: List[Annotation] = Nil
+
   def set(field: Field, value: Any, annotations: List[Annotation] = Nil): this.type = {
     fields.set(field, value, annotations)
     this
@@ -40,6 +42,11 @@ trait Builder {
 
   protected def copy(fs: Fields): this.type = {
     fs.into(fields)
+    this
+  }
+
+  protected def withAnnotations(as: List[Annotation]): this.type = {
+    annotations = as
     this
   }
 

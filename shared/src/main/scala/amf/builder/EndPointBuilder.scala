@@ -20,13 +20,13 @@ class EndPointBuilder extends Builder {
 
   def withParameters(parameters: Seq[Parameter]): EndPointBuilder = set(Parameters, parameters)
 
-  override def build: EndPoint = EndPoint(fields)
+  override def build: EndPoint = EndPoint(fields, annotations)
 }
 
 object EndPointBuilder {
-  def apply(): EndPointBuilder = new EndPointBuilder()
+  def apply(): EndPointBuilder = apply(Nil)
 
-  def apply(annotations: List[Annotation]): EndPointBuilder = new EndPointBuilder()
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): EndPointBuilder = apply(annotations).copy(fields)
 
-  def apply(fields: Fields): EndPointBuilder = apply().copy(fields)
+  def apply(annotations: List[Annotation]): EndPointBuilder = new EndPointBuilder().withAnnotations(annotations)
 }

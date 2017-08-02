@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.domain.{Fields, Parameter, Payload, Request}
+import amf.domain._
 import amf.metadata.domain.RequestModel._
 
 /**
@@ -15,11 +15,13 @@ class RequestBuilder extends Builder {
 
   def withPayloads(payloads: Seq[Payload]): RequestBuilder = set(Payloads, payloads)
 
-  override def build: Request = Request(fields)
+  override def build: Request = Request(fields, annotations)
 }
 
 object RequestBuilder {
-  def apply(): RequestBuilder = new RequestBuilder()
+  def apply(): RequestBuilder = apply(Nil)
 
-  def apply(fields: Fields): RequestBuilder = apply().copy(fields)
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): RequestBuilder = apply(annotations).copy(fields)
+
+  def apply(annotations: List[Annotation]): RequestBuilder = new RequestBuilder().withAnnotations(annotations)
 }

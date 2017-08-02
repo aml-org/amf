@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.domain.{Fields, Payload}
+import amf.domain.{Annotation, Fields, Payload}
 import amf.metadata.domain.PayloadModel._
 
 /**
@@ -13,11 +13,13 @@ class PayloadBuilder extends Builder {
 
   def withSchema(schema: String): PayloadBuilder = set(Schema, schema)
 
-  override def build: Payload = Payload(fields)
+  override def build: Payload = Payload(fields, annotations)
 }
 
 object PayloadBuilder {
-  def apply(): PayloadBuilder = new PayloadBuilder()
+  def apply(): PayloadBuilder = apply(Nil)
 
-  def apply(fields: Fields): PayloadBuilder = apply().copy(fields)
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): PayloadBuilder = apply(annotations).copy(fields)
+
+  def apply(annotations: List[Annotation]): PayloadBuilder = new PayloadBuilder().withAnnotations(annotations)
 }

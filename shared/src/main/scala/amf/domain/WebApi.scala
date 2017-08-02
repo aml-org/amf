@@ -6,7 +6,7 @@ import amf.metadata.domain.WebApiModel.{License => WebApiLicense, _}
 /**
   * Web Api internal model
   */
-case class WebApi(fields: Fields, override val annotations: List[Annotation]) extends DomainElement {
+case class WebApi(fields: Fields, annotations: List[Annotation]) extends DomainElement {
 
   override type T = WebApi
 
@@ -25,7 +25,7 @@ case class WebApi(fields: Fields, override val annotations: List[Annotation]) ex
   val endPoints: Seq[EndPoint]          = fields(EndPoints)
   val baseUriParameters: Seq[Parameter] = fields(BaseUriParameters)
 
-  override def toBuilder: WebApiBuilder = WebApiBuilder(fields)
+  override def toBuilder: WebApiBuilder = WebApiBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "#/web-api"
 }

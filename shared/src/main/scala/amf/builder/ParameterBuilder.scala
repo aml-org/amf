@@ -1,6 +1,6 @@
 package amf.builder
 
-import amf.domain.{Fields, Parameter}
+import amf.domain.{Annotation, Fields, Parameter}
 import amf.metadata.domain.ParameterModel._
 
 /**
@@ -19,11 +19,13 @@ class ParameterBuilder extends Builder {
 
   def withSchema(schema: String): ParameterBuilder = set(Schema, schema)
 
-  override def build: Parameter = Parameter(fields)
+  override def build: Parameter = Parameter(fields, annotations)
 }
 
 object ParameterBuilder {
-  def apply(): ParameterBuilder = new ParameterBuilder()
+  def apply(): ParameterBuilder = apply(Nil)
 
-  def apply(fields: Fields): ParameterBuilder = apply().copy(fields)
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): ParameterBuilder = apply(annotations).copy(fields)
+
+  def apply(annotations: List[Annotation]): ParameterBuilder = new ParameterBuilder().withAnnotations(annotations)
 }

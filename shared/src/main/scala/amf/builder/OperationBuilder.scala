@@ -28,13 +28,13 @@ class OperationBuilder extends Builder {
 
   def withResponses(responses: Seq[Response]): OperationBuilder = set(Responses, responses)
 
-  override def build: Operation = Operation(fields)
+  override def build: Operation = Operation(fields, annotations)
 }
 
 object OperationBuilder {
-  def apply(): OperationBuilder = new OperationBuilder()
+  def apply(): OperationBuilder = apply(Nil)
 
-  def apply(annotations: List[Annotation]): OperationBuilder = new OperationBuilder()
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): OperationBuilder = apply(annotations).copy(fields)
 
-  def apply(fields: Fields): OperationBuilder = apply().copy(fields)
+  def apply(annotations: List[Annotation]): OperationBuilder = new OperationBuilder().withAnnotations(annotations)
 }

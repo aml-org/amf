@@ -5,7 +5,7 @@ import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 /**
   * Operation internal model.
   */
-case class Operation(fields: Fields) extends DomainElement {
+case class Operation(fields: Fields, annotations: List[Annotation]) extends DomainElement {
 
   override type T = Operation
 
@@ -44,7 +44,7 @@ case class Operation(fields: Fields) extends DomainElement {
   override def toString =
     s"Operation($method, $name, $description, $deprecated, $summary, $documentation, $schemes, $request, $responses)"
 
-  override def toBuilder: Builder = OperationBuilder(fields)
+  override def toBuilder: Builder = OperationBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "/" + method
 }

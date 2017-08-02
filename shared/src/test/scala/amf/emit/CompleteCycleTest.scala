@@ -15,120 +15,136 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
 
   val basePath = "file://shared/src/test/resources/upanddown/"
 
-  test("basic raml to amf test") {
-    assertCycle(basePath + "basic.raml", basePath + "basic.raml.jsonld", RamlYamlHint, Amf)
+  test("Basic amf to amf test") {
+    assertCycle("basic.jsonld", "basic.jsonld", AmfJsonLdHint, Amf)
   }
 
-  test("basic amf to amf test") {
-    assertCycle(basePath + "basic.jsonld", basePath + "basic.jsonld", AmfJsonLdHint, Amf)
+  test("Basic raml to amf test") {
+    assertCycle("basic.raml", "basic.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("basic raml to oas test") {
-    assertCycle(basePath + "basic.raml", basePath + "basic.json", RamlYamlHint, Oas)
+  test("Basic oas to amf test") {
+    assertCycle("basic.json", "basic.json.jsonld", OasJsonHint, Amf)
   }
 
-  test("basic oas to raml test") {
-    assertCycle(basePath + "basic.json", basePath + "basic.raml", OasJsonHint, Raml)
+  test("Basic amf(raml) to raml test") {
+    assertCycle("basic.raml.jsonld", "basic.raml", AmfJsonLdHint, Raml)
   }
 
-  test("basic raml to raml test") {
-    assertCycle(basePath + "basic.raml", basePath + "basic.raml", RamlYamlHint, Raml)
+  test("Basic amf(oas) to oas test") {
+    assertCycle("basic.json.jsonld", "basic.json", AmfJsonLdHint, Oas)
   }
 
-  test("basic oas to oastest") {
-    assertCycle(basePath + "basic.json", basePath + "basic.json", OasJsonHint, Oas)
+  test("Basic raml to oas test") {
+    assertCycle("basic.raml", "basic.raml.json", RamlYamlHint, Oas)
   }
 
-  test("complete raml to oas test") {
-    assertCycle(basePath + "complete.raml", basePath + "complete.json", RamlYamlHint, Oas)
+  test("Basic oas to raml test") {
+    assertCycle("basic.json", "basic.json.raml", OasJsonHint, Raml)
   }
 
-  test("complete oas to raml test") {
-    assertCycle(basePath + "complete.json", basePath + "complete.raml", OasJsonHint, Raml)
+  test("Basic raml to raml test") {
+    assertCycle("basic.raml", "basic.raml", RamlYamlHint, Raml)
   }
 
-  test("complete raml to raml test") {
-    assertCycle(basePath + "complete.raml", basePath + "complete.raml", RamlYamlHint, Raml)
+  test("Basic oas to oas test") {
+    assertCycle("basic.json", "basic.json", OasJsonHint, Oas)
   }
 
-  test("complete oas to oas test") {
-    assertCycle(basePath + "complete.json", basePath + "complete.json", OasJsonHint, Oas)
+  test("Complete amf to amf test") {
+    assertCycle("complete.jsonld", "complete.jsonld", AmfJsonLdHint, Amf)
   }
 
-  test("complete with endpoints raml to oas test") {
-    assertCycle(basePath + "completeWithEndpoints.raml", basePath + "completeWithEndpoints.json", RamlYamlHint, Oas)
+  test("Complete raml to amf test") {
+    assertCycle("complete.raml", "complete.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("complete with endpoints raml to raml test") {
-    assertCycle(basePath + "completeWithEndpoints.raml", basePath + "completeWithEndpoints.raml", RamlYamlHint, Raml)
+  test("Complete raml to oas test") {
+    assertCycle("complete.raml", "complete.json", RamlYamlHint, Oas)
   }
 
-  test("complete with endpoints oas to raml test") {
-    assertCycle(basePath + "completeWithEndpoints.json",
-                basePath + "completeWithEndpointsPlain.raml",
-                OasJsonHint,
-                Raml)
+  test("Complete oas to raml test") {
+    assertCycle("complete.json", "complete.raml", OasJsonHint, Raml)
   }
 
-  test("complete with endpoints oas to oas test") {
-    assertCycle(basePath + "completeWithEndpoints.json", basePath + "completeWithEndpoints.json", OasJsonHint, Oas)
+  test("Complete raml to raml test") {
+    assertCycle("complete.raml", "complete.raml", RamlYamlHint, Raml)
   }
 
-  //---operations
-
-  test("complete with operations raml to oas test") {
-    assertCycle(basePath + "completeWithOperations.raml", basePath + "completeWithOperations.json", RamlYamlHint, Oas)
+  test("Complete oas to oas test") {
+    assertCycle("complete.json", "complete.json", OasJsonHint, Oas)
   }
 
-  test("complete with operations raml to raml test") {
-    assertCycle(basePath + "completeWithOperations.raml", basePath + "completeWithOperations.raml", RamlYamlHint, Raml)
+  test("Endpoints raml to amf test") {
+    assertCycle("endpoints.raml", "endpoints.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("complete with operations oas to raml test") {
-    assertCycle(basePath + "completeWithOperations.json",
-                basePath + "completeWithOperationsPlain.raml",
-                OasJsonHint,
-                Raml)
+  test("Endpoints raml to oas test") {
+    assertCycle("endpoints.raml", "endpoints.json", RamlYamlHint, Oas)
   }
 
-  test("complete with operations oas to oas test") {
-    assertCycle(basePath + "completeWithOperations.json", basePath + "completeWithOperations.json", OasJsonHint, Oas)
+  test("Endpoints raml to raml test") {
+    assertCycle("endpoints.raml", "endpoints.raml", RamlYamlHint, Raml)
   }
 
-  test("complete with request raml to raml test") {
-    assertCycle(basePath + "operation-request.raml", basePath + "operation-request.raml", RamlYamlHint, Raml)
+  test("Endpoints oas to raml test") {
+    assertCycle("endpoints.json", "endpoints.json.raml", OasJsonHint, Raml)
   }
 
-  test("complete with request oas to raml test") {
-    assertCycle(basePath + "operation-request.json", basePath + "operation-request.json.raml", OasJsonHint, Raml)
+  test("Endpoints oas to oas test") {
+    assertCycle("endpoints.json", "endpoints.json", OasJsonHint, Oas)
   }
 
-  test("complete with request raml to oas test") {
-    assertCycle(basePath + "operation-request.raml", basePath + "operation-request.raml.json", RamlYamlHint, Oas)
+  test("Complete with operations raml to oas test") {
+    assertCycle("completeWithOperations.raml", "completeWithOperations.json", RamlYamlHint, Oas)
   }
 
-  test("complete with response oas to raml test") {
-    assertCycle(basePath + "operation-response.json", basePath + "operation-response.raml", OasJsonHint, Raml)
+  test("Complete with operations raml to raml test") {
+    assertCycle("completeWithOperations.raml", "completeWithOperations.raml", RamlYamlHint, Raml)
   }
 
-  test("complete with response oas to oas test") {
-    assertCycle(basePath + "operation-response.json", basePath + "operation-response.json", OasJsonHint, Oas)
+  test("Complete with operations oas to raml test") {
+    assertCycle("completeWithOperations.json", "completeWithOperationsPlain.raml", OasJsonHint, Raml)
   }
 
-  test("complete with response raml to raml test") {
-    assertCycle(basePath + "operation-response.raml", basePath + "operation-response.raml", RamlYamlHint, Raml)
+  test("Complete with operations oas to oas test") {
+    assertCycle("completeWithOperations.json", "completeWithOperations.json", OasJsonHint, Oas)
   }
 
-  test("complete with response raml to oas test") {
-    assertCycle(basePath + "operation-response.raml", basePath + "operation-response.raml.json", RamlYamlHint, Oas)
+  test("Complete with request raml to raml test") {
+    assertCycle("operation-request.raml", "operation-request.raml", RamlYamlHint, Raml)
+  }
+
+  test("Complete with request oas to raml test") {
+    assertCycle("operation-request.json", "operation-request.json.raml", OasJsonHint, Raml)
+  }
+
+  test("Complete with request raml to oas test") {
+    assertCycle("operation-request.raml", "operation-request.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Complete with response oas to raml test") {
+    assertCycle("operation-response.json", "operation-response.raml", OasJsonHint, Raml)
+  }
+
+  test("Complete with response oas to oas test") {
+    assertCycle("operation-response.json", "operation-response.json", OasJsonHint, Oas)
+  }
+
+  test("Complete with response raml to raml test") {
+    assertCycle("operation-response.raml", "operation-response.raml", RamlYamlHint, Raml)
+  }
+
+  test("Complete with response raml to oas test") {
+    assertCycle("operation-response.raml", "operation-response.raml.json", RamlYamlHint, Oas)
   }
 
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
     val expected = platform
-      .resolve(golden, None)
+      .resolve(basePath + golden, None)
       .map(_.stream.toString)
 
-    val actual = AMFCompiler(source, platform, hint)
+    val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
       .map(new AMFDumper(_, target).dump)
 

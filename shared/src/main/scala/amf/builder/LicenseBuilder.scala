@@ -14,13 +14,13 @@ class LicenseBuilder extends Builder {
 
   def withName(name: String): LicenseBuilder = set(Name, name)
 
-  override def build: License = License(fields)
+  override def build: License = License(fields, annotations)
 }
 
 object LicenseBuilder {
-  def apply(): LicenseBuilder = new LicenseBuilder()
+  def apply(): LicenseBuilder = apply(Nil)
 
-  def apply(annotations: List[Annotation]): LicenseBuilder = new LicenseBuilder()
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): LicenseBuilder = apply(annotations).copy(fields)
 
-  def apply(fields: Fields): LicenseBuilder = apply().copy(fields)
+  def apply(annotations: List[Annotation]): LicenseBuilder = new LicenseBuilder().withAnnotations(annotations)
 }

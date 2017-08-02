@@ -199,14 +199,14 @@ object FieldParser {
                       collector: ListBuffer[EndPoint],
                       context: ParserContext): Unit = {
 
-      val annotation = annotations(node.head)
-      val endpoint = EndPointBuilder().set(
-        Path,
-        parent.map(_.path).getOrElse("") + node.head.content.unquote,
-        if (parent.isDefined)
-          annotation :+ ParentEndPoint(parent.map(p => EndPointPath(p.parentPath, p.simplePath)).get)
-        else annotation
-      )
+      val as = annotations(node) ++ parent
+        .map(p => List(ParentEndPoint(EndPointPath(p.parentPath, p.relativePath))))
+        .getOrElse(Nil)
+
+      val endpoint = EndPointBuilder(as).set(Path,
+                                             parent.map(_.path).getOrElse("") + node.head.content.unquote,
+                                             annotations(node.head))
+
       super.parse(spec, node, endpoint, context)
 
       val actual = endpoint.build
@@ -271,15 +271,15 @@ object FieldParser {
 
   object ObjectParser extends ChildrenParser {
 
-    def builderForType(t: Type): Builder = t match {
-      case OrganizationModel => OrganizationBuilder()
-      case LicenseModel      => LicenseBuilder()
-      case CreativeWorkModel => CreativeWorkBuilder()
+    def builderForType(t: Type, annotations: List[Annotation]): Builder = t match {
+      case OrganizationModel => OrganizationBuilder(annotations)
+      case LicenseModel      => LicenseBuilder(annotations)
+      case CreativeWorkModel => CreativeWorkBuilder(annotations)
     }
 
     override def parse(spec: SpecField, node: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
       val field                 = spec.fields.head
-      val innerBuilder: Builder = builderForType(field.`type`)
+      val innerBuilder: Builder = builderForType(field.`type`, annotations(node))
       super.parse(spec, node, innerBuilder, context)
       builder.set(field, innerBuilder.build)
     }

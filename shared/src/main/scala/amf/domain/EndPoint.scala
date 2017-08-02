@@ -8,7 +8,7 @@ import amf.common.Strings.strings
 /**
   * EndPoint internal model
   */
-case class EndPoint(fields: Fields) extends DomainElement {
+case class EndPoint(fields: Fields, annotations: List[Annotation]) extends DomainElement {
 
   override type T = EndPoint
 
@@ -18,15 +18,10 @@ case class EndPoint(fields: Fields) extends DomainElement {
   val operations: Seq[Operation] = fields(Operations)
   val parameters: Seq[Parameter] = fields(Parameters)
 
-  def simplePath: String = {
-    val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
-    parent.map(p => path.stripPrefix(p.parentPath.completePath)).getOrElse(path)
-  }
+  val parentPath: Option[EndPointPath] =
+    annotations.find(_.isInstanceOf[ParentEndPoint]).map(_.asInstanceOf[ParentEndPoint].parentPath)
 
-  def parentPath: Option[EndPointPath] = {
-    val parent: Option[ParentEndPoint] = fields.getAnnotation(Path, classOf[ParentEndPoint])
-    parent.map(_.parentPath)
-  }
+  val relativePath: String = parentPath.map(p => path.stripPrefix(p.completePath)).getOrElse(path)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
 
@@ -48,7 +43,7 @@ case class EndPoint(fields: Fields) extends DomainElement {
 
   override def toString = s"EndPoint($name, $description, $path, $operations, $parameters)"
 
-  override def toBuilder: EndPointBuilder = EndPointBuilder(fields)
+  override def toBuilder: EndPointBuilder = EndPointBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "/end-points/" + path.urlEncoded
 }

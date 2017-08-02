@@ -8,7 +8,7 @@ import amf.metadata.domain.WebApiModel._
 /**
   * Web Api builder
   */
-class WebApiBuilder(val annotations: List[Annotation]) extends Builder {
+class WebApiBuilder extends Builder {
 
   override type T = WebApi
 
@@ -57,5 +57,5 @@ object WebApiBuilder {
 
   def apply(fields: Fields, annotations: List[Annotation] = Nil): WebApiBuilder = apply(annotations).copy(fields)
 
-  def apply(annotations: List[Annotation]): WebApiBuilder = new WebApiBuilder(annotations)
+  def apply(annotations: List[Annotation]): WebApiBuilder = new WebApiBuilder().withAnnotations(annotations)
 }

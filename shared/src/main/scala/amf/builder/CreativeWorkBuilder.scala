@@ -14,13 +14,14 @@ class CreativeWorkBuilder extends Builder {
 
   def withDescription(description: String): CreativeWorkBuilder = set(Description, description)
 
-  override def build: CreativeWork = CreativeWork(fields)
+  override def build: CreativeWork = CreativeWork(fields, annotations)
 }
 
 object CreativeWorkBuilder {
-  def apply(): CreativeWorkBuilder = new CreativeWorkBuilder()
+  def apply(): CreativeWorkBuilder = apply(Nil)
 
-  def apply(annotations: List[Annotation]): CreativeWorkBuilder = new CreativeWorkBuilder()
+  def apply(fields: Fields, annotations: List[Annotation] = Nil): CreativeWorkBuilder = apply(annotations).copy(fields)
 
-  def apply(fields: Fields): CreativeWorkBuilder = apply().copy(fields)
+  def apply(annotations: List[Annotation]): CreativeWorkBuilder =
+    new CreativeWorkBuilder().withAnnotations(annotations)
 }

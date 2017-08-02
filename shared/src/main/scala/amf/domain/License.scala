@@ -6,7 +6,7 @@ import amf.metadata.domain.LicenseModel.{Name, Url}
 /**
   * License internal model
   */
-case class License(fields: Fields) extends DomainElement {
+case class License(fields: Fields, annotations: List[Annotation]) extends DomainElement {
 
   override type T = License
 
@@ -30,7 +30,7 @@ case class License(fields: Fields) extends DomainElement {
 
   override def toString = s"License($url, $name)"
 
-  override def toBuilder: LicenseBuilder = LicenseBuilder(fields)
+  override def toBuilder: LicenseBuilder = LicenseBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "/license"
 }

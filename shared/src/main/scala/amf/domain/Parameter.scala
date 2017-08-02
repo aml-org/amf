@@ -6,7 +6,7 @@ import amf.metadata.domain.ParameterModel._
 /**
   * Parameter internal model.
   */
-case class Parameter(fields: Fields) extends DomainElement {
+case class Parameter(fields: Fields, annotations: List[Annotation]) extends DomainElement {
   override type T = Parameter
 
   val name: String        = fields(Name)
@@ -36,7 +36,7 @@ case class Parameter(fields: Fields) extends DomainElement {
 
   override def toString = s"Parameter($name, $description, $required, $binding, $schema)"
 
-  override def toBuilder: ParameterBuilder = ParameterBuilder(fields)
+  override def toBuilder: ParameterBuilder = ParameterBuilder(fields, annotations)
 
   def isHeaderType: Boolean = binding == "header"
 
@@ -44,5 +44,5 @@ case class Parameter(fields: Fields) extends DomainElement {
 }
 
 object Parameter {
-  def apply(fields: Fields): Parameter = new Parameter(fields)
+  def apply(fields: Fields, annotations: List[Annotation]): Parameter = new Parameter(fields, annotations)
 }

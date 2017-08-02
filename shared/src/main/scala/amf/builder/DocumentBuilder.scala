@@ -17,11 +17,11 @@ class DocumentBuilder extends Builder {
 
   def withEncodes(element: DomainElement): DocumentBuilder = set(Encodes, element)
 
-  override def build: Document = Document(fields)
+  override def build: Document = Document(fields, annotations)
 }
 
 object DocumentBuilder {
-  def apply(): DocumentBuilder = new DocumentBuilder()
+  def apply(): DocumentBuilder = apply(Nil)
 
-  def apply(annotations: List[Annotation]): DocumentBuilder = new DocumentBuilder()
+  def apply(annotations: List[Annotation]): DocumentBuilder = new DocumentBuilder().withAnnotations(annotations)
 }

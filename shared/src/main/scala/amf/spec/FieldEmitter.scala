@@ -129,7 +129,7 @@ object FieldEmitter {
 
         if (vendor == Raml) endPoint.parentPath.foreach(ep => { eps(ep).add(builder) })
 
-        eps = eps + (EndPointPath(endPoint.parentPath, endPoint.simplePath) -> builder)
+        eps = eps + (EndPointPath(endPoint.parentPath, endPoint.relativePath) -> builder)
       })
 
       if (vendor == Raml) eps.filterKeys(_.parent.isEmpty).values.toList
@@ -139,7 +139,7 @@ object FieldEmitter {
     private def endPointBuilder(endPoint: EndPoint, spec: SpecField): LazyBuilder = new LazyBuilder(Entry) {
       override def build: AMFAST =
         entry(
-          if (spec.vendor == Raml) endPoint.simplePath else endPoint.path,
+          if (spec.vendor == Raml) endPoint.relativePath else endPoint.path,
           map(
             List
               .concat(SpecEmitter(spec.children.map(_.copy(vendor = spec.vendor)))

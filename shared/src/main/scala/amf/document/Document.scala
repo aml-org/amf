@@ -1,13 +1,16 @@
 package amf.document
 
-import amf.domain.{DomainElement, Fields, WebApi}
+import amf.domain.{Annotation, DomainElement, Fields, WebApi}
 import amf.metadata.document.DocumentModel._
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
   * [[DomainElement]]s that reference from the encoded [[DomainElement]]
   */
-case class Document(fields: Fields) extends BaseUnit with EncodesModel with DeclaresModel {
+case class Document(fields: Fields, annotations: List[Annotation])
+    extends BaseUnit
+    with EncodesModel
+    with DeclaresModel {
 
   override val references: Seq[BaseUnit] = fields(References)
 
@@ -19,5 +22,5 @@ case class Document(fields: Fields) extends BaseUnit with EncodesModel with Decl
 }
 
 object Document {
-  def apply(fields: Fields): Document = new Document(fields)
+  def apply(fields: Fields, annotations: List[Annotation]): Document = new Document(fields, annotations)
 }

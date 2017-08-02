@@ -141,8 +141,8 @@ object Spec {
         )
       ),
       'host ~ Host,
-      'basePath ~ BasePath,
       Symbol("x-baseUriParameters") ~ BaseUriParameters -> OasParam,
+      'basePath ~ BasePath,
       'consumes ~ Accepts,
       'produces ~ ContentType,
       'schemes ~ Schemes,

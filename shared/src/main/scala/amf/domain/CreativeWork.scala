@@ -6,7 +6,7 @@ import amf.metadata.domain.CreativeWorkModel.{Url, Description}
 /**
   * Creative work internal model
   */
-case class CreativeWork(fields: Fields) extends DomainElement {
+case class CreativeWork(fields: Fields, annotations: List[Annotation]) extends DomainElement {
 
   override type T = CreativeWork
 
@@ -30,11 +30,11 @@ case class CreativeWork(fields: Fields) extends DomainElement {
 
   override def toString = s"CreativeWork($url, $description)"
 
-  override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder(fields)
+  override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "/creative-work"
 }
 
 object CreativeWork {
-  def apply(fields: Fields): CreativeWork = new CreativeWork(fields)
+  def apply(fields: Fields, annotations: List[Annotation]): CreativeWork = new CreativeWork(fields, annotations)
 }
