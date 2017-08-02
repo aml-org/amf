@@ -3,8 +3,8 @@ package amf.spec
 import amf.builder._
 import amf.common.AMFToken.{Entry, Extension}
 import amf.common.Strings.strings
-import amf.domain.Annotation.{ExplicitField, LexicalInformation, ParentEndPoint, UriParameter}
-import amf.domain.{Annotation, EndPoint, Parameter, Payload, EndPointPath}
+import amf.domain.Annotation._
+import amf.domain.{Annotation, _}
 import amf.metadata.Type
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.ParameterModel.Required
@@ -228,7 +228,8 @@ object FieldParser {
           context(EndPointBodyParameter) match {
             case Some((endPointParam: Parameter, endPointPayload: Payload)) =>
               request add (RequestModel.Payloads, List(opPayload), annotations ++ List(
-                Annotation.OperationBodyParameter(opParam, Some((endPointParam, endPointPayload)))))
+                Annotation.OperationBodyParameter(opParam),
+                OverrideEndPointBodyParameter(endPointParam, endPointPayload)))
             case None =>
               request add (RequestModel.Payloads, List(opPayload), annotations ++ List(
                 Annotation.OperationBodyParameter(opParam)))

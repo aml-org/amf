@@ -47,11 +47,19 @@ object Annotation {
     override val value: String = null
   }
 
-  case class OperationBodyParameter(asParameter: Parameter, overrides: Option[(Parameter, Payload)] = None)
-      extends Annotation {
+  case class OperationBodyParameter(asParameter: Parameter) extends Annotation {
 
     /** Extension name. */
     override val name: String = "operation-body-parameter"
+
+    /** Value as string. */
+    override val value: String = null
+  }
+
+  case class OverrideEndPointBodyParameter(asParameter: Parameter, asPayload: Payload) extends Annotation {
+
+    /** Extension name. */
+    override val name: String = "override-endpoint-body-parameter"
 
     /** Value as string. */
     override val value: String = null
