@@ -15,6 +15,8 @@ case class ParserContext() {
     c.context = Map() ++ context
     c
   }
+
+  override def toString: String = s"ParserContext($context)"
 }
 
 trait ContextKey
