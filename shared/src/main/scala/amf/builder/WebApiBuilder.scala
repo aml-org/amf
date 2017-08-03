@@ -24,9 +24,9 @@ class WebApiBuilder extends Builder {
 
   def withBasePath(path: String): WebApiBuilder = set(BasePath, path)
 
-  def withAccepts(accepts: String): WebApiBuilder = set(Accepts, accepts)
+  def withAccepts(accepts: List[String]): WebApiBuilder = set(Accepts, accepts)
 
-  def withContentType(contentType: String): WebApiBuilder = set(ContentType, contentType)
+  def withContentType(contentType: List[String]): WebApiBuilder = set(ContentType, contentType)
 
   def withVersion(version: String): WebApiBuilder = set(Version, version)
 

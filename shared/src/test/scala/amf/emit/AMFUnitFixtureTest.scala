@@ -26,8 +26,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .withHost("http://localhost.com/api")
       .withSchemes(List("http", "https"))
       .withBasePath("http://localhost.com/api")
-      .withAccepts("application/json")
-      .withContentType("application/json")
+      .withAccepts(List("application/json"))
+      .withContentType(List("application/json"))
       .withVersion("1.1")
       .withTermsOfService("termsOfService")
       .build

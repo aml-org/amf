@@ -27,8 +27,12 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |    "https"
         |  ],
         |  "basePath": "http://localhost.com/api",
-        |  "consumes": "application/json",
-        |  "produces": "application/json"
+        |  "consumes": [
+        |    "application/json"
+        |  ],
+        |  "produces": [
+        |    "application/json"
+        |  ]
         |}""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Oas).dump
@@ -44,7 +48,8 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |protocols:
         |  - http
         |  - https
-        |mediaType: application/json
+        |mediaType:
+        |  - application/json
         |version: 1.1
         |termsOfService: termsOfService""".stripMargin
 

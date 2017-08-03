@@ -11,8 +11,12 @@
     }
   },
   "host": "http://api.example.com/path",
-  "produces": "application/yaml",
-  "consumes": "application/yaml",
+  "produces": [
+    "application/yaml"
+  ],
+  "consumes": [
+    "application/yaml"
+  ],
   "schemes": [
     "http",
     "https"

@@ -20,9 +20,9 @@ object WebApiModel extends DomainElementModel {
 
   val BasePath = Field(Str, Http + "basePath")
 
-  val Accepts = Field(Str, Http + "accepts")
+  val Accepts = Field(Array(Str), Http + "accepts")
 
-  val ContentType = Field(Str, Http + "contentType")
+  val ContentType = Field(Array(Str), Http + "contentType")
 
   val Version = Field(Str, Schema + "version")
 

@@ -41,8 +41,12 @@
       "https"
     ],
     "raml-http:basePath": "http://localhost.com/api",
-    "raml-http:accepts": "application/json",
-    "raml-http:contentType": "application/json",
+    "raml-http:accepts": [
+      "application/json"
+    ],
+    "raml-http:contentType": [
+      "application/json"
+    ],
     "schema-org:version": "1.1",
     "schema-org:termsOfService": "termsOfService",
     "schema-org:provider": {

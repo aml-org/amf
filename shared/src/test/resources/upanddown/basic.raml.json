@@ -11,7 +11,11 @@
     "http",
     "https"
   ],
-  "produces": "application/yaml",
-  "consumes": "application/yaml",
+  "produces": [
+    "application/yaml"
+  ],
+  "consumes": [
+    "application/yaml"
+  ],
   "basePath": "/path"
 }
