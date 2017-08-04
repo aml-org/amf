@@ -1,9 +1,9 @@
 #%RAML 1.0
 title: test title
 description: test description
-termsOfService: terms of service
+(termsOfService): terms of service
 version: 1.1
-license:
+(license):
   url: licenseUrl
   name: licenseName
 baseUri: http://api.example.com/path
@@ -12,30 +12,30 @@ mediaType:
 protocols:
   - http
   - https
-contact:
+(contact):
   url: contactUrl
   name: contactName
   email: contactEmail
-externalDocs:
+(externalDocs):
   url: externalDocsUrl
   description: externalDocsDescription
 /levelzero:
   displayName: Name
   get:
-    title: Some title
+    displayName: Some title
     description: Some description
-    deprecated: true
-    summary: This is a summary
-    externalDocs:
+    (deprecated): true
+    (summary): This is a summary
+    (externalDocs):
       url: urlExternalDocs
       description: descriptionExternalDocs
     protocols:
       - http
       - https
   post:
-    title: Some title
+    displayName: Some title
     description: Some description
-    externalDocs:
+    (externalDocs):
       url: urlExternalDocs
       description: descriptionExternalDocs
     protocols:
@@ -45,11 +45,11 @@ externalDocs:
   displayName: One display name
   description: and this description!
   get:
-    title: Some title level one
+    displayName: Some title level one
     description: Some description level one
-    deprecated: true
-    summary: This is a summary level one
-    externalDocs:
+    (deprecated): true
+    (summary): This is a summary level one
+    (externalDocs):
       url: urlExternalDocs lvel one
       description: descriptionExternalDocs level one
     protocols:
@@ -60,9 +60,9 @@ externalDocs:
 /another-levelzero:
   displayName: Root name
   post:
-    title: Some title another level 0
+    displayName: Some title another level 0
     description: Some description another level 0
-    externalDocs:
+    (externalDocs):
       url: urlExternalDocs another level 0
       description: descriptionExternalDocs another level 0
     protocols:

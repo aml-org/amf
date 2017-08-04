@@ -56,8 +56,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
     assertNode(root.last, ("description", "test description"))
 
     assertNode(root.last, ("version", "1.1"))
-    assertNode(root.last, ("termsOfService", "termsOfService"))
-    assertNode(root.last, ("license", List(("url", "licenseUrl"), ("name", "licenseName"))))
+    assertNode(root.last, ("(termsOfService)", "termsOfService"))
+    assertNode(root.last, ("(license)", List(("url", "licenseUrl"), ("name", "licenseName"))))
 
     assertNode(root.last, ("protocols", List("http", "http")))
     assertNode(root.last, ("baseUri", "http://localhost.com/api"))
@@ -65,10 +65,10 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
     assertNode(root.last, ("mediaType", List("application/json")))
 
     assertNode(root.last,
-               ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
+               ("(contact)", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
 
     assertNode(root.last,
-               ("externalDocs",
+               ("(externalDocs)",
                 List(
                   ("url", "creativoWorkUrl"),
                   ("description", "creativeWorkDescription")
@@ -78,7 +78,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
   test("Test Raml generation with operations") {
     val root = ast(`document/api/advanced`, Raml)
     assertNode(root.last,
-               ("/endpoint", List(("get", List(("description", "test operation get"), ("title", "test get"))))))
+               ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get"))))))
   }
 
   test("Test Oas generation with operations") {

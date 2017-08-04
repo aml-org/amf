@@ -51,7 +51,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |mediaType:
         |  - application/json
         |version: 1.1
-        |termsOfService: termsOfService""".stripMargin
+        |(termsOfService): termsOfService""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Raml).dump
     Tests.checkDiff(actual, expected)

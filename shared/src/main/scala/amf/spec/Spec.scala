@@ -70,18 +70,18 @@ object Spec {
       'description ~ Description,
       'mediaType ~ (ContentType | Accepts),
       'version ~ Version,
-      'termsOfService ~ TermsOfService,
+      Symbol("(termsOfService)") ~ TermsOfService,
       'protocols ~ Schemes,
-      'contact ~ Provider -> (
+      Symbol("(contact)") ~ Provider -> (
         'url ~ OrganizationUrl,
         'name ~ OrganizationName,
         'email ~ OrganizationEmail
       ),
-      'externalDocs ~ Documentation -> (
+      Symbol("(externalDocs)") ~ Documentation -> (
         'url ~ CreativeWorkUrl,
         'description ~ CreativeWorkDescription
       ),
-      'license ~ License -> (
+      Symbol("(license)") ~ License -> (
         'url ~ LicenseUrl,
         'name ~ LicenseName
       ),
@@ -90,11 +90,11 @@ object Spec {
         'description ~ EndPointDescription,
         'uriParameters ~ EndPointParameters -> RamlParam,
         "get|patch|put|post|delete|options|head" ~ Operations -> (
-          'title ~ OperationName,
+          'displayName ~ OperationName,
           'description ~ OperationDescription,
-          'deprecated ~ Deprecated,
-          'summary ~ Summary,
-          'externalDocs ~ OperationDocumentation -> (
+          Symbol("(deprecated)") ~ Deprecated,
+          Symbol("(summary)") ~ Summary,
+          Symbol("(externalDocs)") ~ OperationDocumentation -> (
             'url ~ CreativeWorkUrl,
             'description ~ CreativeWorkDescription
           ),
