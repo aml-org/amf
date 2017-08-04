@@ -4,13 +4,13 @@ import amf.builder._
 import amf.common.AMFToken.{Comment, Entry, Root, StringToken}
 import amf.common.{AMFAST, AMFASTNode}
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.UriParameter
+import amf.domain.Annotation._
 import amf.domain._
 import amf.graph.GraphEmitter
 import amf.metadata.domain.{EndPointModel, OperationModel, WebApiModel}
 import amf.parser.Range.NONE
 import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.spec.Spec
+import amf.spec.{FieldEmitter, Spec}
 
 import scala.collection.mutable.ListBuffer
 
@@ -130,19 +130,76 @@ class AMFUnitMaker {
       e.fields.getAnnotationForValue(EndPointModel.Parameters, p, classOf[UriParameter]).isDefined
     }))
 
+    val overridedEndpoints = new ListBuffer[OverrideEndPointBodyParameter]
+
     val operatioBuilders: Seq[OperationBuilder] = e.operations.map(o => {
       val builder = o.toBuilder.asInstanceOf[OperationBuilder]
-      if (o.request != null)
+      if (o.request != null) {
+        val annotations = o.request.payloads
+          .filter(p => p.annotations.exists(a => a.isInstanceOf[OperationBodyParameter]))
+          .map(p => {
+            (p.annotations.find(a => a.isInstanceOf[OperationBodyParameter]), p.mediaType)
+          })
+        val opBodyParameter = annotations match {
+          case head :: tail if head._1.isDefined =>
+            val parameter = head._1.get.asInstanceOf[OperationBodyParameter].asParameter
+            List(ParameterBuilder(parameter.fields, MediaType(head._2) :: parameter.annotations).build)
+          case _ => Nil
+        }
+        //Only can have one parameter with binding body in endpoint.
+        overridedEndpoints ++= o.request.payloads.flatMap(p => {
+          p.annotations
+            .filter(a => a.isInstanceOf[OverrideEndPointBodyParameter])
+            .map(_.asInstanceOf[OverrideEndPointBodyParameter])
+        })
+
+        overridedEndpoints ++= o.request.payloads
+          .filter(p => p.annotations.exists(a => a.isInstanceOf[EndPointBodyParameter]))
+          .map(p => {
+            val endpointAnn = p.annotations.find(a => a.isInstanceOf[EndPointBodyParameter]).get
+            OverrideEndPointBodyParameter(endpointAnn.asInstanceOf[EndPointBodyParameter].asParameter, p)
+          })
+
+        //default parameter coming from raml
+
+        val defaultP = FieldEmitter.defaultPayload(
+          o.request.payloads
+            .filter(p =>
+              !p.annotations.exists(a =>
+                a.isInstanceOf[OperationBodyParameter] || a.isInstanceOf[EndPointBodyParameter])))
+        val defaultPayloadParameterB = defaultP.map(p => {
+          ParameterBuilder(List(MediaType(p.mediaType)))
+            .withBinding("body")
+            .withSchema(p.schema)
+        })
+
         builder.withRequest(
           o.request.toBuilder
             .withHeaders(Nil)
-            .withQueryParameters(fixBindingInParameters(o.request.queryParameters.toList, "query", None).map(_.build)
-              ++ fixBindingInParameters(o.request.headers.toList, "header", None).map(_.build))
+            .withQueryParameters(
+              fixBindingInParameters(o.request.queryParameters.toList, "query", None).map(_.build)
+                ++ fixBindingInParameters(o.request.headers.toList, "header", None).map(_.build) ++ opBodyParameter
+                ++ defaultPayloadParameterB.map(_.build))
+            .withPayloads(o.request.payloads.filter(p =>
+              !p.annotations.exists(a =>
+                a.isInstanceOf[OperationBodyParameter] || a.isInstanceOf[EndPointBodyParameter])))
             .build
         )
+      }
       builder
     })
-    e.toBuilder.withParameters(pBuilders.map(_.build)).withOperations(operatioBuilders.map(_.build)).build
+
+    val payloadEndpointParameter = overridedEndpoints.toList match {
+      case head :: tail =>
+        List(
+          ParameterBuilder(head.asParameter.fields,
+                           MediaType(head.asPayload.mediaType) :: head.asParameter.annotations).build)
+      case _ => Nil
+    }
+    e.toBuilder
+      .withParameters(pBuilders.map(_.build) ++ payloadEndpointParameter)
+      .withOperations(operatioBuilders.map(_.build))
+      .build
   }
 
   private def swaggerEntry(): AMFAST = {

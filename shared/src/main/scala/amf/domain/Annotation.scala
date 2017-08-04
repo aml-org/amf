@@ -65,6 +65,17 @@ object Annotation {
     override val value: String = null
   }
 
+  case class MediaType(mediaType: String) extends Annotation {
+
+    /** Extension name. */
+    override val name: String = "inherith-media-type-body-parameter"
+
+    /** Value as string. */
+    override val value: String = null
+
+    val key = "x-media-type"
+  }
+
   case class ArrayFieldAnnotations(holder: Map[Any, List[Annotation]] = Map()) extends Annotation {
     def +(value: Any, annotations: List[Annotation]): ArrayFieldAnnotations =
       ArrayFieldAnnotations(value match {

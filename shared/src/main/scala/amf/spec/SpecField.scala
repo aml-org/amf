@@ -42,7 +42,7 @@ protected trait SpecNode {
       case Array(ParameterModel) =>
         SpecField(fields, matcher(), ParametersParser, ParametersEmitter)
       case Array(PayloadModel) =>
-        SpecField(fields, matcher(), PayloadsParser, null)
+        SpecField(fields, matcher(), PayloadsParser, PayloadEmitter)
       case Array(ResponseModel) =>
         SpecField(fields, matcher(), ResponseParser, ResponseEmitter)
     }

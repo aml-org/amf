@@ -300,8 +300,10 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                   .withName("404")
                   .withStatusCode("404")
                   .withDescription("Not found!")
-                  .withPayloads(List(PayloadBuilder().withMediaType("application/json").build,
-                                     PayloadBuilder().withMediaType("application/xml").build))
+                  .withPayloads(List(
+                    PayloadBuilder().withMediaType("application/json").withSchema("someType").build,
+                    PayloadBuilder().withMediaType("application/xml").withSchema("someType").build
+                  ))
                   .build
               ))
               .build))

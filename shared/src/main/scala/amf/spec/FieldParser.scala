@@ -145,7 +145,7 @@ object FieldParser {
       if (spec.vendor == Oas) {
         val rootPayload = PayloadBuilder()
         if (traverseAndParse(Spec.OasPayload, entry, rootPayload, context))
-          response add (ResponseModel.Payloads, List(rootPayload.build))
+          response add (ResponseModel.Payloads, rootPayload.build)
       }
 
       builder add (spec.fields.head, response.build, annotations(entry))
@@ -163,6 +163,9 @@ object FieldParser {
             .foreach(e => {
               val somePayload =
                 PayloadBuilder().set(PayloadModel.MediaType, e.head.content.unquote, annotations(e.head))
+
+              if (e.last != e.head)
+                somePayload.set(PayloadModel.Schema, e.last.content.unquote, annotations(e.last))
 
               //TODO match a raml-type inside of node e.. . .. .... ?
 
@@ -228,19 +231,22 @@ object FieldParser {
         case Some((opParam: Parameter, opPayload: Payload)) =>
           context(EndPointBodyParameter) match {
             case Some((endPointParam: Parameter, endPointPayload: Payload)) =>
-              request add (RequestModel.Payloads, opPayload, annotations ++ List(
-                Annotation.OperationBodyParameter(opParam),
-                OverrideEndPointBodyParameter(endPointParam, endPointPayload)))
+              request add (RequestModel.Payloads, Payload(
+                opPayload.fields,
+                opPayload.annotations ++ List(Annotation.OperationBodyParameter(opParam),
+                                              OverrideEndPointBodyParameter(endPointParam, endPointPayload))))
             case None =>
-              request add (RequestModel.Payloads, opPayload, annotations ++ List(
-                Annotation.OperationBodyParameter(opParam)))
+              request add (RequestModel.Payloads, Payload(
+                opPayload.fields,
+                opPayload.annotations ++ List(Annotation.OperationBodyParameter(opParam))))
           }
           return true
         case None =>
           context(EndPointBodyParameter) match {
             case Some((endPointParam: Parameter, endPointPayload: Payload)) =>
-              request add (RequestModel.Payloads, endPointPayload, annotations ++ List(
-                Annotation.EndPointBodyParameter(endPointParam)))
+              request add (RequestModel.Payloads, Payload(
+                endPointPayload.fields,
+                endPointPayload.annotations ++ List(Annotation.EndPointBodyParameter(endPointParam))))
               return true
             case None =>
           }

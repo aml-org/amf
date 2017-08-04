@@ -1,0 +1,46 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API"
+  },
+  "host": "/some/uri",
+  "basePath": "/some/uri",
+  "paths": {
+    "/levelzero": {
+
+    },
+    "/levelzero/level-one": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "responses": {
+          "200": {
+            "description": "200 descr",
+            "headers": {
+              "Time-Ago": {
+                "type": "integer"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found!",
+            "x-response-payloads": [
+              {
+                "mediaType": "application/xml"
+              }
+            ],
+            "x-media-type": "application/json"
+          }
+        },
+        "parameters": [
+          {
+            "in": "body",
+            "schema": "string",
+            "x-media-type": "application/json"
+          }
+        ]
+      }
+    }
+  }
+}

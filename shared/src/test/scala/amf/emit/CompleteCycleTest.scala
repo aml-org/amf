@@ -139,6 +139,22 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
     assertCycle("operation-response.raml", "operation-response.raml.json", RamlYamlHint, Oas)
   }
 
+  test("Complete with payloads raml to raml test") {
+    assertCycle("payloads.raml", "payloads.raml", RamlYamlHint, Raml)
+  }
+
+  test("Complete with payloads raml to oas test") {
+    assertCycle("payloads.raml", "payloads.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Complete with payloads oas to oas test") {
+    assertCycle("payloads.json", "payloads.json", OasJsonHint, Oas)
+  }
+
+  test("Complete with payloads oas to raml test") {
+    assertCycle("payloads.json", "payloads.json.raml", OasJsonHint, Raml)
+  }
+
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
     val expected = platform
       .resolve(basePath + golden, None)

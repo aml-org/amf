@@ -2,12 +2,11 @@ package amf.spec
 
 import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFASTNode, AMFToken}
-import amf.domain.{EndPoint, Fields, Operation}
-import amf.domain.Annotation.ExplicitField
-import amf.domain._
+import amf.domain.Annotation.{ExplicitField, MediaType}
+import amf.domain.{EndPoint, Fields, Operation, _}
 import amf.metadata.Field
-import amf.model.AmfElement
 import amf.metadata.domain.{ParameterModel, ResponseModel}
+import amf.model.AmfElement
 import amf.parser.Range.NONE
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.FieldEmitter.StringValueEmitter.key
@@ -164,7 +163,7 @@ object FieldEmitter {
     }
 
     private def emittRequest(request: Request, vendor: Vendor, principal: LazyBuilder): LazyBuilder = {
-      val emitter = SpecEmitter(RequestSpec(vendor).fields.toList)
+      val emitter = SpecEmitter(RequestSpec(vendor).fields.map(_.copy(vendor = vendor)).toList)
       emitter.addEmitToPrincipal(request.fields, principal)
     }
 
@@ -236,8 +235,20 @@ object FieldEmitter {
         entry(parameter.name, map(buildChildrens(spec, parameter.fields)))
     }
 
-    private def oasParameterBuilder(parameter: Parameter, spec: SpecField): LazyBuilder = new LazyBuilder(MapToken) {
-      override def build: AMFAST = map(buildChildrens(spec, parameter.fields))
+    private def oasParameterBuilder(parameter: Parameter, spec: SpecField): LazyBuilder = {
+      val principal = new LazyBuilder(MapToken) {
+        override def build: AMFAST = map(nodes.map(_.build))
+      }
+      val emitter = SpecEmitter(spec.children.map(_.copy(vendor = spec.vendor)))
+      emitter.addEmitToPrincipal(parameter.fields, principal)
+
+      val mediaTypeOption = parameter.annotations.find(p => p.isInstanceOf[MediaType]).map(_.asInstanceOf[MediaType])
+      if (mediaTypeOption.isDefined && mediaTypeOption.get.mediaType != null && !mediaTypeOption.get.mediaType.isEmpty)
+        principal.add(new LazyBuilder(Entry) {
+          override def build: AMFAST = entry(mediaTypeOption.get.key, valueNode(mediaTypeOption.get.mediaType))
+        })
+
+      principal
     }
   }
 
@@ -246,16 +257,75 @@ object FieldEmitter {
       val responses: List[Response] = value.asInstanceOf[List[Response]]
 
       responses.map(r => {
-        new LazyBuilder(Entry) {
+        val emitter = SpecEmitter(Spec.OasPayload.fields.toList)
+
+        val builder = new LazyBuilder(Entry) {
           override def build: AMFAST = {
             entry(if (spec.vendor == Raml) r.statusCode else r.name, map(buildChildrens(spec, r.fields)))
           }
         }
+        if (r.payloads.nonEmpty && spec.vendor == Oas) {
+          val default = defaultPayload(r.payloads.toList)
+          emitter.addEmitToPrincipal(default.get.fields, builder)
+        }
+        builder
       })
     }
   }
 
-  private def valueNode(value: Any, token: AMFToken = StringToken) = new AMFASTNode(token, value.toString, NONE)
+  object PayloadEmitter extends SpecFieldEmitter {
+    override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
+
+      val payloads = value.asInstanceOf[List[Payload]]
+      val default  = defaultPayload(payloads)
+      spec.vendor match {
+        case Raml =>
+          List(new LazyBuilder(Entry) {
+            override def build: AMFAST = {
+              entry(
+                key(spec),
+                map(payloads.map(p => {
+                  if (default.isDefined && default.get == p && (p.mediaType == null || p.mediaType.isEmpty))
+                    entry("type", valueNode(p.schema))
+                  else
+                    entry(p.mediaType, valueNode(p.schema))
+                }))
+              )
+            }
+          })
+        case Oas =>
+          val default            = defaultPayload(payloads)
+          val nonDefaultPayloads = payloads.filter(p => p != default.get)
+          if (nonDefaultPayloads.isEmpty) Nil
+          else
+            List(new LazyBuilder(Entry) {
+              override def build: AMFAST = {
+                entry(
+                  key(spec),
+                  new AMFASTNode(
+                    SequenceToken,
+                    "",
+                    null,
+                    nonDefaultPayloads.map(p => {
+                      val emitter = SpecEmitter(Spec.OasExtensionPayload.fields.toList)
+                      emitter
+                        .addEmitToPrincipal(p.fields, new LazyBuilder(MapToken) {
+                          override def build: AMFAST = map(nodes.map(_.build))
+                        })
+                        .build
+                    })
+                  )
+                )
+              }
+            })
+        case _ => ???
+
+      }
+    }
+  }
+
+  private def valueNode(value: Any, token: AMFToken = StringToken) =
+    new AMFASTNode(token, if (value == null) "" else value.toString, NONE)
 
   def nested(sf: SpecField): Seq[(Field, (SpecField, Option[SpecFieldEmitter]))] = {
 
@@ -318,5 +388,21 @@ object FieldEmitter {
 
   case class Resolved(node: AMFAST) extends NodeBuilder {
     override def build: AMFAST = node
+  }
+
+  //TODO where goes this aux method?
+  def defaultPayload(payloads: Seq[Payload]): Option[Payload] = {
+    //TODO only for raml?
+    if (payloads.isEmpty) None
+    else {
+      val emptyMTOption = payloads.find(p => p.schema == null || p.schema.isEmpty)
+      if (emptyMTOption.isDefined) emptyMTOption
+      else {
+        val jsonSchemaOption = payloads.find(p => p.mediaType == "application/json")
+        if (jsonSchemaOption.isDefined) jsonSchemaOption
+        else
+          Some(payloads.head)
+      }
+    }
   }
 }
