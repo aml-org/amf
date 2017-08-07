@@ -473,9 +473,18 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     * [105]	e-scalar	::=	/* Empty */
     */
   def emptyScalar(): Boolean = {
-    emit(BeginNode, BeginScalar)
-    emit(EndScalar, EndNode)
+    emit(BeginScalar)
+    emit(EndScalar)
   }
+
+    /**
+      * [106] e-node :: e-scalar
+       */
+   private def emptyNode() = {
+       emit(BeginNode)
+       emptyScalar()
+       emit(EndNode)
+   }
 
   /**
     * Process either simple or double quoted scalars
@@ -522,7 +531,8 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
           emitText()
           emit(BeginEscape)
           emitIndicator()
-          if (currentChar == '\n') breakNonContent()
+            val nl = currentChar == '\n'
+            if (nl) breakNonContent()
           else
             escapeSeq(currentChar) match {
               case -1 =>
@@ -534,6 +544,8 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
                 consumeAndEmit(MetaText)
             }
           emit(EndEscape)
+          if (nl) consumeAndEmit(countWhiteSpaces(), WhiteSpace)
+
         case ' ' | '\t' =>
           val spaces = countWhiteSpaces()
           if (isBBreak(lookAhead(spaces))) {
@@ -694,10 +706,20 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     *                                         [[flowSequenceEntries ns-s-flow-seq-entries(n,c)]]?
     *                                       )?
     */
-  @tailrec private def flowSequenceEntries(n: Int, ctx: YamlContext): Boolean = {
+  @tailrec private def flowSequenceEntries(n: Int, ctx: YamlContext): Boolean = currentChar != ']' && {
+
     flowSequenceEntry(n, ctx) && {
+      def isInvalid(chr: Int) = chr != ']' && chr != ',' && chr != EofChar
+
       separate(n, ctx)
-      indicator(',') && {
+      if (isInvalid(currentChar)) {
+        consumeWhile(isInvalid)
+        emit(Error)
+      }
+      val c = currentChar
+      if (c == ']' || c == EofChar) true
+      else {
+        emitIndicator()
         separate(n, ctx)
         flowSequenceEntries(n, ctx)
       }
@@ -713,7 +735,7 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     *                                 | [[flowNode ns-flow-node(n,c)]]
     */
   def flowSequenceEntry(n: Int, ctx: YamlContext): Boolean = {
-    // todo flow-pair
+    matches(emit(BeginMapping, BeginPair) && flowPair(n, ctx) && emit(EndPair, EndMapping)) ||
     matches(emit(BeginNode) && flowNode(n, ctx) && emit(EndNode))
   }
 
@@ -738,7 +760,7 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     *[141]	ns-s-flow-map-entries(n,c)	::=	ns-flow-map-entry(n,c) s-separate(n,c)?
     *                                     ( “,” s-separate(n,c)? ns-s-flow-map-entries(n,c)? )?
     */
-  @tailrec private def flowMapEntries(n: Int, ctx: YamlContext): Boolean = {
+  @tailrec private def flowMapEntries(n: Int, ctx: YamlContext): Boolean = currentChar != '}' && {
     flowMapEntry(n, ctx) && {
       separate(n, ctx)
       indicator(',') && {
@@ -754,67 +776,137 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     *
     * <blockquote><pre>
     * [142]	ns-flow-map-entry(n,c)	::=	  ( “?” [[separate s-separate(n,c)]]
-    *                                        ns-flow-map-explicit-entry(n,c)
+    *                                           [[flowMapExplicitEntry ns-flow-map-explicit-entry(n,c)]]
     *                                     )
-    *                                 |     ns-flow-map-implicit-entry(n,c)
+    *                                     | [[flowMapImplicitEntry ns-flow-map-implicit-entry(n,c)]]
     *
-    *[143]	ns-flow-map-explicit-entry(n,c)	::=	  ns-flow-map-implicit-entry(n,c)
-    *                                        |   ( [[emptyScalar e-node]] [[emptyScalar e-node]])
     * </blockquote></pre>
     */
   private def flowMapEntry(n: Int, c: YamlContext) =
-    currentChar == '?' && separate(n, c) && {
-      {
-        val c = lookAhead(1)
-        (c == ',' || c == '}') && emptyScalar() && emptyScalar()
-      } || flowMapImplicitEntry(n, c)
-    } || flowMapImplicitEntry(n, c)
+    emit(BeginPair) && {
+      indicator('?') && separate(n, c) && flowMapExplicitEntry(n, c) ||
+      flowMapImplicitEntry(n, c)
+    } && emit(EndPair)
+
+  /**
+    * [143]	ns-flow-map-explicit-entry(n,c)	::=	  [[flowMapImplicitEntry ns-flow-map-implicit-entry(n,c)]]
+    *                                        |   ( [[emptyNode e-node]] [[emptyNode e-node]])
+    */
+  private def flowMapExplicitEntry(n: Int, c: YamlContext) = {
+    (currentChar == ',' || currentChar == '}') && emptyNode() && emptyNode() || flowMapImplicitEntry(n, c)
+  }
 
   /**
     * <blockquote><pre>
     *  [144]	ns-flow-map-implicit-entry(n,c)	   ::=	ns-flow-map-yaml-key-entry(n,c)
-    *                                             |  c-ns-flow-map-empty-key-entry(n,c)
-    *                                             |  c-ns-flow-map-json-key-entry(n,c)
+    *                                             |  [[flowMapEmptyKeyEntry c-ns-flow-map-empty-key-entry(n,c)]]
+    *                                             |  [[flowMapJsonKeyEntry c-ns-flow-map-json-key-entry(n,c)]]
     *
     *  [145]	ns-flow-map-yaml-key-entry(n,c)	   ::=	[[flowYamlNode ns-flow-yaml-node(n,c)]]
     *                                             ( ([[separate s-separate(n,c)]]?
-    *                                                c-ns-flow-map-separate-value(n,c) )
-    *                                             |  [[emptyScalar e-node]]
+    *                                                [[flowMapSeparateValue c-ns-flow-map-separate-value(n,c)]])
+    *                                             |  [[emptyNode e-node]]
     *                                             )
-    *  [146]	c-ns-flow-map-empty-key-entry(n,c)	::=	[[emptyScalar e-node]]
-    *                                                c-ns-flow-map-separate-value(n,c)
+
     *
-    *  [147]	c-ns-flow-map-separate-value(n,c)	::=	“:” (Not followed by an ns-plain-safe(c) )
-    *                                                 ( ( [[separate s-separate(n,c)]]
-    *                                                    [[flowNode ns-flow-node(n,c)]])
-    *                                                 | [[emptyScalar e-node]]
-    *                                                )
     * </blockquote></pre>
     * // todo complete
     */
-  private def flowMapImplicitEntry(n: Int, c: YamlContext) = matches {
-    emit(BeginPair, BeginNode)
-    flowYamlNode(n, c) &&
-    emit(EndNode) &&
-    optional(separate(n, c)) &&
-    indicator(':') &&
+  private def flowMapImplicitEntry(n: Int, c: YamlContext) =
     matches {
+      val b1 = emit(BeginNode) && flowYamlNode(n, c)
+      b1 && emit(EndNode) && (
+          matches {
+            optional(separate(n, c)) && flowMapSeparateValue(n, c)
+          } || emptyNode()
+      )
+    } || flowMapEmptyKeyEntry(n, c) || flowMapJsonKeyEntry(n, c)
+
+  /**
+    *  [146]	c-ns-flow-map-empty-key-entry(n,c)	::=	[[emptyNode e-node]]
+    *                                                   [[flowMapSeparateValue c-ns-flow-map-separate-value(n,c)]]
+    */
+  private def flowMapEmptyKeyEntry(n: Int, c: YamlContext) = matches {
+    emptyNode() && flowMapSeparateValue(n, c)
+  }
+
+  /**
+    *  [147]	c-ns-flow-map-separate-value(n,c)	::=	“:” (Not followed by an [[isPlainSafe ns-plain-safe(c)]] )
+    *                                                 ( ( [[separate s-separate(n,c)]] [[flowNode ns-flow-node(n,c)]])
+    *                                                 | [[emptyNode() e-node]]
+    *                                                 )
+    */
+  private def flowMapSeparateValue(n: Int, c: YamlContext) =
+    currentChar == ':' && !isPlainSafe(lookAhead(1), c) && emitIndicator() && (matches {
       separate(n, c)
       emit(BeginNode)
       flowNode(n, c) &&
       emit(EndNode)
-    } &&
-    emit(EndPair)
+    } ||
+      emptyNode())
+
+  /**
+    * [148]	c-ns-flow-map-json-key-entry(n,c)	::=	[[flowJsonNode c-flow-json-node(n,c)]]
+    *                                               ( ( [[separate s-separate(n,c)]]?
+    *                                                   [[flowMapAdjacentValue c-ns-flow-map-adjacent-value(n,c)]]
+    *                                                 )
+    *                                               | [[emptyNode e-node]]
+    *                                               )
+    */
+  private def flowMapJsonKeyEntry(n: Int, c: YamlContext) = matches {
+    flowJsonNode(n, c) && (matches {
+      separate(n, c)
+      flowMapAdjacentValue(n, c)
+    } || emptyNode())
   }
+
+  /**
+    * [149]	c-ns-flow-map-adjacent-value(n,c)	::=	“:” ( ( [[separate s-separate(n,c)]]?
+    *                                                       [[flowNode ns-flow-node(n,c)]] )
+    *                                                   | [[emptyNode e-node]]
+    *                                                   )
+    */
+  private def flowMapAdjacentValue(n: Int, c: YamlContext) = indicator(':') && (
+      matches {
+        separate(n, c)
+        emit(BeginNode)
+        flowNode(n, c) && emit(EndNode)
+      } || emptyNode()
+  )
 
   /**
     * If the “?” indicator is explicitly specified, parsing is unambiguous,
     * and the syntax is identical to the general case. <p>
     *
-    * [150]	ns-flow-pair(n,c)	::=	  ( “?” s-separate(n,c) ns-flow-map-explicit-entry(n,c) )
-    *                                      | ns-flow-pair-entry(n,c)
+    * [150]	ns-flow-pair(n,c)	::=	  ( “?” [[separate s-separate(n,c)]]
+    *                                       [[flowMapExplicitEntry ns-flow-map-explicit-entry(n,c)]]
+    *                                 )
+    *                                 | [[flowPairEntry ns-flow-pair-entry(n,c)]]
     */
-  def flowPair(n: Int, ctx: YamlContext): Boolean = ???
+  private def flowPair(n: Int, c: YamlContext): Boolean =
+    indicator('?') && separate(n, c) && flowMapExplicitEntry(n, c) || flowPairEntry(n, c)
+
+  /**
+    * <blockquote><pre>
+    * [151]	ns-flow-pair-entry(n,c)	::=	  ns-flow-pair-yaml-key-entry(n,c)
+    *                                 | [[flowMapEmptyKeyEntry c-ns-flow-map-empty-key-entry(n,c)]]
+    *                                 | c-ns-flow-pair-json-key-entry(n,c)
+    *
+    * [152]	ns-flow-pair-yaml-key-entry(n,c)	::=	[[implicitYamlKey ns-s-implicit-yaml-key(flow-key)]]
+    *                                               [[flowMapSeparateValue c-ns-flow-map-separate-value(n,c)]]
+    *
+    * [153]	c-ns-flow-pair-json-key-entry(n,c)	::=	[[implicitJsonKey c-s-implicit-json-key(flow-key)]]
+    *                                               [[flowMapAdjacentValue c-ns-flow-map-adjacent-value(n,c)]]
+    *
+    * </blockquote></pre>
+    */
+  private def flowPairEntry(n: Int, c: YamlContext) =
+    matches {
+      val b1 = implicitYamlKey(FlowKey)
+      b1 && flowMapSeparateValue(n, c)
+    } ||
+      flowMapEmptyKeyEntry(n, c) ||
+      matches(implicitJsonKey(FlowKey) && flowMapAdjacentValue(n, c))
 
   /** [154]	implicit-yaml-key(c)	::=	ns-flow-yaml-node(n/a,c) s-separate-in-line? */
   def implicitYamlKey(ctx: YamlContext): Boolean =
@@ -863,7 +955,7 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
   def flowYamlNode(n: Int, c: YamlContext): Boolean =
     aliasNode() ||
       flowYamlContent(n, c) ||
-      nodeProperties(n, c) && (separate(n, c) && flowYamlContent(n, c) || emptyScalar())
+      nodeProperties(n, c) && (matches(separate(n, c) && flowYamlContent(n, c)) || emptyScalar())
 
   /**
     *[160]	c-flow-json-node(n,c)	::=	( c-ns-properties(n,c) s-separate(n,c) )? c-flow-json-content(n,c)
@@ -873,7 +965,6 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
       optional(nodeProperties(n, ctx) && separate(n, ctx)) &&
       flowJsonContent(n, ctx) &&
       emit(EndNode)
-  // todo complete
 
   /**
     * A complete flow node also has optional node properties,
@@ -1190,19 +1281,25 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     *                                      )
     *                                  )
     *                                  | [[blockNode s-l+block-node(n,c) ]]
-    *                                  | ( [[emptyScalar e-node]] [[multilineComment s-l-comments]] )
+    *                                  | ( [[emptyNode e-node]] [[multilineComment s-l-comments]] )
     *
     * </blockquote></pre>
     */
   private def blockIndented(n: Int, ctx: YamlContext) = {
-    val m = detectSequenceStart(n) + n
-    m > 0 && indent(m) && emit(BeginNode) && compactSequence(n + 1 + m) && emit(EndNode)
-  } || {
-    val m = detectMapStart(n) + n
-    m > 0 && indent(m) && emit(BeginNode) && compactMapping(n + 1 + m) && emit(EndNode)
-  } || {
-    blockNode(n, ctx) ||
-    matches(emptyScalar() && multilineComment())
+    {
+      val m = detectSequenceStart(n) + n
+      m > 0 && matches {
+        indent(m) && emit(BeginNode) && compactSequence(n + 1 + m) && emit(EndNode)
+      }
+    } || {
+      val m = detectMapStart(n) + n
+      m > 0 && matches {
+        indent(m) && emit(BeginNode) && compactMapping(n + 1 + m) && emit(EndNode)
+      }
+    } || {
+      blockNode(n, ctx) ||
+      matches(emptyNode() && multilineComment())
+    }
   }
 
   /**
@@ -1240,25 +1337,29 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     val explicit = currentChar == '?'
     val entry    = explicit || lineContainsMapIndicator()
     if (!entry) false
-    else {
-      emit(BeginPair)
-      if (explicit) mapExplicitEntry(n) else mapImplicitEntry(n)
-      emit(EndPair)
-    }
+    else
+      matches {
+        emit(BeginPair)
+        (if (explicit) mapExplicitEntry(n) else mapImplicitEntry(n)) &&
+        emit(EndPair)
+      }
   }
 
   /**
     * Explicit map entries are denoted by the “?” mapping key indicator<p>
     * <blockquote><pre>
     * [189]	c-l-block-map-explicit-entry(n)	::=	c-l-block-map-explicit-key(n)
-    *                                         ( l-block-map-explicit-value(n) | [[emptyScalar e-node]] )
+    *                                         ( l-block-map-explicit-value(n) | [[emptyNode e-node]] )
     *
     * [190]	c-l-block-map-explicit-key(n)	::=	“?” [[blockIndented s-l+block-indented(n,block-out)]]
     *
     * </blockquote></pre>
     */
-  @failfast def mapExplicitEntry(n: Int): Boolean = indicator('?') && blockIndented(n, BlockOut) && matches {
-    mapExplicitValue(n) || emptyScalar()
+  @failfast def mapExplicitEntry(n: Int): Boolean = {
+    val b = indicator('?')
+    b && blockIndented(n, BlockOut) && matches {
+      mapExplicitValue(n) || emptyNode()
+    }
   }
 
   /**
@@ -1284,20 +1385,20 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     *
     * </blockquote></pre>
     */
-  def mapImplicitEntry(n: Int): Boolean = {
-    (matches(implicitJsonKey(BlockKey)) || matches(implicitYamlKey(BlockKey))) || matches(emptyScalar())
-  } && mapImplicitValue(n)
+  def mapImplicitEntry(n: Int): Boolean = matches {
+    (matches(implicitJsonKey(BlockKey)) || matches(implicitYamlKey(BlockKey)) || matches(emptyScalar())) &&
+    mapImplicitValue(n)
+  }
 
   /**
     *  [194] c-l-block-map-implicit-value(n)	::=	“:”
     *  ( [[blockNode s-l+block-node(n,block-out)]]
-    *  | ( [[emptyScalar e-node]] [[multilineComment s-l-comments]] )
+    *  | ( [[emptyNode e-node]] [[multilineComment s-l-comments]] )
     *  )
     */
-  def mapImplicitValue(n: Int): Boolean = {
-    emitIndicator()
+  def mapImplicitValue(n: Int): Boolean = indicator(':') && {
     blockNode(n, BlockOut) ||
-    emptyScalar() && (matches(multilineComment()) || matches(error() && multilineComment()))
+    emptyNode() && (matches(multilineComment()) || matches(error() && multilineComment()))
   }
 
   /**
@@ -1313,7 +1414,8 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     */
   def blockNode(n: Int, ctx: YamlContext): Boolean =
     matches(blockInBlock(n, ctx)) || matches {
-      separate(n + 1, FlowOut) && emit(BeginNode) && flowNode(n + 1, FlowOut) && emit(EndNode) && multilineComment()
+      val b1 = separate(n + 1, FlowOut) && emit(BeginNode)
+      b1 && flowNode(n + 1, FlowOut) && emit(EndNode) && multilineComment()
     }
 
   /*
@@ -1398,12 +1500,12 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
     * [208]	l-explicit-document	::=
     *                                [[directivesEnd c-directives-end]]
     *                                ( [[bareDocument l-bare-document]]
-    *                                | ( [[emptyScalar e-node]] [[multilineComment s-l-comments]] )
+    *                                | ( [[emptyNode e-node]] [[multilineComment s-l-comments]] )
     *                                )
     */
   private def explicitDocument() = directivesEnd(emit = false) && matches {
     directivesEnd()
-    matches(bareDocument()) || matches(emptyScalar() && multilineComment())
+    matches(bareDocument()) || matches(emptyNode() && multilineComment())
   }
 
   /**
@@ -1456,14 +1558,23 @@ final class YamlLexer(input: LexerInput = new CharSequenceLexerInput()) extends 
 
   /** Check if the line contains a map Indicator (":" plus space or end of text) */
   def lineContainsMapIndicator(): Boolean = {
-    var i        = 0
-    var chr: Int = 0
-    var inQuotes = false
+    var i                    = 0
+    var chr: Int             = 0
+    var charStack: List[Int] = Nil
     do {
       chr = lookAhead(i)
-      if (inQuotes) {
-        if (chr == '"' && lookAhead(i - 1) != '\\') inQuotes = false
-      } else if (chr == '"') inQuotes = true
+      if (charStack.nonEmpty) {
+        if (chr == charStack.head) {
+            if (chr == '\'' && lookAhead(i+1) == '\'') i = i+1
+            else if (chr != '"' || lookAhead(i - 1) != '\\')
+                charStack = charStack.tail
+        }
+      } else if (chr == '"' || chr == '\'')
+        charStack = chr :: charStack
+      else if (chr == '{')
+        charStack = '}' :: charStack
+      else if (chr == '[')
+        charStack = ']' :: charStack
       else if (isMappingIndicator(chr, lookAhead(i + 1))) return true
       i += 1
     } while (!isBreakComment(chr))

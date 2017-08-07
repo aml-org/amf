@@ -132,7 +132,7 @@ object YamlToken {
   final val BeginPair = new YamlToken("BeginPair", "X")
 
   /** Ends mapping key:value pair */
-  final val EndPair = new YamlToken("EndPair", "simpleMultiDocument.yaml")
+  final val EndPair = new YamlToken("EndPair", "x")
 
   /** Ends Yaml Stream */
   final val EndStream = new YamlToken("EndStream", "")
