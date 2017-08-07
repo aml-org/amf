@@ -15,5 +15,5 @@ trait Fs extends js.Object {
 }
 
 @js.native
-@JSImport("fs", JSImport.Namespace)
+@JSImport("fs", JSImport.Namespace, "fs")
 object Fs extends Fs

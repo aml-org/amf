@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSGlobal, JSImport}
   * @author lawrence.daniels@gmail.com
   */
 @js.native
-@JSImport("events", "EventEmitter")
+@JSImport("events", "EventEmitter", "events")
 class EventEmitter extends IEventEmitter
 
 /**

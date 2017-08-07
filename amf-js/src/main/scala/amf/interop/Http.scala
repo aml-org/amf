@@ -18,7 +18,7 @@ trait Http extends js.Object {
 }
 
 @js.native
-@JSImport("http", JSImport.Namespace)
+@JSImport("http", JSImport.Namespace, "http")
 object Http extends Http
 
 @js.native

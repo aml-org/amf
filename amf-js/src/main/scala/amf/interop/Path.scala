@@ -6,7 +6,7 @@ package amf.interop
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 @js.native
-@JSImport("path", JSImport.Namespace)
+@JSImport("path", JSImport.Namespace, "path")
 object Path extends js.Object {
 
   /**

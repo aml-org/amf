@@ -21,7 +21,7 @@ import scala.scalajs.js.|
   * @author lawrence.daniels@gmail.com
   */
 @js.native
-@JSImport("buffer", "Buffer")
+@JSImport("buffer", "Buffer", "buffer")
 class Buffer() extends js.Object {
 
   /////////////////////////////////////////////////////////////////////////////////
