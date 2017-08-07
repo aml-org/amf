@@ -111,10 +111,7 @@ package object core {
         new String(Character.toChars(value))
     }
 
-    /** Count the number of times a given predicate holds true */
-    def countWhile(predicate: => Boolean): Int = countWhile(_ => predicate)
-
-    /** Count the number of times a given predicate holds true The predicate receives the offset as a parameter */
+    /** Count the number of times a given predicate holds true The predicate receives an Int as a parameter */
     def countWhile(predicate: Int => Boolean): Int = {
         var i = 0
         while (predicate(i)) i = i+1

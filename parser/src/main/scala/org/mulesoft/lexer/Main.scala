@@ -11,7 +11,7 @@ object Main {
               | Como va
               | """.stripMargin)
          while (l.current != LexerInput.EofChar) {
-             println("%d %d = %c %x %x %x" format(l.line, l.column, if (l.current == '\n') 'n' else l.current , l.current, l.lookAhead(1), l.lookAhead(2)))
+             println("%d %d = %c %simpleMultiDocument.yaml %simpleMultiDocument.yaml %simpleMultiDocument.yaml" format(l.line, l.column, if (l.current == '\n') 'n' else l.current , l.current, l.lookAhead(1), l.lookAhead(2)))
              l.consume()
          }
     }

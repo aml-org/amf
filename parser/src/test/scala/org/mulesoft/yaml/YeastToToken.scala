@@ -22,15 +22,26 @@ object YeastToYToken {
     private val Pattern = new Regex("index(-[0-9]+)?.yeast")
 
   def main(args: Array[String]): Unit = {
-     val fileName = inputFile()
-      val yeastFile = findGeneratedYeast()
-      val ytFile = new File(yeastDir, fileName + ".yt")
+      if (args.length == 0) {
+          val fileName = inputFile()
+          val yeastFile = findGeneratedYeast()
+          generate(yeastFile, new File(yeastDir, fileName + ".yt"))
+      }
+      else {
 
-      val output = new PrintWriter(ytFile)
-      for (Seq(a, b) <- Source.fromFile(yeastFile).getLines().grouped(2))
-        output.println(YeastData(a + ", " + b))
-      output.close()
+          val files = listYeastFiles()
+          val targets = listTargetFiles(args(0), args(1).toInt, files.length)
+          val ts = files.zip(targets).toList
+          ts.foreach(t => generate(t._1, t._2))
+      }
   }
+
+    private def generate(yeastFile: File, ytFile: File) = {
+        val output = new PrintWriter(ytFile)
+        for (Seq(a, b) <- Source.fromFile(yeastFile).getLines().grouped(2))
+            output.println(YeastData(a + ", " + b))
+        output.close()
+    }
 
     private def inputFile():String = {
         while (true) {
@@ -50,6 +61,24 @@ object YeastToYToken {
         val name = if (last == 0) "index" else s"index-$last"
         new File(downloadDir, name + ".yeast")
     }
+    private def listYeastFiles() = {
+        val strings = downloadDir.list()
+        val ints: Array[Int] = strings.flatMap {
+            case Pattern(n) => List(if (n == null) 0 else n.substring(1).toInt)
+            case _ => Nil
+        }.sorted(Ordering[Int])
+        ints.map(n => if (n == 0) "index" else s"index-$n").map(name => new File(downloadDir, name + ".yeast"))
+    }
+    private def listTargetFiles(prefix:String, base:Int, n:Int) = {
+        val range = base until base + n
+        val missing = range.map(prefix + _ + ".yaml").filter(! new File(yamlDir, _).exists)
+        if (missing.nonEmpty) {
+            println(s"Missing files: $missing")
+            System.exit(1)
+        }
+        range.map(n => new File(yeastDir, prefix + n + ".yt"))
+    }
+
 }
 
 case class YeastData(t: YamlToken, start: Int, line: Int, col: Int, text: String) {

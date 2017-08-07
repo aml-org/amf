@@ -10,7 +10,7 @@ object YamlCharRules {
   /** Is a Char Printable ?
     * [1]	c-printable	::=	  #x9 | #xA | #xD | [#x20-#x7E]          8 bit
     *                     |  #x85 | [#xA0-#xD7FF] | [#xE000-#xFFFD]          16 bit
-    *                     | [#x10000-#x 10 FF FF]                               32 bit
+    *                     | [#x10000-#simpleMultiDocument.yaml 10 FF FF]                               32 bit
     */
   def isCPrintable(c: Int): Boolean =
     c == '\t' || c == '\n' || c == '\r' || c >= 0x20 && c <= 0x7E ||
@@ -19,7 +19,7 @@ object YamlCharRules {
 
   /**
     * Is a Non Blank Json character ?
-    * [2]	nb-json	::=	#x9 | [#x20-#x 10 FF FF]
+    * [2]	nb-json	::=	#x9 | [#x20-#simpleMultiDocument.yaml 10 FF FF]
     */
   def isNbJson(c: Int): Boolean = c == '\t' || c >= 0x20 && c <= 0x10FFFF
 
@@ -103,14 +103,14 @@ object YamlCharRules {
   def isBreakComment(c: Int): Boolean = isBreakOrEof(c)
 
   /** If c1 followed by c2 a mapping indicator */
-  def isMappingIndicator(c1:Int, c2: =>Int): Boolean = c1 == ':' && (c2 == ' ' || isBreakComment(c2))
+  def isMappingIndicator(c1:Int, c2: =>Int): Boolean = c1 == ':' && (isWhite(c2) || isBreakComment(c2))
   /**
     * YAML Escape Sequences are a superset of C’s escape sequences:
     * [42]-[61]
     * Returns:
     * <ul>
     *   <li>the processed escaped sequence if single char</li>
-    *   <li>'x', 'u', or 'U' for Unicode hexadecimal sequences</li>
+    *   <li>'simpleMultiDocument.yaml', 'u', or 'U' for Unicode hexadecimal sequences</li>
     *   <li>-1 when it is not a valid escape char</li>
     * </ul>
     */
@@ -118,7 +118,7 @@ object YamlCharRules {
     case '0'  => 0x00 // [42] ASCII null
     case 'a'  => 0x07 // [43] ASCII bell
     case 'b'  => 0x0b // [44] ASCII backspace
-    case 't'  => 0x09 // [45] ASCII horizontal tab
+    case 't' | '\t' => 0x09 // [45] ASCII horizontal tab
     case 'n'  => 0x0A // [46] ASCII line feed
     case 'v'  => 0x0B // [47] ASCII vertical tab
     case 'f'  => 0x0C // [48] ASCII form feed

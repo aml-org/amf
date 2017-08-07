@@ -44,6 +44,18 @@ object YamlToken {
   /** Ends escape sequence. */
   final val EndEscape = new YamlToken("EndScape", "e")
 
+  /** Begins tag */
+  final val BeginTag = new YamlToken("BeginTag", "G")
+
+  /** Ends tag */
+  final val EndTag = new YamlToken("EndTag", "g")
+
+  /** Begins tag handle */
+  final val BeginHandle = new YamlToken("BeginHandle", "H")
+
+  /** Ends tag handle */
+  final val EndHandle = new YamlToken("EndHandle", "h")
+
   /** Character indicating structure. */
   final val Indicator = new YamlToken("Indicator", "I")
 
@@ -120,7 +132,7 @@ object YamlToken {
   final val BeginPair = new YamlToken("BeginPair", "X")
 
   /** Ends mapping key:value pair */
-  final val EndPair = new YamlToken("EndPair", "x")
+  final val EndPair = new YamlToken("EndPair", "simpleMultiDocument.yaml")
 
   /** Ends Yaml Stream */
   final val EndStream = new YamlToken("EndStream", "")
@@ -136,7 +148,7 @@ object YamlToken {
 
   def apply(abbreviation: String): YamlToken =
     tokens.getOrElse(abbreviation, {
-        println(abbreviation)
-        null
+      println(abbreviation)
+      null
     })
 }

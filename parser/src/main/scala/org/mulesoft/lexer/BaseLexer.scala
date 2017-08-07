@@ -62,6 +62,11 @@ abstract class BaseLexer[T <: Token](var input: LexerInput) extends Lexer[T] {
         mark = newMark
         true
     }
+    /** Emit 2 Tokens */
+    @failfast def emit(t1: T, t2: T): Boolean = {
+        emit(t1)
+        emit(t2)
+    }
 
     /** Advance the lexer to the next token.  */
     override def advance(): Unit = {
@@ -77,6 +82,14 @@ abstract class BaseLexer[T <: Token](var input: LexerInput) extends Lexer[T] {
 
     protected final def consume(n:Int): Unit = input.consume(n)
     protected def consumeWhile(p: (Int => Boolean)): Unit = input.consumeWhile(p)
+
+    /** Compare with the specified String and consume if all characters are equal */
+    final def consume(str:String): Boolean = {
+        val len = str.length
+        val r = len > 0 && (0 until len).forall(i => str(i) == lookAhead(i))
+        if (r) consume(len)
+        r
+    }
 
     final def consumeAndEmit(token: T): Boolean = {
         consume()
