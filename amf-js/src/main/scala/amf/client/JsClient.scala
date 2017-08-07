@@ -1,10 +1,9 @@
 package amf.client
 
 import amf.compiler.AMFCompiler
-import amf.document.{BaseUnit, Document}
-import amf.domain.WebApi
 import amf.dumper.AMFDumper
 import amf.lexer.CharSequenceStream
+import amf.model.{BaseUnit, Document, WebApi}
 import amf.remote._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -31,19 +30,20 @@ class JsClient extends BaseClient {
     AMFCompiler(url, if (platformArg.isEmpty) platform else platformArg.get, hint)
       .build()
       .onComplete(callback(
-        new Handler[WebApi] {
+        new Handler[amf.document.BaseUnit] {
           override def error(exception: Throwable): Unit = handler.error(exception)
 
-          override def success(document: WebApi): Unit = handler.success(document)
+          override def success(document: amf.document.BaseUnit): Unit =
+            handler.success(Document(document.asInstanceOf[amf.document.Document]).encodes)
         },
         ""
       ))
   }
 
-  private def callback(handler: Handler[WebApi], url: String)(t: Try[BaseUnit]) = t match {
-    case Success(d: Document) => handler.success(d.encodes.asInstanceOf[WebApi])
-    case Success(unit)        => handler.error(new Exception(s"Unhandled unit $unit"))
-    case Failure(exception)   => handler.error(exception)
+  private def callback(handler: Handler[amf.document.BaseUnit], url: String)(t: Try[amf.document.BaseUnit]) = t match {
+    case Success(d: amf.document.BaseUnit) => handler.success(d)
+    case Success(unit)                     => handler.error(new Exception(s"Unhandled unit $unit"))
+    case Failure(exception)                => handler.error(exception)
   }
 
   private def dumpCallback(handler: Handler[String])(t: Try[String]) = t match {

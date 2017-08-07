@@ -1,5 +1,5 @@
 package amf.domain
-import amf.builder.{Builder, OperationBuilder}
+import amf.builder.OperationBuilder
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
@@ -44,7 +44,7 @@ case class Operation(fields: Fields, annotations: List[Annotation]) extends Doma
   override def toString =
     s"Operation($method, $name, $description, $deprecated, $summary, $documentation, $schemes, $request, $responses)"
 
-  override def toBuilder: Builder = OperationBuilder(fields, annotations)
+  override def toBuilder: OperationBuilder = OperationBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "/" + method
 }

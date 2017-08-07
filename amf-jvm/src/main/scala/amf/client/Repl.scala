@@ -3,9 +3,9 @@ package amf.client
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
-import amf.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.emit.AMFUnitMaker
+import amf.model.{BaseUnit, Document}
 import amf.parser.ASTNodePrinter
 import amf.remote._
 
@@ -15,15 +15,15 @@ class Repl(val in: InputStream, val out: PrintStream) {
 
   private def init(): Unit = {
     val scanner                = new Scanner(in)
-    var unit: Option[BaseUnit] = None
+    var unit: Option[Document] = None
 
     while (scanner.hasNextLine) {
       scanner.nextLine() match {
         case Exit()           => return
         case Json(url)        => remote(url, OasJsonHint, unit = _)
         case Yaml(url)        => remote(url, RamlYamlHint, unit = _)
-        case Ast(_)           => unit.foreach(doc => out.println(ASTNodePrinter.print(AMFUnitMaker(doc, Raml))))
-        case Generate(syntax) => unit.foreach(generate(_, syntax))
+        case Ast(_)           => unit.foreach(doc => out.println(ASTNodePrinter.print(AMFUnitMaker(doc.document, Raml))))
+        case Generate(syntax) => unit.foreach(doc => generate(doc, syntax))
         case line             => out.println(s"... $line")
       }
     }
@@ -31,21 +31,21 @@ class Repl(val in: InputStream, val out: PrintStream) {
 
   private def generate(unit: BaseUnit, syntax: String): Unit = {
     syntax match {
-      case "json"   => out.println(new AMFDumper(unit, Oas).dump)
-      case "yaml"   => out.println(new AMFDumper(unit, Raml).dump)
-      case "jsonld" => out.println(new AMFDumper(unit, Amf).dump)
+      case "json"   => out.println(new AMFDumper(unit.unit, Oas).dump)
+      case "yaml"   => out.println(new AMFDumper(unit.unit, Raml).dump)
+      case "jsonld" => out.println(new AMFDumper(unit.unit, Amf).dump)
       case _        => out.println(s"Unsupported generation for: $syntax")
     }
   }
 
-  private def remote(url: String, hint: Hint, callback: (Option[BaseUnit]) => Unit): Unit = {
+  private def remote(url: String, hint: Hint, callback: (Option[Document]) => Unit): Unit = {
     new JvmClient().generate(
       url,
       hint,
-      new Handler[BaseUnit] {
-        override def success(unit: BaseUnit): Unit = {
+      new Handler[amf.document.BaseUnit] {
+        override def success(unit: amf.document.BaseUnit): Unit = {
           out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
-          callback(Some(unit))
+          callback(Some(Document(unit.asInstanceOf[amf.document.Document])))
         }
         override def error(exception: Throwable): Unit = {
           callback(None)
