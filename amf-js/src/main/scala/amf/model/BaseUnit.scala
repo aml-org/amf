@@ -1,6 +1,6 @@
 package amf.model
 
-import org.scalajs.dom.experimental.URL
+import amf.remote.URL
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll

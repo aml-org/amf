@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.domain.DomainElement
-import org.scalajs.dom.experimental.URL
+import amf.remote.URL
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -25,10 +25,10 @@ case class Document(private[amf] val document: amf.document.Document)
   /**
     * Uri that identifies the document
     */
-  override val location: URL = new URL(document.location)
+  override val location: URL = URL("http://localhost.com/blajh")
 
   /**
-    * The parsing Unit that it's encoded for this [[Document]]
+    * The parsing Unit that it's encoded for this Document
     */
   val encodes: WebApi = WebApi(document.encodes)
 
