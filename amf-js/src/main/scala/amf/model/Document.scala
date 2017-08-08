@@ -25,7 +25,7 @@ case class Document(private[amf] val document: amf.document.Document)
   /**
     * Uri that identifies the document
     */
-  override val location: URL = URL("http://localhost.com/blajh")
+  override val location: URL = URL(document.location)
 
   /**
     * The parsing Unit that it's encoded for this Document
