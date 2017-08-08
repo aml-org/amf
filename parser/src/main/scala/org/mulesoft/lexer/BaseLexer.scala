@@ -109,7 +109,8 @@ abstract class BaseLexer[T <: Token](var input: LexerInput) extends Lexer[T] {
 
     final def zeroOrMore(p: => Boolean): Boolean = {
         var s = saveState
-        while (nonEof && p) s = saveState
+        while (nonEof && p)
+            s = saveState
         restoreState(s)
         true
     }
