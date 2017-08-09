@@ -16,4 +16,6 @@ trait BaseUnit {
   val location: URL
 
   def id(parent: String): String = parent
+
+  def unit: amf.document.BaseUnit
 }

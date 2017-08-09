@@ -27,7 +27,7 @@ trait Platform {
   protected def fetchHttp(url: String): Future[Content]
 
   /** Write specified content on given url. */
-  def write(url: String, content: String): Future[Unit] = {
+  def write(url: String, content: String): Future[String] = {
     url match {
       case File(path) => writeFile(path, content)
       case _          => Future.failed(new Exception(s"Unsupported write operation: $url"))
@@ -35,7 +35,7 @@ trait Platform {
   }
 
   /** Write specified content on specified file path. */
-  protected def writeFile(path: String, content: String): Future[Unit]
+  protected def writeFile(path: String, content: String): Future[String]
 
   protected def mimeFromExtension(extension: String): Option[String] =
     extension match {

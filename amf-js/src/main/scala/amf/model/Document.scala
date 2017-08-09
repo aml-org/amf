@@ -1,6 +1,5 @@
 package amf.model
 
-import amf.domain.DomainElement
 import amf.remote.URL
 
 import scala.scalajs.js
@@ -28,7 +27,7 @@ case class Document(private[amf] val document: amf.document.Document)
   override val location: URL = URL(document.location)
 
   /**
-    * The parsing Unit that it's encoded for this Document
+    * The parsing Unit that it's encoded for this [[Document]]
     */
   val encodes: WebApi = WebApi(document.encodes)
 
@@ -36,4 +35,6 @@ case class Document(private[amf] val document: amf.document.Document)
     *
     */
   val declares: js.Iterable[amf.domain.DomainElement] = document.declares.toJSArray
+
+  override def unit: amf.document.BaseUnit = document
 }

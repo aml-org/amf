@@ -222,7 +222,7 @@ class ParserTest extends FunSuite {
     override protected def fetchHttp(url: String): Future[Content] =
       Future.failed(new Exception(s"[TEST] Unable to fetch url $url"))
 
-    override protected def writeFile(path: String, content: String): Future[Unit] =
+    override protected def writeFile(path: String, content: String): Future[String] =
       Future.failed(new Exception(s"[TEST] Unsupported write operation $path"))
 
     override def resolvePath(path: String): String = path

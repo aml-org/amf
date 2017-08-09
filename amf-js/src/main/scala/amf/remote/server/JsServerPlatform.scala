@@ -57,11 +57,11 @@ class JsServerPlatform extends Platform {
   }
 
   /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[Unit] = {
-    val promise: Promise[Unit] = Promise()
+  override protected def writeFile(path: String, content: String): Future[String] = {
+    val promise: Promise[String] = Promise()
 
     Fs.writeFile(path, content, (error: Any) => {
-      if (error == null) promise.success()
+      if (error == null) promise.success(path)
       else promise.failure(new Exception(s"Write failed on $path: " + error))
     })
 

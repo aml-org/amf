@@ -41,12 +41,13 @@ class JvmPlatform extends Platform {
   }
 
   /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[Unit] = {
+  override protected def writeFile(path: String, content: String): Future[String] = {
     Future {
       val writer: FileWriter = new FileWriter(path)
       writer.write(content)
       writer.flush()
       writer.close()
+      path
     }
   }
 

@@ -28,7 +28,7 @@ class JsBrowserPlatform extends Platform {
   }
 
   /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[Unit] = {
+  override protected def writeFile(path: String, content: String): Future[String] = {
     // Accept in Node only
     Future.failed(new Exception(s"Unsupported write operation: $path"))
   }

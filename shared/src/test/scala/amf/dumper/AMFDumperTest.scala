@@ -4,12 +4,16 @@ import amf.common.Tests
 import amf.emit.AMFUnitFixtureTest
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import org.scalatest.FunSuite
+import org.scalatest.{Assertion, AsyncFunSuite}
+
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * AMF Unit DumperTest
   */
-class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTest {
+class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test simple oas/json") {
     val expected =
@@ -36,7 +40,8 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |}""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Oas).dump
-    Tests.checkDiff(actual, expected)
+
+    assert(actual, expected)
   }
 
   test("Test simple raml/yaml") {
@@ -54,7 +59,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |(termsOfService): termsOfService""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Raml).dump
-    Tests.checkDiff(actual, expected)
+    assert(actual, expected)
   }
 
   test("Test simple amf/jsonld") {
@@ -129,7 +134,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |]""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Amf).dump
-    Tests.checkDiff(actual, expected)
+    assert(actual, expected)
   }
 
   test("Test full amf/jsonld") {
@@ -399,6 +404,12 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |]""".stripMargin
 
     val actual = new AMFDumper(`document/api/full`, Amf).dump
-    Tests.checkDiff(actual, expected)
+    assert(actual, expected)
   }
+
+  private def assert(actual: Future[String], expected: String): Future[Assertion] =
+    actual.map(a => {
+      Tests.checkDiff(a, expected)
+      succeed
+    })
 }
