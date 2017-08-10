@@ -537,6 +537,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       case (Documentation, expected)     => assertField(Documentation, api.documentation, expected)
       case (EndPoints, expected)         => assertField(EndPoints, api.endPoints, expected)
       case (BaseUriParameters, expected) => assertField(BaseUriParameters, api.baseUriParameters, expected)
+      case _                             =>
     }
     succeed
   }

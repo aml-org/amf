@@ -1,6 +1,7 @@
 package amf.spec
 
 import amf.metadata.Field
+import scala.language.implicitConversions
 
 /**
   * Spec implicits

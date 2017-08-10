@@ -12,6 +12,7 @@ import amf.yaml.YamlLexer
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 
+import scala.language.postfixOps
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 

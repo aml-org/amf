@@ -1,5 +1,7 @@
 package amf.common
 
+import scala.language.implicitConversions
+
 /**
   *
   */

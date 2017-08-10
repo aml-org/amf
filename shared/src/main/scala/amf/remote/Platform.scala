@@ -10,7 +10,7 @@ trait Platform {
   /** Resolve remote url. */
   def resolve(url: String, context: Option[Context]): Future[Content] = {
     url match {
-      case Http(_)                             => fetchHttp(url)
+      case Http(_, _, _)                       => fetchHttp(url)
       case File(path)                          => fetchFile(path)
       case Relative(path) if context.isDefined => resolve(context.get resolve path, None)
       case _                                   => Future.failed(new Exception(s"Unsupported url: $url"))

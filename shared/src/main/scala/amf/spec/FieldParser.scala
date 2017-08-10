@@ -16,6 +16,7 @@ import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.ContextKey.{EndPointBodyParameter, OperationBodyParameter}
 import amf.spec.Matcher.RegExpMatcher
 import amf.spec.Spec._
+import scala.language.existentials
 
 import scala.collection.mutable.ListBuffer
 

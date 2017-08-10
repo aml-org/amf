@@ -113,7 +113,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
             maybeN.isDefined should be(true)
           })
           .count(p => p != succeed) should be(0)
-      case l: List[Any] if l.head.isInstanceOf[(String, Any)] =>
+      case l: List[Any] =>
         l.map(e => { assertNode(infoNode.get.children(1), e.asInstanceOf[(String, Any)]) })
           .count(e => e != succeed) should be(0)
       case _ => ???
