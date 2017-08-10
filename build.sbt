@@ -1,3 +1,5 @@
+import org.scalajs.core.tools.linker.ModuleKind
+
 name := "AMF"
 
 scalaVersion in ThisBuild := "2.12.2"
@@ -30,24 +32,24 @@ lazy val amf = crossProject
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))
 lazy val amfJS  = amf.js.in(file("amf-js"))
 
-lazy val jsModule = amf.js
-  .copy(id = "js-module")
+lazy val module = crossProject
   .in(file("amf-js/js-module"))
-  .settings(
-    jsSettings("amf-module.js", modules = true): _*
-  )
+  .dependsOn(amf)
+  .jsSettings(
+    jsSettings("amf-module.js", ModuleKind.CommonJSModule): _*
+  ).js
 
-lazy val jsBrowser = amf.js
-  .copy(id = "js-browser")
+lazy val browser = crossProject
   .in(file("amf-js/js-browser"))
-  .settings(
-    jsSettings("amf-browser.js", modules = false): _*
-  )
+  .dependsOn(amf)
+  .jsSettings(
+    jsSettings("amf-browser.js", ModuleKind.NoModule): _*
+  ).js
 
-def jsSettings(fileName: String, modules: Boolean): Array[Def.SettingsDefinition] = Array(
-  artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / "target" / "artifact" / fileName,
+def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition] = Array(
+  artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / ".." / "target" / "artifact" / fileName,
   scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
-  scalaJSModuleKind := (if (modules) ModuleKind.CommonJSModule else ModuleKind.NoModule)
+  scalaJSModuleKind := kind
 )
 
-addCommandAlias("generate", ";js-browser/clean ;js-module/clean ;js-module/fullOptJS ;js-browser/fullOptJS")
+addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS")
