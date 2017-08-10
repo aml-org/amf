@@ -36,6 +36,7 @@ class AMFUnitMaker {
     vendor match {
       case Raml => makeRamlWebApi(api)
       case Oas  => makeOasWebApi(api)
+      case _    => throw new IllegalStateException("Invalid vendor " + vendor)
     }
   }
 

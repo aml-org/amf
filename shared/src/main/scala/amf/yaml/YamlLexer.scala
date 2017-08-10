@@ -217,6 +217,7 @@ class YamlLexer(stream: CharStream = new CharSequenceStream()) extends AbstractL
         case x :: xs =>
           pushToken(x)
           tokens = xs
+        case _ =>
       }
     }
 

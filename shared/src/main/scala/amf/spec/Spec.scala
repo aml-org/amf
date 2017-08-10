@@ -49,6 +49,7 @@ object Spec {
   def apply(vendor: Vendor): Spec = vendor match {
     case Raml => RamlSpec
     case Oas  => OasSpec
+    case _    => throw new IllegalStateException("Invalid vendor " + vendor)
   }
 
   case class Spec(private val fs: SpecField*)(vendor: Vendor) {
@@ -196,8 +197,9 @@ object Spec {
     )(Oas)
 
   private[spec] val RequestSpec: (Vendor) => Spec = {
-    case Raml => RamlRequestSpec
-    case Oas  => OasRequestSpec
+    case Raml   => RamlRequestSpec
+    case Oas    => OasRequestSpec
+    case vendor => throw new IllegalStateException("Invalid vendor " + vendor)
   }
 
   val RAML_10: String = "#%RAML 1.0\n"

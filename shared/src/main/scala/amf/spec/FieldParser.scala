@@ -15,7 +15,7 @@ import amf.parser.ASTNode
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.ContextKey.{EndPointBodyParameter, OperationBodyParameter}
 import amf.spec.Matcher.RegExpMatcher
-import amf.spec.Spec.{RequestSpec, Spec}
+import amf.spec.Spec._
 
 import scala.collection.mutable.ListBuffer
 
@@ -179,6 +179,7 @@ object FieldParser {
             if (traverseAndParseMap(Spec.OasExtensionPayload, payloadMap, payload, context))
               builder add (spec.fields.head, List(payload.build))
           })
+        case _ =>
       }
     }
 
@@ -239,6 +240,7 @@ object FieldParser {
               request add (RequestModel.Payloads, Payload(
                 opPayload.fields,
                 opPayload.annotations ++ List(Annotation.OperationBodyParameter(opParam))))
+            case _ =>
           }
           return true
         case None =>
@@ -248,8 +250,9 @@ object FieldParser {
                 endPointPayload.fields,
                 endPointPayload.annotations ++ List(Annotation.EndPointBodyParameter(endPointParam))))
               return true
-            case None =>
+            case _ =>
           }
+        case _ =>
       }
       false
     }
