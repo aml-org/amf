@@ -21,4 +21,13 @@ case class Response private[model] (private[amf] val response: amf.domain.Respon
 
   def toBuilder: ResponseBuilder = ResponseBuilder(response.toBuilder)
 
+  override def equals(other: Any): Boolean = other match {
+    case that: Response =>
+      (that canEqual this) &&
+        response == that.response
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Response]
+
 }

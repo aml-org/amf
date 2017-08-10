@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.model.builder.WebApiBuilder
+import amf.model.builder.{CreativeWorkBuilder, LicenseBuilder, OrganizationBuilder, WebApiBuilder}
 
 import scala.collection.JavaConverters._
 
@@ -32,13 +32,25 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
 
   val termsOfService: String = webApi.termsOfService
 
-  val provider: Organization = Organization(webApi.provider)
+  val provider: Organization =
+    if (webApi.provider != null) Organization(webApi.provider) else OrganizationBuilder().build
 
-  val license: License = License(webApi.license)
+  val license: License =
+    if (webApi.license != null) License(webApi.license) else LicenseBuilder().build
 
-  val documentation: CreativeWork = CreativeWork(webApi.documentation)
+  val documentation: CreativeWork =
+    if (webApi.documentation != null) CreativeWork(webApi.documentation) else CreativeWorkBuilder().build
 
   val baseUriParameters: java.util.List[Parameter] = webApi.baseUriParameters.map(Parameter).asJava
 
   def toBuilder: WebApiBuilder = WebApiBuilder(webApi.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: WebApi =>
+      (that canEqual this) &&
+        webApi == that.webApi
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
 }

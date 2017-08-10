@@ -28,4 +28,26 @@ case class WebApi(fields: Fields, annotations: List[Annotation]) extends DomainE
   override def toBuilder: WebApiBuilder = WebApiBuilder(fields, annotations)
 
   override def id(parent: String): String = parent + "#/web-api"
+
+  override def equals(other: Any): Boolean = other match {
+    case that: WebApi =>
+      (that canEqual this) &&
+        name == that.name &&
+        description == that.description &&
+        host == that.host &&
+        schemes == that.schemes &&
+        basePath == that.basePath &&
+        accepts == that.accepts &&
+        contentType == that.contentType &&
+        version == that.version &&
+        termsOfService == that.termsOfService &&
+        provider == that.provider &&
+        license == that.license &&
+        documentation == that.documentation &&
+        endPoints == that.endPoints &&
+        baseUriParameters == that.baseUriParameters
+    case _ => false
+  }
+  def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
+
 }

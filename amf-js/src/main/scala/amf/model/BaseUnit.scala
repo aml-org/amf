@@ -1,7 +1,5 @@
 package amf.model
 
-import amf.remote.URL
-
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -13,7 +11,7 @@ trait BaseUnit {
   val references: js.Iterable[BaseUnit]
 
   /** Returns the file location for the document that has been parsed to generate this model */
-  val location: URL
+  val location: String
 
   def id(parent: String): String = parent
 

@@ -23,4 +23,13 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
   val parameters: js.Iterable[Parameter] = endPoint.parameters.map(Parameter).toJSArray
 
   def toBuilder: EndPointBuilder = EndPointBuilder(endPoint.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: EndPoint =>
+      (that canEqual this) &&
+        endPoint == that.endPoint
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
 }

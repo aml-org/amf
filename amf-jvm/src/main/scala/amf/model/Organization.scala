@@ -14,4 +14,13 @@ case class Organization private[model] (private[amf] val organization: amf.domai
   val email: String = organization.email
 
   def toBuilder: OrganizationBuilder = OrganizationBuilder(organization.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Organization =>
+      (that canEqual this) &&
+        organization == that.organization
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Organization]
 }

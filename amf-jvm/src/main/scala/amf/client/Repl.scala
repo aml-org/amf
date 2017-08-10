@@ -39,11 +39,11 @@ class Repl(val in: InputStream, val out: PrintStream) {
   }
 
   private def remote(url: String, hint: Hint, callback: (Option[Document]) => Unit): Unit = {
-    new JvmClient().generate(
+    new JvmClient().generateFromFile(
       url,
       hint,
-      new Handler[amf.document.BaseUnit] {
-        override def success(unit: amf.document.BaseUnit): Unit = {
+      new Handler[BaseUnit] {
+        override def success(unit: BaseUnit): Unit = {
           out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
           callback(Some(Document(unit.asInstanceOf[amf.document.Document])))
         }

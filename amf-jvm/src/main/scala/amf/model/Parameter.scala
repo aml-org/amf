@@ -18,4 +18,13 @@ case class Parameter private[model] (private[amf] val parameter: amf.domain.Para
   val schema: String = parameter.schema
 
   def toBuilder: ParameterBuilder = ParameterBuilder(parameter.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Parameter =>
+      (that canEqual this) &&
+        parameter == that.parameter
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Parameter]
 }

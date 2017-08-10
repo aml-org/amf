@@ -12,4 +12,13 @@ case class Payload private[model] (private[amf] val payload: amf.domain.Payload)
   val schema: String = payload.schema
 
   def toBuilder: PayloadBuilder = PayloadBuilder(payload.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Payload =>
+      (that canEqual this) &&
+        payload == that.payload
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Payload]
 }

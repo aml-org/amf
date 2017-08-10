@@ -17,4 +17,13 @@ case class Request private[model] (private[amf] val request: amf.domain.Request)
 
   def toBuilder: RequestBuilder = RequestBuilder(request.toBuilder)
 
+  override def equals(other: Any): Boolean = other match {
+    case that: Request =>
+      (that canEqual this) &&
+        request == that.request
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Request]
+
 }

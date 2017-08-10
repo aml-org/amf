@@ -1,7 +1,5 @@
 package amf.model
 
-import java.net.URL
-
 /** Any parseable unit, backed by a source URI. */
 trait BaseUnit {
 
@@ -9,7 +7,8 @@ trait BaseUnit {
   val references: java.util.List[BaseUnit]
 
   /** Returns the file location for the document that has been parsed to generate this model */
-  val location: URL
+  //TODO review. Use URL? what with streams and local files?
+  val location: String
 
   def id(parent: String): String = parent
 

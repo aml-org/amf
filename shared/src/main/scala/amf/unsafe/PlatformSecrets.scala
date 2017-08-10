@@ -38,4 +38,9 @@ case class TrunkPlatform(content: String) extends Platform {
 
   /** Write specified content on specified file path. */
   override protected def writeFile(path: String, content: String): Future[String] = ???
+
+  override def resolve(url: String, context: Option[Context]): Future[Content] = {
+    fetchFile(url)
+  }
+
 }

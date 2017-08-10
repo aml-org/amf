@@ -9,7 +9,7 @@ class Context protected (val platform: Platform,
 
   def hasCycles: Boolean = history.count(_.equals(current)) == 2
 
-  def current: String = history.last
+  def current: String = if (history.isEmpty) "" else history.last
   def root: String    = history.head
 
   def update(url: String): Context = Context(platform, history, resolve(url), mappings)
@@ -36,7 +36,7 @@ object Context {
   def apply(platform: Platform, root: String): Context = Context(platform, root, Map.empty)
 
   def apply(platform: Platform, root: String, mapping: Map[String, String]): Context =
-    new Context(platform, List(root), mapping)
+    new Context(platform, if (root == null || root.isEmpty) Nil else List(root), mapping)
 
   private def stripFile(url: String): String =
     if (url.contains('/')) url.substring(0, url.lastIndexOf('/') + 1) else ""

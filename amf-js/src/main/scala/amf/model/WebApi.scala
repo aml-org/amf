@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.model.builder.WebApiBuilder
+import amf.model.builder.{CreativeWorkBuilder, LicenseBuilder, OrganizationBuilder, WebApiBuilder}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.JSExportAll
 
 //TODO add javadoc
 @JSExportAll
-case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi(private[amf] val webApi: amf.domain.WebApi) extends DomainElement {
 
   val name: String = webApi.name
 
@@ -35,13 +35,25 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
 
   val termsOfService: String = webApi.termsOfService
 
-  val provider: Organization = amf.model.Organization(webApi.provider)
+  val provider: Organization =
+    if (webApi.provider != null) amf.model.Organization(webApi.provider) else OrganizationBuilder().build
 
-  val license: License = amf.model.License(webApi.license)
+  val license: License =
+    if (webApi.license != null) amf.model.License(webApi.license) else LicenseBuilder().build
 
-  val documentation: CreativeWork = amf.model.CreativeWork(webApi.documentation)
+  val documentation: CreativeWork =
+    if (webApi.documentation != null) amf.model.CreativeWork(webApi.documentation) else CreativeWorkBuilder().build
 
   val baseUriParameters: js.Iterable[Parameter] = webApi.baseUriParameters.map(amf.model.Parameter).toJSArray
 
   def toBuilder: WebApiBuilder = WebApiBuilder(webApi.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: WebApi =>
+      (that canEqual this) &&
+        webApi == that.webApi
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
 }

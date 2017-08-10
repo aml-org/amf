@@ -6,6 +6,7 @@ import amf.remote.Vendor
 import amf.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 /**
@@ -18,9 +19,12 @@ abstract class BaseGenerator extends PlatformSecrets {
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  protected def generateFile(unit: BaseUnit, url: String, syntax: Vendor, handler: FileHandler): Unit = {
+  protected def generateFile(unit: BaseUnit, url: String, syntax: Vendor): Future[String] =
     AMFDumper(unit, syntax)
       .dumpToFile(platform, url)
+
+  protected def generateAndHanldeFile(unit: BaseUnit, url: String, syntax: Vendor, handler: FileHandler): Unit = {
+    generateFile(unit, url, syntax)
       .onComplete(dumpCallback(new Handler[String] {
         override def error(exception: Throwable): Unit = handler.error(exception)
 
@@ -30,8 +34,8 @@ abstract class BaseGenerator extends PlatformSecrets {
   }
 
   /** Generates the syntax text and returns it to the provided callback. */
-  protected def generateString(unit: BaseUnit, syntax: Vendor, handler: StringHandler): Unit = {
-    AMFDumper(unit, syntax).dump.onComplete(
+  protected def generateAndHandleString(unit: BaseUnit, syntax: Vendor, handler: StringHandler): Unit = {
+    generateString(unit, syntax).onComplete(
       dumpCallback(
         new Handler[String] {
           override def error(exception: Throwable): Unit = handler.error(exception)
@@ -41,6 +45,9 @@ abstract class BaseGenerator extends PlatformSecrets {
         ""
       ))
   }
+
+  protected def generateString(unit: BaseUnit, syntax: Vendor): Future[String] =
+    AMFDumper(unit, syntax).dump
 
   private def dumpCallback(handler: Handler[String], url: String)(t: Try[String]) = t match {
     case Success(value)     => handler.success(value)
@@ -62,4 +69,5 @@ trait Generator[T] {
   def generateToFile(unit: T, url: String, syntax: Vendor, handler: FileHandler): Unit
 
   def generateToString(unit: T, syntax: Vendor, handler: StringHandler): Unit
+
 }

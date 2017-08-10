@@ -1,13 +1,15 @@
 package amf.model
 
-import java.net.URL
+import java.util
+
+import amf.domain
 
 import scala.collection.JavaConverters._
 
 /**
   * Document jvm class
   */
-case class Document(private[amf] val document: amf.document.Document)
+case class Document(private[amf] val document: amf.document.BaseUnit)
     extends BaseUnit
     with DeclaresModel
     with EncodesModel {
@@ -23,17 +25,25 @@ case class Document(private[amf] val document: amf.document.Document)
   /**
     * Uri that identifies the document
     */
-  val location: URL = new URL(document.location)
+  val location: String = document.location
 
   /**
     * The parsing Unit that it's encoded for this [[Document]]
     */
-  val encodes: DomainElement = WebApi(document.encodes)
+  val encodes: WebApi =
+    document match {
+      case d: amf.document.Document => WebApi(d.encodes)
+      case _                        => null
+    }
 
   /**
     *
     */
-  val declares: java.util.List[amf.domain.DomainElement] = document.declares.asJava
+  val declares: java.util.List[amf.domain.DomainElement] =
+    document match {
+      case d: amf.document.Document => d.declares.asJava
+      case _                        => new util.ArrayList[domain.DomainElement]()
+    }
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   override def unit: amf.document.BaseUnit = document

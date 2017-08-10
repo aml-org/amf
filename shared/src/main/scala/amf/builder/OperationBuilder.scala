@@ -22,7 +22,7 @@ class OperationBuilder extends Builder {
 
   def withDocumentation(documentation: CreativeWork): OperationBuilder = set(Documentation, documentation)
 
-  def withSchemes(schemes: Seq[String]): OperationBuilder = set(Schemes, schemes)
+  def withSchemes(schemes: Seq[String]): OperationBuilder = set(Schemes, schemes.toList)
 
   def withRequest(request: Request): OperationBuilder = set(OperationRequest, request)
 

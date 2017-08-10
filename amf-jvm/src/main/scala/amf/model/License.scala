@@ -12,4 +12,13 @@ case class License private[model] (private[amf] val license: amf.domain.License)
   val name: String = license.name
 
   def toBuilder: LicenseBuilder = LicenseBuilder(license.toBuilder)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: License =>
+      (that canEqual this) &&
+        license == that.license
+    case _ => false
+  }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[License]
 }
