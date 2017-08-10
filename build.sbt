@@ -17,6 +17,7 @@ lazy val amf = crossProject
     name := "amf",
     version := "0.1",
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",
     // Redefining publish for valkyr pipeline, which includes a publish task
     publish := {}
   )
@@ -39,14 +40,16 @@ lazy val module = crossProject
   .dependsOn(amf)
   .jsSettings(
     jsSettings("amf-module.js", ModuleKind.CommonJSModule): _*
-  ).js
+  )
+  .js
 
 lazy val browser = crossProject
   .in(file("amf-js/js-browser"))
   .dependsOn(amf)
   .jsSettings(
     jsSettings("amf-browser.js", ModuleKind.NoModule): _*
-  ).js
+  )
+  .js
 
 def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition] = Array(
   artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / ".." / "target" / "artifact" / fileName,
@@ -54,4 +57,4 @@ def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition
   scalaJSModuleKind := kind
 )
 
-addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS; amfJVM/assembly")
+addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS; amfJVM/assembly; amfJVM/packageDoc")
