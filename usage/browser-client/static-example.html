@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ScalaJS</title>
+</head>
+<body>
+<!-- Include Scala.js compiled code -->
+<script type="text/javascript" src="../../amf-js/target/artifact/amf-browser.js"></script>
+
+<label for="url"> Url:
+    <input id="url" type="text" value="http://amf.us-2.evennode.com/input.yaml/1000"/>
+</label>
+
+<button id="click">Try Me!</button>
+
+<script>
+    const client = new JsClient();
+
+    console.log(client)
+
+    document.getElementById("click").addEventListener("click", click);
+
+    function click() {
+        console.log("Clicked!");
+        const pathname = document.getElementById("url").value;
+        console.log("Pathname:", pathname);
+        client.generate(pathname, "yaml", {
+            success: function (doc) {
+                console.log('Success', doc);
+            },
+            error: function (exception) {
+                console.log('Error', exception);
+            },
+            print: function (message) {
+                console.log('Print', message);
+            }
+        });
+    }
+</script>
+
+<p id="result"></p>
+</body>
+</html>
