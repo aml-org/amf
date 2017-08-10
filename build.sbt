@@ -21,7 +21,9 @@ lazy val amf = crossProject
     publish := {}
   )
   .jvmSettings(
-    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided"
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
+    test in assembly := {},
+    assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
@@ -52,4 +54,4 @@ def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition
   scalaJSModuleKind := kind
 )
 
-addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS")
+addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS; amfJVM/assembly")
