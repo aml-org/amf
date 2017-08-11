@@ -10,6 +10,9 @@ import scala.concurrent.Future
   */
 class JvmGenerator extends BaseGenerator with Generator[BaseUnit] {
 
+  override type FH = FileHandler
+  override type SH = StringHandler
+
   /**
     * Generates the syntax text and stores it in the file pointed by the provided URL.
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system

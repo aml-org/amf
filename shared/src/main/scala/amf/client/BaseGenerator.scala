@@ -23,7 +23,7 @@ abstract class BaseGenerator extends PlatformSecrets {
     AMFDumper(unit, syntax)
       .dumpToFile(platform, url)
 
-  protected def generateAndHanldeFile(unit: BaseUnit, url: String, syntax: Vendor, handler: FileHandler): Unit = {
+  protected def generateAndHanldeFile(unit: BaseUnit, url: String, syntax: Vendor, handler: Handler[Unit]): Unit = {
     generateFile(unit, url, syntax)
       .onComplete(dumpCallback(new Handler[String] {
         override def error(exception: Throwable): Unit = handler.error(exception)
@@ -34,7 +34,7 @@ abstract class BaseGenerator extends PlatformSecrets {
   }
 
   /** Generates the syntax text and returns it to the provided callback. */
-  protected def generateAndHandleString(unit: BaseUnit, syntax: Vendor, handler: StringHandler): Unit = {
+  protected def generateAndHandleString(unit: BaseUnit, syntax: Vendor, handler: Handler[String]): Unit = {
     generateString(unit, syntax).onComplete(
       dumpCallback(
         new Handler[String] {
@@ -55,19 +55,22 @@ abstract class BaseGenerator extends PlatformSecrets {
   }
 }
 
-trait StringHandler {
+trait StringHandler extends Handler[String] {
   def success(generation: String)
   def error(exception: Throwable)
 }
 
-trait FileHandler {
+trait FileHandler extends Handler[Unit] {
   def error(exception: Throwable)
   def success()
 }
 
-trait Generator[T] {
-  def generateToFile(unit: T, url: String, syntax: Vendor, handler: FileHandler): Unit
+trait Generator[Type] {
+  type SH
+  type FH
 
-  def generateToString(unit: T, syntax: Vendor, handler: StringHandler): Unit
+  def generateToFile(unit: Type, url: String, vendor: Vendor, handler: FH): Unit
+
+  def generateToString(unit: Type, vendor: Vendor, handler: SH): Unit
 
 }

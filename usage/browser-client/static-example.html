@@ -10,8 +10,17 @@
 
 <label for="url"> Url:
     <!--<input id="url" type="text" value="http://amf.us-2.evennode.com/input.yaml/1000"/>-->
+    <label>From:</label><select id="from" >
+        <option value="raml">Raml</option>
+        <option value="oas">Oas</option>
+        <option value="amf">Amf</option>
+    </select>
 
-    <label>text:</label><textarea id="url"> </textarea>
+    <label>Api:</label><textarea id="api"> </textarea>
+
+    <label>WebApi:</label><textarea id="webApi"> </textarea>
+
+    <label>Muted WebApi:</label><textarea id="changedWebApi"></textarea>
 
 </label>
 
@@ -26,17 +35,27 @@
 
     function click() {
         console.log("Clicked!");
-        const pathname = document.getElementById("url").value;
+        const pathname = document.getElementById("api").value;
+        const from = document.getElementById("from").value;
+
+        console.log("client: "+client)
         console.log("Pathname:", pathname);
-        client.generateFromStream(pathname, "yaml", {
+
+        client.generateFromStream(pathname, HintMatcherHelper.matchSourceHint(from), {
             success: function (doc) {
                 console.log('Success', doc);
+                console.log('Success', doc.encodes);
+                document.getElementById("webApi").value = doc.encodes
+                console.log("passed")
+                const webApiBuilder = doc.encodes.toBuilder
+
+                webApiBuilder.withSchemes(["http","https","fakeScheme"])
+                const changedWebApi = webApiBuilder.build
+                document.getElementById("changedWebApi").value = changedWebApi
+
             },
             error: function (exception) {
                 console.log('Error', exception);
-            },
-            print: function (message) {
-                console.log('Print', message);
             }
         });
     }

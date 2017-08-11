@@ -14,6 +14,8 @@ import scala.scalajs.js.JSConverters._
 @JSExportTopLevel("JsClient")
 class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
 
+  override type H = JsHandler[BaseUnit]
+
   /**
     * Converts the given api stream to a copy of the api in the spec of the vendor and runs the handler functions for success and fails
     * @param stream source api stream
@@ -22,29 +24,30 @@ class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
     * @param handler handler object to execute the success or fail functions with the result string
     */
   @JSExport
-  def convert(stream: String, sourceHint: String, toVendor: String, handler: JsHandler[String]): Unit = {
+  def convert(stream: String, sourceHint: Hint, toVendor: Vendor, handler: JsStringHandler): Unit = {
 
-    generateFromStream(
+    super.generateAndHandle(
       stream,
-      matchSourceHint(sourceHint),
-      new Handler[BaseUnit] {
-        override def success(document: BaseUnit): Unit = {
+      sourceHint,
+      new Handler[amf.document.BaseUnit] {
+        override def success(document: amf.document.BaseUnit): Unit = {
           new JsGenerator().generateToString(
-            document,
-            matchToVendor(toVendor),
-            new StringHandler {
-              override def error(exception: Throwable): Unit = handler.error(exception)
-
-              override def success(generation: String): Unit = handler.success(generation)
-            }
+            Document(document),
+            toVendor,
+            handler
           )
         }
-
         override def error(exception: Throwable): Unit = handler.error(exception)
       }
     )
   }
-
+//  generateAsyncFromStream(stream,sourceHint).toFuture.map(base =>{
+//    new JsGenerator().generateToString(
+//      base,
+//      toVendor,
+//      handler
+//    )
+//  })
   /**
     * generates the base unit document from api located in the given file or url.
     * @param url : location of the api
@@ -52,7 +55,7 @@ class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
     * @param handler handler object to execute the success or fail functions with the result object model
     */
   @JSExport
-  override def generateFromFile(url: String, hint: Hint, handler: Handler[BaseUnit]): Unit =
+  override def generateFromFile(url: String, hint: Hint, handler: JsHandler[BaseUnit]): Unit =
     super.generateAndHandle(url, hint, jsHander(handler))
 
   /**
@@ -62,7 +65,7 @@ class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
     * @param handler handler object to execute the success or fail functions with the result object model
     */
   @JSExport
-  override def generateFromStream(stream: String, hint: Hint, handler: Handler[BaseUnit]): Unit =
+  override def generateFromStream(stream: String, hint: Hint, handler: JsHandler[BaseUnit]): Unit =
     super.generateAndHandle(null, hint, jsHander(handler), Some(TrunkPlatform(stream)))
 
   /**
@@ -83,7 +86,7 @@ class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
   def generateAsyncFromStream(stream: String, hint: Hint): js.Promise[BaseUnit] =
     super.generate(null, hint, Some(TrunkPlatform(stream))).map(bu => Document(bu)).toJSPromise
 
-  private def jsHander(handler: Handler[BaseUnit]) =
+  private def jsHander(handler: JsHandler[BaseUnit]) =
     new Handler[amf.document.BaseUnit] {
       override def error(exception: Throwable): Unit = handler.error(exception)
 

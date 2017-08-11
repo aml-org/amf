@@ -26,27 +26,13 @@ abstract class BaseClient extends PlatformSecrets {
     case Failure(exception) => handler.error(exception)
   }
 
-  protected def matchSourceHint(source: String): Hint = {
-    source match {
-      case "json" | "oas" | "openapi" => OasJsonHint
-      case "raml" | "yaml"            => RamlYamlHint
-      case _                          => AmfJsonLdHint
-    }
-  }
-
-  protected def matchToVendor(toVendor: String): Vendor = {
-    toVendor match {
-      case "json" | "oas" | "openapi" => Oas
-      case "raml" | "yaml"            => Raml
-      case _                          => Amf
-    }
-  }
 }
 
-trait Client[T] {
-  def generateFromFile(url: String, hint: Hint, handler: Handler[T]): Unit
-//  def generateAsyncFromFile(url: String, hint: Hint): Future[T]
-//
-  def generateFromStream(stream: String, hint: Hint, handler: Handler[T]): Unit
-//  def generateAsyncFromStream(stream: String, hint: Hint): Future[T]
+trait Client[Type] {
+
+  type H
+
+  def generateFromFile(url: String, hint: Hint, handler: H): Unit
+
+  def generateFromStream(stream: String, hint: Hint, handler: H): Unit
 }

@@ -50,4 +50,8 @@ case class WebApi(fields: Fields, annotations: List[Annotation]) extends DomainE
   }
   def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
 
+  override def toString: String =
+    s"WebApi($name ,$description ,$host ," +
+      s"$schemes ,$basePath ,$accepts ,$contentType ,$version ,$termsOfService ," +
+      s"$provider ,$license ,$documentation ,$endPoints ,$baseUriParameters"
 }

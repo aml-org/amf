@@ -1,4 +1,4 @@
-import amf from '@mulesoft/amf-js'
+var amf = require('../../amf-js/target/artifact/amf-module.js')
 
 
 

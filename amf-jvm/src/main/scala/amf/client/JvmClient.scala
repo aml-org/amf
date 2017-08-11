@@ -1,13 +1,15 @@
 package amf.client
 
 import amf.model.{BaseUnit, Document}
-import amf.remote.Hint
+import amf.remote.{Hint, Vendor}
 import amf.unsafe.TrunkPlatform
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class JvmClient extends BaseClient with Client[BaseUnit] {
+
+  override type H = Handler[BaseUnit]
 
   /**
     * generates the base unit document from api located in the given file or url.
@@ -34,16 +36,16 @@ class JvmClient extends BaseClient with Client[BaseUnit] {
     * @param toVendor vendor for the result spec of the converted api. Ej: raml, oas, amf
     * @param handler handler object to execute the success or fail functions with the result string
     */
-  def convert(stream: String, sourceHint: String, toVendor: String, handler: Handler[String]): Unit = {
+  def convert(stream: String, sourceHint: Hint, toVendor: Vendor, handler: Handler[String]): Unit = {
 
     generateFromStream(
       stream,
-      matchSourceHint(sourceHint),
+      sourceHint,
       new Handler[BaseUnit] {
         override def success(document: BaseUnit): Unit = {
           new JvmGenerator().generateToString(
             document,
-            matchToVendor(toVendor),
+            toVendor,
             new StringHandler {
               override def error(exception: Throwable): Unit = handler.error(exception)
 

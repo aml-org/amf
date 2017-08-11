@@ -21,10 +21,10 @@ http.createServer(function (request, response) {
 
             var client =new amf.JsClient();
 
-            client.convert(jsonString,"json","raml",{
+            client.generateFromStream(jsonString,"json",{
                 success: function(doc){
                     response.writeHead(200, {'Content-Type': 'text/html'});
-                    response.write(doc)
+                    response.write(doc.encodes)
 
                     response.end()
                 },
