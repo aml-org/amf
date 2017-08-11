@@ -1,4 +1,6 @@
-const amf = require('../../../amf-js/target/scala-2.12/amf-opt.js')
+import amf from '@mulesoft/amf-js'
+
+
 
 const stringify = (data) => {
 	if (!data) return '';
@@ -16,9 +18,11 @@ const resolve = (error, result) => {
 };
 
 self.addEventListener('message', (e) => {
+	console.log("amf: "+amf)
 	const message = e.data;
 
 	const client = new amf.JsClient();
+	console.log("client: "+ client);
 	client.convert(message.rawData,message.fromLanguage.className,message.toLanguage.className,
 		{
 			success: function(doc){

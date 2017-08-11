@@ -1,7 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
-var amf = require('../../amf-js/target/scala-2.12/amf-fastopt.js')
+var amf = require('../../amf-js/target/artifact/amf-module.js')
 // respond with "hello world" when a GET request is made to the homepage
 
 

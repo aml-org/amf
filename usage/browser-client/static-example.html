@@ -9,7 +9,10 @@
 <script type="text/javascript" src="../../amf-js/target/artifact/amf-browser.js"></script>
 
 <label for="url"> Url:
-    <input id="url" type="text" value="http://amf.us-2.evennode.com/input.yaml/1000"/>
+    <!--<input id="url" type="text" value="http://amf.us-2.evennode.com/input.yaml/1000"/>-->
+
+    <label>text:</label><textarea id="url"> </textarea>
+
 </label>
 
 <button id="click">Try Me!</button>
@@ -17,7 +20,7 @@
 <script>
     const client = new JsClient();
 
-    console.log(client)
+    console.log("client" + client)
 
     document.getElementById("click").addEventListener("click", click);
 
@@ -25,7 +28,7 @@
         console.log("Clicked!");
         const pathname = document.getElementById("url").value;
         console.log("Pathname:", pathname);
-        client.generate(pathname, "yaml", {
+        client.generateFromStream(pathname, "yaml", {
             success: function (doc) {
                 console.log('Success', doc);
             },
