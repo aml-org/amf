@@ -25,9 +25,8 @@ class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
     */
   @JSExport
   def convert(stream: String, sourceHint: Hint, toVendor: Vendor, handler: JsStringHandler): Unit = {
-
     super.generateAndHandle(
-      stream,
+      null,
       sourceHint,
       new Handler[amf.document.BaseUnit] {
         override def success(document: amf.document.BaseUnit): Unit = {
@@ -38,16 +37,11 @@ class JsClient extends BaseClient with PlatformSecrets with Client[BaseUnit] {
           )
         }
         override def error(exception: Throwable): Unit = handler.error(exception)
-      }
+      },
+      Some(TrunkPlatform(stream))
     )
   }
-//  generateAsyncFromStream(stream,sourceHint).toFuture.map(base =>{
-//    new JsGenerator().generateToString(
-//      base,
-//      toVendor,
-//      handler
-//    )
-//  })
+
   /**
     * generates the base unit document from api located in the given file or url.
     * @param url : location of the api

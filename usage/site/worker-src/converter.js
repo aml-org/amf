@@ -30,35 +30,18 @@ self.addEventListener('message', (e) => {
 
 	const toVendor =  amf.HintMatcherHelper.matchToVendor(message.toLanguage.className)
 
-	client.generateFromStream(message.rawData,hint,{
-        success: function(doc){
-            console.log("result: "+doc)
-            generator.generateToString(doc,toVendor,{
-                success: function(doc){
-                	console.log("result: "+doc)
-					resolve(null,doc)
-				},
-                error: function(exception){
-                    resolve(exception,exception.toString());
-                }
-			})
-        },
-        error: function(exception){
-            resolve(exception,exception.toString());
-        }
-	});
-	// client.convert(message.rawData,
-	// 	hint,
-	// 	toVendor,
-	// 	{
-	// 		success: function(doc){
-	// 			console.log("result: "+doc);
-	// 			resolve(null,doc);
-	// 		},
-	// 		error: function(exception){
-	// 			resolve(exception,exception.toString());
-	// 		}
-    //
-	// 	}
-	// );
+	client.convert(message.rawData,
+		hint,
+		toVendor,
+		{
+			success: function(doc){
+				console.log("result: "+doc);
+				resolve(null,doc);
+			},
+			error: function(exception){
+				resolve(exception,exception.toString());
+			}
+
+		}
+	);
 }, false);
