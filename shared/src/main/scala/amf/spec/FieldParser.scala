@@ -1,6 +1,7 @@
 package amf.spec
 
 import amf.builder._
+import amf.common.AMFToken
 import amf.common.AMFToken.{Entry, Extension}
 import amf.common.Strings.strings
 import amf.domain.Annotation._
@@ -16,8 +17,8 @@ import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.ContextKey.{EndPointBodyParameter, OperationBodyParameter}
 import amf.spec.Matcher.RegExpMatcher
 import amf.spec.Spec._
-import scala.language.existentials
 
+import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -53,7 +54,12 @@ object FieldParser {
   object StringListParser extends SpecFieldParser {
 
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit =
-      spec.fields.foreach(builder.set(_, entry.last.children.map(c => c.content.unquote), annotations(entry)))
+      spec.fields.foreach(builder.set(_, values(entry.last), annotations(entry)))
+
+    private def values(value: ASTNode[_]): Seq[String] = value.`type` match {
+      case AMFToken.StringToken => Seq(value.content)
+      case _                    => value.children.map(c => c.content.unquote)
+    }
   }
 
   case class ChildrenParser() extends SpecFieldParser {
