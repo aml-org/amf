@@ -5,12 +5,12 @@ import amf.remote.Vendor
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.{JSExport, JSExportAll}
+import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
 
 /**
   *
   */
-@JSExportAll
+@JSExportTopLevel("JsGenerator")
 class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
 
   override type FH = JsFileHandler

@@ -1,4 +1,4 @@
-var amf = require('../../amf-js/target/artifact/amf-module.js')
+var amf = require('../../../amf-js/target/artifact/amf-module.js')
 
 
 
@@ -19,19 +19,46 @@ const resolve = (error, result) => {
 
 self.addEventListener('message', (e) => {
 	console.log("amf: "+amf)
+	console.log("e: "+e)
 	const message = e.data;
-
+	console.log("message: "+ message)
 	const client = new amf.JsClient();
 	console.log("client: "+ client);
-	client.convert(message.rawData,message.fromLanguage.className,message.toLanguage.className,
-		{
-			success: function(doc){
-				resolve(null,doc);
-			},
-			error: function(exception){
-				resolve(exception,exception.toString());
-			}
+	console.log("rawdata: "+ message.rawData);
+	const hint=amf.HintMatcherHelper.matchSourceHint(message.fromLanguage.className)
+	const generator = new amf.JsGenerator();
 
-		}
-	);
+	const toVendor =  amf.HintMatcherHelper.matchToVendor(message.toLanguage.className)
+
+	client.generateFromStream(message.rawData,hint,{
+        success: function(doc){
+            console.log("result: "+doc)
+            generator.generateToString(doc,toVendor,{
+                success: function(doc){
+                	console.log("result: "+doc)
+					resolve(null,doc)
+				},
+                error: function(exception){
+                    resolve(exception,exception.toString());
+                }
+			})
+        },
+        error: function(exception){
+            resolve(exception,exception.toString());
+        }
+	});
+	// client.convert(message.rawData,
+	// 	hint,
+	// 	toVendor,
+	// 	{
+	// 		success: function(doc){
+	// 			console.log("result: "+doc);
+	// 			resolve(null,doc);
+	// 		},
+	// 		error: function(exception){
+	// 			resolve(exception,exception.toString());
+	// 		}
+    //
+	// 	}
+	// );
 }, false);
