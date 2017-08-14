@@ -119,16 +119,16 @@ object FieldEmitter {
 
   object EndPointEmitter extends SpecFieldEmitter {
     override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
-      var eps: Map[EndPointPath, LazyBuilder] = ListMap()
-      val endPoints                           = value.asInstanceOf[List[EndPoint]]
-      val vendor                              = spec.vendor
+      var eps: Map[EndPoint, LazyBuilder] = ListMap()
+      val endPoints                       = value.asInstanceOf[List[EndPoint]]
+      val vendor                          = spec.vendor
 
       endPoints.foreach(endPoint => {
         val builder: LazyBuilder = endPointBuilder(endPoint, spec)
 
-        if (vendor == Raml) endPoint.parentPath.foreach(ep => { eps(ep).add(builder) })
+        if (vendor == Raml) endPoint.parent.foreach(eps(_).add(builder))
 
-        eps = eps + (EndPointPath(endPoint.parentPath, endPoint.relativePath) -> builder)
+        eps = eps + (endPoint -> builder)
       })
 
       if (vendor == Raml) eps.filterKeys(_.parent.isEmpty).values.toList

@@ -1,6 +1,6 @@
 [
   {
-    "@id": "shared/src/test/resources/upanddown/endpoints.raml",
+    "@id": "shared/src/test/resources/upanddown/endpoints.jsonld",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api",
+        "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -64,7 +64,7 @@
         ],
         "http://schema.org/provider": [
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/organization",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization",
             "@type": [
               "http://schema.org/Organization",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -86,7 +86,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/organization/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -118,7 +118,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/organization"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -146,7 +146,7 @@
         ],
         "http://schema.org/license": [
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/license",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license",
             "@type": [
               "http://raml.org/vocabularies/http#License",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -163,7 +163,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/license/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -183,7 +183,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/license"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -211,7 +211,7 @@
         ],
         "http://schema.org/documentation": [
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/creative-work",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work",
             "@type": [
               "http://schema.org/CreativeWork",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -228,7 +228,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/creative-work/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -248,7 +248,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/creative-work"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -276,7 +276,7 @@
         ],
         "http://raml.org/vocabularies/http#endpoint": [
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -293,7 +293,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -313,7 +313,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -339,7 +339,7 @@
             ]
           },
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Flevel-one",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -361,7 +361,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -369,12 +369,12 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Flevel-one"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
                       }
                     ]
                   }
@@ -407,7 +407,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Flevel-one"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -433,7 +433,7 @@
             ]
           },
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Fanother-level-one",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -450,7 +450,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -458,12 +458,12 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
                       }
                     ]
                   }
@@ -484,7 +484,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -510,7 +510,7 @@
             ]
           },
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Fanother-level-zero",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -527,7 +527,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Fanother-level-zero/source-map",
+                "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -547,7 +547,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/end-points/%2Fanother-level-zero"
+                        "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -575,7 +575,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "shared/src/test/resources/upanddown/endpoints.raml#/web-api/source-map",
+            "@id": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -619,7 +619,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "shared/src/test/resources/upanddown/endpoints.raml#/web-api"
+                    "@value": "shared/src/test/resources/upanddown/endpoints.jsonld#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

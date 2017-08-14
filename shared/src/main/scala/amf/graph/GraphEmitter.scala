@@ -25,10 +25,10 @@ object GraphEmitter {
     emitter.root(unit)
   }
 
-  case class Emitter(e: ASTEmitter[AMFToken, AMFAST]) {
+  case class Emitter(emitter: ASTEmitter[AMFToken, AMFAST]) {
 
     def root(unit: BaseUnit): AMFAST = {
-      e.root(Root) { () =>
+      emitter.root(Root) { () =>
         array { () =>
           map { () =>
             traverse(unit, unit.location)
@@ -96,7 +96,7 @@ object GraphEmitter {
     }
 
     private def raw(content: String, token: AMFToken = StringToken): Unit = {
-      e.value(token, if (token == StringToken) {
+      emitter.value(token, if (token == StringToken) {
         content.quote
       } else content)
     }
@@ -154,9 +154,9 @@ object GraphEmitter {
     private def map(inner: () => Unit): Unit = node(MapToken)(inner)
 
     private def node(t: AMFToken)(inner: () => Unit) = {
-      e.beginNode()
+      emitter.beginNode()
       inner()
-      e.endNode(t)
+      emitter.endNode(t)
     }
 
     private def createSourcesNode(id: String, sources: SourceMap): Unit = {

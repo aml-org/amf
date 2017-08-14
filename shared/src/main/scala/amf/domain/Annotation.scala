@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.model.AmfElement
 import amf.parser.Range
 
 /**
@@ -21,9 +22,11 @@ object Annotation {
 
     override val value: String = range.toString
   }
-  case class ParentEndPoint(parentPath: EndPointPath) extends Annotation {
-    override val name: String  = "parent-end-point"
-    override val value: String = null
+
+  case class ParentEndPoint(parent: EndPoint) extends Annotation {
+    override val name: String = "parent-end-point"
+
+    override val value: String = parent.id
   }
 
   case class ExplicitField() extends Annotation {
@@ -90,11 +93,20 @@ object Annotation {
     override val value: String = null
   }
 
-  def unapply(annotation: String): Option[(String) => Annotation] = annotation match {
-    case "lexical" => Some((value: String) => LexicalInformation(Range.apply(value)))
-    case _         => None // Unknown annotation
+  def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
+    annotation match {
+      case "lexical"          => Some(lexical)
+      case "parent-end-point" => Some(parentEndPoint)
+      case _                  => None // Unknown annotation
+    }
+
+  private def parentEndPoint(value: String, objects: Map[String, AmfElement]) = {
+    ParentEndPoint(objects(value).asInstanceOf[EndPoint])
   }
 
+  private def lexical(value: String, objects: Map[String, AmfElement]) = {
+    LexicalInformation(Range.apply(value))
+  }
 }
 
 case class EndPointPath(parent: Option[EndPointPath] = None, path: String) {

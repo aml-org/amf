@@ -215,7 +215,7 @@ object FieldParser {
                       container: Builder): Unit = {
 
       val as = annotations(node) ++ parent
-        .map(p => List(ParentEndPoint(EndPointPath(p.parentPath, p.relativePath))))
+        .map(p => List(ParentEndPoint(p)))
         .getOrElse(Nil)
       val endpointContext = context.copy()
 

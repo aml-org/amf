@@ -17,10 +17,10 @@ case class EndPoint(fields: Fields, annotations: List[Annotation]) extends Domai
   val operations: Seq[Operation] = fields(Operations)
   val parameters: Seq[Parameter] = fields(Parameters)
 
-  val parentPath: Option[EndPointPath] =
-    annotations.find(_.isInstanceOf[ParentEndPoint]).map(_.asInstanceOf[ParentEndPoint].parentPath)
+  val parent: Option[EndPoint] =
+    annotations.find(_.isInstanceOf[ParentEndPoint]).map(_.asInstanceOf[ParentEndPoint]).map(_.parent)
 
-  val relativePath: String = parentPath.map(p => path.stripPrefix(p.completePath)).getOrElse(path)
+  val relativePath: String = parent.map(p => path.stripPrefix(p.path)).getOrElse(path)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
 
