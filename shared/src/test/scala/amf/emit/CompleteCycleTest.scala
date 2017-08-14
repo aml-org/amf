@@ -83,6 +83,10 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
     assertCycle("endpoints.raml", "endpoints.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Endpoints amf(raml) to raml test") {
+    assertCycle("endpoints.raml.jsonld", "endpoints.raml.jsonld.raml", AmfJsonLdHint, Raml)
+  }
+
   test("Endpoints raml to oas test") {
     assertCycle("endpoints.raml", "endpoints.json", RamlYamlHint, Oas)
   }
