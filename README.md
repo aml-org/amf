@@ -55,7 +55,7 @@ and use the exported classes as if they were global ones, for example:
 const client = new JsClient()
 ```
 
-#Examples
+# Examples
 
 Inside the *usage* folder we have an example for each of the three usages and a *converter* project to give the library some UI.
 
