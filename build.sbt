@@ -12,7 +12,7 @@ lazy val amf = crossProject
   .settings(
     name := "amf",
     organization := "org.mulesoft",
-    version := sys.env.getOrElse("TAG_VERSION", "0.0.1"),
+    version := "0.0.1-SNAPSHOT",
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
   )
   .jvmSettings(
