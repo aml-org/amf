@@ -36,6 +36,17 @@ trait Builder {
     this
   }
 
+  /** Set id. */
+  def withId(id: String): this.type = {
+    fields.id = id
+    this
+  }
+
+  /** Resolve id given container id. */
+  def resolveId(container: String): this.type
+
+  def getId: String = fields.id
+
   private def arrayAnnotation(field: Field): ArrayFieldAnnotations = {
     fields.getAnnotation(field, classOf[ArrayFieldAnnotations]).getOrElse(ArrayFieldAnnotations())
   }

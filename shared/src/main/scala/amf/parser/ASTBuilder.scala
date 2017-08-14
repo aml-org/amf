@@ -40,4 +40,7 @@ abstract class ASTBuilder[T <: Token, N <: ASTNode[T]](val lexer: Lexer[T]) {
 
   /** The token type of the current token. */
   def currentToken: T
+
+  /** Collect specified error. */
+  def error(message: String)
 }

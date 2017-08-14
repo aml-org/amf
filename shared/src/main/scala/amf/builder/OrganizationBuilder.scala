@@ -16,6 +16,8 @@ class OrganizationBuilder extends Builder {
 
   def withEmail(email: String): OrganizationBuilder = set(Email, email)
 
+  override def resolveId(container: String): this.type = withId(container + "/organization")
+
   override def build: Organization = Organization(fields, annotations)
 }
 

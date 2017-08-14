@@ -8,7 +8,7 @@ import amf.remote.Kind
 
 import scala.collection.mutable.ListBuffer
 
-class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AMFToken, AMFAST](lexer) {
+class YeastASTBuilder private (lexer: Lexer[AMFToken], url: String) extends BaseASTBuilder[AMFToken, AMFAST](lexer) {
 
   val references: ListBuffer[AMFASTLink] = ListBuffer()
 
@@ -40,9 +40,12 @@ class YeastASTBuilder private (lexer: Lexer[AMFToken]) extends BaseASTBuilder[AM
     val end   = if (children.nonEmpty) children.last.range else range
     new AMFASTNode(token, null, start.extent(end), children)
   }
+
+  /** Collect specified error. */
+  override def error(message: String): Unit = println(s"Error at $url:${lexer.currentRange} => $message")
 }
 
 object YeastASTBuilder {
-  def apply(lexer: Lexer[AMFToken]): YeastASTBuilder =
-    new YeastASTBuilder(lexer)
+  def apply(lexer: Lexer[AMFToken], url: String = ""): YeastASTBuilder =
+    new YeastASTBuilder(lexer, url)
 }

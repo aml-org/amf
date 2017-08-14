@@ -37,28 +37,28 @@
       "displayName": "endpoint",
       "get": {
         "description": "test operation get",
-        "externalDocs": {
-          "description": "documentation operation",
-          "url": "localhost:8080/endpoint/operation"
-        },
         "operationId": "test get",
         "schemes": [
           "http"
         ],
-        "summary": "summary of operation get"
+        "summary": "summary of operation get",
+        "externalDocs": {
+          "description": "documentation operation",
+          "url": "localhost:8080/endpoint/operation"
+        }
       },
       "post": {
         "description": "test operation post",
         "deprecated": true,
-        "externalDocs": {
-          "description": "documentation operation",
-          "url": "localhost:8080/endpoint/operation"
-        },
         "operationId": "test post",
         "schemes": [
           "http"
         ],
-        "summary": "summary of operation post"
+        "summary": "summary of operation post",
+        "externalDocs": {
+          "description": "documentation operation",
+          "url": "localhost:8080/endpoint/operation"
+        }
       }
     }
   }

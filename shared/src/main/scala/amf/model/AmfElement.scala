@@ -13,6 +13,6 @@ trait AmfElement {
   /** Set of annotations for object. */
   val annotations: List[Annotation]
 
-  /** Return element unique identifier given parent id.*/
-  def id(parent: String): String = ???
+  /** Return element unique identifier.*/
+  def id: String = fields.id
 }

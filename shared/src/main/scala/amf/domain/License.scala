@@ -31,6 +31,4 @@ case class License(fields: Fields, annotations: List[Annotation]) extends Domain
   override def toString = s"License($url, $name)"
 
   override def toBuilder: LicenseBuilder = LicenseBuilder(fields, annotations)
-
-  override def id(parent: String): String = parent + "/license"
 }

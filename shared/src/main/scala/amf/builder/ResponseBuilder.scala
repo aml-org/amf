@@ -20,6 +20,11 @@ class ResponseBuilder extends Builder {
 
   def withPayloads(payloads: Seq[Payload]): ResponseBuilder = set(Payloads, payloads)
 
+  override def resolveId(container: String): this.type = {
+    val name: String = fields(Name)
+    withId(container + "/" + name)
+  }
+
   override def build: Response = Response(fields, annotations)
 }
 

@@ -7,7 +7,8 @@ import amf.common.Strings.strings
 import amf.domain.Annotation._
 import amf.domain.{Annotation, _}
 import amf.metadata.Type
-import amf.metadata.domain.EndPointModel.Path
+import amf.metadata.domain.EndPointModel.{Operations, Path}
+import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain.ParameterModel.Required
 import amf.metadata.domain.ResponseModel.Headers
 import amf.metadata.domain.WebApiModel.EndPoints
@@ -27,17 +28,14 @@ import scala.collection.mutable.ListBuffer
 object FieldParser {
 
   trait SpecFieldParser {
-    def parse(spec: SpecField, node: ASTNode[_], builder: Builder, context: ParserContext): Unit
-
-    def apply(spec: SpecField, node: ASTNode[_], builder: Builder, context: ParserContext = ParserContext()): Unit =
-      parse(spec, node, builder, context)
+    def parse(spec: SpecField, node: ASTNode[_], container: Builder, context: ParserContext): Unit
   }
 
   trait ValueParser[T] extends SpecFieldParser {
     def value(content: String): T
 
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
-      spec.fields.foreach(builder.set(_, value(valueField(entry).content.unquote), annotations(entry)))
+    override def parse(spec: SpecField, entry: ASTNode[_], container: Builder, context: ParserContext): Unit = {
+      spec.fields.foreach(container.set(_, value(valueField(entry).content.unquote), annotations(entry)))
     }
 
     private def valueField(entry: ASTNode[_]) = if (entry.last.`type` == Extension) entry.last.last else entry.last
@@ -53,8 +51,8 @@ object FieldParser {
 
   object StringListParser extends SpecFieldParser {
 
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit =
-      spec.fields.foreach(builder.set(_, values(entry.last), annotations(entry)))
+    override def parse(spec: SpecField, entry: ASTNode[_], container: Builder, context: ParserContext): Unit =
+      spec.fields.foreach(container.set(_, values(entry.last), annotations(entry)))
 
     private def values(value: ASTNode[_]): Seq[String] = value.`type` match {
       case AMFToken.StringToken => Seq(value.content)
@@ -66,12 +64,12 @@ object FieldParser {
     override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit =
       parseMap(spec, entry.last, builder, context)
 
-    protected def parseMap(spec: SpecField, mapNode: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
+    protected def parseMap(spec: SpecField, mapNode: ASTNode[_], container: Builder, context: ParserContext): Unit = {
       mapNode.children.foreach(entry => {
         spec.children
           .map(_.copy(vendor = spec.vendor)) //TODO copying parent vendor to children here...
           .find(_.matcher.matches(entry)) match {
-          case Some(field) => field.parser(field, entry, builder, context)
+          case Some(field) => field.parser.parse(field, entry, container, context)
           case _           => // Unknown node...
         }
       })
@@ -88,7 +86,10 @@ object FieldParser {
       }
     }
 
-    private def parseParamsFromSequence(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext) = {
+    private def parseParamsFromSequence(spec: SpecField,
+                                        entry: ASTNode[_],
+                                        container: Builder,
+                                        context: ParserContext) = {
       entry.last.children.foreach(paramMap => {
         val b = ParameterBuilder()
 
@@ -98,17 +99,17 @@ object FieldParser {
 
         if (spec.fields.size == 1) {
           param.binding match {
-            case "path" | "header" | "query" => builder add (spec.fields.head, List(param), annotations(paramMap))
+            case "path" | "header" | "query" => container.add(spec.fields.head, List(param), annotations(paramMap))
             case "body" =>
-              context set (EndPointBodyParameter, (param, PayloadsParser.parsePayload(paramMap, context)))
+              context.set(EndPointBodyParameter, (param, PayloadsParser.parsePayload(paramMap, context, container)))
             case _ => //Invalid binding in endpoint parameter
           }
         } else {
           param.binding match {
-            case "header"         => builder add (RequestModel.Headers, List(param), annotations(paramMap))
-            case "path" | "query" => builder add (RequestModel.QueryParameters, param, annotations(paramMap))
+            case "header"         => container.add(RequestModel.Headers, List(param), annotations(paramMap))
+            case "path" | "query" => container.add(RequestModel.QueryParameters, param, annotations(paramMap))
             case "body" =>
-              context set (OperationBodyParameter, (param, PayloadsParser.parsePayload(paramMap, context)))
+              context.set(OperationBodyParameter, (param, PayloadsParser.parsePayload(paramMap, context, container)))
             case _ => //Invalid binding in endpoint parameter
           }
         }
@@ -134,7 +135,7 @@ object FieldParser {
   }
 
   object ResponseParser extends ChildrenParser {
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
+    override def parse(spec: SpecField, entry: ASTNode[_], container: Builder, context: ParserContext): Unit = {
       val statusCode = entry.head.content.unquote
 
       val response = ResponseBuilder()
@@ -144,6 +145,7 @@ object FieldParser {
           if (statusCode == "default") "200" else statusCode,
           annotations(entry.head)
         )
+        .resolveId(container.getId)
 
       super.parse(spec, entry, response, context)
 
@@ -155,12 +157,12 @@ object FieldParser {
           response add (ResponseModel.Payloads, rootPayload.build)
       }
 
-      builder add (spec.fields.head, response.build, annotations(entry))
+      container add (spec.fields.head, response.build, annotations(entry))
     }
   }
 
   object PayloadsParser extends ChildrenParser {
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
+    override def parse(spec: SpecField, entry: ASTNode[_], container: Builder, context: ParserContext): Unit = {
       spec.vendor match {
         case Raml =>
           //TODO this is the root. Search for a raml-type here and add a payload to the builder without mediaType.
@@ -176,7 +178,7 @@ object FieldParser {
 
               //TODO match a raml-type inside of node e.. . .. .... ?
 
-              builder add (spec.fields.head, List(somePayload.build))
+              container.add(spec.fields.head, List(somePayload.build))
             })
         case Oas =>
           //This will parse only payloads from extensions (in a sequence)
@@ -184,39 +186,42 @@ object FieldParser {
           entry.last.last.children.foreach(payloadMap => {
             val payload = PayloadBuilder()
             if (traverseAndParseMap(Spec.OasExtensionPayload, payloadMap, payload, context))
-              builder add (spec.fields.head, List(payload.build))
+              container.add(spec.fields.head, List(payload.build))
           })
         case _ =>
       }
     }
 
-    private[spec] def parsePayload(payloadMap: ASTNode[_], context: ParserContext): Payload = {
+    private[spec] def parsePayload(payloadMap: ASTNode[_], context: ParserContext, container: Builder): Payload = {
       val payload = PayloadBuilder()
       traverseAndParseMap(Spec.OasPayload, payloadMap, payload, context)
+      payload.resolveId(container.getId)
       payload.build
     }
   }
 
   object EndPointParser extends ChildrenParser {
-    override def parse(spec: SpecField, node: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
+    override def parse(spec: SpecField, node: ASTNode[_], container: Builder, context: ParserContext): Unit = {
       val result: ListBuffer[EndPoint] = ListBuffer()
-      parse(spec, node, None, result, context)
-      builder.add(EndPoints, result.toList)
+      parse(spec, node, None, result, context, container)
+      container.add(EndPoints, result.toList)
     }
 
     private def parse(spec: SpecField,
                       node: ASTNode[_],
                       parent: Option[EndPoint],
                       collector: ListBuffer[EndPoint],
-                      context: ParserContext): Unit = {
+                      context: ParserContext,
+                      container: Builder): Unit = {
 
       val as = annotations(node) ++ parent
         .map(p => List(ParentEndPoint(EndPointPath(p.parentPath, p.relativePath))))
         .getOrElse(Nil)
-      val endpointContext = context.copy
-      val endpoint = EndPointBuilder(as).set(Path,
-                                             parent.map(_.path).getOrElse("") + node.head.content.unquote,
-                                             annotations(node.head))
+      val endpointContext = context.copy()
+
+      val endpoint = EndPointBuilder(as)
+        .set(Path, parent.map(_.path).getOrElse("") + node.head.content.unquote, annotations(node.head))
+        .resolveId(container.getId)
 
       super.parse(spec, node, endpoint, endpointContext)
 
@@ -226,7 +231,7 @@ object FieldParser {
       if (spec.vendor == Raml)
         node.last.children
           .filter(RegExpMatcher("/.*").matches)
-          .foreach(parse(spec, _, Some(actual), collector, endpointContext))
+          .foreach(parse(spec, _, Some(actual), collector, endpointContext, container))
     }
   }
 
@@ -264,25 +269,27 @@ object FieldParser {
       false
     }
 
-    def setRequest(op: OperationBuilder, entry: ASTNode[_], vendor: Vendor, context: ParserContext): Unit = {
-      val req: RequestBuilder = RequestBuilder()
+    def setRequest(op: OperationBuilder,
+                   entry: ASTNode[_],
+                   vendor: Vendor,
+                   context: ParserContext,
+                   container: Builder): Unit = {
+      val req: RequestBuilder = RequestBuilder().resolveId(container.getId)
       var add                 = traverseAndParse(RequestSpec(vendor), entry, req, context)
       if (vendor == Oas) add |= addDefaultPayload(req, context, annotations(entry))
       if (add) op set (OperationModel.Request, req.build, annotations(entry))
     }
 
-    override def parse(spec: SpecField, entry: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
-      val opContext            = context.copy
-      val op: OperationBuilder = operationBuilder(spec, entry, opContext)
-      setRequest(op, entry, spec.vendor, opContext)
+    override def parse(spec: SpecField, entry: ASTNode[_], container: Builder, context: ParserContext): Unit = {
+      val opContext = context.copy()
 
-      builder add (EndPointModel.Operations, op.build)
-    }
-
-    private def operationBuilder(spec: SpecField, entry: ASTNode[_], context: ParserContext) = {
-      val op = OperationBuilder().set(OperationModel.Method, entry.head.content.unquote, annotations(entry))
+      val method = entry.head.content.unquote
+      val op     = OperationBuilder().set(Method, method, annotations(entry)).resolveId(container.getId)
       super.parse(spec, entry, op, context)
-      op
+
+      setRequest(op, entry, spec.vendor, opContext, container)
+
+      container.add(Operations, op.build)
     }
   }
 
@@ -294,11 +301,12 @@ object FieldParser {
       case CreativeWorkModel => CreativeWorkBuilder(annotations)
     }
 
-    override def parse(spec: SpecField, node: ASTNode[_], builder: Builder, context: ParserContext): Unit = {
-      val field                 = spec.fields.head
-      val innerBuilder: Builder = builderForType(field.`type`, annotations(node))
-      super.parse(spec, node, innerBuilder, context)
-      builder.set(field, innerBuilder.build)
+    override def parse(spec: SpecField, node: ASTNode[_], container: Builder, context: ParserContext): Unit = {
+      val field            = spec.fields.head
+      val builder: Builder = builderForType(field.`type`, annotations(node))
+      super.parse(spec, node, builder, context)
+      builder.resolveId(container.getId)
+      container.set(field, builder.build)
     }
   }
 
@@ -312,7 +320,7 @@ object FieldParser {
     map.children.foreach(entry => {
       spec.fields.find(_.matcher.matches(entry)) match {
         case Some(field) =>
-          field.parser(field, entry, builder, context)
+          field.parser.parse(field, entry, builder, context)
           add = true
         case _ => // Unknown node...
       }

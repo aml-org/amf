@@ -14,6 +14,8 @@ class CreativeWorkBuilder extends Builder {
 
   def withDescription(description: String): CreativeWorkBuilder = set(Description, description)
 
+  override def resolveId(container: String): this.type = withId(container + "/creative-work")
+
   override def build: CreativeWork = CreativeWork(fields, annotations)
 }
 

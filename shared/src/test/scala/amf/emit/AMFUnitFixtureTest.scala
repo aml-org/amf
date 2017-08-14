@@ -12,10 +12,13 @@ import amf.unsafe.PlatformSecrets
   */
 trait AMFUnitFixtureTest extends PlatformSecrets {
 
-  def `document/api/bare`: Document     = doc(bare)
-  def `document/api/basic`: Document    = doc(basic)
+  def `document/api/bare`: Document = doc(bare)
+
+  def `document/api/basic`: Document = doc(basic)
+
   def `document/api/advanced`: Document = doc(advanced)
-  def `document/api/full`: Document     = doc(advanced)
+
+  def `document/api/full`: Document = doc(advanced)
 
   def ast(document: Document, vendor: Vendor): AMFAST = AMFUnitMaker(document, vendor)
 
@@ -30,6 +33,7 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .withContentType(List("application/json"))
       .withVersion("1.1")
       .withTermsOfService("termsOfService")
+      .resolveId("file:///tmp/test")
       .build
   }
 
@@ -41,18 +45,21 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
           .withEmail("test@test")
           .withName("organizationName")
           .withUrl("organizationUrl")
+          .resolveId(builder.getId)
           .build
       )
       .withLicense(
         LicenseBuilder()
           .withName("licenseName")
           .withUrl("licenseUrl")
+          .resolveId(builder.getId)
           .build
       )
       .withDocumentation(
         CreativeWorkBuilder()
           .withUrl("creativoWorkUrl")
           .withDescription("creativeWorkDescription")
+          .resolveId(builder.getId)
           .build
       )
       .build
@@ -60,42 +67,53 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
 
   private def advanced(): WebApi = {
     val builder = basic().toBuilder
-    val documentation = new CreativeWorkBuilder()
-      .withDescription("documentation operation")
-      .withUrl("localhost:8080/endpoint/operation")
-      .build
-
-    val get = new OperationBuilder()
-      .withDescription("test operation get")
-      .withDocumentation(documentation)
-      .withMethod("get")
-      .withName("test get")
-      .withSchemes(List("http"))
-      .withSummary("summary of operation get")
-      .build
-
-    val post = new OperationBuilder()
-      .withMethod("post")
-      .withDescription("test operation post")
-      .withDeprecated(true)
-      .withDocumentation(documentation)
-      .withName("test post")
-      .withSchemes(List("http"))
-      .withSummary("summary of operation post")
-      .build
 
     val endpoint = new EndPointBuilder()
       .withDescription("test endpoint")
       .withName("endpoint")
       .withPath("/endpoint")
-      .withOperations(List(get, post))
+      .resolveId(builder.getId)
+
+    val get = new OperationBuilder()
+      .withDescription("test operation get")
+      .withMethod("get")
+      .withName("test get")
+      .withSchemes(List("http"))
+      .withSummary("summary of operation get")
+      .resolveId(endpoint.getId)
+
+    val post = new OperationBuilder()
+      .withMethod("post")
+      .withDescription("test operation post")
+      .withDeprecated(true)
+      .withName("test post")
+      .withSchemes(List("http"))
+      .withSummary("summary of operation post")
+      .resolveId(endpoint.getId)
+
+    val getBuilt = get
+      .withDocumentation(
+        new CreativeWorkBuilder()
+          .withDescription("documentation operation")
+          .withUrl("localhost:8080/endpoint/operation")
+          .resolveId(get.getId)
+          .build)
+      .build
+
+    val postBuilt = post
+      .withDocumentation(
+        new CreativeWorkBuilder()
+          .withDescription("documentation operation")
+          .withUrl("localhost:8080/endpoint/operation")
+          .resolveId(post.getId)
+          .build)
       .build
 
     builder
-      .withEndPoints(List(endpoint))
+      .withEndPoints(List(endpoint.withOperations(List(getBuilt, postBuilt)).build))
       .build
   }
 
   private def doc(api: () => WebApi): Document =
-    DocumentBuilder().withLocation("file:///tmp/test").withEncodes(api()).build
+    DocumentBuilder().withLocation("file:///tmp/test").resolveId("file:///tmp/test").withEncodes(api()).build
 }

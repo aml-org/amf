@@ -13,6 +13,7 @@ import scala.collection.immutable.ListMap
 class Fields extends PlatformSecrets {
 
   private var fs: Map[Field, Value] = ListMap()
+  var id: String                    = _
 
   def default(field: Field): Any = field.`type` match {
     case Array(_) => Nil
@@ -26,6 +27,8 @@ class Fields extends PlatformSecrets {
       case _               => default(field)
     }).asInstanceOf[T]
   }
+
+  def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
 
   /** Return [[Value]] associated to given [[Field]]. */
   def getValue(field: Field): Value = {
@@ -53,7 +56,11 @@ class Fields extends PlatformSecrets {
     this
   }
 
-  def into(other: Fields): Unit = other.fs = other.fs ++ fs //TODO array copy with references instead of instance
+  def into(other: Fields): Unit = {
+    //TODO array copy with references instead of instance
+    other.fs = other.fs ++ fs
+    other.id = id
+  }
 
   def apply[T](field: Field): T = get(field)
 

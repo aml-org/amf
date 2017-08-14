@@ -27,8 +27,6 @@ case class WebApi(fields: Fields, annotations: List[Annotation]) extends DomainE
 
   override def toBuilder: WebApiBuilder = WebApiBuilder(fields, annotations)
 
-  override def id(parent: String): String = parent + "#/web-api"
-
   override def equals(other: Any): Boolean = other match {
     case that: WebApi =>
       (that canEqual this) &&

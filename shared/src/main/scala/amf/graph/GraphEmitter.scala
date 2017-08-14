@@ -12,6 +12,7 @@ import amf.metadata.domain._
 import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.AmfElement
 import amf.parser.{AMFASTFactory, ASTEmitter}
+import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 
 /**
@@ -37,7 +38,7 @@ object GraphEmitter {
     }
 
     def traverse(element: AmfElement, parent: String): Unit = {
-      val id = element.id(parent)
+      val id = element.id
       createIdNode(id)
 
       val obj = metamodel(element)
@@ -177,7 +178,7 @@ object GraphEmitter {
       sources.annotations.foreach({
         case (a, values) =>
           entry { () =>
-            raw(ValueType(Namespace.Document, a).iri())
+            raw(ValueType(SourceMaps, a).iri())
             array { () =>
               values.foreach(createAnnotationValueNode)
             }

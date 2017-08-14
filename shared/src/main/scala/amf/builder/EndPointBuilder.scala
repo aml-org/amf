@@ -1,5 +1,6 @@
 package amf.builder
 
+import amf.common.Strings.strings
 import amf.domain._
 import amf.metadata.domain.EndPointModel._
 
@@ -19,6 +20,11 @@ class EndPointBuilder extends Builder {
   def withOperations(operations: Seq[Operation]): EndPointBuilder = set(Operations, operations)
 
   def withParameters(parameters: Seq[Parameter]): EndPointBuilder = set(Parameters, parameters)
+
+  override def resolveId(container: String): this.type = {
+    val path: String = fields(Path)
+    withId(container + "/end-points/" + path.urlEncoded)
+  }
 
   override def build: EndPoint = EndPoint(fields, annotations)
 }

@@ -14,7 +14,7 @@ import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.vocabulary.Namespace
-import amf.vocabulary.Namespace.Document
+import amf.vocabulary.Namespace.{Document, SourceMaps}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -37,7 +37,8 @@ object GraphParser {
     val sources = retrieveSources(id, node)
     val model   = retrieveType(node, ctx)
 
-    val builder  = builders(model)(annotations(sources, id))
+    val builder = builders(model)(annotations(sources, id))
+    builder.withId(id)
     val children = node.children
 
     model.fields.foreach(f => {
@@ -166,8 +167,8 @@ object GraphParser {
 
   private object AnnotationName {
     def unapply(uri: String): Option[String] = uri match {
-      case url if url.startsWith(Document.base) => Some(url.substring(url.indexOf("#") + 1))
-      case _                                    => None
+      case url if url.startsWith(SourceMaps.base) => Some(url.substring(url.indexOf("#") + 1))
+      case _                                      => None
     }
   }
 }

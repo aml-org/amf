@@ -13,6 +13,11 @@ class PayloadBuilder extends Builder {
 
   def withSchema(schema: String): PayloadBuilder = set(Schema, schema)
 
+  override def resolveId(container: String): this.type = {
+    val mediaType: Option[String] = fields.?(MediaType)
+    withId(container + "/" + mediaType.getOrElse("default"))
+  }
+
   override def build: Payload = Payload(fields, annotations)
 }
 

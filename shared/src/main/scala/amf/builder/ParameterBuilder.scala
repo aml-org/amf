@@ -19,6 +19,11 @@ class ParameterBuilder extends Builder {
 
   def withSchema(schema: String): ParameterBuilder = set(Schema, schema)
 
+  override def resolveId(container: String): this.type = {
+    val name: String = fields(Name)
+    withId(container + "/parameter/" + name)
+  }
+
   override def build: Parameter = Parameter(fields, annotations)
 }
 

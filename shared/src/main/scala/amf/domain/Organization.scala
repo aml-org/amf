@@ -33,8 +33,6 @@ case class Organization(fields: Fields, annotations: List[Annotation]) extends D
   override def toString = s"Organization($url, $name, $email)"
 
   override def toBuilder: OrganizationBuilder = OrganizationBuilder(fields, annotations)
-
-  override def id(parent: String): String = parent + "/organization"
 }
 
 object Organization {

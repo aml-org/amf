@@ -10,6 +10,4 @@ trait BaseUnit extends AmfElement {
 
   /** Returns the file location for the document that has been parsed to generate this model */
   val location: String
-
-  override def id(parent: String): String = parent
 }

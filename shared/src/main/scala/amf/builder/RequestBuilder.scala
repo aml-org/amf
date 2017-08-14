@@ -15,6 +15,8 @@ class RequestBuilder extends Builder {
 
   def withPayloads(payloads: Seq[Payload]): RequestBuilder = set(Payloads, payloads)
 
+  override def resolveId(container: String): this.type = withId(container + "/request")
+
   override def build: Request = Request(fields, annotations)
 }
 

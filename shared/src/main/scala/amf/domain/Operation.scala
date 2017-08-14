@@ -45,6 +45,4 @@ case class Operation(fields: Fields, annotations: List[Annotation]) extends Doma
     s"Operation($method, $name, $description, $deprecated, $summary, $documentation, $schemes, $request, $responses)"
 
   override def toBuilder: OperationBuilder = OperationBuilder(fields, annotations)
-
-  override def id(parent: String): String = parent + "/" + method
 }

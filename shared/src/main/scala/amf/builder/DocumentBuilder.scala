@@ -17,6 +17,8 @@ class DocumentBuilder extends Builder {
 
   def withEncodes(element: DomainElement): DocumentBuilder = set(Encodes, element)
 
+  override def resolveId(container: String): this.type = withId(container)
+
   override def build: Document = Document(fields, annotations)
 }
 

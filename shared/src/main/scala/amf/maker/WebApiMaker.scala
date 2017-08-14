@@ -13,17 +13,17 @@ import amf.spec.{ParserContext, Spec}
 class WebApiMaker(root: Root) extends Maker[WebApi] {
 
   override def make: WebApi = {
-    val builder: WebApiBuilder = WebApiBuilder(root.annotations())
+    val builder: WebApiBuilder = WebApiBuilder(root.annotations()).resolveId(root.location)
     val map                    = root.ast > MapToken
     val context                = ParserContext()
     map.children.foreach(matcher(builder, _, context))
     builder.build
   }
 
-  private def matcher(builder: WebApiBuilder, entry: ASTNode[_], context: ParserContext): Unit = {
+  private def matcher(container: WebApiBuilder, entry: ASTNode[_], context: ParserContext): Unit = {
     if (entry.children.nonEmpty) {
       Spec(root.vendor).fields.find(_.matcher.matches(entry)) match {
-        case Some(field) => field.parser(field, entry, builder, context)
+        case Some(field) => field.parser.parse(field, entry, container, context)
         case _           => // Unknown node...
       }
     }

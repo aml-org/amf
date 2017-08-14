@@ -31,8 +31,6 @@ case class CreativeWork(fields: Fields, annotations: List[Annotation]) extends D
   override def toString = s"CreativeWork($url, $description)"
 
   override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder(fields, annotations)
-
-  override def id(parent: String): String = parent + "/creative-work"
 }
 
 object CreativeWork {

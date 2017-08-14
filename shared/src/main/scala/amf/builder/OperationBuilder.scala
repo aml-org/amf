@@ -28,6 +28,11 @@ class OperationBuilder extends Builder {
 
   def withResponses(responses: Seq[Response]): OperationBuilder = set(Responses, responses)
 
+  override def resolveId(container: String): this.type = {
+    val method: String = fields(Method)
+    withId(container + "/" + method)
+  }
+
   override def build: Operation = Operation(fields, annotations)
 }
 

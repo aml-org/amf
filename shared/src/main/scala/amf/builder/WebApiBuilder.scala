@@ -49,6 +49,8 @@ class WebApiBuilder extends Builder {
     fields
   }
 
+  override def resolveId(container: String): this.type = withId(container + "#/web-api")
+
   override def build: WebApi = WebApi(fixFields(fields), annotations)
 }
 

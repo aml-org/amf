@@ -116,6 +116,7 @@ class AMFCompiler private (val url: String,
       .withLocation(location)
       .withReferences(references)
       .withEncodes(element)
+      .resolveId(location)
       .build
   }
 
@@ -131,7 +132,7 @@ class AMFCompiler private (val url: String,
 
   private def parse(content: Content) = {
     val lexer   = resolveLexer(content)
-    val builder = YeastASTBuilder(lexer)
+    val builder = YeastASTBuilder(lexer, content.url)
     val parser  = resolveParser(builder, content)
 
     if (ast == null) {

@@ -15,6 +15,8 @@ object Namespace {
 
   val Shapes = Namespace("http://raml.org/vocabularies/shapes#")
 
+  val SourceMaps = Namespace("http://raml.org/vocabularies/document-source-maps#")
+
   val Shacl = Namespace("http://www.w3.org/ns/shacl#")
 
   val Schema = Namespace("http://schema.org/")

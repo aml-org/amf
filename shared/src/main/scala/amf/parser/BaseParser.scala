@@ -56,7 +56,7 @@ abstract class BaseParser[T <: Token, N <: ASTNode[T]](private val builder: ASTB
     case `token` => true
     case _       =>
       // todo Error
-      println(s"Error: expected '$token' but '$current' found")
+      builder.error(s"expected '$token' but '$current' found")
       false
   }
 
