@@ -17,7 +17,7 @@ lazy val amf = crossProject
   )
   .jvmSettings(
     publishTo := Some(
-      "MuleEE Snapshots Repository" at "http://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/"),
+      "MuleEE Snapshots Repository" at "https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/"),
     credentials += Credentials("Mulesoft Snapshots",
                                "mule-ee-snapshots",
                                sys.env.getOrElse("NEXUS_USER", ""),
