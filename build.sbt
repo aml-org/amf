@@ -16,14 +16,15 @@ lazy val amf = crossProject
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
   )
   .jvmSettings(
-    publishTo := Some(
-      "MuleEE Snapshots Repository" at "https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/"),
-    credentials += Credentials("Mulesoft Snapshots",
-                               "mule-ee-snapshots",
-                               sys.env.getOrElse("NEXUS_USER", ""),
-                               sys.env.getOrElse("NEXUS_PASSWORD", "")),
-    addArtifact(artifact in (Compile, assembly), assembly),
-    publishArtifact in (Compile, packageBin) := false,
+    publish := {},
+//    publishTo := Some(
+//      "MuleEE Snapshots Repository" at "https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/"),
+//    credentials += Credentials("Mulesoft Snapshots",
+//                               "mule-ee-snapshots",
+//                               sys.env.getOrElse("NEXUS_USER", ""),
+//                               sys.env.getOrElse("NEXUS_PASSWORD", "")),
+//    addArtifact(artifact in (Compile, assembly), assembly),
+//    publishArtifact in (Compile, packageBin) := false,
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     test in assembly := {},
