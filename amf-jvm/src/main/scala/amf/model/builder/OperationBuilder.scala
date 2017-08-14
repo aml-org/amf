@@ -7,9 +7,11 @@ import scala.collection.JavaConverters._
 /**
   * Operation builder.
   */
-case class OperationBuilder(
-    private[amf] val internalBuilder: amf.builder.OperationBuilder = amf.builder.OperationBuilder())
+case class OperationBuilder private (
+    private val internalBuilder: amf.builder.OperationBuilder = amf.builder.OperationBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.OperationBuilder())
 
   def withMethod(method: String): OperationBuilder = {
     internalBuilder.withMethod(method)
@@ -37,22 +39,22 @@ case class OperationBuilder(
   }
 
   def withDocumentation(documentation: CreativeWork): OperationBuilder = {
-    internalBuilder.withDocumentation(documentation.creativeWork)
+    internalBuilder.withDocumentation(documentation.element)
     this
   }
 
   def withSchemes(schemes: java.util.List[String]): OperationBuilder = {
-    internalBuilder.withSchemes(schemes.asScala)
+    internalBuilder.withSchemes(schemes.asScala.toList)
     this
   }
 
   def withRequest(request: Request): OperationBuilder = {
-    internalBuilder.withRequest(request.request)
+    internalBuilder.withRequest(request.element)
     this
   }
 
   def withResponses(responses: java.util.List[Response]): OperationBuilder = {
-    internalBuilder.withResponses(responses.asScala.map(_.response))
+    internalBuilder.withResponses(responses.asScala.map(_.element).toList)
     this
   }
 

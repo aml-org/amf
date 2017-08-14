@@ -5,8 +5,11 @@ import amf.model.Payload
 /**
   * Payload domain element builder.
   */
-case class PayloadBuilder(private[amf] val internalBuilder: amf.builder.PayloadBuilder = amf.builder.PayloadBuilder())
+case class PayloadBuilder private (
+    private val internalBuilder: amf.builder.PayloadBuilder = amf.builder.PayloadBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.PayloadBuilder())
 
   def withMediaType(mediaType: String): PayloadBuilder = {
     internalBuilder.withMediaType(mediaType)

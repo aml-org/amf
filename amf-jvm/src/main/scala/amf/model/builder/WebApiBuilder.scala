@@ -1,15 +1,16 @@
 package amf.model.builder
 
-import amf.domain._
-import amf.model.{CreativeWork, License, Organization, WebApi}
+import amf.model._
 
 import scala.collection.JavaConverters._
 
 /**
-  * Builder class for web api js
+  * Builder class for web api jvm
   */
-case class WebApiBuilder(private val webApiBuilder: amf.builder.WebApiBuilder = amf.builder.WebApiBuilder())
+case class WebApiBuilder private (private val webApiBuilder: amf.builder.WebApiBuilder = amf.builder.WebApiBuilder())
     extends Builder {
+
+  def this() = { this(amf.builder.WebApiBuilder()) }
 
   def withName(name: String): WebApiBuilder = {
     webApiBuilder.withName(name)
@@ -32,7 +33,7 @@ case class WebApiBuilder(private val webApiBuilder: amf.builder.WebApiBuilder = 
   }
 
   def withEndPoints(endPoints: java.util.List[EndPoint]): WebApiBuilder = {
-    webApiBuilder.withEndPoints(endPoints.asScala.toList)
+    webApiBuilder.withEndPoints(endPoints.asScala.map(_.element).toList)
     this
   }
 
@@ -62,22 +63,22 @@ case class WebApiBuilder(private val webApiBuilder: amf.builder.WebApiBuilder = 
   }
 
   def withProvider(provider: Organization): WebApiBuilder = {
-    webApiBuilder.withProvider(provider.organization)
+    webApiBuilder.withProvider(provider.element)
     this
   }
 
   def withLicense(license: License): WebApiBuilder = {
-    webApiBuilder.withLicense(license.license)
+    webApiBuilder.withLicense(license.element)
     this
   }
 
   def withDocumentation(documentation: CreativeWork): WebApiBuilder = {
-    webApiBuilder.withDocumentation(documentation.creativeWork)
+    webApiBuilder.withDocumentation(documentation.element)
     this
   }
 
   def withBaseUriParameters(parameters: java.util.List[Parameter]): WebApiBuilder = {
-    webApiBuilder.withBaseUriParameters(parameters.asScala.toList)
+    webApiBuilder.withBaseUriParameters(parameters.asScala.map(_.element).toList)
     this
   }
 

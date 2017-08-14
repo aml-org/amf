@@ -23,6 +23,7 @@ lazy val amf = crossProject
   )
   .jvmSettings(
     libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     test in assembly := {},
     assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar"
   )

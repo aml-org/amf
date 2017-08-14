@@ -7,7 +7,7 @@ import scala.collection.JavaConverters._
 /**
   * Request jvm class
   */
-case class Request private[model] (private[amf] val request: amf.domain.Request) extends DomainElement {
+case class Request private[model] (private val request: amf.domain.Request) extends DomainElement {
 
   val queryParameters: java.util.List[Parameter] = request.queryParameters.map(Parameter).asJava
 
@@ -26,4 +26,5 @@ case class Request private[model] (private[amf] val request: amf.domain.Request)
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Request]
 
+  override private[amf] def element: amf.domain.Request = request
 }

@@ -7,6 +7,8 @@ import org.scalatest.AsyncFunSuite
 import scala.concurrent.ExecutionContext
 import org.scalatest.Matchers._
 
+import scala.compat.java8.FutureConverters
+
 /**
   *
   */
@@ -14,7 +16,7 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test to stream dump") {
-    val futureResult = new JvmGenerator().generateToStringAsync(unitBare, Oas)
+    val futureResult = FutureConverters.toScala(new JvmGenerator().generateToStringAsync(unitBare, Oas))
 
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
@@ -26,7 +28,7 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
   }
 
   test("test to stream dump complete") {
-    val futureResult = new JvmGenerator().generateToStringAsync(unitAdvanced, Oas)
+    val futureResult = FutureConverters.toScala(new JvmGenerator().generateToStringAsync(unitAdvanced, Oas))
 
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)

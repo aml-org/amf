@@ -5,7 +5,7 @@ import amf.model.builder.ParameterBuilder
 /**
   * Parameter jvm class
   */
-case class Parameter private[model] (private[amf] val parameter: amf.domain.Parameter) extends DomainElement {
+case class Parameter private[model] (private val parameter: amf.domain.Parameter) extends DomainElement {
 
   val name: String = parameter.name
 
@@ -27,4 +27,6 @@ case class Parameter private[model] (private[amf] val parameter: amf.domain.Para
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Parameter]
+
+  override private[amf] def element: amf.domain.Parameter = parameter
 }

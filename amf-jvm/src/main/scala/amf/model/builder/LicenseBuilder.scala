@@ -7,8 +7,11 @@ import amf.model.License
 /**
   * License domain element builder.
   */
-case class LicenseBuilder(private[amf] val licenseBuilder: amf.builder.LicenseBuilder = amf.builder.LicenseBuilder())
+case class LicenseBuilder private (
+    private val licenseBuilder: amf.builder.LicenseBuilder = amf.builder.LicenseBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.LicenseBuilder())
 
   def withUrl(url: URL): LicenseBuilder = {
     licenseBuilder.withUrl(url.getRef)

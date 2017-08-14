@@ -5,7 +5,7 @@ import amf.model.builder.CreativeWorkBuilder
 /**
   * CreativeWork jvm class
   */
-case class CreativeWork private[model] (private[amf] val creativeWork: amf.domain.CreativeWork) extends DomainElement {
+case class CreativeWork private[model] (private val creativeWork: amf.domain.CreativeWork) extends DomainElement {
 
   val url: String = creativeWork.url
 
@@ -21,4 +21,6 @@ case class CreativeWork private[model] (private[amf] val creativeWork: amf.domai
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[CreativeWork]
+
+  override private[amf] def element: amf.domain.CreativeWork = creativeWork
 }

@@ -5,9 +5,11 @@ import amf.model.Parameter
 /**
   * Parameter domain element builder.
   */
-case class ParameterBuilder(
-    private[amf] val internalBuilder: amf.builder.ParameterBuilder = amf.builder.ParameterBuilder())
+case class ParameterBuilder private (
+    private val internalBuilder: amf.builder.ParameterBuilder = amf.builder.ParameterBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.ParameterBuilder())
 
   def withName(name: String): ParameterBuilder = {
     internalBuilder.withName(name)

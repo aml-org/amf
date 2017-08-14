@@ -7,9 +7,11 @@ import scala.collection.JavaConverters._
 /**
   * Response builder.
   */
-case class ResponseBuilder(
-    private[amf] val internalBuilder: amf.builder.ResponseBuilder = amf.builder.ResponseBuilder())
+case class ResponseBuilder private (
+    private val internalBuilder: amf.builder.ResponseBuilder = amf.builder.ResponseBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.ResponseBuilder())
 
   def withName(name: String): ResponseBuilder = {
     internalBuilder.withName(name)
@@ -27,12 +29,12 @@ case class ResponseBuilder(
   }
 
   def withHeaders(headers: java.util.List[Parameter]): ResponseBuilder = {
-    internalBuilder.withHeaders(headers.asScala.map(_.parameter))
+    internalBuilder.withHeaders(headers.asScala.map(_.element).toList)
     this
   }
 
   def withPayloads(payloads: java.util.List[Payload]): ResponseBuilder = {
-    internalBuilder.withPayloads(payloads.asScala.map(_.payload))
+    internalBuilder.withPayloads(payloads.asScala.map(_.element).toList)
     this
   }
 

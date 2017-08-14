@@ -7,7 +7,7 @@ import scala.collection.JavaConverters._
 /**
   * Endpoint jvm class
   */
-case class EndPoint private[model] (private[amf] val endPoint: amf.domain.EndPoint) extends DomainElement {
+case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) extends DomainElement {
 
   val name: String = endPoint.name
 
@@ -29,4 +29,6 @@ case class EndPoint private[model] (private[amf] val endPoint: amf.domain.EndPoi
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
+
+  override private[amf] def element: amf.domain.EndPoint = endPoint
 }

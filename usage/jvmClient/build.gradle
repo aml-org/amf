@@ -16,5 +16,5 @@ dependencies {
 
 task runApp(type:JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    main = "TestMainClass"
+    main = "amf.test.TestMainClass"
 }

@@ -5,7 +5,7 @@ import amf.model.builder.PayloadBuilder
 /**
   * Payload jvm class
   */
-case class Payload private[model] (private[amf] val payload: amf.domain.Payload) extends DomainElement {
+case class Payload private[model] (private val payload: amf.domain.Payload) extends DomainElement {
 
   val mediaType: String = payload.mediaType
 
@@ -21,4 +21,6 @@ case class Payload private[model] (private[amf] val payload: amf.domain.Payload)
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Payload]
+
+  override private[amf] def element: amf.domain.Payload = payload
 }

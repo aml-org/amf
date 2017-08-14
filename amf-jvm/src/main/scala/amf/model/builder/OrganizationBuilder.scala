@@ -7,9 +7,11 @@ import amf.model.Organization
 /**
   *
   */
-case class OrganizationBuilder(
-    private[amf] val internalBuilder: amf.builder.OrganizationBuilder = amf.builder.OrganizationBuilder())
+case class OrganizationBuilder private (
+    private val internalBuilder: amf.builder.OrganizationBuilder = amf.builder.OrganizationBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.OrganizationBuilder())
 
   def withUrl(url: URL): OrganizationBuilder = {
     internalBuilder.withUrl(url.getRef)

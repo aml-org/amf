@@ -7,10 +7,7 @@ import scala.collection.JavaConverters._
 /**
   * WebApi java class
   */
-//TODO make construct package private when builders are done
-
-//TODO add javadoc
-case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi private (private val webApi: amf.domain.WebApi) extends DomainElement {
 
   val name: String = webApi.name
 
@@ -53,4 +50,6 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
+
+  override private[amf] def element: amf.domain.WebApi = webApi
 }

@@ -7,8 +7,11 @@ import scala.collection.JavaConverters._
 /**
   * EndPoint builder.
   */
-case class EndPointBuilder(private val endPointBuilder: amf.builder.EndPointBuilder = amf.builder.EndPointBuilder())
+case class EndPointBuilder private (
+    private val endPointBuilder: amf.builder.EndPointBuilder = amf.builder.EndPointBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.EndPointBuilder())
 
   def withName(name: String): EndPointBuilder = {
     endPointBuilder.withName(name)
@@ -26,12 +29,12 @@ case class EndPointBuilder(private val endPointBuilder: amf.builder.EndPointBuil
   }
 
   def withOperations(operations: java.util.List[Operation]): EndPointBuilder = {
-    endPointBuilder.withOperations(operations.asScala.map(_.operation))
+    endPointBuilder.withOperations(operations.asScala.map(_.element).toList)
     this
   }
 
   def withParameters(parameters: java.util.List[Parameter]): EndPointBuilder = {
-    endPointBuilder.withParameters(parameters.asScala.map(_.parameter))
+    endPointBuilder.withParameters(parameters.asScala.map(_.element).toList)
     this
   }
 

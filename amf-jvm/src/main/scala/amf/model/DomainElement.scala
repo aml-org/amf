@@ -8,4 +8,5 @@ import amf.model.builder.Builder
 trait DomainElement {
   def toBuilder: Builder
 
+  private[amf] def element: amf.domain.DomainElement
 }
