@@ -16,17 +16,18 @@ lazy val amf = crossProject
     name := "amf",
     organization := "org.mulesoft",
     version := "0.0.1-SNAPSHOT",
+    publish := {},
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
   )
   .jvmSettings(
-    publishTo := Some(
+    /*publishTo := Some(
       "Sonatype Nexus Repository Manager" at "https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/"),
     credentials += Credentials("Sonatype Nexus Repository Manager",
                                "repository-master.mulesoft.org",
                                sys.env.getOrElse("NEXUS_USER", ""),
                                sys.env.getOrElse("NEXUS_PASS", "")),
     addArtifact(artifact in (Compile, assembly), assembly),
-    publishArtifact in (Compile, packageBin) := false,
+    publishArtifact in (Compile, packageBin) := false,*/
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     test in assembly := {},
@@ -34,7 +35,6 @@ lazy val amf = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar"
   )
   .jsSettings(
-    publish := {},
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule
@@ -66,4 +66,4 @@ def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition
 )
 
 addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS; amfJVM/assembly; amfJVM/packageDoc")
-addCommandAlias("publish", "; amfJVM/publish")
+//addCommandAlias("publish", "; amfJVM/publish")
