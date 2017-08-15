@@ -19,16 +19,12 @@ class OasParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
   private def extensions(): Boolean = {
     currentText match {
       case "x-uses" | "\"x-uses\"" => entry(() => libraries)
-      case _                       => entry(() => extension)
+      case _                       => entry(() => extension, Extension)
     }
   }
 
   private def extension = {
-    beginTree()
-    matchOrError(StringToken)
-    discard(Colon)
     parseValue()
-    endTree(Extension)
     true
   }
 

@@ -183,7 +183,7 @@ object FieldParser {
         case Oas =>
           //This will parse only payloads from extensions (in a sequence)
           //TODO .last.last to avoid extension node.
-          entry.last.last.children.foreach(payloadMap => {
+          entry.last.children.foreach(payloadMap => {
             val payload = PayloadBuilder()
             if (traverseAndParseMap(Spec.OasExtensionPayload, payloadMap, payload, context))
               container.add(spec.fields.head, List(payload.build))
