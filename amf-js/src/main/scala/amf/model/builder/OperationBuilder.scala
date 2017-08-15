@@ -39,7 +39,7 @@ case class OperationBuilder(
   }
 
   def withDocumentation(documentation: CreativeWork): OperationBuilder = {
-    internalBuilder.withDocumentation(documentation.creativeWork)
+    internalBuilder.withDocumentation(documentation.element)
     this
   }
 
@@ -49,12 +49,12 @@ case class OperationBuilder(
   }
 
   def withRequest(request: Request): OperationBuilder = {
-    internalBuilder.withRequest(request.request)
+    internalBuilder.withRequest(request.element)
     this
   }
 
   def withResponses(responses: js.Iterable[Response]): OperationBuilder = {
-    internalBuilder.withResponses(responses.toList.map(_.response))
+    internalBuilder.withResponses(responses.toList.map(_.element))
     this
   }
 

@@ -32,4 +32,6 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
+
+  override private[amf] def element: amf.domain.EndPoint = endPoint
 }

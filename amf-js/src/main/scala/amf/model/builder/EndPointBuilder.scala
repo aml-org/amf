@@ -28,12 +28,12 @@ case class EndPointBuilder(private val endPointBuilder: amf.builder.EndPointBuil
   }
 
   def withOperations(operations: js.Iterable[Operation]): EndPointBuilder = {
-    endPointBuilder.withOperations(operations.toList.map(_.operation))
+    endPointBuilder.withOperations(operations.toList.map(_.element))
     this
   }
 
   def withParameters(parameters: js.Iterable[Parameter]): EndPointBuilder = {
-    endPointBuilder.withParameters(parameters.toList.map(_.parameter))
+    endPointBuilder.withParameters(parameters.toList.map(_.element))
     this
   }
 

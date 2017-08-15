@@ -64,17 +64,17 @@ case class WebApiBuilder(private val webApiBuilder: amf.builder.WebApiBuilder = 
   }
 
   def withProvider(provider: Organization): WebApiBuilder = {
-    webApiBuilder.withProvider(provider.organization)
+    webApiBuilder.withProvider(provider.element)
     this
   }
 
   def withLicense(license: License): WebApiBuilder = {
-    webApiBuilder.withLicense(license.license)
+    webApiBuilder.withLicense(license.element)
     this
   }
 
   def withDocumentation(documentation: CreativeWork): WebApiBuilder = {
-    webApiBuilder.withDocumentation(documentation.creativeWork)
+    webApiBuilder.withDocumentation(documentation.element)
     this
   }
 

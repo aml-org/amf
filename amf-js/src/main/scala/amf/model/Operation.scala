@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
   * Operations js class
   */
 @JSExportAll
-case class Operation private[model] (private[amf] val operation: amf.domain.Operation) extends DomainElement {
+case class Operation private[model] (private val operation: amf.domain.Operation) extends DomainElement {
 
   val method: String = operation.method
 
@@ -42,4 +42,6 @@ case class Operation private[model] (private[amf] val operation: amf.domain.Oper
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Operation]
+
+  override private[amf] def element: amf.domain.Operation = operation
 }

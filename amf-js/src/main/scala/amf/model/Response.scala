@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
   * response js class
   */
 @JSExportAll
-case class Response private[model] (private[amf] val response: amf.domain.Response) extends DomainElement {
+case class Response private[model] (private val response: amf.domain.Response) extends DomainElement {
 
   val name: String = response.name
 
@@ -32,4 +32,6 @@ case class Response private[model] (private[amf] val response: amf.domain.Respon
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Response]
+
+  override private[amf] def element: amf.domain.Response = response
 }

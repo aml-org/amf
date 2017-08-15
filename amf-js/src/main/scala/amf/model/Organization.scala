@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.JSExportAll
   * Organization js class
   */
 @JSExportAll
-case class Organization private[model] (private[amf] val organization: amf.domain.Organization) extends DomainElement {
+case class Organization private[model] (private val organization: amf.domain.Organization) extends DomainElement {
 
   val url: String = organization.url
 
@@ -26,4 +26,6 @@ case class Organization private[model] (private[amf] val organization: amf.domai
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Organization]
+
+  override private[amf] def element: amf.domain.Organization = organization
 }

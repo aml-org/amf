@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
   * request js class
   */
 @JSExportAll
-case class Request private[model] (private[amf] val request: amf.domain.Request) extends DomainElement {
+case class Request private[model] (private val request: amf.domain.Request) extends DomainElement {
 
   val queryParameters: js.Iterable[Parameter] = request.queryParameters.map(Parameter).toJSArray
 
@@ -28,4 +28,6 @@ case class Request private[model] (private[amf] val request: amf.domain.Request)
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Request]
+
+  override private[amf] def element: amf.domain.Request = request
 }

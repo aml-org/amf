@@ -13,17 +13,17 @@ case class RequestBuilder(private[amf] val internalBuilder: amf.builder.RequestB
     extends Builder {
 
   def withQueryParameters(queryParameters: js.Iterable[Parameter]): RequestBuilder = {
-    internalBuilder.withQueryParameters(queryParameters.toList.map(_.parameter))
+    internalBuilder.withQueryParameters(queryParameters.toList.map(_.element))
     this
   }
 
   def withHeaders(headers: js.Iterable[Parameter]): RequestBuilder = {
-    internalBuilder.withHeaders(headers.toList.map(_.parameter))
+    internalBuilder.withHeaders(headers.toList.map(_.element))
     this
   }
 
   def withPayloads(payloads: js.Iterable[Payload]): RequestBuilder = {
-    internalBuilder.withPayloads(payloads.toList.map(_.payload))
+    internalBuilder.withPayloads(payloads.toList.map(_.element))
     this
   }
 

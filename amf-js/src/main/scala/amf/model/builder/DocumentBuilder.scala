@@ -1,8 +1,7 @@
 package amf.model.builder
 
 import amf.document.BaseUnit
-import amf.domain.DomainElement
-import amf.model.Document
+import amf.model.{Document, DomainElement}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll
@@ -10,6 +9,8 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class DocumentBuilder(private val documentBuilder: amf.builder.DocumentBuilder = amf.builder.DocumentBuilder())
     extends Builder {
+
+  def this() = this(amf.builder.DocumentBuilder())
 
   def withLocation(location: String): DocumentBuilder = {
     documentBuilder.withLocation(location)
@@ -22,7 +23,7 @@ case class DocumentBuilder(private val documentBuilder: amf.builder.DocumentBuil
   }
 
   def withEncodes(element: DomainElement): DocumentBuilder = {
-    documentBuilder.withEncodes(element)
+    documentBuilder.withEncodes(element.element)
     this
   }
 

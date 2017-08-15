@@ -29,12 +29,12 @@ case class ResponseBuilder(
   }
 
   def withHeaders(headers: js.Iterable[Parameter]): ResponseBuilder = {
-    internalBuilder.withHeaders(headers.toList.map(_.parameter))
+    internalBuilder.withHeaders(headers.toList.map(_.element))
     this
   }
 
   def withPayloads(payloads: js.Iterable[Payload]): ResponseBuilder = {
-    internalBuilder.withPayloads(payloads.toList.map(_.payload))
+    internalBuilder.withPayloads(payloads.toList.map(_.element))
     this
   }
 

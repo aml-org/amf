@@ -9,11 +9,8 @@ import scala.scalajs.js.annotation.JSExportAll
 /**
   * WebApi js class
   */
-//TODO make construct package private when builder are done
-
-//TODO add javadoc
 @JSExportAll
-case class WebApi(private[amf] val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi private (private val webApi: amf.domain.WebApi) extends DomainElement {
 
   val name: String = webApi.name
 
@@ -56,4 +53,6 @@ case class WebApi(private[amf] val webApi: amf.domain.WebApi) extends DomainElem
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
+
+  override private[amf] def element: amf.domain.WebApi = webApi
 }
