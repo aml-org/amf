@@ -2,12 +2,13 @@ package amf.client
 
 import java.util.concurrent.CompletableFuture
 
+import amf.client.FutureConverter.converters
 import amf.model.{BaseUnit, Document}
 import amf.remote.{Hint, Vendor}
 import amf.unsafe.TrunkPlatform
 
-import scala.compat.java8.FutureConverters
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.language.implicitConversions
 
 class JvmClient extends BaseClient with Client[BaseUnit] {
 
@@ -75,10 +76,7 @@ class JvmClient extends BaseClient with Client[BaseUnit] {
     * @param hint : hint that contains the spec and vendor to lexer and parse the api. Exp: OasJson, RamlYaml
     */
   def generateAsyncFromFile(url: String, hint: Hint): CompletableFuture[BaseUnit] =
-    FutureConverters
-      .toJava(super.generate(url, hint).map(bu => Document(bu)))
-      .toCompletableFuture
-      .asInstanceOf[CompletableFuture[BaseUnit]]
+    super.generate(url, hint).map(bu => Document(bu)).asJava
 
   /**
     * generates asynchronously base unit document from given stream (api)
@@ -86,9 +84,6 @@ class JvmClient extends BaseClient with Client[BaseUnit] {
     * @param hint : hint that contains the spec and vendor to lexer and parse the api. Exp: OasJson, RamlYaml
     */
   def generateAsyncFromStream(stream: String, hint: Hint): CompletableFuture[BaseUnit] =
-    FutureConverters
-      .toJava(super.generate(null, hint, Some(TrunkPlatform(stream))).map(bu => Document(bu)))
-      .toCompletableFuture
-      .asInstanceOf[CompletableFuture[BaseUnit]]
+    super.generate(null, hint, Some(TrunkPlatform(stream))).map(bu => Document(bu)).asJava
 
 }
