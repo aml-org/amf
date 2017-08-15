@@ -6,14 +6,10 @@ scalaVersion in ThisBuild := "2.12.2"
 lazy val root = project
   .in(file("."))
   .aggregate(amfJS, amfJVM)
-  .settings(
-    publish := {}
-  )
 
 lazy val amf = crossProject
   .in(file("."))
   .settings(
-    publish := {},
     name := "amf",
     organization := "org.mulesoft",
     version := "0.0.1-SNAPSHOT",
