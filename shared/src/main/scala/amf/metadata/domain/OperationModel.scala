@@ -30,6 +30,13 @@ object OperationModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`
 
-  override val fields
-    : List[Field] = Method :: Name :: Description :: Deprecated :: Summary :: Documentation :: Schemes :: Request :: Responses :: DomainElementModel.fields
+  override val fields: List[Field] = List(Method,
+                                          Name,
+                                          Description,
+                                          Deprecated,
+                                          Summary,
+                                          Documentation,
+                                          Schemes,
+                                          Request,
+                                          Responses) ++ DomainElementModel.fields
 }

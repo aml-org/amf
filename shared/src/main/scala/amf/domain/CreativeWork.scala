@@ -1,38 +1,23 @@
 package amf.domain
 
-import amf.builder.CreativeWorkBuilder
-import amf.metadata.domain.CreativeWorkModel.{Url, Description}
+import amf.common.AMFAST
+import amf.metadata.domain.CreativeWorkModel.{Description, Url}
 
 /**
   * Creative work internal model
   */
-case class CreativeWork(fields: Fields, annotations: List[Annotation]) extends DomainElement {
-
-  override type T = CreativeWork
+case class CreativeWork(fields: Fields, annotations: Annotations) extends DomainElement {
 
   val url: String         = fields(Url)
   val description: String = fields(Description)
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[CreativeWork]
-
-  override def equals(other: Any): Boolean = other match {
-    case that: CreativeWork =>
-      (that canEqual this) &&
-        url == that.url &&
-        description == that.description
-    case _ => false
-  }
-
-  override def hashCode(): Int = {
-    val state = Seq(url, description)
-    state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
-  }
-
-  override def toString = s"CreativeWork($url, $description)"
-
-  override def toBuilder: CreativeWorkBuilder = CreativeWorkBuilder(fields, annotations)
+  def withUrl(url: String): this.type                 = set(Url, url)
+  def withDescription(description: String): this.type = set(Description, description)
 }
 
 object CreativeWork {
-  def apply(fields: Fields, annotations: List[Annotation]): CreativeWork = new CreativeWork(fields, annotations)
+  def apply(ast: AMFAST): CreativeWork = apply(Fields(), Annotations(ast))
+
+  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): CreativeWork =
+    new CreativeWork(fields, annotations)
 }

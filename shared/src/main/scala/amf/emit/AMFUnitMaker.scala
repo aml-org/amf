@@ -44,7 +44,7 @@ class AMFUnitMaker {
 
   private def fixBindingInParameters(parameters: List[Parameter],
                                      bind: String,
-                                     fn: Option[(Parameter => Boolean)]): List[ParameterBuilder] = {
+                                     fn: Option[(Parameter => Boolean)]): List[Parameter] = {
 
     var filtered = new ListBuffer[Parameter]
     if (fn.isDefined)
@@ -72,7 +72,7 @@ class AMFUnitMaker {
     val apiBuilder = api.toBuilder
 
     val baseUriParameters = api.baseUriParameters.filter(bup =>
-      api.fields.getAnnotationForValue(WebApiModel.BaseUriParameters, bup, classOf[UriParameter]).isDefined)
+      api.fields.getAnnotationForValue(WebApiModel.BaseUriParameters, bup, classOf[UriParameters]).isDefined)
     apiBuilder.withBaseUriParameters(baseUriParameters)
 
     if (api.endPoints != null && api.endPoints != Nil)
@@ -96,7 +96,7 @@ class AMFUnitMaker {
 
   val ramlProcessEndPointFn: (EndPoint) => EndPoint = (e) => {
     val uriParameters = e.parameters.filter(p =>
-      e.fields.getAnnotationForValue(EndPointModel.Parameters, p, classOf[UriParameter]).isDefined)
+      e.fields.getAnnotationForValue(EndPointModel.Parameters, p, classOf[UriParameters]).isDefined)
     val headers         = e.parameters.filter(_.isHeaderType)
     val queryParameters = e.parameters.filter(_.isQueryType)
 
@@ -126,9 +126,10 @@ class AMFUnitMaker {
 
   }
 
-  val oasProcessEndpointFn: (EndPoint) => EndPoint = (e) => {
+  val oasProcessEndpointFn: (EndPoint) => EndPoint = e => {
+
     val pBuilders = fixBindingInParameters(e.parameters.toList, "path", Some({ p: Parameter =>
-      e.fields.getAnnotationForValue(EndPointModel.Parameters, p, classOf[UriParameter]).isDefined
+      e.fields.getAnnotationForValue(EndPointModel.Parameters, p, classOf[UriParameters]).isDefined
     }))
 
     val overridedEndpoints = new ListBuffer[OverrideEndPointBodyParameter]

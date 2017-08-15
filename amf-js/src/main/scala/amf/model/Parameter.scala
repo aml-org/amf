@@ -1,7 +1,5 @@
 package amf.model
 
-import amf.model.builder.ParameterBuilder
-
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
@@ -10,17 +8,11 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Parameter private[model] (private val parameter: amf.domain.Parameter) extends DomainElement {
 
-  val name: String = parameter.name
-
+  val name: String        = parameter.name
   val description: String = parameter.description
-
-  val required: Boolean = parameter.required
-
-  val binding: String = parameter.binding
-
-  val schema: String = parameter.schema
-
-  def toBuilder: ParameterBuilder = ParameterBuilder(parameter.toBuilder)
+  val required: Boolean   = parameter.required
+  val binding: String     = parameter.binding
+  val schema: String      = parameter.schema
 
   override def equals(other: Any): Boolean = other match {
     case that: Parameter =>

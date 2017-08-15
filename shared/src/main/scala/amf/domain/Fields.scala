@@ -3,6 +3,7 @@ package amf.domain
 import amf.domain.Annotation.ArrayFieldAnnotations
 import amf.metadata.Field
 import amf.metadata.Type._
+import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.unsafe.PlatformSecrets
 
 import scala.collection.immutable.ListMap
@@ -48,11 +49,24 @@ class Fields extends PlatformSecrets {
       .asInstanceOf[Option[T]]
   }
 
-  def set(field: Field, value: Any, annotations: List[Annotation]): this.type = {
+  def set(field: Field, values: Seq[AmfElement]): this.type = {
+    fs = fs + (field -> values)
+    this
+  }
 
-    if (fs.get(field).isDefined) fs = fs - field
+  def add(field: Field, value: AmfElement): AmfArray = {}
+
+  def array(field: Field): AmfArray = {
+    fs.get(field) match {
+      case Some(Value(value, _)) => value.asInstanceOf[AmfArray]
+      case None => {
+        set(field, AmfArray(Nil))
+      }
+    }
+  }
+
+  def set(field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     fs = fs + (field -> Value(value, annotations))
-
     this
   }
 
@@ -83,4 +97,8 @@ class Fields extends PlatformSecrets {
 
 }
 
-case class Value(value: Any, annotations: List[Annotation])
+object Fields {
+  def apply(): Fields = new Fields()
+}
+
+case class Value(value: AmfElement, annotations: Annotations)

@@ -1,11 +1,9 @@
 package amf.maker
 
-import amf.builder.WebApiBuilder
-import amf.common.AMFToken.MapToken
 import amf.compiler.Root
 import amf.domain.WebApi
-import amf.parser.ASTNode
-import amf.spec.{ParserContext, Spec}
+import amf.remote.{Oas, Raml}
+import amf.spec.{OasSpecParser, RamlSpecParser}
 
 /**
   * API Documentation maker.
@@ -13,19 +11,10 @@ import amf.spec.{ParserContext, Spec}
 class WebApiMaker(root: Root) extends Maker[WebApi] {
 
   override def make: WebApi = {
-    val builder: WebApiBuilder = WebApiBuilder(root.annotations()).resolveId(root.location)
-    val map                    = root.ast > MapToken
-    val context                = ParserContext()
-    map.children.foreach(matcher(builder, _, context))
-    builder.build
-  }
-
-  private def matcher(container: WebApiBuilder, entry: ASTNode[_], context: ParserContext): Unit = {
-    if (entry.children.nonEmpty) {
-      Spec(root.vendor).fields.find(_.matcher.matches(entry)) match {
-        case Some(field) => field.parser.parse(field, entry, container, context)
-        case _           => // Unknown node...
-      }
+    root.vendor match {
+      case Raml => RamlSpecParser(root).parseWebApi()
+      case Oas  => OasSpecParser(root).parseWebApi()
+      case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
     }
   }
 }

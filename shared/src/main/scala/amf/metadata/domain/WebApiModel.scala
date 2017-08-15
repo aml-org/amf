@@ -40,6 +40,18 @@ object WebApiModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Schema + "WebAPI" :: DomainElementModel.`type`
 
-  override val fields
-    : List[Field] = Name :: Description :: Host :: Schemes :: BasePath :: Accepts :: ContentType :: Version :: TermsOfService :: Provider :: License :: Documentation :: EndPoints :: BaseUriParameters :: DomainElementModel.fields
+  override val fields: List[Field] = List(Name,
+                                          Description,
+                                          Host,
+                                          Schemes,
+                                          BasePath,
+                                          Accepts,
+                                          ContentType,
+                                          Version,
+                                          TermsOfService,
+                                          Provider,
+                                          License,
+                                          Documentation,
+                                          EndPoints,
+                                          BaseUriParameters) ++ DomainElementModel.fields
 }

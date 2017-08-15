@@ -1,7 +1,5 @@
 package amf.model
 
-import amf.model.builder.OrganizationBuilder
-
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
@@ -10,13 +8,9 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Organization private[model] (private val organization: amf.domain.Organization) extends DomainElement {
 
-  val url: String = organization.url
-
-  val name: String = organization.name
-
+  val url: String   = organization.url
+  val name: String  = organization.name
   val email: String = organization.email
-
-  def toBuilder: OrganizationBuilder = OrganizationBuilder(organization.toBuilder)
 
   override def equals(other: Any): Boolean = other match {
     case that: Organization =>

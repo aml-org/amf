@@ -1,15 +1,13 @@
 package amf.domain
 
-import amf.builder.EndPointBuilder
+import amf.common.AMFAST
 import amf.domain.Annotation.ParentEndPoint
 import amf.metadata.domain.EndPointModel._
 
 /**
   * EndPoint internal model
   */
-case class EndPoint(fields: Fields, annotations: List[Annotation]) extends DomainElement {
-
-  override type T = EndPoint
+case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElement {
 
   val name: String               = fields(Name)
   val description: String        = fields(Description)
@@ -22,25 +20,16 @@ case class EndPoint(fields: Fields, annotations: List[Annotation]) extends Domai
 
   val relativePath: String = parent.map(p => path.stripPrefix(p.path)).getOrElse(path)
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[EndPoint]
+  def withName(name: String): this.type                     = set(Name, name)
+  def withDescription(description: String): this.type       = set(Description, description)
+  def withPath(path: String): this.type                     = set(Path, path)
+  def withOperations(operations: Seq[Operation]): this.type = set(Operations, operations)
+  def withParameters(parameters: Seq[Parameter]): this.type = set(Parameters, parameters)
+}
 
-  override def equals(other: Any): Boolean = other match {
-    case that: EndPoint =>
-      (that canEqual this) &&
-        name == that.name &&
-        description == that.description &&
-        path == that.path &&
-        operations == that.operations &&
-        parameters == that.parameters
-    case _ => false
-  }
+object EndPoint {
+  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): EndPoint =
+    new EndPoint(fields, annotations)
 
-  override def hashCode(): Int = {
-    val state = Seq(name, description, path, operations, parameters)
-    state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
-  }
-
-  override def toString = s"EndPoint($name, $description, $path, $operations, $parameters)"
-
-  override def toBuilder: EndPointBuilder = EndPointBuilder(fields, annotations)
+  def apply(ast: AMFAST): EndPoint = new EndPoint(Fields(), Annotations(ast))
 }

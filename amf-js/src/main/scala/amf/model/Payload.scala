@@ -1,7 +1,5 @@
 package amf.model
 
-import amf.model.builder.PayloadBuilder
-
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
@@ -11,10 +9,7 @@ import scala.scalajs.js.annotation.JSExportAll
 case class Payload private[model] (private val payload: amf.domain.Payload) extends DomainElement {
 
   val mediaType: String = payload.mediaType
-
-  val schema: String = payload.schema
-
-  def toBuilder: PayloadBuilder = PayloadBuilder(payload.toBuilder)
+  val schema: String    = payload.schema
 
   override def equals(other: Any): Boolean = other match {
     case that: Payload =>

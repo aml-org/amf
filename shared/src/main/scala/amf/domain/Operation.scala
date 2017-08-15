@@ -1,13 +1,11 @@
 package amf.domain
-import amf.builder.OperationBuilder
+import amf.common.AMFAST
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
   * Operation internal model.
   */
-case class Operation(fields: Fields, annotations: List[Annotation]) extends DomainElement {
-
-  override type T = Operation
+case class Operation(fields: Fields, annotations: Annotations) extends DomainElement {
 
   val method: String              = fields(Method)
   val name: String                = fields(Name)
@@ -19,30 +17,20 @@ case class Operation(fields: Fields, annotations: List[Annotation]) extends Doma
   val request: Request            = fields(OperationRequest)
   val responses: Seq[Response]    = fields(Responses)
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Operation]
+  def withMethod(method: String): this.type                     = set(Method, method)
+  def withName(name: String): this.type                         = set(Name, name)
+  def withDescription(description: String): this.type           = set(Description, description)
+  def withDeprecated(deprecated: Boolean): this.type            = set(Deprecated, deprecated)
+  def withSummary(summary: String): this.type                   = set(Summary, summary)
+  def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
+  def withSchemes(schemes: Seq[String]): this.type              = set(Schemes, schemes.toList)
+  def withRequest(request: Request): this.type                  = set(OperationRequest, request)
+  def withResponses(responses: Seq[Response]): this.type        = set(Responses, responses)
+}
 
-  override def equals(other: Any): Boolean = other match {
-    case that: Operation =>
-      (that canEqual this) &&
-        method == that.method &&
-        name == that.name &&
-        description == that.description &&
-        deprecated == that.deprecated &&
-        summary == that.summary &&
-        documentation == that.documentation &&
-        schemes == that.schemes &&
-        request == that.request &&
-        responses == that.responses
-    case _ => false
-  }
+object Operation {
+  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): Operation =
+    new Operation(fields, annotations)
 
-  override def hashCode(): Int = {
-    val state = Seq(method, name, description, deprecated, summary, documentation, schemes, request, responses)
-    state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
-  }
-
-  override def toString =
-    s"Operation($method, $name, $description, $deprecated, $summary, $documentation, $schemes, $request, $responses)"
-
-  override def toBuilder: OperationBuilder = OperationBuilder(fields, annotations)
+  def apply(ast: AMFAST): Operation = new Operation(Fields(), Annotations(ast))
 }

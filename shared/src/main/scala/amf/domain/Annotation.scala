@@ -35,8 +35,8 @@ object Annotation {
     override val value: String = null
   }
 
-  case class UriParameter() extends Annotation {
-    override val name: String = "uri-parameter"
+  case class UriParameters() extends Annotation {
+    override val name: String = "uri-parameters"
 
     override val value: String = null
   }

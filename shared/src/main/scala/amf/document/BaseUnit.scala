@@ -1,9 +1,9 @@
 package amf.document
 
-import amf.model.AmfElement
+import amf.model.AmfObject
 
 /** Any parseable unit, backed by a source URI. */
-trait BaseUnit extends AmfElement {
+trait BaseUnit extends AmfObject {
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   val references: Seq[BaseUnit]

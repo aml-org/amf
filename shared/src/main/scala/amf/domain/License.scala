@@ -1,34 +1,23 @@
 package amf.domain
 
-import amf.builder.LicenseBuilder
+import amf.common.AMFAST
 import amf.metadata.domain.LicenseModel.{Name, Url}
 
 /**
   * License internal model
   */
-case class License(fields: Fields, annotations: List[Annotation]) extends DomainElement {
-
-  override type T = License
+case class License(fields: Fields, annotations: Annotations) extends DomainElement {
 
   val url: String  = fields(Url)
   val name: String = fields(Name)
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[License]
+  def withUrl(url: String): this.type   = set(Url, url)
+  def withName(name: String): this.type = set(Name, name)
+}
 
-  override def equals(other: Any): Boolean = other match {
-    case that: License =>
-      (that canEqual this) &&
-        url == that.url &&
-        name == that.name
-    case _ => false
-  }
+object License {
+  def apply(ast: AMFAST): License = apply(Fields(), Annotations(ast))
 
-  override def hashCode(): Int = {
-    val state = Seq(url, name)
-    state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
-  }
-
-  override def toString = s"License($url, $name)"
-
-  override def toBuilder: LicenseBuilder = LicenseBuilder(fields, annotations)
+  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): License =
+    new License(fields, annotations)
 }

@@ -120,14 +120,20 @@ object FieldParser {
                                    entry: ASTNode[_],
                                    builder: Builder,
                                    context: ParserContext): Unit = {
+
       entry.last.children.foreach(paramEntry => {
-        val name  = paramEntry.head.content.unquote
-        val param = ParameterBuilder().set(Required, !name.endsWith("?")).set(ParameterModel.Name, name)
+        val name = paramEntry.head.content.unquote
+
+        val parameter: Parameter = Parameter(paramEntry)
+          .set(Required, !name.endsWith("?")).set(ParameterModel.Name, name)
+
+
+        val param = ParameterBuilder().set(Required, ).set(ParameterModel.Name, name)
 
         super.parse(spec, paramEntry, param, context)
 
         val paramAnnotations =
-          if (spec.vendor == Raml) annotations(paramEntry) :+ UriParameter() else annotations(paramEntry)
+          if (spec.vendor == Raml) annotations(paramEntry) :+ UriParameters() else annotations(paramEntry)
 
         builder add (spec.fields.head, param.build, paramAnnotations)
       })
@@ -310,7 +316,7 @@ object FieldParser {
     }
   }
 
-  def annotations(node: ASTNode[_]): List[Annotation] = node.`type` match {
+  def annotations(node: ASTNode[_]): Annotations = node.`type` match {
     case Entry if node.head.content.unquote == "required" => List(LexicalInformation(node.range), ExplicitField())
     case _                                                => List(LexicalInformation(node.range))
   }

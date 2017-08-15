@@ -22,6 +22,5 @@ object EndPointModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
 
-  override val fields
-    : List[Field] = Path :: Name :: Description :: Operations :: Parameters :: DomainElementModel.fields
+  override val fields: List[Field] = List(Path, Name, Description, Operations, Parameters) ++ DomainElementModel.fields
 }

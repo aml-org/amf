@@ -1,13 +1,12 @@
 package amf.domain
 
-import amf.builder.ResponseBuilder
+import amf.common.AMFAST
 import amf.metadata.domain.ResponseModel._
 
 /**
   * Response internal model.
   */
-case class Response(fields: Fields, annotations: List[Annotation]) extends DomainElement {
-  override type T = Response
+case class Response(fields: Fields, annotations: Annotations) extends DomainElement {
 
   val name: String            = fields(Name)
   val description: String     = fields(Description)
@@ -15,30 +14,16 @@ case class Response(fields: Fields, annotations: List[Annotation]) extends Domai
   val headers: Seq[Parameter] = fields(Headers)
   val payloads: Seq[Payload]  = fields(Payloads)
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Response]
-
-  override def equals(other: Any): Boolean = other match {
-    case that: Response =>
-      (that canEqual this) &&
-        name == that.name &&
-        description == that.description &&
-        statusCode == that.statusCode &&
-        headers == that.headers &&
-        payloads == that.payloads
-
-    case _ => false
-  }
-
-  override def hashCode(): Int = {
-    val state = Seq(name, description, statusCode, headers, payloads)
-    state.map(p => if (p != null) p.hashCode() else 0).foldLeft(0)((a, b) => 31 * a + b)
-  }
-
-  override def toString = s"Response($name, $description, $statusCode, $headers, $payloads)"
-
-  override def toBuilder: ResponseBuilder = ResponseBuilder(fields, annotations)
+  def withName(name: String): this.type               = set(Name, name)
+  def withDescription(description: String): this.type = set(Description, description)
+  def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
+  def withHeaders(headers: Seq[Parameter]): this.type = set(Headers, headers)
+  def withPayloads(payloads: Seq[Payload]): this.type = set(Payloads, payloads)
 }
 
 object Response {
-  def apply(fields: Fields, annotations: List[Annotation]): Response = new Response(fields, annotations)
+  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): Response =
+    new Response(fields, annotations)
+
+  def apply(ast: AMFAST): Response = new Response(Fields(), Annotations(ast))
 }
