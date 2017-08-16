@@ -1,7 +1,6 @@
 package amf.builder
 
 import amf.document.BaseUnit
-import amf.domain.Annotation.ArrayFieldAnnotations
 import amf.domain.{Annotation, DomainElement, Fields}
 import amf.metadata.{Field, Type}
 
@@ -17,7 +16,7 @@ trait Builder {
   protected var annotations: List[Annotation] = Nil
 
   def set(field: Field, value: Any, annotations: List[Annotation] = Nil): this.type = {
-    fields.set(field, value, annotations)
+//    fields.set(field, value, annotations)
     this
   }
 
@@ -29,7 +28,7 @@ trait Builder {
         case _          => List(value)
       }
 
-      fields.set(field, elements ++ castValue, List(arrayAnnotation(field) + (value, annotations)))
+//      fields.set(field, elements ++ castValue, List(arrayAnnotation(field) + (value, annotations)))
     } else {
       //Illegal!
     }
@@ -47,9 +46,9 @@ trait Builder {
 
   def getId: String = fields.id
 
-  private def arrayAnnotation(field: Field): ArrayFieldAnnotations = {
-    fields.getAnnotation(field, classOf[ArrayFieldAnnotations]).getOrElse(ArrayFieldAnnotations())
-  }
+//  private def arrayAnnotation(field: Field): ArrayFieldAnnotations = {
+//    fields.getAnnotation(field, classOf[ArrayFieldAnnotations]).getOrElse(ArrayFieldAnnotations())
+//  }
 
   protected def copy(fs: Fields): this.type = {
     fs.into(fields)

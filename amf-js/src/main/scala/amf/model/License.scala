@@ -1,7 +1,5 @@
 package amf.model
 
-import amf.model.builder.LicenseBuilder
-
 import scala.scalajs.js.annotation.JSExportAll
 
 /**

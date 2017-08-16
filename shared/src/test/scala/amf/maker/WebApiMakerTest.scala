@@ -1,15 +1,15 @@
 package amf.maker
 
-import amf.builder._
 import amf.common.ListAssertions
 import amf.compiler.AMFCompiler
 import amf.document.Document
-import amf.domain.WebApi
+import amf.domain.{License, _}
 import amf.metadata.Field
-import amf.metadata.domain.WebApiModel._
-import amf.remote.{AmfJsonLdHint, Hint, OasJsonHint, RamlYamlHint}
+import amf.metadata.domain.WebApiModel.{License => LicenseField}
+import amf.model.AmfObject
+import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -21,537 +21,390 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
   test("Generate complete web api instance") {
 
-    val fixture = List(
-      (Name, "test"),
-      (Description, "testDescription"),
-      (Host, "http://api.example.com/path"),
-      (Schemes, List("http", "https")),
-      (BasePath, "/path"),
-      (ContentType, List("application/yaml")),
-      (Accepts, List("application/yaml")),
-      (Version, "1.1"),
-      (TermsOfService, "terminos"),
-      (Provider,
-       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
-      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
+    val api = WebApi()
+      .withName("test")
+      .withDescription("testDescription")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("/path")
+      .withContentType(List("application/yaml"))
+      .withAccepts(List("application/yaml"))
+      .withVersion("1.1")
+      .withTermsOfService("terminos")
+      .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
+      .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
 
-    assertFixture(fixture, "completeExample.raml", RamlYamlHint)
+    assertFixture(api, "completeExample.raml", RamlYamlHint)
   }
 
   test("WebApi with nested endpoints - RAML.") {
     val endpoints = List(
-      EndPointBuilder()
-        .withPath("/levelzero")
-        .build,
-      EndPointBuilder()
+      EndPoint()
+        .withPath("/levelzero"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
-        .withDescription("and this description!")
-        .build,
-      EndPointBuilder().withPath("/levelzero/another-level-one").withName("some other display name").build,
-      EndPointBuilder().withPath("/another-levelzero").withName("Root name").build
-    )
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/base/uri"),
-      (EndPoints, endpoints)
+        .withDescription("and this description!"),
+      EndPoint().withPath("/levelzero/another-level-one").withName("some other display name"),
+      EndPoint().withPath("/another-levelzero").withName("Root name")
     )
 
-    assertFixture(fixture, "nested-endpoints.raml", RamlYamlHint)
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/base/uri")
+      .withEndPoints(endpoints)
+
+    assertFixture(api, "nested-endpoints.raml", RamlYamlHint)
   }
 
   test("WebApi with nested endpoints - OAS.") {
     val endpoints = List(
-      EndPointBuilder()
+      EndPoint()
         .withPath("/levelzero")
-        .withName("Name")
-        .build,
-      EndPointBuilder()
+        .withName("Name"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
-        .withDescription("and this description!")
-        .build,
-      EndPointBuilder().withPath("/levelzero/another-level-one").withName("some other display name").build,
-      EndPointBuilder().withPath("/another-levelzero").withName("Root name").build
+        .withDescription("and this description!"),
+      EndPoint().withPath("/levelzero/another-level-one").withName("some other display name"),
+      EndPoint().withPath("/another-levelzero").withName("Root name")
     )
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/base/uri"),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/base/uri")
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "nested-endpoints.json", OasJsonHint)
+    assertFixture(api, "nested-endpoints.json", OasJsonHint)
   }
 
   test("WebApi with multiple operations - RAML.") {
     val endpoints = List(
-      EndPointBuilder()
-        .withPath("/levelzero")
-        .build,
-      EndPointBuilder()
+      EndPoint()
+        .withPath("/levelzero"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(List(
-          OperationBuilder()
+          Operation()
             .withMethod("get")
             .withName("Some title")
             .withDescription("Some description")
             .withDeprecated(true)
             .withSummary("This is a summary")
-            .withDocumentation(
-              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-            .withSchemes(List("http", "https"))
-            .build,
-          OperationBuilder()
+            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+            .withSchemes(List("http", "https")),
+          Operation()
             .withMethod("post")
             .withName("Some title")
             .withDescription("Some description")
-            .withDocumentation(
-              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
+            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
             .withSchemes(List("http", "https"))
-            .build
         ))
-        .build
     )
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/base/uri"),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/base/uri")
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "endpoint-operations.raml", RamlYamlHint)
+    assertFixture(api, "endpoint-operations.raml", RamlYamlHint)
   }
 
   test("WebApi with multiple operations - OAS.") {
     val endpoints = List(
-      EndPointBuilder()
+      EndPoint()
         .withPath("/levelzero")
-        .withName("Name")
-        .build,
-      EndPointBuilder()
+        .withName("Name"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(List(
-          OperationBuilder()
+          Operation()
             .withMethod("get")
             .withName("Some title")
             .withDescription("Some description")
             .withDeprecated(true)
             .withSummary("This is a summary")
-            .withDocumentation(
-              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-            .withSchemes(List("http", "https"))
-            .build,
-          OperationBuilder()
+            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+            .withSchemes(List("http", "https")),
+          Operation()
             .withMethod("post")
             .withName("Some title")
             .withDescription("Some description")
-            .withDocumentation(
-              CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
+            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
             .withSchemes(List("http", "https"))
-            .build
         ))
-        .build
     )
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/base/uri"),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/base/uri")
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "endpoint-operations.json", OasJsonHint)
+    assertFixture(api, "endpoint-operations.json", OasJsonHint)
   }
 
   test("Parameters - RAML.") {
     val endpoints = List(
-      EndPointBuilder()
+      EndPoint()
         .withPath("/levelzero/some{two}")
-        .withParameters(List(ParameterBuilder().withName("two").withRequired(false).build))
-        .build,
-      EndPointBuilder()
+        .withParameters(List(Parameter().withName("two").withRequired(false))),
+      EndPoint()
         .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(List(
-          OperationBuilder()
+          Operation()
             .withMethod("get")
             .withName("Some title")
-            .withRequest(RequestBuilder()
+            .withRequest(Request()
               .withQueryParameters(List(
-                ParameterBuilder().withName("param1").withDescription("Some descr").withRequired(true).build,
-                ParameterBuilder().withName("param2?").withSchema("string").withRequired(false).build
-              ))
-              .build)
-            .build,
-          OperationBuilder()
+                Parameter().withName("param1").withDescription("Some descr").withRequired(true),
+                Parameter().withName("param2?").withSchema("string").withRequired(false)
+              ))),
+          Operation()
             .withMethod("post")
             .withName("Some title")
             .withDescription("Some description")
-            .withRequest(RequestBuilder()
+            .withRequest(Request()
               .withHeaders(List(
-                ParameterBuilder().withName("Header-One").withRequired(false).build
-              ))
-              .build)
-            .build
+                Parameter().withName("Header-One").withRequired(false)
+              )))
         ))
-        .build
     )
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/{one}/uri"),
-      (BaseUriParameters,
-       List(ParameterBuilder().withName("one").withRequired(true).withDescription("One base uri param").build)),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/{one}/uri")
+      .withBaseUriParameters(
+        List(Parameter().withName("one").withRequired(true).withDescription("One base uri param")))
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "operation-request.raml", RamlYamlHint)
+    assertFixture(api, "operation-request.raml", RamlYamlHint)
   }
 
   test("Parameters - OAS.") {
     val endpoints = List(
-      EndPointBuilder()
+      EndPoint()
         .withPath("/levelzero")
-        .withName("Name")
-        .build,
-      EndPointBuilder()
+        .withName("Name"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(List(
-          OperationBuilder()
+          Operation()
             .withMethod("get")
             .withName("Some title")
             .withRequest(
-              RequestBuilder()
+              Request()
                 .withQueryParameters(
                   List(
-                    ParameterBuilder()
+                    Parameter()
                       .withName("param1")
                       .withDescription("Some descr")
                       .withRequired(true)
                       .withBinding("query")
-                      .build
                   ))
-                .withHeaders(List(ParameterBuilder()
+                .withHeaders(List(Parameter()
                   .withName("param2?")
                   .withSchema("string")
                   .withRequired(false)
-                  .withBinding("header")
-                  .build))
-                .withPayloads(List(PayloadBuilder().withSchema("string").withMediaType("application/xml").build))
-                .build)
-            .build,
-          OperationBuilder()
+                  .withBinding("header")))
+                .withPayloads(List(Payload().withSchema("string").withMediaType("application/xml")))
+            ),
+          Operation()
             .withMethod("post")
             .withName("Some title")
             .withDescription("Some description")
             .withRequest(
-              RequestBuilder()
+              Request()
                 .withHeaders(List(
-                  ParameterBuilder().withName("Header-One").withRequired(false).withBinding("header").build
+                  Parameter().withName("Header-One").withRequired(false).withBinding("header")
                 ))
-                .withPayloads(List(PayloadBuilder().withSchema("number").withMediaType("application/json").build))
-                .build)
-            .build
+                .withPayloads(List(Payload().withSchema("number").withMediaType("application/json")))
+            )
         ))
-        .build
     )
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/base/uri"),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/base/uri")
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "operation-request.json", OasJsonHint)
+    assertFixture(api, "operation-request.json", OasJsonHint)
   }
 
   test("Responses - RAML.") {
     val endpoints = List(
-      EndPointBuilder()
-        .withPath("/levelzero")
-        .build,
-      EndPointBuilder()
+      EndPoint()
+        .withPath("/levelzero"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(
           List(
-            OperationBuilder()
+            Operation()
               .withMethod("get")
               .withName("Some title")
-              .withRequest(RequestBuilder()
-                .withPayloads(List(PayloadBuilder().withMediaType("application/json").build))
-                .build)
+              .withRequest(Request()
+                .withPayloads(List(Payload().withMediaType("application/json"))))
               .withResponses(List(
-                ResponseBuilder()
+                Response()
                   .withDescription("200 descr")
                   .withStatusCode("200")
                   .withName("200")
                   .withHeaders(List(
-                    ParameterBuilder().withName("Time-Ago").withSchema("integer").withRequired(true).build
-                  ))
-                  .build,
-                ResponseBuilder()
+                    Parameter().withName("Time-Ago").withSchema("integer").withRequired(true)
+                  )),
+                Response()
                   .withName("404")
                   .withStatusCode("404")
                   .withDescription("Not found!")
                   .withPayloads(List(
-                    PayloadBuilder().withMediaType("application/json").withSchema("someType").build,
-                    PayloadBuilder().withMediaType("application/xml").withSchema("someType").build
+                    Payload().withMediaType("application/json").withSchema("someType"),
+                    Payload().withMediaType("application/xml").withSchema("someType")
                   ))
-                  .build
               ))
-              .build))
-        .build
+          ))
     )
 
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/uri"),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/uri")
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "operation-response.raml", RamlYamlHint)
+    assertFixture(api, "operation-response.raml", RamlYamlHint)
   }
 
   test("Responses - OAS.") {
     val endpoints = List(
-      EndPointBuilder()
+      EndPoint()
         .withPath("/levelzero")
-        .withName("Name")
-        .build,
-      EndPointBuilder()
+        .withName("Name"),
+      EndPoint()
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
         .withOperations(
           List(
-            OperationBuilder()
+            Operation()
               .withMethod("get")
               .withName("Some title")
-              .withRequest(RequestBuilder()
-                .withPayloads(List(PayloadBuilder().withMediaType("application/json").build))
-                .build)
+              .withRequest(Request()
+                .withPayloads(List(Payload().withMediaType("application/json"))))
               .withResponses(List(
-                ResponseBuilder()
+                Response()
                   .withDescription("200 descr")
                   .withStatusCode("200")
                   .withName("default")
                   .withHeaders(List(
-                    ParameterBuilder().withName("Time-Ago").withSchema("integer").withRequired(true).build
-                  ))
-                  .build,
-                ResponseBuilder()
+                    Parameter().withName("Time-Ago").withSchema("integer").withRequired(true)
+                  )),
+                Response()
                   .withName("404")
                   .withStatusCode("404")
                   .withDescription("Not found!")
-                  .withPayloads(List(PayloadBuilder().withMediaType("application/json").build,
-                                     PayloadBuilder().withMediaType("application/xml").build))
-                  .build
+                  .withPayloads(List(Payload().withMediaType("application/json"),
+                                     Payload().withMediaType("application/xml")))
               ))
-              .build))
-        .build
+          ))
     )
 
-    val fixture = List(
-      (Name, "API"),
-      (BasePath, "/some/uri"),
-      (EndPoints, endpoints)
-    )
+    val api = WebApi()
+      .withName("API")
+      .withBasePath("/some/uri")
+      .withEndPoints(endpoints)
 
-    assertFixture(fixture, "operation-response.json", OasJsonHint)
+    assertFixture(api, "operation-response.json", OasJsonHint)
   }
 
   test("generate partial succeed") {
-    val fixture = List(
-      (Name, "test"),
-      (Description, null),
-      (Host, "http://api.example.com/path"),
-      (Schemes, List("http", "https")),
-      (BasePath, "/path"),
-      (ContentType, List("application/yaml")),
-      (Accepts, List("application/yaml")),
-      (Version, "1.1"),
-      (TermsOfService, null),
-      (Provider,
-       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
+    val api = WebApi()
+      .withName("test")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("/path")
+      .withContentType(List("application/yaml"))
+      .withAccepts(List("application/yaml"))
+      .withVersion("1.1")
+      .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
 
-    assertFixture(fixture, "partialExample.raml", RamlYamlHint)
-  }
-
-  ignore("basic jsonld example") {
-    val fixture = List(
-      (Name, "test"),
-      (Description, null),
-      (Host, "api.example.com"),
-      (Schemes, List("http", "https")),
-      (BasePath, null),
-      (TermsOfService, null),
-      (Provider, null),
-      (License, null),
-      (Documentation, null)
-    )
-
-    assertFixture(fixture, "basicExample.jsonld", AmfJsonLdHint)
+    assertFixture(api, "partialExample.raml", RamlYamlHint)
   }
 
   test("generate partial json") {
 
-    val fixture = List(
-      (Name, "test"),
-      (Description, "testDescription"),
-      (Host, "api.example.com"),
-      (Schemes, List("http", "https")),
-      (BasePath, "http://api.example.com/path"),
-      (ContentType, List("application/json")),
-      (Accepts, List("application/json")),
-      (Version, "1.1"),
-      (TermsOfService, "terminos"),
-      (Provider, OrganizationBuilder().withUrl("urlContact").withName("nameContact").withEmail("emailContact").build),
-      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
+    val api = WebApi()
+      .withName("test")
+      .withDescription("testDescription")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("http://api.example.com/path")
+      .withContentType(List("application/json"))
+      .withAccepts(List("application/json"))
+      .withVersion("1.1")
+      .withTermsOfService("terminos")
+      .withProvider(Organization().withUrl("urlContact").withName("nameContact").withEmail("emailContact"))
+      .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
 
-    assertFixture(fixture, "completeExample.json", OasJsonHint)
-  }
-
-  test("edit complete raml") {
-
-    val before = List(
-      (Name, "test"),
-      (Description, "testDescription"),
-      (Host, "http://api.example.com/path"),
-      (Schemes, List("http", "https")),
-      (BasePath, "/path"),
-      (ContentType, List("application/yaml")),
-      (Accepts, List("application/yaml")),
-      (Version, "1.1"),
-      (TermsOfService, "terminos"),
-      (Provider,
-       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
-      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
-
-    val after = List(
-      (Name, "test"),
-      (Description, "changed"),
-      (Host, "http://api.example.com/path"),
-      (Schemes, List("http", "https")),
-      (BasePath, "/path"),
-      (ContentType, List("application/yaml")),
-      (Accepts, List("application/yaml")),
-      (Version, "1.1"),
-      (TermsOfService, "terminos"),
-      (Provider,
-       OrganizationBuilder().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto").build),
-      (License, LicenseBuilder().withUrl("urlLicense").withName("changed").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
-
-    AMFCompiler(basePath + "completeExample.raml", platform, RamlYamlHint)
-      .build()
-      .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes
-        assertWebApiValues(api, before)
-        val builder = api.toBuilder
-        builder.withDescription("changed")
-        val license = api.license.toBuilder
-        license.withName("changed")
-        builder.withLicense(license.build)
-        assertWebApiValues(builder.build, after)
-      }
-  }
-
-  test("edit complete json") {
-    val before = List(
-      (Name, "test"),
-      (Description, "testDescription"),
-      (Host, "api.example.com"),
-      (Schemes, List("http", "https")),
-      (BasePath, "http://api.example.com/path"),
-      (ContentType, List("application/json")),
-      (Accepts, List("application/json")),
-      (Version, "1.1"),
-      (TermsOfService, "terminos"),
-      (Provider, OrganizationBuilder().withUrl("urlContact").withName("nameContact").withEmail("emailContact").build),
-      (License, LicenseBuilder().withUrl("urlLicense").withName("nameLicense").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
-
-    val after = List(
-      (Name, "test"),
-      (Description, "changed"),
-      (Host, "api.example.com"),
-      (Schemes, List("http", "https")),
-      (BasePath, "http://api.example.com/path"),
-      (ContentType, List("application/json")),
-      (Accepts, List("application/json")),
-      (Version, "1.1"),
-      (TermsOfService, "terminos"),
-      (Provider, OrganizationBuilder().withUrl("urlContact").withName("nameContact").withEmail("emailContact").build),
-      (License, LicenseBuilder().withUrl("urlLicense").withName("changed").build),
-      (Documentation,
-       CreativeWorkBuilder().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs").build)
-    )
-
-    AMFCompiler(basePath + "completeExample.json", platform, OasJsonHint)
-      .build()
-      .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes
-        assertWebApiValues(api, before)
-        val builder = api.toBuilder
-        builder.withDescription("changed")
-        val license = api.license.toBuilder
-        license.withName("changed")
-        builder.withLicense(license.build)
-        assertWebApiValues(builder.build, after)
-      }
-  }
-
-  def assertWebApiValues(api: WebApi, assertions: List[(Field, Any)]): Assertion = {
-    assertions.foreach {
-      case (Name, expected)              => assertField(Name, api.name, expected)
-      case (Description, expected)       => assertField(Description, api.description, expected)
-      case (Host, expected)              => assertField(Host, api.host, expected)
-      case (Schemes, expected)           => assertField(Schemes, api.schemes, expected)
-      case (BasePath, expected)          => assertField(BasePath, api.basePath, expected)
-      case (ContentType, expected)       => assertField(ContentType, api.contentType, expected)
-      case (Accepts, expected)           => assertField(Accepts, api.accepts, expected)
-      case (Version, expected)           => assertField(Version, api.version, expected)
-      case (TermsOfService, expected)    => assertField(TermsOfService, api.termsOfService, expected)
-      case (Provider, expected)          => assertField(Provider, api.provider, expected)
-      case (License, expected)           => assertField(License, api.license, expected)
-      case (Documentation, expected)     => assertField(Documentation, api.documentation, expected)
-      case (EndPoints, expected)         => assertField(EndPoints, api.endPoints, expected)
-      case (BaseUriParameters, expected) => assertField(BaseUriParameters, api.baseUriParameters, expected)
-      case _                             =>
-    }
-    succeed
+    assertFixture(api, "completeExample.json", OasJsonHint)
   }
 
   private def assertField(field: Field, actual: Any, expected: Any) =
-    if (expected != actual) fail(s"Expected $expected but $actual found for field $field")
+    if (expected != actual) {
+      expected match {
+        case obj: AmfObject =>
+      }
+      fail(s"Expected $expected but $actual found for field $field")
+    }
 
-  private def assertFixture(fixture: List[(Field, Object)], file: String, hint: Hint): Future[Assertion] = {
+  private def assertFixture(expected: WebApi, file: String, hint: Hint): Future[Assertion] = {
 
     AMFCompiler(basePath + file, platform, hint)
       .build()
       .map { unit =>
-        val api = unit.asInstanceOf[Document].encodes
-        assertWebApiValues(api, fixture)
+        val actual = unit.asInstanceOf[Document].encodes
+        AmfObjectMatcher(expected).assert(actual)
+        Succeeded
       }
+  }
+
+  /** [[AmfObject]] matcher ignoring all [[Annotation]]s */
+  case class AmfObjectMatcher(expected: AmfObject) {
+
+    def assert(actual: AmfObject): Unit = {
+      if (actual.fields.size != expected.fields.size) {
+        fail(s"Expected ${expected.fields} but ${actual.fields} fields have different sizes")
+      }
+
+      expected.fields.foreach({
+        case (field, _) =>
+          val a: Any = actual.fields.raw(field).orNull
+          val e: Any = expected.fields.raw(field).orNull
+          assertRaw(field, a, e)
+      })
+    }
+  }
+
+  private def assertRaw(field: Field, a: Any, e: Any): Unit = {
+    e match {
+      case _: String | _: Boolean => if (a != e) fail(s"Expected scalar $a but $e found for $field")
+      case obj: AmfObject         => AmfObjectMatcher(obj).assert(a.asInstanceOf[AmfObject])
+      case values: Seq[_] =>
+        val other = a.asInstanceOf[Seq[_]]
+
+        if (values.size != other.size) {
+          fail(s"Expected $values but $other fields have different sizes")
+        }
+
+        values
+          .zip(other)
+          .foreach({
+            case (exp, act) => assertRaw(field, act, exp)
+          })
+    }
   }
 }

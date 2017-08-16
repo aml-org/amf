@@ -44,14 +44,14 @@ class WebApiBuilder extends Builder {
     val basePath = Option(fields(BasePath))
     val host     = Option(fields(Host))
     if (basePath.isEmpty && host.isDefined) {
-      fields.set(BasePath, BaseUriSplitter(host.get).path, List())
+//      fields.set(BasePath, BaseUriSplitter(host.get).path, List())
     }
     fields
   }
 
   override def resolveId(container: String): this.type = withId(container + "#/web-api")
 
-  override def build: WebApi = WebApi(fixFields(fields), annotations)
+  override def build: WebApi = null
 }
 
 object WebApiBuilder {

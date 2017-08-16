@@ -13,7 +13,7 @@ import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
-import amf.model.AmfElement
+import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
@@ -40,7 +40,7 @@ object GraphParser {
     }
 
     private def build(builder: Builder) = {
-      val element: AmfElement = builder.build.asInstanceOf[AmfElement]
+      val element: AmfObject = builder.build.asInstanceOf[AmfObject]
       elements = elements + (element.id -> element)
       element
     }

@@ -1,6 +1,6 @@
 package amf.document
 
-import amf.domain.{Annotation, DomainElement, Fields}
+import amf.domain.{Annotations, DomainElement, Fields}
 
 /**
   * RAML Fragments
@@ -16,7 +16,7 @@ object Fragment {
     override val fields: Fields = new Fields()
 
     /** Set of annotations for object. */
-    override val annotations: List[Annotation] = Nil
+    override val annotations: Annotations = Annotations()
   }
 
   case class DocumentationItem(location: String, encodes: DomainElement) extends Fragment
@@ -45,5 +45,5 @@ object Fragment {
 trait EncodesModel {
 
   /** Encoded [[DomainElement]] described in the document element. */
-  val encodes: DomainElement
+  def encodes: DomainElement
 }

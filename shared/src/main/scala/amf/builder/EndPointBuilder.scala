@@ -26,7 +26,7 @@ class EndPointBuilder extends Builder {
     withId(container + "/end-points/" + path.urlEncoded)
   }
 
-  override def build: EndPoint = EndPoint(fields, annotations)
+  override def build: EndPoint = null
 }
 
 object EndPointBuilder {

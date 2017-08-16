@@ -35,13 +35,19 @@ object Annotation {
     override val value: String = null
   }
 
+  case class SynthesizedField() extends Annotation {
+    override val name: String = "synthesized-field"
+
+    override val value: String = null
+  }
+
   case class UriParameters() extends Annotation {
     override val name: String = "uri-parameters"
 
     override val value: String = null
   }
 
-  case class EndPointBodyParameter(asParameter: Parameter) extends Annotation {
+  case class EndPointBodyParameter() extends Annotation {
 
     /** Extension name. */
     override val name: String = "endpoint-body-parameter"
@@ -50,7 +56,7 @@ object Annotation {
     override val value: String = null
   }
 
-  case class OperationBodyParameter(asParameter: Parameter) extends Annotation {
+  case class OperationBodyParameter() extends Annotation {
 
     /** Extension name. */
     override val name: String = "operation-body-parameter"
@@ -77,20 +83,6 @@ object Annotation {
     override val value: String = null
 
     val key = "x-media-type"
-  }
-
-  case class ArrayFieldAnnotations(holder: Map[Any, List[Annotation]] = Map()) extends Annotation {
-    def +(value: Any, annotations: List[Annotation]): ArrayFieldAnnotations =
-      ArrayFieldAnnotations(value match {
-        case l: List[_] => l.foldLeft(holder)((newHolder, v) => newHolder + (v -> annotations))
-        case _          => holder + (value -> annotations)
-      })
-
-    def apply(fieldValue: Any): List[Annotation] = holder.getOrElse(fieldValue, Nil)
-
-    override val name: String = "array-field-annotation"
-
-    override val value: String = null
   }
 
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =

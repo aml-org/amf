@@ -3,15 +3,14 @@ package amf.spec.oas
 import amf.common.AMFAST
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.ExplicitField
+import amf.domain.Annotation.{EndPointBodyParameter, ExplicitField, OperationBodyParameter}
 import amf.domain._
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfScalar}
-import amf.spec.{EntryNode, _}
 
-import scala.collection.mutable
+import scala.collection.{immutable, mutable}
 import scala.util.matching.Regex
 
 /**
@@ -22,39 +21,43 @@ case class OasSpecParser(root: Root) {
   def parseWebApi(): WebApi = {
 
     val api     = WebApi(root.ast)
-    val entries = new Entries(root.ast)
+    val entries = new Entries(root.ast.last)
 
-    entries.key("info", entry => {
+    entries.key(
+      "info",
+      entry => {
         //TODO lexical for 'info' node is lost.
-      val info = new Entries(entry.ast)
-      info.key("title", entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.Name, value.string(), entry.annotations())
-      })
+        val info = new Entries(entry.value)
 
-      info.key("description", entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.Description, value.string(), entry.annotations())
-      })
+        info.key("title", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.Name, value.string(), entry.annotations())
+        })
 
-      info.key("termsOfService", entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
-      })
+        info.key("description", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.Description, value.string(), entry.annotations())
+        })
 
-      info.key("version", entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.Version, value.string(), entry.annotations())
-      })
+        info.key("termsOfService", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
+        })
 
-      info.key(
-        "(license)",
-        entry => {
-          val license: License = LicenseParser(entry.value).parse()
-          api.set(WebApiModel.License, license, entry.annotations())
-        }
-      )
-    })
+        info.key("version", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.Version, value.string(), entry.annotations())
+        })
+
+        info.key(
+          "license",
+          entry => {
+            val license: License = LicenseParser(entry.value).parse()
+            api.set(WebApiModel.License, license, entry.annotations())
+          }
+        )
+      }
+    )
 
     entries.key("host", entry => {
       val value = ValueNode(entry.value)
@@ -62,9 +65,13 @@ case class OasSpecParser(root: Root) {
     })
 
     entries.key(
-      "x-baseUriParameters",
+      "x-base-uri-parameters",
       entry => {
-        //TODO Params
+        val all: OasParameters = ParametersParser(entry.value).parse()
+        all match {
+          case OasParameters(_, path, _, _) =>
+            api.set(WebApiModel.BaseUriParameters, AmfArray(path, Annotations(entry.value)), entry.annotations())
+        }
       }
     )
 
@@ -107,23 +114,28 @@ case class OasSpecParser(root: Root) {
       }
     )
 
-    entries.key("paths", entry => {
-      val paths = new Entries(entry.ast)
-      paths.regex(
-        "^/.*",
-        entries => {
-          val endpoints = mutable.ListBuffer[EndPoint]()
-          entries.foreach(EndpointParser(_, endpoints).parse())
-          api.set(WebApiModel.EndPoints, AmfArray(endpoints))
-        }
-      )
-    })
+    entries.key(
+      "paths",
+      entry => {
+        //TODO lexical for 'paths' node is lost.
+        val paths = new Entries(entry.value)
+        paths.regex(
+          "^/.*",
+          entries => {
+            val endpoints = mutable.ListBuffer[EndPoint]()
+            entries.foreach(EndpointParser(_, endpoints).parse())
+            api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+          }
+        )
+      }
+    )
 
     api
   }
 }
 
 case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoint]) {
+
   def parse(): Unit = {
 
     val endpoint = EndPoint(entry.ast)
@@ -141,51 +153,64 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
       endpoint.set(EndPointModel.Description, value.string(), entry.annotations())
     })
 
+    var body: Option[Payload] = None
+
     entries.key(
-      //TODO parameters and 'body' payload logic :S
       "parameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
-        endpoint.set(EndPointModel.Parameters,
-                     AmfArray(parameters, Annotations(entry.value)),
-                     entry.annotations())
+        val all: OasParameters = ParametersParser(entry.value).parse()
+        all match {
+          case OasParameters(query, path, header, payload) =>
+            body = payload.map(_.add(EndPointBodyParameter()))
+            val parameters = query ++ path ++ header
+            if (parameters.nonEmpty) {
+              endpoint.set(EndPointModel.Parameters,
+                           AmfArray(parameters, Annotations(entry.value)),
+                           entry.annotations())
+            }
+        }
       }
     )
+
+    collector += endpoint
 
     entries.regex(
       "get|patch|put|post|delete|options|head",
       entries => {
         val operations = mutable.ListBuffer[Operation]()
-        entries.foreach(entry => { operations += OperationParser(entry).parse() })
+        entries.foreach(entry => {
+          operations += OperationParser(entry, body).parse()
+        })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
     )
   }
 }
 
-case class RequestParser(entries: Entries) {
+case class RequestParser(entries: Entries, global: Option[Payload]) {
 
-  def parse(): Request = {
+  def parse(): Option[Request] = {
     val request = Request()
 
+    var body = global
+
     entries.key(
-      "queryParameters",
+      "parameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
-        request.set(RequestModel.QueryParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
+        val all: OasParameters = ParametersParser(entry.value).parse()
+        all match {
+          case OasParameters(query, path, header, payload) =>
+            request.set(RequestModel.QueryParameters,
+                        AmfArray(query ++ path, Annotations(entry.value)),
+                        entry.annotations())
+            request.set(RequestModel.Headers, AmfArray(header, Annotations(entry.value)), entry.annotations())
+            body = payload.map(_.add(OperationBodyParameter())).orElse(global)
+        }
       }
     )
 
     entries.key(
-      "headers",
-      entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
-        request.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
-      }
-    )
-
-    entries.key(
-      "body",
+      "x-request-payloads",
       entry => {
         new Entries(entry.value).regex(
           ".*/.*",
@@ -198,15 +223,15 @@ case class RequestParser(entries: Entries) {
       }
     )
 
-    request
+    if (request.fields.nonEmpty) { Some(request) } else { None }
   }
 }
 
-case class OperationParser(entry: EntryNode) {
+case class OperationParser(entry: EntryNode, body: Option[Payload]) {
   def parse(): Operation = {
 
     val operation = Operation(entry.ast)
-    val entries   = new Entries(entry.ast)
+    val entries   = new Entries(entry.value)
 
     operation.set(Method, ValueNode(entry.key).string())
 
@@ -246,13 +271,13 @@ case class OperationParser(entry: EntryNode) {
       }
     )
 
-    operation.set(OperationModel.Request, RequestParser(entries).parse())
+    RequestParser(entries, body).parse().map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",
       entry => {
         new Entries(entry.value).regex(
-          "\\d{3}",
+          "default|\\d{3}",
           entries => {
             val responses = mutable.ListBuffer[Response]()
             entries.foreach(entry => { responses += ResponseParser(entry).parse() })
@@ -267,10 +292,16 @@ case class OperationParser(entry: EntryNode) {
 }
 
 case class ParametersParser(ast: AMFAST) {
-  def parse(): Seq[Parameter] = {
-    new Entries(ast).entries.values
-      .map(entry => ParameterParser(entry).parse())
-      .toSeq
+  def parse(): OasParameters = {
+    val parameters = ArrayNode(ast).values
+      .map(value => ParameterParser(value).parse())
+
+    OasParameters(
+      parameters.filter(_.isQuery).map(_.parameter),
+      parameters.filter(_.isPath).map(_.parameter),
+      parameters.filter(_.isHeader).map(_.parameter),
+      parameters.filter(_.isBody).map(_.payload).headOption
+    )
   }
 }
 
@@ -294,6 +325,15 @@ case class ResponseParser(entry: EntryNode) {
 
     val entries = new Entries(entry.value)
 
+    val node = ValueNode(entry.key)
+    response.set(ResponseModel.Name, node.string())
+
+    if (response.name == "default") {
+      response.set(ResponseModel.StatusCode, "200")
+    } else {
+      response.set(ResponseModel.StatusCode, node.string())
+    }
+
     entries.key("description", entry => {
       val value = ValueNode(entry.value)
       response.set(ResponseModel.Description, value.string(), entry.annotations())
@@ -302,7 +342,7 @@ case class ResponseParser(entry: EntryNode) {
     entries.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
+        val parameters: Seq[Parameter] = HeaderParametersParser(entry.value).parse()
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -321,40 +361,81 @@ case class ResponseParser(entry: EntryNode) {
       }
     )
 
-    val node = ValueNode(entry.key)
-    response.set(ResponseModel.Name, node.string())
-    response.set(ResponseModel.StatusCode, node.string())
+    entries.key(
+      "x-response-payloads",
+      entry => {
+        new Entries(entry.value).regex(
+          ".*/.*",
+          entries => {
+            val payloads = mutable.ListBuffer[Payload]()
+            entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
+            response.set(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
+          }
+        )
+      }
+    )
+
+    response
   }
 }
 
-case class ParameterParser(entry: EntryNode) {
-  def parse(): Parameter = {
-    val parameter = Parameter(entry.ast)
+case class ParameterParser(ast: AMFAST) {
+  def parse(): OasParameter = {
+    val p       = OasParameter(ast)
+    val entries = new Entries(ast)
 
-    val name = entry.key.content.unquote
-    parameter
-      .set(ParameterModel.Required, !name.endsWith("?"))
-      .set(ParameterModel.Name, ValueNode(entry.key).string())
-
-    val entries = new Entries(entry.value)
+    entries.key("name", entry => {
+      val value = ValueNode(entry.value)
+      p.parameter.set(ParameterModel.Name, value.string(), entry.annotations())
+    })
 
     entries.key("description", entry => {
       val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Description, value.string(), entry.annotations())
+      p.parameter.set(ParameterModel.Description, value.string(), entry.annotations())
     })
 
     entries.key("required", entry => {
       val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() + ExplicitField())
+      p.parameter.set(ParameterModel.Required, value.boolean(), entry.annotations())
     })
 
-    entries.key("type", entry => {
+    entries.key("in", entry => {
       val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
+      p.parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
     })
 
-    parameter
+    if (p.isBody) {
+      entries.key("schema", entry => {
+        val value = ValueNode(entry.value)
+        p.payload.set(PayloadModel.Schema, value.string(), entry.annotations())
+      })
+
+      entries.key("x-media-type", entry => {
+        val value = ValueNode(entry.value)
+        p.payload.set(PayloadModel.MediaType, value.string(), entry.annotations())
+      })
+
+    } else {
+      entries.key("type", entry => {
+        val value = ValueNode(entry.value)
+        p.parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
+      })
+    }
+
+    p
   }
+}
+
+case class OasParameters(query: Seq[Parameter], path: Seq[Parameter], header: Seq[Parameter], body: Option[Payload]) {}
+
+case class OasParameter(ast: AMFAST) {
+  val parameter = Parameter(ast)
+  val payload   = Payload(ast)
+
+  def isBody: Boolean   = parameter.isBody
+  def isQuery: Boolean  = parameter.isQuery
+  def isPath: Boolean   = parameter.isPath
+  def isHeader: Boolean = parameter.isHeader
 }
 
 case class LicenseParser(ast: AMFAST) {
@@ -373,6 +454,44 @@ case class LicenseParser(ast: AMFAST) {
     })
 
     license
+  }
+}
+
+case class HeaderParametersParser(ast: AMFAST) {
+  def parse(): Seq[Parameter] = {
+    new Entries(ast).entries.values
+      .map(entry => HeaderParameterParser(entry).parse())
+      .toSeq
+  }
+}
+
+case class HeaderParameterParser(entry: EntryNode) {
+  def parse(): Parameter = {
+    val parameter = Parameter(entry.ast)
+
+    val name = entry.key.content.unquote
+    parameter
+      .set(ParameterModel.Required, !name.endsWith("?"))
+      .set(ParameterModel.Name, ValueNode(entry.key).string())
+
+    val entries = new Entries(entry.value)
+
+    entries.key("description", entry => {
+      val value = ValueNode(entry.value)
+      parameter.set(ParameterModel.Description, value.string(), entry.annotations())
+    })
+
+    entries.key("required", entry => {
+      val value = ValueNode(entry.value)
+      parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() += ExplicitField())
+    })
+
+    entries.key("type", entry => {
+      val value = ValueNode(entry.value)
+      parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
+    })
+
+    parameter
   }
 }
 
@@ -429,17 +548,25 @@ class Entries(ast: AMFAST) {
     }
   }
 
-  def regex(regex: String, fn: (Seq[EntryNode] => Unit)): Unit = {
+  def regex(regex: String, fn: (Iterable[EntryNode] => Unit)): Unit = {
     val path: Regex = regex.r
-    entries
+    val values = entries
       .filterKeys({
         case path() => true
         case _      => false
       })
       .values
+    if (values.nonEmpty) fn(values)
   }
 
-  var entries: Map[String, EntryNode] = ast.children.map(n => n.head.content.unquote -> EntryNode(n)).toMap
+  val entries: Map[String, EntryNode] = {
+    val children = ast.children.map(n => n.head.content.unquote -> EntryNode(n))
+    val b        = immutable.ListMap.newBuilder[String, EntryNode]
+    for (x <- children)
+      b += x
+
+    b.result()
+  }
 
 }
 
@@ -457,6 +584,8 @@ case class ArrayNode(ast: AMFAST) {
     val elements = ast.children.map(child => ValueNode(child).string())
     AmfArray(elements, annotations())
   }
+
+  val values: Seq[AMFAST] = ast.children
 
   private def annotations() = Annotations(ast)
 }

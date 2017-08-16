@@ -16,7 +16,7 @@ class CreativeWorkBuilder extends Builder {
 
   override def resolveId(container: String): this.type = withId(container + "/creative-work")
 
-  override def build: CreativeWork = CreativeWork(fields, annotations)
+  override def build: CreativeWork = null
 }
 
 object CreativeWorkBuilder {

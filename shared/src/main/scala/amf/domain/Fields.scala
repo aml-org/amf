@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.domain.Annotation.ArrayFieldAnnotations
 import amf.metadata.Field
 import amf.metadata.Type._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
@@ -16,17 +15,17 @@ class Fields extends PlatformSecrets {
   private var fs: Map[Field, Value] = ListMap()
   var id: String                    = _
 
-  def default(field: Field): Any = field.`type` match {
-    case Array(_) => Nil
+  def default(field: Field): AmfElement = field.`type` match {
+    case Array(_) => AmfArray(Nil)
     case _        => null
   }
 
   /** Return typed value associated to given [[Field]]. */
-  def get[T](field: Field): T = {
-    (getValue(field) match {
+  def get(field: Field): AmfElement = {
+    getValue(field) match {
       case Value(value, _) => value
       case _               => default(field)
-    }).asInstanceOf[T]
+    }
   }
 
   def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
@@ -39,31 +38,8 @@ class Fields extends PlatformSecrets {
     }
   }
 
-  def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] = {
-    fs.get(field).flatMap(_.annotations.find(classType.isInstance(_))).asInstanceOf[Option[T]]
-  }
-
-  def getAnnotationForValue[T <: Annotation](field: Field, value: Any, classType: Class[T]): Option[T] = {
-    getAnnotation(field, classOf[ArrayFieldAnnotations])
-      .flatMap(_(value).find(classType.isInstance(_)))
-      .asInstanceOf[Option[T]]
-  }
-
-  def set(field: Field, values: Seq[AmfElement]): this.type = {
-    fs = fs + (field -> values)
-    this
-  }
-
-  def add(field: Field, value: AmfElement): AmfArray = {}
-
-  def array(field: Field): AmfArray = {
-    fs.get(field) match {
-      case Some(Value(value, _)) => value.asInstanceOf[AmfArray]
-      case None => {
-        set(field, AmfArray(Nil))
-      }
-    }
-  }
+  def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] =
+    fs.get(field).flatMap(_.annotations.find(classType))
 
   def set(field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     fs = fs + (field -> Value(value, annotations))
@@ -76,7 +52,20 @@ class Fields extends PlatformSecrets {
     other.id = id
   }
 
-  def apply[T](field: Field): T = get(field)
+  def apply[T](field: Field): T = rawAny(get(field))
+
+  def raw[T](field: Field): Option[T] = getValue(field) match {
+    case Value(value, _) => Some(rawAny(value))
+    case _               => None
+  }
+
+  private def rawAny[T](element: AmfElement): T = {
+    (element match {
+      case AmfArray(values, _) => values.map(rawAny[T])
+      case AmfScalar(value, _) => value
+      case obj                 => obj
+    }).asInstanceOf[T]
+  }
 
   /** Return optional entry for a given [[Field]]. */
   def entry(f: Field): Option[(Field, Value)] = {
@@ -95,10 +84,15 @@ class Fields extends PlatformSecrets {
     this
   }
 
+  def size: Int = fs.size
+
+  def nonEmpty: Boolean = fs.nonEmpty
 }
 
 object Fields {
   def apply(): Fields = new Fields()
 }
 
-case class Value(value: AmfElement, annotations: Annotations)
+case class Value(value: AmfElement, annotations: Annotations) {
+  override def toString: String = value.toString
+}

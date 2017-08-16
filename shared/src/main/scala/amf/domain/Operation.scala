@@ -7,15 +7,15 @@ import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
   */
 case class Operation(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  val method: String              = fields(Method)
-  val name: String                = fields(Name)
-  val description: String         = fields(Description)
-  val deprecated: Boolean         = fields(Deprecated)
-  val summary: String             = fields(Summary)
-  val documentation: CreativeWork = fields(Documentation)
-  val schemes: Seq[String]        = fields(Schemes)
-  val request: Request            = fields(OperationRequest)
-  val responses: Seq[Response]    = fields(Responses)
+  def method: String              = fields(Method)
+  def name: String                = fields(Name)
+  def description: String         = fields(Description)
+  def deprecated: Boolean         = fields(Deprecated)
+  def summary: String             = fields(Summary)
+  def documentation: CreativeWork = fields(Documentation)
+  def schemes: Seq[String]        = fields(Schemes)
+  def request: Request            = fields(OperationRequest)
+  def responses: Seq[Response]    = fields(Responses)
 
   def withMethod(method: String): this.type                     = set(Method, method)
   def withName(name: String): this.type                         = set(Name, name)
@@ -25,12 +25,11 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
   def withSchemes(schemes: Seq[String]): this.type              = set(Schemes, schemes.toList)
   def withRequest(request: Request): this.type                  = set(OperationRequest, request)
-  def withResponses(responses: Seq[Response]): this.type        = set(Responses, responses)
+  def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
 }
 
 object Operation {
-  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): Operation =
-    new Operation(fields, annotations)
+  def apply(): Operation = new Operation(Fields(), Annotations())
 
   def apply(ast: AMFAST): Operation = new Operation(Fields(), Annotations(ast))
 }

@@ -8,11 +8,11 @@ import amf.metadata.domain.ParameterModel._
   */
 case class Parameter(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  val name: String        = fields(Name)
-  val description: String = fields(Description)
-  val required: Boolean   = fields(Required)
-  val binding: String     = fields(Binding)
-  val schema: String      = fields(Schema)
+  def name: String        = fields(Name)
+  def description: String = fields(Description)
+  def required: Boolean   = fields(Required)
+  def binding: String     = fields(Binding)
+  def schema: String      = fields(Schema)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
@@ -20,13 +20,14 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
   def withBinding(binding: String): this.type         = set(Binding, binding)
   def withSchema(schema: String): this.type           = set(Schema, schema)
 
-  def isHeaderType: Boolean = binding == "header"
-  def isQueryType: Boolean  = binding == "query"
+  def isHeader: Boolean = binding == "header"
+  def isQuery: Boolean  = binding == "query"
+  def isBody: Boolean   = binding == "body"
+  def isPath: Boolean   = binding == "path"
 }
 
 object Parameter {
-  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): Parameter =
-    new Parameter(fields, annotations)
+  def apply(): Parameter = new Parameter(Fields(), Annotations())
 
   def apply(ast: AMFAST): Parameter = new Parameter(Fields(), Annotations(ast))
 }

@@ -16,7 +16,7 @@ class LicenseBuilder extends Builder {
 
   override def resolveId(container: String): this.type = withId(container + "/license")
 
-  override def build: License = License(fields, annotations)
+  override def build: License = null
 }
 
 object LicenseBuilder {

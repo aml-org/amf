@@ -5,4 +5,6 @@ import amf.vocabulary.ValueType
 /**
   * Field
   */
-case class Field(`type`: Type, value: ValueType)
+case class Field(`type`: Type, value: ValueType) {
+  override def toString: String = value.iri()
+}

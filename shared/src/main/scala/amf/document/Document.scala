@@ -1,26 +1,35 @@
 package amf.document
 
-import amf.domain.{Annotation, DomainElement, Fields, WebApi}
+import amf.builder.DocumentBuilder
+import amf.domain._
 import amf.metadata.document.DocumentModel._
+import amf.transform.MutableElement
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
   * [[DomainElement]]s that reference from the encoded [[DomainElement]]
   */
-case class Document(fields: Fields, annotations: List[Annotation])
+case class Document(fields: Fields, annotations: Annotations)
     extends BaseUnit
+    with MutableElement
     with EncodesModel
     with DeclaresModel {
 
-  override val references: Seq[BaseUnit] = fields(References)
+  override def references: Seq[BaseUnit] = fields(References)
 
-  override val location: String = fields(Location)
+  override def location: String = fields(Location)
 
-  override val encodes: WebApi = fields(Encodes)
+  override def encodes: WebApi = fields(Encodes)
 
-  val declares: Seq[DomainElement] = fields(Declares)
+  override def declares: Seq[DomainElement] = fields(Declares)
+
+  def withLocation(location: String): this.type            = set(Location, location)
+  def withReferences(references: Seq[BaseUnit]): this.type = setArray(References, references)
+  def withEncodes(element: DomainElement): this.type       = set(Encodes, element)
 }
 
 object Document {
-  def apply(fields: Fields, annotations: List[Annotation]): Document = new Document(fields, annotations)
+  def apply(): Document = new Document(Fields(), Annotations())
+
+  def apply(fields: Fields, annotations: Annotations): Document = new Document(fields, annotations)
 }

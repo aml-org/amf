@@ -19,7 +19,7 @@ class DocumentBuilder extends Builder {
 
   override def resolveId(container: String): this.type = withId(container)
 
-  override def build: Document = Document(fields, annotations)
+  override def build: Document = null
 }
 
 object DocumentBuilder {

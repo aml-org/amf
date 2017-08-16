@@ -17,7 +17,7 @@ class RequestBuilder extends Builder {
 
   override def resolveId(container: String): this.type = withId(container + "/request")
 
-  override def build: Request = Request(fields, annotations)
+  override def build: Request = null
 }
 
 object RequestBuilder {

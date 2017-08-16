@@ -5,7 +5,6 @@ import amf.metadata.Type.{Array, Bool, Iri, Str}
 import amf.metadata.domain._
 import amf.remote.{Amf, Vendor}
 import amf.spec.FieldEmitter._
-import amf.spec.FieldParser._
 import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}
 
 /**
@@ -13,7 +12,6 @@ import amf.spec.Matcher.{KeyMatcher, Matcher, RegExpMatcher}
   */
 protected case class SpecField(fields: List[Field],
                                matcher: Matcher,
-                               parser: SpecFieldParser,
                                emitter: SpecFieldEmitter,
                                children: List[SpecField] = Nil,
                                vendor: Vendor = Amf) {
@@ -30,21 +28,21 @@ protected trait SpecNode {
 
   private def createSpecField(fields: List[Field]) = {
     fields.head.`type` match {
-      case Str | Iri  => SpecField(fields, matcher(), StringValueParser, StringValueEmitter)
-      case Bool       => SpecField(fields, matcher(), BoolValueParser, BooleanValueEmitter)
-      case Array(Str) => SpecField(fields, matcher(), StringListParser, StringListEmitter)
+      case Str | Iri  => SpecField(fields, matcher(), StringValueEmitter)
+      case Bool       => SpecField(fields, matcher(), BooleanValueEmitter)
+      case Array(Str) => SpecField(fields, matcher(), StringListEmitter)
       case OrganizationModel | CreativeWorkModel | LicenseModel =>
-        SpecField(fields, matcher(), ObjectParser, ObjectEmitter)
+        SpecField(fields, matcher(), ObjectEmitter)
       case Array(EndPointModel) =>
-        SpecField(fields, matcher(), EndPointParser, EndPointEmitter)
+        SpecField(fields, matcher(), EndPointEmitter)
       case Array(OperationModel) =>
-        SpecField(fields, matcher(), OperationParser, OperationEmitter)
+        SpecField(fields, matcher(), OperationEmitter)
       case Array(ParameterModel) =>
-        SpecField(fields, matcher(), ParametersParser, ParametersEmitter)
+        SpecField(fields, matcher(), ParametersEmitter)
       case Array(PayloadModel) =>
-        SpecField(fields, matcher(), PayloadsParser, PayloadEmitter)
+        SpecField(fields, matcher(), PayloadEmitter)
       case Array(ResponseModel) =>
-        SpecField(fields, matcher(), ResponseParser, ResponseEmitter)
+        SpecField(fields, matcher(), ResponseEmitter)
     }
   }
 
@@ -62,7 +60,6 @@ protected case class SpecKeyNode(symbol: Symbol) extends SpecNode {
   def ->(specs: SpecField*): SpecField = SpecField(
     Nil,
     matcher(),
-    ChildrenParser(),
     null,
     specs.toList
   )

@@ -10,10 +10,10 @@ import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.{Obj, SourceMapModel, Type}
-import amf.model.AmfElement
+import amf.model.AmfObject
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.vocabulary.Namespace.SourceMaps
-import amf.vocabulary.{Namespace, ValueType}
+import amf.vocabulary.ValueType
 
 /**
   * AMF Graph emitter
@@ -37,7 +37,7 @@ object GraphEmitter {
       }
     }
 
-    def traverse(element: AmfElement, parent: String): Unit = {
+    def traverse(element: AmfObject, parent: String): Unit = {
       val id = element.id
       createIdNode(id)
 
@@ -61,7 +61,7 @@ object GraphEmitter {
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit) = {
       t match {
-        case _: Obj => obj(v.value.asInstanceOf[AmfElement], parent)
+        case _: Obj => obj(v.value.asInstanceOf[AmfObject], parent)
         case Iri =>
           iri(v.value.asInstanceOf[String])
           sources(v)
@@ -74,14 +74,14 @@ object GraphEmitter {
         case a: Array =>
           array { () =>
             a.element match {
-              case _: Obj => v.value.asInstanceOf[Seq[AmfElement]].foreach(e => obj(e, parent, inArray = true))
+              case _: Obj => v.value.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
               case Str    => v.value.asInstanceOf[Seq[String]].foreach(scalar(_, inArray = true))
             }
           }
       }
     }
 
-    private def obj(element: AmfElement, parent: String, inArray: Boolean = false) = {
+    private def obj(element: AmfObject, parent: String, inArray: Boolean = false) = {
       val obj = () =>
         map { () =>
           traverse(element, parent)

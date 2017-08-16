@@ -7,11 +7,11 @@ import amf.metadata.domain.RequestModel._
   */
 case class Request(fields: Fields = Fields(), annotations: Annotations = new Annotations()) extends DomainElement {
 
-  val queryParameters: Seq[Parameter] = fields(QueryParameters)
-  val headers: Seq[Parameter]         = fields(Headers)
-  val payloads: Seq[Payload]          = fields(Payloads)
+  def queryParameters: Seq[Parameter] = fields(QueryParameters)
+  def headers: Seq[Parameter]         = fields(Headers)
+  def payloads: Seq[Payload]          = fields(Payloads)
 
-  def withQueryParameters(parameters: Seq[Parameter]): this.type = set(QueryParameters, parameters)
-  def withHeaders(headers: Seq[Parameter]): this.type            = set(Headers, headers)
-  def withPayloads(payloads: Seq[Payload]): this.type            = set(Payloads, payloads)
+  def withQueryParameters(parameters: Seq[Parameter]): this.type = setArray(QueryParameters, parameters)
+  def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
+  def withPayloads(payloads: Seq[Payload]): this.type            = setArray(Payloads, payloads)
 }

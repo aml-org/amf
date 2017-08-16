@@ -18,7 +18,7 @@ class OrganizationBuilder extends Builder {
 
   override def resolveId(container: String): this.type = withId(container + "/organization")
 
-  override def build: Organization = Organization(fields, annotations)
+  override def build: Organization = null
 }
 
 object OrganizationBuilder {

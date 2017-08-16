@@ -6,7 +6,7 @@ import amf.domain.Annotation.{ExplicitField, MediaType}
 import amf.domain.{EndPoint, Fields, Operation, _}
 import amf.metadata.Field
 import amf.metadata.domain.{ParameterModel, ResponseModel}
-import amf.model.AmfElement
+import amf.model.{AmfElement, AmfObject}
 import amf.parser.Range.NONE
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.FieldEmitter.StringValueEmitter.key
@@ -104,7 +104,7 @@ object FieldEmitter {
   object ObjectEmitter extends SpecFieldEmitter {
 
     override def emit(spec: SpecField, field: Field, value: Any): List[NodeBuilder] = {
-      val fields = value.asInstanceOf[AmfElement].fields
+      val fields = value.asInstanceOf[AmfObject].fields
 
       val parent = new LazyBuilder(Entry) {
 
@@ -216,7 +216,7 @@ object FieldEmitter {
 
     private def ramlParameterBuilder(parameter: Parameter, spec: SpecField): LazyBuilder = new LazyBuilder(Entry) {
       def isExplicit(field: Field, value: Value): Boolean =
-        field == ParameterModel.Required && value.annotations.exists(classOf[ExplicitField].isInstance(_))
+        field == ParameterModel.Required /*&& value.annotations.exists(classOf[ExplicitField].isInstance(_))*/
 
       val requiredFilter: (((Field, Value)) => Boolean) = { t =>
         { !isExplicit(t._1, t._2) }
@@ -227,7 +227,7 @@ object FieldEmitter {
         val value  = parameter.fields.getValue(ParameterModel.Name)
         val sValue = value.value.toString + (if (!required.value.asInstanceOf[Boolean]) "?" else "")
 
-        parameter.fields.set(ParameterModel.Name, sValue, value.annotations)
+//        parameter.fields.set(ParameterModel.Name, sValue, value.annotations)
         parameter.fields.filter(f => f._1 != ParameterModel.Required)
       }
 
@@ -242,11 +242,11 @@ object FieldEmitter {
       val emitter = SpecEmitter(spec.children.map(_.copy(vendor = spec.vendor)))
       emitter.addEmitToPrincipal(parameter.fields, principal)
 
-      val mediaTypeOption = parameter.annotations.find(p => p.isInstanceOf[MediaType]).map(_.asInstanceOf[MediaType])
+      /*val mediaTypeOption = parameter.annotations.find(p => p.isInstanceOf[MediaType]).map(_.asInstanceOf[MediaType])
       if (mediaTypeOption.isDefined && mediaTypeOption.get.mediaType != null && !mediaTypeOption.get.mediaType.isEmpty)
         principal.add(new LazyBuilder(Entry) {
           override def build: AMFAST = entry(mediaTypeOption.get.key, valueNode(mediaTypeOption.get.mediaType))
-        })
+        })*/
 
       principal
     }

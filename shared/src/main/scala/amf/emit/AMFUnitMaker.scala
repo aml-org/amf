@@ -34,15 +34,15 @@ class AMFUnitMaker {
 
   private def makeWebApiWithSpec(api: WebApi, vendor: Vendor): AMFAST = {
     vendor match {
-      case Raml => makeRamlWebApi(api)
-      case Oas  => makeOasWebApi(api)
-      case _    => throw new IllegalStateException("Invalid vendor " + vendor)
+//      case Raml => makeRamlWebApi(api)
+//      case Oas  => makeOasWebApi(api)
+      case _ => throw new IllegalStateException("Invalid vendor " + vendor)
     }
   }
 
   private def makeAmfWebApi(unit: BaseUnit): AMFAST = GraphEmitter.emit(unit)
 
-  private def fixBindingInParameters(parameters: List[Parameter],
+  /*private def fixBindingInParameters(parameters: List[Parameter],
                                      bind: String,
                                      fn: Option[(Parameter => Boolean)]): List[Parameter] = {
 
@@ -97,8 +97,8 @@ class AMFUnitMaker {
   val ramlProcessEndPointFn: (EndPoint) => EndPoint = (e) => {
     val uriParameters = e.parameters.filter(p =>
       e.fields.getAnnotationForValue(EndPointModel.Parameters, p, classOf[UriParameters]).isDefined)
-    val headers         = e.parameters.filter(_.isHeaderType)
-    val queryParameters = e.parameters.filter(_.isQueryType)
+    val headers         = e.parameters.filter(_.isHeader)
+    val queryParameters = e.parameters.filter(_.isQuery)
 
     val builders: Seq[Builder] = e.operations
       .map(o => {
@@ -212,7 +212,7 @@ class AMFUnitMaker {
                      new AMFASTNode(StringToken, "swagger", NONE),
                      new AMFASTNode(StringToken, "2.0", NONE)
                    ))
-  }
+  }*/
 }
 
 object AMFUnitMaker {

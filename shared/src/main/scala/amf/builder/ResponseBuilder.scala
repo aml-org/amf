@@ -25,7 +25,7 @@ class ResponseBuilder extends Builder {
     withId(container + "/" + name)
   }
 
-  override def build: Response = Response(fields, annotations)
+  override def build: Response = null
 }
 
 object ResponseBuilder {

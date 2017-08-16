@@ -33,7 +33,7 @@ class OperationBuilder extends Builder {
     withId(container + "/" + method)
   }
 
-  override def build: Operation = Operation(fields, annotations)
+  override def build: Operation = null
 }
 
 object OperationBuilder {

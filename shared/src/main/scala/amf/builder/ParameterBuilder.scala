@@ -24,7 +24,7 @@ class ParameterBuilder extends Builder {
     withId(container + "/parameter/" + name)
   }
 
-  override def build: Parameter = Parameter(fields, annotations)
+  override def build: Parameter = null
 }
 
 object ParameterBuilder {

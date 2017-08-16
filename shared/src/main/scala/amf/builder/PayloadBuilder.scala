@@ -18,7 +18,7 @@ class PayloadBuilder extends Builder {
     withId(container + "/" + mediaType.getOrElse("default"))
   }
 
-  override def build: Payload = Payload(fields, annotations)
+  override def build: Payload = null
 }
 
 object PayloadBuilder {

@@ -8,9 +8,9 @@ import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
   */
 case class Organization(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  val url: String   = fields(Url)
-  val name: String  = fields(Name)
-  val email: String = fields(Email)
+  def url: String   = fields(Url)
+  def name: String  = fields(Name)
+  def email: String = fields(Email)
 
   def withUrl(url: String): this.type     = set(Url, url)
   def withName(name: String): this.type   = set(Name, name)
@@ -19,8 +19,7 @@ case class Organization(fields: Fields, annotations: Annotations) extends Domain
 
 object Organization {
 
-  def apply(fields: Fields = Fields(), annotations: Annotations = new Annotations()): Organization =
-    new Organization(fields, annotations)
+  def apply(): Organization = new Organization(Fields(), Annotations())
 
   def apply(ast: AMFAST): Organization = apply(Fields(), Annotations(ast))
 }

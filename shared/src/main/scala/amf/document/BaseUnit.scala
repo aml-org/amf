@@ -6,8 +6,8 @@ import amf.model.AmfObject
 trait BaseUnit extends AmfObject {
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
-  val references: Seq[BaseUnit]
+  def references: Seq[BaseUnit]
 
   /** Returns the file location for the document that has been parsed to generate this model */
-  val location: String
+  def location: String
 }
