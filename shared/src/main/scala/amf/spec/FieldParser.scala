@@ -125,10 +125,10 @@ object FieldParser {
         val name = paramEntry.head.content.unquote
 
         val parameter: Parameter = Parameter(paramEntry)
-          .set(Required, !name.endsWith("?")).set(ParameterModel.Name, name)
+          .set(Required, !name.endsWith("?"))
+          .set(ParameterModel.Name, name)
 
-
-        val param = ParameterBuilder().set(Required, ).set(ParameterModel.Name, name)
+        val param = ParameterBuilder().set(Required, null).set(ParameterModel.Name, name)
 
         super.parse(spec, paramEntry, param, context)
 
