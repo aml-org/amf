@@ -292,7 +292,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
               .withMethod("get")
               .withName("Some title")
               .withRequest(Request()
-                .withPayloads(List(Payload().withMediaType("application/json"))))
+                .withPayloads(List(Payload().withMediaType("application/json").withSchema("number"))))
               .withResponses(List(
                 Response()
                   .withDescription("200 descr")
@@ -305,8 +305,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                   .withName("404")
                   .withStatusCode("404")
                   .withDescription("Not found!")
-                  .withPayloads(List(Payload().withMediaType("application/json"),
-                                     Payload().withMediaType("application/xml")))
+                  .withPayloads(List(Payload().withMediaType("application/json").withSchema("string"),
+                                     Payload().withMediaType("application/xml").withSchema("string")))
               ))
           ))
     )
@@ -353,7 +353,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(api, "completeExample.json", OasJsonHint)
   }
 
-  private def assertField(field: Field, actual: Any, expected: Any) =
+  private def assertField(field: Field, actual: Any, expected: Any): Unit =
     if (expected != actual) {
       expected match {
         case obj: AmfObject =>

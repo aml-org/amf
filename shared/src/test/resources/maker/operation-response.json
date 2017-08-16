@@ -13,9 +13,9 @@
       "description": "and this description!",
       "get": {
         "operationId": "Some title",
-        "x-request-payloads": [{
-          "mediaType": "application/json"
-        }],
+        "x-request-payloads": {
+          "application/json": "number"
+        },
         "responses": {
           "default": {
             "description": "200 descr",
@@ -28,11 +28,10 @@
           },
           "404": {
             "description": "Not found!",
-            "x-response-payloads": [{
-              "mediaType": "application/json"
-            }, {
-              "mediaType": "application/xml"
-            }]
+            "x-response-payloads": {
+              "application/json": "string",
+              "application/xml": "string"
+            }
           }
         }
       }

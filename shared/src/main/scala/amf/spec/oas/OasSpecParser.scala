@@ -200,14 +200,20 @@ case class RequestParser(entries: Entries, global: Option[Payload]) {
         val all: OasParameters = ParametersParser(entry.value).parse()
         all match {
           case OasParameters(query, path, header, payload) =>
-            request.set(RequestModel.QueryParameters,
-                        AmfArray(query ++ path, Annotations(entry.value)),
-                        entry.annotations())
-            request.set(RequestModel.Headers, AmfArray(header, Annotations(entry.value)), entry.annotations())
+            val queryParameters = query ++ path
+            if (queryParameters.nonEmpty)
+              request.set(RequestModel.QueryParameters,
+                          AmfArray(queryParameters, Annotations(entry.value)),
+                          entry.annotations())
+            if (header.nonEmpty)
+              request.set(RequestModel.Headers, AmfArray(header, Annotations(entry.value)), entry.annotations())
             body = payload.map(_.add(OperationBodyParameter())).orElse(global)
         }
       }
     )
+
+    val payloads = mutable.ListBuffer[Payload]()
+    body.foreach(payloads += _)
 
     entries.key(
       "x-request-payloads",
@@ -215,13 +221,13 @@ case class RequestParser(entries: Entries, global: Option[Payload]) {
         new Entries(entry.value).regex(
           ".*/.*",
           entries => {
-            val payloads = mutable.ListBuffer[Payload]()
             entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-            request.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
           }
         )
       }
     )
+
+    if (payloads.nonEmpty) request.set(RequestModel.Payloads, AmfArray(payloads)) //TODO annotations
 
     if (request.fields.nonEmpty) { Some(request) } else { None }
   }
@@ -401,7 +407,7 @@ case class ParameterParser(ast: AMFAST) {
 
     entries.key("in", entry => {
       val value = ValueNode(entry.value)
-      p.parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
+      p.parameter.set(ParameterModel.Binding, value.string(), entry.annotations())
     })
 
     if (p.isBody) {
