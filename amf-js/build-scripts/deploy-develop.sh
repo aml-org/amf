@@ -7,7 +7,7 @@ source ./build-scripts/pre-deploy.sh
 echo "Current directory: `pwd`"
 
 
-export TAG=${TAG_VERSION}
+export TAG=${GIT_BRANCH#*/}
 
 
 echo "Used target tag=$TAG"
@@ -28,7 +28,7 @@ fi
 
 
 echo "Base $DEVELOP_VERSION_BASE"
-echo "Branch $TAG_VERSION"
+echo "Branch $TAG"
 echo "-> ${DEVELOP_VERSION_BASE/automatic/$TAG}"
 export DEVELOP_VERSION=${DEVELOP_VERSION_BASE/automatic/$TAG}
 echo "Targeting $DEVELOP_VERSION"
@@ -39,7 +39,7 @@ if [ -z ${NPM_USER} ]; then
     echo 'NPM_USER NOT VALID FOR @mulesoft REGISTRY. CHECK THE ENV-VAR NPM_TOKEN'
     exit 1;
 else
-    echo "PUBLISHING @${TAG_VERSION} RELEASE AS @${NPM_USER}"
+    echo "PUBLISHING @${TAG} RELEASE AS @${NPM_USER}"
     npm version ${DEVELOP_VERSION} --force --no-git-tag-version
     npm version prerelease --force --no-git-tag-version
 
