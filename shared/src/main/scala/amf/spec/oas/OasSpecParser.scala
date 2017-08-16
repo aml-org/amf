@@ -1,14 +1,15 @@
-package amf.spec
+package amf.spec.oas
 
 import amf.common.AMFAST
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.{ExplicitField, UriParameters}
+import amf.domain.Annotation.ExplicitField
 import amf.domain._
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfScalar}
+import amf.spec.{EntryNode, _}
 
 import scala.collection.mutable
 import scala.util.matching.Regex
@@ -23,56 +24,75 @@ case class OasSpecParser(root: Root) {
     val api     = WebApi(root.ast)
     val entries = new Entries(root.ast)
 
-    entries.key("title", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.Name, value.string(), entry.annotations())
+    entries.key("info", entry => {
+        //TODO lexical for 'info' node is lost.
+      val info = new Entries(entry.ast)
+      info.key("title", entry => {
+        val value = ValueNode(entry.value)
+        api.set(WebApiModel.Name, value.string(), entry.annotations())
+      })
+
+      info.key("description", entry => {
+        val value = ValueNode(entry.value)
+        api.set(WebApiModel.Description, value.string(), entry.annotations())
+      })
+
+      info.key("termsOfService", entry => {
+        val value = ValueNode(entry.value)
+        api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
+      })
+
+      info.key("version", entry => {
+        val value = ValueNode(entry.value)
+        api.set(WebApiModel.Version, value.string(), entry.annotations())
+      })
+
+      info.key(
+        "(license)",
+        entry => {
+          val license: License = LicenseParser(entry.value).parse()
+          api.set(WebApiModel.License, license, entry.annotations())
+        }
+      )
     })
 
-    entries.key("baseUri", entry => {
+    entries.key("host", entry => {
       val value = ValueNode(entry.value)
       api.set(WebApiModel.Host, value.string(), entry.annotations())
     })
 
     entries.key(
-      "description",
+      "x-baseUriParameters",
       entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.Description, value.string(), entry.annotations())
+        //TODO Params
       }
     )
 
     entries.key(
-      "mediaType",
+      "basePath",
       entry => {
         val value = ValueNode(entry.value)
-        api.set(WebApiModel.ContentType, value.string(), entry.annotations())
-        api.set(WebApiModel.Accepts, value.string(), entry.annotations())
+        api.set(WebApiModel.BasePath, value.string(), entry.annotations())
       }
     )
 
-    entries.key("version", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.Version, value.string(), entry.annotations())
+    entries.key("consumes", entry => {
+      val value = ArrayNode(entry.value)
+      api.set(WebApiModel.Accepts, value.strings(), entry.annotations())
+    })
+
+    entries.key("produces", entry => {
+      val value = ArrayNode(entry.value)
+      api.set(WebApiModel.ContentType, value.strings(), entry.annotations())
+    })
+
+    entries.key("schemes", entry => {
+      val value = ArrayNode(entry.value)
+      api.set(WebApiModel.Schemes, value.strings(), entry.annotations())
     })
 
     entries.key(
-      "(termsOfService)",
-      entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
-      }
-    )
-
-    entries.key(
-      "protocols",
-      entry => {
-        val value = ArrayNode(entry.value)
-        api.set(WebApiModel.Schemes, value.strings(), entry.annotations())
-      }
-    )
-
-    entries.key(
-      "(contact)",
+      "contact",
       entry => {
         val organization: Organization = OrganizationParser(entry.value).parse()
         api.set(WebApiModel.Provider, organization, entry.annotations())
@@ -80,41 +100,36 @@ case class OasSpecParser(root: Root) {
     )
 
     entries.key(
-      "(externalDocs)",
+      "externalDocs",
       entry => {
         val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
         api.set(WebApiModel.Documentation, creativeWork, entry.annotations())
       }
     )
 
-    entries.key(
-      "(license)",
-      entry => {
-        val license: License = LicenseParser(entry.value).parse()
-        api.set(WebApiModel.License, license, entry.annotations())
-      }
-    )
-
-    entries.regex(
-      "^/.*",
-      entries => {
-        val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(EndpointParser(_, None, endpoints).parse())
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints))
-      }
-    )
+    entries.key("paths", entry => {
+      val paths = new Entries(entry.ast)
+      paths.regex(
+        "^/.*",
+        entries => {
+          val endpoints = mutable.ListBuffer[EndPoint]()
+          entries.foreach(EndpointParser(_, endpoints).parse())
+          api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+        }
+      )
+    })
 
     api
   }
 }
 
-case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector: mutable.ListBuffer[EndPoint]) {
+case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoint]) {
   def parse(): Unit = {
 
     val endpoint = EndPoint(entry.ast)
     val entries  = new Entries(entry.value)
 
-    endpoint.set(Path, AmfScalar(parent.map(_.path).getOrElse("") + entry.key.content.unquote, Annotations(entry.key)))
+    endpoint.set(Path, ValueNode(entry.key).string())
 
     entries.key("displayName", entry => {
       val value = ValueNode(entry.value)
@@ -127,11 +142,12 @@ case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector:
     })
 
     entries.key(
-      "uriParameters",
+      //TODO parameters and 'body' payload logic :S
+      "parameters",
       entry => {
         val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
         endpoint.set(EndPointModel.Parameters,
-                     AmfArray(parameters, Annotations(entry.value) + UriParameters()),
+                     AmfArray(parameters, Annotations(entry.value)),
                      entry.annotations())
       }
     )
@@ -142,13 +158,6 @@ case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector:
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => { operations += OperationParser(entry).parse() })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
-      }
-    )
-
-    entries.regex(
-      "^/.*",
-      entries => {
-        entries.foreach(entry => { EndpointParser(_, Some(endpoint), collector).parse() })
       }
     )
   }
@@ -201,7 +210,7 @@ case class OperationParser(entry: EntryNode) {
 
     operation.set(Method, ValueNode(entry.key).string())
 
-    entries.key("displayName", entry => {
+    entries.key("operationId", entry => {
       val value = ValueNode(entry.value)
       operation.set(OperationModel.Name, value.string(), entry.annotations())
     })
@@ -211,18 +220,18 @@ case class OperationParser(entry: EntryNode) {
       operation.set(OperationModel.Description, value.string(), entry.annotations())
     })
 
-    entries.key("(deprecated)", entry => {
+    entries.key("deprecated", entry => {
       val value = ValueNode(entry.value)
       operation.set(OperationModel.Deprecated, value.boolean(), entry.annotations())
     })
 
-    entries.key("(summary)", entry => {
+    entries.key("summary", entry => {
       val value = ValueNode(entry.value)
       operation.set(OperationModel.Summary, value.string(), entry.annotations())
     })
 
     entries.key(
-      "(externalDocs)",
+      "externalDocs",
       entry => {
         val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
         operation.set(OperationModel.Documentation, creativeWork, entry.annotations())
@@ -230,7 +239,7 @@ case class OperationParser(entry: EntryNode) {
     )
 
     entries.key(
-      "protocols",
+      "schemes",
       entry => {
         val value = ArrayNode(entry.value)
         operation.set(OperationModel.Schemes, value.strings(), entry.annotations())

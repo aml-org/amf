@@ -3,7 +3,8 @@ package amf.maker
 import amf.compiler.Root
 import amf.domain.WebApi
 import amf.remote.{Oas, Raml}
-import amf.spec.{OasSpecParser, RamlSpecParser}
+import amf.spec.RamlSpecParser
+import amf.spec.oas.OasSpecParser
 
 /**
   * API Documentation maker.
