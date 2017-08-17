@@ -31,7 +31,9 @@ case class Range(start: Position, end: Position) {
 
 object Position {
 
-  object ZERO extends Position(0, 0)
+  object ZERO extends Position(0, 0) {
+    override def compareTo(o: Position): Int = 1
+  }
 
   def apply(lc: (Int, Int)): Position = Position(lc._1, lc._2)
 }

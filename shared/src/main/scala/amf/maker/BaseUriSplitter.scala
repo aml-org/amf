@@ -36,4 +36,7 @@ object BaseUriSplitter {
     new BaseUriSplitter(host, domain, path)
   }
 
+  def apply(protocol: String, domain: String, path: String): BaseUriSplitter =
+    new BaseUriSplitter(protocol, domain, path)
+
 }

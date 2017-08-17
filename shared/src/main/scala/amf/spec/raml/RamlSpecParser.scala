@@ -114,9 +114,11 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "baseUri",
       entry => {
+        //TODO lexical for 'baseUri' node is lost.
         val value = ValueNode(entry.value)
         val uri   = BaseUriSplitter(value.string().value.toString)
 
+        //TODO if baseUri has scheme, and 'protocols' property exists, scheme in baseUri will be lost.
         if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
           api.set(WebApiModel.Schemes,
                   AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()))
@@ -359,6 +361,8 @@ case class ParameterParser(entry: EntryNode) {
     parameter
       .set(ParameterModel.Required, !name.endsWith("?"))
       .set(ParameterModel.Name, ValueNode(entry.key).string())
+
+    //TODO what to do with '?' in name
 
     val entries = new Entries(entry.value)
 

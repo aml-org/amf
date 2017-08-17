@@ -15,6 +15,8 @@ class Annotations {
 
   def find[T <: Annotation](clazz: Class[T]): Option[T] = annotations.find(clazz.isInstance(_)).map(_.asInstanceOf[T])
 
+  def contains[T <: Annotation](clazz: Class[T]): Boolean = find(clazz).isDefined
+
   def +=(annotation: Annotation): this.type = {
     annotations += annotation
     this
