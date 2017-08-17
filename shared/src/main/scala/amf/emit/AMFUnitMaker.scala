@@ -10,6 +10,7 @@ import amf.graph.GraphEmitter
 import amf.metadata.domain.{EndPointModel, OperationModel, WebApiModel}
 import amf.parser.Range.NONE
 import amf.remote.{Amf, Oas, Raml, Vendor}
+import amf.spec.raml.RamlSpecEmitter
 import amf.spec.{FieldEmitter, Spec}
 
 import scala.collection.mutable.ListBuffer
@@ -27,9 +28,10 @@ class AMFUnitMaker {
   }
 
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): AMFAST = {
-    unit match {
-      case document: Document => makeWebApiWithSpec(document.encodes, vendor)
-    }
+    RamlSpecEmitter(unit).emitWebApi()
+//    unit match {
+//      case document: Document => makeWebApiWithSpec(document.encodes, vendor)
+//    }
   }
 
   private def makeWebApiWithSpec(api: WebApi, vendor: Vendor): AMFAST = {

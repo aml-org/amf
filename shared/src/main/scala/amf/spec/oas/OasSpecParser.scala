@@ -117,14 +117,13 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "paths",
       entry => {
-        //TODO lexical for 'paths' node is lost.
         val paths = new Entries(entry.value)
         paths.regex(
           "^/.*",
           entries => {
             val endpoints = mutable.ListBuffer[EndPoint]()
             entries.foreach(EndpointParser(_, endpoints).parse())
-            api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+            api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
           }
         )
       }

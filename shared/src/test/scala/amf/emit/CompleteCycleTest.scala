@@ -15,6 +15,10 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
 
   val basePath = "file://shared/src/test/resources/upanddown/"
 
+  test("Simplest raml to raml test") {
+    assertCycle("simplest.raml", "simplest.raml", RamlYamlHint, Raml)
+  }
+
   test("Basic amf to amf test") {
     assertCycle("basic.jsonld", "basic.jsonld", AmfJsonLdHint, Amf)
   }

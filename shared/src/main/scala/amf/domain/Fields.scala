@@ -68,9 +68,9 @@ class Fields extends PlatformSecrets {
   }
 
   /** Return optional entry for a given [[Field]]. */
-  def entry(f: Field): Option[(Field, Value)] = {
+  def entry(f: Field): Option[FieldEntry] = {
     fs.get(f) match {
-      case Some(value) => Some((f, value))
+      case Some(value) => Some(FieldEntry(f, value))
       case _           => None
     }
   }
@@ -84,6 +84,8 @@ class Fields extends PlatformSecrets {
     this
   }
 
+  def fields(): Iterable[FieldEntry] = fs.map(FieldEntry.tupled)
+
   def size: Int = fs.size
 
   def nonEmpty: Boolean = fs.nonEmpty
@@ -96,3 +98,5 @@ object Fields {
 case class Value(value: AmfElement, annotations: Annotations) {
   override def toString: String = value.toString
 }
+
+case class FieldEntry(field: Field, value: Value)

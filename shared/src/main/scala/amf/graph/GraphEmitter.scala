@@ -47,7 +47,7 @@ object GraphEmitter {
       val sources = SourceMap(id, element)
 
       obj.fields.map(element.fields.entry).foreach {
-        case Some((f, v)) =>
+        case Some(FieldEntry(f, v)) =>
           entry { () =>
             val url = f.value.iri()
             raw(url)

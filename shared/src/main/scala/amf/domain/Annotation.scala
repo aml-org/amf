@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.common.AMFAST
 import amf.model.AmfElement
 import amf.parser.Range
 
@@ -16,6 +17,12 @@ trait Annotation {
 }
 
 object Annotation {
+
+  case class SourceAST(ast: AMFAST) extends Annotation {
+    override val name: String = "source-ast"
+
+    override val value: String = null
+  }
 
   case class LexicalInformation(range: Range) extends Annotation {
     override val name: String = "lexical"
