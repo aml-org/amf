@@ -19,6 +19,10 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
     assertCycle("simplest.raml", "simplestModified.raml", RamlYamlHint, Raml)
   }
 
+  test("Simplest oas to oas test") {
+    assertCycle("simplest.json", "simplest.json", OasJsonHint, Oas)
+  }
+
   test("Basic amf to amf test") {
     assertCycle("basic.jsonld", "basic.jsonld", AmfJsonLdHint, Amf)
   }

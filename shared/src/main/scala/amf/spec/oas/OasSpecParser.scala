@@ -353,20 +353,6 @@ case class ResponseParser(entry: EntryNode) {
     )
 
     entries.key(
-      "body",
-      entry => {
-        new Entries(entry.value).regex(
-          ".*/.*",
-          entries => {
-            val payloads = mutable.ListBuffer[Payload]()
-            entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
-          }
-        )
-      }
-    )
-
-    entries.key(
       "x-response-payloads",
       entry => {
         new Entries(entry.value).regex(
