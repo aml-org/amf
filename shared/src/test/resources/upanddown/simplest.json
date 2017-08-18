@@ -30,5 +30,40 @@
     "url": "externalDocsUrl",
     "description": "externalDocsDescription"
   },
-  "basePath": "/path"
+  "basePath": "/path",
+  "paths": {
+    "/levelzero": {
+      "displayName": "Name",
+      "parameters": [
+        {
+          "name": "param1",
+          "description": "Some descr",
+          "in": "query",
+          "required": true
+        }
+      ],
+      "get": {
+        "operationId": "Some title",
+        "description": "Some description",
+        "deprecated": true,
+        "summary": "This is a summary",
+        "externalDocs": {
+          "url": "urlExternalDocs",
+          "description": "descriptionExternalDocs"
+        },
+        "parameters": [
+          {
+            "name": "param2",
+            "description": "Some descr2",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "schemes": [
+          "http",
+          "https"
+        ]
+      }
+    }
+  }
 }

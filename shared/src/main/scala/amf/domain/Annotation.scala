@@ -92,6 +92,15 @@ object Annotation {
     val key = "x-media-type"
   }
 
+  case class EndPointParameter() extends Annotation {
+
+    /** Extension name. */
+    override val name: String = "endpoint-parameter"
+
+    /** Value as string. */
+    override val value: String = null
+  }
+
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     annotation match {
       case "lexical"          => Some(lexical)

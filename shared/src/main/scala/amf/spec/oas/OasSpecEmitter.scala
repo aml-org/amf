@@ -3,15 +3,17 @@ package amf.spec.oas
 import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.{ExplicitField, LexicalInformation, SourceAST, SynthesizedField}
+import amf.domain.Annotation._
 import amf.domain._
 import amf.maker.BaseUriSplitter
+import amf.metadata.Field
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by pedro.colunga on 8/17/17.
@@ -210,10 +212,26 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(EndPointModel.Parameters).map(f => result += ParametersEmitter("parameters", f, ordering))
+          var paramForUp                     = ListBuffer[Parameter]()
+          var payloadOption: Option[Payload] = None
 
           //TODO add search for operations parameters that comes from endpoint parameters with binding query/header
-          //fs.entry(EndPointModel.Operations).map(fe => fe.value)
+
+          //TODO what if i had only one endpoint parameters and has been overrided by and operation parameter??
+
+          //TODO gute review this
+          fs.entry(EndPointModel.Operations)
+            .map(_.value.value.asInstanceOf[AmfArray].values)
+            .map(_.asInstanceOf[Seq[Operation]])
+            .getOrElse(Nil)
+            .foreach(o => {
+              paramForUp = filterParamsForUp(o.request.fields, paramForUp)
+              payloadOption = findPayload(o, payloadOption)
+            })
+          //TODO gute review this
+
+          buildParameters(fs, paramForUp).map(f =>
+            result += ParametersEmitter("parameters", f, ordering, payloadOption))
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
@@ -232,9 +250,56 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(endpoint.annotations)
+    //TODO gute review this
+
+    def plainParam(field: Field, reqFields: Fields): Seq[Parameter] = {
+      reqFields
+        .entry(field)
+        .map(_.value.value.asInstanceOf[AmfArray].values)
+        .map(_.asInstanceOf[Seq[Parameter]])
+        .getOrElse(Nil)
+    }
+    //TODO gute review this
+
+    def filterParamsForUp(reqFields: Fields, foundedParams: ListBuffer[Parameter]): ListBuffer[Parameter] = {
+
+      (plainParam(RequestModel.Headers, reqFields) ++ plainParam(RequestModel.QueryParameters, reqFields))
+        .filter(_.annotations.contains(classOf[EndPointParameter]))
+        .foreach(p => {
+          if (!foundedParams.map(_.name).contains(p.name))
+            foundedParams += p
+        })
+      foundedParams
+    }
+    //TODO gute review this
+
+    def findPayload(o: Operation, payloadOption: Option[Payload]): Option[Payload] = {
+      if (payloadOption.isDefined) payloadOption
+      else {
+        val payloadsOption: Option[Seq[Payload]] = o.request.fields
+          .entry(RequestModel.Payloads)
+          .map(_.value.value.asInstanceOf[AmfArray].values.map(_.asInstanceOf[Payload]))
+        payloadsOption.getOrElse(Nil).find(p => p.annotations.contains(classOf[EndPointBodyParameter]))
+      }
+    }
+    //TODO gute review this
+
+    def buildParameters(fs: Fields, paramsForUp: ListBuffer[Parameter]): Option[FieldEntry] = {
+      fs.entry(EndPointModel.Parameters)
+        .map(f => {
+          val newValue = f.value.copy(
+            value = AmfArray(f.value.value.asInstanceOf[AmfArray].values ++ paramsForUp)
+          )
+          f.copy(value = newValue)
+        })
+    }
   }
 
-  case class ParametersEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class ParametersEmitter(key: String,
+                               f: FieldEntry,
+                               ordering: Ordering[Emitter],
+                               payloadOption: Option[Payload] = None)
+      extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value.annotations,
@@ -242,18 +307,49 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw(key)
 
           array { () =>
-            traverse(parameters(f, ordering))
+            traverse(parameters(f, ordering, payloadOption))
           }
         }
       )
     }
 
-    private def parameters(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
+    private def parameters(f: FieldEntry,
+                           ordering: Ordering[Emitter],
+                           payloadOption: Option[Payload] = None): mutable.SortedSet[Emitter] = {
       val result = mutable.SortedSet()(ordering)
       f.value.value
         .asInstanceOf[AmfArray]
         .values
         .foreach(e => result += ParameterEmitter(e.asInstanceOf[Parameter], ordering))
+
+      //TODO gute review this
+
+      if (payloadOption.isDefined) {
+        result += new Emitter {
+          override def position(): Position = Position.ZERO
+
+          override def emit(): Unit = {
+            map { () =>
+              entry { () =>
+                raw("in")
+                raw("body")
+              }
+
+              if (payloadOption.get.schema != null)
+                entry { () =>
+                  raw("type")
+                  raw(payloadOption.get.schema)
+                }
+
+              if (payloadOption.get.mediaType != null)
+                entry(() => {
+                  raw("x-media-type")
+                  raw(payloadOption.get.mediaType)
+                })
+            }
+          }
+        }
+      }
       result
     }
 
@@ -275,7 +371,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+          fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f, BooleanToken))
 
           fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
 
@@ -285,16 +381,16 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           val reqFs = operation.request.fields
 
+          //TODO gute review this
+          val maybeParameter = reqFs
+            .entry(RequestModel.Payloads)
+            .find(_.value.value.annotations.contains(classOf[OperationBodyParameter]))
+            .map(_.value.value.asInstanceOf[Payload])
           //TODO filter endpoints parameters
-          reqFs
-            .entry(RequestModel.QueryParameters)
-            .map(f => result += ParametersEmitter("parameters", f, ordering))
 
-          //TODO missing headers emitter in operation parameters
+          unifyParameters(reqFs).map(f => result += ParametersEmitter("parameters", f, ordering, maybeParameter))
 
-//          reqFs.entry(RequestModel.Headers).map(f => result += EndpointsEmitter("headers", f, ordering))
-
-          //TODO x-request-payloads
+          reqFs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("x-request-payloads", f, ordering))
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 
@@ -306,6 +402,17 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(operation.annotations)
+
+    //TODO gute review this
+    def unifyParameters(reqFs: Fields): Iterable[FieldEntry] = {
+      (reqFs
+        .entry(RequestModel.QueryParameters)
+        .filter(!_.value.annotations.contains(classOf[EndPointParameter]))
+        ++
+          reqFs
+            .entry(RequestModel.Headers)
+            .filter(!_.value.annotations.contains(classOf[EndPointParameter])))
+    }
   }
 
   case class ResponsesEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
@@ -376,11 +483,40 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     private def payloads(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
-      val result = mutable.SortedSet()(ordering)
-      f.value.value
+      //TODO gute review this
+
+      //TODO where goes this aux method?
+      def defaultPayload(payloads: Seq[Payload]): Option[Payload] = {
+        //TODO only for raml?
+        //            val payloads: Seq[Payload] = payloadsArray.values.map(_.asInstanceOf[Payload])
+        if (payloads.isEmpty) None
+        else {
+          val emptyMTOption = payloads.find(p => p.schema == null || p.schema.isEmpty)
+          if (emptyMTOption.isDefined) emptyMTOption
+          else {
+            val jsonSchemaOption = payloads.find(p => p.mediaType == "application/json")
+            if (jsonSchemaOption.isDefined) jsonSchemaOption
+            else
+              Some(payloads.head)
+          }
+        }
+      }
+
+      val values: Seq[Payload] = f.value.value
         .asInstanceOf[AmfArray]
         .values
-        .foreach(e => result += PayloadEmitter(e.asInstanceOf[Payload], ordering))
+        .map(_.asInstanceOf[Payload])
+
+      val defPayload = defaultPayload(values)
+      val result     = mutable.SortedSet()(ordering)
+
+      values
+        .filter(
+          v =>
+            !v.annotations.contains(classOf[OperationBodyParameter]) || !v.annotations.contains(
+              classOf[EndPointBodyParameter]))
+        .filter(v => v != defPayload.orNull)
+        .foreach(e => result += PayloadEmitter(e, ordering))
       result
     }
 
@@ -444,7 +580,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
           fs.entry(ParameterModel.Required)
-            .map(f => result += ValueEmitter("required", f))
+            .map(f => result += ValueEmitter("required", f, BooleanToken))
 
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
@@ -594,11 +730,11 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(v.annotations)
   }
 
-  case class ValueEmitter(key: String, f: FieldEntry) extends Emitter {
+  case class ValueEmitter(key: String, f: FieldEntry, token: AMFToken = StringToken) extends Emitter {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        raw(f.value.value.asInstanceOf[AmfScalar].value.toString)
+        raw(f.value.value.asInstanceOf[AmfScalar].value.toString, token)
       })
     }
 
@@ -613,10 +749,12 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   private def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
     //TODO first lvl gets sources and changes in the children doesn't matter.
-    annotations
-      .find(classOf[SourceAST])
-      .fold(inner)(a => emitter.addChild(a.ast))
+    //TODO gute review this(for final remove)
 
+    //    annotations
+//      .find(classOf[SourceAST])
+//      .fold(inner)(a => emitter.addChild(a.ast))
+    inner
   }
 
   object Default extends Ordering[Emitter] {
