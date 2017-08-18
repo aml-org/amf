@@ -152,7 +152,9 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
       endpoint.set(EndPointModel.Description, value.string(), entry.annotations())
     })
 
-    var body: Option[Payload] = None
+    var body: Option[Payload]           = None
+    var queryParameters: Seq[Parameter] = Nil
+    var headers: Seq[Parameter]         = Nil
 
     entries.key(
       "parameters",
@@ -161,11 +163,10 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
         all match {
           case OasParameters(query, path, header, payload) =>
             body = payload.map(_.add(EndPointBodyParameter()))
-            val parameters = query ++ path ++ header
-            if (parameters.nonEmpty) {
-              endpoint.set(EndPointModel.Parameters,
-                           AmfArray(parameters, Annotations(entry.value)),
-                           entry.annotations())
+            queryParameters = query
+            headers = header
+            if (path.nonEmpty) {
+              endpoint.set(EndPointModel.Parameters, AmfArray(path, Annotations(entry.value)), entry.annotations())
             }
         }
       }
@@ -178,7 +179,7 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += OperationParser(entry, body).parse()
+          operations += OperationParser(entry, queryParameters, headers, body).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -186,8 +187,10 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
   }
 }
 
-case class RequestParser(entries: Entries, global: Option[Payload]) {
-
+case class RequestParser(entries: Entries,
+                         globalQuery: Seq[Parameter],
+                         globalHeaders: Seq[Parameter],
+                         global: Option[Payload]) {
   def parse(): Option[Request] = {
     val request = Request()
 
@@ -198,18 +201,27 @@ case class RequestParser(entries: Entries, global: Option[Payload]) {
       entry => {
         val all: OasParameters = ParametersParser(entry.value).parse()
         all match {
-          case OasParameters(query, path, header, payload) =>
-            val queryParameters = query ++ path
+          //TODO ignoring path parameters at operation level.
+          case OasParameters(query, _, header, payload) =>
+            val queryParameters = mergeParameters(globalQuery, query)
             if (queryParameters.nonEmpty)
               request.set(RequestModel.QueryParameters,
                           AmfArray(queryParameters, Annotations(entry.value)),
                           entry.annotations())
-            if (header.nonEmpty)
-              request.set(RequestModel.Headers, AmfArray(header, Annotations(entry.value)), entry.annotations())
+            val headers = mergeParameters(globalHeaders, header)
+            if (headers.nonEmpty)
+              request.set(RequestModel.Headers, AmfArray(headers, Annotations(entry.value)), entry.annotations())
             body = payload.map(_.add(OperationBodyParameter())).orElse(global)
         }
       }
     )
+
+    def mergeParameters(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
+      val globalMap = global.map(p => p.name -> p.add(Annotation.EndPointParameter())).toMap
+      val innerMap  = inner.map(p => p.name  -> p).toMap
+
+      (globalMap ++ innerMap).values.toSeq
+    }
 
     val payloads = mutable.ListBuffer[Payload]()
     body.foreach(payloads += _)
@@ -232,7 +244,10 @@ case class RequestParser(entries: Entries, global: Option[Payload]) {
   }
 }
 
-case class OperationParser(entry: EntryNode, body: Option[Payload]) {
+case class OperationParser(entry: EntryNode,
+                           queryParameters: Seq[Parameter],
+                           headers: Seq[Parameter],
+                           body: Option[Payload]) {
   def parse(): Operation = {
 
     val operation = Operation(entry.ast)
@@ -276,7 +291,7 @@ case class OperationParser(entry: EntryNode, body: Option[Payload]) {
       }
     )
 
-    RequestParser(entries, body).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, queryParameters, headers, body).parse().map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",
