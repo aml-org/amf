@@ -160,7 +160,7 @@ case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector:
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
-        endpoint.set(EndPointModel.Parameters,
+        endpoint.set(EndPointModel.UriParameters,
                      AmfArray(parameters, Annotations(entry.value) += UriParameters()),
                      entry.annotations())
       }

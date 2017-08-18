@@ -19,7 +19,7 @@ class EndPointBuilder extends Builder {
 
   def withOperations(operations: Seq[Operation]): EndPointBuilder = set(Operations, operations)
 
-  def withParameters(parameters: Seq[Parameter]): EndPointBuilder = set(Parameters, parameters)
+  def withParameters(parameters: Seq[Parameter]): EndPointBuilder = set(UriParameters, parameters)
 
   override def resolveId(container: String): this.type = {
     val path: String = fields(Path)

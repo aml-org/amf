@@ -5,7 +5,7 @@ import amf.metadata.domain.EndPointModel.{
   Operations,
   Description => EndPointDescription,
   Name => EndPointName,
-  Parameters => EndPointParameters
+  UriParameters => EndPointParameters
 }
 import amf.metadata.domain.LicenseModel.{Name => LicenseName, Url => LicenseUrl}
 import amf.metadata.domain.OperationModel.{

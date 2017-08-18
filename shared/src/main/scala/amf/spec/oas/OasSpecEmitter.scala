@@ -5,7 +5,6 @@ import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfObject, AmfScalar}
@@ -59,16 +58,11 @@ case class OasSpecEmitter(unit: BaseUnit) {
   }
 
   private def raw(content: String, token: AMFToken = StringToken): Unit = {
-//    emitter.value(token, if (token == StringToken) { content.quote } else content)
     emitter.value(token, content)
   }
 
   case class WebApiEmitter(api: WebApi, ordering: Ordering[Emitter]) {
-
     val emitters: mutable.SortedSet[Emitter] = {
-      //      api.endPoints.find(_.path.contains("/levelzero/level-one")).get.operations.head.request.queryParameters.find(_.name.contains("param1")).get.withDescription("Some descr changed")
-      //      api.endPoints.find(_.path.contains("/levelzero/level-one")).get.operations.head.responses.find(_.statusCode=="200").get.headers.head.withSchema("invented")
-
       val fs     = api.fields
       val result = mutable.SortedSet()(ordering)
 
@@ -99,44 +93,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
       result
     }
 
-    private def endpoints(f: FieldEntry, ordering: Ordering[Emitter]): Seq[Emitter] = {
-      f.value.value
-        .asInstanceOf[AmfArray]
-        .values
-        .map(e => EndPointEmitter(e.asInstanceOf[EndPoint], ordering))
-    }
-
-    private case class BaseUriEmitter(fs: Fields) extends Emitter {
-      override def emit(): Unit = {
-        val protocol: String = fs
-          .entry(WebApiModel.Schemes)
-          .find(_.value.annotations.contains(classOf[SynthesizedField]))
-          .flatMap(_.value.value.asInstanceOf[AmfArray].values.headOption)
-          .map(_.asInstanceOf[AmfScalar].value.toString)
-          .getOrElse("")
-
-        val domain: String = fs
-          .entry(WebApiModel.Host)
-          .map(_.value.value.asInstanceOf[AmfScalar].value)
-          .map(_.toString)
-          .getOrElse("")
-
-        val basePath: String = fs
-          .entry(WebApiModel.BasePath)
-          .map(_.value.value.asInstanceOf[AmfScalar].value)
-          .map(_.toString)
-          .getOrElse("")
-
-        entry { () =>
-          raw("baseUri")
-          raw(BaseUriSplitter(protocol, domain, basePath).url())
-        }
-      }
-
-      //TODO position not available for baseUri node
-      override def position(): Position = Position.ZERO
-    }
-
     private case class InfoEmitter(fs: Fields, ordering: Ordering[Emitter]) extends Emitter {
       override def emit(): Unit = {
         entry { () =>
@@ -160,10 +116,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
         }
       }
 
-      //TODO we lost info node position in
+      //TODO we lost info node position
       override def position(): Position = Position.ZERO
     }
-
   }
 
   trait Emitter {
@@ -285,7 +240,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     //TODO gute review this
 
     def buildParameters(fs: Fields, paramsForUp: ListBuffer[Parameter]): Option[FieldEntry] = {
-      fs.entry(EndPointModel.Parameters)
+      fs.entry(EndPointModel.UriParameters)
         .map(f => {
           val newValue = f.value.copy(
             value = AmfArray(f.value.value.asInstanceOf[AmfArray].values ++ paramsForUp)

@@ -152,22 +152,17 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
       endpoint.set(EndPointModel.Description, value.string(), entry.annotations())
     })
 
-    var body: Option[Payload]           = None
-    var queryParameters: Seq[Parameter] = Nil
-    var headers: Seq[Parameter]         = Nil
+    var parameters = OasParameters()
 
     entries.key(
       "parameters",
       entry => {
-        val all: OasParameters = ParametersParser(entry.value).parse()
-        all match {
-          case OasParameters(query, path, header, payload) =>
-            body = payload.map(_.add(EndPointBodyParameter()))
-            queryParameters = query
-            headers = header
-            if (path.nonEmpty) {
-              endpoint.set(EndPointModel.Parameters, AmfArray(path, Annotations(entry.value)), entry.annotations())
-            }
+        parameters = ParametersParser(entry.value).parse()
+        parameters.body.foreach(_.add(EndPointBodyParameter()))
+        parameters match {
+          case OasParameters(_, path, _, _) if path.nonEmpty =>
+            endpoint.set(EndPointModel.UriParameters, AmfArray(path, Annotations(entry.value)), entry.annotations())
+          case _ =>
         }
       }
     )
@@ -179,7 +174,7 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += OperationParser(entry, queryParameters, headers, body).parse()
+          operations += OperationParser(entry, parameters).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -187,44 +182,28 @@ case class EndpointParser(entry: EntryNode, collector: mutable.ListBuffer[EndPoi
   }
 }
 
-case class RequestParser(entries: Entries,
-                         globalQuery: Seq[Parameter],
-                         globalHeaders: Seq[Parameter],
-                         global: Option[Payload]) {
+case class RequestParser(entries: Entries, global: OasParameters) {
   def parse(): Option[Request] = {
     val request = Request()
 
-    var body = global
+    var parameters = global
 
     entries.key(
       "parameters",
       entry => {
-        val all: OasParameters = ParametersParser(entry.value).parse()
-        all match {
-          //TODO ignoring path parameters at operation level.
-          case OasParameters(query, _, header, payload) =>
-            val queryParameters = mergeParameters(globalQuery, query)
-            if (queryParameters.nonEmpty)
-              request.set(RequestModel.QueryParameters,
-                          AmfArray(queryParameters, Annotations(entry.value)),
-                          entry.annotations())
-            val headers = mergeParameters(globalHeaders, header)
-            if (headers.nonEmpty)
-              request.set(RequestModel.Headers, AmfArray(headers, Annotations(entry.value)), entry.annotations())
-            body = payload.map(_.add(OperationBodyParameter())).orElse(global)
+        parameters = parameters.merge(ParametersParser(entry.value).parse())
+        parameters match {
+          case OasParameters(query, _, header, _) =>
+            if (query.nonEmpty)
+              request.set(RequestModel.QueryParameters, AmfArray(query, Annotations(entry.value)), entry.annotations())
+            if (header.nonEmpty)
+              request.set(RequestModel.Headers, AmfArray(header, Annotations(entry.value)), entry.annotations())
         }
       }
     )
 
-    def mergeParameters(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
-      val globalMap = global.map(p => p.name -> p.add(Annotation.EndPointParameter())).toMap
-      val innerMap  = inner.map(p => p.name  -> p).toMap
-
-      (globalMap ++ innerMap).values.toSeq
-    }
-
     val payloads = mutable.ListBuffer[Payload]()
-    body.foreach(payloads += _)
+    parameters.body.foreach(payloads += _)
 
     entries.key(
       "x-request-payloads",
@@ -238,16 +217,13 @@ case class RequestParser(entries: Entries,
       }
     )
 
-    if (payloads.nonEmpty) request.set(RequestModel.Payloads, AmfArray(payloads)) //TODO annotations
+    if (payloads.nonEmpty) request.set(RequestModel.Payloads, AmfArray(payloads)) //TODO annotations?
 
-    if (request.fields.nonEmpty) { Some(request) } else { None }
+    if (request.fields.nonEmpty) Some(request) else None
   }
 }
 
-case class OperationParser(entry: EntryNode,
-                           queryParameters: Seq[Parameter],
-                           headers: Seq[Parameter],
-                           body: Option[Payload]) {
+case class OperationParser(entry: EntryNode, global: OasParameters) {
   def parse(): Operation = {
 
     val operation = Operation(entry.ast)
@@ -291,7 +267,7 @@ case class OperationParser(entry: EntryNode,
       }
     )
 
-    RequestParser(entries, queryParameters, headers, body).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, global).parse().map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",
@@ -432,7 +408,27 @@ case class ParameterParser(ast: AMFAST) {
   }
 }
 
-case class OasParameters(query: Seq[Parameter], path: Seq[Parameter], header: Seq[Parameter], body: Option[Payload]) {}
+case class OasParameters(query: Seq[Parameter] = Nil,
+                         path: Seq[Parameter] = Nil,
+                         header: Seq[Parameter] = Nil,
+                         body: Option[Payload] = None) {
+  def merge(inner: OasParameters): OasParameters = {
+    OasParameters(merge(query, inner.query),
+                  merge(path, inner.path),
+                  merge(header, inner.header),
+                  merge(body, inner.body))
+  }
+
+  private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
+    inner.map(_.add(OperationBodyParameter())).orElse(global)
+
+  private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
+    val globalMap = global.map(p => p.name -> p.add(Annotation.EndPointParameter())).toMap
+    val innerMap  = inner.map(p => p.name  -> p).toMap
+
+    (globalMap ++ innerMap).values.toSeq
+  }
+}
 
 case class OasParameter(ast: AMFAST) {
   val parameter = Parameter(ast)

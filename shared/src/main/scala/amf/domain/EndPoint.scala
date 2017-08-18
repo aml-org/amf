@@ -13,7 +13,7 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
   def description: String        = fields(Description)
   def path: String               = fields(Path)
   def operations: Seq[Operation] = fields(Operations)
-  def parameters: Seq[Parameter] = fields(Parameters)
+  def parameters: Seq[Parameter] = fields(UriParameters)
 
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).map(_.parent)
 
@@ -23,7 +23,7 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
   def withDescription(description: String): this.type       = set(Description, description)
   def withPath(path: String): this.type                     = set(Path, path)
   def withOperations(operations: Seq[Operation]): this.type = setArray(Operations, operations)
-  def withParameters(parameters: Seq[Parameter]): this.type = setArray(Parameters, parameters)
+  def withParameters(parameters: Seq[Parameter]): this.type = setArray(UriParameters, parameters)
 }
 
 object EndPoint {

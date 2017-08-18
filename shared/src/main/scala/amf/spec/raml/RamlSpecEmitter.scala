@@ -182,7 +182,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(EndPointModel.Parameters).map(f => result += ParametersEmitter("uriParameters", f, ordering))
+          fs.entry(EndPointModel.UriParameters).map(f => result += ParametersEmitter("uriParameters", f, ordering))
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
