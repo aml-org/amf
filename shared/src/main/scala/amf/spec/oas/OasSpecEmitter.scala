@@ -5,14 +5,12 @@ import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.metadata.Field
 import amf.metadata.domain._
-import amf.model.{AmfArray, AmfObject, AmfScalar}
+import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 /**
   * Created by pedro.colunga on 8/17/17.
@@ -167,26 +165,11 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
-          var paramForUp                     = ListBuffer[Parameter]()
-          var payloadOption: Option[Payload] = None
+          val parameters = endPointParameters(fs)
 
-          //TODO add search for operations parameters that comes from endpoint parameters with binding query/header
-
-          //TODO what if i had only one endpoint parameters and has been overrided by and operation parameter??
-
-          //TODO gute review this
-          fs.entry(EndPointModel.Operations)
-            .map(_.value.value.asInstanceOf[AmfArray].values)
-            .map(_.asInstanceOf[Seq[Operation]])
-            .getOrElse(Nil)
-            .foreach(o => {
-              paramForUp = filterParamsForUp(o.request.fields, paramForUp)
-              payloadOption = findPayload(o, payloadOption)
-            })
-          //TODO gute review this
-
-          buildParameters(fs, paramForUp).map(f =>
-            result += ParametersEmitter("parameters", f, ordering, payloadOption))
+          if (parameters.nonEmpty) {
+            //TODO emit.
+          }
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
@@ -197,57 +180,35 @@ case class OasSpecEmitter(unit: BaseUnit) {
       )
     }
 
-    private def operations(f: FieldEntry, ordering: Ordering[Emitter]): Seq[Emitter] = {
+    private def endPointParameters(fs: Fields): EndPointParameters = {
+      val ops = fs
+        .entry(EndPointModel.Operations)
+        .map(operations)
+        .getOrElse(Nil)
+
+      var endPointParameters =
+        ops.foldLeft(EndPointParameters())((parameters, op) =>
+          parameters.merge(EndPointParameters(op.asInstanceOf[Operation].request)))
+
+      fs.entry(EndPointModel.UriParameters)
+        .foreach(f => {
+          val pathParameters = f.value.value.asInstanceOf[AmfArray].values.asInstanceOf[Seq[Parameter]]
+          endPointParameters = endPointParameters.merge(EndPointParameters(path = pathParameters))
+        })
+      endPointParameters
+    }
+
+    private def operations(f: FieldEntry, ordering: Ordering[Emitter]): Seq[Emitter] =
+      operations(f)
+        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
+
+    private def operations(f: FieldEntry): Seq[AmfElement] = {
       f.value.value
         .asInstanceOf[AmfArray]
         .values
-        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
     }
 
     override def position(): Position = pos(endpoint.annotations)
-    //TODO gute review this
-
-    def plainParam(field: Field, reqFields: Fields): Seq[Parameter] = {
-      reqFields
-        .entry(field)
-        .map(_.value.value.asInstanceOf[AmfArray].values)
-        .map(_.asInstanceOf[Seq[Parameter]])
-        .getOrElse(Nil)
-    }
-    //TODO gute review this
-
-    def filterParamsForUp(reqFields: Fields, foundedParams: ListBuffer[Parameter]): ListBuffer[Parameter] = {
-
-      (plainParam(RequestModel.Headers, reqFields) ++ plainParam(RequestModel.QueryParameters, reqFields))
-        .filter(_.annotations.contains(classOf[EndPointParameter]))
-        .foreach(p => {
-          if (!foundedParams.map(_.name).contains(p.name))
-            foundedParams += p
-        })
-      foundedParams
-    }
-    //TODO gute review this
-
-    def findPayload(o: Operation, payloadOption: Option[Payload]): Option[Payload] = {
-      if (payloadOption.isDefined) payloadOption
-      else {
-        val payloadsOption: Option[Seq[Payload]] = o.request.fields
-          .entry(RequestModel.Payloads)
-          .map(_.value.value.asInstanceOf[AmfArray].values.map(_.asInstanceOf[Payload]))
-        payloadsOption.getOrElse(Nil).find(p => p.annotations.contains(classOf[EndPointBodyParameter]))
-      }
-    }
-    //TODO gute review this
-
-    def buildParameters(fs: Fields, paramsForUp: ListBuffer[Parameter]): Option[FieldEntry] = {
-      fs.entry(EndPointModel.UriParameters)
-        .map(f => {
-          val newValue = f.value.copy(
-            value = AmfArray(f.value.value.asInstanceOf[AmfArray].values ++ paramsForUp)
-          )
-          f.copy(value = newValue)
-        })
-    }
   }
 
   case class ParametersEmitter(key: String,
@@ -704,7 +665,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   private def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
     //TODO first lvl gets sources and changes in the children doesn't matter.
-    //TODO gute review this(for final remove)
 
     //    annotations
 //      .find(classOf[SourceAST])
@@ -720,4 +680,38 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def compare(x: Emitter, y: Emitter): Int = x.position().compareTo(y.position())
   }
 
+  case class EndPointParameters(query: Seq[Parameter] = Nil,
+                                path: Seq[Parameter] = Nil,
+                                header: Seq[Parameter] = Nil,
+                                body: Option[Payload] = None) {
+
+    def merge(parameters: EndPointParameters): EndPointParameters = {
+      EndPointParameters(merge(query, parameters.query),
+                         merge(path, parameters.path),
+                         merge(header, parameters.header),
+                         merge(body, parameters.body))
+    }
+
+    private def merge(left: Seq[Parameter], right: Seq[Parameter]): Seq[Parameter] =
+      (endPointOnly(left) ++ endPointOnly(right)).values.toSeq
+
+    private def merge(left: Option[Payload], right: Option[Payload]): Option[Payload] = left.fold(right)(Some(_))
+
+    private def endPointOnly(left: Seq[Parameter]) = {
+      left.filter(_.annotations.contains(classOf[EndPointParameter])).map(p => p.name -> p).toMap
+    }
+
+    def parameters(): Seq[Parameter] = query ++ path ++ header
+
+    def nonEmpty: Boolean = query.nonEmpty || path.nonEmpty || header.nonEmpty || body.isDefined
+  }
+
+  object EndPointParameters {
+    def apply(request: Request): EndPointParameters = {
+      EndPointParameters(request.queryParameters,
+                         Nil,
+                         request.headers,
+                         request.payloads.find(_.annotations.contains(classOf[EndPointBodyParameter])))
+    }
+  }
 }

@@ -499,9 +499,10 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
   private def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
     //TODO first lvl gets sources and changes in the children doesn't matter.
-    annotations
-      .find(classOf[SourceAST])
-      .fold(inner)(a => emitter.addChild(a.ast))
+//    annotations
+//      .find(classOf[SourceAST])
+//      .fold(inner)(a => emitter.addChild(a.ast))
+    inner
   }
 
   object Default extends Ordering[Emitter] {
