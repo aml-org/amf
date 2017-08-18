@@ -81,8 +81,8 @@ object YeastToYToken {
 
 }
 
-case class YeastData(t: YamlToken, start: Int, line: Int, col: Int, text: String) {
-  override def toString: String = "%-15s %5d,%3d,%3d '%s'".format(t, start, line, col, text.encode)
+case class YeastData(token: YamlToken, start: Int, line: Int, col: Int, text: String) {
+  override def toString: String = "%-15s %5d,%3d,%3d '%s'".format(token, start, line, col, text.encode)
 }
 
 object YeastData {

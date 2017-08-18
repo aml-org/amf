@@ -5,7 +5,7 @@ import org.mulesoft.lexer.Token
 import scala.collection.mutable
 
 /**
-  * YamlToken
+  * YamlTokenType
   */
 sealed class YamlToken(name: String, val abbreviation: String) extends Token(name) {
   def this(name: String) = this(name, name.substring(0, 1))
