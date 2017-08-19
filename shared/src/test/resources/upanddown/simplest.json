@@ -51,6 +51,10 @@
           "url": "urlExternalDocs",
           "description": "descriptionExternalDocs"
         },
+        "schemes": [
+          "http",
+          "https"
+        ],
         "parameters": [
           {
             "name": "param2",
@@ -58,10 +62,6 @@
             "in": "query",
             "required": true
           }
-        ],
-        "schemes": [
-          "http",
-          "https"
         ]
       }
     }

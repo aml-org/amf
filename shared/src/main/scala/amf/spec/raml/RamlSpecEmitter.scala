@@ -228,18 +228,20 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-          val reqFs = operation.request.fields
+          if (operation.request != null) {
+            val reqFs = operation.request.fields
 
-          reqFs
-            .entry(RequestModel.QueryParameters)
-            .map(f => result += ParametersEmitter("queryParameters", f, ordering))
+            reqFs
+              .entry(RequestModel.QueryParameters)
+              .map(f => result += ParametersEmitter("queryParameters", f, ordering))
 
-          reqFs.entry(RequestModel.Headers).map(f => result += ParametersEmitter("headers", f, ordering))
+            reqFs.entry(RequestModel.Headers).map(f => result += ParametersEmitter("headers", f, ordering))
 
-          reqFs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
+            reqFs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
+
+          }
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
-
           map { () =>
             traverse(result)
           }

@@ -22,20 +22,20 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  "info": {
         |    "title": "test",
         |    "description": "test description",
-        |    "version": "1.1",
-        |    "termsOfService": "termsOfService"
+        |    "termsOfService": "termsOfService",
+        |    "version": "1.1"
         |  },
-        |  "host": "http://localhost.com/api",
+        |  "host": "localhost.com",
+        |  "basePath": "api",
+        |    "consumes": [
+        |    "application/json"
+        |  ],
+        |    "produces": [
+        |    "application/json"
+        |  ],
         |  "schemes": [
         |    "http",
         |    "https"
-        |  ],
-        |  "basePath": "http://localhost.com/api",
-        |  "consumes": [
-        |    "application/json"
-        |  ],
-        |  "produces": [
-        |    "application/json"
         |  ]
         |}""".stripMargin
 

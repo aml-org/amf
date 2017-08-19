@@ -34,8 +34,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
        ))
     )
     assertNode(root.children.head, ("schemes", List("http", "http")))
-    assertNode(root.children.head, ("basePath", "http://localhost.com/api"))
-    assertNode(root.children.head, ("host", "http://localhost.com/api"))
+    assertNode(root.children.head, ("basePath", "api"))
+    assertNode(root.children.head, ("host", "localhost.com"))
     assertNode(root.children.head, ("consumes", List("application/json")))
     assertNode(root.children.head, ("produces", List("application/json")))
     assertNode(root.children.head,
@@ -60,7 +60,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
     assertNode(root.last, ("(license)", List(("url", "licenseUrl"), ("name", "licenseName"))))
 
     assertNode(root.last, ("protocols", List("http", "http")))
-    assertNode(root.last, ("baseUri", "http://localhost.com/api"))
+    assertNode(root.last, ("baseUri", "localhost.com/api"))
 
     assertNode(root.last, ("mediaType", List("application/json")))
 
