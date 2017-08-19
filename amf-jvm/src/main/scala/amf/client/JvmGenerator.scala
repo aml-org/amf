@@ -5,7 +5,9 @@ import java.util.concurrent.CompletableFuture
 import amf.model.BaseUnit
 import amf.remote.Vendor
 
-import scala.compat.java8.FutureConverters
+import amf.client.FutureConverter.converters
+
+import scala.language.implicitConversions
 
 /**
   *
@@ -33,10 +35,10 @@ class JvmGenerator extends BaseGenerator with Generator[BaseUnit] {
     * (like the browser) or if a remote URL is provided.
     */
   def generateToFileAsync(unit: BaseUnit, url: String, syntax: Vendor): CompletableFuture[String] =
-    FutureConverters.toJava(super.generateFile(unit.unit, url, syntax)).toCompletableFuture
+    super.generateFile(unit.unit, url, syntax).asJava
 
   /** Generates the syntax text and returns it  asynchronously. */
   def generateToStringAsync(unit: BaseUnit, syntax: Vendor): CompletableFuture[String] =
-    FutureConverters.toJava(super.generateString(unit.unit, syntax)).toCompletableFuture
+    super.generateString(unit.unit, syntax).asJava
 
 }

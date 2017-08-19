@@ -31,6 +31,9 @@ public class TestMainClass {
             final String waFromStreamDumped = dumpApiToStream(waFromStream);
             System.out.println("Web api from stream dumpped: "+waFromStreamDumped);
 
+            dumpApiToFile(waFromStream);
+            System.out.println("Web api from stream to file dumpped ");
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -70,6 +73,13 @@ public class TestMainClass {
     private static String dumpApiToStream(@NotNull WebApi webApi) throws ExecutionException, InterruptedException {
         Document build = new DocumentBuilder().withEncodes(webApi).build();
         CompletableFuture<String> stringFuture = new JvmGenerator().generateToStringAsync(build, VendorHelper.raml());
+        return stringFuture.get();
+    }
+
+    private static String dumpApiToFile(@NotNull WebApi webApi) throws ExecutionException, InterruptedException {
+        Document build = new DocumentBuilder().withEncodes(webApi).build();
+        CompletableFuture<String> stringFuture = new JvmGenerator().
+                generateToFileAsync(build, "file:///Users/hernan.najles/mulesoft/amf/usage/jvmClient/src/main/resources/output/output.json",VendorHelper.raml());
         return stringFuture.get();
     }
 
