@@ -27,6 +27,25 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
       })
   }
 
+  test("test to file dump") {
+    val futureResult = FutureConverters.toScala(
+      new JvmGenerator()
+        .generateToFileAsync(unitBare, "file://shared/src/test/resources/clients/output/test.json", Oas))
+
+    futureResult.flatMap(r => {
+      val expected = platform
+        .resolve("file://shared/src/test/resources/clients/bare.json", None)
+
+      val actual = platform
+        .resolve("file://shared/src/test/resources/clients/output/test.json", None)
+      expected
+        .zip(actual)
+        .map(t => {
+          t._1.stream.toString should be(t._2.stream.toString)
+        })
+    })
+  }
+
   test("test to stream dump complete") {
     val futureResult = FutureConverters.toScala(new JvmGenerator().generateToStringAsync(unitAdvanced, Oas))
 
