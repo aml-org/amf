@@ -170,7 +170,7 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
 
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(new AMFDumper(_, target).dump)
+      .flatMap(new AMFDumper(_, target).dumpToStream)
 
     actual
       .zip(expected)

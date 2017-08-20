@@ -47,7 +47,7 @@ abstract class BaseGenerator extends PlatformSecrets {
   }
 
   protected def generateString(unit: BaseUnit, syntax: Vendor): Future[String] =
-    AMFDumper(unit, syntax).dump
+    AMFDumper(unit, syntax).dumpToStream
 
   private def dumpCallback(handler: Handler[String], url: String)(t: Try[String]) = t match {
     case Success(value)     => handler.success(value)
@@ -55,12 +55,12 @@ abstract class BaseGenerator extends PlatformSecrets {
   }
 }
 
-trait StringHandler extends Handler[String] {
+trait StringHandler {
   def success(generation: String)
   def error(exception: Throwable)
 }
 
-trait FileHandler extends Handler[Unit] {
+trait FileHandler {
   def error(exception: Throwable)
   def success()
 }

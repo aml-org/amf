@@ -5,7 +5,7 @@ import amf.remote.Vendor
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 /**
   *

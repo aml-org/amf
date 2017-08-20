@@ -12,18 +12,18 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor) {
 
   val ast = AMFUnitMaker(unit, vendor)
 
-  def dump: Future[String] = Future {
+  def dumpToStream: Future[String] = Future {
+    dump()
+  }
+
+  private def dump(): String = {
     vendor match {
       case Raml      => new YamlGenerator().generate(ast).toString
       case Oas | Amf => new JsonGenerator().generate(ast).toString
     }
   }
 
-  def dumpToFile(remote: Platform, path: String): Future[String] =
-    dump.map(d => {
-      remote.write(path, d)
-      path
-    })
+  def dumpToFile(remote: Platform, path: String): Future[String] = remote.write(path, dump()).map(p => p)
 }
 
 object AMFDumper {

@@ -31,9 +31,9 @@ class Repl(val in: InputStream, val out: PrintStream) {
 
   private def generate(unit: BaseUnit, syntax: String): Unit = {
     syntax match {
-      case "json"   => out.println(new AMFDumper(unit.unit, Oas).dump)
-      case "yaml"   => out.println(new AMFDumper(unit.unit, Raml).dump)
-      case "jsonld" => out.println(new AMFDumper(unit.unit, Amf).dump)
+      case "json"   => out.println(new AMFDumper(unit.unit, Oas).dumpToStream)
+      case "yaml"   => out.println(new AMFDumper(unit.unit, Raml).dumpToStream)
+      case "jsonld" => out.println(new AMFDumper(unit.unit, Amf).dumpToStream)
       case _        => out.println(s"Unsupported generation for: $syntax")
     }
   }
