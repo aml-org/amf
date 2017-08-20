@@ -8,6 +8,8 @@ case class Module(declares: Seq[DomainElement], references: Seq[BaseUnit], locat
     with DeclaresModel {
 
   override val annotations: Annotations = Annotations()
+
+  override def adopted(parent: String): this.type = withId(parent)
 }
 
 trait DeclaresModel {

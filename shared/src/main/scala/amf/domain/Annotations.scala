@@ -21,6 +21,10 @@ class Annotations {
     annotations += annotation
     this
   }
+
+  /** Return [[SerializableAnnotation]]s only. */
+  def serializables(): Seq[SerializableAnnotation] =
+    annotations.filter(_.isInstanceOf[SerializableAnnotation]).map(_.asInstanceOf[SerializableAnnotation])
 }
 
 object Annotations {

@@ -1,6 +1,7 @@
 package amf.domain
 
 import amf.common.AMFAST
+import amf.common.Strings.strings
 import amf.domain.Annotation.ParentEndPoint
 import amf.metadata.domain.EndPointModel._
 
@@ -24,10 +25,15 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
   def withPath(path: String): this.type                     = set(Path, path)
   def withOperations(operations: Seq[Operation]): this.type = setArray(Operations, operations)
   def withParameters(parameters: Seq[Parameter]): this.type = setArray(UriParameters, parameters)
+
+  override def adopted(parent: String): this.type = withId(parent + "/end-points/" + path.urlEncoded)
 }
 
 object EndPoint {
-  def apply(): EndPoint = new EndPoint(Fields(), Annotations())
 
-  def apply(ast: AMFAST): EndPoint = new EndPoint(Fields(), Annotations(ast))
+  def apply(): EndPoint = apply(Annotations())
+
+  def apply(ast: AMFAST): EndPoint = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): EndPoint = new EndPoint(Fields(), annotations)
 }

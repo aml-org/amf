@@ -19,10 +19,14 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
   def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
+
+  override def adopted(parent: String): this.type = withId(parent + "/" + name)
 }
 
 object Response {
-  def apply(): Response = new Response(Fields(), Annotations())
+  def apply(): Response = apply(Annotations())
 
-  def apply(ast: AMFAST): Response = new Response(Fields(), Annotations(ast))
+  def apply(ast: AMFAST): Response = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): Response = new Response(Fields(), annotations)
 }

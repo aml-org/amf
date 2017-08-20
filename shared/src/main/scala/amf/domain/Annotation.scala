@@ -7,7 +7,9 @@ import amf.parser.Range
 /**
   * Annotation type
   */
-trait Annotation {
+trait Annotation
+
+trait SerializableAnnotation extends Annotation {
 
   /** Extension name. */
   val name: String
@@ -18,88 +20,35 @@ trait Annotation {
 
 object Annotation {
 
-  case class SourceAST(ast: AMFAST) extends Annotation {
-    override val name: String = "source-ast"
-
-    override val value: String = null
-  }
-
-  case class LexicalInformation(range: Range) extends Annotation {
+  case class LexicalInformation(range: Range) extends SerializableAnnotation {
     override val name: String = "lexical"
 
     override val value: String = range.toString
   }
 
-  case class ParentEndPoint(parent: EndPoint) extends Annotation {
+  case class ParentEndPoint(parent: EndPoint) extends SerializableAnnotation {
     override val name: String = "parent-end-point"
 
     override val value: String = parent.id
   }
 
-  case class ExplicitField() extends Annotation {
-    override val name: String = "explicit-field"
+  case class SourceAST(ast: AMFAST) extends Annotation
 
-    override val value: String = null
-  }
+  case class ExplicitField() extends Annotation
 
-  case class SynthesizedField() extends Annotation {
-    override val name: String = "synthesized-field"
+  case class SynthesizedField() extends Annotation
 
-    override val value: String = null
-  }
+  case class UriParameters() extends Annotation
 
-  case class UriParameters() extends Annotation {
-    override val name: String = "uri-parameters"
+  case class EndPointBodyParameter() extends Annotation
 
-    override val value: String = null
-  }
+  case class OperationBodyParameter() extends Annotation
 
-  case class EndPointBodyParameter() extends Annotation {
+  case class OverrideEndPointBodyParameter(asParameter: Parameter, asPayload: Payload) extends Annotation
 
-    /** Extension name. */
-    override val name: String = "endpoint-body-parameter"
+  case class MediaType(mediaType: String) extends Annotation
 
-    /** Value as string. */
-    override val value: String = null
-  }
-
-  case class OperationBodyParameter() extends Annotation {
-
-    /** Extension name. */
-    override val name: String = "operation-body-parameter"
-
-    /** Value as string. */
-    override val value: String = null
-  }
-
-  case class OverrideEndPointBodyParameter(asParameter: Parameter, asPayload: Payload) extends Annotation {
-
-    /** Extension name. */
-    override val name: String = "override-endpoint-body-parameter"
-
-    /** Value as string. */
-    override val value: String = null
-  }
-
-  case class MediaType(mediaType: String) extends Annotation {
-
-    /** Extension name. */
-    override val name: String = "inherith-media-type-body-parameter"
-
-    /** Value as string. */
-    override val value: String = null
-
-    val key = "x-media-type"
-  }
-
-  case class EndPointParameter() extends Annotation {
-
-    /** Extension name. */
-    override val name: String = "endpoint-parameter"
-
-    /** Value as string. */
-    override val value: String = null
-  }
+  case class EndPointParameter() extends Annotation
 
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     annotation match {
@@ -115,9 +64,4 @@ object Annotation {
   private def lexical(value: String, objects: Map[String, AmfElement]) = {
     LexicalInformation(Range.apply(value))
   }
-}
-
-case class EndPointPath(parent: Option[EndPointPath] = None, path: String) {
-
-  def completePath: String = if (parent.isDefined) parent.get.completePath else "" + path
 }

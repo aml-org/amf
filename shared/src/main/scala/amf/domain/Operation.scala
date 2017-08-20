@@ -26,10 +26,15 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def withSchemes(schemes: Seq[String]): this.type              = set(Schemes, schemes.toList)
   def withRequest(request: Request): this.type                  = set(OperationRequest, request)
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
+
+  override def adopted(parent: String): this.type = withId(parent + "/" + method)
 }
 
 object Operation {
-  def apply(): Operation = new Operation(Fields(), Annotations())
 
-  def apply(ast: AMFAST): Operation = new Operation(Fields(), Annotations(ast))
+  def apply(): Operation = apply(Annotations())
+
+  def apply(ast: AMFAST): Operation = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): Operation = new Operation(Fields(), annotations)
 }

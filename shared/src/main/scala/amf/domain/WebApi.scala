@@ -37,11 +37,15 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   def withLicense(license: License): this.type                     = set(WebApiLicense, license)
   def withDocumentation(documentation: CreativeWork): this.type    = set(Documentation, documentation)
   def withBaseUriParameters(parameters: Seq[Parameter]): this.type = setArray(BaseUriParameters, parameters)
+
+  override def adopted(parent: String): this.type = withId(parent + "#/web-api")
 }
 
 object WebApi {
 
-  def apply(): WebApi = new WebApi(Fields(), Annotations())
+  def apply(): WebApi = apply(Annotations())
 
-  def apply(ast: AMFAST): WebApi = new WebApi(Fields(), Annotations(ast))
+  def apply(ast: AMFAST): WebApi = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): WebApi = new WebApi(Fields(), annotations)
 }

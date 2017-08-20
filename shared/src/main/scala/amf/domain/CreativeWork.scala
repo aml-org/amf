@@ -13,11 +13,15 @@ case class CreativeWork(fields: Fields, annotations: Annotations) extends Domain
 
   def withUrl(url: String): this.type                 = set(Url, url)
   def withDescription(description: String): this.type = set(Description, description)
+
+  override def adopted(parent: String): this.type = withId(parent + "/creative-work")
 }
 
 object CreativeWork {
-  def apply(ast: AMFAST): CreativeWork = apply(Fields(), Annotations(ast))
 
-  def apply(): CreativeWork =
-    new CreativeWork(Fields(), Annotations())
+  def apply(): CreativeWork = apply(Annotations())
+
+  def apply(ast: AMFAST): CreativeWork = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): CreativeWork = apply(Fields(), annotations)
 }

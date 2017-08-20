@@ -1,11 +1,10 @@
 package amf.graph
 
-import amf.builder._
 import amf.common.AMFAST
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.common.Strings.strings
-import amf.document.BaseUnit
-import amf.domain.Annotation
+import amf.document.{BaseUnit, Document}
+import amf.domain._
 import amf.metadata.SourceMapModel.{Element, Value}
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.BaseUnitModel.Location
@@ -13,12 +12,11 @@ import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
-import amf.model.{AmfElement, AmfObject}
+import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 /**
   * AMF Graph parser
@@ -28,43 +26,37 @@ object GraphParser {
   def parse(ast: AMFAST, location: String): BaseUnit = {
     val parser = Parser(Map())
     parser.parse(ast, location)
-
   }
 
-  case class Parser(var elements: Map[String, AmfElement]) {
+  case class Parser(var nodes: Map[String, AmfElement]) {
 
     def parse(ast: AMFAST, location: String): BaseUnit = {
       val root = ast > SequenceToken > MapToken
       val ctx  = context(root)
-      build(parse(root, ctx).set(Location, location)).asInstanceOf[BaseUnit]
-    }
-
-    private def build(builder: Builder) = {
-      val element: AmfObject = builder.build.asInstanceOf[AmfObject]
-      elements = elements + (element.id -> element)
-      element
+      parse(root, ctx).set(Location, location).asInstanceOf[BaseUnit]
     }
 
     private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj = types(ctx.expand(ts(ast).head))
 
-    private def parse(node: AMFAST, ctx: GraphContext): Builder = {
+    private def parse(node: AMFAST, ctx: GraphContext): AmfObject = {
       val id      = retrieveId(node)
       val sources = retrieveSources(id, node)
       val model   = retrieveType(node, ctx)
 
-      val builder = builders(model)(annotations(sources, id))
-      builder.withId(id)
+      val instance = builders(model)(annotations(sources, id))
+      instance.withId(id)
       val children = node.children
 
       model.fields.foreach(f => {
         val k = ctx.reduce(f.value)
         children.find(key(k)) match {
-          case Some(entry) => traverse(ctx, builder, f, value(f.`type`, entry.last), sources, k)
+          case Some(entry) => traverse(ctx, instance, f, value(f.`type`, entry.last), sources, k)
           case _           =>
         }
       })
 
-      builder
+      nodes = nodes + (id -> instance)
+      instance
     }
 
     private def value(t: Type, node: AMFAST): AMFAST = {
@@ -85,21 +77,21 @@ object GraphParser {
     }
 
     private def traverse(ctx: GraphContext,
-                         builder: Builder,
+                         instance: AmfObject,
                          f: Field,
                          node: AMFAST,
                          sources: SourceMap,
                          key: String) = {
       f.`type` match {
-        case _: Obj             => builder.set(f, build(parse(node, ctx)))
-        case Str | RegExp | Iri => builder.set(f, node.content.unquote, annotations(sources, key))
-        case Bool               => builder.set(f, node.content.toBoolean)
+        case _: Obj             => instance.set(f, parse(node, ctx))
+        case Str | RegExp | Iri => instance.set(f, str(node), annotations(sources, key))
+        case Bool               => instance.set(f, bool(node), annotations(sources, key))
         case a: Array =>
-          val values = a.element match {
-            case _: Obj => node.children.map(n => build(parse(n, ctx)))
-            case Str    => node.children.map(n => value(a.element, n).content.unquote)
+          val values: Seq[AmfElement] = a.element match {
+            case _: Obj => node.children.map(n => parse(n, ctx))
+            case Str    => node.children.map(n => str(value(a.element, n)))
           }
-          builder.set(f, values)
+          instance.setArray(f, values)
       }
     }
 
@@ -139,23 +131,20 @@ object GraphParser {
       result
     }
 
-    private def annotations(sources: SourceMap, key: String): List[Annotation] = {
+    private def annotations(sources: SourceMap, key: String): Annotations = {
+      val result = Annotations()
+
       if (sources.nonEmpty) {
-
-        implicit val objects: Map[String, AmfElement] = Map()
-
-        val result = ListBuffer[Annotation]()
         sources.annotations.foreach {
           case (annotation, values: mutable.Map[String, String]) =>
             annotation match {
-              case Annotation(deserialize) if values.contains(key) => result += deserialize(values(key), elements)
+              case Annotation(deserialize) if values.contains(key) => result += deserialize(values(key), nodes)
               case _                                               =>
             }
         }
-        result.toList
-      } else {
-        Nil
       }
+
+      result
     }
 
     private def retrieveId(ast: AMFAST): String = {
@@ -183,15 +172,23 @@ object GraphParser {
     }
   }
 
+  private def str(node: AMFAST) = AmfScalar(node.content.unquote)
+
+  private def bool(node: AMFAST) = AmfScalar(node.content.unquote.toBoolean)
+
   /** Object Type builders. */
-  private val builders: Map[Obj, (List[Annotation]) => Builder] = Map(
-    DocumentModel     -> DocumentBuilder.apply,
-    WebApiModel       -> WebApiBuilder.apply,
-    OrganizationModel -> OrganizationBuilder.apply,
-    LicenseModel      -> LicenseBuilder.apply,
-    CreativeWorkModel -> CreativeWorkBuilder.apply,
-    EndPointModel     -> EndPointBuilder.apply,
-    OperationModel    -> OperationBuilder.apply
+  private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
+    DocumentModel     -> Document.apply,
+    WebApiModel       -> WebApi.apply,
+    OrganizationModel -> Organization.apply,
+    LicenseModel      -> License.apply,
+    CreativeWorkModel -> CreativeWork.apply,
+    EndPointModel     -> EndPoint.apply,
+    OperationModel    -> Operation.apply,
+    ParameterModel    -> Parameter.apply,
+    PayloadModel      -> Payload.apply,
+    RequestModel      -> Request.apply,
+    ResponseModel     -> Response.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

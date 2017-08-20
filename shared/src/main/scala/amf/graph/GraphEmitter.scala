@@ -10,7 +10,7 @@ import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.{Obj, SourceMapModel, Type}
-import amf.model.AmfObject
+import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.ValueType
@@ -63,19 +63,20 @@ object GraphEmitter {
       t match {
         case _: Obj => obj(v.value.asInstanceOf[AmfObject], parent)
         case Iri =>
-          iri(v.value.asInstanceOf[String])
+          iri(v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Str | RegExp =>
-          scalar(v.value.asInstanceOf[String])
+          scalar(v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Bool =>
-          scalar(v.value.asInstanceOf[Boolean].toString, BooleanToken)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, BooleanToken)
           sources(v)
         case a: Array =>
           array { () =>
+            val seq = v.value.asInstanceOf[AmfArray]
             a.element match {
-              case _: Obj => v.value.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
-              case Str    => v.value.asInstanceOf[Seq[String]].foreach(scalar(_, inArray = true))
+              case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
+              case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
             }
           }
       }

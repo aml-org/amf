@@ -1,9 +1,9 @@
 package amf.compiler
 
-import amf.builder.DocumentBuilder
 import amf.common.AMFToken.{Comment, Entry}
 import amf.common.Strings.strings
 import amf.common.{AMFAST, AMFToken}
+import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.LexicalInformation
 import amf.domain.{Annotation, DomainElement}
@@ -19,7 +19,6 @@ import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.serialization.AmfParser
-import amf.spec.Spec.RAML_10
 import amf.yaml.YamlLexer
 
 import scala.collection.mutable.ListBuffer
@@ -116,7 +115,7 @@ class AMFCompiler private (val url: String,
       .withLocation(location)
       .withReferences(references)
       .withEncodes(element)
-//      .resolveId(location)
+      .adopted(location)
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {
@@ -155,4 +154,6 @@ case class Root(ast: AMFAST, location: String, references: Seq[BaseUnit], vendor
 object AMFCompiler {
   def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()))
+
+  val RAML_10 = "#%RAML 1.0\n"
 }

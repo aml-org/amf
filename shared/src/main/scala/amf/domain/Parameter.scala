@@ -24,10 +24,14 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
   def isQuery: Boolean  = binding == "query"
   def isBody: Boolean   = binding == "body"
   def isPath: Boolean   = binding == "path"
+
+  override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name)
 }
 
 object Parameter {
-  def apply(): Parameter = new Parameter(Fields(), Annotations())
+  def apply(): Parameter = apply(Annotations())
 
-  def apply(ast: AMFAST): Parameter = new Parameter(Fields(), Annotations(ast))
+  def apply(ast: AMFAST): Parameter = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): Parameter = new Parameter(Fields(), annotations)
 }

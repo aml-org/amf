@@ -1,19 +1,13 @@
 package amf.document
 
-import amf.builder.DocumentBuilder
 import amf.domain._
 import amf.metadata.document.DocumentModel._
-import amf.transform.MutableElement
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
   * [[DomainElement]]s that reference from the encoded [[DomainElement]]
   */
-case class Document(fields: Fields, annotations: Annotations)
-    extends BaseUnit
-    with MutableElement
-    with EncodesModel
-    with DeclaresModel {
+case class Document(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel with DeclaresModel {
 
   override def references: Seq[BaseUnit] = fields(References)
 
@@ -26,10 +20,12 @@ case class Document(fields: Fields, annotations: Annotations)
   def withLocation(location: String): this.type            = set(Location, location)
   def withReferences(references: Seq[BaseUnit]): this.type = setArray(References, references)
   def withEncodes(element: DomainElement): this.type       = set(Encodes, element)
+
+  override def adopted(parent: String): this.type = withId(parent)
 }
 
 object Document {
-  def apply(): Document = new Document(Fields(), Annotations())
+  def apply(): Document = apply(Annotations())
 
-  def apply(fields: Fields, annotations: Annotations): Document = new Document(fields, annotations)
+  def apply(annotations: Annotations): Document = new Document(Fields(), annotations)
 }

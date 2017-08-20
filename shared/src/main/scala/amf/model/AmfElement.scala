@@ -9,4 +9,10 @@ trait AmfElement {
 
   /** Set of annotations for element. */
   val annotations: Annotations
+
+  /** Add specified annotation. */
+  def add(annotation: Annotation): this.type = {
+    annotations += annotation
+    this
+  }
 }

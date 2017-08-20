@@ -8,15 +8,6 @@ import scala.concurrent.Future
 
 trait PlatformSecrets {
   val platform: Platform = PlatformBuilder()
-
-//  object builders {
-//
-//    def webApi: BaseWebApiBuilder         = new WebApiBuilder
-//    def license: LicenseBuilder           = LicenseBuilder()
-//    def creativeWork: CreativeWorkBuilder = CreativeWorkBuilder()
-//    def organization: OrganizationBuilder = OrganizationBuilder()
-//    def endPoint: EndPointBuilder         = EndPointBuilder()
-//  }
 }
 
 case class TrunkPlatform(content: String) extends Platform {

@@ -22,13 +22,15 @@ private class SourceMap(val annotations: mutable.ListMap[String, mutable.ListMap
   }
 
   def property(element: String)(value: Value): Unit = {
-    value.annotations.foreach(a => {
-      val tuple = element -> a.value
-      annotations.get(a.name) match {
-        case Some(values) => values += tuple
-        case None         => annotations += (a.name -> mutable.ListMap(tuple))
-      }
-    })
+    value.annotations
+      .serializables()
+      .foreach(a => {
+        val tuple = element -> a.value
+        annotations.get(a.name) match {
+          case Some(values) => values += tuple
+          case None         => annotations += (a.name -> mutable.ListMap(tuple))
+        }
+      })
   }
 
   def nonEmpty: Boolean = annotations.nonEmpty
@@ -39,9 +41,11 @@ private object SourceMap {
 
   def apply(id: String, element: AmfElement): SourceMap = {
     val map = mutable.ListMap[String, mutable.ListMap[String, String]]()
-    element.annotations.foreach(a => {
-      map += (a.name -> mutable.ListMap(id -> a.value))
-    })
+    element.annotations
+      .serializables()
+      .foreach(a => {
+        map += (a.name -> mutable.ListMap(id -> a.value))
+      })
     new SourceMap(map)
   }
 

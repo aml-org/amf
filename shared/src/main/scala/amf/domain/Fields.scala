@@ -2,15 +2,14 @@ package amf.domain
 
 import amf.metadata.Field
 import amf.metadata.Type._
-import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.unsafe.PlatformSecrets
+import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
 
 import scala.collection.immutable.ListMap
 
 /**
   * Field values
   */
-class Fields extends PlatformSecrets {
+class Fields {
 
   private var fs: Map[Field, Value] = ListMap()
   var id: String                    = _
@@ -41,7 +40,9 @@ class Fields extends PlatformSecrets {
   def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] =
     fs.get(field).flatMap(_.annotations.find(classType))
 
+  /** Set field value entry-point. */
   def set(field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
+    adopt(value)
     fs = fs + (field -> Value(value, annotations))
     this
   }
@@ -82,6 +83,12 @@ class Fields extends PlatformSecrets {
   def filter(fn: ((Field, Value)) => Boolean): Fields = {
     fs = fs.filter(fn)
     this
+  }
+
+  private def adopt(value: AmfElement): Unit = value match {
+    case obj: AmfObject => obj.adopted(id)
+    case seq: AmfArray  => seq.values.foreach(adopt)
+    case _              => // Do nothing with scalars
   }
 
   def fields(): Iterable[FieldEntry] = fs.map(FieldEntry.tupled)

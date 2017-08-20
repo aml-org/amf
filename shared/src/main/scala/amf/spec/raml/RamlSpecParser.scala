@@ -21,7 +21,7 @@ case class RamlSpecParser(root: Root) {
 
   def parseWebApi(): WebApi = {
 
-    val api     = WebApi(root.ast)
+    val api     = WebApi(root.ast).adopted(root.location)
     val entries = new Entries(root.ast.last)
 
     entries.key("title", entry => {
