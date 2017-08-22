@@ -1,6 +1,6 @@
 package amf.remote
 
-import java.io.FileWriter
+import java.io.{File, FileWriter}
 import java.net.{HttpURLConnection, URI}
 
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
@@ -43,7 +43,9 @@ class JvmPlatform extends Platform {
   /** Write specified content on specified file path. */
   override protected def writeFile(path: String, content: String): Future[String] = {
     Future {
-      val writer: FileWriter = new FileWriter(path)
+      val file = new File(path)
+      file.getParentFile.mkdirs()
+      val writer: FileWriter = new FileWriter(file)
       writer.write(content)
       writer.flush()
       writer.close()
