@@ -348,7 +348,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
                 ScalarEmitter(meditaType.value.value.asInstanceOf[AmfScalar]).emit()
                 val maybeScheme = fs.entry(PayloadModel.Schema)
                 if (maybeScheme.isDefined) ScalarEmitter(maybeScheme.get.value.value.asInstanceOf[AmfScalar]).emit()
-                raw("", StringToken)
+                else raw("", StringToken)
               }
             })
         }
