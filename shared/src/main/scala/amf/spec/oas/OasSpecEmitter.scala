@@ -354,7 +354,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(RequestModel.Headers).map(f => result += RamlParametersEmitter("headers", f, ordering))
 
-          val payloads = responsePayloads(fs)
+          val payloads = Payloads(response)
           if (payloads.default.isDefined)
             result += ManualEmitter("x-media-type", payloads.default.get.mediaType)
 
@@ -366,14 +366,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
           }
         }
       )
-    }
-
-    private def responsePayloads(resFields: Fields): Payloads = {
-      val response = resFields
-        .entry(ResponseModel.Payloads)
-        .map(_.value.value.asInstanceOf[Payload])
-
-      Payloads(response)
     }
 
     override def position(): Position = pos(response.annotations)
@@ -435,12 +427,17 @@ case class OasSpecEmitter(unit: BaseUnit) {
       sourceOr(
         payload.annotations,
         //TODO what if payload has no media-type?
-        entry { () =>
+        map { () =>
           val fs = payload.fields
 
-          ScalarEmitter(fs.entry(PayloadModel.MediaType).get.value.value.asInstanceOf[AmfScalar]).emit()
+          val maybeMediaType = fs.entry(PayloadModel.MediaType)
+          if (maybeMediaType.isDefined)
+            ValueEmitter("mediaType", maybeMediaType.get).emit()
 
-          ScalarEmitter(fs.entry(PayloadModel.Schema).get.value.value.asInstanceOf[AmfScalar]).emit()
+          val maybeSchema = fs.entry(PayloadModel.Schema)
+          if (maybeSchema.isDefined)
+            ValueEmitter("schema", maybeSchema.get).emit()
+
         }
       )
     }

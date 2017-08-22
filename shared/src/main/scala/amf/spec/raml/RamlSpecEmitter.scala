@@ -333,14 +333,17 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   case class PayloadEmitter(payload: Payload, ordering: Ordering[Emitter]) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
-        payload.annotations,
-        //TODO what if payload has no media-type?
-        entry { () =>
+        payload.annotations, {
           val fs = payload.fields
+          //TODO what if payload has no media-type?
+          fs.entry(PayloadModel.MediaType)
+            .fold(
+              ValueEmitter("type", fs.entry(PayloadModel.Schema).get).emit()
+            )(meditaType => {
+              ScalarEmitter(meditaType.value.value.asInstanceOf[AmfScalar]).emit()
+              ScalarEmitter(fs.entry(PayloadModel.Schema).get.value.value.asInstanceOf[AmfScalar]).emit()
+            })
 
-          ScalarEmitter(fs.entry(PayloadModel.MediaType).get.value.value.asInstanceOf[AmfScalar]).emit()
-
-          ScalarEmitter(fs.entry(PayloadModel.Schema).get.value.value.asInstanceOf[AmfScalar]).emit()
         }
       )
     }

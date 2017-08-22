@@ -1,11 +1,12 @@
 #%RAML 1.0
 title: API
-baseUri: /some/uri
 /levelzero/level-one:
  displayName: One display name
     description: and this description!
     get:
       displayName: Some title
+      body:
+        type: string
       responses:
         200:
           description: 200 descr
@@ -14,5 +15,4 @@ baseUri: /some/uri
               type: integer
         404:
           description: Not found!
-      body:
-        type: string
+baseUri: /some/uri
