@@ -9,6 +9,7 @@ class BaseUriSplitter(val protocol: String, val domain: String, val path: String
     (if (protocol.isEmpty) "" else protocol + "://") + domain +
       (if (path.startsWith("/")) path else "/" + path)
 
+  def nonEmpty: Boolean = protocol.nonEmpty || domain.nonEmpty || path.nonEmpty
 }
 
 object BaseUriSplitter {

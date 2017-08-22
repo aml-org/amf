@@ -26,7 +26,7 @@
         ],
         "http://raml.org/vocabularies/http#host": [
           {
-            "@value": "http://api.example.com/path"
+            "@value": "api.example.com"
           }
         ],
         "http://raml.org/vocabularies/http#schemes": [
@@ -67,6 +67,20 @@
             "@id": "shared/src/test/resources/upanddown/basic.json#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "shared/src/test/resources/upanddown/basic.json#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "oas"
+                  }
+                ]
+              }
             ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
@@ -137,7 +151,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,2)-(9,39)]"
+                    "@value": "[(9,2)-(9,27)]"
                   }
                 ]
               },

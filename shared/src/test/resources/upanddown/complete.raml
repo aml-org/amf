@@ -1,14 +1,10 @@
 #%RAML 1.0
 title: test title
 description: test description
-(termsOfService): terms of service
-version: 1.1
-(license):
-  url: licenseUrl
-  name: licenseName
-baseUri: http://api.example.com/path
 mediaType:
   - application/yaml
+version: 1.1
+(termsOfService): terms of service
 protocols:
   - http
   - https
@@ -19,3 +15,7 @@ protocols:
 (externalDocs):
   url: externalDocsUrl
   description: externalDocsDescription
+(license):
+  url: licenseUrl
+  name: licenseName
+baseUri: api.example.com/path

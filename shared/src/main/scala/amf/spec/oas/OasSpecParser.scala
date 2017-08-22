@@ -366,6 +366,8 @@ case class ParameterParser(ast: AMFAST) {
     val p       = OasParameter(ast)
     val entries = new Entries(ast)
 
+    p.parameter.set(ParameterModel.Required, value = false)
+
     entries.key("name", entry => {
       val value = ValueNode(entry.value)
       p.parameter.set(ParameterModel.Name, value.string(), entry.annotations())
@@ -378,7 +380,7 @@ case class ParameterParser(ast: AMFAST) {
 
     entries.key("required", entry => {
       val value = ValueNode(entry.value)
-      p.parameter.set(ParameterModel.Required, value.boolean(), entry.annotations())
+      p.parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() += ExplicitField())
     })
 
     entries.key("in", entry => {

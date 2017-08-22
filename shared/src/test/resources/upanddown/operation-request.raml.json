@@ -3,13 +3,12 @@
   "info": {
     "title": "API"
   },
-  "x-baseUriParameters": [
-    {
-      "name": "one",
-      "required": true,
-      "description": "One base uri param"
+  "x-base-uri-parameters": {
+    "one": {
+      "description": "One base uri param",
+      "required": "true"
     }
-  ],
+  },
   "paths": {
     "/levelzero/some{two}": {
       "parameters": [
@@ -27,16 +26,15 @@
         "operationId": "Some title",
         "parameters": [
           {
-            "required": true,
             "name": "param1",
             "description": "Some descr",
+            "required": true,
             "in": "query"
           },
           {
-            "required": false,
-            "name": "param2?",
-            "schema": "string",
-            "in": "query"
+            "name": "param2",
+            "in": "query",
+            "type": "string"
           }
         ]
       },

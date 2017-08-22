@@ -3,6 +3,7 @@ package amf.domain
 import amf.common.AMFAST
 import amf.model.AmfElement
 import amf.parser.Range
+import amf.remote.Vendor
 
 /**
   * Annotation type
@@ -32,13 +33,17 @@ object Annotation {
     override val value: String = parent.id
   }
 
+  case class SourceVendor(vendor: Vendor) extends SerializableAnnotation {
+    override val name: String = "source-vendor"
+
+    override val value: String = vendor.name
+  }
+
   case class SourceAST(ast: AMFAST) extends Annotation
 
   case class ExplicitField() extends Annotation
 
   case class SynthesizedField() extends Annotation
-
-  case class UriParameters() extends Annotation
 
   case class EndPointBodyParameter() extends Annotation
 
@@ -54,8 +59,16 @@ object Annotation {
     annotation match {
       case "lexical"          => Some(lexical)
       case "parent-end-point" => Some(parentEndPoint)
+      case "source-vendor"    => Some(sourceVendor)
       case _                  => None // Unknown annotation
     }
+
+  private def sourceVendor(value: String, objects: Map[String, AmfElement]) = {
+    value match {
+      case Vendor(vendor) => SourceVendor(vendor)
+      case _              => ??? // Invalid vendor...
+    }
+  }
 
   private def parentEndPoint(value: String, objects: Map[String, AmfElement]) = {
     ParentEndPoint(objects(value).asInstanceOf[EndPoint])

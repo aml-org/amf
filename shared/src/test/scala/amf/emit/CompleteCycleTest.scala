@@ -120,7 +120,7 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Complete with operations oas to raml test") {
-    assertCycle("completeWithOperations.json", "completeWithOperationsPlain.raml", OasJsonHint, Raml)
+    assertCycle("completeWithOperations.json", "complete-with-operations.json.raml", OasJsonHint, Raml)
   }
 
   test("Complete with operations oas to oas test") {

@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.common.AMFAST
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.{ExplicitField, SynthesizedField, UriParameters}
+import amf.domain.Annotation.{ExplicitField, SynthesizedField}
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
@@ -32,10 +32,8 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "baseUriParameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
-        api.set(WebApiModel.BaseUriParameters,
-                AmfArray(parameters, Annotations(entry.value) += UriParameters()),
-                entry.annotations())
+        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("path"))
+        api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
 
@@ -159,10 +157,8 @@ case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector:
     entries.key(
       "uriParameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
-        endpoint.set(EndPointModel.UriParameters,
-                     AmfArray(parameters, Annotations(entry.value) += UriParameters()),
-                     entry.annotations())
+        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("path"))
+        endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
 
@@ -196,7 +192,7 @@ case class RequestParser(entries: Entries) {
     entries.key(
       "queryParameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
+        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("query"))
         request.set(RequestModel.QueryParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -204,7 +200,7 @@ case class RequestParser(entries: Entries) {
     entries.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
+        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("header"))
         request.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -358,11 +354,15 @@ case class ParameterParser(entry: EntryNode) {
     val parameter = Parameter(entry.ast)
 
     val name = entry.key.content.unquote
-    parameter
-      .set(ParameterModel.Required, !name.endsWith("?"))
-      .set(ParameterModel.Name, ValueNode(entry.key).string())
 
-    //TODO what to do with '?' in name
+    parameter.set(ParameterModel.Required, value = true)
+
+    if (name.endsWith("?")) {
+      parameter.set(ParameterModel.Name, name.stripSuffix("?"))
+      parameter.set(ParameterModel.Required, value = false)
+    } else {
+      parameter.set(ParameterModel.Name, name)
+    }
 
     val entries = new Entries(entry.value)
 

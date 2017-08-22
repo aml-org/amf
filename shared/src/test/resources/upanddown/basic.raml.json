@@ -3,19 +3,19 @@
   "info": {
     "title": "test title",
     "description": "test description",
-    "version": "1.1",
-    "termsOfService": "terms of service"
+    "termsOfService": "terms of service",
+    "version": "1.1"
   },
-  "host": "http://api.example.com/path",
-  "schemes": [
-    "http",
-    "https"
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
+    "application/yaml"
   ],
   "produces": [
     "application/yaml"
   ],
-  "consumes": [
-    "application/yaml"
-  ],
-  "basePath": "/path"
+  "schemes": [
+    "http",
+    "https"
+  ]
 }

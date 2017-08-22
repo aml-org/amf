@@ -10,11 +10,12 @@
       "name": "licenseName"
     }
   },
-  "host": "http://api.example.com/path",
-  "produces": [
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
     "application/yaml"
   ],
-  "consumes": [
+  "produces": [
     "application/yaml"
   ],
   "schemes": [
@@ -29,6 +30,5 @@
   "externalDocs": {
     "url": "externalDocsUrl",
     "description": "externalDocsDescription"
-  },
-  "basePath": "/path"
+  }
 }

@@ -9,6 +9,9 @@ import amf.metadata.domain._
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
+import amf.remote.Oas
+import amf.spec.Emitter
+import amf.spec.SpecOrdering.ordering
 
 import scala.collection.mutable
 
@@ -24,7 +27,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
   }
 
   def emitWebApi(): AMFAST = {
-    val api = WebApiEmitter(retrieveWebApi(), Lexical)
+    val model = retrieveWebApi()
+    val api   = WebApiEmitter(model, ordering(Oas, model.annotations))
 
     emitter.root(Root) { () =>
       map { () =>
@@ -69,7 +73,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       fs.entry(WebApiModel.Host).map(f => result += ValueEmitter("host", f))
 
       fs.entry(WebApiModel.BaseUriParameters)
-        .map(f => result += EndpointsEmitter("x-base-uri-parameters", f, ordering))
+        .map(f => result += RamlParametersEmitter("x-base-uri-parameters", f, ordering))
 
       fs.entry(WebApiModel.BasePath).map(f => result += ValueEmitter("basePath", f))
 
@@ -117,11 +121,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       //TODO we lost info node position
       override def position(): Position = Position.ZERO
     }
-  }
 
-  trait Emitter {
-    def emit(): Unit
-    def position(): Position
   }
 
   case class ArrayEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
@@ -404,15 +404,17 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   case class PayloadsEmitter(key: String, payloads: Seq[Payload], ordering: Ordering[Emitter]) extends Emitter {
     override def emit(): Unit = {
-//      sourceOr(
-//        f.value.annotations,
+      //      sourceOr(
+      //        f.value.annotations,
       entry { () =>
         raw(key)
 
         map { () =>
           var result = mutable.SortedSet()(ordering)
 
-          payloads.foreach(p => { result += PayloadEmitter(p, ordering) })
+          payloads.foreach(p => {
+            result += PayloadEmitter(p, ordering)
+          })
           traverse(result)
         }
       }
@@ -484,6 +486,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
           fs.entry(ParameterModel.Required)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required)
             .map(f => result += ValueEmitter("required", f, BooleanToken))
 
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
@@ -508,13 +511,13 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw(key)
 
           map { () =>
-            traverse(endpointers(f, ordering))
+            traverse(endpoints(f, ordering))
           }
         }
       )
     }
 
-    private def endpointers(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
+    private def endpoints(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
       val result = mutable.SortedSet()(ordering)
       f.value.value
         .asInstanceOf[AmfArray]
@@ -666,17 +669,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
     //TODO first lvl gets sources and changes in the children doesn't matter.
 
     //    annotations
-//      .find(classOf[SourceAST])
-//      .fold(inner)(a => emitter.addChild(a.ast))
+    //      .find(classOf[SourceAST])
+    //      .fold(inner)(a => emitter.addChild(a.ast))
     inner
-  }
-
-  object Default extends Ordering[Emitter] {
-    override def compare(x: Emitter, y: Emitter): Int = 1
-  }
-
-  object Lexical extends Ordering[Emitter] {
-    override def compare(x: Emitter, y: Emitter): Int = x.position().compareTo(y.position())
   }
 
   case class EndPointParameters(query: Seq[Parameter] = Nil,
@@ -696,8 +691,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
     private def merge(left: Option[Payload], right: Option[Payload]): Option[Payload] = left.fold(right)(Some(_))
 
-    private def endPointOnly(left: Seq[Parameter]) = {
-      left.filter(_.annotations.contains(classOf[EndPointParameter])).map(p => p.name -> p).toMap
+    private def endPointOnly(left: Seq[Parameter]): Map[String, Parameter] = {
+      left.filter(p => p.annotations.contains(classOf[EndPointParameter]) || p.isPath).map(p => p.name -> p).toMap
     }
 
     def parameters(): Seq[Parameter] = query ++ path ++ header
@@ -710,7 +705,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       EndPointParameters(request.queryParameters,
                          Nil,
                          request.headers,
-                         request.payloads.find(_.annotations.contains(classOf[Annotation.EndPointBodyParameter])))
+                         request.payloads.find(_.annotations.contains(classOf[EndPointBodyParameter])))
     }
   }
 
@@ -719,7 +714,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
                                  payload: Option[Payload] = None) {
 
     def parameters(): Seq[Parameter] = query ++ header
-    def nonEmpty: Boolean            = query.nonEmpty || header.nonEmpty || payload.isDefined
+
+    def nonEmpty: Boolean = query.nonEmpty || header.nonEmpty || payload.isDefined
   }
 
   object OperationParameters {

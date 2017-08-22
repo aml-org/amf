@@ -10,11 +10,12 @@
       "name": "licenseName"
     }
   },
-  "host": "http://api.example.com/path",
-  "produces": [
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
     "application/yaml"
   ],
-  "consumes": [
+  "produces": [
     "application/yaml"
   ],
   "schemes": [
@@ -30,15 +31,12 @@
     "url": "externalDocsUrl",
     "description": "externalDocsDescription"
   },
-  "basePath": "/path",
   "paths": {
     "/levelzero": {
       "displayName": "Name",
-      "get": {
+      "post": {
         "operationId": "Some title",
         "description": "Some description",
-        "deprecated": true,
-        "summary": "This is a summary",
         "externalDocs": {
           "url": "urlExternalDocs",
           "description": "descriptionExternalDocs"
@@ -48,9 +46,11 @@
           "https"
         ]
       },
-      "post": {
+      "get": {
         "operationId": "Some title",
         "description": "Some description",
+        "deprecated": true,
+        "summary": "This is a summary",
         "externalDocs": {
           "url": "urlExternalDocs",
           "description": "descriptionExternalDocs"
