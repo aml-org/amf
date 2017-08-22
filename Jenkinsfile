@@ -1,1 +1,1 @@
-valkyrBuild()
+valkyrBuild("sbt-node")
