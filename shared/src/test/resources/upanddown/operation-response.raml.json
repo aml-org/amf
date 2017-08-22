@@ -6,18 +6,18 @@
     "termsOfService": "terms of service",
     "version": "1.1"
   },
-  "host": "http://api.example.com/path",
-  "produces": [
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
     "application/yaml"
   ],
-  "consumes": [
+  "produces": [
     "application/yaml"
   ],
   "schemes": [
     "http",
     "https"
   ],
-  "basePath": "/path",
   "paths": {
     "/levelzero": {
       "displayName": "Name"
@@ -32,8 +32,8 @@
             "description": "200 descr",
             "headers": {
               "Time-Ago": {
-                "type": "integer",
-                "required": true
+                "required": true,
+                "type": "integer"
               }
             }
           },

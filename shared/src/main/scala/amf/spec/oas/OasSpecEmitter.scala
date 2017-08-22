@@ -543,7 +543,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
-            .map(f => result += ValueEmitter("required", f))
+            .map(f => result += ValueEmitter("required", f, BooleanToken))
 
           fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
 
