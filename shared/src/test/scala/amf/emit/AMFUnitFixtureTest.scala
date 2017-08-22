@@ -32,8 +32,7 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .withContentType(List("application/json"))
       .withVersion("1.1")
       .withTermsOfService("termsOfService")
-//      .resolveId("file:///tmp/test")
-//      .build
+      .adopted("file:///tmp/test")
   }
 
   private def basic(): WebApi = {
@@ -44,34 +43,30 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
           .withEmail("test@test")
           .withName("organizationName")
           .withUrl("organizationUrl")
-//          .resolveId(api.getId)
       )
       .withLicense(
         License()
           .withName("licenseName")
           .withUrl("licenseUrl")
-//          .resolveId(api.getId)
       )
       .withDocumentation(
         CreativeWork()
           .withUrl("creativoWorkUrl")
           .withDescription("creativeWorkDescription")
-//          .resolveId(api.getId)
       )
   }
 
   private def advanced(): WebApi = {
     val api = basic()
 
-    val endpoint = EndPoint()
+    val endpoint = api
+      .withEndPoint("/endpoint")
       .withDescription("test endpoint")
       .withName("endpoint")
-      .withPath("/endpoint")
-//      .resolveId(api.getId)
 
-    val get = Operation()
+    endpoint
+      .withOperation("get")
       .withDescription("test operation get")
-      .withMethod("get")
       .withName("test get")
       .withSchemes(List("http"))
       .withSummary("summary of operation get")
@@ -79,12 +74,10 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
         CreativeWork()
           .withDescription("documentation operation")
           .withUrl("localhost:8080/endpoint/operation")
-//          .resolveId(get.getId)
       )
-//      .resolveId(endpoint.getId)
 
-    val post = Operation()
-      .withMethod("post")
+    endpoint
+      .withOperation("post")
       .withDescription("test operation post")
       .withDeprecated(true)
       .withName("test post")
@@ -94,13 +87,11 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
         CreativeWork()
           .withDescription("documentation operation")
           .withUrl("localhost:8080/endpoint/operation")
-//        .resolveId(post.getId)
       )
-//      .resolveId(endpoint.getId)
 
-    api.withEndPoints(List(endpoint.withOperations(List(get, post))))
+    api
   }
 
   private def doc(api: WebApi): Document =
-    Document().withLocation("file:///tmp/test") /*.resolveId("file:///tmp/test")*/.withEncodes(api)
+    Document().withLocation("file:///tmp/test").adopted("file:///tmp/test").withEncodes(api)
 }

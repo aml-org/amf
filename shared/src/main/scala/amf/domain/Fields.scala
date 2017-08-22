@@ -40,6 +40,17 @@ class Fields {
   def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] =
     fs.get(field).flatMap(_.annotations.find(classType))
 
+  /** Add field array - value. */
+  def add(field: Field, value: AmfElement): this.type = {
+    adopt(value)
+    ?[AmfArray](field) match {
+      case Some(array) =>
+        array += value
+        this
+      case None => set(field, AmfArray(Seq(value)))
+    }
+  }
+
   /** Set field value entry-point. */
   def set(field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     adopt(value)

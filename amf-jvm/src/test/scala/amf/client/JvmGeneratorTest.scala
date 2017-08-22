@@ -1,13 +1,12 @@
 package amf.client
 
+import amf.common.Tests.checkDiff
 import amf.remote.Oas
 import amf.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
-import org.scalatest.Matchers._
-
 import scala.compat.java8.FutureConverters
+import scala.concurrent.ExecutionContext
 
 /**
   *
@@ -16,15 +15,14 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test to stream dump") {
-    val futureResult = FutureConverters.toScala(new JvmGenerator().generateToStringAsync(unitBare, Oas))
-
-    platform
+    val expected = platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .map(content => content.stream.toString)
-      .zip(futureResult)
-      .map(t => {
-        t._1 should be(t._2)
-      })
+
+    FutureConverters
+      .toScala(new JvmGenerator().generateToStringAsync(unitBare, Oas))
+      .zip(expected)
+      .map(checkDiff)
   }
 
   test("test to file dump") {
@@ -47,15 +45,13 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
   }
 
   test("test to stream dump complete") {
-    val futureResult = FutureConverters.toScala(new JvmGenerator().generateToStringAsync(unitAdvanced, Oas))
-
-    platform
+    val expected = platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .map(content => content.stream.toString)
-      .zip(futureResult)
-      .map(t => {
-        t._1 should be(t._2)
-      })
-  }
 
+    FutureConverters
+      .toScala(new JvmGenerator().generateToStringAsync(unitAdvanced, Oas))
+      .zip(expected)
+      .map(checkDiff)
+  }
 }

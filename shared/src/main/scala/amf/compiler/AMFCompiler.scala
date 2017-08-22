@@ -112,10 +112,10 @@ class AMFCompiler private (val url: String,
 
   private def document(location: String, references: Seq[BaseUnit], element: DomainElement): Document = {
     Document()
+      .adopted(location)
       .withLocation(location)
       .withReferences(references)
       .withEncodes(element)
-      .adopted(location)
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {

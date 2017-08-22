@@ -38,6 +38,18 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   def withDocumentation(documentation: CreativeWork): this.type    = set(Documentation, documentation)
   def withBaseUriParameters(parameters: Seq[Parameter]): this.type = setArray(BaseUriParameters, parameters)
 
+  def withEndPoint(path: String): EndPoint = {
+    val result = EndPoint().withPath(path)
+    add(EndPoints, result)
+    result
+  }
+
+  def withBaseUriParameter(): Parameter = {
+    val result = Parameter()
+    add(BaseUriParameters, result)
+    result
+  }
+
   override def adopted(parent: String): this.type = withId(parent + "#/web-api")
 }
 

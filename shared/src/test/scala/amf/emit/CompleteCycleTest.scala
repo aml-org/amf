@@ -5,7 +5,7 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
+import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -178,14 +178,10 @@ class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
 
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(new AMFDumper(_, target).dumpToStream)
+      .flatMap(unit => new AMFDumper(unit, target).dumpToStream)
 
     actual
       .zip(expected)
-      .map({
-        case (dump, exp) =>
-          checkDiff(dump, exp)
-          Succeeded
-      })
+      .map(checkDiff)
   }
 }

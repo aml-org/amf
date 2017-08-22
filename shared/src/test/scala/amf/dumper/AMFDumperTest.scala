@@ -49,14 +49,14 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
       """#%RAML 1.0
         |title: test
         |description: test description
-        |baseUri: http://localhost.com/api
-        |protocols:
-        |  - http
-        |  - https
         |mediaType:
         |  - application/json
         |version: 1.1
-        |(termsOfService): termsOfService""".stripMargin
+        |(termsOfService): termsOfService
+        |protocols:
+        |  - http
+        |  - https
+        |baseUri: localhost.com/api""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Raml).dumpToStream
     assert(actual, expected)
@@ -92,7 +92,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |        ],
         |        "http://raml.org/vocabularies/http#host": [
         |          {
-        |            "@value": "http://localhost.com/api"
+        |            "@value": "localhost.com"
         |          }
         |        ],
         |        "http://raml.org/vocabularies/http#schemes": [
@@ -105,7 +105,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |        ],
         |        "http://raml.org/vocabularies/http#basePath": [
         |          {
-        |            "@value": "http://localhost.com/api"
+        |            "@value": "api"
         |          }
         |        ],
         |        "http://raml.org/vocabularies/http#accepts": [
@@ -167,7 +167,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |        ],
         |        "http://raml.org/vocabularies/http#host": [
         |          {
-        |            "@value": "http://localhost.com/api"
+        |            "@value": "localhost.com"
         |          }
         |        ],
         |        "http://raml.org/vocabularies/http#schemes": [
@@ -180,7 +180,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |        ],
         |        "http://raml.org/vocabularies/http#basePath": [
         |          {
-        |            "@value": "http://localhost.com/api"
+        |            "@value": "api"
         |          }
         |        ],
         |        "http://raml.org/vocabularies/http#accepts": [

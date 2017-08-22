@@ -26,6 +26,18 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
   def withOperations(operations: Seq[Operation]): this.type = setArray(Operations, operations)
   def withParameters(parameters: Seq[Parameter]): this.type = setArray(UriParameters, parameters)
 
+  def withOperation(method: String): Operation = {
+    val result = Operation().withMethod(method)
+    add(Operations, result)
+    result
+  }
+
+  def withParameter(): Parameter = {
+    val result = Parameter()
+    add(UriParameters, result)
+    result
+  }
+
   override def adopted(parent: String): this.type = withId(parent + "/end-points/" + path.urlEncoded)
 }
 

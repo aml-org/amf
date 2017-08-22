@@ -3,6 +3,7 @@ package amf.common
 import java.io.{File, FileNotFoundException, FileReader, Reader}
 import java.net.{InetAddress, UnknownHostException}
 
+import org.scalatest.{Assertion, Succeeded}
 import org.scalatest.Matchers._
 
 import scala.util.Random
@@ -44,12 +45,18 @@ object Tests {
     }
   }
 
+  def checkDiff(tuple: (String, String)): Assertion = tuple match {
+    case (actual, expected) =>
+      checkDiff(actual, expected)
+      Succeeded
+  }
+
   /** Diff between 2 strings. */
-  def checkDiff(val1: String, val2: String): Unit = {
-    val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(val1, val2)
+  def checkDiff(actual: String, expected: String): Unit = {
+    val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(actual, expected)
     if (diffs.nonEmpty) {
       println("---------------------------------------------------------------------------------")
-      println(val1)
+      println(actual)
       println("---------------------------------------------------------------------------------")
       fail("\n" + Diff.makeString(diffs))
     }

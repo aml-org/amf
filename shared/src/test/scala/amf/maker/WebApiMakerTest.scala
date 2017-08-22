@@ -387,24 +387,24 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
           assertRaw(field, a, e)
       })
     }
-  }
 
-  private def assertRaw(field: Field, a: Any, e: Any): Unit = {
-    e match {
-      case _: String | _: Boolean => if (a != e) fail(s"Expected scalar $a but $e found for $field")
-      case obj: AmfObject         => AmfObjectMatcher(obj).assert(a.asInstanceOf[AmfObject])
-      case values: Seq[_] =>
-        val other = a.asInstanceOf[Seq[_]]
+    private def assertRaw(field: Field, a: Any, e: Any): Unit = {
+      e match {
+        case _: String | _: Boolean => if (a != e) fail(s"Expected scalar $a but $e found for $field")
+        case obj: AmfObject         => AmfObjectMatcher(obj).assert(a.asInstanceOf[AmfObject])
+        case values: Seq[_] =>
+          val other = a.asInstanceOf[Seq[_]]
 
-        if (values.size != other.size) {
-          fail(s"Expected $values but $other fields have different sizes")
-        }
+          if (values.size != other.size) {
+            fail(s"Expected $values but $other fields have different sizes")
+          }
 
-        values
-          .zip(other)
-          .foreach({
-            case (exp, act) => assertRaw(field, act, exp)
-          })
+          values
+            .zip(other)
+            .foreach({
+              case (exp, act) => assertRaw(field, act, exp)
+            })
+      }
     }
   }
 }

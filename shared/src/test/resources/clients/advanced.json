@@ -3,29 +3,29 @@
   "info": {
     "title": "test",
     "description": "test description",
-    "version": "1.1",
     "termsOfService": "termsOfService",
+    "version": "1.1",
     "license": {
-      "name": "licenseName",
-      "url": "licenseUrl"
+      "url": "licenseUrl",
+      "name": "licenseName"
     }
   },
-  "host": "http://localhost.com/api",
-  "schemes": [
-    "http",
-    "https"
-  ],
-  "basePath": "http://localhost.com/api",
+  "host": "localhost.com",
+  "basePath": "api",
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "contact": {
-    "email": "test@test",
+    "url": "organizationUrl",
     "name": "organizationName",
-    "url": "organizationUrl"
+    "email": "test@test"
   },
   "externalDocs": {
     "url": "creativoWorkUrl",
@@ -33,32 +33,32 @@
   },
   "paths": {
     "/endpoint": {
-      "description": "test endpoint",
       "displayName": "endpoint",
+      "description": "test endpoint",
       "get": {
-        "description": "test operation get",
         "operationId": "test get",
-        "schemes": [
-          "http"
-        ],
+        "description": "test operation get",
         "summary": "summary of operation get",
         "externalDocs": {
-          "description": "documentation operation",
-          "url": "localhost:8080/endpoint/operation"
-        }
-      },
-      "post": {
-        "description": "test operation post",
-        "deprecated": true,
-        "operationId": "test post",
+          "url": "localhost:8080/endpoint/operation",
+          "description": "documentation operation"
+        },
         "schemes": [
           "http"
-        ],
+        ]
+      },
+      "post": {
+        "operationId": "test post",
+        "description": "test operation post",
+        "deprecated": true,
         "summary": "summary of operation post",
         "externalDocs": {
-          "description": "documentation operation",
-          "url": "localhost:8080/endpoint/operation"
-        }
+          "url": "localhost:8080/endpoint/operation",
+          "description": "documentation operation"
+        },
+        "schemes": [
+          "http"
+        ]
       }
     }
   }
