@@ -24,12 +24,12 @@
           },
           "404": {
             "description": "Not found!",
+            "x-media-type": "application/json",
             "x-response-payloads": [
               {
                 "mediaType": "application/xml"
               }
-            ],
-            "x-media-type": "application/json"
+            ]
           }
         },
         "parameters": [

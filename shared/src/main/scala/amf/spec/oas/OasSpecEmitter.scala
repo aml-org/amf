@@ -409,7 +409,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       entry { () =>
         raw(key)
 
-        map { () =>
+        array { () =>
           var result = mutable.SortedSet()(ordering)
 
           payloads.foreach(p => {
