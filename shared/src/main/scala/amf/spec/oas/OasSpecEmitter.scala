@@ -378,16 +378,13 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       //TODO gute review this
       val parameters = OperationParameters(request)
-      if (parameters.nonEmpty)
+      val payloads   = requestPayloads(request)
+      if (parameters.nonEmpty || payloads.default.isDefined)
         result += ParametersEmitter("parameters",
                                     parameters.parameters(),
                                     reqFs.entry(RequestModel.QueryParameters),
                                     ordering,
-                                    parameters.payload) //todo query parameters? header/ what fields should we use?
-
-      val payloads = requestPayloads(request)
-      if (payloads.default.isDefined)
-        result += ManualEmitter("x-media-type", payloads.default.get.mediaType)
+                                    payloads.default) //todo query parameters? header/ what fields should we use?
 
       if (payloads.payloads.nonEmpty)
         reqFs

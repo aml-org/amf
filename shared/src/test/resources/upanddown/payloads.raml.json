@@ -13,6 +13,13 @@
       "description": "and this description!",
       "get": {
         "operationId": "Some title",
+        "parameters": [
+          {
+            "in": "body",
+            "schema": "string",
+            "x-media-type": "application/json"
+          }
+        ],
         "responses": {
           "200": {
             "description": "200 descr",
@@ -31,14 +38,7 @@
               }
             ]
           }
-        },
-        "parameters": [
-          {
-            "in": "body",
-            "schema": "string",
-            "x-media-type": "application/json"
-          }
-        ]
+        }
       }
     }
   }
