@@ -1,5 +1,6 @@
 package amf.client
 
+import amf.common.AmfObjectTestMatcher
 import amf.model.{BaseUnit, Document, WebApi}
 import amf.remote.OasJsonHint
 import amf.unsafe.PlatformSecrets
@@ -12,7 +13,7 @@ import scala.scalajs.js.Promise
 /**
   *
   */
-class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
+class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   ignore("test from stream generation") {
@@ -23,7 +24,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
         eventualUnit.toFuture
       })
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiBare)
+        AmfObjectMatcher(webApiBare.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        succeed
       })
   }
 
@@ -32,7 +34,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       .generateAsyncFromFile("file://shared/src/test/resources/clients/bare.json", OasJsonHint)
       .toFuture
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiBare)
+        AmfObjectMatcher(webApiBare.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        succeed
       })
   }
 
@@ -44,7 +47,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
         value1.toFuture
       })
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiAdvanced)
+        AmfObjectMatcher(webApiAdvanced.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        succeed
       })
   }
 
@@ -53,7 +57,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       .generateAsyncFromFile("file://shared/src/test/resources/clients/advanced.json", OasJsonHint)
       .toFuture
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiAdvanced)
+        AmfObjectMatcher(webApiAdvanced.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        succeed
       })
   }
 

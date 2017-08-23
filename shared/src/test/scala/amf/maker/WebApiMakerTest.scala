@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.common.ListAssertions
+import amf.common.{AmfObjectTestMatcher, ListAssertions}
 import amf.compiler.AMFCompiler
 import amf.document.Document
 import amf.domain.{License, _}
@@ -12,7 +12,7 @@ import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssertions {
+class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssertions with AmfObjectTestMatcher {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -369,41 +369,5 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
         AmfObjectMatcher(expected).assert(actual)
         Succeeded
       }
-  }
-
-  /** [[AmfObject]] matcher ignoring all [[Annotation]]s */
-  case class AmfObjectMatcher(expected: AmfObject) {
-
-    def assert(actual: AmfObject): Unit = {
-      if (actual.fields.size != expected.fields.size) {
-        fail(s"Expected ${expected.fields} but ${actual.fields} fields have different sizes")
-      }
-
-      expected.fields.foreach({
-        case (field, _) =>
-          val a: Any = actual.fields.raw(field).orNull
-          val e: Any = expected.fields.raw(field).orNull
-          assertRaw(field, a, e)
-      })
-    }
-
-    private def assertRaw(field: Field, a: Any, e: Any): Unit = {
-      e match {
-        case _: String | _: Boolean => if (a != e) fail(s"Expected scalar $a but $e found for $field")
-        case obj: AmfObject         => AmfObjectMatcher(obj).assert(a.asInstanceOf[AmfObject])
-        case values: Seq[_] =>
-          val other = a.asInstanceOf[Seq[_]]
-
-          if (values.size != other.size) {
-            fail(s"Expected $values but $other fields have different sizes")
-          }
-
-          values
-            .zip(other)
-            .foreach({
-              case (exp, act) => assertRaw(field, act, exp)
-            })
-      }
-    }
   }
 }
