@@ -1,5 +1,6 @@
 package amf.client
 
+import amf.common.AmfObjectTestMatcher
 import amf.model.{Document, WebApi}
 import amf.remote.OasJsonHint
 import amf.unsafe.PlatformSecrets
@@ -13,48 +14,52 @@ import scala.compat.java8.FutureConverters
 /**
   *
   */
-class JvmClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
+class JvmClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  ignore("test from stream generation") {
+  test("test from stream generation") {
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .flatMap(stream => {
         FutureConverters.toScala(new JvmClient().generateAsyncFromStream(stream.stream.toString, OasJsonHint))
       })
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiBare)
+        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
+        succeed
       })
   }
 
-  ignore("test from file generation") {
+  test("test from file generation") {
     FutureConverters
       .toScala(
         new JvmClient()
           .generateAsyncFromFile("file://shared/src/test/resources/clients/bare.json", OasJsonHint))
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiBare)
+        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
+        succeed
       })
   }
 
-  ignore("test from stream complete generation") {
+  test("test from stream complete generation") {
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .flatMap(stream => {
         FutureConverters.toScala(new JvmClient().generateAsyncFromStream(stream.stream.toString, OasJsonHint))
       })
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiAdvanced)
+        AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
+        succeed
       })
   }
 
-  ignore("test from file complete generation") {
+  test("test from file complete generation") {
     FutureConverters
       .toScala(
         new JvmClient()
           .generateAsyncFromFile("file://shared/src/test/resources/clients/advanced.json", OasJsonHint))
       .map(bu => {
-        assertWebApi(bu.asInstanceOf[Document].encodes, webApiAdvanced)
+        AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
+        succeed
       })
   }
 

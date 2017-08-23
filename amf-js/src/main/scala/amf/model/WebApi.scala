@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.JSExportAll
   * WebApi js class
   */
 @JSExportAll
-case class WebApi private (private[amf] val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi private (private val webApi: amf.domain.WebApi) extends DomainElement {
 
   val name: String                     = webApi.name
   val description: String              = webApi.description

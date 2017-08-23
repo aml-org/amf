@@ -24,7 +24,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
         eventualUnit.toFuture
       })
       .map(bu => {
-        AmfObjectMatcher(webApiBare.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
         succeed
       })
   }
@@ -34,7 +34,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       .generateAsyncFromFile("file://shared/src/test/resources/clients/bare.json", OasJsonHint)
       .toFuture
       .map(bu => {
-        AmfObjectMatcher(webApiBare.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
         succeed
       })
   }
@@ -47,7 +47,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
         value1.toFuture
       })
       .map(bu => {
-        AmfObjectMatcher(webApiAdvanced.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
         succeed
       })
   }
@@ -57,7 +57,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       .generateAsyncFromFile("file://shared/src/test/resources/clients/advanced.json", OasJsonHint)
       .toFuture
       .map(bu => {
-        AmfObjectMatcher(webApiAdvanced.webApi).assert(bu.asInstanceOf[Document].encodes.webApi)
+        AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
         succeed
       })
   }
