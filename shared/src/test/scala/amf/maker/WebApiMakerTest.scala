@@ -5,7 +5,6 @@ import amf.compiler.AMFCompiler
 import amf.document.Document
 import amf.domain.{License, _}
 import amf.metadata.Field
-import amf.metadata.domain.WebApiModel.{License => LicenseField}
 import amf.model.AmfObject
 import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
@@ -149,7 +148,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     val endpoints = List(
       EndPoint()
         .withPath("/levelzero/some{two}")
-        .withParameters(List(Parameter().withName("two").withRequired(false))),
+        .withParameters(List(Parameter().withName("two").withRequired(false).withBinding("path"))),
       EndPoint()
         .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
@@ -160,8 +159,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withName("Some title")
             .withRequest(Request()
               .withQueryParameters(List(
-                Parameter().withName("param1").withDescription("Some descr").withRequired(true),
-                Parameter().withName("param2?").withSchema("string").withRequired(false)
+                Parameter().withName("param1").withDescription("Some descr").withRequired(true).withBinding("query"),
+                Parameter().withName("param2").withSchema("string").withRequired(false).withBinding("query")
               ))),
           Operation()
             .withMethod("post")
@@ -169,7 +168,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withDescription("Some description")
             .withRequest(Request()
               .withHeaders(List(
-                Parameter().withName("Header-One").withRequired(false)
+                Parameter().withName("Header-One").withRequired(false).withBinding("header")
               )))
         ))
     )
@@ -177,7 +176,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withName("API")
       .withBasePath("/some/{one}/uri")
       .withBaseUriParameters(
-        List(Parameter().withName("one").withRequired(true).withDescription("One base uri param")))
+        List(Parameter().withName("one").withRequired(true).withDescription("One base uri param").withBinding("path")))
       .withEndPoints(endpoints)
 
     assertFixture(api, "operation-request.raml", RamlYamlHint)
