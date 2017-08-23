@@ -15,7 +15,7 @@ import scala.scalajs.js.Promise
 class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("test from stream generation") {
+  ignore("test from stream generation") {
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .flatMap(stream => {
@@ -27,7 +27,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       })
   }
 
-  test("test from file generation") {
+  ignore("test from file generation") {
     new JsClient()
       .generateAsyncFromFile("file://shared/src/test/resources/clients/bare.json", OasJsonHint)
       .toFuture
@@ -36,7 +36,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       })
   }
 
-  test("test from stream complete generation") {
+  ignore("test from stream complete generation") {
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .flatMap(stream => {
@@ -48,7 +48,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
       })
   }
 
-  test("test from file complete generation") {
+  ignore("test from file complete generation") {
     new JsClient()
       .generateAsyncFromFile("file://shared/src/test/resources/clients/advanced.json", OasJsonHint)
       .toFuture
