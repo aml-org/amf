@@ -10,8 +10,8 @@ import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.Oas
-import amf.spec.Emitter
 import amf.spec.SpecOrdering.ordering
+import amf.spec.{Emitter, SpecOrdering}
 
 import scala.collection.mutable
 
@@ -41,7 +41,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
   }
 
-  private def traverse(emitters: mutable.SortedSet[Emitter]): Unit = {
+  private def traverse(emitters: Seq[Emitter]): Unit = {
     emitters.foreach(e => {
       e.emit()
     })
@@ -63,10 +63,10 @@ case class OasSpecEmitter(unit: BaseUnit) {
     emitter.value(token, content)
   }
 
-  case class WebApiEmitter(api: WebApi, ordering: Ordering[Emitter]) {
-    val emitters: mutable.SortedSet[Emitter] = {
+  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering) {
+    val emitters: Seq[Emitter] = {
       val fs     = api.fields
-      val result = mutable.SortedSet()(ordering)
+      val result = mutable.ListBuffer[Emitter]()
 
       result += InfoEmitter(fs, ordering)
 
@@ -92,14 +92,14 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       fs.entry(WebApiModel.EndPoints).map(f => result += EndpointsEmitter("paths", f, ordering))
 
-      result
+      ordering.sorted(result)
     }
 
-    private case class InfoEmitter(fs: Fields, ordering: Ordering[Emitter]) extends Emitter {
+    private case class InfoEmitter(fs: Fields, ordering: SpecOrdering) extends Emitter {
       override def emit(): Unit = {
         entry { () =>
           raw("info")
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
 
@@ -112,26 +112,48 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
 
         }
       }
 
       //TODO we lost info node position
-      override def position(): Position = Position.ZERO
+      override def position(): Position = {
+        var result: Position = ZERO
+        fs.entry(WebApiModel.Version)
+          .foreach(
+            f =>
+              f.value.annotations
+                .find(classOf[LexicalInformation])
+                .foreach({
+                  case LexicalInformation(range) => result = range.start
+                }))
+        fs.entry(WebApiModel.Name)
+          .foreach(
+            f =>
+              f.value.annotations
+                .find(classOf[LexicalInformation])
+                .foreach({
+                  case LexicalInformation(range) =>
+                    if (result.isZero || range.start.lt(result)) {
+                      result = range.start
+                    }
+                }))
+        result
+      }
     }
 
   }
 
-  case class ArrayEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value,
         entry { () =>
           raw(key)
 
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           f.value.value
             .asInstanceOf[AmfArray]
@@ -141,7 +163,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
             })
 
           array { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -150,7 +172,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class EndPointEmitter(endpoint: EndPoint, ordering: Ordering[Emitter]) extends Emitter {
+  case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         endpoint.annotations,
@@ -159,7 +181,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           ScalarEmitter(fs.entry(EndPointModel.Path).get.value.value.asInstanceOf[AmfScalar]).emit()
 
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName", f))
 
@@ -179,7 +201,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -205,7 +227,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       endPointParameters
     }
 
-    private def operations(f: FieldEntry, ordering: Ordering[Emitter]): Seq[Emitter] =
+    private def operations(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] =
       operations(f)
         .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
 
@@ -221,7 +243,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
   case class ParametersEmitter(key: String,
                                parameters: Seq[Parameter],
                                f: Option[FieldEntry],
-                               ordering: Ordering[Emitter],
+                               ordering: SpecOrdering,
                                payloadOption: Option[Payload] = None)
       extends Emitter {
     override def emit(): Unit = {
@@ -237,16 +259,16 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     private def parametersMap(parameters: Seq[Parameter],
-                              ordering: Ordering[Emitter],
-                              payloadOption: Option[Payload]): mutable.SortedSet[Emitter] = {
-      val result = mutable.SortedSet()(ordering)
+                              ordering: SpecOrdering,
+                              payloadOption: Option[Payload]): Seq[Emitter] = {
+      val result = mutable.ListBuffer[Emitter]()
       parameters
         .foreach(e => result += ParameterEmitter(e, ordering))
 
       //TODO gute review this. Parameter not has media type
-      if (payloadOption.isDefined) {
+      payloadOption.foreach(payload => {
         result += new Emitter {
-          override def position(): Position = Position.ZERO
+          override def position(): Position = pos(payload.annotations)
 
           override def emit(): Unit = {
             map { () =>
@@ -255,28 +277,32 @@ case class OasSpecEmitter(unit: BaseUnit) {
                 raw("body")
               }
 
-              if (payloadOption.get.schema != null)
+              if (payload.schema != null)
                 entry { () =>
                   raw("schema")
-                  raw(payloadOption.get.schema)
+                  raw(payload.schema)
                 }
 
-              if (payloadOption.get.mediaType != null)
+              if (payload.mediaType != null)
                 entry(() => {
                   raw("x-media-type")
-                  raw(payloadOption.get.mediaType)
+                  raw(payload.mediaType)
                 })
             }
           }
         }
-      }
-      result
+      })
+
+      ordering.sorted(result)
     }
 
-    override def position(): Position = if (f.isDefined) pos(f.get.value.annotations) else Position.ZERO
+    override def position(): Position = {
+      if (parameters.nonEmpty) pos(parameters.head.annotations)
+      else payloadOption.fold[Position](ZERO)(payload => pos(payload.annotations))
+    }
   }
 
-  case class OperationEmitter(operation: Operation, ordering: Ordering[Emitter]) extends Emitter {
+  case class OperationEmitter(operation: Operation, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         operation.annotations,
@@ -285,7 +311,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           ScalarEmitter(fs.entry(OperationModel.Method).get.value.value.asInstanceOf[AmfScalar]).emit()
 
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(OperationModel.Name).map(f => result += ValueEmitter("operationId", f))
 
@@ -305,7 +331,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -314,7 +340,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(operation.annotations)
   }
 
-  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value.annotations,
@@ -328,24 +354,24 @@ case class OasSpecEmitter(unit: BaseUnit) {
       )
     }
 
-    private def responses(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
-      val result = mutable.SortedSet()(ordering)
+    private def responses(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
+      val result = mutable.ListBuffer[Emitter]()
       f.value.value
         .asInstanceOf[AmfArray]
         .values
         .foreach(e => result += ResponseEmitter(e.asInstanceOf[Response], ordering))
-      result
+      ordering.sorted(result)
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ResponseEmitter(response: Response, ordering: Ordering[Emitter]) extends Emitter {
+  case class ResponseEmitter(response: Response, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         response.annotations,
         entry { () =>
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
           val fs     = response.fields
 
           ScalarEmitter(fs.entry(ResponseModel.Name).get.value.value.asInstanceOf[AmfScalar]).emit()
@@ -362,7 +388,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
             result += PayloadsEmitter("x-response-payloads", payloads.payloads, ordering)
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -371,10 +397,10 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(response.annotations)
   }
 
-  case class RequestEmitter(request: Request, ordering: Ordering[Emitter]) extends Emitter {
+  case class RequestEmitter(request: Request, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       val reqFs  = request.fields
-      val result = mutable.SortedSet()(ordering)
+      val result = mutable.ListBuffer[Emitter]()
 
       //TODO gute review this
       val parameters = OperationParameters(request)
@@ -391,7 +417,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           .entry(RequestModel.Payloads)
           .map(f => result += PayloadsEmitter("x-request-payloads", payloads.payloads, ordering))
 
-      traverse(result)
+      traverse(ordering.sorted(result))
     }
 
     private def requestPayloads(request: Request): Payloads = Payloads(request)
@@ -399,7 +425,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(request.annotations)
   }
 
-  case class PayloadsEmitter(key: String, payloads: Seq[Payload], ordering: Ordering[Emitter]) extends Emitter {
+  case class PayloadsEmitter(key: String, payloads: Seq[Payload], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       //      sourceOr(
       //        f.value.annotations,
@@ -407,12 +433,13 @@ case class OasSpecEmitter(unit: BaseUnit) {
         raw(key)
 
         array { () =>
-          var result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           payloads.foreach(p => {
             result += PayloadEmitter(p, ordering)
           })
-          traverse(result)
+
+          traverse(ordering.sorted(result))
         }
       }
       //)
@@ -421,7 +448,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = Position.ZERO
   }
 
-  case class PayloadEmitter(payload: Payload, ordering: Ordering[Emitter]) extends Emitter {
+  case class PayloadEmitter(payload: Payload, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         payload.annotations,
@@ -444,7 +471,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(payload.annotations)
   }
 
-  case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value.annotations,
@@ -458,24 +485,24 @@ case class OasSpecEmitter(unit: BaseUnit) {
       )
     }
 
-    private def parameters(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
-      val result = mutable.SortedSet()(ordering)
+    private def parameters(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
+      val result = mutable.ListBuffer[Emitter]()
       f.value.value
         .asInstanceOf[AmfArray]
         .values
         .foreach(e => result += RamlParameterEmitter(e.asInstanceOf[Parameter], ordering))
-      result
+      ordering.sorted(result)
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ParameterEmitter(parameter: Parameter, ordering: Ordering[Emitter]) extends Emitter {
+  case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         parameter.annotations,
         map { () =>
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
           val fs     = parameter.fields
 
           fs.entry(ParameterModel.Name).map(f => result += ValueEmitter("name", f))
@@ -491,7 +518,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
           //TODO:Schema if body?
 
-          traverse(result)
+          traverse(ordering.sorted(result))
 
         }
       )
@@ -500,7 +527,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(parameter.annotations)
   }
 
-  case class EndpointsEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class EndpointsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value.annotations,
@@ -514,24 +541,24 @@ case class OasSpecEmitter(unit: BaseUnit) {
       )
     }
 
-    private def endpoints(f: FieldEntry, ordering: Ordering[Emitter]): mutable.SortedSet[Emitter] = {
-      val result = mutable.SortedSet()(ordering)
+    private def endpoints(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
+      val result = mutable.ListBuffer[Emitter]()
       f.value.value
         .asInstanceOf[AmfArray]
         .values
         .foreach(e => result += EndPointEmitter(e.asInstanceOf[EndPoint], ordering))
-      result
+      ordering.sorted(result)
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class RamlParameterEmitter(parameter: Parameter, ordering: Ordering[Emitter]) extends Emitter {
+  case class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         parameter.annotations,
         entry { () =>
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
           val fs     = parameter.fields
 
           ScalarEmitter(fs.entry(ParameterModel.Name).get.value.value.asInstanceOf[AmfScalar]).emit()
@@ -545,7 +572,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -554,7 +581,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(parameter.annotations)
   }
 
-  case class LicenseEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class LicenseEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value,
@@ -562,14 +589,14 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw(key)
 
           val fs     = f.value.value.asInstanceOf[AmfObject].fields
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(LicenseModel.Url).map(f => result += ValueEmitter("url", f))
 
           fs.entry(LicenseModel.Name).map(f => result += ValueEmitter("name", f))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -578,7 +605,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class OrganizationEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class OrganizationEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value,
@@ -586,7 +613,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw(key)
 
           val fs     = f.value.value.asInstanceOf[AmfObject].fields
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(OrganizationModel.Url).map(f => result += ValueEmitter("url", f))
 
@@ -595,7 +622,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(OrganizationModel.Email).map(f => result += ValueEmitter("email", f))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )
@@ -604,7 +631,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class CreativeWorkEmitter(key: String, f: FieldEntry, ordering: Ordering[Emitter]) extends Emitter {
+  case class CreativeWorkEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
         f.value,
@@ -612,14 +639,14 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw(key)
 
           val fs     = f.value.value.asInstanceOf[AmfObject].fields
-          val result = mutable.SortedSet()(ordering)
+          val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
 
           fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
 
           map { () =>
-            traverse(result)
+            traverse(ordering.sorted(result))
           }
         }
       )

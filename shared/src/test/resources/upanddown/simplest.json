@@ -34,14 +34,6 @@
   "paths": {
     "/levelzero": {
       "displayName": "Name",
-      "parameters": [
-        {
-          "name": "param1",
-          "description": "Some descr",
-          "in": "query",
-          "required": true
-        }
-      ],
       "get": {
         "operationId": "Some title",
         "description": "Some description",
@@ -63,7 +55,15 @@
             "required": true
           }
         ]
-      }
+      },
+      "parameters": [
+        {
+          "name": "param1",
+          "description": "Some descr",
+          "in": "query",
+          "required": true
+        }
+      ]
     }
   }
 }

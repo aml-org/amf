@@ -83,7 +83,7 @@ object GraphParser {
                          sources: SourceMap,
                          key: String) = {
       f.`type` match {
-        case _: Obj             => instance.set(f, parse(node, ctx))
+        case _: Obj             => instance.set(f, parse(node, ctx), annotations(sources, key))
         case Str | RegExp | Iri => instance.set(f, str(node), annotations(sources, key))
         case Bool               => instance.set(f, bool(node), annotations(sources, key))
         case a: Array =>
@@ -91,7 +91,7 @@ object GraphParser {
             case _: Obj => node.children.map(n => parse(n, ctx))
             case Str    => node.children.map(n => str(value(a.element, n)))
           }
-          instance.setArray(f, values)
+          instance.setArray(f, values, annotations(sources, key))
       }
     }
 

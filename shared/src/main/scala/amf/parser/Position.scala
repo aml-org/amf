@@ -4,6 +4,10 @@ import amf.parser.Position.ZERO
 
 /** Defines a position on an input */
 case class Position(line: Int, column: Int) extends Comparable[Position] {
+
+  /** Return true if position is less than specified position. */
+  def lt(o: Position): Boolean = compareTo(o) < 0
+
   /* Return min position between actual and given. */
   def min(other: Position): Position =
     if (line < other.line || line == other.line && column <= other.column) this else other
@@ -16,6 +20,8 @@ case class Position(line: Int, column: Int) extends Comparable[Position] {
     val result = line - o.line
     if (result == 0) column - o.column else result
   }
+
+  def isZero: Boolean = this == ZERO
 
   override def toString: String = s"($line,$column)"
 }

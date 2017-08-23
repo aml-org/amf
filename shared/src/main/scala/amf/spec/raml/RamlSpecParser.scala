@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.common.AMFAST
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.{ExplicitField, SynthesizedField}
+import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SourceAST, SynthesizedField}
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
@@ -104,7 +104,7 @@ case class RamlSpecParser(root: Root) {
       "^/.*",
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(EndpointParser(_, None, endpoints).parse())
+        entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints))
       }
     )
@@ -136,13 +136,19 @@ case class RamlSpecParser(root: Root) {
   }
 }
 
-case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector: mutable.ListBuffer[EndPoint]) {
+case class EndpointParser(entry: EntryNode,
+                          producer: String => EndPoint,
+                          parent: Option[EndPoint],
+                          collector: mutable.ListBuffer[EndPoint]) {
   def parse(): Unit = {
 
-    val endpoint = EndPoint(entry.ast)
-    val entries  = new Entries(entry.value)
+    val path = parent.map(_.path).getOrElse("") + entry.key.content.unquote
 
-    endpoint.set(Path, AmfScalar(parent.map(_.path).getOrElse("") + entry.key.content.unquote, Annotations(entry.key)))
+    val endpoint = producer(path).add(Annotations(entry.ast))
+    parent.map(p => endpoint.add(ParentEndPoint(p)))
+    val entries = new Entries(entry.value)
+
+    endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
     entries.key("displayName", entry => {
       val value = ValueNode(entry.value)
@@ -178,7 +184,7 @@ case class EndpointParser(entry: EntryNode, parent: Option[EndPoint], collector:
     entries.regex(
       "^/.*",
       entries => {
-        entries.foreach(EndpointParser(_, Some(endpoint), collector).parse())
+        entries.foreach(EndpointParser(_, producer, Some(endpoint), collector).parse())
       }
     )
   }

@@ -61,7 +61,9 @@ object GraphEmitter {
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit) = {
       t match {
-        case _: Obj => obj(v.value.asInstanceOf[AmfObject], parent)
+        case _: Obj =>
+          obj(v.value.asInstanceOf[AmfObject], parent)
+          sources(v)
         case Iri =>
           iri(v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
@@ -74,6 +76,7 @@ object GraphEmitter {
         case a: Array =>
           array { () =>
             val seq = v.value.asInstanceOf[AmfArray]
+            sources(v)
             a.element match {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
               case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))

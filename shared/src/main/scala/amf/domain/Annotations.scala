@@ -22,6 +22,11 @@ class Annotations {
     this
   }
 
+  def ++=(other: Annotations): this.type = {
+    annotations ++= other.annotations
+    this
+  }
+
   /** Return [[SerializableAnnotation]]s only. */
   def serializables(): Seq[SerializableAnnotation] =
     annotations.filter(_.isInstanceOf[SerializableAnnotation]).map(_.asInstanceOf[SerializableAnnotation])

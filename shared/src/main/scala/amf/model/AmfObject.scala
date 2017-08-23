@@ -51,6 +51,12 @@ trait AmfObject extends AmfElement {
   }
 
   /** Set field value. */
+  def setArray(field: Field, values: Seq[AmfElement], annotations: Annotations): this.type = {
+    fields.set(field, AmfArray(values), annotations)
+    this
+  }
+
+  /** Set field value. */
   def set(field: Field, value: AmfElement, annotations: Annotations): this.type = {
     fields.set(field, value, annotations)
     this

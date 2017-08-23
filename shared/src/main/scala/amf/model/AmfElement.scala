@@ -15,4 +15,10 @@ trait AmfElement {
     annotations += annotation
     this
   }
+
+  /** Merge specified annotations. */
+  def add(other: Annotations): this.type = {
+    annotations ++= other
+    this
+  }
 }
