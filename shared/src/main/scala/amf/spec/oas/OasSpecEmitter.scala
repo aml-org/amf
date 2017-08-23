@@ -6,7 +6,7 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.metadata.domain._
-import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.Oas
@@ -118,7 +118,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
         }
       }
 
-      //TODO we lost info node position
       override def position(): Position = {
         var result: Position = ZERO
         fs.entry(WebApiModel.Version)
@@ -143,7 +142,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
         result
       }
     }
-
   }
 
   case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
@@ -187,10 +185,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
-          val parameters = endPointParameters(fs)
+          val parameters = endPointParameters()
 
-          //TODO if endpoint and operation has body parameter endpoint looses.
-          //TODO we lose name of endpoint parameter with body binding
           if (parameters.nonEmpty)
             result += ParametersEmitter("parameters",
                                         parameters.parameters(),
@@ -207,35 +203,17 @@ case class OasSpecEmitter(unit: BaseUnit) {
       )
     }
 
-    private def endPointParameters(fs: Fields): EndPointParameters = {
-      val ops = fs
-        .entry(EndPointModel.Operations)
-        .map(operations)
-        .getOrElse(Nil)
-
-      var endPointParameters =
-        ops
-          .filter(_.asInstanceOf[Operation].request != null)
-          .foldLeft(EndPointParameters())((parameters, op) =>
-            parameters.merge(EndPointParameters(op.asInstanceOf[Operation].request)))
-
-      fs.entry(EndPointModel.UriParameters)
-        .foreach(f => {
-          val pathParameters = f.value.value.asInstanceOf[AmfArray].values.asInstanceOf[Seq[Parameter]]
-          endPointParameters = endPointParameters.merge(EndPointParameters(path = pathParameters))
-        })
-      endPointParameters
-    }
+    private def endPointParameters(): EndPointParameters =
+      endpoint.operations
+        .filter(_.request != null)
+        .foldLeft(EndPointParameters(path = endpoint.parameters))((parameters, op) =>
+          parameters.merge(EndPointParameters(op.request)))
 
     private def operations(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] =
-      operations(f)
-        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
-
-    private def operations(f: FieldEntry): Seq[AmfElement] = {
       f.value.value
         .asInstanceOf[AmfArray]
         .values
-    }
+        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
 
     override def position(): Position = pos(endpoint.annotations)
   }
@@ -252,46 +230,17 @@ case class OasSpecEmitter(unit: BaseUnit) {
         entry { () =>
           raw(key)
           array { () =>
-            traverse(parametersMap(parameters, ordering, payloadOption))
+            traverse(parameters(ordering))
           }
         }
       )
     }
 
-    private def parametersMap(parameters: Seq[Parameter],
-                              ordering: SpecOrdering,
-                              payloadOption: Option[Payload]): Seq[Emitter] = {
+    private def parameters(ordering: SpecOrdering): Seq[Emitter] = {
       val result = mutable.ListBuffer[Emitter]()
-      parameters
-        .foreach(e => result += ParameterEmitter(e, ordering))
+      parameters.foreach(e => result += ParameterEmitter(e, ordering))
 
-      //TODO gute review this. Parameter not has media type
-      payloadOption.foreach(payload => {
-        result += new Emitter {
-          override def position(): Position = pos(payload.annotations)
-
-          override def emit(): Unit = {
-            map { () =>
-              entry { () =>
-                raw("in")
-                raw("body")
-              }
-
-              if (payload.schema != null)
-                entry { () =>
-                  raw("schema")
-                  raw(payload.schema)
-                }
-
-              if (payload.mediaType != null)
-                entry(() => {
-                  raw("x-media-type")
-                  raw(payload.mediaType)
-                })
-            }
-          }
-        }
-      })
+      payloadOption.foreach(payload => result += PayloadAsParameterEmitter(payload))
 
       ordering.sorted(result)
     }
@@ -299,6 +248,27 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = {
       if (parameters.nonEmpty) pos(parameters.head.annotations)
       else payloadOption.fold[Position](ZERO)(payload => pos(payload.annotations))
+    }
+  }
+
+  case class PayloadAsParameterEmitter(payload: Payload) extends Emitter {
+    override def position(): Position = pos(payload.annotations)
+
+    override def emit(): Unit = {
+      map { () =>
+        val result = mutable.ListBuffer[Emitter]()
+
+        entry { () =>
+          raw("in")
+          raw("body")
+        }
+
+        payload.fields.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
+
+        payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
+
+        traverse(result)
+      }
     }
   }
 
@@ -516,10 +486,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
           fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
-          //TODO:Schema if body?
 
           traverse(ordering.sorted(result))
-
         }
       )
     }

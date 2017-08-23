@@ -26,7 +26,6 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "info",
       entry => {
-        //TODO lexical for 'info' node is lost.
         val info = new Entries(entry.value)
 
         info.key("title", entry => {
