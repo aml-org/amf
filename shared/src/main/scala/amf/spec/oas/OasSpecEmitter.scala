@@ -258,10 +258,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       map { () =>
         val result = mutable.ListBuffer[Emitter]()
 
-        entry { () =>
-          raw("in")
-          raw("body")
-        }
+        result += EntryEmitter("in", "body")
 
         payload.fields.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
 
@@ -352,7 +349,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           val payloads = Payloads(response)
           if (payloads.default.isDefined)
-            result += ManualEmitter("x-media-type", payloads.default.get.mediaType)
+            result += EntryEmitter("x-media-type", payloads.default.get.mediaType)
 
           if (payloads.payloads.nonEmpty)
             result += PayloadsEmitter("x-response-payloads", payloads.payloads, ordering)
@@ -640,7 +637,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ManualEmitter(key: String, value: String, token: AMFToken = StringToken) extends Emitter {
+  case class EntryEmitter(key: String, value: String, token: AMFToken = StringToken) extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         raw(key)
@@ -738,8 +735,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
       val maybePayload = defaultPayload(valids)
       Payloads(maybePayload, nonDefaults(maybePayload, valids))
     }
-
-    private def default(all: Seq[Payload]): Option[Payload] = defaultPayload(filterValids(all))
 
     private def filterValids(all: Seq[Payload]): Seq[Payload] =
       all.filter(p => {
