@@ -47,11 +47,7 @@ object Annotation {
 
   case class EndPointBodyParameter() extends Annotation
 
-  case class OperationBodyParameter() extends Annotation
-
-  case class OverrideEndPointBodyParameter(asParameter: Parameter, asPayload: Payload) extends Annotation
-
-  case class MediaType(mediaType: String) extends Annotation
+  case class DefaultPayload() extends Annotation
 
   case class EndPointParameter() extends Annotation
 

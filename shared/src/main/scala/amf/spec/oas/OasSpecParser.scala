@@ -3,7 +3,7 @@ package amf.spec.oas
 import amf.common.AMFAST
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.{EndPointBodyParameter, ExplicitField, OperationBodyParameter}
+import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField}
 import amf.domain._
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
@@ -216,7 +216,8 @@ case class RequestParser(entries: Entries, global: OasParameters) {
       }
     )
 
-    if (payloads.nonEmpty) request.set(RequestModel.Payloads, AmfArray(payloads)) //TODO annotations?
+    //TODO x-request-payloads entry lexical lost. It's a mix of the default payload and the contents of x-request-payloads.
+    if (payloads.nonEmpty) request.set(RequestModel.Payloads, AmfArray(payloads))
 
     if (request.fields.nonEmpty) Some(request) else None
   }
@@ -342,21 +343,36 @@ case class ResponseParser(entry: EntryNode) {
       }
     )
 
+    val payloads = mutable.ListBuffer[Payload]()
+
+    defaultPayload(entries).foreach(payloads += _)
+
     entries.key(
       "x-response-payloads",
       entry => {
         new Entries(entry.value).regex(
           ".*/.*",
-          entries => {
-            val payloads = mutable.ListBuffer[Payload]()
-            entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-            response.set(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
-          }
+          entries => entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
         )
       }
     )
 
+    //TODO x-response-payloads entry lexical lost. It's a mix of the default payload and the contents of x-response-payloads.
+    if (payloads.nonEmpty) response.set(ResponseModel.Payloads, AmfArray(payloads))
+
     response
+  }
+
+  private def defaultPayload(entries: Entries): Option[Payload] = {
+    val payload = Payload().add(DefaultPayload())
+
+    entries.key("x-media-type",
+                entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
+
+    entries.key("schema",
+                entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
+
+    if (payload.fields.nonEmpty) Some(payload) else None
   }
 }
 
@@ -421,7 +437,7 @@ case class OasParameters(query: Seq[Parameter] = Nil,
   }
 
   private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
-    inner.map(_.add(OperationBodyParameter())).orElse(global)
+    inner.map(_.add(DefaultPayload())).orElse(global)
 
   private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
     val globalMap = global.map(p => p.name -> p.add(Annotation.EndPointParameter())).toMap
