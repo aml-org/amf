@@ -117,4 +117,12 @@ case class Value(value: AmfElement, annotations: Annotations) {
   override def toString: String = value.toString
 }
 
-case class FieldEntry(field: Field, value: Value)
+case class FieldEntry(field: Field, value: Value) {
+  def element: AmfElement = value.value
+
+  def scalar: AmfScalar = element.asInstanceOf[AmfScalar]
+
+  def array: AmfArray = element.asInstanceOf[AmfArray]
+
+  def obj: AmfObject = element.asInstanceOf[AmfObject]
+}

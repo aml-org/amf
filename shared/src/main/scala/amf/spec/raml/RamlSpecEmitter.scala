@@ -8,12 +8,12 @@ import amf.domain.Annotation.{ExplicitField, LexicalInformation, SourceVendor, S
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain._
-import amf.model.{AmfArray, AmfObject, AmfScalar}
+import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
-import amf.spec.{Emitter, SpecOrdering}
 import amf.spec.SpecOrdering.ordering
+import amf.spec.{Emitter, SpecOrdering}
 
 import scala.collection.mutable
 
@@ -101,9 +101,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
 
     private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[Vendor]): Seq[Emitter] = {
-      val endpoints = f.value.value
-        .asInstanceOf[AmfArray]
-        .values
+      val endpoints = f.array.values
         .asInstanceOf[Seq[EndPoint]]
 
       val notOas = !vendor.contains(Oas)
@@ -129,19 +127,19 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         val protocol: String = fs
           .entry(WebApiModel.Schemes)
           .find(_.value.annotations.contains(classOf[SynthesizedField]))
-          .flatMap(_.value.value.asInstanceOf[AmfArray].values.headOption)
+          .flatMap(_.array.values.headOption)
           .map(_.asInstanceOf[AmfScalar].value.toString)
           .getOrElse("")
 
         val domain: String = fs
           .entry(WebApiModel.Host)
-          .map(_.value.value.asInstanceOf[AmfScalar].value)
+          .map(_.scalar.value)
           .map(_.toString)
           .getOrElse("")
 
         val basePath: String = fs
           .entry(WebApiModel.BasePath)
-          .map(_.value.value.asInstanceOf[AmfScalar].value)
+          .map(_.scalar.value)
           .map(_.toString)
           .getOrElse("")
 
@@ -170,9 +168,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           val result = mutable.ListBuffer[Emitter]()
 
-          f.value.value
-            .asInstanceOf[AmfArray]
-            .values
+          f.array.values
             .foreach(v => {
               result += ScalarEmitter(v.asInstanceOf[AmfScalar])
             })
@@ -199,7 +195,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
           val fs = endpoint.fields
 
           endpoint.parent.fold({
-            ScalarEmitter(fs.entry(EndPointModel.Path).get.value.value.asInstanceOf[AmfScalar]).emit()
+            ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit()
           })(parent => {
             ScalarEmitter(AmfScalar(endpoint.relativePath)).emit()
           })
@@ -226,9 +222,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     def +=(child: EndPointEmitter): Unit = children += child
 
     private def operations(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
-      f.value.value
-        .asInstanceOf[AmfArray]
-        .values
+      f.array.values
         .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
     }
 
@@ -242,7 +236,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         entry { () =>
           val fs = operation.fields
 
-          ScalarEmitter(fs.entry(OperationModel.Method).get.value.value.asInstanceOf[AmfScalar]).emit()
+          ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit()
 
           val result = mutable.ListBuffer[Emitter]()
 
@@ -299,9 +293,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
     private def responses(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
       val result = mutable.ListBuffer[Emitter]()
-      f.value.value
-        .asInstanceOf[AmfArray]
-        .values
+      f.array.values
         .foreach(e => result += ResponseEmitter(e.asInstanceOf[Response], ordering))
       ordering.sorted(result)
     }
@@ -317,7 +309,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
           val result = mutable.ListBuffer[Emitter]()
           val fs     = response.fields
 
-          ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.value.value.asInstanceOf[AmfScalar]).emit()
+          ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit()
 
           fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))
 
@@ -351,9 +343,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
     private def payloads(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
       val result = mutable.ListBuffer[Emitter]()
-      f.value.value
-        .asInstanceOf[AmfArray]
-        .values
+      f.array.values
         .foreach(e => result += PayloadEmitter(e.asInstanceOf[Payload], ordering))
       ordering.sorted(result)
     }
@@ -372,9 +362,9 @@ case class RamlSpecEmitter(unit: BaseUnit) {
               ValueEmitter("type", fs.entry(PayloadModel.Schema).get).emit()
             )(meditaType => {
               entry { () =>
-                ScalarEmitter(meditaType.value.value.asInstanceOf[AmfScalar]).emit()
+                ScalarEmitter(meditaType.scalar).emit()
                 val maybeScheme = fs.entry(PayloadModel.Schema)
-                if (maybeScheme.isDefined) ScalarEmitter(maybeScheme.get.value.value.asInstanceOf[AmfScalar]).emit()
+                if (maybeScheme.isDefined) ScalarEmitter(maybeScheme.get.scalar).emit()
                 else raw("", StringToken)
               }
             })
@@ -401,9 +391,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
     private def parameters(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
       val result = mutable.ListBuffer[Emitter]()
-      f.value.value
-        .asInstanceOf[AmfArray]
-        .values
+      f.array.values
         .foreach(e => result += ParameterEmitter(e.asInstanceOf[Parameter], ordering))
       ordering.sorted(result)
     }
@@ -425,7 +413,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
           if (!explicit && !parameter.required) {
             ScalarEmitter(AmfScalar(parameter.name + "?")).emit()
           } else {
-            val name = fs.entry(ParameterModel.Name).get.value.value.asInstanceOf[AmfScalar]
+            val name = fs.entry(ParameterModel.Name).get.scalar
             ScalarEmitter(name).emit()
           }
 
@@ -456,7 +444,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         entry { () =>
           raw(key)
 
-          val fs     = f.value.value.asInstanceOf[AmfObject].fields
+          val fs     = f.obj.fields
           val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(LicenseModel.Url).map(f => result += ValueEmitter("url", f))
@@ -480,7 +468,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         entry { () =>
           raw(key)
 
-          val fs     = f.value.value.asInstanceOf[AmfObject].fields
+          val fs     = f.obj.fields
           val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(OrganizationModel.Url).map(f => result += ValueEmitter("url", f))
@@ -506,7 +494,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         entry { () =>
           raw(key)
 
-          val fs     = f.value.value.asInstanceOf[AmfObject].fields
+          val fs     = f.obj.fields
           val result = mutable.ListBuffer[Emitter]()
 
           fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
@@ -533,7 +521,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        raw(f.value.value.asInstanceOf[AmfScalar].value.toString)
+        raw(f.scalar.value.toString)
       })
     }
 
