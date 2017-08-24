@@ -4,7 +4,7 @@ import amf.common.AMFAST
 import amf.common.AMFToken.StringToken
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SynthesizedField}
+import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SingleValueArray, SynthesizedField}
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
@@ -49,13 +49,17 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "mediaType",
       entry => {
+        val annotations = entry.annotations()
         val value: AmfElement = entry.value.`type` match {
-          case StringToken => AmfArray(Seq(ValueNode(entry.value).string()))
-          case _           => ArrayNode(entry.value).strings()
+          case StringToken =>
+            annotations += SingleValueArray()
+            AmfArray(Seq(ValueNode(entry.value).string()))
+          case _ =>
+            ArrayNode(entry.value).strings()
         }
 
-        api.set(WebApiModel.ContentType, value, entry.annotations())
-        api.set(WebApiModel.Accepts, value, entry.annotations())
+        api.set(WebApiModel.ContentType, value, annotations)
+        api.set(WebApiModel.Accepts, value, annotations)
       }
     )
 

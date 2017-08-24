@@ -68,16 +68,28 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+            "http://raml.org/vocabularies/document-source-maps#single-value-array": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "shared/src/test/resources/upanddown/basic.raml#/web-api"
+                    "@value": "http://raml.org/vocabularies/http#contentType"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "raml"
+                    "@value": ""
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#accepts"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }
@@ -91,7 +103,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,0)-(7,34)]"
+                    "@value": "[(6,0)-(6,34)]"
                   }
                 ]
               },
@@ -103,7 +115,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,0)-(5,20)]"
+                    "@value": "[(4,0)-(4,27)]"
                   }
                 ]
               },
@@ -115,7 +127,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(11,0)-(11,29)]"
+                    "@value": "[(10,0)-(10,29)]"
                   }
                 ]
               },
@@ -127,7 +139,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(11,0)-(11,29)]"
+                    "@value": "[(10,0)-(10,29)]"
                   }
                 ]
               },
@@ -151,7 +163,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(11,29)]"
+                    "@value": "[(1,0)-(10,29)]"
                   }
                 ]
               },
@@ -175,7 +187,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,0)-(10,9)]"
+                    "@value": "[(7,0)-(9,9)]"
                   }
                 ]
               },
@@ -187,7 +199,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,0)-(5,20)]"
+                    "@value": "[(4,0)-(4,27)]"
                   }
                 ]
               },
@@ -199,7 +211,21 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(6,12)]"
+                    "@value": "[(5,0)-(5,12)]"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "shared/src/test/resources/upanddown/basic.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "raml"
                   }
                 ]
               }

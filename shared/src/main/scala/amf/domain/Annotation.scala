@@ -51,12 +51,22 @@ object Annotation {
 
   case class EndPointParameter() extends Annotation
 
+  case class SingleValueArray() extends SerializableAnnotation {
+
+    /** Extension name. */
+    override val name: String = "single-value-array"
+
+    /** Value as string. */
+    override val value: String = ""
+  }
+
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     annotation match {
-      case "lexical"          => Some(lexical)
-      case "parent-end-point" => Some(parentEndPoint)
-      case "source-vendor"    => Some(sourceVendor)
-      case _                  => None // Unknown annotation
+      case "lexical"            => Some(lexical)
+      case "parent-end-point"   => Some(parentEndPoint)
+      case "source-vendor"      => Some(sourceVendor)
+      case "single-value-array" => Some(singleValueArray)
+      case _                    => None // Unknown annotation
     }
 
   private def sourceVendor(value: String, objects: Map[String, AmfElement]) = {
@@ -68,6 +78,10 @@ object Annotation {
 
   private def parentEndPoint(value: String, objects: Map[String, AmfElement]) = {
     ParentEndPoint(objects(value).asInstanceOf[EndPoint])
+  }
+
+  private def singleValueArray(value: String, objects: Map[String, AmfElement]) = {
+    SingleValueArray()
   }
 
   private def lexical(value: String, objects: Map[String, AmfElement]) = {

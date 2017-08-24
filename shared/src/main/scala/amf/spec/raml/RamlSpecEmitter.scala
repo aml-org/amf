@@ -4,7 +4,7 @@ import amf.common.AMFToken._
 import amf.common.TSort.tsort
 import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.{ExplicitField, LexicalInformation, SourceVendor, SynthesizedField}
+import amf.domain.Annotation._
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain._
@@ -60,7 +60,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   }
 
   private def raw(content: String, token: AMFToken = StringToken): Unit = {
-    //    emitter.value(token, if (token == StringToken) { content.quote } else content)
     emitter.value(token, content)
   }
 
@@ -76,7 +75,11 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
 
-      fs.entry(WebApiModel.ContentType).map(f => result += ArrayEmitter("mediaType", f, ordering))
+      fs.entry(WebApiModel.ContentType)
+        .map(f => {
+          if (f.value.annotations.contains(classOf[SingleValueArray])) result += ArrayValueEmitter("mediaType", f)
+          else result += ArrayEmitter("mediaType", f, ordering)
+        })
 
       fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
 
@@ -522,6 +525,18 @@ case class RamlSpecEmitter(unit: BaseUnit) {
       sourceOr(f.value, entry { () =>
         raw(key)
         raw(f.scalar.value.toString)
+      })
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
+  /** Emit a single value from an array as an entry. */
+  case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
+    override def emit(): Unit = {
+      sourceOr(f.value, entry { () =>
+        raw(key)
+        raw(f.array.values.headOption.map(_.asInstanceOf[AmfScalar].value.toString).getOrElse(""))
       })
     }
 
