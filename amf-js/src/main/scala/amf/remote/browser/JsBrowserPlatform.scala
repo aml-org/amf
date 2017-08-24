@@ -33,5 +33,11 @@ class JsBrowserPlatform extends Platform {
     Future.failed(new Exception(s"Unsupported write operation: $path"))
   }
 
+  /** Return temporary directory. */
+  override def tmpdir(): String = {
+    // Accept in Node only
+    throw new Exception(s"Unsupported tmpdir operation")
+  }
+
   override def resolvePath(path: String): String = path
 }

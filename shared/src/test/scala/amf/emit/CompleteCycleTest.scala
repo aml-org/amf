@@ -3,13 +3,14 @@ package amf.emit
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
+import amf.io.TmpTests
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CompleteCycleTest extends AsyncFunSuite with PlatformSecrets {
+class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

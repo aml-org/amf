@@ -53,6 +53,9 @@ class JvmPlatform extends Platform {
     }
   }
 
+  /** Return temporary directory. */
+  override def tmpdir(): String = System.getProperty("java.io.tmpdir")
+
   override def resolvePath(path: String): String = new URI(path).normalize.toString
 }
 

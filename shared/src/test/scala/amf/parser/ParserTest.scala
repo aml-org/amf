@@ -226,6 +226,8 @@ class ParserTest extends FunSuite {
     override protected def writeFile(path: String, content: String): Future[String] =
       Future.failed(new Exception(s"[TEST] Unsupported write operation $path"))
 
+    override def tmpdir(): String = throw new Exception(s"[TEST] Unsupported tmpdir operation")
+
     override def resolvePath(path: String): String = path
   }
 

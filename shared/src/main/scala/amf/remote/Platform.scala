@@ -34,6 +34,9 @@ trait Platform {
     }
   }
 
+  /** Return temporary directory. */
+  def tmpdir(): String
+
   /** Write specified content on specified file path. */
   protected def writeFile(path: String, content: String): Future[String]
 

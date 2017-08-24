@@ -68,6 +68,9 @@ class JsServerPlatform extends Platform {
     promise.future
   }
 
+  /** Return temporary directory. */
+  override def tmpdir(): String = OS.tmpdir() + "/"
+
   override def resolvePath(uri: String): String = uri match {
     case File(path)                 => FILE_PROTOCOL + Path.resolve(withTrailingSlash(path)).substring(1)
     case Http(protocol, host, path) => protocol + host + Path.resolve(withTrailingSlash(path))

@@ -2,8 +2,8 @@ package amf.unsafe
 
 import amf.lexer.CharSequenceStream
 import amf.remote._
-import scala.concurrent.ExecutionContext.Implicits.global
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait PlatformSecrets {
@@ -27,8 +27,10 @@ case class TrunkPlatform(content: String) extends Platform {
     fetchFile(url)
   }
 
-  /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[String] = ???
+  override protected def writeFile(path: String, content: String): Future[String] =
+    throw new Exception("Unsupported write operation")
+
+  override def tmpdir(): String = throw new Exception("Unsupported tmpdir operation")
 
   override def resolve(url: String, context: Option[Context]): Future[Content] = {
     fetchFile(url)
