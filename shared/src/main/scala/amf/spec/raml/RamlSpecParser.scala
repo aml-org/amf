@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.common.AMFAST
 import amf.common.Strings.strings
 import amf.compiler.Root
-import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SourceAST, SynthesizedField}
+import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SynthesizedField}
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
@@ -112,22 +112,26 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "baseUri",
       entry => {
-        //TODO lexical for 'baseUri' node is lost.
         val value = ValueNode(entry.value)
         val uri   = BaseUriSplitter(value.string().value.toString)
 
         //TODO if baseUri has scheme, and 'protocols' property exists, scheme in baseUri will be lost.
         if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
           api.set(WebApiModel.Schemes,
-                  AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()))
+                  AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
+                  entry.annotations())
         }
 
         if (uri.domain.nonEmpty) {
-          api.set(WebApiModel.Host, AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()))
+          api.set(WebApiModel.Host,
+                  AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
+                  entry.annotations())
         }
 
         if (uri.path.nonEmpty) {
-          api.set(WebApiModel.BasePath, AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()))
+          api.set(WebApiModel.BasePath,
+                  AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
+                  entry.annotations())
         }
       }
     )

@@ -94,7 +94,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, vendor))
 
-      //TODO source not available for baseUri node
       result += BaseUriEmitter(fs)
 
       ordering.sorted(result)
@@ -153,10 +152,17 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         }
       }
 
-      //TODO position not available for baseUri node
-      override def position(): Position = Position.ZERO
+      override def position(): Position =
+        fs.entry(WebApiModel.BasePath)
+          .flatMap(f => f.value.annotations.find(classOf[LexicalInformation]))
+          .orElse(fs.entry(WebApiModel.Host).flatMap(f => f.value.annotations.find(classOf[LexicalInformation])))
+          .orElse(
+            fs.entry(WebApiModel.Schemes)
+              .find(_.value.annotations.contains(classOf[SynthesizedField]))
+              .flatMap(f => f.value.annotations.find(classOf[LexicalInformation])))
+          .map(_.range.start)
+          .getOrElse(ZERO)
     }
-
   }
 
   case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
@@ -194,11 +200,8 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         entry { () =>
           val fs = endpoint.fields
 
-          endpoint.parent.fold({
-            ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit()
-          })(parent => {
-            ScalarEmitter(AmfScalar(endpoint.relativePath)).emit()
-          })
+          endpoint.parent.fold(ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit())(_ =>
+            ScalarEmitter(AmfScalar(endpoint.relativePath)).emit())
 
           val result = mutable.ListBuffer[Emitter]()
 
@@ -356,16 +359,13 @@ case class RamlSpecEmitter(unit: BaseUnit) {
       sourceOr(
         payload.annotations, {
           val fs = payload.fields
-          //TODO what if payload has no media-type?
           fs.entry(PayloadModel.MediaType)
             .fold(
               ValueEmitter("type", fs.entry(PayloadModel.Schema).get).emit()
-            )(meditaType => {
+            )(mediaType => {
               entry { () =>
-                ScalarEmitter(meditaType.scalar).emit()
-                val maybeScheme = fs.entry(PayloadModel.Schema)
-                if (maybeScheme.isDefined) ScalarEmitter(maybeScheme.get.scalar).emit()
-                else raw("", StringToken)
+                ScalarEmitter(mediaType.scalar).emit()
+                fs.entry(PayloadModel.Schema).fold(raw("", StringToken))(schema => ScalarEmitter(schema.scalar).emit())
               }
             })
         }
@@ -534,7 +534,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   private def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
 
   private def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
-    //TODO first lvl gets sources and changes in the children doesn't matter.
     //    annotations
     //      .find(classOf[SourceAST])
     //      .fold(inner)(a => emitter.addChild(a.ast))
