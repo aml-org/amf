@@ -62,11 +62,13 @@ class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
     }
 }
 
+@js.native
 trait JsStringHandler extends JsHandler[String] {
   def success(generation: String)
   def error(exception: Throwable)
 }
 
+@js.native
 trait JsFileHandler extends JsHandler[Unit] {
   def error(exception: Throwable)
   def success()
