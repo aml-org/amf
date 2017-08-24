@@ -405,18 +405,15 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def emit(): Unit = {
       sourceOr(
         payload.annotations,
-        //TODO what if payload has no media-type?
         map { () =>
-          val fs = payload.fields
+          val fs     = payload.fields
+          val result = mutable.ListBuffer[Emitter]()
 
-          val maybeMediaType = fs.entry(PayloadModel.MediaType)
-          if (maybeMediaType.isDefined)
-            ValueEmitter("mediaType", maybeMediaType.get).emit()
+          fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
 
-          val maybeSchema = fs.entry(PayloadModel.Schema)
-          if (maybeSchema.isDefined)
-            ValueEmitter("schema", maybeSchema.get).emit()
+          fs.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
 
+          traverse(ordering.sorted(result))
         }
       )
     }
@@ -697,7 +694,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
     def defaultPayload(payloads: Seq[Payload]): Option[Payload] =
       payloads
-        .find(p => p.schema == null || p.schema.isEmpty)
+        .find(p => p.mediaType == null || p.mediaType.isEmpty)
         .orElse(payloads.find(_.mediaType == "application/json"))
         .orElse(payloads.headOption)
   }
