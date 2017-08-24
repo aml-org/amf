@@ -66,11 +66,8 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "x-base-uri-parameters",
       entry => {
-        val all: OasParameters = ParametersParser(entry.value).parse()
-        all match {
-          case OasParameters(_, path, _, _) =>
-            api.set(WebApiModel.BaseUriParameters, AmfArray(path, Annotations(entry.value)), entry.annotations())
-        }
+        val uriParameters = HeaderParametersParser(entry.value).parse()
+        api.set(WebApiModel.BaseUriParameters, AmfArray(uriParameters, Annotations(entry.value)), entry.annotations())
       }
     )
 
@@ -370,7 +367,7 @@ case class ResponseParser(entry: EntryNode) {
                 entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
 
     entries.key("schema",
-                entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
+                entry => payload.set(PayloadModel.Schema, ValueNode(entry.value).string(), entry.annotations()))
 
     if (payload.fields.nonEmpty) Some(payload) else None
   }

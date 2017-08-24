@@ -16,7 +16,7 @@ import amf.spec.{Emitter, SpecOrdering}
 import scala.collection.mutable
 
 /**
-  * Created by pedro.colunga on 8/17/17.
+  *
   */
 case class OasSpecEmitter(unit: BaseUnit) {
 
@@ -228,7 +228,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       val result = mutable.ListBuffer[Emitter]()
       parameters.foreach(e => result += ParameterEmitter(e, ordering))
 
-      payloadOption.foreach(payload => result += PayloadAsParameterEmitter(payload))
+      payloadOption.foreach(payload => result += PayloadAsParameterEmitter(payload, ordering))
 
       ordering.sorted(result)
     }
@@ -239,20 +239,20 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
   }
 
-  case class PayloadAsParameterEmitter(payload: Payload) extends Emitter {
+  case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering) extends Emitter {
     override def position(): Position = pos(payload.annotations)
 
     override def emit(): Unit = {
       map { () =>
         val result = mutable.ListBuffer[Emitter]()
 
-        result += EntryEmitter("in", "body")
-
         payload.fields.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
 
         payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
 
-        traverse(result)
+        result += EntryEmitter("in", "body")
+
+        traverse(ordering.sorted(result))
       }
     }
   }
@@ -282,7 +282,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
 
           if (operation.request != null)
-            result += RequestEmitter(operation.request, ordering, endpointPayloadEmitted)
+            result ++= requestEmitters(operation.request, ordering, endpointPayloadEmitted)
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 
@@ -294,6 +294,25 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(operation.annotations)
+
+    def requestEmitters(request: Request, ordering: SpecOrdering, endpointPayloadEmitted: Boolean): Seq[Emitter] = {
+
+      val result = mutable.ListBuffer[Emitter]()
+
+      val parameters = operationOnly(request.queryParameters) ++ operationOnly(request.headers)
+      val payloads   = Payloads(request.payloads, endpointPayloadEmitted)
+
+      if (parameters.nonEmpty || payloads.default.isDefined)
+        result += ParametersEmitter("parameters", parameters, ordering, payloads.default)
+
+      if (payloads.other.nonEmpty) result += PayloadsEmitter("x-request-payloads", payloads.other, ordering)
+
+      result
+    }
+
+    private def operationOnly(parameters: Seq[Parameter]) =
+      parameters.filter(!_.annotations.contains(classOf[Annotation.EndPointParameter]))
+
   }
 
   case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
@@ -351,28 +370,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(response.annotations)
-  }
-
-  case class RequestEmitter(request: Request, ordering: SpecOrdering, endpointPayloadEmitted: Boolean)
-      extends Emitter {
-    override def emit(): Unit = {
-      val result = mutable.ListBuffer[Emitter]()
-
-      val parameters = operationOnly(request.queryParameters) ++ operationOnly(request.headers)
-      val payloads   = Payloads(request.payloads, endpointPayloadEmitted)
-
-      if (parameters.nonEmpty || payloads.default.isDefined)
-        result += ParametersEmitter("parameters", parameters, ordering, payloads.default)
-
-      if (payloads.other.nonEmpty) result += PayloadsEmitter("x-request-payloads", payloads.other, ordering)
-
-      traverse(ordering.sorted(result))
-    }
-
-    private def operationOnly(parameters: Seq[Parameter]) =
-      parameters.filter(!_.annotations.contains(classOf[Annotation.EndPointParameter]))
-
-    override def position(): Position = pos(request.annotations)
   }
 
   case class PayloadsEmitter(key: String, payloads: Seq[Payload], ordering: SpecOrdering) extends Emitter {
