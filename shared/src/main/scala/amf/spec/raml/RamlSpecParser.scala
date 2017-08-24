@@ -1,6 +1,7 @@
 package amf.spec.raml
 
 import amf.common.AMFAST
+import amf.common.AMFToken.StringToken
 import amf.common.Strings.strings
 import amf.compiler.Root
 import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SynthesizedField}
@@ -9,7 +10,7 @@ import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
-import amf.model.{AmfArray, AmfScalar}
+import amf.model.{AmfArray, AmfElement, AmfScalar}
 
 import scala.collection.mutable
 import scala.util.matching.Regex
@@ -48,10 +49,13 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "mediaType",
       entry => {
-        //TODO it can be a single value (not in a sequence).
-        val value = ArrayNode(entry.value)
-        api.set(WebApiModel.ContentType, value.strings(), entry.annotations())
-        api.set(WebApiModel.Accepts, value.strings(), entry.annotations())
+        val value: AmfElement = entry.value.`type` match {
+          case StringToken => AmfArray(Seq(ValueNode(entry.value).string()))
+          case _           => ArrayNode(entry.value).strings()
+        }
+
+        api.set(WebApiModel.ContentType, value, entry.annotations())
+        api.set(WebApiModel.Accepts, value, entry.annotations())
       }
     )
 
