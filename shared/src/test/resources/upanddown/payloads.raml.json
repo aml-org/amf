@@ -15,9 +15,9 @@
         "operationId": "Some title",
         "parameters": [
           {
-            "in": "body",
             "schema": "string",
-            "x-media-type": "application/json"
+            "x-media-type": "application/json",
+            "in": "body"
           }
         ],
         "responses": {
