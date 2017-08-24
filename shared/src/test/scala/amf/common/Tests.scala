@@ -129,6 +129,12 @@ object Tests {
     if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + aName + " " + bName + "\n" + Diff.makeString(diffs))
   }
 
+  def checkDiff(a: String, aName: String, b: String, bName: String): Assertion = {
+    val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
+    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + aName + " " + bName + "\n" + Diff.makeString(diffs))
+    Succeeded
+  }
+
   def diff(a: Reader, aName: String, b: Reader, bName: String): Option[String] = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
     if (diffs.isEmpty) Option.empty

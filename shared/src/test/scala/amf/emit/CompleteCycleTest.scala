@@ -5,7 +5,6 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.io.TmpTests
 import amf.remote._
-import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -24,8 +23,16 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("simplest.json", "simplest.json", OasJsonHint, Oas)
   }
 
-  test("Basic amf to amf test") {
-    assertCycle("basic.jsonld", "basic.jsonld", AmfJsonLdHint, Amf)
+  test("Basic cycle for amf") {
+    cycle("basic.jsonld", AmfJsonLdHint, Amf)
+  }
+
+  test("Basic cycle for raml") {
+    cycle("basic.raml", RamlYamlHint, Raml)
+  }
+
+  test("Basic cycle for oas") {
+    cycle("basic.json", OasJsonHint, Oas)
   }
 
   test("Basic raml to amf test") {
@@ -50,14 +57,6 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   test("Basic oas to raml test") {
     assertCycle("basic.json", "basic.json.raml", OasJsonHint, Raml)
-  }
-
-  test("Basic raml to raml test") {
-    assertCycle("basic.raml", "basic.raml", RamlYamlHint, Raml)
-  }
-
-  test("Basic oas to oas test") {
-    assertCycle("basic.json", "basic.json", OasJsonHint, Oas)
   }
 
   test("Complete amf to amf test") {
@@ -204,5 +203,21 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     actual
       .zip(expected)
       .map(checkDiff)
+  }
+
+  def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = {
+    AMFCompiler(basePath + source, platform, hint)
+      .build()
+      .flatMap(new AMFDumper(_, target).dumpToStream)
+      .flatMap(content => {
+        val file = tmp(source + ".tmp")
+        platform.write("file://" + file, content).map((_, content))
+      })
+      .flatMap({
+        case (path, actual) =>
+          platform
+            .resolve(basePath + source, None)
+            .map(expected => checkDiff(actual, path, expected.stream.toString, expected.url))
+      })
   }
 }
