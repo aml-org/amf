@@ -1,5 +1,6 @@
 package amf.domain
 import amf.common.AMFAST
+import amf.metadata.domain.EndPointModel.UriParameters
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
@@ -28,6 +29,12 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + method)
+
+  def withResponse(name: String): Response = {
+    val result = Response().withName(name)
+    add(Responses, result)
+    result
+  }
 }
 
 object Operation {

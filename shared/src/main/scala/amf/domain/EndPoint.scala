@@ -32,8 +32,8 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
     result
   }
 
-  def withParameter(): Parameter = {
-    val result = Parameter()
+  def withParameter(name: String): Parameter = {
+    val result = Parameter().withName(name)
     add(UriParameters, result)
     result
   }

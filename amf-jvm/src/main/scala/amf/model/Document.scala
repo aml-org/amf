@@ -14,6 +14,10 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
     with DeclaresModel
     with EncodesModel {
 
+  def this() = this(amf.document.Document())
+
+  def this(webApi: WebApi) = this(amf.document.Document().withEncodes(webApi.element))
+
   /**
     * list of references to other [[DomainElement]]s
     */

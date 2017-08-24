@@ -1,6 +1,7 @@
 package amf.domain
 
 import amf.common.AMFAST
+import amf.metadata.domain.EndPointModel.UriParameters
 import amf.metadata.domain.ResponseModel._
 
 /**
@@ -19,6 +20,18 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
   def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
+
+  def withHeader(name: String): Parameter = {
+    val result = Parameter().withName(name)
+    add(Headers, result)
+    result
+  }
+
+  def withPayload(): Payload = {
+    val result = Payload()
+    add(Payloads, result)
+    result
+  }
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
 }

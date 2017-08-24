@@ -44,8 +44,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
     result
   }
 
-  def withBaseUriParameter(): Parameter = {
-    val result = Parameter()
+  def withBaseUriParameter(name: String): Parameter = {
+    val result = Parameter().withName(name)
     add(BaseUriParameters, result)
     result
   }

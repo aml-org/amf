@@ -3,16 +3,11 @@ import amf.client.HintHelper;
 import amf.client.JvmClient;
 import amf.client.JvmGenerator;
 import amf.client.VendorHelper;
-import amf.model.BaseUnit;
-import amf.model.Document;
-import amf.model.EndPoint;
-import amf.model.WebApi;
-import amf.model.builder.*;
+import amf.model.*;
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -43,25 +38,21 @@ public class TestMainClass {
     private static WebApi webApiFromScratch(){
         System.out.println("write here your code for test the web api :)");
         List<String> list = Arrays.asList("one","two");
-        WebApiBuilder builder = new WebApiBuilder();
+        WebApi webApi = new WebApi();
 
-        builder.withSchemes(list);
+        webApi.withSchemes(list);
         List<EndPoint> endpoints = new ArrayList<>();
+        webApi.withEndPoint("/endpoint")
+                .withDescription("endpoint description")
+                .withName("endpoint name")
+                .withOperation("get")
+                    .withDescription("operaiton description")
+                    .withDocumentation( new CreativeWork()
+                                            .withDescription("o1 description")
+                                            .withUrl("o1 cw url"))
+                    .withName("operation name");
 
-        OperationBuilder oBuilder = new OperationBuilder();
-
-        oBuilder.withDescription("operation description");
-        oBuilder.withDocumentation(new CreativeWorkBuilder().withDescription("o1 description").withUrl("o1 cw url").build());
-        oBuilder.withName("operation name");
-        oBuilder.withMethod("get");
-        endpoints.add(new EndPointBuilder().withDescription("endpoint description")
-                .withName("endpoint anme")
-                .withOperations(Collections.singletonList(oBuilder.build())).build());
-
-        builder.withEndPoints(endpoints);
-
-        return builder.build();
-
+        return webApi;
     }
 
     private static WebApi baseUnitFromStream() throws InterruptedException, ExecutionException {
@@ -71,16 +62,16 @@ public class TestMainClass {
     }
 
     private static String dumpApiToStream(@NotNull WebApi webApi) throws ExecutionException, InterruptedException {
-        Document build = new DocumentBuilder().withEncodes(webApi).build();
+        Document build = new Document(webApi);
         CompletableFuture<String> stringFuture = new JvmGenerator().generateToStringAsync(build, VendorHelper.raml());
         return stringFuture.get();
     }
 
-    private static String dumpApiToFile(@NotNull WebApi webApi) throws ExecutionException, InterruptedException {
-        Document build = new DocumentBuilder().withEncodes(webApi).build();
+    private static void dumpApiToFile(@NotNull WebApi webApi) throws ExecutionException, InterruptedException {
+        Document build = new Document(webApi);
         CompletableFuture<String> stringFuture = new JvmGenerator().
                 generateToFileAsync(build, "file:///Users/hernan.najles/mulesoft/amf/usage/jvmClient/src/main/resources/output/output.json",VendorHelper.raml());
-        return stringFuture.get();
+        stringFuture.get();
     }
 
 

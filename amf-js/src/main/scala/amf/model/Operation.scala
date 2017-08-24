@@ -10,6 +10,8 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Operation private[model] (private val operation: amf.domain.Operation) extends DomainElement {
 
+  def this() = this(amf.domain.Operation())
+
   val method: String      = operation.method
   val name: String        = operation.name
   val description: String = operation.description
@@ -32,4 +34,43 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   def canEqual(other: Any): Boolean = other.isInstanceOf[Operation]
 
   override private[amf] def element: amf.domain.Operation = operation
+
+  def withMethod(method: String): this.type = {
+    operation.withMethod(method)
+    this
+  }
+  def withName(name: String): this.type = {
+    operation.withName(name)
+    this
+  }
+  def withDescription(description: String): this.type = {
+    operation.withDescription(description)
+    this
+  }
+  def withDeprecated(deprecated: Boolean): this.type = {
+    operation.withDeprecated(deprecated)
+    this
+  }
+  def withSummary(summary: String): this.type = {
+    operation.withSummary(summary)
+    this
+  }
+  def withDocumentation(documentation: CreativeWork): this.type = {
+    operation.withDocumentation(documentation.element)
+    this
+  }
+  def withSchemes(schemes: js.Iterable[String]): this.type = {
+    operation.withSchemes(schemes.toSeq)
+    this
+  }
+  def withRequest(request: Request): this.type = {
+    operation.withRequest(request.element)
+    this
+  }
+  def withResponses(responses: js.Iterable[Response]): this.type = {
+    operation.withResponses(responses.toSeq.map(_.element))
+    this
+  }
+
+  def withResponse(name: String): Response = Response(operation.withResponse(name))
 }

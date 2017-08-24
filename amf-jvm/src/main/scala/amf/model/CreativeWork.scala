@@ -5,6 +5,8 @@ package amf.model
   */
 case class CreativeWork private[model] (private val creativeWork: amf.domain.CreativeWork) extends DomainElement {
 
+  def this() = this(amf.domain.CreativeWork())
+
   val url: String         = creativeWork.url
   val description: String = creativeWork.description
 
@@ -18,4 +20,14 @@ case class CreativeWork private[model] (private val creativeWork: amf.domain.Cre
   def canEqual(other: Any): Boolean = other.isInstanceOf[CreativeWork]
 
   override private[amf] def element: amf.domain.CreativeWork = creativeWork
+
+  def withUrl(url: String): this.type = {
+    creativeWork.withUrl(url)
+    this
+  }
+
+  def withDescription(description: String): this.type = {
+    creativeWork.withDescription(description)
+    this
+  }
 }

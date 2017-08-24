@@ -7,6 +7,8 @@ import scala.collection.JavaConverters._
   */
 case class WebApi private (private val webApi: amf.domain.WebApi) extends DomainElement {
 
+  def this() = this(amf.domain.WebApi())
+
   val name: String                        = webApi.name
   val description: String                 = webApi.description
   val host: String                        = webApi.host
@@ -35,4 +37,65 @@ case class WebApi private (private val webApi: amf.domain.WebApi) extends Domain
   def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
 
   override private[amf] def element: amf.domain.WebApi = webApi
+
+  def withName(name: String): this.type = {
+    webApi.withName(name)
+    this
+  }
+  def withDescription(description: String): this.type = {
+    webApi.withDescription(description)
+    this
+  }
+  def withHost(host: String): this.type = {
+    webApi.withHost(host)
+    this
+  }
+  def withSchemes(schemes: java.util.List[String]): this.type = {
+    webApi.withSchemes(schemes.asScala)
+    this
+  }
+  def withEndPoints(endPoints: java.util.List[EndPoint]): this.type = {
+    webApi.withEndPoints(endPoints.asScala.map(_.element))
+    this
+  }
+  def withBasePath(path: String): this.type = {
+    webApi.withBasePath(path)
+    this
+  }
+  def withAccepts(accepts: java.util.List[String]): this.type = {
+    webApi.withAccepts(accepts.asScala)
+    this
+  }
+  def withContentType(contentType: java.util.List[String]): this.type = {
+    webApi.withContentType(contentType.asScala)
+    this
+  }
+  def withVersion(version: String): this.type = {
+    webApi.withVersion(version)
+    this
+  }
+  def withTermsOfService(terms: String): this.type = {
+    webApi.withTermsOfService(terms)
+    this
+  }
+  def withProvider(provider: Organization): this.type = {
+    webApi.withProvider(provider.element)
+    this
+  }
+  def withLicense(license: License): this.type = {
+    webApi.withLicense(license.element)
+    this
+  }
+  def withDocumentation(documentation: CreativeWork): this.type = {
+    webApi.withDocumentation(documentation.element)
+    this
+  }
+  def withBaseUriParameters(parameters: java.util.List[Parameter]): this.type = {
+    webApi.withBaseUriParameters(parameters.asScala.map(_.element))
+    this
+  }
+
+  def withEndPoint(path: String): EndPoint = EndPoint(webApi.withEndPoint(path))
+
+  def withBaseUriParameter(name: String): Parameter = Parameter(webApi.withBaseUriParameter(name))
 }

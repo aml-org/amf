@@ -16,6 +16,24 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
   def withPayloads(payloads: Seq[Payload]): this.type            = setArray(Payloads, payloads)
 
   override def adopted(parent: String): this.type = withId(parent + "/request")
+
+  def withQueryParameter(name: String): Parameter = {
+    val result = Parameter().withName(name)
+    add(QueryParameters, result)
+    result
+  }
+
+  def withHeader(name: String): Parameter = {
+    val result = Parameter().withName(name)
+    add(Headers, result)
+    result
+  }
+
+  def withPayload(): Payload = {
+    val result = Payload()
+    add(Payloads, result)
+    result
+  }
 }
 
 object Request {

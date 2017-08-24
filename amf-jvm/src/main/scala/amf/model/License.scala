@@ -5,6 +5,8 @@ package amf.model
   */
 case class License private[model] (private val license: amf.domain.License) extends DomainElement {
 
+  def this() = this(amf.domain.License())
+
   val url: String  = license.url
   val name: String = license.name
 
@@ -18,5 +20,14 @@ case class License private[model] (private val license: amf.domain.License) exte
   def canEqual(other: Any): Boolean = other.isInstanceOf[License]
 
   override private[amf] def element: amf.domain.License = license
+
+  def withUrl(url: String): this.type = {
+    license.withUrl(url)
+    this
+  }
+  def withName(name: String): this.type = {
+    license.withName(name)
+    this
+  }
 
 }
