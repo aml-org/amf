@@ -15,19 +15,19 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   val basePath = "file://shared/src/test/resources/upanddown/"
 
-  test("Simplest raml to raml test") {
+  test("Full raml to raml test") {
     assertCycle("full-example.raml", "full-example.raml", RamlYamlHint, Raml)
   }
 
-  test("Simplest oas to oas test") {
+  test("Full oas to oas test") {
     assertCycle("full-example.json", "full-example.json", OasJsonHint, Oas)
   }
 
-  test("Simplest raml to oas test") {
+  test("Full raml to oas test") {
     assertCycle("full-example.raml", "full-example.json", RamlYamlHint, Oas)
   }
 
-  test("Simplest oas to raml test") {
+  test("Full oas to raml test") {
     assertCycle("full-example.json", "full-example.json.raml", OasJsonHint, Raml)
   }
 

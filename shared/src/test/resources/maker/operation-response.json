@@ -13,9 +13,12 @@
       "description": "and this description!",
       "get": {
         "operationId": "Some title",
-        "x-request-payloads": {
-          "application/json": "number"
-        },
+        "x-request-payloads": [
+          {
+            "mediaType": "application/json",
+            "schema": "number"
+          }
+        ],
         "responses": {
           "default": {
             "description": "200 descr",
@@ -28,10 +31,16 @@
           },
           "404": {
             "description": "Not found!",
-            "x-response-payloads": {
-              "application/json": "string",
-              "application/xml": "string"
-            }
+            "x-response-payloads": [
+              {
+                "mediaType": "application/json",
+                "schema": "string"
+              },
+              {
+                "mediaType": "application/xml",
+                "schema": "string"
+              }
+            ]
           }
         }
       }

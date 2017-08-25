@@ -203,17 +203,9 @@ case class RequestParser(entries: Entries, global: OasParameters) {
 
     entries.key(
       "x-request-payloads",
-      entry => {
-        new Entries(entry.value).regex(
-          ".*/.*",
-          entries => {
-            entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-          }
-        )
-      }
+      entry => ArrayNode(entry.value).values.map(value => payloads += PayloadParser(value).parse())
     )
 
-    //TODO x-request-payloads entry lexical lost. It's a mix of the default payload and the contents of x-request-payloads.
     if (payloads.nonEmpty) request.set(RequestModel.Payloads, AmfArray(payloads))
 
     if (request.fields.nonEmpty) Some(request) else None
@@ -298,15 +290,20 @@ case class ParametersParser(ast: AMFAST) {
   }
 }
 
-case class PayloadParser(entry: EntryNode) {
+case class PayloadParser(payloadMap: AMFAST) {
   def parse(): Payload = {
-    val payload = Payload(entry.ast)
+    val payload = Payload(payloadMap)
+    val entries = new Entries(payloadMap)
 
-    payload.set(PayloadModel.MediaType, ValueNode(entry.key).string())
+    entries.key("mediaType", entry => {
+      val value = ValueNode(entry.value)
+      payload.set(PayloadModel.MediaType, value.string(), entry.annotations())
+    })
 
-    if (entry.value != null) {
-      payload.set(PayloadModel.Schema, ValueNode(entry.value).string())
-    }
+    entries.key("schema", entry => {
+      val value = ValueNode(entry.value)
+      payload.set(PayloadModel.Schema, value.string(), entry.annotations())
+    })
 
     payload
   }
@@ -346,15 +343,9 @@ case class ResponseParser(entry: EntryNode) {
 
     entries.key(
       "x-response-payloads",
-      entry => {
-        new Entries(entry.value).regex(
-          ".*/.*",
-          entries => entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-        )
-      }
+      entry => ArrayNode(entry.value).values.map(value => payloads += PayloadParser(value).parse())
     )
 
-    //TODO x-response-payloads entry lexical lost. It's a mix of the default payload and the contents of x-response-payloads.
     if (payloads.nonEmpty) response.set(ResponseModel.Payloads, AmfArray(payloads))
 
     response

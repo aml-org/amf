@@ -86,6 +86,16 @@
             "in": "body"
           }
         ],
+        "x-request-payloads": [
+          {
+            "mediaType": "application/xml",
+            "schema": "number"
+          },
+          {
+            "mediaType": "application/pdf",
+            "schema": "file"
+          }
+        ],
         "responses": {
           "200": {
             "description": "200 descr",
@@ -96,7 +106,12 @@
               }
             },
             "x-media-type": "application/yaml",
-            "schema": "string"
+            "schema": "string",
+            "x-response-payloads": [
+              {
+                "mediaType": "application/x-www-form-urlencoded; charset=UTF-8"
+              }
+            ]
           },
           "404": {
             "description": "Not found!"

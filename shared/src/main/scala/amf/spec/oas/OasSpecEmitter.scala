@@ -389,7 +389,19 @@ case class OasSpecEmitter(unit: BaseUnit) {
       }
     }
 
-    override def position(): Position = Position.ZERO
+    override def position(): Position = {
+      val filtered = payloads
+        .filter(p => p.annotations.find(classOf[LexicalInformation]).exists(!_.range.start.isZero))
+      val result = filtered
+        .foldLeft[Position](ZERO)(
+          (pos, p) =>
+            p.annotations
+              .find(classOf[LexicalInformation])
+              .map(_.range.start)
+              .filter(newPos => pos.isZero || pos.lt(newPos))
+              .getOrElse(pos))
+      result
+    }
   }
 
   case class PayloadEmitter(payload: Payload, ordering: SpecOrdering) extends Emitter {

@@ -48,6 +48,8 @@ baseUriParameters:
         required: true
     body:
       application/json: string
+      application/xml: number
+      application/pdf: file
     responses:
       200:
         description: 200 descr
@@ -57,5 +59,6 @@ baseUriParameters:
             required: true
         body:
             application/yaml: string
+            application/x-www-form-urlencoded; charset=UTF-8:
       404:
         description: Not found!
