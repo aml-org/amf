@@ -72,4 +72,4 @@ def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition
 addCommandAlias("generate", "; clean; generateJS; generateJVM")
 addCommandAlias("generateJS", "; moduleJS/fullOptJS; browserJS/fullOptJS")
 addCommandAlias("generateJVM", "; amfJVM/assembly; amfJVM/packageDoc")
-addCommandAlias("publish", "; clean; generateJS; publish")
+addCommandAlias("publish", "; clean; generateJS; amfJS/publish; amfJVM/publish")
