@@ -16,7 +16,6 @@ lazy val amf = crossProject
     name := "amf",
     organization := "org.mulesoft",
     version := "0.0.1-SNAPSHOT",
-    publish := {},
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
   )
   .jvmSettings(
@@ -40,6 +39,7 @@ lazy val amf = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar"
   )
   .jsSettings(
+    publish := {},
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule
