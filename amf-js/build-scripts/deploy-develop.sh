@@ -2,9 +2,9 @@
 
 # THIS SCRIPT MUST BE EXECUTED FROM PATH (root) AND NOT FROM (root)/amf-js/build-scripts
 
-source ./amf-js/build-scripts/pre-deploy.sh
-
 cd ./amf-js
+
+source ./build-scripts/pre-deploy.sh
 
 echo "Current directory: `pwd`"
 
