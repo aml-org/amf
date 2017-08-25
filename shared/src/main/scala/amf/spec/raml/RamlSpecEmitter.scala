@@ -130,7 +130,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
           .entry(WebApiModel.Schemes)
           .find(_.value.annotations.contains(classOf[SynthesizedField]))
           .flatMap(_.array.values.headOption)
-          .map(_.asInstanceOf[AmfScalar].value.toString)
+          .map(_.asInstanceOf[AmfScalar].toString)
           .getOrElse("")
 
         val domain: String = fs
@@ -515,7 +515,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   }
 
   case class ScalarEmitter(v: AmfScalar) extends Emitter {
-    override def emit(): Unit = sourceOr(v.annotations, raw(v.value.toString))
+    override def emit(): Unit = sourceOr(v.annotations, raw(v.toString))
 
     override def position(): Position = pos(v.annotations)
   }
@@ -524,7 +524,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        raw(f.scalar.value.toString)
+        raw(f.scalar.toString)
       })
     }
 
@@ -536,7 +536,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        raw(f.array.values.headOption.map(_.asInstanceOf[AmfScalar].value.toString).getOrElse(""))
+        raw(f.array.values.headOption.map(_.asInstanceOf[AmfScalar].toString).getOrElse(""))
       })
     }
 

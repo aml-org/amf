@@ -612,7 +612,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        raw(f.scalar.value.toString, token)
+        raw(f.scalar.toString, token)
       })
     }
 
