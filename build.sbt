@@ -6,9 +6,6 @@ scalaVersion in ThisBuild := "2.12.2"
 lazy val root = project
   .in(file("."))
   .aggregate(amfJS, amfJVM)
-  .settings(
-    publish := {}
-  )
 
 lazy val amf = crossProject
   .in(file("."))
@@ -39,7 +36,9 @@ lazy val amf = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar"
   )
   .jsSettings(
-    publish := {},
+    publish := {
+      "./amf-js/build-scripts/deploy-develop.sh".!
+    },
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule
@@ -70,5 +69,7 @@ def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition
   scalaJSModuleKind := kind
 )
 
-addCommandAlias("generate", "; clean; moduleJS/fullOptJS; browserJS/fullOptJS; amfJVM/assembly; amfJVM/packageDoc")
-addCommandAlias("publish", "; amfJVM/publish")
+addCommandAlias("generate", "; clean; generateJS; generateJVM")
+addCommandAlias("generateJS", "; moduleJS/fullOptJS; browserJS/fullOptJS")
+addCommandAlias("generateJVM", "; amfJVM/assembly; amfJVM/packageDoc")
+addCommandAlias("publish", "; clean; generateJS; publish")
