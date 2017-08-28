@@ -15,6 +15,64 @@ sbt test
 sbt coverage test coverageReport
 ```
 
+## Use as dependencies
+
+Use *amf* importing the published artifacts as dependencies.
+
+### Using from npm
+
+Before you get started, you'll want to register with our private npm repository so you can download @mulesoft modules.
+
+```
+npm login --registry=https://npm.mulesoft.com --scope=@mulesoft
+```
+
+When prompted, enter your github username and password. You may then clone and install the project's dependencies.
+
+If you have 2-factor authentication enabled, you'll get a 401 after attempting to login. Temporarily disable 2FA, login with your github credentials, then re-enable 2FA.
+
+Once you are logged in on the scope @mulesoft just execute the command
+
+```bash
+npm install --save @mulesoft/amf-jenkins@latest
+```
+
+Import it using
+```javascript
+import amf from '@mulesoft/amf-js'
+```
+
+and *amf* will be an object containing all the exported classes, for example:
+```javascript
+const client = new amf.JsClient()
+```
+
+### Using from JVM
+
+Add the mulesoft ci-snapshots repository and its credentials to the repositories, for example in gradle:
+
+```groovy
+maven {
+        url 'https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots'
+        credentials {
+            username = "username"
+            password = "password"
+        }
+    }
+```
+
+And then add the dependency:
+
+```groovy
+dependencies {
+    compile 'org.mulesoft:amf_2.12:0.0.1-SNAPSHOT'
+}
+```
+
+## Use as artifacts
+
+Use *amf* importing the artifacts generated from cloning the project and running *sbt generate*.
+
 ### Generate artifacts
 ```sh
 sbt generate

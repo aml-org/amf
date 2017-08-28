@@ -8,7 +8,7 @@ source ./build-scripts/pre-deploy.sh
 
 echo "Current directory: `pwd`"
 
-export DEVELOP_VERSION_BASE=`npm v @mulesoft/amf-jenkins dist-tags.latest`
+export DEVELOP_VERSION_BASE=`npm v @mulesoft/amf-js dist-tags.latest`
 
 if [[ "$DEVELOP_VERSION_BASE" == "undefined" ]]; then
   DEVELOP_VERSION_BASE='0.0.1-automatic'
