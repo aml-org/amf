@@ -39,7 +39,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
   }
 
   private def remote(url: String, hint: Hint, callback: (Option[Document]) => Unit): Unit = {
-    new JvmClient().generateFromFile(
+    new Client().parseFromFile(
       url,
       hint,
       new Handler[BaseUnit] {

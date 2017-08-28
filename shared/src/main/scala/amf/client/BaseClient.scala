@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
 abstract class BaseClient extends PlatformSecrets {
 
   protected def generate(url: String, hint: Hint, overridePlatForm: Option[Platform] = None): Future[BaseUnit] =
-    AMFCompiler(url, if (overridePlatForm.isDefined) overridePlatForm.get else platform, hint).build()
+    AMFCompiler(url, overridePlatForm.getOrElse(platform), hint).build()
 
   protected def generateAndHandle(url: String,
                                   hint: Hint,
@@ -26,13 +26,4 @@ abstract class BaseClient extends PlatformSecrets {
     case Failure(exception) => handler.error(exception)
   }
 
-}
-
-trait Client[Type] {
-
-  type H
-
-  def generateFromFile(url: String, hint: Hint, handler: H): Unit
-
-  def generateFromStream(stream: String, hint: Hint, handler: H): Unit
 }

@@ -10,12 +10,8 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 /**
   *
   */
-@JSExportTopLevel("JsGenerator")
-class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
-
-  override type FH = JsFileHandler
-
-  override type SH = JsStringHandler
+@JSExportTopLevel("Generator")
+class Generator extends BaseGenerator {
 
   /**
     * Generates the syntax text and stores it in the file pointed by the provided URL.
@@ -23,12 +19,12 @@ class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
     * (like the browser) or if a remote URL is provided.
     */
   @JSExport
-  override def generateToFile(unit: BaseUnit, url: String, vendor: Vendor, handler: JsFileHandler): Unit =
+  def generateFile(unit: BaseUnit, url: String, vendor: Vendor, handler: FileHandler): Unit =
     super.generateAndHanldeFile(unit.unit, url, vendor, jsUnitHander(handler))
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
-  override def generateToString(unit: BaseUnit, vendor: Vendor, handler: JsStringHandler): Unit =
+  def generateString(unit: BaseUnit, vendor: Vendor, handler: StringHandler): Unit =
     super.generateAndHandleString(unit.unit, vendor, jsStringHander(handler))
 
   /**
@@ -37,15 +33,15 @@ class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
     * (like the browser) or if a remote URL is provided.
     */
   @JSExport
-  def generateToFileAsync(unit: BaseUnit, url: String, vendor: Vendor): js.Promise[String] =
+  def generateFileAsync(unit: BaseUnit, url: String, vendor: Vendor): js.Promise[String] =
     super.generateFile(unit.unit, url, vendor).toJSPromise
 
   /** Generates the syntax text and returns it  asynchronously. */
   @JSExport
-  def generateToStringAsync(unit: BaseUnit, vendor: Vendor): js.Promise[String] =
+  def generateStringAsync(unit: BaseUnit, vendor: Vendor): js.Promise[String] =
     super.generateString(unit.unit, vendor).toJSPromise
 
-  private def jsStringHander(handler: JsHandler[String]) =
+  private def jsStringHander(handler: StringHandler) =
     new Handler[String] {
       override def error(exception: Throwable): Unit = handler.error(exception)
 
@@ -53,7 +49,7 @@ class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
         handler.success(document)
     }
 
-  private def jsUnitHander(handler: JsHandler[Unit]) =
+  private def jsUnitHander(handler: FileHandler) =
     new Handler[Unit] {
       override def error(exception: Throwable): Unit = handler.error(exception)
 
@@ -63,13 +59,13 @@ class JsGenerator extends BaseGenerator with Generator[BaseUnit] {
 }
 
 @js.native
-trait JsStringHandler extends JsHandler[String] {
+trait StringHandler extends JsHandler[String] {
   def success(generation: String)
   def error(exception: Throwable)
 }
 
 @js.native
-trait JsFileHandler extends JsHandler[Unit] {
+trait FileHandler extends JsHandler[Unit] {
   def error(exception: Throwable)
   def success()
 }

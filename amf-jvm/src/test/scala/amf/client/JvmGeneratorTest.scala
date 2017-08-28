@@ -20,7 +20,7 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
       .map(content => content.stream.toString)
 
     FutureConverters
-      .toScala(new JvmGenerator().generateToStringAsync(unitBare, Oas))
+      .toScala(new Generator().generateStringAsync(unitBare, Oas))
       .zip(expected)
       .map(checkDiff)
   }
@@ -50,7 +50,7 @@ class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFU
       .map(content => content.stream.toString)
 
     FutureConverters
-      .toScala(new JvmGenerator().generateToStringAsync(unitAdvanced, Oas))
+      .toScala(new Generator().generateStringAsync(unitAdvanced, Oas))
       .zip(expected)
       .map(checkDiff)
   }

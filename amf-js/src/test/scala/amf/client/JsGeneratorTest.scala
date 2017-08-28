@@ -14,7 +14,7 @@ class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUn
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test to stream dump") {
-    val futureResult = new JsGenerator().generateToStringAsync(unitBare, Oas).toFuture
+    val futureResult = new Generator().generateStringAsync(unitBare, Oas).toFuture
 
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
@@ -26,7 +26,7 @@ class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUn
   }
 
   test("test to stream dump complete") {
-    val futureResult = new JsGenerator().generateToStringAsync(unitAdvanced, Oas).toFuture
+    val futureResult = new Generator().generateStringAsync(unitAdvanced, Oas).toFuture
 
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
