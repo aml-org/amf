@@ -34,12 +34,12 @@ private[client] abstract class BaseGenerator(protected val target: Vendor, prote
     * (like the browser) or if a remote URL is provided.
     */
   @JSExport
-  def generateFileAsync(unit: BaseUnit, url: String, vendor: Vendor): js.Promise[String] =
+  def generateFileAsync(unit: BaseUnit, url: String): js.Promise[String] =
     super.generateFileAsync(unit.unit, url).toJSPromise
 
   /** Generates the syntax text and returns it  asynchronously. */
   @JSExport
-  def generateStringAsync(unit: BaseUnit, vendor: Vendor): js.Promise[String] =
+  def generateStringAsync(unit: BaseUnit): js.Promise[String] =
     super.generateStringAsync(unit.unit).toJSPromise
 
   private case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {

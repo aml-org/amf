@@ -218,17 +218,18 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(unit => new AMFDumper(unit, target).dumpToString)
+      .flatMap(unit => new AMFDumper(unit, target, target.defaultSyntax).dumpToString)
 
     actual
       .zip(expected)
       .map(checkDiff)
+
   }
 
   def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = {
     AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(new AMFDumper(_, target).dumpToString)
+      .flatMap(new AMFDumper(_, target, target.defaultSyntax).dumpToString)
       .flatMap(content => {
         val file = tmp(source + ".tmp")
         platform.write("file://" + file, content).map((_, content))

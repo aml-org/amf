@@ -2,7 +2,6 @@ package amf.client
 
 import amf.common.AmfObjectTestMatcher
 import amf.model.{BaseUnit, Document, WebApi}
-import amf.remote.OasJsonHint
 import amf.unsafe.PlatformSecrets
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -13,14 +12,40 @@ import scala.scalajs.js.Promise
 /**
   *
   */
-class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
+class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("test from stream generation") {
+  test("test from stream generation oas") {
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .flatMap(stream => {
-        val eventualUnit = new BaseParser().parseStringAsync(stream.stream.toString, OasJsonHint)
+        val eventualUnit = new OasParser().parseStringAsync(stream.stream.toString)
+        eventualUnit.toFuture
+      })
+      .map(bu => {
+        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
+        succeed
+      })
+  }
+
+  test("test from stream generation raml") {
+    platform
+      .resolve("file://shared/src/test/resources/clients/bare.raml", None)
+      .flatMap(stream => {
+        val eventualUnit = new RamlParser().parseStringAsync(stream.stream.toString)
+        eventualUnit.toFuture
+      })
+      .map(bu => {
+        AmfObjectMatcher(webApiBare.element.withBasePath("/api")).assert(bu.asInstanceOf[Document].encodes.element)
+        succeed
+      })
+  }
+
+  test("test from stream generation amf") {
+    platform
+      .resolve("file://shared/src/test/resources/clients/bare.jsonld", None)
+      .flatMap(stream => {
+        val eventualUnit = new AmfParser().parseStringAsync(stream.stream.toString)
         eventualUnit.toFuture
       })
       .map(bu => {
@@ -30,8 +55,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
   }
 
   test("test from file generation") {
-    new BaseParser()
-      .parseFileAsync("file://shared/src/test/resources/clients/bare.json", OasJsonHint)
+    new OasParser()
+      .parseFileAsync("file://shared/src/test/resources/clients/bare.json")
       .toFuture
       .map(bu => {
         AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
@@ -43,7 +68,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .flatMap(stream => {
-        val value1: Promise[BaseUnit] = new BaseParser().parseStringAsync(stream.stream.toString, OasJsonHint)
+        val value1: Promise[BaseUnit] = new OasParser().parseStringAsync(stream.stream.toString)
         value1.toFuture
       })
       .map(bu => {
@@ -53,8 +78,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
   }
 
   test("test from file complete generation") {
-    new BaseParser()
-      .parseFileAsync("file://shared/src/test/resources/clients/advanced.json", OasJsonHint)
+    new OasParser()
+      .parseFileAsync("file://shared/src/test/resources/clients/advanced.json")
       .toFuture
       .map(bu => {
         AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)

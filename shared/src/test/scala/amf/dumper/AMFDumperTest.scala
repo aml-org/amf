@@ -2,6 +2,7 @@ package amf.dumper
 
 import amf.common.Tests
 import amf.emit.AMFUnitFixtureTest
+import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -39,7 +40,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  ]
         |}""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Oas).dumpToString
+    val actual = new AMFDumper(`document/api/bare`, Oas, Json).dumpToString
 
     assert(actual, expected)
   }
@@ -58,7 +59,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  - https
         |baseUri: localhost.com/api""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Raml).dumpToString
+    val actual = new AMFDumper(`document/api/bare`, Raml, Yaml).dumpToString
     assert(actual, expected)
   }
 
@@ -133,7 +134,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Amf).dumpToString
+    val actual = new AMFDumper(`document/api/bare`, Amf, Json).dumpToString
     assert(actual, expected)
   }
 
@@ -403,7 +404,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/full`, Amf).dumpToString
+    val actual = new AMFDumper(`document/api/full`, Amf, Json).dumpToString
     assert(actual, expected)
   }
 

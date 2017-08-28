@@ -19,18 +19,22 @@ object AmfJsonHint extends Hint(Amf, Json)
 
 sealed trait Vendor {
   val name: String
+  val defaultSyntax: Syntax
 }
 
 object Raml extends Vendor {
-  override val name: String = "raml"
+  override val name: String          = "raml"
+  override val defaultSyntax: Syntax = Yaml
 }
 
 object Oas extends Vendor {
-  override val name: String = "oas"
+  override val name: String          = "oas"
+  override val defaultSyntax: Syntax = Json
 }
 
 object Amf extends Vendor {
-  override val name: String = "amf"
+  override val name: String          = "amf"
+  override val defaultSyntax: Syntax = Json
 }
 
 sealed trait Kind
