@@ -21,7 +21,7 @@ class JvmClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .flatMap(stream => {
-        FutureConverters.toScala(new Client().parseFromStreamAsync(stream.stream.toString, OasJsonHint))
+        FutureConverters.toScala(new BaseParser().parseStringAsync(stream.stream.toString, OasJsonHint))
       })
       .map(bu => {
         AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
@@ -32,8 +32,8 @@ class JvmClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
   test("test from file generation") {
     FutureConverters
       .toScala(
-        new Client()
-          .parseFromFileAsync("file://shared/src/test/resources/clients/bare.json", OasJsonHint))
+        new BaseParser()
+          .parseFileAsync("file://shared/src/test/resources/clients/bare.json", OasJsonHint))
       .map(bu => {
         AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
         succeed
@@ -44,7 +44,7 @@ class JvmClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .flatMap(stream => {
-        FutureConverters.toScala(new Client().parseFromStreamAsync(stream.stream.toString, OasJsonHint))
+        FutureConverters.toScala(new BaseParser().parseStringAsync(stream.stream.toString, OasJsonHint))
       })
       .map(bu => {
         AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
@@ -55,8 +55,8 @@ class JvmClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
   test("test from file complete generation") {
     FutureConverters
       .toScala(
-        new Client()
-          .parseFromFileAsync("file://shared/src/test/resources/clients/advanced.json", OasJsonHint))
+        new BaseParser()
+          .parseFileAsync("file://shared/src/test/resources/clients/advanced.json", OasJsonHint))
       .map(bu => {
         AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
         succeed

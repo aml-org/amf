@@ -20,7 +20,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .flatMap(stream => {
-        val eventualUnit = new Client().parseFromStreamAsync(stream.stream.toString, OasJsonHint)
+        val eventualUnit = new BaseParser().parseStringAsync(stream.stream.toString, OasJsonHint)
         eventualUnit.toFuture
       })
       .map(bu => {
@@ -30,8 +30,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
   }
 
   test("test from file generation") {
-    new Client()
-      .parseFromFileAsync("file://shared/src/test/resources/clients/bare.json", OasJsonHint)
+    new BaseParser()
+      .parseFileAsync("file://shared/src/test/resources/clients/bare.json", OasJsonHint)
       .toFuture
       .map(bu => {
         AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
@@ -43,7 +43,7 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .flatMap(stream => {
-        val value1: Promise[BaseUnit] = new Client().parseFromStreamAsync(stream.stream.toString, OasJsonHint)
+        val value1: Promise[BaseUnit] = new BaseParser().parseStringAsync(stream.stream.toString, OasJsonHint)
         value1.toFuture
       })
       .map(bu => {
@@ -53,8 +53,8 @@ class JsClientTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitF
   }
 
   test("test from file complete generation") {
-    new Client()
-      .parseFromFileAsync("file://shared/src/test/resources/clients/advanced.json", OasJsonHint)
+    new BaseParser()
+      .parseFileAsync("file://shared/src/test/resources/clients/advanced.json", OasJsonHint)
       .toFuture
       .map(bu => {
         AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)

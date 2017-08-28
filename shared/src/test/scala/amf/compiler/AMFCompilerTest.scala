@@ -30,7 +30,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Api (amf)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonLdHint)
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonHint)
       .build() map assertDocument
   }
 

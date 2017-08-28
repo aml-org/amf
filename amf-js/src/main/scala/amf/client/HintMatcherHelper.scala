@@ -16,7 +16,7 @@ object HintMatcherHelper {
     source match {
       case "json" | "oas" | "openapi" => OasJsonHint
       case "raml" | "yaml"            => RamlYamlHint
-      case _                          => AmfJsonLdHint
+      case _                          => AmfJsonHint
     }
   }
 

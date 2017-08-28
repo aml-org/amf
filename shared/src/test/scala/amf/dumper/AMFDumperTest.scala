@@ -39,7 +39,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  ]
         |}""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Oas).dumpToStream
+    val actual = new AMFDumper(`document/api/bare`, Oas).dumpToString
 
     assert(actual, expected)
   }
@@ -58,7 +58,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  - https
         |baseUri: localhost.com/api""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Raml).dumpToStream
+    val actual = new AMFDumper(`document/api/bare`, Raml).dumpToString
     assert(actual, expected)
   }
 
@@ -133,7 +133,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Amf).dumpToStream
+    val actual = new AMFDumper(`document/api/bare`, Amf).dumpToString
     assert(actual, expected)
   }
 
@@ -403,7 +403,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/full`, Amf).dumpToStream
+    val actual = new AMFDumper(`document/api/full`, Amf).dumpToString
     assert(actual, expected)
   }
 

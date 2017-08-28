@@ -1,4 +1,4 @@
-package amf.client
+package amf.remote
 
 import java.util.concurrent.CompletableFuture
 

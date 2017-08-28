@@ -44,7 +44,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 //  }
 
   test("Basic cycle for amf") {
-    cycle("basic.jsonld", AmfJsonLdHint, Amf)
+    cycle("basic.jsonld", AmfJsonHint, Amf)
   }
 
   test("Basic cycle for raml") {
@@ -64,11 +64,11 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Basic amf(raml) to raml test") {
-    assertCycle("basic.raml.jsonld", "basic.raml", AmfJsonLdHint, Raml)
+    assertCycle("basic.raml.jsonld", "basic.raml", AmfJsonHint, Raml)
   }
 
   test("Basic amf(oas) to oas test") {
-    assertCycle("basic.json.jsonld", "basic.json", AmfJsonLdHint, Oas)
+    assertCycle("basic.json.jsonld", "basic.json", AmfJsonHint, Oas)
   }
 
   test("Basic raml to oas test") {
@@ -80,7 +80,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Complete amf to amf test") {
-    assertCycle("complete.jsonld", "complete.jsonld", AmfJsonLdHint, Amf)
+    assertCycle("complete.jsonld", "complete.jsonld", AmfJsonHint, Amf)
   }
 
   test("Complete raml to amf test") {
@@ -108,15 +108,15 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Complete amf(raml) to raml test") {
-    assertCycle("complete.raml.jsonld", "complete.raml", AmfJsonLdHint, Raml)
+    assertCycle("complete.raml.jsonld", "complete.raml", AmfJsonHint, Raml)
   }
 
   test("Complete amf(oas) to oas test") {
-    assertCycle("complete.json.jsonld", "complete.json", AmfJsonLdHint, Oas)
+    assertCycle("complete.json.jsonld", "complete.json", AmfJsonHint, Oas)
   }
 
   test("Endpoints amf to amf test") {
-    assertCycle("endpoints.jsonld", "endpoints.jsonld", AmfJsonLdHint, Amf)
+    assertCycle("endpoints.jsonld", "endpoints.jsonld", AmfJsonHint, Amf)
   }
 
   test("Endpoints raml to amf test") {
@@ -144,11 +144,11 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Endpoints amf(raml) to raml test") {
-    assertCycle("endpoints.raml.jsonld", "endpoints.raml", AmfJsonLdHint, Raml)
+    assertCycle("endpoints.raml.jsonld", "endpoints.raml", AmfJsonHint, Raml)
   }
 
   test("Endpoints amf(oas) to oas test") {
-    assertCycle("endpoints.json.jsonld", "endpoints.json", AmfJsonLdHint, Oas)
+    assertCycle("endpoints.json.jsonld", "endpoints.json", AmfJsonHint, Oas)
   }
 
   test("Complete with operations raml to oas test") {
@@ -218,7 +218,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(unit => new AMFDumper(unit, target).dumpToStream)
+      .flatMap(unit => new AMFDumper(unit, target).dumpToString)
 
     actual
       .zip(expected)
@@ -228,7 +228,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = {
     AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(new AMFDumper(_, target).dumpToStream)
+      .flatMap(new AMFDumper(_, target).dumpToString)
       .flatMap(content => {
         val file = tmp(source + ".tmp")
         platform.write("file://" + file, content).map((_, content))

@@ -11,7 +11,7 @@ object HintHelper {
   def oasJsonHint   = OasJsonHint
   def ramlJsonHint  = RamlJsonHint
   def oasyamlHint   = OasYamlHint
-  def amfJsonldHint = AmfJsonLdHint
+  def amfJsonldHint = AmfJsonHint
 }
 
 object VendorHelper {

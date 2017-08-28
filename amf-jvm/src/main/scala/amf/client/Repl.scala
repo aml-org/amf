@@ -3,11 +3,8 @@ package amf.client
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
-import amf.dumper.AMFDumper
-import amf.emit.AMFUnitMaker
 import amf.model.{BaseUnit, Document}
-import amf.parser.ASTNodePrinter
-import amf.remote._
+import amf.remote.{Amf, Oas, Raml, Vendor}
 
 class Repl(val in: InputStream, val out: PrintStream) {
 
@@ -19,34 +16,45 @@ class Repl(val in: InputStream, val out: PrintStream) {
 
     while (scanner.hasNextLine) {
       scanner.nextLine() match {
-        case Exit()           => return
-        case Json(url)        => remote(url, OasJsonHint, unit = _)
-        case Yaml(url)        => remote(url, RamlYamlHint, unit = _)
-        case Ast(_)           => unit.foreach(doc => out.println(ASTNodePrinter.print(AMFUnitMaker(doc.document, Raml))))
-        case Generate(syntax) => unit.foreach(doc => generate(doc, syntax))
-        case line             => out.println(s"... $line")
+        case Exit()               => return
+        case Parse((vendor, url)) => remote(vendor, url, unit = _)
+        case Generate(syntax)     => unit.foreach(doc => generate(doc, syntax))
+        case line                 => out.println(s"... $line")
       }
     }
   }
 
   private def generate(unit: BaseUnit, syntax: String): Unit = {
-    syntax match {
-      case "json"   => out.println(new AMFDumper(unit.unit, Oas).dumpToStream)
-      case "yaml"   => out.println(new AMFDumper(unit.unit, Raml).dumpToStream)
-      case "jsonld" => out.println(new AMFDumper(unit.unit, Amf).dumpToStream)
-      case _        => out.println(s"Unsupported generation for: $syntax")
+    val generator: Option[BaseGenerator] = syntax match {
+      case "raml" => Some(new RamlGenerator)
+      case "oas"  => Some(new OasGenerator)
+      case "amf"  => Some(new AmfGenerator)
+      case _ =>
+        out.println(s"Unsupported generation for: $syntax")
+        None
     }
+
+    generator.foreach(g => {
+      g.generateString(
+        unit,
+        new StringHandler {
+          override def error(exception: Throwable): Unit = println(s"An error occurred: $exception")
+          override def success(generation: String): Unit = out.print(generation)
+        }
+      )
+    })
+
   }
 
-  private def remote(url: String, hint: Hint, callback: (Option[Document]) => Unit): Unit = {
-    new Client().parseFromFile(
+  private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
+    parser(vendor).parseFile(
       url,
-      hint,
       new Handler[BaseUnit] {
         override def success(unit: BaseUnit): Unit = {
-          out.println("Successfully parsed. Type `:ast` or `:generate json` or `:generate yaml`")
+          out.println("Successfully parsed. Type `:generate raml` or `:generate oas` or `:generate amf`")
           callback(Some(Document(unit.asInstanceOf[amf.document.Document])))
         }
+
         override def error(exception: Throwable): Unit = {
           callback(None)
           out.println(exception)
@@ -55,31 +63,21 @@ class Repl(val in: InputStream, val out: PrintStream) {
     )
   }
 
-  private object Json {
-    def unapply(line: String): Option[String] = {
+  private object Parse {
+    def unapply(line: String): Option[(Vendor, String)] = {
       line match {
-        case s if s.startsWith(":json ") => Some(s.stripPrefix(":json "))
+        case s if s.startsWith(":raml ") => Some((Raml, s.stripPrefix(":raml ")))
+        case s if s.startsWith(":oas ")  => Some((Oas, s.stripPrefix(":oas ")))
+        case s if s.startsWith(":amf ")  => Some((Amf, s.stripPrefix(":amf ")))
         case _                           => None
       }
     }
   }
 
-  private object Yaml {
-    def unapply(line: String): Option[String] = {
-      line match {
-        case s if s.startsWith(":yaml ") => Some(s.stripPrefix(":yaml "))
-        case _                           => None
-      }
-    }
-  }
-
-  private object Ast {
-    def unapply(line: String): Option[String] = {
-      line match {
-        case s if s.startsWith(":ast") => Some(line)
-        case _                         => None
-      }
-    }
+  private def parser(vendor: Vendor) = vendor match {
+    case Raml => new RamlParser
+    case Oas  => new OasParser
+    case Amf  => new AmfParser
   }
 
   private object Generate {
@@ -99,6 +97,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
       }
     }
   }
+
 }
 
 object Repl {

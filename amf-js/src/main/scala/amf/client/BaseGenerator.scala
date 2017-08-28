@@ -1,17 +1,18 @@
 package amf.client
 import amf.model.BaseUnit
+import amf.remote.Syntax.Syntax
 import amf.remote.Vendor
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExport
 
 /**
-  *
+  * Base class for jvm generators
   */
-@JSExportTopLevel("Generator")
-class Generator extends BaseGenerator {
+private[client] abstract class BaseGenerator(protected val target: Vendor, protected val syntax: Syntax)
+    extends PlatformGenerator {
 
   /**
     * Generates the syntax text and stores it in the file pointed by the provided URL.
@@ -19,13 +20,13 @@ class Generator extends BaseGenerator {
     * (like the browser) or if a remote URL is provided.
     */
   @JSExport
-  def generateFile(unit: BaseUnit, url: String, vendor: Vendor, handler: FileHandler): Unit =
-    super.generateAndHanldeFile(unit.unit, url, vendor, jsUnitHander(handler))
+  def generateFile(unit: BaseUnit, url: String, handler: FileHandler): Unit =
+    super.generateFile(unit.unit, url, UnitHandlerAdapter(handler))
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
-  def generateString(unit: BaseUnit, vendor: Vendor, handler: StringHandler): Unit =
-    super.generateAndHandleString(unit.unit, vendor, jsStringHander(handler))
+  def generateString(unit: BaseUnit, handler: StringHandler): Unit =
+    super.generateString(unit.unit, StringHandlerAdapter(handler))
 
   /**
     * Generates asynchronously the syntax text and stores it in the file pointed by the provided URL.
@@ -34,28 +35,22 @@ class Generator extends BaseGenerator {
     */
   @JSExport
   def generateFileAsync(unit: BaseUnit, url: String, vendor: Vendor): js.Promise[String] =
-    super.generateFile(unit.unit, url, vendor).toJSPromise
+    super.generateFileAsync(unit.unit, url).toJSPromise
 
   /** Generates the syntax text and returns it  asynchronously. */
   @JSExport
   def generateStringAsync(unit: BaseUnit, vendor: Vendor): js.Promise[String] =
-    super.generateString(unit.unit, vendor).toJSPromise
+    super.generateStringAsync(unit.unit).toJSPromise
 
-  private def jsStringHander(handler: StringHandler) =
-    new Handler[String] {
-      override def error(exception: Throwable): Unit = handler.error(exception)
+  private case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
+    override def success(unit: Unit): Unit         = handler.success()
+    override def error(exception: Throwable): Unit = handler.error(exception)
+  }
 
-      override def success(document: String): Unit =
-        handler.success(document)
-    }
-
-  private def jsUnitHander(handler: FileHandler) =
-    new Handler[Unit] {
-      override def error(exception: Throwable): Unit = handler.error(exception)
-
-      override def success(document: Unit): Unit =
-        handler.success()
-    }
+  private case class StringHandlerAdapter(handler: StringHandler) extends Handler[String] {
+    override def success(document: String): Unit   = handler.success(document)
+    override def error(exception: Throwable): Unit = handler.error(exception)
+  }
 }
 
 @js.native

@@ -15,7 +15,7 @@ object OasYamlHint extends Hint(Oas, Yaml)
 
 object OasJsonHint extends Hint(Oas, Json)
 
-object AmfJsonLdHint extends Hint(Amf, Json)
+object AmfJsonHint extends Hint(Amf, Json)
 
 sealed trait Vendor {
   val name: String
