@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-npm whoami --registry https://npm.mulesoft.com
-
 echo "EXECUTING DEPLOY.SH"
 
 export NPM_USER=`npm whoami --registry https://npm.mulesoft.com 2> /dev/null`
