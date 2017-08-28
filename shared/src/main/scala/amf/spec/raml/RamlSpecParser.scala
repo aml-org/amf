@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.common.AMFAST
+import amf.common.{AMFAST, Lazy}
 import amf.common.AMFToken.StringToken
 import amf.common.Strings.strings
 import amf.compiler.Root
@@ -33,7 +33,8 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "baseUriParameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("path"))
+        val parameters: Seq[Parameter] =
+          ParametersParser(entry.value, api.withBaseUriParameter).parse().map(_.withBinding("path"))
         api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -175,7 +176,8 @@ case class EndpointParser(entry: EntryNode,
     entries.key(
       "uriParameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("path"))
+        val parameters: Seq[Parameter] =
+          ParametersParser(entry.value, endpoint.withParameter).parse().map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -185,7 +187,7 @@ case class EndpointParser(entry: EntryNode,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += OperationParser(entry).parse()
+          operations += OperationParser(entry, endpoint.withOperation).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -202,24 +204,31 @@ case class EndpointParser(entry: EntryNode,
   }
 }
 
-case class RequestParser(entries: Entries) {
+case class RequestParser(entries: Entries, producer: () => Request) {
 
   def parse(): Option[Request] = {
-    val request = Request()
-
+    //TODO if request it's empty (no parameters or payloads) the request object its created anyway
+    val request = new Lazy[Request](producer)
     entries.key(
       "queryParameters",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("query"))
-        request.set(RequestModel.QueryParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
+
+        val parameters: Seq[Parameter] =
+          ParametersParser(entry.value, request.getOrCreate.withQueryParameter).parse().map(_.withBinding("query"))
+        request.getOrCreate.set(RequestModel.QueryParameters,
+                                AmfArray(parameters, Annotations(entry.value)),
+                                entry.annotations())
       }
     )
 
     entries.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse().map(_.withBinding("header"))
-        request.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
+        val parameters: Seq[Parameter] =
+          ParametersParser(entry.value, request.getOrCreate.withHeader).parse().map(_.withBinding("header"))
+        request.getOrCreate.set(RequestModel.Headers,
+                                AmfArray(parameters, Annotations(entry.value)),
+                                entry.annotations())
       }
     )
 
@@ -231,21 +240,28 @@ case class RequestParser(entries: Entries) {
           entries => {
             val payloads = mutable.ListBuffer[Payload]()
             entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-            request.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
+            request.getOrCreate.set(RequestModel.Payloads,
+                                    AmfArray(payloads, Annotations(entry.value)),
+                                    entry.annotations())
           }
         )
       }
     )
 
-    if (request.fields.nonEmpty) { Some(request) } else { None }
+    request.option
   }
+
 }
 
-case class OperationParser(entry: EntryNode) {
+case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
+
   def parse(): Operation = {
 
-    val operation = Operation(entry.ast)
-    val entries   = new Entries(entry.value)
+    val method = entry.key.content.unquote
+
+    val operation = producer(method).add(Annotations(entry.ast))
+
+    val entries = new Entries(entry.value)
 
     operation.set(Method, ValueNode(entry.key).string())
 
@@ -285,7 +301,7 @@ case class OperationParser(entry: EntryNode) {
       }
     )
 
-    RequestParser(entries).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, operation.withRequest).parse().map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",
@@ -294,7 +310,7 @@ case class OperationParser(entry: EntryNode) {
           "\\d{3}",
           entries => {
             val responses = mutable.ListBuffer[Response]()
-            entries.foreach(entry => { responses += ResponseParser(entry).parse() })
+            entries.foreach(entry => { responses += ResponseParser(entry, operation.withResponse).parse() })
             operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), entry.annotations())
           }
         )
@@ -305,10 +321,10 @@ case class OperationParser(entry: EntryNode) {
   }
 }
 
-case class ParametersParser(ast: AMFAST) {
+case class ParametersParser(ast: AMFAST, producer: String => Parameter) {
   def parse(): Seq[Parameter] = {
     new Entries(ast).entries.values
-      .map(entry => ParameterParser(entry).parse())
+      .map(entry => ParameterParser(entry, producer).parse())
       .toSeq
   }
 }
@@ -327,13 +343,14 @@ case class PayloadParser(entry: EntryNode) {
   }
 }
 
-case class ResponseParser(entry: EntryNode) {
+case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
   def parse(): Response = {
-    val response = Response(entry.ast)
-    val entries  = new Entries(entry.value)
 
     val node = ValueNode(entry.key)
-    response.set(ResponseModel.Name, node.string())
+
+    val response = producer(node.string().value.toString).add(Annotations(entry.ast))
+    val entries  = new Entries(entry.value)
+
     response.set(ResponseModel.StatusCode, node.string())
 
     entries.key("description", entry => {
@@ -344,7 +361,7 @@ case class ResponseParser(entry: EntryNode) {
     entries.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value).parse()
+        val parameters: Seq[Parameter] = ParametersParser(entry.value, response.withHeader).parse()
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -367,11 +384,11 @@ case class ResponseParser(entry: EntryNode) {
   }
 }
 
-case class ParameterParser(entry: EntryNode) {
+case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
   def parse(): Parameter = {
-    val parameter = Parameter(entry.ast)
 
-    val name = entry.key.content.unquote
+    val name      = entry.key.content.unquote
+    val parameter = producer(name).add(Annotations(entry.ast))
 
     parameter.set(ParameterModel.Required, value = true)
 

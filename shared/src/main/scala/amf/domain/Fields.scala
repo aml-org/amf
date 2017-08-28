@@ -12,7 +12,6 @@ import scala.collection.immutable.ListMap
 class Fields {
 
   private var fs: Map[Field, Value] = ListMap()
-  var id: String                    = _
 
   def default(field: Field): AmfElement = field.`type` match {
     case Array(_) => AmfArray(Nil)
@@ -41,19 +40,19 @@ class Fields {
     fs.get(field).flatMap(_.annotations.find(classType))
 
   /** Add field array - value. */
-  def add(field: Field, value: AmfElement): this.type = {
-    adopt(value)
+  def add(id: String, field: Field, value: AmfElement): this.type = {
+    adopt(id, value)
     ?[AmfArray](field) match {
       case Some(array) =>
         array += value
         this
-      case None => set(field, AmfArray(Seq(value)))
+      case None => set(id, field, AmfArray(Seq(value)))
     }
   }
 
   /** Set field value entry-point. */
-  def set(field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
-    adopt(value)
+  def set(id: String, field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
+    adopt(id, value)
     fs = fs + (field -> Value(value, annotations))
     this
   }
@@ -61,7 +60,6 @@ class Fields {
   def into(other: Fields): Unit = {
     //TODO array copy with references instead of instance
     other.fs = other.fs ++ fs
-    other.id = id
   }
 
   def apply[T](field: Field): T = rawAny(get(field))
@@ -96,9 +94,9 @@ class Fields {
     this
   }
 
-  private def adopt(value: AmfElement): Unit = value match {
+  private def adopt(id: String, value: AmfElement): Unit = value match {
     case obj: AmfObject => obj.adopted(id)
-    case seq: AmfArray  => seq.values.foreach(adopt)
+    case seq: AmfArray  => seq.values.foreach(adopt(id, _))
     case _              => // Do nothing with scalars
   }
 

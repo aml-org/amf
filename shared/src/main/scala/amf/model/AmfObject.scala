@@ -12,11 +12,11 @@ trait AmfObject extends AmfElement {
   val fields: Fields
 
   /** Return element unique identifier. */
-  def id: String = fields.id
+  var id: String = _
 
   /** Set element unique identifier. */
-  def withId(id: String): this.type = {
-    fields.id = id
+  def withId(value: String): this.type = {
+    id = value
     this
   }
 
@@ -34,31 +34,31 @@ trait AmfObject extends AmfElement {
 
   /** Set field value. */
   def set(field: Field, value: AmfElement): this.type = {
-    fields.set(field, value)
+    fields.set(id, field, value)
     this
   }
 
   /** Add field value to array. */
   def add(field: Field, value: AmfElement): this.type = {
-    fields.add(field, value)
+    fields.add(id, field, value)
     this
   }
 
   /** Set field value. */
   def setArray(field: Field, values: Seq[AmfElement]): this.type = {
-    fields.set(field, AmfArray(values))
+    fields.set(id, field, AmfArray(values))
     this
   }
 
   /** Set field value. */
   def setArray(field: Field, values: Seq[AmfElement], annotations: Annotations): this.type = {
-    fields.set(field, AmfArray(values), annotations)
+    fields.set(id, field, AmfArray(values), annotations)
     this
   }
 
   /** Set field value. */
   def set(field: Field, value: AmfElement, annotations: Annotations): this.type = {
-    fields.set(field, value, annotations)
+    fields.set(id, field, value, annotations)
     this
   }
 }

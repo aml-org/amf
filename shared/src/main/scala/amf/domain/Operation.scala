@@ -1,6 +1,5 @@
 package amf.domain
 import amf.common.AMFAST
-import amf.metadata.domain.EndPointModel.UriParameters
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
@@ -34,6 +33,12 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
     val result = Response().withName(name)
     add(Responses, result)
     result
+  }
+
+  def withRequest(): Request = {
+    val request = Request()
+    set(OperationRequest, request)
+    request
   }
 }
 

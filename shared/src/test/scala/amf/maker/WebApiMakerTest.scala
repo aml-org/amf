@@ -78,68 +78,61 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   }
 
   test("WebApi with multiple operations - RAML.") {
-    val endpoints = List(
-      EndPoint()
-        .withPath("/levelzero"),
-      EndPoint()
-        .withPath("/levelzero/level-one")
-        .withName("One display name")
-        .withDescription("and this description!")
-        .withOperations(List(
-          Operation()
-            .withMethod("get")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withDeprecated(true)
-            .withSummary("This is a summary")
-            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
-            .withSchemes(List("http", "https")),
-          Operation()
-            .withMethod("post")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
-            .withSchemes(List("http", "https"))
-        ))
-    )
     val api = WebApi()
       .withName("API")
       .withBasePath("/some/base/uri")
-      .withEndPoints(endpoints)
+    api.withEndPoint("/levelzero")
+
+    val endpointOne = api.withEndPoint("/levelzero/level-one")
+
+    val operationGet = endpointOne
+      .withName("One display name")
+      .withDescription("and this description!")
+      .withOperation("get")
+    val operationPost = endpointOne.withOperation("post")
+
+    operationGet
+      .withName("Some title")
+      .withDescription("Some description")
+      .withDeprecated(true)
+      .withSummary("This is a summary")
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+      .withSchemes(List("http", "https"))
+    operationPost
+      .withName("Some title")
+      .withDescription("Some description")
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+      .withSchemes(List("http", "https"))
 
     assertFixture(api, "endpoint-operations.raml", RamlYamlHint)
   }
 
   test("WebApi with multiple operations - OAS.") {
-    val endpoints = List(
-      EndPoint()
-        .withPath("/levelzero")
-        .withName("Name"),
-      EndPoint()
-        .withPath("/levelzero/level-one")
-        .withName("One display name")
-        .withDescription("and this description!")
-        .withOperations(List(
-          Operation()
-            .withMethod("get")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withDeprecated(true)
-            .withSummary("This is a summary")
-            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
-            .withSchemes(List("http", "https")),
-          Operation()
-            .withMethod("post")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
-            .withSchemes(List("http", "https"))
-        ))
-    )
     val api = WebApi()
       .withName("API")
       .withBasePath("/some/base/uri")
-      .withEndPoints(endpoints)
+
+    api.withEndPoint("/levelzero").withName("Name")
+
+    val endpointOne = api
+      .withEndPoint("/levelzero/level-one")
+      .withName("One display name")
+      .withDescription("and this description!")
+
+    val operationGet = endpointOne.withOperation("get")
+    operationGet
+      .withName("Some title")
+      .withDescription("Some description")
+      .withDeprecated(true)
+      .withSummary("This is a summary")
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+      .withSchemes(List("http", "https"))
+    endpointOne
+      .withOperation("post")
+      .withName("Some title")
+      .withDescription("Some description")
+      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+      .withSchemes(List("http", "https"))
 
     assertFixture(api, "endpoint-operations.json", OasJsonHint)
   }

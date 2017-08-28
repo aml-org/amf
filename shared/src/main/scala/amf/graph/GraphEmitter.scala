@@ -214,6 +214,10 @@ object GraphEmitter {
     case _: CreativeWork => CreativeWorkModel
     case _: EndPoint     => EndPointModel
     case _: Operation    => OperationModel
+    case _: Parameter    => ParameterModel
+    case _: Request      => RequestModel
+    case _: Response     => ResponseModel
+    case _: Payload      => PayloadModel
     case _               => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }
