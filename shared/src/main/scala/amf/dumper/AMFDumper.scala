@@ -1,5 +1,6 @@
 package amf.dumper
 
+import amf.client.GenerationOptions
 import amf.document.BaseUnit
 import amf.emit.AMFUnitMaker
 import amf.generator.{JsonGenerator, YamlGenerator}
@@ -9,9 +10,9 @@ import amf.remote._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax) {
+class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: GenerationOptions) {
 
-  private val ast = AMFUnitMaker(unit, vendor)
+  private val ast = AMFUnitMaker(unit, vendor, options)
 
   /** Print ast to string. */
   def dumpToString: Future[String] = Future { dump() }
@@ -40,5 +41,6 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax) {
 }
 
 object AMFDumper {
-  def apply(unit: BaseUnit, vendor: Vendor, syntax: Syntax): AMFDumper = new AMFDumper(unit, vendor, syntax)
+  def apply(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: GenerationOptions): AMFDumper =
+    new AMFDumper(unit, vendor, syntax, options)
 }

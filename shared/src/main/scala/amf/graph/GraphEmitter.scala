@@ -1,5 +1,6 @@
 package amf.graph
 
+import amf.client.GenerationOptions
 import amf.common.AMFToken._
 import amf.common.Strings.strings
 import amf.common._
@@ -20,12 +21,12 @@ import amf.vocabulary.ValueType
   */
 object GraphEmitter {
 
-  def emit(unit: BaseUnit): AMFAST = {
-    val emitter = Emitter(ASTEmitter(AMFASTFactory()))
+  def emit(unit: BaseUnit, options: GenerationOptions): AMFAST = {
+    val emitter = Emitter(ASTEmitter(AMFASTFactory()), options)
     emitter.root(unit)
   }
 
-  case class Emitter(emitter: ASTEmitter[AMFToken, AMFAST]) {
+  case class Emitter(emitter: ASTEmitter[AMFToken, AMFAST], options: GenerationOptions) {
 
     def root(unit: BaseUnit): AMFAST = {
       emitter.root(Root) { () =>
@@ -164,7 +165,7 @@ object GraphEmitter {
     }
 
     private def createSourcesNode(id: String, sources: SourceMap): Unit = {
-      if (sources.nonEmpty) {
+      if (options.isWithSourceMaps && sources.nonEmpty) {
         entry { () =>
           raw(Sources.value.iri())
           array { () =>

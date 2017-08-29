@@ -11,9 +11,9 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 /**
-  *
+  * Common class for all platform generators
   */
-private[client] abstract class PlatformGenerator extends PlatformSecrets {
+protected abstract class PlatformGenerator extends PlatformSecrets {
 
   protected val target: Vendor
   protected val syntax: Syntax
@@ -23,27 +23,27 @@ private[client] abstract class PlatformGenerator extends PlatformSecrets {
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  protected def generateFileAsync(unit: BaseUnit, url: String): Future[String] =
-    AMFDumper(unit, target, syntax).dumpToFile(platform, url)
+  protected def generateAsync(unit: BaseUnit, url: String, options: GenerationOptions): Future[String] =
+    AMFDumper(unit, target, syntax, options).dumpToFile(platform, url)
 
-  protected def generateStringAsync(unit: BaseUnit): Future[String] =
-    AMFDumper(unit, target, syntax).dumpToString
+  protected def generateAsync(unit: BaseUnit, options: GenerationOptions): Future[String] =
+    AMFDumper(unit, target, syntax, options).dumpToString
 
-  protected def generateFile(unit: BaseUnit, url: String, handler: Handler[Unit]): Unit = {
-    generateFileAsync(unit, url).onComplete(unitCallbackAdapter(handler))
+  protected def generateSync(unit: BaseUnit, url: String, options: GenerationOptions, handler: Handler[Unit]): Unit = {
+    generateAsync(unit, url, options).onComplete(unitSyncAdapter(handler))
   }
 
   /** Generates the syntax text and returns it to the provided callback. */
-  protected def generateString(unit: BaseUnit, handler: Handler[String]): Unit = {
-    generateStringAsync(unit).onComplete(stringCallbackAdapter(handler))
+  protected def generateSync(unit: BaseUnit, options: GenerationOptions, handler: Handler[String]): Unit = {
+    generateAsync(unit, options).onComplete(stringSyncAdapter(handler))
   }
 
-  private def stringCallbackAdapter(handler: Handler[String])(t: Try[String]) = t match {
+  private def stringSyncAdapter(handler: Handler[String])(t: Try[String]) = t match {
     case Success(value)     => handler.success(value)
     case Failure(exception) => handler.error(exception)
   }
 
-  private def unitCallbackAdapter(handler: Handler[Unit])(t: Try[String]) = t match {
+  private def unitSyncAdapter(handler: Handler[Unit])(t: Try[String]) = t match {
     case Success(value)     => handler.success()
     case Failure(exception) => handler.error(exception)
   }

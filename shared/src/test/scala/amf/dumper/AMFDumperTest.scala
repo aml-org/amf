@@ -1,5 +1,6 @@
 package amf.dumper
 
+import amf.client.GenerationOptions
 import amf.common.Tests
 import amf.emit.AMFUnitFixtureTest
 import amf.remote.Syntax.{Json, Yaml}
@@ -40,7 +41,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  ]
         |}""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Oas, Json).dumpToString
+    val actual = new AMFDumper(`document/api/bare`, Oas, Json, GenerationOptions()).dumpToString
 
     assert(actual, expected)
   }
@@ -59,7 +60,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  - https
         |baseUri: localhost.com/api""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Raml, Yaml).dumpToString
+    val actual = new AMFDumper(`document/api/bare`, Raml, Yaml, GenerationOptions()).dumpToString
     assert(actual, expected)
   }
 
@@ -134,7 +135,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Amf, Json).dumpToString
+    val actual = new AMFDumper(`document/api/bare`, Amf, Json, GenerationOptions()).dumpToString
     assert(actual, expected)
   }
 
@@ -404,7 +405,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/full`, Amf, Json).dumpToString
+    val actual = new AMFDumper(`document/api/full`, Amf, Json, GenerationOptions()).dumpToString
     assert(actual, expected)
   }
 

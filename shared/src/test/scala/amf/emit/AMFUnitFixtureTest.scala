@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.client.GenerationOptions
 import amf.common.AMFAST
 import amf.document.Document
 import amf.domain._
@@ -19,7 +20,7 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
 
   def `document/api/full`: Document = doc(advanced())
 
-  def ast(document: Document, vendor: Vendor): AMFAST = AMFUnitMaker(document, vendor)
+  def ast(document: Document, vendor: Vendor): AMFAST = AMFUnitMaker(document, vendor, GenerationOptions())
 
   private def bare(): WebApi = {
     WebApi()

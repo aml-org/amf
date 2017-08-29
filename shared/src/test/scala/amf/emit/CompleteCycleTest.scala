@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
@@ -218,7 +219,8 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(unit => new AMFDumper(unit, target, target.defaultSyntax).dumpToString)
+      .flatMap(unit =>
+        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)
 
     actual
       .zip(expected)
@@ -229,7 +231,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = {
     AMFCompiler(basePath + source, platform, hint)
       .build()
-      .flatMap(new AMFDumper(_, target, target.defaultSyntax).dumpToString)
+      .flatMap(new AMFDumper(_, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)
       .flatMap(content => {
         val file = tmp(source + ".tmp")
         platform.write("file://" + file, content).map((_, content))

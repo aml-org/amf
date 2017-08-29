@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.client.GenerationOptions
 import amf.common.AMFAST
 import amf.document.BaseUnit
 import amf.graph.GraphEmitter
@@ -12,9 +13,9 @@ import amf.spec.raml.RamlSpecEmitter
   */
 class AMFUnitMaker {
 
-  def make(unit: BaseUnit, vendor: Vendor): AMFAST = {
+  def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): AMFAST = {
     vendor match {
-      case Amf        => makeAmfWebApi(unit)
+      case Amf        => makeAmfWebApi(unit, options)
       case Raml | Oas => makeUnitWithSpec(unit, vendor)
     }
   }
@@ -29,9 +30,10 @@ class AMFUnitMaker {
     }
   }
 
-  private def makeAmfWebApi(unit: BaseUnit): AMFAST = GraphEmitter.emit(unit)
+  private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): AMFAST = GraphEmitter.emit(unit, options)
 }
 
 object AMFUnitMaker {
-  def apply(unit: BaseUnit, vendor: Vendor): AMFAST = new AMFUnitMaker().make(unit, vendor)
+  def apply(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): AMFAST =
+    new AMFUnitMaker().make(unit, vendor, options)
 }

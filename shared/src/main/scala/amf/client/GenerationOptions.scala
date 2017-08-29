@@ -12,6 +12,8 @@ class GenerationOptions {
     sources = true
     this
   }
+
+  def isWithSourceMaps: Boolean = sources
 }
 
 object GenerationOptions {

@@ -10,10 +10,10 @@ import scala.concurrent.ExecutionContext
 /**
   *
   */
-class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
+class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("test to oas stream dump") {
+  test("Test oas generator string-async") {
     val expected = platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .map(content => content.stream.toString)
@@ -24,7 +24,7 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .map(checkDiff)
   }
 
-  test("test to raml stream dump") {
+  test("Test raml generator string-async") {
     val expected = platform
       .resolve("file://shared/src/test/resources/clients/bare.raml", None)
       .map(content => content.stream.toString)
@@ -35,7 +35,7 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .map(checkDiff)
   }
 
-  test("test to amf stream dump") {
+  test("Test amf generator string-async") {
     val expected = platform
       .resolve("file://shared/src/test/resources/clients/bare.jsonld", None)
       .map(content => content.stream.toString)
@@ -46,26 +46,7 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .map(checkDiff)
   }
 
-//  test("test to file dump") {
-//    val futureResult = FutureConverters.toScala(
-//      new OasGenerator()
-//        .generateFileAsync(unitBare, "file://amf-jvm/target/test-output/jvm-generator-test/test.json"))
-//
-//    futureResult.flatMap(r => {
-//      val expected = platform
-//        .resolve("file://shared/src/test/resources/clients/bare.json", None)
-//
-//      val actual = platform
-//        .resolve("file://amf-jvm/target/test-output/jvm-generator-test/test.json", None)
-//      expected
-//        .zip(actual)
-//        .map(t => {
-//          t._1.stream.toString should be(t._2.stream.toString)
-//        })
-//    })
-//  }
-
-  test("test to stream dump complete") {
+  test("Test oas generator string-async (complete spec)") {
     val expected = platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .map(content => content.stream.toString)
