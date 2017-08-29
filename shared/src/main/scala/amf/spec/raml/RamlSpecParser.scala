@@ -299,7 +299,7 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
       }
     )
 
-    RequestParser(entries, operation.withRequest).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, () => operation.withRequest()).parse().map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",

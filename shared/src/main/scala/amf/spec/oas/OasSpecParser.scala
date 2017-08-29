@@ -254,7 +254,7 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
       }
     )
 
-    RequestParser(entries, global, operation.withRequest).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, global, () => operation.withRequest()).parse().map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",

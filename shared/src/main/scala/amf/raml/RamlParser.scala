@@ -18,7 +18,7 @@ class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
   private def library(): Unit = link(Library)
 
-  private def libraries = parseList(MapToken, StartMap, Comma, EndMap, () => entry(library))
+  private def libraries() = parseList(MapToken, StartMap, Comma, EndMap, () => entry(() => library()))
 
   override protected def parseValue(): Unit = current match {
     case Tag if currentText equals "!include" => link(Link)
@@ -26,7 +26,7 @@ class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
   }
 
   override protected def parseEntry(): Boolean = currentText match {
-    case "uses" => entry(() => libraries)
+    case "uses" => entry(() => libraries())
     case _      => super.parseEntry()
   }
 

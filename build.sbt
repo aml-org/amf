@@ -13,10 +13,12 @@ lazy val amf = crossProject
     name := "amf",
     organization := "org.mulesoft",
     version := "0.0.1-SNAPSHOT",
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
+    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
+    scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
   )
   .jvmSettings(
-    publishTo := Some("snapshots" at "https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/"),
+    publishTo := Some(
+      "snapshots" at "https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/"),
     credentials ++= Seq(
       Credentials("Sonatype Nexus Repository Manager",
                   "repository-master.mulesoft.org",

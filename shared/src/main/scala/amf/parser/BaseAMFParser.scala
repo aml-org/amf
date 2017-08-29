@@ -24,11 +24,11 @@ abstract class BaseAMFParser(b: YeastASTBuilder) extends BaseParser(b) {
       true
     })
 
-  private def parseMapping(): Unit = parseList(MapToken, StartMap, Comma, EndMap, parseEntry)
+  private def parseMapping(): Unit = parseList(MapToken, StartMap, Comma, EndMap, () => parseEntry())
 
   protected def parseEntry(): Boolean = entry()
 
-  protected def entry(value: () => Unit = parseValue, token: AMFToken = Entry): Boolean = {
+  protected def entry(value: () => Unit = () => parseValue(), token: AMFToken = Entry): Boolean = {
     beginTree()
     matchOrError(StringToken)
     discard(Colon)

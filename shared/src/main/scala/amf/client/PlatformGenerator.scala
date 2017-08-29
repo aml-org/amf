@@ -44,7 +44,7 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
   }
 
   private def unitSyncAdapter(handler: Handler[Unit])(t: Try[String]) = t match {
-    case Success(value)     => handler.success()
+    case Success(_)         => handler.success(Unit)
     case Failure(exception) => handler.error(exception)
   }
 }

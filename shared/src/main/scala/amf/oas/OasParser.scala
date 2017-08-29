@@ -34,7 +34,7 @@ class OasParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
     endTree(Library)
   }
 
-  private def libraries = parseList(MapToken, StartMap, Comma, EndMap, () => entry(library))
+  private def libraries = parseList(MapToken, StartMap, Comma, EndMap, () => entry(() => library()))
 
   private def modules = {
     parseList(SequenceToken, StartSequence, Comma, EndSequence, () => {

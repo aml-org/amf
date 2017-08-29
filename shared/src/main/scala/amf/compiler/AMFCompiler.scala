@@ -39,11 +39,10 @@ class AMFCompiler private (val url: String,
 
   def build(): Future[BaseUnit] = {
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
-    else {
-      cache.getOrUpdate(location) {
-        compile
+    else
+      cache.getOrUpdate(location) { () =>
+        compile()
       }
-    }
   }
 
   private def compile() = root().map(make)
@@ -132,8 +131,8 @@ class AMFCompiler private (val url: String,
     val parser  = resolveParser(builder, content)
 
     if (Option(ast).isEmpty) {
-      ast = builder.root() {
-        parser.parse
+      ast = builder.root() { () =>
+        parser.parse()
       }
     }
 
