@@ -71,7 +71,8 @@ def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition
   scalaJSModuleKind := kind
 )
 
-addCommandAlias("generate", "; clean; generateJS; generateJVM")
-addCommandAlias("generateJS", "; moduleJS/fullOptJS; browserJS/fullOptJS")
+addCommandAlias("generate", "; clean; generateModuleJS; generateBrowserJS; generateJVM")
+addCommandAlias("generateBrowserJS", "; browserJS/fullOptJS")
+addCommandAlias("generateModuleJS", "; moduleJS/fullOptJS")
 addCommandAlias("generateJVM", "; amfJVM/assembly; amfJVM/packageDoc")
-addCommandAlias("publish", "; clean; generateJS; amfJS/publish; amfJVM/publish")
+addCommandAlias("publish", "; clean; generateModuleJS; amfJS/publish; amfJVM/publish")
