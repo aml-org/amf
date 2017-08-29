@@ -11,14 +11,14 @@ import amf.remote.Vendor
 import scala.language.implicitConversions
 
 /**
-  * Base class for jvm generators
+  * Base class for JVM generators.
   */
 protected abstract class BaseGenerator(protected val target: Vendor, protected val syntax: Syntax)
     extends PlatformGenerator {
 
   /**
     * Generates the syntax text and stores it in the file pointed by the provided URL.
-    * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
+    * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
   def generateFile(unit: BaseUnit, path: File, handler: FileHandler): Unit =
@@ -30,13 +30,13 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
 
   /**
     * Generates asynchronously the syntax text and stores it in the file pointed by the provided URL.
-    * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
+    * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
   def generateFileAsync(unit: BaseUnit, url: File): CompletableFuture[String] =
     generateAsync(unit.unit, url.getAbsolutePath, GenerationOptions()).asJava
 
-  /** Generates the syntax text and returns it  asynchronously. */
+  /** Generates the syntax text and returns it asynchronously. */
   def generateStringAsync(unit: BaseUnit): CompletableFuture[String] =
     generateAsync(unit.unit, GenerationOptions()).asJava
 
@@ -51,11 +51,13 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
   }
 }
 
+/** Interface that needs to be implemented to handle a string result, or an exception if something went wrong. */
 trait StringHandler {
   def success(generation: String)
   def error(exception: Throwable)
 }
 
+/** Interface that needs to be implemented to handle a success result from writing a file, or an exception if something went wrong. */
 trait FileHandler {
   def error(exception: Throwable)
   def success()

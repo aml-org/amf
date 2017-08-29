@@ -3,7 +3,7 @@ package amf.model
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * Organization js class
+  * JS Organization model class.
   */
 @JSExportAll
 case class Organization private[model] (private val organization: amf.domain.Organization) extends DomainElement {
@@ -25,14 +25,19 @@ case class Organization private[model] (private val organization: amf.domain.Org
 
   override private[amf] def element: amf.domain.Organization = organization
 
+  /** Set url property of this [[Organization]]. */
   def withUrl(url: String): this.type = {
     organization.withUrl(url)
     this
   }
+
+  /** Set name property of this [[Organization]]. */
   def withName(name: String): this.type = {
     organization.withName(name)
     this
   }
+
+  /** Set email property of this [[Organization]]. */
   def withEmail(email: String): this.type = {
     organization.withEmail(email)
     this

@@ -38,12 +38,12 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
     generateAsync(unit, options).onComplete(stringSyncAdapter(handler))
   }
 
-  private def stringSyncAdapter(handler: Handler[String])(t: Try[String]) = t match {
+  private def stringSyncAdapter(handler: Handler[String])(t: Try[String]): Unit = t match {
     case Success(value)     => handler.success(value)
     case Failure(exception) => handler.error(exception)
   }
 
-  private def unitSyncAdapter(handler: Handler[Unit])(t: Try[String]) = t match {
+  private def unitSyncAdapter(handler: Handler[Unit])(t: Try[String]): Unit = t match {
     case Success(_)         => handler.success(Unit)
     case Failure(exception) => handler.error(exception)
   }

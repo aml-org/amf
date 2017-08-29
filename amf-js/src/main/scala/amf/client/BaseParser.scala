@@ -11,39 +11,41 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExport
 
 /**
-  * Base class for js parsers
+  * Base class for JS parsers.
   */
 class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
 
   /**
-    * generates the base unit document from api located in the given file or url.
-    * @param url : location of the api
-    * @param handler handler object to execute the success or fail functions with the result object model
+    * Generates a [[BaseUnit]] from the api located in the given url.
+    * @param url : Location of the api.
+    * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   @JSExport
   def parseFile(url: String, handler: JsHandler[BaseUnit]): Unit =
     super.parse(url, BaseUnitHandlerAdapter(handler))
 
   /**
-    * generates the base unit document from given stream (api)
-    * @param stream: the api stream
-    * @param handler handler object to execute the success or fail functions with the result object model
+    * Generates the [[BaseUnit]] from a given string, which should be a valid api.
+    * @param stream: The api as a string.
+    * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   @JSExport
   def parseString(stream: String, handler: JsHandler[BaseUnit]): Unit =
     super.parse(null, BaseUnitHandlerAdapter(handler), Some(TrunkPlatform(stream)))
 
   /**
-    * generates asynchronously base unit document from api located in the given file or url.
-    * @param url : location of the api
+    * Asynchronously generate a [[BaseUnit]] from the api located in the given url.
+    * @param url : Location of the api.
+    * @return A js promise that will have a [[BaseUnit]] or an error to handle the result of such invocation.
     */
   @JSExport
   def parseFileAsync(url: String): js.Promise[BaseUnit] =
     super.parseAsync(url).map(bu => Document(bu)).toJSPromise
 
   /**
-    * generates asynchronously base unit document from given stream (api)
-    * @param stream: the api stream
+    * Asynchronously generate a [[BaseUnit]] from a given string, which should be a valid api.
+    * @param stream: The api as a string
+    * @return A js promise that will have a [[BaseUnit]] or an error to handle the result of such invocation.
     */
   @JSExport
   def parseStringAsync(stream: String): js.Promise[BaseUnit] =
@@ -55,6 +57,7 @@ class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) ext
   }
 }
 
+/** Trait that needs to be implemented to handle different kinds of results. */
 @js.native
 trait JsHandler[T] extends js.Object {
   def success(document: T): Unit = js.native

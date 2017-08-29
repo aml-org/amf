@@ -3,7 +3,7 @@ package amf.model
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * CreativeWork js class
+  * JS CreativeWork model class.
   */
 @JSExportAll
 case class CreativeWork private[model] (private val creativeWork: amf.domain.CreativeWork) extends DomainElement {
@@ -24,11 +24,13 @@ case class CreativeWork private[model] (private val creativeWork: amf.domain.Cre
 
   override private[amf] def element: amf.domain.CreativeWork = creativeWork
 
+  /** Set url property of this [[CreativeWork]]. */
   def withUrl(url: String): this.type = {
     creativeWork.withUrl(url)
     this
   }
 
+  /** Set description property of this [[CreativeWork]]. */
   def withDescription(description: String): this.type = {
     creativeWork.withDescription(description)
     this

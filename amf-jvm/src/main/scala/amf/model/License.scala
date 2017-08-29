@@ -1,7 +1,7 @@
 package amf.model
 
 /**
-  * License jvm class
+  * JVM License model class.
   */
 case class License private[model] (private val license: amf.domain.License) extends DomainElement {
 
@@ -21,13 +21,15 @@ case class License private[model] (private val license: amf.domain.License) exte
 
   override private[amf] def element: amf.domain.License = license
 
+  /** Set url property of this [[License]]. */
   def withUrl(url: String): this.type = {
     license.withUrl(url)
     this
   }
+
+  /** Set name property of this [[License]]. */
   def withName(name: String): this.type = {
     license.withName(name)
     this
   }
-
 }

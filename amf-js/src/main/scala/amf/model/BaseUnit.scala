@@ -3,7 +3,7 @@ package amf.model
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll
 
-/** Any parseable unit, backed by a source URI. */
+/** Any parsable unit, backed by a source URI. */
 @JSExportAll
 trait BaseUnit {
 

@@ -3,7 +3,7 @@ package amf.model
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * parameter js class
+  * JS Parameter model class.
   */
 @JSExportAll
 case class Parameter private[model] (private val parameter: amf.domain.Parameter) extends DomainElement {
@@ -27,22 +27,31 @@ case class Parameter private[model] (private val parameter: amf.domain.Parameter
 
   override private[amf] def element: amf.domain.Parameter = parameter
 
+  /** Set name property of this [[Parameter]]. */
   def withName(name: String): this.type = {
     parameter.withName(name)
     this
   }
+
+  /** Set description property of this [[Parameter]]. */
   def withDescription(description: String): this.type = {
     parameter.withDescription(description)
     this
   }
+
+  /** Set required property of this [[Parameter]]. */
   def withRequired(required: Boolean): this.type = {
     parameter.withRequired(required)
     this
   }
+
+  /** Set binding property of this [[Parameter]]. */
   def withBinding(binding: String): this.type = {
     parameter.withBinding(binding)
     this
   }
+
+  /** Set schema property of this [[Parameter]]. */
   def withSchema(schema: String): this.type = {
     parameter.withSchema(schema)
     this

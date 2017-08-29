@@ -3,7 +3,7 @@ package amf.model
 import scala.collection.JavaConverters._
 
 /**
-  * response jvm class
+  * JVM Response model class.
   */
 case class Response private[model] (private val response: amf.domain.Response) extends DomainElement {
 
@@ -26,29 +26,42 @@ case class Response private[model] (private val response: amf.domain.Response) e
 
   override private[amf] def element: amf.domain.Response = response
 
+  /** Set name property of this [[Response]]. */
   def withName(name: String): this.type = {
     response.withName(name)
     this
   }
+
+  /** Set description property of this [[Response]]. */
   def withDescription(description: String): this.type = {
     response.withDescription(description)
     this
   }
+
+  /** Set statusCode property of this [[Response]]. */
   def withStatusCode(statusCode: String): this.type = {
     response.withStatusCode(statusCode)
     this
   }
+
+  /** Set headers property of this [[Response]]. */
   def withHeaders(headers: java.util.List[Parameter]): this.type = {
     response.withHeaders(headers.asScala.map(_.element))
     this
   }
+
+  /** Set payloads property of this [[Response]]. */
   def withPayloads(payloads: java.util.List[Payload]): this.type = {
     response.withPayloads(payloads.asScala.map(_.element))
     this
   }
 
+  /**
+    * Adds one [[Parameter]] to the headers property of this [[Response]] and returns it for population.
+    * Name property of the parameter is required.
+    */
   def withHeader(name: String): Parameter = Parameter(response.withHeader(name))
 
+  /** Adds one [[Payload]] to the payloads property of this [[Response]] and returns it for population. */
   def withPayload(): Payload = Payload(response.withPayload())
-
 }

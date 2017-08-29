@@ -5,7 +5,7 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * response js class
+  * JS Response model class.
   */
 @JSExportAll
 case class Response private[model] (private val response: amf.domain.Response) extends DomainElement {
@@ -29,28 +29,42 @@ case class Response private[model] (private val response: amf.domain.Response) e
 
   override private[amf] def element: amf.domain.Response = response
 
+  /** Set name property of this [[Response]]. */
   def withName(name: String): this.type = {
     response.withName(name)
     this
   }
+
+  /** Set description property of this [[Response]]. */
   def withDescription(description: String): this.type = {
     response.withDescription(description)
     this
   }
+
+  /** Set statusCode property of this [[Response]]. */
   def withStatusCode(statusCode: String): this.type = {
     response.withStatusCode(statusCode)
     this
   }
+
+  /** Set headers property of this [[Response]]. */
   def withHeaders(headers: js.Iterable[Parameter]): this.type = {
     response.withHeaders(headers.toSeq.map(_.element))
     this
   }
+
+  /** Set payloads property of this [[Response]]. */
   def withPayloads(payloads: js.Iterable[Payload]): this.type = {
     response.withPayloads(payloads.toSeq.map(_.element))
     this
   }
 
+  /**
+    * Adds one [[Parameter]] to the headers property of this [[Response]] and returns it for population.
+    * Name property of the parameter is required.
+    */
   def withHeader(name: String): Parameter = Parameter(response.withHeader(name))
 
+  /** Adds one [[Payload]] to the payloads property of this [[Response]] and returns it for population. */
   def withPayload(): Payload = Payload(response.withPayload())
 }

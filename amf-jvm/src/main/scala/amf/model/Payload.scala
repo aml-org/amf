@@ -1,7 +1,7 @@
 package amf.model
 
 /**
-  * Payload jvm class
+  * JVM Payload model class.
   */
 case class Payload private[model] (private val payload: amf.domain.Payload) extends DomainElement {
 
@@ -21,10 +21,13 @@ case class Payload private[model] (private val payload: amf.domain.Payload) exte
 
   override private[amf] def element: amf.domain.Payload = payload
 
+  /** Set mediaType property of this [[Payload]]. */
   def withMediaType(mediaType: String): this.type = {
     payload.withMediaType(mediaType)
     this
   }
+
+  /** Set schema property of this [[Payload]]. */
   def withSchema(schema: String): this.type = {
     payload.withSchema(schema)
     this
