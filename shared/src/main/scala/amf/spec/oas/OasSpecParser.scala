@@ -580,7 +580,7 @@ class Entries(ast: AMFAST) {
 case class EntryNode(ast: AMFAST) {
 
   val key: AMFAST   = ast.head
-  val value: AMFAST = if (ast.children.size > 1) ast.last else null
+  val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
 
   def annotations(): Annotations = Annotations(ast)
 }

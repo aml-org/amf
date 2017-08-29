@@ -206,7 +206,6 @@ case class EndpointParser(entry: EntryNode,
 case class RequestParser(entries: Entries, producer: () => Request) {
 
   def parse(): Option[Request] = {
-    // TODO if request it's empty (no parameters or payloads) the request object its created anyway
     val request = new Lazy[Request](producer)
     entries.key(
       "queryParameters",
@@ -507,7 +506,7 @@ class Entries(ast: AMFAST) {
 case class EntryNode(ast: AMFAST) {
 
   val key: AMFAST   = ast.head
-  val value: AMFAST = if (ast.children.size > 1) ast.last else null
+  val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
 
   def annotations(): Annotations = Annotations(ast)
 }
