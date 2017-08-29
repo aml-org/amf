@@ -23,8 +23,6 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
     Option(findOperator(chr)).fold(badCharToken)(t => t)
   }
 
-  private def multiLineString(quoteChar: Int): T = ???
-
   private def string(chr: Int): T = {
     matches(chr)
     while (!matchAny(chr, '\n', EOF_CHAR)) {
@@ -41,8 +39,6 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
     while (currentChar != CharStream.EOF_CHAR && !stream.matches('*', '/')) consume()
     commentToken
   }
-
-  private def hexadecimalNumber(): T = ???
 
   private def number(): T = {
 
@@ -80,7 +76,7 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
     case chr @ ('+' | '-' | '*' | ':' | ';' | '.' | ',' | '{' | '}' | '[' | ']' | '(' | ')' | '?' | '=' | '>' | '<' |
         '$' | '&' | '|' | '!') =>
       operator(chr)
-    case chr @ '"' => strings(chr)
+    case chr @ '"' => string(chr)
     case '/' =>
       val a = lookAhead(1)
       if (a == '*' || a == '/') {
@@ -88,9 +84,6 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
         consume()
       }
       if (a == '*') blockComment() else if (a == '/') lineComment() else operator('/')
-    case '0' =>
-      val c = lookAhead(1)
-      if (c == 'x' || c == 'X') hexadecimalNumber() else number()
     case chr =>
       if (isJavaIdentifierStart(chr)) {
         identifier()
@@ -101,10 +94,4 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
       else
         badChar()
   })
-
-  private def strings(chr: Int) = {
-    val c1 = lookAhead(1)
-    val c2 = lookAhead(2)
-    if (c1 == '"' && c2 == '"') multiLineString(chr) else string(chr)
-  }
 }

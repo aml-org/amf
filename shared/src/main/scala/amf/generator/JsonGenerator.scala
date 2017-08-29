@@ -34,7 +34,7 @@ class JsonGenerator extends ASTNodeVisitor {
       case FloatToken                      => writer.write(node.content)
       case BooleanToken                    => writer.write(node.content)
       case StringToken                     => writer.quoted(node.content)
-      case _                               => ???
+      case _                               =>
     }
   }
 

@@ -7,7 +7,7 @@ import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.LexicalInformation
 import amf.domain.{Annotation, DomainElement}
-import amf.exception.CyclicReferenceException
+import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
@@ -62,7 +62,7 @@ class AMFCompiler private (val url: String,
         hint.syntax match {
           case Yaml => YamlLexer(content.stream)
           case Json => JsonLexer(content.stream)
-          case _    => ???
+          case _    => throw new UnableToResolveLexerException
         }
     }
   }
@@ -103,7 +103,7 @@ class AMFCompiler private (val url: String,
     root.ast.head match {
       case c if c.is(Comment) && RAML_10 == c.content =>
         document(root.location, root.references, WebApiMaker(root).make)
-      case _ => ???
+      case _ => throw new UnableToResolveUnitException
     }
   }
 
@@ -119,7 +119,7 @@ class AMFCompiler private (val url: String,
     root.ast.head.children.find(e =>
       e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
       case Some(_) => document(root.location, root.references, WebApiMaker(root).make)
-      case _       => ???
+      case _       => throw new UnableToResolveUnitException
     }
   }
 

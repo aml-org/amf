@@ -37,7 +37,7 @@ class YamlGenerator extends ASTNodeVisitor {
       case IntToken | FloatToken | BooleanToken => writer.write(' ').write(node.content)
       case StringToken                          => writer.write(' ').write(node.content)
       case Comment                              => writer.write('#').write(node.content)
-      case _                                    => ???
+      case _                                    =>
     }
   }
 

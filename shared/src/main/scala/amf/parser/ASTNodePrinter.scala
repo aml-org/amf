@@ -24,7 +24,7 @@ class ASTPrinter extends ASTNodeVisitor {
   override def before(node: ASTNode[_]): Unit = {
     node.`type` match {
       case t: NamedToken => writer.write('(').write(t.name).indent()
-      case _             => ???
+      case _             =>
     }
   }
 
@@ -33,9 +33,6 @@ class ASTPrinter extends ASTNodeVisitor {
   override def visit(node: ASTLinkNode[_]): Unit = {
     dump(node)
     writer.line().write("target -> ").line().indent()
-    if (Option(node.target).isDefined) {
-//      generate(node.target.root) TODO include source AST ?
-    }
     writer.outdent()
   }
 

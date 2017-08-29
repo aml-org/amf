@@ -14,7 +14,7 @@ lazy val amf = crossProject
     organization := "org.mulesoft",
     version := "0.0.1-SNAPSHOT",
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
-    scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
+    scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-Xfatal-warnings")
   )
   .jvmSettings(
     publishTo := Some(

@@ -116,8 +116,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
       case l: List[Any] =>
         l.map(e => { assertNode(infoNode.get.children(1), e.asInstanceOf[(String, Any)]) })
           .count(e => e != succeed) should be(0)
-      case _ => ???
-      //TODO hanlde secuences
     }
   }
 
