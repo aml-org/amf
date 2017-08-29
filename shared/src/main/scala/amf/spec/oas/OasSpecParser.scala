@@ -568,8 +568,9 @@ class Entries(ast: AMFAST) {
   val entries: Map[String, EntryNode] = {
     val children = ast.children.map(n => n.head.content.unquote -> EntryNode(n))
     val b        = immutable.ListMap.newBuilder[String, EntryNode]
-    for (x <- children)
-      b += x
+    for {
+      x <- children
+    } b += x
 
     b.result()
   }

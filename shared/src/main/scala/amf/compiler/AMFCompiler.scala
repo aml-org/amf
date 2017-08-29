@@ -92,8 +92,6 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def createAmfUnit(root: Root): BaseUnit = null
-
   private def makeRamlUnit(root: Root): BaseUnit = {
     hint.kind match {
       case Library     => document(root.location, root.references, WebApiMaker(root).make) // TODO libraries
@@ -133,7 +131,7 @@ class AMFCompiler private (val url: String,
     val builder = YeastASTBuilder(lexer, content.url)
     val parser  = resolveParser(builder, content)
 
-    if (ast == null) {
+    if (Option(ast).isEmpty) {
       ast = builder.root() {
         parser.parse
       }

@@ -21,22 +21,26 @@ class Strings(val str: String) {
 
   /** Url encoded string. */
   def urlEncoded: String = {
-    str.replaceAll("/", "%2F") //todo encode
+    str.replaceAll("/", "%2F") // TODO encode
   }
 
   private def isQuoted =
-    str != null && ((str.startsWith("\"") && str.endsWith("\"")) || (str.startsWith("'") && str.endsWith("'")))
+    Option(str).exists(s => (s.startsWith("\"") && s.endsWith("\"")) || (s.startsWith("'") && s.endsWith("'")))
 }
 
 object Strings {
 
   implicit def strings(s: String): Strings = new Strings(s)
 
-  def isNotEmpty(s: String): Boolean = s != null && s.trim.nonEmpty
+  def isNotEmpty(s: String): Boolean = Option(s).exists(_.trim.nonEmpty)
+
+  def isEmpty(s: String): Boolean = !isNotEmpty(s)
 
   def escape(str: String): String = {
     val result = new StringBuilder()
-    for (c <- str) {
+    for {
+      c <- str
+    } {
       result.append(c match {
         case '\n'             => "\\n"
         case '"'              => "\""
@@ -54,7 +58,7 @@ object Strings {
   def split(str: String, c: Char): List[String] = {
     val s = if (isNotEmpty(str)) str else ""
 
-    if (s.isEmpty) return List()
+    if (s.isEmpty) return Nil
 
     val n = count(s, c) + 1
     if (n == 1) return List(s)
@@ -62,7 +66,9 @@ object Strings {
     var result = List[String]()
 
     var prev = 0
-    for (i <- 0 until s.length) {
+    for {
+      i <- 0 until s.length
+    } {
       val c1: Char = s.charAt(i)
       if (c1 == c) {
         result = result :+ s.substring(prev, i)

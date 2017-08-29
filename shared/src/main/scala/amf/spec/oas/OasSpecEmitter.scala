@@ -199,7 +199,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
     private def endPointParameters(): EndPointParameters =
       endpoint.operations
-        .filter(_.request != null)
+        .filter(op => Option(op.request).isDefined)
         .foldLeft(EndPointParameters(path = endpoint.parameters))((parameters, op) =>
           parameters.merge(EndPointParameters(op.request)))
 
@@ -281,8 +281,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
 
-          if (operation.request != null)
-            result ++= requestEmitters(operation.request, ordering, endpointPayloadEmitted)
+          Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, endpointPayloadEmitted))
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 
@@ -693,7 +692,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
     def defaultPayload(payloads: Seq[Payload]): Option[Payload] =
       payloads
-        .find(p => p.mediaType == null || p.mediaType.isEmpty)
+        .find(p => Option(p.mediaType).isEmpty || p.mediaType.isEmpty)
         .orElse(payloads.find(_.mediaType == "application/json"))
         .orElse(payloads.headOption)
   }

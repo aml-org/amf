@@ -37,7 +37,7 @@ abstract class AbstractLexer[T <: Token](var stream: CharStream) extends Lexer[T
 
   /** get the current token in the input stream.  */
   override def currentToken: T = {
-    if (_currentToken == null) advance()
+    if (Option(_currentToken).isEmpty) advance()
     _currentToken
   }
 

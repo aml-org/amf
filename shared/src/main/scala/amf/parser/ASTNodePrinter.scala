@@ -33,7 +33,7 @@ class ASTPrinter extends ASTNodeVisitor {
   override def visit(node: ASTLinkNode[_]): Unit = {
     dump(node)
     writer.line().write("target -> ").line().indent()
-    if (node.target != null) {
+    if (Option(node.target).isDefined) {
 //      generate(node.target.root) TODO include source AST ?
     }
     writer.outdent()

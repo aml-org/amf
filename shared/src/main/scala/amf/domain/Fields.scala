@@ -58,7 +58,7 @@ class Fields {
   }
 
   def into(other: Fields): Unit = {
-    //TODO array copy with references instead of instance
+    // TODO array copy with references instead of instance
     other.fs = other.fs ++ fs
   }
 

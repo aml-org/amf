@@ -12,22 +12,23 @@ object Files {
     * Get the content of a <code>Reader</code> as a list of Strings, one entry per line. Returns an
     * empty List if an IOException is raised during reading
     */
-  def readLines(input: Reader): List[String] = {
-    if (input == null) return List()
-
-    try {
-      val reader              = new BufferedReader(input)
-      var lines: List[String] = List()
-      var line: String        = reader.readLine()
-      while (line != null) {
-        lines = lines :+ line
-        line = reader.readLine()
-      }
-      lines
-    } catch {
-      case _: IOException => List();
-    }
-  }
+  def readLines(input: Reader): List[String] =
+    Option(input)
+      .map(i => {
+        try {
+          val reader              = new BufferedReader(i)
+          var lines: List[String] = List()
+          var line: String        = reader.readLine()
+          while (line != null) {
+            lines = lines :+ line
+            line = reader.readLine()
+          }
+          lines
+        } catch {
+          case _: IOException => List();
+        }
+      })
+      .getOrElse(Nil)
 
   /**
     * Get the content of a <code>File</code> as a list of Strings, one entry per line. Returns an
@@ -60,9 +61,7 @@ object Files {
     if (file.isFile && filter.accept(file)) result +: file.getAbsolutePath
     else if (file.isDirectory) {
       val fileList: Array[String] = file.list()
-      if (fileList != null) {
-        fileList.foldLeft(result)((result, value) => list(result, new File(file, value), filter))
-      }
+      Option(fileList).foreach(l => l.foldLeft(result)((result, value) => list(result, new File(file, value), filter)))
     }
     result
   }

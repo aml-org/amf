@@ -20,10 +20,7 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
 
   private def operator(chr: Int): T = {
     consume()
-    findOperator(chr) match {
-      case null => badCharToken
-      case t    => t
-    }
+    Option(findOperator(chr)).fold(badCharToken)(t => t)
   }
 
   private def multiLineString(quoteChar: Int): T = ???
@@ -54,12 +51,12 @@ abstract class BaseLexer[T <: Token](stream: CharStream = new CharSequenceStream
     if (matches('.')) {
       matchDecimalDigits()
       t = decimalToken
-      if (t == null) t = doubleToken
+      if (Option(t).isEmpty) t = doubleToken
     }
 
-    //todo implement...
+    // todo implement...
 
-    if (t != null) t else intToken
+    Option(t).fold(intToken)(t => t)
   }
 
   private def isJavaIdentifierStart(chr: Int): Boolean = chr.toChar match {

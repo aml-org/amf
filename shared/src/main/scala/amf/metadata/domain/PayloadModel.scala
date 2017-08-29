@@ -11,7 +11,7 @@ object PayloadModel extends DomainElementModel {
 
   val MediaType = Field(Str, Http + "mediaType")
 
-  val Schema = Field(Str, Http + "schema") //TODO this is a shacl:Shape
+  val Schema = Field(Str, Http + "schema") // TODO this is a shacl:Shape
 
   override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
 

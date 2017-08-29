@@ -258,8 +258,8 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-          if (operation.request != null) {
-            val reqFs = operation.request.fields
+          Option(operation.request).foreach(req => {
+            val reqFs = req.fields
 
             reqFs
               .entry(RequestModel.QueryParameters)
@@ -268,8 +268,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
             reqFs.entry(RequestModel.Headers).map(f => result += ParametersEmitter("headers", f, ordering))
 
             reqFs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
-
-          }
+          })
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 

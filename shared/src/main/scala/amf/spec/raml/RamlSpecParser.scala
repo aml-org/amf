@@ -124,7 +124,6 @@ case class RamlSpecParser(root: Root) {
         val value = ValueNode(entry.value)
         val uri   = BaseUriSplitter(value.string().value.toString)
 
-        //TODO if baseUri has scheme, and 'protocols' property exists, scheme in baseUri will be lost.
         if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
           api.set(WebApiModel.Schemes,
                   AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
@@ -207,7 +206,7 @@ case class EndpointParser(entry: EntryNode,
 case class RequestParser(entries: Entries, producer: () => Request) {
 
   def parse(): Option[Request] = {
-    //TODO if request it's empty (no parameters or payloads) the request object its created anyway
+    // TODO if request it's empty (no parameters or payloads) the request object its created anyway
     val request = new Lazy[Request](producer)
     entries.key(
       "queryParameters",
@@ -335,9 +334,7 @@ case class PayloadParser(entry: EntryNode) {
 
     payload.set(PayloadModel.MediaType, ValueNode(entry.key).string())
 
-    if (entry.value != null) {
-      payload.set(PayloadModel.Schema, ValueNode(entry.value).string())
-    }
+    Option(entry.value).foreach(v => payload.set(PayloadModel.Schema, ValueNode(v).string()))
 
     payload
   }

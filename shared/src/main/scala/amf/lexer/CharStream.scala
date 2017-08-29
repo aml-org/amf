@@ -60,7 +60,9 @@ abstract class CharStream extends CharSequence {
     */
   def matchAny(chars: Int*): Boolean = {
     val current = currentChar()
-    for (c <- chars) {
+    for {
+      c <- chars
+    } {
       if (c == current) {
         consume()
         return true

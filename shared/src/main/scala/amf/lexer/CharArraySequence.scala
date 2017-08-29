@@ -36,7 +36,7 @@ object CharArraySequence {
       val read = isr.read(data)
       new CharArraySequence(data, 0, read)
     } finally {
-      if (isr != null) isr.close()
+      Option(isr).foreach(_.close())
     }
   }
 }
