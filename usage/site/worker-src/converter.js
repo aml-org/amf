@@ -17,31 +17,57 @@ const resolve = (error, result) => {
 	});
 };
 
+function getParser(from){
+    var parser;
+    if(from == 'raml'){
+        parser = new amf.RamlParser()
+    }else if(from =='oas'){
+        parser = new amf.OasParser()
+    }else {
+        parser
+    }
+    return parser
+}
+function getGenerator(to){
+    var generator;
+    if(to == 'raml'){
+        generator = new amf.RamlGenerator()
+    }else if(to =='oas'){
+        generator = new amf.OasGenerator()
+    }else{
+        generator = new amf.AmfGenerator()
+    }
+    return generator
+}
+
 self.addEventListener('message', (e) => {
 	console.log("amf: "+amf)
 	console.log("e: "+e)
 	const message = e.data;
 	console.log("message: "+ message)
-	const client = new amf.JsClient();
-	console.log("client: "+ client);
 	console.log("rawdata: "+ message.rawData);
-	const hint=amf.HintMatcherHelper.matchSourceHint(message.fromLanguage.className)
-	const generator = new amf.JsGenerator();
+	const from = message.fromLanguage.className
+	const to = message.toLanguage.className
+	var parser = getParser(from)
 
-	const toVendor =  amf.HintMatcherHelper.matchToVendor(message.toLanguage.className)
+	var generator=getGenerator(to)
 
-	client.convert(message.rawData,
-		hint,
-		toVendor,
-		{
-			success: function(doc){
-				console.log("result: "+doc);
-				resolve(null,doc);
-			},
-			error: function(exception){
-				resolve(exception,exception.toString());
-			}
+	parser.parseString(message.rawData,{
+        success: function(doc){
+            console.log("result: "+doc);
+            generator.generateString(doc, {
+                success: function (doc) {
+                    console.log("result: " + doc);
+                    resolve(null, doc);
+                },
+                error: function (exception) {
+                    resolve(exception, exception.toString());
+                }
+            })
+        },
+        error: function(exception){
+            resolve(exception,exception.toString());
+        }
 
-		}
-	);
+    } );
 }, false);
