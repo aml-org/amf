@@ -4,6 +4,8 @@
 * Scala 2.12.2
 * sbt 0.13.15
 
+## sbt useful commands
+
 ### Test
 * Tests on jvm and js
 ```sh
@@ -15,11 +17,11 @@ sbt test
 sbt coverage test coverageReport
 ```
 
-## Use as dependencies
+## Using AMF
 
-Use *amf* importing the published artifacts as dependencies.
+To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
 
-### Using from npm
+### Getting artifacts for JS
 
 Before you get started, you'll want to register with our private npm repository so you can download @mulesoft modules.
 
@@ -47,7 +49,7 @@ and *amf* will be an object containing all the exported classes, for example:
 const client = new amf.JsClient()
 ```
 
-### Using from JVM
+### Getting artifacts for JVM
 
 Add the mulesoft ci-snapshots repository and its credentials to the repositories, for example in gradle:
 
@@ -73,7 +75,7 @@ dependencies {
 
 Use *amf* importing the artifacts generated from cloning the project and running *sbt generate*.
 
-### Generate artifacts
+### Generate artifacts directly from cloned repository
 ```sh
 sbt generate
 ```
@@ -85,7 +87,7 @@ And two *JVM artifacts*:
 - **Jar**: jar file in amf-jvm/target/artifact/amf.jar with the amf library.
 - **Javadoc jar**: jar file in amf-jvm/target/artifact/amf-javadoc.jar with the docs of the project in Scaladoc format.
 
-### Using from node.js project
+### Using AMF in a node.js project
 
 ```bash
 npm install --save amf-project-location/amf-js/
@@ -101,7 +103,7 @@ and *amf* will be an object containing all the exported classes, for example:
 const client = new amf.JsClient()
 ```
 
-### Using from client browser
+### Using AMF from client browser
 
 Just import the generated JS file in a script tag
 ```html
