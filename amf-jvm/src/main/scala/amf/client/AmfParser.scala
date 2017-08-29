@@ -4,6 +4,6 @@ import amf.remote.Amf
 import amf.remote.Syntax.Json
 
 /**
-  * [[Amf]] parser.
+  * [[amf.remote.Amf]] parser.
   */
 class AmfParser extends BaseParser(Amf, Json)

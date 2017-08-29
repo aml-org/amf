@@ -5,7 +5,7 @@ import amf.common.AMFToken._
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.remote.{Raml, Vendor}
 
-/** [[Raml]] parser */
+/** [[amf.remote.Raml]] parser */
 class RamlParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
 
   private def link(token: AMFToken): Boolean = {

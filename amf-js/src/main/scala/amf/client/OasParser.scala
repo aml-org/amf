@@ -6,7 +6,7 @@ import amf.remote.Syntax.Json
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * [[Oas]] parser.
+  * [[amf.remote.Oas]] parser.
   */
 @JSExportTopLevel("OasParser")
 class OasParser extends BaseParser(Oas, Json)

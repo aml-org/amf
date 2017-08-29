@@ -6,7 +6,7 @@ import amf.remote.Syntax.Yaml
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * [[Raml]] parser.
+  * [[amf.remote.Raml]] parser.
   */
 @JSExportTopLevel("RamlParser")
 class RamlParser extends BaseParser(Raml, Yaml)

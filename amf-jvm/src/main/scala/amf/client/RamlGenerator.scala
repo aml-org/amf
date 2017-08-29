@@ -4,6 +4,6 @@ import amf.remote.Raml
 import amf.remote.Syntax.Yaml
 
 /**
-  * [[Raml]] generator.
+  * [[amf.remote.Raml]] generator.
   */
 class RamlGenerator extends BaseGenerator(Raml, Yaml)

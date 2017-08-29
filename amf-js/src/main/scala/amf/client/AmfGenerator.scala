@@ -10,7 +10,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 /**
-  * [[Amf]] generator.
+  * [[amf.remote.Amf]] generator.
   */
 @JSExportTopLevel("AmfGenerator")
 class AmfGenerator extends BaseGenerator(Amf, Json) {

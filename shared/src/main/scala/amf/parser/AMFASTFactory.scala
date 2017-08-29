@@ -11,11 +11,11 @@ import amf.remote.Kind
   */
 case class AMFASTFactory() extends ASTFactory[AMFToken, AMFAST] {
 
-  /** Create [[AMFAST]] node with given content. */
+  /** Create [[amf.common.AMFAST]] node with given content. */
   override def createNode(token: AMFToken, content: String, range: parser.Range): AMFAST =
     new AMFASTNode(token, content, range)
 
-  /** Create [[AMFAST]] node with given children. */
+  /** Create [[amf.common.AMFAST]] node with given children. */
   override def createNode(token: AMFToken, range: parser.Range, children: Seq[AMFAST]): AMFAST = token match {
     case Link | Library => createLinkNode(range, children, Kind(token))
     case _              => createYamlNode(token, range, children)

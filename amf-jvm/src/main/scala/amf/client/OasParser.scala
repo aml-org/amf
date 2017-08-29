@@ -4,6 +4,6 @@ import amf.remote.Oas
 import amf.remote.Syntax.Json
 
 /**
-  * [[Oas]] parser.
+  * [[amf.remote.Oas]] parser.
   */
 class OasParser extends BaseParser(Oas, Json)

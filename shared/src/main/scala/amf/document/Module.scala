@@ -14,6 +14,6 @@ case class Module(declares: Seq[DomainElement], references: Seq[BaseUnit], locat
 
 trait DeclaresModel {
 
-  /** Declared [[DomainElement]]s that can be re-used from other documents. */
+  /** Declared [[amf.domain.DomainElement]]s that can be re-used from other documents. */
   def declares: Seq[DomainElement]
 }

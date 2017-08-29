@@ -6,7 +6,7 @@ import amf.remote.Syntax.Yaml
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * [[Raml]] generator.
+  * [[amf.remote.Raml]] generator.
   */
 @JSExportTopLevel("RamlGenerator")
 class RamlGenerator extends BaseGenerator(Raml, Yaml)

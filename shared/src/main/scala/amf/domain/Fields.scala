@@ -16,7 +16,7 @@ class Fields {
   def default(field: Field): AmfElement =
     Option(field.`type`).filter(_.isInstanceOf[Array]).map(_ => AmfArray(Nil)).orNull
 
-  /** Return typed value associated to given [[Field]]. */
+  /** Return typed value associated to given [[amf.metadata.Field]]. */
   def get(field: Field): AmfElement = {
     getValue(field) match {
       case Value(value, _) => value
@@ -26,7 +26,7 @@ class Fields {
 
   def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
 
-  /** Return [[Value]] associated to given [[Field]]. */
+  /** Return [[Value]] associated to given [[amf.metadata.Field]]. */
   def getValue(field: Field): Value = fs.get(field).orNull
 
   def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] =
@@ -70,7 +70,7 @@ class Fields {
     }).asInstanceOf[T]
   }
 
-  /** Return optional entry for a given [[Field]]. */
+  /** Return optional entry for a given [[amf.metadata.Field]]. */
   def entry(f: Field): Option[FieldEntry] = {
     fs.get(f) match {
       case Some(value) => Some(FieldEntry(f, value))

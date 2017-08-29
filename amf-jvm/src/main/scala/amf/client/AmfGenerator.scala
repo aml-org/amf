@@ -9,7 +9,7 @@ import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Json
 
 /**
-  * [[Amf]] generator.
+  * [[amf.remote.Amf]] generator.
   */
 class AmfGenerator extends BaseGenerator(Amf, Json) {
 

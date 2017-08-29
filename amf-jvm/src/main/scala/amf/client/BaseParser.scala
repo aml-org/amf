@@ -17,7 +17,7 @@ import scala.language.implicitConversions
 class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
 
   /**
-    * Generates a [[BaseUnit]] from the api located in the given url.
+    * Generates a [[amf.model.BaseUnit]] from the api located in the given url.
     * @param url : Location of the api.
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
@@ -25,7 +25,7 @@ class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) ext
     super.parse(url, BaseUnitHandlerAdapter(handler))
 
   /**
-    * Generates the [[BaseUnit]] from a given string, which should be a valid api.
+    * Generates the [[amf.model.BaseUnit]] from a given string, which should be a valid api.
     * @param stream: The api as a string.
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
@@ -33,17 +33,17 @@ class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) ext
     super.parse(null, BaseUnitHandlerAdapter(handler), Some(TrunkPlatform(stream)))
 
   /**
-    * Asynchronously generate a [[BaseUnit]] from the api located in the given url.
+    * Asynchronously generate a [[amf.model.BaseUnit]] from the api located in the given url.
     * @param url : Location of the api.
-    * @return A java future that will have a [[BaseUnit]] or an error to handle the result of such invocation.
+    * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseFileAsync(url: String): CompletableFuture[BaseUnit] =
     super.parseAsync(url).map(bu => Document(bu)).asJava
 
   /**
-    * Asynchronously generate a [[BaseUnit]] from a given string, which should be a valid api.
+    * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.
     * @param stream: The api as a string
-    * @return A java future that will have a [[BaseUnit]] or an error to handle the result of such invocation.
+    * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseStringAsync(stream: String): CompletableFuture[BaseUnit] =
     super.parseAsync(null, Some(TrunkPlatform(stream))).map(bu => Document(bu)).asJava

@@ -4,8 +4,8 @@ import amf.domain._
 import amf.metadata.document.DocumentModel._
 
 /**
-  * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
-  * [[DomainElement]]s that reference from the encoded [[DomainElement]]
+  * A [[Document]] is a parsing Unit that encodes a stand-alone [[amf.domain.DomainElement]] and can include references to other
+  * [[amf.domain.DomainElement]]s that reference from the encoded [[amf.domain.DomainElement]]
   */
 case class Document(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel with DeclaresModel {
 

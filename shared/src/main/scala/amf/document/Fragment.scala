@@ -46,6 +46,6 @@ object Fragment {
 
 trait EncodesModel {
 
-  /** Encoded [[DomainElement]] described in the document element. */
+  /** Encoded [[amf.domain.DomainElement]] described in the document element. */
   def encodes: DomainElement
 }

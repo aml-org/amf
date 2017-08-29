@@ -6,7 +6,7 @@ import amf.remote.Syntax.Json
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * [[Oas]] generator.
+  * [[amf.remote.Oas]] generator.
   */
 @JSExportTopLevel("OasGenerator")
 class OasGenerator extends BaseGenerator(Oas, Json)
