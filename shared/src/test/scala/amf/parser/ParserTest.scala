@@ -65,8 +65,8 @@ class ParserTest extends FunSuite {
     val builder = YeastASTBuilder(YamlLexer(`RAML/yaml`))
     val parser  = new RamlParser(builder)
 
-    val root = builder.root() {
-      parser.parse
+    val root = builder.root() { () =>
+      parser.parse()
     }
 
     assertDocumentRoot(root)
@@ -76,8 +76,8 @@ class ParserTest extends FunSuite {
     val builder = YeastASTBuilder(JsonLexer(`RAML/json`))
     val parser  = new RamlParser(builder)
 
-    val root = builder.root() {
-      parser.parse
+    val root = builder.root() { () =>
+      parser.parse()
     }
 
     assertDocumentRoot(root)
@@ -87,8 +87,8 @@ class ParserTest extends FunSuite {
     val builder = YeastASTBuilder(JsonLexer(`OAS/json`))
     val parser  = new OasParser(builder)
 
-    val root = builder.root() {
-      parser.parse
+    val root = builder.root() { () =>
+      parser.parse()
     }
 
     assertDocumentRoot(root)
@@ -98,8 +98,8 @@ class ParserTest extends FunSuite {
     val builder = YeastASTBuilder(YamlLexer(`OAS/yaml`))
     val parser  = new OasParser(builder)
 
-    val root = builder.root() {
-      parser.parse
+    val root = builder.root() { () =>
+      parser.parse()
     }
 
     assertDocumentRoot(root)
