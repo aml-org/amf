@@ -1,0 +1,72 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ACME Banking HTTP API",
+    "version": "1.0"
+  },
+  "host": "acme-banking.com",
+  "basePath": "/apis",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/customers": {
+
+    },
+    "/customers/{customer_id}": {
+      "parameters": [
+        {
+          "name": "customer_id",
+          "required": true,
+          "in": "path"
+        }
+      ],
+      "delete": {
+        "description": "Removes a Customer from the system"
+      },
+      "get": {
+        "description": "Returns Customer data",
+        "responses": {
+          "200": {
+            "x-media-type": "application/json"
+          }
+        }
+      }
+    },
+    "/customers/{customer_id}/accounts": {
+      "get": {
+        "description": "Returns a collection accounts",
+        "responses": {
+          "200": {
+            "x-media-type": "application/json"
+          }
+        }
+      }
+    },
+    "/customers/{customer_id}/cards": {
+
+    },
+    "/customers/{customer_id}/cards/debit": {
+      "get": {
+        "description": "Returns a collection of cards",
+        "responses": {
+          "200": {
+            "x-media-type": "application/json"
+          }
+        }
+      },
+      "post": {
+        "description": "Requests the creation of a new DebitCard",
+        "parameters": [
+          {
+            "x-media-type": "application/json",
+            "in": "body"
+          }
+        ]
+      }
+    }
+  }
+}

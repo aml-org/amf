@@ -22,7 +22,7 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
     * (like the browser) or if a remote URL is provided.
     */
   def generateFile(unit: BaseUnit, path: File, handler: FileHandler): Unit =
-    generateSync(unit.unit, path.getAbsolutePath, GenerationOptions(), UnitHandlerAdapter(handler))
+    generateSync(unit.unit, "file://" + path.getAbsolutePath, GenerationOptions(), UnitHandlerAdapter(handler))
 
   /** Generates the syntax text and returns it to the provided callback. */
   def generateString(unit: BaseUnit, handler: StringHandler): Unit =
@@ -34,7 +34,7 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
     * (like the browser) or if a remote URL is provided.
     */
   def generateFileAsync(unit: BaseUnit, url: File): CompletableFuture[String] =
-    generateAsync(unit.unit, url.getAbsolutePath, GenerationOptions()).asJava
+    generateAsync(unit.unit, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
 
   /** Generates the syntax text and returns it asynchronously. */
   def generateStringAsync(unit: BaseUnit): CompletableFuture[String] =

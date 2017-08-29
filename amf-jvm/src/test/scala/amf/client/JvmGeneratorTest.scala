@@ -1,6 +1,8 @@
 package amf.client
 
-import amf.common.Tests.checkDiff
+import java.io.File
+
+import amf.common.Tests._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
