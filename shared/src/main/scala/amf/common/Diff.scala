@@ -74,9 +74,9 @@ class Diff[T](equalsComparator: Equals[T]) {
     var patch = List[Delta[T]]()
 
     var path: PathNode =
-      if (originalPath == null) null else if (originalPath.isSnake) originalPath.prev else originalPath
+      Option(originalPath).map(op => if (op.isSnake) op.prev else op).orNull
 
-    while (path != null && path.prev != null && path.prev.j >= 0) {
+    while (Option(path).isDefined && Option(path.prev).isDefined && path.prev.j >= 0) {
       if (path.isSnake) throw new IllegalStateException()
 
       val i = path.i
@@ -197,7 +197,7 @@ object Diff {
     }
 
     def equal(a: T, b: T): Boolean = {
-      a == b || b != null && doEqualComparison(a, b)
+      a == b || Option(b).isDefined && doEqualComparison(a, b)
     }
   }
 
@@ -217,7 +217,7 @@ object Diff {
     def isSnake: Boolean = snake
 
     def previousSnake: PathNode =
-      if (i < 0 || j < 0) null else if (!snake && prev != null) prev.previousSnake else this
+      if (i < 0 || j < 0) null else if (!snake && Option(prev).isDefined) prev.previousSnake else this
   }
 
   object PathNode {
@@ -228,7 +228,7 @@ object Diff {
     }
 
     def diffNode(i: Int, j: Int, prev: PathNode): PathNode = {
-      new PathNode(i, j, if (prev == null) null else prev.previousSnake)
+      new PathNode(i, j, Option(prev).map(_.previousSnake).orNull)
     }
   }
 

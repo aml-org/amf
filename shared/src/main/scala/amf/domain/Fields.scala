@@ -13,10 +13,8 @@ class Fields {
 
   private var fs: Map[Field, Value] = ListMap()
 
-  def default(field: Field): AmfElement = field.`type` match {
-    case Array(_) => AmfArray(Nil)
-    case _        => null
-  }
+  def default(field: Field): AmfElement =
+    Option(field.`type`).filter(_.isInstanceOf[Array]).map(_ => AmfArray(Nil)).orNull
 
   /** Return typed value associated to given [[Field]]. */
   def get(field: Field): AmfElement = {
@@ -29,12 +27,7 @@ class Fields {
   def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
 
   /** Return [[Value]] associated to given [[Field]]. */
-  def getValue(field: Field): Value = {
-    fs.get(field) match {
-      case Some(value) => value
-      case _           => null
-    }
-  }
+  def getValue(field: Field): Value = fs.get(field).orNull
 
   def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] =
     fs.get(field).flatMap(_.annotations.find(classType))

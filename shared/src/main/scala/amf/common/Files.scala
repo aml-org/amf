@@ -19,7 +19,7 @@ object Files {
           val reader              = new BufferedReader(i)
           var lines: List[String] = List()
           var line: String        = reader.readLine()
-          while (line != null) {
+          while (Option(line).isDefined) {
             lines = lines :+ line
             line = reader.readLine()
           }
