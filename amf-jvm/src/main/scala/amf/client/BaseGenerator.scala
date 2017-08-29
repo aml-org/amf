@@ -33,8 +33,8 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  def generateFileAsync(unit: BaseUnit, url: String): CompletableFuture[String] =
-    generateAsync(unit.unit, url, GenerationOptions()).asJava
+  def generateFileAsync(unit: BaseUnit, url: File): CompletableFuture[String] =
+    generateAsync(unit.unit, url.getAbsolutePath, GenerationOptions()).asJava
 
   /** Generates the syntax text and returns it  asynchronously. */
   def generateStringAsync(unit: BaseUnit): CompletableFuture[String] =
