@@ -25,20 +25,17 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
   override val location: String = document.location
 
   /** Encoded [[DomainElement]] described in the document element. */
-  val encodes: WebApi = {
-    document match {
-      case d: amf.document.Document => WebApi(d.encodes)
-      case _                        => null
-    }
-  }
+  val encodes: WebApi = Option(document)
+    .filter(_.isInstanceOf[amf.document.Document])
+    .map(d => WebApi(d.asInstanceOf[amf.document.Document].encodes))
+    .orNull
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
-  val declares: js.Iterable[amf.domain.DomainElement] = {
+  val declares: js.Iterable[amf.domain.DomainElement] =
     document match {
       case d: amf.document.Document => d.declares.toJSArray
       case _                        => js.Array()
     }
-  }
 
   override def unit: amf.document.BaseUnit = document
 }

@@ -7,7 +7,7 @@ import amf.domain
 import scala.collection.JavaConverters._
 
 /**
-  * JVM Document class.
+  * JVM Document model class.
   */
 case class Document(private[amf] val document: amf.document.BaseUnit)
     extends BaseUnit
@@ -25,14 +25,13 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
       .asJava
 
   /** Uri that identifies the document. */
-  val location: String = document.location
+  override val location: String = document.location
 
   /** Encoded [[DomainElement]] described in the document element. */
-  val encodes: WebApi =
-    document match {
-      case d: amf.document.Document => WebApi(d.encodes)
-      case _                        => null
-    }
+  val encodes: WebApi = Option(document)
+    .filter(_.isInstanceOf[amf.document.Document])
+    .map(d => WebApi(d.asInstanceOf[amf.document.Document].encodes))
+    .orNull
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   val declares: java.util.List[amf.domain.DomainElement] =
