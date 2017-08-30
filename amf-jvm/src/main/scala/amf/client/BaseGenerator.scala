@@ -22,23 +22,23 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
     * (like the browser) or if a remote URL is provided.
     */
   def generateFile(unit: BaseUnit, path: File, handler: FileHandler): Unit =
-    generateSync(unit.unit, "file://" + path.getAbsolutePath, GenerationOptions(), UnitHandlerAdapter(handler))
+    generate(unit.unit, "file://" + path.getAbsolutePath, GenerationOptions(), UnitHandlerAdapter(handler))
 
   /** Generates the syntax text and returns it to the provided callback. */
   def generateString(unit: BaseUnit, handler: StringHandler): Unit =
-    generateSync(unit.unit, GenerationOptions(), StringHandlerAdapter(handler))
+    generate(unit.unit, GenerationOptions(), StringHandlerAdapter(handler))
 
   /**
     * Generates asynchronously the syntax text and stores it in the file pointed by the provided URL.
     * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  def generateFileAsync(unit: BaseUnit, url: File): CompletableFuture[String] =
-    generateAsync(unit.unit, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
+  def generateFile(unit: BaseUnit, url: File): CompletableFuture[String] =
+    generate(unit.unit, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
 
   /** Generates the syntax text and returns it asynchronously. */
-  def generateStringAsync(unit: BaseUnit): CompletableFuture[String] =
-    generateAsync(unit.unit, GenerationOptions()).asJava
+  def generateString(unit: BaseUnit): CompletableFuture[String] =
+    generate(unit.unit, GenerationOptions()).asJava
 
   protected case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
     override def success(unit: Unit): Unit         = handler.success()

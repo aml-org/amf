@@ -17,17 +17,17 @@ class AmfGenerator extends BaseGenerator(Amf, Json) {
 
   @JSExport
   def generateFile(unit: BaseUnit, url: String, options: GenerationOptions, handler: FileHandler): Unit =
-    generateSync(unit.unit, url, options, UnitHandlerAdapter(handler))
+    generate(unit.unit, url, options, UnitHandlerAdapter(handler))
 
   @JSExport
   def generateString(unit: BaseUnit, options: GenerationOptions, handler: StringHandler): Unit =
-    generateSync(unit.unit, options, StringHandlerAdapter(handler))
+    generate(unit.unit, options, StringHandlerAdapter(handler))
 
   @JSExport
-  def generateFileAsync(unit: BaseUnit, url: String, options: GenerationOptions): js.Promise[String] =
-    generateAsync(unit.unit, url, options).toJSPromise
+  def generateFile(unit: BaseUnit, url: String, options: GenerationOptions): js.Promise[String] =
+    generate(unit.unit, url, options).toJSPromise
 
   @JSExport
-  def generateStringAsync(unit: BaseUnit, options: GenerationOptions): js.Promise[String] =
-    generateAsync(unit.unit, options).toJSPromise
+  def generateString(unit: BaseUnit, options: GenerationOptions): js.Promise[String] =
+    generate(unit.unit, options).toJSPromise
 }

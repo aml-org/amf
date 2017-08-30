@@ -13,7 +13,7 @@ class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUn
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test to oas stream dump") {
-    val futureResult = new OasGenerator().generateStringAsync(unitBare).toFuture
+    val futureResult = new OasGenerator().generateString(unitBare).toFuture
 
     platform
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
@@ -25,7 +25,7 @@ class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUn
   }
 
   test("test to raml stream dump") {
-    val futureResult = new RamlGenerator().generateStringAsync(unitBare).toFuture
+    val futureResult = new RamlGenerator().generateString(unitBare).toFuture
 
     platform
       .resolve("file://shared/src/test/resources/clients/bare.raml", None)
@@ -37,7 +37,7 @@ class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUn
   }
 
   test("test to amf stream dump") {
-    val futureResult = new AmfGenerator().generateStringAsync(unitBare).toFuture
+    val futureResult = new AmfGenerator().generateString(unitBare).toFuture
 
     platform
       .resolve("file://shared/src/test/resources/clients/bare.jsonld", None)
@@ -49,7 +49,7 @@ class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUn
   }
 
   test("test to stream dump complete") {
-    val futureResult = new OasGenerator().generateStringAsync(unitAdvanced).toFuture
+    val futureResult = new OasGenerator().generateString(unitAdvanced).toFuture
 
     platform
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)

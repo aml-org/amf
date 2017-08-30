@@ -23,19 +23,19 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  protected def generateAsync(unit: BaseUnit, url: String, options: GenerationOptions): Future[String] =
+  protected def generate(unit: BaseUnit, url: String, options: GenerationOptions): Future[String] =
     AMFDumper(unit, target, syntax, options).dumpToFile(platform, url)
 
-  protected def generateAsync(unit: BaseUnit, options: GenerationOptions): Future[String] =
+  protected def generate(unit: BaseUnit, options: GenerationOptions): Future[String] =
     AMFDumper(unit, target, syntax, options).dumpToString
 
-  protected def generateSync(unit: BaseUnit, url: String, options: GenerationOptions, handler: Handler[Unit]): Unit = {
-    generateAsync(unit, url, options).onComplete(unitSyncAdapter(handler))
+  protected def generate(unit: BaseUnit, url: String, options: GenerationOptions, handler: Handler[Unit]): Unit = {
+    generate(unit, url, options).onComplete(unitSyncAdapter(handler))
   }
 
   /** Generates the syntax text and returns it to the provided callback. */
-  protected def generateSync(unit: BaseUnit, options: GenerationOptions, handler: Handler[String]): Unit = {
-    generateAsync(unit, options).onComplete(stringSyncAdapter(handler))
+  protected def generate(unit: BaseUnit, options: GenerationOptions, handler: Handler[String]): Unit = {
+    generate(unit, options).onComplete(stringSyncAdapter(handler))
   }
 
   private def stringSyncAdapter(handler: Handler[String])(t: Try[String]): Unit = t match {
