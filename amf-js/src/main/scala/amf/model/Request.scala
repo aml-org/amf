@@ -2,7 +2,7 @@ package amf.model
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Request model class.
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Request private[model] (private val request: amf.domain.Request) extends DomainElement {
 
+  @JSExportTopLevel("Request")
   def this() = this(amf.domain.Request())
 
   val queryParameters: js.Iterable[Parameter] = request.queryParameters.map(Parameter).toJSArray

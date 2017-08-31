@@ -12,7 +12,6 @@ class OperationHelper {
                 .withDescription("[Get Several Albums](https://developer.spotify.com/web-api/get-several-albums/)");
         searchAlbums.withRequest(RequestBuilder.albums());
         
-        
     }
     
     static void populateGetAlbum(Operation getAlbum){

@@ -137,10 +137,11 @@ This example has a *node.js* file **index.js** where amf library will be importe
 2. Run *npm install*
 3. Make sure that artifacts for amf have been generated (Run *sbt generate*)
 4. Run *npm install ../../amf-js/* (This will pick up configurations from *package.json* to install the *amf-module.js* file as a node module in the jsClient project)
-5. Run *node index.js*
+5. Run *node start*
 6. Open *localhost:3000* in the browser
 
-Modify *index.js* to change the use of the library server side.
+You can see *index.js* with examples of use and play with the module!
+Modify *parser* and generator *modules* to change the use of the library server side.
 
 ### JVM Client
 

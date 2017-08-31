@@ -2,7 +2,7 @@ package amf.model
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Document model class.
@@ -13,8 +13,10 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
     with EncodesModel
     with DeclaresModel {
 
+  @JSExportTopLevel("Document")
   def this() = this(amf.document.Document())
 
+  @JSExportTopLevel("Document")
   def this(webApi: WebApi) = this(amf.document.Document().withEncodes(webApi.element))
 
   /** List of references to other [[DomainElement]]s. */

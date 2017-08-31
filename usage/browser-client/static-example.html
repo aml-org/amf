@@ -8,8 +8,7 @@
 <!-- Include Scala.js compiled code -->
 <script type="text/javascript" src="../../amf-js/target/artifact/amf-browser.js"></script>
 
-<label for="url"> Url:
-    <!--<input id="url" type="text" value="http://amf.us-2.evennode.com/input.yaml/1000"/>-->
+
     <label>From:</label><select id="from" >
         <option value="raml">Raml</option>
         <option value="oas">Oas</option>
@@ -27,6 +26,7 @@
 <button id="click">Try Me!</button>
 
 <script>
+
     const client = new JsClient();
 
     console.log("client" + client)

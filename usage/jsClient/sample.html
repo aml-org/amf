@@ -3,35 +3,84 @@
 <head>
     <title>Sample</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
     <!--<script src="../amf-js/target/scala-2.12/jquery-3.2.1.min.js"></script>-->
 </head>
 
 <script>
     $(document).ready(function(){
         $("#parse").click(function () {
-            $.post("parse", $("#url").val(),
+            var data = {
+                'from' : $('#from').val(),
+                'mode' : "text",
+                'content':$('#fromApi').val()
+            };
+
+            $.post("parse", JSON.stringify(data),
                 function (data) {
                     alert(data)
-                    $("#webApiInfContainer").html(data)
                 }
-            ).done(function () {
-                alert(data)
-            })
+            )
         })
+
+        $("#generate").click(function () {
+            var data = {
+                'to' : $('#to').val(),
+                'mode' : "text",
+                'path':''
+            };
+
+            $.post("generate", JSON.stringify(data),
+                function (data) {
+                    alert("New api generated. Result: "+data)
+                }
+            )
+        });
+
+        $("#fromApi").on('change keyup paste', function() {
+            var input = $(this).val()
+            if(input.startsWith('#')){
+                $('#from').val('raml')
+            }else if(input.startsWith('{')){
+                $('#from').val('oas')
+            }else if(input.startsWith('[')){
+                $('#from').val('amf')
+            }
+        });
     })
 </script>
 <body>
 
-    <div >
-        <label>WebApp to string</label>
-        <div id="webApiInfContainer">
+    <div class="formContainer">
+        <div class="formApi left" >
+            <h3>Input Api</h3>
+
+            <div class="field">
+                <div class="labelContainer"><label>From:</label></div>
+                <select id="from">
+                    <option value="amf" selected>Amf</option>
+                    <option value="raml">Raml</option>
+                    <option value="oas">oas</option>
+                </select>
+            </div>
+
+            <label>Api:</label>
+            <textarea id="fromApi" ></textarea>
+
+            <input type="submit" id="parse" value=Parse" />
+        </div>
+
+        <div class="formApi right"  >
+            <h3>Example OutPut Api</h3>
+
+            <select id="to">
+                <option value="amf" selected>Amf</option>
+                <option value="raml">Raml</option>
+                <option value="oas">oas</option>
+            </select>
+            <input type="submit" id="generate" value="Generate" />
 
         </div>
-    </div>
-
-    <div>
-        <label>text:</label><textarea id="url"> </textarea>
-        <input type="submit" id="parse" value="Parse" />
     </div>
 </body>
 

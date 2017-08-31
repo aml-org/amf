@@ -30,7 +30,7 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   override def adopted(parent: String): this.type = withId(parent + "/" + method)
 
   def withResponse(name: String): Response = {
-    val result = Response().withName(name)
+    val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)
     add(Responses, result)
     result
   }

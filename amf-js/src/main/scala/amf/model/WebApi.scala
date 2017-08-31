@@ -2,14 +2,15 @@ package amf.model
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS WebApi model class.
   */
 @JSExportAll
-case class WebApi private (private val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
 
+  @JSExportTopLevel("WebApi")
   def this() = this(amf.domain.WebApi())
 
   val name: String                              = webApi.name
