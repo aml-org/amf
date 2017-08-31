@@ -26,6 +26,21 @@ Changes to the current interfaces and vocabularies are to be expected, as well a
 - Extensible, single document model for multiple domain vocabularies
 - Consistent parsing behaviour
 
+## On development features
+The library supports many of the required uses cases:
+- Parse a 1.0 RAML, 2.0 OAS and JSON-LD AMF model.
+- AMF API design model creation.
+- Model edition.
+- Export to any of the mentioned standards.
+
+However there's work in progress that will be delivered in first version:
+- Fragments and Libraries
+- Types support
+- Model validation
+- Improved yaml/json lexer integration
+- Improved error handling
+
+
 ## Usage
 
 To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
@@ -192,7 +207,7 @@ This is a simple example that uses the **JVM jar artifact** in a gradle projects
 
 ### Converter
 
-This is a node project that demonstrates how amf parses and generates an OAS/RAML document.
+This is a node project that demonstrates how amf parses and generates an OAS/RAML document. Please note that it's not a conversion tool per se as you can quickly see in the code. AMF will build the model every time.
 
 #### Usage
 
@@ -201,7 +216,8 @@ This is a node project that demonstrates how amf parses and generates an OAS/RAM
 2. Inside the *site* directory (*cd usage/site*):
     - Create directory *"build"*
     - Run *npm install*
-    - Run *npm start*
+    - Check if you have a *"public/build"* in the *site* directory. In not, create it.
+    - Run *npm start* from *site* directory
     - Open *localhost:3000* in the browser
-
-**Note**: if *npm start* fails, check if you have a *"public/build"* in the *site* directory.
+    
+You can now start trying AMF by reading and dumping from/to different API Design specs.

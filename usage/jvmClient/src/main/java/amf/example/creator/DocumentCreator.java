@@ -5,7 +5,7 @@ import amf.model.*;
 import java.util.Collections;
 
 /**
- * Client class for create a document with a web api from scratch. Use this code as example for build apis programmatically
+ * Client class for creating a document with a web api from scratch. Use this code as example for build apis programmatically
  */
 public class DocumentCreator {
     
