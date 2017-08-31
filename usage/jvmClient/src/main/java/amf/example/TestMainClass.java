@@ -39,12 +39,14 @@ public class TestMainClass {
         purgeDirectory();
         
         System.out.println("\n-------------------------------------------------------------------------------");
-        System.out.println("Test ASync");
+        System.out.println("Creating API from scratch");
         
         /*new Document api from scratch*/
         Document fromScratch = DocumentCreator.spotifyApiDocument();
-    
-    
+
+        System.out.println("\n-------------------------------------------------------------------------------");
+        System.out.println("Reading RAML API from stream");
+
         /* Parse internal raml api example*/
         Document parsedApi = null;
         try {
@@ -52,7 +54,9 @@ public class TestMainClass {
         } catch (ParserException e) {
             e.printStackTrace();
         }
-    
+        System.out.println("\n-------------------------------------------------------------------------------");
+        System.out.println("Reading JSON-LD API from file");
+
         /* Parse baking jsonld api from examples directory */
         Document parsedAmfApi = null;
         try {
@@ -60,14 +64,20 @@ public class TestMainClass {
         } catch (ParserException e) {
             e.printStackTrace();
         }
-    
+
+        System.out.println("\n-------------------------------------------------------------------------------");
+        System.out.println("Reading OAS API from file");
+
         Document parsedOasApi = null;
         try {
             parsedOasApi = new DocumentParser().parseOasFile(workingDirectory+"examples/banking-api.json");
         } catch (ParserException e) {
             e.printStackTrace();
         }
-        
+
+        System.out.println("\n-------------------------------------------------------------------------------");
+        System.out.println("Generating OAS API stream");
+
         /* Generate oas api string from document */
         if(parsedApi!=null){
             try {
@@ -77,17 +87,22 @@ public class TestMainClass {
                 e.printStackTrace();
             }
         }
-    
+
+        System.out.println("\n-------------------------------------------------------------------------------");
+        System.out.println("Generating OAS API file");
+
         /* Generate oas api file from new in memory api*/
         try {
             String s = new ApiGenerator(fromScratch).generateOasFile(workingDirectory+"output/generatedFile.json");
-            System.out.println("Document dumpped: "+ s);
+            System.out.println("Document: "+ s);
         } catch (GeneratorException e) {
             e.printStackTrace();
         }
-        
-        
-        /* mutate and existing document*/
+
+        System.out.println("\n-------------------------------------------------------------------------------");
+        System.out.println("Editing an AMF model\n");
+
+        /* mutate an existing document*/
         if(parsedOasApi!=null){
     
             parsedOasApi.encodes()
@@ -107,7 +122,7 @@ public class TestMainClass {
             /* Generate raml api file from mutated api*/
             try {
                 String s = new ApiGenerator(parsedOasApi).generateRamlString();
-                System.out.println("Document mutated dumpp: "+ s);
+                System.out.println("Edited document: "+ s);
             } catch (GeneratorException e) {
                 e.printStackTrace();
             }

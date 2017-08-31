@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Client generation class for show how to use the generation amf api. Public methods and exceptions are examples of how to, and does not belong to the api.
+ * Client generation class to show how to use the generation amf api. Public methods and exceptions are examples to be used as guidelines.
  */
 public class ApiGenerator {
     
@@ -21,27 +21,27 @@ public class ApiGenerator {
     }
     
     public String generateOasString() throws GeneratorException {
-        return handleFuture(new OasGenerator().generateStringAsync(document));
+        return handleFuture(new OasGenerator().generateString(document));
     }
     
     public String generateRamlString() throws GeneratorException {
-        return handleFuture(new RamlGenerator().generateStringAsync(document));
+        return handleFuture(new RamlGenerator().generateString(document));
     }
     
     public String generateAmfString() throws GeneratorException {
-        return handleFuture(new AmfGenerator().generateStringAsync(document));
+        return handleFuture(new AmfGenerator().generateString(document));
     }
     
     public String generateOasFile(String path) throws GeneratorException {
-        return handleFuture(new OasGenerator().generateFileAsync(document,new File(filePrefix+path)));
+        return handleFuture(new OasGenerator().generateFile(document,new File(filePrefix+path)));
     }
     
     public String generateRamlFile(String path) throws GeneratorException {
-        return handleFuture(new RamlGenerator().generateFileAsync(document,new File(filePrefix+path)));
+        return handleFuture(new RamlGenerator().generateFile(document,new File(filePrefix+path)));
     }
     
     public String generateAmfFile(String path) throws GeneratorException {
-        return handleFuture(new AmfGenerator().generateFileAsync(document,new File(filePrefix+path)));
+        return handleFuture(new AmfGenerator().generateFile(document,new File(filePrefix+path)));
     }
     
     private String handleFuture(CompletableFuture<String> f) throws GeneratorException {
