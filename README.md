@@ -1,57 +1,60 @@
-# AMF
+# API Modeling Framework
 
-### Requirements
-* Scala 2.12.2
-* sbt 0.13.15
+This project aims to provide a common programming interface that lets developers interact with any API specification, whether it is written in OpenAPI Specification (OAS) or RAML, in a similar way to how the HTML DOM allows programmatic interaction with an HTML document.
 
-## sbt useful commands
+## Vision
 
-### Test
-* Tests on jvm and js
-```sh
-sbt test
-```
+The API Modeling Framework (AMF) allows users to formally describe different kind of APIs, parse and generate instances of those APIS as sets of modular documents and to store those connected descriptions into a single unified data graph.
 
-### Generate coverage reports
-```sh
-sbt coverage test coverageReport
-```
+![Overview](https://raw.githubusercontent.com/raml-org/api-modeling-framework/gh-pages/images/diagram.png)
 
-## Using AMF
+## Status
+
+AMF is under active development.
+Artifacts have been pushed to private repositories. Can be built from the source code as well, as described bellow.
+Changes to the current interfaces and vocabularies are to be expected, as well as a possible split of the library into smaller units.
+
+## Goals
+
+- Support for multiple languages with a unified output API/model for clients
+- Support for both, document (RAML modularity) and domain (service clients), layers
+- Bi-directional transformation
+- Support for validation at document and service layers
+- Produce a formal specification for the language
+- Extensible, single document model for multiple domain vocabularies
+- Consistent parsing behaviour
+
+## Usage
 
 To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
 
-### Getting artifacts for JS
+### JVM artifacts (private repository)
 
-Before you get started, you'll want to register with our private npm repository so you can download @mulesoft modules.
+To use, specify dependency. 
 
-```
-npm login --registry=https://npm.mulesoft.com --scope=@mulesoft
-```
+Gradle example:
 
-When prompted, enter your github username and password. You may then clone and install the project's dependencies.
-
-If you have 2-factor authentication enabled, you'll get a 401 after attempting to login. Temporarily disable 2FA, login with your github credentials, then re-enable 2FA.
-
-Once you are logged in on the scope @mulesoft just execute the command
-
-```bash
-npm install --save @mulesoft/amf-jenkins@latest
+```groovy
+dependencies {
+    compile 'org.mulesoft:amf_2.12:0.0.1-SNAPSHOT'
+}
 ```
 
-Import it using
-```javascript
-import amf from '@mulesoft/amf-js'
+Maven example:
+
+```xml
+<dependency>
+    <groupId>org.mulesoft</groupId>
+    <artifactId>amf_2.12</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
 ```
 
-and *amf* will be an object containing all the exported classes, for example:
-```javascript
-const client = new amf.JsClient()
-```
+#### Private repository registration
 
-### Getting artifacts for JVM
+Add the mulesoft ci-snapshots repository and its credentials to the repositories.
 
-Add the mulesoft ci-snapshots repository and its credentials to the repositories, for example in gradle:
+Gradle example:
 
 ```groovy
 maven {
@@ -63,19 +66,52 @@ maven {
     }
 ```
 
-And then add the dependency:
 
-```groovy
-dependencies {
-    compile 'org.mulesoft:amf_2.12:0.0.1-SNAPSHOT'
-}
+
+### JS artifacts (private repository)
+
+To use, import:
+
+```javascript
+import amf from '@mulesoft/amf-js'
 ```
 
-## Use as artifacts
+The *amf* package will contain all exported classes:
+```javascript
+const parser = new amf.RamlParser()
+```
 
-Use *amf* importing the artifacts generated from cloning the project and running *sbt generate*.
+#### Private repository registration
 
+See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-js/dw-parser-js/README.md#getting-started
+
+And then:
+
+```bash
+npm install --save @mulesoft/amf-js@latest
+```
+
+
+## Installation
+
+### Requirements
+* Scala 2.12.2
+* sbt 0.13.15
+
+### Useful sbt commands
+
+#### Test
+* Tests on jvm and js
+```sh
+sbt test
+```
+
+#### Coverage reports
+```sh
+sbt coverage test coverageReport
+```
 ### Generate artifacts directly from cloned repository
+
 ```sh
 sbt generate
 ```
@@ -87,20 +123,20 @@ And two *JVM artifacts*:
 - **Jar**: jar file in amf-jvm/target/artifact/amf.jar with the amf library.
 - **Javadoc jar**: jar file in amf-jvm/target/artifact/amf-javadoc.jar with the docs of the project in Scaladoc format.
 
-### Using AMF in a node.js project
+#### Using AMF in a node.js project
 
 ```bash
 npm install --save amf-project-location/amf-js/
 ```
 
-If you are using *Node.js* (server side) just import it using
+If you are using *Node.js* (server side) just import it using:
 ```javascript
 import amf from '@mulesoft/amf-js'
 ```
 
-and *amf* will be an object containing all the exported classes, for example:
+The *amf* package will contain all exported classes:
 ```javascript
-const client = new amf.JsClient()
+const parser = new amf.RamlParser()
 ```
 
 ### Using AMF from client browser
@@ -112,10 +148,10 @@ Just import the generated JS file in a script tag
 
 and use the exported classes as if they were global ones, for example:
 ```javascript
-const client = new JsClient()
+const parser = new RamlParser()
 ```
 
-# Examples
+## Examples
 
 Inside the *usage* folder we have an example for each of the three usages and a *converter* project to give the library some UI.
 
@@ -123,15 +159,15 @@ Inside the *usage* folder we have an example for each of the three usages and a 
 
 It shows a static *html* file that imports the *amf-browser.js* artifact as a script and uses its globally exported classes.
 
-##### Usage
+#### Usage
 
 Just open the *html* file in any browser and play with what's inside the script tag!
 
-### JS Client (node.js)
+### NodeJS Client
 
 This example has a *node.js* file **index.js** where amf library will be imported and can be used as a node module.
 
-##### Usage
+#### Usage
 
 1. Run *cd usage/jsClient* while standing on the root of the project
 2. Run *npm install*
@@ -147,7 +183,7 @@ Modify *parser* and generator *modules* to change the use of the library server 
 
 This is a simple example that uses the **JVM jar artifact** in a gradle projects' main file.
 
-##### Usage
+#### Usage
 
 1. Make sure that artifacts for amf have been generated (Run *sbt generate*), as the project will pick up the jar from the generated location
 2. Play with the library in java files! (There's a main class in src/main/java/ with some examples)
@@ -156,7 +192,7 @@ This is a simple example that uses the **JVM jar artifact** in a gradle projects
 
 This is a node project that demonstrates how amf parses and generates an OAS/RAML document.
 
-##### Usage
+#### Usage
 
 1. Make sure that artifacts for amf have been generated (Run *sbt generate*)
 
