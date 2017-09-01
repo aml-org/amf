@@ -21,7 +21,7 @@ lazy val amf = crossProject
       "snapshots" at s"${sys.env.getOrElse("NEXUS_REPOSITORY", "")}/content/repositories/ci-snapshots/"),
     credentials ++= Seq(
       Credentials("Sonatype Nexus Repository Manager",
-                  sys.env.getOrElse("NEXUS_REPOSITORY", ""),
+                  "nexus.build.msap.io",
                   sys.env.getOrElse("NEXUS_USER", ""),
                   sys.env.getOrElse("NEXUS_PASS", ""))
     ),
