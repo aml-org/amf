@@ -69,21 +69,19 @@ Maven example:
 
 #### Private repository registration
 
-Add the mulesoft ci-snapshots repository and its credentials to the repositories.
+Add the mulesoft *ci-snapshots* repository and its credentials to the repositories.
 
 Gradle example:
 
 ```groovy
 maven {
-        url 'https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots'
+        url 'https://nexus.build.msap.io/nexus/content/repositories/ci-snapshots'
         credentials {
             username = "username"
             password = "password"
         }
     }
 ```
-
-
 
 ### JS artifacts (private repository)
 
