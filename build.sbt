@@ -18,16 +18,17 @@ lazy val amf = crossProject
   )
   .jvmSettings(
     publishTo := Some(
-      "snapshots" at "https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/"),
+//      "snapshots" at "https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/"),
+      "snapshots" at "https://nexus.build.msap.io/nexus"),
     credentials ++= Seq(
       Credentials("Sonatype Nexus Repository Manager",
-                  "repository-master.mulesoft.org",
-                  sys.env.getOrElse("PUBLIC_NEXUS_USER", ""),
-                  sys.env.getOrElse("PUBLIC_NEXUS_PASS", "")),
+                  "nexus.build.msap.io",
+                  sys.env.getOrElse("NEXUS_USER", ""),
+                  sys.env.getOrElse("NEXUS_PASS", "")),
       Credentials("Sonatype Nexus Repository Manager",
                   "repository.mulesoft.org",
-                  sys.env.getOrElse("PUBLIC_NEXUS_USER", ""),
-                  sys.env.getOrElse("PUBLIC_NEXUS_PASS", ""))
+                  sys.env.getOrElse("NEXUS_USER", ""),
+                  sys.env.getOrElse("NEXUS_PASS", ""))
     ),
     addArtifact(artifact in (Compile, assembly), assembly),
     publishArtifact in (Compile, packageBin) := false,
