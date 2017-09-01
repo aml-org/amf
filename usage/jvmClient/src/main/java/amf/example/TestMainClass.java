@@ -98,6 +98,16 @@ public class TestMainClass {
         } catch (GeneratorException e) {
             e.printStackTrace();
         }
+        
+        /* Generate raml api file from new in memory api*/
+        try {
+            String s = new ApiGenerator(parsedAmfApi).generateRamlString();
+            System.out.println("Memory amf to raml document dumpped: "+ s);
+        } catch (GeneratorException e) {
+            e.printStackTrace();
+        }
+        
+        /* mutate and existing document*/
 
         System.out.println("\n-------------------------------------------------------------------------------");
         System.out.println("Editing an AMF model\n");

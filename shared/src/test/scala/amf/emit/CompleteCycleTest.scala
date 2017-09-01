@@ -212,6 +212,18 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("payloads.json", "payloads.json.raml", OasJsonHint, Raml)
   }
 
+  test("Children endpoints amf to raml test") {
+    assertCycle("banking-api.raml.jsonld", "banking-api.jsonld.raml", AmfJsonHint, Raml)
+  }
+
+  test("Children endpoints raml to raml test") {
+    assertCycle("banking-api.raml", "banking-api.raml", RamlYamlHint, Raml)
+  }
+
+  test("Children endpoints amf to amf test") {
+    assertCycle("banking-api.raml", "banking-api.raml.jsonld", RamlYamlHint, Amf)
+  }
+
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
     val expected = platform
       .resolve(basePath + golden, None)

@@ -114,11 +114,14 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         tsort(graph, Seq()).foreach(e => {
           val emitter = EndPointEmitter(e, ordering)
           e.parent match {
-            case Some(parent) => all(parent) += emitter
-            case _            => all += (e -> emitter)
+            case Some(parent) => {
+              all(parent) += emitter
+              all += (e -> emitter)
+            }
+            case _ => all += (e -> emitter)
           }
         })
-        all.values.toSeq
+        all.filterKeys(_.parent.isEmpty).values.toSeq
       } else {
         endpoints.map(EndPointEmitter(_, ordering))
       }
