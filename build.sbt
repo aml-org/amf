@@ -21,7 +21,7 @@ lazy val amf = crossProject
       "snapshots" at s"${sys.env.getOrElse("NEXUS_REPOSITORY", "")}/content/repositories/ci-snapshots/"),
     credentials ++= Seq(
       Credentials("Sonatype Nexus Repository Manager",
-                  "nexus.build.msap.io",
+                  host,
                   sys.env.getOrElse("NEXUS_USER", ""),
                   sys.env.getOrElse("NEXUS_PASS", ""))
     ),
@@ -41,6 +41,8 @@ lazy val amf = crossProject
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule
   )
+
+lazy val host: String = new java.net.URL(sys.env.getOrElse("NEXUS_REPOSITORY", "nexus.build.msap.io")).getHost
 
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))
 lazy val amfJS  = amf.js.in(file("amf-js"))
