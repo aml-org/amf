@@ -18,7 +18,7 @@ lazy val amf = crossProject
   )
   .jvmSettings(
     publishTo := Some(
-      "snapshots" at "https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/"),
+      "snapshots" at s"${sys.env.getOrElse("NEXUS_REPOSITORY", "")}/content/repositories/ci-snapshots/"),
     credentials ++= Seq(
       Credentials("Sonatype Nexus Repository Manager",
                   "repository-master.mulesoft.org",
