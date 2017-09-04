@@ -47,5 +47,5 @@ object EndPoint {
 
   def apply(ast: AMFAST): EndPoint = apply(Annotations(ast))
 
-  def apply(annotations: Annotations): EndPoint = new EndPoint(Fields(), annotations)
+  def apply(annotations: Annotations): EndPoint = EndPoint(Fields(), annotations)
 }

@@ -22,6 +22,8 @@ object Type {
 
   object Str extends Scalar("string")
 
+  object Int extends Scalar("int")
+
   object Iri extends Scalar("url")
 
   object Bool extends Scalar("boolean")

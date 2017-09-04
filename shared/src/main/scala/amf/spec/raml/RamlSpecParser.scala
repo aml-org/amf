@@ -11,6 +11,7 @@ import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.shape.{NodeShape, Shape}
 
 import scala.collection.mutable
 import scala.util.matching.Regex
@@ -141,6 +142,14 @@ case class RamlSpecParser(root: Root) {
                   AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
                   entry.annotations())
         }
+      }
+    )
+
+    entries.key(
+      "types",
+      entry => {
+        val types = TypesParser(entry.value, name => NodeShape().withName(name).adopted(api.id)).parse()
+//        api.set(WebApiModel.BaseUriParameters, AmfArray(shape, Annotations(entry.value)), entry.annotations())
       }
     )
 
@@ -316,6 +325,14 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
     )
 
     operation
+  }
+}
+
+case class TypesParser(ast: AMFAST, producer: String => NodeShape) {
+  def parse(): Seq[Shape] = {
+    new Entries(ast).entries.values
+      .map(entry => ShapeParser(entry, producer).parse())
+      .toSeq
   }
 }
 

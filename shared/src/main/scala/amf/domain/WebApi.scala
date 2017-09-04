@@ -59,5 +59,5 @@ object WebApi {
 
   def apply(ast: AMFAST): WebApi = apply(Annotations(ast))
 
-  def apply(annotations: Annotations): WebApi = new WebApi(Fields(), annotations)
+  def apply(annotations: Annotations): WebApi = WebApi(Fields(), annotations)
 }
