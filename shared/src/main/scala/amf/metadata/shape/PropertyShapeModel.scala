@@ -3,17 +3,17 @@ package amf.metadata.shape
 import amf.metadata.Field
 import amf.metadata.Type.{Int, Iri}
 import amf.metadata.domain.DomainElementModel
-import amf.vocabulary.Namespace.Shacl
+import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.vocabulary.ValueType
 
 /**
-  * Created by pedro.colunga on 9/4/17.
+  * Property shape metamodel
   */
 object PropertyShapeModel extends ShapeModel {
 
   val Path = Field(Iri, Shacl + "path")
 
-  val DataType = Field(Iri, Shacl + "datatype")
+  val Range = Field(ShapeModel, Shapes + "range")
 
   val MinCount = Field(Int, Shacl + "minCount")
 
@@ -22,5 +22,5 @@ object PropertyShapeModel extends ShapeModel {
   override val `type`: List[ValueType] = List(Shacl + "PropertyShape") ++ ShapeModel.`type`
 
   override val fields
-    : List[Field] = List(Path, DataType, MinCount, MaxCount) ++ ShapeModel.fields ++ DomainElementModel.fields
+    : List[Field] = List(Path, Range, MinCount, MaxCount) ++ ShapeModel.fields ++ DomainElementModel.fields
 }

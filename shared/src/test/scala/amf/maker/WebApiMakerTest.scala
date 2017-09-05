@@ -345,6 +345,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(api, "completeExample.json", OasJsonHint)
   }
 
+  test("shape example test") {
+
+    assertFixture(WebApi(), "example-types.raml", RamlYamlHint)
+  }
+
   private def assertField(field: Field, actual: Any, expected: Any): Unit =
     if (expected != actual) {
       expected match {

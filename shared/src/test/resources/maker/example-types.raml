@@ -1,0 +1,35 @@
+#%RAML 1.0
+types:
+  Person:
+    properties:
+      name: string
+      description: string
+      age: integer
+      address:
+        properties:
+          street: string
+          number: integer
+          document:
+            type: object
+          lastName:
+            type: string
+title: test title
+description: test description
+mediaType:
+  - application/yaml
+version: 1.1
+(termsOfService): terms of service
+protocols:
+  - http
+  - https
+(contact):
+  url: contactUrl
+  name: contactName
+  email: contactEmail
+(externalDocs):
+  url: externalDocsUrl
+  description: externalDocsDescription
+(license):
+  url: licenseUrl
+  name: licenseName
+baseUri: api.example.com/path

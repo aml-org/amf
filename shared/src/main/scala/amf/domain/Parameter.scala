@@ -26,6 +26,7 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
   def isPath: Boolean   = binding == "path"
 
   override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name)
+
 }
 
 object Parameter {

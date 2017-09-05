@@ -1,6 +1,7 @@
 package amf.metadata.domain
 import amf.metadata.Field
 import amf.metadata.Type.{Bool, Str}
+import amf.metadata.shape.ShapeModel
 import amf.vocabulary.Namespace.{Http, Hydra, Schema => SchemaNamespace}
 import amf.vocabulary.ValueType
 
@@ -17,7 +18,7 @@ object ParameterModel extends DomainElementModel {
 
   val Binding = Field(Str, Http + "binding")
 
-  val Schema = Field(Str, Http + "schema")
+  val Schema = Field(ShapeModel, Http + "schema")
 
   override val `type`: List[ValueType] = Http + "Parameter" :: DomainElementModel.`type`
 
