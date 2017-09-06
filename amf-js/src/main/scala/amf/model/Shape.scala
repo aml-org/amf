@@ -1,0 +1,50 @@
+package amf.model
+
+import scala.scalajs.js
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.JSConverters._
+
+@JSExportAll
+abstract class Shape(private[amf] val shape: amf.shape.Shape) {
+
+  val name: String                = shape.name
+  val displayName: String         = shape.displayName
+  val description: String         = shape.description
+  val default: String             = shape.default
+  val values: js.Iterable[String] = shape.values.toJSArray
+  val documentation: CreativeWork = Option(shape.documentation).map(amf.model.CreativeWork).orNull
+
+  def withName(name: String): this.type = {
+    shape.withName(name)
+    this
+  }
+  def withDisplayName(name: String): this.type = {
+    shape.withDisplayName(name)
+    this
+  }
+  def withDescription(description: String): this.type = {
+    shape.withDescription(description)
+    this
+  }
+  def withDefault(default: String): this.type = {
+    shape.withDefault(default)
+    this
+  }
+  def withValues(values: js.Iterable[String]): this.type = {
+    shape.withValues(values.toList)
+    this
+  }
+  def withDocumnetation(documentation: CreativeWork): this.type = {
+    shape.withDocumnetation(documentation.element)
+    this
+  }
+}
+
+object Shape {
+  def apply(shape: amf.shape.Shape): Shape =
+    (shape match {
+      case node: amf.shape.NodeShape     => Some(NodeShape(node))
+      case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
+      case a                             => None
+    }).orNull
+}

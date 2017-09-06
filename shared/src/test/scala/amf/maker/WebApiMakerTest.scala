@@ -7,6 +7,7 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
+import amf.shape.ScalarShape
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -153,7 +154,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withRequest(Request()
               .withQueryParameters(List(
                 Parameter().withName("param1").withDescription("Some descr").withRequired(true).withBinding("query"),
-                Parameter().withName("param2").withSchema("string").withRequired(false).withBinding("query")
+                Parameter()
+                  .withName("param2")
+                  .withSchema(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                  .withRequired(false)
+                  .withBinding("query")
               ))),
           Operation()
             .withMethod("post")
@@ -200,10 +205,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                   ))
                 .withHeaders(List(Parameter()
                   .withName("param2?")
-                  .withSchema("string")
+                  .withSchema(ScalarShape().withDataType("string"))
                   .withRequired(false)
                   .withBinding("header")))
-                .withPayloads(List(Payload().withSchema("string").withMediaType("application/xml")))
+                .withPayloads(List(
+                  Payload().withSchema(ScalarShape().withDataType("string")).withMediaType("application/xml")))
             ),
           Operation()
             .withMethod("post")
@@ -214,7 +220,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                 .withHeaders(List(
                   Parameter().withName("Header-One").withRequired(false).withBinding("header")
                 ))
-                .withPayloads(List(Payload().withSchema("number").withMediaType("application/json")))
+                .withPayloads(
+                  List(Payload().withSchema(ScalarShape().withDataType("number")).withMediaType("application/json")))
             )
         ))
     )
@@ -247,15 +254,18 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                   .withStatusCode("200")
                   .withName("200")
                   .withHeaders(List(
-                    Parameter().withName("Time-Ago").withSchema("integer").withRequired(true)
+                    Parameter()
+                      .withName("Time-Ago")
+                      .withSchema(ScalarShape().withDataType("integer"))
+                      .withRequired(true)
                   )),
                 Response()
                   .withName("404")
                   .withStatusCode("404")
                   .withDescription("Not found!")
                   .withPayloads(List(
-                    Payload().withMediaType("application/json").withSchema("someType"),
-                    Payload().withMediaType("application/xml").withSchema("someType")
+                    Payload().withMediaType("application/json").withSchema(ScalarShape().withDataType("string")),
+                    Payload().withMediaType("application/xml").withSchema(ScalarShape().withDataType("string"))
                   ))
               ))
           ))
@@ -284,21 +294,27 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
               .withMethod("get")
               .withName("Some title")
               .withRequest(Request()
-                .withPayloads(List(Payload().withMediaType("application/json").withSchema("number"))))
+                .withPayloads(
+                  List(Payload().withMediaType("application/json").withSchema(ScalarShape().withDataType("number")))))
               .withResponses(List(
                 Response()
                   .withDescription("200 descr")
                   .withStatusCode("200")
                   .withName("default")
                   .withHeaders(List(
-                    Parameter().withName("Time-Ago").withSchema("integer").withRequired(true)
+                    Parameter()
+                      .withName("Time-Ago")
+                      .withSchema(ScalarShape().withDataType("integer"))
+                      .withRequired(true)
                   )),
                 Response()
                   .withName("404")
                   .withStatusCode("404")
                   .withDescription("Not found!")
-                  .withPayloads(List(Payload().withMediaType("application/json").withSchema("string"),
-                                     Payload().withMediaType("application/xml").withSchema("string")))
+                  .withPayloads(List(
+                    Payload().withMediaType("application/json").withSchema(ScalarShape().withDataType("string")),
+                    Payload().withMediaType("application/xml").withSchema(ScalarShape().withDataType("string"))
+                  ))
               ))
           ))
     )
@@ -348,6 +364,128 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   test("shape example test") {
 
     assertFixture(WebApi(), "example-types.raml", RamlYamlHint)
+  }
+
+  test("Generate example with types") {
+
+    val api = WebApi()
+      .withName("test title")
+      .withDescription("test description")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("/path")
+      .withContentType(List("application/yaml"))
+      .withAccepts(List("application/yaml"))
+      .withVersion("1.1")
+      .withTermsOfService("terms of service")
+
+    val operation = api
+      .withEndPoint("/level-zero")
+      .withName("One display name")
+      .withDescription("and this description!")
+      .withOperation("get")
+      .withName("Some title")
+
+    val request = operation
+      .withRequest()
+
+    //shape of param1
+    val param1Shape = request
+      .withQueryParameter("param1")
+      .withDescription("Some descr")
+      .withBinding("query")
+      .withRequired(true)
+      .withObjectSchema("schema")
+
+    param1Shape
+      .withDescription("Some descr")
+      .withClosed(false)
+      .withProperty("name")
+      .withScalarSchema("name")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    param1Shape
+      .withProperty("lastName")
+      .withScalarSchema("lastName")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val address = param1Shape.withProperty("address").withObjectRange("address")
+    address
+      .withClosed(false)
+      .withProperty("city")
+      .withScalarSchema("city")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    address.withProperty("postal").withScalarSchema("postal").withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    //shape of param1
+
+    //shape of param2
+    request
+      .withQueryParameter("param2")
+      .withBinding("query")
+      .withRequired(false)
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    //param3 typeless
+    request.withQueryParameter("param3").withRequired(true).withBinding("query").withDescription("typeless")
+
+    //headers
+    //header type string
+    request
+      .withHeader("Header-One")
+      .withBinding("header")
+      .withRequired(false)
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    //header with object type
+    val header2Type =
+      request.withHeader("header-two").withRequired(true).withBinding("header").withObjectSchema("schema")
+    header2Type
+      .withClosed(false)
+      .withProperty("number")
+      .withScalarSchema("number")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    //body operation payload
+    request
+      .withPayload()
+      .withMediaType("application/raml")
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    //payload of body operation with object
+    request
+      .withPayload()
+      .withMediaType("application/json")
+      .withObjectSchema("schema")
+      .withClosed(false)
+      .withProperty("howmuch")
+      .withScalarSchema("howmuch")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    //responses
+
+    val default = operation
+      .withResponse("200")
+
+    default
+      .withPayload()
+      .withObjectSchema("default")
+      .withClosed(false)
+      .withProperty("invented")
+      .withScalarSchema("invented")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    default
+      .withPayload()
+      .withMediaType("application/xml")
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    operation
+      .withResponse("404")
+      .withPayload()
+      .withScalarSchema("default")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    assertFixture(api, "example-types.raml", RamlYamlHint)
   }
 
   private def assertField(field: Field, actual: Any, expected: Any): Unit =

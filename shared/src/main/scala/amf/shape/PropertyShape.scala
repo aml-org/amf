@@ -2,6 +2,7 @@ package amf.shape
 
 import amf.common.AMFAST
 import amf.domain.{Annotations, Fields}
+import amf.metadata.shape.PropertyShapeModel
 import amf.metadata.shape.PropertyShapeModel._
 
 /**
@@ -20,6 +21,18 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def withMaxCount(max: Int): this.type  = set(MaxCount, max)
 
   override def adopted(parent: String): this.type = withId(parent + "/property/" + name)
+
+  def withObjectRange(name: String): NodeShape = {
+    val node = NodeShape().withName(name)
+    set(PropertyShapeModel.Range, node)
+    node
+  }
+
+  def withScalarSchema(name: String): ScalarShape = {
+    val scalar = ScalarShape().withName(name)
+    set(PropertyShapeModel.Range, scalar)
+    scalar
+  }
 }
 
 object PropertyShape {

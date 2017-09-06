@@ -31,7 +31,7 @@ case class ScalarShape(fields: Fields, annotations: Annotations) extends Shape {
   def withFormat(format: String): this.type        = set(Format, format)
   def withMultipleOf(multiple: Int): this.type     = set(MultipleOf, multiple)
 
-  override def adopted(parent: String): this.type = withId(parent + "/scalar")
+  override def adopted(parent: String): this.type = withId(parent + "/scalar/" + name)
 }
 
 object ScalarShape {

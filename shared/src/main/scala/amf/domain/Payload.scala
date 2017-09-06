@@ -1,7 +1,9 @@
 package amf.domain
 
 import amf.common.AMFAST
+import amf.metadata.domain.PayloadModel
 import amf.metadata.domain.PayloadModel._
+import amf.shape.{NodeShape, ScalarShape, Shape}
 
 /**
   * Payload internal model.
@@ -9,14 +11,26 @@ import amf.metadata.domain.PayloadModel._
 case class Payload(fields: Fields, annotations: Annotations) extends DomainElement {
 
   def mediaType: String = fields(MediaType)
-  def schema: String    = fields(Schema)
+  def schema: Shape     = fields(Schema)
 
   def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
-  def withSchema(schema: String): this.type       = set(Schema, schema)
+  def withSchema(schema: Shape): this.type        = set(Schema, schema)
 
   override def adopted(parent: String): this.type = {
     val mediaType: Option[String] = fields.?(MediaType)
     withId(parent + "/" + mediaType.getOrElse("default"))
+  }
+
+  def withObjectSchema(name: String): NodeShape = {
+    val node = NodeShape().withName(name)
+    set(PayloadModel.Schema, node)
+    node
+  }
+
+  def withScalarSchema(name: String): ScalarShape = {
+    val scalar = ScalarShape().withName(name)
+    set(PayloadModel.Schema, scalar)
+    scalar
   }
 }
 

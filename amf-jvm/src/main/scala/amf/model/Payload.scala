@@ -8,7 +8,7 @@ case class Payload private[model] (private val payload: amf.domain.Payload) exte
   def this() = this(amf.domain.Payload())
 
   val mediaType: String = payload.mediaType
-  val schema: String    = payload.schema
+  val schema: Shape     = Shape(payload.schema)
 
   override def equals(other: Any): Boolean = other match {
     case that: Payload =>
@@ -27,9 +27,10 @@ case class Payload private[model] (private val payload: amf.domain.Payload) exte
     this
   }
 
-  /** Set schema property of this [[Payload]]. */
-  def withSchema(schema: String): this.type = {
-    payload.withSchema(schema)
-    this
-  }
+  def withObjectSchema(name: String): NodeShape =
+    NodeShape(payload.withObjectSchema(name))
+
+  def withScalarSchema(name: String): ScalarShape =
+    ScalarShape(payload.withScalarSchema(name))
+
 }

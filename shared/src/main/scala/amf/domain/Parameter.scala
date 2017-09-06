@@ -1,7 +1,9 @@
 package amf.domain
 
 import amf.common.AMFAST
+import amf.metadata.domain.ParameterModel
 import amf.metadata.domain.ParameterModel._
+import amf.shape.{NodeShape, ScalarShape, Shape}
 
 /**
   * Parameter internal model.
@@ -12,13 +14,13 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
   def description: String = fields(Description)
   def required: Boolean   = fields(Required)
   def binding: String     = fields(Binding)
-  def schema: String      = fields(Schema)
+  def schema: Shape       = fields(Schema)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
   def withRequired(required: Boolean): this.type      = set(Required, required)
   def withBinding(binding: String): this.type         = set(Binding, binding)
-  def withSchema(schema: String): this.type           = set(Schema, schema)
+  def withSchema(schema: Shape): this.type            = set(Schema, schema)
 
   def isHeader: Boolean = binding == "header"
   def isQuery: Boolean  = binding == "query"
@@ -26,6 +28,18 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
   def isPath: Boolean   = binding == "path"
 
   override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name)
+
+  def withObjectSchema(name: String): NodeShape = {
+    val node = NodeShape().withName(name)
+    set(ParameterModel.Schema, node)
+    node
+  }
+
+  def withScalarSchema(name: String): ScalarShape = {
+    val scalar = ScalarShape().withName(name)
+    set(ParameterModel.Schema, scalar)
+    scalar
+  }
 
 }
 

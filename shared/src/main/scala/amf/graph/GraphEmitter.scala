@@ -10,9 +10,11 @@ import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
 import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
+import amf.shape.{NodeShape, PropertyShape, ScalarShape}
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.ValueType
 
@@ -60,7 +62,7 @@ object GraphEmitter {
       createSourcesNode(id + "/source-map", sources)
     }
 
-    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit) = {
+    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit): Unit = {
       t match {
         case _: Obj =>
           obj(v.value.asInstanceOf[AmfObject], parent)
@@ -86,7 +88,7 @@ object GraphEmitter {
       }
     }
 
-    private def obj(element: AmfObject, parent: String, inArray: Boolean = false) = {
+    private def obj(element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
       val obj = () =>
         map { () =>
           traverse(element, parent)
@@ -127,7 +129,7 @@ object GraphEmitter {
       }
     }
 
-    private def value(content: String, token: AMFToken) = {
+    private def value(content: String, token: AMFToken): Unit = {
       map { () =>
         entry { () =>
           raw("@value")
@@ -136,9 +138,9 @@ object GraphEmitter {
       }
     }
 
-    private def createIdNode(id: String) = entry("@id", id)
+    private def createIdNode(id: String): Unit = entry("@id", id)
 
-    private def createTypeNode(obj: Obj) = {
+    private def createTypeNode(obj: Obj): Unit = {
       entry { () =>
         raw("@type")
         array { () =>
@@ -179,7 +181,7 @@ object GraphEmitter {
       }
     }
 
-    private def createAnnotationNodes(sources: SourceMap) = {
+    private def createAnnotationNodes(sources: SourceMap): Unit = {
       sources.annotations.foreach({
         case (a, values) =>
           entry { () =>
@@ -208,17 +210,20 @@ object GraphEmitter {
 
   /** Metadata Type references. */
   private def metamodel(instance: Any): Obj = instance match {
-    case _: Document     => DocumentModel
-    case _: WebApi       => WebApiModel
-    case _: Organization => OrganizationModel
-    case _: License      => LicenseModel
-    case _: CreativeWork => CreativeWorkModel
-    case _: EndPoint     => EndPointModel
-    case _: Operation    => OperationModel
-    case _: Parameter    => ParameterModel
-    case _: Request      => RequestModel
-    case _: Response     => ResponseModel
-    case _: Payload      => PayloadModel
-    case _               => throw new Exception(s"Missing metadata mapping for $instance")
+    case _: Document      => DocumentModel
+    case _: WebApi        => WebApiModel
+    case _: Organization  => OrganizationModel
+    case _: License       => LicenseModel
+    case _: CreativeWork  => CreativeWorkModel
+    case _: EndPoint      => EndPointModel
+    case _: Operation     => OperationModel
+    case _: Parameter     => ParameterModel
+    case _: Request       => RequestModel
+    case _: Response      => ResponseModel
+    case _: Payload       => PayloadModel
+    case _: NodeShape     => NodeShapeModel
+    case _: ScalarShape   => ScalarShapeModel
+    case _: PropertyShape => PropertyShapeModel
+    case _                => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

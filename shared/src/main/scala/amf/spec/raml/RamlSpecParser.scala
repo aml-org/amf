@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.common.AMFToken.{MapToken, StringToken}
+import amf.common.AMFToken.StringToken
 import amf.common.Strings.strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
@@ -10,11 +10,7 @@ import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, ShapeModel}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ObjectType, UndefinedType}
-import amf.shape._
 
 import scala.collection.mutable
 import scala.util.matching.Regex
@@ -139,7 +135,7 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "types",
       entry => {
-        val types = TypesParser(entry.value, name => NodeShape().withName(name).adopted(api.id)).parse()
+        val types = RamlTypesParser(entry.value, shape => shape.adopted(api.id)).parse()
         println(types)
       }
     )
@@ -233,22 +229,29 @@ case class RequestParser(entries: Entries, producer: () => Request) {
     entries.key(
       "body",
       entry => {
-        Entries(entry.value).regex(
-          ".*/.*",
-          entries => {
-            val payloads = mutable.ListBuffer[Payload]()
-            entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-            request.getOrCreate.set(RequestModel.Payloads,
-                                    AmfArray(payloads, Annotations(entry.value)),
-                                    entry.annotations())
-          }
-        )
+        val payloads = mutable.ListBuffer[Payload]()
+
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id))
+          .parse()
+          .foreach(payloads += request.getOrCreate.withPayload().withSchema(_)) //todo
+
+        Entries(entry.value)
+          .regex(
+            ".*/.*",
+            entries => {
+              entries.foreach(entry => {
+                payloads += PayloadParser(entry, () => request.getOrCreate.withPayload()).parse()
+              })
+            }
+          )
+        if (payloads.nonEmpty)
+          request.getOrCreate
+            .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
       }
     )
 
     request.option
   }
-
 }
 
 case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
@@ -319,14 +322,6 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
   }
 }
 
-case class TypesParser(ast: AMFAST, producer: String => NodeShape) {
-  def parse(): Seq[NodeShape] = {
-    Entries(ast).entries.values
-      .map(entry => TypeParser(entry, producer).parse())
-      .toSeq
-  }
-}
-
 case class ParametersParser(ast: AMFAST, producer: String => Parameter) {
   def parse(): Seq[Parameter] = {
     Entries(ast).entries.values
@@ -335,18 +330,17 @@ case class ParametersParser(ast: AMFAST, producer: String => Parameter) {
   }
 }
 
-case class PayloadParser(entry: EntryNode) {
+case class PayloadParser(entry: EntryNode, producer: () => Payload) {
   def parse(): Payload = {
-//    val payload = producer().add(Annotations(entry.ast))
-    val payload = Payload(entry.ast)
-//    payload.set(PayloadModel.MediaType, ValueNode(entry.key).string())
-//
-//    Option(entry.value).foreach(v =>
-//      PropertiesParser(entry.value,)
-//      TypeParser(ValueNode(v), name => NodeShape().withName(name).adopted(payload.id)).parse()
-//      payload.set(PayloadModel.Schema, ValueNode(v).string()))
-//
-//    val types =
+
+    val payload = producer().add(Annotations(entry.ast))
+
+    payload.set(PayloadModel.MediaType, ValueNode(entry.key).string())
+
+    RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
+      .parse()
+      .foreach(payload.withSchema)
+
     payload
   }
 }
@@ -377,252 +371,24 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
     entries.key(
       "body",
       entry => {
+        val payloads = mutable.ListBuffer[Payload]()
+
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(response.id))
+          .parse()
+          .foreach(payloads += response.withPayload().withSchema(_))
+
         Entries(entry.value).regex(
           ".*/.*",
           entries => {
-            val payloads = mutable.ListBuffer[Payload]()
-            entries.foreach(entry => { payloads += PayloadParser(entry).parse() })
-            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
+            entries.foreach(entry => { payloads += PayloadParser(entry, () => response.withPayload()).parse() })
           }
         )
+        if (payloads.nonEmpty)
+          response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
       }
     )
 
     response
-  }
-}
-
-case class TypeParser(entry: EntryNode, producer: String => NodeShape) {
-  def parse(): NodeShape = {
-    val name  = entry.key.content.unquote
-    val shape = producer(name).add(Annotations(entry.ast))
-    NodeShapeParser(shape, Entries(entry.value)).parse()
-  }
-}
-
-case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entries) extends ShapeParser() {
-  override def parse(): ScalarShape = {
-
-    super.parse()
-
-    shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef))) // todo annotations (TypeDefNode?)
-
-    entries.key("pattern", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Pattern, value.string(), entry.annotations())
-    })
-
-    entries.key("minLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MinLength, value.integer(), entry.annotations())
-    })
-
-    entries.key("maxLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MaxLength, value.integer(), entry.annotations())
-    })
-
-    entries.key("minimum", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Minimum, value.string(), entry.annotations())
-    })
-
-    entries.key("maximum", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Maximum, value.string(), entry.annotations())
-    })
-
-    entries.key("(exclusiveMinimum)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.ExclusiveMinimum, value.string(), entry.annotations())
-    })
-
-    entries.key("(exclusiveMaximum)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), entry.annotations())
-    })
-
-    entries.key("format", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Format, value.string(), entry.annotations())
-    })
-
-    entries.key("multipleOf", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MultipleOf, value.integer(), entry.annotations())
-    })
-
-    shape
-  }
-}
-case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapeParser() {
-  override def parse(): NodeShape = {
-
-    super.parse()
-
-    entries.key("minProperties", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.MinProperties, value.integer(), entry.annotations())
-    })
-
-    entries.key("maxProperties", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.MaxProperties, value.integer(), entry.annotations())
-    })
-
-    shape.set(NodeShapeModel.Closed, value = false)
-
-    entries.key("additionalProperties", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.Closed, value.negated(), entry.annotations() += ExplicitField())
-    })
-
-    entries.key("discriminator", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.Discriminator, value.string(), entry.annotations())
-    })
-
-    entries.key("discriminatorValue", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.DiscriminatorValue, value.string(), entry.annotations())
-    })
-
-    entries.key("(readOnly)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.ReadOnly, value.boolean(), entry.annotations())
-    })
-
-    entries.key(
-      "properties",
-      entry => {
-        val properties: Seq[PropertyShape] =
-          PropertiesParser(entry.value, shape.withProperty).parse()
-        shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), entry.annotations())
-      }
-    )
-
-    shape
-  }
-}
-
-case class PropertiesParser(ast: AMFAST, producer: String => PropertyShape) {
-
-  def parse(): Seq[PropertyShape] = {
-    Entries(ast).entries.values
-      .map(entry => PropertyShapeParser(entry, producer).parse())
-      .toSeq
-  }
-}
-
-case class PropertyShapeParser(entry: EntryNode, producer: String => PropertyShape) {
-
-  def parse(): PropertyShape = {
-
-    val name     = entry.key.content.unquote
-    val property = producer(name).add(Annotations(entry.ast))
-
-    // todo required (name, etc)
-    // todo path
-
-    val ahead = lookAhead()
-
-    detect(ahead) match {
-      case ObjectType                  => parseObjectType(ahead, property)
-      case typeDef if typeDef.isScalar => parseScalarType(typeDef, ahead, property)
-      case _                           =>
-    }
-
-    property
-  }
-
-  private def detect(property: Either[AMFAST, Entries]): TypeDef = property match {
-    case Left(node) => matchType(node.content.unquote)
-    case Right(entries) =>
-      entries
-        .key("type")
-        .orElse(entries.key("schema"))
-        .map(e => {
-          val t = e.value.content.unquote
-          val f = entries.key("(format)").map(_.value.content.unquote).getOrElse("")
-          matchType(t, f)
-        })
-        .orElse(entries.key("properties").map(_ => ObjectType))
-        .getOrElse(UndefinedType)
-  }
-
-  private def parseScalarType(typeDef: TypeDef, ahead: Either[AMFAST, Entries], property: PropertyShape) = {
-    ahead match {
-      case Left(node) =>
-        val shape = ScalarShape(node).withName(property.name)
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node)))
-        property.set(PropertyShapeModel.Range, shape)
-      case Right(entries) =>
-        val shape = ScalarShape(entries.ast).withName(property.name)
-        property.set(PropertyShapeModel.Range, shape)
-        ScalarShapeParser(typeDef, shape, entries).parse()
-    }
-  }
-
-  private def parseObjectType(ahead: Either[AMFAST, Entries], property: PropertyShape): Unit = {
-    ahead match {
-      case Left(node) =>
-        property.set(PropertyShapeModel.Range, NodeShape(node).withName(property.name))
-      case Right(entries) =>
-        val shape = NodeShape(entries.ast).withName(property.name)
-        property.set(PropertyShapeModel.Range, shape)
-        NodeShapeParser(shape, entries).parse()
-    }
-  }
-
-  def lookAhead(): Either[AMFAST, Entries] = {
-    entry.value.`type` match {
-      case StringToken => Left(entry.value)
-      case MapToken    => Right(Entries(entry.value))
-      case _           => throw new RuntimeException("no value detected in look a head")
-    }
-  }
-}
-
-case class Property(var typeDef: TypeDef = UndefinedType) {
-  def withTypeDef(value: TypeDef): Unit = typeDef = value
-}
-
-abstract class ShapeParser() {
-
-  val shape: Shape
-  val entries: Entries
-
-  def parse(): Shape = {
-
-    entries.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.DisplayName, value.string(), entry.annotations())
-    })
-
-    entries.key("description", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Description, value.string(), entry.annotations())
-    })
-
-    entries.key("default", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Default, value.string(), entry.annotations())
-    })
-
-    entries.key("enum", entry => {
-      val value = ArrayNode(entry.value)
-      shape.set(ShapeModel.Values, value.strings(), entry.annotations())
-    })
-
-    entries.key(
-      "(externalDocs)",
-      entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
-        shape.set(ShapeModel.Documentation, creativeWork, entry.annotations())
-      }
-    )
-
-    shape
   }
 }
 
@@ -653,16 +419,9 @@ case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
       parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() += ExplicitField())
     })
 
-    entries.key(
-      "type",
-      entry => {
-//        TypeParser(entry, producer).parse()
-
-        val value = ValueNode(entry.value)
-
-        parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
-      }
-    )
+    RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
+      .parse()
+      .foreach(parameter.set(ParameterModel.Schema, _, entry.annotations()))
 
     parameter
   }

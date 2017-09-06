@@ -14,7 +14,7 @@ case class Parameter private[model] (private val parameter: amf.domain.Parameter
   val description: String = parameter.description
   val required: Boolean   = parameter.required
   val binding: String     = parameter.binding
-  val schema: String      = parameter.schema
+  val schema: Shape       = Shape(parameter.schema)
 
   override def equals(other: Any): Boolean = other match {
     case that: Parameter =>
@@ -52,8 +52,9 @@ case class Parameter private[model] (private val parameter: amf.domain.Parameter
   }
 
   /** Set schema property of this [[Parameter]]. */
-  def withSchema(schema: String): this.type = {
-    parameter.withSchema(schema)
-    this
-  }
+  def withObjectSchema(name: String): NodeShape =
+    NodeShape(parameter.withObjectSchema(name))
+
+  def withScalarSchema(name: String): ScalarShape =
+    ScalarShape(parameter.withScalarSchema(name))
 }
