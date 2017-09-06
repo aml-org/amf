@@ -311,7 +311,6 @@ case class PayloadParser(payloadMap: AMFAST, producer: () => Payload) {
     entries.key(
       "schema",
       entry => {
-        val value = ValueNode(entry.value)
         OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id))
           .parse()
           .map(payload.set(PayloadModel.Schema, _, entry.annotations()))
@@ -417,7 +416,6 @@ case class ParameterParser(ast: AMFAST) {
       entries.key(
         "schema",
         entry => {
-          val value = ValueNode(entry.value)
           OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.parameter.id))
             .parse()
             .map(p.payload.set(PayloadModel.Schema, _, entry.annotations()))
@@ -433,7 +431,6 @@ case class ParameterParser(ast: AMFAST) {
       entries.key(
         "type",
         entry => {
-          val value = ValueNode(entry.value)
           OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.parameter.id))
             .parse()
             .map(p.parameter.set(ParameterModel.Schema, _, entry.annotations()))
@@ -529,7 +526,6 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
     entries.key(
       "type",
       entry => {
-        val value = ValueNode(entry.value)
         OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
           .parse()
           .map(parameter.set(ParameterModel.Schema, _, entry.annotations()))
