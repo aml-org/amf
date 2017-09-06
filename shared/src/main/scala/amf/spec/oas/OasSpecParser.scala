@@ -1,14 +1,14 @@
 package amf.spec.oas
 
-import amf.common.{AMFAST, Lazy}
 import amf.common.Strings.strings
+import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField}
 import amf.domain._
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfScalar}
 
-import scala.collection.{immutable, mutable}
+import scala.collection.mutable
 import scala.util.matching.Regex
 
 /**
@@ -19,12 +19,12 @@ case class OasSpecParser(root: Root) {
   def parseWebApi(): WebApi = {
 
     val api     = WebApi(root.ast).adopted(root.location)
-    val entries = new Entries(root.ast.last)
+    val entries = Entries(root.ast.last)
 
     entries.key(
       "info",
       entry => {
-        val info = new Entries(entry.value)
+        val info = Entries(entry.value)
 
         info.key("title", entry => {
           val value = ValueNode(entry.value)
@@ -111,7 +111,7 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "paths",
       entry => {
-        val paths = new Entries(entry.value)
+        val paths = Entries(entry.value)
         paths.regex(
           "^/.*",
           entries => {
@@ -120,6 +120,14 @@ case class OasSpecParser(root: Root) {
             api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
           }
         )
+      }
+    )
+
+    entries.key(
+      "definitions",
+      entry => {
+        val types = OasTypesParser(entry.value, shape => shape.adopted(api.id)).parse()
+        println(types)
       }
     )
 
@@ -132,7 +140,7 @@ case class EndpointParser(entry: EntryNode, producer: String => EndPoint, collec
   def parse(): Unit = {
 
     val endpoint = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry.ast))
-    val entries  = new Entries(entry.value)
+    val entries  = Entries(entry.value)
 
     entries.key("displayName", entry => {
       val value = ValueNode(entry.value)
@@ -203,7 +211,9 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
 
     entries.key(
       "x-request-payloads",
-      entry => ArrayNode(entry.value).values.map(value => payloads += PayloadParser(value).parse())
+      entry =>
+        ArrayNode(entry.value).values.map(value =>
+          payloads += PayloadParser(value, () => request.getOrCreate.withPayload()).parse())
     )
 
     if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
@@ -216,7 +226,7 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
   def parse(): Operation = {
 
     val operation = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry.ast))
-    val entries   = new Entries(entry.value)
+    val entries   = Entries(entry.value)
 
     entries.key("operationId", entry => {
       val value = ValueNode(entry.value)
@@ -259,7 +269,7 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
     entries.key(
       "responses",
       entry => {
-        new Entries(entry.value).regex(
+        Entries(entry.value).regex(
           "default|\\d{3}",
           entries => {
             val responses = mutable.ListBuffer[Response]()
@@ -288,20 +298,25 @@ case class ParametersParser(ast: AMFAST) {
   }
 }
 
-case class PayloadParser(payloadMap: AMFAST) {
+case class PayloadParser(payloadMap: AMFAST, producer: () => Payload) {
   def parse(): Payload = {
-    val payload = Payload(payloadMap)
-    val entries = new Entries(payloadMap)
+    val payload = producer().add(Annotations(payloadMap))
+    val entries = Entries(payloadMap)
 
     entries.key("mediaType", entry => {
       val value = ValueNode(entry.value)
       payload.set(PayloadModel.MediaType, value.string(), entry.annotations())
     })
 
-    entries.key("schema", entry => {
-      val value = ValueNode(entry.value)
-      payload.set(PayloadModel.Schema, value.string(), entry.annotations())
-    })
+    entries.key(
+      "schema",
+      entry => {
+        val value = ValueNode(entry.value)
+        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id))
+          .parse()
+          .map(payload.set(PayloadModel.Schema, _, entry.annotations()))
+      }
+    )
 
     payload
   }
@@ -310,7 +325,7 @@ case class PayloadParser(payloadMap: AMFAST) {
 case class ResponseParser(entry: EntryNode, producer: String => Response) {
   def parse(): Response = {
 
-    val entries = new Entries(entry.value)
+    val entries = Entries(entry.value)
 
     val node     = ValueNode(entry.key)
     val response = producer(node.string().value.toString).add(Annotations(entry.ast))
@@ -340,7 +355,9 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
 
     entries.key(
       "x-response-payloads",
-      entry => ArrayNode(entry.value).values.map(value => payloads += PayloadParser(value).parse())
+      entry =>
+        ArrayNode(entry.value).values.map(value =>
+          payloads += PayloadParser(value, () => response.withPayload()).parse())
     )
 
     if (payloads.nonEmpty)
@@ -350,13 +367,19 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
   }
 
   private def defaultPayload(entries: Entries): Option[Payload] = {
+    //TODO add parent id to payload?
     val payload = Payload().add(DefaultPayload())
 
     entries.key("x-media-type",
                 entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
 
-    entries.key("schema",
-                entry => payload.set(PayloadModel.Schema, ValueNode(entry.value).string(), entry.annotations()))
+    entries.key(
+      "schema",
+      entry =>
+        OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id))
+          .parse()
+          .map(payload.set(PayloadModel.Schema, _, entry.annotations()))
+    )
 
     if (payload.fields.nonEmpty) Some(payload) else None
   }
@@ -365,7 +388,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
 case class ParameterParser(ast: AMFAST) {
   def parse(): OasParameter = {
     val p       = OasParameter(ast)
-    val entries = new Entries(ast)
+    val entries = Entries(ast)
 
     p.parameter.set(ParameterModel.Required, value = false)
 
@@ -389,11 +412,17 @@ case class ParameterParser(ast: AMFAST) {
       p.parameter.set(ParameterModel.Binding, value.string(), entry.annotations())
     })
 
+    //TODO generate parameter with parent id or adopt
     if (p.isBody) {
-      entries.key("schema", entry => {
-        val value = ValueNode(entry.value)
-        p.payload.set(PayloadModel.Schema, value.string(), entry.annotations())
-      })
+      entries.key(
+        "schema",
+        entry => {
+          val value = ValueNode(entry.value)
+          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.parameter.id))
+            .parse()
+            .map(p.payload.set(PayloadModel.Schema, _, entry.annotations()))
+        }
+      )
 
       entries.key("x-media-type", entry => {
         val value = ValueNode(entry.value)
@@ -401,10 +430,15 @@ case class ParameterParser(ast: AMFAST) {
       })
 
     } else {
-      entries.key("type", entry => {
-        val value = ValueNode(entry.value)
-        p.parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
-      })
+      entries.key(
+        "type",
+        entry => {
+          val value = ValueNode(entry.value)
+          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.parameter.id))
+            .parse()
+            .map(p.parameter.set(ParameterModel.Schema, _, entry.annotations()))
+        }
+      )
     }
 
     p
@@ -446,7 +480,7 @@ case class OasParameter(ast: AMFAST) {
 case class LicenseParser(ast: AMFAST) {
   def parse(): License = {
     val license = License(ast)
-    val entries = new Entries(ast)
+    val entries = Entries(ast)
 
     entries.key("url", entry => {
       val value = ValueNode(entry.value)
@@ -464,7 +498,7 @@ case class LicenseParser(ast: AMFAST) {
 
 case class HeaderParametersParser(ast: AMFAST, producer: String => Parameter) {
   def parse(): Seq[Parameter] = {
-    new Entries(ast).entries.values
+    Entries(ast).entries.values
       .map(entry => HeaderParameterParser(entry, producer).parse())
       .toSeq
   }
@@ -480,7 +514,7 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
       .set(ParameterModel.Required, !name.endsWith("?"))
       .set(ParameterModel.Name, ValueNode(entry.key).string())
 
-    val entries = new Entries(entry.value)
+    val entries = Entries(entry.value)
 
     entries.key("description", entry => {
       val value = ValueNode(entry.value)
@@ -492,10 +526,15 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
       parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() += ExplicitField())
     })
 
-    entries.key("type", entry => {
-      val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Schema, value.string(), entry.annotations())
-    })
+    entries.key(
+      "type",
+      entry => {
+        val value = ValueNode(entry.value)
+        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
+          .parse()
+          .map(parameter.set(ParameterModel.Schema, _, entry.annotations()))
+      }
+    )
 
     parameter
   }
@@ -504,7 +543,7 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
 case class CreativeWorkParser(ast: AMFAST) {
   def parse(): CreativeWork = {
     val creativeWork = CreativeWork(ast)
-    val entries      = new Entries(ast)
+    val entries      = Entries(ast)
 
     entries.key("url", entry => {
       val value = ValueNode(entry.value)
@@ -524,7 +563,7 @@ case class OrganizationParser(ast: AMFAST) {
   def parse(): Organization = {
 
     val organization = Organization(ast)
-    val entries      = new Entries(ast)
+    val entries      = Entries(ast)
 
     entries.key("url", entry => {
       val value = ValueNode(entry.value)
@@ -545,14 +584,10 @@ case class OrganizationParser(ast: AMFAST) {
   }
 }
 
-class Entries(ast: AMFAST) {
+case class Entries(ast: AMFAST) {
+  def key(keyword: String): Option[EntryNode] = entries.get(keyword)
 
-  def key(keyword: String, fn: (EntryNode => Unit)): Unit = {
-    entries.get(keyword) match {
-      case Some(entry) => fn(entry)
-      case _           =>
-    }
-  }
+  def key(keyword: String, fn: (EntryNode => Unit)): Unit = key(keyword).foreach(fn)
 
   def regex(regex: String, fn: (Iterable[EntryNode] => Unit)): Unit = {
     val path: Regex = regex.r
@@ -565,15 +600,7 @@ class Entries(ast: AMFAST) {
     if (values.nonEmpty) fn(values)
   }
 
-  val entries: Map[String, EntryNode] = {
-    val children = ast.children.map(n => n.head.content.unquote -> EntryNode(n))
-    val b        = immutable.ListMap.newBuilder[String, EntryNode]
-    for {
-      x <- children
-    } b += x
-
-    b.result()
-  }
+  var entries: Map[String, EntryNode] = ast.children.map(n => n.head.content.unquote -> EntryNode(n)).toMap
 
 }
 
@@ -607,6 +634,16 @@ case class ValueNode(ast: AMFAST) {
   def boolean(): AmfScalar = {
     val content = ast.content.unquote
     AmfScalar(content.toBoolean, annotations())
+  }
+
+  def integer(): AmfScalar = {
+    val content = ast.content.unquote
+    AmfScalar(content.toInt, annotations())
+  }
+
+  def negated(): AmfScalar = {
+    val content = ast.content.unquote
+    AmfScalar(!content.toBoolean, annotations())
   }
 
   private def annotations() = Annotations(ast)
