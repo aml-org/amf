@@ -625,7 +625,10 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
-      fs.entry(NodeShapeModel.Closed).map(f => result += ValueEmitter("additionalProperties", f))
+      fs.entry(NodeShapeModel.Closed)
+        .filter(_.value.annotations.contains(classOf[ExplicitField]))
+        .map(f =>
+          result += EntryEmitter("additionalProperties", (!node.closed).toString, position = pos(f.value.annotations)))
 
       fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 
