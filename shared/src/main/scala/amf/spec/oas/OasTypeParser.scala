@@ -1,6 +1,7 @@
 package amf.spec.oas
 
 import amf.common.AMFAST
+import amf.common.AMFToken.SequenceToken
 import amf.common.Strings._
 import amf.domain.Annotation.ExplicitField
 import amf.domain.{Annotations, CreativeWork}
@@ -163,10 +164,13 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapePars
 
     var requiredFields = Seq[String]()
 
-    entries.key("required", entry => {
-      val value = ArrayNode(entry.value)
-      requiredFields = value.strings().values.map(_.asInstanceOf[AmfScalar].value.toString)
-    })
+    entries
+      .key("required")
+      .filter(_.value.`type` == SequenceToken)
+      .foreach(entry => {
+        val value = ArrayNode(entry.value)
+        requiredFields = value.strings().values.map(_.asInstanceOf[AmfScalar].value.toString)
+      })
 
     entries.key(
       "properties",
