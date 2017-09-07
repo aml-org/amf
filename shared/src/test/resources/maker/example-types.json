@@ -1,0 +1,119 @@
+{
+  "swagger" : "2.0",
+  "definitions": {
+    "Person": {
+      "properties": {
+        "name": "string",
+        "description": "string",
+        "age": "integer",
+        "fake-address": {
+          "properties": {
+            "street": "string",
+            "number": "integer",
+            "document": {
+              "type": "object"
+            },
+            "lastName": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "info":{
+    "title": "test title",
+    "description": "test description",
+    "version": "1.1",
+    "termsOfService" : "terms of service"
+  },
+  "host": "api.example.com",
+  "schemes": ["http","https"],
+  "basePath": "/path",
+  "consumes": ["application/yaml"],
+  "produces": ["application/yaml"],
+  "paths": {
+    "/level-zero": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "parameters": [
+          {
+            "name": "param1",
+            "description": "Some descr",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": "string",
+                "lastName": "string",
+                "address": {
+                  "properties": {
+                    "city": "string",
+                    "postal": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "param2",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "param3",
+            "description": "typeless",
+            "in": "query"
+          },
+          {
+            "name": "Header-One",
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "header-two",
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "x-request-payloads": [
+          {
+            "mediaType": "application/raml",
+            "schema": "string"
+          },
+          {
+            "mediaType": "application/json",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "howmuch": "integer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "invented": "string"
+              }
+            },
+            "x-response-payloads": [
+              {
+                "mediaType": "application/xml",
+                "schema": "string"
+              }
+            ]
+          },
+          "404": {
+            "schema": "integer"
+          }
+        }
+      }
+    }
+  }
+
+}

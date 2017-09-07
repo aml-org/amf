@@ -303,6 +303,7 @@ case class PayloadParser(payloadMap: AMFAST, producer: () => Payload) {
     val payload = producer().add(Annotations(payloadMap))
     val entries = Entries(payloadMap)
 
+    // TODO check media type in id
     entries.key("mediaType", entry => {
       val value = ValueNode(entry.value)
       payload.set(PayloadModel.MediaType, value.string(), entry.annotations())

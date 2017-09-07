@@ -337,10 +337,11 @@ case class PayloadParser(entry: EntryNode, producer: () => Payload) {
 
     payload.set(PayloadModel.MediaType, ValueNode(entry.key).string())
 
-    RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
-      .parse()
-      .foreach(payload.withSchema)
-
+    Option(entry.value).foreach(
+      _ =>
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
+          .parse()
+          .foreach(payload.withSchema))
     payload
   }
 }
