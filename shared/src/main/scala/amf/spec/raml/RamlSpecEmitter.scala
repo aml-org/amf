@@ -117,10 +117,9 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         tsort(graph, Seq()).foreach(e => {
           val emitter = EndPointEmitter(e, ordering)
           e.parent match {
-            case Some(parent) => {
+            case Some(parent) =>
               all(parent) += emitter
               all += (e -> emitter)
-            }
             case _ => all += (e -> emitter)
           }
         })
@@ -619,8 +618,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       result += EntryEmitter("type", "object")
 
-      fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("title", f))
-
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
       fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
@@ -634,7 +631,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
 
-      fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("readOnly", f))
+      fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
 
       fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
 
@@ -649,7 +646,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       val fs = scalar.fields
 
-      val (typeDef, format) = TypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
+      val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
       fs.entry(ScalarShapeModel.DataType)
         .map(f => result += EntryEmitter("type", typeDef, position = pos(f.value.annotations)))

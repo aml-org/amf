@@ -3,7 +3,7 @@ package amf.shape
 import amf.shape.TypeDef._
 
 /**
-  * Raml type to [[TypeDef]] matcher
+  * Oas type to [[TypeDef]] matcher
   */
 object OasTypeDefMatcher {
 
@@ -24,5 +24,25 @@ object OasTypeDefMatcher {
     case "datetime-only" => DateTimeOnlyType
     case "object"        => ObjectType
     case _               => UndefinedType
+  }
+}
+
+object OasTypeDefStringValueMatcher {
+
+  def matchType(typeDef: TypeDef): String = typeDef match {
+
+    case ByteType         => "byte"
+    case BinaryType       => "binary"
+    case PasswordType     => "string"
+    case StrType          => "string"
+    case IntType          => "integer"
+    case FloatType        => "number"
+    case BoolType         => "boolean"
+    case DateTimeType     => "datetime"
+    case DateTimeOnlyType => "datetime-only"
+    case TimeOnlyType     => "string"
+    case DateOnlyType     => "string"
+    case ObjectType       => "object"
+    case UndefinedType    => throw new RuntimeException("Undefined type def")
   }
 }

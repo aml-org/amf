@@ -27,7 +27,7 @@ object RamlTypeDefMatcher {
   }
 }
 
-object TypeDefStringValueMatcher {
+object RamlTypeDefStringValueMatcher {
 
   def matchType(typeDef: TypeDef): (String, String) = typeDef match {
 

@@ -11,6 +11,9 @@ import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ObjectType, UndefinedType}
 import amf.shape._
 
+/**
+  * OpenAPI Type Parser.
+  */
 case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
@@ -101,12 +104,12 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
       shape.set(ScalarShapeModel.Maximum, value.string(), entry.annotations())
     })
 
-    entries.key("(exclusiveMinimum)", entry => {
+    entries.key("exclusiveMinimum", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.ExclusiveMinimum, value.string(), entry.annotations())
     })
 
-    entries.key("(exclusiveMaximum)", entry => {
+    entries.key("exclusiveMaximum", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), entry.annotations())
     })
