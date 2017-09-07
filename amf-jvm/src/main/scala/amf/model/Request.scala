@@ -56,4 +56,7 @@ case class Request private[model] (private val request: amf.domain.Request) exte
 
   /** Adds one [[Payload]] to the payloads property of this [[Request]] and returns it for population. */
   def withPayload(): Payload = Payload(request.withPayload())
+
+  /** Adds one [[Payload]] to the payloads property of this [[Request]] with the given media type and returns it for population. */
+  def withPayload(mediaType: String): Payload = Payload(request.withPayload(Some(mediaType)))
 }

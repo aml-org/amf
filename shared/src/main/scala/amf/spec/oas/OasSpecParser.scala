@@ -213,7 +213,7 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
       "x-request-payloads",
       entry =>
         ArrayNode(entry.value).values.map(value =>
-          payloads += PayloadParser(value, () => request.getOrCreate.withPayload()).parse())
+          payloads += PayloadParser(value, request.getOrCreate.withPayload).parse())
     )
 
     if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
@@ -298,16 +298,14 @@ case class ParametersParser(ast: AMFAST) {
   }
 }
 
-case class PayloadParser(payloadMap: AMFAST, producer: () => Payload) {
+case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Payload) {
   def parse(): Payload = {
-    val payload = producer().add(Annotations(payloadMap))
+
     val entries = Entries(payloadMap)
 
-    // TODO check media type in id
-    entries.key("mediaType", entry => {
-      val value = ValueNode(entry.value)
-      payload.set(PayloadModel.MediaType, value.string(), entry.annotations())
-    })
+    val payload = producer(
+      entries.key("mediaType").map(entry => ValueNode(entry.value).string().value.toString)
+    ).add(Annotations(payloadMap))
 
     entries.key(
       "schema",
@@ -356,8 +354,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
     entries.key(
       "x-response-payloads",
       entry =>
-        ArrayNode(entry.value).values.map(value =>
-          payloads += PayloadParser(value, () => response.withPayload()).parse())
+        ArrayNode(entry.value).values.map(value => payloads += PayloadParser(value, response.withPayload).parse())
     )
 
     if (payloads.nonEmpty)

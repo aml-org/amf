@@ -26,3 +26,23 @@ object RamlTypeDefMatcher {
     case _               => UndefinedType
   }
 }
+
+object TypeDefStringValueMatcher {
+
+  def matchType(typeDef: TypeDef): (String, String) = typeDef match {
+
+    case ByteType         => ("string", "byte")
+    case BinaryType       => ("string", "binary")
+    case PasswordType     => ("string", "password")
+    case StrType          => ("string", "")
+    case IntType          => ("integer", "")
+    case FloatType        => ("number", "")
+    case BoolType         => ("boolean", "")
+    case DateTimeType     => ("datetime", "")
+    case DateTimeOnlyType => ("datetime-only", "")
+    case TimeOnlyType     => ("time-only", "")
+    case DateOnlyType     => ("date-only", "")
+    case ObjectType       => ("object", "")
+    case UndefinedType    => throw new RuntimeException("Undefined type def")
+  }
+}

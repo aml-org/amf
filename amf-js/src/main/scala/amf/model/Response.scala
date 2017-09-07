@@ -67,4 +67,7 @@ case class Response private[model] (private val response: amf.domain.Response) e
 
   /** Adds one [[Payload]] to the payloads property of this [[Response]] and returns it for population. */
   def withPayload(): Payload = Payload(response.withPayload())
+
+  /** Adds one [[Payload]] to the payloads property of this [[Response]] with the given media type and returns it for population. */
+  def withPayload(mediaType: String): Payload = Payload(response.withPayload(Some(mediaType)))
 }

@@ -25,3 +25,23 @@ object XsdTypeDefMapping {
     }).iri()
 
 }
+
+object TypeDefXsdMapping {
+
+  def typeDef(iri: String): TypeDef =
+    iri match {
+      case s if s == (Xsd + "string").iri()       => StrType
+      case s if s == (Xsd + "integer").iri()      => IntType
+      case s if s == (Xsd + "float").iri()        => FloatType
+      case s if s == (Xsd + "boolean").iri()      => BoolType
+      case s if s == (Xsd + "dateTime").iri()     => DateTimeType
+      case s if s == (Xsd + "dateTime").iri()     => DateTimeOnlyType
+      case s if s == (Xsd + "time").iri()         => TimeOnlyType
+      case s if s == (Xsd + "date").iri()         => DateOnlyType
+      case s if s == (Xsd + "byte").iri()         => ByteType
+      case s if s == (Xsd + "base64Binary").iri() => BinaryType
+      case s if s == (Xsd + "string").iri()       => PasswordType
+      case _                                      => throw new RuntimeException("Unknown mapping")
+    }
+
+}

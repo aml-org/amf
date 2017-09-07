@@ -11,8 +11,10 @@ import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
+import amf.shape.{NodeShape, PropertyShape, ScalarShape}
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
@@ -178,17 +180,20 @@ object GraphParser {
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
-    DocumentModel     -> Document.apply,
-    WebApiModel       -> WebApi.apply,
-    OrganizationModel -> Organization.apply,
-    LicenseModel      -> License.apply,
-    CreativeWorkModel -> CreativeWork.apply,
-    EndPointModel     -> EndPoint.apply,
-    OperationModel    -> Operation.apply,
-    ParameterModel    -> Parameter.apply,
-    PayloadModel      -> Payload.apply,
-    RequestModel      -> Request.apply,
-    ResponseModel     -> Response.apply
+    DocumentModel      -> Document.apply,
+    WebApiModel        -> WebApi.apply,
+    OrganizationModel  -> Organization.apply,
+    LicenseModel       -> License.apply,
+    CreativeWorkModel  -> CreativeWork.apply,
+    EndPointModel      -> EndPoint.apply,
+    OperationModel     -> Operation.apply,
+    ParameterModel     -> Parameter.apply,
+    PayloadModel       -> Payload.apply,
+    RequestModel       -> Request.apply,
+    ResponseModel      -> Response.apply,
+    NodeShapeModel     -> NodeShape.apply,
+    ScalarShapeModel   -> ScalarShape.apply,
+    PropertyShapeModel -> PropertyShape.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

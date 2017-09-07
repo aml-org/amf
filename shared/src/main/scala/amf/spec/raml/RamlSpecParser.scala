@@ -233,14 +233,14 @@ case class RequestParser(entries: Entries, producer: () => Request) {
 
         RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id))
           .parse()
-          .foreach(payloads += request.getOrCreate.withPayload().withSchema(_)) //todo
+          .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) //todo
 
         Entries(entry.value)
           .regex(
             ".*/.*",
             entries => {
               entries.foreach(entry => {
-                payloads += PayloadParser(entry, () => request.getOrCreate.withPayload()).parse()
+                payloads += PayloadParser(entry, producer = request.getOrCreate.withPayload).parse()
               })
             }
           )
@@ -330,12 +330,10 @@ case class ParametersParser(ast: AMFAST, producer: String => Parameter) {
   }
 }
 
-case class PayloadParser(entry: EntryNode, producer: () => Payload) {
+case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload) {
   def parse(): Payload = {
 
-    val payload = producer().add(Annotations(entry.ast))
-
-    payload.set(PayloadModel.MediaType, ValueNode(entry.key).string())
+    val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry.ast))
 
     Option(entry.value).foreach(
       _ =>
@@ -374,14 +372,17 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(response.id))
+        val payload = Payload()
+        payload.adopted(response.id) // TODO review
+
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id))
           .parse()
-          .foreach(payloads += response.withPayload().withSchema(_))
+          .foreach(payloads += payload.withSchema(_))
 
         Entries(entry.value).regex(
           ".*/.*",
           entries => {
-            entries.foreach(entry => { payloads += PayloadParser(entry, () => response.withPayload()).parse() })
+            entries.foreach(entry => { payloads += PayloadParser(entry, response.withPayload).parse() })
           }
         )
         if (payloads.nonEmpty)

@@ -8,14 +8,17 @@ import amf.domain.Annotation._
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain._
+import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel}
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
+import amf.shape._
 import amf.spec.SpecOrdering.ordering
 import amf.spec.{Emitter, SpecOrdering}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by pedro.colunga on 8/17/17.
@@ -352,29 +355,37 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     private def payloads(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
       val result = mutable.ListBuffer[Emitter]()
       f.array.values
-        .foreach(e => result += PayloadEmitter(e.asInstanceOf[Payload], ordering))
+        .foreach(e => result ++= Payloads(e.asInstanceOf[Payload], ordering).emitters())
       ordering.sorted(result)
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
+  case class Payloads(payload: Payload, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+      val fs = payload.fields
+      fs.entry(PayloadModel.MediaType)
+        .fold(
+          RamlTypeEmitter(payload.schema, ordering).emitters()
+        )(_ => Seq(PayloadEmitter(payload, ordering)))
+    }
+  }
+
   case class PayloadEmitter(payload: Payload, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
-      sourceOr(
-        payload.annotations, {
-          val fs = payload.fields
-          fs.entry(PayloadModel.MediaType)
-            .fold(
-              ValueEmitter("type", fs.entry(PayloadModel.Schema).get).emit()
-            )(mediaType => {
-              entry { () =>
-                ScalarEmitter(mediaType.scalar).emit()
-                fs.entry(PayloadModel.Schema).fold(raw("", StringToken))(schema => ScalarEmitter(schema.scalar).emit())
-              }
-            })
-        }
-      )
+      val fs = payload.fields
+      fs.entry(PayloadModel.MediaType)
+        .foreach(mediaType => {
+          entry { () =>
+            ScalarEmitter(mediaType.scalar).emit()
+            val result = RamlTypeEmitter(payload.schema, ordering).emitters()
+
+            map { () =>
+              traverse(ordering.sorted(result))
+            }
+          }
+        })
     }
 
     override def position(): Position = pos(payload.annotations)
@@ -430,7 +441,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
             .map(f => result += ValueEmitter("required", f))
 
-          fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
+          result ++= RamlTypeEmitter(parameter.schema, ordering).emitters()
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -533,6 +544,19 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
+  case class EntryEmitter(key: String,
+                          value: String,
+                          token: AMFToken = StringToken,
+                          position: Position = Position.ZERO)
+      extends Emitter {
+    override def emit(): Unit = {
+      entry { () =>
+        raw(key)
+        raw(value, token)
+      }
+    }
+  }
+
   /** Emit a single value from an array as an entry. */
   case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
     override def emit(): Unit = {
@@ -555,5 +579,129 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     //      .find(classOf[SourceAST])
     //      .fold(inner)(a => emitter.addChild(a.ast))
     inner
+  }
+
+  case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+      shape match {
+        case node: NodeShape     => NodeShapeEmitter(node, ordering).emitters()
+        case scalar: ScalarShape => ScalarShapeEmitter(scalar, ordering).emitters()
+        case _                   => Seq()
+      }
+    }
+  }
+
+  abstract class ShapeEmitter(shape: Shape, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+
+      val result = ListBuffer[Emitter]()
+      val fs     = shape.fields
+
+      fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
+
+      fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
+
+      fs.entry(ShapeModel.Default).map(f => result += ValueEmitter("default", f))
+
+      fs.entry(ShapeModel.Values).map(f => result += ValueEmitter("enum", f))
+
+      fs.entry(ShapeModel.Documentation).map(f => result += CreativeWorkEmitter("(externalDocs)", f, ordering))
+
+      result
+    }
+  }
+
+  case class NodeShapeEmitter(node: NodeShape, ordering: SpecOrdering) extends ShapeEmitter(node, ordering) {
+    override def emitters(): Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+
+      val fs = node.fields
+
+      result += EntryEmitter("type", "object")
+
+      fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("title", f))
+
+      fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
+
+      fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
+
+      fs.entry(NodeShapeModel.Closed).map(f => result += ValueEmitter("additionalProperties", f))
+
+      fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
+
+      fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
+
+      fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("readOnly", f))
+
+      fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
+
+      result
+    }
+
+  }
+
+  case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) {
+    override def emitters(): Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+
+      val fs = scalar.fields
+
+      val (typeDef, format) = TypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
+
+      fs.entry(ScalarShapeModel.DataType)
+        .map(f => result += EntryEmitter("type", typeDef, position = pos(f.value.annotations)))
+
+      fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
+
+      fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
+
+      fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
+
+      fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum", f))
+
+      fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("maximum", f))
+
+      fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("(exclusiveMinimum)", f))
+
+      fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("(exclusiveMaximum)", f))
+
+      fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f))
+
+      fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("multipleOf", f))
+
+      if (format.nonEmpty) result += EntryEmitter("(format)", format)
+
+      result
+    }
+  }
+
+  case class PropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    def emit(): Unit = {
+
+      entry { () =>
+        raw("properties")
+        map { () =>
+          val result = f.array.values.map(v => PropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering))
+          traverse(ordering.sorted(result))
+        }
+      }
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class PropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering) extends Emitter {
+
+    def emit(): Unit = {
+      entry { () =>
+        raw(property.name)
+        map { () =>
+          traverse(ordering.sorted(RamlTypeEmitter(property.range, ordering).emitters()))
+
+        }
+      }
+    }
+
+    override def position(): Position = pos(property.annotations) // TODO check this
   }
 }

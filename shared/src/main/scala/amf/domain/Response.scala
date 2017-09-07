@@ -27,8 +27,9 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
     result
   }
 
-  def withPayload(): Payload = {
+  def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()
+    mediaType.map(result.withMediaType)
     add(Payloads, result)
     result
   }

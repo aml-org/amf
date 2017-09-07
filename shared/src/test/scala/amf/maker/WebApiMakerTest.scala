@@ -6,7 +6,7 @@ import amf.document.Document
 import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
-import amf.remote.{Hint, OasJsonHint, RamlYamlHint}
+import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.shape.ScalarShape
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
@@ -385,124 +385,12 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
   test("Generate raml example with types") {
 
-    val api = WebApi()
-      .withName("test title")
-      .withDescription("test description")
-      .withHost("api.example.com")
-      .withSchemes(List("http", "https"))
-      .withBasePath("/path")
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
-      .withVersion("1.1")
-      .withTermsOfService("terms of service")
+    assertFixture(webApiWithTypes(), "example-types.raml", RamlYamlHint)
+  }
 
-    val operation = api
-      .withEndPoint("/level-zero")
-      .withName("One display name")
-      .withDescription("and this description!")
-      .withOperation("get")
-      .withName("Some title")
+  test("Generate amf example with types") {
 
-    val request = operation
-      .withRequest()
-
-    //shape of param1
-    val param1Shape = request
-      .withQueryParameter("param1")
-      .withDescription("Some descr")
-      .withBinding("query")
-      .withRequired(true)
-      .withObjectSchema("schema")
-
-    param1Shape
-      .withDescription("Some descr")
-      .withClosed(false)
-      .withProperty("name")
-      .withScalarSchema("name")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    param1Shape
-      .withProperty("lastName")
-      .withScalarSchema("lastName")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    val address = param1Shape.withProperty("address").withObjectRange("address")
-    address
-      .withClosed(false)
-      .withProperty("city")
-      .withScalarSchema("city")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    address.withProperty("postal").withScalarSchema("postal").withDataType("http://www.w3.org/2001/XMLSchema#integer")
-    //shape of param1
-
-    //shape of param2
-    request
-      .withQueryParameter("param2")
-      .withBinding("query")
-      .withRequired(false)
-      .withScalarSchema("schema")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-
-    //param3 typeless
-    request.withQueryParameter("param3").withRequired(true).withBinding("query").withDescription("typeless")
-
-    //headers
-    //header type string
-    request
-      .withHeader("Header-One")
-      .withBinding("header")
-      .withRequired(false)
-      .withScalarSchema("schema")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-
-    //header with object type
-    val header2Type =
-      request.withHeader("header-two").withRequired(true).withBinding("header").withObjectSchema("schema")
-    header2Type
-      .withClosed(false)
-      .withProperty("number")
-      .withScalarSchema("number")
-      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-
-    //body operation payload
-    request
-      .withPayload()
-      .withMediaType("application/raml")
-      .withScalarSchema("schema")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    //payload of body operation with object
-    request
-      .withPayload()
-      .withMediaType("application/json")
-      .withObjectSchema("schema")
-      .withClosed(false)
-      .withProperty("howmuch")
-      .withScalarSchema("howmuch")
-      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-
-    //responses
-
-    val default = operation
-      .withResponse("200")
-
-    default
-      .withPayload()
-      .withObjectSchema("default")
-      .withClosed(false)
-      .withProperty("invented")
-      .withScalarSchema("invented")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    default
-      .withPayload()
-      .withMediaType("application/xml")
-      .withScalarSchema("schema")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-
-    operation
-      .withResponse("404")
-      .withPayload()
-      .withScalarSchema("default")
-      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-
-    assertFixture(api, "example-types.raml", RamlYamlHint)
+    assertFixture(webApiWithTypes(), "example-types.raml.jsonld", AmfJsonHint)
   }
 
   test("Generate oas example with types") {
@@ -594,14 +482,12 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
     //body operation payload
     request
-      .withPayload()
-      .withMediaType("application/raml")
+      .withPayload(Some("application/raml"))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     //payload of body operation with object
     request
-      .withPayload()
-      .withMediaType("application/json")
+      .withPayload(Some("application/json"))
       .withObjectSchema("schema")
       .withClosed(false)
       .withProperty("howmuch")
@@ -624,8 +510,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withScalarSchema("invented")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     default
-      .withPayload()
-      .withMediaType("application/xml")
+      .withPayload(Some("application/xml"))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
@@ -655,5 +540,123 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
         AmfObjectMatcher(expected).assert(actual)
         Succeeded
       }
+  }
+
+  private def webApiWithTypes(): WebApi = {
+    val api = WebApi()
+      .withName("test title")
+      .withDescription("test description")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("/path")
+      .withContentType(List("application/yaml"))
+      .withAccepts(List("application/yaml"))
+      .withVersion("1.1")
+      .withTermsOfService("terms of service")
+
+    val operation = api
+      .withEndPoint("/level-zero")
+      .withName("One display name")
+      .withDescription("and this description!")
+      .withOperation("get")
+      .withName("Some title")
+
+    val request = operation
+      .withRequest()
+
+    //shape of param1
+    val param1Shape = request
+      .withQueryParameter("param1")
+      .withDescription("Some descr")
+      .withBinding("query")
+      .withRequired(true)
+      .withObjectSchema("schema")
+
+    param1Shape
+      .withDescription("Some descr")
+      .withClosed(false)
+      .withProperty("name")
+      .withScalarSchema("name")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    param1Shape
+      .withProperty("lastName")
+      .withScalarSchema("lastName")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val address = param1Shape.withProperty("address").withObjectRange("address")
+    address
+      .withClosed(false)
+      .withProperty("city")
+      .withScalarSchema("city")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    address.withProperty("postal").withScalarSchema("postal").withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    //shape of param1
+
+    //shape of param2
+    request
+      .withQueryParameter("param2")
+      .withBinding("query")
+      .withRequired(false)
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    //param3 typeless
+    request.withQueryParameter("param3").withRequired(true).withBinding("query").withDescription("typeless")
+
+    //headers
+    //header type string
+    request
+      .withHeader("Header-One")
+      .withBinding("header")
+      .withRequired(false)
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    //header with object type
+    val header2Type =
+      request.withHeader("header-two").withRequired(true).withBinding("header").withObjectSchema("schema")
+    header2Type
+      .withClosed(false)
+      .withProperty("number")
+      .withScalarSchema("number")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    //body operation payload
+    request
+      .withPayload(Some("application/raml"))
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    //payload of body operation with object
+    request
+      .withPayload(Some("application/json"))
+      .withObjectSchema("schema")
+      .withClosed(false)
+      .withProperty("howmuch")
+      .withScalarSchema("howmuch")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    //responses
+
+    val default = operation
+      .withResponse("200")
+
+    default
+      .withPayload()
+      .withObjectSchema("default")
+      .withClosed(false)
+      .withProperty("invented")
+      .withScalarSchema("invented")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    default
+      .withPayload(Some("application/xml"))
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    operation
+      .withResponse("404")
+      .withPayload()
+      .withScalarSchema("default")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    api
   }
 }
