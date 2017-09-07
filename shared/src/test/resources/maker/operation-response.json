@@ -16,7 +16,9 @@
         "x-request-payloads": [
           {
             "mediaType": "application/json",
-            "schema": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -34,11 +36,15 @@
             "x-response-payloads": [
               {
                 "mediaType": "application/json",
-                "schema": "string"
+                "schema": {
+                  "type": "string"
+                }
               },
               {
                 "mediaType": "application/xml",
-                "schema": "string"
+                "schema": {
+                  "type": "string"
+                }
               }
             ]
           }

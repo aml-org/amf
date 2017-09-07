@@ -3,13 +3,23 @@
   "definitions": {
     "Person": {
       "properties": {
-        "name": "string",
-        "description": "string",
-        "age": "integer",
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        },
         "fake-address": {
           "properties": {
-            "street": "string",
-            "number": "integer",
+            "street": {
+              "type": "string"
+            },
+            "number": {
+              "type": "integer"
+            },
             "document": {
               "type": "object"
             },
@@ -46,12 +56,20 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": "string",
-                "lastName": "string",
+                "name": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
                 "address": {
                   "properties": {
-                    "city": "string",
-                    "postal": "integer"
+                    "city": {
+                      "type": "string"
+                    },
+                    "postal": {
+                      "type": "integer"
+                    }
                   }
                 }
               }
@@ -81,14 +99,18 @@
         "x-request-payloads": [
           {
             "mediaType": "application/raml",
-            "schema": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "mediaType": "application/json",
             "schema": {
               "type": "object",
               "properties": {
-                "howmuch": "integer"
+                "howmuch": {
+                  "type": "integer"
+                }
               }
             }
           }
@@ -98,18 +120,24 @@
             "schema": {
               "type": "object",
               "properties": {
-                "invented": "string"
+                "invented": {
+                  "type": "string"
+                }
               }
             },
             "x-response-payloads": [
               {
                 "mediaType": "application/xml",
-                "schema": "string"
+                "schema": {
+                  "type": "string"
+                }
               }
             ]
           },
           "404": {
-            "schema": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         }
       }

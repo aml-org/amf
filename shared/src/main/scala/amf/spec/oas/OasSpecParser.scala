@@ -429,14 +429,11 @@ case class ParameterParser(ast: AMFAST) {
       })
 
     } else {
-      entries.key(
-        "type",
-        entry => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.parameter.id))
-            .parse()
-            .map(p.parameter.set(ParameterModel.Schema, _, entry.annotations()))
-        }
-      )
+      // type
+      val map = MapNode(ast)
+      OasTypeParser(map, shape => shape.withName("schema").adopted(p.parameter.id))
+        .parse()
+        .map(p.parameter.set(ParameterModel.Schema, _, map.annotations()))
     }
 
     p
@@ -526,7 +523,7 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
 
     entries.key(
       "type",
-      entry => {
+      _ => {
         OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
           .parse()
           .map(parameter.set(ParameterModel.Schema, _, entry.annotations()))
@@ -601,12 +598,28 @@ case class Entries(ast: AMFAST) {
 
 }
 
-case class EntryNode(ast: AMFAST) {
+trait KeyValueNode {
+  val key: AMFAST
+  val value: AMFAST
+  val ast: AMFAST
 
-  val key: AMFAST   = ast.head
-  val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
+  def annotations(): Annotations
+}
 
-  def annotations(): Annotations = Annotations(ast)
+case class EntryNode(ast: AMFAST) extends KeyValueNode {
+
+  override val key: AMFAST   = ast.head
+  override val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
+
+  override def annotations(): Annotations = Annotations(ast)
+}
+
+case class MapNode(ast: AMFAST) extends KeyValueNode {
+
+  override val key: AMFAST   = AMFAST.EMPTY_NODE
+  override val value: AMFAST = ast
+
+  override def annotations(): Annotations = Annotations(ast)
 }
 
 case class ArrayNode(ast: AMFAST) {

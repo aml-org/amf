@@ -16,7 +16,9 @@
           "name": "paramName",
           "in": "body",
           "x-media-type": "application/json",
-          "schema": "integer"
+          "schema": {
+            "type": "integer"
+          }
         }
       ],
       "get": {
@@ -38,11 +40,13 @@
             "name": "otherParamName",
             "in": "body",
             "x-media-type": "application/xml",
-            "schema": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ]
       },
-    "post": {
+      "post": {
         "operationId": "Some title",
         "description": "Some description",
         "parameters": [

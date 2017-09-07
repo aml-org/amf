@@ -1,7 +1,6 @@
 package amf.spec.oas
 
 import amf.common.AMFAST
-import amf.common.AMFToken.{MapToken, StringToken}
 import amf.common.Strings._
 import amf.domain.Annotation.ExplicitField
 import amf.domain.{Annotations, CreativeWork}
@@ -11,71 +10,53 @@ import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ObjectType, UndefinedType}
 import amf.shape._
 
-case class OasTypeParser(entry: EntryNode, adopt: Shape => Unit) {
+case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
 
     // todo required (name, etc)
     // todo path
 
-    val ahead = lookAhead()
+    val entries = Entries(entry.value)
 
-    detect(ahead) match {
+    detect(entries) match {
       case ObjectType =>
-        Some(parseObjectType(name, ahead))
+        Some(parseObjectType(name, entries))
       case typeDef if typeDef.isScalar =>
-        Some(parseScalarType(name, typeDef, ahead))
+        Some(parseScalarType(name, typeDef, entries))
       case _ => None
     }
   }
 
-  private def detect(property: Either[AMFAST, Entries]): TypeDef = property match {
-    case Left(node) => matchType(node.content.unquote)
-    case Right(entries) =>
-      detectTypeOrSchema(entries)
-        .orElse(detectProperties(entries))
-        .getOrElse(UndefinedType)
-  }
+  private def detect(entries: Entries): TypeDef =
+    detectType(entries)
+      .orElse(detectProperties(entries))
+      .getOrElse(if (entries.entries.isEmpty) ObjectType else UndefinedType)
 
-  private def detectProperties(entries: Entries) = {
+  private def detectProperties(entries: Entries): Option[TypeDef.ObjectType.type] = {
     entries.key("properties").map(_ => ObjectType)
   }
 
-  private def detectTypeOrSchema(entries: Entries) = {
+  private def detectType(entries: Entries): Option[TypeDef] = {
     entries
       .key("type")
       .map(e => {
         val t = e.value.content.unquote
-        val f = entries.key("(format)").map(_.value.content.unquote).getOrElse("")
+        val f = entries.key("format").map(_.value.content.unquote).getOrElse("")
         matchType(t, f)
       })
   }
 
-  private def parseScalarType(name: String, typeDef: TypeDef, ahead: Either[AMFAST, Entries]): Shape = {
+  private def parseScalarType(name: String, typeDef: TypeDef, entries: Entries): Shape = {
     val shape = ScalarShape(entry.ast).withName(name)
     adopt(shape)
-    ahead match {
-      case Left(node) =>
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node)))
-      case Right(entries) => ScalarShapeParser(typeDef, shape, entries).parse()
-    }
+    ScalarShapeParser(typeDef, shape, entries).parse()
   }
 
-  private def parseObjectType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
+  private def parseObjectType(name: String, entries: Entries): Shape = {
     val shape = NodeShape(entry.ast).withName(name)
     adopt(shape)
-    ahead match {
-      case Right(entries) => NodeShapeParser(shape, entries).parse()
-      case Left(_)        => shape
-    }
-  }
-
-  def lookAhead(): Either[AMFAST, Entries] = {
-    entry.value.`type` match {
-      case StringToken => Left(entry.value)
-      case MapToken    => Right(Entries(entry.value))
-      case _           => throw new RuntimeException("no value detected in look a head")
-    }
+    NodeShapeParser(shape, entries).parse()
   }
 }
 
