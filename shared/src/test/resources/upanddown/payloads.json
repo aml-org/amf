@@ -10,7 +10,9 @@
       "description": "and this description!",
       "parameters": [
         {
-          "schema": "string",
+          "schema": {
+            "type": "string"
+          },
           "in": "body"
         }
       ],

@@ -81,7 +81,9 @@
             "type": "string"
           },
           {
-            "schema": "string",
+            "schema": {
+              "type": "string"
+            },
             "x-media-type": "application/json",
             "in": "body"
           }
@@ -89,11 +91,15 @@
         "x-request-payloads": [
           {
             "mediaType": "application/xml",
-            "schema": "number"
+            "schema": {
+              "type": "number"
+            }
           },
           {
             "mediaType": "application/pdf",
-            "schema": "file"
+            "schema": {
+              "type": "file"
+            }
           }
         ],
         "responses": {
@@ -106,7 +112,9 @@
               }
             },
             "x-media-type": "application/yaml",
-            "schema": "string",
+            "schema": {
+              "type": "string"
+            },
             "x-response-payloads": [
               {
                 "mediaType": "application/x-www-form-urlencoded; charset=UTF-8"

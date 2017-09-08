@@ -15,7 +15,9 @@
         "operationId": "Some title",
         "parameters": [
           {
-            "schema": "string",
+            "schema": {
+              "type": "string"
+            },
             "x-media-type": "application/json",
             "in": "body"
           }
