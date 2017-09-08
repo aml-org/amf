@@ -18,9 +18,6 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
 
-    // todo required (name, etc)
-    // todo path
-
     val entries = Entries(entry.value)
 
     detect(entries) match {
@@ -210,7 +207,7 @@ case class PropertyShapeParser(entry: EntryNode, producer: String => PropertySha
 
     val property = producer(name)
       .add(Annotations(entry.ast))
-      .set(PropertyShapeModel.MinCount, if (required) 1 else 0)
+      .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations() += ExplicitField())
 
     // todo path
 

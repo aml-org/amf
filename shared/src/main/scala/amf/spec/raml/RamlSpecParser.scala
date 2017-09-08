@@ -398,27 +398,24 @@ case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
   def parse(): Parameter = {
 
     val name      = entry.key.content.unquote
-    val parameter = producer(name).add(Annotations(entry.ast))
-
-    parameter.set(ParameterModel.Required, value = true)
-
-    if (name.endsWith("?")) {
-      parameter.set(ParameterModel.Name, name.stripSuffix("?"))
-      parameter.set(ParameterModel.Required, value = false)
-    } else {
-      parameter.set(ParameterModel.Name, name)
-    }
-
-    val entries = Entries(entry.value)
-
-    entries.key("description", entry => {
-      val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Description, value.string(), entry.annotations())
-    })
+    val parameter = producer(name).add(Annotations(entry.ast)) // TODO parameter id is using a name that is not final.
+    val entries   = Entries(entry.value)
 
     entries.key("required", entry => {
       val value = ValueNode(entry.value)
       parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() += ExplicitField())
+    })
+
+    if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
+      val required = !name.endsWith("?")
+
+      parameter.set(ParameterModel.Required, required)
+      parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+    }
+
+    entries.key("description", entry => {
+      val value = ValueNode(entry.value)
+      parameter.set(ParameterModel.Description, value.string(), entry.annotations())
     })
 
     RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))

@@ -576,19 +576,26 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withDescription("Some descr")
       .withClosed(false)
       .withProperty("name")
+      .withMinCount(1)
       .withScalarSchema("name")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     param1Shape
       .withProperty("lastName")
+      .withMinCount(1)
       .withScalarSchema("lastName")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    val address = param1Shape.withProperty("address").withObjectRange("address")
+    val address = param1Shape.withProperty("address").withMinCount(1).withObjectRange("address")
     address
       .withClosed(false)
       .withProperty("city")
+      .withMinCount(1)
       .withScalarSchema("city")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    address.withProperty("postal").withScalarSchema("postal").withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    address
+      .withProperty("postal")
+      .withMinCount(1)
+      .withScalarSchema("postal")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
     //shape of param1
 
     //shape of param2
@@ -617,6 +624,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     header2Type
       .withClosed(false)
       .withProperty("number")
+      .withMinCount(1)
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
@@ -631,6 +639,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withObjectSchema("schema")
       .withClosed(false)
       .withProperty("howmuch")
+      .withMinCount(1)
       .withScalarSchema("howmuch")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
@@ -644,6 +653,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withObjectSchema("default")
       .withClosed(false)
       .withProperty("invented")
+      .withMinCount(1)
       .withScalarSchema("invented")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     default

@@ -15,9 +15,6 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
 
-    // todo required (name, etc)
-    // todo path
-
     val ahead = lookAhead()
 
     detect(ahead) match {
@@ -215,13 +212,30 @@ case class PropertyShapeParser(entry: EntryNode, producer: String => PropertySha
 
     val name     = entry.key.content.unquote
     val property = producer(name).add(Annotations(entry.ast))
+    val entries  = Entries(entry.value)
 
-    // todo required (name, etc)
+    entries.key(
+      "required",
+      entry => {
+        val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+        property.set(PropertyShapeModel.MinCount,
+                     AmfScalar(if (required) 1 else 0),
+                     entry.annotations() += ExplicitField())
+      }
+    )
+
+    if (property.fields.entry(PropertyShapeModel.MinCount).isEmpty) {
+      val required = !name.endsWith("?")
+
+      property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
+      property.set(PropertyShapeModel.Name, if (required) name else name.stripSuffix("?")) // TODO property id is using a name that is not final.
+    }
+
     // todo path
 
     RamlTypeParser(entry, shape => shape.adopted(property.id))
       .parse()
-      .foreach(property.set(PropertyShapeModel.Range, _))
+      .foreach(range => property.set(PropertyShapeModel.Name, range.name).set(PropertyShapeModel.Range, range))
 
     property
   }
