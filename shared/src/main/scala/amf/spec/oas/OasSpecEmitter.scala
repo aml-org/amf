@@ -249,7 +249,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
       map { () =>
         val result = mutable.ListBuffer[Emitter]()
 
-        payload.fields.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
+        payload.fields
+          .entry(PayloadModel.Schema)
+          .map(f => result += PayloadSchemaEmmiter(f, ordering)) // TODO check this
 
         payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
 
@@ -358,7 +360,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
           val payloads = Payloads(response.payloads)
           payloads.default.foreach(payload => {
             payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
-            payload.fields.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
+            payload.fields
+              .entry(PayloadModel.Schema)
+              .map(f => result += PayloadSchemaEmmiter(f, ordering)) // TODO check this
           })
 
           if (payloads.other.nonEmpty)
@@ -416,7 +420,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
 
-          fs.entry(PayloadModel.Schema).map(f => result += ValueEmitter("schema", f))
+          fs.entry(PayloadModel.Schema).map(f => result += PayloadSchemaEmmiter(f, ordering)) // TODO check this
 
           traverse(ordering.sorted(result))
         }
@@ -424,6 +428,21 @@ case class OasSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(payload.annotations)
+  }
+
+  case class PayloadSchemaEmmiter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val shape = f.value.value.asInstanceOf[Shape]
+
+      entry { () =>
+        raw("schema")
+        map { () =>
+          traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
+        }
+      }
+    }
+
+    override def position(): Position = pos(f.value.annotations)
   }
 
   case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
@@ -468,7 +487,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
-          fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
+          fs.entry(ParameterModel.Schema)
+            .map(f => result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering).emitters()) // TODO check this
 
           traverse(ordering.sorted(result))
         }
@@ -518,7 +538,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
             .map(f => result += ValueEmitter("required", f, BooleanToken))
 
-          fs.entry(ParameterModel.Schema).map(f => result += ValueEmitter("type", f))
+          fs.entry(ParameterModel.Schema)
+            .map(f => result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering).emitters()) // TODO check this
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -770,7 +791,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
       val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
       fs.entry(ScalarShapeModel.DataType)
-        .map(f => result += EntryEmitter("type", typeDef, position = pos(f.value.annotations)))
+        .map(f => result += EntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
       fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 

@@ -35,6 +35,7 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
   private def detect(entries: Entries): TypeDef =
     detectType(entries)
       .orElse(detectProperties(entries))
+      .orElse(detectValueNode(entries)) // TODO check this
       .getOrElse(if (entries.entries.isEmpty) ObjectType else UndefinedType)
 
   private def detectProperties(entries: Entries): Option[TypeDef.ObjectType.type] = {
@@ -49,6 +50,11 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
         val f = entries.key("format").map(_.value.content.unquote).getOrElse("")
         matchType(t, f)
       })
+  }
+  // TODO check this
+  private def detectValueNode(entries: Entries): Option[TypeDef] = {
+    if (entries.entries.isEmpty && entries.ast.content.nonEmpty) Some(matchType(entries.ast.content.unquote))
+    else None
   }
 
   private def parseScalarType(name: String, typeDef: TypeDef, entries: Entries): Shape = {
