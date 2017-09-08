@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.common.AMFAST
 import amf.common.AMFToken.{MapToken, StringToken}
 import amf.common.Strings._
-import amf.domain.Annotation.ExplicitField
+import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, ShapeModel}
 import amf.model.{AmfArray, AmfScalar}
@@ -93,7 +93,11 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
 
     super.parse()
 
-    shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef))) // todo annotations (TypeDefNode?)
+    entries
+      .key("type")
+      .fold(
+        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
+        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), entry.annotations()))
 
     entries.key("pattern", entry => {
       val value = ValueNode(entry.value)
@@ -134,6 +138,8 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Format, value.string(), entry.annotations())
     })
+
+    //We don't need to parse (format) extention because in oas must not be emitted, and in raml will be emitted.
 
     entries.key("multipleOf", entry => {
       val value = ValueNode(entry.value)

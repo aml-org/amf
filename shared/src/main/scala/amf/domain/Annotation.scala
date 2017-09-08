@@ -60,6 +60,8 @@ object Annotation {
     override val value: String = ""
   }
 
+  case class Inferred() extends Annotation
+
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     annotation match {
       case "lexical"            => Some(lexical)

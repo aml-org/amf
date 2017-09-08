@@ -26,9 +26,9 @@ object TypeDef {
   object DateTimeOnlyType extends TypeDef with ScalarType
   object TimeOnlyType     extends TypeDef with ScalarType
   object DateOnlyType     extends TypeDef with ScalarType
-  object ByteType         extends TypeDef
-  object BinaryType       extends TypeDef
-  object PasswordType     extends TypeDef
+  object ByteType         extends TypeDef with ScalarType
+  object BinaryType       extends TypeDef with ScalarType
+  object PasswordType     extends TypeDef with ScalarType
   object ObjectType       extends TypeDef
   object UndefinedType    extends TypeDef
 }

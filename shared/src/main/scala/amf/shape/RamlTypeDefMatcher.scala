@@ -25,6 +25,11 @@ object RamlTypeDefMatcher {
     case "object"        => ObjectType
     case _               => UndefinedType
   }
+
+  def isFormatExtention(format: String = ""): Boolean = format match {
+    case "byte" | "binary" | "password" => true
+    case _                              => false
+  }
 }
 
 object RamlTypeDefStringValueMatcher {

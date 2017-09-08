@@ -792,7 +792,14 @@ case class OasSpecEmitter(unit: BaseUnit) {
       val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
       fs.entry(ScalarShapeModel.DataType)
-        .map(f => result += EntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+        .map(
+          f =>
+            result += EntryEmitter(
+              "type",
+              typeDef,
+              position =
+                if (f.value.annotations.contains(classOf[Inferred])) Position.ZERO
+                else pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
       fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 

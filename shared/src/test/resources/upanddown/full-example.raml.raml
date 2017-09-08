@@ -47,8 +47,10 @@ baseUriParameters:
         type: string
         required: true
     body:
-      application/json: string
-      application/xml: number
+      application/json:
+        type: string
+      application/xml:
+        type: number
       application/pdf:
         type: string
         (format): byte
@@ -60,7 +62,8 @@ baseUriParameters:
             type: integer
             required: true
         body:
-            application/yaml: string
-            application/x-www-form-urlencoded; charset=UTF-8:
+          application/yaml:
+            type: string
+          application/x-www-form-urlencoded; charset=UTF-8:
       404:
         description: Not found!

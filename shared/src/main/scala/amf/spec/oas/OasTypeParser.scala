@@ -3,7 +3,7 @@ package amf.spec.oas
 import amf.common.AMFAST
 import amf.common.AMFToken.SequenceToken
 import amf.common.Strings._
-import amf.domain.Annotation.ExplicitField
+import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, ShapeModel}
 import amf.model.{AmfArray, AmfScalar}
@@ -77,7 +77,11 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
 
     super.parse()
 
-    shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef))) // todo annotations (TypeDefNode?)
+    entries
+      .key("type")
+      .fold(
+        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
+        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), entry.annotations()))
 
     entries.key("pattern", entry => {
       val value = ValueNode(entry.value)

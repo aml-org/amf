@@ -157,7 +157,7 @@ case class EndpointParser(entry: EntryNode, producer: String => EndPoint, collec
     entries.key(
       "parameters",
       entry => {
-        parameters = ParametersParser(entry.value).parse()
+        parameters = ParametersParser(entry.value, endpoint.id).parse()
         parameters.body.foreach(_.add(EndPointBodyParameter()))
         parameters match {
           case OasParameters(_, path, _, _) if path.nonEmpty =>
@@ -191,7 +191,7 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
     entries.key(
       "parameters",
       entry => {
-        parameters = global.merge(ParametersParser(entry.value).parse())
+        parameters = global.merge(ParametersParser(entry.value, request.getOrCreate.id).parse())
         parameters match {
           case OasParameters(query, _, header, _) =>
             if (query.nonEmpty)
@@ -284,10 +284,10 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
   }
 }
 
-case class ParametersParser(ast: AMFAST) {
+case class ParametersParser(ast: AMFAST, parentId: String) {
   def parse(): OasParameters = {
     val parameters = ArrayNode(ast).values
-      .map(value => ParameterParser(value).parse())
+      .map(value => ParameterParser(value, parentId).parse())
 
     OasParameters(
       parameters.filter(_.isQuery).map(_.parameter),
@@ -306,6 +306,10 @@ case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Paylo
     val payload = producer(
       entries.key("mediaType").map(entry => ValueNode(entry.value).string().value.toString)
     ).add(Annotations(payloadMap))
+
+    // todo set again for not lose annotations?
+    entries.key("mediaType",
+                entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
 
     entries.key(
       "schema",
@@ -349,7 +353,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
 
     val payloads = mutable.ListBuffer[Payload]()
 
-    defaultPayload(entries).foreach(payloads += _)
+    defaultPayload(entries, response.id).foreach(payloads += _)
 
     entries.key(
       "x-response-payloads",
@@ -363,12 +367,13 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
     response
   }
 
-  private def defaultPayload(entries: Entries): Option[Payload] = {
-    //TODO add parent id to payload?
+  private def defaultPayload(entries: Entries, parentId: String): Option[Payload] = {
     val payload = Payload().add(DefaultPayload())
 
     entries.key("x-media-type",
                 entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
+    //TODO add parent id to payload?
+    payload.adopted(parentId)
 
     entries.key(
       "schema",
@@ -382,7 +387,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
   }
 }
 
-case class ParameterParser(ast: AMFAST) {
+case class ParameterParser(ast: AMFAST, parentId: String) {
   def parse(): OasParameter = {
     val p       = OasParameter(ast)
     val entries = Entries(ast)
@@ -411,10 +416,11 @@ case class ParameterParser(ast: AMFAST) {
 
     //TODO generate parameter with parent id or adopt
     if (p.isBody) {
+      p.payload.adopted(parentId)
       entries.key(
         "schema",
         entry => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.parameter.id))
+          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
             .parse()
             .map(p.payload.set(PayloadModel.Schema, _, entry.annotations()))
         }
@@ -427,6 +433,7 @@ case class ParameterParser(ast: AMFAST) {
 
     } else {
       // type
+      p.parameter.adopted(parentId)
       val map = MapNode(ast)
       OasTypeParser(map, shape => shape.withName("schema").adopted(p.parameter.id))
         .parse()

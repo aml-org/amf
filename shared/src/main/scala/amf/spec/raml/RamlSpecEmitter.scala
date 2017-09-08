@@ -649,7 +649,14 @@ case class RamlSpecEmitter(unit: BaseUnit) {
       val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
       fs.entry(ScalarShapeModel.DataType)
-        .map(f => result += EntryEmitter("type", typeDef, position = pos(f.value.annotations)))
+        .map(
+          f =>
+            result += EntryEmitter(
+              "type",
+              typeDef,
+              position =
+                if (f.value.annotations.contains(classOf[Inferred])) Position.ZERO
+                else pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
       fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 
@@ -665,11 +672,10 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("(exclusiveMaximum)", f))
 
-      fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f))
-
       fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("multipleOf", f))
 
       if (format.nonEmpty) result += EntryEmitter("(format)", format)
+      else fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f)) // todo mutually exclusive?
 
       result
     }

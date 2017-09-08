@@ -48,9 +48,13 @@ protocols:
         required: true
         type: string
     body:
-      application/json: string
-      application/xml: number
-      application/pdf: file
+      application/json:
+        type: string
+      application/xml:
+        type: number
+      application/pdf:
+        type: string
+        (format): byte
     responses:
       200:
         description: 200 descr
@@ -59,7 +63,8 @@ protocols:
             required: true
             type: integer
         body:
-          application/yaml: string
+          application/yaml:
+            type: string
           application/x-www-form-urlencoded; charset=UTF-8:
       404:
         description: Not found!
