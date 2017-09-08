@@ -29,7 +29,13 @@
             "name": "param1",
             "description": "Some descr",
             "required": true,
-            "in": "query"
+            "in": "query",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
           },
           {
             "name": "param2",

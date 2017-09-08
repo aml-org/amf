@@ -169,7 +169,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Complete with request raml to raml test") {
-    assertCycle("operation-request.raml", "operation-request.raml", RamlYamlHint, Raml)
+    assertCycle("operation-request.raml", "operation-request.raml.raml", RamlYamlHint, Raml)
   }
 
   test("Complete with request oas to raml test") {
@@ -197,7 +197,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Complete with payloads raml to raml test") {
-    assertCycle("payloads.raml", "payloads.raml", RamlYamlHint, Raml)
+    assertCycle("payloads.raml", "payloads.raml.raml", RamlYamlHint, Raml)
   }
 
   test("Complete with payloads raml to oas test") {
@@ -217,7 +217,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Children endpoints raml to raml test") {
-    assertCycle("banking-api.raml", "banking-api.raml", RamlYamlHint, Raml)
+    assertCycle("banking-api.raml", "banking-api.raml.raml", RamlYamlHint, Raml)
   }
 
   test("Children endpoints amf to amf test") {
@@ -230,6 +230,22 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   test("Types amf(raml) to amf test") {
     assertCycle("types.raml.jsonld", "types.raml.jsonld", AmfJsonHint, Amf)
+  }
+
+  test("Types implicit & explicit raml to raml test") {
+    assertCycle("explicit-&-implicit-type-object.raml", "explicit-&-implicit-type-object.raml", RamlYamlHint, Raml)
+  }
+
+  test("Types implicit & explicit oas to oas test") {
+    assertCycle("explicit-&-implicit-type-object.json", "explicit-&-implicit-type-object.json", OasJsonHint, Oas)
+  }
+
+  test("Types implicit & explicit raml to oas test") {
+    assertCycle("explicit-&-implicit-type-object.raml", "explicit-&-implicit-type-object.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Types implicit & explicit oas to raml test") {
+    assertCycle("explicit-&-implicit-type-object.json", "explicit-&-implicit-type-object.json.raml", OasJsonHint, Raml)
   }
 
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {

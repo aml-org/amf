@@ -1,0 +1,38 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API"
+  },
+  "paths": {
+    "/levelzero": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "parameters": [
+          {
+            "name": "param1",
+            "description": "Some descr",
+            "required": true,
+            "in": "query",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "properties": {
+              "lastName": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      }
+    }
+  }
+}

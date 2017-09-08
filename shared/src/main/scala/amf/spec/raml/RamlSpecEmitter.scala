@@ -7,6 +7,7 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.maker.BaseUriSplitter
+import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel}
 import amf.model.AmfScalar
@@ -440,7 +441,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
             .map(f => result += ValueEmitter("required", f))
 
-          result ++= RamlTypeEmitter(parameter.schema, ordering).emitters()
+          result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description)).emitters()
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -580,12 +581,16 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     inner
   }
 
-  case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering) {
+  case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case node: NodeShape     => NodeShapeEmitter(node, ordering).emitters()
-        case scalar: ScalarShape => ScalarShapeEmitter(scalar, ordering).emitters()
-        case _                   => Seq()
+        case node: NodeShape =>
+          val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
+          NodeShapeEmitter(copiedNode, ordering).emitters()
+        case scalar: ScalarShape =>
+          val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
+          ScalarShapeEmitter(copiedScalar, ordering).emitters()
+        case _ => Seq()
       }
     }
   }
@@ -616,7 +621,9 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       val fs = node.fields
 
-      result += EntryEmitter("type", "object")
+      // TODO annotation for original position?
+      if (node.annotations.contains(classOf[ExplicitField]))
+        result += EntryEmitter("type", "object")
 
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 

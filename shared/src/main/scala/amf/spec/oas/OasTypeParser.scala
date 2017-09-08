@@ -134,6 +134,8 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapePars
 
     super.parse()
 
+    entries.key("type", entry => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+
     entries.key("minProperties", entry => {
       val value = ValueNode(entry.value)
       shape.set(NodeShapeModel.MinProperties, value.integer(), entry.annotations())

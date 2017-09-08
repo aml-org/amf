@@ -76,6 +76,9 @@ object GraphEmitter {
         case Bool =>
           scalar(v.value.asInstanceOf[AmfScalar].toString, BooleanToken)
           sources(v)
+        case Type.Int =>
+          scalar(v.value.asInstanceOf[AmfScalar].toString, IntToken)
+          sources(v)
         case a: Array =>
           array { () =>
             val seq = v.value.asInstanceOf[AmfArray]

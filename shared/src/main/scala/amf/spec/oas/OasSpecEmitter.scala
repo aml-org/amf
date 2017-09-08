@@ -5,6 +5,7 @@ import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
+import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel}
 import amf.model.AmfScalar
@@ -489,7 +490,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
           fs.entry(ParameterModel.Schema)
-            .map(f => result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering).emitters())
+            .map(f =>
+              result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering, Seq(ShapeModel.Description))
+                .emitters())
 
           traverse(ordering.sorted(result))
         }
@@ -540,7 +543,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
             .map(f => result += ValueEmitter("required", f, BooleanToken))
 
           fs.entry(ParameterModel.Schema)
-            .map(f => result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering).emitters())
+            .map(f =>
+              result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering, Seq(ShapeModel.Description))
+                .emitters())
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -724,12 +729,16 @@ case class OasSpecEmitter(unit: BaseUnit) {
         .orElse(payloads.headOption)
   }
 
-  case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering) {
+  case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case node: NodeShape     => NodeShapeEmitter(node, ordering).emitters()
-        case scalar: ScalarShape => ScalarShapeEmitter(scalar, ordering).emitters()
-        case _                   => Seq()
+        case node: NodeShape =>
+          val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+          NodeShapeEmitter(copiedNode, ordering).emitters()
+        case scalar: ScalarShape =>
+          val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
+          ScalarShapeEmitter(copiedScalar, ordering).emitters()
+        case _ => Seq()
       }
     }
   }
@@ -760,13 +769,18 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       val fs = node.fields
 
-      result += EntryEmitter("type", "object")
+      // TODO annotation for original position?
+      if (node.annotations.contains(classOf[ExplicitField]))
+        result += EntryEmitter("type", "object")
 
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
       fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
-      fs.entry(NodeShapeModel.Closed).map(f => result += ValueEmitter("additionalProperties", f))
+      fs.entry(NodeShapeModel.Closed)
+        .filter(_.value.annotations.contains(classOf[ExplicitField]))
+        .map(f =>
+          result += EntryEmitter("additionalProperties", (!node.closed).toString, position = pos(f.value.annotations)))
 
       fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 

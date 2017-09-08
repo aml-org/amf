@@ -70,9 +70,9 @@ object GraphParser {
           }
         case MapToken =>
           t match {
-            case Iri                 => node.children.find(key("@id")).get.last
-            case Str | RegExp | Bool => node.children.find(key("@value")).get.last
-            case _                   => node
+            case Iri                            => node.children.find(key("@id")).get.last
+            case Str | RegExp | Bool | Type.Int => node.children.find(key("@value")).get.last
+            case _                              => node
           }
         case _ => node
       }
@@ -88,6 +88,7 @@ object GraphParser {
         case _: Obj             => instance.set(f, parse(node, ctx), annotations(sources, key))
         case Str | RegExp | Iri => instance.set(f, str(node), annotations(sources, key))
         case Bool               => instance.set(f, bool(node), annotations(sources, key))
+        case Type.Int           => instance.set(f, int(node), annotations(sources, key))
         case a: Array =>
           val values: Seq[AmfElement] = a.element match {
             case _: Obj => node.children.map(n => parse(n, ctx))
@@ -177,6 +178,8 @@ object GraphParser {
   private def str(node: AMFAST) = AmfScalar(node.content.unquote)
 
   private def bool(node: AMFAST) = AmfScalar(node.content.unquote.toBoolean)
+
+  private def int(node: AMFAST) = AmfScalar(node.content.unquote.toInt)
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(

@@ -200,6 +200,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
                                     "@value": "name"
@@ -276,6 +281,11 @@
                                         ]
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 1
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -378,6 +388,11 @@
                                             ]
                                           }
                                         ],
+                                        "http://www.w3.org/ns/shacl#minCount": [
+                                          {
+                                            "@value": 1
+                                          }
+                                        ],
                                         "http://www.w3.org/ns/shacl#name": [
                                           {
                                             "@value": "city"
@@ -456,6 +471,11 @@
                                             ]
                                           }
                                         ],
+                                        "http://www.w3.org/ns/shacl#minCount": [
+                                          {
+                                            "@value": 1
+                                          }
+                                        ],
                                         "http://www.w3.org/ns/shacl#name": [
                                           {
                                             "@value": "postal"
@@ -524,6 +544,11 @@
                                         ]
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 1
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -710,6 +735,18 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(42,8)-(42,20)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
                                         "@value": "shared/src/test/resources/upanddown/types.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param2/scalar/schema"
                                       }
                                     ],
@@ -872,6 +909,18 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(48,8)-(48,20)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
                                         "@value": "shared/src/test/resources/upanddown/types.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/Header-One/scalar/schema"
                                       }
                                     ],
@@ -1017,6 +1066,11 @@
                                         ]
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 1
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -1279,6 +1333,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
                                     "@value": "howmuch"
@@ -1508,6 +1567,11 @@
                                         ]
                                       }
                                     ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 1
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
