@@ -10,9 +10,9 @@ pipeline {
   }
   environment {
     NEXUS = credentials('nexus')
-    SONAR = credentials('sonar-credentials')
+    SONAR = credentials('sonar-mulesoft')
     SONAR_URL = 'http://es.sandbox.msap.io/sonar'
-    NPM_TOKEN = credentials('NPM_TOKEN')
+    NPM_TOKEN = credentials('npm-mulesoft')
   }
   stages {
     stage('Test') {
@@ -20,9 +20,9 @@ pipeline {
         sh 'sbt clean coverage test coverageReport'
       }
     }
-    stage('Sonar') {
+    stage('Static Code Analysis') {
       steps {
-        sh 'sbt sonar'
+        sh "sonar-scanner -Dsonar.host.url=${env.SONAR_SERVER_URL} -Dsonar.login=${env.SONAR_SERVER_TOKEN}"
       }
     }
     stage('Publish') {
