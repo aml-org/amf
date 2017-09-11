@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext
 /**
   *
   */
-class JvmGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
+class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test oas generator string-async") {

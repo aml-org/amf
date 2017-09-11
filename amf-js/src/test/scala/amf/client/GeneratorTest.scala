@@ -9,7 +9,7 @@ import scala.concurrent.ExecutionContext
 /**
   *
   */
-class JsGeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
+class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test to oas stream dump") {

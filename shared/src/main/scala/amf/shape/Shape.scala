@@ -21,5 +21,5 @@ abstract class Shape extends AmfObject {
   def withDescription(description: String): this.type           = set(Description, description)
   def withDefault(default: String): this.type                   = set(Default, default)
   def withValues(values: Seq[String]): this.type                = set(Values, values)
-  def withDocumnetation(documentation: CreativeWork): this.type = set(Documentation, documentation)
+  def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
 }

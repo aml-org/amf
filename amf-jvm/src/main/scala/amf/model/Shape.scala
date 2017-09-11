@@ -29,8 +29,8 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) {
     shape.withValues(values)
     this
   }
-  def withDocumnetation(documentation: CreativeWork): this.type = {
-    shape.withDocumnetation(documentation.element)
+  def withDocumentation(documentation: CreativeWork): this.type = {
+    shape.withDocumentation(documentation.element)
     this
   }
 }

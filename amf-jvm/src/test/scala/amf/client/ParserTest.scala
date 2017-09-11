@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext
 /**
   *
   */
-class ParsersTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
+class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test from stream generation oas") {
