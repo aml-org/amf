@@ -3,6 +3,9 @@ import org.scalajs.core.tools.linker.ModuleKind
 name := "AMF"
 
 scalaVersion in ThisBuild := "2.12.2"
+
+val repository = sys.env.getOrElse("NEXUS_REPOSITORY", "https://nexus.build.msap.io/nexus")
+
 lazy val root = project
   .in(file("."))
   .aggregate(amfJS, amfJVM)
@@ -13,17 +16,37 @@ lazy val amf = crossProject
     name := "amf",
     organization := "org.mulesoft",
     version := "0.0.1-SNAPSHOT",
+
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
-    scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-Xfatal-warnings")
+
+    scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-Xfatal-warnings"),
+    scalacOptions ++= Seq("-encoding", "utf-8"),
+
+    sonarProperties ++= Map(
+      "sonar.host.url"             -> s"${sys.env.getOrElse("SONAR_URL", "")}",
+      "sonar.login"                -> s"${sys.env.getOrElse("SONAR_USR", "")}",
+      "sonar.password"             -> s"${sys.env.getOrElse("SONAR_PSW", "")}",
+      "sonar.projectKey"           -> "mulesoft.amf",
+      "sonar.projectName"          -> "AMF",
+      "sonar.projectVersion"       -> "0.1",
+      "sonar.sourceEncoding"       -> "UTF-8",
+      "sonar.github"               -> "repository=mulesoft/amf",
+      "sonar.tests"                -> "shared/src/test/scala",
+      "sonar.sources"              -> "shared/src/main/scala",
+      "AMF.sonar.sources"          -> "shared/src/main/scala",
+      "sonar.scoverage.reportPath" -> "amf-jvm/target/scala-2.12/scoverage-report/scoverage.xml"
+    )
   )
   .jvmSettings(
     publishTo := Some(
-      "snapshots" at s"${sys.env.getOrElse("NEXUS_REPOSITORY", "")}/content/repositories/ci-snapshots/"),
+      "snapshots" at s"$repository/content/repositories/ci-snapshots/"),
     credentials ++= Seq(
-      Credentials("Sonatype Nexus Repository Manager",
-                  new java.net.URL(sys.env.getOrElse("NEXUS_REPOSITORY", "https://nexus.build.msap.io/nexus")).getHost,
-                  sys.env.getOrElse("NEXUS_USER", ""),
-                  sys.env.getOrElse("NEXUS_PASS", ""))
+      Credentials(
+        "Sonatype Nexus Repository Manager",
+        new java.net.URL(repository).getHost,
+        sys.env.getOrElse("NEXUS_USR", ""),
+        sys.env.getOrElse("NEXUS_PSW", "")
+      )
     ),
     addArtifact(artifact in (Compile, assembly), assembly),
     publishArtifact in (Compile, packageBin) := false,
