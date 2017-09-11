@@ -10,7 +10,7 @@ pipeline {
   }
   environment {
     NEXUS = credentials('nexus')
-    SONAR = credentials('sonar-mulesoft')
+    SONAR = credentials('sonar-credentials')
     SONAR_URL = 'http://es.sandbox.msap.io/sonar'
     NPM_TOKEN = credentials('NPM_TOKEN')
   }
