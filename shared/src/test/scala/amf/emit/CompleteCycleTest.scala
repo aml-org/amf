@@ -44,15 +44,15 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 //    cycle("full-example.raml", RamlYamlHint, Amf)
 //  }
 
-  test("Basic cycle for amf") {
+  ignore("Basic cycle for amf") {
     cycle("basic.jsonld", AmfJsonHint, Amf)
   }
 
-  test("Basic cycle for raml") {
+  ignore("Basic cycle for raml") {
     cycle("basic.raml", RamlYamlHint, Raml)
   }
 
-  test("Basic cycle for oas") {
+  ignore("Basic cycle for oas") {
     cycle("basic.json", OasJsonHint, Oas)
   }
 
