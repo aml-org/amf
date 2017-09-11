@@ -1,6 +1,6 @@
 package amf.spec.oas
 
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField}

@@ -1,7 +1,5 @@
 package amf.remote
 
-import amf.common.Strings.isEmpty
-
 /**
   * Context class for URL resolution.
   */
@@ -38,7 +36,10 @@ object Context {
   def apply(platform: Platform, root: String): Context = Context(platform, root, Map.empty)
 
   def apply(platform: Platform, root: String, mapping: Map[String, String]): Context =
-    new Context(platform, if (isEmpty(root)) Nil else List(root), mapping)
+    new Context(platform, if (root == null || root.isEmpty) Nil else List(root), mapping)
+
+  def apply(platform: Platform, mapping: Map[String, String]): Context =
+    new Context(platform, Nil, mapping)
 
   private def stripFile(url: String): String =
     if (url.contains('/')) url.substring(0, url.lastIndexOf('/') + 1) else ""

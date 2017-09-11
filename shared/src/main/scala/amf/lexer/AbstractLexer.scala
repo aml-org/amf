@@ -4,7 +4,7 @@ import amf.lexer.CharStream.EOF_CHAR
 import amf.lexer.Token.Consume
 import amf.parser.Position
 import amf.parser.Position.ZERO
-import amf.common.Strings.escape
+import amf.common.core.Strings
 
 /**
   * Abstract common lexer
@@ -145,7 +145,7 @@ abstract class AbstractLexer[T <: Token](var stream: CharStream) extends Lexer[T
         result = result :+ (t, "")
         return result
       }
-      result = result :+ (t, escape(currentTokenText.toString))
+      result = result :+ (t, currentTokenText.toString.escape)
       advance()
     }
     result

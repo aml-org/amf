@@ -2,7 +2,7 @@ package amf.parser
 
 import amf.common.{AMFAST, AMFASTLink, AMFASTNode, AMFToken}
 import amf.common.AMFToken.{Library, Link}
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.parser
 import amf.remote.Kind
 

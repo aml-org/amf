@@ -1,7 +1,6 @@
 package amf.parser
 
-import amf.common.Strings.isNotEmpty
-import amf.generator.{IndentedWriter, JsonGenerator}
+import amf.generator.IndentedWriter
 import amf.lexer.Token.NamedToken
 import amf.visitor.ASTNodeVisitor
 
@@ -41,7 +40,7 @@ class ASTPrinter extends ASTNodeVisitor {
       writer.write(" ").write(node.range.toString)
     }
 
-    if (isNotEmpty(node.content)) {
+    if (node.content.nonEmpty) {
       writer.line().write("content -> ").write(node.content)
     }
 

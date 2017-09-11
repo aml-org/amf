@@ -2,7 +2,7 @@ package amf.graph
 
 import amf.common.AMFAST
 import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.metadata.SourceMapModel.{Element, Value}

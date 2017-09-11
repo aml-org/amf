@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.common.AMFToken.{Library, Link, Root}
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.common._
 import amf.lexer.Lexer
 import amf.remote.Kind

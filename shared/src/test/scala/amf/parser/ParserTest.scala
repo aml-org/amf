@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.common.AMFToken._
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.common.{AMFAST, AMFToken}
 import amf.json.JsonLexer
 import amf.lexer.CharSequenceStream

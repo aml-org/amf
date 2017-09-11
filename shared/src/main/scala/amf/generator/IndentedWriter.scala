@@ -1,6 +1,6 @@
 package amf.generator
 
-import amf.common.Strings.strings
+import amf.common.core.Strings
 
 /**
   *

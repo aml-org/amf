@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.common.AMFToken.{Comment, Entry}
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.common.{AMFAST, AMFToken}
 import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}

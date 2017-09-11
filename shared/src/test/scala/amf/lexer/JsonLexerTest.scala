@@ -4,7 +4,7 @@ import amf.common.AMFToken._
 import amf.common.ListAssertions
 import amf.json.JsonLexer
 import org.scalatest.FunSuite
-import amf.common.Strings.escape
+import amf.common.core.Strings
 
 /**
   *
@@ -66,7 +66,7 @@ class JsonLexerTest extends FunSuite with ListAssertions {
     val actual: List[(Token, String)] = JsonLexer(input).lex()
     val expected = List(
       (StartMap, "{"),
-      (WhiteSpace, escape("\n  ")),
+      (WhiteSpace, "\n  ".escape),
       (StringToken, "\"a\""),
       (Colon, ":"),
       (WhiteSpace, " "),

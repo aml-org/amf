@@ -1,7 +1,7 @@
 package amf.domain
 
 import amf.common.AMFAST
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.domain.Annotation.ParentEndPoint
 import amf.metadata.domain.EndPointModel._
 

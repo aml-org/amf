@@ -2,7 +2,7 @@ package amf.graph
 
 import amf.client.GenerationOptions
 import amf.common.AMFToken._
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._

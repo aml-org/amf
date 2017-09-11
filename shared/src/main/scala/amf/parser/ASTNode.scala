@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.common.Strings.strings
+import amf.common.core.Strings
 import amf.document.BaseUnit
 import amf.lexer.Token
 import amf.parser.ASTNodePrinter.print

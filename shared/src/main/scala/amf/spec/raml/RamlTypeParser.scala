@@ -2,7 +2,7 @@ package amf.spec.raml
 
 import amf.common.AMFAST
 import amf.common.AMFToken.{MapToken, StringToken}
-import amf.common.Strings._
+import amf.common.core.Strings
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, ShapeModel}
