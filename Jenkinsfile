@@ -12,6 +12,7 @@ pipeline {
     NEXUS = credentials('nexus')
     SONAR = credentials('sonar-mulesoft')
     SONAR_URL = 'http://es.sandbox.msap.io/sonar'
+    NPM_TOKEN = credentials('NPM_TOKEN')
   }
   stages {
     stage('Test') {

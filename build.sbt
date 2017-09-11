@@ -6,6 +6,21 @@ scalaVersion in ThisBuild := "2.12.2"
 
 val repository = sys.env.getOrElse("NEXUS_REPOSITORY", "https://nexus.build.msap.io/nexus")
 
+sonarProperties ++= Map(
+  "sonar.host.url"             -> s"${sys.env.getOrElse("SONAR_URL", "http://es.sandbox.msap.io/sonar")}",
+  "sonar.login"                -> s"${sys.env.getOrElse("SONAR_USR", "")}",
+  "sonar.password"             -> s"${sys.env.getOrElse("SONAR_PSW", "")}",
+  "sonar.projectKey"           -> "mulesoft.amf",
+  "sonar.projectName"          -> "AMF",
+  "sonar.projectVersion"       -> "0.1",
+  "sonar.sourceEncoding"       -> "UTF-8",
+  "sonar.github"               -> "repository=mulesoft/amf",
+  "sonar.tests"                -> "shared/src/test/scala",
+  "sonar.sources"              -> "shared/src/main/scala",
+  "AMF.sonar.sources"          -> "shared/src/main/scala",
+  "sonar.scoverage.reportPath" -> "amf-jvm/target/scala-2.12/scoverage-report/scoverage.xml"
+)
+
 lazy val root = project
   .in(file("."))
   .aggregate(amfJS, amfJVM)
@@ -20,22 +35,7 @@ lazy val amf = crossProject
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
 
     scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-Xfatal-warnings"),
-    scalacOptions ++= Seq("-encoding", "utf-8"),
-
-    sonarProperties ++= Map(
-      "sonar.host.url"             -> s"${sys.env.getOrElse("SONAR_URL", "http://es.sandbox.msap.io/sonar")}",
-      "sonar.login"                -> s"${sys.env.getOrElse("SONAR_USR", "")}",
-      "sonar.password"             -> s"${sys.env.getOrElse("SONAR_PSW", "")}",
-      "sonar.projectKey"           -> "mulesoft.amf",
-      "sonar.projectName"          -> "AMF",
-      "sonar.projectVersion"       -> "0.1",
-      "sonar.sourceEncoding"       -> "UTF-8",
-      "sonar.github"               -> "repository=mulesoft/amf",
-      "sonar.tests"                -> "shared/src/test/scala",
-      "sonar.sources"              -> "shared/src/main/scala",
-      "AMF.sonar.sources"          -> "shared/src/main/scala",
-      "sonar.scoverage.reportPath" -> "amf-jvm/target/scala-2.12/scoverage-report/scoverage.xml"
-    )
+    scalacOptions ++= Seq("-encoding", "utf-8")
   )
   .jvmSettings(
     publishTo := Some(
