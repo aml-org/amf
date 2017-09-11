@@ -23,7 +23,7 @@ lazy val amf = crossProject
     scalacOptions ++= Seq("-encoding", "utf-8"),
 
     sonarProperties ++= Map(
-      "sonar.host.url"             -> s"${sys.env.getOrElse("SONAR_URL", "")}",
+      "sonar.host.url"             -> s"${sys.env.getOrElse("SONAR_URL", "http://es.sandbox.msap.io/sonar")}",
       "sonar.login"                -> s"${sys.env.getOrElse("SONAR_USR", "")}",
       "sonar.password"             -> s"${sys.env.getOrElse("SONAR_PSW", "")}",
       "sonar.projectKey"           -> "mulesoft.amf",
@@ -95,3 +95,4 @@ addCommandAlias("generateBrowserJS", "; browserJS/fullOptJS")
 addCommandAlias("generateModuleJS", "; moduleJS/fullOptJS")
 addCommandAlias("generateJVM", "; amfJVM/assembly; amfJVM/packageDoc")
 addCommandAlias("publish", "; clean; generateModuleJS; amfJS/publish; amfJVM/publish")
+addCommandAlias("sonar", "; amfJVM/sonar")
