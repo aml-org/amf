@@ -5,7 +5,7 @@ import amf.common.AMFToken.{MapToken, StringToken}
 import amf.common.core.Strings
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, ShapeModel}
+import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ObjectType, UndefinedType}
@@ -247,6 +247,46 @@ case class Property(var typeDef: TypeDef = UndefinedType) {
   def withTypeDef(value: TypeDef): Unit = typeDef = value
 }
 
+case class XMLSerializerParser(defaultName: String, ast: AMFAST) {
+  def parse(): XMLSerializer = {
+    val xmlSerializer = XMLSerializer(ast)
+      .set(XMLSerializerModel.Attribute, value = false)
+      .set(XMLSerializerModel.Wrapped, value = false)
+      .set(XMLSerializerModel.Name, defaultName)
+    val entries = Entries(ast)
+
+    entries.key(
+      "attribute",
+      entry => {
+        val value = ValueNode(entry.value)
+        xmlSerializer.set(XMLSerializerModel.Attribute, value.boolean(), entry.annotations() += ExplicitField())
+      }
+    )
+
+    entries.key("wrapped", entry => {
+      val value = ValueNode(entry.value)
+      xmlSerializer.set(XMLSerializerModel.Wrapped, value.boolean(), entry.annotations() += ExplicitField())
+    })
+
+    entries.key("name", entry => {
+      val value = ValueNode(entry.value)
+      xmlSerializer.set(XMLSerializerModel.Name, value.string(), entry.annotations() += ExplicitField())
+    })
+
+    entries.key("namespace", entry => {
+      val value = ValueNode(entry.value)
+      xmlSerializer.set(XMLSerializerModel.Namespace, value.string(), entry.annotations())
+    })
+
+    entries.key("prefix", entry => {
+      val value = ValueNode(entry.value)
+      xmlSerializer.set(XMLSerializerModel.Prefix, value.string(), entry.annotations())
+    })
+
+    xmlSerializer
+  }
+}
+
 abstract class ShapeParser() {
 
   val shape: Shape
@@ -279,6 +319,14 @@ abstract class ShapeParser() {
       entry => {
         val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
         shape.set(ShapeModel.Documentation, creativeWork, entry.annotations())
+      }
+    )
+
+    entries.key(
+      "xml",
+      entry => {
+        val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value).parse()
+        shape.set(ShapeModel.XMLSerialization, xmlSerializer, entry.annotations())
       }
     )
 

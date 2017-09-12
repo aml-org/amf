@@ -10,11 +10,11 @@ import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
+import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel}
 import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape}
+import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer}
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.ValueType
 
@@ -227,6 +227,7 @@ object GraphEmitter {
     case _: NodeShape     => NodeShapeModel
     case _: ScalarShape   => ScalarShapeModel
     case _: PropertyShape => PropertyShapeModel
+    case _: XMLSerializer => XMLSerializerModel
     case _                => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

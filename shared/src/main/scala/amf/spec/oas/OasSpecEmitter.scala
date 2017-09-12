@@ -7,7 +7,7 @@ import amf.domain.Annotation._
 import amf.domain._
 import amf.metadata.Field
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel}
+import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel, XMLSerializerModel}
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
@@ -759,8 +759,46 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       fs.entry(ShapeModel.Documentation).map(f => result += CreativeWorkEmitter("externalDocs", f, ordering))
 
+      fs.entry(ShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
+
       result
     }
+  }
+
+  case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      sourceOr(
+        f.value,
+        entry { () =>
+          raw(key)
+
+          val fs     = f.obj.fields
+          val result = mutable.ListBuffer[Emitter]()
+
+          fs.entry(XMLSerializerModel.Attribute)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f => result += ValueEmitter("attribute", f))
+
+          fs.entry(XMLSerializerModel.Wrapped)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f => result += ValueEmitter("wrapped", f))
+
+          fs.entry(XMLSerializerModel.Name)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f => result += ValueEmitter("name", f))
+
+          fs.entry(XMLSerializerModel.Namespace).map(f => result += ValueEmitter("namespace", f))
+
+          fs.entry(XMLSerializerModel.Prefix).map(f => result += ValueEmitter("prefix", f))
+
+          map { () =>
+            traverse(ordering.sorted(result))
+          }
+        }
+      )
+    }
+
+    override def position(): Position = pos(f.value.annotations)
   }
 
   case class NodeShapeEmitter(node: NodeShape, ordering: SpecOrdering) extends ShapeEmitter(node, ordering) {

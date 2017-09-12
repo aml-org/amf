@@ -46,6 +46,11 @@ protocols:
       Header-One:
         required: false
         type: string
+        xml:
+          attribute: true
+          prefix: pref
+          name: Xml-name
+          namespace: xsd
       header-two:
         type: object
         properties:

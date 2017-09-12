@@ -5,7 +5,7 @@ import amf.domain.{Annotations, Fields}
 import amf.metadata.shape.NodeShapeModel._
 
 /**
-  * Node shape
+  * Node shape.
   */
 case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
 

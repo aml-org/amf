@@ -1,18 +1,19 @@
 package amf.model
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 abstract class Shape(private[amf] val shape: amf.shape.Shape) {
 
-  val name: String                = shape.name
-  val displayName: String         = shape.displayName
-  val description: String         = shape.description
-  val default: String             = shape.default
-  val values: js.Iterable[String] = shape.values.toJSArray
-  val documentation: CreativeWork = Option(shape.documentation).map(amf.model.CreativeWork).orNull
+  val name: String                    = shape.name
+  val displayName: String             = shape.displayName
+  val description: String             = shape.description
+  val default: String                 = shape.default
+  val values: js.Iterable[String]     = shape.values.toJSArray
+  val documentation: CreativeWork     = Option(shape.documentation).map(amf.model.CreativeWork).orNull
+  val xmlSerialization: XMLSerializer = Option(shape.xmlSerialization).map(amf.model.XMLSerializer).orNull
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -36,6 +37,11 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) {
   }
   def withDocumentation(documentation: CreativeWork): this.type = {
     shape.withDocumentation(documentation.element)
+    this
+  }
+
+  def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = {
+    shape.withXMLSerialization(xmlSerialization.xmlSerializer)
     this
   }
 }

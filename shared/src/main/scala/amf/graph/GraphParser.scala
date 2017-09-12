@@ -11,10 +11,10 @@ import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
+import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel}
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape}
+import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer}
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
@@ -196,7 +196,8 @@ object GraphParser {
     ResponseModel      -> Response.apply,
     NodeShapeModel     -> NodeShape.apply,
     ScalarShapeModel   -> ScalarShape.apply,
-    PropertyShapeModel -> PropertyShape.apply
+    PropertyShapeModel -> PropertyShape.apply,
+    XMLSerializerModel -> XMLSerializer.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

@@ -88,6 +88,12 @@
           {
             "name": "Header-One",
             "type": "string",
+            "xml": {
+              "attribute": true,
+              "prefix": "pref",
+              "name": "Xml-name",
+              "namespace": "xsd"
+            },
             "in": "header"
           },
           {

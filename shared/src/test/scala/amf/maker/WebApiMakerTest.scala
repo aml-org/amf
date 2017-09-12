@@ -7,7 +7,7 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.shape.ScalarShape
+import amf.shape.{ScalarShape, XMLSerializer}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -470,6 +470,13 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withRequired(false)
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
+      .withXMLSerialization(
+        XMLSerializer()
+          .withAttribute(true)
+          .withWrapped(false)
+          .withName("Xml-name")
+          .withNamespace("xsd")
+          .withPrefix("pref"))
 
     //header with object type
     val header2Type =
@@ -617,6 +624,13 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withRequired(false)
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
+      .withXMLSerialization(
+        XMLSerializer()
+          .withAttribute(true)
+          .withWrapped(false)
+          .withName("Xml-name")
+          .withNamespace("xsd")
+          .withPrefix("pref"))
 
     //header with object type
     val header2Type =
