@@ -393,16 +393,6 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(webApiWithTypes(), "example-types.raml.jsonld", AmfJsonHint)
   }
 
-  test("Generate raml with dependency types") {
-
-    assertFixture(webApiWithDependencyTypes(), "types-dependency.raml", RamlYamlHint)
-  }
-
-  test("Generate oas with dependency types") {
-
-    assertFixture(oasWebApiWithDependencyTypes(), "types-dependency.json", OasJsonHint)
-  }
-
   test("Generate oas example with types") {
 
     val api = WebApi()
@@ -536,6 +526,31 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withPayload()
       .withScalarSchema("default")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    api
+      .withEndPoint("/scalar_array")
+      .withOperation("get")
+      .withName("scalar_array")
+      .withRequest()
+      .withPayload(None)
+      .withArraySchema("schema")
+      .withMinItems(3)
+      .withMaxItems(10)
+      .withUniqueItems(true)
+      .withScalarItems()
+      .withName("items")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    api
+      .withEndPoint("/object_array")
+      .withOperation("get")
+      .withName("object_array")
+      .withRequest()
+      .withPayload(None)
+      .withArraySchema("schema")
+      .withNodeItems()
+      .withClosed(false)
+      .withName("items")
 
     assertFixture(api, "example-types.json", OasJsonHint)
   }
@@ -690,6 +705,35 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withPayload()
       .withScalarSchema("default")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    // array operations
+
+    api
+      .withEndPoint("/scalar_array")
+      .withOperation("get")
+      .withName("scalar_array")
+      .withRequest()
+      .withPayload(Some("application/json"))
+      .withArraySchema("schema")
+      .withDisplayName("scalar_array")
+      .withMinItems(3)
+      .withMaxItems(10)
+      .withUniqueItems(true)
+      .withScalarItems()
+      .withName("items")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    api
+      .withEndPoint("/object_array")
+      .withOperation("get")
+      .withName("object_array")
+      .withRequest()
+      .withPayload(Some("application/json"))
+      .withArraySchema("schema")
+      .withDisplayName("object_array")
+      .withNodeItems()
+      .withClosed(false)
+      .withName("items")
 
     api
   }

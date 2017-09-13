@@ -23,6 +23,7 @@ object OasTypeDefMatcher {
     case "datetime"      => DateTimeType
     case "datetime-only" => DateTimeOnlyType
     case "object"        => ObjectType
+    case "array"         => ArrayType
     case _               => UndefinedType
   }
 }
@@ -42,6 +43,7 @@ object OasTypeDefStringValueMatcher {
     case DateTimeOnlyType => "datetime-only"
     case TimeOnlyType     => "string"
     case DateOnlyType     => "string"
+    case ArrayType        => "array"
     case ObjectType       => "object"
     case UndefinedType    => throw new RuntimeException("Undefined type def")
   }

@@ -1,19 +1,20 @@
 package amf.spec.raml
 
-import amf.common.AMFAST
-import amf.common.AMFToken.{MapToken, StringToken}
+import amf.common.{AMFAST, AMFToken}
+import amf.common.AMFToken.{MapToken, StringToken, SequenceToken}
 import amf.common.core.Strings
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 
 import scala.collection.mutable
 
 case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
+
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
 
@@ -22,6 +23,8 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     detect(ahead) match {
       case ObjectType =>
         Some(parseObjectType(name, ahead))
+      case ArrayType =>
+        Some(parseArrayType(name, ahead))
       case typeDef if typeDef.isScalar =>
         Some(parseScalarType(name, typeDef, ahead))
       case _ => None
@@ -33,11 +36,16 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     case Right(entries) =>
       detectTypeOrSchema(entries)
         .orElse(detectProperties(entries))
+        .orElse(detectItems(entries))
         .getOrElse(UndefinedType)
   }
 
   private def detectProperties(entries: Entries) = {
     entries.key("properties").map(_ => ObjectType)
+  }
+
+  private def detectItems(entries: Entries) = {
+    entries.key("items").map(_ => ArrayType)
   }
 
   private def detectTypeOrSchema(entries: Entries) = {
@@ -61,6 +69,14 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     }
   }
 
+  def parseArrayType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
+    val shape = ahead match {
+      case Right(entries) => DataArrangementParser(name, entry, entries, (shape: Shape) => adopt(shape)).parse()
+      case _              => ArrayShape(entry.ast).withName(name)
+    }
+    shape
+  }
+
   private def parseObjectType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
     val shape = NodeShape(entry.ast).withName(name)
     adopt(shape)
@@ -72,9 +88,9 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
 
   def lookAhead(): Either[AMFAST, Entries] = {
     entry.value.`type` match {
-      case StringToken => Left(entry.value)
-      case MapToken    => Right(Entries(entry.value))
-      case _           => throw new RuntimeException("no value detected in look a head")
+      case StringToken   => Left(entry.value)
+      case MapToken      => Right(Entries(entry.value))
+      case _           => throw new RuntimeException("no value detected in look ahead")
     }
   }
 }
@@ -143,6 +159,109 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
     entries.key("multipleOf", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.MultipleOf, value.integer(), entry.annotations())
+    })
+
+    shape
+  }
+}
+
+case class DataArrangementParser(name: String, entry: EntryNode, entries: Entries, adopt: Shape => Unit) {
+
+  def lookAhead(): Either[TupleShape, ArrayShape] = {
+    entries.key("(tuple)") match {
+      case Some(tuplesEntry) =>
+        tuplesEntry.ast.`type` match {
+          // this is a sequence, we need to create a tuple
+          case AMFToken.SequenceToken => Left(TupleShape(entry.ast).withName(name))
+          // not an array regular array parsing
+          case _ =>  throw new Exception("Tuples must have a list of types")
+
+        }
+      case None => Right(ArrayShape(entry.ast).withName(name))
+    }
+  }
+
+  def parse(): Shape = {
+    lookAhead() match {
+      case Left(tuple)  => TupleShapeParser(tuple, entries, adopt).parse()
+      case Right(array) => ArrayShapeParser(array, entries, adopt).parse()
+    }
+  }
+
+}
+
+case class ArrayShapeParser(override val shape: ArrayShape, entries: Entries, adopt: Shape => Unit) extends ShapeParser() {
+
+  override def parse(): Shape = {
+    adopt(shape)
+
+    super.parse()
+
+    entries.key("type", entry => shape.add(ExplicitField()))
+
+    entries.key("minItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("maxItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("uniqueItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+    })
+
+    val finalShape = for {
+      itemsEntry <- entries.key("items")
+      item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items")).parse()
+    } yield {
+      item match {
+        case array: ArrayShape   => shape.withItems(array).toMatrixShape
+        case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
+        case other: Shape        => shape.withItems(other)
+      }
+    }
+
+    finalShape match {
+      case Some(parsed:Shape) => parsed
+      case None               => throw new Exception("Cannot parse data arrangement shape")
+    }
+  }
+}
+
+case class TupleShapeParser(val shape: TupleShape, entries: Entries,  adopt: Shape => Unit) extends ShapeParser() {
+
+  override def parse(): Shape = {
+    adopt(shape)
+
+    super.parse()
+
+    entries.key("type", entry => shape.add(ExplicitField()))
+
+    entries.key("minItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("maxItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("uniqueItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+    })
+
+    entries.key("items", entry => {
+      val items = Entries(entry.ast).entries.values
+        .zipWithIndex
+        .map(entry => RamlTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
+        .toSeq
+      shape.withItems(items.filter(_.isDefined).map(_.get))
     })
 
     shape

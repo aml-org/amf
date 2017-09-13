@@ -2072,6 +2072,213 @@
                 ]
               }
             ]
+          },
+          {
+            "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/scalar_array",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/scalar_array"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/scalar_array/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_array"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#expects": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/scalar_array/get/request",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Request",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/application/raml",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/scalar_array/get/request/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#ArrayShape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://schema.org/name": [
+                              {
+                                "@value": "scalar_array"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#minCount": [
+                              {
+                                "@value": 3
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#maxCount": [
+                              {
+                                "@value": 10
+                              }
+                            ],
+                            "http://raml.org/vocabularies/shapes#uniqueItems": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "http://raml.org/vocabularies/shapes#items": [
+                              {
+                                "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/scalar_array/get/request/schema/items",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#ScalarShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "items"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/object_array",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/object_array"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/object_array/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "object_array"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#expects": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/object_array/get/request",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Request",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/application/raml",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/object_array/get/request/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#ArrayShape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://schema.org/name": [
+                              {
+                                "@value": "object_array"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/shapes#items": [
+                              {
+                                "@id": "shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/object_array/get/request/schema/items",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "items"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#closed": [
+                                  {
+                                    "@value": false
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [

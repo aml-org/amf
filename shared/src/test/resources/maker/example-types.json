@@ -146,6 +146,43 @@
           }
         }
       }
+    },
+    "/scalar_array": {
+      "get": {
+        "operationId": "scalar_array",
+        "parameters": [
+          {
+            "name": "scalar_array",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 10,
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/object_array": {
+      "get": {
+        "operationId": "object_array",
+        "parameters": [
+          {
+            "name": "object_array",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        ]
+      }
     }
   }
 

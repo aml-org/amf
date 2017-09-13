@@ -6,15 +6,15 @@ import amf.common.core.Strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel,PropertyDependenciesModel}
+import amf.metadata.shape._
 import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer,PropertyDependencies}
+import amf.shape._
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.ValueType
 
@@ -79,6 +79,20 @@ object GraphEmitter {
         case Type.Int =>
           scalar(v.value.asInstanceOf[AmfScalar].toString, IntToken)
           sources(v)
+        case a : SortedArray =>
+          map { () =>
+            entry { () =>
+              raw("@list")
+              array { () =>
+                val seq = v.value.asInstanceOf[AmfArray]
+                sources(v)
+                a.element match {
+                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
+                  case Str => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
+                }
+              }
+            }
+          }
         case a: Array =>
           array { () =>
             val seq = v.value.asInstanceOf[AmfArray]
@@ -234,6 +248,7 @@ object GraphEmitter {
     case _: Response      => ResponseModel
     case _: Payload       => PayloadModel
     case _: NodeShape     => NodeShapeModel
+    case _: ArrayShape    => ArrayShapeModel
     case _: ScalarShape   => ScalarShapeModel
     case _: PropertyShape => PropertyShapeModel
     case _: XMLSerializer => XMLSerializerModel

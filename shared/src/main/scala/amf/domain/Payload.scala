@@ -3,7 +3,7 @@ package amf.domain
 import amf.common.AMFAST
 import amf.metadata.domain.PayloadModel
 import amf.metadata.domain.PayloadModel._
-import amf.shape.{NodeShape, ScalarShape, Shape}
+import amf.shape.{ArrayShape, NodeShape, ScalarShape, Shape}
 
 /**
   * Payload internal model.
@@ -31,6 +31,12 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
     val scalar = ScalarShape().withName(name)
     set(PayloadModel.Schema, scalar)
     scalar
+  }
+
+  def withArraySchema(name: String): ArrayShape = {
+    val array = ArrayShape().withName(name)
+    set(PayloadModel.Schema, array)
+    array
   }
 }
 

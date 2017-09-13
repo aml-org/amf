@@ -6,15 +6,15 @@ import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.metadata.SourceMapModel.{Element, Value}
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel,PropertyDependenciesModel, XMLSerializerModel}
+import amf.metadata.shape._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer, PropertyDependencies}
+import amf.shape._
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
@@ -38,7 +38,31 @@ object GraphParser {
       parse(root, ctx).set(Location, location).asInstanceOf[BaseUnit]
     }
 
-    private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj = types(ctx.expand(ts(ast).head))
+    private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj =
+      ts(ast).find( t => {
+        types.get(ctx.expand(t)).isDefined
+      }) match {
+        case Some(t) => types(ctx.expand(t))
+        case None    => {
+          throw new Exception(s"Error parsing JSON-LD node, unknown @types ${ts(ast)}")
+        }
+      }
+
+    private def parseList(listElement: Type, node: AMFAST, ctx: GraphContext) = {
+      retrieveElements(node).map ({ (n) =>
+        listElement match {
+          case _: Obj  => parse(n, ctx)
+          case _       => str(value(listElement, n))
+        }
+      })
+    }
+
+    def retrieveElements(ast: AMFAST) = {
+      ast.children.find(key("@list")) match {
+        case Some(entry) => (entry > SequenceToken).children
+        case _           => throw new Exception(s"No @list declaration on list node $ast")
+      }
+    }
 
     private def parse(node: AMFAST, ctx: GraphContext): AmfObject = {
       val id      = retrieveId(node)
@@ -89,6 +113,7 @@ object GraphParser {
         case Str | RegExp | Iri => instance.set(f, str(node), annotations(sources, key))
         case Bool               => instance.set(f, bool(node), annotations(sources, key))
         case Type.Int           => instance.set(f, int(node), annotations(sources, key))
+        case l: SortedArray     => instance.setArray(f, parseList(l.element, node, ctx), annotations(sources, key))
         case a: Array =>
           val values: Seq[AmfElement] = a.element match {
             case _: Obj    => node.children.map(n => parse(n, ctx))
@@ -195,6 +220,7 @@ object GraphParser {
     RequestModel       -> Request.apply,
     ResponseModel      -> Response.apply,
     NodeShapeModel     -> NodeShape.apply,
+    ArrayShapeModel    -> ArrayShape.apply,
     ScalarShapeModel   -> ScalarShape.apply,
     PropertyShapeModel -> PropertyShape.apply,
     XMLSerializerModel -> XMLSerializer.apply,

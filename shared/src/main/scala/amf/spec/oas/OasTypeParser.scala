@@ -1,14 +1,14 @@
 package amf.spec.oas
 
-import amf.common.AMFAST
-import amf.common.AMFToken.SequenceToken
+import amf.common.{AMFAST, AMFToken}
+import amf.common.AMFToken.{MapToken, SequenceToken, StringToken}
 import amf.common.core.Strings
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.OasTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 
 import scala.collection.mutable
@@ -25,6 +25,8 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
     detect(entries) match {
       case ObjectType =>
         Some(parseObjectType(name, entries))
+      case ArrayType =>
+        Some(parseArrayType(name, entries))
       case typeDef if typeDef.isScalar =>
         Some(parseScalarType(name, typeDef, entries))
       case _ => None
@@ -54,6 +56,10 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
     val shape = ScalarShape(entry.ast).withName(name)
     adopt(shape)
     ScalarShapeParser(typeDef, shape, entries).parse()
+  }
+
+  private def parseArrayType(name: String, entries: Entries): Shape = {
+    DataArrangementParser(name, entry, entries, (shape: Shape) => adopt(shape)).parse()
   }
 
   private def parseObjectType(name: String, entries: Entries): Shape = {
@@ -128,6 +134,107 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
     })
 
     shape
+  }
+}
+
+case class DataArrangementParser(name: String, entry: KeyValueNode, entries: Entries, adopt: Shape => Unit) {
+
+  def lookAhead(): Option[Either[TupleShape, ArrayShape]] = {
+    entries.key("items") match {
+      case Some(itemsEntry) =>
+        itemsEntry.ast.`type` match {
+          // this is a sequence, we need to create a tuple
+          case AMFToken.SequenceToken => Some(Left(TupleShape(entry.ast).withName(name)))
+          // not an array regular array parsing
+          case _ =>  Some(Right(ArrayShape(entry.ast).withName(name)))
+
+        }
+      case None => None
+    }
+  }
+
+  def parse(): Shape = {
+    lookAhead() match {
+      case None => throw new Exception("Cannot parse data arrangement shape")
+      case Some(Left(tuple))  => TupleShapeParser(tuple, entries, adopt).parse()
+      case Some(Right(array)) => ArrayShapeParser(array, entries, adopt).parse()
+    }
+  }
+
+}
+
+case class TupleShapeParser(val shape: TupleShape, entries: Entries,  adopt: Shape => Unit) extends ShapeParser() {
+
+  override def parse(): Shape = {
+    adopt(shape)
+
+    super.parse()
+
+    entries.key("minItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("maxItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("uniqueItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+    })
+
+    entries.key("items", entry => {
+      val items = Entries(entry.ast).entries.values
+        .zipWithIndex
+        .map(entry => OasTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
+        .toSeq
+      shape.withItems(items.filter(_.isDefined).map(_.get))
+    })
+
+    shape
+  }
+}
+
+
+
+case class ArrayShapeParser(shape: ArrayShape, entries: Entries, adopt: Shape => Unit) extends ShapeParser() {
+  override def parse(): Shape = {
+    adopt(shape)
+
+    super.parse()
+
+    entries.key("minItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("maxItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("uniqueItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+    })
+
+    val finalShape = for {
+      itemsEntry <- entries.key("items")
+      item       <- OasTypeParser(itemsEntry, items => items.adopted(shape.id + "/items")).parse()
+    } yield {
+      item match {
+        case array: ArrayShape   => shape.withItems(array).toMatrixShape
+        case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
+        case other: Shape        => shape.withItems(other)
+      }
+    }
+
+    finalShape match {
+      case Some(parsed:Shape) => parsed
+      case None               => throw new Exception("Cannot parse data arrangement shape")
+    }
   }
 }
 
