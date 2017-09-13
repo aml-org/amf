@@ -6,7 +6,7 @@ import amf.common.core.Strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
@@ -79,6 +79,20 @@ object GraphEmitter {
         case Type.Int =>
           scalar(v.value.asInstanceOf[AmfScalar].toString, IntToken)
           sources(v)
+        case a : SortedArray =>
+          map { () =>
+            entry { () =>
+              raw("@list")
+              array { () =>
+                val seq = v.value.asInstanceOf[AmfArray]
+                sources(v)
+                a.element match {
+                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
+                  case Str => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
+                }
+              }
+            }
+          }
         case a: Array =>
           array { () =>
             val seq = v.value.asInstanceOf[AmfArray]

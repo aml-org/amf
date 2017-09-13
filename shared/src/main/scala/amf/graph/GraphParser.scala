@@ -6,7 +6,7 @@ import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.metadata.SourceMapModel.{Element, Value}
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
+import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
@@ -47,6 +47,22 @@ object GraphParser {
           throw new Exception(s"Error parsing JSON-LD node, unknown @types ${ts(ast)}")
         }
       }
+
+    private def parseList(listElement: Type, node: AMFAST, ctx: GraphContext) = {
+      retrieveElements(node).map ({ (n) =>
+        listElement match {
+          case _: Obj  => parse(n, ctx)
+          case _       => str(value(listElement, n))
+        }
+      })
+    }
+
+    def retrieveElements(ast: AMFAST) = {
+      ast.children.find(key("@list")) match {
+        case Some(entry) => (entry > SequenceToken).children
+        case _           => throw new Exception(s"No @list declaration on list node $ast")
+      }
+    }
 
     private def parse(node: AMFAST, ctx: GraphContext): AmfObject = {
       val id      = retrieveId(node)
@@ -97,6 +113,7 @@ object GraphParser {
         case Str | RegExp | Iri => instance.set(f, str(node), annotations(sources, key))
         case Bool               => instance.set(f, bool(node), annotations(sources, key))
         case Type.Int           => instance.set(f, int(node), annotations(sources, key))
+        case l: SortedArray     => instance.setArray(f, parseList(l.element, node, ctx), annotations(sources, key))
         case a: Array =>
           val values: Seq[AmfElement] = a.element match {
             case _: Obj    => node.children.map(n => parse(n, ctx))

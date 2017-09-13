@@ -9,11 +9,7 @@ import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
-<<<<<<< HEAD
-import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel, XMLSerializerModel, PropertyDependenciesModel}
-=======
 import amf.metadata.shape._
->>>>>>> Basic Array Shapes parsing and generation APIMF-56 APIMF-85
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
@@ -549,6 +545,19 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
+  case class SyntheticAnnotationEmitter(key: String, value: String, pos: Position) extends Emitter {
+    override def emit(): Unit =  {
+      entry { () =>
+        raw(key)
+        raw(value)
+      }
+    }
+
+    override def position(): Position = pos
+  }
+
+
+
   case class EntryEmitter(key: String,
                           value: String,
                           token: AMFToken = StringToken,
@@ -598,6 +607,12 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         case array: ArrayShape =>
           val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
           ArrayShapeEmitter(copiedArray, ordering).emitters()
+        case tuple: TupleShape =>
+          val copiedTuple = tuple.copy(fields = tuple.fields.filter(f => !ignored.contains(f._1)))
+          TupleShapeEmitter(copiedTuple, ordering).emitters()
+        case matrix: MatrixShape =>
+          val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1)))
+          ArrayShapeEmitter(copiedMatrix.toArrayShape, ordering).emitters()
         case _ => Seq()
       }
     }
@@ -738,7 +753,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
   }
 
-<<<<<<< HEAD
   case class ShapeDependenciesEmitter(f: FieldEntry,
                                       ordering: SpecOrdering,
                                       propertiesMap: ListMap[String, PropertyShape])
@@ -810,6 +824,28 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
   }
 
+  case class TupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering) extends ShapeEmitter(tuple, ordering) {
+    override def emitters(): Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+
+      val fs = tuple.fields
+
+      if (tuple.annotations.contains(classOf[ExplicitField]))
+        result += EntryEmitter("type", "array")
+
+      result += TupleItemsShapeEmitter(tuple, ordering)
+      result += SyntheticAnnotationEmitter("(tuple)", "true", ZERO)
+
+      fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
+
+      fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
+
+      fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+
+      result
+    }
+  }
+
   case class ItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering) extends Emitter {
     def emit(): Unit = {
       entry { () =>
@@ -819,6 +855,27 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(array.items.fields.getValue(ArrayShapeModel.Items).annotations)
+  }
+
+  case class TupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering) extends Emitter {
+
+    def emit(): Unit = {
+      val result = mutable.ListBuffer[Emitter]()
+
+      tuple.items
+        .foreach(item => {
+          RamlTypeEmitter(item, ordering).emitters().foreach(result += _)
+        })
+
+      entry { () =>
+        raw("items")
+        array { () =>
+          traverse(ordering.sorted(result))
+        }
+      }
+    }
+
+    override def position(): Position = pos(tuple.fields.getValue(ArrayShapeModel.Items).annotations)
   }
 
   case class PropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {

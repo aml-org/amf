@@ -51,7 +51,9 @@ object Shape {
     (shape match {
       case node: amf.shape.NodeShape     => Some(NodeShape(node))
       case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
-      case array: amf.shape.ArrayShape   => Some(ArrayShape(array))
+      case array: amf.shape.ArrayShape   => Some(new ArrayShape(array))
+      case matrix: amf.shape.MatrixShape => Some(new MatrixShape(matrix.toArrayShape))
+      case tuple: amf.shape.TupleShape   => Some(new TupleShape(tuple))
       case a                             => None
     }).orNull
 }

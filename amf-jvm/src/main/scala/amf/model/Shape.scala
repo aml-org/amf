@@ -48,6 +48,8 @@ object Shape {
       case node: amf.shape.NodeShape     => Some(NodeShape(node))
       case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
       case array: amf.shape.ArrayShape   => Some(ArrayShape(array))
+      case matrix: amf.shape.MatrixShape => Some(MatrixShape(matrix))
+      case tuple: amf.shape.TupleShape   => Some(TupleShape(tuple))
       case a                             => None
     }).orNull
 }

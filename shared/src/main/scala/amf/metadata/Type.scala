@@ -33,4 +33,8 @@ object Type {
   case class Array(element: Type) extends Type {
     override val `type`: List[ValueType] = element.`type`
   }
+
+  case class SortedArray(element: Type) extends Type {
+    override val `type`: List[ValueType] = element.`type`
+  }
 }
