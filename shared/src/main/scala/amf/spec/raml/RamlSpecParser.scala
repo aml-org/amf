@@ -13,6 +13,8 @@ import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.shape.Shape
+import amf.parser.{YMapOps, YValueOps}
+import org.yaml.model.{YMap, YNode, YValue}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -25,27 +27,30 @@ case class RamlSpecParser(root: Root) {
 
   def parseDocument(): Document = {
 
-    val entries = Entries(root.ast.last)
+    root.document.value collect {
+      case map: YMap =>
+        val declarations = parseDeclares(map)
 
-    val declarations = parseDeclares(entries)
+        val api = parseWebApi(entries, declarations)
 
-    val api = parseWebApi(entries, declarations)
+        Document()
+          .adopted(root.location)
+          .withEncodes(api)
+          .withDeclares(declarations.values.toSeq)
 
-    Document()
-      .adopted(root.location)
-      .withEncodes(api)
-      .withDeclares(declarations.values.toSeq)
+      case _ => throw new Exception("Map expected")
+    }
   }
 
-  private def parseDeclares(entries: Entries) = {
+  private def parseDeclares(map: YMap) = {
     val definitions = root.location + "#/definitions"
 
     var declarations: Map[String, Shape] = Map()
 
-    entries.key(
+    map.key(
       "types",
       entry => {
-        val types = RamlTypesParser(entry.value, shape => { shape.adopted(definitions) }).parse()
+        val types = RamlTypesParser(entry.value.value.map, shape => { shape.adopted(definitions) }).parse()
         types.foreach(shape => {
           declarations += shape.name -> shape.add(DeclaredElement())
         })
@@ -64,107 +69,107 @@ case class RamlSpecParser(root: Root) {
       api.set(WebApiModel.Name, value.string(), entry.annotations())
     })
 
-    entries.key(
-      "baseUriParameters",
-      entry => {
-        val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, api.withBaseUriParameter).parse().map(_.withBinding("path"))
-        api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
-      }
-    )
+        map.entry(
+          "baseUriParameters",
+          entry => {
+            val parameters: Seq[Parameter] =
+              ParametersParser(entry.value, api.withBaseUriParameter).parse().map(_.withBinding("path"))
+            api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
+          }
+        )
 
-    entries.key("description", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.Description, value.string(), entry.annotations())
-    })
+        map.entry("description", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.Description, value.string(), entry.annotations())
+        })
 
-    entries.key(
-      "mediaType",
-      entry => {
-        val annotations = entry.annotations()
-        val value: AmfElement = entry.value.`type` match {
-          case StringToken =>
-            annotations += SingleValueArray()
-            AmfArray(Seq(ValueNode(entry.value).string()))
-          case _ =>
-            ArrayNode(entry.value).strings()
-        }
+        map.entry(
+          "mediaType",
+          entry => {
+            val annotations = entry.annotations()
+            val value: AmfElement = entry.value.`type` match {
+              case StringToken =>
+                annotations += SingleValueArray()
+                AmfArray(Seq(ValueNode(entry.value).string()))
+              case _ =>
+                ArrayNode(entry.value).strings()
+            }
 
-        api.set(WebApiModel.ContentType, value, annotations)
-        api.set(WebApiModel.Accepts, value, annotations)
-      }
-    )
+            api.set(WebApiModel.ContentType, value, annotations)
+            api.set(WebApiModel.Accepts, value, annotations)
+          }
+        )
 
-    entries.key("version", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.Version, value.string(), entry.annotations())
-    })
+        map.entry("version", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.Version, value.string(), entry.annotations())
+        })
 
-    entries.key("(termsOfService)", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
-    })
+        map.entry("(termsOfService)", entry => {
+          val value = ValueNode(entry.value)
+          api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
+        })
 
-    entries.key("protocols", entry => {
-      val value = ArrayNode(entry.value)
-      api.set(WebApiModel.Schemes, value.strings(), entry.annotations())
-    })
+        map.entry("protocols", entry => {
+          val value = ArrayNode(entry.value)
+          api.set(WebApiModel.Schemes, value.strings(), entry.annotations())
+        })
 
-    entries.key(
-      "(contact)",
-      entry => {
-        val organization: Organization = OrganizationParser(entry.value).parse()
-        api.set(WebApiModel.Provider, organization, entry.annotations())
-      }
-    )
+        map.entry(
+          "(contact)",
+          entry => {
+            val organization: Organization = OrganizationParser(entry.value).parse()
+            api.set(WebApiModel.Provider, organization, entry.annotations())
+          }
+        )
 
-    entries.key(
-      "(externalDocs)",
-      entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
-        api.set(WebApiModel.Documentation, creativeWork, entry.annotations())
-      }
-    )
+        map.entry(
+          "(externalDocs)",
+          entry => {
+            val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
+            api.set(WebApiModel.Documentation, creativeWork, entry.annotations())
+          }
+        )
 
-    entries.key("(license)", entry => {
-      val license: License = LicenseParser(entry.value).parse()
-      api.set(WebApiModel.License, license, entry.annotations())
-    })
+        map.entry("(license)", entry => {
+          val license: License = LicenseParser(entry.value).parse()
+          api.set(WebApiModel.License, license, entry.annotations())
+        })
 
-    entries.regex(
-      "^/.*",
-      entries => {
-        val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints).parse())
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints))
-      }
-    )
+        map.regex(
+          "^/.*",
+          entries => {
+            val endpoints = mutable.ListBuffer[EndPoint]()
+            entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints).parse())
+            api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+          }
+        )
 
-    entries.key(
-      "baseUri",
-      entry => {
-        val value = ValueNode(entry.value)
-        val uri   = BaseUriSplitter(value.string().value.toString)
+        map.entry(
+          "baseUri",
+          entry => {
+            val value = ValueNode(entry.value)
+            val uri   = BaseUriSplitter(value.string().value.toString)
 
-        if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
-          api.set(WebApiModel.Schemes,
-                  AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
-                  entry.annotations())
-        }
+            if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
+              api.set(WebApiModel.Schemes,
+                      AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
+                      entry.annotations())
+            }
 
-        if (uri.domain.nonEmpty) {
-          api.set(WebApiModel.Host,
-                  AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
-                  entry.annotations())
-        }
+            if (uri.domain.nonEmpty) {
+              api.set(WebApiModel.Host,
+                      AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
+                      entry.annotations())
+            }
 
-        if (uri.path.nonEmpty) {
-          api.set(WebApiModel.BasePath,
-                  AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
-                  entry.annotations())
-        }
-      }
-    )
+            if (uri.path.nonEmpty) {
+              api.set(WebApiModel.BasePath,
+                      AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
+                      entry.annotations())
+            }
+          }
+        )
 
     api
   }
@@ -554,27 +559,29 @@ case class ArrayNode(ast: AMFAST) {
   private def annotations() = Annotations(ast)
 }
 
-case class ValueNode(ast: AMFAST) {
+case class ValueNode(ast: YNode) {
 
   def string(): AmfScalar = {
-    val content = ast.content.unquote
+    val content = scalar.text.unquote
     AmfScalar(content, annotations())
   }
 
   def integer(): AmfScalar = {
-    val content = ast.content.unquote
+    val content = scalar.text.unquote
     AmfScalar(content.toInt, annotations())
   }
 
   def boolean(): AmfScalar = {
-    val content = ast.content.unquote
+    val content = scalar.text.unquote
     AmfScalar(content.toBoolean, annotations())
   }
 
   def negated(): AmfScalar = {
-    val content = ast.content.unquote
+    val content = scalar.text.unquote
     AmfScalar(!content.toBoolean, annotations())
   }
+
+  private def scalar = ast.value.scalar
 
   private def annotations() = Annotations(ast)
 }

@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.common.AMFAST
 import amf.metadata.domain.WebApiModel.{License => WebApiLicense, _}
+import org.yaml.model.YDocument
 
 /**
   * Web Api internal model
@@ -57,7 +58,7 @@ object WebApi {
 
   def apply(): WebApi = apply(Annotations())
 
-  def apply(ast: AMFAST): WebApi = apply(Annotations(ast))
+  def apply(ast: YDocument): WebApi = apply(Annotations(ast))
 
   def apply(annotations: Annotations): WebApi = WebApi(Fields(), annotations)
 }

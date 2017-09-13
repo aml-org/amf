@@ -3,6 +3,7 @@ package amf.shape
 import amf.common.AMFAST
 import amf.domain.{Annotations, Fields}
 import amf.metadata.shape.ArrayShapeModel._
+import org.yaml.model.YMapEntry
 
 /**
   * Array shape
@@ -49,7 +50,7 @@ object ArrayShape {
 
   def apply(): ArrayShape = apply(Annotations())
 
-  def apply(ast: AMFAST): ArrayShape = apply(Annotations(ast))
+  def apply(ast: YMapEntry): ArrayShape = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ArrayShape = ArrayShape(Fields(), annotations)
 
@@ -83,7 +84,7 @@ object TupleShape {
 
   def apply(): TupleShape = apply(Annotations())
 
-  def apply(ast: AMFAST): TupleShape = apply(Annotations(ast))
+  def apply(ast: YMapEntry): TupleShape = apply(Annotations(ast))
 
   def apply(annotations: Annotations): TupleShape = TupleShape(Fields(), annotations)
 

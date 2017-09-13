@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.common.AMFAST
 import amf.domain.Annotation.{LexicalInformation, SourceAST}
+import org.yaml.model.YPart
 
 import scala.collection.mutable
 
@@ -36,5 +37,6 @@ object Annotations {
 
   def apply(): Annotations = new Annotations()
 
-  def apply(ast: AMFAST): Annotations = apply() += LexicalInformation(ast.range) += SourceAST(ast)
+  //todo syaml
+  def apply(ast: YPart): Annotations = apply() /*+= LexicalInformation(ast.range)*/ += SourceAST(ast)
 }

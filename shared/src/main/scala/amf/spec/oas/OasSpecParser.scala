@@ -53,8 +53,8 @@ case class OasSpecParser(root: Root) {
 
   private def parseWebApi(entries: Entries, declarations: Map[String, Shape]): WebApi = {
 
-    val api     = WebApi(root.ast).adopted(root.location)
-    val entries = Entries(root.ast.last)
+    val api     = WebApi(root.document).adopted(root.location)
+    val entries = Entries(root.document.last)
 
     entries.key(
       "info",
