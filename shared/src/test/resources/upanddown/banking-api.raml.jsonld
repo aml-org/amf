@@ -92,57 +92,6 @@
             ],
             "http://www.w3.org/ns/hydra/core#supportedOperation": [
               {
-                "@id": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/delete",
-                "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
-                  "http://raml.org/vocabularies/document#DomainElement"
-                ],
-                "http://www.w3.org/ns/hydra/core#method": [
-                  {
-                    "@value": "delete"
-                  }
-                ],
-                "http://schema.org/description": [
-                  {
-                    "@value": "Removes a Customer from the system"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/delete/source-map",
-                    "@type": [
-                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#lexical": [
-                      {
-                        "http://raml.org/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://schema.org/description"
-                          }
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(18,6)-(18,53)]"
-                          }
-                        ]
-                      },
-                      {
-                        "http://raml.org/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/delete"
-                          }
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(17,4)-(18,53)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
                 "@id": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/get",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
@@ -287,6 +236,57 @@
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(12,6)-(12,40)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@id": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/delete",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "delete"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "Removes a Customer from the system"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/delete/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://schema.org/description"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(18,6)-(18,53)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F{customer_id}/delete"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(17,4)-(18,53)]"
                           }
                         ]
                       }

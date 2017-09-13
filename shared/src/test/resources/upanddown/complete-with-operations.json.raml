@@ -20,20 +20,20 @@ protocols:
   name: licenseName
 /levelzero:
   displayName: Name
-  post:
+  get:
     displayName: Some title
     description: Some description
+    (deprecated): true
+    (summary): This is a summary
     (externalDocs):
       url: urlExternalDocs
       description: descriptionExternalDocs
     protocols:
       - http
       - https
-  get:
+  post:
     displayName: Some title
     description: Some description
-    (deprecated): true
-    (summary): This is a summary
     (externalDocs):
       url: urlExternalDocs
       description: descriptionExternalDocs

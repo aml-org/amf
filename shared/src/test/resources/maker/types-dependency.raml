@@ -1,0 +1,63 @@
+#%RAML 1.0
+title: test title
+description: test description
+mediaType:
+  - application/yaml
+version: 1.1
+(termsOfService): terms of service
+protocols:
+  - http
+  - https
+/level-zero:
+  displayName: One display name
+  description: and this description!
+  get:
+    displayName: Some title
+    queryParameters:
+      param1:
+        description: Some descr
+        type: object
+        properties:
+          name: string
+          lastName: string
+          address:
+            properties:
+              city: string
+              street: string
+              number: integer
+              postal: integer
+            (dependencies):
+              city:
+                - postal
+              street:
+                - number
+                - postal
+                - city
+              number:
+                - street
+    body:
+      application/raml:
+        type: object
+        properties:
+          credit_card: integer
+          city: string
+          street: string
+          number: integer
+          postal: integer
+        (dependencies):
+          credit_card:
+            - city
+            - postal
+          street:
+            - number
+            - postal
+            - city
+          number:
+            - street
+    responses:
+      200:
+        body:
+          application/xml: string
+      404:
+        body: integer
+baseUri: api.example.com/path

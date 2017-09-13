@@ -248,6 +248,39 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("explicit-&-implicit-type-object.json", "explicit-&-implicit-type-object.json.raml", OasJsonHint, Raml)
   }
 
+  test("Types dependency raml to raml test") {
+    assertCycle("types-dependency.raml", "types-dependency.raml", RamlYamlHint, Raml)
+  }
+
+  test("Types dependency oas to oas test") {
+    assertCycle("types-dependency.json", "types-dependency.json", OasJsonHint, Oas)
+  }
+
+  test("Types dependency raml to oas test") {
+    assertCycle("types-dependency.raml", "types-dependency.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Types dependency oas to raml test") {
+    assertCycle("types-dependency.json", "types-dependency.json.raml", OasJsonHint, Raml)
+  }
+
+  test("Types dependency raml to amf test") {
+    assertCycle("types-dependency.raml", "types-dependency.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Types dependency oas to amf test") {
+    assertCycle("types-dependency.json", "types-dependency.json.jsonld", OasJsonHint, Amf)
+  }
+
+  // TODO explicit field annotation its not serializable so type: object entry will be not generated whyle dumping
+  ignore("Types dependency amf(raml) to raml test") {
+    assertCycle("types-dependency.raml.jsonld", "types-dependency.raml", AmfJsonHint, Raml)
+  }
+
+  ignore("Types dependency amf(oas) to oas test") {
+    assertCycle("types-dependency.json.jsonld", "types-dependency.json", AmfJsonHint, Oas)
+  }
+
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
     val expected = platform
       .resolve(basePath + golden, None)

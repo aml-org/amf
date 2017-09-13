@@ -4,13 +4,14 @@ import scala.collection.JavaConverters._
 
 case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) {
 
-  val minProperties: Int                        = node.minProperties
-  val maxProperties: Int                        = node.maxProperties
-  val closed: Boolean                           = node.closed
-  val discriminator: String                     = node.discriminator
-  val discriminatorValue: String                = node.discriminatorValue
-  val readOnly: Boolean                         = node.readOnly
-  val properties: java.util.List[PropertyShape] = node.properties.map(PropertyShape).asJava
+  val minProperties: Int                                 = node.minProperties
+  val maxProperties: Int                                 = node.maxProperties
+  val closed: Boolean                                    = node.closed
+  val discriminator: String                              = node.discriminator
+  val discriminatorValue: String                         = node.discriminatorValue
+  val readOnly: Boolean                                  = node.readOnly
+  val properties: java.util.List[PropertyShape]          = node.properties.map(PropertyShape).asJava
+  val dependencies: java.util.List[PropertyDependencies] = node.dependencies.map(PropertyDependencies).asJava
 
   def withMinProperties(min: Int): this.type = {
     node.withMinProperties(min)
@@ -41,8 +42,13 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
     this
   }
 
-  def withProperty(name: String): PropertyShape = {
-    PropertyShape(node.withProperty(name))
+  def withProperty(name: String): PropertyShape = PropertyShape(node.withProperty(name))
+
+  def withDependencies(dependencies: java.util.List[PropertyDependencies]): this.type = {
+    node.withDependencies(dependencies.asScala.map(_.element))
+    this
   }
+
+  def withDependency(): PropertyDependencies = PropertyDependencies(node.withDependency())
 
 }

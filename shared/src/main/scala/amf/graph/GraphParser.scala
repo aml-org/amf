@@ -11,10 +11,10 @@ import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel}
+import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel,PropertyDependenciesModel, XMLSerializerModel}
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer}
+import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer, PropertyDependencies}
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
@@ -91,8 +91,8 @@ object GraphParser {
         case Type.Int           => instance.set(f, int(node), annotations(sources, key))
         case a: Array =>
           val values: Seq[AmfElement] = a.element match {
-            case _: Obj => node.children.map(n => parse(n, ctx))
-            case Str    => node.children.map(n => str(value(a.element, n)))
+            case _: Obj    => node.children.map(n => parse(n, ctx))
+            case Str | Iri => node.children.map(n => str(value(a.element, n)))
           }
           instance.setArray(f, values, annotations(sources, key))
       }
@@ -197,7 +197,8 @@ object GraphParser {
     NodeShapeModel     -> NodeShape.apply,
     ScalarShapeModel   -> ScalarShape.apply,
     PropertyShapeModel -> PropertyShape.apply,
-    XMLSerializerModel -> XMLSerializer.apply
+    XMLSerializerModel -> XMLSerializer.apply,
+    PropertyDependenciesModel -> PropertyDependencies.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

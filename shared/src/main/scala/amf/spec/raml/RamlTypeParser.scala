@@ -11,6 +11,8 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ObjectType, UndefinedType}
 import amf.shape._
 
+import scala.collection.mutable
+
 case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
@@ -195,8 +197,54 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapePars
       }
     )
 
+    val properties = mutable.ListMap[String, PropertyShape]()
+    shape.properties.foreach(p => properties += (p.name -> p))
+
+    entries.key(
+      "(dependencies)",
+      entry => {
+        val dependencies: Seq[PropertyDependencies] =
+          ShapeDependenciesParser(entry.value, properties).parse()
+        shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), entry.annotations())
+      }
+    )
+
     shape
   }
+}
+
+case class ShapeDependenciesParser(ast: AMFAST, properties: mutable.ListMap[String, PropertyShape]) {
+  def parse(): Seq[PropertyDependencies] = {
+    Entries(ast).entries.values
+      .flatMap(entry => NodeDependencyParser(entry, properties).parse())
+      .toSeq
+  }
+}
+
+case class NodeDependencyParser(entry: EntryNode, properties: mutable.ListMap[String, PropertyShape]) {
+  def parse(): Option[PropertyDependencies] = {
+
+    properties
+      .get(entry.key.content.unquote)
+      .map(p => {
+        val targets = buildTargets()
+        PropertyDependencies(entry.ast)
+          .set(PropertyDependenciesModel.PropertySource, AmfScalar(p.id), entry.annotations())
+          .set(PropertyDependenciesModel.PropertyTarget, AmfArray(targets), Annotations(entry.value))
+      })
+  }
+
+  private def buildTargets(): Seq[AmfScalar] = {
+    ArrayNode(entry.value)
+      .strings()
+      .scalars
+      .flatMap(
+        v =>
+          properties
+            .get(v.value.toString)
+            .map(p => AmfScalar(p.id, v.annotations)))
+  }
+
 }
 
 case class PropertiesParser(ast: AMFAST, producer: String => PropertyShape) {

@@ -12,6 +12,7 @@ import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 
+import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.util.matching.Regex
 
@@ -506,7 +507,7 @@ case class Entries(ast: AMFAST) {
     if (values.nonEmpty) fn(values)
   }
 
-  var entries: Map[String, EntryNode] = ast.children.map(n => n.head.content.unquote -> EntryNode(n)).toMap
+  var entries: ListMap[String, EntryNode] = ListMap(ast.children.map(n => n.head.content.unquote -> EntryNode(n)): _*)
 
 }
 

@@ -34,9 +34,11 @@
   "paths": {
     "/levelzero": {
       "displayName": "Name",
-      "post": {
+      "get": {
         "operationId": "Some title",
         "description": "Some description",
+        "deprecated": true,
+        "summary": "This is a summary",
         "externalDocs": {
           "url": "urlExternalDocs",
           "description": "descriptionExternalDocs"
@@ -46,11 +48,9 @@
           "https"
         ]
       },
-      "get": {
+      "post": {
         "operationId": "Some title",
         "description": "Some description",
-        "deprecated": true,
-        "summary": "This is a summary",
         "externalDocs": {
           "url": "urlExternalDocs",
           "description": "descriptionExternalDocs"

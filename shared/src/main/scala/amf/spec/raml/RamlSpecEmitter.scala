@@ -9,7 +9,7 @@ import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel, XMLSerializerModel}
+import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel, XMLSerializerModel, PropertyDependenciesModel}
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
@@ -18,6 +18,7 @@ import amf.shape._
 import amf.spec.SpecOrdering.ordering
 import amf.spec.{Emitter, SpecOrdering}
 
+import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -135,8 +136,8 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         val protocol: String = fs
           .entry(WebApiModel.Schemes)
           .find(_.value.annotations.contains(classOf[SynthesizedField]))
-          .flatMap(_.array.values.headOption)
-          .map(_.asInstanceOf[AmfScalar].toString)
+          .flatMap(_.array.scalars.headOption)
+          .map(_.toString)
           .getOrElse("")
 
         val domain: String = fs
@@ -183,9 +184,9 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           val result = mutable.ListBuffer[Emitter]()
 
-          f.array.values
+          f.array.scalars
             .foreach(v => {
-              result += ScalarEmitter(v.asInstanceOf[AmfScalar])
+              result += ScalarEmitter(v)
             })
 
           array { () =>
@@ -562,7 +563,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        raw(f.array.values.headOption.map(_.asInstanceOf[AmfScalar].toString).getOrElse(""))
+        raw(f.array.scalars.headOption.map(_.toString).getOrElse(""))
       })
     }
 
@@ -680,6 +681,10 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
 
+      val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
+
+      fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
+
       result
     }
 
@@ -724,6 +729,56 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       result
     }
+  }
+
+  case class ShapeDependenciesEmitter(f: FieldEntry,
+                                      ordering: SpecOrdering,
+                                      propertiesMap: ListMap[String, PropertyShape])
+      extends Emitter {
+    def emit(): Unit = {
+
+      entry { () =>
+        raw("(dependencies)")
+        map { () =>
+          val result = f.array.values.map(v =>
+            PropertyDependenciesEmitter(v.asInstanceOf[PropertyDependencies], ordering, propertiesMap))
+          traverse(ordering.sorted(result))
+        }
+      }
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class PropertyDependenciesEmitter(property: PropertyDependencies,
+                                         ordering: SpecOrdering,
+                                         properties: ListMap[String, PropertyShape])
+      extends Emitter {
+
+    def emit(): Unit = {
+      properties
+        .get(property.propertySource)
+        .foreach(p => {
+          entry { () =>
+            raw(p.name)
+
+            val targets = property.fields
+              .entry(PropertyDependenciesModel.PropertyTarget)
+              .map(f => {
+                f.array.scalars.flatMap(iri =>
+                  properties.get(iri.value.toString).map(p => AmfScalar(p.name, iri.annotations)))
+              })
+
+            targets.foreach(t => {
+              array { () =>
+                traverse(ordering.sorted(t.map(ScalarEmitter)))
+              }
+            })
+          }
+        })
+    }
+
+    override def position(): Position = pos(property.annotations) // TODO check this
   }
 
   case class PropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {

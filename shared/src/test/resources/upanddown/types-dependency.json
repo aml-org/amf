@@ -1,0 +1,114 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "version": "1.1",
+    "termsOfService": "terms of service"
+  },
+  "host": "api.example.com",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "basePath": "/path",
+  "consumes": [
+    "application/yaml"
+  ],
+  "produces": [
+    "application/yaml"
+  ],
+  "paths": {
+    "/level-zero": {
+      "displayName": "One display name",
+      "description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "parameters": [
+          {
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "address": {
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    },
+                    "street": {
+                      "type": "string"
+                    },
+                    "number": {
+                      "type": "integer"
+                    },
+                    "postal": {
+                      "type": "integer"
+                    }
+                  },
+                  "dependencies": {
+                    "city": [
+                      "postal"
+                    ],
+                    "street": [
+                      "number",
+                      "postal",
+                      "city"
+                    ],
+                    "number": [
+                      "street"
+                    ]
+                  }
+                }
+              },
+              "type": "object"
+            },
+            "in": "body"
+          }
+        ],
+        "x-request-payloads": [
+          {
+            "mediaType": "application/raml",
+            "schema": {
+              "properties": {
+                "credit_card": {
+                  "type": "integer"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "street": {
+                  "type": "string"
+                },
+                "number": {
+                  "type": "integer"
+                },
+                "postal": {
+                  "type": "integer"
+                }
+              },
+              "dependencies": {
+                "credit_card": [
+                  "city",
+                  "postal"
+                ],
+                "street": [
+                  "number",
+                  "postal",
+                  "city"
+                ],
+                "number": [
+                  "street"
+                ]
+              },
+              "type": "object"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

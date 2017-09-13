@@ -25,13 +25,16 @@ object NodeShapeModel extends ShapeModel with DomainElementModel {
 
   val Properties = Field(Array(PropertyShapeModel), Shacl + "property")
 
+  val Dependencies = Field(Array(PropertyDependenciesModel), Shapes + "dependencies")
+
   override val fields: List[Field] = List(MinProperties,
                                           MaxProperties,
                                           Closed,
                                           Discriminator,
                                           DiscriminatorValue,
                                           ReadOnly,
-                                          Properties) ++ ShapeModel.fields ++ DomainElementModel.fields
+                                          Properties,
+                                          Dependencies) ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 }

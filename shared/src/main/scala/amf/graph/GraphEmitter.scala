@@ -10,11 +10,11 @@ import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel}
+import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel,PropertyDependenciesModel}
 import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer}
+import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer,PropertyDependencies}
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.ValueType
 
@@ -86,6 +86,7 @@ object GraphEmitter {
             a.element match {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
               case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
+              case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
             }
           }
       }
@@ -111,13 +112,21 @@ object GraphEmitter {
       } else content)
     }
 
-    private def iri(content: String): Unit = {
-      array { () =>
-        map { () =>
-          entry { () =>
-            raw("@id")
-            raw(content)
-          }
+    private def iriValue(content: String): Unit = {
+      map { () =>
+        entry { () =>
+          raw("@id")
+          raw(content)
+        }
+      }
+    }
+
+    private def iri(content: String, inArray: Boolean = false): Unit = {
+      if (inArray) {
+        iriValue(content)
+      } else {
+        array { () =>
+          iriValue(content)
         }
       }
     }
@@ -228,6 +237,7 @@ object GraphEmitter {
     case _: ScalarShape   => ScalarShapeModel
     case _: PropertyShape => PropertyShapeModel
     case _: XMLSerializer => XMLSerializerModel
+    case _: PropertyDependencies => PropertyDependenciesModel
     case _                => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

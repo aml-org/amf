@@ -7,7 +7,7 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.shape.{ScalarShape, XMLSerializer}
+import amf.shape.{ScalarShape, XMLSerializer,PropertyDependencies}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -191,20 +191,6 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
         .withDescription("and this description!")
         .withOperations(List(
           Operation()
-            .withMethod("post")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withRequest(
-              Request()
-                .withHeaders(List(
-                  Parameter().withName("Header-One").withRequired(false).withBinding("header")
-                ))
-                .withPayloads(List(Payload()
-                  .withSchema(
-                    ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
-                  .withMediaType("application/json")))
-            ),
-          Operation()
             .withMethod("get")
             .withName("Some title")
             .withRequest(
@@ -225,6 +211,20 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                 .withPayloads(List(Payload()
                   .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   .withMediaType("application/xml")))
+            ),
+          Operation()
+            .withMethod("post")
+            .withName("Some title")
+            .withDescription("Some description")
+            .withRequest(
+              Request()
+                .withHeaders(List(
+                  Parameter().withName("Header-One").withRequired(false).withBinding("header")
+                ))
+                .withPayloads(List(Payload()
+                  .withSchema(
+                    ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
+                  .withMediaType("application/json")))
             )
         ))
     )
@@ -391,6 +391,16 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   test("Generate amf example with types") {
 
     assertFixture(webApiWithTypes(), "example-types.raml.jsonld", AmfJsonHint)
+  }
+
+  test("Generate raml with dependency types") {
+
+    assertFixture(webApiWithDependencyTypes(), "types-dependency.raml", RamlYamlHint)
+  }
+
+  test("Generate oas with dependency types") {
+
+    assertFixture(oasWebApiWithDependencyTypes(), "types-dependency.json", OasJsonHint)
   }
 
   test("Generate oas example with types") {
@@ -680,6 +690,300 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withPayload()
       .withScalarSchema("default")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    api
+  }
+
+  // TODO
+  private def webApiWithDependencyTypes(): WebApi = {
+    val api = WebApi()
+      .withName("test title")
+      .withDescription("test description")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("/path")
+      .withContentType(List("application/yaml"))
+      .withAccepts(List("application/yaml"))
+      .withVersion("1.1")
+      .withTermsOfService("terms of service")
+      .withId("shared/src/test/resources/maker/types-dependency.raml#/web-api")
+
+    val operation = api
+      .withEndPoint("/level-zero")
+      .withName("One display name")
+      .withDescription("and this description!")
+      .withOperation("get")
+      .withName("Some title")
+
+    val request = operation
+      .withRequest()
+
+    //shape of param1
+    val param1Shape = request
+      .withQueryParameter("param1")
+      .withDescription("Some descr")
+      .withBinding("query")
+      .withRequired(true)
+      .withObjectSchema("schema")
+
+    param1Shape
+      .withDescription("Some descr")
+      .withClosed(false)
+      .withProperty("name")
+      .withMinCount(1)
+      .withScalarSchema("name")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    param1Shape
+      .withProperty("lastName")
+      .withMinCount(1)
+      .withScalarSchema("lastName")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val address = param1Shape.withProperty("address").withMinCount(1).withObjectRange("address")
+    val city = address
+      .withClosed(false)
+      .withProperty("city")
+    city
+      .withMinCount(1)
+      .withScalarSchema("city")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val street = address
+      .withProperty("street")
+    street
+      .withMinCount(1)
+      .withScalarSchema("street")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val number = address
+      .withProperty("number")
+    number
+      .withMinCount(1)
+      .withScalarSchema("number")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    val postal = address
+      .withProperty("postal")
+    postal
+      .withMinCount(1)
+      .withScalarSchema("postal")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    address
+      .withDependency()
+      .withPropertySource(city.id)
+      .withPropertyTarget(Seq(postal.id))
+    address
+      .withDependency()
+      .withPropertySource(street.id)
+      .withPropertyTarget(Seq(number.id, postal.id, city.id))
+    address
+      .withDependency()
+      .withPropertySource(number.id)
+      .withPropertyTarget(Seq(street.id))
+
+    //body operation payload
+    val bodySchema = request
+      .withPayload(Some("application/raml"))
+      .withObjectSchema("schema")
+      .withClosed(false)
+    val credit_card = bodySchema
+      .withProperty("credit_card")
+    credit_card
+      .withMinCount(1)
+      .withScalarSchema("credit_card")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    val creditCity = bodySchema
+      .withProperty("city")
+    creditCity
+      .withMinCount(1)
+      .withScalarSchema("city")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    val creditStreet = bodySchema
+      .withProperty("street")
+    creditStreet
+      .withMinCount(1)
+      .withScalarSchema("street")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    val creditNumber = bodySchema
+      .withProperty("number")
+    creditNumber
+      .withMinCount(1)
+      .withScalarSchema("number")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    val creditPostal = bodySchema
+      .withProperty("postal")
+    creditPostal
+      .withMinCount(1)
+      .withScalarSchema("postal")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    //payload of body operation with object
+
+    bodySchema
+      .withDependency()
+      .withPropertySource(credit_card.id)
+      .withPropertyTarget(Seq(creditCity.id, creditPostal.id))
+    bodySchema
+      .withDependency()
+      .withPropertySource(creditStreet.id)
+      .withPropertyTarget(Seq(creditNumber.id, creditPostal.id, creditCity.id))
+    bodySchema
+      .withDependency()
+      .withPropertySource(creditNumber.id)
+      .withPropertyTarget(Seq(creditStreet.id))
+
+    //responses
+
+    val default = operation
+      .withResponse("200")
+    default
+      .withPayload(Some("application/xml"))
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    operation
+      .withResponse("404")
+      .withPayload()
+      .withScalarSchema("default")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    api
+  }
+
+  private def oasWebApiWithDependencyTypes(): WebApi = {
+    val api = WebApi()
+      .withName("test title")
+      .withDescription("test description")
+      .withHost("api.example.com")
+      .withSchemes(List("http", "https"))
+      .withBasePath("/path")
+      .withContentType(List("application/yaml"))
+      .withAccepts(List("application/yaml"))
+      .withVersion("1.1")
+      .withTermsOfService("terms of service")
+      .withId("shared/src/test/resources/maker/types-dependency.json#/web-api")
+
+    val operation = api
+      .withEndPoint("/level-zero")
+      .withName("One display name")
+      .withDescription("and this description!")
+      .withOperation("get")
+      .withName("Some title")
+
+    val request = operation
+      .withRequest()
+
+    //shape of param1
+    val param1Shape = request
+      .withPayload()
+      .withObjectSchema("schema")
+
+    param1Shape
+      .withClosed(false)
+      .withProperty("name")
+      .withMinCount(0)
+      .withScalarSchema("name")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    param1Shape
+      .withProperty("lastName")
+      .withMinCount(0)
+      .withScalarSchema("lastName")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val address = param1Shape.withProperty("address").withMinCount(0).withObjectRange("address")
+    val city = address
+      .withClosed(false)
+      .withProperty("city")
+    city
+      .withMinCount(0)
+      .withScalarSchema("city")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val street = address
+      .withProperty("street")
+    street
+      .withMinCount(0)
+      .withScalarSchema("street")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val number = address
+      .withProperty("number")
+    number
+      .withMinCount(0)
+      .withScalarSchema("number")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    val postal = address
+      .withProperty("postal")
+    postal
+      .withMinCount(0)
+      .withScalarSchema("postal")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    address
+      .withDependency()
+      .withPropertySource(city.id)
+      .withPropertyTarget(Seq(postal.id))
+    address
+      .withDependency()
+      .withPropertySource(street.id)
+      .withPropertyTarget(Seq(number.id, postal.id, city.id))
+    address
+      .withDependency()
+      .withPropertySource(number.id)
+      .withPropertyTarget(Seq(street.id))
+
+    //body operation payload
+    val bodySchema = request
+      .withPayload(Some("application/raml"))
+      .withObjectSchema("schema")
+      .withClosed(false)
+    val credit_card = bodySchema
+      .withProperty("credit_card")
+    credit_card
+      .withMinCount(0)
+      .withScalarSchema("credit_card")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    val creditCity = bodySchema
+      .withProperty("city")
+    creditCity
+      .withMinCount(0)
+      .withScalarSchema("city")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    val creditStreet = bodySchema
+      .withProperty("street")
+    creditStreet
+      .withMinCount(0)
+      .withScalarSchema("street")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    val creditNumber = bodySchema
+      .withProperty("number")
+    creditNumber
+      .withMinCount(0)
+      .withScalarSchema("number")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+
+    val creditPostal = bodySchema
+      .withProperty("postal")
+    creditPostal
+      .withMinCount(0)
+      .withScalarSchema("postal")
+      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
+    //payload of body operation with object
+
+    bodySchema
+      .withDependency()
+      .withPropertySource(credit_card.id)
+      .withPropertyTarget(Seq(creditCity.id, creditPostal.id))
+    bodySchema
+      .withDependency()
+      .withPropertySource(creditStreet.id)
+      .withPropertyTarget(Seq(creditNumber.id, creditPostal.id, creditCity.id))
+    bodySchema
+      .withDependency()
+      .withPropertySource(creditNumber.id)
+      .withPropertyTarget(Seq(creditStreet.id))
+
+    //responses
 
     api
   }

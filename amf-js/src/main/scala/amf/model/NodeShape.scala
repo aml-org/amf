@@ -1,19 +1,20 @@
 package amf.model
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportAll
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) {
 
-  val minProperties: Int                     = node.minProperties
-  val maxProperties: Int                     = node.maxProperties
-  val closed: Boolean                        = node.closed
-  val discriminator: String                  = node.discriminator
-  val discriminatorValue: String             = node.discriminatorValue
-  val readOnly: Boolean                      = node.readOnly
-  val properties: js.Iterable[PropertyShape] = node.properties.map(PropertyShape).toJSArray
+  val minProperties: Int                              = node.minProperties
+  val maxProperties: Int                              = node.maxProperties
+  val closed: Boolean                                 = node.closed
+  val discriminator: String                           = node.discriminator
+  val discriminatorValue: String                      = node.discriminatorValue
+  val readOnly: Boolean                               = node.readOnly
+  val properties: js.Iterable[PropertyShape]          = node.properties.map(PropertyShape).toJSArray
+  val dependencies: js.Iterable[PropertyDependencies] = node.dependencies.map(PropertyDependencies).toJSArray
 
   def withMinProperties(min: Int): this.type = {
     node.withMinProperties(min)
@@ -44,8 +45,13 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
     this
   }
 
-  def withProperty(name: String): PropertyShape = {
-    PropertyShape(node.withProperty(name))
+  def withProperty(name: String): PropertyShape = PropertyShape(node.withProperty(name))
+
+  def withDependencies(dependencies: js.Iterable[PropertyDependencies]): this.type = {
+    node.withDependencies(dependencies.map(_.element).toSeq)
+    this
   }
+
+  def withDependency(): PropertyDependencies = PropertyDependencies(node.withDependency())
 
 }
