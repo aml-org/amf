@@ -1,10 +1,20 @@
 import org.scalajs.core.tools.linker.ModuleKind
+import sbt.Keys.{libraryDependencies, resolvers}
 
 name := "AMF"
 
-scalaVersion in ThisBuild := "2.12.2"
+val settings = Common.settings ++ Seq(
+  name := "amf",
+  version := "0.0.1-SNAPSHOT",
 
-val repository = sys.env.getOrElse("NEXUS_REPOSITORY", "https://nexus.build.msap.io/nexus")
+  libraryDependencies ++= Seq(
+    "org.mulesoft" %%% "syaml" % "0.0.1-SNAPSHOT",
+    "org.scalatest" %%% "scalatest" % "3.0.0" % Test
+  ),
+
+  resolvers += Common.snapshots,
+  credentials ++= Common.credentials()
+)
 
 lazy val root = project
   .in(file("."))
@@ -12,27 +22,9 @@ lazy val root = project
 
 lazy val amf = crossProject
   .in(file("."))
-  .settings(
-    name := "amf",
-    organization := "org.mulesoft",
-    version := "0.0.1-SNAPSHOT",
-
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
-
-    scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-Xfatal-warnings"),
-    scalacOptions ++= Seq("-encoding", "utf-8")
-  )
+  .settings(settings: _*)
   .jvmSettings(
-    publishTo := Some(
-      "snapshots" at s"$repository/content/repositories/ci-snapshots/"),
-    credentials ++= Seq(
-      Credentials(
-        "Sonatype Nexus Repository Manager",
-        new java.net.URL(repository).getHost,
-        sys.env.getOrElse("NEXUS_USER", ""),
-        sys.env.getOrElse("NEXUS_PASS", "")
-      )
-    ),
+    Common.publish,
     addArtifact(artifact in (Compile, assembly), assembly),
     publishArtifact in (Compile, packageBin) := false,
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
@@ -52,28 +44,6 @@ lazy val amf = crossProject
 
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))
 lazy val amfJS  = amf.js.in(file("amf-js"))
-
-lazy val module = crossProject
-  .in(file("amf-js/js-module"))
-  .dependsOn(amf)
-  .jsSettings(
-    jsSettings("amf-module.js", ModuleKind.CommonJSModule): _*
-  )
-  .js
-
-lazy val browser = crossProject
-  .in(file("amf-js/js-browser"))
-  .dependsOn(amf)
-  .jsSettings(
-    jsSettings("amf-browser.js", ModuleKind.NoModule): _*
-  )
-  .js
-
-def jsSettings(fileName: String, kind: ModuleKind): Array[Def.SettingsDefinition] = Array(
-  artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / ".." / "target" / "artifact" / fileName,
-  scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
-  scalaJSModuleKind := kind
-)
 
 addCommandAlias("generate", "; clean; generateModuleJS; generateBrowserJS; generateJVM")
 addCommandAlias("generateBrowserJS", "; browserJS/fullOptJS")
