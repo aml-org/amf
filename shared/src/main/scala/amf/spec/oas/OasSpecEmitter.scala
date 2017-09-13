@@ -7,7 +7,7 @@ import amf.domain.Annotation._
 import amf.domain._
 import amf.metadata.Field
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyDependenciesModel, ScalarShapeModel, ShapeModel,PropertyDependenciesModel,XMLSerializerModel}
+import amf.metadata.shape.{NodeShapeModel, PropertyDependenciesModel, ScalarShapeModel, ShapeModel, XMLSerializerModel}
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
