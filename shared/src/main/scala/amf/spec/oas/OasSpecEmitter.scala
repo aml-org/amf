@@ -7,7 +7,7 @@ import amf.domain.Annotation._
 import amf.domain._
 import amf.metadata.Field
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyDependenciesModel, ScalarShapeModel, ShapeModel, XMLSerializerModel}
+import amf.metadata.shape._
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
@@ -736,6 +736,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           NodeShapeEmitter(copiedNode, ordering).emitters()
+        case array: ArrayShape =>
+          val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
+          ArrayShapeEmitter(copiedArray, ordering).emitters()
         case scalar: ScalarShape =>
           val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
           ScalarShapeEmitter(copiedScalar, ordering).emitters()
@@ -765,6 +768,37 @@ case class OasSpecEmitter(unit: BaseUnit) {
       result
     }
   }
+
+  case class ArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+      val result = ListBuffer[Emitter]()
+      val fs     = shape.fields
+
+      result += EntryEmitter("type", "array")
+
+      result += ItemsShapeEmitter(shape, ordering)
+
+      fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
+
+      fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
+
+      fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+
+      result
+    }
+  }
+
+  case class ItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering) extends Emitter {
+    def emit(): Unit = {
+      entry { () =>
+        raw("items")
+        OasTypeEmitter(array.items, ordering).emitters().foreach(_.emit())
+      }
+    }
+
+    override def position(): Position = pos(array.items.fields.getValue(ArrayShapeModel.Items).annotations)
+  }
+
 
   case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
@@ -960,3 +994,5 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(property.annotations) // TODO check this
   }
 }
+
+

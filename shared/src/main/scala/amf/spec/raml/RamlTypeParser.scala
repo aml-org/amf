@@ -8,12 +8,13 @@ import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 
 import scala.collection.mutable
 
 case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
+
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
 
@@ -22,6 +23,8 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     detect(ahead) match {
       case ObjectType =>
         Some(parseObjectType(name, ahead))
+      case ArrayType =>
+        Some(parseArrayType(name, ahead))
       case typeDef if typeDef.isScalar =>
         Some(parseScalarType(name, typeDef, ahead))
       case _ => None
@@ -33,11 +36,16 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     case Right(entries) =>
       detectTypeOrSchema(entries)
         .orElse(detectProperties(entries))
+        .orElse(detectItems(entries))
         .getOrElse(UndefinedType)
   }
 
   private def detectProperties(entries: Entries) = {
     entries.key("properties").map(_ => ObjectType)
+  }
+
+  private def detectItems(entries: Entries) = {
+    entries.key("items").map(_ => ArrayType)
   }
 
   private def detectTypeOrSchema(entries: Entries) = {
@@ -61,6 +69,15 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     }
   }
 
+  def parseArrayType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
+    val shape = ArrayShape(entry.ast).withName(name)
+    adopt(shape)
+    ahead match {
+      case Right(entries) => ArrayShapeParser(shape, entries).parse()
+      case _              => shape
+    }
+  }
+
   private def parseObjectType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
     val shape = NodeShape(entry.ast).withName(name)
     adopt(shape)
@@ -74,7 +91,7 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     entry.value.`type` match {
       case StringToken => Left(entry.value)
       case MapToken    => Right(Entries(entry.value))
-      case _           => throw new RuntimeException("no value detected in look a head")
+      case _           => throw new RuntimeException("no value detected in look ahead")
     }
   }
 }
@@ -144,6 +161,39 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.MultipleOf, value.integer(), entry.annotations())
     })
+
+    shape
+  }
+}
+
+case class ArrayShapeParser(shape: ArrayShape, entries: Entries) extends ShapeParser() {
+  override def parse(): Shape = {
+
+    super.parse()
+
+    entries.key("type", entry => shape.add(ExplicitField()))
+
+    entries.key("minItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("maxItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("uniqueItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+    })
+
+    entries.key("items", entry => {
+        RamlTypeParser(entry, items => items.adopted(shape.id + "/items"))
+          .parse()
+          .foreach(items => shape.withItems(items))
+      }
+    )
 
     shape
   }

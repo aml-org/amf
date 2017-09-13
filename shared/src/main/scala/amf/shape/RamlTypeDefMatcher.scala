@@ -22,6 +22,7 @@ object RamlTypeDefMatcher {
     case "datetime-only" => DateTimeOnlyType
     case "time-only"     => TimeOnlyType
     case "date-only"     => DateOnlyType
+    case "array"         => ArrayType
     case "object"        => ObjectType
     case _               => UndefinedType
   }

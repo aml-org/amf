@@ -29,6 +29,7 @@ object TypeDef {
   object ByteType         extends TypeDef with ScalarType
   object BinaryType       extends TypeDef with ScalarType
   object PasswordType     extends TypeDef with ScalarType
+  object ArrayType        extends TypeDef
   object ObjectType       extends TypeDef
   object UndefinedType    extends TypeDef
 }

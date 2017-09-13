@@ -9,7 +9,11 @@ import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
+<<<<<<< HEAD
 import amf.metadata.shape.{NodeShapeModel, ScalarShapeModel, ShapeModel, XMLSerializerModel, PropertyDependenciesModel}
+=======
+import amf.metadata.shape._
+>>>>>>> Basic Array Shapes parsing and generation APIMF-56 APIMF-85
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
@@ -591,6 +595,9 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         case scalar: ScalarShape =>
           val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
           ScalarShapeEmitter(copiedScalar, ordering).emitters()
+        case array: ArrayShape =>
+          val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
+          ArrayShapeEmitter(copiedArray, ordering).emitters()
         case _ => Seq()
       }
     }
@@ -731,6 +738,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
   }
 
+<<<<<<< HEAD
   case class ShapeDependenciesEmitter(f: FieldEntry,
                                       ordering: SpecOrdering,
                                       propertiesMap: ListMap[String, PropertyShape])
@@ -779,6 +787,38 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
 
     override def position(): Position = pos(property.annotations) // TODO check this
+  }
+
+  case class ArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering) extends ShapeEmitter(array, ordering) {
+    override def emitters(): Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+
+      val fs = array.fields
+
+      if (array.annotations.contains(classOf[ExplicitField]))
+        result += EntryEmitter("type", "array")
+
+      result += ItemsShapeEmitter(array, ordering)
+
+      fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
+
+      fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
+
+      fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+
+      result
+    }
+  }
+
+  case class ItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering) extends Emitter {
+    def emit(): Unit = {
+      entry { () =>
+        raw("items")
+        RamlTypeEmitter(array.items, ordering).emitters().foreach(_.emit())
+      }
+    }
+
+    override def position(): Position = pos(array.items.fields.getValue(ArrayShapeModel.Items).annotations)
   }
 
   case class PropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {

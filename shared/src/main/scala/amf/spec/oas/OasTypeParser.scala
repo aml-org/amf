@@ -8,7 +8,7 @@ import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.OasTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 
 import scala.collection.mutable
@@ -25,6 +25,8 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
     detect(entries) match {
       case ObjectType =>
         Some(parseObjectType(name, entries))
+      case ArrayType =>
+        Some(parseArrayType(name, entries))
       case typeDef if typeDef.isScalar =>
         Some(parseScalarType(name, typeDef, entries))
       case _ => None
@@ -54,6 +56,12 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit) {
     val shape = ScalarShape(entry.ast).withName(name)
     adopt(shape)
     ScalarShapeParser(typeDef, shape, entries).parse()
+  }
+
+  private def parseArrayType(name: String, entries: Entries): Shape = {
+    val shape = ArrayShape(entry.ast).withName(name)
+    adopt(shape)
+    ArrayShapeParser(shape, entries).parse()
   }
 
   private def parseObjectType(name: String, entries: Entries): Shape = {
@@ -126,6 +134,37 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.MultipleOf, value.integer(), entry.annotations())
     })
+
+    shape
+  }
+}
+
+case class ArrayShapeParser(shape: ArrayShape, entries: Entries) extends ShapeParser() {
+  override def parse(): Shape = {
+
+    super.parse()
+
+    entries.key("minItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("maxItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+    })
+
+    entries.key("uniqueItems", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+    })
+
+    entries.key("items", entry => {
+      OasTypeParser(entry, items => items.adopted(shape.id + "/items"))
+        .parse()
+        .foreach(items => shape.withItems(items))
+    }
+    )
 
     shape
   }

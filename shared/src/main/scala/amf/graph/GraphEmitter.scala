@@ -10,11 +10,11 @@ import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel, XMLSerializerModel,PropertyDependenciesModel}
+import amf.metadata.shape._
 import amf.metadata.{Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer,PropertyDependencies}
+import amf.shape._
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.ValueType
 
@@ -234,6 +234,7 @@ object GraphEmitter {
     case _: Response      => ResponseModel
     case _: Payload       => PayloadModel
     case _: NodeShape     => NodeShapeModel
+    case _: ArrayShape    => ArrayShapeModel
     case _: ScalarShape   => ScalarShapeModel
     case _: PropertyShape => PropertyShapeModel
     case _: XMLSerializer => XMLSerializerModel

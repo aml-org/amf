@@ -11,10 +11,10 @@ import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel,PropertyDependenciesModel, XMLSerializerModel}
+import amf.metadata.shape._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
-import amf.shape.{NodeShape, PropertyShape, ScalarShape, XMLSerializer, PropertyDependencies}
+import amf.shape._
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 
@@ -38,7 +38,15 @@ object GraphParser {
       parse(root, ctx).set(Location, location).asInstanceOf[BaseUnit]
     }
 
-    private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj = types(ctx.expand(ts(ast).head))
+    private def retrieveType(ast: AMFAST, ctx: GraphContext): Obj =
+      ts(ast).find( t => {
+        types.get(ctx.expand(t)).isDefined
+      }) match {
+        case Some(t) => types(ctx.expand(t))
+        case None    => {
+          throw new Exception(s"Error parsing JSON-LD node, unknown @types ${ts(ast)}")
+        }
+      }
 
     private def parse(node: AMFAST, ctx: GraphContext): AmfObject = {
       val id      = retrieveId(node)
@@ -195,6 +203,7 @@ object GraphParser {
     RequestModel       -> Request.apply,
     ResponseModel      -> Response.apply,
     NodeShapeModel     -> NodeShape.apply,
+    ArrayShapeModel    -> ArrayShape.apply,
     ScalarShapeModel   -> ScalarShape.apply,
     PropertyShapeModel -> PropertyShape.apply,
     XMLSerializerModel -> XMLSerializer.apply,

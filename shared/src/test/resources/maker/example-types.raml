@@ -70,4 +70,28 @@ protocols:
           application/xml: string
       404:
         body: integer
+
+/scalar_array:
+  get:
+    displayName: scalar_array
+    body:
+      application/json:
+        type: array
+        displayName: scalar_array
+        minItems: 3
+        maxItems: 10
+        uniqueItems: true
+        items:
+          type: string
+
+/object_array:
+  get:
+    displayName: object_array
+    body:
+      application/json:
+        displayName: object_array
+        type: array
+        items:
+          type: object
+
 baseUri: api.example.com/path
