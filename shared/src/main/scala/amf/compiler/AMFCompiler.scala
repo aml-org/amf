@@ -19,6 +19,7 @@ import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.serialization.AmfParser
+import amf.spec.dialect.DialectParser
 import amf.spec.oas.OasSpecParser
 import amf.spec.raml.RamlSpecParser
 import amf.yaml.YamlLexer
@@ -32,7 +33,7 @@ class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
                            hint: Hint,
-                           private val cache: Cache) {
+                           private val cache: Cache,private val dialects:amf.dialects.DialectRegistry=amf.dialects.DialectRegistry.default) {
 
   private lazy val context: Context                    = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                            = context.current
@@ -106,9 +107,17 @@ class AMFCompiler private (val url: String,
 
   private def resolveRamlUnit(root: Root) = {
     root.ast.head match {
-      case c if c.is(Comment) && RAML_10 == c.content => makeDocument(root)
-      case _                                          => throw new UnableToResolveUnitException
+      case c if c.is(Comment) && RAML_10 == c.content =>
+        makeDocument(root)
+      case c if c.is(Comment) && dialects.knowsHeader(c.content) =>
+        makeDialect(root)
+      case _                                          =>
+        throw new UnableToResolveUnitException
     }
+  }
+
+  private def makeDialect(root: Root): Document = {
+    DialectParser(root, dialects).parseDocument()
   }
 
   private def makeDocument(root: Root): Document = {

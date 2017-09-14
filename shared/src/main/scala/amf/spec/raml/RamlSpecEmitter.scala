@@ -32,7 +32,7 @@ case class RamlSpecEmitter(unit: BaseUnit) extends EmitterHelper {
   val emitter = ASTEmitter(AMFASTFactory())
 
   private def retrieveWebApi() = unit match {
-    case document: Document => document.encodes
+    case document: Document => document.encodes.asInstanceOf[WebApi]
   }
 
   def emitDocument(): AMFAST = {

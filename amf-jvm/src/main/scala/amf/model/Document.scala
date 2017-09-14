@@ -3,6 +3,7 @@ package amf.model
 import java.util
 
 import amf.domain
+import amf.spec.dialect.DomainEntity
 
 import scala.collection.JavaConverters._
 
@@ -16,7 +17,7 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
 
   def this() = this(amf.document.Document())
 
-  def this(webApi: WebApi) = this(amf.document.Document().withEncodes(webApi.element))
+  def this(webApi: DomainElement) = this(amf.document.Document().withEncodes(webApi.element))
 
   /** List of references to other [[DomainElement]]s. */
   override val references: java.util.List[BaseUnit] =
@@ -28,9 +29,22 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
   override val location: String = document.location
 
   /** Encoded [[DomainElement]] described in the document element. */
-  val encodes: WebApi = Option(document)
+  val encodes: DomainElement = Option(document)
     .filter(_.isInstanceOf[amf.document.Document])
-    .map(d => WebApi(d.asInstanceOf[amf.document.Document].encodes))
+    .map({d =>
+      d match {
+        case doc: amf.document.Document => {
+          doc.encodes match {
+            case webapi: amf.domain.WebApi                      => WebApi(webapi)
+            case domain: DomainEntity                      => new amf.dialects.DialectEntityModel(domain)
+
+            case _ => throw new Exception("Only WebAPI and vocabularies supported at the moment")
+          }
+        }
+        case _ => throw new Exception("Only documents supported at the moment")
+      }
+
+    })
     .orNull
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */

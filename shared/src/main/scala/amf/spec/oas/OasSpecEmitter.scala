@@ -34,7 +34,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
   // Now, will be saved in document model (since changes in parser)
 
   private def retrieveWebApi() = unit match {
-    case document: Document => document.encodes
+    case document: Document => document.encodes.asInstanceOf[WebApi]
   }
 
   def emitDocument(): AMFAST = {

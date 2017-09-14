@@ -2,8 +2,8 @@ package amf.graph
 
 import amf.client.GenerationOptions
 import amf.common.AMFToken._
-import amf.common.core.Strings
 import amf.common._
+import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -17,6 +17,7 @@ import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.shape._
+import amf.spec.dialect.DomainEntity
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 
@@ -51,6 +52,7 @@ object GraphEmitter {
       val sources = SourceMap(id, element)
 
       val obj = metamodel(element)
+
       if (obj.dynamic) {
         traverseDynamicMetamodel(id, element, sources, obj, parent)
       } else {
@@ -79,11 +81,9 @@ object GraphEmitter {
     }
 
     def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
-      createTypeNode(obj)
+      createTypeNode(obj, Some(element))
 
-
-
-      obj.fields.map(element.fields.entry).foreach {
+      obj.fields.map(element.fields.entryJsonld).foreach {
         case Some(FieldEntry(f, v)) =>
           entry { () =>
             val url = f.value.iri()
@@ -165,6 +165,9 @@ object GraphEmitter {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
               case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
               case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
+              case Type.Int  => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalarWithType(e.toString, "http://www.w3.org/2001/XMLSchema#integer", inArray = true))
+              case Bool     => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalarWithType(e.toString, "http://www.w3.org/2001/XMLSchema#boolean", inArray = true))
+              case _        => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
             }
           }
       }
@@ -219,7 +222,17 @@ object GraphEmitter {
       }
     }
 
-    private def value(content: String, token: AMFToken): Unit = {
+    private def scalarWithType(content: String, datatype: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
+      if (inArray) {
+        value(content, datatype, token)
+      } else {
+        array { () =>
+          value(content, datatype, token)
+        }
+      }
+    }
+
+    private def value(content: String, token: AMFToken) = {
       map { () =>
         entry { () =>
           raw("@value")
@@ -228,13 +241,29 @@ object GraphEmitter {
       }
     }
 
-    private def createIdNode(id: String): Unit = entry("@id", id)
+    private def value(content: String, datatype: String, token: AMFToken) = {
+      map { () =>
+        entry { () =>
+          raw("@value")
+          raw("@type", StringToken)
+          raw(content, token)
+        }
+      }
+    }
 
-    private def createTypeNode(obj: Obj): Unit = {
+    private def createIdNode(id: String) = entry("@id", id)
+
+    private def createTypeNode(obj: Obj, maybeElement: Option[AmfObject] = None) = {
       entry { () =>
         raw("@type")
         array { () =>
           obj.`type`.foreach(t => raw(t.iri()))
+          if (obj.dynamicType) {
+            maybeElement match {
+              case Some(element) => element.dynamicTypes().foreach(t => raw(t))
+              case _             => // ignore
+            }
+          }
         }
       }
     }
@@ -329,6 +358,7 @@ object GraphEmitter {
     case _: DomainExtension      => DomainExtensionModel
     case _: CustomDomainProperty => CustomDomainPropertyModel
     case _: DataNode             => DataNodeModel
-    case _  => throw new Exception(s"Missing metadata mapping for $instance")
+    case entity: DomainEntity    => new amf.dialects.DialectEntityModel(entity)
+    case _                => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

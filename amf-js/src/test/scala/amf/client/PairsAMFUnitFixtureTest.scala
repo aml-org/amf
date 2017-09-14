@@ -9,11 +9,11 @@ import amf.model.{Document, WebApi}
 trait PairsAMFUnitFixtureTest extends AMFUnitFixtureTest {
 
   def webApiBare: WebApi = {
-    WebApi(`document/api/bare`.encodes)
+    WebApi(`document/api/bare`.encodes.asInstanceOf[amf.domain.WebApi])
   }
 
   def webApiAdvanced: WebApi = {
-    WebApi(`document/api/advanced`.encodes)
+    WebApi(`document/api/advanced`.encodes.asInstanceOf[amf.domain.WebApi])
   }
 
   def unitBare: Document = {
