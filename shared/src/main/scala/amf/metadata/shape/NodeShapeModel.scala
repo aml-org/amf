@@ -7,7 +7,7 @@ import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.vocabulary.ValueType
 
 /**
-  * Node shape metamodel
+  * Node shape metamodel.
   */
 object NodeShapeModel extends ShapeModel with DomainElementModel {
 
@@ -26,6 +26,8 @@ object NodeShapeModel extends ShapeModel with DomainElementModel {
   val Properties = Field(Array(PropertyShapeModel), Shacl + "property")
 
   val Dependencies = Field(Array(PropertyDependenciesModel), Shapes + "dependencies")
+
+  val Inherits = Field(Array(ShapeModel), Shapes + "inherits")
 
   override val fields: List[Field] = List(MinProperties,
                                           MaxProperties,

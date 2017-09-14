@@ -31,5 +31,6 @@ object TypeDef {
   object PasswordType     extends TypeDef with ScalarType
   object ArrayType        extends TypeDef
   object ObjectType       extends TypeDef
+  object RefType          extends TypeDef
   object UndefinedType    extends TypeDef
 }

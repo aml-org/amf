@@ -45,7 +45,7 @@ case class RamlSpecParser(root: Root) {
     entries.key(
       "types",
       entry => {
-        val types = RamlTypesParser(entry.value, shape => { shape.adopted(definitions) }).parse()
+        val types = RamlTypesParser(entry.value, shape => shape.adopted(definitions), declarations).parse()
         types.foreach(shape => {
           declarations += shape.name -> shape.add(DeclaredElement())
         })
@@ -68,7 +68,7 @@ case class RamlSpecParser(root: Root) {
       "baseUriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, api.withBaseUriParameter).parse().map(_.withBinding("path"))
+          ParametersParser(entry.value, api.withBaseUriParameter, declarations).parse().map(_.withBinding("path"))
         api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -135,7 +135,7 @@ case class RamlSpecParser(root: Root) {
       "^/.*",
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints).parse())
+        entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints, declarations).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints))
       }
     )
@@ -173,7 +173,8 @@ case class RamlSpecParser(root: Root) {
 case class EndpointParser(entry: EntryNode,
                           producer: String => EndPoint,
                           parent: Option[EndPoint],
-                          collector: mutable.ListBuffer[EndPoint]) {
+                          collector: mutable.ListBuffer[EndPoint],
+                          declarations: Map[String, Shape]) {
   def parse(): Unit = {
 
     val path = parent.map(_.path).getOrElse("") + entry.key.content.unquote
@@ -198,7 +199,7 @@ case class EndpointParser(entry: EntryNode,
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, endpoint.withParameter).parse().map(_.withBinding("path"))
+          ParametersParser(entry.value, endpoint.withParameter, declarations).parse().map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -208,7 +209,7 @@ case class EndpointParser(entry: EntryNode,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += OperationParser(entry, endpoint.withOperation).parse()
+          operations += OperationParser(entry, endpoint.withOperation, declarations).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -219,13 +220,13 @@ case class EndpointParser(entry: EntryNode,
     entries.regex(
       "^/.*",
       entries => {
-        entries.foreach(EndpointParser(_, producer, Some(endpoint), collector).parse())
+        entries.foreach(EndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
       }
     )
   }
 }
 
-case class RequestParser(entries: Entries, producer: () => Request) {
+case class RequestParser(entries: Entries, producer: () => Request, declarations: Map[String, Shape]) {
 
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)
@@ -234,7 +235,9 @@ case class RequestParser(entries: Entries, producer: () => Request) {
       entry => {
 
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, request.getOrCreate.withQueryParameter).parse().map(_.withBinding("query"))
+          ParametersParser(entry.value, request.getOrCreate.withQueryParameter, declarations)
+            .parse()
+            .map(_.withBinding("query"))
         request.getOrCreate.set(RequestModel.QueryParameters,
                                 AmfArray(parameters, Annotations(entry.value)),
                                 entry.annotations())
@@ -245,7 +248,9 @@ case class RequestParser(entries: Entries, producer: () => Request) {
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, request.getOrCreate.withHeader).parse().map(_.withBinding("header"))
+          ParametersParser(entry.value, request.getOrCreate.withHeader, declarations)
+            .parse()
+            .map(_.withBinding("header"))
         request.getOrCreate.set(RequestModel.Headers,
                                 AmfArray(parameters, Annotations(entry.value)),
                                 entry.annotations())
@@ -257,7 +262,7 @@ case class RequestParser(entries: Entries, producer: () => Request) {
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id))
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) //todo
 
@@ -266,7 +271,7 @@ case class RequestParser(entries: Entries, producer: () => Request) {
             ".*/.*",
             entries => {
               entries.foreach(entry => {
-                payloads += PayloadParser(entry, producer = request.getOrCreate.withPayload).parse()
+                payloads += PayloadParser(entry, producer = request.getOrCreate.withPayload, declarations).parse()
               })
             }
           )
@@ -280,7 +285,7 @@ case class RequestParser(entries: Entries, producer: () => Request) {
   }
 }
 
-case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
+case class OperationParser(entry: EntryNode, producer: (String) => Operation, declarations: Map[String, Shape]) {
 
   def parse(): Operation = {
 
@@ -328,7 +333,9 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
       }
     )
 
-    RequestParser(entries, () => operation.withRequest()).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, () => operation.withRequest(), declarations)
+      .parse()
+      .map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",
@@ -337,7 +344,9 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
           "\\d{3}",
           entries => {
             val responses = mutable.ListBuffer[Response]()
-            entries.foreach(entry => { responses += ResponseParser(entry, operation.withResponse).parse() })
+            entries.foreach(entry => {
+              responses += ResponseParser(entry, operation.withResponse, declarations).parse()
+            })
             operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), entry.annotations())
           }
         )
@@ -348,29 +357,29 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
   }
 }
 
-case class ParametersParser(ast: AMFAST, producer: String => Parameter) {
+case class ParametersParser(ast: AMFAST, producer: String => Parameter, declarations: Map[String, Shape]) {
   def parse(): Seq[Parameter] = {
     Entries(ast).entries.values
-      .map(entry => ParameterParser(entry, producer).parse())
+      .map(entry => ParameterParser(entry, producer, declarations).parse())
       .toSeq
   }
 }
 
-case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload) {
+case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload, declarations: Map[String, Shape]) {
   def parse(): Payload = {
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry.ast))
 
     Option(entry.value).foreach(
       _ =>
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
           .parse()
           .foreach(payload.withSchema))
     payload
   }
 }
 
-case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
+case class ResponseParser(entry: EntryNode, producer: (String) => Response, declarations: Map[String, Shape]) {
   def parse(): Response = {
 
     val node = ValueNode(entry.key)
@@ -388,7 +397,7 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
     entries.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value, response.withHeader).parse()
+        val parameters: Seq[Parameter] = ParametersParser(entry.value, response.withHeader, declarations).parse()
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -401,14 +410,14 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
         val payload = Payload()
         payload.adopted(response.id) // TODO review
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id))
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), declarations)
           .parse()
           .foreach(payloads += payload.withSchema(_))
 
         Entries(entry.value).regex(
           ".*/.*",
           entries => {
-            entries.foreach(entry => { payloads += PayloadParser(entry, response.withPayload).parse() })
+            entries.foreach(entry => { payloads += PayloadParser(entry, response.withPayload, declarations).parse() })
           }
         )
         if (payloads.nonEmpty)
@@ -420,7 +429,7 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
   }
 }
 
-case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
+case class ParameterParser(entry: EntryNode, producer: String => Parameter, declarations: Map[String, Shape]) {
   def parse(): Parameter = {
 
     val name      = entry.key.content.unquote
@@ -444,7 +453,7 @@ case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
       parameter.set(ParameterModel.Description, value.string(), entry.annotations())
     })
 
-    RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
+    RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
       .parse()
       .foreach(parameter.set(ParameterModel.Schema, _, entry.annotations()))
 

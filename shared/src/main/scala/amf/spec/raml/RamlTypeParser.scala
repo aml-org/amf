@@ -1,8 +1,8 @@
 package amf.spec.raml
 
-import amf.common.{AMFAST, AMFToken}
-import amf.common.AMFToken.{MapToken, StringToken, SequenceToken}
+import amf.common.AMFToken.{MapToken, SequenceToken, StringToken}
 import amf.common.core.Strings
+import amf.common.{AMFAST, AMFToken}
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
@@ -13,7 +13,7 @@ import amf.shape._
 
 import scala.collection.mutable
 
-case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
+case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit, declarations: Map[String, Shape]) {
 
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
@@ -22,7 +22,7 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
 
     detect(ahead) match {
       case ObjectType =>
-        Some(parseObjectType(name, ahead))
+        Some(parseObjectType(name, ahead, declarations))
       case ArrayType =>
         Some(parseArrayType(name, ahead))
       case typeDef if typeDef.isScalar =>
@@ -32,7 +32,11 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
   }
 
   private def detect(property: Either[AMFAST, Entries]): TypeDef = property match {
-    case Left(node) => matchType(node.content.unquote)
+    case Left(node) =>
+      node.`type` match {
+        case StringToken   => matchType(node.content.unquote)
+        case SequenceToken => ObjectType
+      }
     case Right(entries) =>
       detectTypeOrSchema(entries)
         .orElse(detectProperties(entries))
@@ -52,10 +56,15 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
     entries
       .key("type")
       .orElse(entries.key("schema"))
-      .map(e => {
-        val t = e.value.content.unquote
-        val f = entries.key("(format)").map(_.value.content.unquote).getOrElse("")
-        matchType(t, f)
+      .map(e =>
+        e.value.`type` match {
+          case StringToken =>
+            val t = e.value.content.unquote
+            val f = entries.key("(format)").map(_.value.content.unquote).getOrElse("")
+            matchType(t, f)
+          case SequenceToken => ObjectType
+          case MapToken      => ObjectType
+          case _             => UndefinedType
       })
   }
 
@@ -71,34 +80,35 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit) {
 
   def parseArrayType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
     val shape = ahead match {
-      case Right(entries) => DataArrangementParser(name, entry, entries, (shape: Shape) => adopt(shape)).parse()
-      case _              => ArrayShape(entry.ast).withName(name)
+      case Right(entries) =>
+        DataArrangementParser(name, entry, entries, (shape: Shape) => adopt(shape), declarations).parse()
+      case _ => ArrayShape(entry.ast).withName(name)
     }
     shape
   }
 
-  private def parseObjectType(name: String, ahead: Either[AMFAST, Entries]): Shape = {
+  private def parseObjectType(name: String, ahead: Either[AMFAST, Entries], declarations: Map[String, Shape]): Shape = {
     val shape = NodeShape(entry.ast).withName(name)
     adopt(shape)
     ahead match {
-      case Right(entries) => NodeShapeParser(shape, entries).parse()
+      case Right(entries) => NodeShapeParser(shape, entries, declarations).parse()
       case Left(_)        => shape
     }
   }
 
   def lookAhead(): Either[AMFAST, Entries] = {
     entry.value.`type` match {
-      case StringToken   => Left(entry.value)
-      case MapToken      => Right(Entries(entry.value))
-      case _           => throw new RuntimeException("no value detected in look ahead")
+      case StringToken | SequenceToken => Left(entry.value)
+      case MapToken                    => Right(Entries(entry.value))
+      case _                           => throw new RuntimeException("no value detected in look ahead")
     }
   }
 }
 
-case class RamlTypesParser(ast: AMFAST, adopt: Shape => Unit) {
+case class RamlTypesParser(ast: AMFAST, adopt: Shape => Unit, declarations: Map[String, Shape]) {
   def parse(): Seq[Shape] = {
     Entries(ast).entries.values
-      .flatMap(entry => RamlTypeParser(entry, adopt).parse())
+      .flatMap(entry => RamlTypeParser(entry, adopt, declarations).parse())
       .toSeq
   }
 }
@@ -165,7 +175,11 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
   }
 }
 
-case class DataArrangementParser(name: String, entry: EntryNode, entries: Entries, adopt: Shape => Unit) {
+case class DataArrangementParser(name: String,
+                                 entry: EntryNode,
+                                 entries: Entries,
+                                 adopt: Shape => Unit,
+                                 declarations: Map[String, Shape]) {
 
   def lookAhead(): Either[TupleShape, ArrayShape] = {
     entries.key("(tuple)") match {
@@ -174,7 +188,7 @@ case class DataArrangementParser(name: String, entry: EntryNode, entries: Entrie
           // this is a sequence, we need to create a tuple
           case AMFToken.SequenceToken => Left(TupleShape(entry.ast).withName(name))
           // not an array regular array parsing
-          case _ =>  throw new Exception("Tuples must have a list of types")
+          case _ => throw new Exception("Tuples must have a list of types")
 
         }
       case None => Right(ArrayShape(entry.ast).withName(name))
@@ -183,21 +197,25 @@ case class DataArrangementParser(name: String, entry: EntryNode, entries: Entrie
 
   def parse(): Shape = {
     lookAhead() match {
-      case Left(tuple)  => TupleShapeParser(tuple, entries, adopt).parse()
-      case Right(array) => ArrayShapeParser(array, entries, adopt).parse()
+      case Left(tuple)  => TupleShapeParser(tuple, entries, adopt, declarations).parse()
+      case Right(array) => ArrayShapeParser(array, entries, adopt, declarations).parse()
     }
   }
 
 }
 
-case class ArrayShapeParser(override val shape: ArrayShape, entries: Entries, adopt: Shape => Unit) extends ShapeParser() {
+case class ArrayShapeParser(override val shape: ArrayShape,
+                            entries: Entries,
+                            adopt: Shape => Unit,
+                            declarations: Map[String, Shape])
+    extends ShapeParser() {
 
   override def parse(): Shape = {
     adopt(shape)
 
     super.parse()
 
-    entries.key("type", entry => shape.add(ExplicitField()))
+    entries.key("type", _ => shape.add(ExplicitField()))
 
     entries.key("minItems", entry => {
       val value = ValueNode(entry.value)
@@ -216,7 +234,7 @@ case class ArrayShapeParser(override val shape: ArrayShape, entries: Entries, ad
 
     val finalShape = for {
       itemsEntry <- entries.key("items")
-      item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items")).parse()
+      item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), declarations).parse()
     } yield {
       item match {
         case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -226,20 +244,24 @@ case class ArrayShapeParser(override val shape: ArrayShape, entries: Entries, ad
     }
 
     finalShape match {
-      case Some(parsed:Shape) => parsed
-      case None               => throw new Exception("Cannot parse data arrangement shape")
+      case Some(parsed: Shape) => parsed
+      case None                => throw new Exception("Cannot parse data arrangement shape")
     }
   }
 }
 
-case class TupleShapeParser(val shape: TupleShape, entries: Entries,  adopt: Shape => Unit) extends ShapeParser() {
+case class TupleShapeParser(shape: TupleShape,
+                            entries: Entries,
+                            adopt: Shape => Unit,
+                            declarations: Map[String, Shape])
+    extends ShapeParser() {
 
   override def parse(): Shape = {
     adopt(shape)
 
     super.parse()
 
-    entries.key("type", entry => shape.add(ExplicitField()))
+    entries.key("type", _ => shape.add(ExplicitField()))
 
     entries.key("minItems", entry => {
       val value = ValueNode(entry.value)
@@ -256,24 +278,52 @@ case class TupleShapeParser(val shape: TupleShape, entries: Entries,  adopt: Sha
       shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
     })
 
-    entries.key("items", entry => {
-      val items = Entries(entry.ast).entries.values
-        .zipWithIndex
-        .map(entry => RamlTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
-        .toSeq
-      shape.withItems(items.filter(_.isDefined).map(_.get))
-    })
+    entries.key(
+      "items",
+      entry => {
+        val items = Entries(entry.ast).entries.values.zipWithIndex
+          .map(entry =>
+            RamlTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2), declarations).parse())
+          .toSeq
+        shape.withItems(items.filter(_.isDefined).map(_.get))
+      }
+    )
 
     shape
   }
 }
 
-case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapeParser() {
+case class NodeShapeParser(shape: NodeShape, entries: Entries, declarations: Map[String, Shape])
+    extends ShapeParser() {
   override def parse(): NodeShape = {
 
     super.parse()
 
-    entries.key("type", entry => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+    entries.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+
+    entries.key(
+      "type",
+      entry => {
+        shape.add(ExplicitField()) // TODO store annotation in dataType field.
+        entry.value.`type` match {
+          case StringToken if entry.value.content.unquote != "object" =>
+            shape.set(NodeShapeModel.Inherits,
+                      AmfArray(Seq(declarations(entry.value.content.unquote)), Annotations(entry.value)),
+                      entry.annotations())
+          case SequenceToken =>
+            val inherits = ArrayNode(entry.value)
+              .strings()
+              .scalars
+              .map(scalar => declarations(scalar.toString))
+
+            shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), entry.annotations())
+          case _ =>
+            RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
+              .parse()
+              .foreach(s => shape.set(NodeShapeModel.Inherits, s, entry.annotations()))
+        }
+      }
+    )
 
     entries.key("minProperties", entry => {
       val value = ValueNode(entry.value)
@@ -311,7 +361,7 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapePars
       "properties",
       entry => {
         val properties: Seq[PropertyShape] =
-          PropertiesParser(entry.value, shape.withProperty).parse()
+          PropertiesParser(entry.value, shape.withProperty, declarations).parse()
         shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -366,16 +416,16 @@ case class NodeDependencyParser(entry: EntryNode, properties: mutable.ListMap[St
 
 }
 
-case class PropertiesParser(ast: AMFAST, producer: String => PropertyShape) {
+case class PropertiesParser(ast: AMFAST, producer: String => PropertyShape, declarations: Map[String, Shape]) {
 
   def parse(): Seq[PropertyShape] = {
     Entries(ast).entries.values
-      .map(entry => PropertyShapeParser(entry, producer).parse())
+      .map(entry => PropertyShapeParser(entry, producer, declarations).parse())
       .toSeq
   }
 }
 
-case class PropertyShapeParser(entry: EntryNode, producer: String => PropertyShape) {
+case class PropertyShapeParser(entry: EntryNode, producer: String => PropertyShape, declarations: Map[String, Shape]) {
 
   def parse(): PropertyShape = {
 
@@ -402,7 +452,7 @@ case class PropertyShapeParser(entry: EntryNode, producer: String => PropertySha
 
     // todo path
 
-    RamlTypeParser(entry, shape => shape.adopted(property.id))
+    RamlTypeParser(entry, shape => shape.adopted(property.id), declarations)
       .parse()
       .foreach(range => property.set(PropertyShapeModel.Name, range.name).set(PropertyShapeModel.Range, range))
 

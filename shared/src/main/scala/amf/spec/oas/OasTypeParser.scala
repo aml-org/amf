@@ -1,8 +1,8 @@
 package amf.spec.oas
 
-import amf.common.{AMFAST, AMFToken}
-import amf.common.AMFToken.{MapToken, SequenceToken, StringToken}
+import amf.common.AMFToken.SequenceToken
 import amf.common.core.Strings
+import amf.common.{AMFAST, AMFToken}
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
@@ -146,7 +146,7 @@ case class DataArrangementParser(name: String, entry: KeyValueNode, entries: Ent
           // this is a sequence, we need to create a tuple
           case AMFToken.SequenceToken => Some(Left(TupleShape(entry.ast).withName(name)))
           // not an array regular array parsing
-          case _ =>  Some(Right(ArrayShape(entry.ast).withName(name)))
+          case _ => Some(Right(ArrayShape(entry.ast).withName(name)))
 
         }
       case None => None
@@ -155,7 +155,7 @@ case class DataArrangementParser(name: String, entry: KeyValueNode, entries: Ent
 
   def parse(): Shape = {
     lookAhead() match {
-      case None => throw new Exception("Cannot parse data arrangement shape")
+      case None               => throw new Exception("Cannot parse data arrangement shape")
       case Some(Left(tuple))  => TupleShapeParser(tuple, entries, adopt).parse()
       case Some(Right(array)) => ArrayShapeParser(array, entries, adopt).parse()
     }
@@ -163,7 +163,7 @@ case class DataArrangementParser(name: String, entry: KeyValueNode, entries: Ent
 
 }
 
-case class TupleShapeParser(val shape: TupleShape, entries: Entries,  adopt: Shape => Unit) extends ShapeParser() {
+case class TupleShapeParser(shape: TupleShape, entries: Entries, adopt: Shape => Unit) extends ShapeParser() {
 
   override def parse(): Shape = {
     adopt(shape)
@@ -185,19 +185,19 @@ case class TupleShapeParser(val shape: TupleShape, entries: Entries,  adopt: Sha
       shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
     })
 
-    entries.key("items", entry => {
-      val items = Entries(entry.ast).entries.values
-        .zipWithIndex
-        .map(entry => OasTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
-        .toSeq
-      shape.withItems(items.filter(_.isDefined).map(_.get))
-    })
+    entries.key(
+      "items",
+      entry => {
+        val items = Entries(entry.ast).entries.values.zipWithIndex
+          .map(entry => OasTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
+          .toSeq
+        shape.withItems(items.filter(_.isDefined).map(_.get))
+      }
+    )
 
     shape
   }
 }
-
-
 
 case class ArrayShapeParser(shape: ArrayShape, entries: Entries, adopt: Shape => Unit) extends ShapeParser() {
   override def parse(): Shape = {
@@ -232,8 +232,8 @@ case class ArrayShapeParser(shape: ArrayShape, entries: Entries, adopt: Shape =>
     }
 
     finalShape match {
-      case Some(parsed:Shape) => parsed
-      case None               => throw new Exception("Cannot parse data arrangement shape")
+      case Some(parsed: Shape) => parsed
+      case None                => throw new Exception("Cannot parse data arrangement shape")
     }
   }
 }
@@ -243,7 +243,7 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries) extends ShapePars
 
     super.parse()
 
-    entries.key("type", entry => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+    entries.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
     entries.key("minProperties", entry => {
       val value = ValueNode(entry.value)

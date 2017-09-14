@@ -24,7 +24,7 @@ object RamlTypeDefMatcher {
     case "date-only"     => DateOnlyType
     case "array"         => ArrayType
     case "object"        => ObjectType
-    case _               => UndefinedType
+    case _               => ObjectType
   }
 
   def isFormatExtention(format: String = ""): Boolean = format match {
