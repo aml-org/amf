@@ -42,12 +42,18 @@ case class RamlSpecParser(root: Root) {
 
     var declarations: Map[String, Shape] = Map()
 
+    // TODO lexical information?
     entries.key(
       "types",
       entry => {
-        val types = RamlTypesParser(entry.value, shape => shape.adopted(definitions), declarations).parse()
-        types.foreach(shape => {
-          declarations += shape.name -> shape.add(DeclaredElement())
+
+        // TODO Unresolved reference when two types are in the same level.
+        Entries(entry.value).entries.values.flatMap(entry => {
+          val s = RamlTypeParser(entry, shape => shape.adopted(definitions), declarations).parse()
+          s.foreach(shape => {
+            declarations += shape.name -> shape.add(DeclaredElement())
+          })
+          s
         })
       }
     )

@@ -304,7 +304,6 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries, declarations: Map
     entries.key(
       "type",
       entry => {
-        shape.add(ExplicitField()) // TODO store annotation in dataType field.
         entry.value.`type` match {
           case StringToken if entry.value.content.unquote != "object" =>
             shape.set(NodeShapeModel.Inherits,
@@ -317,10 +316,12 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries, declarations: Map
               .map(scalar => declarations(scalar.toString))
 
             shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), entry.annotations())
-          case _ =>
+          case MapToken =>
             RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
               .parse()
               .foreach(s => shape.set(NodeShapeModel.Inherits, s, entry.annotations()))
+          case _ =>
+            shape.add(ExplicitField()) // TODO store annotation in dataType field.
         }
       }
     )

@@ -10,7 +10,7 @@ import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.shape._
-import amf.model.AmfScalar
+import amf.model.{AmfElement, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
@@ -33,17 +33,37 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     case document: Document => document.encodes
   }
 
-  def emitWebApi(): AMFAST = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    val api    = WebApiEmitter(model, ordering(Raml, model.annotations), vendor)
+  private def retrieveDeclarations() = unit match {
+    case document: Document => document.declares
+  }
+
+  def emitDocument(): AMFAST = {
+    val apiEmitters = emitWebApi()
+    // TODO ordering??
+
+    val encodesEmitters = emitEncodes()
 
     emitter.root(Root) { () =>
       raw("%RAML 1.0", Comment)
       map { () =>
-        traverse(api.emitters)
+        traverse(apiEmitters ++ encodesEmitters)
       }
     }
+  }
+
+  def emitWebApi(): Seq[Emitter] = {
+    val model  = retrieveWebApi()
+    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val api    = WebApiEmitter(model, ordering(Raml, model.annotations), vendor)
+    api.emitters
+  }
+
+  def emitEncodes(): Seq[Emitter] = {
+    val declared = retrieveDeclarations()
+    // TODO annotations???
+
+    //TODO other domaint elements declared?
+    DeclaresEmitter(declared, ordering(Raml, Annotations())).emitters()
   }
 
   private def traverse(emitters: Seq[Emitter]): Unit = {
@@ -66,6 +86,43 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
   private def raw(content: String, token: AMFToken = StringToken): Unit = {
     emitter.value(token, content)
+  }
+
+  case class DeclaresEmitter(declares: Seq[DomainElement], ordering: SpecOrdering) {
+
+    def emitters(): Seq[Emitter] = {
+
+      // todo others emitters? traits? all mixed?
+      val shapes = declares.filter(_.isInstanceOf[Shape]).map(_.asInstanceOf[Shape])
+      Seq(DeclaresTypesEmitter(shapes))
+    }
+
+    case class DeclaresTypesEmitter(declares: Seq[Shape]) extends Emitter {
+      override def emit(): Unit = {
+        entry { () =>
+          raw("types")
+          map { () =>
+            traverse(ordering.sorted(declares.map(DeclareTypeEmitter)))
+          }
+        }
+      }
+
+      override def position(): Position = pos(declares.head.annotations)
+    }
+
+    case class DeclareTypeEmitter(shape: Shape) extends Emitter {
+      override def emit(): Unit = {
+        entry(() => {
+          raw(shape.name)
+
+          map(() => {
+            traverse(ordering.sorted(RamlTypeEmitter(shape, ordering).emitters()))
+          })
+        })
+      }
+
+      override def position(): Position = pos(shape.annotations)
+    }
   }
 
   case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[Vendor]) {
@@ -546,7 +603,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   }
 
   case class SyntheticAnnotationEmitter(key: String, value: String, pos: Position) extends Emitter {
-    override def emit(): Unit =  {
+    override def emit(): Unit = {
       entry { () =>
         raw(key)
         raw(value)
@@ -555,8 +612,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
     override def position(): Position = pos
   }
-
-
 
   case class EntryEmitter(key: String,
                           value: String,
@@ -707,9 +762,37 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
 
+      fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
+
       result
     }
 
+  }
+
+  case class ShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+
+      val (declaredShapes, inlineShapes) =
+        f.array.values.map(_.asInstanceOf[Shape]).partition(_.annotations.contains(classOf[DeclaredElement]))
+
+      entry(() => {
+        raw("type")
+
+        if (inlineShapes.nonEmpty) {
+          map { () =>
+            traverse(ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering).emitters())))
+          }
+        } else {
+          array(() => {
+            declaredShapes.foreach(s => raw(s.name))
+          })
+        }
+
+      })
+
+    }
+
+    override def position(): Position = pos(f.value.annotations)
   }
 
   case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) {
