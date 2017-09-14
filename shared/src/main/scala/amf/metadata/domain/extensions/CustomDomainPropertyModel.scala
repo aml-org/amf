@@ -20,7 +20,7 @@ import amf.vocabulary.ValueType
   * Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more
   * re-usable and generic way of achieving the same functionality
   */
-object CustomDomainProperty extends DomainElementModel {
+object CustomDomainPropertyModel extends DomainElementModel {
 
   /**
     * The name of the extension

@@ -2,7 +2,7 @@ package amf.domain.extensions
 
 import amf.common.AMFAST
 import amf.domain.{Annotations, DomainElement, Fields}
-import amf.metadata.domain.extensions.CustomDomainProperty.{Description, Domain, Name, Schema}
+import amf.metadata.domain.extensions.CustomDomainPropertyModel.{Description, Domain, Name, Schema}
 import amf.shape.Shape
 import amf.common.core._
 

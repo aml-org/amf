@@ -32,6 +32,9 @@ object Namespace {
   val Rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
 
   val Rdf = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+
+  // To build full URIs without namespace
+  val WihtoutNamespace = Namespace("")
 }
 
 /** Value type. */

@@ -24,7 +24,9 @@ trait AmfObject extends AmfElement {
   def adopted(parent: String): this.type
 
   /** Set scalar value. */
-  def set(field: Field, value: String): this.type = set(field, AmfScalar(value))
+  def set(field: Field, value: String): this.type = {
+    set(field, AmfScalar(value))
+  }
 
   /** Set scalar value. */
   def set(field: Field, value: Boolean): this.type = set(field, AmfScalar(value))

@@ -1,7 +1,10 @@
 package amf.metadata.domain.extensions
 
+import amf.metadata.Field
+import amf.metadata.Type.Str
 import amf.metadata.domain.DomainElementModel
-import amf.vocabulary.Namespace.Data
+import amf.vocabulary.Namespace.{Data, Schema}
+import amf.vocabulary.ValueType
 
 
 /**
@@ -13,20 +16,14 @@ import amf.vocabulary.Namespace.Data
   * examples
   */
 
-trait DataNode extends DomainElementModel {
-  override val fields = Seq.empty ++ DomainElementModel.fields
-  override val `type` = Data + "Node" :: DomainElementModel.`type`
+object DataNodeModel extends DomainElementModel {
+
+  val Name: Field = Field(Str, Schema + "name")
+
+  // We set this so it can be re-used in the definition of the dynamic types
+  override val fields: List[Field] = List(Name) ++ DomainElementModel.fields
+  override val `type`: List[ValueType] = Data + "Node" :: DomainElementModel.`type`
+
   // This is a dynamic class, the structure is not known before parsing
   override val dynamic = true
 }
-
-object DataNode extends  DataNode {}
-
-
-case class ObjectNode(subjectValue: String, properties: List[PropertyNode]) extends DataNode
-
-case class PropertyNode(predicateValue: String, objectValue: List[DataNode])
-
-case class ScalarNode(id: Option[String], objectValue: String, scalarType: Option[String])
-
-case class ArrayNode(id: Option[String], objectValue: List[DataNode])

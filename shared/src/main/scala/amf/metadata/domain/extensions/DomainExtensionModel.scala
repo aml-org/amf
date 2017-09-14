@@ -14,10 +14,10 @@ import amf.vocabulary.ValueType
   * They are parsed as RDF graphs using a default transformation from a set of nested
   * records into RDF
   */
-object DomainExtension extends DomainElementModel {
+object DomainExtensionModel extends DomainElementModel {
 
-  val DefinedBy       = Field(CustomDomainProperty, Document + "definedBy")
-  val Extension       = Field(DataNode, Document + "extension")
+  val DefinedBy = Field(CustomDomainPropertyModel, Document + "definedBy")
+  val Extension = Field(DataNodeModel, Document + "extension")
 
   override val fields
   : List[Field] = List(DefinedBy, Extension) ++ DomainElementModel.fields

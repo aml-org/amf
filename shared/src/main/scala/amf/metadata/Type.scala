@@ -12,7 +12,6 @@ trait Type {
 
 trait Obj extends Type {
   val fields: List[Field]
-  val dynamic: Boolean = false
 }
 
 object Type {
