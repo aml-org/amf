@@ -289,7 +289,8 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
       .flatMap(unit =>
-        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)
+        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
+      )
 
     actual
       .zip(expected)

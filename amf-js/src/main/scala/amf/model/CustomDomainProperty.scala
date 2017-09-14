@@ -8,12 +8,18 @@ import scala.scalajs.js.JSConverters._
 case class CustomDomainProperty(private[amf] val customDomainProperty: amf.domain.extensions.CustomDomainProperty) extends DomainElement {
 
   def name: String                = customDomainProperty.name
+  def displayName: String         = customDomainProperty.displayName
   def description: String         = customDomainProperty.description
   def domain: js.Iterable[String] = customDomainProperty.domain.toJSArray
   def schema: Shape               = Shape(customDomainProperty.schema)
 
   def withName(name: String): this.type = {
     customDomainProperty.withName(name)
+    this
+  }
+
+  def withDisplayName(displayName: String): this.type = {
+    customDomainProperty.withDisplayName(displayName)
     this
   }
 

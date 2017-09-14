@@ -9,4 +9,7 @@ import amf.unsafe.PlatformSecrets
 trait Maker[T <: DomainElement] extends PlatformSecrets {
 
   def make: T
+
+  def makeDeclarations: Seq[DomainElement] = Seq.empty
+
 }

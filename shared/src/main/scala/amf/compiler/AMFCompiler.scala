@@ -12,6 +12,7 @@ import amf.graph.GraphParser
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
 import amf.maker.WebApiMaker
+import amf.model.AmfObject
 import amf.oas.OasParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
@@ -102,23 +103,24 @@ class AMFCompiler private (val url: String,
   private def resolveRamlUnit(root: Root) = {
     root.ast.head match {
       case c if c.is(Comment) && RAML_10 == c.content =>
-        document(root.location, root.references, WebApiMaker(root).make)
+        document(root.location, root.references, WebApiMaker(root).make, WebApiMaker(root).makeDeclarations)
       case _ => throw new UnableToResolveUnitException
     }
   }
 
-  private def document(location: String, references: Seq[BaseUnit], element: DomainElement): Document = {
+  private def document(location: String, references: Seq[BaseUnit], element: DomainElement, declarations: Seq[DomainElement] = Seq.empty): Document = {
     Document()
       .adopted(location)
       .withLocation(location)
       .withReferences(references)
+      .withDeclares(declarations)
       .withEncodes(element)
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {
     root.ast.head.children.find(e =>
       e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
-      case Some(_) => document(root.location, root.references, WebApiMaker(root).make)
+      case Some(_) => document(root.location, root.references, WebApiMaker(root).make, WebApiMaker(root).makeDeclarations)
       case _       => throw new UnableToResolveUnitException
     }
   }

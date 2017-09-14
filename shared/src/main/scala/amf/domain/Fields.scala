@@ -45,7 +45,18 @@ class Fields {
 
   /** Set field value entry-point. */
   def set(id: String, field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
-    adopt(id, value)
+    if (field.value.iri() == "http://raml.org/vocabularies/document#declares") {
+      // declaration, set correctly the id
+      adopt(id+"#/declarations", value)
+    } else {
+      adopt(id, value)
+    }
+    fs = fs + (field -> Value(value, annotations))
+    this
+  }
+
+  /** Set field value entry-point without adopting it. */
+  def setWithoutId(field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     fs = fs + (field -> Value(value, annotations))
     this
   }

@@ -5,6 +5,7 @@ import scala.collection.JavaConverters._
 case class CustomDomainProperty(private[amf] val customDomainProperty: amf.domain.extensions.CustomDomainProperty) extends DomainElement {
 
   def name: String                   = customDomainProperty.name
+  def displayName: String            = customDomainProperty.displayName
   def description: String            = customDomainProperty.description
   def domain: java.util.List[String] = customDomainProperty.domain.asJava
   def schema: Shape                  = Shape(customDomainProperty.schema)
@@ -13,6 +14,12 @@ case class CustomDomainProperty(private[amf] val customDomainProperty: amf.domai
     customDomainProperty.withName(name)
     this
   }
+
+  def withDisplayName(displayName: String): this.type = {
+    customDomainProperty.withDisplayName(displayName)
+    this
+  }
+
 
   def withDescription(description: String): this.type = {
     customDomainProperty.withDescription(description)

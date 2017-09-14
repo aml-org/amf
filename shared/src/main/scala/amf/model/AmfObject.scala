@@ -62,6 +62,18 @@ trait AmfObject extends AmfElement {
   }
 
   /** Set field value. */
+  def setArrayWithoutId(field: Field, values: Seq[AmfElement]): this.type = {
+    fields.setWithoutId(field, AmfArray(values))
+    this
+  }
+
+  /** Set field value. */
+  def setArrayWithoutId(field: Field, values: Seq[AmfElement], annotations: Annotations): this.type = {
+    fields.setWithoutId(field, AmfArray(values), annotations)
+    this
+  }
+
+  /** Set field value. */
   def set(field: Field, value: AmfElement, annotations: Annotations): this.type = {
     fields.set(id, field, value, annotations)
     this

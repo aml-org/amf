@@ -2,7 +2,8 @@ package amf.maker
 
 import amf.compiler.Root
 import amf.domain.Annotation.SourceVendor
-import amf.domain.WebApi
+import amf.domain.{DomainElement, WebApi}
+import amf.model.AmfObject
 import amf.remote.{Oas, Raml}
 import amf.spec.oas.OasSpecParser
 import amf.spec.raml.RamlSpecParser
@@ -19,6 +20,13 @@ class WebApiMaker(root: Root) extends Maker[WebApi] {
       case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
     }).add(SourceVendor(root.vendor))
   }
+
+  override def makeDeclarations: Seq[DomainElement] = root.vendor match {
+    case Raml => RamlSpecParser(root).parseWebApiDeclarations()
+    case Oas  => Seq.empty // OasSpecParser(root).parseWebApiDeclarations()
+    case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
+  }
+
 }
 
 object WebApiMaker {

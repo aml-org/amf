@@ -25,7 +25,8 @@ object CustomDomainPropertyModel extends DomainElementModel {
   /**
     * The name of the extension
     */
-  val Name = Field(Str, amf.vocabulary.Namespace.Schema + "name")
+  val Name = Field(Str, amf.vocabulary.Namespace.Document + "name")
+  val DisplayName = Field(Str, amf.vocabulary.Namespace.Schema + "name")
   val Description = Field(Str, amf.vocabulary.Namespace.Schema + "description")
 
   /**

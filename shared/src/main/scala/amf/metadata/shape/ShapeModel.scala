@@ -1,12 +1,12 @@
 package amf.metadata.shape
 
+import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
-import amf.metadata.domain.CreativeWorkModel
-import amf.metadata.{Field, Obj}
+import amf.metadata.domain.{CreativeWorkModel, DomainElementModel}
 import amf.vocabulary.Namespace.{Schema, Shacl, Shapes}
 import amf.vocabulary.ValueType
 
-trait ShapeModel extends Obj {
+trait ShapeModel extends DomainElementModel {
 
   val Name = Field(Str, Shacl + "name")
 
