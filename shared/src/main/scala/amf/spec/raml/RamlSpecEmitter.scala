@@ -10,7 +10,7 @@ import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.shape._
-import amf.model.{AmfElement, AmfScalar}
+import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
@@ -33,7 +33,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     case document: Document => document.encodes
   }
 
-  private def retrieveDeclarations() = unit match {
+  private def retrieveDeclarations(): Seq[DomainElement] = unit match {
     case document: Document => document.declares
   }
 
@@ -41,12 +41,12 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     val apiEmitters = emitWebApi()
     // TODO ordering??
 
-    val encodesEmitters = emitEncodes()
+    val declares = DeclaresEmitter(retrieveDeclarations(), ordering(Raml, Annotations())).emitters()
 
     emitter.root(Root) { () =>
       raw("%RAML 1.0", Comment)
       map { () =>
-        traverse(apiEmitters ++ encodesEmitters)
+        traverse(apiEmitters ++ declares)
       }
     }
   }
@@ -56,14 +56,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
     val api    = WebApiEmitter(model, ordering(Raml, model.annotations), vendor)
     api.emitters
-  }
-
-  def emitEncodes(): Seq[Emitter] = {
-    val declared = retrieveDeclarations()
-    // TODO annotations???
-
-    //TODO other domaint elements declared?
-    DeclaresEmitter(declared, ordering(Raml, Annotations())).emitters()
   }
 
   private def traverse(emitters: Seq[Emitter]): Unit = {
@@ -89,12 +81,10 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   }
 
   case class DeclaresEmitter(declares: Seq[DomainElement], ordering: SpecOrdering) {
-
     def emitters(): Seq[Emitter] = {
-
-      // todo others emitters? traits? all mixed?
-      val shapes = declares.filter(_.isInstanceOf[Shape]).map(_.asInstanceOf[Shape])
-      Seq(DeclaresTypesEmitter(shapes))
+      val shapes = declares.collect { case s: Shape => s }
+      if (shapes.nonEmpty) Seq(DeclaresTypesEmitter(shapes))
+      else Nil
     }
 
     case class DeclaresTypesEmitter(declares: Seq[Shape]) extends Emitter {
