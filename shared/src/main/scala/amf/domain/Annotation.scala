@@ -41,6 +41,8 @@ object Annotation {
 
   case class SourceAST(ast: AMFAST) extends Annotation
 
+  case class DeclaredElement() extends Annotation
+
   case class ExplicitField() extends Annotation
 
   case class SynthesizedField() extends Annotation

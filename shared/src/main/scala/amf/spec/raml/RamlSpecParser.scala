@@ -4,13 +4,15 @@ import amf.common.AMFToken.StringToken
 import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
-import amf.domain.Annotation.{ExplicitField, ParentEndPoint, SingleValueArray, SynthesizedField}
+import amf.document.Document
+import amf.domain.Annotation._
 import amf.domain._
 import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.shape.Shape
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -21,10 +23,41 @@ import scala.util.matching.Regex
   */
 case class RamlSpecParser(root: Root) {
 
-  def parseWebApi(): WebApi = {
+  def parseDocument(): Document = {
 
-    val api     = WebApi(root.ast).adopted(root.location)
     val entries = Entries(root.ast.last)
+
+    val declarations = parseDeclares(entries)
+
+    val api = parseWebApi(entries, declarations)
+
+    Document()
+      .adopted(root.location)
+      .withEncodes(api)
+      .withDeclares(declarations.values.toSeq)
+  }
+
+  private def parseDeclares(entries: Entries) = {
+    val definitions = root.location + "#/definitions"
+
+    var declarations: Map[String, Shape] = Map()
+
+    entries.key(
+      "types",
+      entry => {
+        val types = RamlTypesParser(entry.value, shape => { shape.adopted(definitions) }).parse()
+        types.foreach(shape => {
+          declarations += shape.name -> shape.add(DeclaredElement())
+        })
+      }
+    )
+
+    declarations
+  }
+
+  private def parseWebApi(entries: Entries, declarations: Map[String, Shape]): WebApi = {
+
+    val api = WebApi(root.ast).adopted(root.location)
 
     entries.key("title", entry => {
       val value = ValueNode(entry.value)
@@ -130,14 +163,6 @@ case class RamlSpecParser(root: Root) {
                   AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
                   entry.annotations())
         }
-      }
-    )
-
-    entries.key(
-      "types",
-      entry => {
-        val types = RamlTypesParser(entry.value, shape => shape.adopted(api.id)).parse()
-        println(types)
       }
     )
 

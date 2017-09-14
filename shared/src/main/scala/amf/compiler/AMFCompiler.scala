@@ -5,13 +5,12 @@ import amf.common.core.Strings
 import amf.common.{AMFAST, AMFToken}
 import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.LexicalInformation
-import amf.domain.{Annotation, DomainElement}
+import amf.domain.Annotation
+import amf.domain.Annotation.{LexicalInformation, SourceVendor}
 import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
-import amf.maker.WebApiMaker
 import amf.oas.OasParser
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.raml.RamlParser
@@ -19,6 +18,8 @@ import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.serialization.AmfParser
+import amf.spec.oas.OasSpecParser
+import amf.spec.raml.RamlSpecParser
 import amf.yaml.YamlLexer
 
 import scala.collection.mutable.ListBuffer
@@ -93,32 +94,31 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     hint.kind match {
-      case Library     => document(root.location, root.references, WebApiMaker(root).make) // TODO libraries
-      case Link        => document(root.location, root.references, WebApiMaker(root).make) // TODO includes
+      case Library     => makeDocument(root) // TODO libraries
+      case Link        => makeDocument(root) // TODO includes
       case Unspecified => resolveRamlUnit(root)
     }
   }
 
   private def resolveRamlUnit(root: Root) = {
     root.ast.head match {
-      case c if c.is(Comment) && RAML_10 == c.content =>
-        document(root.location, root.references, WebApiMaker(root).make)
-      case _ => throw new UnableToResolveUnitException
+      case c if c.is(Comment) && RAML_10 == c.content => makeDocument(root)
+      case _                                          => throw new UnableToResolveUnitException
     }
   }
 
-  private def document(location: String, references: Seq[BaseUnit], element: DomainElement): Document = {
-    Document()
-      .adopted(location)
-      .withLocation(location)
-      .withReferences(references)
-      .withEncodes(element)
+  private def makeDocument(root: Root): Document = {
+    (root.vendor match {
+      case Raml => RamlSpecParser(root).parseDocument()
+      case Oas  => OasSpecParser(root).parseDocument()
+      case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
+    }).add(SourceVendor(root.vendor))
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {
     root.ast.head.children.find(e =>
       e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
-      case Some(_) => document(root.location, root.references, WebApiMaker(root).make)
+      case Some(_) => makeDocument(root)
       case _       => throw new UnableToResolveUnitException
     }
   }

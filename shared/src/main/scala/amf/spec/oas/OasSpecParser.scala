@@ -3,10 +3,12 @@ package amf.spec.oas
 import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
+import amf.document.Document
 import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField}
 import amf.domain._
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfScalar}
+import amf.shape.Shape
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -17,7 +19,39 @@ import scala.util.matching.Regex
   */
 case class OasSpecParser(root: Root) {
 
-  def parseWebApi(): WebApi = {
+  def parseDocument(): Document = {
+
+    val entries = Entries(root.ast.last)
+
+    val declarations = parseDeclares(entries)
+
+    val api = parseWebApi(entries, declarations)
+
+    Document()
+      .adopted(root.location)
+      .withEncodes(api)
+      .withDeclares(declarations.values.toSeq)
+  }
+
+  private def parseDeclares(entries: Entries) = {
+    val definitions = root.location + "#/definitions"
+
+    var declarations: Map[String, Shape] = Map()
+
+    entries.key(
+      "definitions",
+      entry => {
+        val types = OasTypesParser(entry.value, shape => shape.adopted(definitions)).parse()
+        types.foreach(shape => {
+          declarations += shape.name -> shape
+        })
+      }
+    )
+
+    declarations
+  }
+
+  private def parseWebApi(entries: Entries, declarations: Map[String, Shape]): WebApi = {
 
     val api     = WebApi(root.ast).adopted(root.location)
     val entries = Entries(root.ast.last)
@@ -121,14 +155,6 @@ case class OasSpecParser(root: Root) {
             api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
           }
         )
-      }
-    )
-
-    entries.key(
-      "definitions",
-      entry => {
-        val types = OasTypesParser(entry.value, shape => shape.adopted(api.id)).parse()
-        println(types)
       }
     )
 
