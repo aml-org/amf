@@ -29,9 +29,16 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
   private def retrieveWebApi() = document.encodes
 
+  private def retrieveWebApi() = unit match {
+    case document: Document => document.encodes.asInstanceOf[WebApi]
+  }
+
   def emitDocument(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, document.encodes.annotations)
+    val ordering: SpecOrdering = unit match {
+      case document: Document => SpecOrdering.ordering(Oas, document.encodes.annotations)
+      case module: Module     => SpecOrdering.ordering(Oas, module.annotations)
+    }
 
     val apiEmitters = emitWebApi(ordering)
     // TODO ordering??

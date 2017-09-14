@@ -29,8 +29,12 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
   /** Encoded [[DomainElement]] described in the document element. */
   val encodes: WebApi = Option(document)
     .filter(_.isInstanceOf[amf.document.Document])
-    .map(d => WebApi(d.asInstanceOf[amf.document.Document].encodes))
-    .orNull
+    .map({d =>
+      d.asInstanceOf[amf.document.Document].encodes match {
+        case w: amf.domain.WebApi => WebApi(w)
+        case _ => throw new Exception("Vocabulary non supported in JS library yet")
+      }
+    }).orNull
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   val declares: js.Iterable[amf.domain.DomainElement] =

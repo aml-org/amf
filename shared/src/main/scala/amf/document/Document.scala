@@ -13,7 +13,7 @@ case class Document(fields: Fields, annotations: Annotations) extends BaseUnit w
 
   override def location: String = fields(Location)
 
-  override def encodes: WebApi = fields(Encodes)
+  override def encodes: DomainElement = fields(Encodes)
 
   override def declares: Seq[DomainElement] = fields(Declares)
 
