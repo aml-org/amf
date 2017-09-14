@@ -963,6 +963,21 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(property.annotations) // TODO check this
   }
 
+  case class SchemaEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val shape = f.value.value.asInstanceOf[Shape]
+
+      entry { () =>
+        raw("type")
+        map { () =>
+          traverse(ordering.sorted(RamlTypeEmitter(shape, ordering).emitters()))
+        }
+      }
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
 
   case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {
     def emitters(): Seq[Emitter] = {
@@ -987,7 +1002,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         else result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
       }
 
-      fs.entry(CustomDomainPropertyModel.Schema).map(f => result ++ RamlTypeEmitter(f.element.asInstanceOf[Shape], ordering).emitters())
+      fs.entry(CustomDomainPropertyModel.Schema).map(f => result ++ Seq(SchemaEmitter(f, ordering)))
       result
     }
   }

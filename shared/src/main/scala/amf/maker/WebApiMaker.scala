@@ -23,7 +23,7 @@ class WebApiMaker(root: Root) extends Maker[WebApi] {
 
   override def makeDeclarations: Seq[DomainElement] = root.vendor match {
     case Raml => RamlSpecParser(root).parseWebApiDeclarations()
-    case Oas  => Seq.empty // OasSpecParser(root).parseWebApiDeclarations()
+    case Oas  => OasSpecParser(root).parseWebApiDeclarations()
     case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
   }
 

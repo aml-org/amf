@@ -1,15 +1,21 @@
 package amf.spec.oas
 
+import amf.common.AMFToken.StringToken
 import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
-import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField}
+import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray}
 import amf.domain._
+import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.domain._
+import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
+import amf.shape.Shape
+import amf.vocabulary.VocabularyMappings
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.util.matching.Regex
 
 /**
@@ -17,10 +23,56 @@ import scala.util.matching.Regex
   */
 case class OasSpecParser(root: Root) {
 
-  def parseWebApi(): WebApi = {
+  val api     = WebApi(root.ast).adopted(root.location)
+  val entries = Entries(root.ast.last)
 
-    val api     = WebApi(root.ast).adopted(root.location)
-    val entries = Entries(root.ast.last)
+  def parseWebApiDeclarations(): Seq[DomainElement] = {
+    parseTypeDeclarations(root.location + "#/declarations") ++
+      parseAnnotationTypeDeclarations(root.location + "#/declarations")
+  }
+
+  def parseTypeDeclarations(typesPrefix: String): Seq[Shape] = {
+    val types = ListBuffer[Shape]()
+
+    entries.key("definitions", entry => {
+      Entries(entry.value).regex("^.+$", entries => {
+        entries.foreach(entry => {
+          val typeName = entry.key.content.unquote
+          OasTypeParser(entry, shape => shape.withName(typeName).adopted(typesPrefix))
+            .parse() match {
+            case Some(shape) => {
+              types += shape
+            }
+            case None        => throw new Exception(s"Error parsing shape at $typeName")
+          }
+        })
+      })
+    })
+
+    types
+  }
+
+  def parseAnnotationTypeDeclarations(customProperties: String): Seq[CustomDomainProperty] = {
+    val customDomainProperties = ListBuffer[CustomDomainProperty]()
+
+    entries.key("x-annotationTypes", entry => {
+      Entries(entry.value).regex("^.+$", entries => {
+        entries.foreach(entry => {
+          val typeName = entry.key.content.unquote
+          val customProperty = AnnotationTypesParser(entry,
+            customProperty => customProperty
+              .withName(typeName)
+              .adopted(customProperties)
+          ).parse()
+          customDomainProperties += customProperty
+        })
+      })
+    })
+
+    customDomainProperties
+  }
+
+  def parseWebApi(): WebApi = {
 
     entries.key(
       "info",
@@ -580,6 +632,58 @@ case class OrganizationParser(ast: AMFAST) {
     })
 
     organization
+  }
+}
+
+case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) => Unit) {
+  def parse(): CustomDomainProperty = {
+    val custom = CustomDomainProperty(node.annotations())
+    val annotationName = node.key.content.unquote
+    custom.withName(annotationName)
+    adopt(custom)
+
+    val entries = Entries(node.value)
+
+    entries.key("allowedTargets", entry => {
+      val annotations = entry.annotations()
+      val targets: AmfArray = entry.value.`type` match {
+        case StringToken =>
+          annotations += SingleValueArray()
+          AmfArray(Seq(ValueNode(entry.value).string()))
+        case _ =>
+          ArrayNode(entry.value).strings()
+      }
+
+      val targetUris = targets.values.map({
+        case s: AmfScalar => VocabularyMappings.ramlToUri.get(s.toString) match {
+          case Some(uri) => AmfScalar(uri, s.annotations)
+          case None      => s
+        }
+        case nodeType => AmfScalar(nodeType.toString, nodeType.annotations)
+      })
+
+      custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris), annotations)
+    })
+
+    entries.key("displayName", entry => {
+      val value = ValueNode(entry.value)
+      custom.set(CustomDomainPropertyModel.DisplayName, value.string(), entry.annotations())
+    })
+
+    entries.key("description", entry => {
+      val value = ValueNode(entry.value)
+      custom.set(CustomDomainPropertyModel.Description, value.string(), entry.annotations())
+    })
+
+    entries.key("schema", entry => {
+      OasTypeParser(entry, shape => shape.adopted(custom.id))
+        .parse()
+        .foreach({ shape =>
+          custom.set(CustomDomainPropertyModel.Schema, shape, entry.annotations())
+        })
+    })
+
+    custom
   }
 }
 

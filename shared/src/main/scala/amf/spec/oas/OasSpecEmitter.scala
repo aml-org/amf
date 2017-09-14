@@ -2,19 +2,22 @@ package amf.spec.oas
 
 import amf.common.AMFToken._
 import amf.common.{AMFAST, AMFToken}
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
+import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.Field
 import amf.metadata.domain._
+import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.shape._
-import amf.model.AmfScalar
+import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.Oas
 import amf.shape._
 import amf.spec.SpecOrdering.ordering
 import amf.spec.{Emitter, SpecOrdering}
+import amf.vocabulary.VocabularyMappings
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -33,7 +36,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   def emitWebApi(): AMFAST = {
     val model = retrieveWebApi()
-    val api   = WebApiEmitter(model, ordering(Oas, model.annotations))
+    val order = ordering(Oas, model.annotations)
+    val api   = WebApiEmitter(model, order)
+    val declarations = DeclarationsEmitter(order)
 
     emitter.root(Root) { () =>
       map { () =>
@@ -41,7 +46,10 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw("swagger")
           raw("2.0")
         }
-        traverse(api.emitters)
+        traverse(
+          declarations.emitters ++
+            api.emitters
+        )
       }
     }
   }
@@ -66,6 +74,53 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   private def raw(content: String, token: AMFToken = StringToken): Unit = {
     emitter.value(token, content)
+  }
+
+  case class DeclarationsEmitter(ordering: SpecOrdering) {
+    val emitters: Seq[Emitter] = {
+      val declarations = unit match {
+        case module: Module => module.declares
+        case document: Document => document.declares
+        case _ => Seq.empty
+      }
+
+      val grouped = declarations.groupBy {
+        case _: Shape => "definitions"
+        case _: CustomDomainProperty => "x-annotationTypes"
+        case declaration => throw new Exception(s"Non supported declaration type ${declaration.getClass}")
+      }
+
+      grouped.toList.map {
+        case (declarationType, declarationUnits) =>
+          GroupDeclaration(declarationType, ordering, declarationUnits)
+      }
+    }
+  }
+
+  case class GroupDeclaration(declarationType: String, ordering: SpecOrdering, elements: Seq[DomainElement]) extends Emitter {
+    override def emit(): Unit = {
+      declarationType match {
+        case "definitions" => emitTypes()
+        case "x-annotationTypes" => emitAnnotationTypes()
+        case other => throw new Exception(s"Cannot emit declarations of type $other")
+      }
+    }
+
+    def emitTypes(): Unit = {
+      val shapeEmitters: Seq[Emitter] = this.elements.flatMap { shape => OasTypeEmitter(shape.asInstanceOf[Shape], ordering).emitters() }
+      ordering.sorted(shapeEmitters).foreach(_.emit())
+    }
+
+    def emitAnnotationTypes(): Unit = {
+      val shapeEmitters: Seq[Emitter] = this.elements.flatMap { shape => AnnotationTypeEmitter(shape.asInstanceOf[CustomDomainProperty], ordering).emitters() }
+      ordering.sorted(shapeEmitters).foreach(_.emit())
+    }
+
+    // Let's try to get the first line of any declared element
+    override def position(): Position = {
+      val lines = elements.map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start).toList.sortBy(_.line).headOption)
+      lines.filter(_.isDefined).map(_.get).headOption.getOrElse(ZERO)
+    }
   }
 
   case class WebApiEmitter(api: WebApi, ordering: SpecOrdering) {
@@ -730,6 +785,18 @@ case class OasSpecEmitter(unit: BaseUnit) {
         .orElse(payloads.headOption)
   }
 
+  /** Emit a single value from an array as an entry. */
+  case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
+    override def emit(): Unit = {
+      sourceOr(f.value, entry { () =>
+        raw(key)
+        raw(f.array.scalars.headOption.map(_.toString).getOrElse(""))
+      })
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
@@ -993,6 +1060,35 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
     override def position(): Position = pos(property.annotations) // TODO check this
   }
+
+  case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+      val result = ListBuffer[Emitter]()
+      val fs = property.fields
+
+      fs.entry(CustomDomainPropertyModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
+
+      fs.entry(CustomDomainPropertyModel.Description).map(f => result += ValueEmitter("description", f))
+
+      fs.entry(CustomDomainPropertyModel.Domain).map { f =>
+        val scalars = f.array.scalars.map { s =>
+          VocabularyMappings.uriToRaml.get(s.toString) match {
+            case Some(identifier) => AmfScalar(identifier, s.annotations)
+            case None             => s
+          }
+        }
+        val finalArray = AmfArray(scalars, f.array.annotations)
+        val finalFieldEntry = FieldEntry(f.field, Value(finalArray, f.value.annotations))
+
+        if (f.value.annotations.contains(classOf[SingleValueArray])) result += ArrayValueEmitter("allowedTargets", finalFieldEntry)
+        else result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
+      }
+
+      fs.entry(CustomDomainPropertyModel.Schema).map(f => result ++ Seq(SchemaEmitter(f, ordering)))
+      result
+    }
+  }
+
 }
 
 
