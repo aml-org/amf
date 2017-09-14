@@ -1,7 +1,7 @@
 package amf.metadata.domain.extensions
 
 import amf.metadata.Field
-import amf.metadata.Type.{Array, Iri}
+import amf.metadata.Type.{Array, Iri, Str}
 import amf.vocabulary.Namespace.{Rdfs, Rdf, Shapes, Document}
 import amf.metadata.domain.DomainElementModel
 import amf.metadata.shape.ShapeModel
@@ -23,6 +23,12 @@ import amf.vocabulary.ValueType
 object CustomDomainProperty extends DomainElementModel {
 
   /**
+    * The name of the extension
+    */
+  val Name = Field(Str, amf.vocabulary.Namespace.Schema + "name")
+  val Description = Field(Str, amf.vocabulary.Namespace.Schema + "description")
+
+  /**
     * These Iris are always going to be domain classes URIs.
     * No any class can be added to the domain.
     *
@@ -37,7 +43,7 @@ object CustomDomainProperty extends DomainElementModel {
   val Schema = Field(ShapeModel, Shapes + "schema")
 
   override val fields
-  : List[Field] = List(Domain, Schema) ++ DomainElementModel.fields
+  : List[Field] = List(Domain, Schema, Name) ++ DomainElementModel.fields
 
   override val `type`
   : List[ValueType] = Rdf + "Property" :: Document + "DomainProperty" :: DomainElementModel.`type`
