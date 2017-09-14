@@ -47,7 +47,7 @@ class Fields {
   def set(id: String, field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     if (field.value.iri() == "http://raml.org/vocabularies/document#declares") {
       // declaration, set correctly the id
-      adopt(id+"#/declarations", value)
+      adopt(id + "#/declarations", value)
     } else {
       adopt(id, value)
     }

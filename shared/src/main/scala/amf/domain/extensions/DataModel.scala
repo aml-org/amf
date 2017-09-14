@@ -32,14 +32,8 @@ object idCounter {
   * Base class for all dynamic DataNodes
   */
 abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
-  def name: String = {
-    val name = fields(Name)
-    if (name != null){
-      name
-    } else {
-      defaultName
-    }
-  }
+
+  def name: String = Option(fields(Name)).getOrElse(defaultName)
 
   protected def defaultName: String = idCounter.genId("dataNode")
   def withName(name: String): this.type  = set(Name, name)

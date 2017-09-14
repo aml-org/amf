@@ -57,9 +57,17 @@ object Tests {
   def checkDiff(actual: String, expected: String): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(actual, expected)
     if (diffs.nonEmpty) {
+      /*
       println("---------------------------------------------------------------------------------")
       println(actual)
       println("---------------------------------------------------------------------------------")
+      */
+      println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+      println(expected)
+      println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+      println(actual)
+      println("==============================================")
+
       fail("\n" + Diff.makeString(diffs))
     }
   }

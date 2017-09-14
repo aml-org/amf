@@ -99,21 +99,46 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
   case class GroupDeclaration(declarationType: String, ordering: SpecOrdering, elements: Seq[DomainElement]) extends Emitter {
     override def emit(): Unit = {
-      declarationType match {
-        case "types" => emitTypes()
-        case "annotationTypes" => emitAnnotationTypes()
-        case other => throw new Exception(s"Cannot emit declarations of type $other")
+      entry { () =>
+        declarationType match {
+          case "types" =>
+            raw("types")
+            map { () => emitTypes() }
+
+          case "annotationTypes" =>
+            raw("annotationTypes")
+            map { () => emitAnnotationTypes() }
+
+          case other =>  // ignore
+        }
       }
     }
 
     def emitTypes(): Unit = {
-      val shapeEmitters: Seq[Emitter] = this.elements.flatMap { shape => RamlTypeEmitter(shape.asInstanceOf[Shape], ordering).emitters() }
-      ordering.sorted(shapeEmitters).foreach(_.emit())
+      this.elements.foreach { shape =>
+        entry { () =>
+          val sh = shape.asInstanceOf[Shape]
+          val name = Option(sh.name).orElse(throw new Exception(s"Cannot declare shape without name ${sh}")).get
+          raw(name)
+          map { () =>
+            traverse(ordering.sorted(RamlTypeEmitter(sh, ordering).emitters()))
+          }
+        }
+      }
     }
 
     def emitAnnotationTypes(): Unit = {
-      val shapeEmitters: Seq[Emitter] = this.elements.flatMap { shape => AnnotationTypeEmitter(shape.asInstanceOf[CustomDomainProperty], ordering).emitters() }
-      ordering.sorted(shapeEmitters).foreach(_.emit())
+      this.elements.foreach { annotationType =>
+        entry { () =>
+          val annotation = annotationType.asInstanceOf[CustomDomainProperty]
+          val name = Option(annotation.name).orElse(throw new Exception(s"Cannot declare annotation type without name ${annotation}")).get
+          raw(name)
+          map { () =>
+            val emitters = AnnotationTypeEmitter(annotation.asInstanceOf[CustomDomainProperty], ordering).emitters()
+            traverse(ordering.sorted(emitters))
+          }
+        }
+      }
     }
 
     // Let's try to get the first line of any declared element
@@ -1002,7 +1027,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
         else result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
       }
 
-      fs.entry(CustomDomainPropertyModel.Schema).map(f => result ++ Seq(SchemaEmitter(f, ordering)))
+      fs.entry(CustomDomainPropertyModel.Schema).map(f => result += SchemaEmitter(f, ordering))
       result
     }
   }
