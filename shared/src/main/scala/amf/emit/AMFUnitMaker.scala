@@ -25,7 +25,7 @@ class AMFUnitMaker {
       case Raml =>
         RamlSpecEmitter(unit).emitDocument()
       case Oas =>
-        OasSpecEmitter(unit).emitWebApi()
+        OasSpecEmitter(unit).emitDocument()
       case _ => throw new IllegalStateException("Invalid vendor " + vendor)
     }
   }

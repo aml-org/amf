@@ -11,7 +11,7 @@ import amf.metadata.shape._
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
-import amf.remote.Oas
+import amf.remote.Raml
 import amf.shape._
 import amf.spec.SpecOrdering.ordering
 import amf.spec.{Emitter, SpecOrdering}
@@ -31,9 +31,15 @@ case class OasSpecEmitter(unit: BaseUnit) {
     case document: Document => document.encodes
   }
 
-  def emitWebApi(): AMFAST = {
-    val model = retrieveWebApi()
-    val api   = WebApiEmitter(model, ordering(Oas, model.annotations))
+  private def retrieveDeclarations(): Seq[DomainElement] = unit match {
+    case document: Document => document.declares
+  }
+
+  def emitDocument(): AMFAST = {
+    val apiEmitters = emitWebApi()
+    // TODO ordering??
+
+    val declares = DeclaresEmitter(retrieveDeclarations(), ordering(Raml, Annotations())).emitters()
 
     emitter.root(Root) { () =>
       map { () =>
@@ -41,9 +47,16 @@ case class OasSpecEmitter(unit: BaseUnit) {
           raw("swagger")
           raw("2.0")
         }
-        traverse(api.emitters)
+        traverse(apiEmitters ++ declares)
       }
     }
+  }
+
+  def emitWebApi(): Seq[Emitter] = {
+    val model  = retrieveWebApi()
+    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val api    = WebApiEmitter(model, ordering(Raml, model.annotations))
+    api.emitters
   }
 
   private def traverse(emitters: Seq[Emitter]): Unit = {
@@ -66,6 +79,44 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   private def raw(content: String, token: AMFToken = StringToken): Unit = {
     emitter.value(token, content)
+  }
+
+  case class DeclaresEmitter(declares: Seq[DomainElement], ordering: SpecOrdering) {
+
+    def emitters(): Seq[Emitter] = {
+
+      // todo others emitters? traits? all mixed?
+      val shapes = declares.collect { case s: Shape => s }
+      if (shapes.nonEmpty) Seq(DeclaresTypesEmitter(shapes))
+      else Nil
+    }
+
+    case class DeclaresTypesEmitter(declares: Seq[Shape]) extends Emitter {
+      override def emit(): Unit = {
+        entry { () =>
+          raw("definitions")
+          map { () =>
+            traverse(ordering.sorted(declares.map(DeclareTypeEmitter)))
+          }
+        }
+      }
+
+      override def position(): Position = pos(declares.head.annotations)
+    }
+
+    case class DeclareTypeEmitter(shape: Shape) extends Emitter {
+      override def emit(): Unit = {
+        entry(() => {
+          raw(shape.name)
+
+          map(() => {
+            traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
+          })
+        })
+      }
+
+      override def position(): Position = pos(shape.annotations)
+    }
   }
 
   case class WebApiEmitter(api: WebApi, ordering: SpecOrdering) {
@@ -799,7 +850,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(array.items.fields.getValue(ArrayShapeModel.Items).annotations)
   }
 
-
   case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
@@ -869,9 +919,42 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
 
+      fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
+
       result
     }
 
+  }
+
+  case class ShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val inherits = f.array.values.map(_.asInstanceOf[Shape])
+      entry(() => {
+        raw("allOf")
+
+        array(() => inherits.foreach(emitInherit))
+
+      })
+
+    }
+
+    private def emitInherit(shape: Shape): Unit = {
+      map { () =>
+        if (shape.annotations.contains(classOf[DeclaredElement])) inlineEmit(shape)
+        else declaredEmit(shape)
+      }
+    }
+
+    def inlineEmit(shape: Shape): Unit = {
+      traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
+    }
+
+    def declaredEmit(shape: Shape): Unit = {
+      raw("$ref")
+      raw("#/definitions/" + shape.name)
+    }
+
+    override def position(): Position = pos(f.value.annotations)
   }
 
   case class ShapeDependenciesEmitter(f: FieldEntry,
@@ -994,5 +1077,3 @@ case class OasSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(property.annotations) // TODO check this
   }
 }
-
-

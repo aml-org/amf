@@ -20,6 +20,12 @@ abstract class BaseParser[T <: Token, N <: ASTNode[T]](private val builder: ASTB
   /** Token 'n' positions ahead. */
   protected def lookAhead(n: Int): T = builder.lookAhead(n)
 
+  /** String 'n' positions ahead. */
+  protected def lookAheadText(n: Int): Option[String] = builder.lookAheadText(n)
+
+  /** Text for the next 'token' ahead. */
+  protected def lookAheadTextWhile(token: T): Option[String] = builder.lookAheadTextWhile(token)
+
   protected def eof: Boolean = builder.eof
 
   protected def consume(): Unit = {

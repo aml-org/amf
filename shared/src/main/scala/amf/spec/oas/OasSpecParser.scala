@@ -41,9 +41,13 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "definitions",
       entry => {
-        val types = OasTypesParser(entry.value, shape => shape.adopted(definitions), declarations).parse()
-        types.foreach(shape => {
-          declarations += shape.name -> shape.add(DeclaredElement())
+        // TODO Unresolved reference when two types are in the same level.
+        Entries(entry.value).entries.values.flatMap(entry => {
+          val s = OasTypeParser(entry, shape => shape.adopted(definitions), declarations).parse()
+          s.foreach(shape => {
+            declarations += shape.name -> shape.add(DeclaredElement())
+          })
+          s
         })
       }
     )
