@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.common.AMFAST
 import amf.metadata.domain.CreativeWorkModel.{Description, Url}
+import org.yaml.model.YMap
 
 /**
   * Creative work internal model
@@ -21,7 +22,7 @@ object CreativeWork {
 
   def apply(): CreativeWork = apply(Annotations())
 
-  def apply(ast: AMFAST): CreativeWork = apply(Annotations(ast))
+  def apply(ast: YMap): CreativeWork = apply(Annotations(ast))
 
   def apply(annotations: Annotations): CreativeWork = apply(Fields(), annotations)
 }

@@ -1,8 +1,7 @@
 package amf.spec.raml
 
-import amf.common.AMFToken.StringToken
+import amf.common.Lazy
 import amf.common.core.Strings
-import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.document.Document
 import amf.domain.Annotation._
@@ -12,13 +11,11 @@ import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.shape.Shape
 import amf.parser.{YMapOps, YValueOps}
-import org.yaml.model.{YMap, YNode, YValue}
+import amf.shape.Shape
+import org.yaml.model._
 
-import scala.collection.immutable.ListMap
 import scala.collection.mutable
-import scala.util.matching.Regex
 
 /**
   * Raml 1.0 spec parser
@@ -27,19 +24,19 @@ case class RamlSpecParser(root: Root) {
 
   def parseDocument(): Document = {
 
-    root.document.value collect {
-      case map: YMap =>
-        val declarations = parseDeclares(map)
+    val document = Document().adopted(root.location)
 
-        val api = parseWebApi(entries, declarations)
+    root.document.value.foreach(value => {
+      val map = value.toMap
 
-        Document()
-          .adopted(root.location)
-          .withEncodes(api)
-          .withDeclares(declarations.values.toSeq)
+      val declarations = parseDeclares(map)
 
-      case _ => throw new Exception("Map expected")
-    }
+      val api = parseWebApi(map, declarations)
+
+      document.withEncodes(api).withDeclares(declarations.values.toSeq)
+    })
+
+    document
   }
 
   private def parseDeclares(map: YMap) = {
@@ -50,7 +47,7 @@ case class RamlSpecParser(root: Root) {
     map.key(
       "types",
       entry => {
-        val types = RamlTypesParser(entry.value.value.map, shape => { shape.adopted(definitions) }).parse()
+        val types = RamlTypesParser(entry.value.value.toMap, shape => { shape.adopted(definitions) }).parse()
         types.foreach(shape => {
           declarations += shape.name -> shape.add(DeclaredElement())
         })
@@ -60,155 +57,156 @@ case class RamlSpecParser(root: Root) {
     declarations
   }
 
-  private def parseWebApi(entries: Entries, declarations: Map[String, Shape]): WebApi = {
+  private def parseWebApi(map: YMap, declarations: Map[String, Shape]): WebApi = {
 
-    val api = WebApi(root.ast).adopted(root.location)
+    val api = WebApi(map).adopted(root.location)
 
-    entries.key("title", entry => {
+    map.key("title", entry => {
       val value = ValueNode(entry.value)
-      api.set(WebApiModel.Name, value.string(), entry.annotations())
+      api.set(WebApiModel.Name, value.string(), Annotations(entry))
     })
 
-        map.entry(
-          "baseUriParameters",
-          entry => {
-            val parameters: Seq[Parameter] =
-              ParametersParser(entry.value, api.withBaseUriParameter).parse().map(_.withBinding("path"))
-            api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
-          }
-        )
+    map.key(
+      "baseUriParameters",
+      entry => {
+        val parameters: Seq[Parameter] =
+          ParametersParser(entry.value.value.toMap, api.withBaseUriParameter).parse().map(_.withBinding("path"))
+        api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
+      }
+    )
 
-        map.entry("description", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.Description, value.string(), entry.annotations())
-        })
+    map.key("description", entry => {
+      val value = ValueNode(entry.value)
+      api.set(WebApiModel.Description, value.string(), Annotations(entry))
+    })
 
-        map.entry(
-          "mediaType",
-          entry => {
-            val annotations = entry.annotations()
-            val value: AmfElement = entry.value.`type` match {
-              case StringToken =>
-                annotations += SingleValueArray()
-                AmfArray(Seq(ValueNode(entry.value).string()))
-              case _ =>
-                ArrayNode(entry.value).strings()
-            }
+    map.key(
+      "mediaType",
+      entry => {
+        val annotations = Annotations(entry)
+        val value: AmfElement = entry.value.value match {
+          case _: YScalar =>
+            annotations += SingleValueArray()
+            AmfArray(Seq(ValueNode(entry.value).string()))
+          case _: YSequence =>
+            ArrayNode(entry.value.value.toSequence).strings()
+        }
 
-            api.set(WebApiModel.ContentType, value, annotations)
-            api.set(WebApiModel.Accepts, value, annotations)
-          }
-        )
+        api.set(WebApiModel.ContentType, value, annotations)
+        api.set(WebApiModel.Accepts, value, annotations)
+      }
+    )
 
-        map.entry("version", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.Version, value.string(), entry.annotations())
-        })
+    map.key("version", entry => {
+      val value = ValueNode(entry.value)
+      api.set(WebApiModel.Version, value.string(), Annotations(entry))
+    })
 
-        map.entry("(termsOfService)", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.TermsOfService, value.string(), entry.annotations())
-        })
+    map.key("(termsOfService)", entry => {
+      val value = ValueNode(entry.value)
+      api.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
+    })
 
-        map.entry("protocols", entry => {
-          val value = ArrayNode(entry.value)
-          api.set(WebApiModel.Schemes, value.strings(), entry.annotations())
-        })
+    map.key("protocols", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+    })
 
-        map.entry(
-          "(contact)",
-          entry => {
-            val organization: Organization = OrganizationParser(entry.value).parse()
-            api.set(WebApiModel.Provider, organization, entry.annotations())
-          }
-        )
+    map.key(
+      "(contact)",
+      entry => {
+        val organization: Organization = OrganizationParser(entry.value.value.toMap).parse()
+        api.set(WebApiModel.Provider, organization, Annotations(entry))
+      }
+    )
 
-        map.entry(
-          "(externalDocs)",
-          entry => {
-            val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
-            api.set(WebApiModel.Documentation, creativeWork, entry.annotations())
-          }
-        )
+    map.key(
+      "(externalDocs)",
+      entry => {
+        val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+        api.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
+      }
+    )
 
-        map.entry("(license)", entry => {
-          val license: License = LicenseParser(entry.value).parse()
-          api.set(WebApiModel.License, license, entry.annotations())
-        })
+    map.key("(license)", entry => {
+      val license: License = LicenseParser(entry.value.value.toMap).parse()
+      api.set(WebApiModel.License, license, Annotations(entry))
+    })
 
-        map.regex(
-          "^/.*",
-          entries => {
-            val endpoints = mutable.ListBuffer[EndPoint]()
-            entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints).parse())
-            api.set(WebApiModel.EndPoints, AmfArray(endpoints))
-          }
-        )
+    map.regex(
+      "^/.*",
+      entries => {
+        val endpoints = mutable.ListBuffer[EndPoint]()
+        entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints).parse())
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+      }
+    )
 
-        map.entry(
-          "baseUri",
-          entry => {
-            val value = ValueNode(entry.value)
-            val uri   = BaseUriSplitter(value.string().value.toString)
+    map.key(
+      "baseUri",
+      entry => {
+        val value = ValueNode(entry.value)
+        val uri   = BaseUriSplitter(value.string().value.toString)
 
-            if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
-              api.set(WebApiModel.Schemes,
-                      AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
-                      entry.annotations())
-            }
+        if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
+          api.set(WebApiModel.Schemes,
+                  AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
+                  Annotations(entry))
+        }
 
-            if (uri.domain.nonEmpty) {
-              api.set(WebApiModel.Host,
-                      AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
-                      entry.annotations())
-            }
+        if (uri.domain.nonEmpty) {
+          api.set(WebApiModel.Host,
+                  AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
+                  Annotations(entry))
+        }
 
-            if (uri.path.nonEmpty) {
-              api.set(WebApiModel.BasePath,
-                      AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
-                      entry.annotations())
-            }
-          }
-        )
+        if (uri.path.nonEmpty) {
+          api.set(WebApiModel.BasePath,
+                  AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
+                  Annotations(entry))
+        }
+      }
+    )
 
     api
   }
 }
 
-case class EndpointParser(entry: EntryNode,
+case class EndpointParser(entry: YMapEntry,
                           producer: String => EndPoint,
                           parent: Option[EndPoint],
                           collector: mutable.ListBuffer[EndPoint]) {
   def parse(): Unit = {
 
-    val path = parent.map(_.path).getOrElse("") + entry.key.content.unquote
+    val path = parent.map(_.path).getOrElse("") + entry.key.value.toScalar.text.unquote
 
-    val endpoint = producer(path).add(Annotations(entry.ast))
+    val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
-    val entries = Entries(entry.value)
+
+    val map = entry.value.value.toMap
 
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
-    entries.key("displayName", entry => {
+    map.key("displayName", entry => {
       val value = ValueNode(entry.value)
-      endpoint.set(EndPointModel.Name, value.string(), entry.annotations())
+      endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
     })
 
-    entries.key("description", entry => {
+    map.key("description", entry => {
       val value = ValueNode(entry.value)
-      endpoint.set(EndPointModel.Description, value.string(), entry.annotations())
+      endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
     })
 
-    entries.key(
+    map.key(
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, endpoint.withParameter).parse().map(_.withBinding("path"))
-        endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
+          ParametersParser(entry.value.value.toMap, endpoint.withParameter).parse().map(_.withBinding("path"))
+        endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
       }
     )
 
-    entries.regex(
+    map.regex(
       "get|patch|put|post|delete|options|head",
       entries => {
         val operations = mutable.ListBuffer[Operation]()
@@ -221,7 +219,7 @@ case class EndpointParser(entry: EntryNode,
 
     collector += endpoint
 
-    entries.regex(
+    map.regex(
       "^/.*",
       entries => {
         entries.foreach(EndpointParser(_, producer, Some(endpoint), collector).parse())
@@ -230,34 +228,38 @@ case class EndpointParser(entry: EntryNode,
   }
 }
 
-case class RequestParser(entries: Entries, producer: () => Request) {
+case class RequestParser(map: YMap, producer: () => Request) {
 
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)
-    entries.key(
+    map.key(
       "queryParameters",
       entry => {
 
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, request.getOrCreate.withQueryParameter).parse().map(_.withBinding("query"))
+          ParametersParser(entry.value.value.toMap, request.getOrCreate.withQueryParameter)
+            .parse()
+            .map(_.withBinding("query"))
         request.getOrCreate.set(RequestModel.QueryParameters,
                                 AmfArray(parameters, Annotations(entry.value)),
-                                entry.annotations())
+                                Annotations(entry))
       }
     )
 
-    entries.key(
+    map.key(
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value, request.getOrCreate.withHeader).parse().map(_.withBinding("header"))
+          ParametersParser(entry.value.value.toMap, request.getOrCreate.withHeader)
+            .parse()
+            .map(_.withBinding("header"))
         request.getOrCreate.set(RequestModel.Headers,
                                 AmfArray(parameters, Annotations(entry.value)),
-                                entry.annotations())
+                                Annotations(entry))
       }
     )
 
-    entries.key(
+    map.key(
       "body",
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
@@ -266,7 +268,7 @@ case class RequestParser(entries: Entries, producer: () => Request) {
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) //todo
 
-        Entries(entry.value)
+        entry.value.value.toMap
           .regex(
             ".*/.*",
             entries => {
@@ -277,7 +279,7 @@ case class RequestParser(entries: Entries, producer: () => Request) {
           )
         if (payloads.nonEmpty)
           request.getOrCreate
-            .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
+            .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -285,65 +287,65 @@ case class RequestParser(entries: Entries, producer: () => Request) {
   }
 }
 
-case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
+case class OperationParser(entry: YMapEntry, producer: (String) => Operation) {
 
   def parse(): Operation = {
 
-    val method = entry.key.content.unquote
+    val method = entry.key.value.toScalar.text.unquote
 
-    val operation = producer(method).add(Annotations(entry.ast))
+    val operation = producer(method).add(Annotations(entry))
 
-    val entries = Entries(entry.value)
+    val map = entry.value.value.toMap
 
     operation.set(Method, ValueNode(entry.key).string())
 
-    entries.key("displayName", entry => {
+    map.key("displayName", entry => {
       val value = ValueNode(entry.value)
-      operation.set(OperationModel.Name, value.string(), entry.annotations())
+      operation.set(OperationModel.Name, value.string(), Annotations(entry))
     })
 
-    entries.key("description", entry => {
+    map.key("description", entry => {
       val value = ValueNode(entry.value)
-      operation.set(OperationModel.Description, value.string(), entry.annotations())
+      operation.set(OperationModel.Description, value.string(), Annotations(entry))
     })
 
-    entries.key("(deprecated)", entry => {
+    map.key("(deprecated)", entry => {
       val value = ValueNode(entry.value)
-      operation.set(OperationModel.Deprecated, value.boolean(), entry.annotations())
+      operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
     })
 
-    entries.key("(summary)", entry => {
+    map.key("(summary)", entry => {
       val value = ValueNode(entry.value)
-      operation.set(OperationModel.Summary, value.string(), entry.annotations())
+      operation.set(OperationModel.Summary, value.string(), Annotations(entry))
     })
 
-    entries.key(
+    map.key(
       "(externalDocs)",
       entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
-        operation.set(OperationModel.Documentation, creativeWork, entry.annotations())
+        val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+        operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
       }
     )
 
-    entries.key(
+    map.key(
       "protocols",
       entry => {
-        val value = ArrayNode(entry.value)
-        operation.set(OperationModel.Schemes, value.strings(), entry.annotations())
+        val value = ArrayNode(entry.value.value.toSequence)
+        operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
       }
     )
 
-    RequestParser(entries, () => operation.withRequest()).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(map, () => operation.withRequest()).parse().map(operation.set(OperationModel.Request, _))
 
-    entries.key(
+    map.key(
       "responses",
       entry => {
-        Entries(entry.value).regex(
+        entry.value.value.toMap.regex(
           "\\d{3}",
           entries => {
             val responses = mutable.ListBuffer[Response]()
             entries.foreach(entry => { responses += ResponseParser(entry, operation.withResponse).parse() })
-            operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), entry.annotations())
+            operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
           }
         )
       }
@@ -353,18 +355,16 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation) {
   }
 }
 
-case class ParametersParser(ast: AMFAST, producer: String => Parameter) {
-  def parse(): Seq[Parameter] = {
-    Entries(ast).entries.values
+case class ParametersParser(map: YMap, producer: String => Parameter) {
+  def parse(): Seq[Parameter] =
+    map.entries
       .map(entry => ParameterParser(entry, producer).parse())
-      .toSeq
-  }
 }
 
-case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload) {
+case class PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload) {
   def parse(): Payload = {
 
-    val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry.ast))
+    val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
 
     Option(entry.value).foreach(
       _ =>
@@ -375,30 +375,30 @@ case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload
   }
 }
 
-case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
+case class ResponseParser(entry: YMapEntry, producer: (String) => Response) {
   def parse(): Response = {
 
     val node = ValueNode(entry.key)
 
-    val response = producer(node.string().value.toString).add(Annotations(entry.ast))
-    val entries  = Entries(entry.value)
+    val response = producer(node.string().value.toString).add(Annotations(entry))
+    val map      = entry.value.value.toMap
 
     response.set(ResponseModel.StatusCode, node.string())
 
-    entries.key("description", entry => {
+    map.key("description", entry => {
       val value = ValueNode(entry.value)
-      response.set(ResponseModel.Description, value.string(), entry.annotations())
+      response.set(ResponseModel.Description, value.string(), Annotations(entry))
     })
 
-    entries.key(
+    map.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = ParametersParser(entry.value, response.withHeader).parse()
-        response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
+        val parameters: Seq[Parameter] = ParametersParser(entry.value.value.toMap, response.withHeader).parse()
+        response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
       }
     )
 
-    entries.key(
+    map.key(
       "body",
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
@@ -410,14 +410,14 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
           .parse()
           .foreach(payloads += payload.withSchema(_))
 
-        Entries(entry.value).regex(
+        entry.value.value.toMap.regex(
           ".*/.*",
           entries => {
             entries.foreach(entry => { payloads += PayloadParser(entry, response.withPayload).parse() })
           }
         )
         if (payloads.nonEmpty)
-          response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
+          response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -425,16 +425,16 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response) {
   }
 }
 
-case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
+case class ParameterParser(entry: YMapEntry, producer: String => Parameter) {
   def parse(): Parameter = {
 
-    val name      = entry.key.content.unquote
-    val parameter = producer(name).add(Annotations(entry.ast)) // TODO parameter id is using a name that is not final.
-    val entries   = Entries(entry.value)
+    val name      = entry.key.value.toScalar.text.unquote
+    val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+    val map       = entry.value.value.toMap
 
-    entries.key("required", entry => {
+    map.key("required", entry => {
       val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Required, value.boolean(), entry.annotations() += ExplicitField())
+      parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
     })
 
     if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
@@ -444,115 +444,83 @@ case class ParameterParser(entry: EntryNode, producer: String => Parameter) {
       parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
     }
 
-    entries.key("description", entry => {
+    map.key("description", entry => {
       val value = ValueNode(entry.value)
-      parameter.set(ParameterModel.Description, value.string(), entry.annotations())
+      parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
     })
 
     RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
       .parse()
-      .foreach(parameter.set(ParameterModel.Schema, _, entry.annotations()))
+      .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 
     parameter
   }
 }
 
-case class LicenseParser(ast: AMFAST) {
+case class LicenseParser(map: YMap) {
   def parse(): License = {
-    val license = License(ast)
-    val entries = Entries(ast)
+    val license = License(map)
 
-    entries.key("url", entry => {
+    map.key("url", entry => {
       val value = ValueNode(entry.value)
-      license.set(LicenseModel.Url, value.string(), entry.annotations())
+      license.set(LicenseModel.Url, value.string(), Annotations(entry))
     })
 
-    entries.key("name", entry => {
+    map.key("name", entry => {
       val value = ValueNode(entry.value)
-      license.set(LicenseModel.Name, value.string(), entry.annotations())
+      license.set(LicenseModel.Name, value.string(), Annotations(entry))
     })
 
     license
   }
 }
 
-case class CreativeWorkParser(ast: AMFAST) {
+case class CreativeWorkParser(map: YMap) {
   def parse(): CreativeWork = {
-    val creativeWork = CreativeWork(ast)
-    val entries      = Entries(ast)
+    val creativeWork = CreativeWork(map)
 
-    entries.key("url", entry => {
+    map.key("url", entry => {
       val value = ValueNode(entry.value)
-      creativeWork.set(CreativeWorkModel.Url, value.string(), entry.annotations())
+      creativeWork.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
     })
 
-    entries.key("description", entry => {
+    map.key("description", entry => {
       val value = ValueNode(entry.value)
-      creativeWork.set(CreativeWorkModel.Description, value.string(), entry.annotations())
+      creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
     })
 
     creativeWork
   }
 }
 
-case class OrganizationParser(ast: AMFAST) {
+case class OrganizationParser(map: YMap) {
   def parse(): Organization = {
 
-    val organization = Organization(ast)
-    val entries      = Entries(ast)
+    val organization = Organization(map)
 
-    entries.key("url", entry => {
+    map.key("url", entry => {
       val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Url, value.string(), entry.annotations())
+      organization.set(OrganizationModel.Url, value.string(), Annotations(entry))
     })
 
-    entries.key("name", entry => {
+    map.key("name", entry => {
       val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Name, value.string(), entry.annotations())
+      organization.set(OrganizationModel.Name, value.string(), Annotations(entry))
     })
 
-    entries.key("email", entry => {
+    map.key("email", entry => {
       val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Email, value.string(), entry.annotations())
+      organization.set(OrganizationModel.Email, value.string(), Annotations(entry))
     })
 
     organization
   }
 }
 
-case class Entries(ast: AMFAST) {
-
-  def key(keyword: String): Option[EntryNode] = entries.get(keyword)
-
-  def key(keyword: String, fn: (EntryNode => Unit)): Unit = key(keyword).foreach(fn)
-
-  def regex(regex: String, fn: (Iterable[EntryNode] => Unit)): Unit = {
-    val path: Regex = regex.r
-    val values = entries
-      .filterKeys({
-        case path() => true
-        case _      => false
-      })
-      .values
-    if (values.nonEmpty) fn(values)
-  }
-
-  var entries: ListMap[String, EntryNode] = ListMap(ast.children.map(n => n.head.content.unquote -> EntryNode(n)): _*)
-
-}
-
-case class EntryNode(ast: AMFAST) {
-
-  val key: AMFAST   = ast.head
-  val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
-
-  def annotations(): Annotations = Annotations(ast)
-}
-
-case class ArrayNode(ast: AMFAST) {
+case class ArrayNode(ast: YSequence) {
 
   def strings(): AmfArray = {
-    val elements = ast.children.map(child => ValueNode(child).string())
+    val elements = ast.nodes.map(child => ValueNode(child).string())
     AmfArray(elements, annotations())
   }
 
@@ -581,7 +549,7 @@ case class ValueNode(ast: YNode) {
     AmfScalar(!content.toBoolean, annotations())
   }
 
-  private def scalar = ast.value.scalar
+  private def scalar = ast.value.toScalar
 
   private def annotations() = Annotations(ast)
 }

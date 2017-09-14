@@ -1,8 +1,8 @@
 package amf.shape
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.shape.PropertyDependenciesModel._
+import org.yaml.model.YMapEntry
 
 /**
   * Property Dependency
@@ -23,7 +23,7 @@ case class PropertyDependencies(fields: Fields, annotations: Annotations) extend
 object PropertyDependencies {
   def apply(): PropertyDependencies = apply(Annotations())
 
-  def apply(ast: AMFAST): PropertyDependencies = apply(Annotations(ast))
+  def apply(ast: YMapEntry): PropertyDependencies = apply(Annotations(ast))
 
   def apply(annotations: Annotations): PropertyDependencies = PropertyDependencies(Fields(), annotations)
 }

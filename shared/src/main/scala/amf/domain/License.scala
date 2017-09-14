@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.common.AMFAST
 import amf.metadata.domain.LicenseModel.{Name, Url}
+import org.yaml.model.YMap
 
 /**
   * License internal model
@@ -21,7 +22,7 @@ object License {
 
   def apply(): License = apply(Annotations())
 
-  def apply(ast: AMFAST): License = apply(Annotations(ast))
+  def apply(ast: YMap): License = apply(Annotations(ast))
 
   def apply(annotations: Annotations): License = new License(Fields(), annotations)
 }

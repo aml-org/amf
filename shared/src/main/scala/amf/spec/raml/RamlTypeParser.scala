@@ -1,7 +1,6 @@
 package amf.spec.raml
 
 import amf.common.core.Strings
-import amf.common.{AMFAST, AMFToken}
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
@@ -17,7 +16,7 @@ import scala.collection.mutable
 case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit) {
 
   def parse(): Option[Shape] = {
-    val name = entry.key.value.scalar.text
+    val name = entry.key.value.toScalar.text.unquote
 
     val ahead = lookAhead()
 
@@ -54,8 +53,8 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit) {
       .key("type")
       .orElse(map.key("schema"))
       .map(e => {
-        val t = e.value.value.scalar.text.unquote
-        val f = map.key("(format)").map(_.value.value.scalar.text.unquote).getOrElse("")
+        val t = e.value.value.toScalar.text.unquote
+        val f = map.key("(format)").map(_.value.value.toScalar.text.unquote).getOrElse("")
         matchType(t, f)
       })
   }
@@ -97,11 +96,9 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit) {
   }
 }
 
-case class RamlTypesParser(ast: Option[YMap], adopt: Shape => Unit) {
-  def parse(): Seq[Shape] = ast match {
-    case Some(map) => map.entries.flatMap(entry => RamlTypeParser(entry, adopt).parse())
-    case None      => Seq()
-  }
+case class RamlTypesParser(map: YMap, adopt: Shape => Unit) {
+  def parse(): Seq[Shape] =
+    map.entries.flatMap(entry => RamlTypeParser(entry, adopt).parse())
 }
 
 case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() {
@@ -173,7 +170,7 @@ case class DataArrangementParser(name: String, entry: YMapEntry, map: YMap, adop
       case Some(tuplesEntry) =>
         tuplesEntry.value.value match {
           // this is a sequence, we need to create a tuple
-          case _ : YSequence => Left(TupleShape(entry).withName(name))
+          case _: YSequence => Left(TupleShape(entry).withName(name))
           // not an array regular array parsing
           case _ => throw new Exception("Tuples must have a list of types")
 
@@ -198,21 +195,21 @@ case class ArrayShapeParser(override val shape: ArrayShape, map: YMap, adopt: Sh
 
     super.parse()
 
-    map.key("type", entry => shape.add(ExplicitField()))
+    map.key("type", _ => shape.add(ExplicitField()))
 
     map.key("minItems", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+      shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
     })
 
     map.key("maxItems", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
     })
 
     map.key("uniqueItems", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
     })
 
     val finalShape = for {
@@ -240,29 +237,28 @@ case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) 
 
     super.parse()
 
-    map.key("type", entry => shape.add(ExplicitField()))
+    map.key("type", _ => shape.add(ExplicitField()))
 
     map.key("minItems", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MinItems, value.integer(), entry.annotations())
+      shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
     })
 
     map.key("maxItems", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MaxItems, value.integer(), entry.annotations())
+      shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
     })
 
     map.key("uniqueItems", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), entry.annotations())
+      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
     })
 
     map.key(
       "items",
       entry => {
-        val items = Entries(entry.ast).entries.values.zipWithIndex
+        val items = entry.value.value.toMap.entries.zipWithIndex
           .map(entry => RamlTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
-          .toSeq
         shape.withItems(items.filter(_.isDefined).map(_.get))
       }
     )
@@ -276,7 +272,7 @@ case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
 
     super.parse()
 
-    map.key("type", entry => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+    map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
     map.key("minProperties", entry => {
       val value = ValueNode(entry.value)
@@ -314,7 +310,7 @@ case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
       "properties",
       entry => {
         val properties: Seq[PropertyShape] =
-          PropertiesParser(entry.value, shape.withProperty).parse()
+          PropertiesParser(entry.value.value.toMap, shape.withProperty).parse()
         shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
       }
     )
@@ -326,7 +322,7 @@ case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
       "(dependencies)",
       entry => {
         val dependencies: Seq[PropertyDependencies] =
-          ShapeDependenciesParser(entry.value, properties).parse()
+          ShapeDependenciesParser(entry.value.value.toMap, properties).parse()
         shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
       }
     )
@@ -335,64 +331,55 @@ case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
   }
 }
 
-case class ShapeDependenciesParser(ast: AMFAST, properties: mutable.ListMap[String, PropertyShape]) {
-  def parse(): Seq[PropertyDependencies] = {
-    Entries(ast).entries.values
+case class ShapeDependenciesParser(ast: YMap, properties: mutable.ListMap[String, PropertyShape]) {
+  def parse(): Seq[PropertyDependencies] =
+    ast.entries
       .flatMap(entry => NodeDependencyParser(entry, properties).parse())
-      .toSeq
-  }
 }
 
-case class NodeDependencyParser(entry: EntryNode, properties: mutable.ListMap[String, PropertyShape]) {
+case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[String, PropertyShape]) {
   def parse(): Option[PropertyDependencies] = {
 
     properties
-      .get(entry.key.content.unquote)
+      .get(entry.key.value.toScalar.text.unquote)
       .map(p => {
-        val targets = buildTargets()
-        PropertyDependencies(entry.ast)
-          .set(PropertyDependenciesModel.PropertySource, AmfScalar(p.id), entry.annotations())
-          .set(PropertyDependenciesModel.PropertyTarget, AmfArray(targets), Annotations(entry.value))
+        PropertyDependencies(entry)
+          .set(PropertyDependenciesModel.PropertySource, AmfScalar(p.id), Annotations(entry.key))
+          .set(PropertyDependenciesModel.PropertyTarget, AmfArray(targets()), Annotations(entry.value))
       })
   }
 
-  private def buildTargets(): Seq[AmfScalar] = {
-    ArrayNode(entry.value)
+  private def targets(): Seq[AmfScalar] = {
+    ArrayNode(entry.value.value.toSequence)
       .strings()
       .scalars
-      .flatMap(
-        v =>
-          properties
-            .get(v.value.toString)
-            .map(p => AmfScalar(p.id, v.annotations)))
+      .flatMap(v => properties.get(v.value.toString).map(p => AmfScalar(p.id, v.annotations)))
   }
-
 }
 
-case class PropertiesParser(ast: AMFAST, producer: String => PropertyShape) {
+case class PropertiesParser(ast: YMap, producer: String => PropertyShape) {
 
   def parse(): Seq[PropertyShape] = {
-    Entries(ast).entries.values
+    ast.entries
       .map(entry => PropertyShapeParser(entry, producer).parse())
-      .toSeq
   }
 }
 
-case class PropertyShapeParser(entry: EntryNode, producer: String => PropertyShape) {
+case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape) {
 
   def parse(): PropertyShape = {
 
-    val name     = entry.key.content.unquote
-    val property = producer(name).add(Annotations(entry.ast))
-    val entries  = Entries(entry.value)
+    val name     = entry.key.value.toScalar.text.unquote
+    val property = producer(name).add(Annotations(entry))
+    val map      = entry.value.value.toMap
 
-    entries.key(
+    map.key(
       "required",
       entry => {
         val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
         property.set(PropertyShapeModel.MinCount,
                      AmfScalar(if (required) 1 else 0),
-                     entry.annotations() += ExplicitField())
+                     Annotations(entry) += ExplicitField())
       }
     )
 
@@ -417,43 +404,42 @@ case class Property(var typeDef: TypeDef = UndefinedType) {
   def withTypeDef(value: TypeDef): Unit = typeDef = value
 }
 
-case class XMLSerializerParser(defaultName: String, ast: AMFAST) {
+case class XMLSerializerParser(defaultName: String, map: YMap) {
   def parse(): XMLSerializer = {
-    val xmlSerializer = XMLSerializer(ast)
+    val serializer = XMLSerializer(map)
       .set(XMLSerializerModel.Attribute, value = false)
       .set(XMLSerializerModel.Wrapped, value = false)
       .set(XMLSerializerModel.Name, defaultName)
-    val entries = Entries(ast)
 
-    entries.key(
+    map.key(
       "attribute",
       entry => {
         val value = ValueNode(entry.value)
-        xmlSerializer.set(XMLSerializerModel.Attribute, value.boolean(), entry.annotations() += ExplicitField())
+        serializer.set(XMLSerializerModel.Attribute, value.boolean(), Annotations(entry) += ExplicitField())
       }
     )
 
-    entries.key("wrapped", entry => {
+    map.key("wrapped", entry => {
       val value = ValueNode(entry.value)
-      xmlSerializer.set(XMLSerializerModel.Wrapped, value.boolean(), entry.annotations() += ExplicitField())
+      serializer.set(XMLSerializerModel.Wrapped, value.boolean(), Annotations(entry) += ExplicitField())
     })
 
-    entries.key("name", entry => {
+    map.key("name", entry => {
       val value = ValueNode(entry.value)
-      xmlSerializer.set(XMLSerializerModel.Name, value.string(), entry.annotations() += ExplicitField())
+      serializer.set(XMLSerializerModel.Name, value.string(), Annotations(entry) += ExplicitField())
     })
 
-    entries.key("namespace", entry => {
+    map.key("namespace", entry => {
       val value = ValueNode(entry.value)
-      xmlSerializer.set(XMLSerializerModel.Namespace, value.string(), entry.annotations())
+      serializer.set(XMLSerializerModel.Namespace, value.string(), Annotations(entry))
     })
 
-    entries.key("prefix", entry => {
+    map.key("prefix", entry => {
       val value = ValueNode(entry.value)
-      xmlSerializer.set(XMLSerializerModel.Prefix, value.string(), entry.annotations())
+      serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
     })
 
-    xmlSerializer
+    serializer
   }
 }
 
@@ -466,37 +452,37 @@ abstract class ShapeParser() {
 
     map.key("displayName", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ShapeModel.DisplayName, value.string(), entry.annotations())
+      shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
     })
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Description, value.string(), entry.annotations())
+      shape.set(ShapeModel.Description, value.string(), Annotations(entry))
     })
 
     map.key("default", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Default, value.string(), entry.annotations())
+      shape.set(ShapeModel.Default, value.string(), Annotations(entry))
     })
 
     map.key("enum", entry => {
-      val value = ArrayNode(entry.value)
-      shape.set(ShapeModel.Values, value.strings(), entry.annotations())
+      val value = ArrayNode(entry.value.value.toSequence)
+      shape.set(ShapeModel.Values, value.strings(), Annotations(entry))
     })
 
     map.key(
       "(externalDocs)",
       entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value).parse()
-        shape.set(ShapeModel.Documentation, creativeWork, entry.annotations())
+        val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+        shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
       }
     )
 
     map.key(
       "xml",
       entry => {
-        val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value).parse()
-        shape.set(ShapeModel.XMLSerialization, xmlSerializer, entry.annotations())
+        val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value.value.toMap).parse()
+        shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
       }
     )
 
