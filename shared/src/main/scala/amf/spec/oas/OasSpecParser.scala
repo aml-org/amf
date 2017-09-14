@@ -4,7 +4,7 @@ import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.document.Document
-import amf.domain.Annotation.{DefaultPayload, EndPointBodyParameter, ExplicitField}
+import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField}
 import amf.domain._
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfScalar}
@@ -41,9 +41,9 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "definitions",
       entry => {
-        val types = OasTypesParser(entry.value, shape => shape.adopted(definitions)).parse()
+        val types = OasTypesParser(entry.value, shape => shape.adopted(definitions), declarations).parse()
         types.foreach(shape => {
-          declarations += shape.name -> shape
+          declarations += shape.name -> shape.add(DeclaredElement())
         })
       }
     )
@@ -99,7 +99,7 @@ case class OasSpecParser(root: Root) {
     entries.key(
       "x-base-uri-parameters",
       entry => {
-        val uriParameters = HeaderParametersParser(entry.value, api.withBaseUriParameter).parse()
+        val uriParameters = HeaderParametersParser(entry.value, api.withBaseUriParameter, declarations).parse()
         api.set(WebApiModel.BaseUriParameters, AmfArray(uriParameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -151,7 +151,7 @@ case class OasSpecParser(root: Root) {
           "^/.*",
           entries => {
             val endpoints = mutable.ListBuffer[EndPoint]()
-            entries.foreach(EndpointParser(_, api.withEndPoint, endpoints).parse())
+            entries.foreach(EndpointParser(_, api.withEndPoint, endpoints, declarations).parse())
             api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
           }
         )
@@ -162,7 +162,10 @@ case class OasSpecParser(root: Root) {
   }
 }
 
-case class EndpointParser(entry: EntryNode, producer: String => EndPoint, collector: mutable.ListBuffer[EndPoint]) {
+case class EndpointParser(entry: EntryNode,
+                          producer: String => EndPoint,
+                          collector: mutable.ListBuffer[EndPoint],
+                          declarations: Map[String, Shape]) {
 
   def parse(): Unit = {
 
@@ -184,7 +187,7 @@ case class EndpointParser(entry: EntryNode, producer: String => EndPoint, collec
     entries.key(
       "parameters",
       entry => {
-        parameters = ParametersParser(entry.value, endpoint.id).parse()
+        parameters = ParametersParser(entry.value, endpoint.id, declarations).parse()
         parameters.body.foreach(_.add(EndPointBodyParameter()))
         parameters match {
           case OasParameters(_, path, _, _) if path.nonEmpty =>
@@ -201,7 +204,7 @@ case class EndpointParser(entry: EntryNode, producer: String => EndPoint, collec
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += OperationParser(entry, parameters, endpoint.withOperation).parse()
+          operations += OperationParser(entry, parameters, endpoint.withOperation, declarations).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -209,7 +212,10 @@ case class EndpointParser(entry: EntryNode, producer: String => EndPoint, collec
   }
 }
 
-case class RequestParser(entries: Entries, global: OasParameters, producer: () => Request) {
+case class RequestParser(entries: Entries,
+                         global: OasParameters,
+                         producer: () => Request,
+                         declarations: Map[String, Shape]) {
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)
 
@@ -218,7 +224,7 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
     entries.key(
       "parameters",
       entry => {
-        parameters = global.merge(ParametersParser(entry.value, request.getOrCreate.id).parse())
+        parameters = global.merge(ParametersParser(entry.value, request.getOrCreate.id, declarations).parse())
         parameters match {
           case OasParameters(query, _, header, _) =>
             if (query.nonEmpty)
@@ -240,7 +246,7 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
       "x-request-payloads",
       entry =>
         ArrayNode(entry.value).values.map(value =>
-          payloads += PayloadParser(value, request.getOrCreate.withPayload).parse())
+          payloads += PayloadParser(value, request.getOrCreate.withPayload, declarations).parse())
     )
 
     if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
@@ -249,7 +255,10 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
   }
 }
 
-case class OperationParser(entry: EntryNode, global: OasParameters, producer: String => Operation) {
+case class OperationParser(entry: EntryNode,
+                           global: OasParameters,
+                           producer: String => Operation,
+                           declarations: Map[String, Shape]) {
   def parse(): Operation = {
 
     val operation = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry.ast))
@@ -291,7 +300,9 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
       }
     )
 
-    RequestParser(entries, global, () => operation.withRequest()).parse().map(operation.set(OperationModel.Request, _))
+    RequestParser(entries, global, () => operation.withRequest(), declarations)
+      .parse()
+      .map(operation.set(OperationModel.Request, _))
 
     entries.key(
       "responses",
@@ -300,7 +311,9 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
           "default|\\d{3}",
           entries => {
             val responses = mutable.ListBuffer[Response]()
-            entries.foreach(entry => { responses += ResponseParser(entry, operation.withResponse).parse() })
+            entries.foreach(entry => {
+              responses += ResponseParser(entry, operation.withResponse, declarations).parse()
+            })
             operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), entry.annotations())
           }
         )
@@ -311,10 +324,10 @@ case class OperationParser(entry: EntryNode, global: OasParameters, producer: St
   }
 }
 
-case class ParametersParser(ast: AMFAST, parentId: String) {
+case class ParametersParser(ast: AMFAST, parentId: String, declarations: Map[String, Shape]) {
   def parse(): OasParameters = {
     val parameters = ArrayNode(ast).values
-      .map(value => ParameterParser(value, parentId).parse())
+      .map(value => ParameterParser(value, parentId, declarations).parse())
 
     OasParameters(
       parameters.filter(_.isQuery).map(_.parameter),
@@ -325,7 +338,7 @@ case class ParametersParser(ast: AMFAST, parentId: String) {
   }
 }
 
-case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Payload) {
+case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Payload, declarations: Map[String, Shape]) {
   def parse(): Payload = {
 
     val entries = Entries(payloadMap)
@@ -341,7 +354,7 @@ case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Paylo
     entries.key(
       "schema",
       entry => {
-        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id))
+        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id), declarations)
           .parse()
           .map(payload.set(PayloadModel.Schema, _, entry.annotations()))
       }
@@ -351,7 +364,7 @@ case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Paylo
   }
 }
 
-case class ResponseParser(entry: EntryNode, producer: String => Response) {
+case class ResponseParser(entry: EntryNode, producer: String => Response, declarations: Map[String, Shape]) {
   def parse(): Response = {
 
     val entries = Entries(entry.value)
@@ -373,7 +386,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
     entries.key(
       "headers",
       entry => {
-        val parameters: Seq[Parameter] = HeaderParametersParser(entry.value, response.withHeader).parse()
+        val parameters: Seq[Parameter] = HeaderParametersParser(entry.value, response.withHeader, declarations).parse()
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), entry.annotations())
       }
     )
@@ -385,7 +398,8 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
     entries.key(
       "x-response-payloads",
       entry =>
-        ArrayNode(entry.value).values.map(value => payloads += PayloadParser(value, response.withPayload).parse())
+        ArrayNode(entry.value).values.map(value =>
+          payloads += PayloadParser(value, response.withPayload, declarations).parse())
     )
 
     if (payloads.nonEmpty)
@@ -405,7 +419,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
     entries.key(
       "schema",
       entry =>
-        OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id))
+        OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id), declarations)
           .parse()
           .map(payload.set(PayloadModel.Schema, _, entry.annotations()))
     )
@@ -414,7 +428,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response) {
   }
 }
 
-case class ParameterParser(ast: AMFAST, parentId: String) {
+case class ParameterParser(ast: AMFAST, parentId: String, declarations: Map[String, Shape]) {
   def parse(): OasParameter = {
     val p       = OasParameter(ast)
     val entries = Entries(ast)
@@ -447,7 +461,7 @@ case class ParameterParser(ast: AMFAST, parentId: String) {
       entries.key(
         "schema",
         entry => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
+          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id), declarations)
             .parse()
             .map(p.payload.set(PayloadModel.Schema, _, entry.annotations()))
         }
@@ -462,7 +476,7 @@ case class ParameterParser(ast: AMFAST, parentId: String) {
       // type
       p.parameter.adopted(parentId)
       val map = MapNode(ast)
-      OasTypeParser(map, shape => shape.withName("schema").adopted(p.parameter.id))
+      OasTypeParser(map, shape => shape.withName("schema").adopted(p.parameter.id), declarations)
         .parse()
         .map(p.parameter.set(ParameterModel.Schema, _, map.annotations()))
     }
@@ -522,15 +536,15 @@ case class LicenseParser(ast: AMFAST) {
   }
 }
 
-case class HeaderParametersParser(ast: AMFAST, producer: String => Parameter) {
+case class HeaderParametersParser(ast: AMFAST, producer: String => Parameter, declarations: Map[String, Shape]) {
   def parse(): Seq[Parameter] = {
     Entries(ast).entries.values
-      .map(entry => HeaderParameterParser(entry, producer).parse())
+      .map(entry => HeaderParameterParser(entry, producer, declarations).parse())
       .toSeq
   }
 }
 
-case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter) {
+case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter, declarations: Map[String, Shape]) {
   def parse(): Parameter = {
 
     val name      = entry.key.content.unquote
@@ -555,7 +569,7 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
     entries.key(
       "type",
       _ => {
-        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
+        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id), declarations)
           .parse()
           .map(parameter.set(ParameterModel.Schema, _, entry.annotations()))
       }
