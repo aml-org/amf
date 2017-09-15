@@ -15,7 +15,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
-import amf.remote.{Oas, Vendor}
+import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
 import amf.spec.{Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
@@ -42,8 +42,8 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   def emitDocument(): AMFAST = {
 
     val ordering: SpecOrdering = unit match {
-      case document: Document => SpecOrdering.ordering(Oas, document.encodes.annotations)
-      case module: Module     => SpecOrdering.ordering(Oas, module.annotations)
+      case document: Document => SpecOrdering.ordering(Raml, document.encodes.annotations)
+      case module: Module     => SpecOrdering.ordering(Raml, module.annotations)
     }
 
     val apiEmitters = emitWebApi(ordering)
@@ -51,8 +51,8 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     val declares = DeclarationsEmitter(ordering).emitters
 
     emitter.root(Root) { () =>
+      raw("%RAML 1.0", Comment)
       map { () =>
-        raw("%RAML 1.0", Comment)
         traverse(ordering.sorted(apiEmitters ++ declares))
       }
     }
