@@ -160,14 +160,20 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     }
 
     private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[Vendor]): Seq[Emitter] = {
+
+      def defaultOrder(emitters: Seq[EndPointEmitter]): Seq[EndPointEmitter] = {
+        emitters.sorted((x: EndPointEmitter, y: EndPointEmitter) =>
+          x.endpoint.path.count(_ == '/') compareTo y.endpoint.path.count(_ == '/'))
+      }
+
       val endpoints = f.array.values
         .asInstanceOf[Seq[EndPoint]]
 
       val notOas = !vendor.contains(Oas)
 
       if (notOas) {
-        val graph                                       = endpoints.map(e => (e, e.parent.toSet)).toMap
-        val all: mutable.Map[EndPoint, EndPointEmitter] = mutable.Map[EndPoint, EndPointEmitter]()
+        val graph                                           = endpoints.map(e => (e, e.parent.toSet)).toMap
+        val all: mutable.ListMap[EndPoint, EndPointEmitter] = mutable.ListMap[EndPoint, EndPointEmitter]()
         tsort(graph, Seq()).foreach(e => {
           val emitter = EndPointEmitter(e, ordering)
           e.parent match {
@@ -177,10 +183,16 @@ case class RamlSpecEmitter(unit: BaseUnit) {
             case _ => all += (e -> emitter)
           }
         })
-        all.filterKeys(_.parent.isEmpty).values.toSeq
+        defaultOrder(
+          all
+            .filterKeys(_.parent.isEmpty)
+            .values
+            .toSeq)
+
       } else {
         endpoints.map(EndPointEmitter(_, ordering))
       }
+
     }
 
     private case class BaseUriEmitter(fs: Fields) extends Emitter {

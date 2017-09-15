@@ -68,20 +68,6 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "shared/src/test/resources/upanddown/basic.json#/web-api"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "oas"
-                  }
-                ]
-              }
-            ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
@@ -208,8 +194,30 @@
         ]
       }
     ],
-    "http://raml.org/vocabularies/document#references": [
+    "http://raml.org/vocabularies/document#declares": [
 
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "shared/src/test/resources/upanddown/basic.json/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "shared/src/test/resources/upanddown/basic.json"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "oas"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
 ]
