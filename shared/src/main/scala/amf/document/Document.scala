@@ -20,7 +20,7 @@ case class Document(fields: Fields, annotations: Annotations) extends BaseUnit w
   def withLocation(location: String): this.type                 = set(Location, location)
   def withReferences(references: Seq[BaseUnit]): this.type      = setArray(References, references)
   def withEncodes(encoded: DomainElement): this.type            = set(Encodes, encoded)
-  def withDeclares(declarations: Seq[DomainElement]): this.type = setArray(Declares, declarations)
+  def withDeclares(declarations: Seq[DomainElement]): this.type = setArrayWithoutId(Declares, declarations)
 
   override def adopted(parent: String): this.type = withId(parent)
 }

@@ -10,13 +10,14 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
+import amf.spec.Declarations
 
 import scala.collection.mutable
 
 /**
   * OpenAPI Type Parser.
   */
-case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit, declarations: Map[String, Shape]) {
+case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit, declarations: Declarations) {
   def parse(): Option[Shape] = {
     val name = entry.key.content.unquote
 
@@ -69,7 +70,7 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit, declarations
   }
 }
 
-case class OasTypesParser(ast: AMFAST, adopt: Shape => Unit, declarations: Map[String, Shape]) {
+case class OasTypesParser(ast: AMFAST, adopt: Shape => Unit, declarations: Declarations) {
   def parse(): Seq[Shape] = {
     Entries(ast).entries.values
       .flatMap(entry => OasTypeParser(entry, adopt, declarations).parse())
@@ -141,7 +142,7 @@ case class DataArrangementParser(name: String,
                                  entry: KeyValueNode,
                                  entries: Entries,
                                  adopt: Shape => Unit,
-                                 declarations: Map[String, Shape]) {
+                                 declarations: Declarations) {
 
   def lookAhead(): Option[Either[TupleShape, ArrayShape]] = {
     entries.key("items") match {
@@ -167,10 +168,7 @@ case class DataArrangementParser(name: String,
 
 }
 
-case class TupleShapeParser(shape: TupleShape,
-                            entries: Entries,
-                            adopt: Shape => Unit,
-                            declarations: Map[String, Shape])
+case class TupleShapeParser(shape: TupleShape, entries: Entries, adopt: Shape => Unit, declarations: Declarations)
     extends ShapeParser() {
 
   override def parse(): Shape = {
@@ -208,10 +206,7 @@ case class TupleShapeParser(shape: TupleShape,
   }
 }
 
-case class ArrayShapeParser(shape: ArrayShape,
-                            entries: Entries,
-                            adopt: Shape => Unit,
-                            declarations: Map[String, Shape])
+case class ArrayShapeParser(shape: ArrayShape, entries: Entries, adopt: Shape => Unit, declarations: Declarations)
     extends ShapeParser() {
   override def parse(): Shape = {
     adopt(shape)
@@ -251,8 +246,7 @@ case class ArrayShapeParser(shape: ArrayShape,
   }
 }
 
-case class NodeShapeParser(shape: NodeShape, entries: Entries, declarations: Map[String, Shape])
-    extends ShapeParser() {
+case class NodeShapeParser(shape: NodeShape, entries: Entries, declarations: Declarations) extends ShapeParser() {
   override def parse(): NodeShape = {
 
     super.parse()
@@ -335,13 +329,13 @@ case class NodeShapeParser(shape: NodeShape, entries: Entries, declarations: Map
   }
 }
 
-case class AllOfParser(array: ArrayNode, declarations: Map[String, Shape], adopt: Shape => Unit) {
+case class AllOfParser(array: ArrayNode, declarations: Declarations, adopt: Shape => Unit) {
   def parse(): Seq[Shape] =
     array.values.flatMap(map =>
       declarationsRef(Entries(map)).orElse(OasTypeParser(MapNode(map), adopt, declarations).parse()))
 
   private def declarationsRef(entries: Entries): Option[Shape] = {
-    entries.key("$ref").map(entry => declarations(entry.value.content.unquote.stripPrefix("#/definitions/")))
+    entries.key("$ref").map(entry => declarations.shapes(entry.value.content.unquote.stripPrefix("#/definitions/")))
   }
 }
 
@@ -382,7 +376,7 @@ case class NodeDependencyParser(entry: EntryNode, properties: mutable.ListMap[St
 case class PropertiesParser(ast: AMFAST,
                             producer: String => PropertyShape,
                             requiredFields: Seq[String],
-                            declarations: Map[String, Shape]) {
+                            declarations: Declarations) {
 
   def parse(): Seq[PropertyShape] = {
     Entries(ast).entries.values
@@ -394,7 +388,7 @@ case class PropertiesParser(ast: AMFAST,
 case class PropertyShapeParser(entry: EntryNode,
                                producer: String => PropertyShape,
                                requiredFields: Seq[String],
-                               declarations: Map[String, Shape]) {
+                               declarations: Declarations) {
 
   def parse(): PropertyShape = {
 

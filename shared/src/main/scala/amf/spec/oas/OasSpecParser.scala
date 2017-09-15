@@ -1,17 +1,30 @@
 package amf.spec.oas
 
+import amf.common.AMFToken.StringToken
 import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.document.Document
-import amf.domain.Annotation._
+import amf.domain.Annotation.{
+  DeclaredElement,
+  DefaultPayload,
+  EndPointBodyParameter,
+  ExplicitField,
+  SingleValueArray,
+  _
+}
 import amf.domain._
+import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.domain._
+import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.Shape
+import amf.spec.Declarations
+import amf.vocabulary.VocabularyMappings
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.util.matching.Regex
 
 /**
@@ -25,37 +38,61 @@ case class OasSpecParser(root: Root) {
 
     val declarations = parseDeclares(entries)
 
-    val api = parseWebApi(entries, declarations).add(SourceVendor(root.vendor))
+    val api = parseWebApi(entries, Declarations(declarations)).add(SourceVendor(root.vendor))
 
     Document()
       .adopted(root.location)
       .withEncodes(api)
-      .withDeclares(declarations.values.toSeq)
+      .withDeclares(declarations)
   }
 
-  private def parseDeclares(entries: Entries) = {
-    val definitions = root.location + "#/definitions"
+  private def parseDeclares(entries: Entries) =
+    parseTypeDeclarations(entries, root.location + "#/declarations") ++
+      parseAnnotationTypeDeclarations(entries, root.location + "#/declarations")
 
-    var declarations: Map[String, Shape] = Map()
+  def parseTypeDeclarations(entries: Entries, typesPrefix: String): Seq[Shape] = {
+    val types = ListBuffer[Shape]()
 
     entries.key(
       "definitions",
       entry => {
-        // TODO Unresolved reference when two types are in the same level.
         Entries(entry.value).entries.values.flatMap(entry => {
-          val s = OasTypeParser(entry, shape => shape.adopted(definitions), declarations).parse()
-          s.foreach(shape => {
-            declarations += shape.name -> shape.add(DeclaredElement())
-          })
-          s
+          val typeName = entry.key.content.unquote
+          OasTypeParser(entry, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
+            .parse() match {
+            case Some(shape) =>
+              types += shape.add(DeclaredElement())
+            case None => throw new Exception(s"Error parsing shape at $typeName")
+          }
+        })
+      }
+    )
+    types
+  }
+
+  def parseAnnotationTypeDeclarations(entries: Entries, customProperties: String): Seq[CustomDomainProperty] = {
+    val customDomainProperties = ListBuffer[CustomDomainProperty]()
+
+    entries.key(
+      "x-annotationTypes",
+      e => {
+        Entries(e.value).entries.values.map(entry => {
+          val typeName = entry.key.content.unquote
+          val customProperty = AnnotationTypesParser(entry,
+                                                     customProperty =>
+                                                       customProperty
+                                                         .withName(typeName)
+                                                         .adopted(customProperties),
+                                                     Declarations(customDomainProperties)).parse()
+          customDomainProperties += customProperty.add(DeclaredElement())
         })
       }
     )
 
-    declarations
+    customDomainProperties
   }
 
-  private def parseWebApi(entries: Entries, declarations: Map[String, Shape]): WebApi = {
+  private def parseWebApi(entries: Entries, declarations: Declarations): WebApi = {
 
     val api     = WebApi(root.ast).adopted(root.location)
     val entries = Entries(root.ast.last)
@@ -169,7 +206,7 @@ case class OasSpecParser(root: Root) {
 case class EndpointParser(entry: EntryNode,
                           producer: String => EndPoint,
                           collector: mutable.ListBuffer[EndPoint],
-                          declarations: Map[String, Shape]) {
+                          declarations: Declarations) {
 
   def parse(): Unit = {
 
@@ -216,10 +253,7 @@ case class EndpointParser(entry: EntryNode,
   }
 }
 
-case class RequestParser(entries: Entries,
-                         global: OasParameters,
-                         producer: () => Request,
-                         declarations: Map[String, Shape]) {
+case class RequestParser(entries: Entries, global: OasParameters, producer: () => Request, declarations: Declarations) {
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)
 
@@ -262,7 +296,7 @@ case class RequestParser(entries: Entries,
 case class OperationParser(entry: EntryNode,
                            global: OasParameters,
                            producer: String => Operation,
-                           declarations: Map[String, Shape]) {
+                           declarations: Declarations) {
   def parse(): Operation = {
 
     val operation = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry.ast))
@@ -328,7 +362,7 @@ case class OperationParser(entry: EntryNode,
   }
 }
 
-case class ParametersParser(ast: AMFAST, parentId: String, declarations: Map[String, Shape]) {
+case class ParametersParser(ast: AMFAST, parentId: String, declarations: Declarations) {
   def parse(): OasParameters = {
     val parameters = ArrayNode(ast).values
       .map(value => ParameterParser(value, parentId, declarations).parse())
@@ -342,7 +376,7 @@ case class ParametersParser(ast: AMFAST, parentId: String, declarations: Map[Str
   }
 }
 
-case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Payload, declarations: Map[String, Shape]) {
+case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Payload, declarations: Declarations) {
   def parse(): Payload = {
 
     val entries = Entries(payloadMap)
@@ -368,7 +402,7 @@ case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Paylo
   }
 }
 
-case class ResponseParser(entry: EntryNode, producer: String => Response, declarations: Map[String, Shape]) {
+case class ResponseParser(entry: EntryNode, producer: String => Response, declarations: Declarations) {
   def parse(): Response = {
 
     val entries = Entries(entry.value)
@@ -432,7 +466,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response, declar
   }
 }
 
-case class ParameterParser(ast: AMFAST, parentId: String, declarations: Map[String, Shape]) {
+case class ParameterParser(ast: AMFAST, parentId: String, declarations: Declarations) {
   def parse(): OasParameter = {
     val p       = OasParameter(ast)
     val entries = Entries(ast)
@@ -540,7 +574,7 @@ case class LicenseParser(ast: AMFAST) {
   }
 }
 
-case class HeaderParametersParser(ast: AMFAST, producer: String => Parameter, declarations: Map[String, Shape]) {
+case class HeaderParametersParser(ast: AMFAST, producer: String => Parameter, declarations: Declarations) {
   def parse(): Seq[Parameter] = {
     Entries(ast).entries.values
       .map(entry => HeaderParameterParser(entry, producer, declarations).parse())
@@ -548,7 +582,7 @@ case class HeaderParametersParser(ast: AMFAST, producer: String => Parameter, de
   }
 }
 
-case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter, declarations: Map[String, Shape]) {
+case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter, declarations: Declarations) {
   def parse(): Parameter = {
 
     val name      = entry.key.content.unquote
@@ -624,6 +658,65 @@ case class OrganizationParser(ast: AMFAST) {
     })
 
     organization
+  }
+}
+
+case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
+  def parse(): CustomDomainProperty = {
+    val custom         = CustomDomainProperty(node.annotations())
+    val annotationName = node.key.content.unquote
+    custom.withName(annotationName)
+    adopt(custom)
+
+    val entries = Entries(node.value)
+
+    entries.key(
+      "allowedTargets",
+      entry => {
+        val annotations = entry.annotations()
+        val targets: AmfArray = entry.value.`type` match {
+          case StringToken =>
+            annotations += SingleValueArray()
+            AmfArray(Seq(ValueNode(entry.value).string()))
+          case _ =>
+            ArrayNode(entry.value).strings()
+        }
+
+        val targetUris = targets.values.map({
+          case s: AmfScalar =>
+            VocabularyMappings.ramlToUri.get(s.toString) match {
+              case Some(uri) => AmfScalar(uri, s.annotations)
+              case None      => s
+            }
+          case nodeType => AmfScalar(nodeType.toString, nodeType.annotations)
+        })
+
+        custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris), annotations)
+      }
+    )
+
+    entries.key("displayName", entry => {
+      val value = ValueNode(entry.value)
+      custom.set(CustomDomainPropertyModel.DisplayName, value.string(), entry.annotations())
+    })
+
+    entries.key("description", entry => {
+      val value = ValueNode(entry.value)
+      custom.set(CustomDomainPropertyModel.Description, value.string(), entry.annotations())
+    })
+
+    entries.key(
+      "schema",
+      entry => {
+        OasTypeParser(entry, shape => shape.adopted(custom.id), declarations)
+          .parse()
+          .foreach({ shape =>
+            custom.set(CustomDomainPropertyModel.Schema, shape, entry.annotations())
+          })
+      }
+    )
+
+    custom
   }
 }
 
