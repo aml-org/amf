@@ -15,7 +15,6 @@ import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
-import amf.spec.SpecOrdering.ordering
 import amf.spec.{Emitter, SpecOrdering}
 
 import scala.collection.immutable.ListMap
@@ -29,6 +28,12 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
   val emitter: ASTEmitter[AMFToken, AMFAST] = ASTEmitter(AMFASTFactory())
 
+  //before the source vendor annotations was saved in web api model.
+  // Now, will be saved in document model (since changes in parser).
+  val ordering: SpecOrdering = unit match {
+    case document: Document => SpecOrdering.ordering(Raml, document.annotations)
+  }
+
   private def retrieveWebApi() = unit match {
     case document: Document => document.encodes
   }
@@ -41,7 +46,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     val apiEmitters = emitWebApi()
     // TODO ordering??
 
-    val declares = DeclaresEmitter(retrieveDeclarations(), ordering(Raml, Annotations())).emitters()
+    val declares = DeclaresEmitter(retrieveDeclarations(), ordering).emitters()
 
     emitter.root(Root) { () =>
       raw("%RAML 1.0", Comment)
@@ -54,7 +59,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   def emitWebApi(): Seq[Emitter] = {
     val model  = retrieveWebApi()
     val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    val api    = WebApiEmitter(model, ordering(Raml, model.annotations), vendor)
+    val api    = WebApiEmitter(model, ordering, vendor)
     api.emitters
   }
 
