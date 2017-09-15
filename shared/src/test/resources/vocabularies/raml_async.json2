@@ -1,0 +1,630 @@
+[
+  {
+    "@id": "shared/src/test/resources/vocabularies/raml_async.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "http://raml.org/vocabularies/async#",
+        "@type": [
+          "http://raml.org/vocabularies/meta#Vocabulary",
+          "http://www.w3.org/2002/07/owl#Ontology"
+        ],
+        "http://raml.org/vocabularies/meta#base": [
+          {
+            "@value": "http://raml.org/vocabularies/async#"
+          }
+        ],
+        "http://raml.org/vocabularies/meta#dialect": [
+          {
+            "@value": "RAML Async"
+          }
+        ],
+        "http://raml.org/vocabularies/meta#version": [
+          {
+            "@value": "0.1"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "Vocabulary to define Asynchronous APIs"
+          }
+        ],
+        "http://raml.org/vocabularies/meta#external": [
+          {
+            "@id": "http://raml.org/vocabularies/async#schema-org",
+            "@type": [
+              "http://raml.org/vocabularies/meta#External"
+            ],
+            "http://raml.org/vocabularies/meta#name": [
+              {
+                "@value": "schema-org"
+              }
+            ],
+            "http://raml.org/vocabularies/meta#uri": [
+              {
+                "@value": "http://schema.org/"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#shacl",
+            "@type": [
+              "http://raml.org/vocabularies/meta#External"
+            ],
+            "http://raml.org/vocabularies/meta#name": [
+              {
+                "@value": "shacl"
+              }
+            ],
+            "http://raml.org/vocabularies/meta#uri": [
+              {
+                "@value": "http://www.w3.org/ns/shacl#"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#raml-doc",
+            "@type": [
+              "http://raml.org/vocabularies/meta#External"
+            ],
+            "http://raml.org/vocabularies/meta#name": [
+              {
+                "@value": "raml-doc"
+              }
+            ],
+            "http://raml.org/vocabularies/meta#uri": [
+              {
+                "@value": "http://raml.org/vocabularies/doc#"
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/meta#classes": [
+          {
+            "@id": "http://raml.org/vocabularies/async#AsyncAPI",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#RootDomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "AsyncAPI"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "|"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#Connection",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Connection"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "|"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#EndPoint",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "End Point"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "|"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#Parameter",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Parameter"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Information about the replacement options that can be used in a parametric EndPoint"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#AsyncOperation",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Async Operation"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Each of the operations in the asynchronous interface"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#Message",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Message"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Unit of data passed as the argument of an asyn operation"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#Header",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Header"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Meta information for a message"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#Bindings",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://raml.org/vocabularies/doc#DomainElement"
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/meta#properties": [
+          {
+            "@id": "http://raml.org/vocabularies/async#schema-org.title",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "A short, plain-text label for the API. Its value is a string."
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#schema-org.version",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "String identifying the version of the API."
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#schema-org.description",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "A substantial, human-friendly description of the API. Its value is a string and MAY be formatted using markdown."
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#type-declaration",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Declarations of data types for use within the API."
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/ns/shacl#Shape"
+              }
+            ],
+            "http://raml.org/vocabularies/meta#extends": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#declarationProperty"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#transport",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "String containing an identifier for the kind of transport associated to the API, bindings in the spec will target this transport value"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#connection",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Optional connection details to the system providing the messaging infrastructure."
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Connection"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#endpoints",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "EndPoints declared in the API"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#EndPoint"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#host",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Host machine where to establish the connection"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Connection"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#port",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Network port for the connection in the host machine"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Connection"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#scheme",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "URI scheme identifying the network protocol used for the connection"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Connection"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#operation",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operation supported by an EndPoint"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#EndPoint"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#parameter",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Parameters that can be replaced in the identifier of an EndPoint"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#EndPoint"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Parameter"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#message",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Message used as argument for an asynchronous operation"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Message"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#header",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Meta-data about a message"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Message"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Header"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#bindings",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Transport specific bindings for a model element"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#Connection"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#EndPoint"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Bindings"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#pattern",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Messaging pattern implemented by an end point"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#EndPoint"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#serialization",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Format used to encode some data over network transport"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#schema",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Data shape associated to some element of the domain"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Parameter"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#Message"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#Header"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/ns/shacl#Shape"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#references": [
+
+    ]
+  }
+]
