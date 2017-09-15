@@ -167,7 +167,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       if (notOas) {
         val graph                                       = endpoints.map(e => (e, e.parent.toSet)).toMap
-        val all: mutable.Map[EndPoint, EndPointEmitter] = mutable.ListMap()
+        val all: mutable.Map[EndPoint, EndPointEmitter] = mutable.Map[EndPoint, EndPointEmitter]()
         tsort(graph, Seq()).foreach(e => {
           val emitter = EndPointEmitter(e, ordering)
           e.parent match {

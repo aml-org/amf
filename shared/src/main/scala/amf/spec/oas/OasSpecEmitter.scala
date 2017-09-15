@@ -32,6 +32,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
   val ordering: SpecOrdering = unit match {
     case document: Document => SpecOrdering.ordering(Oas, document.annotations)
   }
+
   private def retrieveWebApi() = unit match {
     case document: Document => document.encodes
   }
