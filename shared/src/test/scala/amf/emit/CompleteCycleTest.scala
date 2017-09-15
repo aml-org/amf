@@ -228,8 +228,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("types.raml", "types.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  // todo fix id (#/declares) propagation when set declares elements in document.
-  ignore("Types amf(raml) to amf test") {
+  test("Types amf(raml) to amf test") {
     assertCycle("types.raml.jsonld", "types.raml.jsonld", AmfJsonHint, Amf)
   }
 
