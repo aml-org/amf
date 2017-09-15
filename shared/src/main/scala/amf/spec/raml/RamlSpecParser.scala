@@ -8,14 +8,13 @@ import amf.document.Document
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
-import amf.maker.BaseUriSplitter
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.shape.Shape
-import amf.spec.Declarations
+import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
 
 import scala.collection.immutable.ListMap

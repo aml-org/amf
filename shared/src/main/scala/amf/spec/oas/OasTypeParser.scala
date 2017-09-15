@@ -70,14 +70,6 @@ case class OasTypeParser(entry: KeyValueNode, adopt: Shape => Unit, declarations
   }
 }
 
-case class OasTypesParser(ast: AMFAST, adopt: Shape => Unit, declarations: Declarations) {
-  def parse(): Seq[Shape] = {
-    Entries(ast).entries.values
-      .flatMap(entry => OasTypeParser(entry, adopt, declarations).parse())
-      .toSeq
-  }
-}
-
 case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entries) extends ShapeParser() {
   override def parse(): ScalarShape = {
 

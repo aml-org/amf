@@ -7,7 +7,6 @@ import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
-import amf.maker.BaseUriSplitter
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -17,7 +16,7 @@ import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
-import amf.spec.{Declarations, Emitter, SpecOrdering}
+import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
 
 import scala.collection.immutable.ListMap
@@ -33,10 +32,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
   private def retrieveWebApi() = unit match {
     case document: Document => document.encodes
-  }
-
-  private def retrieveDeclarations(): Seq[DomainElement] = unit match {
-    case document: Document => document.declares
   }
 
   def emitDocument(): AMFAST = {

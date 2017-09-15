@@ -63,9 +63,8 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit, declarations: 
             val t = e.value.content.unquote
             val f = entries.key("(format)").map(_.value.content.unquote).getOrElse("")
             matchType(t, f)
-          case SequenceToken => ObjectType
-          case MapToken      => ObjectType
-          case _             => UndefinedType
+          case SequenceToken | MapToken => ObjectType
+          case _                        => UndefinedType
       })
   }
 
@@ -103,14 +102,6 @@ case class RamlTypeParser(entry: EntryNode, adopt: Shape => Unit, declarations: 
       case MapToken                    => Right(Entries(entry.value))
       case _                           => throw new RuntimeException("no value detected in look ahead")
     }
-  }
-}
-
-case class RamlTypesParser(ast: AMFAST, adopt: Shape => Unit, declarations: Declarations) {
-  def parse(): Seq[Shape] = {
-    Entries(ast).entries.values
-      .flatMap(entry => RamlTypeParser(entry, adopt, declarations).parse())
-      .toSeq
   }
 }
 
