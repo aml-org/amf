@@ -2,9 +2,8 @@ package amf.dialects
 
 import amf.common.AMFAST
 import amf.common.AMFToken.{Comment, Root}
-import amf.document.BaseUnit
+import amf.document.{BaseUnit, Document}
 import amf.domain.FieldEntry
-import amf.metadata.document.FragmentModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position
 import amf.spec.dialect.DomainEntity
@@ -15,14 +14,22 @@ import amf.spec.{ASTEmitterHelper, Emitter}
   */
 class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
 
-  var _root:DomainEntity=null;
-  var _np:LocalNameProvider=null;
+  val _root:DomainEntity=retrieveDomainEntity(unit);
+  var _np:LocalNameProvider=_;
 
-  case class RefValueEmitter(key: String, f: FieldEntry) extends Emitter {
+  if (_root.definition.nameProvider!=null) {
+     _np=_root.definition.nameProvider(_root);
+  }
+
+  private def retrieveDomainEntity(unit:BaseUnit) = unit match {
+    case document: Document => document.encodes.asInstanceOf[DomainEntity]
+  }
+
+  case class RefValueEmitter(val parent:DialectPropertyMapping,key: String, f: FieldEntry) extends Emitter {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
-        emitRef(f.scalar.toString)
+        emitRef(parent,f.scalar.toString)
       })
     }
 
@@ -30,7 +37,7 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
   }
 
   /** Emit a single value from an array as an entry. */
-  case class RefArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
+  case class RefArrayValueEmitter(parent:DialectPropertyMapping,key: String, f: FieldEntry) extends Emitter {
     override def emit(): Unit = {
       try {
         sourceOr(f.value, entry { () =>
@@ -38,12 +45,12 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
           //raw("A")
           if (f.array.values.size == 1) {
             val scalar = f.array.values.head.asInstanceOf[AmfScalar]
-            emitRef(scalar.toString)
+            emitRef(parent,scalar.toString)
 
           }
           else array(() => {
             f.array.values.foreach(v => {
-              emitRef(v.asInstanceOf[AmfScalar].toString);
+              emitRef(parent,v.asInstanceOf[AmfScalar].toString);
               ;
             })
           })
@@ -56,35 +63,24 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
     override def position(): Position = pos(f.value.annotations)
   }
 
-  private def emitRef(string: String) = {
-    try {
-      val name = _np.localName(string);
-      if (name == null) {
+  private def emitRef(dialectPropertyMapping: DialectPropertyMapping,string: String) = {
+      if (_np==null){
         raw(string)
+
       }
-      else raw(name);
-    }catch {
-      case e:Exception =>e.printStackTrace()
-    }
+      else {
+        val name = _np.localName(string, dialectPropertyMapping);
+        if (name == null) {
+          raw(string)
+        }
+        else raw(name);
+      }
   }
 
   def  emit():AMFAST={
     emitter.root(Root) { () =>
-      raw("%RAML Vocabulary 1.0", Comment)
-      try {
-        unit.fields.fields().foreach(k=>{
-          if (k.field.value.iri()==FragmentModel.Encodes.value.iri()){
-            val entity = k.value.value.asInstanceOf[DomainEntity]
-            _root=entity;
-            if (_root.definition.nameProvider!=null){
-              _np=_root.definition.nameProvider(entity);
-            }
-            ObjectEmitter(entity).emit();
-          }
-        })
-      }catch {
-        case e:Exception =>e.printStackTrace()
-      }
+      raw(_root.definition._dialect.header.substring(1), Comment)
+      ObjectEmitter(_root).emit();
     }
   }
 
@@ -104,7 +100,7 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
           val value = obj.fields.getValue(field)
           if (value!=null&&value.value!=null){
             if (p.isRef()){
-              res = new RefArrayValueEmitter(p.name, new FieldEntry(field, value));
+              res = new RefArrayValueEmitter(p,p.name, new FieldEntry(field, value));
             }
             else
             res = new ArrayValueEmitter(p.name, new FieldEntry(field, value));
@@ -113,7 +109,7 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
       }
       else {
         if (p.isRef()){
-            res=RefValueEmitter(p.name, new FieldEntry(field, obj.fields.getValue(field)))
+            res=RefValueEmitter(p,p.name, new FieldEntry(field, obj.fields.getValue(field)))
         }
         else res = new ValueEmitter(p.name, new FieldEntry(field, obj.fields.getValue(field)));
       }
@@ -128,15 +124,30 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
           }
       }
       else{
-        res = new ObjectEmitter(vl.asInstanceOf[DomainEntity]);
+
+        res = new ObjectKVEmmiter(p,vl.asInstanceOf[DomainEntity]);
       }
     }
     return res;
   }
+  case class ObjectKVEmmiter(p:DialectPropertyMapping,entity: DomainEntity) extends Emitter{
 
+    override def emit(): Unit = {
+      entry { () =>
+        raw(p.name)
+        ObjectEmitter(entity).emit();
+        }
+      }
+
+
+    override def position(): Position = Position.ZERO;
+  }
   case class ObjectMapEmmiter(p:DialectPropertyMapping,values:AmfArray) extends Emitter{
 
     override def emit(): Unit = {
+      if (values.values.isEmpty){
+        return;
+      }
       entry { () =>
         raw(p.name)
         //raw(p.name)
@@ -144,7 +155,12 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
           values.values.foreach(v=>{
             val entity = v.asInstanceOf[DomainEntity]
             entry({()=>{
-              raw(localId(entity))
+              if (p._noLastSegmentTrimInMaps) {
+                raw(localId(p, entity))
+              }
+              else{
+                raw(lastSegment(entity))
+              }
               ObjectEmitter(entity).emit();
 
             }})
@@ -155,10 +171,17 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
 
     override def position(): Position = Position.ZERO;
   }
+  def lastSegment(obj:DomainEntity): String ={
+    val ind:Int=Math.max(obj.id.lastIndexOf('/'),obj.id.lastIndexOf('#'));
+    if (ind>0){
+      return obj.id.substring(ind+1);
+    }
+    return obj.id;
+  }
 
-  def localId(obj:DomainEntity): String ={
+  def localId(dialectPropertyMapping: DialectPropertyMapping,obj:DomainEntity): String ={
       if (_np!=null){
-        val name=_np.localName(obj.id);
+        val name=_np.localName(obj.id,dialectPropertyMapping );
         if (name!=null){
           return name;
         }
@@ -172,7 +195,15 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
       val scalarProp:DialectPropertyMapping=obj.definition._props().find(x=>x._fromVal).getOrElse(null)
       if (scalarProp!=null){
         val em = obj.string(scalarProp);
-        raw(em.getOrElse("null"));
+        if (scalarProp.isRef()){
+          val name=_np.localName(em.getOrElse(null),scalarProp );
+          if (name!=null){
+            raw(name);
+            return;
+          }
+        }
+        val str = em.getOrElse("null")
+        raw(str);
       }
       else map { ()=>
         obj.definition._props().foreach(p => {
@@ -190,4 +221,8 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper{
 
     override def position(): Position = Position.ZERO;
   }
+}
+
+object DialectEmitter{
+  def apply(unit: BaseUnit) = new DialectEmitter(unit)
 }
