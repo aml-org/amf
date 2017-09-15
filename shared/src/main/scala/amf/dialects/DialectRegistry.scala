@@ -9,8 +9,9 @@ class DialectRegistry {
 
   def knowsHeader(h:String): Boolean = map.contains(h.trim)
 
-  def add(dialect: Dialect): Unit = {
-    map = map + ("#%RAML 1.0 " + dialect.name -> dialect)
+  def add(dialect: Dialect): DialectRegistry = {
+    map = map + (dialect.header -> dialect)
+    this
   }
 
   def get(h:String): Option[Dialect] = map.get(h.trim)
@@ -18,9 +19,7 @@ class DialectRegistry {
 
 
 object DialectRegistry{
-
   val default = new DialectRegistry()
-
-  default.add(VocabularyLanguageDefinition)
-  default.add(DialectLanguageDefinition)
+    .add(VocabularyLanguageDefinition)
+    .add(DialectLanguageDefinition)
 }

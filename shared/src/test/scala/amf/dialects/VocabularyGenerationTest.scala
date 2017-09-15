@@ -8,7 +8,7 @@ import amf.dumper.AMFDumper
 import amf.remote.Syntax.Json
 import amf.remote.{RamlYamlHint, _}
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 import org.scalatest.Matchers._
 import amf.client.{GenerationOptions, RamlGenerator}
 import amf.common.Tests.checkDiff
@@ -29,38 +29,47 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
     val actual = AMFCompiler(basePath + source, platform, hint)
       .build()
       .flatMap(unit =>
-        new AMFDumper(unit, Amf, Json, GenerationOptions().withSourceMaps).dumpToString)
+        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString)
 
     actual
       .zip(expected)
       .map(checkDiff)
 
   }
+  def write(tuple: (String, String)): Assertion = tuple match {
+    case (actual, expected) =>
+      platform.write("file://shared/src/test/resources/vocabularies/validation_dialect.json",actual)
+      Succeeded
+  }
+  def assertWrite(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
+    val expected = platform
+      .resolve(basePath + golden, None)
+      .map(_.stream.toString)
 
-  test("Vocabulary test 1") {
-    //assertCycle("raml_async.raml","raml_async.json",AmfJsonHint, Raml);
-    val generator = new RamlGenerator()
-    try {
-      for {
-        parsed <- AMFCompiler("file://shared/src/test/resources/vocabularies/raml_async.raml", platform, RamlYamlHint).build()
-        content <- platform.resolve("file://shared/src/test/resources/vocabularies/raml_async.json",Option.empty)
-      } yield {
-        //val generated = generator.generateString(parsed)
-        for {
-          rs <- new AMFDumper(parsed, Amf, Json, GenerationOptions()).dumpToString
-        }
-        yield {
-          platform.write("file://shared/src/test/resources/vocabularies/raml_async.json2",rs)
-        }
-        //content shouldBe (rs).
-        //val result = generated.join()
-        //println(result)
+    val actual = AMFCompiler(basePath + source, platform, hint)
+      .build()
+      .flatMap(unit =>
+        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString)
 
-      }
-      true shouldBe(true)
-    } catch {
-      case e:Exception => true shouldBe(false)
-    }
+    actual
+      .zip(expected)
+      .map(write)
+
+  }
+
+  test("Parse Vocabulary") {
+    assertCycle("raml_async.raml","raml_async.json",AmfJsonHint, Amf);
+  }
+
+  test("Store Vocabulary") {
+    assertCycle("raml_async.raml","raml_async-gold.raml",AmfJsonHint, Raml);
+  }
+  test("Parse Dialect") {
+    assertWrite("validation_dialect.raml","validation_dialect.json",AmfJsonHint, Amf);
+  }
+
+  test("Store Dialect") {
+    assertCycle("validation_dialect.raml","validation_dialect-gold.raml",AmfJsonHint, Raml);
   }
 //  test("Vocabulary test 00") {
 //    val generator = new RamlGenerator()

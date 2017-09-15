@@ -1,11 +1,43 @@
 package amf.dialects
 
+import amf.dialects.Vocabulary.nameProvider
 import amf.vocabulary.Namespace
+
+import scala.collection.mutable
 
 /**
   * Created by kor on 14/09/17.
   */
-object DialectLanguageDefinition extends Dialect("Dialect Definition",DialectDefinition,null){
+
+case class DialectLanguageNameProvider(root:DomainEntity) extends TypeBuiltins{
+
+  val namespaces=mutable.Map[String,String]();
+
+  {
+    root.entities(Vocabulary.externals).foreach(e=>{
+      namespaces.put(e.string(External.uri).get,e.string(External.name).get);
+    })
+  }
+
+  override def localName(uri: String, property: DialectPropertyMapping): String = {
+    val ln=super.localName(uri,property );
+    if (ln!=uri){
+      return ln
+    }
+    if (uri.indexOf(root.id) > -1) {
+      return uri.replace(root.id, "")
+    } else {
+      namespaces.find { case (p, v) =>
+        uri.indexOf(p) > -1
+      } match {
+        case Some((p, v)) => return uri.replace(p, s"$v.")
+        case res => return uri
+      }
+    }
+    return uri;
+  }
+}
+object DialectLanguageDefinition extends Dialect("Dialect",DialectDefinition,r=>{new BasicResolver(r,List(DialectDefinition.externals,DialectDefinition.vocabularies))}){
 
 }
 class DialectLanguageNode(override val shortName:String,namespace: Namespace=Namespace.Meta) extends DialectNode(namespace,shortName){
@@ -20,7 +52,7 @@ object NodeReference extends DialectLanguageNode("Declaration"){
 
   val name=str("name");
 
-  val uri=str("declaredNode").value;
+  val uri=str("declaredNode").ref(NodeDefinition).value;
 }
 
 object ModuleDeclaration extends DialectLanguageNode("ModuleDeclaration"){
@@ -29,11 +61,12 @@ object ModuleDeclaration extends DialectLanguageNode("ModuleDeclaration"){
 }
 object PropertyMapping extends DialectLanguageNode("PropertyMapping"){
 
-  val name=str("name");
+  val name=str("name").noRAML();
+
+  val propertyTerm=str("propertyTerm").ref(PropertyTerm).require();
 
   val mandatory=bool("mandatory")
 
-  val propertyTerm=str("propertyTerm").ref(PropertyTerm).require();
 
   val enum=str("enum").collection()
 
@@ -44,6 +77,13 @@ object PropertyMapping extends DialectLanguageNode("PropertyMapping"){
   val maximum=str("maximum")
 
   val range=str("range").ref(NodeDefinition);
+
+  val allowMultiple=bool("allowMultiple")
+
+  val asMap=bool("asMap")
+
+  val hash=str("hash")
+
 }
 object ClassTermRef extends DialectLanguageNode("ClassTermRef"){
   val name=str("name");
@@ -59,7 +99,7 @@ object ClassTermMap extends DialectLanguageNode("ClassTermMap"){
 }
 object NodeDefinition extends DialectLanguageNode("NodeDefinition"){
 
-  val name=str("name");
+  val name=str("name").noRAML();
 
   val classTerm=ref("classTerm",ClassTerm).require()
 
@@ -68,6 +108,8 @@ object NodeDefinition extends DialectLanguageNode("NodeDefinition"){
   val classTermMap=map("classTermMap",ClassTermMap.name,ClassTerm);
 
   val traitProperty=str("is")
+
+  keyProperty=name;
 }
 
 object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration"){
@@ -86,7 +128,7 @@ object MainNode extends DialectLanguageNode("Document"){
 
   val module=obj("module",ModuleDeclaration).require()
 
-  val fragment=obj("fragment",FragmentDeclaration).require()
+  val fragment=obj("fragments",FragmentDeclaration).require()
 
 }
 
@@ -99,11 +141,18 @@ object DialectDefinition extends DialectLanguageNode("dialect"){
 
   var usage=str("usage").namespace(Namespace.Schema).rdfName("description")
 
-  var externals=map("external",External.name,External);
-
   var vocabularies=map("vocabularies",External.name,External);
 
-  var nodeMappings=map("nodeMappings",NodeDefinition.name,NodeDefinition);
+  var externals=map("external",External.name,External);
+
+
+  var nodeMappings=map("nodeMappings",NodeDefinition.name,NodeDefinition).declaration();
 
   var raml=obj("raml",MainNode).require();
+
+  nameProvider= (root: DomainEntity) => new BasicNameProvider(root,List(externals,vocabularies));
+}
+
+object DialectLanguageResolver extends Builtins{
+
 }

@@ -2,9 +2,12 @@ package amf.emit
 
 import amf.client.GenerationOptions
 import amf.common.AMFAST
-import amf.document.BaseUnit
+import amf.dialects.DialectEmitter
+import amf.document.{BaseUnit, Document}
+import amf.domain.WebApi
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
+import amf.spec.dialect.DomainEntity
 import amf.spec.oas.OasSpecEmitter
 import amf.spec.raml.RamlSpecEmitter
 
@@ -19,11 +22,15 @@ class AMFUnitMaker {
       case Raml | Oas => makeUnitWithSpec(unit, vendor)
     }
   }
+  private def isDialect(unit:BaseUnit) = unit match {
+    case document: Document => document.encodes.isInstanceOf[DomainEntity]
+  }
 
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): AMFAST = {
     vendor match {
       case Raml =>
-        RamlSpecEmitter(unit).emitDocument()
+        if (isDialect(unit)) DialectEmitter(unit).emit()
+        else RamlSpecEmitter(unit).emitDocument()
       case Oas =>
         OasSpecEmitter(unit).emitDocument()
       case _ => throw new IllegalStateException("Invalid vendor " + vendor)

@@ -1,0 +1,199 @@
+#%RAML 1.0 Vocabulary
+
+vocabulary: amf-validation
+base: "http://raml.org/vocabularies/amf-validation#"
+
+external:
+  schema-org: "http://schema.org/"
+  shacl: "http://www.w3.org/ns/shacl#"
+
+classTerms:
+
+  Profile:
+    displayName: Profile
+    description: A set of validations that will be applied together over a parsed RAML HTTP data model
+    properties:
+      - extendsProfile
+      - setSeverityInfo
+      - setSeverityWarning
+      - setSeverityViolation
+      - disableValidation
+      - validations
+
+  Validation:
+    displayName: Validation
+    description: Data shape constraining a part of the RAML data model
+    extends: shacl.NodeShape
+    properties:
+      - shacl.severity
+      - shacl.message
+      - shacl.targetClass
+      - targetQuery
+      - shacl.property
+      - shacl.js
+
+  shacl.PropertyShape:
+    displayName: Property Shape
+    description: Restriction over the properties of a data node
+    properties:
+      - shacl.message
+      - shacl.path
+      - shacl.maxCount
+      - shacl.minCount
+      - shacl.minExclusive
+      - shacl.minInclusive
+      - shacl.maxExclusive
+      - shacl.maxInclusive
+      - shacl.pattern
+      - shacl.in
+
+  shacl.JSConstraint:
+    displayName: JavaScript Constraint
+    description: Constraint over a data node specified as a JavaScript constraint
+      - shacl.message
+      - shacl.jsLibrary
+      - shacl.jsFunctionName
+      - jsCode
+
+
+propertyTerms:
+
+  schema-org.name:
+    displayName: name
+    description: Human readable label for one element in the validation settings
+    range: string
+
+  schema-org.description:
+    displayName: description
+    description: Long comment about an element in the validation settings model
+    range: string
+
+  extendsProfile:
+    displayName: extends profile
+    description: Optional profile this validation is going to inherit from
+    range: Profile
+
+  disableValidation:
+    displayName: disabled validation
+    description: Disabled validations in a profile
+    range: Validation
+
+  setSeverityViolation:
+    displayName: set severity violation
+    description: Validations that we want to enable with VIOLATION severity
+    range: Validation
+
+  setSeverityWarning:
+    displayName: set severity warning
+    description: Validations that we want to enable with WARNING severity
+
+  setSeverityInfo:
+    displayName: set severity info
+    description: Validations that we want to enable with INFO severity
+
+  validations:
+    displayName: validations
+    description: Custom validations declared in a profile
+    range: Validation
+
+  shacl.severity:
+    displayName: severity
+    description: severity of the validation
+    range:
+      - shacl.Info
+      - shacl.Warning
+      - shacl.Violation
+
+  shacl.message:
+    displayName: message
+    description: message associated to a validation
+    range: string
+
+  shacl.property:
+    displayName: property constraint
+    description: constraint for a property in a data shape
+    range: shacl.PropertyShape
+
+  shacl.targetClass:
+    displayName: target class
+    description: Selector targeting data nodes instances of a particular class
+    range: uri
+
+  ramlClassId:
+    displayName: RAML class ID
+    description: A well known string identifier for a RAML vocabulary class
+    range: string
+
+  shacl.path:
+    displayName: path target
+    description: target of property constraint based in the URI of data property
+    range: uri
+
+  ramlPropertyId:
+    displayName: RAML property ID
+    description: A well known string identifier for a RAML vocabulary property
+    range: string
+
+  targetQuery:
+    displayName: target query
+    description: Selector targeting results of a SPARQL query
+    range: string
+
+  shacl.js:
+    displayName: JavaScript based constraint
+    description: constraint over a data node expressed as JS function
+    range: shacl.JSConstraint
+
+  shacl.maxCount:
+    displayName: max count
+    description: max number of values for a property
+    range: integer
+
+  shacl.minCount:
+    displayName: min count
+    description: min number of values for a property
+    range: integer
+
+  shacl.minExclusive:
+    displayName: min exclusive
+    description: min exclusive value allowed for a property value
+    range: any
+
+  shacl.minInclusive:
+    displayName: min inclusive
+    description: min inclusive value allowed for a property value
+    range: any
+
+  shacl.maxExclusive:
+    displayName: max inclusive
+    description: max inclusive value allowed for a property value
+    range: any
+
+  shacl.maxInclusive:
+    displayName: max inclusive
+    description: max inclusive value allowed for a property value
+    range: any
+
+  shacl.pattern:
+    displayName: pattern
+    description: regex pattern constraining a property string value
+    range: string
+
+  shacl.in:
+    displayName: in
+    description: enumeration of values constraining the value of a property
+    range: any
+
+  shacl.jsLibrary:
+    displayName: JS library
+    description: URI of a JS library with validation functions
+    range: uri
+
+  shacl.jsFunctionName:
+    displayName: JS function name
+    description: Name of JS function used to validate a data node
+    range: string
+
+  shacl.jsCode:
+    displayName: JS code
+    description: JS function code that must be used to perform a validation

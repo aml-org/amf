@@ -4,6 +4,7 @@ import amf.compiler.Root
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.spec.dialect.DomainEntity
+import amf.spec.raml.{Entries, ValueNode}
 import amf.vocabulary.{Namespace, ValueType}
 
 import scala.collection.mutable
@@ -13,10 +14,13 @@ import scala.collection.mutable
 /**
   * Created by kor on 12/09/17.
   */
-case class Dialect(val name:String,val root: DialectNode,val resolver:ResolverFactory) {
+case class Dialect(val name:String,val root: DialectNode,val resolver:ResolverFactory=r=>null) {
 
   var refiner:Refiner=_;
 
+  val header: String="#%RAML 1.0 "+name
+
+  root._dialect=this;
 
 }
 trait ResolverFactory{
@@ -31,7 +35,7 @@ trait ReferenceResolver{
 }
 
 trait LocalNameProvider{
-   def localName(refValue:String):String;
+   def localName(refValue: String, property: DialectPropertyMapping):String;
 }
 
 trait Refiner{
@@ -48,6 +52,8 @@ case class DialectPropertyMapping(val name:String, val range:Type, required:Bool
 
   var _noRAML=false;
 
+  var _noLastSegmentTrimInMaps=false
+
   def noRAML():DialectPropertyMapping={
     this._noRAML=true;
     return this;
@@ -57,6 +63,11 @@ case class DialectPropertyMapping(val name:String, val range:Type, required:Bool
 
   var _fromVal=false;
 
+
+  var _declaration=false;
+
+
+
   private var _namespace:Namespace=null;
 
   private var _rdfName: String=null;
@@ -64,6 +75,12 @@ case class DialectPropertyMapping(val name:String, val range:Type, required:Bool
   private var _field:amf.metadata.Field=_;
 
   private var _jsonLd=true;
+
+
+  def declaration():DialectPropertyMapping={
+    this._declaration=true;
+    return this;
+  }
 
   def collection(): DialectPropertyMapping = {
     this._collection=true;
@@ -166,7 +183,7 @@ class Builtins extends LocalNameProvider with ReferenceResolver{
 
   override def resolve(root: Root, name: String, t: Type): String = b2id.get(name).getOrElse(null);
 
-  override def localName(refValue: String): String = id2b.get(refValue).getOrElse(refValue);
+  override def localName(refValue: String, property: DialectPropertyMapping): String = id2b.get(refValue).getOrElse(refValue);
 
   val b2id=mutable.HashMap[String,String]();
   val id2b=mutable.HashMap[String,String]();
@@ -198,7 +215,117 @@ object TypeBuiltins{
   val ANY="http://www.w3.org/2001/XMLSchema#anyType"
 
 }
+class BasicResolver(val root:Root, val externals:List[DialectPropertyMapping]) extends TypeBuiltins{
 
+  val REGEX_URI = "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
+
+  private var externalsMap:mutable.HashMap[String,String]=new mutable.HashMap();
+
+  private var base:String=root.location + "#";
+
+  def resolveBasicRef(name: String, root: Root):String = {
+    if (name.indexOf(".") > -1) {
+      name.split("\\.") match {
+        case Array(alias, name) =>
+          this.externalsMap.get(alias) match {
+            case Some(resolved) => return s"$resolved${name}"
+            case _              => throw new Exception(s"Cannot find prefix $name")
+          }
+        case _ => throw new Exception(s"Error in class/property name $name, multiple .")
+      }
+    } else {
+      if (name.matches(REGEX_URI)) {
+        name
+      } else {
+        s"$base$name"
+      }
+    }
+  }
+
+  initReferences(root);
+
+  private def initReferences(root: Root) = {
+    val ast = root.ast.last
+    val entries = new Entries(ast)
+    externals.foreach(p=> {
+      entries.key(p.name, e => {
+        val entries = new Entries(e.value).entries
+        entries.foreach { case (alias, entry) =>
+          ValueNode(entry.value).string().value match {
+            case prefix: String => externalsMap.put(alias, prefix)
+          }
+        }
+      });
+    })
+    entries.key("base", entry => {
+      if (entry.value != null) {
+        val value = ValueNode(entry.value)
+        value.string().value match {
+          case base: String => this.base = base;
+        }
+      }
+    })
+  }
+
+  override def resolve(root: Root, name:String, t:Type):String={
+    if (t==ClassTerm){
+      val range = if (name != null) {
+        val bid=super.resolve(root,name,t);
+        if (bid!=null){
+          return bid;
+        }
+      } else {
+        return "http://www.w3.org/2001/XMLSchema#anyType"
+      }
+    }
+    return resolveBasicRef(name,root);
+  }
+}
+
+class BasicNameProvider(root:DomainEntity,val namespaceDeclarators:List[DialectPropertyMapping]) extends TypeBuiltins{
+
+  val namespaces=mutable.Map[String,String]();
+  var declarations=mutable.Map[String,DomainEntity]();
+
+  {
+    namespaceDeclarators.foreach(x=> {
+      root.entities(x).foreach(e => {
+        namespaces.put(e.string(External.uri).get, e.string(External.name).get);
+      })
+    })
+    root.traverse((r,p)=>{
+      if (p._declaration){
+        declarations.put(r.id,r);
+      }
+      true;
+    })
+  }
+
+  override def localName(uri: String, property: DialectPropertyMapping): String = {
+    if (declarations.contains(uri)){
+      val entity=declarations.getOrElse(uri,null);
+      var kp=entity.definition.keyProperty;
+      if (kp!=null){
+        return entity.string(kp).getOrElse(uri);
+      }
+    }
+    val ln=super.localName(uri,property );
+    if (ln!=uri){
+      return ln
+    }
+    if (uri.indexOf(root.id) > -1) {
+      return uri.replace(root.id, "")
+    } else {
+      namespaces.find { case (p, v) =>
+        uri.indexOf(p) > -1
+      } match {
+        case Some((p, v)) => return uri.replace(p, s"$v.")
+        case res => return uri
+      }
+    }
+    return uri;
+  }
+}
 class DialectNode(val namespace:Namespace,val shortName:String) extends Type with Obj{
 
   protected val props:mutable.Map[String,DialectPropertyMapping]=new mutable.LinkedHashMap();
@@ -215,6 +342,8 @@ class DialectNode(val namespace:Namespace,val shortName:String) extends Type wit
   protected var _typeCalculator:TypeCalculator=null;
   protected var extraTypes:List[ValueType]=List();
   override val `type`: List[ValueType] = List(ValueType(namespace,shortName))
+
+  private [dialects] var _dialect: Dialect=_
 
   def add(p:DialectPropertyMapping):DialectPropertyMapping={
     props.put(p.name,p);
@@ -246,6 +375,8 @@ class DialectNode(val namespace:Namespace,val shortName:String) extends Type wit
     }
     return extraTypes;
   }
+
+  var keyProperty:DialectPropertyMapping=null;
 
   def withGlobalIdField(field:String)()=_id=field;
 

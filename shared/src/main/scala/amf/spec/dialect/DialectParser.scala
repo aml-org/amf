@@ -6,11 +6,16 @@ import amf.dialects.{Dialect, DialectNode, DialectPropertyMapping, DialectRegist
 import amf.document.Document
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.Type
-import amf.model.{AmfArray, AmfScalar}
+import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.raml.{ArrayNode, Entries, ValueNode}
 
 import scala.collection.mutable.ListBuffer
 
+
+trait DomainEntityVisitor{
+
+  def visit(entity:DomainEntity,prop:DialectPropertyMapping):Boolean
+}
 /**
   * Created by kor on 12/09/17.
   */
@@ -34,6 +39,29 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
     this
   }
 
+  def traverse(visitor:DomainEntityVisitor): Unit ={
+      this.definition._props().foreach(p=>{
+        if (!p.isScalar()){
+          val element = this.fields.get(p.field())
+          if (element.isInstanceOf[AmfArray]){
+              element.asInstanceOf[AmfArray].values.foreach(v=>{
+                  visitElement(visitor,p,v);
+              })
+          }
+          visitElement(visitor, p, element)
+        }
+      })
+  }
+
+  private def visitElement(visitor: DomainEntityVisitor, p: DialectPropertyMapping, element: AmfElement) = {
+    if (element.isInstanceOf[DomainEntity]) {
+      val domainEntity = element.asInstanceOf[DomainEntity]
+      var visitChidren = visitor.visit(domainEntity, p);
+      if (visitChidren) {
+        domainEntity.traverse(visitor);
+      }
+    }
+  }
 
   def string(m: DialectPropertyMapping): Option[String] = {
     val fieldValue = this.fields.get(m.field())
@@ -140,12 +168,13 @@ class DialectParser(val dialect: Dialect, val root: Root) {
           val classTerms = ListBuffer[DomainEntity]()
           entries.foreach {
             case (classTermName, entry) =>
-              val ent = new DomainEntity(classTermName, f.range.asInstanceOf[DialectNode], Fields(), Annotations(entry.ast));
+              val ent = new DomainEntity(Some(classTermName), f.range.asInstanceOf[DialectNode], Fields(), Annotations(entry.ast));
               classTerms += ent;
               val field1 = f.field()
               node.add(field1, ent);
               ent.set(f._hash.field(), classTermName);
               parseNode(new Entries(entry.value), ent);
+
           }
         }
         else if (f.isCollection()) {
@@ -182,8 +211,16 @@ class DialectParser(val dialect: Dialect, val root: Root) {
           }
         }
         else {
-          val value = ValueNode(entryNode.value);
-          setScalar(node, f, value)
+          if (!f.isScalar()){
+            val ent = new DomainEntity(Option(entryNode.key.content), f.range.asInstanceOf[DialectNode], Fields(), Annotations(entryNode.ast));
+            node.set(f.field(),ent);
+            parseNode(new Entries(entryNode.value), ent);
+
+          }
+          else {
+            val value = ValueNode(entryNode.value);
+            setScalar(node, f, value)
+          }
         }
       })
     })
