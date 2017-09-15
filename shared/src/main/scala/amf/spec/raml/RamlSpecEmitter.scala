@@ -732,7 +732,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(ShapeModel.Default).map(f => result += ValueEmitter("default", f))
 
-      fs.entry(ShapeModel.Values).map(f => result += ValueEmitter("enum", f))
+      fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
       fs.entry(ShapeModel.Documentation).map(f => result += CreativeWorkEmitter("(externalDocs)", f, ordering))
 
