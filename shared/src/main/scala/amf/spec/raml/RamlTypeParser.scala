@@ -165,7 +165,7 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, entries: Entr
       shape.set(ScalarShapeModel.Format, value.string(), entry.annotations())
     })
 
-    //We don't need to parse (format) extention because in oas must not be emitted, and in raml will be emitted.
+    // We don't need to parse (format) extention because in oas must not be emitted, and in raml will be emitted.
 
     entries.key("multipleOf", entry => {
       val value = ValueNode(entry.value)
