@@ -9,34 +9,6 @@ import scala.collection.mutable
   * Created by kor on 14/09/17.
   */
 
-case class DialectLanguageNameProvider(root:DomainEntity) extends TypeBuiltins{
-
-  val namespaces=mutable.Map[String,String]();
-
-  {
-    root.entities(Vocabulary.externals).foreach(e=>{
-      namespaces.put(e.string(External.uri).get,e.string(External.name).get);
-    })
-  }
-
-  override def localName(uri: String, property: DialectPropertyMapping): String = {
-    val ln=super.localName(uri,property );
-    if (ln!=uri){
-      return ln
-    }
-    if (uri.indexOf(root.id) > -1) {
-      return uri.replace(root.id, "")
-    } else {
-      namespaces.find { case (p, v) =>
-        uri.indexOf(p) > -1
-      } match {
-        case Some((p, v)) => return uri.replace(p, s"$v.")
-        case res => return uri
-      }
-    }
-    return uri;
-  }
-}
 object DialectLanguageDefinition extends Dialect("Dialect",DialectDefinition,r=>{new BasicResolver(r,List(DialectDefinition.externals,DialectDefinition.vocabularies))}){
 
 }
@@ -151,8 +123,4 @@ object DialectDefinition extends DialectLanguageNode("dialect"){
   var raml=obj("raml",MainNode).require();
 
   nameProvider= (root: DomainEntity) => new BasicNameProvider(root,List(externals,vocabularies));
-}
-
-object DialectLanguageResolver extends Builtins{
-
 }
