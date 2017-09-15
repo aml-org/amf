@@ -4,6 +4,7 @@ import amf.common.AMFToken.{Comment, Entry}
 import amf.common.core.Strings
 import amf.common.{AMFAST, AMFToken}
 import amf.compiler.AMFCompiler.RAML_10
+import amf.dialects.DialectRegistry
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation
 import amf.domain.Annotation.LexicalInformation
@@ -162,8 +163,8 @@ case class Root(ast: AMFAST, location: String, references: Seq[BaseUnit], vendor
 }
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()))
+  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None,dialects:DialectRegistry=DialectRegistry.default) =
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()),dialects)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

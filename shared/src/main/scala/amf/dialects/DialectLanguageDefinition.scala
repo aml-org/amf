@@ -1,15 +1,30 @@
 package amf.dialects
 
+import amf.compiler.Root
 import amf.dialects.Vocabulary.nameProvider
+import amf.metadata.Type
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
 
+
+case class DialectLanguageResolver (r:Root) extends BasicResolver(r,List(DialectDefinition.externals,DialectDefinition.vocabularies)){
+  override def resolve(root: Root, name:String, t:Type):String={
+    if (t==NodeDefinition){
+      val n= b2id.getOrElse(name,null);
+      if (n!=null){
+        return n;
+      }
+
+    }
+    return resolveBasicRef(name,root);
+  }
+}
 /**
   * Created by kor on 14/09/17.
   */
 
-object DialectLanguageDefinition extends Dialect("Dialect",DialectDefinition,r=>{new BasicResolver(r,List(DialectDefinition.externals,DialectDefinition.vocabularies))}){
+object DialectLanguageDefinition extends Dialect("Dialect",DialectDefinition,r=>{new DialectLanguageResolver(r)}){
 
 }
 class DialectLanguageNode(override val shortName:String,namespace: Namespace=Namespace.Meta) extends DialectNode(namespace,shortName){
@@ -91,7 +106,7 @@ object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration"){
 
   val declares=refMap("declares");
 
-  var encodes=str("encodes").require();
+  var encodes=str("encodes").ref(NodeDefinition).require();
 }
 
 object MainNode extends DialectLanguageNode("Document"){
