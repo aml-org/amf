@@ -18,4 +18,6 @@ class DialectEntityModel (domainEntity: DomainEntity) extends DomainElementModel
   override val `type`: List[ValueType] = domainEntity.definition.`type`
 
   def element: amf.domain.DomainElement = domainEntity
+
+  override val dynamicType: Boolean = true
 }
