@@ -41,13 +41,13 @@ case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
     result
   }
 
-  def withInheritObject(name: String): Shape = {
+  def withInheritsObject(name: String): NodeShape = {
     val result = NodeShape().withName(name)
     add(Inherits, result)
     result
   }
 
-  def withInheritScalar(name: String): Shape = {
+  def withInheritsScalar(name: String): ScalarShape = {
     val result = ScalarShape().withName(name)
     add(Inherits, result)
     result
