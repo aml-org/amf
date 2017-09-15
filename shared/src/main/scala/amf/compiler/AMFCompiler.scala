@@ -1,12 +1,9 @@
 package amf.compiler
 
 import amf.common.AMFToken
-import amf.common.AMFToken.{Comment, Entry}
-import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation
-import amf.domain.Annotation.{LexicalInformation, SourceVendor}
-import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
+import amf.domain.Annotation.SourceVendor
+import amf.exception.{CyclicReferenceException, UnableToResolveLexerException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
@@ -14,7 +11,6 @@ import amf.parser.YeastASTBuilder
 import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
-import amf.serialization.AmfParser
 import amf.spec.oas.OasSpecParser
 import amf.spec.raml.RamlSpecParser
 import amf.yaml.YamlLexer
@@ -94,10 +90,12 @@ class AMFCompiler private (val url: String,
   }
 
   private def resolveRamlUnit(root: Root) = {
-    root.document.head match {
-      case c if c.is(Comment) && RAML_10 == c.content => makeDocument(root)
-      case _                                          => throw new UnableToResolveUnitException
-    }
+    //todo syaml read comment
+//    root.document.head match {
+//      case c if c.is(Comment) && RAML_10 == c.content => makeDocument(root)
+//      case _                                          => throw new UnableToResolveUnitException
+//    }
+    makeDocument(root)
   }
 
   private def makeDocument(root: Root): Document = {
@@ -109,11 +107,13 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {
-    root.document.head.children.find(e =>
-      e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
-      case Some(_) => makeDocument(root)
-      case _       => throw new UnableToResolveUnitException
-    }
+    //todo syaml read comment
+    //    root.document.head.children.find(e =>
+//      e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
+//      case Some(_) => makeDocument(root)
+//      case _       => throw new UnableToResolveUnitException
+//    }
+    makeDocument(root)
   }
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
@@ -137,9 +137,7 @@ class AMFCompiler private (val url: String,
   }
 }
 
-case class Root(document: YDocument, location: String, references: Seq[BaseUnit], vendor: Vendor) {
-  def annotations(): List[Annotation] = List(LexicalInformation(document.range))
-}
+case class Root(document: YDocument, location: String, references: Seq[BaseUnit], vendor: Vendor)
 
 object AMFCompiler {
   def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =

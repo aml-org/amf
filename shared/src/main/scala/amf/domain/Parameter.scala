@@ -4,6 +4,7 @@ import amf.common.AMFAST
 import amf.metadata.domain.ParameterModel
 import amf.metadata.domain.ParameterModel._
 import amf.shape.{NodeShape, ScalarShape, Shape}
+import org.yaml.model.YPart
 
 /**
   * Parameter internal model.
@@ -46,7 +47,7 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
 object Parameter {
   def apply(): Parameter = apply(Annotations())
 
-  def apply(ast: AMFAST): Parameter = apply(Annotations(ast))
+  def apply(ast: YPart): Parameter = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Parameter = new Parameter(Fields(), annotations)
 }

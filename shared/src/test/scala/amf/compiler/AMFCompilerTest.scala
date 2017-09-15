@@ -1,14 +1,14 @@
 package amf.compiler
 
-import amf.common.AMFToken.MapToken
-import amf.common.{AMFAST, AMFASTLink}
 import amf.document.{BaseUnit, Document}
 import amf.exception.CyclicReferenceException
+import amf.parser.{YMapOps, YValueOps}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
+import org.yaml.model.YMapEntry
 
 import scala.concurrent.ExecutionContext
 
@@ -69,28 +69,24 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Libraries (raml)") {
-    val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, cache = Some(cache))
+    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint)
       .root() map {
       case Root(root, _, _, _) =>
         root.children.size should be(2)
-        val bodyMap = root > MapToken
-        bodyMap.children.size should be(2)
-        val uses = bodyMap.children(1)
-        assertUses(uses)
+        val body = root.value.get.toMap
+        body.children.size should be(2)
+        assertUses(body.key("uses").get)
     }
   }
 
   test("Libraries (oas)") {
-    val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, cache = Some(cache))
+    AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint)
       .root() map {
       case Root(root, _, _, _) =>
         root.children.size should be(1)
-        val bodyMap = root.children.head
-        bodyMap.children.size should be(3)
-        val uses = bodyMap.children(2)
-        assertUses(uses)
+        val body = root.value.get.toMap
+        body.children.size should be(3)
+        assertUses(body.key("x-uses").get)
     }
   }
 
@@ -100,17 +96,15 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       d.encodes.name should be("test")
   }
 
-  private def assertUses(uses: AMFAST) = {
+  private def assertUses(uses: YMapEntry) = {
     uses.children.length should be(2)
-    uses.children.head.content should include("uses")
-    val libraries = uses.children(1)
-    libraries.children.length should be(2)
+    uses.key.value.toScalar.text should include("uses")
 
-    val library = libraries.children.head
-    library.children.size should be(2)
-    library.children(1) shouldBe a[AMFASTLink]
-    val link = library.children(1).asInstanceOf[AMFASTLink]
-    link.target shouldBe a[Document]
+    val libraries = uses.value.value.toMap
+    libraries.map.values.foreach(value => {
+      value.toScalar.text should include("libraries")
+    })
+    libraries.children.length should be(2)
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {

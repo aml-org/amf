@@ -1,7 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
-import amf.metadata.domain.EndPointModel.UriParameters
 import amf.metadata.domain.ResponseModel._
 
 /**
@@ -39,8 +37,6 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
 
 object Response {
   def apply(): Response = apply(Annotations())
-
-  def apply(ast: AMFAST): Response = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Response = new Response(Fields(), annotations)
 }

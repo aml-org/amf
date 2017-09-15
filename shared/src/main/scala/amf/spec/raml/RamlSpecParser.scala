@@ -15,6 +15,8 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.Shape
 import org.yaml.model._
 
+import amf.spec.BaseSpecParser._
+
 import scala.collection.mutable
 
 /**
@@ -455,101 +457,4 @@ case class ParameterParser(entry: YMapEntry, producer: String => Parameter) {
 
     parameter
   }
-}
-
-case class LicenseParser(map: YMap) {
-  def parse(): License = {
-    val license = License(map)
-
-    map.key("url", entry => {
-      val value = ValueNode(entry.value)
-      license.set(LicenseModel.Url, value.string(), Annotations(entry))
-    })
-
-    map.key("name", entry => {
-      val value = ValueNode(entry.value)
-      license.set(LicenseModel.Name, value.string(), Annotations(entry))
-    })
-
-    license
-  }
-}
-
-case class CreativeWorkParser(map: YMap) {
-  def parse(): CreativeWork = {
-    val creativeWork = CreativeWork(map)
-
-    map.key("url", entry => {
-      val value = ValueNode(entry.value)
-      creativeWork.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
-    })
-
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
-    })
-
-    creativeWork
-  }
-}
-
-case class OrganizationParser(map: YMap) {
-  def parse(): Organization = {
-
-    val organization = Organization(map)
-
-    map.key("url", entry => {
-      val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Url, value.string(), Annotations(entry))
-    })
-
-    map.key("name", entry => {
-      val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Name, value.string(), Annotations(entry))
-    })
-
-    map.key("email", entry => {
-      val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Email, value.string(), Annotations(entry))
-    })
-
-    organization
-  }
-}
-
-case class ArrayNode(ast: YSequence) {
-
-  def strings(): AmfArray = {
-    val elements = ast.nodes.map(child => ValueNode(child).string())
-    AmfArray(elements, annotations())
-  }
-
-  private def annotations() = Annotations(ast)
-}
-
-case class ValueNode(ast: YNode) {
-
-  def string(): AmfScalar = {
-    val content = scalar.text.unquote
-    AmfScalar(content, annotations())
-  }
-
-  def integer(): AmfScalar = {
-    val content = scalar.text.unquote
-    AmfScalar(content.toInt, annotations())
-  }
-
-  def boolean(): AmfScalar = {
-    val content = scalar.text.unquote
-    AmfScalar(content.toBoolean, annotations())
-  }
-
-  def negated(): AmfScalar = {
-    val content = scalar.text.unquote
-    AmfScalar(!content.toBoolean, annotations())
-  }
-
-  private def scalar = ast.value.toScalar
-
-  private def annotations() = Annotations(ast)
 }

@@ -3,7 +3,7 @@ package amf.shape
 import amf.common.AMFAST
 import amf.domain.{Annotations, Fields}
 import amf.metadata.shape.ScalarShapeModel._
-import org.yaml.model.YMapEntry
+import org.yaml.model.{YMapEntry, YPart}
 
 /**
   * Scalar shape
@@ -39,7 +39,7 @@ object ScalarShape {
 
   def apply(): ScalarShape = apply(Annotations())
 
-  def apply(ast: YMapEntry): ScalarShape = apply(Annotations(ast))
+  def apply(ast: YPart): ScalarShape = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ScalarShape = ScalarShape(Fields(), annotations)
 }

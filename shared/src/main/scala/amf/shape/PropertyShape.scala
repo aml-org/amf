@@ -1,6 +1,5 @@
 package amf.shape
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, Fields}
 import amf.metadata.shape.PropertyShapeModel
 import amf.metadata.shape.PropertyShapeModel._
@@ -36,10 +35,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
 }
 
 object PropertyShape {
-
   def apply(): PropertyShape = apply(Annotations())
-
-  def apply(ast: AMFAST): PropertyShape = apply(Annotations(ast))
 
   def apply(annotations: Annotations): PropertyShape = PropertyShape(Fields(), annotations)
 }

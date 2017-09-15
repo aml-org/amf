@@ -9,7 +9,8 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
-import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
+import amf.spec.BaseSpecParser._
+import org.yaml.model._
 
 import scala.collection.mutable
 
@@ -152,7 +153,7 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
       shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
     })
 
-    //We don't need to parse (format) extention because in oas must not be emitted, and in raml will be emitted.
+    //We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
     map.key("multipleOf", entry => {
       val value = ValueNode(entry.value)
@@ -163,19 +164,19 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
   }
 }
 
-case class DataArrangementParser(name: String, entry: YMapEntry, map: YMap, adopt: Shape => Unit) {
+case class DataArrangementParser(name: String, ast: YPart, map: YMap, adopt: Shape => Unit) {
 
   def lookAhead(): Either[TupleShape, ArrayShape] = {
     map.key("(tuple)") match {
-      case Some(tuplesEntry) =>
-        tuplesEntry.value.value match {
+      case Some(entry) =>
+        entry.value.value match {
           // this is a sequence, we need to create a tuple
-          case _: YSequence => Left(TupleShape(entry).withName(name))
+          case _: YSequence => Left(TupleShape(ast).withName(name))
           // not an array regular array parsing
           case _ => throw new Exception("Tuples must have a list of types")
 
         }
-      case None => Right(ArrayShape(entry).withName(name))
+      case None => Right(ArrayShape(ast).withName(name))
     }
   }
 
@@ -258,7 +259,9 @@ case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) 
       "items",
       entry => {
         val items = entry.value.value.toMap.entries.zipWithIndex
-          .map(entry => RamlTypeParser(entry._1, items => items.adopted(shape.id + "/items/" + entry._2)).parse())
+          .map {
+            case (elem, index) => RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index)).parse()
+          }
         shape.withItems(items.filter(_.isDefined).map(_.get))
       }
     )
@@ -331,32 +334,6 @@ case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
   }
 }
 
-case class ShapeDependenciesParser(ast: YMap, properties: mutable.ListMap[String, PropertyShape]) {
-  def parse(): Seq[PropertyDependencies] =
-    ast.entries
-      .flatMap(entry => NodeDependencyParser(entry, properties).parse())
-}
-
-case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[String, PropertyShape]) {
-  def parse(): Option[PropertyDependencies] = {
-
-    properties
-      .get(entry.key.value.toScalar.text.unquote)
-      .map(p => {
-        PropertyDependencies(entry)
-          .set(PropertyDependenciesModel.PropertySource, AmfScalar(p.id), Annotations(entry.key))
-          .set(PropertyDependenciesModel.PropertyTarget, AmfArray(targets()), Annotations(entry.value))
-      })
-  }
-
-  private def targets(): Seq[AmfScalar] = {
-    ArrayNode(entry.value.value.toSequence)
-      .strings()
-      .scalars
-      .flatMap(v => properties.get(v.value.toString).map(p => AmfScalar(p.id, v.annotations)))
-  }
-}
-
 case class PropertiesParser(ast: YMap, producer: String => PropertyShape) {
 
   def parse(): Seq[PropertyShape] = {
@@ -402,45 +379,6 @@ case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertySha
 
 case class Property(var typeDef: TypeDef = UndefinedType) {
   def withTypeDef(value: TypeDef): Unit = typeDef = value
-}
-
-case class XMLSerializerParser(defaultName: String, map: YMap) {
-  def parse(): XMLSerializer = {
-    val serializer = XMLSerializer(map)
-      .set(XMLSerializerModel.Attribute, value = false)
-      .set(XMLSerializerModel.Wrapped, value = false)
-      .set(XMLSerializerModel.Name, defaultName)
-
-    map.key(
-      "attribute",
-      entry => {
-        val value = ValueNode(entry.value)
-        serializer.set(XMLSerializerModel.Attribute, value.boolean(), Annotations(entry) += ExplicitField())
-      }
-    )
-
-    map.key("wrapped", entry => {
-      val value = ValueNode(entry.value)
-      serializer.set(XMLSerializerModel.Wrapped, value.boolean(), Annotations(entry) += ExplicitField())
-    })
-
-    map.key("name", entry => {
-      val value = ValueNode(entry.value)
-      serializer.set(XMLSerializerModel.Name, value.string(), Annotations(entry) += ExplicitField())
-    })
-
-    map.key("namespace", entry => {
-      val value = ValueNode(entry.value)
-      serializer.set(XMLSerializerModel.Namespace, value.string(), Annotations(entry))
-    })
-
-    map.key("prefix", entry => {
-      val value = ValueNode(entry.value)
-      serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
-    })
-
-    serializer
-  }
 }
 
 abstract class ShapeParser() {
