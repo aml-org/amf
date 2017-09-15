@@ -62,6 +62,13 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
       }
     }
   }
+  def boolean(m:DialectPropertyMapping):Option[Boolean]={
+    val q=this.fields.get(m.field());
+    if (q.isInstanceOf[AmfScalar]){
+      return Option(q.asInstanceOf[AmfScalar].value.asInstanceOf[Boolean]);
+    }
+    return Option.empty;
+  }
 
   def string(m: DialectPropertyMapping): Option[String] = {
     val fieldValue = this.fields.get(m.field())
@@ -91,6 +98,13 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
       return values;
     }
     return List();
+  }
+  def entity(m:DialectPropertyMapping):Option[DomainEntity]={
+    val q=this.fields.get(m.field());
+    if (q.isInstanceOf[DomainEntity]){
+      return Option(q.asInstanceOf[DomainEntity]);
+    }
+    return Option.empty;
   }
   def entities(m:DialectPropertyMapping):Seq[DomainEntity]={
     val q=this.fields.get(m.field());

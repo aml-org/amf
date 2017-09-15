@@ -1,6 +1,7 @@
 package amf.compiler
 
-import amf.document.BaseUnit
+import amf.dialects.DialectRegistry
+import amf.document.{BaseUnit, Document}
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.remote.Mimes._
@@ -139,8 +140,8 @@ case class ParsedDocument(comment: Option[YComment], document: YDocument)
 case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String)
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()))
+  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None,dialects:DialectRegistry=DialectRegistry.default) =
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()),dialects)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

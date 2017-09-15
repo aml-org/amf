@@ -1,5 +1,11 @@
 package amf.dialects
 
+import amf.compiler.AMFCompiler
+import amf.remote.{Platform, RamlYamlHint}
+
+import scala.concurrent.{ExecutionContext, Future}
+import ExecutionContext.Implicits.global
+
 /**
   * Created by kor on 14/09/17.
   */
@@ -14,7 +20,15 @@ class DialectRegistry {
     this
   }
 
-  def get(h:String): Option[Dialect] = map.get(h.trim)
+  def add(p: Platform, uri: String): Future[Dialect] = {
+    AMFCompiler(uri, p, RamlYamlHint)
+      .build()
+      .map { compiled =>
+        val dialect = new DialectLoader().loadDialect(compiled)
+        add(dialect)
+        dialect
+      }
+  }
 }
 
 

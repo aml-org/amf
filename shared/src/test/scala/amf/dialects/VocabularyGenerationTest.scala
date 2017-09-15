@@ -36,26 +36,26 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
       .map(checkDiff)
 
   }
-  def write(tuple: (String, String)): Assertion = tuple match {
-    case (actual, expected) =>
-      platform.write("file://shared/src/test/resources/vocabularies/validation_dialect.json",actual)
-      Succeeded
-  }
-  def assertWrite(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
-    val expected = platform
-      .resolve(basePath + golden, None)
-      .map(_.stream.toString)
-
-    val actual = AMFCompiler(basePath + source, platform, hint)
-      .build()
-      .flatMap(unit =>
-        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString)
-
-    actual
-      .zip(expected)
-      .map(write)
-
-  }
+//  def write(tuple: (String, String)): Assertion = tuple match {
+//    case (actual, expected) =>
+//      platform.write("file://shared/src/test/resources/vocabularies/validation_dialect.json",actual)
+//      Succeeded
+//  }
+//  def assertWrite(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
+//    val expected = platform
+//      .resolve(basePath + golden, None)
+//      .map(_.stream.toString)
+//
+//    val actual = AMFCompiler(basePath + source, platform, hint)
+//      .build()
+//      .flatMap(unit =>
+//        new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString)
+//
+//    actual
+//      .zip(expected)
+//      .map(write)
+//
+//  }
 
   test("Parse Vocabulary") {
     assertCycle("raml_async.raml","raml_async.json",AmfJsonHint, Amf);
@@ -65,76 +65,28 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
     assertCycle("raml_async.raml","raml_async-gold.raml",AmfJsonHint, Raml);
   }
   test("Parse Dialect") {
-    assertWrite("validation_dialect.raml","validation_dialect.json",AmfJsonHint, Amf);
+    assertCycle("validation_dialect.raml","validation_dialect.json",AmfJsonHint, Amf);
   }
 
   test("Store Dialect") {
     assertCycle("validation_dialect.raml","validation_dialect-gold.raml",AmfJsonHint, Raml);
   }
-//  test("Vocabulary test 00") {
-//    val generator = new RamlGenerator()
-//    try {
-//      for {
-//        parsed <- AMFCompiler("file://shared/src/test/resources/vocabularies/raml_async2.raml", platform, RamlYamlHint).build()
-//      } yield {
-//        val doc = Document(parsed.asInstanceOf[amf.document.Document])
-//        val generated = generator.generateString(doc)
-//        val rs=new AMFDumper(doc.unit, Amf, Json,GenerationOptions()).dumpToString;
-//        var resultLd=rs;
-//        //val result = generated.join()
-//        //println(result)
-//        //println(resultLd.)
-//        //print("A")
-//      }
-//      true shouldBe(true)
-//    } catch {
-//      case e:Exception => true shouldBe(false)
-//    }
-//  }
 
-//  test("Vocabulary test 2") {
-//    val generator = new AmfGenerator()
-//    try {
-//      for {
-//        parsed <- AMFCompiler("file://shared/src/test/resources/vocabularies/raml_async.raml", platform, RamlYamlHint).build()
-//      } yield {
-//        val doc = Document(parsed.asInstanceOf[amf.document.Document])
-//        val generated = generator.generateString(doc)
-//        val result = generated.join()
-//        // println(result)
-//      }
-//      true shouldBe(true)
-//    } catch {
-//      case e:Exception => true shouldBe(false)
-//    }
-//  }
-//
-//  test("Dialect test 1") {
-//    val generator = new AmfGenerator()
-//    try {
-//      for {
-//        parsed <- DialectParser("file://shared/src/test/resources/vocabularies/mule_config.raml", "file://shared/src/test/resources/vocabularies/muleconfig.raml").process()
-//      } yield {
-//        println(parsed)
-//        true shouldBe(true)
-//      }
-//    } catch {
-//      case e:Exception => true shouldBe(false)
-//    }
-//  }
-//
-//  test("Dialect test 2") {
-//    val generator = new AmfGenerator()
-//    try {
-//      for {
-//        parsed <- DialectParser("file://shared/src/test/resources/vocabularies/mule_config.raml", "file://shared/src/test/resources/vocabularies/muleconfig.raml").toJsonld()
-//      } yield {
-//        println(parsed)
-//        true shouldBe(true)
-//      }
-//    } catch {
-//      case e:Exception => true shouldBe(false)
-//    }
-//  }
+  test("Store Dialect 2") {
+    assertCycle("mule_config_dialect.raml","mule_config_dialect_gold.raml",AmfJsonHint, Raml);
+  }
+
+  test("Load Dialect from yaml") {
+    val l=new DialectRegistry();
+    val expected = platform
+      .resolve("file://shared/src/test/resources/vocabularies/muleconfig.json", None)
+      .map(_.stream.toString)
+    var actual=l.add(platform,executionContext,"file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml").flatMap(
+      (x)=>AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint,None,None,l).build()
+    ).flatMap(u=>new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString)
+    actual.zip(expected).map(checkDiff)
+
+  }
+
 
 }

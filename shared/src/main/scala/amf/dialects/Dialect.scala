@@ -42,11 +42,10 @@ trait Refiner{
   def refine(root:DomainEntity);
 }
 
-case class DialectPropertyMapping(val name:String, val range:Type, required:Boolean=false){
+case class DialectPropertyMapping(val name:String, val range:Type, var required:Boolean=false){
 
-  private var _collection=false;
+  private[dialects] var _collection=false;
 
-  private var _required=false;
 
   var _referenceTarget:DialectNode=null;
 
@@ -88,7 +87,7 @@ case class DialectPropertyMapping(val name:String, val range:Type, required:Bool
   }
 
   def require(): DialectPropertyMapping ={
-    this._required=true;
+    this.required=true;
     this
   }
 
@@ -187,9 +186,15 @@ class Builtins extends LocalNameProvider with ReferenceResolver{
 
   val b2id=mutable.HashMap[String,String]();
   val id2b=mutable.HashMap[String,String]();
+  val id2t=mutable.HashMap[String,Type]();
 
-  def add(id:String,builtin:String):Builtins={
+  def buitInType(id:String): Type ={
+    return id2t.getOrElse(id,null);
+  }
+
+  def add(id:String,builtin:String,t:Type):Builtins={
     b2id.put(builtin,id);
+    id2t.put(id,t);
     id2b.put(id,builtin);
     return this;
   }
@@ -197,12 +202,13 @@ class Builtins extends LocalNameProvider with ReferenceResolver{
 
 class TypeBuiltins extends Builtins{
 
-  add(TypeBuiltins.STRING,"string");
-  add(TypeBuiltins.INTEGER,"integer");
-  add(TypeBuiltins.NUMBER,"number");
-  add(TypeBuiltins.BOOLEAN,"boolean");
-  add(TypeBuiltins.URI,"uri");
-  add(TypeBuiltins.ANY,"any");
+  add(TypeBuiltins.STRING,"string",Type.Str);
+  add(TypeBuiltins.INTEGER,"integer",Type.Int);
+  add(TypeBuiltins.NUMBER,"number",Type.Int);
+  add(TypeBuiltins.FLOAT,"number",Type.Int);
+  add(TypeBuiltins.BOOLEAN,"boolean",Type.Bool);
+  add(TypeBuiltins.URI,"uri",Type.Iri);
+  add(TypeBuiltins.ANY,"any",null);
 
 }
 object TypeBuiltins{
