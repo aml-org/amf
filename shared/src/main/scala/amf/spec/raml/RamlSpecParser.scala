@@ -739,7 +739,8 @@ case class ExtensionParser(annotationName: String, parent: String, entry: EntryN
     val dataNode = DataNodeParser(entry.value, Some(parent)).parse()
     // TODO
     // this is temporary, we should look for the annotation in the annotationTypes declared in the schema
-    val customDomainProperty = CustomDomainProperty().withName(WellKnownAnnotation.parseRamlName(annotationName))
+    val customDomainProperty = CustomDomainProperty(entry.annotations()).withName(WellKnownAnnotation.parseRamlName(annotationName))
+    domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)
       .withDefinedBy(customDomainProperty)
@@ -761,7 +762,7 @@ case class DataNodeParser(value: AMFAST, parent: Option[String] = None) {
   }
 
   protected def parseScalar(ast: AMFAST, datatype: String): DataNode = {
-    val node = DataScalarNode(ast.toString, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
+    val node = DataScalarNode(ast.content.unquote, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
     if (parent.isDefined) node.adopted(parent.get)
     node
   }

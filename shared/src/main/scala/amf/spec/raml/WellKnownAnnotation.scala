@@ -1,7 +1,6 @@
 package amf.spec.raml
 
-import amf.domain.{DomainElement, Operation, WebApi}
-import amf.shape._
+import amf.domain.{DomainElement}
 
 object WellKnownAnnotation {
 
@@ -13,31 +12,38 @@ object WellKnownAnnotation {
       "(license)"        -> true
     ),
     "amf.domain.Operation" -> Map(
-      "(deprecated)"   -> true,
-      "(summary)"      -> true,
-      "(externalDocs)" -> true,
-      "(externalDocs)"   -> true
+      "(deprecated)"    -> true,
+      "(summary)"       -> true,
+      "(externalDocs)"  -> true,
+      "(externalDocs)"  -> true
     ),
-    "amf.domain.ScalarShape" -> Map(
-      "(format)"           -> true,
+    "amf.domain.Payload" -> Map(
       "(externalDocs)"   -> true,
+      "(readOnly)"       -> true,
+      "(dependencies)"   -> true,
+      "(tuple)"          -> true,
+      "(format)"         -> true,
+    ),
+    "amf.shape.ScalarShape" -> Map(
+      "(format)"           -> true,
+      "(externalDocs)"     -> true,
       "(exclusiveMaximum)" -> true,
       "(exclusiveMinimum)" -> true
     ),
-    "amf.domain.ArrayShape" -> Map (
-      "(externalDocs)"   -> true,
-      "(tuple)" -> true
+    "amf.shape.ArrayShape" -> Map (
+      "(externalDocs)" -> true,
+      "(tuple)"        -> true
     ),
-    "amf.domain.MatrixShape" -> Map (
-      "(externalDocs)"   -> true,
-      "(tuple)" -> true
+    "amf.shape.MatrixShape" -> Map (
+      "(externalDocs)" -> true,
+      "(tuple)"        -> true
     ),
-    "amf.domain.TupleShape" -> Map (
-      "(externalDocs)"   -> true,
-      "(tuple)" -> true
+    "amf.shape.TupleShape" -> Map (
+      "(externalDocs)" -> true,
+      "(tuple)"        -> true
     ),
-    "amf.domain.NodeShape" -> Map(
-      "(externalDocs)"   -> true,
+    "amf.shape.NodeShape" -> Map(
+      "(externalDocs)" -> true,
       "(readOnly)"     -> true,
       "(dependencies)" -> true
     )

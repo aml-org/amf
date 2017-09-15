@@ -12,6 +12,11 @@ trait Type {
 
 trait Obj extends Type {
   val fields: List[Field]
+
+  // This can be override by dynamic element models to provide
+  // the information about fields at parsing time
+
+  val dynamic: Boolean = false
 }
 
 object Type {

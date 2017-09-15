@@ -6,8 +6,9 @@ import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.common.core._
 import amf.metadata.Field
 import amf.vocabulary.Namespace
-import amf.metadata.Type.Iri
+import amf.metadata.Type.{Iri, Str, Array}
 import amf.metadata.domain.extensions.DataNodeModel
+import amf.model.{AmfArray, AmfElement, AmfScalar}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -77,6 +78,11 @@ case class ObjectNode(override val fields: Fields, annotations: Annotations) ext
   override def dynamicType = List(Namespace.Data + "Object")
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
+
+  override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.iri()) match {
+    case Some(els) if els.nonEmpty => Some(els.head)
+    case _                         => None
+  }
 }
 
 object ObjectNode {
@@ -96,13 +102,24 @@ case class ScalarNode(value: String, dataType: Option[String], override val fiel
   override def defaultName: String = idCounter.genId("scalar")
 
   val Range: Field = Field(Iri, Namespace.Rdfs + "range")
-  val Value: Field = Field(DataNodeModel, Namespace.Data + "value")
+  val Value: Field = Field(Str, Namespace.Data + "value")
 
   override def dynamicFields: List[Field] = List(Range, Value) ++ DataNodeModel.fields
 
   override def dynamicType = List(Namespace.Data + "Scalar")
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
+
+  override def valueForField(f: Field): Option[AmfElement] = f match {
+    case Range =>
+      dataType match {
+        case Some(dt) => Some(AmfScalar(dt))
+        case None     => None
+      }
+    case Value =>
+      Some(AmfScalar(value))
+    case _ => None
+  }
 }
 
 object ScalarNode {
@@ -124,7 +141,7 @@ object ScalarNode {
 case class ArrayNode(override val fields: Fields, annotations: Annotations) extends DataNode(annotations) {
   override def defaultName: String = idCounter.genId("array")
 
-  val Member: Field = Field(DataNodeModel, Namespace.Rdf + "member")
+  val Member: Field = Field(Array(DataNodeModel), Namespace.Rdf + "member")
 
   var members: ListBuffer[DataNode] = ListBuffer()
 
@@ -135,6 +152,11 @@ case class ArrayNode(override val fields: Fields, annotations: Annotations) exte
   override def dynamicType = List(Namespace.Rdf + "Seq", Namespace.Data + "Array")
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
+
+  override def valueForField(f: Field): Option[AmfElement] = f match {
+    case Member => Some(AmfArray(members))
+    case _      => None
+  }
 }
 
 object ArrayNode {
