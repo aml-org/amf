@@ -1703,6 +1703,20 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "shared/src/test/resources/upanddown/full-example.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "raml"
+                  }
+                ]
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
@@ -1879,28 +1893,6 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
 
-    ],
-    "http://raml.org/vocabularies/document-source-maps#sources": [
-      {
-        "@id": "shared/src/test/resources/upanddown/full-example.raml/source-map",
-        "@type": [
-          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-        ],
-        "http://raml.org/vocabularies/document-source-maps#source-vendor": [
-          {
-            "http://raml.org/vocabularies/document-source-maps#element": [
-              {
-                "@value": "shared/src/test/resources/upanddown/full-example.raml"
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#value": [
-              {
-                "@value": "raml"
-              }
-            ]
-          }
-        ]
-      }
     ]
   }
 ]

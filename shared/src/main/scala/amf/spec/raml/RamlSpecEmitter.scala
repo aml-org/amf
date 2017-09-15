@@ -31,7 +31,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
   //before the source vendor annotations was saved in web api model.
   // Now, will be saved in document model (since changes in parser).
   val ordering: SpecOrdering = unit match {
-    case document: Document => SpecOrdering.ordering(Raml, document.annotations)
+    case document: Document => SpecOrdering.ordering(Raml, document.encodes.annotations)
   }
 
   private def retrieveWebApi() = unit match {

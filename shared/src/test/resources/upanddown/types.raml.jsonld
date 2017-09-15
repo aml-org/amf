@@ -2220,8 +2220,752 @@
         ]
       }
     ],
-    "http://raml.org/vocabularies/document#references": [
-
+    "http://raml.org/vocabularies/document#declares": [
+      {
+        "@id": "shared/src/test/resources/upanddown/types.raml/Person",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://raml.org/vocabularies/shapes#Shape",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://raml.org/vocabularies/shapes#range": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/name/scalar/name",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://raml.org/vocabularies/shapes#Shape",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/name/scalar/name/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/name/scalar/name"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(5,6)-(5,18)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/name/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,6)-(5,18)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/description",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://raml.org/vocabularies/shapes#range": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/description/scalar/description",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://raml.org/vocabularies/shapes#Shape",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/description/scalar/description/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/description/scalar/description"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,6)-(6,25)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "description"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/description/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,6)-(6,25)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/age",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://raml.org/vocabularies/shapes#range": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/age/scalar/age",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://raml.org/vocabularies/shapes#Shape",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "age"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/age/scalar/age/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/age/scalar/age"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(7,6)-(7,18)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "age"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/age/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/age"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,6)-(7,18)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://raml.org/vocabularies/shapes#range": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://raml.org/vocabularies/shapes#Shape",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#property": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/street",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://raml.org/vocabularies/shapes#Shape"
+                    ],
+                    "http://raml.org/vocabularies/shapes#range": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/street/scalar/street",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://raml.org/vocabularies/shapes#Shape",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "street"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/street/scalar/street/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/street/scalar/street"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(10,10)-(10,24)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "street"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/street/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/street"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,10)-(10,24)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/number",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://raml.org/vocabularies/shapes#Shape"
+                    ],
+                    "http://raml.org/vocabularies/shapes#range": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/number/scalar/number",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://raml.org/vocabularies/shapes#Shape",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "number"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/number/scalar/number/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/number/scalar/number"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(11,10)-(11,25)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "number"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/number/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/number"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,10)-(11,25)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/document",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://raml.org/vocabularies/shapes#Shape"
+                    ],
+                    "http://raml.org/vocabularies/shapes#range": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/document/document",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#NodeShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://raml.org/vocabularies/shapes#Shape",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#closed": [
+                          {
+                            "@value": false
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "document"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/document/document/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/document/document"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(12,10)-(13,24)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "document"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/document/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/document"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,10)-(13,24)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/lastName",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://raml.org/vocabularies/shapes#Shape"
+                    ],
+                    "http://raml.org/vocabularies/shapes#range": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/lastName/scalar/lastName",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://raml.org/vocabularies/shapes#Shape",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "lastName"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/lastName/scalar/lastName/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(15,12)-(15,24)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/lastName/scalar/lastName"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(14,10)-(15,24)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "lastName"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/lastName/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/property/lastName"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(14,10)-(15,24)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "address"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#property"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(9,8)-(15,24)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/address"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,6)-(15,24)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "address"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "shared/src/test/resources/upanddown/types.raml#/definitions/Person/property/address"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,6)-(15,24)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Person"
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "shared/src/test/resources/upanddown/types.raml/Person/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,4)-(15,24)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "shared/src/test/resources/upanddown/types.raml/Person"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,2)-(15,24)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
 ]

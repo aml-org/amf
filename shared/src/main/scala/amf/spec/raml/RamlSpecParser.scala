@@ -29,7 +29,7 @@ case class RamlSpecParser(root: Root) {
 
     val declarations = parseDeclares(entries)
 
-    val api = parseWebApi(entries, declarations)
+    val api = parseWebApi(entries, declarations).add(SourceVendor(root.vendor))
 
     Document()
       .adopted(root.location)

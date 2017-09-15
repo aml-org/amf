@@ -30,7 +30,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
   // Now, will be saved in document model (since changes in parser).
 
   val ordering: SpecOrdering = unit match {
-    case document: Document => SpecOrdering.ordering(Oas, document.annotations)
+    case document: Document => SpecOrdering.ordering(Oas, document.encodes.annotations)
   }
 
   private def retrieveWebApi() = unit match {

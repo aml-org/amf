@@ -4,7 +4,7 @@ import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.document.Document
-import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField}
+import amf.domain.Annotation._
 import amf.domain._
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfScalar}
@@ -25,7 +25,7 @@ case class OasSpecParser(root: Root) {
 
     val declarations = parseDeclares(entries)
 
-    val api = parseWebApi(entries, declarations)
+    val api = parseWebApi(entries, declarations).add(SourceVendor(root.vendor))
 
     Document()
       .adopted(root.location)

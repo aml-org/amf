@@ -6,7 +6,7 @@ import amf.common.{AMFAST, AMFToken}
 import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation
-import amf.domain.Annotation.{LexicalInformation, SourceVendor}
+import amf.domain.Annotation.LexicalInformation
 import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer
@@ -108,11 +108,11 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeDocument(root: Root): Document = {
-    (root.vendor match {
+    root.vendor match {
       case Raml => RamlSpecParser(root).parseDocument()
       case Oas  => OasSpecParser(root).parseDocument()
       case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
-    }).add(SourceVendor(root.vendor))
+    }
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {
