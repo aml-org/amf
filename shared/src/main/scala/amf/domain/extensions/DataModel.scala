@@ -46,10 +46,12 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   */
 case class ObjectNode(override val fields: Fields, annotations: Annotations) extends DataNode(annotations) {
 
-  val properties: mutable.HashMap[String, ListBuffer[DataNode]] = mutable.HashMap()
-  override def defaultName: String                              = idCounter.genId("object")
+  val properties: mutable.HashMap[String,ListBuffer[DataNode]] = mutable.HashMap()
+  val propertyAnnotations: mutable.HashMap[String,Annotations] = mutable.HashMap()
 
-  def addProperty(property: String, objectValue: DataNode): this.type = {
+  override def defaultName: String = idCounter.genId("object")
+
+  def addProperty(property: String, objectValue: DataNode, annotations: Annotations = Annotations()): this.type = {
     objectValue.adopted(this.id)
     val propertyList = properties.getOrElse(property, ListBuffer())
     objectValue match {
@@ -61,6 +63,7 @@ case class ObjectNode(override val fields: Fields, annotations: Annotations) ext
       case _ => propertyList += objectValue // scalar values can be duplicated
     }
     properties.update(property, propertyList)
+    propertyAnnotations.update(property, annotations)
     this
   }
 
