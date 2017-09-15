@@ -451,7 +451,7 @@ case class ResponseParser(entry: EntryNode, producer: String => Response, declar
 
     entries.key("x-media-type",
                 entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
-    //TODO add parent id to payload?
+    // TODO add parent id to payload?
     payload.adopted(parentId)
 
     entries.key(
@@ -493,7 +493,7 @@ case class ParameterParser(ast: AMFAST, parentId: String, declarations: Declarat
       p.parameter.set(ParameterModel.Binding, value.string(), entry.annotations())
     })
 
-    //TODO generate parameter with parent id or adopt
+    // TODO generate parameter with parent id or adopt
     if (p.isBody) {
       p.payload.adopted(parentId)
       entries.key(

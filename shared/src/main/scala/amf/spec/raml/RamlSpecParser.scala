@@ -298,7 +298,7 @@ case class RequestParser(entries: Entries, producer: () => Request, declarations
 
         RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
           .parse()
-          .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) //todo
+          .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
         Entries(entry.value)
           .regex(

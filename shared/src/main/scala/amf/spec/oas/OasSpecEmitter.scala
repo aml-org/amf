@@ -29,7 +29,7 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
   val emitter: ASTEmitter[AMFToken, AMFAST] = ASTEmitter(AMFASTFactory())
 
-  //before the source vendor annotations was saved in web api model.
+  // before the source vendor annotations was saved in web api model.
   // Now, will be saved in document model (since changes in parser)
 
   private def retrieveWebApi() = unit match {
@@ -59,9 +59,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
   }
 
   def emitWebApi(ordering: SpecOrdering): Seq[Emitter] = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    val api    = WebApiEmitter(model, ordering)
+    val model = retrieveWebApi()
+    val api   = WebApiEmitter(model, ordering)
     api.emitters
   }
 
