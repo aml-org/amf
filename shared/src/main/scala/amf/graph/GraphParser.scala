@@ -1,36 +1,34 @@
 package amf.graph
 
 import amf.common.AMFAST
-import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
+import amf.common.AMFToken.{MapToken, SequenceToken}
 import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.metadata.SourceMapModel.{Element, Value}
+import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.DocumentModel
-import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.metadata.shape._
-import amf.metadata.{Field, Obj, SourceMapModel, Type}
+import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.shape._
 import amf.vocabulary.Namespace
-import amf.vocabulary.Namespace.SourceMaps
-
-import scala.collection.mutable
 
 /**
   * AMF Graph parser
   */
-object GraphParser {
-
+object GraphParser extends GraphParserHelpers {
   def parse(ast: AMFAST, location: String): BaseUnit = {
     val parser = Parser(Map())
     parser.parse(ast, location)
   }
 
   case class Parser(var nodes: Map[String, AmfElement]) {
+
+    val dynamicGraphParser = new DynamicGraphParser(nodes)
 
     def parse(ast: AMFAST, location: String): BaseUnit = {
       val root = ast > SequenceToken > MapToken
@@ -43,9 +41,8 @@ object GraphParser {
         types.get(ctx.expand(t)).isDefined
       }) match {
         case Some(t) => types(ctx.expand(t))
-        case None    => {
+        case None    =>
           throw new Exception(s"Error parsing JSON-LD node, unknown @types ${ts(ast)}")
-        }
       }
 
     private def parseList(listElement: Type, node: AMFAST, ctx: GraphContext) = {
@@ -57,7 +54,7 @@ object GraphParser {
       })
     }
 
-    def retrieveElements(ast: AMFAST) = {
+    def retrieveElements(ast: AMFAST): Seq[AMFAST] = {
       ast.children.find(key("@list")) match {
         case Some(entry) => (entry > SequenceToken).children
         case _           => throw new Exception(s"No @list declaration on list node $ast")
@@ -69,7 +66,7 @@ object GraphParser {
       val sources = retrieveSources(id, node)
       val model   = retrieveType(node, ctx)
 
-      val instance = builders(model)(annotations(sources, id))
+      val instance = builders(model)(annotations(nodes, sources, id))
       instance.withId(id)
       val children = node.children
 
@@ -81,26 +78,52 @@ object GraphParser {
         }
       })
 
+      // parsing custom extensions
+      instance match {
+        case elm:DomainElement => parseCustomProperties(node, elm, ctx)
+        case _                 => // ignore
+      }
+
+
       nodes = nodes + (id -> instance)
       instance
     }
 
-    private def value(t: Type, node: AMFAST): AMFAST = {
-      node.`type` match {
-        case SequenceToken =>
-          t match {
-            case Array(_) => node
-            case _        => value(t, node.head)
+    private def parseCustomProperties(node: AMFAST, instance: DomainElement, ctx: GraphContext) = {
+      val customProperties = node.children.find(key(DomainElementModel.CustomDomainProperties.value.iri())) match {
+        case Some(entry) => {
+          entry.children.last.`type` match {
+            case SequenceToken =>
+              val elements = entry.children.last.children
+              elements.filter { propertyUriNode =>
+                propertyUriNode.children.exists(key("@id"))
+              }.map { propertyUriNode =>
+                propertyUriNode.children.find(key("@id")).get.last.content.unquote
+              }
+            case _        => Seq()
           }
-        case MapToken =>
-          t match {
-            case Iri                            => node.children.find(key("@id")).get.last
-            case Str | RegExp | Bool | Type.Int => node.children.find(key("@value")).get.last
-            case _                              => node
-          }
-        case _ => node
+        }
+        case _           => Seq()
       }
+
+      val domainExtensions: Seq[DomainExtension] = customProperties.map { propertyUri =>
+        node.children.find(key(propertyUri)) match {
+          case Some(entry) =>
+            val parsedNode = dynamicGraphParser.parseDynamicType(entry.children.last, ctx)
+            val domainExtension = DomainExtension()
+            val domainProperty = CustomDomainProperty()
+            domainProperty.id = propertyUri
+            domainExtension.withId(parsedNode.id)
+            domainExtension.withDefinedBy(domainProperty)
+            domainExtension.withExtension(parsedNode)
+            Some(domainExtension)
+          case _          => None
+        }
+      }.filter(_.isDefined).map(_.get)
+      instance.withCustomDomainProperties(domainExtensions)
     }
+
+
 
     private def traverse(ctx: GraphContext,
                          instance: AmfObject,
@@ -109,17 +132,17 @@ object GraphParser {
                          sources: SourceMap,
                          key: String) = {
       f.`type` match {
-        case _: Obj             => instance.set(f, parse(node, ctx), annotations(sources, key))
-        case Str | RegExp | Iri => instance.set(f, str(node), annotations(sources, key))
-        case Bool               => instance.set(f, bool(node), annotations(sources, key))
-        case Type.Int           => instance.set(f, int(node), annotations(sources, key))
-        case l: SortedArray     => instance.setArray(f, parseList(l.element, node, ctx), annotations(sources, key))
+        case _: Obj             => instance.set(f, parse(node, ctx), annotations(nodes, sources, key))
+        case Str | RegExp | Iri => instance.set(f, str(node), annotations(nodes, sources, key))
+        case Bool               => instance.set(f, bool(node), annotations(nodes, sources, key))
+        case Type.Int           => instance.set(f, int(node), annotations(nodes, sources, key))
+        case l: SortedArray     => instance.setArray(f, parseList(l.element, node, ctx), annotations(nodes, sources, key))
         case a: Array =>
           val values: Seq[AmfElement] = a.element match {
             case _: Obj    => node.children.map(n => parse(n, ctx))
             case Str | Iri => node.children.map(n => str(value(a.element, n)))
           }
-          instance.setArray(f, values, annotations(sources, key))
+          instance.setArray(f, values, annotations(nodes, sources, key))
       }
     }
 
@@ -136,68 +159,6 @@ object GraphParser {
       }
     }
 
-    private def retrieveSources(id: String, ast: AMFAST): SourceMap = {
-      ast.children.find(key(Sources.value.iri())) match {
-        case Some(entry) => parseSourceNode(value(SourceMapModel, entry.last))
-        case _           => SourceMap.empty
-      }
-    }
-
-    private def parseSourceNode(node: AMFAST): SourceMap = {
-      val result = SourceMap()
-      node.children.foreach(entry => {
-        entry.head.content.unquote match {
-          case AnnotationName(annotation) =>
-            val consumer = result.annotation(annotation)
-            entry.last.children.foreach(node => {
-              consumer(value(Value.`type`, node.head.last).content.unquote,
-                       value(Element.`type`, node.last.last).content.unquote)
-            })
-          case _ => // Unknown annotation identifier
-        }
-      })
-      result
-    }
-
-    private def annotations(sources: SourceMap, key: String): Annotations = {
-      val result = Annotations()
-
-      if (sources.nonEmpty) {
-        sources.annotations.foreach {
-          case (annotation, values: mutable.Map[String, String]) =>
-            annotation match {
-              case Annotation(deserialize) if values.contains(key) => result += deserialize(values(key), nodes)
-              case _                                               =>
-            }
-        }
-      }
-
-      result
-    }
-
-    private def retrieveId(ast: AMFAST): String = {
-      ast.children.find(key("@id")) match {
-        case Some(entry) => entry.last.content.unquote
-        case _           => throw new Exception(s"No @id declaration on node $ast")
-      }
-    }
-
-    private def ts(ast: AMFAST): Seq[String] = {
-      ast.children.find(key("@type")) match {
-        case Some(entry) => (entry > SequenceToken).children.map(_.content.unquote)
-        case _           => throw new Exception(s"No @type declaration on node $ast")
-      }
-    }
-
-    /** Find entry with matching key. */
-    private def key(key: String)(n: AMFAST): Boolean = (n is Entry) && (n > StringToken) ? key
-
-    private object AnnotationName {
-      def unapply(uri: String): Option[String] = uri match {
-        case url if url.startsWith(SourceMaps.base) => Some(url.substring(url.indexOf("#") + 1))
-        case _                                      => None
-      }
-    }
   }
 
   private def str(node: AMFAST) = AmfScalar(node.content.unquote)
@@ -208,23 +169,25 @@ object GraphParser {
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
-    DocumentModel      -> Document.apply,
-    WebApiModel        -> WebApi.apply,
-    OrganizationModel  -> Organization.apply,
-    LicenseModel       -> License.apply,
-    CreativeWorkModel  -> CreativeWork.apply,
-    EndPointModel      -> EndPoint.apply,
-    OperationModel     -> Operation.apply,
-    ParameterModel     -> Parameter.apply,
-    PayloadModel       -> Payload.apply,
-    RequestModel       -> Request.apply,
-    ResponseModel      -> Response.apply,
-    NodeShapeModel     -> NodeShape.apply,
-    ArrayShapeModel    -> ArrayShape.apply,
-    ScalarShapeModel   -> ScalarShape.apply,
-    PropertyShapeModel -> PropertyShape.apply,
-    XMLSerializerModel -> XMLSerializer.apply,
-    PropertyDependenciesModel -> PropertyDependencies.apply
+    DocumentModel      -> {(a: Annotations) => Document(a)},
+    WebApiModel        -> {(a: Annotations) => WebApi(a) },
+    OrganizationModel  -> {(a: Annotations) => Organization(a)},
+    LicenseModel       -> {(a: Annotations) => License(a)},
+    CreativeWorkModel  -> {(a: Annotations) => CreativeWork(a)},
+    EndPointModel      -> {(a: Annotations) => EndPoint(a)},
+    OperationModel     -> {(a: Annotations) => Operation(a)},
+    ParameterModel     -> {(a: Annotations) => Parameter(a)},
+    PayloadModel       -> {(a: Annotations) => Payload(a)},
+    RequestModel       -> {(a: Annotations) => Request(a)},
+    ResponseModel      -> {(a: Annotations) => Response(a)},
+    NodeShapeModel     -> {(a: Annotations) => NodeShape(a)},
+    ArrayShapeModel    -> {(a: Annotations) => ArrayShape(a)},
+    ScalarShapeModel   -> {(a: Annotations) => ScalarShape(a)},
+    PropertyShapeModel -> {(a: Annotations) => PropertyShape(a)},
+    XMLSerializerModel -> {(a: Annotations) => XMLSerializer(a)},
+    PropertyDependenciesModel -> {(a: Annotations) => PropertyDependencies(a)},
+    DomainExtensionModel      -> {(a: Annotations) => DomainExtension(a)},
+    CustomDomainPropertyModel -> {(a: Annotations) => CustomDomainProperty(a)}
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

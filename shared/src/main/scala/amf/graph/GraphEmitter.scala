@@ -6,7 +6,7 @@ import amf.common.core.Strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension}
+import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
@@ -121,7 +121,7 @@ object GraphEmitter {
       if (customProperties.nonEmpty) {
         entry { () =>
           raw((Namespace.Document + "customDomainProperties").iri())
-          array { () => customProperties.foreach(iri(_)) }
+          array { () => customProperties.foreach(iri(_, inArray = true)) }
         }
       }
     }
@@ -329,6 +329,6 @@ object GraphEmitter {
     case _: DomainExtension      => DomainExtensionModel
     case _: CustomDomainProperty => CustomDomainPropertyModel
     case _: DataNode             => DataNodeModel
-    case _                => throw new Exception(s"Missing metadata mapping for $instance")
+    case _  => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

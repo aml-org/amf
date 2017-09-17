@@ -8,7 +8,7 @@ import scala.collection.mutable
 /**
   * Source maps for graph: Map(annotation -> Map(element -> value))
   */
-private class SourceMap(val annotations: mutable.ListMap[String, mutable.ListMap[String, String]]) {
+protected class SourceMap(val annotations: mutable.ListMap[String, mutable.ListMap[String, String]]) {
 
   def annotation(annotation: String): (String, String) => Unit = {
     val map = annotations.get(annotation) match {
