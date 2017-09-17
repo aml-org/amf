@@ -7,21 +7,19 @@ import amf.compiler.Root
 import amf.document.Document
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.CustomDomainProperty
-import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
+import amf.domain.extensions.{CustomDomainProperty, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.shape.Shape
+import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
-import amf.vocabulary.{Namespace, VocabularyMappings}
+import amf.vocabulary.VocabularyMappings
 
-import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.util.matching.Regex
 
 /**
   * Raml 1.0 spec parser
@@ -651,144 +649,5 @@ case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) 
     AnnotationParser(custom, entries).parse()
 
     custom
-  }
-}
-
-case class Entries(ast: AMFAST) {
-
-  def key(keyword: String): Option[EntryNode] = entries.get(keyword)
-
-  def key(keyword: String, fn: (EntryNode => Unit)): Unit = key(keyword).foreach(fn)
-
-  def regex(regex: String, fn: (Iterable[EntryNode] => Unit)): Unit = {
-    val path: Regex = regex.r
-    val values = entries
-      .filterKeys({
-        case path() => true
-        case _      => false
-      })
-      .values
-    if (values.nonEmpty) fn(values)
-  }
-
-  var entries: ListMap[String, EntryNode] = ListMap(ast.children.map(n => n.head.content.unquote -> EntryNode(n)): _*)
-
-}
-
-case class EntryNode(ast: AMFAST) {
-
-  val key: AMFAST   = ast.head
-  val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
-
-  def annotations(): Annotations = Annotations(ast)
-}
-
-case class ArrayNode(ast: AMFAST) {
-
-  def strings(): AmfArray = {
-    val elements = ast.children.map(child => ValueNode(child).string())
-    AmfArray(elements, annotations())
-  }
-
-  private def annotations() = Annotations(ast)
-}
-
-case class ValueNode(ast: AMFAST) {
-
-  def string(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content, annotations())
-  }
-
-  def integer(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content.toInt, annotations())
-  }
-
-  def boolean(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content.toBoolean, annotations())
-  }
-
-  def negated(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(!content.toBoolean, annotations())
-  }
-
-  private def annotations() = Annotations(ast)
-}
-
-case class AnnotationParser(element: DomainElement, entries: Entries) {
-  def parse(): Unit = {
-    val domainExtensions:ListBuffer[DomainExtension] = ListBuffer()
-    entries.entries.foreach {
-      case (key, entry) => {
-        if (WellKnownAnnotation.normalAnnotation(key, element)) {
-          domainExtensions += ExtensionParser(key, element.id, entry).parse()
-        }
-      }
-    }
-    if (domainExtensions.nonEmpty)
-      element.withCustomDomainProperties(domainExtensions)
-  }
-}
-
-case class ExtensionParser(annotationRamlName: String, parent: String, entry: EntryNode) {
-  def parse(): DomainExtension = {
-    val domainExtension = DomainExtension()
-    val annotationName = WellKnownAnnotation.parseRamlName(annotationRamlName)
-    val dataNode = DataNodeParser(entry.value, Some(parent + s"/$annotationName")).parse()
-    // TODO
-    // this is temporary, we should look for the annotation in the annotationTypes declared in the schema
-    val customDomainProperty = CustomDomainProperty(entry.annotations()).withName(annotationName)
-    domainExtension.adopted(parent)
-    domainExtension
-      .withExtension(dataNode)
-      .withDefinedBy(customDomainProperty)
-  }
-}
-
-case class DataNodeParser(value: AMFAST, parent: Option[String] = None) {
-  def parse(): DataNode = {
-    value.`type` match {
-      case StringToken   => parseScalar(value, "string")
-      case IntToken      => parseScalar(value, "integer")
-      case FloatToken    => parseScalar(value, "float")
-      case BooleanToken  => parseScalar(value, "boolean")
-      case Null          => parseScalar(value, "nil")
-      case SequenceToken => parseArray(value)
-      case MapToken      => parseObject(value)
-      case other         => throw new Exception(s"Cannot parse data node from AST structure $other")
-    }
-  }
-
-  protected def parseScalar(ast: AMFAST, datatype: String): DataNode = {
-    val node = DataScalarNode(ast.content.unquote, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
-    if (parent.isDefined) node.adopted(parent.get)
-    node
-  }
-
-  protected def parseArray(value: AMFAST): DataNode = {
-    val node = DataArrayNode(Annotations(value))
-    if (parent.isDefined) node.adopted(parent.get)
-    value.children.foreach { ast =>
-      val element = DataNodeParser(ast).parse()
-      node.addMember(element)
-    }
-    node
-  }
-
-  protected def parseObject(value: AMFAST): DataNode = {
-    val node = DataObjectNode(Annotations(value))
-    if (parent.isDefined) node.adopted(parent.get)
-    value.children.map { ast =>
-      val property = ast.head.content.unquote
-      val value = Option(ast).filter(_.children.size > 1).map(_.last).orNull
-      val propertyAnnotations = Annotations(ast)
-
-      val propertyNode = DataNodeParser(value, Some(node.id)).parse()
-      node.addProperty(property, propertyNode, propertyAnnotations)
-    }
-    node
   }
 }

@@ -11,6 +11,7 @@ import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
+import amf.spec.common._
 
 import scala.collection.mutable
 

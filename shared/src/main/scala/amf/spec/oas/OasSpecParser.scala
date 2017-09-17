@@ -20,12 +20,11 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.shape.Shape
 import amf.spec.Declarations
+import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
 
-import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.util.matching.Regex
 
 /**
   * Oas 2.0 spec parser
@@ -198,6 +197,16 @@ case class OasSpecParser(root: Root) {
         )
       }
     )
+
+    entries.key(
+      "definitions",
+      entry => {
+        val types = OasTypeParser(entry, shape => shape.adopted(api.id), declarations).parse()
+        println(types)
+      }
+    )
+
+    AnnotationParser(api, entries).parse()
 
     api
   }
@@ -720,41 +729,8 @@ case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) 
   }
 }
 
-case class Entries(ast: AMFAST) {
-  def key(keyword: String): Option[EntryNode] = entries.get(keyword)
 
-  def key(keyword: String, fn: (EntryNode => Unit)): Unit = key(keyword).foreach(fn)
 
-  def regex(regex: String, fn: (Iterable[EntryNode] => Unit)): Unit = {
-    val path: Regex = regex.r
-    val values = entries
-      .filterKeys({
-        case path() => true
-        case _      => false
-      })
-      .values
-    if (values.nonEmpty) fn(values)
-  }
-
-  var entries: ListMap[String, EntryNode] = ListMap(ast.children.map(n => n.head.content.unquote -> EntryNode(n)): _*)
-
-}
-
-trait KeyValueNode {
-  val key: AMFAST
-  val value: AMFAST
-  val ast: AMFAST
-
-  def annotations(): Annotations
-}
-
-case class EntryNode(ast: AMFAST) extends KeyValueNode {
-
-  override val key: AMFAST   = ast.head
-  override val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
-
-  override def annotations(): Annotations = Annotations(ast)
-}
 
 case class MapNode(ast: AMFAST) extends KeyValueNode {
 
@@ -762,41 +738,4 @@ case class MapNode(ast: AMFAST) extends KeyValueNode {
   override val value: AMFAST = ast
 
   override def annotations(): Annotations = Annotations(ast)
-}
-
-case class ArrayNode(ast: AMFAST) {
-
-  def strings(): AmfArray = {
-    val elements = ast.children.map(child => ValueNode(child).string())
-    AmfArray(elements, annotations())
-  }
-
-  val values: Seq[AMFAST] = ast.children
-
-  private def annotations() = Annotations(ast)
-}
-
-case class ValueNode(ast: AMFAST) {
-
-  def string(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content, annotations())
-  }
-
-  def boolean(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content.toBoolean, annotations())
-  }
-
-  def integer(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content.toInt, annotations())
-  }
-
-  def negated(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(!content.toBoolean, annotations())
-  }
-
-  private def annotations() = Annotations(ast)
 }
