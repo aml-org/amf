@@ -6,6 +6,8 @@ import amf.metadata.domain.extensions.DomainExtensionModel.{DefinedBy, Extension
 
 case class DomainExtension(fields: Fields, annotations: Annotations) extends DomainElement {
 
+  id = "http://raml.org/vocabularies#document/domain_extension"
+
   def definedBy: CustomDomainProperty = fields(DefinedBy)
   def extension: DataNode             = fields(Extension)
 

@@ -127,4 +127,6 @@ case class FieldEntry(field: Field, value: Value) {
   def array: AmfArray = element.asInstanceOf[AmfArray]
 
   def obj: AmfObject = element.asInstanceOf[AmfObject]
+
+  def domainElement: DomainElement = element.asInstanceOf[DomainElement]
 }

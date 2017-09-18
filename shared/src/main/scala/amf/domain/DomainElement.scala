@@ -2,8 +2,8 @@ package amf.domain
 
 import amf.domain.extensions.DomainExtension
 import amf.metadata.Field
-import amf.metadata.domain.DomainElementModel.{CustomDomainProperties}
-import amf.model.AmfObject
+import amf.metadata.domain.DomainElementModel.CustomDomainProperties
+import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
 /**
@@ -18,4 +18,7 @@ trait DomainElement extends AmfObject {
 trait DynamicDomainElement extends DomainElement {
   def dynamicFields: List[Field]
   def dynamicType: List[ValueType]
+
+  // this is used to generate the graph
+  def valueForField(f: Field): Option[AmfElement]
 }

@@ -11,6 +11,7 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
+import amf.spec.common.{ArrayNode, Entries, EntryNode, ValueNode}
 
 import scala.collection.mutable
 

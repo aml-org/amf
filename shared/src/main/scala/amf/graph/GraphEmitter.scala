@@ -6,17 +6,21 @@ import amf.common.core.Strings
 import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
+import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.DocumentModel
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel}
 import amf.metadata.shape._
-import amf.metadata.{Obj, SourceMapModel, Type}
+import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.shape._
 import amf.vocabulary.Namespace.SourceMaps
-import amf.vocabulary.ValueType
+import amf.vocabulary.{Namespace, ValueType}
+
+import scala.collection.mutable.ListBuffer
 
 /**
   * AMF Graph emitter
@@ -44,10 +48,40 @@ object GraphEmitter {
       val id = element.id
       createIdNode(id)
 
+      val sources = SourceMap(id, element)
+
       val obj = metamodel(element)
+      if (obj.dynamic) {
+        traverseDynamicMetamodel(id, element, sources, obj, parent)
+      } else {
+        traverseStaticMetamodel(id, element, sources, obj, parent)
+      }
+
+      createCustomExtensions(element, parent)
+
+      createSourcesNode(id + "/source-map", sources)
+    }
+
+    def traverseDynamicMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
+      val schema:DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
+
+      createDynamicTypeNode(schema)
+
+      schema.dynamicFields.foreach { f: Field =>
+        schema.valueForField(f).foreach { amfElement =>
+          entry { () =>
+            val propertyUri = f.value.iri()
+            raw(propertyUri)
+            value(f.`type`, Value(amfElement, amfElement.annotations), id, { (_) => })
+          }
+        }
+      }
+    }
+
+    def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
       createTypeNode(obj)
 
-      val sources = SourceMap(id, element)
+
 
       obj.fields.map(element.fields.entry).foreach {
         case Some(FieldEntry(f, v)) =>
@@ -58,8 +92,38 @@ object GraphEmitter {
           }
         case None => // Missing field
       }
+    }
 
-      createSourcesNode(id + "/source-map", sources)
+    private def createCustomExtensions(element: AmfObject, parent: String) = {
+      val customProperties: ListBuffer[String] = ListBuffer()
+
+      element.fields.entry(DomainElementModel.CustomDomainProperties) match {
+        case Some(FieldEntry(f, v)) =>
+          v.value match {
+            case AmfArray(values, _) =>
+              values.foreach {
+                case customExtension: DomainExtension =>
+                  val propertyUri = customExtension.definedBy.id
+                  customProperties += propertyUri
+                  entry { () =>
+                    raw(propertyUri)
+                    map { () =>
+                      traverse(customExtension.extension, parent)
+                    }
+                  }
+              }
+
+            case _ => // ignore
+          }
+        case None => // ignore
+      }
+
+      if (customProperties.nonEmpty) {
+        entry { () =>
+          raw((Namespace.Document + "customDomainProperties").iri())
+          array { () => customProperties.foreach(iri(_, inArray = true)) }
+        }
+      }
     }
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit): Unit = {
@@ -175,6 +239,15 @@ object GraphEmitter {
       }
     }
 
+    private def createDynamicTypeNode(obj: DynamicDomainElement): Unit = {
+      entry { () =>
+        raw("@type")
+        array { () =>
+          obj.dynamicType.foreach(t => raw(t.iri()))
+        }
+      }
+    }
+
     private def entry(k: String, v: String): Unit = entry { () =>
       raw(k)
       raw(v)
@@ -253,6 +326,9 @@ object GraphEmitter {
     case _: PropertyShape => PropertyShapeModel
     case _: XMLSerializer => XMLSerializerModel
     case _: PropertyDependencies => PropertyDependenciesModel
-    case _                => throw new Exception(s"Missing metadata mapping for $instance")
+    case _: DomainExtension      => DomainExtensionModel
+    case _: CustomDomainProperty => CustomDomainPropertyModel
+    case _: DataNode             => DataNodeModel
+    case _  => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

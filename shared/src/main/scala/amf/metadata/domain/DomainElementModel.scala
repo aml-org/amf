@@ -21,11 +21,6 @@ trait DomainElementModel extends Obj {
   // I need lazy evaluation here.
   // It cannot even be defined in the list of fields below
   lazy val CustomDomainProperties = Field(Array(DomainExtensionModel), Document + "customDomainProperties")
-
-  // This can be override by dynamic element models to provide
-  // the information about fields at parsing time
-
-  val dynamic: Boolean = false
 }
 
 object DomainElementModel extends DomainElementModel {

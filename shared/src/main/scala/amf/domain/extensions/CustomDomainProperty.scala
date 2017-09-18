@@ -20,7 +20,7 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations) extend
   def withDomain(domain: Seq[String]): this.type      = set(Domain, domain)
   def withSchema(schema: Shape): this.type            = set(Schema, schema)
 
-  override def adopted(parent: String) = withId(parent + "/" + name.urlEncoded)
+  override def adopted(parent: String) = if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
 }
 
 object CustomDomainProperty {

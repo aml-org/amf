@@ -1,26 +1,25 @@
 package amf.spec.raml
 
-import amf.common.AMFToken.StringToken
+import amf.common.AMFToken._
 import amf.common.core.Strings
 import amf.common.{AMFAST, Lazy}
 import amf.compiler.Root
 import amf.document.Document
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.CustomDomainProperty
+import amf.domain.extensions.{CustomDomainProperty, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.shape.Shape
+import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
 
-import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.util.matching.Regex
 
 /**
   * Raml 1.0 spec parser
@@ -199,6 +198,16 @@ case class RamlSpecParser(root: Root) {
       }
     )
 
+    entries.key(
+      "types",
+      entry => {
+        val types = RamlTypeParser(entry, shape => shape.adopted(api.id), declarations).parse()
+        println(types)
+      }
+    )
+
+    AnnotationParser(api, entries).parse()
+
     api
   }
 }
@@ -249,6 +258,8 @@ case class EndpointParser(entry: EntryNode,
     )
 
     collector += endpoint
+
+    AnnotationParser(endpoint, entries).parse()
 
     entries.regex(
       "^/.*",
@@ -313,6 +324,8 @@ case class RequestParser(entries: Entries, producer: () => Request, declarations
             .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), entry.annotations())
       }
     )
+
+    request.option.foreach { req => AnnotationParser(req, entries).parse() }
 
     request.option
   }
@@ -386,6 +399,8 @@ case class OperationParser(entry: EntryNode, producer: (String) => Operation, de
       }
     )
 
+    AnnotationParser(operation, entries).parse()
+
     operation
   }
 }
@@ -403,11 +418,20 @@ case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry.ast))
 
+    if (Option(entry.value).isDefined && entry.value.`type` == MapToken) {
+      // TODO
+      // Should we clean the annotations here so they are not parsed again in the shape?
+      AnnotationParser(payload, Entries(entry.value)).parse()
+    }
+
     Option(entry.value).foreach(
       _ =>
         RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
           .parse()
           .foreach(payload.withSchema))
+
+
+
     payload
   }
 }
@@ -458,6 +482,8 @@ case class ResponseParser(entry: EntryNode, producer: (String) => Response, decl
       }
     )
 
+    AnnotationParser(response, Entries(entry.value)).parse()
+
     response
   }
 }
@@ -490,6 +516,8 @@ case class ParameterParser(entry: EntryNode, producer: String => Parameter, decl
       .parse()
       .foreach(parameter.set(ParameterModel.Schema, _, entry.annotations()))
 
+    AnnotationParser(parameter, entries).parse()
+
     parameter
   }
 }
@@ -509,6 +537,8 @@ case class LicenseParser(ast: AMFAST) {
       license.set(LicenseModel.Name, value.string(), entry.annotations())
     })
 
+    AnnotationParser(license, entries).parse()
+
     license
   }
 }
@@ -527,6 +557,8 @@ case class CreativeWorkParser(ast: AMFAST) {
       val value = ValueNode(entry.value)
       creativeWork.set(CreativeWorkModel.Description, value.string(), entry.annotations())
     })
+
+    AnnotationParser(creativeWork, entries).parse()
 
     creativeWork
   }
@@ -552,6 +584,8 @@ case class OrganizationParser(ast: AMFAST) {
       val value = ValueNode(entry.value)
       organization.set(OrganizationModel.Email, value.string(), entry.annotations())
     })
+
+    AnnotationParser(organization, entries).parse()
 
     organization
   }
@@ -612,70 +646,8 @@ case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) 
       }
     )
 
+    AnnotationParser(custom, entries).parse()
+
     custom
   }
-}
-
-case class Entries(ast: AMFAST) {
-
-  def key(keyword: String): Option[EntryNode] = entries.get(keyword)
-
-  def key(keyword: String, fn: (EntryNode => Unit)): Unit = key(keyword).foreach(fn)
-
-  def regex(regex: String, fn: (Iterable[EntryNode] => Unit)): Unit = {
-    val path: Regex = regex.r
-    val values = entries
-      .filterKeys({
-        case path() => true
-        case _      => false
-      })
-      .values
-    if (values.nonEmpty) fn(values)
-  }
-
-  var entries: ListMap[String, EntryNode] = ListMap(ast.children.map(n => n.head.content.unquote -> EntryNode(n)): _*)
-
-}
-
-case class EntryNode(ast: AMFAST) {
-
-  val key: AMFAST   = ast.head
-  val value: AMFAST = Option(ast).filter(_.children.size > 1).map(_.last).orNull
-
-  def annotations(): Annotations = Annotations(ast)
-}
-
-case class ArrayNode(ast: AMFAST) {
-
-  def strings(): AmfArray = {
-    val elements = ast.children.map(child => ValueNode(child).string())
-    AmfArray(elements, annotations())
-  }
-
-  private def annotations() = Annotations(ast)
-}
-
-case class ValueNode(ast: AMFAST) {
-
-  def string(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content, annotations())
-  }
-
-  def integer(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content.toInt, annotations())
-  }
-
-  def boolean(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(content.toBoolean, annotations())
-  }
-
-  def negated(): AmfScalar = {
-    val content = ast.content.unquote
-    AmfScalar(!content.toBoolean, annotations())
-  }
-
-  private def annotations() = Annotations(ast)
 }
