@@ -4,6 +4,7 @@ import amf.client.GenerationOptions
 import amf.common.AMFToken._
 import amf.common._
 import amf.common.core.Strings
+import amf.dialects.DomainEntity
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -17,7 +18,6 @@ import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.shape._
-import amf.spec.dialect.DomainEntity
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 

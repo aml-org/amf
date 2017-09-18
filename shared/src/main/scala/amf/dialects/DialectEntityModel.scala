@@ -1,23 +1,36 @@
 package amf.dialects
 
+import amf.domain.Annotations
 import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel
-import amf.spec.dialect.DomainEntity
 import amf.vocabulary.ValueType
 
 /**
-  * Created by kor on 13/09/17.
+  * Created by Pavel Petrochenko on 13/09/17.
   */
-class DialectEntityModel (domainEntity: DomainEntity) extends DomainElementModel with amf.model.DomainElement {
+class DialectEntityModel (domainEntity: DomainEntity) extends DomainElementModel {
+
+
   override val fields: List[Field] = {
-    val fl=domainEntity.fields.fieldsMeta()
-    var num=0;
-    var props=domainEntity.definition._props();
-    fl.sortBy(f=>props.indexWhere(p=>p.field==f));
+    val fields = domainEntity.fields.fieldsMeta()
+    val props = domainEntity.definition.props.values.toList
+
+    fields.sortBy { field =>
+      props.indexWhere(prop => prop.field == field)
+    }
   }
+
   override val `type`: List[ValueType] = domainEntity.definition.`type`
 
   def element: amf.domain.DomainElement = domainEntity
 
   override val dynamicType: Boolean = true
+
+  def adopted(parent: String): this.type = {
+    domainEntity.adopted(parent)
+    this
+  }
+
+  val annotations: Annotations = domainEntity.annotations
+
 }

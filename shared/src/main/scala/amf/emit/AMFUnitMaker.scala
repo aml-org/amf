@@ -2,12 +2,11 @@ package amf.emit
 
 import amf.client.GenerationOptions
 import amf.common.AMFAST
-import amf.dialects.DialectEmitter
+import amf.dialects.{DialectEmitter, DomainEntity}
 import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.spec.dialect.DomainEntity
 import amf.spec.oas.OasSpecEmitter
 import amf.spec.raml.RamlSpecEmitter
 

@@ -45,4 +45,9 @@ object Type {
   case class SortedArray(element: Type) extends Type {
     override val `type`: List[ValueType] = element.`type`
   }
+
+  object Any extends Type {
+    override val `type`: List[ValueType] = List(Xsd + "anyType")
+  }
+
 }

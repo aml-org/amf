@@ -4,7 +4,7 @@ import amf.common.AMFToken.{Comment, Entry}
 import amf.common.core.Strings
 import amf.common.{AMFAST, AMFToken}
 import amf.compiler.AMFCompiler.RAML_10
-import amf.dialects.DialectRegistry
+import amf.dialects.{DialectParser, DialectRegistry}
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation
 import amf.domain.Annotation.LexicalInformation
@@ -20,7 +20,6 @@ import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.serialization.AmfParser
-import amf.spec.dialect.DialectParser
 import amf.spec.oas.OasSpecParser
 import amf.spec.raml.RamlSpecParser
 import amf.yaml.YamlLexer
