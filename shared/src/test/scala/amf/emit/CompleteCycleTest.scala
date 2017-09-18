@@ -272,13 +272,60 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("types-dependency.json", "types-dependency.json.jsonld", OasJsonHint, Amf)
   }
 
-  // TODO explicit field annotation its not serializable so type: object entry will be not generated whyle dumping
   ignore("Types dependency amf(raml) to raml test") {
     assertCycle("types-dependency.raml.jsonld", "types-dependency.raml", AmfJsonHint, Raml)
   }
 
   ignore("Types dependency amf(oas) to oas test") {
     assertCycle("types-dependency.json.jsonld", "types-dependency.json", AmfJsonHint, Oas)
+  }
+
+  test("Types declarations oas to oas test") {
+    assertCycle("declarations-small.json", "declarations-small.json", OasJsonHint, Oas)
+  }
+
+  test("Types declarations raml to raml test") {
+    assertCycle("declarations-small.raml", "declarations-small.raml", RamlYamlHint, Raml)
+  }
+
+  test("Types all facets raml to raml test") {
+    assertCycle("types-facet.raml", "types-facet.raml", RamlYamlHint, Raml)
+  }
+
+  test("Types all facets oas to oas test") {
+    assertCycle("types-facet.json", "types-facet.json", OasJsonHint, Oas)
+  }
+
+  test("Types all facets oas to raml test") {
+    assertCycle("types-facet.json", "types-facet.json.raml", OasJsonHint, Raml)
+  }
+
+  test("Types all facets raml to oas test") {
+    assertCycle("types-facet.raml", "types-facet.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Types all types raml to raml test") {
+    assertCycle("all-type-types.raml", "all-type-types.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Annotations raml to raml test") {
+    assertCycle("annotations.raml", "annotations.raml", RamlYamlHint, Raml)
+  }
+
+  test("Annotations raml to jsonld test") {
+    assertCycle("annotations.raml", "annotations.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Annotations jsonld to jsonld test") {
+    assertCycle("annotations.raml.jsonld", "annotations.raml.jsonld", AmfJsonHint, Amf)
+  }
+
+  test("Annotations oas to jsonld test") {
+    assertCycle("annotations.json", "annotations.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Annotations oas to oas test") {
+    assertCycle("annotations.json", "annotations.json", OasJsonHint, Oas)
   }
 
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {

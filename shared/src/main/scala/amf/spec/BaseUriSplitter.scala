@@ -1,4 +1,4 @@
-package amf.maker
+package amf.spec
 
 /**
   *

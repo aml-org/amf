@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.domain.{Annotation, Annotations, Fields}
+import amf.domain.{Annotation, Annotations}
 
 /**
   * Amf element including DomainElements and BaseUnits

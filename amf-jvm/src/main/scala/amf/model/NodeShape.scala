@@ -12,6 +12,7 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
   val readOnly: Boolean                                  = node.readOnly
   val properties: java.util.List[PropertyShape]          = node.properties.map(PropertyShape).asJava
   val dependencies: java.util.List[PropertyDependencies] = node.dependencies.map(PropertyDependencies).asJava
+  val inherits: java.util.List[Shape]                    = node.inherits.map(Shape(_)).asJava
 
   def withMinProperties(min: Int): this.type = {
     node.withMinProperties(min)
@@ -51,4 +52,12 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
 
   def withDependency(): PropertyDependencies = PropertyDependencies(node.withDependency())
 
+  def withInherits(inherits: java.util.List[Shape]): this.type = {
+    node.withInherits(inherits.asScala.map(_.shape))
+    this
+  }
+
+  def withInheritsObject(name: String): NodeShape = NodeShape(node.withInheritsObject(name))
+
+  def withInheritsScalar(name: String): ScalarShape = ScalarShape(node.withInheritsScalar(name))
 }

@@ -2,6 +2,10 @@ package amf.compiler
 
 import amf.common.AMFToken
 import amf.document.{BaseUnit, Document}
+import amf.domain.Annotation
+import amf.domain.Annotation.LexicalInformation
+import amf.domain.extensions.idCounter
+import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
 import amf.domain.Annotation.SourceVendor
 import amf.exception.{CyclicReferenceException, UnableToResolveLexerException}
 import amf.graph.GraphParser
@@ -33,6 +37,9 @@ class AMFCompiler private (val url: String,
   private val references: ListBuffer[Future[BaseUnit]] = ListBuffer()
 
   def build(): Future[BaseUnit] = {
+    // Reset the data node counter
+    idCounter.reset()
+
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else
       cache.getOrUpdate(location) { () =>
@@ -99,11 +106,11 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeDocument(root: Root): Document = {
-    (root.vendor match {
+    root.vendor match {
       case Raml => RamlSpecParser(root).parseDocument()
       case Oas  => OasSpecParser(root).parseDocument()
       case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
-    }).add(SourceVendor(root.vendor))
+    }
   }
 
   private def makeOasUnit(root: Root): BaseUnit = {

@@ -36,7 +36,7 @@ object Context {
   def apply(platform: Platform, root: String): Context = Context(platform, root, Map.empty)
 
   def apply(platform: Platform, root: String, mapping: Map[String, String]): Context =
-    new Context(platform, if (root == null || root.isEmpty) Nil else List(root), mapping)
+    new Context(platform, Option(root).filter(_.nonEmpty).map(List(_)).getOrElse(Nil), mapping)
 
   def apply(platform: Platform, mapping: Map[String, String]): Context =
     new Context(platform, Nil, mapping)

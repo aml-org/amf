@@ -31,8 +31,10 @@ object Tests {
   /** Check against a specified golden File and fail. */
   def checkDiff(outFile: File, goldenFile: File): Unit = {
     val difference: Option[String] = diff(outFile, goldenFile)
-
-    println("IS PRESENT!!!!!! : " + difference.isDefined)
+    if (difference.isDefined) {
+      println("DIFF!!")
+      println(difference.get)
+    }
     difference.map(s => fail(s))
   }
 
@@ -55,9 +57,17 @@ object Tests {
   def checkDiff(actual: String, expected: String): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(actual, expected)
     if (diffs.nonEmpty) {
+      /*
       println("---------------------------------------------------------------------------------")
       println(actual)
       println("---------------------------------------------------------------------------------")
+       */
+      println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+      println(expected)
+      println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+      println(actual)
+      println("==============================================")
+
       fail("\n" + Diff.makeString(diffs))
     }
   }

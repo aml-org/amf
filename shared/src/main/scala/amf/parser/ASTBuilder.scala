@@ -35,6 +35,12 @@ abstract class ASTBuilder[T <: Token, N <: ASTNode[T]](val lexer: Lexer[T]) {
   /** Token 'n' positions ahead. */
   def lookAhead(n: Int): T
 
+  /** Text 'n' positions ahead. */
+  def lookAheadText(n: Int): Option[String]
+
+  /** Text for the next 'token' ahead. */
+  def lookAheadTextWhile(token: T): Option[String]
+
   /** Returns current token text. */
   def currentText: String
 

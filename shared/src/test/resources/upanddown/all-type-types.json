@@ -1,0 +1,47 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title"
+  },
+  "definitions": {
+    "StringType": {
+      "type": "string"
+    },
+    "TimeOnly": {
+      "type": "string",
+      "format": "time-only"
+    },
+    "DateOnly": {
+      "type": "string",
+      "format": "date-only"
+    },
+    "Password": {
+      "type": "string",
+      "format": "password"
+    },
+    "IntegerType": {
+      "type": "integer"
+    },
+    "NumberType": {
+      "type": "number"
+    },
+    "BooleanType": {
+      "type": "boolean"
+    },
+    "ByteType": {
+      "type": "byte"
+    },
+    "BinaryType": {
+      "type": "binary"
+    },
+    "DateTimeType": {
+      "type": "datetime"
+    },
+    "DateTimeOnly": {
+      "type": "datetime-only"
+    },
+    "ObjectType": {
+      "type": "object"
+    }
+  }
+}

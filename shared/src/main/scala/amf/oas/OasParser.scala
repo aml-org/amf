@@ -3,6 +3,7 @@ package amf.oas
 import amf.common.AMFToken._
 import amf.parser.{BaseAMFParser, YeastASTBuilder}
 import amf.remote.{Oas, Vendor}
+import amf.common.core.Strings
 
 /** [[amf.remote.Oas]] parser. */
 class OasParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
@@ -48,9 +49,9 @@ class OasParser(b: YeastASTBuilder) extends BaseAMFParser(b) {
   /** Parse map entry input. */
   override protected def parseEntry(): Boolean = {
     currentText match {
-      case "\"$ref\"" | "$ref"                                   => link()
-      case ext if ext.startsWith("x-") || ext.startsWith("\"x-") => extensions()
-      case _                                                     => entry()
+      case "\"$ref\"" | "$ref" if lookAheadTextWhile(StringToken).exists(!_.unquote.startsWith("#/")) => link()
+      case ext if ext.startsWith("x-") || ext.startsWith("\"x-")                                      => extensions()
+      case _                                                                                          => entry()
     }
   }
 

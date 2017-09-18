@@ -23,9 +23,9 @@ class AMFUnitMaker {
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): AMFAST = {
     vendor match {
       case Raml =>
-        RamlSpecEmitter(unit).emitWebApi()
+        RamlSpecEmitter(unit).emitDocument()
       case Oas =>
-        OasSpecEmitter(unit).emitWebApi()
+        OasSpecEmitter(unit).emitDocument()
       case _ => throw new IllegalStateException("Invalid vendor " + vendor)
     }
   }

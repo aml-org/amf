@@ -1,5 +1,6 @@
 package amf.parser
 
+import amf.common.AMFToken
 import amf.lexer.Token.{Eof, WhiteSpace}
 import amf.lexer.{Lexer, Token}
 
@@ -79,6 +80,17 @@ abstract class BaseASTBuilder[T <: Token, N <: ASTNode[T]](lexer: Lexer[T]) exte
 
   /** A token 'n' positions ahead. */
   override def lookAhead(offset: Int): T = tokens(index + offset).`type`
+
+  /** Text 'n' positions ahead. */
+  override def lookAheadText(offset: Int): Option[String] = Option(tokens(index + offset).content)
+
+  override def lookAheadTextWhile(token: T): Option[String] = {
+    var offset = 1
+    while (index + offset < tokens.length && lookAhead(offset) != token) offset = offset + 1
+
+    if (index + offset >= tokens.length) None
+    else lookAheadText(offset)
+  }
 
   /** Returns current token text. */
   override def currentText: String = current.content
