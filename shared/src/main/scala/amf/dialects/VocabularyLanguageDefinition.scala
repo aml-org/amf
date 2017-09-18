@@ -1,94 +1,93 @@
 package amf.dialects
 
 import amf.compiler.Root
-import amf.metadata.Type
-import amf.spec.dialect.DomainEntity
-import amf.spec.raml.{Entries, ValueNode}
 import amf.vocabulary.{Namespace, ValueType}
-
-import scala.collection.mutable
 /**
-* Created by kor on 12/09/17.
+* Created by Pavel Petrochenko on 12/09/17.
 */
 
-class VocabPartDialect(override val shortName:String,namespace: Namespace=Namespace.Meta) extends DialectNode(namespace,shortName){}
+class VocabPartDialect(override val shortName:String, namespace: Namespace=Namespace.Meta) extends DialectNode(shortName, namespace){}
 
 case class Declaration(override val shortName:String,override val namespace: Namespace=Namespace.Meta) extends VocabPartDialect(shortName,namespace = namespace){
-  val id=str("id").namespace(Namespace.Schema).noJsonLd.noRAML;
+  val idProperty: DialectPropertyMapping = str("id").copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true)
 }
 
 
-object ClassTerm extends Declaration("Class",Namespace.Owl){
-  val displayName=str("displayName").namespace(Namespace.Schema).rdfName("name")
-  val description=str("description").namespace(Namespace.Schema)
+object ClassTerm extends Declaration("Class", Namespace.Owl){
+  val displayName: DialectPropertyMapping  = str("displayName", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("name")))
+  val description: DialectPropertyMapping  = str("description", _.copy(namespace = Some(Namespace.Schema)))
+  val `extends`: DialectPropertyMapping    = ref("extends",ClassTerm, _.copy(collection = true, jsonld = false))
+  val `properties`: DialectPropertyMapping = ref("properties",PropertyTerm, _.copy(collection = true, jsonld = false))
 
-  val `extends`= ref("extends",ClassTerm).collection.noJsonLd();
-  val `properties`= ref("properties",PropertyTerm).collection.noJsonLd();
-
-  withCalculator((d: DomainEntity) => d.strings(`extends`).map(ValueType(_).asInstanceOf[ValueType]).toList)
+  typeCalculator = {
+    val calculator: TypeCalculator = {(domainEntity: DomainEntity) =>
+      domainEntity.strings(`extends`).map(ValueType(_).asInstanceOf[ValueType]).toList
+    }
+    Some(calculator)
+  }
 
 }
 
 object PropertyTerm extends Declaration("Property"){
-  val description=str("description").namespace(Namespace.Schema)
-
-  val domain= ref("domain",ClassTerm).collection.namespace(Namespace.Rdfs);
-
-  val range=ref("range",ClassTerm).collection.ref(ClassTerm).namespace(Namespace.Rdfs);
-
-  val `extends`= ref("extends",PropertyTerm).collection;
+  val description: DialectPropertyMapping  = str("description", _.copy(namespace = Some(Namespace.Schema)))
+  val domain: DialectPropertyMapping       = ref("domain",ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs)))
+  val range: DialectPropertyMapping        = ref("range",ClassTerm, _.copy(collection = true, referenceTarget = Some(ClassTerm), namespace = Some(Namespace.Rdfs)))
+  val `extends`: DialectPropertyMapping    = ref("extends",PropertyTerm, _.copy(collection = true))
 
   val DATATYPE_PROPERTY = ValueType("http://www.w3.org/2002/07/owl#DatatypeProperty")
   val OBJECT_PROPERTY   = ValueType("http://www.w3.org/2002/07/owl#ObjectProperty")
 
 
-  fieldValueDescriminator(range)
-    .add(TypeBuiltins.ANY,DATATYPE_PROPERTY)
-    .add(TypeBuiltins.STRING,DATATYPE_PROPERTY)
-    .add(TypeBuiltins.INTEGER,DATATYPE_PROPERTY)
-    .add(TypeBuiltins.NUMBER,DATATYPE_PROPERTY)
-    .add(TypeBuiltins.FLOAT,DATATYPE_PROPERTY)
-    .add(TypeBuiltins.BOOLEAN,DATATYPE_PROPERTY)
-    .add(TypeBuiltins.URI,DATATYPE_PROPERTY)
-    .defaultValue=OBJECT_PROPERTY;
+  fieldValueDiscriminator(range)
+    .add(TypeBuiltins.ANY, DATATYPE_PROPERTY)
+    .add(TypeBuiltins.STRING, DATATYPE_PROPERTY)
+    .add(TypeBuiltins.INTEGER, DATATYPE_PROPERTY)
+    .add(TypeBuiltins.NUMBER, DATATYPE_PROPERTY)
+    .add(TypeBuiltins.FLOAT, DATATYPE_PROPERTY)
+    .add(TypeBuiltins.BOOLEAN, DATATYPE_PROPERTY)
+    .add(TypeBuiltins.URI, DATATYPE_PROPERTY)
+    .defaultValue = Some(OBJECT_PROPERTY)
 }
 
 object External extends VocabPartDialect("External"){
-  val name=str("name");
-  val uri=str("uri").value;
+  val name: DialectPropertyMapping = str("name")
+  val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
 }
 
 object Vocabulary extends VocabPartDialect("Vocabulary"){
 
-  val base=str("base");
-  val dialect=str("dialect")
-  val version=str("version")
-  var usage=str("usage").namespace(Namespace.Schema).rdfName("description")
-
-  var externals=map("external",External.name,External);
-
-  var classTerms=map("classTerms",ClassTerm.id,ClassTerm).rdfName("classes");
-  var propertyTerms=map("propertyTerms",PropertyTerm.id,PropertyTerm).rdfName("properties");
+  val base: DialectPropertyMapping             = str("base")
+  val dialectProperty: DialectPropertyMapping  = str("dialect")
+  val version: DialectPropertyMapping          = str("version")
+  var usage: DialectPropertyMapping            = str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
+  var externals: DialectPropertyMapping        = map("external", External.name, External)
+  var classTerms: DialectPropertyMapping       = map("classTerms", ClassTerm.idProperty, ClassTerm, _.copy(rdfName = Some("classes")))
+  var propertyTerms: DialectPropertyMapping    = map("propertyTerms", PropertyTerm.idProperty,PropertyTerm, _.copy(rdfName = Some("properties")))
 
   withGlobalIdField("base")
-  withType("http://www.w3.org/2002/07/owl#Ontology");
+  withType("http://www.w3.org/2002/07/owl#Ontology")
 
-  nameProvider= (root: DomainEntity) => new BasicNameProvider(root,List(externals));
-}
-
-class VocabularyRefiner extends Refiner{
-
-  def refine(voc:DomainEntity){
-      voc.entities(Vocabulary.classTerms).foreach(clazz=>{
-          clazz.strings(ClassTerm.`properties`).foreach(p=>{
-            voc.mapElementWithId(Vocabulary.propertyTerms,p).foreach(pt=>{
-                pt.addValue(PropertyTerm.domain,clazz.id);
-            })
-          })
-      })
+  nameProvider = {
+    val provider: LocalNameProviderFactory = new BasicNameProvider(_, List(externals))
+    Some(provider)
   }
 }
 
-object VocabularyLanguageDefinition extends Dialect("Vocabulary",Vocabulary,resolver = (root: Root) => new BasicResolver(root,List(Vocabulary.externals))){
-  refiner=new VocabularyRefiner()
+class VocabularyRefiner extends Refiner{
+  def refine(voc:DomainEntity): Unit = {
+    for {
+      classTerm    <- voc.entities(Vocabulary.classTerms)
+      property     <- classTerm.strings(ClassTerm.`properties`)
+      propertyTerm <- voc.mapElementWithId(Vocabulary.propertyTerms, property)
+    } yield {
+      propertyTerm.addValue(PropertyTerm.domain, classTerm.id)
+    }
+  }
+}
+
+object VocabularyLanguageDefinition extends Dialect("Vocabulary", Vocabulary, resolver = (root: Root) => new BasicResolver(root, List(Vocabulary.externals))){
+  refiner = {
+    val ref = new VocabularyRefiner()
+    Some(ref)
+  }
 }

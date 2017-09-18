@@ -1,91 +1,136 @@
 package amf.dialects
 
-import amf.dialects.PropertyMapping.{bool, str}
 import amf.document.{BaseUnit, Document}
-import amf.spec.dialect.DomainEntity
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
 
-
-
-
 /**
-  * Created by kor on 15/09/17.
+  * Created by Pavel Petrochenko on 15/09/17.
   */
 
-class NM(val n:Namespace,val name:String){
-
-}
+case class NM(namespace: Namespace, name:String){ }
 object NM{
-  def apply(s:String):NM={
-    val ind:Int=Math.max(s.lastIndexOf('/'),s.lastIndexOf('#'));
-    if (ind>0){
-      val namespace = Namespace(s.substring(0, ind+1))
+  def apply(s:String): Option[NM] ={
+
+    val ind: Int = Math.max(s.lastIndexOf('/'), s.lastIndexOf('#'))
+
+    if (ind > 0) {
+      val namespace = Namespace(s.substring(0, ind + 1))
       val str1 = s.substring(ind + 1)
-      return new NM(namespace,str1);
+      Some(NM(namespace,str1))
+    } else {
+      None
     }
-    return null;
   }
 }
+
 class DialectLoader {
 
-  val builtins=new TypeBuiltins()
+  val builtins = new TypeBuiltins()
 
   private def retrieveDomainEntity(unit:BaseUnit) = unit match {
     case document: Document => document.encodes.asInstanceOf[DomainEntity]
+    case _                  => throw new Exception(s"Cannot load a dialect from a unit that is not a document $unit")
   }
 
-  def loadDialect(d:BaseUnit): Dialect = {
-     return loadDialect(retrieveDomainEntity(d))
-  }
-  def loadDialect(d:DomainEntity):Dialect={
-    val rootEntity = d.entity(DialectDefinition.raml).get.entity(MainNode.document).get.string(DocumentEncode.encodes)
-    val map=mutable.Map[String,DialectNode]()
-    d.entities(DialectDefinition.nodeMappings).foreach(n=>{
-        val ns=NM(n.string(NodeDefinition.classTerm).get);
-        map.put(n.id,new DialectNode(ns.n,ns.name));
-    })
-    d.entities(DialectDefinition.nodeMappings).foreach(n=>{
-      parseNodeMapping(n,map);
-    })
-    val dialect=d.string(DialectDefinition.dialect).get;
-    val dialectDialect = new Dialect(dialect, map.get(rootEntity.get).get)
-    return dialectDialect;
-  }
+  def loadDialect(document: BaseUnit): Dialect = loadDialect(retrieveDomainEntity(document))
 
-
-  def parsePropertyMapping(pm:DomainEntity,map:mutable.Map[String,DialectNode]): DialectPropertyMapping = {
-    val name = pm.string(PropertyMapping.name);
-    val range = pm.string(PropertyMapping.range);
-    var tp=builtins.buitInType(range.getOrElse(TypeBuiltins.STRING));
-    if (tp==null){
-      tp=map.getOrElse(range.getOrElse(TypeBuiltins.STRING),null);
+  def loadDialect(domainEntity: DomainEntity): Dialect = {
+    val rootEntity = for {
+      ramlNode     <- domainEntity.entity(DialectDefinition.raml)
+      ramlDocument <- ramlNode.entity(MainNode.document)
+      root         <- ramlDocument.string(DocumentEncode.encodes)
+    } yield {
+      root
     }
-    val res=new DialectPropertyMapping(name.get,tp);
-    pm.boolean(PropertyMapping.mandatory).foreach(m=>res.required=m);
-    pm.boolean(PropertyMapping.allowMultiple).foreach(m=>res._collection=m);
 
-    val term = pm.string(PropertyMapping.propertyTerm).get;
-    val nm = NM(term)
-    res.namespace(nm.n);
-    res.rdfName(nm.name);
-    val enum = pm.strings(PropertyMapping.enum)
-    val pattern = pm.string(PropertyMapping.pattern);
-    val minimum = pm.string(PropertyMapping.minimum);
-    val maximum = pm.string(PropertyMapping.maximum);
-    val hash=pm.string(PropertyMapping.hash);
-    val asMap=pm.boolean(PropertyMapping.asMap);
-    return res;
+    rootEntity match {
+
+      case Some(encodedRootEntity) =>
+        val dialectMap = mutable.Map[String,DialectNode]()
+
+        domainEntity.entities(DialectDefinition.nodeMappings).foreach { n =>
+          NM(n.string(NodeDefinition.classTerm).get) match {
+            case Some(ns) =>
+              dialectMap.put(n.id, new DialectNode(ns.name, ns.namespace));
+            case _        => // ignore
+          }
+        }
+
+        domainEntity.entities(DialectDefinition.nodeMappings).foreach { n =>
+          parseNodeMapping(n, dialectMap)
+        }
+
+        val dialect = for {
+          dialectName <- domainEntity.string(DialectDefinition.dialectProperty)
+          dialectNode <- dialectMap.get(encodedRootEntity)
+        } yield {
+          Dialect(dialectName, dialectNode)
+        }
+
+        dialect match {
+          case Some(dialectFound) => dialectFound
+          case _                  => throw new Exception("Cannot load dialect, dialect not found")
+        }
+
+      case _ => throw new Exception("Cannot load dialect, root entity not found")
+    }
   }
 
-  def parseNodeMapping(pm:DomainEntity,map:mutable.Map[String,DialectNode]):DialectNode={
-    val node=map.get(pm.id).get;
-    pm.entities(NodeDefinition.mapping).foreach(p=>{
-      node.add(parsePropertyMapping(p,map))
-    })
 
-    return node;
+  def parsePropertyMapping(domainEntity: DomainEntity, dialects: mutable.Map[String,DialectNode]): DialectPropertyMapping = {
+
+    val name = domainEntity.string(PropertyMapping.name)
+    val range = domainEntity.string(PropertyMapping.range).getOrElse(TypeBuiltins.STRING)
+
+    val `type` = builtins.buitInType(range) match {
+      case Some(t) => t
+      case None =>
+        dialects.get(range) match {
+          case Some(t) => t
+          case None    => throw new Exception(s"Cannot find dialect node type for $range")
+        }
+    }
+
+    var res =  DialectPropertyMapping(name.get,`type`)
+
+    domainEntity.boolean(PropertyMapping.mandatory).foreach { mandatory =>
+      res = res.copy(required = mandatory)
+    }
+
+    domainEntity.boolean(PropertyMapping.allowMultiple).foreach { required =>
+      res = res.copy(required = required)
+    }
+
+    domainEntity.string(PropertyMapping.propertyTerm).foreach { term =>
+      NM(term) foreach { ns =>
+        res = res.copy(namespace = Some(ns.namespace), rdfName = Some(ns.name))
+      }
+    }
+
+
+    // ??
+    /*
+    val enum    = domainEntity.strings(PropertyMapping.enum)
+    val pattern = domainEntity.string(PropertyMapping.pattern)
+    val minimum = domainEntity.string(PropertyMapping.minimum)
+    val maximum = domainEntity.string(PropertyMapping.maximum)
+    val hash    = domainEntity.string(PropertyMapping.hash)
+    val asMap   = domainEntity.boolean(PropertyMapping.asMap)
+    */
+
+    res
+  }
+
+  def parseNodeMapping(domainEntity: DomainEntity, dialects: mutable.Map[String,DialectNode]): DialectNode = {
+    val node = dialects(domainEntity.id)
+
+    domainEntity.entities(NodeDefinition.mapping).foreach { p=>
+      node.add(parsePropertyMapping(p,dialects))
+    }
+
+    node
   }
 
 

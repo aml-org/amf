@@ -1,6 +1,7 @@
 package amf.graph
 
 import amf.client.GenerationOptions
+import amf.dialects.DomainEntity
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -14,7 +15,6 @@ import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.ASTEmitter
 import amf.shape._
-import amf.spec.dialect.DomainEntity
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YDocument, YType}
@@ -217,9 +217,6 @@ object GraphEmitter {
       }
     }
 
-<<<<<<< HEAD
-    private def value(content: String, tag: YType): Unit = {
-=======
     private def scalarWithType(content: String, datatype: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
       if (inArray) {
         value(content, datatype, token)
@@ -230,8 +227,7 @@ object GraphEmitter {
       }
     }
 
-    private def value(content: String, token: AMFToken) = {
->>>>>>> merged with master and passing test, more work needed to make serializations working correctly
+    private def value(content: String, tag: YType): Unit = {
       map { () =>
         entry { () =>
           raw("@value")

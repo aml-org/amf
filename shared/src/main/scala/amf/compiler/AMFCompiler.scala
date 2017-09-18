@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.dialects.DialectRegistry
+import amf.dialects.{DialectParser, DialectRegistry}
 import amf.document.{BaseUnit, Document}
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}

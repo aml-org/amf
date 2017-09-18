@@ -34,7 +34,7 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
         case w: amf.domain.WebApi => WebApi(w)
         case _ => throw new Exception("Vocabulary non supported in JS library yet")
       }
-    }).orNull
+    }).get
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   val declares: js.Iterable[amf.domain.DomainElement] =

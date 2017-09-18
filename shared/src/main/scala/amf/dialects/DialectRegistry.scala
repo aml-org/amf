@@ -1,10 +1,10 @@
 package amf.dialects
 
-import amf.compiler.AMFCompiler
-import amf.remote.{Platform, RamlYamlHint}
+import amf.remote.Platform
 import scala.concurrent.Future
+
 /**
-  * Created by kor on 14/09/17.
+  * Created by Pavel Petrochenko on 14/09/17.
   */
 class DialectRegistry {
 
