@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: test title
+types:
+  StringType:
+    type: string
+  IntegerType:
+    type: integer
+  DateTimeOnlyType:
+    type: datetime
+  TimeOnlyType:
+    type: time-only
+    format: time-only
+  BinaryType:
+    type: string
+    (format): binary
+  DateTimeType:
+    type: datetime
+  DateOnlyType:
+    type: date-only
+    format: date-only
+  BooleanType:
+    type: boolean
+  ObjectType:
+    type: object
+  ByteType:
+    type: string
+    (format): byte
+  NumberType:
+    type: number
+  PasswordType:
+    type: string
+    format: password
