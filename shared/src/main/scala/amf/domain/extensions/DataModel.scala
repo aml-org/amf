@@ -1,14 +1,14 @@
 package amf.domain.extensions
 
-import amf.common.AMFAST
-import amf.domain.{Annotations, DynamicDomainElement, Fields}
-import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.common.core._
+import amf.domain.{Annotations, DynamicDomainElement, Fields}
 import amf.metadata.Field
-import amf.vocabulary.Namespace
-import amf.metadata.Type.{Iri, Str, Array}
+import amf.metadata.Type.{Array, Iri, Str}
 import amf.metadata.domain.extensions.DataNodeModel
+import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.vocabulary.Namespace
+import org.yaml.model.{YPart, YSequence}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -92,7 +92,7 @@ object ObjectNode {
 
   def apply(): ObjectNode = apply(Annotations())
 
-  def apply(ast: AMFAST): ObjectNode = apply(Annotations(ast))
+  def apply(ast: YPart): ObjectNode = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ObjectNode = new ObjectNode(Fields(), annotations)
 }
@@ -140,7 +140,7 @@ object ScalarNode {
 
   def apply(value: String, dataType: Option[String]): ScalarNode = apply(value, dataType, Annotations())
 
-  def apply(value: String, dataType: Option[String], ast: AMFAST): ScalarNode =
+  def apply(value: String, dataType: Option[String], ast: YPart): ScalarNode =
     apply(value, dataType, Annotations(ast))
 
   def apply(value: String, dataType: Option[String], annotations: Annotations): ScalarNode =
@@ -178,7 +178,7 @@ object ArrayNode {
 
   def apply(): ArrayNode = apply(Annotations())
 
-  def apply(ast: AMFAST): ArrayNode = apply(Annotations(ast))
+  def apply(ast: YSequence): ArrayNode = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ArrayNode = new ArrayNode(Fields(), annotations)
 }

@@ -1,4 +1,4 @@
-package amf.spec
+package amf.spec.common
 
 import amf.common.core.Strings
 import amf.domain.Annotation.ExplicitField
@@ -31,6 +31,8 @@ private[spec] object BaseSpecParser {
         creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
       })
 
+      AnnotationParser(creativeWork, map).parse()
+
       creativeWork
     }
   }
@@ -55,6 +57,8 @@ private[spec] object BaseSpecParser {
         organization.set(OrganizationModel.Email, value.string(), Annotations(entry))
       })
 
+      AnnotationParser(organization, map).parse()
+
       organization
     }
   }
@@ -72,6 +76,8 @@ private[spec] object BaseSpecParser {
         val value = ValueNode(entry.value)
         license.set(LicenseModel.Name, value.string(), Annotations(entry))
       })
+
+      AnnotationParser(license, map).parse()
 
       license
     }

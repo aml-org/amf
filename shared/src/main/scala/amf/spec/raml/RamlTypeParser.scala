@@ -1,8 +1,6 @@
 package amf.spec.raml
 
-import amf.common.AMFToken.{MapToken, SequenceToken, StringToken}
 import amf.common.core.Strings
-import amf.common.{AMFAST, AMFToken}
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
@@ -11,10 +9,9 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
-import amf.spec.BaseSpecParser._
-import org.yaml.model._
+import amf.spec.common.BaseSpecParser._
 import amf.spec.Declarations
-import amf.spec.common.{ArrayNode, Entries, EntryNode, ValueNode}
+import org.yaml.model._
 
 import scala.collection.mutable
 
@@ -23,7 +20,7 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
   def parse(): Option[Shape] = {
     val name = entry.key.value.toScalar.text.unquote
 
-    val ahead = lookAhead()
+    val ahead = entry.value.value
 
     detect(ahead) match {
       case ObjectType =>
@@ -36,24 +33,21 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
     }
   }
 
-  private def detect(property: Either[YScalar, YMap]): TypeDef = property match {
-    case Left(scalar) =>
-      node.`type` match {
-        case StringToken   => matchType(scalar.text.unquote)
-        case SequenceToken => ObjectType
-      }
-    case Right(map) =>
+  private def detect(property: YValue): TypeDef = property match {
+    case scalar: YScalar => matchType(scalar.text.unquote)
+    case _: YSequence    => ObjectType
+    case map: YMap =>
       detectTypeOrSchema(map)
         .orElse(detectProperties(map))
         .orElse(detectItems(map))
         .getOrElse(UndefinedType)
   }
 
-  private def detectProperties(map: YMap) = {
+  private def detectProperties(map: YMap): Option[TypeDef] = {
     map.key("properties").map(_ => ObjectType)
   }
 
-  private def detectItems(map: YMap) = {
+  private def detectItems(map: YMap): Option[TypeDef] = {
     map.key("items").map(_ => ArrayType)
   }
 
@@ -62,58 +56,43 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
       .key("type")
       .orElse(map.key("schema"))
       .map(e =>
-        e.value.`type` match {
-          case StringToken =>
-            val t = e.value.value.toScalar.text.unquote
+        e.value.value match {
+          case scalar: YScalar =>
+            val t = scalar.text.unquote
             val f = map.key("(format)").map(_.value.value.toScalar.text.unquote).getOrElse("")
             matchType(t, f)
-          case SequenceToken | MapToken => ObjectType
-          case _                        => UndefinedType
+          case _: YSequence | _: YMap => ObjectType
+          case _                      => UndefinedType
       })
   }
 
-  private def parseScalarType(name: String, typeDef: TypeDef, ahead: Either[YScalar, YMap]): Shape = {
+  private def parseScalarType(name: String, typeDef: TypeDef, ahead: YValue): Shape = {
     val shape = ScalarShape(entry).withName(name)
     adopt(shape)
     ahead match {
-      case Left(scalar) =>
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(scalar)))
-      case Right(map) => ScalarShapeParser(typeDef, shape, map).parse()
+      case map: YMap => ScalarShapeParser(typeDef, shape, map).parse()
+      case value =>
+        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(value)))
     }
   }
 
-  def parseArrayType(name: String, ahead: Either[YScalar, YMap]): Shape = {
+  def parseArrayType(name: String, ahead: YValue): Shape = {
     val shape = ahead match {
-      case Right(map) => DataArrangementParser(name, entry, map, (shape: Shape) => adopt(shape), declarations).parse()
-      case _          => ArrayShape(entry).withName(name)
+      case map: YMap => DataArrangementParser(name, entry, map, (shape: Shape) => adopt(shape), declarations).parse()
+      case _         => ArrayShape(entry).withName(name)
     }
     shape
   }
 
-  private def parseObjectType(name: String, ahead: Either[YScalar, YMap], declarations: Declarations): Shape = {
+  private def parseObjectType(name: String, ahead: YValue, declarations: Declarations): Shape = {
     val shape = NodeShape(entry).withName(name)
     adopt(shape)
     ahead match {
-      case Right(map)     => NodeShapeParser(shape, map).parse()
-      case Left(_)        => shape
-      case Right(entries) => NodeShapeParser(shape, entries, declarations).parse()
-      case Left(_)        => shape
+      case map: YMap => NodeShapeParser(shape, map, declarations).parse()
+      case _         => shape
     }
   }
 
-  private def lookAhead(): Either[YScalar, YMap] = {
-    val value = entry.value.value
-    value match {
-      case scalar: YScalar => Left(scalar)
-      case map: YMap       => Right(map)
-      case _               => throw new RuntimeException(s"Expected map or scalar but found: $value")
-    }
-  }
-}
-
-case class RamlTypesParser(map: YMap, adopt: Shape => Unit) {
-  def parse(): Seq[Shape] =
-    map.entries.flatMap(entry => RamlTypeParser(entry, adopt).parse())
 }
 
 case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() {
@@ -297,25 +276,25 @@ case class NodeShapeParser(shape: NodeShape, map: YMap, declarations: Declaratio
 
     map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
-    entries.key(
+    map.key(
       "type",
       entry => {
-        entry.value.`type` match {
-          case StringToken if entry.value.content.unquote != "object" =>
+        entry.value.value match {
+          case scalar: YScalar if scalar.text.unquote != "object" =>
             shape.set(NodeShapeModel.Inherits,
-                      AmfArray(Seq(declarations.shapes(entry.value.content.unquote)), Annotations(entry.value)),
-                      entry.annotations())
-          case SequenceToken =>
-            val inherits = ArrayNode(entry.value)
+                      AmfArray(Seq(declarations.shapes(scalar.text.unquote)), Annotations(entry.value)),
+                      Annotations(entry))
+          case sequence: YSequence =>
+            val inherits = ArrayNode(sequence)
               .strings()
               .scalars
               .map(scalar => declarations.shapes(scalar.toString))
 
-            shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), entry.annotations())
-          case MapToken =>
+            shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
+          case _: YMap =>
             RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
               .parse()
-              .foreach(s => shape.set(NodeShapeModel.Inherits, s, entry.annotations()))
+              .foreach(s => shape.set(NodeShapeModel.Inherits, s, Annotations(entry)))
           case _ =>
             shape.add(ExplicitField()) // TODO store annotation in dataType field.
         }

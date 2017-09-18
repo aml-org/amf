@@ -1,8 +1,8 @@
 package amf.domain.extensions
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.domain.extensions.DomainExtensionModel.{DefinedBy, Extension}
+import org.yaml.model.YPart
 
 case class DomainExtension(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -25,7 +25,7 @@ case class DomainExtension(fields: Fields, annotations: Annotations) extends Dom
 object DomainExtension {
   def apply(): DomainExtension = apply(Annotations())
 
-  def apply(ast: AMFAST): DomainExtension = apply(Annotations(ast))
+  def apply(ast: YPart): DomainExtension = apply(Annotations(ast))
 
   def apply(annotations: Annotations): DomainExtension = DomainExtension(Fields(), annotations)
 }

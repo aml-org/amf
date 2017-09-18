@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.common.AMFToken.StringToken
+import amf.common.Lazy
 import amf.common.core.Strings
 import amf.compiler.Root
 import amf.document.Document
@@ -19,19 +19,13 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.Shape
-
-import scala.collection.immutable.ListMap
-import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
-import scala.util.matching.Regex
-import amf.common.Lazy
-import amf.common.AMFToken._
+import amf.spec.common.BaseSpecParser._
 import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
-import amf.spec.BaseSpecParser._
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -57,38 +51,39 @@ case class RamlSpecParser(root: Root) {
   }
 
   private def parseDeclares(map: YMap) =
-    parseTypeDeclarations(entries, root.location + "#/declarations") ++
-      parseAnnotationTypeDeclarations(entries, root.location + "#/declarations")
+    parseTypeDeclarations(map, root.location + "#/declarations") ++
+      parseAnnotationTypeDeclarations(map, root.location + "#/declarations")
 
-  def parseTypeDeclarations(entries: Entries, typesPrefix: String): Seq[Shape] = {
+  def parseTypeDeclarations(map: YMap, typesPrefix: String): Seq[Shape] = {
     val types = ListBuffer[Shape]()
 
     map.key(
       "types",
       entry => {
 
-        val types = RamlTypesParser(entry.value.value.toMap,
-                                    shape => { shape.adopted(definitions) },
-                                    Declarations(types)).parse()
-        types match {
-          case Some(shape) =>
-            types += shape.add(DeclaredElement())
-          case None => throw new Exception(s"Error parsing shape at $typeName")
-        }
+        entry.value.value.toMap.entries.foreach(e => {
+          val typeName = e.key.value.toScalar.text.unquote
+          RamlTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
+            .parse() match {
+            case Some(shape) =>
+              types += shape.add(DeclaredElement())
+            case None => throw new Exception(s"Error parsing shape at $typeName")
+          }
+        })
       }
     )
 
     types
   }
 
-  def parseAnnotationTypeDeclarations(entries: Entries, customProperties: String): Seq[CustomDomainProperty] = {
+  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Seq[CustomDomainProperty] = {
     val customDomainProperties = ListBuffer[CustomDomainProperty]()
 
-    entries.key(
+    map.key(
       "annotationTypes",
       e => {
-        Entries(e.value).entries.values.map(entry => {
-          val typeName = entry.key.content.unquote
+        e.value.value.toMap.entries.map(entry => {
+          val typeName = entry.key.value.toScalar.text.unquote
           val customProperty = AnnotationTypesParser(entry,
                                                      customProperty =>
                                                        customProperty
@@ -216,7 +211,7 @@ case class RamlSpecParser(root: Root) {
       }
     )
 
-    entries.key(
+    map.key(
       "types",
       entry => {
         val types = RamlTypeParser(entry, shape => shape.adopted(api.id), declarations).parse()
@@ -224,7 +219,7 @@ case class RamlSpecParser(root: Root) {
       }
     )
 
-    AnnotationParser(api, entries).parse()
+    AnnotationParser(api, map).parse()
 
     api
   }
@@ -280,7 +275,7 @@ case class EndpointParser(entry: YMapEntry,
 
     collector += endpoint
 
-    AnnotationParser(endpoint, entries).parse()
+    AnnotationParser(endpoint, map).parse()
 
     map.regex(
       "^/.*",
@@ -347,7 +342,7 @@ case class RequestParser(map: YMap, producer: () => Request, declarations: Decla
     )
 
     request.option.foreach { req =>
-      AnnotationParser(req, entries).parse()
+      AnnotationParser(req, map).parse()
     }
 
     request.option
@@ -422,7 +417,7 @@ case class OperationParser(entry: YMapEntry, producer: (String) => Operation, de
       }
     )
 
-    AnnotationParser(operation, entries).parse()
+    AnnotationParser(operation, map).parse()
 
     operation
   }
@@ -434,15 +429,18 @@ case class ParametersParser(map: YMap, producer: String => Parameter, declaratio
       .map(entry => ParameterParser(entry, producer, declarations).parse())
 }
 
+//todo review!
 case class PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations) {
   def parse(): Payload = {
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
 
-    if (Option(entry.value).isDefined && entry.value.`type` == MapToken) {
-      // TODO
-      // Should we clean the annotations here so they are not parsed again in the shape?
-      AnnotationParser(payload, Entries(entry.value)).parse()
+    entry.value.value match {
+      case map: YMap =>
+        // TODO
+        // Should we clean the annotations here so they are not parsed again in the shape?
+        AnnotationParser(payload, map).parse()
+      case _ =>
     }
 
     Option(entry.value).foreach(
@@ -508,7 +506,7 @@ case class ResponseParser(entry: YMapEntry, producer: (String) => Response, decl
       }
     )
 
-    AnnotationParser(response, Entries(entry.value)).parse()
+    AnnotationParser(response, map).parse()
 
     response
   }
@@ -542,100 +540,31 @@ case class ParameterParser(entry: YMapEntry, producer: String => Parameter, decl
       .parse()
       .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 
-    AnnotationParser(parameter, entries).parse()
+    AnnotationParser(parameter, map).parse()
 
     parameter
   }
 }
 
-case class LicenseParser(ast: AMFAST) {
-  def parse(): License = {
-    val license = License(ast)
-    val entries = Entries(ast)
-
-    entries.key("url", entry => {
-      val value = ValueNode(entry.value)
-      license.set(LicenseModel.Url, value.string(), entry.annotations())
-    })
-
-    entries.key("name", entry => {
-      val value = ValueNode(entry.value)
-      license.set(LicenseModel.Name, value.string(), entry.annotations())
-    })
-
-    AnnotationParser(license, entries).parse()
-
-    license
-  }
-}
-
-case class CreativeWorkParser(ast: AMFAST) {
-  def parse(): CreativeWork = {
-    val creativeWork = CreativeWork(ast)
-    val entries      = Entries(ast)
-
-    entries.key("url", entry => {
-      val value = ValueNode(entry.value)
-      creativeWork.set(CreativeWorkModel.Url, value.string(), entry.annotations())
-    })
-
-    entries.key("description", entry => {
-      val value = ValueNode(entry.value)
-      creativeWork.set(CreativeWorkModel.Description, value.string(), entry.annotations())
-    })
-
-    AnnotationParser(creativeWork, entries).parse()
-
-    creativeWork
-  }
-}
-
-case class OrganizationParser(ast: AMFAST) {
-  def parse(): Organization = {
-
-    val organization = Organization(ast)
-    val entries      = Entries(ast)
-
-    entries.key("url", entry => {
-      val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Url, value.string(), entry.annotations())
-    })
-
-    entries.key("name", entry => {
-      val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Name, value.string(), entry.annotations())
-    })
-
-    entries.key("email", entry => {
-      val value = ValueNode(entry.value)
-      organization.set(OrganizationModel.Email, value.string(), entry.annotations())
-    })
-
-    AnnotationParser(organization, entries).parse()
-
-    organization
-  }
-}
-
-case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
+case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
   def parse(): CustomDomainProperty = {
-    val custom         = CustomDomainProperty(node.annotations())
-    val annotationName = node.key.content.unquote
+    val custom         = CustomDomainProperty(node)
+    val annotationName = node.key.value.toScalar.text.unquote
     custom.withName(annotationName)
     adopt(custom)
 
-    val entries = Entries(node.value)
+    val map = node.value.value.toMap
 
-    entries.key(
+    map.key(
       "allowedTargets",
       entry => {
-        val annotations = entry.annotations()
-        val targets: AmfArray = entry.value.`type` match {
-          case StringToken =>
+        val annotations = Annotations(entry)
+        val targets: AmfArray = entry.value.value match {
+          case _: YScalar =>
             annotations += SingleValueArray()
             AmfArray(Seq(ValueNode(entry.value).string()))
-          case _ =>
-            ArrayNode(entry.value).strings()
+          case sequence: YSequence =>
+            ArrayNode(sequence).strings()
         }
 
         val targetUris = targets.values.map({
@@ -651,28 +580,28 @@ case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) 
       }
     )
 
-    entries.key("displayName", entry => {
+    map.key("displayName", entry => {
       val value = ValueNode(entry.value)
-      custom.set(CustomDomainPropertyModel.DisplayName, value.string(), entry.annotations())
+      custom.set(CustomDomainPropertyModel.DisplayName, value.string(), Annotations(entry))
     })
 
-    entries.key("description", entry => {
+    map.key("description", entry => {
       val value = ValueNode(entry.value)
-      custom.set(CustomDomainPropertyModel.Description, value.string(), entry.annotations())
+      custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
     })
 
-    entries.key(
+    map.key(
       "type",
       entry => {
         RamlTypeParser(entry, shape => shape.adopted(custom.id), declarations)
           .parse()
           .foreach({ shape =>
-            custom.set(CustomDomainPropertyModel.Schema, shape, entry.annotations())
+            custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(entry))
           })
       }
     )
 
-    AnnotationParser(custom, entries).parse()
+    AnnotationParser(custom, map).parse()
 
     custom
   }

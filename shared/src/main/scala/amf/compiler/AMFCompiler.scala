@@ -2,11 +2,7 @@ package amf.compiler
 
 import amf.common.AMFToken
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation
-import amf.domain.Annotation.LexicalInformation
 import amf.domain.extensions.idCounter
-import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
-import amf.domain.Annotation.SourceVendor
 import amf.exception.{CyclicReferenceException, UnableToResolveLexerException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer

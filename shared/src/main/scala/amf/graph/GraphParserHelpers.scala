@@ -1,42 +1,32 @@
 package amf.graph
 
 import amf.common.core._
-import amf.common.AMFAST
-import amf.common.AMFToken.{Entry, MapToken, SequenceToken, StringToken}
 import amf.domain.{Annotation, Annotations}
-import amf.metadata.{SourceMapModel, Type}
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, Str}
-import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.SourceMapModel.{Element, Value}
+import amf.metadata.Type._
+import amf.metadata.domain.DomainElementModel.Sources
+import amf.metadata.{SourceMapModel, Type}
 import amf.model.AmfElement
+import amf.parser.{YMapOps, YValueOps}
 import amf.vocabulary.Namespace.SourceMaps
+import org.yaml.model.{YMap, YSequence, YValue}
+
 import scala.collection.mutable
 
 trait GraphParserHelpers {
 
-  protected def retrieveId(ast: AMFAST): String = {
-    ast.children.find(key("@id")) match {
-      case Some(entry) => entry.last.content.unquote
-      case _           => throw new Exception(s"No @id declaration on node $ast")
-    }
-  }
-
-  protected def retrieveSources(id: String, ast: AMFAST): SourceMap = {
-    ast.children.find(key(Sources.value.iri())) match {
-      case Some(entry) => parseSourceNode(value(SourceMapModel, entry.last))
-      case _           => SourceMap.empty
-    }
-  }
-
-  private def parseSourceNode(node: AMFAST): SourceMap = {
+  private def parseSourceNode(map: YMap): SourceMap = {
     val result = SourceMap()
-    node.children.foreach(entry => {
-      entry.head.content.unquote match {
+    map.entries.foreach(entry => {
+      entry.key.value.toScalar.text.unquote match {
         case AnnotationName(annotation) =>
           val consumer = result.annotation(annotation)
-          entry.last.children.foreach(node => {
-            consumer(value(Value.`type`, node.head.last).content.unquote,
-                     value(Element.`type`, node.last.last).content.unquote)
+          entry.value.value.toSequence.values.foreach(entry => {
+            val element = entry.toMap
+            val k       = element.key(Value.value.iri()).get
+            val v       = element.key(Element.value.iri()).get
+            consumer(value(Value.`type`, k.key.value).toScalar.text.unquote,
+                     value(Element.`type`, v.value.value).toScalar.text.unquote)
           })
         case _ => // Unknown annotation identifier
       }
@@ -44,32 +34,43 @@ trait GraphParserHelpers {
     result
   }
 
-  protected def value(t: Type, node: AMFAST): AMFAST = {
-    node.`type` match {
-      case SequenceToken =>
+  protected def ts(map: YMap): Seq[String] = {
+    map.key("@type") match {
+      case Some(entry) => entry.value.value.toSequence.values.map(_.toScalar.text.unquote)
+      case _           => throw new Exception(s"No @type declaration on node $map")
+    }
+  }
+
+  protected def retrieveId(map: YMap): String = {
+    map.key("@id") match {
+      case Some(entry) => entry.value.value.toScalar.text.unquote
+      case _           => throw new Exception(s"No @id declaration on node $map")
+    }
+  }
+
+  protected def retrieveSources(id: String, map: YMap): SourceMap = {
+    map.key(Sources.value.iri()) match {
+      case Some(entry) => parseSourceNode(value(SourceMapModel, entry.value.value).toMap)
+      case _           => SourceMap.empty
+    }
+  }
+
+  protected def value(t: Type, node: YValue): YValue = {
+    node match {
+      case s: YSequence =>
         t match {
           case Array(_) => node
-          case _        => value(t, node.head)
+          case _        => value(t, s.values.head)
         }
-      case MapToken =>
+      case m: YMap =>
         t match {
-          case Iri                            => node.children.find(key("@id")).get.last
-          case Str | RegExp | Bool | Type.Int => node.children.find(key("@value")).get.last
+          case Iri                            => m.key("@id").get.value.value
+          case Str | RegExp | Bool | Type.Int => m.key("@value").get.value.value
           case _                              => node
         }
       case _ => node
     }
   }
-
-  protected def ts(ast: AMFAST): Seq[String] = {
-    ast.children.find(key("@type")) match {
-      case Some(entry) => (entry > SequenceToken).children.map(_.content.unquote)
-      case _           => throw new Exception(s"No @type declaration on node $ast")
-    }
-  }
-
-  /** Find entry with matching key. */
-  protected def key(key: String)(n: AMFAST): Boolean = (n is Entry) && (n > StringToken) ? key
 
   protected object AnnotationName {
     def unapply(uri: String): Option[String] = uri match {

@@ -1,7 +1,5 @@
 package amf.spec.common
 
-import amf.common.AMFAST
-import amf.common.AMFToken._
 import amf.common.core._
 import amf.domain.extensions.{
   CustomDomainProperty,
@@ -12,18 +10,19 @@ import amf.domain.extensions.{
   ScalarNode => DataScalarNode
 }
 import amf.domain.{Annotations, DomainElement}
+import amf.parser.YValueOps
 import amf.vocabulary.Namespace
+import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
-case class AnnotationParser(element: DomainElement, entries: Entries) {
+case class AnnotationParser(element: DomainElement, map: YMap) {
   def parse(): Unit = {
     val domainExtensions: ListBuffer[DomainExtension] = ListBuffer()
-    entries.entries.foreach {
-      case (key, entry) => {
-        if (WellKnownAnnotation.normalAnnotation(key)) {
-          domainExtensions += ExtensionParser(key, element.id, entry).parse()
-        }
+    map.entries.foreach { entry =>
+      val key = entry.key.value.toScalar.text.unquote
+      if (WellKnownAnnotation.normalAnnotation(key)) {
+        domainExtensions += ExtensionParser(key, element.id, entry).parse()
       }
     }
     if (domainExtensions.nonEmpty)
@@ -31,14 +30,14 @@ case class AnnotationParser(element: DomainElement, entries: Entries) {
   }
 }
 
-case class ExtensionParser(annotationRamlName: String, parent: String, entry: EntryNode) {
+case class ExtensionParser(annotationRamlName: String, parent: String, entry: YMapEntry) {
   def parse(): DomainExtension = {
     val domainExtension = DomainExtension()
     val annotationName  = WellKnownAnnotation.parseName(annotationRamlName)
     val dataNode        = DataNodeParser(entry.value, Some(parent + s"/$annotationName")).parse()
     // TODO
     // this is temporary, we should look for the annotation in the annotationTypes declared in the schema
-    val customDomainProperty = CustomDomainProperty(entry.annotations()).withName(annotationName)
+    val customDomainProperty = CustomDomainProperty(Annotations(entry)).withName(annotationName)
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)
@@ -46,42 +45,42 @@ case class ExtensionParser(annotationRamlName: String, parent: String, entry: En
   }
 }
 
-case class DataNodeParser(value: AMFAST, parent: Option[String] = None) {
+case class DataNodeParser(value: YNode, parent: Option[String] = None) {
   def parse(): DataNode = {
-    value.`type` match {
-      case StringToken   => parseScalar(value, "string")
-      case IntToken      => parseScalar(value, "integer")
-      case FloatToken    => parseScalar(value, "float")
-      case BooleanToken  => parseScalar(value, "boolean")
-      case Null          => parseScalar(value, "nil")
-      case SequenceToken => parseArray(value)
-      case MapToken      => parseObject(value)
-      case other         => throw new Exception(s"Cannot parse data node from AST structure $other")
+    value.tag match {
+      case YTag.Str   => parseScalar(value.value.toScalar, "string")
+      case YTag.Int   => parseScalar(value.value.toScalar, "integer")
+      case YTag.Float => parseScalar(value.value.toScalar, "float")
+      case YTag.Bool  => parseScalar(value.value.toScalar, "boolean")
+      case YTag.Null  => parseScalar(value.value.toScalar, "nil")
+      case YTag.Seq   => parseArray(value.value.toSequence)
+      case YTag.Map   => parseObject(value.value.toMap)
+      case other      => throw new Exception(s"Cannot parse data node from AST structure $other")
     }
   }
 
-  protected def parseScalar(ast: AMFAST, datatype: String): DataNode = {
-    val node = DataScalarNode(ast.content.unquote, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
-    if (parent.isDefined) node.adopted(parent.get)
+  protected def parseScalar(ast: YScalar, datatype: String): DataNode = {
+    val node = DataScalarNode(ast.text.unquote, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
+    parent.foreach(node.adopted)
     node
   }
 
-  protected def parseArray(value: AMFAST): DataNode = {
+  protected def parseArray(value: YSequence): DataNode = {
     val node = DataArrayNode(Annotations(value))
-    if (parent.isDefined) node.adopted(parent.get)
-    value.children.foreach { ast =>
+    parent.foreach(node.adopted)
+    value.nodes.foreach { ast =>
       val element = DataNodeParser(ast).parse()
       node.addMember(element)
     }
     node
   }
 
-  protected def parseObject(value: AMFAST): DataNode = {
+  protected def parseObject(value: YMap): DataNode = {
     val node = DataObjectNode(Annotations(value))
-    if (parent.isDefined) node.adopted(parent.get)
-    value.children.map { ast =>
-      val property            = ast.head.content.unquote
-      val value               = Option(ast).filter(_.children.size > 1).map(_.last).orNull
+    parent.foreach(node.adopted)
+    value.entries.map { ast =>
+      val property            = ast.key.value.toScalar.text.unquote
+      val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode = DataNodeParser(value, Some(node.id)).parse()
