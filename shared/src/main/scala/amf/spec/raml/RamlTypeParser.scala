@@ -348,17 +348,20 @@ case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertySha
 
     val name     = entry.key.value.toScalar.text.unquote
     val property = producer(name).add(Annotations(entry))
-    val map      = entry.value.value.toMap
 
-    map.key(
-      "required",
-      entry => {
-        val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
-        property.set(PropertyShapeModel.MinCount,
-                     AmfScalar(if (required) 1 else 0),
-                     Annotations(entry) += ExplicitField())
-      }
-    )
+    entry.value.value match {
+      case map: YMap =>
+        map.key(
+          "required",
+          entry => {
+            val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+            property.set(PropertyShapeModel.MinCount,
+                         AmfScalar(if (required) 1 else 0),
+                         Annotations(entry) += ExplicitField())
+          }
+        )
+      case _ =>
+    }
 
     if (property.fields.entry(PropertyShapeModel.MinCount).isEmpty) {
       val required = !name.endsWith("?")

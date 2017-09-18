@@ -412,12 +412,16 @@ case class ResponseParser(entry: YMapEntry, producer: (String) => Response) {
           .parse()
           .foreach(payloads += payload.withSchema(_))
 
-        entry.value.value.toMap.regex(
-          ".*/.*",
-          entries => {
-            entries.foreach(entry => { payloads += PayloadParser(entry, response.withPayload).parse() })
-          }
-        )
+        entry.value.value match {
+          case map: YMap =>
+            map.regex(
+              ".*/.*",
+              entries => {
+                entries.foreach(entry => { payloads += PayloadParser(entry, response.withPayload).parse() })
+              }
+            )
+          case _ =>
+        }
         if (payloads.nonEmpty)
           response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }

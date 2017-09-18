@@ -127,9 +127,12 @@ object GraphParser {
         entry.key.value.toScalar.text.unquote match {
           case AnnotationName(annotation) =>
             val consumer = result.annotation(annotation)
-            entry.value.value.toMap.entries.foreach(entry => {
-              consumer(value(Value.`type`, entry.key.value).toScalar.text.unquote,
-                       value(Element.`type`, entry.value.value).toScalar.text.unquote)
+            entry.value.value.toSequence.values.foreach(entry => {
+              val element = entry.toMap
+              val k       = element.key(Value.value.iri()).get
+              val v       = element.key(Element.value.iri()).get
+              consumer(value(Value.`type`, k.key.value).toScalar.text.unquote,
+                       value(Element.`type`, v.value.value).toScalar.text.unquote)
             })
           case _ => // Unknown annotation identifier
         }
