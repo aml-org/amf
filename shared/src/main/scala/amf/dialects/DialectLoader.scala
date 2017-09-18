@@ -2,6 +2,7 @@ package amf.dialects
 
 import amf.dialects.PropertyMapping.{bool, str}
 import amf.document.{BaseUnit, Document}
+import amf.spec.dialect.DomainEntity
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable

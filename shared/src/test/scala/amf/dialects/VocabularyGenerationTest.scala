@@ -1,19 +1,14 @@
 package amf.dialects
 
-import java.io.InputStreamReader
-
-import amf.compiler.AMFCompiler
-import amf.document.Document
-import amf.dumper.AMFDumper
-import amf.remote.Syntax.Json
-import amf.remote.{RamlYamlHint, _}
-import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
-import org.scalatest.Matchers._
-import amf.client.{GenerationOptions, RamlGenerator}
+import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
+import amf.compiler.AMFCompiler
+import amf.dumper.AMFDumper
+import amf.remote._
+import amf.unsafe.PlatformSecrets
+import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.concurrent.{ExecutionContext, Future}
 
 class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -75,18 +70,4 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
   test("Store Dialect 2") {
     assertCycle("mule_config_dialect.raml","mule_config_dialect_gold.raml",AmfJsonHint, Raml);
   }
-
-  test("Load Dialect from yaml") {
-    val l=new DialectRegistry();
-    val expected = platform
-      .resolve("file://shared/src/test/resources/vocabularies/muleconfig.json", None)
-      .map(_.stream.toString)
-    var actual=l.add(platform,executionContext,"file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml").flatMap(
-      (x)=>AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint,None,None,l).build()
-    ).flatMap(u=>new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString)
-    actual.zip(expected).map(checkDiff)
-
-  }
-
-
 }

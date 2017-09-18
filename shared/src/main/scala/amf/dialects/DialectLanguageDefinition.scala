@@ -3,6 +3,7 @@ package amf.dialects
 import amf.compiler.Root
 import amf.dialects.Vocabulary.nameProvider
 import amf.metadata.Type
+import amf.spec.dialect.DomainEntity
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
