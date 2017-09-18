@@ -63,7 +63,7 @@ case class OasSpecParser(root: Root) {
 
         entry.value.value.toMap.entries.foreach(e => {
           val typeName = e.key.value.toScalar.text.unquote
-          OasTypeParser(entry, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
+          OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
             .parse() match {
             case Some(shape) =>
               types += shape.add(DeclaredElement())

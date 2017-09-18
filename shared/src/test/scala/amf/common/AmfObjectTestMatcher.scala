@@ -1,6 +1,5 @@
 package amf.common
 
-import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation
 import amf.metadata.Field
 import amf.model.AmfObject
@@ -47,36 +46,3 @@ trait AmfObjectTestMatcher extends Assertions {
     }
   }
 }
-//trait AmfUnitTestMatcher extends Assertions with AmfObjectTestMatcher{
-//
-//  case class AmfUnitMatcher(expected: BaseUnit){
-//
-//    def assert(actual:BaseUnit): Unit ={
-//      actual match {
-//        case a:Document =>
-//          expected match {
-//            case e:Document => AmfDocumentMatcher(e).assert(a)
-//            case _ => fail(" expected type its not of the same type than actual (document)")
-//          }
-//
-//        case _ => fail("unsupported type of base unit")
-//      }
-//    }
-//  }
-//
-//  case class AmfDocumentMatcher(expected: Document){
-//
-//    def assert(actual: Document): Unit ={
-//      AmfObjectMatcher(expected.encodes).assert(actual.encodes)
-//      if(actual.location!= expected.location ) fail(s"Expected location '${expected.location}' but '${actual.location}' found")
-//
-//      if(actual.declares.size != actual.declares.size)
-//        fail(s"Expected declared  ${expected.declares.size} but ${actual.declares.size} fields have different sizes")
-//
-//
-//      actual.de
-//    }
-//  }
-//}
-//
-//

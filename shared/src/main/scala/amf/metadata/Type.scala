@@ -35,6 +35,11 @@ object Type {
 
   object RegExp extends Scalar("token")
 
+  object ObjType extends Obj {
+    override val fields: List[Field]     = Nil
+    override val `type`: List[ValueType] = Nil
+  }
+
   case class Array(element: Type) extends Type {
     override val `type`: List[ValueType] = element.`type`
   }

@@ -3,6 +3,8 @@ package amf.graph
 import amf.common.core._
 import amf.domain.Annotations
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
+import amf.metadata.Type
+import amf.metadata.Type.ObjType
 import amf.metadata.domain.DomainElementModel
 import amf.model.{AmfElement, AmfObject}
 import amf.parser.{YMapOps, YValueOps}
@@ -32,13 +34,13 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case obj: ObjectNode =>
         obj.withId(id)
         map.entries.foreach { entry =>
-          val uri   = entry.key.value.toScalar.text.unquote
-          val value = entry.value.value
+          val uri = entry.key.value.toScalar.text.unquote
+          val v   = entry.value.value
           if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri()) {
-            val dataNode = value match {
-              case _ if isJSONLDScalar(value) => parseJSONLDScalar(value)
-              case _ if isJSONLDArray(value)  => parseJSONLDArray(value)
-              case _                          => parseDynamicType(value.toMap)
+            val dataNode = v match {
+              case _ if isJSONLDScalar(v) => parseJSONLDScalar(v)
+              case _ if isJSONLDArray(v)  => parseJSONLDArray(v)
+              case _                      => parseDynamicType(value(ObjType, v).toMap)
             }
             obj.addProperty(uri, dataNode)
           }
@@ -52,7 +54,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
           val uri = entry.key.value.toScalar.text.unquote
           uri match {
             case _ if uri == scalar.Range.value.iri() =>
-              scalar.dataType = Some(retrieveId(entry.value.value.toMap))
+              scalar.dataType = Some(value(scalar.Range.`type`, entry.value.value).toScalar.text.unquote)
             case _ if uri == scalar.Value.value.iri() =>
               scalar.value = parseJSONLDScalar(entry.value.value).value
             case _ => // ignore
@@ -67,7 +69,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
           uri match {
             case _ if uri == array.Member.value.iri() =>
               array.members =
-                entry.value.value.toMap.entries.map(e => parseDynamicType(e.value.value.toMap)).to[ListBuffer]
+                entry.value.value.toSequence.values.map(e => parseDynamicType(value(ObjType, e).toMap)).to[ListBuffer]
             case _ => // ignore
           }
         }
@@ -114,12 +116,9 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
   }
 
   def parseJSONLDArray(node: YValue): ArrayNode = {
-    val array = node.toSequence.values.head.toMap
-    val maybeId = try {
-      Some(retrieveId(array))
-    } catch {
-      case _: Exception => None
-    }
+    val array   = node.toSequence.values.head.toMap
+    val maybeId = array.key("@id").map(_ => retrieveId(array))
+
     val nodeAnnotations: Annotations = maybeId match {
       case Some(id) =>
         val sources = retrieveSources(id, array)
