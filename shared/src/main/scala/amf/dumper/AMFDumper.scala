@@ -2,6 +2,7 @@ package amf.dumper
 
 import amf.client.GenerationOptions
 import amf.document.BaseUnit
+import amf.domain.extensions.idCounter
 import amf.emit.AMFUnitMaker
 import amf.generator.{JsonGenerator, YamlGenerator}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
@@ -21,6 +22,9 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
   def dumpToFile(remote: Platform, path: String): Future[String] = remote.write(path, dump()).map(p => p)
 
   private def dump(): String = {
+    // reset data node counter
+    idCounter.reset()
+
     vendor match {
       case Raml =>
         syntax match {

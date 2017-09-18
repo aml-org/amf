@@ -1,12 +1,10 @@
 package amf.spec.common
 
-import amf.common.core._
 import amf.common.AMFAST
 import amf.common.AMFToken._
-import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
+import amf.common.core._
+import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.domain.{Annotations, DomainElement}
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension}
-import amf.spec.raml.WellKnownAnnotation
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable.ListBuffer
@@ -16,7 +14,7 @@ case class AnnotationParser(element: DomainElement, entries: Entries) {
     val domainExtensions:ListBuffer[DomainExtension] = ListBuffer()
     entries.entries.foreach {
       case (key, entry) => {
-        if (WellKnownAnnotation.normalAnnotation(key, element)) {
+        if (WellKnownAnnotation.normalAnnotation(key)) {
           domainExtensions += ExtensionParser(key, element.id, entry).parse()
         }
       }

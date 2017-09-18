@@ -156,7 +156,7 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   override def dynamicType = List(ArrayNode.builderType, Namespace.Rdf + "Seq")
 
-  override def adopted(parent: String): this.type = if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
+  override def adopted(parent: String): this.type = if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Member => Some(AmfArray(members))

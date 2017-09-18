@@ -312,16 +312,20 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("annotations.raml", "annotations.raml", RamlYamlHint, Raml)
   }
 
-  test("HERE_HERE Annotations raml to jsonld test") {
+  test("Annotations raml to jsonld test") {
     assertCycle("annotations.raml", "annotations.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("HERE_HERE Annotations jsonld to jsonld test") {
+  test("Annotations jsonld to jsonld test") {
     assertCycle("annotations.raml.jsonld", "annotations.raml.jsonld", AmfJsonHint, Amf)
   }
 
-  test("HERE_HERE Annotations oas to jsonld test") {
+  test("Annotations oas to jsonld test") {
     assertCycle("annotations.json", "annotations.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Annotations oas to oas test") {
+    assertCycle("annotations.json", "annotations.json", OasJsonHint, Oas)
   }
 
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {

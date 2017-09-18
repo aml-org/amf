@@ -15,6 +15,7 @@ import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.Oas
 import amf.shape._
+import amf.spec.common.EmitterHelper
 import amf.spec.{Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
 
@@ -25,9 +26,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasSpecEmitter(unit: BaseUnit) {
+case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
 
-  val emitter: ASTEmitter[AMFToken, AMFAST] = ASTEmitter(AMFASTFactory())
+  val emitter = ASTEmitter(AMFASTFactory())
 
   // before the source vendor annotations was saved in web api model.
   // Now, will be saved in document model (since changes in parser)
@@ -62,28 +63,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
     val model = retrieveWebApi()
     val api   = WebApiEmitter(model, ordering)
     api.emitters
-  }
-
-  private def traverse(emitters: Seq[Emitter]): Unit = {
-    emitters.foreach(e => {
-      e.emit()
-    })
-  }
-
-  private def entry(inner: () => Unit): Unit = node(Entry)(inner)
-
-  private def array(inner: () => Unit): Unit = node(SequenceToken)(inner)
-
-  private def map(inner: () => Unit): Unit = node(MapToken)(inner)
-
-  private def node(t: AMFToken)(inner: () => Unit) = {
-    emitter.beginNode()
-    inner()
-    emitter.endNode(t)
-  }
-
-  private def raw(content: String, token: AMFToken = StringToken): Unit = {
-    emitter.value(token, content)
   }
 
   case class DeclarationsEmitter(ordering: SpecOrdering) {
@@ -192,6 +171,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       fs.entry(WebApiModel.EndPoints).map(f => result += EndpointsEmitter("paths", f, ordering))
 
+      result ++= OasAnnotationsEmitter(api, ordering).emitters
+
       ordering.sorted(result)
     }
 
@@ -290,6 +271,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering, parameters.body.isDefined))
 
+          result ++= OasAnnotationsEmitter(endpoint, ordering).emitters
+
           map { () =>
             traverse(ordering.sorted(result))
           }
@@ -354,6 +337,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
         result += EntryEmitter("in", "body")
 
+        result ++= OasAnnotationsEmitter(payload, ordering).emitters
+
         traverse(ordering.sorted(result))
       }
     }
@@ -387,6 +372,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 
+          result ++= OasAnnotationsEmitter(operation, ordering).emitters
+
           map { () =>
             traverse(ordering.sorted(result))
           }
@@ -407,6 +394,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
         result += ParametersEmitter("parameters", parameters, ordering, payloads.default)
 
       if (payloads.other.nonEmpty) result += PayloadsEmitter("x-request-payloads", payloads.other, ordering)
+
+      result ++= OasAnnotationsEmitter(request, ordering).emitters
 
       result
     }
@@ -434,6 +423,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
       val result = mutable.ListBuffer[Emitter]()
       f.array.values
         .foreach(e => result += ResponseEmitter(e.asInstanceOf[Response], ordering))
+
+
       ordering.sorted(result)
     }
 
@@ -465,6 +456,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           if (payloads.other.nonEmpty)
             result += PayloadsEmitter("x-response-payloads", payloads.other, ordering)
+
+          result ++= OasAnnotationsEmitter(response, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -519,6 +512,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
 
           fs.entry(PayloadModel.Schema).map(f => result += SchemaEmitter(f, ordering))
+
+          result ++= OasAnnotationsEmitter(payload, ordering).emitters
 
           traverse(ordering.sorted(result))
         }
@@ -590,6 +585,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
             .map(f =>
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape], ordering, Seq(ShapeModel.Description))
                 .emitters())
+
+          result ++= OasAnnotationsEmitter(parameter, ordering).emitters
 
           traverse(ordering.sorted(result))
         }
@@ -668,6 +665,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(LicenseModel.Name).map(f => result += ValueEmitter("name", f))
 
+          result ++= OasAnnotationsEmitter(f.domainElement, ordering).emitters
+
           map { () =>
             traverse(ordering.sorted(result))
           }
@@ -694,6 +693,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OrganizationModel.Email).map(f => result += ValueEmitter("email", f))
 
+          result ++= OasAnnotationsEmitter(f.domainElement, ordering).emitters
+
           map { () =>
             traverse(ordering.sorted(result))
           }
@@ -717,6 +718,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
 
           fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
+
+          result ++= OasAnnotationsEmitter(f.domainElement, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -756,10 +759,6 @@ case class OasSpecEmitter(unit: BaseUnit) {
         raw(value, token)
       }
     }
-  }
-
-  private def pos(annotations: Annotations): Position = {
-    annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
   }
 
   private def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
@@ -873,6 +872,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
 
       fs.entry(ShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
+      result ++= OasAnnotationsEmitter(shape, ordering).emitters
+
       result
     }
   }
@@ -891,6 +892,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
       fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
 
       fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+
+      result ++= OasAnnotationsEmitter(shape, ordering).emitters
 
       result
     }
@@ -932,6 +935,8 @@ case class OasSpecEmitter(unit: BaseUnit) {
           fs.entry(XMLSerializerModel.Namespace).map(f => result += ValueEmitter("namespace", f))
 
           fs.entry(XMLSerializerModel.Prefix).map(f => result += ValueEmitter("prefix", f))
+
+          result ++= OasAnnotationsEmitter(f.domainElement, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -1161,6 +1166,9 @@ case class OasSpecEmitter(unit: BaseUnit) {
         .map({ f =>
           result += SchemaEmitter(f, ordering)
         })
+
+      result ++= OasAnnotationsEmitter(property, ordering).emitters
+
       result
     }
   }

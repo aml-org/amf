@@ -249,6 +249,8 @@ case class EndpointParser(entry: EntryNode,
 
     collector += endpoint
 
+    AnnotationParser(endpoint, entries).parse()
+
     entries.regex(
       "get|patch|put|post|delete|options|head",
       entries => {
@@ -297,6 +299,8 @@ case class RequestParser(entries: Entries, global: OasParameters, producer: () =
     )
 
     if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
+
+    request.option.foreach { req => AnnotationParser(req, entries).parse() }
 
     request.option
   }
@@ -367,6 +371,8 @@ case class OperationParser(entry: EntryNode,
       }
     )
 
+    AnnotationParser(operation, entries).parse()
+
     operation
   }
 }
@@ -394,6 +400,7 @@ case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Paylo
       entries.key("mediaType").map(entry => ValueNode(entry.value).string().value.toString)
     ).add(Annotations(payloadMap))
 
+
     // todo set again for not lose annotations?
     entries.key("mediaType",
                 entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), entry.annotations()))
@@ -406,6 +413,8 @@ case class PayloadParser(payloadMap: AMFAST, producer: (Option[String]) => Paylo
           .map(payload.set(PayloadModel.Schema, _, entry.annotations()))
       }
     )
+
+    AnnotationParser(payload, entries).parse()
 
     payload
   }
@@ -451,6 +460,8 @@ case class ResponseParser(entry: EntryNode, producer: String => Response, declar
 
     if (payloads.nonEmpty)
       response.set(ResponseModel.Payloads, AmfArray(payloads))
+
+    AnnotationParser(response, Entries(entry.value)).parse()
 
     response
   }
@@ -528,6 +539,8 @@ case class ParameterParser(ast: AMFAST, parentId: String, declarations: Declarat
         .map(p.parameter.set(ParameterModel.Schema, _, map.annotations()))
     }
 
+    AnnotationParser(p.parameter, entries).parse()
+
     p
   }
 }
@@ -579,6 +592,8 @@ case class LicenseParser(ast: AMFAST) {
       license.set(LicenseModel.Name, value.string(), entry.annotations())
     })
 
+    AnnotationParser(license, entries).parse()
+
     license
   }
 }
@@ -622,6 +637,8 @@ case class HeaderParameterParser(entry: EntryNode, producer: String => Parameter
       }
     )
 
+    AnnotationParser(parameter, entries).parse()
+
     parameter
   }
 }
@@ -640,6 +657,8 @@ case class CreativeWorkParser(ast: AMFAST) {
       val value = ValueNode(entry.value)
       creativeWork.set(CreativeWorkModel.Description, value.string(), entry.annotations())
     })
+
+    AnnotationParser(creativeWork, entries).parse()
 
     creativeWork
   }
@@ -665,6 +684,8 @@ case class OrganizationParser(ast: AMFAST) {
       val value = ValueNode(entry.value)
       organization.set(OrganizationModel.Email, value.string(), entry.annotations())
     })
+
+    AnnotationParser(organization, entries).parse()
 
     organization
   }
@@ -724,6 +745,8 @@ case class AnnotationTypesParser(node: EntryNode, adopt: (CustomDomainProperty) 
           })
       }
     )
+
+    AnnotationParser(custom, entries).parse()
 
     custom
   }

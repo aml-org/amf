@@ -7,6 +7,7 @@ import amf.compiler.AMFCompiler.RAML_10
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation
 import amf.domain.Annotation.LexicalInformation
+import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveLexerException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer
@@ -39,6 +40,9 @@ class AMFCompiler private (val url: String,
   private val references: ListBuffer[Future[BaseUnit]] = ListBuffer()
 
   def build(): Future[BaseUnit] = {
+    // Reset the data node counter
+    idCounter.reset()
+
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else
       cache.getOrUpdate(location) { () =>

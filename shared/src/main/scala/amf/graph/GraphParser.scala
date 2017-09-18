@@ -120,7 +120,10 @@ object GraphParser extends GraphParserHelpers {
           case _          => None
         }
       }.filter(_.isDefined).map(_.get)
-      instance.withCustomDomainProperties(domainExtensions)
+
+      if (domainExtensions.nonEmpty) {
+        instance.withCustomDomainProperties(domainExtensions)
+      }
     }
 
 

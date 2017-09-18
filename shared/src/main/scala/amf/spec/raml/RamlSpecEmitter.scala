@@ -6,8 +6,7 @@ import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.CustomDomainProperty
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
+import amf.domain.extensions.{CustomDomainProperty, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -17,8 +16,9 @@ import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
+import amf.spec.common.EmitterHelper
 import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
-import amf.vocabulary.{Namespace, VocabularyMappings}
+import amf.vocabulary.VocabularyMappings
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -27,9 +27,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by pedro.colunga on 8/17/17.
   */
-case class RamlSpecEmitter(unit: BaseUnit) {
+case class RamlSpecEmitter(unit: BaseUnit) extends EmitterHelper {
 
-  val emitter: ASTEmitter[AMFToken, AMFAST] = ASTEmitter(AMFASTFactory())
+  val emitter = ASTEmitter(AMFASTFactory())
 
   private def retrieveWebApi() = unit match {
     case document: Document => document.encodes
@@ -59,28 +59,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
     val api    = WebApiEmitter(model, ordering, vendor)
     api.emitters
-  }
-
-  private def traverse(emitters: Seq[Emitter]): Unit = {
-    emitters.foreach(e => {
-      e.emit()
-    })
-  }
-
-  private def entry(inner: () => Unit): Unit = node(Entry)(inner)
-
-  private def array(inner: () => Unit): Unit = node(SequenceToken)(inner)
-
-  private def map(inner: () => Unit): Unit = node(MapToken)(inner)
-
-  private def node(t: AMFToken)(inner: () => Unit) = {
-    emitter.beginNode()
-    inner()
-    emitter.endNode(t)
-  }
-
-  private def raw(content: String, token: AMFToken = StringToken): Unit = {
-    emitter.value(token, content)
   }
 
   case class DeclarationsEmitter(ordering: SpecOrdering) {
@@ -196,7 +174,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       result += BaseUriEmitter(fs)
 
-      result ++= AnnotationsEmitter(api, ordering).emitters
+      result ++= RamlAnnotationsEmitter(api, ordering).emitters
 
       ordering.sorted(result)
     }
@@ -330,7 +308,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
-          result ++= AnnotationsEmitter(endpoint, ordering).emitters
+          result ++= RamlAnnotationsEmitter(endpoint, ordering).emitters
 
           result ++= children
 
@@ -374,7 +352,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-          result ++= AnnotationsEmitter(operation, ordering).emitters
+          result ++= RamlAnnotationsEmitter(operation, ordering).emitters
 
           Option(operation.request).foreach(req => {
             val reqFs = req.fields
@@ -440,7 +418,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
 
-          result ++= AnnotationsEmitter(response, ordering).emitters
+          result ++= RamlAnnotationsEmitter(response, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -494,7 +472,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
           entry { () =>
             ScalarEmitter(mediaType.scalar).emit()
             var result = RamlTypeEmitter(payload.schema, ordering).emitters()
-            result ++= AnnotationsEmitter(payload, ordering).emitters
+            result ++= RamlAnnotationsEmitter(payload, ordering).emitters
 
             map { () =>
               traverse(ordering.sorted(result))
@@ -524,6 +502,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
       val result = mutable.ListBuffer[Emitter]()
       f.array.values
         .foreach(e => result += ParameterEmitter(e.asInstanceOf[Parameter], ordering))
+
       ordering.sorted(result)
     }
 
@@ -558,7 +537,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description)).emitters()
 
-          result ++= AnnotationsEmitter(parameter, ordering).emitters
+          result ++= RamlAnnotationsEmitter(parameter, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -584,7 +563,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(LicenseModel.Name).map(f => result += ValueEmitter("name", f))
 
-          result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
+          result ++= RamlAnnotationsEmitter(f.domainElement, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -612,7 +591,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(OrganizationModel.Email).map(f => result += ValueEmitter("email", f))
 
-          result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
+          result ++= RamlAnnotationsEmitter(f.domainElement, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -638,7 +617,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
 
-          result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
+          result ++= RamlAnnotationsEmitter(f.domainElement, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -703,8 +682,6 @@ case class RamlSpecEmitter(unit: BaseUnit) {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  private def pos(annotations: Annotations): Position =
-    annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
   private def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
 
@@ -756,7 +733,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(ShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
-      result ++= AnnotationsEmitter(shape, ordering).emitters
+      result ++= RamlAnnotationsEmitter(shape, ordering).emitters
 
       result
     }
@@ -788,7 +765,7 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
           fs.entry(XMLSerializerModel.Prefix).map(f => result += ValueEmitter("prefix", f))
 
-          result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
+          result ++= RamlAnnotationsEmitter(f.domainElement, ordering).emitters
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -1100,88 +1077,10 @@ case class RamlSpecEmitter(unit: BaseUnit) {
 
       fs.entry(CustomDomainPropertyModel.Schema).map(f => result += SchemaEmitter(f, ordering))
 
-      result ++= AnnotationsEmitter(property, ordering).emitters
+      result ++= RamlAnnotationsEmitter(property, ordering).emitters
 
       result
     }
   }
 
-  case class AnnotationsEmitter(domainElement: DomainElement, ordering: SpecOrdering) {
-    def emitters: Seq[Emitter] = {
-      domainElement.customDomainProperties.map { pro =>
-        AnnotationEmitter(pro, ordering)
-      }
-    }
-  }
-
-  case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw("(" + domainExtension.definedBy.name + ")")
-        Option(domainExtension.extension).foreach { dataNode =>
-          DataNodeEmitter(dataNode, ordering).emit()
-        }
-      }
-    }
-
-    override def position(): Position = pos(domainExtension.annotations)
-  }
-
-  case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends Emitter {
-    private val xsdString: String  = (Namespace.Xsd + "string").iri()
-    private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
-    private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
-    private val xsdBoolean: String = (Namespace.Xsd + "boolean").iri()
-    private val xsdNil: String     = (Namespace.Xsd + "nil").iri()
-
-    override def emit(): Unit = {
-      dataNode match {
-        case scalar: DataScalarNode => emitScalar(scalar)
-        case array: DataArrayNode   => emitArray(array)
-        case obj: DataObjectNode    => emitObject(obj)
-      }
-    }
-
-    def emitObject(objectNode: DataObjectNode): Unit = {
-      val emitters = objectNode.properties.keys.map { property => DataPropertyEmitter(property, objectNode, ordering) }.toSeq
-      map { () =>
-        ordering.sorted(emitters).foreach(_.emit())
-      }
-    }
-
-    def emitArray(arrayNode: DataArrayNode): Unit = {
-      val emitters = arrayNode.members.map(DataNodeEmitter(_, ordering))
-      array { () =>
-        ordering.sorted(emitters).foreach(_.emit())
-      }
-    }
-
-    def emitScalar(scalar: DataScalarNode): Unit = {
-      scalar.dataType match {
-        case Some(t) if t == xsdString  => raw(scalar.value)
-        case Some(t) if t == xsdInteger => raw(scalar.value, IntToken)
-        case Some(t) if t == xsdFloat   => raw(scalar.value, FloatToken)
-        case Some(t) if t == xsdBoolean => raw(scalar.value, BooleanToken)
-        case Some(t) if t == xsdNil     => raw("null")
-        case _                          => raw(scalar.value)
-      }
-    }
-
-    override def position(): Position = pos(dataNode.annotations)
-  }
-
-  case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, ordering: SpecOrdering) extends  Emitter {
-    val annotations: Annotations = dataNode.propertyAnnotations(property)
-    val propertyValue: Seq[DataNode] = dataNode.properties(property)
-
-    override def emit(): Unit = {
-      entry { () =>
-        raw(property)
-        // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(propertyValue.head, ordering).emit()
-      }
-    }
-
-    override def position(): Position = pos(annotations)
-  }
 }

@@ -418,7 +418,7 @@ case class PayloadParser(entry: EntryNode, producer: (Option[String]) => Payload
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry.ast))
 
-    if (entry.value != null && entry.value.`type` == MapToken) {
+    if (Option(entry.value).isDefined && entry.value.`type` == MapToken) {
       // TODO
       // Should we clean the annotations here so they are not parsed again in the shape?
       AnnotationParser(payload, Entries(entry.value)).parse()
