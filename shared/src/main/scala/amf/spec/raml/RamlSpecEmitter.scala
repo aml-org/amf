@@ -18,10 +18,10 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position.ZERO
-import amf.parser.{AMFASTFactory, ASTEmitter, Position}
+import amf.parser.{ASTEmitter, Position}
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
-import amf.spec.common.EmitterHelper
+import amf.spec.common.BaseSpecEmitter
 import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
 
@@ -32,9 +32,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by pedro.colunga on 8/17/17.
   */
-case class RamlSpecEmitter(unit: BaseUnit) extends EmitterHelper {
+case class RamlSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
 
-  val emitter = ASTEmitter(AMFASTFactory())
+  val emitter = ASTEmitter()
 
   private def retrieveWebApi() = unit match {
     case document: Document => document.encodes
@@ -51,7 +51,7 @@ case class RamlSpecEmitter(unit: BaseUnit) extends EmitterHelper {
     // TODO ordering??
     val declares = DeclarationsEmitter(ordering).emitters
 
-    emitter.root(Root) { () =>
+    emitter.document() { () =>
       raw("%RAML 1.0", Comment)
       map { () =>
         traverse(ordering.sorted(apiEmitters ++ declares))

@@ -17,8 +17,10 @@ import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.{AMFASTFactory, ASTEmitter}
 import amf.shape._
+import amf.spec.common.BaseSpecEmitter
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
+import org.yaml.model.{YDocument, YTag}
 
 import scala.collection.mutable.ListBuffer
 
@@ -28,14 +30,14 @@ import scala.collection.mutable.ListBuffer
 object GraphEmitter {
 
   def emit(unit: BaseUnit, options: GenerationOptions): AMFAST = {
-    val emitter = Emitter(ASTEmitter(AMFASTFactory()), options)
+    val emitter = Emitter(ASTEmitter(), options)
     emitter.root(unit)
   }
 
-  case class Emitter(emitter: ASTEmitter[AMFToken, AMFAST], options: GenerationOptions) {
+  case class Emitter(emitter: ASTEmitter, options: GenerationOptions) {
 
-    def root(unit: BaseUnit): AMFAST = {
-      emitter.root(Root) { () =>
+    def root(unit: BaseUnit): YDocument = {
+      emitter.document { () =>
         array { () =>
           map { () =>
             traverse(unit, unit.location)
@@ -185,8 +187,9 @@ object GraphEmitter {
       }
     }
 
-    private def raw(content: String, token: AMFToken = StringToken): Unit = {
-      emitter.value(token, if (token == StringToken) {
+    private def raw(content: String, tag: YTag = YTag.Str): Unit = {
+      emitter.scalar()
+      emitter.value(tag, if (tag == YTag.Str) {
         content.quote
       } else content)
     }
@@ -210,7 +213,7 @@ object GraphEmitter {
       }
     }
 
-    private def scalar(content: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
+    private def scalar(content: String, token: YTag = YTag.Str, inArray: Boolean = false): Unit = {
       if (inArray) {
         value(content, token)
       } else {
@@ -220,7 +223,7 @@ object GraphEmitter {
       }
     }
 
-    private def value(content: String, token: AMFToken): Unit = {
+    private def value(content: String, token: YTag): Unit = {
       map { () =>
         entry { () =>
           raw("@value")
@@ -254,17 +257,11 @@ object GraphEmitter {
       raw(v)
     }
 
-    private def entry(inner: () => Unit): Unit = node(Entry)(inner)
+    private def entry(inner: () => Unit): Unit = emitter.entry(inner)
 
-    private def array(inner: () => Unit): Unit = node(SequenceToken)(inner)
+    private def array(inner: () => Unit): Unit = emitter.sequence(inner)
 
-    private def map(inner: () => Unit): Unit = node(MapToken)(inner)
-
-    private def node(t: AMFToken)(inner: () => Unit) = {
-      emitter.beginNode()
-      inner()
-      emitter.endNode(t)
-    }
+    private def map(inner: () => Unit): Unit = emitter.mapping(inner)
 
     private def createSourcesNode(id: String, sources: SourceMap): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {

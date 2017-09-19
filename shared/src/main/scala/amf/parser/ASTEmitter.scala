@@ -1,52 +1,139 @@
 package amf.parser
 
-import amf.lexer.Token
-
+import org.mulesoft.lexer.{InputRange, TokenData}
+import org.yaml.lexer.YamlToken._
+import org.yaml.lexer.{YamlToken, YeastToken}
+import org.yaml.model._
+import amf.common.core.Strings
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * AST emitter
   */
-case class ASTEmitter[T <: Token, N <: ASTNode[T]](factory: ASTFactory[T, N]) {
+case class ASTEmitter() {
 
-  private val stack: mutable.ArrayStack[NodeBuilder] = mutable.ArrayStack()
+  private var stack               = List(new Builder)
+  private def current             = stack.head
+  private var document: YDocument = _
 
-  /** Build and return root node. */
-  def root(root: T)(parse: () => Unit): N = {
-    beginNode()
+  class Builder {
+    val tokens = new ArrayBuffer[YeastToken]
+    val parts  = new ArrayBuffer[YPart]
+  }
+
+  /** Build and return a YDocument node. */
+  def document(parse: () => Unit): YDocument = {
+    process(BeginDocument)
     parse()
-    createNode(root)
+    process(EndDocument)
+    document
   }
 
-  /** Starts the building of a new tree node. Every call to addChild will place a new child under the current sub-tree. */
-  def beginNode(): this.type = {
-    stack.push(NodeBuilder(Range.NONE))
+  def sequence(parse: () => Unit): this.type = {
+    process(BeginNode)
+    process(BeginSequence)
+    parse()
+    process(EndSequence)
+    process(EndNode)
     this
   }
 
-  /**
-    * Instruct the emitter to end the building of the current sub-tree. The provided token will be
-    * used as the root of the constructed sub-tree
-    */
-  def endNode(token: T): this.type = {
-    addChild(createNode(token))
-  }
-
-  protected def createNode(token: T): N = {
-    val n = stack.pop
-    factory.createNode(token, n.range, n.nodes)
-  }
-
-  def value(t: T, content: String): this.type = addChild(factory.createNode(t, content, Range.NONE))
-
-  /** Adds given input token to the sub-tree under construction. */
-  def addChild(n: N): this.type = {
-    stack.head + n
+  def mapping(parse: () => Unit): this.type = {
+    process(BeginNode)
+    process(BeginMapping)
+    parse()
+    process(EndMapping)
+    process(EndNode)
     this
   }
 
-  private case class NodeBuilder(range: Range, nodes: ListBuffer[N] = ListBuffer()) {
-    def +(n: N): Unit = nodes += n
+  def entry(parse: () => Unit): this.type = {
+    process(BeginPair)
+    parse()
+    process(EndPair)
+    this
   }
+
+  def scalar(text: String, tag: YTag): this.type = {
+    process(BeginNode)
+    process(BeginScalar)
+    process(EndScalar, text)
+    process(EndNode)
+    this
+  }
+
+  private def process(token: YamlToken, text: String = ""): Unit = {
+    token match {
+      case BeginDocument =>
+        addNonContent(current.parts)
+        addToken(token)
+      case EndDocument =>
+        addToken(token)
+        document = new YDocument(buildParts())
+      case BeginNode | BeginSequence | BeginScalar | BeginMapping | BeginPair | BeginAlias | BeginAnchor | BeginTag =>
+        push()
+        addToken(token)
+      case EndSequence =>
+        addToken(token)
+        pop(new YSequence(buildParts()))
+      case EndNode =>
+        addToken(token)
+        pop(YNode(buildParts(), mutable.Map()))
+      case EndScalar =>
+        addToken(token)
+        pop(new YScalar(text, true, getTokens))
+      case EndMapping =>
+        addToken(token)
+        pop(new YMap(buildParts()))
+      case EndPair =>
+        addToken(token)
+        pop(YMapEntry(buildParts()))
+      case EndTag =>
+        addToken(token)
+        pop(YTag(text, getTokens))
+      case _ =>
+        addToken(token)
+    }
+  }
+
+  private def pop(part: YPart): Unit = {
+    stack = stack.tail
+    current.parts += part
+  }
+
+  private def addToken(token: YamlToken) = addToken(TokenData(token, InputRange.Zero, 0, 0))
+
+  private def push(): Unit = {
+    addNonContent(current.parts)
+    stack = new Builder :: stack
+  }
+
+  private def buildParts(): IndexedSeq[YPart] = {
+    val ps = current.parts
+    addNonContent(ps)
+    if (ps.isEmpty) IndexedSeq.empty
+    else {
+      val r = ps.toArray[YPart]
+      ps.clear()
+      r
+    }
+  }
+
+  private def addNonContent(buffer: mutable.Buffer[YPart]) = {
+    val tks = getTokens
+    if (tks.nonEmpty) buffer += new YNonContent(tks)
+  }
+
+  private def getTokens: IndexedSeq[YeastToken] = {
+    val tks = current.tokens
+    if (tks.isEmpty) IndexedSeq.empty
+    else {
+      val r = tks.toArray[YeastToken]
+      tks.clear()
+      r
+    }
+  }
+
+  private def addToken(td: TokenData[YamlToken]) = current.tokens += YeastToken(td.token, td.start, td.end, td.range)
 }

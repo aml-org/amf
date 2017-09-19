@@ -21,9 +21,9 @@ trait AnnotationFormat {}
 object RamlAnnotationFormat extends AnnotationFormat {}
 object OasAnnotationFormat  extends AnnotationFormat {}
 
-trait EmitterHelper {
+trait BaseSpecEmitter {
 
-  val emitter: ASTEmitter[AMFToken, AMFAST]
+  val emitter: ASTEmitter
 
   protected def pos(annotations: Annotations): Position =
     annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
@@ -32,10 +32,9 @@ trait EmitterHelper {
     try {
       emitter.value(token, content)
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         println(e)
-        throw (e)
-      }
+        throw e
     }
 
   }

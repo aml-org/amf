@@ -15,7 +15,7 @@ import amf.parser.Position.ZERO
 import amf.parser.{AMFASTFactory, ASTEmitter, Position}
 import amf.remote.Oas
 import amf.shape._
-import amf.spec.common.EmitterHelper
+import amf.spec.common.BaseSpecEmitter
 import amf.spec.{Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
 
@@ -26,7 +26,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
+case class OasSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
 
   val emitter = ASTEmitter(AMFASTFactory())
 
