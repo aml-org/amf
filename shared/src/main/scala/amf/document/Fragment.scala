@@ -19,6 +19,8 @@ object Fragment {
     override val annotations: Annotations = Annotations()
 
     override def adopted(parent: String): this.type = withId(parent)
+
+    override def usage: String = ""
   }
 
   case class DocumentationItem(location: String, encodes: DomainElement) extends Fragment

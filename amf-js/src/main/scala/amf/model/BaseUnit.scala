@@ -16,4 +16,6 @@ trait BaseUnit {
   def id(parent: String): String = parent
 
   def unit: amf.document.BaseUnit
+
+  def usage: String
 }

@@ -41,4 +41,6 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
     }
 
   override def unit: amf.document.BaseUnit = document
+
+  override def usage: String = document.usage
 }
