@@ -80,23 +80,25 @@ class DialectLoader {
     }
   }
 
-  private def asInstance[T](v:Any):Option[T]={ if (v.isInstanceOf[T]) Option(v.asInstanceOf[T]) else None; }
+
+
 
   private def fillHashes(propertyMap: mutable.Map[DialectPropertyMapping, DomainEntity]) = {
     propertyMap.keys.foreach(dialectPropertyMapping => {
       propertyMap.get(dialectPropertyMapping).foreach(v => v.string(PropertyMapping.hash).map(hash => {
-        asInstance[DialectNode](dialectPropertyMapping).map(rangeNode=>{
+        if (dialectPropertyMapping.range.isInstanceOf[DialectNode]) {
+          val rangeNode = dialectPropertyMapping.range.asInstanceOf[DialectNode]
           rangeNode.props.values.filter(_.iri()==hash).foreach(property => {
               dialectPropertyMapping.owningNode.map(clazz => {
                 clazz.add(dialectPropertyMapping.copy(hash = Option(property)))
                 rangeNode.add(property.copy(noRAML = true))
               })
-          })
-        })
+            }
+          )
+        }
       }))
     })
   }
-
 
 
 
