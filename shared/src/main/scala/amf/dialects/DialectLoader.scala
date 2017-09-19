@@ -62,7 +62,9 @@ class DialectLoader {
         domainEntity.entities(DialectDefinition.nodeMappings).foreach { n =>
           parseNodeMapping(n, dialectMap,propertyMap)
         }
-        fillHashes( propertyMap)
+
+        fillHashes(propertyMap)
+
         val dialect = for {
           dialectName    <- domainEntity.string(DialectDefinition.dialectProperty)
           dialectVersion <- domainEntity.string(DialectDefinition.version)
@@ -84,20 +86,20 @@ class DialectLoader {
 
 
   private def fillHashes(propertyMap: mutable.Map[DialectPropertyMapping, DomainEntity]) = {
-    propertyMap.keys.foreach(dialectPropertyMapping => {
-      propertyMap.get(dialectPropertyMapping).foreach(v => v.string(PropertyMapping.hash).map(hash => {
-        if (dialectPropertyMapping.range.isInstanceOf[DialectNode]) {
-          val rangeNode = dialectPropertyMapping.range.asInstanceOf[DialectNode]
-          rangeNode.props.values.filter(_.iri()==hash).foreach(property => {
-              dialectPropertyMapping.owningNode.map(clazz => {
-                clazz.add(dialectPropertyMapping.copy(hash = Option(property)))
-                rangeNode.add(property.copy(noRAML = true))
-              })
-            }
-          )
+    for {
+      (dialectPropertyMapping, domainEntity) <- propertyMap
+      hash                                   <- domainEntity.string(PropertyMapping.hash)
+    } yield dialectPropertyMapping.range match {
+      case rangeNode: DialectNode =>
+        for {
+          property <- rangeNode.mappings() if property.iri() == hash
+          clazz    <- dialectPropertyMapping.owningNode
+        } yield {
+          clazz.add(dialectPropertyMapping.copy(hash = Option(property)))
+          rangeNode.add(property.copy(noRAML = true))
         }
-      }))
-    })
+      case _ => // ignore
+    }
   }
 
 
