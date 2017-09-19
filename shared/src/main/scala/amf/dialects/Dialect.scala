@@ -61,7 +61,8 @@ case class DialectPropertyMapping(name: String,
                                   isDeclaration: Boolean = false,
                                   namespace: Option[Namespace] = None,
                                   rdfName: Option[String] = None,
-                                  jsonld: Boolean = true
+                                  jsonld: Boolean = true,
+                                  owningNode: Option[DialectNode]=None
                                  ) {
 
   def isRef: Boolean = referenceTarget.isDefined
@@ -75,21 +76,26 @@ case class DialectPropertyMapping(name: String,
 
   def adopt(dialectNode: DialectNode): DialectPropertyMapping =
     namespace match {
-      case None => copy(namespace = Some(dialectNode.namespace))
-      case _    => this
+      case None => copy(namespace = Some(dialectNode.namespace),owningNode=Option(dialectNode))
+      case _    => copy(owningNode=Option(dialectNode))
     }
+
+  def fieldName = this.rdfName match {
+    case Some(rdf) => namespace.get + rdf
+    case _         => namespace.get + name
+  }
 
   def field(): amf.metadata.Field = {
     val `type` = if (collection || isMap) Type.Array(range)
                  else range
 
-    val fieldName = this.rdfName match {
-      case Some(rdf) => namespace.get + rdf
-      case _         => namespace.get + name
-    }
+
 
     Field(`type`, fieldName, jsonld)
   }
+
+  def iri():String=this.fieldName.iri();
+
 }
 
 trait TypeCalculator {
