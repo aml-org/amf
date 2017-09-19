@@ -58,6 +58,27 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
 
     override def position(): Position = pos(field.value.annotations)
   }
+  /** Emit array or single value from an entry. */
+  //TODO why ArrayValueEmitter emits just one value?
+  case class SimpleArrayValueEmitter(parent: DialectPropertyMapping, key: String, field: FieldEntry) extends Emitter {
+
+    override def emit(): Unit = {
+      sourceOr(field.value, entry { () =>
+        raw(key)
+        field.array.values match {
+          case Seq(member) =>
+            raw(member.toString)
+          case members if members.nonEmpty =>
+            array(() => {
+              members.foreach(value => { raw( value.toString) })
+            })
+          case _ => // ignore
+        }
+      })
+    }
+
+    override def position(): Position = pos(field.value.annotations)
+  }
 
   private def emitRef(mapping: DialectPropertyMapping, refName: String): Unit = {
     nameProvider match {
@@ -88,7 +109,7 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
                 res = Some(RefArrayValueEmitter(mapping, mapping.name, FieldEntry(field, value)))
               }
               else
-                res = Some(ArrayValueEmitter(mapping.name, FieldEntry(field, value)))
+                res = Some(SimpleArrayValueEmitter(mapping,mapping.name, FieldEntry(field, value)))
             }
           }
         }

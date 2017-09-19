@@ -166,7 +166,12 @@
                 ],
                 "http://raml.org/vocabularies/meta#range": [
                   {
-                    "@value": "shared/src/test/resources/vocabularies/validation_dialect.raml#string[]"
+                    "@value": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://raml.org/vocabularies/meta#allowMultiple": [
+                  {
+                  "@value": true
                   }
                 ]
               },
@@ -273,7 +278,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#pattern?"
+                    "@value": "http://www.w3.org/ns/shacl#pattern"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -294,7 +299,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#maxCount?"
+                    "@value": "http://www.w3.org/ns/shacl#maxCount"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -315,7 +320,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#minCount?"
+                    "@value": "http://www.w3.org/ns/shacl#minCount"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -336,7 +341,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#minExclusive?"
+                    "@value": "http://www.w3.org/ns/shacl#minExclusive"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -357,7 +362,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#maxExclusive?"
+                    "@value": "http://www.w3.org/ns/shacl#maxExclusive"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -378,7 +383,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#minInclusive?"
+                    "@value": "http://www.w3.org/ns/shacl#minInclusive"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -399,7 +404,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#maxInclusive?"
+                    "@value": "http://www.w3.org/ns/shacl#maxInclusive"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -420,12 +425,17 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#in?"
+                    "@value": "http://www.w3.org/ns/shacl#in"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
                   {
-                    "@value": "shared/src/test/resources/vocabularies/validation_dialect.raml#string[]"
+                    "@value": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://raml.org/vocabularies/meta#allowMultiple": [
+                  {
+                    "@value": true
                   }
                 ]
               }
@@ -459,7 +469,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://schema.org/name?"
+                    "@value": "http://schema.org/name"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -532,7 +542,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#property?"
+                    "@value": "http://www.w3.org/ns/shacl#property"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -547,7 +557,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#hash": [
                   {
-                    "@value": "validation.ramlPropertyId"
+                    "@value": "../vocabulary/validation.ramlramlPropertyId"
                   }
                 ]
               },
@@ -563,7 +573,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#js?"
+                    "@value": "http://www.w3.org/ns/shacl#js"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -602,7 +612,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://schema.org/name?"
+                    "@value": "http://schema.org/name"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -709,7 +719,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "http://schema.org/description?"
+                    "@value": "http://schema.org/description"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -730,7 +740,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "../vocabulary/validation.ramlextendsProfile?"
+                    "@value": "../vocabulary/validation.ramlextendsProfile"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -751,7 +761,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "../vocabulary/validation.ramlsetSeverityViolation?"
+                    "@value": "../vocabulary/validation.ramlsetSeverityViolation"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -777,7 +787,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "../vocabulary/validation.ramlsetSeverityInfo?"
+                    "@value": "../vocabulary/validation.ramlsetSeverityInfo"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -803,7 +813,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "../vocabulary/validation.ramlsetSeverityWarning?"
+                    "@value": "../vocabulary/validation.ramlsetSeverityWarning"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -829,7 +839,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "../vocabulary/validation.ramldisableValidation?"
+                    "@value": "../vocabulary/validation.ramldisableValidation"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -855,7 +865,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#propertyTerm": [
                   {
-                    "@value": "../vocabulary/validation.ramlvalidations?"
+                    "@value": "../vocabulary/validation.ramlvalidations"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -870,7 +880,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#hash": [
                   {
-                    "@value": "schema-org.name"
+                    "@value": "http://schema.org/name"
                   }
                 ]
               }

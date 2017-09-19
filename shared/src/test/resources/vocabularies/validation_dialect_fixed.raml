@@ -1,13 +1,17 @@
 #%RAML 1.0 Dialect
+
 dialect: Validation Profile
 version: 1.0
+
 usage: Dialect to describe validations over RAML documents
-vocabularies:
-  validation: ../vocabulary/validation.raml
+
+
 external:
-  schema-org: http://schema.org/
-  shacl: http://www.w3.org/ns/shacl#
+  schema-org: "http://schema.org/"
+  shacl: "http://www.w3.org/ns/shacl#"
+  validation: "http://raml.org/vocabularies/amf-validation#"
 nodeMappings:
+
   functionConstraintNode:
     classTerm: shacl.JSConstraint
     mapping:
@@ -17,8 +21,8 @@ nodeMappings:
         range: string
       code:
         propertyTerm: validation.jsCode
-        pattern: ^function\(.+\)\s*\{.+\}$
         range: string
+        pattern: "^function\(.+\)\s*\{.+\}$"
       libraries:
         propertyTerm: shacl.jsLibrary
         range: string
@@ -26,6 +30,7 @@ nodeMappings:
       functionName:
         propertyTerm: shacl.jsFunctionName
         range: string
+
   propertyConstraintNode:
     classTerm: shacl.PropertyShape
     mapping:
@@ -60,8 +65,9 @@ nodeMappings:
         range: number
       in:
         propertyTerm: shacl.in
-        range: string
         allowMultiple: true
+        range: string
+
   shapeValidationNode:
     classTerm: validation.Validation
     mapping:
@@ -71,6 +77,7 @@ nodeMappings:
       message:
         propertyTerm: shacl.message
         mandatory: true
+        range: string
       targetClass:
         propertyTerm: validation.ramlClassId
         mandatory: true
@@ -78,24 +85,18 @@ nodeMappings:
         allowMultiple: true
       propertyConstraints:
         propertyTerm: shacl.property
-        range: propertyConstraintNode
         asMap: true
         hash: validation.ramlPropertyId
+        range: propertyConstraintNode
       functionConstraint:
         propertyTerm: shacl.js
         range: functionConstraintNode
-  queryValidationNode:
-    classTerm: validation.Validation
-    mapping:
-      name:
-        propertyTerm: schema-org.name
-        range: string
-      message:
-        propertyTerm: shacl.message
-        mandatory: true
       targetQuery:
-        propertyTerm: validation.targetQuery
-        range: string
+              propertyTerm: validation.targetQuery
+              range: string
+
+
+
   profileNode:
     classTerm: validation.Profile
     mapping:
@@ -127,15 +128,19 @@ nodeMappings:
         allowMultiple: true
       validations:
         propertyTerm: validation.validations
-        range: shapeValidationNode
         asMap: true
         hash: schema-org.name
+        range: shapeValidationNode
+
+
 raml:
-  document:
-    encodes: profileNode
-  module:
-    declares:
-      validations: queryValidationNode
   fragments:
     encodes:
       Validation: queryValidationNode
+
+  module:
+    declares:
+      validations: queryValidationNode
+
+  document:
+    encodes: profileNode

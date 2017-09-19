@@ -1,9 +1,14 @@
 package amf.validation
+import amf.common.Tests.checkDiff
 
+import amf.client.GenerationOptions
+import amf.dumper.AMFDumper
+import amf.remote.Syntax.Yaml
+import amf.remote.Raml
 import amf.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
@@ -11,17 +16,28 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   val basePath="file://shared/src/test/resources/vocabularies/"
 
+  test("Loading and serialiing validations") {
+    val validation = Validation(platform)
+    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
+    .flatMap(unit =>
+        validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
+    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .zip(expected)
+      .map(checkDiff)
+  }
 
   test("HERE_HERE Load dialect") {
 
     val validation = Validation(platform)
     try {
       for {
-        _ <- validation.loadValidationDialect(basePath + "validation_dialect.raml")
+        _ <- validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
         parsed <- validation.loadValidationProfile(basePath + "validation_profile_example.raml")
       } yield {
         println("LOADED!!!")
         assert(parsed != null)
+
       }
     } catch {
       case e:Exception => {

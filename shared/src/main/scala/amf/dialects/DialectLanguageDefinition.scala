@@ -36,7 +36,7 @@ object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
   val range: DialectPropertyMapping         = str("range", _.copy(referenceTarget = Some(NodeDefinition)))
   val allowMultiple: DialectPropertyMapping = bool("allowMultiple")
   val asMap: DialectPropertyMapping         = bool("asMap")
-  val hash: DialectPropertyMapping          = str("hash")
+  val hash: DialectPropertyMapping          = str("hash", _.copy(referenceTarget = Some(PropertyTerm), required = true))
 }
 
 object ClassTermRef extends DialectLanguageNode("ClassTermRef") {
