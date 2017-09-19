@@ -33,7 +33,8 @@ class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
                            hint: Hint,
-                           private val cache: Cache,private val dialects:amf.dialects.DialectRegistry=amf.dialects.DialectRegistry.default) {
+                           private val cache: Cache,
+                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default) {
 
   private lazy val context: Context                    = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                            = context.current
@@ -162,8 +163,8 @@ case class Root(ast: AMFAST, location: String, references: Seq[BaseUnit], vendor
 }
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None,dialects:DialectRegistry=DialectRegistry.default) =
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()),dialects)
+  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None, dialects: DialectRegistry = DialectRegistry.default) =
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), dialects)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

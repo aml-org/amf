@@ -1,5 +1,6 @@
 package amf.unsafe
 
+import amf.dialects.{DialectLanguageDefinition, DialectRegistry, PlatformDialectRegistry, VocabularyLanguageDefinition}
 import amf.lexer.CharSequenceStream
 import amf.remote._
 
@@ -8,6 +9,13 @@ import scala.concurrent.Future
 
 trait PlatformSecrets {
   val platform: Platform = PlatformBuilder()
+}
+
+class TrunkDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
+  add(VocabularyLanguageDefinition)
+  add(DialectLanguageDefinition)
+
+  override def registerDialect(uri: String) = throw new Exception("Not supported in trunk platform")
 }
 
 case class TrunkPlatform(content: String) extends Platform {
@@ -36,4 +44,5 @@ case class TrunkPlatform(content: String) extends Platform {
     fetchFile(url)
   }
 
+  override val dialectsRegistry = new TrunkDialectsRegistry(this)
 }

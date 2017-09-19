@@ -3,6 +3,7 @@ package amf.parser
 import amf.common.AMFToken._
 import amf.common.core.Strings
 import amf.common.{AMFAST, AMFToken}
+import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
 import amf.json.JsonLexer
 import amf.lexer.CharSequenceStream
 import amf.oas.OasParser
@@ -187,6 +188,13 @@ class ParserTest extends FunSuite {
     assert(node.range equals expected)
   }
 
+  class TestMemoryDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
+    add(VocabularyLanguageDefinition)
+    add(DialectLanguageDefinition)
+
+    override def registerDialect(uri: String) = throw new Exception("Not supported in test memory platform")
+  }
+
   private class TestMemoryPlatform extends Platform {
 
     /** Resolve specified file. */
@@ -229,6 +237,8 @@ class ParserTest extends FunSuite {
     override def tmpdir(): String = throw new Exception(s"[TEST] Unsupported tmpdir operation")
 
     override def resolvePath(path: String): String = path
+
+    override val dialectsRegistry: PlatformDialectRegistry = new TestMemoryDialectsRegistry(this)
   }
 
 }

@@ -6,7 +6,7 @@ import amf.vocabulary.{Namespace, ValueType}
 * Created by Pavel Petrochenko on 12/09/17.
 */
 
-class VocabPartDialect(override val shortName:String, namespace: Namespace=Namespace.Meta) extends DialectNode(shortName, namespace){}
+class VocabPartDialect(override val shortName:String, namespace: Namespace=Namespace.Meta) extends DialectNode(shortName, namespace) {}
 
 case class Declaration(override val shortName:String,override val namespace: Namespace=Namespace.Meta) extends VocabPartDialect(shortName,namespace = namespace){
   val idProperty: DialectPropertyMapping = str("id").copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true)
@@ -85,7 +85,7 @@ class VocabularyRefiner extends Refiner{
   }
 }
 
-object VocabularyLanguageDefinition extends Dialect("Vocabulary", Vocabulary, resolver = (root: Root) => new BasicResolver(root, List(Vocabulary.externals))){
+object VocabularyLanguageDefinition extends Dialect("RAML 1.0 Vocabulary", "", Vocabulary, resolver = (root: Root) => new BasicResolver(root, List(Vocabulary.externals))){
   refiner = {
     val ref = new VocabularyRefiner()
     Some(ref)

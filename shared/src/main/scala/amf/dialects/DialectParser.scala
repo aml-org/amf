@@ -59,7 +59,7 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
 
   def boolean(m: DialectPropertyMapping): Option[Boolean] =
     fields.get(m.field()) match {
-      case scalar: AmfScalar => Option(scalar.value.asInstanceOf[Boolean])
+      case scalar: AmfScalar => Option(scalar.toString.toBoolean)
       case _                 => None
     }
 
