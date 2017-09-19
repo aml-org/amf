@@ -1,6 +1,8 @@
 package amf.dialects
 
-import amf.remote.Platform
+import amf.compiler.AMFCompiler
+import amf.remote.{Platform, RamlYamlHint}
+
 import scala.concurrent.Future
 
 /**
@@ -8,9 +10,9 @@ import scala.concurrent.Future
   */
 class DialectRegistry {
 
-  private var map:Map[String,Dialect] = Map()
+  protected var map: Map[String,Dialect] = Map()
 
-  def knowsHeader(h:String): Boolean = map.contains(h.trim)
+  def knowsHeader(h: String): Boolean = map.contains(h.trim)
 
   def add(dialect: Dialect): DialectRegistry = {
     map = map + (dialect.header -> dialect)
@@ -21,12 +23,16 @@ class DialectRegistry {
 }
 
 
-abstract class PlatformDialectRegistry extends DialectRegistry {
-  def add(p: Platform, uri: String): Future[Dialect]
+abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {
+
+  add(VocabularyLanguageDefinition)
+  add(DialectLanguageDefinition)
+
+  def registerDialect(uri: String): Future[Dialect]
 }
 
-object DialectRegistry{
-  val default = new DialectRegistry()
+object DialectRegistry {
+  val default: DialectRegistry = new DialectRegistry()
     .add(VocabularyLanguageDefinition)
     .add(DialectLanguageDefinition)
 }

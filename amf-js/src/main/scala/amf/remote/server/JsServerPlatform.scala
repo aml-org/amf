@@ -1,5 +1,6 @@
 package amf.remote.server
 
+import amf.dialects.JSDialectRegistry
 import amf.interop.{Path, _}
 import amf.lexer.CharSequenceStream
 import amf.remote.File.FILE_PROTOCOL
@@ -77,4 +78,6 @@ class JsServerPlatform extends Platform {
   }
 
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
+
+  override val dialectsRegistry = JSDialectRegistry(this)
 }

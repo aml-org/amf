@@ -27,7 +27,8 @@ nodeMappings:
         pattern: "^function\(.+\)\s*\{.+\}$"
       libraries:
         propertyTerm: shacl.jsLibrary
-        range: string[]
+        range: string
+        allowMultiple: true
       functionName:
         propertyTerm: shacl.jsFunctionName
         range: string
@@ -44,35 +45,36 @@ nodeMappings:
         mandatory: true
         range: string
       pattern:
-        propertyTerm: shacl.pattern?
+        propertyTerm: shacl.pattern
         range: string
       maxCount:
-        propertyTerm: shacl.maxCount?
+        propertyTerm: shacl.maxCount
         range: number
       minCount:
-        propertyTerm: shacl.minCount?
+        propertyTerm: shacl.minCount
         range: number
       minExclusive:
-        propertyTerm: shacl.minExclusive?
+        propertyTerm: shacl.minExclusive
         range: number
       maxExclusive:
-        propertyTerm: shacl.maxExclusive?
+        propertyTerm: shacl.maxExclusive
         range: number
       minInclusive:
-        propertyTerm: shacl.minInclusive?
+        propertyTerm: shacl.minInclusive
         range: number
       maxInclusive:
-        propertyTerm: shacl.maxInclusive?
+        propertyTerm: shacl.maxInclusive
         range: number
       in:
-        propertyTerm: shacl.in?
-        range: string[]
+        propertyTerm: shacl.in
+        allowMultiple: true
+        range: string
 
   shapeValidationNode:
     classTerm: validation.Validation
     mapping:
       name:
-        propertyTerm: schema-org.name?
+        propertyTerm: schema-org.name
         range: string
       message:
         propertyTerm: shacl.message
@@ -84,19 +86,19 @@ nodeMappings:
         range: string
         allowMultiple: true
       propertyConstraints:
-        propertyTerm: shacl.property?
+        propertyTerm: shacl.property
         asMap: true
         hash: validation.ramlPropertyId
         range: propertyConstraintNode
       functionConstraint:
-        propertyTerm: shacl.js?
+        propertyTerm: shacl.js
         range: functionConstraintNode
 
   queryValidationNode:
     classTerm: validation.Validation
     mapping:
       name:
-        propertyTerm: schema-org.name?
+        propertyTerm: schema-org.name
         range: string
       message:
         propertyTerm: shacl.message
@@ -114,29 +116,29 @@ nodeMappings:
         mandatory: true
         range: string
       description:
-        propertyTerm: schema-org.description?
+        propertyTerm: schema-org.description
         range: string
       extends:
-        propertyTerm: validation.extendsProfile?
+        propertyTerm: validation.extendsProfile
         range: string
       violation:
-        propertyTerm: validation.setSeverityViolation?
+        propertyTerm: validation.setSeverityViolation
         range: string
         allowMultiple: true
       info:
-        propertyTerm: validation.setSeverityInfo?
+        propertyTerm: validation.setSeverityInfo
         range: string
         allowMultiple: true
       warning:
-        propertyTerm: validation.setSeverityWarning?
+        propertyTerm: validation.setSeverityWarning
         range: string
         allowMultiple: true
       disabled:
-        propertyTerm: validation.disableValidation?
+        propertyTerm: validation.disableValidation
         range: string
         allowMultiple: true
       validations:
-        propertyTerm: validation.validations?
+        propertyTerm: validation.validations
         asMap: true
         hash: schema-org.name
         range: shapeValidationNode

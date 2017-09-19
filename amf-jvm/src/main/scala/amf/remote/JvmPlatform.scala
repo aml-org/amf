@@ -3,6 +3,7 @@ package amf.remote
 import java.io.FileWriter
 import java.net.{HttpURLConnection, URI}
 
+import amf.dialects.JVMDialectRegistry
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -57,6 +58,8 @@ class JvmPlatform extends Platform {
   override def tmpdir(): String = System.getProperty("java.io.tmpdir")
 
   override def resolvePath(path: String): String = new URI(path).normalize.toString
+
+  override val dialectsRegistry = JVMDialectRegistry(this)
 }
 
 object PlatformBuilder {

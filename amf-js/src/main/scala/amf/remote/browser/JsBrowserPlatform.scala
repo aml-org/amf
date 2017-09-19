@@ -1,5 +1,6 @@
 package amf.remote.browser
 
+import amf.dialects.JSDialectRegistry
 import amf.lexer.CharSequenceStream
 import amf.remote.{Content, Platform}
 import org.scalajs.dom.ext.Ajax
@@ -40,4 +41,6 @@ class JsBrowserPlatform extends Platform {
   }
 
   override def resolvePath(path: String): String = path
+
+  override val dialectsRegistry = JSDialectRegistry(this)
 }

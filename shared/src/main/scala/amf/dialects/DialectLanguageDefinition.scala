@@ -100,4 +100,4 @@ case class DialectLanguageResolver(override val root:Root) extends BasicResolver
   }
 }
 
-object DialectLanguageDefinition extends Dialect("Dialect", DialectDefinition, r => { DialectLanguageResolver(r) } ){}
+object DialectLanguageDefinition extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, r => { DialectLanguageResolver(r) } ){}

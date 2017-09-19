@@ -14,12 +14,13 @@ import scala.collection.mutable
   * Created by Pavel Petrochenko on 12/09/17.
   */
 case class Dialect(name:String,
+                   version: String,
                    root: DialectNode,
                    resolver: ResolverFactory = NullReferenceResolverFactory ) {
   root.dialect = Some(this)
 
   var refiner: Option[Refiner] = None
-  def header: String = "#%RAML 1.0 " + name
+  def header: String = ("#%" + name + " " + version).trim
 }
 
 trait ResolverFactory {

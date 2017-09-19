@@ -53,21 +53,21 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
 //  }
 
   test("Parse Vocabulary") {
-    assertCycle("raml_async.raml","raml_async.json",AmfJsonHint, Amf);
+    assertCycle("raml_async.raml","raml_async.json",RamlYamlHint, Amf);
   }
 
   test("Store Vocabulary") {
-    assertCycle("raml_async.raml","raml_async-gold.raml",AmfJsonHint, Raml);
+    assertCycle("raml_async.raml","raml_async-gold.raml",RamlYamlHint, Raml);
   }
   test("Parse Dialect") {
-    assertCycle("validation_dialect.raml","validation_dialect.json",AmfJsonHint, Amf);
+    assertCycle("validation_dialect.raml","validation_dialect.json",RamlYamlHint, Amf);
   }
 
   test("Store Dialect") {
-    assertCycle("validation_dialect.raml","validation_dialect-gold.raml",AmfJsonHint, Raml);
+    assertCycle("validation_dialect.raml","validation_dialect-gold.raml",RamlYamlHint, Raml);
   }
 
   test("Store Dialect 2") {
-    assertCycle("mule_config_dialect.raml","mule_config_dialect_gold.raml",AmfJsonHint, Raml);
+    assertCycle("mule_config_dialect.raml","mule_config_dialect_gold.raml",RamlYamlHint, Raml);
   }
 }

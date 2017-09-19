@@ -63,10 +63,11 @@ class DialectLoader {
         }
 
         val dialect = for {
-          dialectName <- domainEntity.string(DialectDefinition.dialectProperty)
-          dialectNode <- dialectMap.get(encodedRootEntity)
+          dialectName    <- domainEntity.string(DialectDefinition.dialectProperty)
+          dialectVersion <- domainEntity.string(DialectDefinition.version)
+          dialectNode    <- dialectMap.get(encodedRootEntity)
         } yield {
-          Dialect(dialectName, dialectNode)
+          Dialect(dialectName, dialectVersion, dialectNode)
         }
 
         dialect match {
@@ -106,6 +107,17 @@ class DialectLoader {
     domainEntity.string(PropertyMapping.propertyTerm).foreach { term =>
       NM(term) foreach { ns =>
         res = res.copy(namespace = Some(ns.namespace), rdfName = Some(ns.name))
+      }
+    }
+
+    domainEntity.string(PropertyMapping.hash).foreach { term =>
+      NM(term) foreach { ns =>
+        val hashPropertyMapping =  DialectPropertyMapping(
+          ns.name,
+          builtins.buitInType(TypeBuiltins.STRING).get,
+          namespace = Some(ns.namespace),
+          rdfName = Some(ns.name))
+        res = res.copy(hash = Some(hashPropertyMapping))
       }
     }
 

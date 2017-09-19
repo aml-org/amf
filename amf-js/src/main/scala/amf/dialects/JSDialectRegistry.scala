@@ -4,9 +4,9 @@ import amf.remote.{Platform, RamlYamlHint}
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
-class JSDialectRegistry extends PlatformDialectRegistry {
-  override def add(p: Platform, uri: String) = {
-    AMFCompiler(uri, p, RamlYamlHint)
+class JSDialectRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
+  def registerDialect(uri: String) =  {
+    AMFCompiler(uri, platform, RamlYamlHint)
       .build()
       .map { compiled =>
         val dialect = new DialectLoader().loadDialect(compiled)
@@ -14,4 +14,8 @@ class JSDialectRegistry extends PlatformDialectRegistry {
         dialect
       }
   }
+}
+
+object JSDialectRegistry {
+  def apply(platform: Platform): JSDialectRegistry = new JSDialectRegistry(platform)
 }
