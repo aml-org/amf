@@ -90,11 +90,18 @@ class DialectLoader {
 
 
   private def fillHashes(propertyMap: mutable.Map[DialectPropertyMapping, PropertyMappingObject]) = {
-    propertyMap.keys.foreach(dialectPropertyMapping =>
-      propertyMap.get(dialectPropertyMapping).foreach(v => v.hash.map(hash => dialectPropertyMapping.rangeAsDialect.map(rangeNode=>
-          rangeNode.props.values.filter(_.iri() == hash).foreach(connectHash(dialectPropertyMapping,  _))
-        )
-    )))
+    for {
+      (dialectPropertyMapping, v) <- propertyMap
+      hash <- v.hash
+    } yield dialectPropertyMapping.range match {
+      case rangeNode: DialectNode =>
+        for {
+          property <- rangeNode.mappings() if property.iri() == hash
+        } yield {
+          connectHash(dialectPropertyMapping,property);
+        }
+      case _ => // ignore
+    }
   }
 
   private def connectHash(hashedProperty: DialectPropertyMapping,  hashProperty: DialectPropertyMapping) = {
