@@ -63,7 +63,8 @@ case class DialectPropertyMapping(name: String,
                                   rdfName: Option[String] = None,
                                   jsonld: Boolean = true,
                                   owningNode: Option[DialectNode]=None,
-                                  scalaNameOverride:Option[String]=None
+                                  scalaNameOverride:Option[String]=None,
+                                  allowInplace: Boolean=false
                                  ) {
 
   def isRef: Boolean = referenceTarget.isDefined

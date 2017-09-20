@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.common.{AMFAST, AMFToken}
 import amf.common.AMFToken.SequenceToken
 import amf.compiler.Root
 import amf.document.Document
@@ -172,12 +173,25 @@ class DialectParser(val dialect: Dialect, val root: Root) {
           } else if (mapping.collection) {
             parseCollection(mapping, entryNode, domainEntity)
           } else if (!mapping.isScalar) {
-            parseScalar(mapping, entryNode, domainEntity)
+            parseSingleObject(mapping, entryNode, domainEntity)
           } else {
-            setScalar(domainEntity, mapping, ValueNode(entryNode.value))
+            parseScalarValue(domainEntity, mapping, entryNode)
           }
         })
       })
+    }
+  }
+
+  private def parseScalarValue(domainEntity: DomainEntity, mapping: DialectPropertyMapping, entryNode: EntryNode) = {
+    if (entryNode.value.is(AMFToken.MapToken) && mapping.allowInplace) {
+      mapping.referenceTarget.foreach(trg => {
+        val child = DomainEntity(Option(entryNode.key.content), trg, Fields(), Annotations(entryNode.ast))
+        domainEntity.set(mapping.field(), child)
+        parseNode(Entries(entryNode.value), child)
+      })
+    }
+    else {
+      setScalar(domainEntity, mapping, ValueNode(entryNode.value))
     }
   }
 
@@ -191,7 +205,11 @@ class DialectParser(val dialect: Dialect, val root: Root) {
         val field = mapping.field()
         parentDomainEntity.add(field, domainEntity)
         domainEntity.set(mapping.hash.get.field(), classTermName)
-        parseNode(Entries(entry.value), domainEntity);
+        entry.value match {
+          case v:AMFAST =>  parseNode(Entries(v), domainEntity);
+          case _ =>
+        }
+
     }
   }
 
@@ -226,7 +244,7 @@ class DialectParser(val dialect: Dialect, val root: Root) {
     }
   }
 
-  private def parseScalar(mapping: DialectPropertyMapping, entryNode: EntryNode, parentDomainEntity: DomainEntity): Unit = {
+  private def parseSingleObject(mapping: DialectPropertyMapping, entryNode: EntryNode, parentDomainEntity: DomainEntity): Unit = {
     mapping.range match {
       case node: DialectNode =>
         val domainEntity = DomainEntity(Option(entryNode.key.content), node, Fields(), Annotations(entryNode.ast))

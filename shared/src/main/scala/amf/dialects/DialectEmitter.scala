@@ -4,7 +4,7 @@ import amf.common.AMFAST
 import amf.common.AMFToken.{Comment, Root}
 import amf.document.{BaseUnit, Document}
 import amf.domain.FieldEntry
-import amf.model.AmfArray
+import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
 import amf.spec.{ASTEmitterHelper, Emitter}
 
@@ -27,13 +27,24 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
     case _                  => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
   }
 
+  private def emitRef(parent:DialectPropertyMapping,element: AmfElement):Unit = {
+    element match{
+      case e:DomainEntity => new ObjectEmitter(e).emit()
+      case s:AmfScalar => emitRef(parent, s.toString)
+      case _ => throw new Exception("References can only be emitted from entities or scalars")
+    }
+  }
+
   case class RefValueEmitter(parent: DialectPropertyMapping, key: String, field: FieldEntry) extends Emitter {
     override def emit(): Unit = {
       sourceOr(field.value, entry { () =>
         raw(key)
-        emitRef(parent,field.scalar.toString)
+        val element = field.element
+        emitRef(parent,element)
       })
     }
+
+
 
     override def position(): Position = pos(field.value.annotations)
   }
@@ -46,10 +57,10 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
         raw(key)
         field.array.values match {
           case Seq(member) =>
-            emitRef(parent, member.toString)
+            emitRef(parent, member)
           case members if members.nonEmpty =>
             array(() => {
-              members.foreach(value => { emitRef(parent, value.toString) })
+              members.foreach(value => { emitRef(parent, value) })
             })
           case _ => // ignore
         }
@@ -122,7 +133,7 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
       }
       else {
         if (mapping.collection) throw new RuntimeException("Not implemented yet")
-        else if (mapping.hash.isDefined) {
+        else if (mapping.isMap) {
           value match {
             case array: AmfArray =>
               res = Some(ObjectMapEmmiter(mapping, array))
