@@ -55,20 +55,26 @@ case class ASTEmitter() {
     this
   }
 
-  def scalar(text: String, tag: YTag): this.type = {
+  def comment(text: String): this.type = {
+    process(BeginComment)
+    process(EndComment, text)
+    this
+  }
+
+  def scalar(text: String, tag: YType): this.type = {
     process(BeginNode)
     process(BeginTag)
-    process(EndTag, tag.tag)
+    process(EndTag, tag.tag.text)
     process(BeginScalar)
     process(EndScalar, text)
     process(EndNode)
     this
   }
 
-  def scalar(value: Any, tag: YTag): this.type = {
+  def scalar(value: Any, tag: YType): this.type = {
     tag match {
-      case YTag.Str => scalar(value.toString.quote, tag)
-      case _        => scalar(value.toString, tag)
+      case YType.Str => scalar(value.toString.quote, tag)
+      case _         => scalar(value.toString, tag)
     }
   }
 
@@ -80,12 +86,15 @@ case class ASTEmitter() {
       case EndDocument =>
         addToken(token)
         document = new YDocument(buildParts())
-      case BeginNode | BeginSequence | BeginScalar | BeginMapping | BeginPair | BeginAlias | BeginAnchor | BeginTag =>
+      case BeginComment | BeginNode | BeginSequence | BeginScalar | BeginMapping | BeginPair | BeginAlias |
+          BeginAnchor | BeginTag =>
         push()
         addToken(token)
       case EndSequence =>
         addToken(token)
         pop(new YSequence(buildParts()))
+      case EndComment =>
+        pop(new YComment(text, InputRange.Zero, getTokens))
       case EndNode =>
         addToken(token)
         pop(YNode(buildParts(), mutable.Map()))

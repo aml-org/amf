@@ -23,7 +23,6 @@ import amf.spec.common.BaseSpecParser._
 import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model.YTag.Null
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -444,8 +443,8 @@ case class PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload
       case _ =>
     }
 
-    entry.value.tag match {
-      case Null =>
+    entry.value.tag.tagType match {
+      case YType.Null =>
       case _ =>
         RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
           .parse()

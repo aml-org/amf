@@ -2,7 +2,7 @@ package amf.parser
 
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
-import org.yaml.model.YTag
+import org.yaml.model.{YTag, YType}
 
 /**
   * [[ASTEmitter]] test
@@ -15,14 +15,14 @@ class ASTEmitterTest extends FunSuite {
     val document = emitter.document { () =>
       emitter.mapping { () =>
         emitter.entry { () =>
-          emitter.scalar("a", YTag.Str)
-          emitter.scalar(1, YTag.Int)
+          emitter.scalar("a", YType.Str)
+          emitter.scalar(1, YType.Int)
         }
         emitter.entry { () =>
-          emitter.scalar("b", YTag.Str)
+          emitter.scalar("b", YType.Str)
           emitter.sequence { () =>
-            emitter.scalar(1, YTag.Int)
-            emitter.scalar(2, YTag.Int)
+            emitter.scalar(1, YType.Int)
+            emitter.scalar(2, YType.Int)
           }
         }
       }

@@ -29,33 +29,20 @@ class JsonGenerator {
         writer.line().outdent().write(']')
       case entry: YMapEntry => visitEntry(entry)
       case node: YNode      => visitNode(node)
-      case any              => println(any)
     }
   }
 
   private def visitNode(node: YNode) = {
-    node.tag match {
-      case ScalarYTag(tag) => visitScalar(node.value.toScalar, tag)
-      case _               => visit(node.value)
+    node.tag.tagType match {
+      case tag @ (YType.Str | YType.Int | YType.Bool | YType.Float) => visitScalar(node.value.toScalar, tag)
+      case _                                                        => visit(node.value)
     }
   }
 
-  private object ScalarYTag {
-    def unapply(tag: YTag): Option[YTag] = {
-      tag.tag match {
-        case "!!str"   => Some(YTag.Str)
-        case "!!int"   => Some(YTag.Int)
-        case "!!float" => Some(YTag.Float)
-        case "!!bool"  => Some(YTag.Bool)
-        case _         => None
-      }
-    }
-  }
-
-  private def visitScalar(scalar: YScalar, tag: YTag) = {
+  private def visitScalar(scalar: YScalar, tag: YType) = {
     tag match {
-      case t if t.tag == YTag.Str.tag => writer.quoted(scalar.text)
-      case _                          => writer.write(scalar.text)
+      case YType.Str => writer.quoted(scalar.text)
+      case _         => writer.write(scalar.text)
     }
   }
 

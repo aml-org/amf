@@ -14,7 +14,7 @@ import amf.parser.Position.ZERO
 import amf.parser.{ASTEmitter, Position}
 import amf.spec.{Emitter, SpecOrdering}
 import amf.vocabulary.Namespace
-import org.yaml.model.YTag
+import org.yaml.model.YType
 
 trait AnnotationFormat {}
 
@@ -34,13 +34,15 @@ trait BaseSpecEmitter {
     })
   }
 
-  protected def raw(content: String, tag: YTag = YTag.Str): Unit = emitter.scalar(content, tag)
+  protected def raw(content: String, tag: YType = YType.Str): Unit = emitter.scalar(content, tag)
 
   protected def entry(inner: () => Unit): Unit = emitter.entry(inner)
 
   protected def array(inner: () => Unit): Unit = emitter.sequence(inner)
 
   protected def map(inner: () => Unit): Unit = emitter.mapping(inner)
+
+  protected def comment(text: String): Unit = emitter.comment(text)
 
   /** Emit a single value from an array as an entry. */
   case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
@@ -60,7 +62,7 @@ trait BaseSpecEmitter {
     override def position(): Position = pos(v.annotations)
   }
 
-  case class ValueEmitter(key: String, f: FieldEntry, tag: YTag = YTag.Str) extends Emitter {
+  case class ValueEmitter(key: String, f: FieldEntry, tag: YType = YType.Str) extends Emitter {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>
         raw(key)
@@ -80,7 +82,7 @@ trait BaseSpecEmitter {
     inner
   }
 
-  case class EntryEmitter(key: String, value: String, tag: YTag = YTag.Str, position: Position = Position.ZERO)
+  case class EntryEmitter(key: String, value: String, tag: YType = YType.Str, position: Position = Position.ZERO)
       extends Emitter {
     override def emit(): Unit = {
       entry { () =>
@@ -160,9 +162,9 @@ trait BaseSpecEmitter {
     def emitScalar(scalar: DataScalarNode): Unit = {
       scalar.dataType match {
         case Some(t) if t == xsdString  => raw(scalar.value)
-        case Some(t) if t == xsdInteger => raw(scalar.value, YTag.Int)
-        case Some(t) if t == xsdFloat   => raw(scalar.value, YTag.Float)
-        case Some(t) if t == xsdBoolean => raw(scalar.value, YTag.Bool)
+        case Some(t) if t == xsdInteger => raw(scalar.value, YType.Int)
+        case Some(t) if t == xsdFloat   => raw(scalar.value, YType.Float)
+        case Some(t) if t == xsdBoolean => raw(scalar.value, YType.Bool)
         case Some(t) if t == xsdNil     => raw("null")
         case _                          => raw(scalar.value)
       }

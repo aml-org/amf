@@ -82,8 +82,8 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
 
   def ramlLinks(part: YPart): Unit = {
     part match {
-      case node: YNode if node.tag.tag == "!include" => ramlInclude(node)
-      case _                                         => part.children.foreach(ramlLinks)
+      case node: YNode if !node.tag.synthesized && node.tag.text == "!include" => ramlInclude(node)
+      case _                                                                   => part.children.foreach(ramlLinks)
     }
   }
 

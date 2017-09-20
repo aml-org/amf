@@ -20,7 +20,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   test("Test simple Oas generation") {
     val root = ast(`document/api/bare`, Oas)
     assertNode(root, ("info", List(("title", "test"), ("description", "test description"))))
-
   }
 
   test("Test complete Oas generation") {

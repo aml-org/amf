@@ -47,15 +47,15 @@ case class ExtensionParser(annotationRamlName: String, parent: String, entry: YM
 
 case class DataNodeParser(value: YNode, parent: Option[String] = None) {
   def parse(): DataNode = {
-    value.tag match {
-      case YTag.Str   => parseScalar(value.value.toScalar, "string")
-      case YTag.Int   => parseScalar(value.value.toScalar, "integer")
-      case YTag.Float => parseScalar(value.value.toScalar, "float")
-      case YTag.Bool  => parseScalar(value.value.toScalar, "boolean")
-      case YTag.Null  => parseScalar(value.value.toScalar, "nil")
-      case YTag.Seq   => parseArray(value.value.toSequence)
-      case YTag.Map   => parseObject(value.value.toMap)
-      case other      => throw new Exception(s"Cannot parse data node from AST structure $other")
+    value.tag.tagType match {
+      case YType.Str   => parseScalar(value.value.toScalar, "string")
+      case YType.Int   => parseScalar(value.value.toScalar, "integer")
+      case YType.Float => parseScalar(value.value.toScalar, "float")
+      case YType.Bool  => parseScalar(value.value.toScalar, "boolean")
+      case YType.Null  => parseScalar(value.value.toScalar, "nil")
+      case YType.Seq   => parseArray(value.value.toSequence)
+      case YType.Map   => parseObject(value.value.toMap)
+      case other       => throw new Exception(s"Cannot parse data node from AST structure $other")
     }
   }
 

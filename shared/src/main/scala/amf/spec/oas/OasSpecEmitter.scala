@@ -16,7 +16,7 @@ import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model.{YDocument, YTag}
+import org.yaml.model.{YDocument, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -356,7 +356,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
 
           fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f, YTag.Bool))
+          fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f, YType.Bool))
 
           fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
 
@@ -572,7 +572,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required)
-            .map(f => result += ValueEmitter("required", f, YTag.Bool))
+            .map(f => result += ValueEmitter("required", f, YType.Bool))
 
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
@@ -629,7 +629,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
-            .map(f => result += ValueEmitter("required", f, YTag.Bool))
+            .map(f => result += ValueEmitter("required", f, YType.Bool))
 
           fs.entry(ParameterModel.Schema)
             .map(f =>

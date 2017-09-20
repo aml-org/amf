@@ -22,7 +22,7 @@ import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -51,8 +51,8 @@ case class RamlSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
     val declares = DeclarationsEmitter(ordering).emitters
 
     emitter.document { () =>
-//      raw("%RAML 1.0", Comment) todo comments
       map { () =>
+        comment("%RAML 1.0")
         traverse(ordering.sorted(apiEmitters ++ declares))
       }
     }

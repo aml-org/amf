@@ -16,7 +16,7 @@ import amf.parser.ASTEmitter
 import amf.shape._
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
-import org.yaml.model.{YDocument, YTag}
+import org.yaml.model.{YDocument, YType}
 
 import scala.collection.mutable.ListBuffer
 
@@ -137,10 +137,10 @@ object GraphEmitter {
           scalar(v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Bool =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, YTag.Bool)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
           sources(v)
         case Type.Int =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, YTag.Int)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
         case a: SortedArray =>
           map { () =>
@@ -202,21 +202,21 @@ object GraphEmitter {
       }
     }
 
-    private def scalar(content: String, token: YTag = YTag.Str, inArray: Boolean = false): Unit = {
+    private def scalar(content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
       if (inArray) {
-        value(content, token)
+        value(content, tag)
       } else {
         array { () =>
-          value(content, token)
+          value(content, tag)
         }
       }
     }
 
-    private def value(content: String, token: YTag): Unit = {
+    private def value(content: String, tag: YType): Unit = {
       map { () =>
         entry { () =>
           raw("@value")
-          raw(content, token)
+          raw(content, tag)
         }
       }
     }
@@ -246,7 +246,7 @@ object GraphEmitter {
       raw(v)
     }
 
-    private def raw(content: String, tag: YTag = YTag.Str): Unit = emitter.scalar(content, tag)
+    private def raw(content: String, tag: YType = YType.Str): Unit = emitter.scalar(content, tag)
 
     private def entry(inner: () => Unit): Unit = emitter.entry(inner)
 

@@ -29,9 +29,10 @@ class YamlGenerator {
         writer.line().indent()
         visitChildren(seq, "- ", forceLine = false)
         writer.outdent()
-      case entry: YMapEntry => visitEntry(entry)
-      case node: YNode      => visit(node.value)
-      case scalar: YScalar  => writer.write(scalar.text)
+      case entry: YMapEntry  => visitEntry(entry)
+      case node: YNode       => visit(node.value)
+      case scalar: YScalar   => writer.write(scalar.text)
+      case comment: YComment => writer.write("#" + comment.metaText)
     }
   }
 
