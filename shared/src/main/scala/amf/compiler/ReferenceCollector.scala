@@ -96,6 +96,9 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
 }
 
 case class Reference(url: String, kind: Kind, ast: YAggregate) {
+
+  def isRemote: Boolean = !url.startsWith("#")
+
   def resolve(remote: Platform, context: Context, cache: Cache, hint: Hint): Future[BaseUnit] = {
     AMFCompiler(url, remote, hint + kind, Some(context), Some(cache))
       .build()

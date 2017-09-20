@@ -91,7 +91,7 @@ case class ASTEmitter() {
         pop(YNode(buildParts(), mutable.Map()))
       case EndScalar =>
         addToken(token)
-        pop(new YScalar(text, true, getTokens))
+        pop(new YScalar(text, true, InputRange.Zero, getTokens))
       case EndMapping =>
         addToken(token)
         pop(new YMap(buildParts()))
@@ -100,7 +100,7 @@ case class ASTEmitter() {
         pop(YMapEntry(buildParts()))
       case EndTag =>
         addToken(token)
-        pop(YTag(text, getTokens))
+        pop(YTag(text, InputRange.Zero, getTokens))
       case _ =>
         addToken(token)
     }
@@ -129,7 +129,7 @@ case class ASTEmitter() {
 
   private def addNonContent(buffer: mutable.Buffer[YPart]) = {
     val tks = getTokens
-    if (tks.nonEmpty) buffer += new YNonContent(tks)
+    if (tks.nonEmpty) buffer += new YIgnorable(InputRange.Zero, tks)
   }
 
   private def getTokens: IndexedSeq[YeastToken] = {
@@ -145,5 +145,5 @@ case class ASTEmitter() {
   private def addToken(token: YamlToken): Unit = addToken(TokenData(token, InputRange.Zero, 0, 0))
 
   private def addToken(td: TokenData[YamlToken]): Unit =
-    current.tokens += YeastToken(td.token, td.start, td.end, td.range)
+    current.tokens += YeastToken(td.token, td.start, td.end)
 }

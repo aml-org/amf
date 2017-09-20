@@ -1,21 +1,25 @@
 package amf.emit
 
-import amf.parser.ASTNode
-import amf.remote.{Oas, Raml}
+import amf.client.GenerationOptions
+import amf.common.ListAssertions
+import amf.document.Document
+import amf.parser.{YMapOps, YValueOps}
+import amf.remote.{Oas, Raml, Vendor}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
+import org.yaml.model.YMap
 
-class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
+class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions {
 
   test("Test simple Raml generation") {
     val root = ast(`document/api/bare`, Raml)
-    assertRamlTree(root, List(("title", "test"), ("description", "test description")))
-
+    assertNode(root, ("title", "test"))
+    assertNode(root, ("description", "test description"))
   }
 
   test("Test simple Oas generation") {
     val root = ast(`document/api/bare`, Oas)
-    assertNode(root.children.head, ("info", List(("title", "test"), ("description", "test description"))))
+    assertNode(root, ("info", List(("title", "test"), ("description", "test description"))))
 
   }
 
@@ -23,7 +27,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
     val root = ast(`document/api/basic`, Oas)
 
     assertNode(
-      root.children.head,
+      root,
       ("info",
        List(
          ("title", "test"),
@@ -33,15 +37,15 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
          ("license", List(("url", "licenseUrl"), ("name", "licenseName")))
        ))
     )
-    assertNode(root.children.head, ("schemes", List("http", "http")))
-    assertNode(root.children.head, ("basePath", "api"))
-    assertNode(root.children.head, ("host", "localhost.com"))
-    assertNode(root.children.head, ("consumes", List("application/json")))
-    assertNode(root.children.head, ("produces", List("application/json")))
-    assertNode(root.children.head,
+    assertNode(root, ("schemes", Array("http", "https")))
+    assertNode(root, ("basePath", "api"))
+    assertNode(root, ("host", "localhost.com"))
+    assertNode(root, ("consumes", Array("application/json")))
+    assertNode(root, ("produces", Array("application/json")))
+    assertNode(root,
                ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
 
-    assertNode(root.children.head,
+    assertNode(root,
                ("externalDocs",
                 List(
                   ("url", "creativoWorkUrl"),
@@ -52,22 +56,22 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
 
   test("Test complete Raml generation") {
     val root = ast(`document/api/basic`, Raml)
-    assertNode(root.last, ("title", "test"))
-    assertNode(root.last, ("description", "test description"))
+    assertNode(root, ("title", "test"))
+    assertNode(root, ("description", "test description"))
 
-    assertNode(root.last, ("version", "1.1"))
-    assertNode(root.last, ("(termsOfService)", "termsOfService"))
-    assertNode(root.last, ("(license)", List(("url", "licenseUrl"), ("name", "licenseName"))))
+    assertNode(root, ("version", "1.1"))
+    assertNode(root, ("(termsOfService)", "termsOfService"))
+    assertNode(root, ("(license)", List(("url", "licenseUrl"), ("name", "licenseName"))))
 
-    assertNode(root.last, ("protocols", List("http", "http")))
-    assertNode(root.last, ("baseUri", "localhost.com/api"))
+    assertNode(root, ("protocols", Array("http", "https")))
+    assertNode(root, ("baseUri", "localhost.com/api"))
 
-    assertNode(root.last, ("mediaType", List("application/json")))
+    assertNode(root, ("mediaType", Array("application/json")))
 
-    assertNode(root.last,
+    assertNode(root,
                ("(contact)", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
 
-    assertNode(root.last,
+    assertNode(root,
                ("(externalDocs)",
                 List(
                   ("url", "creativoWorkUrl"),
@@ -77,54 +81,44 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest {
 
   test("Test Raml generation with operations") {
     val root = ast(`document/api/advanced`, Raml)
-    assertNode(root.last,
+    assertNode(root,
                ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get"))))))
   }
 
   test("Test Oas generation with operations") {
     val root = ast(`document/api/advanced`, Oas)
     assertNode(
-      root.last,
+      root,
       ("paths",
        List(("/endpoint", List(("get", List(("description", "test operation get"), ("operationId", "test get"))))))))
   }
 
-//list of triple key -> value
-  def assertRamlTree(root: ASTNode[_], expected: (List[(String, String)])): Assertion = {
-    expected
-      .map(e => {
-        val value = root.last.children
-          .find(c => c.children.head.content.startsWith(e._1))
-        if (value.isEmpty) throwNotFound(e._1)
-        value.get.children(1).content should be(e._2)
-      })
-      .count(a => a != succeed) should be(0)
-  }
-
-  def assertNode(conainter: ASTNode[_], expected: (String, Any)): Assertion = {
-    val infoNode = conainter.children
-      .find(c => c.children.head.content.startsWith(expected._1))
-    if (infoNode.isEmpty) throwNotFound(expected._1)
-    expected._2 match {
-      case x: String => infoNode.get.children(1).content should be(x)
-      case l: List[Any] if l.head.isInstanceOf[String] =>
-        l.map(i => {
-            val maybeN = infoNode.get.children(1).children.find(c => c.content == i)
-            maybeN.isDefined should be(true)
-          })
-          .count(p => p != succeed) should be(0)
-      case l: List[Any] =>
-        l.map(e => { assertNode(infoNode.get.children(1), e.asInstanceOf[(String, Any)]) })
-          .count(e => e != succeed) should be(0)
+  private def assertNode(container: YMap, expected: (String, Any)): Assertion = {
+    expected match {
+      case (k, v) =>
+        container.key(k) match {
+          case Some(entry) =>
+            val value = entry.value.value
+            v match {
+              case x: String => value.toScalar.text should be(x)
+              case l: Array[String] =>
+                val expected = value.toSequence.values.map(_.toScalar.text).toList
+                assert(l.toList, expected)
+              case l: List[Any] =>
+                val obj = value.toMap
+                l.map(e => assertNode(obj, e.asInstanceOf[(String, Any)]))
+            }
+          case None => notFound(k)
+        }
     }
+    succeed
   }
 
-  def throwFail(field: String, expected: String, actual: String): Assertion = {
-    fail(s"Field $field expected: $expected but actual: $actual")
-  }
-
-  def throwNotFound(field: String): Assertion = {
+  private def notFound(field: String): Assertion = {
     fail(s"Field $field not found in tree where was expected to be")
   }
 
+  private def ast(document: Document, vendor: Vendor): YMap = {
+    AMFUnitMaker(document, vendor, GenerationOptions()).value.get.toMap
+  }
 }

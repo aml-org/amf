@@ -30,9 +30,7 @@ class AMFUnitMaker {
     }
   }
 
-  private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): YDocument = {
-    GraphEmitter.emit(unit, options)
-  }
+  private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): YDocument = GraphEmitter.emit(unit, options)
 }
 
 object AMFUnitMaker {

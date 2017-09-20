@@ -1,6 +1,5 @@
 package amf.graph
 
-import amf.common.AMFAST
 import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._

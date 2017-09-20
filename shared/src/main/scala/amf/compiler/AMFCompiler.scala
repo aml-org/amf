@@ -7,7 +7,6 @@ import amf.exception.{CyclicReferenceException, UnableToResolveLexerException}
 import amf.graph.GraphParser
 import amf.json.JsonLexer
 import amf.lexer.AbstractLexer
-import amf.parser.YeastASTBuilder
 import amf.remote.Mimes._
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
@@ -122,29 +121,24 @@ class AMFCompiler private (val url: String,
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
 
   private def parse(content: Content): Future[Root] = {
-    val lexer   = resolveLexer(content)
-    val builder = YeastASTBuilder(lexer, content.url)
-
     val parser = YamlParser(content.stream.toString)
 
-    val document = parser.parse(true) collectFirst { case d: YDocument => d }
+    val parsed = parser.parse(true) collectFirst { case d: YDocument => d }
 
-    document match {
-      case Some(d) =>
+    parsed match {
+      case Some(document) =>
         val vendor = resolveVendor(content)
-        val refs   = new ReferenceCollector(d, vendor).traverse()
+        val refs   = new ReferenceCollector(document, vendor).traverse()
 
-        refs.foreach(link => {
-          references += link.resolve(remote, context, cache, hint)
-        })
+        refs
+          .filter(_.isRemote)
+          .foreach(link => {
+            references += link.resolve(remote, context, cache, hint)
+          })
 
-        Future.sequence(references).map(rs => { Root(d, content.url, rs, vendor) })
+        Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor) })
       case None => Future.failed(new Exception("Unable to parse document."))
     }
-  }
-
-  private def collectReferences(document: YDocument, vendor: Vendor) = {
-    document
   }
 }
 

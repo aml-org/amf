@@ -68,7 +68,7 @@ class JsonGenerator {
   def visitChildren(parent: YPart): Unit = {
     var first = true
     parent.children
-      .filterNot(_.isInstanceOf[YNonContent])
+      .filterNot(_.isInstanceOf[YIgnorable])
       .foreach(c => {
         if (first) {
           visit(c)

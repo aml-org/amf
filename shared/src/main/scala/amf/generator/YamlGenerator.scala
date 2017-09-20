@@ -27,24 +27,24 @@ class YamlGenerator {
         writer.outdent()
       case seq: YSequence =>
         writer.line().indent()
-        visitChildren(seq, "-", forceLine = false)
+        visitChildren(seq, "- ", forceLine = false)
         writer.outdent()
       case entry: YMapEntry => visitEntry(entry)
       case node: YNode      => visit(node.value)
-      case scalar: YScalar  => writer.write(' ').write(scalar.text)
+      case scalar: YScalar  => writer.write(scalar.text)
     }
   }
 
   private def visitEntry(entry: YMapEntry): Unit = {
     visit(entry.key)
-    writer.write(":")
+    writer.write(": ")
     visit(entry.value)
   }
 
   def visitChildren(parent: YPart, prefix: String = "", forceLine: Boolean = true): Unit = {
     var first = true
     parent.children
-      .filterNot(_.isInstanceOf[YNonContent])
+      .filterNot(_.isInstanceOf[YIgnorable])
       .foreach(c => {
         if (!first || forceLine) { writer.line() }
         writer.write(prefix)

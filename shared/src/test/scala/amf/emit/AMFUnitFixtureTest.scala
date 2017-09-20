@@ -6,6 +6,7 @@ import amf.document.Document
 import amf.domain._
 import amf.remote.Vendor
 import amf.unsafe.PlatformSecrets
+import org.yaml.model.YDocument
 
 /**
   *
@@ -19,11 +20,6 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   def `document/api/advanced`: Document = doc(advanced())
 
   def `document/api/full`: Document = doc(advanced())
-
-  def ast(document: Document, vendor: Vendor): AMFAST = {
-    AMFUnitMaker(document, vendor, GenerationOptions())
-    null
-  }
 
   private def bare(): WebApi = {
     WebApi()

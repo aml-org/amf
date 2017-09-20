@@ -1,6 +1,7 @@
 package amf.parser
 
 import amf.parser.Position.ZERO
+import org.mulesoft.lexer.InputRange
 
 /** Defines a position on an input */
 case class Position(line: Int, column: Int) extends Comparable[Position] {
@@ -47,6 +48,8 @@ object Position {
 object Range {
 
   object NONE extends Range(ZERO, ZERO)
+
+  def apply(r: InputRange): Range = new Range(Position(r.lineFrom, r.columnFrom), Position(r.lineTo, r.columnTo))
 
   def apply(start: Position, delta: Int): Range = new Range(start, Position(start.line, start.column + delta))
 

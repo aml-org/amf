@@ -7,18 +7,16 @@ import org.scalatest.{Assertion, Assertions}
   */
 trait ListAssertions extends Assertions {
 
-  def assert[E](left: List[E], right: List[E]): Assertion = {
-//    println("Actual: ", left.toString)
-//    println("Expect: ", right.toString)
-    if (left.size == right.size) {
-      left.zipWithIndex.foreach {
-        case (actual, index) =>
-          val expected = right(index)
-          if (actual != expected) {
-            fail(s"$actual did not equal $expected at index $index")
+  def assert[E](actual: List[E], expected: List[E]): Assertion = {
+    if (actual.size == expected.size) {
+      actual.zipWithIndex.foreach {
+        case (a, index) =>
+          val e = expected(index)
+          if (a != e) {
+            fail(s"$a did not equal $e at index $index")
           }
       }
-      succeed
-    } else fail(s"$left did not contain the same elements that \n$right")
+    } else fail(s"$actual did not contain the same elements that \n$expected")
+    succeed
   }
 }

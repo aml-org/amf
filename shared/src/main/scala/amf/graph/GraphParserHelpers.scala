@@ -18,15 +18,15 @@ trait GraphParserHelpers {
   private def parseSourceNode(map: YMap): SourceMap = {
     val result = SourceMap()
     map.entries.foreach(entry => {
-      entry.key.value.toScalar.text.unquote match {
+      entry.key.value.toScalar.text match {
         case AnnotationName(annotation) =>
           val consumer = result.annotation(annotation)
-          entry.value.value.toSequence.values.foreach(entry => {
-            val element = entry.toMap
-            val k       = element.key(Value.value.iri()).get
-            val v       = element.key(Element.value.iri()).get
-            consumer(value(Value.`type`, k.key.value).toScalar.text.unquote,
-                     value(Element.`type`, v.value.value).toScalar.text.unquote)
+          entry.value.value.toSequence.values.foreach(e => {
+            val element = e.toMap
+            val k       = element.key(Element.value.iri()).get
+            val v       = element.key(Value.value.iri()).get
+            consumer(value(Element.`type`, k.value.value).toScalar.text,
+                     value(Value.`type`, v.value.value).toScalar.text)
           })
         case _ => // Unknown annotation identifier
       }
