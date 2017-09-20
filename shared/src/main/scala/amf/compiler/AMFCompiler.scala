@@ -80,7 +80,7 @@ class AMFCompiler private (val url: String,
 
   private def resolveRamlUnit(root: Root) = {
     //todo syaml read comment
-//    root.document.head match {
+//    header(root.document) match {
 //      case c if c.is(Comment) && RAML_10 == c.content => makeDocument(root)
 //      case _                                          => throw new UnableToResolveUnitException
 //    }
