@@ -16,7 +16,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   val basePath="file://shared/src/test/resources/vocabularies/"
 
-  test("Loading and serialiing validations") {
+  test("Loading and serializing validations") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
     val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
@@ -25,6 +25,31 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
+  }
+
+
+  test("Loading and serializing validations with inplace definition of encodes") {
+    val validation = Validation(platform)
+    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed2.raml")
+      .flatMap(unit =>
+        validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
+    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .zip(expected)
+      .map(checkDiff)
+    assert(true)
+  }
+
+  test("Loading and serializing validations with inplace definition of range") {
+    val validation = Validation(platform)
+    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed3.raml")
+      .flatMap(unit =>
+        validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
+    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .zip(expected)
+      .map(checkDiff)
+    assert(true)
   }
 
   test("HERE_HERE Load dialect") {

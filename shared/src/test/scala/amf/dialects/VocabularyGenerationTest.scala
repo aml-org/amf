@@ -73,6 +73,10 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
 
+  test("Store Dialect 3") {
+    assertCycle("validation_dialect_fixed2.raml","validation_dialect_fixed2_gold.raml",RamlYamlHint, Raml);
+  }
+
 
 
 }

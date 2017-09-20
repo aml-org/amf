@@ -21,6 +21,39 @@ class TopLevelGenerator(d:Dialect) {
 
   def generateProperty(d: DialectNode, p: DialectPropertyMapping): String =s"def ${escape(p.name)}():${signature(d,p)}= ${impl(d,p)}\n"
 
+  def generateRefResolver(d: DialectNode, p: DialectPropertyMapping): String =
+    s"def ${escape("resolved" + p.name.charAt(0).toUpper + p.name.substring(1))}():${refSignature(d,p)}= ${implRef(d,p)}\n"
+
+
+  def implRef(dialectNode: DialectNode,p:DialectPropertyMapping): String = {
+    val s=new mutable.StringBuilder();
+    val propName=scalaName(dialectNode, p);
+    val declarationName=escape(declarations(p).head.name)
+    /**
+      *  resolveReferences(PropertyTerm.domain,
+      (r,s)=>{r.asInstanceOf[VocabularyObject].classTerms().find(_.entity.id==s)}
+      ,e=>ClassObject(e,Some(this)))
+      */
+    if (p.isMap||p.collection) {
+
+      s.append(s"resolveReferences(${propName},\n")
+      s.append(s"(r,s)=>{r.asInstanceOf[${d.root.shortName}Object].${declarationName}.find(_.entity.id==s)}\n")
+      s.append(s" ,e=>${p.referenceTarget.get.shortName}Object(e,Some(this)))")
+
+    }
+    else{
+      s.append(s"resolveReference(${propName},\n")
+      s.append(s"(r,s)=>{r.asInstanceOf[${d.root.shortName}Object].${declarationName}.find(_.entity.id==s)}\n")
+      s.append(s" ,e=>${p.referenceTarget.get.shortName}Object(e,Some(this)))")
+
+    }
+    s.toString
+    //"???"
+  }
+
+  private def declarations(p:DialectPropertyMapping) = {
+    d.root.props.values.filter(v => v.isMap && v.range == p.referenceTarget.get)
+  }
 
   def generateBuilderMethod(d: DialectNode, p: DialectPropertyMapping): String
        =s"def with${p.name.charAt(0).toUpper + p.name.substring(1)}(value:${builderType(p)}):${d.shortName}Object= ${generateWriter(d,p)}\n"
@@ -49,7 +82,7 @@ class TopLevelGenerator(d:Dialect) {
     val propName=scalaName(dialectNode, p);
     if (p.multivalue){
       if (!p.isScalar){
-        s"entity.entities(${propName}).map(${p.range.asInstanceOf[DialectNode].shortName}Object(_))"
+        s"entity.entities(${propName}).map(${p.range.asInstanceOf[DialectNode].shortName}Object(_,Some(this)))"
 
       }
       else p.range match {
@@ -60,7 +93,7 @@ class TopLevelGenerator(d:Dialect) {
     }
     else {
       if (!p.isScalar) {
-        s"entity.entity(${propName}).map(${p.range.asInstanceOf[DialectNode].shortName}Object(_))"
+        s"entity.entity(${propName}).map(${p.range.asInstanceOf[DialectNode].shortName}Object(_,Some(this)))"
       }
       else p.range match {
         case Type.Str=> s"entity.string(${propName})"
@@ -89,13 +122,26 @@ class TopLevelGenerator(d:Dialect) {
     var tpName= if (p.isScalar) scalarName(p.range) else s"${p.range.asInstanceOf[DialectNode].shortName}Object"
     s"${container}[${tpName}]";
   }
+  private def refSignature(d:DialectNode, p:DialectPropertyMapping):String={
+    val container=if (p.multivalue) "Seq" else "Option"
+    var tpName= s"${p.referenceTarget.get.shortName}Object"
+    s"${container}[${tpName}]";
+  }
+
 
   private def generateNodeRangeIfNeeded(p: DialectPropertyMapping) = {
     if (p.range.isInstanceOf[DialectNode]) {
       val node = p.range.asInstanceOf[DialectNode];
-      if (!_map.contains(node)) {
-        generateNode(node);
-      }
+      appendNodeIfNeeded(node)
+    }
+    p.referenceTarget.foreach(node=>{
+      appendNodeIfNeeded(node)
+    })
+  }
+
+  private def appendNodeIfNeeded(node: DialectNode) = {
+    if (!_map.contains(node)) {
+      generateNode(node);
     }
   }
 
@@ -123,10 +169,13 @@ class TopLevelGenerator(d:Dialect) {
   def generateNode(d:DialectNode):String={
     _map.put(d,"");
     val sb=new StringBuilder();
-    sb.append(s"case class ${d.shortName}Object(val entity: DomainEntity=DomainEntity(${nameOfType(d)})){\n")
+    sb.append(s"case class ${d.shortName}Object(val entity: DomainEntity=DomainEntity(${nameOfType(d)}),override val parent:Option[TopLevelObject]=None) extends TopLevelObject(entity,parent){\n")
     d.props.values.foreach(p=>{
       sb.append("  " + generateProperty(d,p))
       sb.append("  " + generateBuilderMethod(d,p))
+      if (p.isRef&&declarations(p).size==1){
+        sb.append("  " + generateRefResolver(d,p))
+      }
     })
     sb.append("}\n")
     _map.put(d,sb.toString);

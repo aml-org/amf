@@ -33,7 +33,7 @@ object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
   val pattern: DialectPropertyMapping       = str("pattern")
   val minimum: DialectPropertyMapping       = str("minimum")
   val maximum: DialectPropertyMapping       = str("maximum")
-  val range: DialectPropertyMapping         = str("range", _.copy(referenceTarget = Some(NodeDefinition)))
+  val range: DialectPropertyMapping         = str("range", _.copy(referenceTarget = Some(NodeDefinition),allowInplace = true))
   val allowMultiple: DialectPropertyMapping = bool("allowMultiple")
   val asMap: DialectPropertyMapping         = bool("asMap")
   val hash: DialectPropertyMapping          = str("hash", _.copy(referenceTarget = Some(PropertyTerm), required = true))
@@ -65,7 +65,7 @@ object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration") {
 }
 object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") {
   val declares: DialectPropertyMapping = refMap("declares")
-  var encodes: DialectPropertyMapping  = str("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true))
+  var encodes: DialectPropertyMapping  = str("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true,allowInplace = true))
 }
 
 object MainNode extends DialectLanguageNode("Document"){
