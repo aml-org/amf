@@ -62,10 +62,13 @@ case class DialectPropertyMapping(name: String,
                                   namespace: Option[Namespace] = None,
                                   rdfName: Option[String] = None,
                                   jsonld: Boolean = true,
-                                  owningNode: Option[DialectNode]=None
+                                  owningNode: Option[DialectNode]=None,
+                                  scalaNameOverride:Option[String]=None
                                  ) {
 
   def isRef: Boolean = referenceTarget.isDefined
+
+  def scalaName:String = scalaNameOverride.getOrElse(name);
 
   def isScalar: Boolean = range match {
     case _: Type.Scalar => true
@@ -73,6 +76,8 @@ case class DialectPropertyMapping(name: String,
   }
 
   def isMap: Boolean = hash.isDefined
+
+  def multivalue= isMap || collection
 
   def adopt(dialectNode: DialectNode): DialectPropertyMapping =
     namespace match {
@@ -84,6 +89,8 @@ case class DialectPropertyMapping(name: String,
     case Some(rdf) => namespace.get + rdf
     case _         => namespace.get + name
   }
+
+  def rangeAsDialect:Option[DialectNode] = if (this.range.isInstanceOf[DialectNode]) Some(this.range.asInstanceOf[DialectNode]) else None;
 
   def field(): amf.metadata.Field = {
     val `type` = if (collection || isMap) Type.Array(range)

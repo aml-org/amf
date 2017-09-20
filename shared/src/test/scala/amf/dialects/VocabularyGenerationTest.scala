@@ -4,6 +4,7 @@ import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
+import amf.remote.Syntax.Json
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -70,4 +71,8 @@ class VocabularyGenerationTest extends AsyncFunSuite with PlatformSecrets {
   test("Store Dialect 2") {
     assertCycle("mule_config_dialect.raml","mule_config_dialect_gold.raml",RamlYamlHint, Raml);
   }
+
+
+
+
 }

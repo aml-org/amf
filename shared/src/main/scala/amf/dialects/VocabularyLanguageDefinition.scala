@@ -9,7 +9,7 @@ import amf.vocabulary.{Namespace, ValueType}
 class VocabPartDialect(override val shortName:String, namespace: Namespace=Namespace.Meta) extends DialectNode(shortName, namespace) {}
 
 case class Declaration(override val shortName:String,override val namespace: Namespace=Namespace.Meta) extends VocabPartDialect(shortName,namespace = namespace){
-  val idProperty: DialectPropertyMapping = str("id").copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true)
+  val idProperty: DialectPropertyMapping = str("id",_.copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true,scalaNameOverride = Some("idProperty")))
 }
 
 
@@ -57,10 +57,10 @@ object External extends VocabPartDialect("External"){
 object Vocabulary extends VocabPartDialect("Vocabulary"){
 
   val base: DialectPropertyMapping             = str("base")
-  val dialectProperty: DialectPropertyMapping  = str("dialect")
+  val dialectProperty: DialectPropertyMapping  = str("dialect",_.copy(scalaNameOverride = Some("dialectProperty")))
   val version: DialectPropertyMapping          = str("version")
   var usage: DialectPropertyMapping            = str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
-  var externals: DialectPropertyMapping        = map("external", External.name, External)
+  var externals: DialectPropertyMapping        = map("external", External.name, External,_.copy(scalaNameOverride = Some("externals")))
   var classTerms: DialectPropertyMapping       = map("classTerms", ClassTerm.idProperty, ClassTerm, _.copy(rdfName = Some("classes")))
   var propertyTerms: DialectPropertyMapping    = map("propertyTerms", PropertyTerm.idProperty,PropertyTerm, _.copy(rdfName = Some("properties")))
 
