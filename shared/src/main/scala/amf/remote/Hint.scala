@@ -45,13 +45,6 @@ object Link extends Kind
 
 object Unspecified extends Kind
 
-object Kind {
-  def apply(token: AMFToken): Kind = token match {
-    case AMFToken.Link    => Link
-    case AMFToken.Library => Library
-  }
-}
-
 object Vendor {
   def unapply(name: String): Option[Vendor] = {
     name match {

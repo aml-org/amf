@@ -51,19 +51,6 @@ class AMFCompiler private (val url: String,
       .flatMap(parse)
   }
 
-  def resolveLexer(content: Content): AbstractLexer[AMFToken] = {
-    content.mime match {
-      case Syntax(Yaml) => YamlLexer(content.stream)
-      case Syntax(Json) => JsonLexer(content.stream)
-      case _ =>
-        hint.syntax match {
-          case Yaml => YamlLexer(content.stream)
-          case Json => JsonLexer(content.stream)
-          case _    => throw new UnableToResolveLexerException
-        }
-    }
-  }
-
   def resolveVendor(content: Content): Vendor = {
     content.mime match {
       case Some(`APPLICATION/RAML` | `APPLICATION/RAML+JSON` | `APPLICATION/RAML+YAML`) => Raml
