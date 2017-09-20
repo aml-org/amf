@@ -131,12 +131,20 @@ class AMFCompiler private (val url: String,
 
     document match {
       case Some(d) =>
-        builder.references.foreach(link => {
+        val vendor = resolveVendor(content)
+        val refs   = new ReferenceCollector(d, vendor).traverse()
+
+        refs.foreach(link => {
           references += link.resolve(remote, context, cache, hint)
         })
-        Future.sequence(references).map(rs => Root(d, content.url, rs, resolveVendor(content)))
+
+        Future.sequence(references).map(rs => { Root(d, content.url, rs, vendor) })
       case None => Future.failed(new Exception("Unable to parse document."))
     }
+  }
+
+  private def collectReferences(document: YDocument, vendor: Vendor) = {
+    document
   }
 }
 

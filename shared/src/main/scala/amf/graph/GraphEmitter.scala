@@ -1,9 +1,6 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.common.AMFToken._
-import amf.common.core.Strings
-import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -15,9 +12,8 @@ import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel,
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
-import amf.parser.{AMFASTFactory, ASTEmitter}
+import amf.parser.ASTEmitter
 import amf.shape._
-import amf.spec.common.BaseSpecEmitter
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YDocument, YTag}
@@ -29,7 +25,7 @@ import scala.collection.mutable.ListBuffer
   */
 object GraphEmitter {
 
-  def emit(unit: BaseUnit, options: GenerationOptions): AMFAST = {
+  def emit(unit: BaseUnit, options: GenerationOptions): YDocument = {
     val emitter = Emitter(ASTEmitter(), options)
     emitter.root(unit)
   }
@@ -99,7 +95,7 @@ object GraphEmitter {
       val customProperties: ListBuffer[String] = ListBuffer()
 
       element.fields.entry(DomainElementModel.CustomDomainProperties) match {
-        case Some(FieldEntry(f, v)) =>
+        case Some(FieldEntry(_, v)) =>
           v.value match {
             case AmfArray(values, _) =>
               values.foreach {
@@ -141,10 +137,10 @@ object GraphEmitter {
           scalar(v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Bool =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, BooleanToken)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, YTag.Bool)
           sources(v)
         case Type.Int =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, IntToken)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, YTag.Int)
           sources(v)
         case a: SortedArray =>
           map { () =>
@@ -185,13 +181,6 @@ object GraphEmitter {
           obj()
         }
       }
-    }
-
-    private def raw(content: String, tag: YTag = YTag.Str): Unit = {
-      emitter.scalar()
-      emitter.value(tag, if (tag == YTag.Str) {
-        content.quote
-      } else content)
     }
 
     private def iriValue(content: String): Unit = {
@@ -256,6 +245,8 @@ object GraphEmitter {
       raw(k)
       raw(v)
     }
+
+    private def raw(content: String, tag: YTag = YTag.Str): Unit = emitter.scalar(content, tag)
 
     private def entry(inner: () => Unit): Unit = emitter.entry(inner)
 

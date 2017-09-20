@@ -1,69 +1,55 @@
 package amf.generator
 
-import amf.common.AMFToken._
-import amf.parser.{ASTLinkNode, ASTNode}
-import amf.visitor.ASTNodeVisitor
+import org.yaml.model._
 
 /**
   *
   */
-class YamlGenerator extends ASTNodeVisitor {
+class YamlGenerator {
 
   private val writer: IndentedWriter = new IndentedWriter
 
   /** Generate yaml for specified document. */
-  def generate(root: ASTNode[_]): IndentedWriter = {
-    root.accept(this)
+  def generate(document: YDocument): IndentedWriter = {
+    visit(document)
     writer
   }
 
-  override def before(node: ASTNode[_]): Unit = {
-    node.`type` match {
-      case MapToken      => writer.indent()
-      case SequenceToken => writer.line().indent()
-      case _             =>
+  def visit(part: YPart): Unit = {
+    part match {
+      case document: YDocument =>
+//        visit(part.head)
+//        writer.line()
+        document.value.foreach(visitChildren(_, forceLine = false))
+      case map: YMap =>
+        writer.indent()
+        visitChildren(map)
+        writer.outdent()
+      case seq: YSequence =>
+        writer.line().indent()
+        visitChildren(seq, "-", forceLine = false)
+        writer.outdent()
+      case entry: YMapEntry => visitEntry(entry)
+      case node: YNode      => visit(node.value)
+      case scalar: YScalar  => writer.write(' ').write(scalar.text)
     }
   }
 
-  override def visit(node: ASTNode[_]): Unit = {
-    node.`type` match {
-      case Root =>
-        visit(node.head)
-        writer.line()
-        visitChildren(node.last, forceLine = false)
-      case MapToken                             => visitChildren(node)
-      case SequenceToken                        => visitChildren(node, "-", forceLine = false)
-      case Entry                                => visitEntry(node)
-      case IntToken | FloatToken | BooleanToken => writer.write(' ').write(node.content)
-      case StringToken                          => writer.write(' ').write(node.content)
-      case Comment                              => writer.write('#').write(node.content)
-      case _                                    =>
-    }
+  private def visitEntry(entry: YMapEntry): Unit = {
+    visit(entry.key)
+    writer.write(":")
+    visit(entry.value)
   }
 
-  override def visit(node: ASTLinkNode[_]): Unit = {
-    writer.write(" !include ").write(node.target.location)
-  }
-
-  override def after(node: ASTNode[_]): Unit = {
-    node.`type` match {
-      case MapToken | SequenceToken => writer.outdent()
-      case _                        =>
-    }
-  }
-
-  private def visitEntry(entry: ASTNode[_]): Unit = {
-    writer.write(entry.head.content).write(":")
-    entry.last.accept(this)
-  }
-
-  def visitChildren(parent: ASTNode[_], prefix: String = "", forceLine: Boolean = true): Unit = {
+  def visitChildren(parent: YPart, prefix: String = "", forceLine: Boolean = true): Unit = {
     var first = true
-    parent.children.foreach(c => {
-      if (!first || forceLine) { writer.line() }
-      writer.write(prefix)
-      c.accept(this)
-      first = false
-    })
+    parent.children
+      .filterNot(_.isInstanceOf[YNonContent])
+      .foreach(c => {
+        if (!first || forceLine) { writer.line() }
+        writer.write(prefix)
+        visit(c)
+        first = false
+      })
   }
 }

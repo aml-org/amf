@@ -71,22 +71,21 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Libraries (raml)") {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint)
       .root() map {
-      case Root(root, _, _, _) =>
-        root.children.size should be(2)
+      case Root(root, _, references, _) =>
         val body = root.value.get.toMap
-        body.children.size should be(2)
-        assertUses(body.key("uses").get)
+        body.entries.size should be(2)
+        assertUses(body.key("uses").get, references)
     }
   }
 
   test("Libraries (oas)") {
     AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint)
       .root() map {
-      case Root(root, _, _, _) =>
-        root.children.size should be(1)
+      case Root(root, _, references, _) =>
         val body = root.value.get.toMap
-        body.children.size should be(3)
-        assertUses(body.key("x-uses").get)
+        println(references)
+        body.entries.size should be(3)
+        assertUses(body.key("x-uses").get, references)
     }
   }
 
@@ -96,15 +95,16 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       d.encodes.name should be("test")
   }
 
-  private def assertUses(uses: YMapEntry) = {
-    uses.children.length should be(2)
+  private def assertUses(uses: YMapEntry, references: Seq[BaseUnit]) = {
     uses.key.value.toScalar.text should include("uses")
 
     val libraries = uses.value.value.toMap
+
     libraries.map.values.foreach(value => {
       value.toScalar.text should include("libraries")
     })
-    libraries.children.length should be(2)
+
+    libraries.entries.length should be(references.size)
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
@@ -122,5 +122,4 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       size should be(expectedSize)
     }
   }
-
 }

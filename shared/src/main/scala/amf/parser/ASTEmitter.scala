@@ -57,10 +57,19 @@ case class ASTEmitter() {
 
   def scalar(text: String, tag: YTag): this.type = {
     process(BeginNode)
+    process(BeginTag)
+    process(EndTag, tag.tag)
     process(BeginScalar)
     process(EndScalar, text)
     process(EndNode)
     this
+  }
+
+  def scalar(value: Any, tag: YTag): this.type = {
+    tag match {
+      case YTag.Str => scalar(value.toString.quote, tag)
+      case _        => scalar(value.toString, tag)
+    }
   }
 
   private def process(token: YamlToken, text: String = ""): Unit = {
@@ -102,8 +111,6 @@ case class ASTEmitter() {
     current.parts += part
   }
 
-  private def addToken(token: YamlToken) = addToken(TokenData(token, InputRange.Zero, 0, 0))
-
   private def push(): Unit = {
     addNonContent(current.parts)
     stack = new Builder :: stack
@@ -135,5 +142,8 @@ case class ASTEmitter() {
     }
   }
 
-  private def addToken(td: TokenData[YamlToken]) = current.tokens += YeastToken(td.token, td.start, td.end, td.range)
+  private def addToken(token: YamlToken): Unit = addToken(TokenData(token, InputRange.Zero, 0, 0))
+
+  private def addToken(td: TokenData[YamlToken]): Unit =
+    current.tokens += YeastToken(td.token, td.start, td.end, td.range)
 }

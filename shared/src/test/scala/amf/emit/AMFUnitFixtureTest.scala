@@ -20,7 +20,10 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
 
   def `document/api/full`: Document = doc(advanced())
 
-  def ast(document: Document, vendor: Vendor): AMFAST = AMFUnitMaker(document, vendor, GenerationOptions())
+  def ast(document: Document, vendor: Vendor): AMFAST = {
+    AMFUnitMaker(document, vendor, GenerationOptions())
+    null
+  }
 
   private def bare(): WebApi = {
     WebApi()

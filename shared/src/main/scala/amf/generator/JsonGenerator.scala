@@ -1,79 +1,82 @@
 package amf.generator
 
-import amf.common.AMFToken._
-import amf.parser.{ASTLinkNode, ASTNode}
-import amf.visitor.ASTNodeVisitor
+import amf.parser.YValueOps
+import org.yaml.model._
 
 /**
   *
   */
-class JsonGenerator extends ASTNodeVisitor {
+class JsonGenerator {
 
   private val writer: IndentedWriter = new IndentedWriter
 
   /** Generate json for specified document. */
-  def generate(root: ASTNode[_]): IndentedWriter = {
-    root.accept(this)
+  def generate(document: YDocument): IndentedWriter = {
+    visit(document)
     writer
-
   }
 
-  override def before(node: ASTNode[_]): Unit = {
-    node.`type` match {
-      case MapToken      => writer.write('{').line().indent()
-      case SequenceToken => writer.write('[').line().indent()
-      case _             =>
+  def visit(part: YPart): Unit = {
+    part match {
+      case document: YDocument => visitChildren(document)
+      case _: YMap =>
+        writer.write('{').line().indent()
+        visitChildren(part)
+        writer.line().outdent().write('}')
+      case _: YSequence =>
+        writer.write('[').line().indent()
+        visitChildren(part)
+        writer.line().outdent().write(']')
+      case entry: YMapEntry => visitEntry(entry)
+      case node: YNode      => visitNode(node)
+      case any              => println(any)
     }
   }
 
-  override def visit(node: ASTNode[_]): Unit = {
-    node.`type` match {
-      case Root | MapToken | SequenceToken => visitChildren(node)
-      case Entry                           => visitEntry(node)
-      case IntToken                        => writer.write(node.content)
-      case FloatToken                      => writer.write(node.content)
-      case BooleanToken                    => writer.write(node.content)
-      case StringToken                     => writer.quoted(node.content)
-      case _                               =>
+  private def visitNode(node: YNode) = {
+    node.tag match {
+      case ScalarYTag(tag) => visitScalar(node.value.toScalar, tag)
+      case _               => visit(node.value)
     }
   }
 
-  override def visit(node: ASTLinkNode[_]): Unit = {
-    writer
-      .write('{')
-      .line()
-      .indent()
-      .quoted("$ref")
-      .write(": ")
-      .quoted(node.target.location)
-      .outdent()
-      .line()
-      .write('}')
-  }
-
-  override def after(node: ASTNode[_]): Unit = {
-    node.`type` match {
-      case MapToken      => writer.line().outdent().write('}')
-      case SequenceToken => writer.line().outdent().write(']')
-      case _             =>
-    }
-  }
-
-  private def visitEntry(entry: ASTNode[_]): Unit = {
-    writer.quoted(entry.head.content).write(": ")
-    entry.last.accept(this)
-  }
-
-  def visitChildren(parent: ASTNode[_]): Unit = {
-    var first = true
-    parent.children.foreach(c => {
-      if (first) {
-        c.accept(this)
-        first = false
-      } else {
-        writer.write(',').line()
-        c.accept(this)
+  private object ScalarYTag {
+    def unapply(tag: YTag): Option[YTag] = {
+      tag.tag match {
+        case "!!str"   => Some(YTag.Str)
+        case "!!int"   => Some(YTag.Int)
+        case "!!float" => Some(YTag.Float)
+        case "!!bool"  => Some(YTag.Bool)
+        case _         => None
       }
-    })
+    }
+  }
+
+  private def visitScalar(scalar: YScalar, tag: YTag) = {
+    tag match {
+      case t if t.tag == YTag.Str.tag => writer.quoted(scalar.text)
+      case _                          => writer.write(scalar.text)
+    }
+  }
+
+  private def visitEntry(entry: YMapEntry): Unit = {
+    visit(entry.key)
+    writer.write(": ")
+    visit(entry.value)
+  }
+
+  def visitChildren(parent: YPart): Unit = {
+    var first = true
+    parent.children
+      .filterNot(_.isInstanceOf[YNonContent])
+      .foreach(c => {
+        if (first) {
+          visit(c)
+          first = false
+        } else {
+          writer.write(',').line()
+          visit(c)
+        }
+      })
   }
 }

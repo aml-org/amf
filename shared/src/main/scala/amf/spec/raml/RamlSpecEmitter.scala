@@ -1,8 +1,6 @@
 package amf.spec.raml
 
-import amf.common.AMFToken._
 import amf.common.TSort.tsort
-import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
@@ -24,6 +22,7 @@ import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
+import org.yaml.model.YDocument
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -40,7 +39,7 @@ case class RamlSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
     case document: Document => document.encodes
   }
 
-  def emitDocument(): AMFAST = {
+  def emitDocument(): YDocument = {
 
     val ordering: SpecOrdering = unit match {
       case document: Document => SpecOrdering.ordering(Raml, document.encodes.annotations)
@@ -51,8 +50,8 @@ case class RamlSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
     // TODO ordering??
     val declares = DeclarationsEmitter(ordering).emitters
 
-    emitter.document() { () =>
-      raw("%RAML 1.0", Comment)
+    emitter.document { () =>
+//      raw("%RAML 1.0", Comment) todo comments
       map { () =>
         traverse(ordering.sorted(apiEmitters ++ declares))
       }
@@ -634,23 +633,6 @@ case class RamlSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ScalarEmitter(v: AmfScalar) extends Emitter {
-    override def emit(): Unit = sourceOr(v.annotations, raw(v.toString))
-
-    override def position(): Position = pos(v.annotations)
-  }
-
-  case class ValueEmitter(key: String, f: FieldEntry) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(f.value, entry { () =>
-        raw(key)
-        raw(f.scalar.toString)
-      })
-    }
-
-    override def position(): Position = pos(f.value.annotations)
-  }
-
   case class SyntheticAnnotationEmitter(key: String, value: String, pos: Position) extends Emitter {
     override def emit(): Unit = {
       entry { () =>
@@ -660,40 +642,6 @@ case class RamlSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos
-  }
-
-  case class EntryEmitter(key: String,
-                          value: String,
-                          token: AMFToken = StringToken,
-                          position: Position = Position.ZERO)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(key)
-        raw(value, token)
-      }
-    }
-  }
-
-  /** Emit a single value from an array as an entry. */
-  case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(f.value, entry { () =>
-        raw(key)
-        raw(f.array.scalars.headOption.map(_.toString).getOrElse(""))
-      })
-    }
-
-    override def position(): Position = pos(f.value.annotations)
-  }
-
-  private def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
-
-  private def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
-    //    annotations
-    //      .find(classOf[SourceAST])
-    //      .fold(inner)(a => emitter.addChild(a.ast))
-    inner
   }
 
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
