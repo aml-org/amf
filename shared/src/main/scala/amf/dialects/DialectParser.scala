@@ -113,6 +113,11 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
 
   override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
 }
+object DomainEntity{
+  def apply(d:DialectNode): DomainEntity ={
+    new DomainEntity(null,d,Fields(),Annotations());
+  }
+}
 
 class DialectParser(val dialect: Dialect, val root: Root) {
 
