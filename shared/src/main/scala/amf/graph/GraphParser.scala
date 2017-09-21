@@ -1,6 +1,5 @@
 package amf.graph
 
-import amf.common.core.Strings
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -89,7 +88,7 @@ object GraphParser extends GraphParserHelpers {
         case Some(entry) =>
           entry.value.value match {
             case sequence: YSequence =>
-              sequence.values.flatMap(_.toMap.key("@id")).map(_.value.value.toScalar.text.unquote)
+              sequence.values.flatMap(_.toMap.key("@id")).map(_.value.value.toScalar.text)
             case _ => Seq()
           }
         case _ => Seq()
@@ -134,11 +133,11 @@ object GraphParser extends GraphParserHelpers {
     }
   }
 
-  private def str(node: YScalar) = AmfScalar(node.text.unquote)
+  private def str(node: YScalar) = AmfScalar(node.text)
 
-  private def bool(node: YScalar) = AmfScalar(node.text.unquote.toBoolean)
+  private def bool(node: YScalar) = AmfScalar(node.text.toBoolean)
 
-  private def int(node: YScalar) = AmfScalar(node.text.unquote.toInt)
+  private def int(node: YScalar) = AmfScalar(node.text.toInt)
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(

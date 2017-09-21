@@ -1,7 +1,6 @@
 package amf.spec.raml
 
 import amf.common.Lazy
-import amf.common.core.Strings
 import amf.compiler.Root
 import amf.document.Document
 import amf.domain.Annotation._
@@ -62,7 +61,7 @@ case class RamlSpecParser(root: Root) {
       entry => {
 
         entry.value.value.toMap.entries.foreach(e => {
-          val typeName = e.key.value.toScalar.text.unquote
+          val typeName = e.key.value.toScalar.text
           RamlTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
             .parse() match {
             case Some(shape) =>
@@ -83,7 +82,7 @@ case class RamlSpecParser(root: Root) {
       "annotationTypes",
       e => {
         e.value.value.toMap.entries.map(entry => {
-          val typeName = entry.key.value.toScalar.text.unquote
+          val typeName = entry.key.value.toScalar.text
           val customProperty = AnnotationTypesParser(entry,
                                                      customProperty =>
                                                        customProperty
@@ -224,7 +223,7 @@ case class EndpointParser(entry: YMapEntry,
                           declarations: Declarations) {
   def parse(): Unit = {
 
-    val path = parent.map(_.path).getOrElse("") + entry.key.value.toScalar.text.unquote
+    val path = parent.map(_.path).getOrElse("") + entry.key.value.toScalar.text
 
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
@@ -345,7 +344,7 @@ case class OperationParser(entry: YMapEntry, producer: (String) => Operation, de
 
   def parse(): Operation = {
 
-    val method = entry.key.value.toScalar.text.unquote
+    val method = entry.key.value.toScalar.text
 
     val operation = producer(method).add(Annotations(entry))
 
@@ -509,7 +508,7 @@ case class ResponseParser(entry: YMapEntry, producer: (String) => Response, decl
 case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
   def parse(): Parameter = {
 
-    val name      = entry.key.value.toScalar.text.unquote
+    val name      = entry.key.value.toScalar.text
     val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
     val map       = entry.value.value.toMap
 
@@ -543,7 +542,7 @@ case class ParameterParser(entry: YMapEntry, producer: String => Parameter, decl
 case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
   def parse(): CustomDomainProperty = {
     val custom         = CustomDomainProperty(node)
-    val annotationName = node.key.value.toScalar.text.unquote
+    val annotationName = node.key.value.toScalar.text
     custom.withName(annotationName)
     adopt(custom)
 

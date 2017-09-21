@@ -1,6 +1,5 @@
 package amf.graph
 
-import amf.common.core._
 import amf.domain.{Annotation, Annotations}
 import amf.metadata.SourceMapModel.{Element, Value}
 import amf.metadata.Type._
@@ -36,14 +35,14 @@ trait GraphParserHelpers {
 
   protected def ts(map: YMap): Seq[String] = {
     map.key("@type") match {
-      case Some(entry) => entry.value.value.toSequence.values.map(_.toScalar.text.unquote)
+      case Some(entry) => entry.value.value.toSequence.values.map(_.toScalar.text)
       case _           => throw new Exception(s"No @type declaration on node $map")
     }
   }
 
   protected def retrieveId(map: YMap): String = {
     map.key("@id") match {
-      case Some(entry) => entry.value.value.toScalar.text.unquote
+      case Some(entry) => entry.value.value.toScalar.text
       case _           => throw new Exception(s"No @id declaration on node $map")
     }
   }

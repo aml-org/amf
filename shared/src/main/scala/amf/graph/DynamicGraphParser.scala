@@ -1,9 +1,7 @@
 package amf.graph
 
-import amf.common.core._
 import amf.domain.Annotations
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
-import amf.metadata.Type
 import amf.metadata.Type.ObjType
 import amf.metadata.domain.DomainElementModel
 import amf.model.{AmfElement, AmfObject}
@@ -34,7 +32,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case obj: ObjectNode =>
         obj.withId(id)
         map.entries.foreach { entry =>
-          val uri = entry.key.value.toScalar.text.unquote
+          val uri = entry.key.value.toScalar.text
           val v   = entry.value.value
           if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri()) {
             val dataNode = v match {
@@ -51,10 +49,10 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case scalar: ScalarNode =>
         scalar.withId(id)
         map.entries.foreach { entry =>
-          val uri = entry.key.value.toScalar.text.unquote
+          val uri = entry.key.value.toScalar.text
           uri match {
             case _ if uri == scalar.Range.value.iri() =>
-              scalar.dataType = Some(value(scalar.Range.`type`, entry.value.value).toScalar.text.unquote)
+              scalar.dataType = Some(value(scalar.Range.`type`, entry.value.value).toScalar.text)
             case _ if uri == scalar.Value.value.iri() =>
               scalar.value = parseJSONLDScalar(entry.value.value).value
             case _ => // ignore
@@ -65,7 +63,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case array: ArrayNode =>
         array.withId(id)
         map.entries.foreach { entry =>
-          val uri = entry.key.value.toScalar.text.unquote
+          val uri = entry.key.value.toScalar.text
           uri match {
             case _ if uri == array.Member.value.iri() =>
               array.members =
@@ -96,12 +94,12 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
     scalar
       .key("@value")
       .foreach(entry => {
-        result.value = entry.value.value.toScalar.text.unquote
+        result.value = entry.value.value.toScalar.text
       })
     scalar
       .key("@type")
       .foreach(entry => {
-        result.dataType = Some(entry.value.value.toScalar.text.unquote)
+        result.dataType = Some(entry.value.value.toScalar.text)
       })
     result
   }

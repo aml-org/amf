@@ -1,7 +1,6 @@
 package amf.spec.oas
 
 import amf.common.Lazy
-import amf.common.core.Strings
 import amf.compiler.Root
 import amf.document.Document
 import amf.domain.Annotation.{
@@ -19,8 +18,8 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.Shape
-import amf.spec.common.BaseSpecParser._
 import amf.spec.Declarations
+import amf.spec.common.BaseSpecParser._
 import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
@@ -62,7 +61,7 @@ case class OasSpecParser(root: Root) {
       entry => {
 
         entry.value.value.toMap.entries.foreach(e => {
-          val typeName = e.key.value.toScalar.text.unquote
+          val typeName = e.key.value.toScalar.text
           OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
             .parse() match {
             case Some(shape) =>
@@ -82,7 +81,7 @@ case class OasSpecParser(root: Root) {
       "x-annotationTypes",
       e => {
         e.value.value.toMap.entries.map(entry => {
-          val typeName = entry.key.value.toScalar.text.unquote
+          val typeName = entry.key.value.toScalar.text
           val customProperty = AnnotationTypesParser(entry,
                                                      customProperty =>
                                                        customProperty
@@ -587,7 +586,7 @@ case class HeaderParametersParser(map: YMap, producer: String => Parameter, decl
 case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
   def parse(): Parameter = {
 
-    val name      = entry.key.value.toScalar.text.unquote
+    val name      = entry.key.value.toScalar.text
     val parameter = producer(name).add(Annotations(entry))
 
     parameter
@@ -624,7 +623,7 @@ case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter
 case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
   def parse(): CustomDomainProperty = {
     val custom         = CustomDomainProperty(node)
-    val annotationName = node.key.value.toScalar.text.unquote
+    val annotationName = node.key.value.toScalar.text
     custom.withName(annotationName)
     adopt(custom)
 

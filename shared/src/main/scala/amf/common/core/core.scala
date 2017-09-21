@@ -7,12 +7,6 @@ package object core {
     */
   implicit class Strings(val str: String) extends AnyVal {
 
-    /** Remove quotes from string. */
-    def unquote: String = {
-      if (isQuoted) str.substring(1, str.length - 1)
-      else str
-    }
-
     /** Add quotes to string. */
     def quote: String = {
       if (isQuoted) str

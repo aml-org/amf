@@ -1,6 +1,5 @@
 package amf.spec.oas
 
-import amf.common.core.Strings
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
@@ -9,8 +8,8 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
-import amf.spec.common.BaseSpecParser._
 import amf.spec.Declarations
+import amf.spec.common.BaseSpecParser._
 import org.yaml.model.{YMap, YMapEntry, YPart, YSequence}
 
 import scala.collection.mutable
@@ -45,8 +44,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     map
       .key("type")
       .map(e => {
-        val t = e.value.value.toScalar.text.unquote
-        val f = map.key("format").map(_.value.value.toScalar.text.unquote).getOrElse("")
+        val t = e.value.value.toScalar.text
+        val f = map.key("format").map(_.value.value.toScalar.text).getOrElse("")
         matchType(t, f)
       })
   }
@@ -70,7 +69,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
 object OasTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations): OasTypeParser =
-    OasTypeParser(entry, entry.key.value.toScalar.text.unquote, entry.value.value.toMap, adopt, declarations)
+    OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations)
 }
 
 case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() {
@@ -329,7 +328,7 @@ case class AllOfParser(array: YSequence, declarations: Declarations, adopt: Shap
   private def declarationsRef(entries: YMap): Option[Shape] = {
     entries
       .key("$ref")
-      .map(entry => declarations.shapes(entry.value.value.toScalar.text.unquote.stripPrefix("#/definitions/")))
+      .map(entry => declarations.shapes(entry.value.value.toScalar.text.stripPrefix("#/definitions/")))
   }
 }
 
@@ -349,7 +348,7 @@ case class PropertyShapeParser(entry: YMapEntry,
 
   def parse(): PropertyShape = {
 
-    val name     = entry.key.value.toScalar.text.unquote
+    val name     = entry.key.value.toScalar.text
     val required = requiredFields.contains(name)
 
     val property = producer(name)

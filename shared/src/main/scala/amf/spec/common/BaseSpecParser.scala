@@ -1,6 +1,5 @@
 package amf.spec.common
 
-import amf.common.core.Strings
 import amf.domain.Annotation.ExplicitField
 import amf.domain.{Annotations, CreativeWork, License, Organization}
 import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
@@ -93,7 +92,7 @@ private[spec] object BaseSpecParser {
     def parse(): Option[PropertyDependencies] = {
 
       properties
-        .get(entry.key.value.toScalar.text.unquote)
+        .get(entry.key.value.toScalar.text)
         .map(p => {
           PropertyDependencies(entry)
             .set(PropertyDependenciesModel.PropertySource, AmfScalar(p.id), Annotations(entry.key))
@@ -161,22 +160,22 @@ private[spec] object BaseSpecParser {
   case class ValueNode(ast: YNode) {
 
     def string(): AmfScalar = {
-      val content = scalar.text.unquote
+      val content = scalar.text
       AmfScalar(content, annotations())
     }
 
     def integer(): AmfScalar = {
-      val content = scalar.text.unquote
+      val content = scalar.text
       AmfScalar(content.toInt, annotations())
     }
 
     def boolean(): AmfScalar = {
-      val content = scalar.text.unquote
+      val content = scalar.text
       AmfScalar(content.toBoolean, annotations())
     }
 
     def negated(): AmfScalar = {
-      val content = scalar.text.unquote
+      val content = scalar.text
       AmfScalar(!content.toBoolean, annotations())
     }
 

@@ -1,6 +1,5 @@
 package amf.spec.common
 
-import amf.common.core._
 import amf.domain.extensions.{
   CustomDomainProperty,
   DataNode,
@@ -20,7 +19,7 @@ case class AnnotationParser(element: DomainElement, map: YMap) {
   def parse(): Unit = {
     val domainExtensions: ListBuffer[DomainExtension] = ListBuffer()
     map.entries.foreach { entry =>
-      val key = entry.key.value.toScalar.text.unquote
+      val key = entry.key.value.toScalar.text
       if (WellKnownAnnotation.normalAnnotation(key)) {
         domainExtensions += ExtensionParser(key, element.id, entry).parse()
       }
@@ -60,7 +59,7 @@ case class DataNodeParser(value: YNode, parent: Option[String] = None) {
   }
 
   protected def parseScalar(ast: YScalar, datatype: String): DataNode = {
-    val node = DataScalarNode(ast.text.unquote, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
+    val node = DataScalarNode(ast.text, Some((Namespace.Xsd + datatype).iri()), Annotations(ast))
     parent.foreach(node.adopted)
     node
   }
@@ -79,7 +78,7 @@ case class DataNodeParser(value: YNode, parent: Option[String] = None) {
     val node = DataObjectNode(Annotations(value))
     parent.foreach(node.adopted)
     value.entries.map { ast =>
-      val property            = ast.key.value.toScalar.text.unquote
+      val property            = ast.key.value.toScalar.text
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 

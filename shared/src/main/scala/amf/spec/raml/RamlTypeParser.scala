@@ -1,6 +1,5 @@
 package amf.spec.raml
 
-import amf.common.core.Strings
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
@@ -9,8 +8,8 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
-import amf.spec.common.BaseSpecParser._
 import amf.spec.Declarations
+import amf.spec.common.BaseSpecParser._
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -18,7 +17,7 @@ import scala.collection.mutable
 case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations) {
 
   def parse(): Option[Shape] = {
-    val name = entry.key.value.toScalar.text.unquote
+    val name = entry.key.value.toScalar.text
 
     val ahead = entry.value.value
 
@@ -34,7 +33,7 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
   }
 
   private def detect(property: YValue): TypeDef = property match {
-    case scalar: YScalar => matchType(scalar.text.unquote)
+    case scalar: YScalar => matchType(scalar.text)
     case _: YSequence    => ObjectType
     case map: YMap =>
       detectTypeOrSchema(map)
@@ -58,8 +57,8 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
       .map(e =>
         e.value.value match {
           case scalar: YScalar =>
-            val t = scalar.text.unquote
-            val f = map.key("(format)").map(_.value.value.toScalar.text.unquote).getOrElse("")
+            val t = scalar.text
+            val f = map.key("(format)").map(_.value.value.toScalar.text).getOrElse("")
             matchType(t, f)
           case _: YSequence | _: YMap => ObjectType
           case _                      => UndefinedType
@@ -280,9 +279,9 @@ case class NodeShapeParser(shape: NodeShape, map: YMap, declarations: Declaratio
       "type",
       entry => {
         entry.value.value match {
-          case scalar: YScalar if scalar.text.unquote != "object" =>
+          case scalar: YScalar if scalar.text != "object" =>
             shape.set(NodeShapeModel.Inherits,
-                      AmfArray(Seq(declarations.shapes(scalar.text.unquote)), Annotations(entry.value)),
+                      AmfArray(Seq(declarations.shapes(scalar.text)), Annotations(entry.value)),
                       Annotations(entry))
           case sequence: YSequence =>
             val inherits = ArrayNode(sequence)
@@ -370,7 +369,7 @@ case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertySha
 
   def parse(): PropertyShape = {
 
-    val name     = entry.key.value.toScalar.text.unquote
+    val name     = entry.key.value.toScalar.text
     val property = producer(name).add(Annotations(entry))
 
     entry.value.value match {
