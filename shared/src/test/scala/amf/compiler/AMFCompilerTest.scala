@@ -72,7 +72,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint)
       .root() map {
       case Root(root, _, references, _) =>
-        val body = root.value.get.toMap
+        val body = root.document.value.get.toMap
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references)
     }
@@ -82,8 +82,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint)
       .root() map {
       case Root(root, _, references, _) =>
-        val body = root.value.get.toMap
-        println(references)
+        val body = root.document.value.get.toMap
         body.entries.size should be(3)
         assertUses(body.key("x-uses").get, references)
     }

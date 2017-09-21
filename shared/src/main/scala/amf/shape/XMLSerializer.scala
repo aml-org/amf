@@ -1,6 +1,5 @@
 package amf.shape
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.shape.XMLSerializerModel._
 import org.yaml.model.YMap

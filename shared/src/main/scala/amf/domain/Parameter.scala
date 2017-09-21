@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.ParameterModel
 import amf.metadata.domain.ParameterModel._
 import amf.shape.{NodeShape, ScalarShape, Shape}

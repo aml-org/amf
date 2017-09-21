@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.PayloadModel
 import amf.metadata.domain.PayloadModel._
 import amf.shape.{ArrayShape, NodeShape, ScalarShape, Shape}

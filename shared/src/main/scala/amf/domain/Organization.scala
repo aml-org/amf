@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 import org.yaml.model.YMap
 

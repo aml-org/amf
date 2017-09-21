@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.model.AmfElement
 import amf.parser.Range
 import amf.remote.Vendor

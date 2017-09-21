@@ -1,6 +1,5 @@
 package amf.remote
 
-import amf.common.AMFToken
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 
 case class Hint(vendor: Vendor, syntax: Syntax, kind: Kind = Unspecified) {

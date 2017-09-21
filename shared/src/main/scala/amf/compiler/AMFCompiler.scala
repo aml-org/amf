@@ -1,19 +1,15 @@
 package amf.compiler
 
-import amf.common.AMFToken
-import amf.document.{BaseUnit, Document}
+import amf.compiler.RamlHeader.{Raml10, Raml10Library}
+import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
-import amf.exception.{CyclicReferenceException, UnableToResolveLexerException}
+import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
-import amf.json.JsonLexer
-import amf.lexer.AbstractLexer
 import amf.remote.Mimes._
-import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.spec.oas.OasSpecParser
 import amf.spec.raml.RamlSpecParser
-import amf.yaml.YamlLexer
-import org.yaml.model.YDocument
+import org.yaml.model.{YComment, YDocument, YPart}
 import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
@@ -70,35 +66,26 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  // will be back when merge with modules be done
-//  private def makeRamlUnit(root: Root): BaseUnit = {
-//    hint.kind match {
-//      case Library     => makeDocument(root) // TODO libraries
-//      case Link        => makeDocument(root) // TODO includes
-//      case Unspecified => resolveRamlUnit(root)
-//    }
-//  }
-
   private def makeRamlUnit(root: Root): BaseUnit = {
-    RamlHeader(root.document) match {
-      case Some(RamlHeader.RAML_10)         => RamlSpecParser(root).parseDocument()
-      case Some(RamlHeader.RAML_10_LIBRARY) => RamlSpecParser(root).parseDocument() // todo library
-      case None                             => throw new RuntimeException("Invalid raml document")
+    val option = RamlHeader(root).map({
+      case r: RamlHeader if r == Raml10        => RamlSpecParser(root).parseDocument()
+      case r: RamlHeader if r == Raml10Library => RamlSpecParser(root).parseDocument() // todo library
+      case _                                   => throw new UnableToResolveUnitException
+    })
+    option match {
+      case Some(unit) => unit
+      case None       => throw new UnableToResolveUnitException
     }
   }
   private def makeOasUnit(root: Root): BaseUnit = {
-
-    OasHeader(root.document) match {
-      case Some(OasHeader.Oas_20) => OasSpecParser(root).parseDocument() //todo libra
-      case None                   => throw new RuntimeException("Invalid oas document")
-      // ries
+    val option = OasHeader(root).map({
+      case OasHeader.Oas_20 => OasSpecParser(root).parseDocument() //todo libraries
+      case _                => throw new Exception("dddfff")
+    })
+    option match {
+      case Some(unit) => unit
+      case None       => throw new UnableToResolveUnitException
     }
-    //todo syaml read comment
-    //    root.document.head.children.find(e =>
-//      e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
-//      case Some(_) => makeDocument(root)
-//      case _       => throw new UnableToResolveUnitException
-//    }
   }
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
@@ -106,12 +93,12 @@ class AMFCompiler private (val url: String,
   private def parse(content: Content): Future[Root] = {
     val parser = YamlParser(content.stream.toString)
 
-    val parsed = parser.parse(true) collectFirst { case d: YDocument => d }
+    val parsed = toDocument(parser.parse(true))
 
     parsed match {
       case Some(document) =>
         val vendor = resolveVendor(content)
-        val refs   = new ReferenceCollector(document, vendor).traverse()
+        val refs   = new ReferenceCollector(document.document, vendor).traverse()
 
         refs
           .filter(_.isRemote)
@@ -123,9 +110,20 @@ class AMFCompiler private (val url: String,
       case None => Future.failed(new Exception("Unable to parse document."))
     }
   }
+
+  private def toDocument(parts: Seq[YPart]) = {
+    parts collectFirst { case d: YDocument => d } map { document =>
+      val comment = parts collectFirst { case c: YComment => c }
+      ParsedDocument(comment, document)
+    }
+  }
 }
 
-case class Root(document: YDocument, location: String, references: Seq[BaseUnit], vendor: Vendor)
+case class Root(parsed: ParsedDocument, location: String, references: Seq[BaseUnit], vendor: Vendor) {
+  val document: YDocument = parsed.document
+}
+
+case class ParsedDocument(comment: Option[YComment], document: YDocument)
 
 object AMFCompiler {
   def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =

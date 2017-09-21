@@ -204,14 +204,6 @@ case class OasSpecParser(root: Root) {
       }
     )
 
-    map.key(
-      "definitions",
-      entry => {
-        val types = OasTypeParser(entry, shape => shape.adopted(api.id), declarations).parse()
-        println(types)
-      }
-    )
-
     AnnotationParser(api, map).parse()
 
     api

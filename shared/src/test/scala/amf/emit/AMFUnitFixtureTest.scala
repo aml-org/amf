@@ -1,12 +1,8 @@
 package amf.emit
 
-import amf.client.GenerationOptions
-import amf.common.AMFAST
 import amf.document.Document
 import amf.domain._
-import amf.remote.Vendor
 import amf.unsafe.PlatformSecrets
-import org.yaml.model.YDocument
 
 /**
   *

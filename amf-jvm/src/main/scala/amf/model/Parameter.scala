@@ -13,15 +13,6 @@ case class Parameter private[model] (private val parameter: amf.domain.Parameter
   val binding: String     = parameter.binding
   val schema: Shape       = Shape(parameter.schema)
 
-  override def equals(other: Any): Boolean = other match {
-    case that: Parameter =>
-      (that canEqual this) &&
-        parameter == that.parameter
-    case _ => false
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Parameter]
-
   override private[amf] def element: amf.domain.Parameter = parameter
 
   /** Set name property of this [[Parameter]]. */

@@ -1,9 +1,8 @@
 package amf.shape
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, Fields}
 import amf.metadata.shape.ScalarShapeModel._
-import org.yaml.model.{YMapEntry, YPart}
+import org.yaml.model.YPart
 
 /**
   * Scalar shape

@@ -28,15 +28,6 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
   val documentation: CreativeWork               = Option(webApi.documentation).map(amf.model.CreativeWork).orNull
   val baseUriParameters: js.Iterable[Parameter] = webApi.baseUriParameters.map(amf.model.Parameter).toJSArray
 
-  override def equals(other: Any): Boolean = other match {
-    case that: WebApi =>
-      (that canEqual this) &&
-        webApi == that.webApi
-    case _ => false
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[WebApi]
-
   override private[amf] def element: amf.domain.WebApi = webApi
 
   /** Set name property of this [[WebApi]]. */

@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.LicenseModel.{Name, Url}
 import org.yaml.model.YMap
 

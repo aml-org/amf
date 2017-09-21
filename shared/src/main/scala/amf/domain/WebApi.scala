@@ -1,8 +1,7 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.WebApiModel.{License => WebApiLicense, _}
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model.YMap
 
 /**
   * Web Api internal model

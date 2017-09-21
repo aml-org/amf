@@ -10,12 +10,13 @@ import scala.language.postfixOps
 class ParserTest extends FunSuite {
 
   private val `RAML/yaml`: String =
-    """a: 1
-          |b: !include include1.yaml
-          |c:
-          |  - 2
-          |  - 3
-          |d: !include include2.yaml""".stripMargin
+    """#%RAML 1.0
+      |a: 1
+      |b: !include include1.yaml
+      |c:
+      |  - 2
+      |  - 3
+      |d: !include include2.yaml""".stripMargin
 
   private val `OAS/json`: String =
     """{
@@ -43,10 +44,13 @@ class ParserTest extends FunSuite {
           |  $ref: include2.yaml""".stripMargin
 
   test("Test RAML/yaml") {
-    val root = YamlParser(`RAML/yaml`).parse()
-    root.size should be(1)
+    val root = YamlParser(`RAML/yaml`).parse(true)
+    root.size should be(3)
 
-    val document = root.head.asInstanceOf[YDocument]
+    val comment = root.head.asInstanceOf[YComment]
+    comment.metaText should be("%RAML 1.0")
+
+    val document = root.last.asInstanceOf[YDocument]
     document.value shouldBe defined
     document.value.get shouldBe a[YMap]
 
@@ -66,7 +70,7 @@ class ParserTest extends FunSuite {
   }
 
   test("Test OAS/yaml") {
-    val root = YamlParser(`OAS/yaml`).parse()
+    val root = YamlParser(`OAS/yaml`).parse(true)
     root.size should be(1)
 
     val document = root.head.asInstanceOf[YDocument]

@@ -18,8 +18,6 @@ class YamlGenerator {
   def visit(part: YPart): Unit = {
     part match {
       case document: YDocument =>
-//        visit(part.head)
-//        writer.line()
         document.value.foreach(visitChildren(_, forceLine = false))
       case map: YMap =>
         writer.indent()

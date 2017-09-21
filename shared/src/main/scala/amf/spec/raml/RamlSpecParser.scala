@@ -211,14 +211,6 @@ case class RamlSpecParser(root: Root) {
       }
     )
 
-    map.key(
-      "types",
-      entry => {
-        val types = RamlTypeParser(entry, shape => shape.adopted(api.id), declarations).parse()
-        println(types)
-      }
-    )
-
     AnnotationParser(api, map).parse()
 
     api
