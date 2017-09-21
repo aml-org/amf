@@ -1,5 +1,4 @@
 package amf.domain
-import amf.common.AMFAST
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
@@ -45,8 +44,6 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
 object Operation {
 
   def apply(): Operation = apply(Annotations())
-
-  def apply(ast: AMFAST): Operation = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Operation = new Operation(Fields(), annotations)
 }

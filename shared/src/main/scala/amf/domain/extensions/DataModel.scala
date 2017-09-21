@@ -1,14 +1,14 @@
 package amf.domain.extensions
 
-import amf.common.AMFAST
-import amf.domain.{Annotations, DynamicDomainElement, Fields}
-import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.common.core._
+import amf.domain.{Annotations, DynamicDomainElement, Fields}
 import amf.metadata.Field
-import amf.vocabulary.Namespace
-import amf.metadata.Type.{Iri, Str, Array}
+import amf.metadata.Type.{Array, Iri, Str}
 import amf.metadata.domain.extensions.DataNodeModel
+import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.vocabulary.Namespace
+import org.yaml.model.{YPart, YSequence}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -47,8 +47,8 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   */
 class ObjectNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
 
-  val properties: mutable.HashMap[String,ListBuffer[DataNode]] = mutable.HashMap()
-  val propertyAnnotations: mutable.HashMap[String,Annotations] = mutable.HashMap()
+  val properties: mutable.HashMap[String, ListBuffer[DataNode]] = mutable.HashMap()
+  val propertyAnnotations: mutable.HashMap[String, Annotations] = mutable.HashMap()
 
   override def defaultName: String = idCounter.genId("object")
 
@@ -77,7 +77,8 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   override def dynamicType = List(ObjectNode.builderType)
 
-  override def adopted(parent: String): this.type = if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
+  override def adopted(parent: String): this.type =
+    if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
 
   override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.iri()) match {
     case Some(els) if els.nonEmpty => Some(els.head)
@@ -91,7 +92,7 @@ object ObjectNode {
 
   def apply(): ObjectNode = apply(Annotations())
 
-  def apply(ast: AMFAST): ObjectNode = apply(Annotations(ast))
+  def apply(ast: YPart): ObjectNode = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ObjectNode = new ObjectNode(Fields(), annotations)
 }
@@ -99,7 +100,11 @@ object ObjectNode {
 /**
   * Scalar values with associated data type
   */
-class ScalarNode(var value: String, var dataType: Option[String], override val fields: Fields, val annotations: Annotations) extends  DataNode(annotations) {
+class ScalarNode(var value: String,
+                 var dataType: Option[String],
+                 override val fields: Fields,
+                 val annotations: Annotations)
+    extends DataNode(annotations) {
 
   override def defaultName: String = idCounter.genId("scalar")
 
@@ -110,7 +115,8 @@ class ScalarNode(var value: String, var dataType: Option[String], override val f
 
   override def dynamicType = List(ScalarNode.builderType)
 
-  override def adopted(parent: String): this.type = if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
+  override def adopted(parent: String): this.type =
+    if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Range =>
@@ -134,10 +140,11 @@ object ScalarNode {
 
   def apply(value: String, dataType: Option[String]): ScalarNode = apply(value, dataType, Annotations())
 
-  def apply(value: String, dataType: Option[String], ast: AMFAST): ScalarNode =
+  def apply(value: String, dataType: Option[String], ast: YPart): ScalarNode =
     apply(value, dataType, Annotations(ast))
 
-  def apply(value: String, dataType: Option[String], annotations: Annotations): ScalarNode = new ScalarNode(value: String, dataType: Option[String], Fields(), annotations)
+  def apply(value: String, dataType: Option[String], annotations: Annotations): ScalarNode =
+    new ScalarNode(value: String, dataType: Option[String], Fields(), annotations)
 }
 
 /**
@@ -156,7 +163,8 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   override def dynamicType = List(ArrayNode.builderType, Namespace.Rdf + "Seq")
 
-  override def adopted(parent: String): this.type = if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
+  override def adopted(parent: String): this.type =
+    if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Member => Some(AmfArray(members))
@@ -170,7 +178,7 @@ object ArrayNode {
 
   def apply(): ArrayNode = apply(Annotations())
 
-  def apply(ast: AMFAST): ArrayNode = apply(Annotations(ast))
+  def apply(ast: YSequence): ArrayNode = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ArrayNode = new ArrayNode(Fields(), annotations)
 }

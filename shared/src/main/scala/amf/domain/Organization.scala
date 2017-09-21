@@ -1,7 +1,7 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
+import org.yaml.model.YMap
 
 /**
   * Organization internal model
@@ -23,7 +23,7 @@ object Organization {
 
   def apply(): Organization = apply(Annotations())
 
-  def apply(ast: AMFAST): Organization = apply(Annotations(ast))
+  def apply(ast: YMap): Organization = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Organization = apply(Fields(), annotations)
 }

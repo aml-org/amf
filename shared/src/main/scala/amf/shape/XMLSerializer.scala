@@ -1,8 +1,8 @@
 package amf.shape
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.shape.XMLSerializerModel._
+import org.yaml.model.YMap
 
 case class XMLSerializer(fields: Fields, annotations: Annotations) extends DomainElement {
   def attribute: Boolean = fields(Attribute)
@@ -25,7 +25,7 @@ object XMLSerializer {
 
   def apply(): XMLSerializer = apply(Annotations())
 
-  def apply(ast: AMFAST): XMLSerializer = apply(Annotations(ast))
+  def apply(ast: YMap): XMLSerializer = apply(Annotations(ast))
 
   def apply(annotations: Annotations): XMLSerializer = XMLSerializer(Fields(), annotations)
 }

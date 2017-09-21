@@ -1,40 +1,22 @@
 package amf.parser
 
-import amf.common.AMFToken._
-import amf.common.core.Strings
-import amf.common.{AMFAST, AMFToken}
-import amf.json.JsonLexer
-import amf.lexer.CharSequenceStream
-import amf.oas.OasParser
-import amf.raml.RamlParser
-import amf.remote.{Content, Platform}
-import amf.yaml.YamlLexer
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
+import org.yaml.model._
+import org.yaml.parser.YamlParser
 
 import scala.language.postfixOps
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 
 class ParserTest extends FunSuite {
-  private val `RAML/yaml`: String =
-    """a: 1
-          |b: !include include1.yaml
-          |c:
-          |  - 2
-          |  - 3
-          |d: !include include2.yaml""".stripMargin
 
-  private val `RAML/json`: String =
-    """{
-          |  "a": 1,
-          |  "b": "!include include1.yaml",
-          |  "c": [
-          |    2,
-          |    3
-          |  ],
-          |  "d": "!include include2.yaml"
-          |}""".stripMargin
+  private val `RAML/yaml`: String =
+    """#%RAML 1.0
+      |a: 1
+      |b: !include include1.yaml
+      |c:
+      |  - 2
+      |  - 3
+      |d: !include include2.yaml""".stripMargin
 
   private val `OAS/json`: String =
     """{
@@ -61,174 +43,87 @@ class ParserTest extends FunSuite {
           |d:
           |  $ref: include2.yaml""".stripMargin
 
-  test("Test RamlParser with RAML/yaml") {
-    val builder = YeastASTBuilder(YamlLexer(`RAML/yaml`))
-    val parser  = new RamlParser(builder)
+  test("Test RAML/yaml") {
+    val root = YamlParser(`RAML/yaml`).parse(true)
+    root.size should be(3)
 
-    val root = builder.root() { () =>
-      parser.parse()
-    }
+    val comment = root.head.asInstanceOf[YComment]
+    comment.metaText should be("%RAML 1.0")
 
-    assertDocumentRoot(root)
+    val document = root.last.asInstanceOf[YDocument]
+    document.value shouldBe defined
+    document.value.get shouldBe a[YMap]
+
+    assertDocumentRoot(document.value.get.asInstanceOf[YMap], assertRamlInclude)
   }
 
-  ignore("Test RamlParser with RAML/json") {
-    val builder = YeastASTBuilder(JsonLexer(`RAML/json`))
-    val parser  = new RamlParser(builder)
+  test("Test OAS/json") {
+    val root = YamlParser(`OAS/json`).parse(true)
+    root.size should be(1)
 
-    val root = builder.root() { () =>
-      parser.parse()
-    }
+    root.head shouldBe a[YDocument]
+    val document = root.head.asInstanceOf[YDocument]
+    document.value shouldBe defined
+    document.value.get shouldBe a[YMap]
 
-    assertDocumentRoot(root)
+    assertDocumentRoot(document.value.get.asInstanceOf[YMap], assertOasInclude)
   }
 
-  test("Test OASParser with OAS/json") {
-    val builder = YeastASTBuilder(JsonLexer(`OAS/json`))
-    val parser  = new OasParser(builder)
+  test("Test OAS/yaml") {
+    val root = YamlParser(`OAS/yaml`).parse(true)
+    root.size should be(1)
 
-    val root = builder.root() { () =>
-      parser.parse()
-    }
+    val document = root.head.asInstanceOf[YDocument]
+    document.value shouldBe defined
+    document.value.get shouldBe a[YMap]
 
-    assertDocumentRoot(root)
+    assertDocumentRoot(document.value.get.asInstanceOf[YMap], assertOasInclude)
   }
 
-  test("Test OASParser with OAS/yaml") {
-    val builder = YeastASTBuilder(YamlLexer(`OAS/yaml`))
-    val parser  = new OasParser(builder)
+  private def assertRamlInclude(entry: YMapEntry) = {
+    entry.key.value shouldBe a[YScalar]
+    Some(entry.key.value.asInstanceOf[YScalar].text) should contain oneOf ("b", "d")
 
-    val root = builder.root() { () =>
-      parser.parse()
-    }
-
-    assertDocumentRoot(root)
+    entry.value.value shouldBe a[YScalar]
+    //todo parser: missing property for tag!
+    entry.value.value.asInstanceOf[YScalar].text should startWith("include")
   }
 
-  def typed(head: AMFAST): Any = head.`type` match {
-    case IntToken    => head.content.toInt
-    case StringToken => head.content.unquote
-    case _           => head.content
+  private def assertOasInclude(entry: YMapEntry) = {
+    entry.key.value shouldBe a[YScalar]
+    Some(entry.key.value.asInstanceOf[YScalar].text) should contain oneOf ("b", "d")
+
+    entry.value.value shouldBe a[YMap]
+    val include = entry.value.value.asInstanceOf[YMap].entries.head
+    include.key.value shouldBe a[YScalar]
+    include.key.value.asInstanceOf[YScalar].text shouldBe "$ref"
+    include.value.value shouldBe a[YScalar]
+    include.value.value.asInstanceOf[YScalar].text should startWith("include")
   }
 
-  private def assertDocumentRoot(root: AMFAST) = {
-    // Assert AST tree
-    assert(root.children.length == 1)
-    assert(root.`type` equals Root)
-    assert(root.content == null)
+  private def assertDocumentRoot(content: YMap, include: YMapEntry => Unit) = {
+    content.entries.size should be(4)
 
-    val content = root.head
-    assert(content.children.length == 4)
-    assert(content.`type` equals MapToken)
-    assert(content.content == null)
+    val first = content.entries(0)
+    first.key.value shouldBe a[YScalar]
+    first.key.value.asInstanceOf[YScalar].text shouldBe "a"
+    first.value.value shouldBe a[YScalar]
+    first.value.value.asInstanceOf[YScalar].text shouldBe "1"
 
-    val first = content.child(0)
-    typed(first.head) shouldBe "a"
-    typed(first.last) shouldBe 1
+    include(content.entries(1))
 
-    val second = content.child(1)
-    typed(second.head) shouldBe "b"
-    typed(second.last).toString should startWith("include1.")
+    val third = content.entries(2)
+    third.key.value shouldBe a[YScalar]
+    third.key.value.asInstanceOf[YScalar].text shouldBe "c"
+    third.value.value shouldBe a[YSequence]
 
-    val third = content.child(2)
-    assert(third.content == null)
-    typed(third.head) shouldBe "c"
-    assertYamlSequence(third.last)
+    val sequence = third.value.value.asInstanceOf[YSequence]
+    sequence.values.size should be(2)
+    sequence.values(0) shouldBe a[YScalar]
+    sequence.values(0).asInstanceOf[YScalar].text shouldBe "2"
+    sequence.values(1) shouldBe a[YScalar]
+    sequence.values(1).asInstanceOf[YScalar].text shouldBe "3"
 
-    val fourth = content.child(3)
-    typed(fourth.head) shouldBe "d"
-    typed(fourth.last).toString should startWith("include2.")
-
-    assert(content.child(4) eq root.empty)
+    include(content.entries(3))
   }
-
-  private def assertYamlSequence(sequence: AMFAST) = {
-    assert(sequence.content == null)
-    sequence.`type` should be(SequenceToken)
-
-    val v0 = sequence.child(0)
-    typed(v0) shouldBe 2
-    assert(v0.children isEmpty)
-    val v1 = sequence.child(1)
-    typed(v1) shouldBe 3
-    assert(v1.children isEmpty)
-  }
-
-  private def assertYamlEntry(node: AMFAST, expected: Range) = {
-    assert(node.children.length == 2)
-    node.`type` should be(Entry)
-    assert(node.content == null)
-    node.range should be(expected)
-  }
-
-  private def assertYamlLink(link: AMFAST, expected: Range) = {
-    link.`type` should be(Link)
-    assert(link.children.isEmpty)
-    link.range should be(expected)
-    /*val include = link.asInstanceOf[YamlASTLink]
-        val root = include.target.root.asInstanceOf[YamlAST]
-        assert(root.children.length == 1)
-
-        val entry = root.head.head
-        assertYamlEntry(entry, Range((1, 0), (1, 5)))
-        assert(entry.last.content equals "0")
-        assert(entry.last.range equals Range((1, 4), (1, 5)))*/
-  }
-
-  private def assertOASRoot(root: AMFAST) = {
-    // Assert AST tree ...
-    assert(root.children.length == 1)
-  }
-
-  private def assertJsonEntry(node: AMFAST, expected: Range) = {
-    assert(node.children.length == 2)
-    assert(node.`type` equals AMFToken.Entry)
-    assert(node.content == null)
-    assert(node.range equals expected)
-  }
-
-  private class TestMemoryPlatform extends Platform {
-
-    /** Resolve specified file. */
-    override protected def fetchFile(path: String): Future[Content] = {
-      path match {
-        case "input.yaml" =>
-          Future {
-            Content(new CharSequenceStream(`RAML/yaml`), path)
-          }
-        case "include1.yaml" =>
-          Future {
-            Content(new CharSequenceStream("aa: 0"), path)
-          }
-        case "include2.yaml" =>
-          Future {
-            Content(new CharSequenceStream("dd: 0"), path)
-          }
-        case "input.json" =>
-          Future {
-            Content(new CharSequenceStream(`OAS/json`), path)
-          }
-        case "include1.json" =>
-          Future {
-            Content(new CharSequenceStream("{\"aa\": 0}"), path)
-          }
-        case "include2.json" =>
-          Future {
-            Content(new CharSequenceStream("{\"dd\": 0}"), path)
-          }
-        case _ => Future.failed(new Exception(s"[TEST] Unable to load $path"))
-      }
-    }
-
-    override protected def fetchHttp(url: String): Future[Content] =
-      Future.failed(new Exception(s"[TEST] Unable to fetch url $url"))
-
-    override protected def writeFile(path: String, content: String): Future[String] =
-      Future.failed(new Exception(s"[TEST] Unsupported write operation $path"))
-
-    override def tmpdir(): String = throw new Exception(s"[TEST] Unsupported tmpdir operation")
-
-    override def resolvePath(path: String): String = path
-  }
-
 }

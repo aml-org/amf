@@ -1,9 +1,6 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.common.AMFToken._
-import amf.common.core.Strings
-import amf.common._
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -15,10 +12,11 @@ import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel,
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
-import amf.parser.{AMFASTFactory, ASTEmitter}
+import amf.parser.ASTEmitter
 import amf.shape._
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
+import org.yaml.model.{YDocument, YType}
 
 import scala.collection.mutable.ListBuffer
 
@@ -27,15 +25,15 @@ import scala.collection.mutable.ListBuffer
   */
 object GraphEmitter {
 
-  def emit(unit: BaseUnit, options: GenerationOptions): AMFAST = {
-    val emitter = Emitter(ASTEmitter(AMFASTFactory()), options)
+  def emit(unit: BaseUnit, options: GenerationOptions): YDocument = {
+    val emitter = Emitter(ASTEmitter(), options)
     emitter.root(unit)
   }
 
-  case class Emitter(emitter: ASTEmitter[AMFToken, AMFAST], options: GenerationOptions) {
+  case class Emitter(emitter: ASTEmitter, options: GenerationOptions) {
 
-    def root(unit: BaseUnit): AMFAST = {
-      emitter.root(Root) { () =>
+    def root(unit: BaseUnit): YDocument = {
+      emitter.document { () =>
         array { () =>
           map { () =>
             traverse(unit, unit.location)
@@ -63,7 +61,7 @@ object GraphEmitter {
     }
 
     def traverseDynamicMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
-      val schema:DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
+      val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
       createDynamicTypeNode(schema)
 
@@ -72,7 +70,8 @@ object GraphEmitter {
           entry { () =>
             val propertyUri = f.value.iri()
             raw(propertyUri)
-            value(f.`type`, Value(amfElement, amfElement.annotations), id, { (_) => })
+            value(f.`type`, Value(amfElement, amfElement.annotations), id, { (_) =>
+              })
           }
         }
       }
@@ -80,8 +79,6 @@ object GraphEmitter {
 
     def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
       createTypeNode(obj)
-
-
 
       obj.fields.map(element.fields.entry).foreach {
         case Some(FieldEntry(f, v)) =>
@@ -98,7 +95,7 @@ object GraphEmitter {
       val customProperties: ListBuffer[String] = ListBuffer()
 
       element.fields.entry(DomainElementModel.CustomDomainProperties) match {
-        case Some(FieldEntry(f, v)) =>
+        case Some(FieldEntry(_, v)) =>
           v.value match {
             case AmfArray(values, _) =>
               values.foreach {
@@ -121,7 +118,9 @@ object GraphEmitter {
       if (customProperties.nonEmpty) {
         entry { () =>
           raw((Namespace.Document + "customDomainProperties").iri())
-          array { () => customProperties.foreach(iri(_, inArray = true)) }
+          array { () =>
+            customProperties.foreach(iri(_, inArray = true))
+          }
         }
       }
     }
@@ -138,12 +137,12 @@ object GraphEmitter {
           scalar(v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Bool =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, BooleanToken)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
           sources(v)
         case Type.Int =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, IntToken)
+          scalar(v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
-        case a : SortedArray =>
+        case a: SortedArray =>
           map { () =>
             entry { () =>
               raw("@list")
@@ -152,7 +151,7 @@ object GraphEmitter {
                 sources(v)
                 a.element match {
                   case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
-                  case Str => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
+                  case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
                 }
               }
             }
@@ -184,12 +183,6 @@ object GraphEmitter {
       }
     }
 
-    private def raw(content: String, token: AMFToken = StringToken): Unit = {
-      emitter.value(token, if (token == StringToken) {
-        content.quote
-      } else content)
-    }
-
     private def iriValue(content: String): Unit = {
       map { () =>
         entry { () =>
@@ -209,21 +202,21 @@ object GraphEmitter {
       }
     }
 
-    private def scalar(content: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
+    private def scalar(content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
       if (inArray) {
-        value(content, token)
+        value(content, tag)
       } else {
         array { () =>
-          value(content, token)
+          value(content, tag)
         }
       }
     }
 
-    private def value(content: String, token: AMFToken): Unit = {
+    private def value(content: String, tag: YType): Unit = {
       map { () =>
         entry { () =>
           raw("@value")
-          raw(content, token)
+          raw(content, tag)
         }
       }
     }
@@ -253,17 +246,13 @@ object GraphEmitter {
       raw(v)
     }
 
-    private def entry(inner: () => Unit): Unit = node(Entry)(inner)
+    private def raw(content: String, tag: YType = YType.Str): Unit = emitter.scalar(content, tag)
 
-    private def array(inner: () => Unit): Unit = node(SequenceToken)(inner)
+    private def entry(inner: () => Unit): Unit = emitter.entry(inner)
 
-    private def map(inner: () => Unit): Unit = node(MapToken)(inner)
+    private def array(inner: () => Unit): Unit = emitter.sequence(inner)
 
-    private def node(t: AMFToken)(inner: () => Unit) = {
-      emitter.beginNode()
-      inner()
-      emitter.endNode(t)
-    }
+    private def map(inner: () => Unit): Unit = emitter.mapping(inner)
 
     private def createSourcesNode(id: String, sources: SourceMap): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {
@@ -309,26 +298,26 @@ object GraphEmitter {
 
   /** Metadata Type references. */
   private def metamodel(instance: Any): Obj = instance match {
-    case _: Document      => DocumentModel
-    case _: WebApi        => WebApiModel
-    case _: Organization  => OrganizationModel
-    case _: License       => LicenseModel
-    case _: CreativeWork  => CreativeWorkModel
-    case _: EndPoint      => EndPointModel
-    case _: Operation     => OperationModel
-    case _: Parameter     => ParameterModel
-    case _: Request       => RequestModel
-    case _: Response      => ResponseModel
-    case _: Payload       => PayloadModel
-    case _: NodeShape     => NodeShapeModel
-    case _: ArrayShape    => ArrayShapeModel
-    case _: ScalarShape   => ScalarShapeModel
-    case _: PropertyShape => PropertyShapeModel
-    case _: XMLSerializer => XMLSerializerModel
+    case _: Document             => DocumentModel
+    case _: WebApi               => WebApiModel
+    case _: Organization         => OrganizationModel
+    case _: License              => LicenseModel
+    case _: CreativeWork         => CreativeWorkModel
+    case _: EndPoint             => EndPointModel
+    case _: Operation            => OperationModel
+    case _: Parameter            => ParameterModel
+    case _: Request              => RequestModel
+    case _: Response             => ResponseModel
+    case _: Payload              => PayloadModel
+    case _: NodeShape            => NodeShapeModel
+    case _: ArrayShape           => ArrayShapeModel
+    case _: ScalarShape          => ScalarShapeModel
+    case _: PropertyShape        => PropertyShapeModel
+    case _: XMLSerializer        => XMLSerializerModel
     case _: PropertyDependencies => PropertyDependenciesModel
     case _: DomainExtension      => DomainExtensionModel
     case _: CustomDomainProperty => CustomDomainPropertyModel
     case _: DataNode             => DataNodeModel
-    case _  => throw new Exception(s"Missing metadata mapping for $instance")
+    case _                       => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

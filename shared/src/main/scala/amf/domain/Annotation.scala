@@ -1,9 +1,9 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.model.AmfElement
 import amf.parser.Range
 import amf.remote.Vendor
+import org.yaml.model.YPart
 
 /**
   * Annotation type
@@ -39,7 +39,7 @@ object Annotation {
     override val value: String = vendor.name
   }
 
-  case class SourceAST(ast: AMFAST) extends Annotation
+  case class SourceAST(ast: YPart) extends Annotation
 
   case class DeclaredElement() extends Annotation
 

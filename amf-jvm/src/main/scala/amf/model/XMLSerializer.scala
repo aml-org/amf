@@ -14,15 +14,6 @@ case class XMLSerializer private[model] (private[amf] val xmlSerializer: amf.sha
   val namespace: String  = xmlSerializer.namespace
   val prefix: String     = xmlSerializer.prefix
 
-  override def equals(other: Any): Boolean = other match {
-    case that: XMLSerializer =>
-      (that canEqual this) &&
-        xmlSerializer == that.xmlSerializer
-    case _ => false
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[XMLSerializer]
-
   override private[amf] def element: amf.shape.XMLSerializer = xmlSerializer
 
   def withAttribute(attribute: Boolean): this.type = {

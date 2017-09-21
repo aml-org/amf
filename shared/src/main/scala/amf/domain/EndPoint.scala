@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.common.core.Strings
 import amf.domain.Annotation.ParentEndPoint
 import amf.metadata.domain.EndPointModel._
@@ -44,8 +43,6 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
 object EndPoint {
 
   def apply(): EndPoint = apply(Annotations())
-
-  def apply(ast: AMFAST): EndPoint = apply(Annotations(ast))
 
   def apply(annotations: Annotations): EndPoint = EndPoint(Fields(), annotations)
 }

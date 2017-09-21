@@ -11,5 +11,5 @@ case class AmfArray(var values: Seq[AmfElement], annotations: Annotations = new 
     values = values :+ value
   }
 
-  def scalars: Seq[AmfScalar] = values.map({ case s: AmfScalar => s })
+  def scalars: Seq[AmfScalar] = values collect { case s: AmfScalar => s }
 }

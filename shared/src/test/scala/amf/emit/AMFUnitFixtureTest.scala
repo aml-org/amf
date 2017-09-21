@@ -1,10 +1,7 @@
 package amf.emit
 
-import amf.client.GenerationOptions
-import amf.common.AMFAST
 import amf.document.Document
 import amf.domain._
-import amf.remote.Vendor
 import amf.unsafe.PlatformSecrets
 
 /**
@@ -19,8 +16,6 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   def `document/api/advanced`: Document = doc(advanced())
 
   def `document/api/full`: Document = doc(advanced())
-
-  def ast(document: Document, vendor: Vendor): AMFAST = AMFUnitMaker(document, vendor, GenerationOptions())
 
   private def bare(): WebApi = {
     WebApi()

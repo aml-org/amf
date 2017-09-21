@@ -1,9 +1,9 @@
 package amf.domain
 
-import amf.common.AMFAST
 import amf.metadata.domain.PayloadModel
 import amf.metadata.domain.PayloadModel._
 import amf.shape.{ArrayShape, NodeShape, ScalarShape, Shape}
+import org.yaml.model.YMap
 
 /**
   * Payload internal model.
@@ -43,7 +43,7 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
 object Payload {
   def apply(): Payload = apply(Annotations())
 
-  def apply(ast: AMFAST): Payload = apply(Annotations(ast))
+  def apply(ast: YMap): Payload = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Payload = new Payload(Fields(), annotations)
 }

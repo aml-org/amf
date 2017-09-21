@@ -1,7 +1,5 @@
 package amf.spec.oas
 
-import amf.common.AMFToken._
-import amf.common.{AMFAST, AMFToken}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
@@ -12,12 +10,13 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position.ZERO
-import amf.parser.{AMFASTFactory, ASTEmitter, Position}
+import amf.parser.{ASTEmitter, Position}
 import amf.remote.Oas
 import amf.shape._
-import amf.spec.common.EmitterHelper
+import amf.spec.common.BaseSpecEmitter
 import amf.spec.{Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
+import org.yaml.model.{YDocument, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -26,18 +25,15 @@ import scala.collection.mutable.ListBuffer
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
+case class OasSpecEmitter(unit: BaseUnit) extends BaseSpecEmitter {
 
-  val emitter = ASTEmitter(AMFASTFactory())
-
-  // before the source vendor annotations was saved in web api model.
-  // Now, will be saved in document model (since changes in parser)
+  val emitter = ASTEmitter()
 
   private def retrieveWebApi() = unit match {
     case document: Document => document.encodes
   }
 
-  def emitDocument(): AMFAST = {
+  def emitDocument(): YDocument = {
 
     val ordering: SpecOrdering = unit match {
       case document: Document => SpecOrdering.ordering(Oas, document.encodes.annotations)
@@ -48,7 +44,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
     // TODO ordering??
     val declares = DeclarationsEmitter(ordering).emitters
 
-    emitter.root(Root) { () =>
+    emitter.document { () =>
       map { () =>
         entry { () =>
           raw("swagger")
@@ -360,7 +356,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
 
           fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f, BooleanToken))
+          fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f, YType.Bool))
 
           fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
 
@@ -423,7 +419,6 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
       val result = mutable.ListBuffer[Emitter]()
       f.array.values
         .foreach(e => result += ResponseEmitter(e.asInstanceOf[Response], ordering))
-
 
       ordering.sorted(result)
     }
@@ -577,7 +572,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required)
-            .map(f => result += ValueEmitter("required", f, BooleanToken))
+            .map(f => result += ValueEmitter("required", f, YType.Bool))
 
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
@@ -634,7 +629,7 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
-            .map(f => result += ValueEmitter("required", f, BooleanToken))
+            .map(f => result += ValueEmitter("required", f, YType.Bool))
 
           fs.entry(ParameterModel.Schema)
             .map(f =>
@@ -731,45 +726,6 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ScalarEmitter(v: AmfScalar) extends Emitter {
-    override def emit(): Unit = sourceOr(v.annotations, raw(v.value.toString))
-
-    override def position(): Position = pos(v.annotations)
-  }
-
-  case class ValueEmitter(key: String, f: FieldEntry, token: AMFToken = StringToken) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(f.value, entry { () =>
-        raw(key)
-        raw(f.scalar.toString, token)
-      })
-    }
-
-    override def position(): Position = pos(f.value.annotations)
-  }
-
-  case class EntryEmitter(key: String,
-                          value: String,
-                          token: AMFToken = StringToken,
-                          position: Position = Position.ZERO)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(key)
-        raw(value, token)
-      }
-    }
-  }
-
-  private def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
-
-  private def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
-    //    annotations
-    //      .find(classOf[SourceAST])
-    //      .fold(inner)(a => emitter.addChild(a.ast))
-    inner
-  }
-
   case class EndPointParameters(query: Seq[Parameter] = Nil,
                                 path: Seq[Parameter] = Nil,
                                 header: Seq[Parameter] = Nil,
@@ -823,18 +779,6 @@ case class OasSpecEmitter(unit: BaseUnit) extends EmitterHelper {
         .find(p => Option(p.mediaType).isEmpty || p.mediaType.isEmpty)
         .orElse(payloads.find(_.mediaType == "application/json"))
         .orElse(payloads.headOption)
-  }
-
-  /** Emit a single value from an array as an entry. */
-  case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(f.value, entry { () =>
-        raw(key)
-        raw(f.array.scalars.headOption.map(_.toString).getOrElse(""))
-      })
-    }
-
-    override def position(): Position = pos(f.value.annotations)
   }
 
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {

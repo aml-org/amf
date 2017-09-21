@@ -1,6 +1,5 @@
 package amf.remote
 
-import amf.common.AMFToken
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 
 case class Hint(vendor: Vendor, syntax: Syntax, kind: Kind = Unspecified) {
@@ -44,13 +43,6 @@ object Library extends Kind
 object Link extends Kind
 
 object Unspecified extends Kind
-
-object Kind {
-  def apply(token: AMFToken): Kind = token match {
-    case AMFToken.Link    => Link
-    case AMFToken.Library => Library
-  }
-}
 
 object Vendor {
   def unapply(name: String): Option[Vendor] = {

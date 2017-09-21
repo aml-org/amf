@@ -1,8 +1,8 @@
 package amf.shape
 
-import amf.common.AMFAST
 import amf.domain.{Annotations, Fields}
 import amf.metadata.shape.NodeShapeModel._
+import org.yaml.model.YPart
 
 /**
   * Node shape.
@@ -60,7 +60,7 @@ object NodeShape {
 
   def apply(): NodeShape = apply(Annotations())
 
-  def apply(ast: AMFAST): NodeShape = apply(Annotations(ast))
+  def apply(ast: YPart): NodeShape = apply(Annotations(ast))
 
   def apply(annotations: Annotations): NodeShape = NodeShape(Fields(), annotations)
 }
