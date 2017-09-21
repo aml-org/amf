@@ -22,15 +22,29 @@ object Common {
   val publish: Def.Setting[_] = publishTo := Some(if (isSnapshot.value) snapshots else releases)
 
   def credentials(): Seq[Credentials] = {
-    val user: String     = System.getenv("mule_user")
-    val password: String = System.getenv("mule_password")
+    val cs =
+      Seq("mule_user"         -> "mule_password",
+          "PUBLIC_NEXUS_USER" -> "PUBLIC_NEXUS_PASS",
+          "NEXUS_USER"        -> "NEXUS_PASSWORD",
+          "NEXUS_USR"         -> "NEXUS_PSW")
+        .flatMap({
+          case (user, password) =>
+            for {
+              u <- sys.env.get(user)
+              p <- sys.env.get(password)
+            } yield u -> p
+        })
 
-    if (user != null && password != null) {
+    if (cs.nonEmpty) {
       println("Using System Custom credentials ")
-      Seq(
-        Credentials("Sonatype Nexus Repository Manager", "repository-master.mulesoft.org", user, password),
-        Credentials("Sonatype Nexus Repository Manager", "repository.mulesoft.org", user, password)
-      )
+      cs.flatMap({
+        case (user, password) =>
+          Seq(
+            Credentials("Sonatype Nexus Repository Manager", "repository-master.mulesoft.org", user, password),
+            Credentials("Sonatype Nexus Repository Manager", "repository.mulesoft.org", user, password)
+          )
+      })
+
     } else {
 
       val ivyCredentials   = Path.userHome / ".ivy2" / ".credentials"
@@ -54,11 +68,12 @@ object Common {
         })
       }
 
-      val credentials: Seq[Credentials] = (ivyCredentials.asFile, mavenCredentials.asFile) match {
-        case (ivy, _) if ivy.canRead => Credentials(ivy) :: Nil
-        case (_, mvn) if mvn.canRead => loadMavenCredentials(mvn)
-        case _                       => Nil
-      }
+      val credentials: Seq[Credentials] =
+        (ivyCredentials.asFile, mavenCredentials.asFile) match {
+          case (ivy, _) if ivy.canRead => Credentials(ivy) :: Nil
+          case (_, mvn) if mvn.canRead => loadMavenCredentials(mvn)
+          case _                       => Nil
+        }
 
       credentials
     }
