@@ -1,11 +1,11 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.metadata.document.DocumentModel
+import amf.metadata.document.{DocumentModel, ModuleModel}
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel}
@@ -318,6 +318,7 @@ object GraphEmitter {
     case _: DomainExtension      => DomainExtensionModel
     case _: CustomDomainProperty => CustomDomainPropertyModel
     case _: DataNode             => DataNodeModel
+    case _: Module               => ModuleModel
     case _                       => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }
