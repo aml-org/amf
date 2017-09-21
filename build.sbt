@@ -45,8 +45,6 @@ lazy val amf = crossProject
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))
 lazy val amfJS  = amf.js.in(file("amf-js"))
 
-addCommandAlias("generate", "; clean; generateModuleJS; generateBrowserJS; generateJVM")
-addCommandAlias("generateBrowserJS", "; browserJS/fullOptJS")
-addCommandAlias("generateModuleJS", "; moduleJS/fullOptJS")
+addCommandAlias("generate", "; clean; amfJS/fullOptJS; generateJVM")
 addCommandAlias("generateJVM", "; amfJVM/assembly; amfJVM/packageDoc")
-addCommandAlias("publish", "; clean; generateModuleJS; amfJS/publish; amfJVM/publish")
+addCommandAlias("publish", "; clean; amfJS/fullOptJS; amfJS/publish; amfJVM/publish")
