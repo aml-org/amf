@@ -70,39 +70,35 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeRamlUnit(root: Root): BaseUnit = {
-    hint.kind match {
-      case Library     => makeDocument(root) // TODO libraries
-      case Link        => makeDocument(root) // TODO includes
-      case Unspecified => resolveRamlUnit(root)
-    }
-  }
-
-  private def resolveRamlUnit(root: Root) = {
-    //todo syaml read comment
-//    header(root.document) match {
-//      case c if c.is(Comment) && RAML_10 == c.content => makeDocument(root)
-//      case _                                          => throw new UnableToResolveUnitException
+  // will be back when merge with modules be done
+//  private def makeRamlUnit(root: Root): BaseUnit = {
+//    hint.kind match {
+//      case Library     => makeDocument(root) // TODO libraries
+//      case Link        => makeDocument(root) // TODO includes
+//      case Unspecified => resolveRamlUnit(root)
 //    }
-    makeDocument(root)
-  }
+//  }
 
-  private def makeDocument(root: Root): Document = {
-    root.vendor match {
-      case Raml => RamlSpecParser(root).parseDocument()
-      case Oas  => OasSpecParser(root).parseDocument()
-      case _    => throw new IllegalStateException(s"Invalid vendor ${root.vendor}")
+  private def makeRamlUnit(root: Root): BaseUnit = {
+    RamlHeader(root.document) match {
+      case Some(RamlHeader.RAML_10)         => RamlSpecParser(root).parseDocument()
+      case Some(RamlHeader.RAML_10_LIBRARY) => RamlSpecParser(root).parseDocument() // todo library
+      case None                             => throw new RuntimeException("Invalid raml document")
     }
   }
-
   private def makeOasUnit(root: Root): BaseUnit = {
+
+    OasHeader(root.document) match {
+      case Some(OasHeader.Oas_20) => OasSpecParser(root).parseDocument() //todo libra
+      case None                   => throw new RuntimeException("Invalid oas document")
+      // ries
+    }
     //todo syaml read comment
     //    root.document.head.children.find(e =>
 //      e.is(Entry) && e.head.content.unquote == "swagger" && e.last.content.unquote == "2.0") match {
 //      case Some(_) => makeDocument(root)
 //      case _       => throw new UnableToResolveUnitException
 //    }
-    makeDocument(root)
   }
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
