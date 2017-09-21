@@ -46,6 +46,16 @@ package object parser {
       case s: YSequence => s
       case _            => throw new Exception(s"Expected sequence but found: $value")
     }
+
+    def asMap: Option[YMap] = value match {
+      case m: YMap => Some(m)
+      case _       => None
+    }
+
+    def asScalar: Option[YScalar] = value match {
+      case s: YScalar => Some(s)
+      case _          => None
+    }
   }
 
   implicit class YScalarOps(value: YScalar) {}
