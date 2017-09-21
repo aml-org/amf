@@ -1,11 +1,11 @@
 package amf.emit
 
 import amf.client.GenerationOptions
-import amf.document.BaseUnit
+import amf.document.{BaseUnit, Document, Module}
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.spec.oas.OasSpecEmitter
-import amf.spec.raml.RamlSpecEmitter
+import amf.spec.oas.{OasDocumentEmitter, OasModuleEmitter}
+import amf.spec.raml.{RamlDocumentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument
 
 /**
@@ -23,11 +23,23 @@ class AMFUnitMaker {
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): YDocument = {
     vendor match {
       case Raml =>
-        RamlSpecEmitter(unit).emitDocument()
+        makeRamlUnit(unit)
       case Oas =>
-        OasSpecEmitter(unit).emitDocument()
+        makeOasUnit(unit)
       case _ => throw new IllegalStateException("Invalid vendor " + vendor)
     }
+  }
+
+  private def makeRamlUnit(unit: BaseUnit): YDocument = unit match {
+    case module: Module     => RamlModuleEmitter(module).emitModule()
+    case document: Document => RamlDocumentEmitter(document).emitDocument()
+    case _                  => throw new IllegalStateException("Invalid base unit form maker")
+  }
+
+  private def makeOasUnit(unit: BaseUnit): YDocument = unit match {
+    case module: Module     => OasModuleEmitter(module).emitModule()
+    case document: Document => OasDocumentEmitter(document).emitDocument()
+    case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 
   private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): YDocument = GraphEmitter.emit(unit, options)

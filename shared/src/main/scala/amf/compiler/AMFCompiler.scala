@@ -1,14 +1,13 @@
 package amf.compiler
 
-import amf.compiler.RamlHeader.{Raml10, Raml10Library}
 import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.remote.Mimes._
 import amf.remote._
-import amf.spec.oas.OasSpecParser
-import amf.spec.raml.RamlSpecParser
+import amf.spec.oas.{OasDocumentParser, OasModuleParser}
+import amf.spec.raml.{RamlDocumentParser, RamlModuleParser}
 import org.yaml.model.{YComment, YDocument, YPart}
 import org.yaml.parser.YamlParser
 
@@ -23,9 +22,9 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            private val cache: Cache) {
 
-  private lazy val context: Context                    = base.map(_.update(url)).getOrElse(Context(remote, url))
-  private lazy val location                            = context.current
-  private val references: ListBuffer[Future[BaseUnit]] = ListBuffer()
+  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
+  private lazy val location                                   = context.current
+  private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
 
   def build(): Future[BaseUnit] = {
     // Reset the data node counter
@@ -68,23 +67,31 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     val option = RamlHeader(root).map({
-      case r: RamlHeader if r == Raml10        => RamlSpecParser(root).parseDocument()
-      case r: RamlHeader if r == Raml10Library => RamlSpecParser(root).parseDocument() // todo library
-      case _                                   => throw new UnableToResolveUnitException
+      case RamlHeader.Raml10        => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Library => RamlModuleParser(root).parseModule()
+      case _                        => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit
       case None       => throw new UnableToResolveUnitException
     }
   }
+
   private def makeOasUnit(root: Root): BaseUnit = {
     val option = OasHeader(root).map({
-      case OasHeader.Oas_20 => OasSpecParser(root).parseDocument() // todo libraries
-      case _                => throw new Exception("dddfff")
+      case OasHeader.Oas_20 => resolveOasUnit(root: Root)
+      case _                => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit
       case None       => throw new UnableToResolveUnitException
+    }
+  }
+
+  private def resolveOasUnit(root: Root): BaseUnit = {
+    hint.kind match {
+      case Library => OasModuleParser(root).parseModule()
+      case _       => OasDocumentParser(root).parseDocument()
     }
   }
 
@@ -103,7 +110,7 @@ class AMFCompiler private (val url: String,
         refs
           .filter(_.isRemote)
           .foreach(link => {
-            references += link.resolve(remote, context, cache, hint)
+            references += link.resolve(remote, context, cache, hint).map(r => ParsedReference(r, link.url))
           })
 
         Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor) })
@@ -119,11 +126,13 @@ class AMFCompiler private (val url: String,
   }
 }
 
-case class Root(parsed: ParsedDocument, location: String, references: Seq[BaseUnit], vendor: Vendor) {
+case class Root(parsed: ParsedDocument, location: String, references: Seq[ParsedReference], vendor: Vendor) {
   val document: YDocument = parsed.document
 }
 
 case class ParsedDocument(comment: Option[YComment], document: YDocument)
+
+case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String)
 
 object AMFCompiler {
   def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =

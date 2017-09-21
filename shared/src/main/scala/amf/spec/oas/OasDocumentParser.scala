@@ -1,18 +1,12 @@
 package amf.spec.oas
 
 import amf.common.Lazy
-import amf.compiler.Root
-import amf.document.Document
-import amf.domain.Annotation.{
-  DeclaredElement,
-  DefaultPayload,
-  EndPointBodyParameter,
-  ExplicitField,
-  SingleValueArray,
-  _
-}
+import amf.compiler.{ParsedReference, Root}
+import amf.document.{BaseUnit, Document}
+import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
+import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
@@ -22,7 +16,7 @@ import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
 import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
+import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -30,7 +24,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas 2.0 spec parser
   */
-case class OasSpecParser(root: Root) {
+case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
 
   def parseDocument(): Document = {
 
@@ -38,62 +32,19 @@ case class OasSpecParser(root: Root) {
 
     root.document.value.foreach(value => {
       val map = value.toMap
+      val declarations  = parseDeclares(map)
+      val enviromentRef = ReferencesParser(map, root.references).parse()
 
-      val declarations = parseDeclares(map)
+      val api = parseWebApi(map, Declarations(declarations,enviromentRef.toMap)).add(SourceVendor(root.vendor))
 
-      val api = parseWebApi(map, Declarations(declarations)).add(SourceVendor(root.vendor))
+      document
+        .withEncodes(api)
+        .adopted(root.location)
 
-      document.withEncodes(api).withDeclares(declarations)
+      if(declarations.nonEmpty) document.withDeclares(declarations)
+      if(enviromentRef.nonEmpty) document.withReferences(enviromentRef.values.toSeq)
     })
-
     document
-  }
-
-  private def parseDeclares(map: YMap) =
-    parseTypeDeclarations(map, root.location + "#/declarations") ++
-      parseAnnotationTypeDeclarations(map, root.location + "#/declarations")
-
-  def parseTypeDeclarations(map: YMap, typesPrefix: String): Seq[Shape] = {
-    val types = ListBuffer[Shape]()
-
-    map.key(
-      "definitions",
-      entry => {
-
-        entry.value.value.toMap.entries.foreach(e => {
-          val typeName = e.key.value.toScalar.text
-          OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
-            .parse() match {
-            case Some(shape) =>
-              types += shape.add(DeclaredElement())
-            case None => throw new Exception(s"Error parsing shape at $typeName")
-          }
-        })
-      }
-    )
-    types
-  }
-
-  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Seq[CustomDomainProperty] = {
-    val customDomainProperties = ListBuffer[CustomDomainProperty]()
-
-    map.key(
-      "x-annotationTypes",
-      e => {
-        e.value.value.toMap.entries.map(entry => {
-          val typeName = entry.key.value.toScalar.text
-          val customProperty = AnnotationTypesParser(entry,
-                                                     customProperty =>
-                                                       customProperty
-                                                         .withName(typeName)
-                                                         .adopted(customProperties),
-                                                     Declarations(customDomainProperties)).parse()
-          customDomainProperties += customProperty.add(DeclaredElement())
-        })
-      }
-    )
-
-    customDomainProperties
   }
 
   private def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
@@ -679,4 +630,85 @@ case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) 
 
     custom
   }
+}
+
+class OasSpecParser(root: Root) {
+
+  protected def parseDeclares(map: YMap): Seq[DomainElement] =
+    parseTypeDeclarations(map, root.location + "#/declarations") ++
+      parseAnnotationTypeDeclarations(map, root.location + "#/declarations")
+
+  def parseTypeDeclarations(map: YMap, typesPrefix: String): Seq[Shape] = {
+    val types = ListBuffer[Shape]()
+
+    map.key(
+      "definitions",
+      entry => {
+
+        entry.value.value.toMap.entries.foreach(e => {
+          val typeName = e.key.value.toScalar.text
+          OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
+            .parse() match {
+            case Some(shape) =>
+              types += shape.add(DeclaredElement())
+            case None => throw new Exception(s"Error parsing shape at $typeName")
+          }
+        })
+      }
+    )
+    types
+  }
+
+  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Seq[CustomDomainProperty] = {
+    val customDomainProperties = ListBuffer[CustomDomainProperty]()
+
+    map.key(
+      "x-annotationTypes",
+      e => {
+        e.value.value.toMap.entries.map(entry => {
+          val typeName = entry.key.value.toScalar.text
+          val customProperty = AnnotationTypesParser(entry,
+            customProperty =>
+              customProperty
+                .withName(typeName)
+                .adopted(customProperties),
+            Declarations(customDomainProperties)).parse()
+          customDomainProperties += customProperty.add(DeclaredElement())
+        })
+      }
+    )
+
+    customDomainProperties
+  }
+
+  // producer? whe lose id?
+  case class ReferencesParser(map: YMap, rootReferences:Seq[ParsedReference]) {
+    def parse(): mutable.Map[String, BaseUnit] = {
+
+      val references = mutable.Map[String, BaseUnit]()
+
+      map.key("x-uses", entry =>
+        entry.value.value.toMap.entries.foreach(e => {
+          target(e.value.value.toScalar.text).foreach(bu =>{
+            val alias = e.key.value.toScalar.text
+            references += alias -> bu
+          })
+        })
+      )
+
+      references
+    }
+
+    private def target(originalUrl: String): Option[BaseUnit] = rootReferences.find(r => r.parsedUrl.equals(originalUrl)).map(_.baseUnit)
+  }
+
+  case class UsageParser(map: YMap, baseUnit: BaseUnit) {
+    def parse(): Unit = {
+      map.key("usage", entry => {
+        val value = ValueNode(entry.value)
+        baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
+      })
+    }
+  }
+
 }

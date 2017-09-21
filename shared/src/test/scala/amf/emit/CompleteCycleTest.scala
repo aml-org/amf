@@ -6,7 +6,6 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.io.TmpTests
 import amf.remote._
-import com.sun.org.apache.xml.internal.resolver.readers.OASISXMLCatalogReader
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -339,6 +338,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   test("Types all types oas to raml test") {
     assertCycle("all-type-types.json", "all-type-types.json.raml", OasJsonHint, Raml)
+  }
+
+  test("Test libraries raml to raml") {
+    assertCycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml)
   }
 
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {

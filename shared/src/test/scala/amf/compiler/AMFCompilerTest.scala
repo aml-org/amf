@@ -74,7 +74,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       case Root(root, _, references, _) =>
         val body = root.document.value.get.toMap
         body.entries.size should be(2)
-        assertUses(body.key("uses").get, references)
+        assertUses(body.key("uses").get, references.map(_.baseUnit))
     }
   }
 
@@ -84,7 +84,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       case Root(root, _, references, _) =>
         val body = root.document.value.get.toMap
         body.entries.size should be(3)
-        assertUses(body.key("x-uses").get, references)
+        assertUses(body.key("x-uses").get, references.map(_.baseUnit))
     }
   }
 

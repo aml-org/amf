@@ -16,6 +16,8 @@ import amf.spec.{Emitter, SpecOrdering}
 import amf.vocabulary.Namespace
 import org.yaml.model.YType
 
+import scala.collection.mutable
+
 trait AnnotationFormat {}
 
 object RamlAnnotationFormat extends AnnotationFormat {}
@@ -188,4 +190,27 @@ trait BaseSpecEmitter {
     override def position(): Position = pos(annotations)
   }
 
+  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      sourceOr(
+        f.value,
+        entry { () =>
+          raw(key)
+
+          val result = mutable.ListBuffer[Emitter]()
+
+          f.array.scalars
+            .foreach(v => {
+              result += ScalarEmitter(v)
+            })
+
+          array { () =>
+            traverse(ordering.sorted(result))
+          }
+        }
+      )
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
 }
