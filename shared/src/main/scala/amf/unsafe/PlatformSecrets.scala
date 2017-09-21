@@ -1,8 +1,9 @@
 package amf.unsafe
 
-import amf.dialects.{DialectLanguageDefinition, DialectRegistry, PlatformDialectRegistry, VocabularyLanguageDefinition}
+import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
 import amf.lexer.CharSequenceStream
 import amf.remote._
+import amf.validation.core.SHACLValidator
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -16,6 +17,12 @@ class TrunkDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(
   add(DialectLanguageDefinition)
 
   override def registerDialect(uri: String) = throw new Exception("Not supported in trunk platform")
+}
+
+class TrunkValidator extends SHACLValidator {
+  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) = throw new Exception("Error, validation is not supported")
+
+  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) = throw new Exception("Error, validation is not supported")
 }
 
 case class TrunkPlatform(content: String) extends Platform {
@@ -45,4 +52,5 @@ case class TrunkPlatform(content: String) extends Platform {
   }
 
   override val dialectsRegistry = new TrunkDialectsRegistry(this)
+  override val validator = new TrunkValidator()
 }

@@ -1,6 +1,7 @@
 package amf.remote
 
 import amf.dialects.PlatformDialectRegistry
+import amf.validation.core.SHACLValidator
 
 import scala.concurrent.Future
 
@@ -20,6 +21,10 @@ trait Platform {
   }
 
   val dialectsRegistry: PlatformDialectRegistry
+
+  val validator: SHACLValidator
+
+  def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file:/$str"}
 
   /** Test path resolution. */
   def resolvePath(path: String): String

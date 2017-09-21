@@ -5,6 +5,7 @@ import amf.interop.{Path, _}
 import amf.lexer.CharSequenceStream
 import amf.remote.File.FILE_PROTOCOL
 import amf.remote.{Content, File, Http, Platform}
+import amf.validation.SHACLValidator
 
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
@@ -25,7 +26,7 @@ class JsServerPlatform extends Platform {
           promise.failure(new Exception(s"Could not load file $path from fs"))
         } else {
           promise.success(
-            Content(new CharSequenceStream(path, content.toString), path, extension(path).flatMap(mimeFromExtension)))
+            Content(new CharSequenceStream(path, content.toString), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension)))
         }
       }
     )
@@ -80,4 +81,5 @@ class JsServerPlatform extends Platform {
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
 
   override val dialectsRegistry = JSDialectRegistry(this)
+  override val validator = new SHACLValidator()
 }

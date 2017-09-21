@@ -97,7 +97,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |            "@value": "localhost.com"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#schemes": [
+        |        "http://raml.org/vocabularies/http#scheme": [
         |          {
         |            "@value": "http"
         |          },
@@ -172,7 +172,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |            "@value": "localhost.com"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#schemes": [
+        |        "http://raml.org/vocabularies/http#scheme": [
         |          {
         |            "@value": "http"
         |          },

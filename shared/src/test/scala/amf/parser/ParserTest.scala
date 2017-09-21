@@ -1,8 +1,6 @@
 package amf.parser
 
-import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
-import amf.lexer.CharSequenceStream
-import amf.remote.{Content, Platform}
+import amf.validation.core.{SHACLValidator, ValidationReport}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import org.yaml.model._
@@ -24,28 +22,28 @@ class ParserTest extends FunSuite {
 
   private val `OAS/json`: String =
     """{
-          |  "a": 1,
-          |  "b": {
-          |    "$ref": "include1.json"
-          |  },
-          |  "c": [
-          |    2,
-          |    3
-          |  ],
-          |  "d": {
-          |    "$ref": "include2.json"
-          |  }
-          |}""".stripMargin
+      |  "a": 1,
+      |  "b": {
+      |    "$ref": "include1.json"
+      |  },
+      |  "c": [
+      |    2,
+      |    3
+      |  ],
+      |  "d": {
+      |    "$ref": "include2.json"
+      |  }
+      |}""".stripMargin
 
   private val `OAS/yaml`: String =
     """a: 1
-          |b:
-          |  $ref: include1.yaml
-          |c:
-          |  - 2
-          |  - 3
-          |d:
-          |  $ref: include2.yaml""".stripMargin
+      |b:
+      |  $ref: include1.yaml
+      |c:
+      |  - 2
+      |  - 3
+      |d:
+      |  $ref: include2.yaml""".stripMargin
 
   test("Test RAML/yaml") {
     val root = YamlParser(`RAML/yaml`).parse(true)
@@ -129,5 +127,11 @@ class ParserTest extends FunSuite {
     sequence.values(1).asInstanceOf[YScalar].text shouldBe "3"
 
     include(content.entries(3))
+
+    class TestValidator extends SHACLValidator {
+      override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = throw new Exception("Validation not supported")
+
+      override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport] = throw new Exception("Validation not supported")
+    }
   }
 }

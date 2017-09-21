@@ -3,6 +3,7 @@ package amf.remote.browser
 import amf.dialects.JSDialectRegistry
 import amf.lexer.CharSequenceStream
 import amf.remote.{Content, Platform}
+import amf.validation.SHACLValidator
 import org.scalajs.dom.ext.Ajax
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -43,4 +44,5 @@ class JsBrowserPlatform extends Platform {
   override def resolvePath(path: String): String = path
 
   override val dialectsRegistry = JSDialectRegistry(this)
+  override val validator = new SHACLValidator()
 }

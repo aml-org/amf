@@ -5,6 +5,8 @@ import java.net.{HttpURLConnection, URI}
 
 import amf.dialects.JVMDialectRegistry
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
+import amf.validation.core.ValidationResult
+import amf.validation.{JVMValidationResult, SHACLValidator}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -38,7 +40,7 @@ class JvmPlatform extends Platform {
 
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = Future {
-    Content(new FileStream(path), path, extension(path).flatMap(mimeFromExtension))
+    Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
   }
 
   /** Write specified content on specified file path. */
@@ -60,6 +62,7 @@ class JvmPlatform extends Platform {
   override def resolvePath(path: String): String = new URI(path).normalize.toString
 
   override val dialectsRegistry = JVMDialectRegistry(this)
+  override val validator = new SHACLValidator
 }
 
 object PlatformBuilder {

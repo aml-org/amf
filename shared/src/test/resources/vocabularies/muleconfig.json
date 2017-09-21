@@ -1,6 +1,6 @@
 [
   {
-    "@id": "shared/src/test/resources/vocabularies/muleconfig.raml",
+    "@id": "file:/shared/src/test/resources/vocabularies/muleconfig.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "shared/src/test/resources/vocabularies/muleconfig.raml#",
+        "@id": "file:/shared/src/test/resources/vocabularies/muleconfig.raml#",
         "@type": [
           "http://mulesoft.com/vocabularies/muleconfig#MuleConfig"
         ],
@@ -25,7 +25,7 @@
         ],
         "http://mulesoft.com/vocabularies/muleconfig#timeout": [
           {
-            "@id": "shared/src/test/resources/vocabularies/muleconfig.raml#timeouts",
+            "@id": "file:/shared/src/test/resources/vocabularies/muleconfig.raml#timeouts",
             "@type": [
               "http://mulesoft.com/vocabularies/muleconfig#Timeouts"
             ],
