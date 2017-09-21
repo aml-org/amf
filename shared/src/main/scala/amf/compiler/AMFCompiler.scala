@@ -79,7 +79,7 @@ class AMFCompiler private (val url: String,
   }
   private def makeOasUnit(root: Root): BaseUnit = {
     val option = OasHeader(root).map({
-      case OasHeader.Oas_20 => OasSpecParser(root).parseDocument() //todo libraries
+      case OasHeader.Oas_20 => OasSpecParser(root).parseDocument() // todo libraries
       case _                => throw new Exception("dddfff")
     })
     option match {

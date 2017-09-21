@@ -7,7 +7,7 @@ import amf.metadata.Type.{Array, Iri, Str}
 import amf.metadata.domain.extensions.DataNodeModel
 import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.vocabulary.Namespace
+import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YPart, YSequence}
 
 import scala.collection.mutable
@@ -78,7 +78,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
   override def dynamicType = List(ObjectNode.builderType)
 
   override def adopted(parent: String): this.type =
-    if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
+    Option(this.id).map(_ => this).getOrElse(withId(parent + "/" + name.urlEncoded))
 
   override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.iri()) match {
     case Some(els) if els.nonEmpty => Some(els.head)
@@ -88,7 +88,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
 object ObjectNode {
 
-  val builderType = (Namespace.Data + "Object")
+  val builderType: ValueType = Namespace.Data + "Object"
 
   def apply(): ObjectNode = apply(Annotations())
 
@@ -116,7 +116,7 @@ class ScalarNode(var value: String,
   override def dynamicType = List(ScalarNode.builderType)
 
   override def adopted(parent: String): this.type =
-    if (this.id == null) { withId(parent + "/" + name.urlEncoded) } else { this }
+    Option(this.id).map(_ => this).getOrElse(withId(parent + "/" + name.urlEncoded))
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Range =>
@@ -132,7 +132,7 @@ class ScalarNode(var value: String,
 
 object ScalarNode {
 
-  val builderType = Namespace.Data + "Scalar"
+  val builderType: ValueType = Namespace.Data + "Scalar"
 
   def apply(): ScalarNode = apply("", None)
 
@@ -174,7 +174,7 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
 object ArrayNode {
 
-  val builderType = (Namespace.Data + "Array")
+  val builderType: ValueType = Namespace.Data + "Array"
 
   def apply(): ArrayNode = apply(Annotations())
 

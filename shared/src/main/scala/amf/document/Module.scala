@@ -13,7 +13,7 @@ case class Module(declares: Seq[DomainElement], references: Seq[BaseUnit], locat
   override def adopted(parent: String): this.type = withId(parent)
 
   /** Returns the usage comment for de element */
-  override def usage: String = fields(Usage) //temp
+  override def usage: String = fields(Usage) // temp
 }
 
 trait DeclaresModel {
