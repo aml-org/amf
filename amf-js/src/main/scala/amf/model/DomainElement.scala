@@ -11,8 +11,8 @@ import scala.scalajs.js.JSConverters._
 trait DomainElement {
   private[amf] def element: amf.domain.DomainElement
 
-  val customDomainProperties: js.Iterable[DomainExtension] =
-    element.customDomainProperties.map(DomainExtension(_)).toJSArray
+  lazy val customDomainProperties: js.Iterable[DomainExtension] =
+    element.customDomainProperties.map(DomainExtension).toJSArray
 
   def withCustomDomainProperties(customProperties: js.Iterable[DomainExtension]): this.type = {
     element.withCustomDomainProperties(customProperties.map(_.domainExtension).toSeq)

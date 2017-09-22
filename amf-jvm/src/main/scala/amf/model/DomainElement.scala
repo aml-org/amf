@@ -9,7 +9,7 @@ trait DomainElement {
 
   private[amf] def element: amf.domain.DomainElement
 
-  val customDomainProperties: java.util.List[DomainExtension] =
+  lazy val customDomainProperties: java.util.List[DomainExtension] =
     element.customDomainProperties.map(DomainExtension).asJava
 
   def withCustomDomainProperties(customProperties: java.util.List[DomainExtension]): this.type = {

@@ -37,14 +37,5 @@ case class CustomDomainProperty(private[amf] val customDomainProperty: amf.domai
 
   def this() = this(amf.domain.extensions.CustomDomainProperty())
 
-  override def equals(other: Any): Boolean = other match {
-    case that: CustomDomainProperty =>
-      (that canEqual this) &&
-        customDomainProperty == that.customDomainProperty
-    case _ => false
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[CustomDomainProperty]
-
   override private[amf] def element: amf.domain.extensions.CustomDomainProperty = customDomainProperty
 }

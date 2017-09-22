@@ -22,15 +22,6 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   val request: Request                 = Option(operation.request).map(Request).orNull
   val responses: js.Iterable[Response] = operation.responses.map(Response).toJSArray
 
-  override def equals(other: Any): Boolean = other match {
-    case that: Operation =>
-      (that canEqual this) &&
-        operation == that.operation
-    case _ => false
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Operation]
-
   override private[amf] def element: amf.domain.Operation = operation
 
   /** Set method property of this [[Operation]]. */

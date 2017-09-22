@@ -18,15 +18,6 @@ case class Response private[model] (private val response: amf.domain.Response) e
   val headers: js.Iterable[Parameter] = response.headers.map(Parameter).toJSArray
   val payloads: js.Iterable[Payload]  = response.payloads.map(Payload).toJSArray
 
-  override def equals(other: Any): Boolean = other match {
-    case that: Response =>
-      (that canEqual this) &&
-        response == that.response
-    case _ => false
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Response]
-
   override private[amf] def element: amf.domain.Response = response
 
   /** Set name property of this [[Response]]. */

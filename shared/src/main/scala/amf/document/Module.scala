@@ -1,6 +1,7 @@
 package amf.document
 
 import amf.domain.{Annotations, DomainElement, Fields}
+import amf.metadata.document.DocumentModel.{Declares => _, Location => _, References => _, Usage => _}
 import amf.metadata.document.ModuleModel._
 import org.yaml.model.YDocument
 
@@ -20,6 +21,11 @@ case class Module(fields: Fields, annotations: Annotations) extends BaseUnit wit
 
   /** Returns the file location for the document that has been parsed to generate this model */
   override def location: String = fields(Location)
+
+  def withLocation(location: String): this.type                 = set(Location, location)
+  def withReferences(references: Seq[BaseUnit]): this.type      = setArrayWithoutId(References, references)
+  def withDeclares(declarations: Seq[DomainElement]): this.type = setArrayWithoutId(Declares, declarations)
+  def withUsage(usage: String): this.type                       = set(Usage, usage)
 }
 
 trait DeclaresModel {

@@ -2,7 +2,7 @@ package amf.client
 
 import java.util.concurrent.CompletableFuture
 
-import amf.model.{BaseUnit, Document}
+import amf.model.{BaseUnit, Document, Module}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.Vendor
@@ -15,6 +15,11 @@ import scala.language.implicitConversions
   * Base class for JVM parsers.
   */
 class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
+
+  private def unitScalaToJVM(unit: amf.document.BaseUnit): BaseUnit = unit match {
+    case d: amf.document.Document => Document(d)
+    case m: amf.document.Module   => Module(m)
+  }
 
   /**
     * Generates a [[amf.model.BaseUnit]] from the api located in the given url.
@@ -37,8 +42,7 @@ class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) ext
     * @param url : Location of the api.
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
-  def parseFileAsync(url: String): CompletableFuture[BaseUnit] =
-    super.parseAsync(url).map(bu => Document(bu)).asJava
+  def parseFileAsync(url: String): CompletableFuture[BaseUnit] = super.parseAsync(url).map(unitScalaToJVM).asJava
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -46,10 +50,11 @@ class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) ext
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseStringAsync(stream: String): CompletableFuture[BaseUnit] =
-    super.parseAsync(null, Some(TrunkPlatform(stream))).map(bu => Document(bu)).asJava
+    super.parseAsync(null, Some(TrunkPlatform(stream))).map(unitScalaToJVM).asJava
 
   private case class BaseUnitHandlerAdapter(handler: Handler[BaseUnit]) extends Handler[amf.document.BaseUnit] {
-    override def success(document: amf.document.BaseUnit): Unit = handler.success(Document(document))
-    override def error(exception: Throwable): Unit              = handler.error(exception)
+    override def success(document: amf.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
+
+    override def error(exception: Throwable): Unit = handler.error(exception)
   }
 }

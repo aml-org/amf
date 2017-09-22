@@ -22,13 +22,4 @@ case class DomainExtension(private[amf] val domainExtension: amf.domain.extensio
   override private[amf] def element = domainExtension
 
   def this() = this(amf.domain.extensions.DomainExtension())
-
-  override def equals(other: Any): Boolean = other match {
-    case that: DomainExtension =>
-      (that canEqual this) &&
-        extension == that.extension
-    case _ => false
-  }
-
-  override def canEqual(other: Any): Boolean = other.isInstanceOf[DomainExtension]
 }

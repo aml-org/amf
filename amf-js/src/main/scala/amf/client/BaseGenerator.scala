@@ -21,12 +21,12 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
     */
   @JSExport
   def generateFile(unit: BaseUnit, url: String, handler: FileHandler): Unit =
-    generate(unit.unit, url, GenerationOptions(), UnitHandlerAdapter(handler))
+    generate(unit.element, url, GenerationOptions(), UnitHandlerAdapter(handler))
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
   def generateString(unit: BaseUnit, handler: StringHandler): Unit =
-    generate(unit.unit, GenerationOptions(), StringHandlerAdapter(handler))
+    generate(unit.element, GenerationOptions(), StringHandlerAdapter(handler))
 
   /**
     * Generates asynchronously the syntax text and stores it in the file pointed by the provided URL.
@@ -35,12 +35,12 @@ protected abstract class BaseGenerator(protected val target: Vendor, protected v
     */
   @JSExport
   def generateFile(unit: BaseUnit, url: String): js.Promise[String] =
-    generate(unit.unit, url, GenerationOptions()).toJSPromise
+    generate(unit.element, url, GenerationOptions()).toJSPromise
 
   /** Generates the syntax text and returns it asynchronously. */
   @JSExport
   def generateString(unit: BaseUnit): js.Promise[String] =
-    generate(unit.unit, GenerationOptions()).toJSPromise
+    generate(unit.element, GenerationOptions()).toJSPromise
 
   protected case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
     override def success(unit: Unit): Unit         = handler.success()

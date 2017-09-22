@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.document.Document
+import amf.document.{Document, Module}
 import amf.domain._
 import amf.unsafe.PlatformSecrets
 
@@ -16,6 +16,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   def `document/api/advanced`: Document = doc(advanced())
 
   def `document/api/full`: Document = doc(advanced())
+
+  def `module/bare`: Module = libraryBare()
 
   private def bare(): WebApi = {
     WebApi()
@@ -86,6 +88,14 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       )
 
     api
+  }
+
+  def libraryBare(): Module = {
+    Module()
+      .withId("shared/src/test/resources/clients/lib/lib.raml")
+      .withLocation("shared/src/test/resources/clients/lib/lib.raml")
+      .withUsage("Data types and annotation types")
+
   }
 
   private def doc(api: WebApi): Document =

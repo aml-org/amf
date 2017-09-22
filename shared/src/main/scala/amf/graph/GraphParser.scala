@@ -5,7 +5,7 @@ import amf.domain._
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
-import amf.metadata.document.{DocumentModel, ModuleModel}
+import amf.metadata.document.{BaseUnitModel, DocumentModel, ModuleModel}
 import amf.metadata.domain._
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
@@ -128,11 +128,9 @@ object GraphParser extends GraphParserHelpers {
             case _: Obj    => items.map(n => parse(n.toMap))
             case Str | Iri => items.map(n => str(value(a.element, n).toScalar))
           }
-          // todo: review with pedro, field. set overrides module id with father document id.
-          values.headOption match {
-            case Some(x) if x.isInstanceOf[BaseUnit] =>
-              instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
-            case _ => instance.setArray(f, values, annotations(nodes, sources, key))
+          a.element match {
+            case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
+            case _                => instance.setArray(f, values, annotations(nodes, sources, key))
           }
       }
     }
