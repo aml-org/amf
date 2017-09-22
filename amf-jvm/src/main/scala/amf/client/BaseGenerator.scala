@@ -13,8 +13,7 @@ import scala.language.implicitConversions
 /**
   * Base class for JVM generators.
   */
-protected abstract class BaseGenerator(protected val target: Vendor, protected val syntax: Syntax)
-    extends PlatformGenerator {
+abstract class BaseGenerator(protected val target: Vendor, protected val syntax: Syntax) extends PlatformGenerator {
 
   /**
     * Generates the syntax text and stores it in the file pointed by the provided URL.

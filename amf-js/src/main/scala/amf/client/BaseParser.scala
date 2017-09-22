@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.JSExport
 /**
   * Base class for JS parsers.
   */
-class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
+abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
 
   private def unitScalaToJVM(unit: amf.document.BaseUnit): BaseUnit = unit match {
     case d: amf.document.Document => Document(d)
