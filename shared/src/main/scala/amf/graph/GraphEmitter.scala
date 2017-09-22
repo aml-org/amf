@@ -329,7 +329,6 @@ object GraphEmitter {
     case _: CustomDomainProperty => CustomDomainPropertyModel
     case _: DataNode             => DataNodeModel
     case entity: DomainEntity    => new amf.dialects.DialectEntityModel(entity)
-    case _                => throw new Exception(s"Missing metadata mapping for $instance")
     case _: Module               => ModuleModel
     case _                       => throw new Exception(s"Missing metadata mapping for $instance")
   }
