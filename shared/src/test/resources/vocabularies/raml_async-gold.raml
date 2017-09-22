@@ -3,16 +3,18 @@ base: http://raml.org/vocabularies/async#
 dialect: RAML Async
 version: 0.1
 usage: Vocabulary to define Asynchronous APIs
-external:
+external: 
   schema-org: http://schema.org/
   shacl: http://www.w3.org/ns/shacl#
   raml-doc: http://raml.org/vocabularies/doc#
-classTerms:
-  AsyncAPI:
+classTerms: 
+  AsyncAPI: 
     displayName: AsyncAPI
-    description: |
+    description: The top level element of any RAML Async is the AsyncAPI node. It introduces some meta-information about the API like the title, version and description of the API.
+It also holds the information of the Connection, global Bindings and the EndPoints defined in the spec.
+
     extends: raml-doc.RootDomainElement
-    properties:
+    properties: 
       - schema-org.title
       - schema-org.version
       - schema-org.description
@@ -22,138 +24,143 @@ classTerms:
       - endpoints
       - bindings
       - serialization
-  Connection:
+  Connection: 
     displayName: Connection
-    description: |
+    description: The `Connection` node contains global connection information that can be used by clients to gain access to the API endpoints and use the async operations interface.
+It can be used to define a base identifier for the end points as well as to set-up specific `Bindings` for the transport layer.
+This node can also be used to define connection parameters to a 'messaging broker' in the messaging systems that using this kind of functionality.
+
     extends: raml-doc.DomainElement
-    properties:
+    properties: 
       - host
       - port
       - scheme
       - bindings
-  EndPoint:
+  EndPoint: 
     displayName: End Point
-    description: |
+    description: Each of the discoverable communication units in the API with support for the asynchronous interface are defined as EndPoint nodes.
+EndPoints are defined by an identifier, the list of asynchronous operations supported and an optional set of transport bindings.
+
     extends: raml-doc.DomainElement
-    properties:
+    properties: 
       - schema-org.description
       - pattern
       - bindings
       - parameter
       - operation
-  Parameter:
+  Parameter: 
     displayName: Parameter
     description: Information about the replacement options that can be used in a parametric EndPoint
     extends: raml-doc.DomainElement
-    properties:
+    properties: 
       - schema-org.name
       - schema
-  AsyncOperation:
+  AsyncOperation: 
     displayName: Async Operation
     description: Each of the operations in the asynchronous interface
     extends: raml-doc.DomainElement
-    properties:
+    properties: 
       - schema-org.name
       - schema-org.description
       - message
       - bindings
       - pattern
       - serialization
-  Message:
+  Message: 
     displayName: Message
     description: Unit of data passed as the argument of an asyn operation
     extends: raml-doc.DomainElement
-    properties:
+    properties: 
       - header
       - schema
-  Header:
+  Header: 
     displayName: Header
     description: Meta information for a message
     extends: raml-doc.DomainElement
-    properties:
+    properties: 
       - schema-org.name
       - mandatory
       - schema
-  Bindings:
+  Bindings: 
     extends: raml-doc.DomainElement
-propertyTerms:
-  schema-org.title:
+propertyTerms: 
+  schema-org.title: 
     description: A short, plain-text label for the API. Its value is a string.
     range: string
-  schema-org.version:
+  schema-org.version: 
     description: String identifying the version of the API.
     range: string
-  schema-org.description:
+  schema-org.description: 
     description: A substantial, human-friendly description of the API. Its value is a string and MAY be formatted using markdown.
     range: string
-  type-declaration:
+  type-declaration: 
     description: Declarations of data types for use within the API.
     domain: AsyncAPI
     range: shacl.Shape
     extends: raml-doc.declarationProperty
-  transport:
+  transport: 
     description: String containing an identifier for the kind of transport associated to the API, bindings in the spec will target this transport value
     domain: AsyncAPI
     range: string
-  connection:
+  connection: 
     description: Optional connection details to the system providing the messaging infrastructure.
     domain: AsyncAPI
     range: Connection
-  endpoints:
+  endpoints: 
     description: EndPoints declared in the API
     domain: AsyncAPI
     range: EndPoint
-  host:
+  host: 
     description: Host machine where to establish the connection
     domain: Connection
     range: string
-  port:
+  port: 
     description: Network port for the connection in the host machine
     domain: Connection
     range: integer
-  scheme:
+  scheme: 
     description: URI scheme identifying the network protocol used for the connection
     domain: Connection
     range: string
-  operation:
+  operation: 
     description: Operation supported by an EndPoint
     domain: EndPoint
     range: AsyncOperation
-  parameter:
+  parameter: 
     description: Parameters that can be replaced in the identifier of an EndPoint
     domain: EndPoint
     range: Parameter
-  message:
+  message: 
     description: Message used as argument for an asynchronous operation
     domain: AsyncOperation
     range: Message
-  header:
+  header: 
     description: Meta-data about a message
     domain: Message
     range: Header
-  bindings:
+  bindings: 
     description: Transport specific bindings for a model element
-    domain:
+    domain: 
       - AsyncAPI
       - Connection
       - EndPoint
       - AsyncOperation
     range: Bindings
-  pattern:
+  pattern: 
     description: Messaging pattern implemented by an end point
-    domain:
+    domain: 
       - EndPoint
       - AsyncOperation
     range: string
-  serialization:
+  serialization: 
     description: Format used to encode some data over network transport
-    domain:
+    domain: 
       - AsyncAPI
       - AsyncOperation
     range: string
-  schema:
+  schema: 
     description: Data shape associated to some element of the domain
-    domain:
+    domain: 
       - Parameter
       - Message
       - Header

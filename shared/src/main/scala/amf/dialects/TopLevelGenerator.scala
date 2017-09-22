@@ -156,7 +156,7 @@ class TopLevelGenerator(d:Dialect) {
 
   def generate(): String ={
     val bld=new mutable.StringBuilder()
-    bld.append("package amf.dialects\nimport amf.dialects._;\nimport amf.model.AmfScalar;\n")
+    bld.append("package amf.dialects\nimport amf.dialects._;\nimport amf.model.AmfScalar;\nimport amf.spec.dialects.DomainEntity;\n")
     bld.append(s"object ${d.name.replace(' ','_').replace('.','_')}TopLevel {\n")
     generateNode(this.d.root);
     this._map.values.foreach(v=>{

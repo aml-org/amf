@@ -140,7 +140,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#pattern": [
                   {
-                    "@value": "^function\(.+\)\s*\{.+\}$"
+                    "@value": "^function\.+\\*\.+\$"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#range": [
@@ -171,7 +171,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#allowMultiple": [
                   {
-                  "@value": true
+                    "@value": true
                   }
                 ]
               },

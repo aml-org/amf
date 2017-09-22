@@ -187,7 +187,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
           })
     }
 
-    println("DONE!")
+
   }
 
   private def parseScalarValue(domainEntity: DomainEntity, mapping: DialectPropertyMapping, entryNode: YMapEntry) = {
@@ -214,10 +214,11 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
   }
 
   private def parseMap(mapping: DialectPropertyMapping, entryNode: YMapEntry, parentDomainEntity: DomainEntity): Unit = {
+
     entryNode.value.value match {
       case entries: YMap =>
         val classTerms = ListBuffer[DomainEntity]()
-        entries.map.foreach {
+        orderedMap(entries).foreach {
           case (classTermName: YScalar, entry) if mapping.range.isInstanceOf[DialectNode] =>
             val domainEntity = DomainEntity(Some(classTermName.text), mapping.range.asInstanceOf[DialectNode], Fields(), Annotations(entry))
             classTerms += domainEntity
@@ -226,13 +227,17 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
             domainEntity.set(mapping.hash.get.field(), classTermName.text)
             entry match {
               case v:YMap =>  parseNode(v, domainEntity);
+              case s:YScalar =>  parseNode(s, domainEntity);
               case _      =>  // ignore
             }
 
         }
-
       case _ => throw new Exception(s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}")
     }
+  }
+
+  private def orderedMap(entries: YMap) = {
+    entries.entries.filter(_.key.value.isInstanceOf[YScalar]).map(e => (e.key.value.asInstanceOf[YScalar], e.value.value))
   }
 
   private def parseCollection(mapping: DialectPropertyMapping, entryNode: YMapEntry, parentDomainEntity: DomainEntity): Unit = {

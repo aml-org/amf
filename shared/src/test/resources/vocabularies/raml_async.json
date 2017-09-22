@@ -98,7 +98,9 @@
             ],
             "http://schema.org/description": [
               {
-                "@value": "|"
+                "@value": "The top level element of any RAML Async is the AsyncAPI node. It introduces some meta-information about the API like the title, version and description of the API.
+It also holds the information of the Connection, global Bindings and the EndPoints defined in the spec.
+"
               }
             ]
           },
@@ -115,7 +117,10 @@
             ],
             "http://schema.org/description": [
               {
-                "@value": "|"
+                "@value": "The `Connection` node contains global connection information that can be used by clients to gain access to the API endpoints and use the async operations interface.
+It can be used to define a base identifier for the end points as well as to set-up specific `Bindings` for the transport layer.
+This node can also be used to define connection parameters to a 'messaging broker' in the messaging systems that using this kind of functionality.
+"
               }
             ]
           },
@@ -132,7 +137,9 @@
             ],
             "http://schema.org/description": [
               {
-                "@value": "|"
+                "@value": "Each of the discoverable communication units in the API with support for the asynchronous interface are defined as EndPoint nodes.
+EndPoints are defined by an identifier, the list of asynchronous operations supported and an optional set of transport bindings.
+"
               }
             ]
           },

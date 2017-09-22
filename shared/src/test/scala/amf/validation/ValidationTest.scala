@@ -18,7 +18,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   test("WOA Loading and serializing validations") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
     val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
     .flatMap(unit =>
         validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
@@ -31,7 +31,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   test("Loading and serializing validations with inplace definition of encodes") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
     val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed2.raml")
       .flatMap(unit =>
         validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
@@ -43,7 +43,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   test("Loading and serializing validations with inplace definition of range") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
     val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed3.raml")
       .flatMap(unit =>
         validation.loadValidationProfile(basePath + "validation_profile_example.raml"));

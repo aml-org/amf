@@ -100,8 +100,7 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
 
   def emit(): YDocument = {
     emitter.document { () =>
-      comment(root.definition.dialect.get.header.substring(1))
-      ObjectEmitter(root).emit()
+        ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1))).emit()
     }
   }
 
@@ -200,9 +199,10 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
     }
   }
 
-  case class ObjectEmitter(obj: DomainEntity) extends Emitter {
+  case class ObjectEmitter(obj: DomainEntity,comment_text:Option[String]=None) extends Emitter {
 
     override def emit(): Unit = {
+
       obj.definition.mappings().find(_.fromVal) match {
 
         case Some(scalarProp) =>
@@ -210,7 +210,7 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
           if (scalarProp.isRef) {
             nameProvider match {
               case Some(np) =>
-                raw(np.localName(em.orNull, scalarProp))
+                raw(np.localName(em.getOrElse("!!"), scalarProp))
               case _ => // ignore
             }
           } else {
@@ -220,9 +220,13 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
 
         case None =>
           map { () =>
+            comment_text.foreach(c=>
+              comment(c)
+            )
             obj.definition.mappings().foreach(mapping => {
               createEmitter(obj, mapping) match {
                 case Some(emitterCreated) => try {
+
                   emitterCreated.emit()
                 } catch {
                   case e: Exception => e.printStackTrace()

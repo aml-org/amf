@@ -22,6 +22,7 @@ class AMFUnitMaker {
   }
   private def isDialect(unit:BaseUnit) = unit match {
     case document: Document => document.encodes.isInstanceOf[DomainEntity]
+    case _ => false
   }
 
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): YDocument = {
