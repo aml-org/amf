@@ -5,7 +5,7 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-abstract class Shape(private[amf] val shape: amf.shape.Shape) {
+abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement {
 
   val name: String                    = shape.name
   val displayName: String             = shape.displayName
@@ -53,7 +53,7 @@ object Shape {
       case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
       case array: amf.shape.ArrayShape   => Some(new ArrayShape(array))
       case matrix: amf.shape.MatrixShape => Some(new MatrixShape(matrix.toArrayShape))
-      case tuple: amf.shape.TupleShape   => Some(new TupleShape(tuple))
+      case tuple: amf.shape.TupleShape   => Some(TupleShape(tuple))
       case a                             => None
     }).orNull
 }

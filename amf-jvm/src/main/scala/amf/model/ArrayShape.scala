@@ -2,7 +2,7 @@ package amf.model
 
 import scala.collection.JavaConverters._
 
-abstract class DataArrangeShape (private[amf] val array: amf.shape.DataArrangementShape) extends Shape(array) {
+abstract class DataArrangeShape(private[amf] val array: amf.shape.DataArrangementShape) extends Shape(array) {
 
   val minItems: Int        = array.minItems
   val maxItems: Int        = array.maxItems
@@ -25,13 +25,14 @@ abstract class DataArrangeShape (private[amf] val array: amf.shape.DataArrangeme
 }
 
 class ArrayShape(private[amf] override val array: amf.shape.ArrayShape) extends DataArrangeShape(array) {
-  val items: Shape         = Shape(array.items)
+  val items: Shape = Shape(array.items)
 
   def withItems(items: Shape): this.type = {
     array.withItems(items.shape)
     this
   }
 
+  override private[amf] def element = array
 }
 
 object ArrayShape {
@@ -48,18 +49,20 @@ class MatrixShape(private[amf] override val array: amf.shape.ArrayShape) extends
     this
   }
 
+  override private[amf] def element = array
 }
 
 object MatrixShape {
   def apply(array: amf.shape.MatrixShape): MatrixShape = { new MatrixShape(array.toArrayShape) }
 }
 
-
 case class TupleShape(private[amf] override val array: amf.shape.TupleShape) extends DataArrangeShape(array) {
-  val items: java.util.List[Shape]         = array.items.map(Shape(_)).asJava
+  val items: java.util.List[Shape] = array.items.map(Shape(_)).asJava
 
   def withItems(items: java.util.List[Shape]): this.type = {
     array.withItems(items.asScala.map(_.shape))
     this
   }
+
+  override private[amf] def element = array
 }

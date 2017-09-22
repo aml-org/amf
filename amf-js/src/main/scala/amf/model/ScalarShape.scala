@@ -57,4 +57,5 @@ case class ScalarShape(private[amf] val scalar: amf.shape.ScalarShape) extends S
     this
   }
 
+  override private[amf] def element = scalar.asInstanceOf[amf.domain.DomainElement]
 }

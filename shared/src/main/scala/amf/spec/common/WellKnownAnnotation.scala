@@ -16,6 +16,7 @@ object WellKnownAnnotation {
     "x-request-payloads"    -> true,
     "(request-payloads)"    -> true,
     "x-response-payloads"   -> true,
+    "x-uses"                -> true,
     "(response-payloads)"   -> true,
     "x-media-type"          -> true,
     "(media-type)"          -> true,

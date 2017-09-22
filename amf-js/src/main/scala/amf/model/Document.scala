@@ -36,14 +36,9 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
       }
     }).get
 
-  /** Declared [[DomainElement]]s that can be re-used from other documents. */
-  val declares: js.Iterable[amf.domain.DomainElement] =
-    document match {
-      case d: amf.document.Document => d.declares.toJSArray
-      case _                        => js.Array()
-    }
-
   override def unit: amf.document.BaseUnit = document
 
   override def usage: String = document.usage
+
+  override private[amf] def element = document.asInstanceOf[amf.document.DeclaresModel]
 }

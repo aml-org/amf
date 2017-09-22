@@ -344,6 +344,27 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Test libraries oas to oas") {
+    assertCycle("libraries.json", "libraries.json.json", OasJsonHint, Oas)
+  }
+
+  test("Test libraries raml to amf") {
+    assertCycle("libraries.raml", "libraries.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Test libraries amf to raml") {
+    assertCycle("libraries.raml.jsonld", "libraries.raml.raml", AmfJsonHint, Raml)
+  }
+
+  // todo what we do when library file name changes changes on dump
+  ignore("Test libraries raml to oas") {
+    assertCycle("libraries.raml", "libraries.json.json", RamlYamlHint, Oas)
+  }
+
+  ignore("Test libraries oas to raml") {
+    assertCycle("libraries.json", "libraries.raml.raml", OasJsonHint, Raml)
+  }
+
   def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
     val expected = platform
       .resolve(basePath + golden, None)

@@ -60,4 +60,6 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
   def withInheritsObject(name: String): NodeShape = NodeShape(node.withInheritsObject(name))
 
   def withInheritsScalar(name: String): ScalarShape = ScalarShape(node.withInheritsScalar(name))
+
+  override private[amf] def element = node
 }

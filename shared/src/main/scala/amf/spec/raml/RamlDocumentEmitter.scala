@@ -5,7 +5,12 @@ import amf.compiler.RamlHeader
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
+import amf.domain.extensions.{
+  ArrayNode => DataArrayNode,
+  ObjectNode => DataObjectNode,
+  ScalarNode => DataScalarNode,
+  _
+}
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -510,7 +515,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
           raw("uses")
           map(() => {
             idCounter.reset()
-            traverse(ordering.sorted(references.map(r => ReferenceEmitter(r, ordering,  idCounter.genId("uses")))))
+            traverse(ordering.sorted(references.map(r => ReferenceEmitter(r, ordering, idCounter.genId("uses")))))
           })
         }
       }
@@ -521,7 +526,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
   case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, alias: String) extends Emitter {
 
-    override def emit(): Unit = EntryEmitter(alias, reference.location).emit()
+    // todo review with PEdro. We dont serialize location, so when parse amf to dump spec, we lose de location (we only have the id)
+    override def emit(): Unit =
+      EntryEmitter(alias, if (reference.location == null) reference.id else reference.location).emit()
 
     override def position(): Position = Position.ZERO
   }
