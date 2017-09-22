@@ -3,6 +3,7 @@ package amf.dialects
 import amf.document.{BaseUnit, Document}
 import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.spec.dialects.{DialectPropertyMapping, DomainEntity}
 
 import scala.collection.mutable
 

@@ -19,25 +19,25 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   val basePath="file://shared/src/test/resources/vocabularies/"
 
-//  test("Basic Validation Test") {
-//    val dl=platform.dialectsRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
-//    val cm=dl.flatMap(d=>
-//      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint, None, None,platform.dialectsRegistry).build()
-//    )
-//    cm.map(u=>DialectValidator.validate(u).size).map(s=>{
-//      s should be(0)
-//    })
-//  }
-//
-//  test("another validation test") {
-//    val dl=platform.dialectsRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
-//    val cm=dl.flatMap(d=>
-//      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig2.raml", platform, RamlYamlHint, None, None,platform.dialectsRegistry).build()
-//    )
-//    cm.map(u=>DialectValidator.validate(u).size).map(s=>{
-//      s should be(1)
-//    })
-//  }
+  test("Basic Validation Test") {
+    val dl=platform.dialectsRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
+    val cm=dl.flatMap(d=>
+      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint, None, None,platform.dialectsRegistry).build()
+    )
+    cm.map(u=>DialectValidator.validate(u).size).map(s=>{
+      s should be(0)
+    })
+  }
+
+  test("another validation test") {
+    val dl=platform.dialectsRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
+    val cm=dl.flatMap(d=>
+      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig2.raml", platform, RamlYamlHint, None, None,platform.dialectsRegistry).build()
+    )
+    cm.map(u=>DialectValidator.validate(u).size).map(s=>{
+      s should be(1)
+    })
+  }
   test("missing required property") {
     val dl=platform.dialectsRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
     val cm=dl.flatMap(d=>

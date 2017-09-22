@@ -1,7 +1,7 @@
 package amf.spec.dialects
 
 import amf.compiler.Root
-import amf.dialects.DialectRegistry
+import amf.dialects.{DialectRegistry, DialectValidator}
 import amf.document.Document
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.Type
@@ -87,6 +87,17 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
       case _                 => List.empty
     }
 
+  def rawstrings(m: DialectPropertyMapping): Seq[String] =
+    this.fields.get(m.field()) match {
+      case scalar: AmfScalar => List(scalar.toString)
+
+      case array: AmfArray   => array.values.map({
+        case scalarMember: AmfScalar => Some(scalarMember.toString)
+        case _ => None
+      }).map(_.getOrElse(""))
+
+      case _                 => List.empty
+    }
 
   def entity(m: DialectPropertyMapping): Option[DomainEntity] =
     fields.get(m.field()) match {
@@ -117,8 +128,8 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
   override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
 }
 object DomainEntity{
-  def apply(d:DialectNode): DomainEntity = {
-    DomainEntity(None,d,Fields(),Annotations())
+  def apply(d:DialectNode): DomainEntity ={
+    new DomainEntity(null,d,Fields(),Annotations());
   }
 }
 
@@ -220,7 +231,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
         val classTerms = ListBuffer[DomainEntity]()
         orderedMap(entries).foreach {
           case (classTermName: YScalar, entry) if mapping.range.isInstanceOf[DialectNode] =>
-            val domainEntity = DomainEntity(Some(classTermName.text), mapping.range.asInstanceOf[DialectNode], Fields(), Annotations(entry))
+            val domainEntity = DomainEntity(Some(classTermName.text), getActualRange(mapping,entry).asInstanceOf[DialectNode], Fields(), Annotations(entry))
             classTerms += domainEntity
             val field = mapping.field()
             parentDomainEntity.add(field, domainEntity)
@@ -244,16 +255,18 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
     entryNode.value.value match {
       case arr: YSequence =>
         if (mapping.isScalar) {
+
           mapping.range match {
             case Type.Str =>
-              val value = ArrayNode(arr)
-              parentDomainEntity.set(mapping.field(), value.strings(), Annotations(entryNode))
-
+              if (mapping.isRef){
+                parseArrayRefs(mapping, entryNode, parentDomainEntity, arr)
+              }
+              else {
+                val value = ArrayNode(arr)
+                parentDomainEntity.set(mapping.field(), value.strings(), Annotations(entryNode))
+              }
             case Type.Iri =>
-              val value = ArrayNode(arr)
-              val array = value.strings()
-              val scalars = array.values.map(AmfScalar(_))
-              parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _))), Annotations(entryNode))
+              parseArrayRefs(mapping, entryNode, parentDomainEntity, arr)
 
             case _ => throw new IllegalStateException("Does not know how to parse sequences of other scalars yet")
           }
@@ -263,16 +276,37 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
 
       case _ =>
         if (mapping.isScalar) {
-          val resolvedVal = resolveValue(mapping, ValueNode(entryNode.value).string())
-          parentDomainEntity.setArray(mapping.field(), Seq(resolvedVal))
-        } else {
-          throw new IllegalStateException("Does not know how to parse sequences of instances yet")
+          if (entryNode.value.value.isInstanceOf[YScalar]) {
+            val scalar = ValueNode(entryNode.value).string()
+            if (Option(scalar.value).isDefined) {
+              val resolvedVal = resolveValue(mapping, scalar)
+              parentDomainEntity.setArray(mapping.field(), Seq(resolvedVal))
+            }
+          }
+          else {
+            if (entryNode.value.value.isInstanceOf[YMap] && mapping.allowInplace) {
+              mapping.referenceTarget.foreach(trg => {
+                val child = DomainEntity(Option(entryNode.key.value.toString), trg, Fields(), Annotations(entryNode.value.value))
+                parentDomainEntity.add(mapping.field(), child)
+                parseNode(entryNode.value.value, child)
+              })
+            }
+          }
         }
+        else  throw new IllegalStateException("Does not know how to parse sequences of instances yet")
+
     }
   }
 
+  private def parseArrayRefs(mapping: DialectPropertyMapping, entryNode: YMapEntry, parentDomainEntity: DomainEntity, arr: YSequence) = {
+    val value = ArrayNode(arr)
+    val array = value.strings()
+    val scalars = array.values.map(AmfScalar(_))
+    parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _))), Annotations(entryNode))
+  }
+
   private def parseSingleObject(mapping: DialectPropertyMapping, entryNode: YMapEntry, parentDomainEntity: DomainEntity): Unit = {
-    mapping.range match {
+    getActualRange(mapping,entryNode.value.value) match {
       case node: DialectNode =>
         val linkValue = entryNode.key.value match {
           case scalar: YScalar => Some(scalar.text)
@@ -283,6 +317,29 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
         parseNode(entryNode.value.value, domainEntity)
       case _ => // ignore
     }
+  }
+
+  private def getActualRange(mapping: DialectPropertyMapping,entryNode:YValue):Type = {
+    if (mapping.unionTypes.isDefined){
+      val maybeType = mapping.unionTypes.get.find(t => {
+        if (t.isInstanceOf[DialectNode]) {
+          var dl = t.asInstanceOf[DialectNode]
+          val domainEntity = DomainEntity(Option("#"), dl, Fields(), Annotations(entryNode))
+          domainEntity.withId("#")
+          parseNode(entryNode, domainEntity)
+          val issues = DialectValidator.validate(domainEntity)
+          issues.size == 0;
+        }
+        else false
+        // true
+      })
+      if (maybeType.isDefined) {
+        maybeType.get
+      }
+      else mapping.range
+    }
+    else
+    mapping.range
   }
 
   private def resolveValue(mapping: DialectPropertyMapping, value: AmfScalar): AmfScalar = {
