@@ -1,9 +1,9 @@
 package amf.validation
 
 import amf.compiler.AMFCompiler
-import amf.dialects.Dialect
 import amf.document.BaseUnit
 import amf.remote.{Platform, RamlYamlHint}
+import amf.spec.dialects.Dialect
 
 import scala.concurrent.Future
 

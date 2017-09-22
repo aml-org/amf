@@ -2,6 +2,7 @@ package amf.dialects
 
 import amf.compiler.AMFCompiler
 import amf.remote.{Platform, RamlYamlHint}
+import amf.spec.dialects.Dialect
 
 import scala.concurrent.Future
 

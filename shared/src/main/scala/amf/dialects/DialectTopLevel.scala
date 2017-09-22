@@ -1,6 +1,7 @@
 package amf.dialects
-import amf.dialects._;
-import amf.model.AmfScalar;
+import amf.dialects._
+import amf.model.AmfScalar
+import amf.spec.dialects.DomainEntity;
 object RAML_1_0_DialectTopLevel {
 case class dialectObject(val entity: DomainEntity=DomainEntity(DialectDefinition),override val parent:Option[TopLevelObject]=None) extends TopLevelObject(entity,parent){
   def dialect():Option[String]= entity.string(DialectDefinition.dialectProperty)

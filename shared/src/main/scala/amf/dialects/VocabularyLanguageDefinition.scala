@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.compiler.Root
+import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
 /**
 * Created by Pavel Petrochenko on 12/09/17.

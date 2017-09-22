@@ -2,8 +2,8 @@ package amf.model
 
 import java.util
 
-import amf.dialects.DomainEntity
 import amf.domain
+import amf.spec.dialects.DomainEntity
 
 import scala.collection.JavaConverters._
 

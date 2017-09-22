@@ -18,6 +18,7 @@ import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
+import org.yaml.model.YDocument
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -28,9 +29,7 @@ import scala.collection.mutable.ListBuffer
   */
 case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
-  private def retrieveWebApi() = document.encodes
-
-  private def retrieveWebApi() = match {
+  private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
   }
 

@@ -1,17 +1,17 @@
-package amf.dialects
+package amf.spec.dialects
 
-import amf.common.AMFAST
-import amf.common.AMFToken.{Comment, Root}
 import amf.document.{BaseUnit, Document}
 import amf.domain.FieldEntry
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
-import amf.spec.{ASTEmitterHelper, Emitter}
+import amf.spec.Emitter
+import amf.spec.raml.RamlSpecEmitter
+import org.yaml.model.YDocument
 
 /**
   * Created by Pavel Petrochenko on 13/09/17.
   */
-class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
+class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
 
   val root: DomainEntity = retrieveDomainEntity(unit)
   var nameProvider: Option[LocalNameProvider] = root.definition.nameProvider match {
@@ -98,9 +98,9 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
     }
   }
 
-  def emit(): AMFAST = {
-    emitter.root(Root) { () =>
-      raw(root.definition.dialect.get.header.substring(1), Comment)
+  def emit(): YDocument = {
+    emitter.document { () =>
+      comment(root.definition.dialect.get.header.substring(1))
       ObjectEmitter(root).emit()
     }
   }
@@ -237,6 +237,7 @@ class DialectEmitter (val unit: BaseUnit) extends ASTEmitterHelper {
 
     override def position(): Position = Position.ZERO
   }
+
 }
 
 object DialectEmitter{

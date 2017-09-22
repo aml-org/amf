@@ -1,8 +1,9 @@
 package amf.dialects
 
 
-import scala.collection.mutable;
-import amf.metadata.Type;
+import scala.collection.mutable
+import amf.metadata.Type
+import amf.spec.dialects.{Dialect, DialectNode, DialectPropertyMapping};
 
 /**
   * Created by kor on 18/09/17.

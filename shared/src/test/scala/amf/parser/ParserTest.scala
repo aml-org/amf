@@ -8,6 +8,7 @@ import org.scalatest.Matchers._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
+import scala.concurrent.Future
 import scala.language.postfixOps
 
 class ParserTest extends FunSuite {
@@ -129,57 +130,4 @@ class ParserTest extends FunSuite {
 
     include(content.entries(3))
   }
-}
-
-class TestMemoryDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
-  add(VocabularyLanguageDefinition)
-  add(DialectLanguageDefinition)
-
-  override def registerDialect(uri: String) = throw new Exception("Not supported in test memory platform")
-}
-
-private class TestMemoryPlatform extends Platform {
-
-  /** Resolve specified file. */
-  override protected def fetchFile(path: String): Future[Content] = {
-    path match {
-      case "input.yaml" =>
-        Future {
-          Content(new CharSequenceStream(`RAML/yaml`), path)
-        }
-      case "include1.yaml" =>
-        Future {
-          Content(new CharSequenceStream("aa: 0"), path)
-        }
-      case "include2.yaml" =>
-        Future {
-          Content(new CharSequenceStream("dd: 0"), path)
-        }
-      case "input.json" =>
-        Future {
-          Content(new CharSequenceStream(`OAS/json`), path)
-        }
-      case "include1.json" =>
-        Future {
-          Content(new CharSequenceStream("{\"aa\": 0}"), path)
-        }
-      case "include2.json" =>
-        Future {
-          Content(new CharSequenceStream("{\"dd\": 0}"), path)
-        }
-      case _ => Future.failed(new Exception(s"[TEST] Unable to load $path"))
-    }
-  }
-
-  override protected def fetchHttp(url: String): Future[Content] =
-    Future.failed(new Exception(s"[TEST] Unable to fetch url $url"))
-
-  override protected def writeFile(path: String, content: String): Future[String] =
-    Future.failed(new Exception(s"[TEST] Unsupported write operation $path"))
-
-  override def tmpdir(): String = throw new Exception(s"[TEST] Unsupported tmpdir operation")
-
-  override def resolvePath(path: String): String = path
-
-  override val dialectsRegistry: PlatformDialectRegistry = new TestMemoryDialectsRegistry(this)
 }

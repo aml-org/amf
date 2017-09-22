@@ -3,6 +3,7 @@ package amf.dialects
 import amf.domain.Annotations
 import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel
+import amf.spec.dialects.DomainEntity
 import amf.vocabulary.ValueType
 
 /**

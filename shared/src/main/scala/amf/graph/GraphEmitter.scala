@@ -1,7 +1,6 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.dialects.DomainEntity
 import amf.document.{BaseUnit, Document}
 import amf.domain._
 import amf.domain.extensions._
@@ -15,6 +14,7 @@ import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.ASTEmitter
 import amf.shape._
+import amf.spec.dialects.DomainEntity
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YDocument, YType}
@@ -166,8 +166,8 @@ object GraphEmitter {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
               case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
               case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
-              case Type.Int  => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalarWithType(e.toString, "http://www.w3.org/2001/XMLSchema#integer", inArray = true))
-              case Bool     => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalarWithType(e.toString, "http://www.w3.org/2001/XMLSchema#boolean", inArray = true))
+              case Type.Int  => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Int , inArray = true))
+              case Bool     => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
               case _        => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
             }
           }
@@ -217,31 +217,11 @@ object GraphEmitter {
       }
     }
 
-    private def scalarWithType(content: String, datatype: String, token: AMFToken = StringToken, inArray: Boolean = false): Unit = {
-      if (inArray) {
-        value(content, datatype, token)
-      } else {
-        array { () =>
-          value(content, datatype, token)
-        }
-      }
-    }
-
     private def value(content: String, tag: YType): Unit = {
       map { () =>
         entry { () =>
           raw("@value")
           raw(content, tag)
-        }
-      }
-    }
-
-    private def value(content: String, datatype: String, token: AMFToken) = {
-      map { () =>
-        entry { () =>
-          raw("@value")
-          raw("@type", StringToken)
-          raw(content, token)
         }
       }
     }

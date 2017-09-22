@@ -1,10 +1,14 @@
-package amf.dialects
+package amf.spec.dialects
 
 import amf.compiler.Root
+import amf.dialects._
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
-import amf.spec.common.{Entries, ValueNode}
+import amf.parser.YValueOps
+import amf.spec.common.BaseSpecParser._
+import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}
+import org.yaml.model.{YScalar, YValue}
 
 import scala.collection.mutable
 
@@ -91,7 +95,10 @@ case class DialectPropertyMapping(name: String,
     case _         => namespace.get + name
   }
 
-  def rangeAsDialect:Option[DialectNode] = if (this.range.isInstanceOf[DialectNode]) Some(this.range.asInstanceOf[DialectNode]) else None;
+  def rangeAsDialect:Option[DialectNode] = this.range match {
+    case node: DialectNode => Some(node)
+    case _ => None
+  }
 
   def field(): amf.metadata.Field = {
     val `type` = if (collection || isMap) Type.Array(range)
@@ -168,7 +175,7 @@ object FieldValueDiscriminator {
     new FieldValueDiscriminator(dialectPropertyMapping, valueMap)
 }
 
-class Builtins extends LocalNameProvider with ReferenceResolver {
+trait Builtins extends LocalNameProvider with ReferenceResolver {
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = b2id.get(name)
 
@@ -188,7 +195,7 @@ class Builtins extends LocalNameProvider with ReferenceResolver {
   }
 }
 
-class TypeBuiltins extends Builtins{
+trait TypeBuiltins extends Builtins{
   add(TypeBuiltins.STRING, "string", Type.Str)
   add(TypeBuiltins.INTEGER, "integer", Type.Int)
   add(TypeBuiltins.NUMBER, "number", Type.Int)
@@ -208,7 +215,7 @@ object TypeBuiltins{
   val ANY: String     = (Namespace.Xsd +  "anyType").iri()
 
 }
-class BasicResolver(val root:Root, val externals: List[DialectPropertyMapping]) extends TypeBuiltins {
+class BasicResolver(override val root: Root, val externals: List[DialectPropertyMapping]) extends RamlSpecParser(root) with TypeBuiltins  {
 
   val REGEX_URI = "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
   private val externalsMap: mutable.HashMap[String,String] = new mutable.HashMap()
@@ -238,25 +245,29 @@ class BasicResolver(val root:Root, val externals: List[DialectPropertyMapping]) 
 
 
   private def initReferences(root: Root): Unit = {
-    val ast = root.ast.last
-    val entries = Entries(ast)
+    // val ast = root.ast.last
+    // val entries = Entries(ast)
 
-    for {
-      mapping              <- externals
-      node                 <- entries.key(mapping.name)
-    } yield for {
-      (alias, nestedEntry) <-  Entries(node.value).entries
-      prefix <-  Option(ValueNode(nestedEntry.value).string().value)
-    } yield {
-      externalsMap.put(alias, prefix.toString)
-    }
+      root.document.value.foreach { value: YValue =>
+        val entries = value.toMap.entries
 
-    for {
-      entry <- entries.key("base")
-      node  = ValueNode(entry.value).string().value
-      if node.isInstanceOf[String]
-    } yield {
-      base = node.asInstanceOf[String]
+        for {
+          mapping              <- externals
+          node                 <- entries.find(_.key.value.toScalar.text == mapping.name)
+        } yield for {
+          (alias, nestedEntry) <-  node.value.value.toMap.map
+          if nestedEntry.isInstanceOf[YScalar] && alias.isInstanceOf[YScalar]
+        } yield {
+          externalsMap.put(alias.toScalar.text, nestedEntry.asInstanceOf[YScalar].text)
+        }
+
+        for {
+          entry <- entries.find(_.key.value.toScalar.text == "base")
+          node  = ValueNode(entry.value).string().value
+          if node.isInstanceOf[String]
+        } yield {
+          base = node.asInstanceOf[String]
+        }
     }
   }
 

@@ -4,6 +4,7 @@ import amf.dialects.RAML_1_0_DialectTopLevel.NodeDefinitionObject
 import amf.dialects.RAML_1_0_DialectTopLevel.PropertyMappingObject
 import amf.document.{BaseUnit, Document}
 import amf.metadata.Type
+import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
@@ -28,9 +29,7 @@ object NM{
   }
 }
 
-class DialectLoader {
-
-  val builtins = new TypeBuiltins()
+class DialectLoader extends  TypeBuiltins {
 
   private def retrieveDomainEntity(unit:BaseUnit) = unit match {
     case document: Document => document.encodes.asInstanceOf[DomainEntity]
@@ -40,17 +39,17 @@ class DialectLoader {
   def loadDialect(document: BaseUnit): Dialect = loadDialect(retrieveDomainEntity(document))
 
   private def registerType (n:NodeDefinitionObject,dialectMap:mutable.Map[String,DialectNode]) =
-    NM(n.classTerm.get) match {
+    NM(n.classTerm().get) match {
       case Some(ns) =>
-        dialectMap.put(n.entity.id, new DialectNode(ns.name, ns.namespace));
+        dialectMap.put(n.entity.id, new DialectNode(ns.name, ns.namespace))
       case _        => // ignore
-    };
+    }
 
   def loadDialect(domainEntity: DomainEntity): Dialect = {
-    val dialectObject=RAML_1_0_DialectTopLevel.dialectObject(domainEntity);
+    val dialectObject=RAML_1_0_DialectTopLevel.dialectObject(domainEntity)
     val rootEntity = for {
-      ramlNode     <- dialectObject.raml
-      ramlDocument <- ramlNode.document
+      ramlNode     <- dialectObject.raml()
+      ramlDocument <- ramlNode.document()
       root         <- ramlDocument.resolvedEncodes()
     } yield {
       root
@@ -62,13 +61,13 @@ class DialectLoader {
         val dialectMap = mutable.Map[String,DialectNode]()
         val propertyMap = mutable.Map[DialectPropertyMapping,PropertyMappingObject]()
 
-        dialectObject.nodeMappings.foreach {registerType(_,dialectMap)}
+        dialectObject.nodeMappings().foreach {registerType(_,dialectMap)}
 
         if (!dialectMap.contains(encodedRootEntity.entity.id)){
-          registerType(encodedRootEntity,dialectMap);
-          parseNodeMapping(encodedRootEntity,dialectMap,propertyMap);
+          registerType(encodedRootEntity,dialectMap)
+          parseNodeMapping(encodedRootEntity,dialectMap,propertyMap)
         }
-        dialectObject.nodeMappings.foreach {  n =>
+        dialectObject.nodeMappings().foreach { n =>
           parseNodeMapping(n, dialectMap,propertyMap)
         }
 
@@ -97,13 +96,13 @@ class DialectLoader {
   private def fillHashes(propertyMap: mutable.Map[DialectPropertyMapping, PropertyMappingObject]) = {
     for {
       (dialectPropertyMapping, v) <- propertyMap
-      hash <- v.hash
+      hash <- v.hash()
     } yield dialectPropertyMapping.range match {
       case rangeNode: DialectNode =>
         for {
           property <- rangeNode.mappings() if property.iri() == hash
         } yield {
-          connectHash(dialectPropertyMapping,property);
+          connectHash(dialectPropertyMapping,property)
         }
       case _ => // ignore
     }
@@ -116,20 +115,20 @@ class DialectLoader {
 
   def parsePropertyMapping(domainEntity: PropertyMappingObject, dialects: mutable.Map[String,DialectNode]): DialectPropertyMapping = {
 
-    val name = domainEntity.name
+    val name = domainEntity.name()
     val `type`: Type = resolveType(domainEntity, dialects)
 
     var res =  DialectPropertyMapping(name.get,`type`)
 
-    domainEntity.mandatory.foreach { mandatory =>
+    domainEntity.mandatory().foreach { mandatory =>
       res = res.copy(required = mandatory)
     }
 
-    domainEntity.allowMultiple.foreach { isCollection =>
+    domainEntity.allowMultiple().foreach { isCollection =>
       res = res.copy(collection = isCollection)
     }
 
-    domainEntity.propertyTerm.foreach { term =>
+    domainEntity.propertyTerm().foreach { term =>
       NM(term) foreach { ns =>
         res = res.copy(namespace = Some(ns.namespace), rdfName = Some(ns.name))
       }
@@ -160,14 +159,14 @@ class DialectLoader {
       }
       else {
         // this is inplace range type definition
-        registerType(value,dialects);
-        parseNodeMapping(value,dialects,mutable.Map())
+        registerType(value, dialects)
+        parseNodeMapping(value, dialects, mutable.Map())
       }
     }
     else{
-       //this is built in type
-       val rng=domainEntity.range().getOrElse(TypeBuiltins.STRING)
-       builtins.buitInType(rng) match {
+       // this is built in type
+       val rng = domainEntity.range().getOrElse(TypeBuiltins.STRING)
+       buitInType(rng) match {
           case Some(t) => t
           case None =>
             throw new Exception(s"Cannot find dialect node type for $range")
@@ -175,11 +174,11 @@ class DialectLoader {
     }
   }
 
-  def parseNodeMapping(domainEntity: NodeDefinitionObject, dialects: mutable.Map[String,DialectNode], props: mutable.Map[DialectPropertyMapping,PropertyMappingObject]): DialectNode = {
+  def parseNodeMapping(domainEntity: NodeDefinitionObject, dialects: mutable.Map[String,DialectNode], props: mutable.Map[DialectPropertyMapping, PropertyMappingObject]): DialectNode = {
     val node = dialects(domainEntity.entity.id)
-    domainEntity.mapping.foreach { p=>
+    domainEntity.mapping().foreach { p=>
       val mapping = node.add(parsePropertyMapping(p, dialects))
-      props.put(mapping,p);
+      props.put(mapping, p)
     }
     node
   }

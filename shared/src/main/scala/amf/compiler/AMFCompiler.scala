@@ -1,14 +1,17 @@
 package amf.compiler
 
-import amf.dialects.{DialectParser, DialectRegistry}
+import amf.dialects.DialectRegistry
 import amf.document.{BaseUnit, Document}
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
+import amf.graph.GraphParser
 import amf.remote.Mimes._
 import amf.remote._
+import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasModuleParser}
 import amf.spec.raml.{RamlDocumentParser, RamlModuleParser}
-import org.yaml.model.{YComment, YDocument}
+import org.yaml.model.{YComment, YDocument, YPart}
+import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -67,11 +70,11 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     val option = RamlHeader(root).map({
-      case RamlHeader.Raml10            => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Library     => RamlModuleParser(root).parseModule()
+      case RamlHeader.Raml10                 => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Library          => RamlModuleParser(root).parseModule()
       case RamlHeader(header)
-        if dialects.knowsHeader(header) => makeDialect(root)
-      case _                            => throw new UnableToResolveUnitException
+        if dialects.knowsHeader(s"#$header") => makeDialect(root)
+      case _                                 => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit

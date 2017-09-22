@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.spec.dialects.{DialectPropertyMapping, DomainEntity}
 
 
 

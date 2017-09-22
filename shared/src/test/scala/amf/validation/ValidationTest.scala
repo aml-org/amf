@@ -16,14 +16,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   val basePath="file://shared/src/test/resources/vocabularies/"
 
-  test("Loading and serializing validations") {
+  test("WOA Loading and serializing validations") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
     val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
     .flatMap(unit =>
         validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
-      .zip(expected)
+    actual.flatMap({ unit =>
+      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+    }).zip(expected)
       .map(checkDiff)
   }
 
@@ -52,7 +53,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     assert(true)
   }
 
-  test("HERE_HERE Load dialect") {
+  test("Load dialect") {
 
     val validation = Validation(platform)
     try {

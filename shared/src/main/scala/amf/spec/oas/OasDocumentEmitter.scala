@@ -27,18 +27,14 @@ import scala.collection.mutable.ListBuffer
   */
 case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
-  private def retrieveWebApi() = document.encodes
-
-  private def retrieveWebApi() = unit match {
-    case document: Document => document.encodes.asInstanceOf[WebApi]
+  private def retrieveWebApi(): WebApi = document.encodes match {
+    case webApi: WebApi => webApi
+    case _              => throw new Exception("Cannot emit OAS api from document that does not encode a WebAPI")
   }
 
   def emitDocument(): YDocument = {
 
-    val ordering: SpecOrdering = unit match {
-      case document: Document => SpecOrdering.ordering(Oas, document.encodes.annotations)
-      case module: Module     => SpecOrdering.ordering(Oas, module.annotations)
-    }
+    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, document.encodes.annotations)
 
     val apiEmitters = emitWebApi(ordering)
     // TODO ordering??

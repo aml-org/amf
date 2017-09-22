@@ -2,6 +2,7 @@ package amf.dialects
 
 import amf.compiler.Root
 import amf.metadata.Type
+import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
 /**
