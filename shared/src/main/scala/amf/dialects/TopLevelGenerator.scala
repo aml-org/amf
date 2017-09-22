@@ -36,7 +36,7 @@ class TopLevelGenerator(d:Dialect) {
       */
     if (p.isMap||p.collection) {
 
-      s.append(s"resolveReferences(${propName},\n")
+      s.append(s"resolveReferences2Options(${propName},\n")
       s.append(s"(r,s)=>{r.asInstanceOf[${d.root.shortName}Object].${declarationName}.find(_.entity.id==s)}\n")
       s.append(s" ,e=>${p.referenceTarget.get.shortName}Object(e,Some(this)))")
 
@@ -123,9 +123,13 @@ class TopLevelGenerator(d:Dialect) {
     s"${container}[${tpName}]";
   }
   private def refSignature(d:DialectNode, p:DialectPropertyMapping):String={
-    val container=if (p.multivalue) "Seq" else "Option"
     var tpName= s"${p.referenceTarget.get.shortName}Object"
-    s"${container}[${tpName}]";
+    if (p.multivalue){
+      s"List[Option[${tpName}]]";
+    }
+    else{
+      s"Option[${tpName}]";
+    }
   }
 
 

@@ -37,7 +37,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
-    assert(true)
+
   }
 
   test("Loading and serializing validations with inplace definition of range") {
@@ -49,7 +49,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
-    assert(true)
+
+  }
+  test("Loading and serializing validations with union type") {
+    val validation = Validation(platform)
+    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation.loadValidationDialect(basePath + "validation_dialect_unions.raml")
+      .flatMap(unit =>
+        validation.loadValidationProfile(basePath + "validation_profile_example.raml"));
+    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .zip(expected)
+      .map(checkDiff)
+
   }
 
   test("HERE_HERE Load dialect") {

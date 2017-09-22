@@ -85,6 +85,17 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
       case _                 => List.empty
     }
 
+  def rawstrings(m: DialectPropertyMapping): Seq[String] =
+    this.fields.get(m.field()) match {
+      case scalar: AmfScalar => List(scalar.toString)
+
+      case array: AmfArray   => array.values.map({
+        case scalarMember: AmfScalar => Some(scalarMember.toString)
+        case _ => None
+      }).map(_.getOrElse(""))
+
+      case _                 => List.empty
+    }
 
   def entity(m: DialectPropertyMapping): Option[DomainEntity] =
     fields.get(m.field()) match {
@@ -200,7 +211,7 @@ class DialectParser(val dialect: Dialect, val root: Root) {
     val classTerms = ListBuffer[DomainEntity]()
     entries.foreach {
       case (classTermName, entry) if mapping.range.isInstanceOf[DialectNode] =>
-        val domainEntity = DomainEntity(Some(classTermName), mapping.range.asInstanceOf[DialectNode], Fields(), Annotations(entry.ast))
+        val domainEntity = DomainEntity(Some(classTermName), getActualRange(mapping,entry).asInstanceOf[DialectNode], Fields(), Annotations(entry.ast))
         classTerms += domainEntity
         val field = mapping.field()
         parentDomainEntity.add(field, domainEntity)
@@ -219,14 +230,17 @@ class DialectParser(val dialect: Dialect, val root: Root) {
         if (mapping.isScalar) {
           mapping.range match {
             case Type.Str =>
-              val value = ArrayNode(entryNode.value)
-              parentDomainEntity.set(mapping.field(), value.strings(), entryNode.annotations())
+              if (mapping.isRef){
+                parseRefArray(mapping, entryNode, parentDomainEntity)
+              }
+              else {
+                val value = ArrayNode(entryNode.value)
+
+                parentDomainEntity.set(mapping.field(), value.strings(), entryNode.annotations())
+              }
 
             case Type.Iri =>
-              val value = ArrayNode(entryNode.value)
-              val array = value.strings()
-              val scalars = array.values.map(AmfScalar(_))
-              parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _))), entryNode.annotations())
+              parseRefArray(mapping, entryNode, parentDomainEntity)
 
             case _ => throw new IllegalStateException("Does not know how to parse sequences of other scalars yet")
           }
@@ -236,22 +250,65 @@ class DialectParser(val dialect: Dialect, val root: Root) {
 
       case _ =>
         if (mapping.isScalar) {
-          val resolvedVal = resolveValue(mapping, ValueNode(entryNode.value).string())
-          parentDomainEntity.setArray(mapping.field(), Seq(resolvedVal))
+          val scalar = ValueNode(entryNode.value).string()
+          if (Option(scalar.value).isDefined) {
+            val resolvedVal = resolveValue(mapping, scalar)
+            parentDomainEntity.setArray(mapping.field(), Seq(resolvedVal))
+          }
+          else{
+            if (entryNode.value.is(AMFToken.MapToken) && mapping.allowInplace) {
+              mapping.referenceTarget.foreach(trg => {
+                val child = DomainEntity(Option(entryNode.key.content), trg, Fields(), Annotations(entryNode.ast))
+                parentDomainEntity.add(mapping.field(), child)
+                parseNode(Entries(entryNode.value), child)
+              })
+            }
+          }
         } else {
           throw new IllegalStateException("Does not know how to parse sequences of instances yet")
         }
     }
   }
 
+  private def parseRefArray(mapping: DialectPropertyMapping, entryNode: EntryNode, parentDomainEntity: DomainEntity) = {
+    val value = ArrayNode(entryNode.value)
+
+    val array = value.strings()
+
+    val scalars = array.values.map(AmfScalar(_))
+    parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _))), entryNode.annotations())
+  }
+
   private def parseSingleObject(mapping: DialectPropertyMapping, entryNode: EntryNode, parentDomainEntity: DomainEntity): Unit = {
-    mapping.range match {
+    getActualRange(mapping,entryNode) match {
       case node: DialectNode =>
+
         val domainEntity = DomainEntity(Option(entryNode.key.content), node, Fields(), Annotations(entryNode.ast))
         parentDomainEntity.set(mapping.field(), domainEntity)
         parseNode(Entries(entryNode.value), domainEntity)
       case _ => // ignore
     }
+  }
+
+  private def getActualRange(mapping: DialectPropertyMapping,entryNode:EntryNode):Type = {
+    if (mapping.unionTypes.isDefined){
+      val maybeType = mapping.unionTypes.get.find(t => {
+        if (t.isInstanceOf[DialectNode]) {
+          var dl = t.asInstanceOf[DialectNode]
+          val domainEntity = DomainEntity(Option(entryNode.key.content), dl, Fields(), Annotations(entryNode.ast))
+          domainEntity.withId("#")
+          parseNode(Entries(entryNode.value), domainEntity)
+          val issues = DialectValidator.validate(domainEntity)
+          issues.size == 0;
+        }
+        else false
+      })
+      if (maybeType.isDefined) {
+        maybeType.get
+      }
+      else mapping.range
+    }
+    else mapping.range
   }
 
   private def resolveValue(mapping: DialectPropertyMapping, value: AmfScalar): AmfScalar = {

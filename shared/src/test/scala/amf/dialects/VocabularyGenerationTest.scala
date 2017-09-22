@@ -4,7 +4,6 @@ import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
-import amf.remote.Syntax.Json
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}

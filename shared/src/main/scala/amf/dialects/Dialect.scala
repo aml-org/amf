@@ -51,6 +51,7 @@ trait Refiner {
 
 case class DialectPropertyMapping(name: String,
                                   range: Type,
+                                  unionTypes: Option[List[Type]]=None,
                                   required: Boolean = false,
                                   collection: Boolean = false,
                                   referenceTarget: Option[DialectNode] = None,
@@ -64,7 +65,12 @@ case class DialectPropertyMapping(name: String,
                                   jsonld: Boolean = true,
                                   owningNode: Option[DialectNode]=None,
                                   scalaNameOverride:Option[String]=None,
-                                  allowInplace: Boolean=false
+                                  allowInplace: Boolean=false,
+                                  pattern:Option[String]=None,
+                                  enum: Option[Seq[String]]=None,
+                                  minimum: Option[Int]=None,
+                                  maximum: Option[Int]=None
+
                                  ) {
 
   def isRef: Boolean = referenceTarget.isDefined
@@ -218,7 +224,10 @@ class BasicResolver(val root:Root, val externals: List[DialectPropertyMapping]) 
   initReferences(root)
 
   def resolveBasicRef(name: String, root: Root): String =
-    if (name.indexOf(".") > -1) {
+    if (name==null){
+      null
+    }
+    else if (name.indexOf(".") > -1) {
       name.split("\\.") match {
         case Array(alias, suffix) =>
           externalsMap.get(alias) match {

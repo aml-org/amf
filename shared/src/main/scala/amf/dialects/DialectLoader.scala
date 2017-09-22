@@ -7,6 +7,7 @@ import amf.metadata.Type
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by Pavel Petrochenko on 15/09/17.
@@ -97,29 +98,47 @@ class DialectLoader {
     for {
       (dialectPropertyMapping, v) <- propertyMap
       hash <- v.hash
-    } yield dialectPropertyMapping.range match {
+    } yield
+      {
+      val r=dialectPropertyMapping.range;
+      if (dialectPropertyMapping.unionTypes.isDefined){
+        dialectPropertyMapping.unionTypes.get.foreach(uoption=>{
+          processHashRange(dialectPropertyMapping, hash, uoption)
+        })
+      }
+      else {
+          processHashRange(dialectPropertyMapping, hash, r)
+      }
+    }
+  }
+
+  private def processHashRange(dialectPropertyMapping: DialectPropertyMapping, hash: String, r: Type) = {
+    r match {
       case rangeNode: DialectNode =>
+
         for {
           property <- rangeNode.mappings() if property.iri() == hash
         } yield {
-          connectHash(dialectPropertyMapping,property);
+          connectHash(dialectPropertyMapping, property,r);
         }
       case _ => // ignore
     }
   }
 
-  private def connectHash(hashedProperty: DialectPropertyMapping,  hashProperty: DialectPropertyMapping) = {
+  private def connectHash(hashedProperty: DialectPropertyMapping, hashProperty: DialectPropertyMapping,r:Type) = {
     hashedProperty.owningNode.get.add(hashedProperty.copy(hash = Option(hashProperty)))
-    hashedProperty.range.asInstanceOf[DialectNode].add(hashProperty.copy(noRAML = true))
+    r.asInstanceOf[DialectNode].add(hashProperty.copy(noRAML = true))
   }
 
-  def parsePropertyMapping(domainEntity: PropertyMappingObject, dialects: mutable.Map[String,DialectNode]): DialectPropertyMapping = {
+  def parsePropertyMapping(domainEntity: PropertyMappingObject, dialects: mutable.Map[String,DialectNode], props: mutable.Map[DialectPropertyMapping,PropertyMappingObject]): DialectPropertyMapping = {
 
     val name = domainEntity.name
-    val `type`: Type = resolveType(domainEntity, dialects)
+    val `type`: List[Type] = resolveType(domainEntity, dialects,props)
 
-    var res =  DialectPropertyMapping(name.get,`type`)
-
+    var res =  DialectPropertyMapping(name.get,`type`.head)
+    if (`type`.size>1){
+      res=res.copy(unionTypes = Some(`type`))
+    }
     domainEntity.mandatory.foreach { mandatory =>
       res = res.copy(required = mandatory)
     }
@@ -133,52 +152,61 @@ class DialectLoader {
         res = res.copy(namespace = Some(ns.namespace), rdfName = Some(ns.name))
       }
     }
+    domainEntity.maximum().foreach(m=>{
+      res=res.copy(maximum = Some(m.toInt));
+    })
+    domainEntity.minimum().foreach(m=>{
+      res=res.copy(minimum = Some(m.toInt));
+    })
+    domainEntity.pattern().foreach(p=>{
+      res=res.copy(pattern = Some(p))
+    })
+    val ev=domainEntity.`enum`()
 
-    // ??
-    /*
-    val enum    = domainEntity.strings(PropertyMapping.enum)
-    val pattern = domainEntity.string(PropertyMapping.pattern)
-    val minimum = domainEntity.string(PropertyMapping.minimum)
-    val maximum = domainEntity.string(PropertyMapping.maximum)
-    val hash    = domainEntity.string(PropertyMapping.hash)
-    val asMap   = domainEntity.boolean(PropertyMapping.asMap)
-    */
+    if (ev.size>0){
+      res=res.copy(`enum` = Some(ev))
+
+    }
+
 
     res
   }
 
-  private def resolveType(domainEntity: PropertyMappingObject, dialects: mutable.Map[String, DialectNode]):Type = {
-    val range = domainEntity.resolvedRange();
+  private def resolveType(domainEntity: PropertyMappingObject, dialects: mutable.Map[String, DialectNode],props: mutable.Map[DialectPropertyMapping,PropertyMappingObject]):List[Type] = {
+
+    val strings = domainEntity.entity.rawstrings(PropertyMapping.range)
+    domainEntity.resolvedRange().zip(strings).map(rr=>{
+    val (range,rangeString)=rr;
     if (range.isDefined){
-      //this is locally defined type
+      // this is locally defined type
       val value = range.get
       val id = value.entity.id
       if (dialects.contains(id)){
-        //return node from global declarations
+        // return node from global declarations
         dialects.get(id).get
       }
       else {
-        //this is inplace range type definition
+        // this is inplace range type definition
         registerType(value,dialects);
-        parseNodeMapping(value,dialects,mutable.Map());
+        parseNodeMapping(value,dialects,props);
       }
     }
     else{
-       //this is built in type
-       val rng=domainEntity.range().getOrElse(TypeBuiltins.STRING)
-       builtins.buitInType(rng) match {
+       // this is built in type
+       builtins.buitInType(rangeString) match {
           case Some(t) => t
           case None =>
             throw new Exception(s"Cannot find dialect node type for $range")
        }
-    }
+    }})
+
   }
 
   def parseNodeMapping(domainEntity: NodeDefinitionObject, dialects: mutable.Map[String,DialectNode], props: mutable.Map[DialectPropertyMapping,PropertyMappingObject]): DialectNode = {
     val node = dialects(domainEntity.entity.id)
 
     domainEntity.mapping.foreach { p=>
-      val mapping = node.add(parsePropertyMapping(p, dialects))
+      val mapping = node.add(parsePropertyMapping(p, dialects,props))
       props.put(mapping,p);
     }
 
