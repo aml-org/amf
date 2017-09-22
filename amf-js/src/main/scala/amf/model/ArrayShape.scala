@@ -2,9 +2,9 @@ package amf.model
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.{JSExportAll}
+import scala.scalajs.js.annotation.JSExportAll
 
-abstract class DataArrangeShape (private[amf] val array: amf.shape.DataArrangementShape) extends Shape(array) {
+abstract class DataArrangeShape(private[amf] val array: amf.shape.DataArrangementShape) extends Shape(array) {
 
   val minItems: Int        = array.minItems
   val maxItems: Int        = array.maxItems
@@ -28,13 +28,14 @@ abstract class DataArrangeShape (private[amf] val array: amf.shape.DataArrangeme
 
 @JSExportAll
 class ArrayShape(private[amf] override val array: amf.shape.ArrayShape) extends DataArrangeShape(array) {
-  val items: Shape         = Shape(array.items)
+  val items: Shape = Shape(array.items)
 
   def withItems(items: Shape): this.type = {
     array.withItems(items.shape)
     this
   }
 
+  override private[amf] def element = array
 }
 
 @JSExportAll
@@ -47,14 +48,21 @@ class MatrixShape(private[amf] override val array: amf.shape.ArrayShape) extends
     }
   }
 
+  override private[amf] def element = array
+}
+
+object MatrixShape {
+  def apply(array: amf.shape.MatrixShape): MatrixShape = { new MatrixShape(array.toArrayShape) }
 }
 
 @JSExportAll
 case class TupleShape(private[amf] override val array: amf.shape.TupleShape) extends DataArrangeShape(array) {
-  val items: js.Iterable[Shape]         = array.items.map(Shape(_)).toJSArray
+  val items: js.Iterable[Shape] = array.items.map(Shape(_)).toJSArray
 
   def withItems(items: js.Iterable[Shape]): this.type = {
     array.withItems(items.map(_.shape).toSeq)
     this
   }
+
+  override private[amf] def element = array
 }

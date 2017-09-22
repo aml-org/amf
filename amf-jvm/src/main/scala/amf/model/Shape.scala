@@ -1,7 +1,7 @@
 package amf.model
 import scala.collection.JavaConverters._
 
-abstract class Shape(private[amf] val shape: amf.shape.Shape) {
+abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement {
 
   val name: String                    = shape.name
   val displayName: String             = shape.displayName

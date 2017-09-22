@@ -1,9 +1,5 @@
 package amf.model
 
-import java.util
-
-import amf.domain
-
 import scala.collection.JavaConverters._
 
 /**
@@ -21,7 +17,10 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
   /** List of references to other [[DomainElement]]s. */
   override val references: java.util.List[BaseUnit] =
     document.references
-      .map(d => amf.model.Document(d.asInstanceOf[amf.document.Document]).asInstanceOf[BaseUnit])
+      .map({ case r: amf.model.Document => Document(r) })
+      .map({ bu: BaseUnit =>
+        bu
+      })
       .asJava
 
   /** Uri that identifies the document. */
@@ -33,14 +32,9 @@ case class Document(private[amf] val document: amf.document.BaseUnit)
     .map(d => WebApi(d.asInstanceOf[amf.document.Document].encodes))
     .orNull
 
-  /** Declared [[DomainElement]]s that can be re-used from other documents. */
-  val declares: java.util.List[amf.domain.DomainElement] =
-    document match {
-      case d: amf.document.Document => d.declares.asJava
-      case _                        => new util.ArrayList[domain.DomainElement]()
-    }
-
   override def unit: amf.document.BaseUnit = document
 
   override def usage: String = document.usage
+
+  override private[amf] def element = document.asInstanceOf[amf.document.DeclaresModel]
 }
