@@ -1,11 +1,11 @@
 package amf.graph
 
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
-import amf.metadata.document.DocumentModel
+import amf.metadata.document.{DocumentModel, ModuleModel}
 import amf.metadata.domain._
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
@@ -128,7 +128,12 @@ object GraphParser extends GraphParserHelpers {
             case _: Obj    => items.map(n => parse(n.toMap))
             case Str | Iri => items.map(n => str(value(a.element, n).toScalar))
           }
-          instance.setArray(f, values, annotations(nodes, sources, key))
+          // todo: review with pedro, field. set overrides module id with father document id.
+          values.headOption match {
+            case Some(x) if x.isInstanceOf[BaseUnit] =>
+              instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
+            case _ => instance.setArray(f, values, annotations(nodes, sources, key))
+          }
       }
     }
   }
@@ -157,7 +162,8 @@ object GraphParser extends GraphParserHelpers {
     ScalarShapeModel          -> ScalarShape.apply,
     PropertyShapeModel        -> PropertyShape.apply,
     XMLSerializerModel        -> XMLSerializer.apply,
-    PropertyDependenciesModel -> PropertyDependencies.apply
+    PropertyDependenciesModel -> PropertyDependencies.apply,
+    ModuleModel               -> Module.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap
