@@ -656,9 +656,16 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
   case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, alias: String) extends Emitter {
 
-    override def emit(): Unit = EntryEmitter(alias, reference.location).emit()
+    override def emit(): Unit = EntryEmitter(alias, name).emit()
 
     override def position(): Position = Position.ZERO
+
+    def name: String = {
+      Option(reference.location) match {
+        case Some(location) => location
+        case None           => reference.id
+      }
+    }
   }
 
   case class DeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering) {
