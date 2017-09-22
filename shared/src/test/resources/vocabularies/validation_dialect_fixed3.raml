@@ -137,28 +137,28 @@ raml:
                asMap: true
                hash: schema-org.name
                range:
-                     classTerm: validation.Validation
-                     mapping:
-                       name:
-                         propertyTerm: schema-org.name
-                         range: string
-                       message:
-                         propertyTerm: shacl.message
-                         mandatory: true
-                         range: string
-                       targetClass:
-                         propertyTerm: validation.ramlClassId
-                         mandatory: true
-                         range: string
-                         allowMultiple: true
-                       propertyConstraints:
-                         propertyTerm: shacl.property
-                         asMap: true
-                         hash: validation.ramlPropertyId
-                         range: propertyConstraintNode
-                       functionConstraint:
-                         propertyTerm: shacl.js
-                         range: functionConstraintNode
-                       targetQuery:
-                               propertyTerm: validation.targetQuery
-                               range: string
+                  classTerm: validation.Validation
+                  mapping:
+                    name:
+                      propertyTerm: schema-org.name
+                      range: string
+                    message:
+                      propertyTerm: shacl.message
+                      mandatory: true
+                      range: string
+                    targetClass:
+                      propertyTerm: validation.ramlClassId
+                      mandatory: true
+                      range: string
+                      allowMultiple: true
+                    propertyConstraints:
+                      propertyTerm: shacl.property
+                      asMap: true
+                      hash: validation.ramlPropertyId
+                      range: propertyConstraintNode
+                    functionConstraint:
+                      propertyTerm: shacl.js
+                      range: functionConstraintNode
+                    targetQuery:
+                            propertyTerm: validation.targetQuery
+                            range: string

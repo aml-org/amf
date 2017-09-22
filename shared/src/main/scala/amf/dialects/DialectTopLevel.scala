@@ -81,9 +81,9 @@ case class PropertyMappingObject(val entity: DomainEntity=DomainEntity(PropertyM
   def withMinimum(value:String):PropertyMappingObject= {entity.set(PropertyMapping.minimum.field , AmfScalar(value)); this}
   def maximum():Option[String]= entity.string(PropertyMapping.maximum)
   def withMaximum(value:String):PropertyMappingObject= {entity.set(PropertyMapping.maximum.field , AmfScalar(value)); this}
-  def range():Option[String]= entity.string(PropertyMapping.range)
-  def withRange(value:String):PropertyMappingObject= {entity.set(PropertyMapping.range.field , AmfScalar(value)); this}
-  def resolvedRange():Option[NodeDefinitionObject]= resolveReference(PropertyMapping.range,
+  def range():Seq[String]= entity.strings(PropertyMapping.range)
+  def withRange(value:String):PropertyMappingObject= {entity.add(PropertyMapping.range.field , AmfScalar(value)); this}
+  def resolvedRange():List[Option[NodeDefinitionObject]]= resolveReferences2Options(PropertyMapping.range,
 (r,s)=>{r.asInstanceOf[dialectObject].nodeMappings.find(_.entity.id==s)}
  ,e=>NodeDefinitionObject(e,Some(this)))
   def allowMultiple():Option[Boolean]= entity.boolean(PropertyMapping.allowMultiple)

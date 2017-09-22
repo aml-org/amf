@@ -36,12 +36,12 @@ case class ClassObject(val entity: DomainEntity=DomainEntity(ClassTerm),override
   def withDescription(value:String):ClassObject= {entity.set(ClassTerm.description.field , AmfScalar(value)); this}
   def `extends`():Seq[String]= entity.strings(ClassTerm.`extends`)
   def withExtends(value:String):ClassObject= {entity.add(ClassTerm.`extends`.field , AmfScalar(value)); this}
-  def resolvedExtends():Seq[ClassObject]= resolveReferences(ClassTerm.`extends`,
+  def resolvedExtends():List[Option[ClassObject]]= resolveReferences2Options(ClassTerm.`extends`,
 (r,s)=>{r.asInstanceOf[VocabularyObject].classTerms.find(_.entity.id==s)}
  ,e=>ClassObject(e,Some(this)))
   def properties():Seq[String]= entity.strings(ClassTerm.properties)
   def withProperties(value:String):ClassObject= {entity.add(ClassTerm.properties.field , AmfScalar(value)); this}
-  def resolvedProperties():Seq[PropertyObject]= resolveReferences(ClassTerm.properties,
+  def resolvedProperties():List[Option[PropertyObject]]= resolveReferences2Options(ClassTerm.properties,
 (r,s)=>{r.asInstanceOf[VocabularyObject].propertyTerms.find(_.entity.id==s)}
  ,e=>PropertyObject(e,Some(this)))
 }
@@ -53,17 +53,17 @@ case class PropertyObject(val entity: DomainEntity=DomainEntity(PropertyTerm),ov
   def withDescription(value:String):PropertyObject= {entity.set(PropertyTerm.description.field , AmfScalar(value)); this}
   def domain():Seq[String]= entity.strings(PropertyTerm.domain)
   def withDomain(value:String):PropertyObject= {entity.add(PropertyTerm.domain.field , AmfScalar(value)); this}
-  def resolvedDomain():Seq[ClassObject]= resolveReferences(PropertyTerm.domain,
+  def resolvedDomain():List[Option[ClassObject]]= resolveReferences2Options(PropertyTerm.domain,
 (r,s)=>{r.asInstanceOf[VocabularyObject].classTerms.find(_.entity.id==s)}
  ,e=>ClassObject(e,Some(this)))
   def range():Seq[String]= entity.strings(PropertyTerm.range)
   def withRange(value:String):PropertyObject= {entity.add(PropertyTerm.range.field , AmfScalar(value)); this}
-  def resolvedRange():Seq[ClassObject]= resolveReferences(PropertyTerm.range,
+  def resolvedRange():List[Option[ClassObject]]= resolveReferences2Options(PropertyTerm.range,
 (r,s)=>{r.asInstanceOf[VocabularyObject].classTerms.find(_.entity.id==s)}
  ,e=>ClassObject(e,Some(this)))
   def `extends`():Seq[String]= entity.strings(PropertyTerm.`extends`)
   def withExtends(value:String):PropertyObject= {entity.add(PropertyTerm.`extends`.field , AmfScalar(value)); this}
-  def resolvedExtends():Seq[PropertyObject]= resolveReferences(PropertyTerm.`extends`,
+  def resolvedExtends():List[Option[PropertyObject]]= resolveReferences2Options(PropertyTerm.`extends`,
 (r,s)=>{r.asInstanceOf[VocabularyObject].propertyTerms.find(_.entity.id==s)}
  ,e=>PropertyObject(e,Some(this)))
 }

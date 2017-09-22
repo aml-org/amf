@@ -45,4 +45,16 @@ class TopLevelObject(val domainEntity: DomainEntity, val parent:Option[TopLevelO
       case e:DomainEntity=>List(v(e));
     }
   }
+
+  protected def resolveReferences2Options[T]( refP:DialectPropertyMapping, resolver:(TopLevelObject,String) => Option[T], v:(DomainEntity) => T):List[Option[T]]={
+    domainEntity.fields.get(refP.field) match {
+      case s:AmfScalar =>List(resolver(root,s.toString));
+      case a:AmfArray =>
+        a.values.map(_ match{
+          case s:AmfScalar =>resolver(root,s.toString);
+          case e:DomainEntity=>Some(v(e));
+        }).toList
+      case e:DomainEntity=>List(Some(v(e)));
+    }
+  }
 }
