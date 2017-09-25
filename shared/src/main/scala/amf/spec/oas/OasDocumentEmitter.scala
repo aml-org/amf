@@ -27,7 +27,10 @@ import scala.collection.mutable.ListBuffer
   */
 case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
-  private def retrieveWebApi() = document.encodes
+  private def retrieveWebApi(): WebApi = document.encodes match {
+    case webApi: WebApi => webApi
+    case _              => throw new Exception("Cannot emit OAS api from document that does not encode a WebAPI")
+  }
 
   def emitDocument(): YDocument = {
 

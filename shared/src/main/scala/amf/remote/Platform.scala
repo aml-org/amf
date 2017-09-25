@@ -1,5 +1,7 @@
 package amf.remote
 
+import amf.dialects.PlatformDialectRegistry
+
 import scala.concurrent.Future
 
 /**
@@ -16,6 +18,8 @@ trait Platform {
       case _                                   => Future.failed(new Exception(s"Unsupported url: $url"))
     }
   }
+
+  val dialectsRegistry: PlatformDialectRegistry
 
   /** Test path resolution. */
   def resolvePath(path: String): String

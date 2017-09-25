@@ -24,6 +24,8 @@ class Fields {
     }
   }
 
+  def fieldsMeta():List[Field]= fs.keys.toList
+
   def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
 
   /** Return [[Value]] associated to given [[amf.metadata.Field]]. */
@@ -86,6 +88,14 @@ class Fields {
     fs.get(f) match {
       case Some(value) => Some(FieldEntry(f, value))
       case _           => None
+    }
+  }
+
+  def entryJsonld(f: Field): Option[FieldEntry] = {
+    if (f.jsonldField) {
+      entry(f)
+    } else {
+      None
     }
   }
 

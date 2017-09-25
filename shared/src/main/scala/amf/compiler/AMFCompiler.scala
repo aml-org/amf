@@ -1,11 +1,13 @@
 package amf.compiler
 
-import amf.document.BaseUnit
+import amf.dialects.DialectRegistry
+import amf.document.{BaseUnit, Document}
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.remote.Mimes._
 import amf.remote._
+import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasModuleParser}
 import amf.spec.raml.{RamlDocumentParser, RamlModuleParser}
 import org.yaml.model.{YComment, YDocument, YPart}
@@ -20,7 +22,8 @@ class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
                            hint: Hint,
-                           private val cache: Cache) {
+                           private val cache: Cache,
+                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default) {
 
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                                   = context.current
@@ -67,9 +70,11 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     val option = RamlHeader(root).map({
-      case RamlHeader.Raml10        => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Library => RamlModuleParser(root).parseModule()
-      case _                        => throw new UnableToResolveUnitException
+      case RamlHeader.Raml10                 => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Library          => RamlModuleParser(root).parseModule()
+      case RamlHeader(header)
+        if dialects.knowsHeader(header) => makeDialect(root)
+      case _                                 => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit
@@ -93,6 +98,10 @@ class AMFCompiler private (val url: String,
       case Library => OasModuleParser(root).parseModule()
       case _       => OasDocumentParser(root).parseDocument()
     }
+  }
+
+  private def makeDialect(root: Root): Document = {
+    DialectParser(root, dialects).parseDocument()
   }
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
@@ -135,8 +144,8 @@ case class ParsedDocument(comment: Option[YComment], document: YDocument)
 case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String)
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None) =
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()))
+  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None, dialects: DialectRegistry = DialectRegistry.default) =
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), dialects)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

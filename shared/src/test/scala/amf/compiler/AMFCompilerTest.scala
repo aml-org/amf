@@ -1,6 +1,7 @@
 package amf.compiler
 
 import amf.document.{BaseUnit, Document}
+import amf.domain.WebApi
 import amf.exception.CyclicReferenceException
 import amf.parser.{YMapOps, YValueOps}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
@@ -22,6 +23,14 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Api (raml)") {
     AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", platform, RamlYamlHint)
       .build() map assertDocument
+  }
+
+  test("Vocabulary") {
+    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint).build().onComplete(unit => {
+      assert(unit.isSuccess)
+    })
+
+    true shouldBe(true)
   }
 
   test("Api (oas)") {
@@ -90,8 +99,8 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {
     case d: Document =>
-      d.encodes.host should be("api.example.com")
-      d.encodes.name should be("test")
+      d.encodes.asInstanceOf[WebApi].host should be("api.example.com")
+      d.encodes.asInstanceOf[WebApi].name should be("test")
   }
 
   private def assertUses(uses: YMapEntry, references: Seq[BaseUnit]) = {

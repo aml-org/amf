@@ -1,10 +1,14 @@
 package amf.parser
 
+import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
+import amf.lexer.CharSequenceStream
+import amf.remote.{Content, Platform}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
+import scala.concurrent.Future
 import scala.language.postfixOps
 
 class ParserTest extends FunSuite {
