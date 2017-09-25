@@ -3,9 +3,10 @@ package amf.spec.dialects
 import amf.compiler.Root
 import amf.dialects.{DialectRegistry, DialectValidator}
 import amf.document.Document
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.dialects.DomainEntity
+import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
-import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YMapOps
 import amf.spec.common.BaseSpecParser._
 import amf.spec.raml.RamlSpecParser
@@ -20,117 +21,6 @@ import scala.collection.mutable.ListBuffer
 
 trait DomainEntityVisitor{
   def visit(entity: DomainEntity, prop: DialectPropertyMapping): Boolean
-}
-
-case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations) extends DomainElement {
-
-  override def adopted(parent: String): this.type = {
-    if (Option(this.id).isEmpty) {
-      linkValue match {
-        case Some(link) =>
-          parent.charAt(parent.length - 1) match {
-            case '/' => withId(s"$parent$link")
-            case '#' => withId(s"$parent$link")
-            case _   => withId(s"$parent/$link")
-          }
-        case _          =>
-          withId(parent)
-      }
-    }
-    this
-  }
-
-  def traverse(visitor: DomainEntityVisitor): Unit =
-      definition.mappings().foreach { mapping =>
-        if (!mapping.isScalar) {
-          val element = fields.get(mapping.field())
-          element match {
-            case array: AmfArray => array.values.foreach(visitElement(visitor, mapping, _))
-            case _ =>
-          }
-          visitElement(visitor, mapping, element)
-        }
-      }
-
-  private def visitElement(visitor: DomainEntityVisitor, mapping: DialectPropertyMapping, element: AmfElement): Unit =
-    element match {
-      case domainEntity: DomainEntity =>
-        val visitChidren = visitor.visit(domainEntity, mapping)
-        if (visitChidren) { domainEntity.traverse(visitor) }
-      case _ => // ignore
-    }
-
-  def boolean(m: DialectPropertyMapping): Option[Boolean] =
-    fields.get(m.field()) match {
-      case scalar: AmfScalar => Option(scalar.toString.toBoolean)
-      case _                 => None
-    }
-
-  def string(m: DialectPropertyMapping): Option[String] =
-    this.fields.get(m.field()) match {
-      case scalar: AmfScalar => Some(scalar.toString)
-      case _                 => None
-    }
-
-  def addValue(mapping: DialectPropertyMapping, value: String): Unit = add(mapping.field(), AmfScalar(value))
-
-
-  def strings(m: DialectPropertyMapping): Seq[String] =
-    this.fields.get(m.field()) match {
-      case scalar: AmfScalar => List(scalar.toString)
-
-      case array: AmfArray   => array.values.map({
-          case scalarMember: AmfScalar => Some(scalarMember.toString)
-          case _ => None
-        }).filter(_.isDefined).map(_.get)
-
-      case _                 => List.empty
-    }
-
-  def rawstrings(m: DialectPropertyMapping): Seq[String] =
-    this.fields.get(m.field()) match {
-      case scalar: AmfScalar => List(scalar.toString)
-
-      case array: AmfArray   => array.values.map({
-        case scalarMember: AmfScalar => Some(scalarMember.toString)
-        case _ => None
-      }).map(_.getOrElse(""))
-
-      case _                 => List.empty
-    }
-
-  def entity(m: DialectPropertyMapping): Option[DomainEntity] =
-    fields.get(m.field()) match {
-      case entity: DomainEntity => Some(entity)
-      case _                    => None
-    }
-
-
-  def entities(m:DialectPropertyMapping):Seq[DomainEntity] =
-    fields.get(m.field()) match {
-      case entity: DomainEntity => List(entity)
-      case array: AmfArray      => array.values.filter(_.isInstanceOf[DomainEntity]).asInstanceOf[List[DomainEntity]]
-      case _                    => List()
-    }
-
-  def mapElementWithId(m:DialectPropertyMapping,id:String): Option[DomainEntity] ={
-    fields.get(m.field()) match {
-      case array: AmfArray =>
-        array
-          .values
-          .filter(v => v.isInstanceOf[DomainEntity])
-          .find { case x: DomainEntity => x.id == id }
-          .asInstanceOf[Option[DomainEntity]]
-      case _ => None
-    }
-  }
-
-  override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
-}
-object DomainEntity{
-  def apply(d:DialectNode): DomainEntity ={
-    new DomainEntity(null,d,Fields(),Annotations());
-  }
 }
 
 class DialectParser(val dialect: Dialect, override val root: Root) extends RamlSpecParser(root) {
@@ -163,7 +53,6 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
   }
 
   def parseNode(node: YValue, domainEntity: DomainEntity): Unit = {
-
     node match {
       case entries: YMap =>
         for {
@@ -197,8 +86,6 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
             setScalar(domainEntity, f, scalar)
           })
     }
-
-
   }
 
   private def parseScalarValue(domainEntity: DomainEntity, mapping: DialectPropertyMapping, entryNode: YMapEntry) = {
@@ -321,18 +208,16 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
 
   private def getActualRange(mapping: DialectPropertyMapping,entryNode:YValue):Type = {
     if (mapping.unionTypes.isDefined){
-      val maybeType = mapping.unionTypes.get.find(t => {
-        if (t.isInstanceOf[DialectNode]) {
-          var dl = t.asInstanceOf[DialectNode]
+      val maybeType = mapping.unionTypes.get.find {
+        case node: DialectNode =>
+          var dl = node
           val domainEntity = DomainEntity(Option("#"), dl, Fields(), Annotations(entryNode))
           domainEntity.withId("#")
           parseNode(entryNode, domainEntity)
           val issues = DialectValidator.validate(domainEntity)
-          issues.size == 0;
-        }
-        else false
-        // true
-      })
+          issues.isEmpty
+        case _ => false
+      }
       if (maybeType.isDefined) {
         maybeType.get
       }
@@ -362,7 +247,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
 object DialectParser {
 
   def apply(root: Root, dialects: DialectRegistry): DialectParser = {
-    val dialectDeclaration = s"#${root.parsed.comment.get.metaText}"
+    val dialectDeclaration = root.parsed.comment.get.metaText
     dialects.get(dialectDeclaration) match {
       case Some(dialect) => new DialectParser(dialect,root)
       case _             => throw new Exception(s"Unknown dialect $dialectDeclaration")

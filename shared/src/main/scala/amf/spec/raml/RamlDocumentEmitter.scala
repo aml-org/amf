@@ -29,9 +29,7 @@ import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-/**
-  *
-  */
+
 case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
   private def retrieveWebApi(): WebApi = document match {
@@ -528,9 +526,16 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
     // todo review with PEdro. We dont serialize location, so when parse amf to dump spec, we lose de location (we only have the id)
     override def emit(): Unit =
-      EntryEmitter(alias, if (reference.location == null) reference.id else reference.location).emit()
+      EntryEmitter(alias, name).emit()
 
     override def position(): Position = Position.ZERO
+
+    def name: String = {
+      Option(reference.location) match {
+        case Some(location) => location
+        case None           => reference.id
+      }
+    }
   }
 
   case class DeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering) {

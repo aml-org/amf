@@ -14,14 +14,14 @@ import amf.remote.Syntax.Json
 class AmfGenerator extends BaseGenerator(Amf, Json) {
 
   def generateFile(unit: BaseUnit, path: File, options: GenerationOptions, handler: FileHandler): Unit =
-    generate(unit.unit, path.getAbsolutePath, options, UnitHandlerAdapter(handler))
+    generate(unit.element, path.getAbsolutePath, options, UnitHandlerAdapter(handler))
 
   def generateString(unit: BaseUnit, options: GenerationOptions, handler: StringHandler): Unit =
-    generate(unit.unit, options, StringHandlerAdapter(handler))
+    generate(unit.element, options, StringHandlerAdapter(handler))
 
   def generateFile(unit: BaseUnit, url: String, options: GenerationOptions): CompletableFuture[String] =
-    generate(unit.unit, url, options).asJava
+    generate(unit.element, url, options).asJava
 
   def generateString(unit: BaseUnit, options: GenerationOptions): CompletableFuture[String] =
-    generate(unit.unit, options).asJava
+    generate(unit.element, options).asJava
 }

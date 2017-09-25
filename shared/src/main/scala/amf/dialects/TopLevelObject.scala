@@ -1,7 +1,8 @@
 package amf.dialects
 
+import amf.domain.dialects.DomainEntity
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
-import amf.spec.dialects.{DialectPropertyMapping, DomainEntity}
+import amf.spec.dialects.DialectPropertyMapping
 
 
 
@@ -38,10 +39,10 @@ class TopLevelObject(val domainEntity: DomainEntity, val parent:Option[TopLevelO
     domainEntity.fields.get(refP.field) match {
       case s:AmfScalar =>resolver(root,s.toString).toList;
       case a:AmfArray =>
-        a.values.map(_ match{
-          case s:AmfScalar =>resolver(root,s.toString).get;
-          case e:DomainEntity=>v(e);
-        }).toList
+        a.values.map {
+          case s: AmfScalar => resolver(root, s.toString).get;
+          case e: DomainEntity => v(e);
+        }.toList
       case e:DomainEntity=>List(v(e));
     }
   }
@@ -50,10 +51,10 @@ class TopLevelObject(val domainEntity: DomainEntity, val parent:Option[TopLevelO
     domainEntity.fields.get(refP.field) match {
       case s:AmfScalar =>List(resolver(root,s.toString));
       case a:AmfArray =>
-        a.values.map(_ match{
-          case s:AmfScalar =>resolver(root,s.toString);
-          case e:DomainEntity=>Some(v(e));
-        }).toList
+        a.values.map {
+          case s: AmfScalar => resolver(root, s.toString);
+          case e: DomainEntity => Some(v(e));
+        }.toList
       case e:DomainEntity=>List(Some(v(e)));
     }
   }

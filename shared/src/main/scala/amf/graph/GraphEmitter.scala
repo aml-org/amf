@@ -3,18 +3,19 @@ package amf.graph
 import amf.client.GenerationOptions
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
+import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.{DocumentModel, ModuleModel}
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.domain.dialects.DialectEntityModel
 import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel}
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, SourceMapModel, Type}
 import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.parser.ASTEmitter
 import amf.shape._
-import amf.spec.dialects.DomainEntity
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YDocument, YType}
@@ -328,7 +329,7 @@ object GraphEmitter {
     case _: DomainExtension      => DomainExtensionModel
     case _: CustomDomainProperty => CustomDomainPropertyModel
     case _: DataNode             => DataNodeModel
-    case entity: DomainEntity    => new amf.dialects.DialectEntityModel(entity)
+    case entity: DomainEntity    => new DialectEntityModel(entity)
     case _: Module               => ModuleModel
     case _                       => throw new Exception(s"Missing metadata mapping for $instance")
   }

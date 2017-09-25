@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.emit.AMFUnitFixtureTest
-import amf.model.{Document, WebApi}
+import amf.model.{Document, Module, WebApi}
 
 /**
   *
@@ -22,5 +22,9 @@ trait PairsAMFUnitFixtureTest extends AMFUnitFixtureTest {
 
   def unitAdvanced: Document = {
     Document(super.`document/api/advanced`)
+  }
+
+  def moduleBare: Module = {
+    Module(super.`module/bare`)
   }
 }

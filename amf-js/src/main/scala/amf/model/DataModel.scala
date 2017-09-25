@@ -47,14 +47,6 @@ case class ObjectNode(private[amf] val objectNode: amf.domain.extensions.ObjectN
 
   def this() = this(amf.domain.extensions.ObjectNode())
 
-  override def equals(other: Any): Boolean = other match {
-    case that: ObjectNode =>
-      (that canEqual this) &&
-        objectNode == that.objectNode
-    case _ => false
-  }
-
-  override def canEqual(other: Any): Boolean = other.isInstanceOf[ObjectNode]
 }
 
 @JSExportAll
@@ -70,14 +62,6 @@ case class ScalarNode(private[amf] val scalarNode: amf.domain.extensions.ScalarN
 
   def this() = this(amf.domain.extensions.ScalarNode())
 
-  override def equals(other: Any): Boolean = other match {
-    case that: ScalarNode =>
-      (that canEqual this) &&
-        scalarNode == that.scalarNode
-    case _ => false
-  }
-
-  override def canEqual(other: Any): Boolean = other.isInstanceOf[ScalarNode]
 }
 
 @JSExportAll
@@ -99,12 +83,4 @@ case class ArrayNode(private[amf] val arrayNode: amf.domain.extensions.ArrayNode
 
   def this() = this(amf.domain.extensions.ArrayNode())
 
-  override def equals(other: Any): Boolean = other match {
-    case that: ArrayNode =>
-      (that canEqual this) &&
-        arrayNode == that.arrayNode
-    case _ => false
-  }
-
-  override def canEqual(other: Any): Boolean = other.isInstanceOf[ArrayNode]
 }

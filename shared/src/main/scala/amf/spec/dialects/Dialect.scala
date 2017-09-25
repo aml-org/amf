@@ -2,6 +2,7 @@ package amf.spec.dialects
 
 import amf.compiler.Root
 import amf.dialects._
+import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
@@ -9,10 +10,7 @@ import amf.spec.common.BaseSpecParser._
 import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YScalar, YValue}
-
 import scala.collection.mutable
-
-
 
 /**
   * Created by Pavel Petrochenko on 12/09/17.
@@ -34,9 +32,11 @@ trait ResolverFactory {
 object NullReferenceResolverFactory extends ResolverFactory {
   override def resolver(root: Root) = NullReferenceResolver
 }
+
 trait LocalNameProviderFactory {
   def apply(root:DomainEntity): LocalNameProvider
 }
+
 trait ReferenceResolver {
   def resolve(root: Root,name:String,t:Type): Option[String]
 }
@@ -73,13 +73,11 @@ case class DialectPropertyMapping(name: String,
                                   pattern:Option[String]=None,
                                   enum: Option[Seq[String]]=None,
                                   minimum: Option[Int]=None,
-                                  maximum: Option[Int]=None
-
-                                 ) {
+                                  maximum: Option[Int]=None) {
 
   def isRef: Boolean = referenceTarget.isDefined
 
-  def scalaName:String = scalaNameOverride.getOrElse(name);
+  def scalaName: String = scalaNameOverride.getOrElse(name)
 
   def isScalar: Boolean = range match {
     case _: Type.Scalar => true
@@ -88,7 +86,7 @@ case class DialectPropertyMapping(name: String,
 
   def isMap: Boolean = hash.isDefined
 
-  def multivalue= isMap || collection
+  def multivalue: Boolean = isMap || collection
 
   def adopt(dialectNode: DialectNode): DialectPropertyMapping =
     namespace match {
@@ -96,7 +94,7 @@ case class DialectPropertyMapping(name: String,
       case _    => copy(owningNode=Option(dialectNode))
     }
 
-  def fieldName = this.rdfName match {
+  def fieldName: ValueType = this.rdfName match {
     case Some(rdf) => namespace.get + rdf
     case _         => namespace.get + name
   }
@@ -231,10 +229,9 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
   initReferences(root)
 
   def resolveBasicRef(name: String, root: Root): String =
-    if (name==null){
-      null
-    }
-    else if (name.indexOf(".") > -1) {
+    if (Option(name).isEmpty) {
+      throw new Exception("Empty name for basic ref")
+    } else if (name.indexOf(".") > -1) {
       name.split("\\.") match {
         case Array(alias, suffix) =>
           externalsMap.get(alias) match {
@@ -287,12 +284,12 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
           case Some(range) =>
             super.resolve(root, range, t) match {
               case Some(bid) => Some(bid)
-              case _         => Some(resolveBasicRef(name,root))
+              case _         => Some(resolveBasicRef(name, root))
             }
           case None        => Some(TypeBuiltins.ANY)
         }
 
-      case _ => Some(resolveBasicRef(name,root))
+      case _ => Some(resolveBasicRef(name, root))
     }
   }
 }

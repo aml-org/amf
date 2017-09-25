@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.common.AmfObjectTestMatcher
-import amf.model.{BaseUnit, Document, WebApi}
+import amf.model.{BaseUnit, Document, Module, WebApi}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -21,11 +21,11 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
       .flatMap(stream => {
         val eventualUnit = new OasParser().parseStringAsync(stream.stream.toString)
         eventualUnit.toFuture
-      })
-      .map(bu => {
-        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
+      }) map {
+      case d: Document =>
+        AmfObjectMatcher(webApiBare.element).assert(d.encodes.element)
         succeed
-      })
+    }
   }
 
   test("test from stream generation raml") {
@@ -34,11 +34,11 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
       .flatMap(stream => {
         val eventualUnit = new RamlParser().parseStringAsync(stream.stream.toString)
         eventualUnit.toFuture
-      })
-      .map(bu => {
-        AmfObjectMatcher(webApiBare.element.withBasePath("/api")).assert(bu.asInstanceOf[Document].encodes.element)
+      }) map {
+      case d: Document =>
+        AmfObjectMatcher(webApiBare.element.withBasePath("/api")).assert(d.encodes.element)
         succeed
-      })
+    }
   }
 
   test("test from stream generation amf") {
@@ -47,21 +47,21 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
       .flatMap(stream => {
         val eventualUnit = new AmfParser().parseStringAsync(stream.stream.toString)
         eventualUnit.toFuture
-      })
-      .map(bu => {
-        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
+      }) map {
+      case d: Document =>
+        AmfObjectMatcher(webApiBare.element).assert(d.encodes.element)
         succeed
-      })
+    }
   }
 
   test("test from file generation") {
     new OasParser()
       .parseFileAsync("file://shared/src/test/resources/clients/bare.json")
-      .toFuture
-      .map(bu => {
-        AmfObjectMatcher(webApiBare.element).assert(bu.asInstanceOf[Document].encodes.element)
+      .toFuture map {
+      case d: Document =>
+        AmfObjectMatcher(webApiBare.element).assert(d.encodes.element)
         succeed
-      })
+    }
   }
 
   test("test from stream complete generation") {
@@ -70,24 +70,43 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
       .flatMap(stream => {
         val value1: Promise[BaseUnit] = new OasParser().parseStringAsync(stream.stream.toString)
         value1.toFuture
-      })
-      .map(bu => {
-        AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
+      }) map {
+      case d: Document =>
+        AmfObjectMatcher(webApiAdvanced.element).assert(d.encodes.element)
         succeed
-      })
+    }
   }
 
   test("test from file complete generation") {
     new OasParser()
       .parseFileAsync("file://shared/src/test/resources/clients/advanced.json")
-      .toFuture
-      .map(bu => {
-        AmfObjectMatcher(webApiAdvanced.element).assert(bu.asInstanceOf[Document].encodes.element)
+      .toFuture map {
+      case d: Document =>
+        AmfObjectMatcher(webApiAdvanced.element).assert(d.encodes.element)
         succeed
-      })
+    }
+  }
+
+  test("test from library file complete generation") {
+    new RamlParser()
+      .parseFileAsync("file://shared/src/test/resources/clients/libraries.raml")
+      .toFuture map {
+      case d: Document =>
+        d.references.head match {
+          case m: Module =>
+            AmfObjectMatcher(moduleBare.model).assert(m.model)
+            succeed
+          case _ => fail("unexpected type")
+        }
+    }
   }
 
   def assertWebApi(actual: WebApi, expected: WebApi): Assertion = {
+    actual should be(expected)
+    succeed
+  }
+
+  def assertModule(actual: Module, expected: Module): Assertion = {
     actual should be(expected)
     succeed
   }

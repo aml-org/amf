@@ -2,9 +2,10 @@ package amf.emit
 
 import amf.client.GenerationOptions
 import amf.document.{BaseUnit, Document, Module}
+import amf.domain.dialects.DomainEntity
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.spec.dialects.{DialectEmitter, DomainEntity}
+import amf.spec.dialects.DialectEmitter
 import amf.spec.oas.{OasDocumentEmitter, OasModuleEmitter}
 import amf.spec.raml.{RamlDocumentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument

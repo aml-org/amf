@@ -35,8 +35,6 @@ object Fragment {
 
   case class AnnotationTypeDeclaration(location: String, encodes: DomainElement) extends Fragment
 
-  case class Library(location: String, encodes: DomainElement) extends Fragment
-
   case class Overlay(location: String, encodes: DomainElement) extends Fragment
 
   case class Extension(location: String, encodes: DomainElement) extends Fragment

@@ -2,6 +2,7 @@ package amf.spec.dialects
 
 import amf.document.{BaseUnit, Document}
 import amf.domain.FieldEntry
+import amf.domain.dialects.DomainEntity
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
 import amf.spec.Emitter
@@ -70,7 +71,7 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
     override def position(): Position = pos(field.value.annotations)
   }
   /** Emit array or single value from an entry. */
-  //TODO why ArrayValueEmitter emits just one value?
+  // TODO why ArrayValueEmitter emits just one value?
   case class SimpleArrayValueEmitter(parent: DialectPropertyMapping, key: String, field: FieldEntry) extends Emitter {
 
     override def emit(): Unit = {

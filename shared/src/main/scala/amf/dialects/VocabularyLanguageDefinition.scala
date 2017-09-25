@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.compiler.Root
+import amf.domain.dialects.DomainEntity
 import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
 /**
@@ -9,7 +10,7 @@ import amf.vocabulary.{Namespace, ValueType}
 
 class VocabPartDialect(override val shortName:String, namespace: Namespace=Namespace.Meta) extends DialectNode(shortName, namespace) {}
 
-case class Declaration(override val shortName:String,override val namespace: Namespace=Namespace.Meta) extends VocabPartDialect(shortName,namespace = namespace){
+case class Declaration(override val shortName:String, override val namespace: Namespace=Namespace.Meta) extends VocabPartDialect(shortName,namespace = namespace){
   val idProperty: DialectPropertyMapping = str("id",_.copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true,scalaNameOverride = Some("idProperty")))
 }
 

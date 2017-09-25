@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * JS Document model class.
   */
 @JSExportAll
-case class Document(private[amf] val document: amf.document.BaseUnit)
+case class Document(private[amf] val document: amf.document.Document)
     extends BaseUnit
     with EncodesModel
     with DeclaresModel {

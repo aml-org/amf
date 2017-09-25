@@ -43,6 +43,14 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
     assertReferences("libraries.json", Seq("lib/lib.json.jsonld"), OasJsonHint, Amf)
   }
 
+  test("library amf to oas from include") {
+    assertReferences("libraries.json.jsonld", Seq("lib/lib.json"), AmfJsonHint, Oas)
+  }
+
+  test("library amf to raml from include") {
+    assertReferences("libraries.raml.jsonld", Seq("lib/lib.raml"), AmfJsonHint, Raml)
+  }
+
   def assertReferences(documentRootPath: String, goldens: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
 
     val expecteds: Future[Seq[ModuleContent]] = Future.sequence(goldens.map(g => {

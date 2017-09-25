@@ -7,9 +7,9 @@ import amf.domain.Annotations
   */
 case class AmfScalar(value: Any, annotations: Annotations = new Annotations()) extends AmfElement {
   override def toString: String = {
-    if (value==null){
-      return null;
+    Option(value) match {
+      case Some(v) => v.toString
+      case None    => ""
     }
-    value.toString
   }
 }

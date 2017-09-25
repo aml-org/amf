@@ -1,7 +1,6 @@
 package amf.dialects
 
-import amf.compiler.AMFCompiler
-import amf.remote.{Platform, RamlYamlHint}
+import amf.remote.Platform
 import amf.spec.dialects.Dialect
 
 import scala.concurrent.Future
@@ -16,7 +15,7 @@ class DialectRegistry {
   def knowsHeader(h: String): Boolean = map.contains(h.trim)
 
   def add(dialect: Dialect): DialectRegistry = {
-    map = map + (dialect.header -> dialect)
+    map = map + (dialect.header.replace("#","") -> dialect)
     this
   }
 

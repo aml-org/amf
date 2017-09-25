@@ -73,7 +73,7 @@ class AMFCompiler private (val url: String,
       case RamlHeader.Raml10                 => RamlDocumentParser(root).parseDocument()
       case RamlHeader.Raml10Library          => RamlModuleParser(root).parseModule()
       case RamlHeader(header)
-        if dialects.knowsHeader(s"#$header") => makeDialect(root)
+        if dialects.knowsHeader(header) => makeDialect(root)
       case _                                 => throw new UnableToResolveUnitException
     })
     option match {
