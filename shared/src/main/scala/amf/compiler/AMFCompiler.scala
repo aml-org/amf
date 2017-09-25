@@ -9,7 +9,7 @@ import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasModuleParser}
-import amf.spec.raml.{RamlDocumentParser, RamlModuleParser}
+import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
 import org.yaml.model.{YComment, YDocument, YPart}
 import org.yaml.parser.YamlParser
 
@@ -72,6 +72,7 @@ class AMFCompiler private (val url: String,
     val option = RamlHeader(root).map({
       case RamlHeader.Raml10                 => RamlDocumentParser(root).parseDocument()
       case RamlHeader.Raml10Library          => RamlModuleParser(root).parseModule()
+      case RamlHeader.Raml10Fragment => RamlFragmentParser(root).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case RamlHeader(header)

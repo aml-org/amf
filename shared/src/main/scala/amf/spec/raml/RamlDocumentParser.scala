@@ -525,14 +525,21 @@ case class ParameterParser(entry: YMapEntry, producer: String => Parameter, decl
   }
 }
 
-case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
+object AnnotationTypesParser {
+  def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations): AnnotationTypesParser =
+    AnnotationTypesParser(ast, ast.key.value.toScalar.text, ast.value.value.toMap, adopt, declarations)
+}
+
+case class AnnotationTypesParser(ast: YPart,
+                                 annotationName: String,
+                                 map: YMap,
+                                 adopt: (CustomDomainProperty) => Unit,
+                                 declarations: Declarations) {
   def parse(): CustomDomainProperty = {
-    val custom         = CustomDomainProperty(node)
-    val annotationName = node.key.value.toScalar.text
+
+    val custom = CustomDomainProperty(ast)
     custom.withName(annotationName)
     adopt(custom)
-
-    val map = node.value.value.toMap
 
     map.key(
       "allowedTargets",
@@ -703,4 +710,34 @@ class RamlSpecParser(val root: Root) {
       })
     }
   }
+
+  case class UserDocumentationsParser(map: YMap) {
+    def parse(): Seq[UserDocumentation] = {
+      val results = ListBuffer[UserDocumentation]()
+
+      map.key("documentation", seq => {
+        seq.value.value.toSequence.values.foreach(value => results += UserDocumentationParser(value.toMap).parse())
+      })
+      results
+    }
+  }
+
+  case class UserDocumentationParser(map: YMap) {
+    def parse(): UserDocumentation = {
+
+      val documentation = UserDocumentation(Annotations(map))
+
+      map.key("title", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(UserDocumentationModel.Title, value.string(), Annotations(entry))
+      })
+
+      map.key("content", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(UserDocumentationModel.Content, value.string(), Annotations(entry))
+      })
+      documentation
+    }
+  }
+
 }

@@ -4,7 +4,7 @@ import amf.common.core._
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel._
 import amf.shape.Shape
-import org.yaml.model.YMapEntry
+import org.yaml.model.{YMapEntry, YPart}
 
 case class CustomDomainProperty(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -27,7 +27,7 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations) extend
 object CustomDomainProperty {
   def apply(): CustomDomainProperty = apply(Annotations())
 
-  def apply(ast: YMapEntry): CustomDomainProperty = apply(Annotations(ast))
+  def apply(ast: YPart): CustomDomainProperty = apply(Annotations(ast))
 
   def apply(annotations: Annotations): CustomDomainProperty = CustomDomainProperty(Fields(), annotations)
 }

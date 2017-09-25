@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, NilType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -14,36 +14,40 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations) {
+object RamlTypeParser {
+  def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations): RamlTypeParser =
+    new RamlTypeParser(ast, ast.key.value.toScalar.text, ast.value.value, adopt, declarations)
+}
+
+case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape => Shape, declarations: Declarations) {
 
   def parse(): Option[Shape] = {
-    val name = entry.key.value.toScalar.text
 
-    val ahead = entry.value.value
-
-    ahead match {
-      case ref: YReference =>
-        processRef(ref)
-      case _ => detect(ahead) match {
+    // todo review and change if necessary
+//    part match {
+//      case ref: YReference =>
+//        processRef(ref)
+//      case _ =>
+      detect() match {
         case ObjectType =>
-          Some(parseObjectType(name, ahead, declarations))
+          Some(parseObjectType(name, part, declarations))
         case ArrayType =>
-          Some(parseArrayType(name, ahead))
+          Some(parseArrayType(name, part))
         case typeDef if typeDef.isScalar =>
-          Some(parseScalarType(name, typeDef, ahead))
+          Some(parseScalarType(name, typeDef, part))
         case _ => None
       }
-    }
+
   }
+//
+//  def retrieveRefShape(ref: YReference): Shape = {
+//    // this should look in the context for a matching reference
+//    throw new Exception(s"Shape for ref ${ref.name}, not implemented yet")
+//  }
+//
+//  def processRef(ref: YReference): Option[Shape] = Some(retrieveRefShape(ref).link(None, Some(Annotations(ref))))
 
-  def retrieveRefShape(ref: YReference): Shape = {
-    // this should look in the context for a matching reference
-    throw new Exception(s"Shape for ref ${ref.name}, not implemented yet")
-  }
-
-  def processRef(ref: YReference): Option[Shape] = Some(retrieveRefShape(ref).link(None, Some(Annotations(ref))))
-
-  private def detect(property: YValue): TypeDef = property match {
+  private def detect(): TypeDef = part match {
     case scalar: YScalar => matchType(scalar.text)
     case _: YSequence    => ObjectType
     case map: YMap =>
@@ -76,30 +80,30 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
       })
   }
 
-  private def parseScalarType(name: String, typeDef: TypeDef, ahead: YValue): Shape = {
+  private def parseScalarType(name: String, typeDef: TypeDef, ahead: YPart): Shape = {
     if (typeDef.isNil) {
-      NilShape(entry).withName(name)
+      NilShape(ast).withName(name)
     } else {
-      val shape = ScalarShape(entry).withName(name)
+      val shape = ScalarShape(ast).withName(name)
       adopt(shape)
       ahead match {
         case map: YMap => ScalarShapeParser(typeDef, shape, map).parse()
-        case value =>
-          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(value)))
+        case v =>
+          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(v)))
       }
     }
   }
 
-  def parseArrayType(name: String, ahead: YValue): Shape = {
+  def parseArrayType(name: String, ahead: YPart): Shape = {
     val shape = ahead match {
-      case map: YMap => DataArrangementParser(name, entry, map, (shape: Shape) => adopt(shape), declarations).parse()
-      case _         => ArrayShape(entry).withName(name)
+      case map: YMap => DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape), declarations).parse()
+      case _         => ArrayShape(ast).withName(name)
     }
     shape
   }
 
-  private def parseObjectType(name: String, ahead: YValue, declarations: Declarations): Shape = {
-    val shape = NodeShape(entry).withName(name)
+  private def parseObjectType(name: String, ahead: YPart, declarations: Declarations): Shape = {
+    val shape = NodeShape(ast).withName(name)
     adopt(shape)
     ahead match {
       case map: YMap => NodeShapeParser(shape, map, declarations).parse()

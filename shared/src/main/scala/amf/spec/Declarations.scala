@@ -9,7 +9,7 @@ import amf.shape.Shape
 /**
   * Declarations object.
   */
-case class Declarations(private val declarations: Seq[DomainElement], references: Map[String, BaseUnit] = Map()) {
+case class Declarations(private val declarations: Seq[DomainElement], references: Map[String, BaseUnit]) {
   val shapes: Map[String, Shape] = declarations.collect { case d: Shape => d.name -> d }.toMap
 
   val annotations: Map[String, CustomDomainProperty] = declarations.collect {
@@ -19,4 +19,12 @@ case class Declarations(private val declarations: Seq[DomainElement], references
   val resourceTypes: Map[String, ResourceType] = declarations.collect { case d: ResourceType => d.name -> d }.toMap
 
   val traits: Map[String, Trait] = declarations.collect { case d: Trait => d.name -> d }.toMap
+}
+
+object Declarations {
+
+  def apply(): Declarations = apply(Nil, Map())
+
+  def apply(declarations: Seq[DomainElement]): Declarations = Declarations(declarations, Map())
+
 }
