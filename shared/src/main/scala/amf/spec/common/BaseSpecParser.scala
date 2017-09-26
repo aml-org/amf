@@ -32,7 +32,7 @@ private[spec] object BaseSpecParser {
         creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
       })
 
-      AnnotationParser(creativeWork, map).parse()
+      AnnotationParser(() => creativeWork, map).parse()
 
       creativeWork
     }
@@ -58,7 +58,7 @@ private[spec] object BaseSpecParser {
         organization.set(OrganizationModel.Email, value.string(), Annotations(entry))
       })
 
-      AnnotationParser(organization, map).parse()
+      AnnotationParser(() => organization, map).parse()
 
       organization
     }
@@ -78,7 +78,7 @@ private[spec] object BaseSpecParser {
         license.set(LicenseModel.Name, value.string(), Annotations(entry))
       })
 
-      AnnotationParser(license, map).parse()
+      AnnotationParser(() => license, map).parse()
 
       license
     }

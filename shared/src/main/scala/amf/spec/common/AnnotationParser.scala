@@ -7,17 +7,17 @@ import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
-case class AnnotationParser(element: DomainElement, map: YMap) {
+case class AnnotationParser(lazyElement: () => DomainElement, map: YMap) {
   def parse(): Unit = {
     val domainExtensions: ListBuffer[DomainExtension] = ListBuffer()
     map.entries.foreach { entry =>
       val key = entry.key.value.toScalar.text
       if (WellKnownAnnotation.normalAnnotation(key)) {
-        domainExtensions += ExtensionParser(key, element.id, entry).parse()
+        domainExtensions += ExtensionParser(key, lazyElement().id, entry).parse()
       }
     }
     if (domainExtensions.nonEmpty)
-      element.withCustomDomainProperties(domainExtensions)
+      lazyElement().withCustomDomainProperties(domainExtensions)
   }
 }
 

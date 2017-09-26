@@ -32,8 +32,10 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
 
     UsageParser(rootMap, fragment).parse()
 
-    val environmentRef = ReferencesParser(rootMap, root.references).parse()
-    if (environmentRef.nonEmpty) fragment.withReferences(environmentRef.values.toSeq)
+    val environmentRef = ModulesParser(rootMap, root.references).parse()
+
+    if (environmentRef.nonEmpty)
+      fragment.withReferences(environmentRef.values.toSeq)
     fragment
   }
 
