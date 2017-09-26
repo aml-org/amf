@@ -15,7 +15,7 @@ object Common {
     scalaVersion := "2.12.2",
     parallelExecution in Test := false,
     fork in Test := false,
-    scalacOptions ++= Seq("-unchecked", "-deprecation", "-Xfatal-warnings"),
+    scalacOptions ++= Seq("-unchecked"/*, "-deprecation", "-Xfatal-warnings" */),
     scalacOptions ++= Seq("-encoding", "utf-8")
   )
 

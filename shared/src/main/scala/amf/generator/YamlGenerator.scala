@@ -18,7 +18,7 @@ class YamlGenerator {
   def visit(part: YPart): Unit = {
     part match {
       case document: YDocument =>
-        document.value.foreach(visitChildren(_, forceLine = false))
+        visitChildren(document, forceLine = false)
       case map: YMap =>
         writer.indent()
         visitChildren(map)
@@ -30,7 +30,8 @@ class YamlGenerator {
       case entry: YMapEntry  => visitEntry(entry)
       case node: YNode       => visit(node.value)
       case scalar: YScalar   => writer.write(scalar.text)
-      case comment: YComment => writer.write("#" + comment.metaText)
+      case comment: YComment =>
+          writer.write("#" + comment.metaText)
     }
   }
 
@@ -43,7 +44,7 @@ class YamlGenerator {
   def visitChildren(parent: YPart, prefix: String = "", forceLine: Boolean = true): Unit = {
     var first = true
     parent.children
-      .filterNot(_.isInstanceOf[YIgnorable])
+      .filterNot(n => n.isInstanceOf[YIgnorable] && !n.isInstanceOf[YComment])
       .foreach(c => {
         if (!first || forceLine) { writer.line() }
         writer.write(prefix)

@@ -26,8 +26,8 @@ case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
     //TODO invoke traits end resource types
 
     emitter.document({ () =>
+      comment(RamlHeader.Raml10Library.text)
       map { () =>
-        comment(RamlHeader.Raml10Library.text)
         traverse(ordering.sorted(declares ++ usageEmitter ++ referenceEmitter))
       }
     })

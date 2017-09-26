@@ -46,8 +46,8 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
     val referenceEmitter = ReferencesEmitter(document.references, ordering)
 
     emitter.document { () =>
+      comment(RamlHeader.Raml10.text)
       map { () =>
-        comment(RamlHeader.Raml10.text)
         traverse(ordering.sorted(apiEmitters ++ declares :+ referenceEmitter))
       }
     }

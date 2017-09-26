@@ -28,14 +28,6 @@ class ASTEmitterTest extends FunSuite {
       }
     }
 
-    document.toString() should be("""|Document:
-         |!!map   {
-         |    !!str "a": !!int "1"
-         |    !!str "b": !!seq [
-         |!!int   "1"
-         |!!int   "2"
-         |]
-         |  }
-         |""".stripMargin)
+    document.toString() shouldBe "Document: {\"a\": \"1\", \"b\": [\"1\", \"2\"]}"
   }
 }

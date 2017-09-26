@@ -109,7 +109,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     val libraries = uses.value.value.toMap
 
     libraries.map.values.foreach(value => {
-      value.toScalar.text should include("libraries")
+      value.asString should include("libraries")
     })
 
     libraries.entries.length should be(references.size)

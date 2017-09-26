@@ -85,25 +85,25 @@ case class ASTEmitter() {
         addToken(token)
       case EndDocument =>
         addToken(token)
-        document = new YDocument(buildParts())
+        document = YDocument(buildParts())
       case BeginComment | BeginNode | BeginSequence | BeginScalar | BeginMapping | BeginPair | BeginAlias |
           BeginAnchor | BeginTag =>
         push()
         addToken(token)
       case EndSequence =>
         addToken(token)
-        pop(new YSequence(buildParts()))
+        pop(YSequence(buildParts()))
       case EndComment =>
-        pop(new YComment(text, InputRange.Zero, getTokens))
+        pop(YComment(text, InputRange.Zero, getTokens))
       case EndNode =>
         addToken(token)
-        pop(YNode(buildParts(), mutable.Map()))
+        pop(YNode(buildParts(), mutable.Map[String, YNode]()))
       case EndScalar =>
         addToken(token)
-        pop(new YScalar(text, true, InputRange.Zero, getTokens))
+        pop(YScalar(text, plain = true, InputRange.Zero, getTokens))
       case EndMapping =>
         addToken(token)
-        pop(new YMap(buildParts()))
+        pop(YMap(buildParts()))
       case EndPair =>
         addToken(token)
         pop(YMapEntry(buildParts()))

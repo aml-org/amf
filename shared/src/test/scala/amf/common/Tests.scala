@@ -55,7 +55,7 @@ object Tests {
 
   /** Diff between 2 strings. */
   def checkDiff(actual: String, expected: String): Unit = {
-    val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(actual, expected)
+    val diffs: List[Diff.Delta[String]] = Diff.trimming.ignoreEmptyLines.diff(actual, expected)
     if (diffs.nonEmpty) {
       /*
       println("---------------------------------------------------------------------------------")
@@ -74,7 +74,7 @@ object Tests {
 
   /** Check against a specified golden File. */
   def checkDiff(outFile: File, goldenFile: File, comparator: Diff.Equals[String]): Unit = {
-    val diffs: List[Diff.Delta[String]] = Diff.stringDiffer(comparator).diff(outFile, goldenFile)
+    val diffs: List[Diff.Delta[String]] = Diff.stringDiffer(comparator).ignoreEmptyLines.diff(outFile, goldenFile)
     if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + outFile + " " + goldenFile + "\n" + Diff.makeString(diffs))
   }
 

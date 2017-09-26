@@ -12,7 +12,7 @@ import org.yaml.model.YDocument
 /**
   * Created by Pavel Petrochenko on 13/09/17.
   */
-class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
+class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
   val root: DomainEntity = retrieveDomainEntity(unit)
   var nameProvider: Option[LocalNameProvider] = root.definition.nameProvider match {
@@ -21,18 +21,19 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
   }
 
   private def retrieveDomainEntity(unit: BaseUnit) = unit match {
-    case document: Document => document.encodes match {
-      case unit: DomainEntity => unit
-      case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
-    }
-    case _                  => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
+    case document: Document =>
+      document.encodes match {
+        case unit: DomainEntity => unit
+        case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
+      }
+    case _ => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
   }
 
-  private def emitRef(parent:DialectPropertyMapping,element: AmfElement):Unit = {
-    element match{
-      case e:DomainEntity => new ObjectEmitter(e).emit()
-      case s:AmfScalar => emitRef(parent, s.toString)
-      case _ => throw new Exception("References can only be emitted from entities or scalars")
+  private def emitRef(parent: DialectPropertyMapping, element: AmfElement): Unit = {
+    element match {
+      case e: DomainEntity => new ObjectEmitter(e).emit()
+      case s: AmfScalar    => emitRef(parent, s.toString)
+      case _               => throw new Exception("References can only be emitted from entities or scalars")
     }
   }
 
@@ -41,11 +42,9 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
       sourceOr(field.value, entry { () =>
         raw(key)
         val element = field.element
-        emitRef(parent,element)
+        emitRef(parent, element)
       })
     }
-
-
 
     override def position(): Position = pos(field.value.annotations)
   }
@@ -54,39 +53,46 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
   case class RefArrayValueEmitter(parent: DialectPropertyMapping, key: String, field: FieldEntry) extends Emitter {
 
     override def emit(): Unit = {
-      sourceOr(field.value, entry { () =>
-        raw(key)
-        field.array.values match {
-          case Seq(member) =>
-            emitRef(parent, member)
-          case members if members.nonEmpty =>
-            array(() => {
-              members.foreach(value => { emitRef(parent, value) })
-            })
-          case _ => // ignore
+      sourceOr(
+        field.value,
+        entry { () =>
+          raw(key)
+          field.array.values match {
+            case Seq(member) =>
+              emitRef(parent, member)
+            case members if members.nonEmpty =>
+              array(() => {
+                members.foreach(value => { emitRef(parent, value) })
+              })
+            case _ => // ignore
+          }
         }
-      })
+      )
     }
 
     override def position(): Position = pos(field.value.annotations)
   }
+
   /** Emit array or single value from an entry. */
   // TODO why ArrayValueEmitter emits just one value?
   case class SimpleArrayValueEmitter(parent: DialectPropertyMapping, key: String, field: FieldEntry) extends Emitter {
 
     override def emit(): Unit = {
-      sourceOr(field.value, entry { () =>
-        raw(key)
-        field.array.values match {
-          case Seq(member) =>
-            raw(member.toString)
-          case members if members.nonEmpty =>
-            array(() => {
-              members.foreach(value => { raw( value.toString) })
-            })
-          case _ => // ignore
+      sourceOr(
+        field.value,
+        entry { () =>
+          raw(key)
+          field.array.values match {
+            case Seq(member) =>
+              raw(member.toString)
+            case members if members.nonEmpty =>
+              array(() => {
+                members.foreach(value => { raw(value.toString) })
+              })
+            case _ => // ignore
+          }
         }
-      })
+      )
     }
 
     override def position(): Position = pos(field.value.annotations)
@@ -101,12 +107,12 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
 
   def emit(): YDocument = {
     emitter.document { () =>
-        ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1))).emit()
+      ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1))).emit()
     }
   }
 
-  def createEmitter(domainEntity:DomainEntity, mapping:DialectPropertyMapping): Option[Emitter] = {
-    var res:Option[Emitter] = None
+  def createEmitter(domainEntity: DomainEntity, mapping: DialectPropertyMapping): Option[Emitter] = {
+    var res: Option[Emitter] = None
 
     val field = mapping.field()
     val value = domainEntity.fields.get(field)
@@ -118,20 +124,16 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
             if (Option(value).isDefined && Option(value.value).isDefined) {
               if (mapping.isRef) {
                 res = Some(RefArrayValueEmitter(mapping, mapping.name, FieldEntry(field, value)))
-              }
-              else
-                res = Some(SimpleArrayValueEmitter(mapping,mapping.name, FieldEntry(field, value)))
+              } else
+                res = Some(SimpleArrayValueEmitter(mapping, mapping.name, FieldEntry(field, value)))
             }
           }
-        }
-        else {
+        } else {
           if (mapping.isRef) {
             res = Some(RefValueEmitter(mapping, mapping.name, FieldEntry(field, domainEntity.fields.getValue(field))))
-          }
-          else res = Some(ValueEmitter(mapping.name, FieldEntry(field, domainEntity.fields.getValue(field))))
+          } else res = Some(ValueEmitter(mapping.name, FieldEntry(field, domainEntity.fields.getValue(field))))
         }
-      }
-      else {
+      } else {
         if (mapping.collection) throw new RuntimeException("Not implemented yet")
         else if (mapping.isMap) {
           value match {
@@ -139,8 +141,7 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
               res = Some(ObjectMapEmmiter(mapping, array))
             case _ => // ignore
           }
-        }
-        else {
+        } else {
           res = Some(ObjectKVEmmiter(mapping, value.asInstanceOf[DomainEntity]))
         }
       }
@@ -149,7 +150,7 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
     res
   }
 
-  case class ObjectKVEmmiter(mapping:DialectPropertyMapping, domainEntity: DomainEntity) extends Emitter{
+  case class ObjectKVEmmiter(mapping: DialectPropertyMapping, domainEntity: DomainEntity) extends Emitter {
 
     override def emit(): Unit = {
       entry { () =>
@@ -161,22 +162,23 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
     override def position(): Position = Position.ZERO
   }
 
-  case class ObjectMapEmmiter(mapping:DialectPropertyMapping, values:AmfArray) extends Emitter{
+  case class ObjectMapEmmiter(mapping: DialectPropertyMapping, values: AmfArray) extends Emitter {
 
     override def emit(): Unit = {
       if (values.values.nonEmpty) {
         entry { () =>
           raw(mapping.name)
           map { () =>
-            values.values.foreach { case entity: DomainEntity =>
-              entry { () =>
-                if (mapping.noLastSegmentTrimInMaps) {
-                  raw(localId(mapping, entity))
-                } else {
-                  raw(lastSegment(entity))
+            values.values.foreach {
+              case entity: DomainEntity =>
+                entry { () =>
+                  if (mapping.noLastSegmentTrimInMaps) {
+                    raw(localId(mapping, entity))
+                  } else {
+                    raw(lastSegment(entity))
+                  }
+                  ObjectEmitter(entity).emit()
                 }
-                ObjectEmitter(entity).emit()
-              }
             }
           }
         }
@@ -195,12 +197,12 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
     nameProvider match {
       case Some(np) =>
         Option(np.localName(obj.id, dialectPropertyMapping)).getOrElse(obj.id)
-      case _        =>
+      case _ =>
         obj.id
     }
   }
 
-  case class ObjectEmitter(obj: DomainEntity,comment_text:Option[String]=None) extends Emitter {
+  case class ObjectEmitter(obj: DomainEntity, comment_text: Option[String] = None) extends Emitter {
 
     override def emit(): Unit = {
 
@@ -220,22 +222,23 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
           }
 
         case None =>
+          comment_text.foreach(c => comment(c))
           map { () =>
-            comment_text.foreach(c=>
-              comment(c)
-            )
-            obj.definition.mappings().foreach(mapping => {
-              createEmitter(obj, mapping) match {
-                case Some(emitterCreated) => try {
+            obj.definition
+              .mappings()
+              .foreach(mapping => {
+                createEmitter(obj, mapping) match {
+                  case Some(emitterCreated) =>
+                    try {
 
-                  emitterCreated.emit()
-                } catch {
-                  case e: Exception => e.printStackTrace()
+                      emitterCreated.emit()
+                    } catch {
+                      case e: Exception => e.printStackTrace()
+                    }
+
+                  case _ => // ignore
                 }
-
-                case _             => // ignore
-              }
-            })
+              })
           }
       }
     }
@@ -245,6 +248,6 @@ class DialectEmitter (val unit: BaseUnit) extends RamlSpecEmitter {
 
 }
 
-object DialectEmitter{
+object DialectEmitter {
   def apply(unit: BaseUnit) = new DialectEmitter(unit)
 }

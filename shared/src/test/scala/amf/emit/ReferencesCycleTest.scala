@@ -102,7 +102,7 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
 
     /** Diff between 2 resolved contents. */
     def checkDiff(actual: ModuleContent, expected: ModuleContent): Unit = {
-      val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(actual.content, expected.content)
+      val diffs: List[Diff.Delta[String]] = Diff.trimming.ignoreEmptyLines.diff(actual.content, expected.content)
       if (diffs.nonEmpty) {
         println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         println(expected)

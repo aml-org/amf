@@ -262,9 +262,8 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
           node                 <- entries.find(_.key.value.toScalar.text == mapping.name)
         } yield for {
           (alias, nestedEntry) <-  node.value.value.toMap.map
-          if nestedEntry.isInstanceOf[YScalar] && alias.isInstanceOf[YScalar]
         } yield {
-          externalsMap.put(alias.toScalar.text, nestedEntry.asInstanceOf[YScalar].text)
+          externalsMap.put(alias, nestedEntry)
         }
 
         for {
