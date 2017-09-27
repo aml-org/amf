@@ -7,6 +7,25 @@ import amf.metadata.domain.DomainElementModel._
 import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
+trait Linkable {
+  this: DomainElement with Linkable =>
+  var isLink = false
+  var linkLabel: Option[String] = None
+  var linkTarget: Option[DomainElement with Linkable] = None
+  var linkAnnotations: Option[Annotations] = None
+
+  def linkCopy(): DomainElement with Linkable
+
+  def link[T](label: Option[String] = None, annotations: Option[Annotations] = None): T = {
+    val href = linkCopy()
+    href.isLink = true
+    href.linkLabel = label
+    href.linkTarget = Some(this)
+
+    href.asInstanceOf[T]
+  }
+}
+
 /**
   * Internal model for any domain element
   */

@@ -1,12 +1,12 @@
 package amf.shape
 
-import amf.domain.{CreativeWork, DomainElement}
+import amf.domain.{CreativeWork, DomainElement, Linkable}
 import amf.metadata.shape.ShapeModel._
 
 /**
   * Shape.
   */
-abstract class Shape extends DomainElement {
+abstract class Shape extends DomainElement with Linkable {
 
   def name: String                    = fields(Name)
   def displayName: String             = fields(DisplayName)

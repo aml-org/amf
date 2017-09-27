@@ -63,6 +63,11 @@ class Fields {
     this
   }
 
+  def link(field: Field, value: AmfObject, annotations: Annotations): this.type = {
+    fs = fs + (field -> Link(value, annotations))
+    this
+  }
+
   def into(other: Fields): Unit = {
     // TODO array copy with references instead of instance
     other.fs = other.fs ++ fs
@@ -125,8 +130,32 @@ object Fields {
   def apply(): Fields = new Fields()
 }
 
-case class Value(value: AmfElement, annotations: Annotations) {
+class Value(val value: AmfElement, val annotations: Annotations) {
   override def toString: String = value.toString
+
+  def unapply(value: Value): Option[(AmfElement, Annotations)] =
+    if (Option(value).isDefined)
+      Some((value.value, value.annotations))
+    else
+      None
+}
+
+object Value {
+  def apply(value: AmfElement, annotations: Annotations) = new Value(value, annotations)
+
+  def unapply(link: Value): Option[(AmfElement, Annotations)] =
+    if (Option(link).isDefined)
+      Some((link.value, link.annotations))
+    else
+      None
+}
+
+class Link(override val value: AmfObject, annotations: Annotations) extends Value(value, annotations) {
+  override def toString: String = value.id
+}
+
+object Link {
+  def apply(value: AmfObject, annotations: Annotations) = new Link(value, annotations)
 }
 
 case class FieldEntry(field: Field, value: Value) {
@@ -139,4 +168,6 @@ case class FieldEntry(field: Field, value: Value) {
   def obj: AmfObject = element.asInstanceOf[AmfObject]
 
   def domainElement: DomainElement = element.asInstanceOf[DomainElement]
+
+  def isLink = value.isInstanceOf[Link]
 }

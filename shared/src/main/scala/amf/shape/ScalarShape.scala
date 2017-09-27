@@ -32,6 +32,8 @@ case class ScalarShape(fields: Fields, annotations: Annotations) extends Shape {
   def withMultipleOf(multiple: Int): this.type     = set(MultipleOf, multiple)
 
   override def adopted(parent: String): this.type = withId(parent + "/scalar/" + name)
+
+  override def linkCopy() = PropertyShape().withId(id)
 }
 
 object ScalarShape {

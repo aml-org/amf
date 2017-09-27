@@ -659,6 +659,12 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
+        case link: Shape if link.isLink =>
+          Seq(new Emitter() {
+            override def emit(): Unit = raw(link.linkTarget.get.id)
+
+            override def position(): Position = pos(link.linkAnnotations.getOrElse(Annotations()))
+          })
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()

@@ -21,16 +21,27 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
 
     val ahead = entry.value.value
 
-    detect(ahead) match {
-      case ObjectType =>
-        Some(parseObjectType(name, ahead, declarations))
-      case ArrayType =>
-        Some(parseArrayType(name, ahead))
-      case typeDef if typeDef.isScalar =>
-        Some(parseScalarType(name, typeDef, ahead))
-      case _ => None
+    ahead match {
+      case ref: YReference =>
+        processRef(ref)
+      case _ => detect(ahead) match {
+        case ObjectType =>
+          Some(parseObjectType(name, ahead, declarations))
+        case ArrayType =>
+          Some(parseArrayType(name, ahead))
+        case typeDef if typeDef.isScalar =>
+          Some(parseScalarType(name, typeDef, ahead))
+        case _ => None
+      }
     }
   }
+
+  def retrieveRefShape(ref: YReference): Shape = {
+    // this should look in the context for a matching reference
+    throw new Exception(s"Shape for ref ${ref.name}, not implemented yet")
+  }
+
+  def processRef(ref: YReference): Option[Shape] = Some(retrieveRefShape(ref).link(None, Some(Annotations(ref))))
 
   private def detect(property: YValue): TypeDef = property match {
     case scalar: YScalar => matchType(scalar.text)
