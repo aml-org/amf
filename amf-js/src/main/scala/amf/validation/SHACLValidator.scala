@@ -20,20 +20,6 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
     js.Dynamic.global.SHACLValidator
   }
 
-  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
-    val promise = Promise[String]()
-    val validator = js.Dynamic.newInstance(nativeShacl)()
-    loadLibrary(validator)
-    validator.validate(data, dataMediaType, shapes, shapesMediaType, { (e: js.Error, report: js.Dynamic) =>
-      if (js.isUndefined(e) || e == null) {
-        promise.success(js.JSON.stringify(report))
-      } else {
-        promise.failure(js.JavaScriptException(e))
-      }
-    })
-    promise.future
-  }
-
   /**
     * Version of the validate function that retuern a JS promise instead of a Scala future
     * @param data string representation of the data graph
@@ -85,6 +71,19 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
     this.functionCode = Some(code)
   }
 
+  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
+    val promise = Promise[String]()
+    val validator = js.Dynamic.newInstance(nativeShacl)()
+    loadLibrary(validator)
+    validator.validate(data, dataMediaType, shapes, shapesMediaType, { (e: js.Dynamic, r: js.Dynamic) =>
+      if (js.isUndefined(e) || e == null) {
+        promise.success(js.Dynamic.global.JSON.stringify(r).toString)
+      } else {
+        promise.failure(js.JavaScriptException(e))
+      }
+    })
+    promise.future
+  }
 
   protected def loadLibrary(validator: js.Dynamic): Unit = {
     if (functionCode.isDefined && functionUrl.isDefined) {
