@@ -4,6 +4,8 @@ import amf.compiler.Root
 import amf.domain.dialects.DomainEntity
 import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
+
+import scala.collection.mutable
 /**
 * Created by Pavel Petrochenko on 12/09/17.
 */
@@ -56,7 +58,8 @@ object External extends VocabPartDialect("External"){
   val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
 }
 
-object Vocabulary extends VocabPartDialect("Vocabulary"){
+object
+Vocabulary extends VocabPartDialect("Vocabulary"){
 
   val base: DialectPropertyMapping             = str("base")
   val dialectProperty: DialectPropertyMapping  = str("dialect",_.copy(scalaNameOverride = Some("dialectProperty")))

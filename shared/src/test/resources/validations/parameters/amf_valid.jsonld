@@ -1,0 +1,34 @@
+{
+  "@id": "http://test.com/the-parameter",
+  "@type": [
+    "http://raml.org/vocabularies/http#Parameter",
+    "http://raml.org/vocabularies/document#DomainElement"
+  ],
+  "http://raml.org/vocabularies/http#binding": [
+    {
+      "@value": "path"
+    }
+  ],
+  "http://www.w3.org/ns/hydra/core#required": [
+    {
+      "@value": true
+    }
+  ],
+  "http://raml.org/vocabularies/http#schema": [
+    {
+      "@id": "http://test.com/the-schema",
+      "@type": [
+        "http://raml.org/vocabularies/shapes#Shape",
+        "http://raml.org/vocabularies/shapes#Object",
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://raml.org/vocabularies/document#DomainElement"
+      ]
+    }
+  ],
+  "http://schema.org/name": [
+    {
+      "@value": "name"
+    }
+  ]
+}

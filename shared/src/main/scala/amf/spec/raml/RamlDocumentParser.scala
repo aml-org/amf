@@ -102,8 +102,13 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     })
 
     map.key("protocols", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
-      api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+      entry.value.value match {
+        case _: YScalar =>
+          api.set(WebApiModel.Schemes, AmfArray(Seq(ValueNode(entry.value).string())), Annotations(entry))
+        case _: YSequence =>
+          val value = ArrayNode(entry.value.value.toSequence)
+          api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+      }
     })
 
     map.key(

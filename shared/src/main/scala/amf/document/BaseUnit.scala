@@ -1,6 +1,7 @@
 package amf.document
 
-import amf.model.AmfObject
+import amf.domain.DomainElement
+import amf.model.{AmfArray, AmfElement, AmfObject}
 
 /** Any parseable unit, backed by a source URI. */
 trait BaseUnit extends AmfObject {
@@ -13,4 +14,63 @@ trait BaseUnit extends AmfObject {
 
   /** Returns the usage comment for de element */
   def usage: String
+
+  /**
+    * finds in the nested model structure an AmfObject with the requested Id
+    * @param id URI of the model element
+    */
+  def findById(id: String): Option[DomainElement] = {
+    findInEncodedModel(id, this) match {
+      case None => findInDeclaredModel(id, this)
+      case found => found
+    }
+  }
+
+  // Private lookup methods
+
+  private def findInEncodedModel(id: String, encoder: BaseUnit): Option[DomainElement] = {
+    encoder match {
+      case encoder: EncodesModel => findModelById(id, encoder.encodes)
+      case _                     => None
+    }
+  }
+
+  private def findInDeclaredModel(id: String, encoder: BaseUnit): Option[DomainElement] = {
+    encoder match {
+      case encoder: DeclaresModel => findModelByIdInSeq(id, encoder.declares)
+      case _                     => None
+    }
+  }
+
+  private def findModelById(id: String, element: DomainElement): Option[DomainElement] = {
+    if (element.id == id) {
+      Some(element)
+    } else {
+      findModelByIdInSeq(id, this.fields.fields().map(_.element).toSeq)
+    }
+  }
+
+  private def findModelByIdInSeq(id: String, elements: Seq[AmfElement]): Option[DomainElement] = {
+    if (elements.isEmpty) {
+      None
+    } else {
+      elements.head match {
+        case obj: DomainElement =>
+          findModelById(id, obj) match {
+            case None         => findModelByIdInSeq(id, elements.tail)
+            case foundElement => foundElement
+          }
+
+        case arr: AmfArray =>
+          findModelByIdInSeq(id, arr.values) match {
+            case None => findModelByIdInSeq(id, elements.tail)
+            case foundElement => foundElement
+          }
+
+        case _ => findModelByIdInSeq(id, elements.tail)
+      }
+    }
+  }
+
 }
+

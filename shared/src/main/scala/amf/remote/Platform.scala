@@ -1,6 +1,7 @@
 package amf.remote
 
 import amf.dialects.PlatformDialectRegistry
+import amf.validation.core.SHACLValidator
 
 import scala.concurrent.Future
 
@@ -21,6 +22,10 @@ trait Platform {
 
   val dialectsRegistry: PlatformDialectRegistry
 
+  val validator: SHACLValidator
+
+  def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file:/$str"}
+
   /** Test path resolution. */
   def resolvePath(path: String): String
 
@@ -29,6 +34,9 @@ trait Platform {
 
   /** Resolve specified url. */
   protected def fetchHttp(url: String): Future[Content]
+
+  /** Location where the helper functions for custom validations must be retrieved */
+  protected def customValidationLibraryHelperLocation: String = "http://raml.org/amf/validation.js"
 
   /** Write specified content on given url. */
   def write(url: String, content: String): Future[String] = {

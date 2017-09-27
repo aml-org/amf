@@ -16,7 +16,7 @@ object WebApiModel extends DomainElementModel {
 
   val Host = Field(Str, Http + "host")
 
-  val Schemes = Field(Array(Str), Http + "schemes")
+  val Schemes = Field(Array(Str), Http + "scheme")
 
   val BasePath = Field(Str, Http + "basePath")
 

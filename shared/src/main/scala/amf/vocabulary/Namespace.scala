@@ -40,6 +40,56 @@ object Namespace {
 
   val Rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
 
+  val AmfParser = Namespace("http://raml.org/vocabularies/amf/parser#")
+
+  val ns = Map(
+    "rdf"         -> Rdf,
+    "sh"          -> Shacl,
+    "shacl"       -> Shacl,
+    "schema-org"  -> Schema,
+    "schema"      -> Schema,
+    "raml-http"   -> Http,
+    "http"        -> Http,
+    "raml-doc"    -> Document,
+    "doc"         -> Document,
+    "xsd"         -> Xsd,
+    "amf-parser"  -> AmfParser,
+    "hydra"       -> Hydra,
+    "raml-shapes" -> Shapes,
+    "data"        -> Data,
+    "sourcemaps"  -> SourceMaps,
+    "meta"        -> Meta,
+    "owl"         -> Owl,
+    "rdfs"        -> Rdfs
+  )
+
+  def uri(s: String): ValueType = {
+    if (s.indexOf(":") > -1){
+      expand(s)
+    } else {
+      ns.values.find(n => s.indexOf(n.base) == 0) match {
+        case Some(foundNs) => ValueType(foundNs, s.split(foundNs.base).last)
+        case _             => ValueType(s)
+      }
+    }
+  }
+
+  def expand(uri: String): ValueType = {
+    if (uri.startsWith("http://")) { // we have http: as  a valid prefix, we need to disambiguate
+      ValueType(uri)
+    } else {
+      uri.split(":") match {
+        case Array(prefix, postfix) => resolve(prefix) match {
+          case Some(n) => ValueType(n, postfix)
+          case _ => ValueType(uri)
+        }
+        case _ => ValueType(uri)
+      }
+    }
+  }
+
+  private def resolve(prefix: String): Option[Namespace] = ns.get(prefix)
+
 }
 
 /** Value type. */
