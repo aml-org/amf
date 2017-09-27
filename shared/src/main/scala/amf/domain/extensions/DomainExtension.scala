@@ -18,8 +18,7 @@ case class DomainExtension(fields: Fields, annotations: Annotations) extends Dom
 
   // This element will never be serialised in the JSON-LD graph, it is just a placeholder
   // for the extension point. ID is not required for serialisation
-  override def adopted(parent: String) = withId(parent + "/extension")
-
+  override def adopted(parent: String): this.type = withId(parent + "/extension")
 }
 
 object DomainExtension {

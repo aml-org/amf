@@ -5,17 +5,19 @@ import amf.compiler.{ParsedReference, Root}
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
+import amf.domain.`abstract`._
 import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
+import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.Shape
+import amf.spec.common.{AbstractVariables, AnnotationParser, DataNodeParser}
 import amf.spec.common.BaseSpecParser._
-import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -35,7 +37,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     root.document.value.foreach(value => {
       val map = value.toMap
 
-      val declarations  = parseDeclares(map)
+      val declarations   = parseDeclares(map)
       val environmentRef = ReferencesParser(map, root.references).parse()
 
       val api = parseWebApi(map, Declarations(declarations, environmentRef.toMap)).add(SourceVendor(root.vendor))
@@ -101,15 +103,18 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       api.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
     })
 
-    map.key("protocols", entry => {
-      entry.value.value match {
-        case _: YScalar =>
-          api.set(WebApiModel.Schemes, AmfArray(Seq(ValueNode(entry.value).string())), Annotations(entry))
-        case _: YSequence =>
-          val value = ArrayNode(entry.value.value.toSequence)
-          api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+    map.key(
+      "protocols",
+      entry => {
+        entry.value.value match {
+          case _: YScalar =>
+            api.set(WebApiModel.Schemes, AmfArray(Seq(ValueNode(entry.value).string())), Annotations(entry))
+          case _: YSequence =>
+            val value = ArrayNode(entry.value.value.toSequence)
+            api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+        }
       }
-    })
+    )
 
     map.key(
       "(contact)",
@@ -210,6 +215,20 @@ case class EndpointParser(entry: YMapEntry,
       }
     )
 
+    map.key(
+      "type",
+      entry =>
+        ParametrizedDeclarationParser(entry.value.value, endpoint.withResourceType, declarations.resourceTypes).parse()
+    )
+
+    map.key(
+      "is",
+      entry => {
+        entry.value.value.toSequence.values.map(value =>
+          ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.traits).parse())
+      }
+    )
+
     map.regex(
       "get|patch|put|post|delete|options|head",
       entries => {
@@ -231,6 +250,34 @@ case class EndpointParser(entry: YMapEntry,
         entries.foreach(EndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
       }
     )
+  }
+}
+
+case class ParametrizedDeclarationParser(value: YValue,
+                                         producer: String => ParametrizedDeclaration,
+                                         declarations: Map[String, AbstractDeclaration]) {
+  def parse(): ParametrizedDeclaration = {
+    value match {
+      case map: YMap =>
+        // TODO is it always the first child?
+        val entry = map.entries.head
+
+        val name = entry.key.value.toScalar.text
+        val declaration =
+          producer(name).add(Annotations(value)).set(ParametrizedDeclarationModel.Target, declarations(name).id)
+        val variables = entry.value.value.toMap.entries.map(
+          variableEntry =>
+            VariableValue(variableEntry)
+              .withName(variableEntry.key.value.toScalar.text)
+              .withValue(variableEntry.value.value.toScalar.text))
+
+        declaration.withVariables(variables)
+      case scalar: YScalar =>
+        producer(scalar.text)
+          .add(Annotations(value))
+          .set(ParametrizedDeclarationModel.Target, declarations(scalar.text).id)
+      case _ => throw new Exception("Invalid model extension.")
+    }
   }
 }
 
@@ -342,6 +389,16 @@ case class OperationParser(entry: YMapEntry, producer: (String) => Operation, de
       entry => {
         val value = ArrayNode(entry.value.value.toSequence)
         operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
+      }
+    )
+
+    map.key(
+      "is",
+      entry => {
+        val traits = entry.value.value.toSequence.nodes.map(value => {
+          ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+        })
+        if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
       }
     )
 
@@ -559,28 +616,65 @@ case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) 
 
 class RamlSpecParser(val root: Root) {
 
-  protected def parseDeclares(map: YMap): Seq[DomainElement] =
-    parseTypeDeclarations(map, root.location + "#/declarations") ++
-      parseAnnotationTypeDeclarations(map, root.location + "#/declarations")
+  protected def parseDeclares(map: YMap): Seq[DomainElement] = {
+    val types = parseTypeDeclarations(map, root.location + "#/declarations")
+
+    types ++
+      parseAnnotationTypeDeclarations(map, root.location + "#/declarations", types) ++
+      parseResourceTypeDeclarations(map, root.location + "#/declarations") ++
+      parseTraitDeclarations(map, root.location + "#/declarations")
+  }
 
   // producer? whe lose id?
-  case class ReferencesParser(map: YMap, rootReferences:Seq[ParsedReference]) {
+  case class ReferencesParser(map: YMap, rootReferences: Seq[ParsedReference]) {
     def parse(): mutable.Map[String, BaseUnit] = {
 
       val references = mutable.Map[String, BaseUnit]()
 
-      map.key("uses", entry =>
-        entry.value.value.toMap.entries.foreach(e => {
-          target(e.value.value.toScalar.text).foreach(bu =>{
-            val alias = e.key.value.toScalar.text
-            references += alias -> bu
+      map.key(
+        "uses",
+        entry =>
+          entry.value.value.toMap.entries.foreach(e => {
+            target(e.value.value.toScalar.text).foreach(bu => {
+              val alias = e.key.value.toScalar.text
+              references += alias -> bu
+            })
           })
-        })
       )
       references
     }
 
-    private def target(originalUrl: String): Option[BaseUnit] = rootReferences.find(r => r.parsedUrl.equals(originalUrl)).map(_.baseUnit)
+    private def target(originalUrl: String): Option[BaseUnit] =
+      rootReferences.find(r => r.parsedUrl.equals(originalUrl)).map(_.baseUnit)
+  }
+
+  def parseTraitDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+    val traits = ListBuffer[AbstractDeclaration]()
+
+    map.key(
+      "traits",
+      e => {
+        e.value.value.toMap.entries.map(traitEntry =>
+          traits += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry).parse())
+      }
+    )
+
+    traits
+  }
+
+  def parseResourceTypeDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+    val resourceTypes = ListBuffer[AbstractDeclaration]()
+
+    map.key(
+      "resourceTypes",
+      e => {
+        e.value.value.toMap.entries.map(resourceEntry =>
+          resourceTypes += AbstractDeclarationParser(ResourceType(resourceEntry), customProperties, resourceEntry)
+            .parse())
+      }
+    )
+
+    resourceTypes
   }
 
   def parseTypeDeclarations(map: YMap, typesPrefix: String): Seq[Shape] = {
@@ -605,7 +699,9 @@ class RamlSpecParser(val root: Root) {
     types
   }
 
-  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Seq[CustomDomainProperty] = {
+  def parseAnnotationTypeDeclarations(map: YMap,
+                                      customProperties: String,
+                                      types: Seq[Shape]): Seq[CustomDomainProperty] = {
     val customDomainProperties = ListBuffer[CustomDomainProperty]()
 
     map.key(
@@ -618,7 +714,7 @@ class RamlSpecParser(val root: Root) {
                                                        customProperty
                                                          .withName(typeName)
                                                          .adopted(customProperties),
-                                                     Declarations(customDomainProperties)).parse()
+                                                     Declarations(types ++ customDomainProperties)).parse()
           customDomainProperties += customProperty.add(DeclaredElement())
         })
       }
@@ -634,5 +730,19 @@ class RamlSpecParser(val root: Root) {
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })
     }
+  }
+}
+
+case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, entry: YMapEntry) {
+  def parse(): AbstractDeclaration = {
+    val key        = entry.key.value.toScalar.text
+    val parameters = AbstractVariables()
+    val dataNode   = DataNodeParser(entry.value, parameters, Some(parent + s"/$key")).parse()
+
+    declaration.withName(key).adopted(parent).withDataNode(dataNode)
+
+    parameters.ifNonEmpty(p => declaration.withVariables(p))
+
+    declaration
   }
 }

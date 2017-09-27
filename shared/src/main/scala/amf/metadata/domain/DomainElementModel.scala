@@ -1,6 +1,7 @@
 package amf.metadata.domain
 
 import amf.metadata.Type.Array
+import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.extensions.DomainExtensionModel
 import amf.metadata.{Field, Obj, SourceMapModel}
 import amf.vocabulary.Namespace.{Document, SourceMaps}
@@ -11,7 +12,7 @@ import amf.vocabulary.ValueType
   */
 trait DomainElementModel extends Obj {
 
-  val Extends = Field(Array(DomainElementModel), Document + "extends")
+  val Extends = Field(Array(ParametrizedDeclarationModel), Document + "extends")
 
   val Includes = Field(Array(DomainElementModel), Document + "includes")
 

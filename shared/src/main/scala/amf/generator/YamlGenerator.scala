@@ -15,23 +15,23 @@ class YamlGenerator {
     writer
   }
 
-  def visit(part: YPart): Unit = {
+  def visit(part: YPart, previousSequence: Boolean = false): Unit = {
     part match {
       case document: YDocument =>
         visitChildren(document, forceLine = false)
       case map: YMap =>
-        writer.indent()
-        visitChildren(map)
+        if (!previousSequence) writer.indent()
+        visitChildren(map, forceLine = !previousSequence)
         writer.outdent()
       case seq: YSequence =>
         writer.line().indent()
         visitChildren(seq, "- ", forceLine = false)
         writer.outdent()
-      case entry: YMapEntry  => visitEntry(entry)
-      case node: YNode       => visit(node.value)
-      case scalar: YScalar   => writer.write(scalar.text)
+      case entry: YMapEntry => visitEntry(entry)
+      case node: YNode      => visit(node.value, previousSequence)
+      case scalar: YScalar  => writer.write(scalar.text)
       case comment: YComment =>
-          writer.write("#" + comment.metaText)
+        writer.write("#" + comment.metaText)
     }
   }
 
@@ -48,7 +48,7 @@ class YamlGenerator {
       .foreach(c => {
         if (!first || forceLine) { writer.line() }
         writer.write(prefix)
-        visit(c)
+        visit(c, previousSequence = parent.isInstanceOf[YSequence])
         first = false
       })
   }

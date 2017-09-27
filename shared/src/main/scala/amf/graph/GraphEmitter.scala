@@ -3,12 +3,14 @@ package amf.graph
 import amf.client.GenerationOptions
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
+import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.{DocumentModel, ModuleModel}
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
 import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel}
 import amf.metadata.shape._
@@ -50,9 +52,9 @@ object GraphEmitter {
 
       val sources = SourceMap(id, element)
 
-      val obj = metamodel(element)
+      val obj = metaModel(element)
       if (obj.dynamic) {
-        traverseDynamicMetamodel(id, element, sources, obj, parent)
+        traverseDynamicMetaModel(id, element, sources, obj, parent)
       } else {
         traverseStaticMetamodel(id, element, sources, obj, parent)
       }
@@ -62,7 +64,7 @@ object GraphEmitter {
       createSourcesNode(id + "/source-map", sources)
     }
 
-    def traverseDynamicMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
+    def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
       val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
       createDynamicTypeNode(schema)
@@ -93,7 +95,7 @@ object GraphEmitter {
       }
     }
 
-    private def createCustomExtensions(element: AmfObject, parent: String) = {
+    private def createCustomExtensions(element: AmfObject, parent: String): Unit = {
       val customProperties: ListBuffer[String] = ListBuffer()
 
       element.fields.entry(DomainElementModel.CustomDomainProperties) match {
@@ -166,9 +168,15 @@ object GraphEmitter {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
               case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
               case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
-              case Type.Int  => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Int , inArray = true))
-              case Bool     => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
-              case _        => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
+              case Type.Int =>
+                seq.values
+                  .asInstanceOf[Seq[AmfScalar]]
+                  .foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Int, inArray = true))
+              case Bool =>
+                seq.values
+                  .asInstanceOf[Seq[AmfScalar]]
+                  .foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
+              case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
             }
           }
       }
@@ -226,9 +234,9 @@ object GraphEmitter {
       }
     }
 
-    private def createIdNode(id: String) = entry("@id", id)
+    private def createIdNode(id: String): Unit = entry("@id", id)
 
-    private def createTypeNode(obj: Obj, maybeElement: Option[AmfObject] = None) = {
+    private def createTypeNode(obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {
       entry { () =>
         raw("@type")
         array { () =>
@@ -308,29 +316,35 @@ object GraphEmitter {
   }
 
   /** Metadata Type references. */
-  private def metamodel(instance: Any): Obj = instance match {
-    case _: Document             => DocumentModel
-    case _: WebApi               => WebApiModel
-    case _: Organization         => OrganizationModel
-    case _: License              => LicenseModel
-    case _: CreativeWork         => CreativeWorkModel
-    case _: EndPoint             => EndPointModel
-    case _: Operation            => OperationModel
-    case _: Parameter            => ParameterModel
-    case _: Request              => RequestModel
-    case _: Response             => ResponseModel
-    case _: Payload              => PayloadModel
-    case _: NodeShape            => NodeShapeModel
-    case _: ArrayShape           => ArrayShapeModel
-    case _: ScalarShape          => ScalarShapeModel
-    case _: PropertyShape        => PropertyShapeModel
-    case _: XMLSerializer        => XMLSerializerModel
-    case _: PropertyDependencies => PropertyDependenciesModel
-    case _: DomainExtension      => DomainExtensionModel
-    case _: CustomDomainProperty => CustomDomainPropertyModel
-    case _: DataNode             => DataNodeModel
-    case entity: DomainEntity    => new DialectEntityModel(entity)
-    case _: Module               => ModuleModel
-    case _                       => throw new Exception(s"Missing metadata mapping for $instance")
+  private def metaModel(instance: Any): Obj = instance match {
+    case _: Document                 => DocumentModel
+    case _: WebApi                   => WebApiModel
+    case _: Organization             => OrganizationModel
+    case _: License                  => LicenseModel
+    case _: CreativeWork             => CreativeWorkModel
+    case _: EndPoint                 => EndPointModel
+    case _: Operation                => OperationModel
+    case _: Parameter                => ParameterModel
+    case _: Request                  => RequestModel
+    case _: Response                 => ResponseModel
+    case _: Payload                  => PayloadModel
+    case _: NodeShape                => NodeShapeModel
+    case _: ArrayShape               => ArrayShapeModel
+    case _: ScalarShape              => ScalarShapeModel
+    case _: PropertyShape            => PropertyShapeModel
+    case _: XMLSerializer            => XMLSerializerModel
+    case _: PropertyDependencies     => PropertyDependenciesModel
+    case _: DomainExtension          => DomainExtensionModel
+    case _: CustomDomainProperty     => CustomDomainPropertyModel
+    case _: DataNode                 => DataNodeModel
+    case entity: DomainEntity        => new DialectEntityModel(entity)
+    case _: Module                   => ModuleModel
+    case _: ResourceType             => ResourceTypeModel
+    case _: Trait                    => TraitModel
+    case _: ParametrizedResourceType => ParametrizedResourceTypeModel
+    case _: ParametrizedTrait        => ParametrizedTraitModel
+    case _: Variable                 => VariableModel
+    case _: VariableValue            => VariableValueModel
+    case _                           => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

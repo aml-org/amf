@@ -2,11 +2,13 @@ package amf.graph
 
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
+import amf.domain.`abstract`._
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document.{BaseUnitModel, DocumentModel, ModuleModel}
 import amf.metadata.domain._
+import amf.metadata.domain.`abstract`._
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
@@ -144,24 +146,30 @@ object GraphParser extends GraphParserHelpers {
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
-    DocumentModel             -> Document.apply,
-    WebApiModel               -> WebApi.apply,
-    OrganizationModel         -> Organization.apply,
-    LicenseModel              -> License.apply,
-    CreativeWorkModel         -> CreativeWork.apply,
-    EndPointModel             -> EndPoint.apply,
-    OperationModel            -> Operation.apply,
-    ParameterModel            -> Parameter.apply,
-    PayloadModel              -> Payload.apply,
-    RequestModel              -> Request.apply,
-    ResponseModel             -> Response.apply,
-    NodeShapeModel            -> NodeShape.apply,
-    ArrayShapeModel           -> ArrayShape.apply,
-    ScalarShapeModel          -> ScalarShape.apply,
-    PropertyShapeModel        -> PropertyShape.apply,
-    XMLSerializerModel        -> XMLSerializer.apply,
-    PropertyDependenciesModel -> PropertyDependencies.apply,
-    ModuleModel               -> Module.apply
+    DocumentModel                 -> Document.apply,
+    WebApiModel                   -> WebApi.apply,
+    OrganizationModel             -> Organization.apply,
+    LicenseModel                  -> License.apply,
+    CreativeWorkModel             -> CreativeWork.apply,
+    EndPointModel                 -> EndPoint.apply,
+    OperationModel                -> Operation.apply,
+    ParameterModel                -> Parameter.apply,
+    PayloadModel                  -> Payload.apply,
+    RequestModel                  -> Request.apply,
+    ResponseModel                 -> Response.apply,
+    NodeShapeModel                -> NodeShape.apply,
+    ArrayShapeModel               -> ArrayShape.apply,
+    ScalarShapeModel              -> ScalarShape.apply,
+    PropertyShapeModel            -> PropertyShape.apply,
+    XMLSerializerModel            -> XMLSerializer.apply,
+    PropertyDependenciesModel     -> PropertyDependencies.apply,
+    ModuleModel                   -> Module.apply,
+    ResourceTypeModel             -> ResourceType.apply,
+    TraitModel                    -> Trait.apply,
+    ParametrizedResourceTypeModel -> ParametrizedResourceType.apply,
+    ParametrizedTraitModel        -> ParametrizedTrait.apply,
+    VariableModel                 -> Variable.apply,
+    VariableValueModel            -> VariableValue.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

@@ -39,5 +39,5 @@ object WellKnownAnnotation {
   def parseRamlName(s: String): String = s.replace("(", "").replace(")", "")
   def parseOasName(s: String): String  = s.replace("x-", "").replace("X-", "")
 
-  def parseName(s: String) = parseOasName(parseRamlName(s))
+  def parseName(s: String): String = parseOasName(parseRamlName(s))
 }
