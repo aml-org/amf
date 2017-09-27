@@ -1,10 +1,11 @@
-package amf.validation.model
+package amf.validation.emitters
 
 import amf.client.GenerationOptions
 import amf.generator.JsonGenerator
 import amf.graph.GraphEmitter.Emitter
 import amf.parser.ASTEmitter
 import amf.spec.common.BaseSpecEmitter
+import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.vocabulary.Namespace
 import org.yaml.model.{YDocument, YType}
 
@@ -14,7 +15,7 @@ import scala.collection.mutable.ListBuffer
   * Generates a JSON-LD graph with the shapes for a set of validations
   * @param targetProfile which kind of messages should be generated
   */
-class JSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
+class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
 
   override val emitter = ASTEmitter()
 
@@ -28,7 +29,6 @@ class JSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
     */
   def emitJSON(validations: Seq[ValidationSpecification]): String =
     new JsonGenerator().generate(emitJSONLDAST(validations)).toString
-
 
   private def emitJSONLDAST(validations: Seq[ValidationSpecification]): YDocument = {
     Emitter(emitter, GenerationOptions()).emitter.document { () =>
@@ -280,7 +280,7 @@ class JSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
                       map {() =>
                         entry {() =>
                           raw("@value")
-                          raw(JSONLDEmitter.validationLibraryUrl)
+                          raw(ValidationJSONLDEmitter.validationLibraryUrl)
                         }
                       }
                     }
@@ -321,7 +321,7 @@ class JSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
                       map {() =>
                         entry {() =>
                           raw("@value")
-                          raw(JSONLDEmitter.validationLibraryUrl)
+                          raw(ValidationJSONLDEmitter.validationLibraryUrl)
                         }
                       }
                     }
@@ -413,6 +413,6 @@ class JSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
 
 }
 
-object JSONLDEmitter {
+object ValidationJSONLDEmitter {
   def validationLibraryUrl = (Namespace.AmfParser + "validationLibrary.js").iri()
 }

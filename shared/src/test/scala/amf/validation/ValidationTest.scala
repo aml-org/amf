@@ -7,6 +7,7 @@ import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
+import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -101,7 +102,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-  test("HERE_HERE Custom function validation success test") {
+  test("Custom function validation success test") {
 
     val validation = Validation(platform)
     for {
@@ -115,7 +116,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-  test("HERE_HERE Custom function validation failure test") {
+  test("Custom function validation failure test") {
 
     val validation = Validation(platform)
     for {
@@ -126,7 +127,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     } yield {
       assert(report.conforms)
       assert(report.results.length == 1)
-      assert(report.results.head.validationId == "my_custom_validation")
+      assert(report.results.head.validationId == "http://raml.org/vocabularies/data#my_custom_validation")
     }
   }
 
@@ -143,13 +144,27 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
       assert(report.results.length == 1)
       val result = report.results.head
       assert(result.level == "Info")
-      assert(result.validationId == "my-custom-validation")
+      assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")
       assert(result.targetNode == "file:/shared/src/test/resources/validations/data/error1.raml#/web-api")
       assert(result.targetProperty.get == "http://raml.org/vocabularies/http#scheme")
       assert(result.message == "error wadus")
       assert(result.position.isDefined)
     }
   }
+
+  test("Validation report generation") {
+
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
+      report <- validation.validate(model, "Test Profile")
+    } yield {
+      assert(Option(ValidationReportJSONLDEmitter.emitJSON(report)).isDefined)
+    }
+  }
+
 
   val testValidations = Map(
     "bad_domain/amf.jsonld"            -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),

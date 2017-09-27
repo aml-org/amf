@@ -11,6 +11,7 @@ import amf.graph.GraphEmitter
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.validation.core.ValidationResult
+import amf.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.validation.model._
 import amf.vocabulary.Namespace
 
@@ -121,9 +122,15 @@ class Validation(platform: Platform) {
 
   /**
     * Client code can use this function to register a new validation failure
-    * @param validation
     */
-  def reportConstraintFailure(validation: AMFValidationResult): Unit = aggregatedReport ++= Seq(validation)
+  def reportConstraintFailure(level: String,
+                              validationId: String,
+                              targetNode: String,
+                              targetProperty: Option[String] = None,
+                              message: String = "",
+                              position: Option[LexicalInformation] = None): Unit = {
+    aggregatedReport ++= Seq(AMFValidationResult(message, level, targetNode, targetProperty, validationId, position))
+  }
 
   lazy val defaultProfiles: List[ValidationProfile] = DefaultAMFValidations.profiles()
 
@@ -207,8 +214,9 @@ class Validation(platform: Platform) {
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, messageStyle: String = ValidationProfileNames.RAML): String = {
-    new JSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq)
+    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq)
   }
+
   def validate(model: BaseUnit, profileName: String, messageStyle: String = ValidationProfileNames.RAML): Future[AMFValidationReport] = {
     val graphAST  = GraphEmitter.emit(model, GenerationOptions())
     val modelJSON = new JsonGenerator().generate(graphAST).toString
@@ -231,7 +239,7 @@ class Validation(platform: Platform) {
 
     jsLibrary match {
       case Some(code) => {
-        platform.validator.registerLibrary(JSONLDEmitter.validationLibraryUrl, code);
+        platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code);
       }
       case _          => // ignore
     }
@@ -241,7 +249,8 @@ class Validation(platform: Platform) {
         shapesJSON, "application/ld+json",
       )
     } yield {
-      val results = shaclReport.results.map(r => buildValidationResult(model, r, messageStyle, validations))
+      val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
+                    shaclReport.results.map(r => buildValidationResult(model, r, messageStyle, validations))
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
         model = model.id,
@@ -261,6 +270,25 @@ class Validation(platform: Platform) {
     }
   }
 
+  protected def processAggregatedResult(result: AMFValidationResult, messageStyle: String, validations: EffectiveValidations): AMFValidationResult = {
+    val spec = validations.all.get(result.validationId) match {
+      case Some(s) => s
+      case None       => throw new Exception(s"Cannot find spec for aggregated validation result ${result.validationId}")
+    }
+
+    var message: String = messageStyle match {
+      case ValidationProfileNames.RAML => spec.ramlMessage.getOrElse(result.message)
+      case ValidationProfileNames.OAS  => spec.oasMessage.getOrElse(result.message)
+      case _                           => spec.message
+    }
+    if (message == "") {
+      message = "Constraint violation"
+    }
+
+    val severity = findLevel(spec.id(), validations)
+    new AMFValidationResult(message, severity, result.targetNode, result.targetProperty, spec.id(), result.position)
+  }
+
   protected def buildValidationResult(model: BaseUnit, result: ValidationResult, messageStyle: String, validations: EffectiveValidations): AMFValidationResult = {
     val validationSpecToLook = if (result.sourceShape.startsWith(Namespace.Data.base)) {
       result.sourceShape.replace(Namespace.Data.base, "") // this is for custom validations they are all prefixed with the data namespace
@@ -274,6 +302,7 @@ class Validation(platform: Platform) {
         validationSpec
 
       case None => validations.all.find { case (v, _) =>
+        // processing property shapes Id computed as constraintID + "/prop"
         validationSpecToLook.startsWith(v)
       } match {
         case Some((v, spec)) =>
@@ -293,8 +322,11 @@ class Validation(platform: Platform) {
       message = result.message.getOrElse("Constraint violation")
     }
 
-    val finalId = idMapping(result.sourceShape)
-    val severity = findLevel(finalId, validations)
+    val finalId = idMapping(result.sourceShape).startsWith("http") match {
+      case true  => idMapping(result.sourceShape)
+      case false => Namespace.Data.base + idMapping(result.sourceShape) // we put back the prefix for the custom validations
+    }
+    val severity = findLevel(idMapping(result.sourceShape), validations)
     AMFValidationResult.withShapeId(finalId, AMFValidationResult.fromSHACLValidation(model, message, severity, result))
   }
 }

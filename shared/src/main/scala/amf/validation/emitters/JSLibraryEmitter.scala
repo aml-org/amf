@@ -1,5 +1,6 @@
-package amf.validation.model
+package amf.validation.emitters
 
+import amf.validation.model.ValidationSpecification
 import amf.vocabulary.Namespace
 
 object JSLibraryEmitter {
