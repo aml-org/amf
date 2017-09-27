@@ -4,6 +4,7 @@ import amf.common.AmfObjectTestMatcher
 import amf.compiler.AMFCompiler
 import amf.document.Document
 import amf.document.Fragment.{DataType, Fragment}
+import amf.domain.WebApi
 import amf.remote.{Hint, RamlYamlHint}
 import amf.shape.NodeShape
 import amf.unsafe.PlatformSecrets
@@ -18,7 +19,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Data type fragment test") {
-    val rootDocument = "file://shared/src/test/resources/upanddown/data-type-fragment.raml"
+    val rootDocument = "file://shared/src/test/resources/references/data-type-fragment.raml"
     assertFixture(usesDataType, rootDocument, RamlYamlHint)
   }
 
@@ -47,29 +48,20 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
       .withScalarSchema("name")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     shape
-      .withProperty("lastName")
-      .withMinCount(1)
-      .withScalarSchema("lastName")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    shape
-      .withProperty("age")
-      .withMinCount(1)
-      .withScalarSchema("age")
-      .withDataType("http://www.w3.org/2001/XMLSchema#integer")
-    shape
   }
 
   private val dataTypeFragment: Fragment = {
     DataType()
-      .withId("/shared/src/test/resources/upanddown/fragments/person.raml")
+      .withId("/shared/src/test/resources/references/fragments/person.raml")
       .withEncodes(person)
   }
 
   private val usesDataType: Document = {
-    val shape = person.copy(fields = person.fields)
+    val shape = person.copy()
     shape.withName("person")
     Document()
-      .withId("/Users/hernan.najles/mulesoft/amf/shared/src/test/resources/upanddown/data-type-fragment.raml")
+      .withId("/Users/hernan.najles/mulesoft/amf/shared/src/test/resources/references/data-type-fragment.raml")
+      .withEncodes(WebApi().withId("shared/src/test/resources/references/data-type-fragment.raml#/web-api"))
       .withDeclares(Seq(shape))
       .withReferences(Seq(dataTypeFragment))
   }

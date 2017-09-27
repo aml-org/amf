@@ -53,6 +53,9 @@ object Annotation {
 
   case class EndPointParameter() extends Annotation
 
+  // save original text link?
+  case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
+
   case class SingleValueArray() extends SerializableAnnotation {
 
     /** Extension name. */

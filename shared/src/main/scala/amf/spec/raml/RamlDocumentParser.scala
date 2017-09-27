@@ -43,8 +43,9 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
 
       val declaredElements = parseDeclares(map, declarations)
 
-      parseWebApi(map, declarations.add(declaredElements))
-        .map(api => document.withEncodes(api.add(SourceVendor(root.vendor))))
+      val api = parseWebApi(map, declarations.add(declaredElements)).add(SourceVendor(root.vendor))
+
+      document.withEncodes(api)
 
       if (declaredElements.nonEmpty) document.withDeclares(declaredElements)
 
@@ -54,31 +55,29 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     document
   }
 
-  private def parseWebApi(map: YMap, declarations: Declarations): Option[WebApi] = {
+  private def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
 
-    val api = new Lazy[WebApi](() => { WebApi(map).adopted(root.location) })
+    val api = WebApi(map).adopted(root.location)
 
     map.key("title", entry => {
       val value = ValueNode(entry.value)
-      api.getOrCreate.set(WebApiModel.Name, value.string(), Annotations(entry))
+      api.set(WebApiModel.Name, value.string(), Annotations(entry))
     })
 
     map.key(
       "baseUriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value.value.toMap, api.getOrCreate.withBaseUriParameter, declarations)
+          ParametersParser(entry.value.value.toMap, api.withBaseUriParameter, declarations)
             .parse()
             .map(_.withBinding("path"))
-        api.getOrCreate.set(WebApiModel.BaseUriParameters,
-                            AmfArray(parameters, Annotations(entry.value)),
-                            Annotations(entry))
+        api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
       }
     )
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)
-      api.getOrCreate.set(WebApiModel.Description, value.string(), Annotations(entry))
+      api.set(WebApiModel.Description, value.string(), Annotations(entry))
     })
 
     map.key(
@@ -93,19 +92,19 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
             ArrayNode(entry.value.value.toSequence).strings()
         }
 
-        api.getOrCreate.set(WebApiModel.ContentType, value, annotations)
-        api.getOrCreate.set(WebApiModel.Accepts, value, annotations)
+        api.set(WebApiModel.ContentType, value, annotations)
+        api.set(WebApiModel.Accepts, value, annotations)
       }
     )
 
     map.key("version", entry => {
       val value = ValueNode(entry.value)
-      api.getOrCreate.set(WebApiModel.Version, value.string(), Annotations(entry))
+      api.set(WebApiModel.Version, value.string(), Annotations(entry))
     })
 
     map.key("(termsOfService)", entry => {
       val value = ValueNode(entry.value)
-      api.getOrCreate.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
+      api.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
     })
 
     map.key(
@@ -116,7 +115,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
             api.set(WebApiModel.Schemes, AmfArray(Seq(ValueNode(entry.value).string())), Annotations(entry))
           case _: YSequence =>
             val value = ArrayNode(entry.value.value.toSequence)
-            api.getOrCreate.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+            api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
         }
       }
     )
@@ -125,7 +124,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       "(contact)",
       entry => {
         val organization: Organization = OrganizationParser(entry.value.value.toMap).parse()
-        api.getOrCreate.set(WebApiModel.Provider, organization, Annotations(entry))
+        api.set(WebApiModel.Provider, organization, Annotations(entry))
       }
     )
 
@@ -133,7 +132,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       "(externalDocs)",
       entry => {
         val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
-        api.getOrCreate.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
+        api.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
       }
     )
 
@@ -141,7 +140,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       "(license)",
       entry => {
         val license: License = LicenseParser(entry.value.value.toMap).parse()
-        api.getOrCreate.set(WebApiModel.License, license, Annotations(entry))
+        api.set(WebApiModel.License, license, Annotations(entry))
       }
     )
 
@@ -149,9 +148,8 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       "^/.*",
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(entry =>
-          EndpointParser(entry, api.getOrCreate.withEndPoint, None, endpoints, declarations).parse())
-        api.getOrCreate.set(WebApiModel.EndPoints, AmfArray(endpoints))
+        entries.foreach(entry => EndpointParser(entry, api.withEndPoint, None, endpoints, declarations).parse())
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints))
       }
     )
 
@@ -161,29 +159,29 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         val value = ValueNode(entry.value)
         val uri   = BaseUriSplitter(value.string().value.toString)
 
-        if (api.getOrCreate.schemes.isEmpty && uri.protocol.nonEmpty) {
-          api.getOrCreate.set(WebApiModel.Schemes,
-                              AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
-                              Annotations(entry))
+        if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
+          api.set(WebApiModel.Schemes,
+                  AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
+                  Annotations(entry))
         }
 
         if (uri.domain.nonEmpty) {
-          api.getOrCreate.set(WebApiModel.Host,
-                              AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
-                              Annotations(entry))
+          api.set(WebApiModel.Host,
+                  AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
+                  Annotations(entry))
         }
 
         if (uri.path.nonEmpty) {
-          api.getOrCreate.set(WebApiModel.BasePath,
-                              AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
-                              Annotations(entry))
+          api.set(WebApiModel.BasePath,
+                  AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
+                  Annotations(entry))
         }
       }
     )
 
-    AnnotationParser(() => api.getOrCreate, map).parse()
+    AnnotationParser(() => api, map).parse()
 
-    api.option
+    api
   }
 }
 

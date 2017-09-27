@@ -2,7 +2,8 @@ package amf.spec.raml
 
 import amf.common.TSort.tsort
 import amf.compiler.RamlHeader
-import amf.document.{BaseUnit, Document}
+import amf.document.Fragment.Fragment
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.{
@@ -41,7 +42,7 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
     val apiEmitters = emitWebApi(ordering)
     // TODO ordering??
-    val declares         = DeclarationsEmitter(document.declares, ordering).emitters
+    val declares         = DeclarationsEmitter(document.declares, document.references, ordering).emitters
     val referenceEmitter = ReferencesEmitter(document.references, ordering)
 
     emitter.document { () =>
@@ -511,12 +512,13 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
   case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
-      if (references.nonEmpty) {
+      val modules = references.collect({ case m: Module => m })
+      if (modules.nonEmpty) {
         entry { () =>
           raw("uses")
           map(() => {
             idCounter.reset()
-            traverse(ordering.sorted(references.map(r => ReferenceEmitter(r, ordering, idCounter.genId("uses")))))
+            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, idCounter.genId("uses")))))
           })
         }
       }
@@ -541,13 +543,14 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
-  case class DeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering) {
+  case class DeclarationsEmitter(declares: Seq[DomainElement], references: Seq[BaseUnit], ordering: SpecOrdering) {
     val emitters: Seq[Emitter] = {
       val declarations = Declarations(declares)
 
       val result = ListBuffer[Emitter]()
 
-      if (declarations.shapes.nonEmpty) result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, ordering)
+      if (declarations.shapes.nonEmpty)
+        result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, references: Seq[BaseUnit], ordering)
 
       if (declarations.annotations.nonEmpty)
         result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
@@ -562,12 +565,13 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
-  case class DeclaredTypesEmitters(types: Seq[Shape], ordering: SpecOrdering) extends Emitter {
+  case class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)
+      extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         raw("types")
         map { () =>
-          traverse(ordering.sorted(types.map(s => NamedTypeEmitter(s, ordering))))
+          traverse(ordering.sorted(types.map(s => NamedTypeEmitter(s, references: Seq[BaseUnit], ordering))))
         }
       }
     }
@@ -575,17 +579,37 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
   }
 
-  case class NamedTypeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {
+  case class NamedTypeEmitter(shape: Shape, references: Seq[BaseUnit], ordering: SpecOrdering) extends Emitter {
     override def position(): Position = pos(shape.annotations)
 
     override def emit(): Unit = {
+
+      val referencedOption: Option[ReferencedElement] = shape.annotations.find(classOf[ReferencedElement])
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
-        map { () =>
-          traverse(ordering.sorted(RamlTypeEmitter(shape, ordering).emitters()))
-        }
+        if (referencedOption.isEmpty) emitLocalType()
+        else referencedOption.foreach(r => TagToReferenceEmitter(r, references).emit())
       }
+    }
+
+    private def emitLocalType(): Unit = {
+      map { () =>
+        traverse(ordering.sorted(RamlTypeEmitter(shape, ordering).emitters()))
+      }
+    }
+  }
+
+  case class TagToReferenceEmitter(referencedElement: ReferencedElement, refences: Seq[BaseUnit]) {
+    def emit(): Unit = {
+      val referenceOption: Option[BaseUnit] = refences.find {
+        case m: Module   => m.declares.contains(referencedElement.referenced)
+        case f: Fragment => f.encodes == referencedElement.referenced
+      }
+      referenceOption.foreach({
+        case _: Module => raw(referencedElement.parsedUrl)
+        case _         => link(referencedElement.parsedUrl)
+      })
     }
   }
 
@@ -1065,6 +1089,22 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       result
     }
+  }
+
+  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering) extends Emitter {
+
+    override def emit(): Unit = {
+      val result = ListBuffer[Emitter]()
+      val fs     = userDocumentation.fields
+      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
+      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
+
+      map { () =>
+        traverse(ordering.sorted(result))
+      }
+    }
+
+    override def position(): Position = pos(userDocumentation.annotations)
   }
 
 }

@@ -1,13 +1,14 @@
 package amf.emit
 
 import amf.client.GenerationOptions
+import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.spec.dialects.DialectEmitter
 import amf.spec.oas.{OasDocumentEmitter, OasModuleEmitter}
-import amf.spec.raml.{RamlDocumentEmitter, RamlModuleEmitter}
+import amf.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument
 
 /**
@@ -40,6 +41,7 @@ class AMFUnitMaker {
   private def makeRamlUnit(unit: BaseUnit): YDocument = unit match {
     case module: Module     => RamlModuleEmitter(module).emitModule()
     case document: Document => RamlDocumentEmitter(document).emitDocument()
+    case fragment: Fragment => RamlFragmentEmitter(fragment).emitFragment()
     case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 

@@ -17,7 +17,7 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://shared/src/test/resources/referencesCycle/"
+  val basePath = "file://shared/src/test/resources/references/"
 
   test("simple library raml") {
     assertReferences("libraries.raml", Seq("lib/lib.raml"), RamlYamlHint, Raml)
@@ -49,6 +49,10 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
 
   test("library amf to raml from include") {
     assertReferences("libraries.raml.jsonld", Seq("lib/lib.raml"), AmfJsonHint, Raml)
+  }
+
+  test("data type fragment raml to raml") {
+    assertReferences("data-type-fragment.raml", Seq("fragments/person.raml"), RamlYamlHint, Raml)
   }
 
   def assertReferences(documentRootPath: String, goldens: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {

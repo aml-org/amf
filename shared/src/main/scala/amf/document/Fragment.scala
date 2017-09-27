@@ -1,7 +1,9 @@
 package amf.document
 
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.extensions.CustomDomainProperty
+import amf.domain.{Annotations, DomainElement, Fields, UserDocumentation}
 import amf.metadata.document.{BaseUnitModel, FragmentModel, ModuleModel}
+import amf.shape.Shape
 
 /**
   * RAML Fragments
@@ -33,9 +35,15 @@ object Fragment {
     def withUsage(usage: String): this.type                  = set(BaseUnitModel.Usage, usage)
   }
 
-  case class DocumentationItem() extends Fragment
+  // todo review
 
-  case class DataType() extends Fragment
+  case class DocumentationItem() extends Fragment {
+    override def encodes: UserDocumentation = super.encodes.asInstanceOf[UserDocumentation]
+  }
+
+  case class DataType() extends Fragment {
+    override def encodes: Shape = super.encodes.asInstanceOf[Shape]
+  }
 
   case class NamedExample() extends Fragment
 
@@ -43,7 +51,9 @@ object Fragment {
 
   case class Trait() extends Fragment
 
-  case class AnnotationTypeDeclaration() extends Fragment
+  case class AnnotationTypeDeclaration() extends Fragment {
+    override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
+  }
 
   case class Overlay() extends Fragment
 

@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.domain.Annotation.{ExplicitField, Inferred}
+import amf.domain.Annotation.{ExplicitField, Inferred, ReferencedElement}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -106,17 +106,31 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     // if we have node name: string => string its include (scalar type already discarted). For inherits we must have type: string.
     // If we have name -> type: include, the type will be node and inherits from the include.
 
+    // todo libraries? find return option tuple with type?
     val shape = NodeShape(ast).withName(name)
     adopt(shape)
     ahead match {
       case map: YMap => NodeShapeParser(shape, map, declarations).parse()
       case scalar: YScalar =>
         declarations.find(scalar.text) match {
-          case Some(obj: Shape) => obj.withName(name) // todo : mutate refered shape?
-          case _                => shape
+          case Some(s: Shape) => copyShapeDeclaration(scalar, s)
+          case _              => shape
         }
       case _ => shape
     }
+  }
+
+  private def copyShapeDeclaration(scalar: YScalar, declaration: Shape): Shape = {
+    val shape = declaration match {
+      case node: NodeShape          => node.copy()
+      case scalarShape: ScalarShape => scalarShape.copy()
+      case property: PropertyShape  => property.copy()
+      case tuple: TupleShape        => tuple.copy()
+      case matrix: MatrixShape      => matrix.copy()
+      case array: ArrayShape        => array.copy()
+    }
+    shape.withName(name).add(ReferencedElement(scalar.text, shape))
+
   }
 }
 
