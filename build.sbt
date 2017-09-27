@@ -12,7 +12,7 @@ val settings = Common.settings ++ Seq(
     "org.scalatest" %%% "scalatest" % "3.0.0" % Test
   ),
 
-  resolvers ++= List(Common.releases, Common.snapshots),
+  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials()
 )
 
@@ -32,7 +32,7 @@ lazy val amf = crossProject
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s" %% "json4s-jackson" % "3.5.2",
-    libraryDependencies += "org.topbraid" % "shacl" % "1.0.0",
+    libraryDependencies += "org.topbraid" % "shacl" % "1.0.1-SNAPSHOT",
     test in assembly := {},
     assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",

@@ -11,7 +11,7 @@ import amf.graph.GraphEmitter
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.validation.core.ValidationResult
-import amf.validation.model.{DefaultAMFValidations, JSONLDEmitter, ValidationProfile, ValidationSpecification}
+import amf.validation.model._
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
@@ -63,7 +63,7 @@ object AMFValidationResult {
     AMFValidationResult(validation.message, validation.level, validation.targetNode, validation.targetProperty, shapeId, validation.position)
 
   def findPosition(node: DomainElement, validation: ValidationResult): Option[LexicalInformation] = {
-    if (validation.path != null) {
+    if (validation.path != null && validation.path != "") {
       val foundPosition = node.fields.fields().find(f => f.field.value.iri() == validation.path) match {
         case Some(f) =>
           f.element.annotations.find(classOf[LexicalInformation])
@@ -216,6 +216,7 @@ class Validation(platform: Platform) {
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
     val shapesJSON = shapesGraph(validations, messageStyle)
+    val jsLibrary = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
 
     /*
     println("\n\nGRAPH")
@@ -224,8 +225,16 @@ class Validation(platform: Platform) {
     println("\n\nVALIDATION")
     println(shapesJSON)
     println("===========================")
+    println(jsLibrary)
+    println("===========================")
     */
 
+    jsLibrary match {
+      case Some(code) => {
+        platform.validator.registerLibrary(JSONLDEmitter.validationLibraryUrl, code);
+      }
+      case _          => // ignore
+    }
     for {
       shaclReport <- platform.validator.report(
         modelJSON, "application/ld+json",

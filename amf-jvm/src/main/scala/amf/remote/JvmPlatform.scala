@@ -59,6 +59,10 @@ class JvmPlatform extends Platform {
   /** Return temporary directory. */
   override def tmpdir(): String = System.getProperty("java.io.tmpdir")
 
+  /** Location where the helper functions for custom validations must be retrieved */
+  override def customValidationLibraryHelperLocation: String = "classpath:validations/amf_validation.js"
+
+
   override def resolvePath(path: String): String = new URI(path).normalize.toString
 
   override val dialectsRegistry = JVMDialectRegistry(this)

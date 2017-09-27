@@ -35,4 +35,11 @@ trait SHACLValidator {
     */
   def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport]
 
+  /**
+    * Registers a library in the validator
+    * @param url
+    * @param code
+    * @return
+    */
+  def registerLibrary(url: String, code: String): Unit
 }

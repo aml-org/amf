@@ -1,0 +1,24 @@
+#%Validation Profile 1.0
+
+profile: Test Profile
+
+description: Test profile that ignores validations about schemes
+
+extends: RAML
+
+info:
+  - my_custom_validation
+
+disabled:
+  - amf-parser.raml-schemes
+
+validations:
+
+  my_custom_validation:
+    message: This is a function constraint
+    targetClass: schema.WebAPI
+    functionConstraint:
+      code: |
+        function(webapi) {
+          return webapi["raml-http:scheme"].length === 1;
+        }

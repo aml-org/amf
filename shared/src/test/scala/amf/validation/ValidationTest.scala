@@ -1,9 +1,8 @@
 package amf.validation
 
-import amf.common.Tests.checkDiff
 import amf.client.GenerationOptions
+import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.document.Document
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
@@ -22,7 +21,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
   val vocabulariesPath = "file://shared/src/test/resources/vocabularies/"
   val examplesPath = "file://shared/src/test/resources/validations/"
 
-  test("WOA Loading and serializing validations") {
+  test("Loading and serializing validations") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
     val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
@@ -99,6 +98,35 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     } yield {
       assert(report.conforms)
       assert(report.results.isEmpty)
+    }
+  }
+
+  test("HERE_HERE Custom function validation success test") {
+
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_success.raml")
+      report <- validation.validate(model, "Test Profile")
+    } yield {
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("HERE_HERE Custom function validation failure test") {
+
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
+      report <- validation.validate(model, "Test Profile")
+    } yield {
+      assert(report.conforms)
+      assert(report.results.length == 1)
+      assert(report.results.head.validationId == "my_custom_validation")
     }
   }
 

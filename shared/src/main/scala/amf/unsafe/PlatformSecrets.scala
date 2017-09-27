@@ -23,6 +23,15 @@ class TrunkValidator extends SHACLValidator {
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) = throw new Exception("Error, validation is not supported")
 
   override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) = throw new Exception("Error, validation is not supported")
+
+  /**
+    * Registers a library in the validator
+    *
+    * @param url
+    * @param code
+    * @return
+    */
+  override def registerLibrary(url: String, code: String): Unit = throw new Exception("Error, validation is not supported")
 }
 
 case class TrunkPlatform(content: String) extends Platform {

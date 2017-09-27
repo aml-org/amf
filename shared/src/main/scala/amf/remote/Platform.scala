@@ -35,6 +35,9 @@ trait Platform {
   /** Resolve specified url. */
   protected def fetchHttp(url: String): Future[Content]
 
+  /** Location where the helper functions for custom validations must be retrieved */
+  protected def customValidationLibraryHelperLocation: String = "http://raml.org/amf/validation.js"
+
   /** Write specified content on given url. */
   def write(url: String, content: String): Future[String] = {
     url match {

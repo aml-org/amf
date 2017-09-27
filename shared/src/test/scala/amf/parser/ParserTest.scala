@@ -132,6 +132,8 @@ class ParserTest extends FunSuite {
       override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = throw new Exception("Validation not supported")
 
       override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport] = throw new Exception("Validation not supported")
+
+      override def registerLibrary(url: String, code: String): Unit = throw new Exception("Validation not supported")
     }
   }
 }

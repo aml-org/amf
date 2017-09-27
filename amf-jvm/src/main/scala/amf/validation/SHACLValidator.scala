@@ -1,12 +1,14 @@
 package amf.validation
 
+import java.io.{InputStreamReader, Reader, StringReader}
 import java.nio.charset.Charset
 
 import amf.validation.core.ValidationReport
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
-import org.apache.jena.rdf.model.Model
+import org.apache.jena.rdf.model.{Model, Resource}
 import org.apache.jena.util.FileUtils
+import org.topbraid.shacl.js.{JSScriptEngine, JSScriptEngineFactory, NashornScriptEngine, SHACLScriptEngineManager}
 import org.topbraid.shacl.validation.ValidationUtil
 import org.topbraid.spin.util.JenaUtil
 
@@ -18,6 +20,9 @@ import scala.concurrent.{Future, Promise}
   */
 
 class SHACLValidator extends amf.validation.core.SHACLValidator {
+
+  var functionUrl: Option[String] = None
+  var functionCode: Option[String] = None
 
   val formats = Map(
     "application/ld+json" -> "JSON-LD",
@@ -31,8 +36,18 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
     val promise = Promise[String]()
     val dataModel = loadModel(StringUtils.chomp(data), dataMediaType)
     val shapesModel = loadModel(StringUtils.chomp(shapes), shapesMediaType)
-    val report = ValidationUtil.validateModel(dataModel, shapesModel, false)
-    val output = RDFPrinter(report.getModel, "JSON-LD")
+    loadLibrary()
+    val res = SHACLScriptEngineManager.begin()
+    var report: Option[Resource] = None
+    try {
+      SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
+      report = Some(ValidationUtil.validateModel(dataModel, shapesModel, false))
+
+    } finally {
+      SHACLScriptEngineManager.end(res)
+    }
+
+    val output = RDFPrinter(report.get.getModel, "JSON-LD")
     promise.success(output)
     promise.future
 
@@ -51,4 +66,39 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
   override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport] =
     validate(data, dataMediaType, shapes, shapesMediaType).map(new JVMValidationReport(_))
 
+  /**
+    * Registers a library in the validator
+    *
+    * @param url
+    * @param code
+    * @return
+    */
+  override def registerLibrary(url: String, code: String): Unit = {
+    functionUrl = Some(url)
+    functionCode = Some(code)
+  }
+
+
+  protected def loadLibrary(): Unit = {
+    JSScriptEngineFactory.set(new JSScriptEngineFactory() {
+      override def createScriptEngine: JSScriptEngine = new CachedScriptEngine(functionUrl, functionCode)
+    })
+  }
+
+}
+
+
+class CachedScriptEngine(functionUrl: Option[String], functionCode: Option[String]) extends org.topbraid.shacl.js.NashornScriptEngine() {
+    @throws[Exception]
+  override protected def createScriptReader(url: String): Reader = {
+    if (NashornScriptEngine.DASH_JS.equals(url)) {
+      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/etc/dash.js"))
+    } else if (NashornScriptEngine.RDFQUERY_JS.equals(url)) {
+      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/etc/rdfquery.js"))
+    } else if (functionUrl.isDefined && functionUrl.get.equals(functionUrl.get)) {
+      new StringReader(functionCode.get)
+    } else {
+      new InputStreamReader(new java.net.URL(url).openStream)
+    }
+  }
 }

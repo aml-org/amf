@@ -11,6 +11,9 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 @JSExportTopLevel("SHACLValidator")
 class SHACLValidator extends amf.validation.core.SHACLValidator {
 
+  var functionUrl: Option[String] = None
+  var functionCode: Option[String] = None
+
   def nativeShacl: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
     throw new Exception("Cannot find global SHACLValidator object")
   }  else {
@@ -20,6 +23,7 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
     val promise = Promise[String]()
     val validator = js.Dynamic.newInstance(nativeShacl)()
+    loadLibrary(validator)
     validator.validate(data, dataMediaType, shapes, shapesMediaType, { (e: js.Error, report: js.Dynamic) =>
       if (js.isUndefined(e) || e == null) {
         promise.success(js.JSON.stringify(report))
@@ -45,6 +49,7 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
   override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport] = {
     val promise = Promise[ValidationReport]()
     val validator = js.Dynamic.newInstance(nativeShacl)()
+    loadLibrary(validator)
     validator.validate(data, dataMediaType, shapes, shapesMediaType, { (e: js.Error, report: js.Dynamic) =>
       if (js.isUndefined(e) || e == null) {
         val result = new JSValidationReport(report)
@@ -67,4 +72,24 @@ class SHACLValidator extends amf.validation.core.SHACLValidator {
   @JSExport("report")
   def reportJS(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): js.Promise[ValidationReport] =
     report(data, dataMediaType, shapes, shapesMediaType).toJSPromise
+
+  /**
+    * Registers a library in the validator
+    *
+    * @param url
+    * @param code
+    * @return
+    */
+  override def registerLibrary(url: String, code: String): Unit = {
+    this.functionUrl = Some(url)
+    this.functionCode = Some(code)
+  }
+
+
+  protected def loadLibrary(validator: js.Dynamic): Unit = {
+    if (functionCode.isDefined && functionUrl.isDefined) {
+      validator.registerJSCode(functionUrl.get, functionCode.get)
+    }
+  }
+
 }

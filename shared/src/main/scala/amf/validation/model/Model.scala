@@ -1,6 +1,7 @@
 package amf.validation.model
 
 import amf.domain.dialects.DomainEntity
+import amf.vocabulary.Namespace
 
 trait DialectWrapper {
   def extractString(node: DomainEntity, property: String): Option[String] = {
@@ -35,6 +36,18 @@ case class FunctionConstraint(message: Option[String],
                               libraries: Seq[String] = Seq(),
                               functionName: Option[String] = None
                              ) {
+
+  def constraintId(validationId: String) = s"${validationId}Constraint"
+  def validatorId(validationId: String) = s"${validationId}Validator"
+  def validatorPath(validationId: String) = s"${validationId}Path"
+  def validatorArgument(validationId: String) = "$" + validatorPath(validationId).split("#").last
+  def computeFunctionName(validationId: String) = functionName match {
+    case Some(fnName) => fnName
+    case _            => {
+      val localName = validationId.split("/").last.split("#").last
+      s"${localName.replace("-","_").replace(".","_")}FnName"
+    }
+  }
 }
 
 object FunctionConstraint extends DialectWrapper {
@@ -93,7 +106,19 @@ case class ValidationSpecification(name: String,
                                    propertyConstraints: Seq[PropertyConstraint] = Seq.empty,
                                    nodeConstraints: Seq[NodeConstraint] = Seq.empty,
                                    functionConstraint: Option[FunctionConstraint] = None
-                                  ) {}
+                                  ) {
+
+  def id(): String = {
+    if (name.startsWith("http://") || name.startsWith("https://")) {
+      name
+    } else {
+      Namespace.expand(name).iri() match {
+        case s if s.startsWith("http://") || s.startsWith("https://") => s
+        case s  => (Namespace.Data + s).iri()
+      }
+    }
+  }
+}
 
 object ValidationSpecification extends DialectWrapper {
   def apply(node: DomainEntity): ValidationSpecification = {
