@@ -1,12 +1,18 @@
 package amf.spec.common
 
 import amf.domain.Annotation.LexicalInformation
+import amf.domain.`abstract`.{
+  AbstractDeclaration,
+  ParametrizedDeclaration,
+  ParametrizedResourceType,
+  ParametrizedTrait
+}
 import amf.domain.extensions.{
-DataNode,
-DomainExtension,
-ArrayNode => DataArrayNode,
-ObjectNode => DataObjectNode,
-ScalarNode => DataScalarNode
+  DataNode,
+  DomainExtension,
+  ArrayNode => DataArrayNode,
+  ObjectNode => DataObjectNode,
+  ScalarNode => DataScalarNode
 }
 import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
 import amf.model.AmfScalar
@@ -17,6 +23,7 @@ import amf.vocabulary.Namespace
 import org.yaml.model.YType
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 trait AnnotationFormat {}
 
@@ -85,7 +92,7 @@ trait BaseSpecEmitter {
   }
 
   case class EntryEmitter(key: String, value: String, tag: YType = YType.Str, position: Position = Position.ZERO)
-    extends Emitter {
+      extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         raw(key)
@@ -109,12 +116,12 @@ trait BaseSpecEmitter {
   }
 
   case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering, format: AnnotationFormat)
-    extends Emitter {
+      extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         format match {
           case RamlAnnotationFormat => raw("(" + domainExtension.definedBy.name + ")")
-          case OasAnnotationFormat => raw("x-" + domainExtension.definedBy.name)
+          case OasAnnotationFormat  => raw("x-" + domainExtension.definedBy.name)
         }
 
         Option(domainExtension.extension).foreach { dataNode =>
@@ -137,17 +144,17 @@ trait BaseSpecEmitter {
   }
 
   case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends Emitter {
-    private val xsdString: String = (Namespace.Xsd + "string").iri()
+    private val xsdString: String  = (Namespace.Xsd + "string").iri()
     private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
-    private val xsdFloat: String = (Namespace.Xsd + "float").iri()
+    private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
     private val xsdBoolean: String = (Namespace.Xsd + "boolean").iri()
-    private val xsdNil: String = (Namespace.Xsd + "nil").iri()
+    private val xsdNil: String     = (Namespace.Xsd + "nil").iri()
 
     override def emit(): Unit = {
       dataNode match {
         case scalar: DataScalarNode => emitScalar(scalar)
-        case array: DataArrayNode => emitArray(array)
-        case obj: DataObjectNode => emitObject(obj)
+        case array: DataArrayNode   => emitArray(array)
+        case obj: DataObjectNode    => emitObject(obj)
       }
     }
 
@@ -169,20 +176,123 @@ trait BaseSpecEmitter {
 
     def emitScalar(scalar: DataScalarNode): Unit = {
       scalar.dataType match {
-        case Some(t) if t == xsdString => raw(scalar.value)
+        case Some(t) if t == xsdString  => raw(scalar.value)
         case Some(t) if t == xsdInteger => raw(scalar.value, YType.Int)
-        case Some(t) if t == xsdFloat => raw(scalar.value, YType.Float)
+        case Some(t) if t == xsdFloat   => raw(scalar.value, YType.Float)
         case Some(t) if t == xsdBoolean => raw(scalar.value, YType.Bool)
-        case Some(t) if t == xsdNil => raw("null")
-        case _ => raw(scalar.value)
+        case Some(t) if t == xsdNil     => raw("null")
+        case _                          => raw(scalar.value)
       }
     }
 
     override def position(): Position = pos(dataNode.annotations)
   }
 
+  case class ExtendsEmitter(prefix: String, field: FieldEntry, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+      val result = ListBuffer[Emitter]()
+      val resourceTypes: Seq[ParametrizedResourceType] = field.array.values.collect {
+        case a: ParametrizedResourceType => a
+      }
+      val traits: Seq[ParametrizedTrait] = field.array.values.collect { case a: ParametrizedTrait => a }
+
+      if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(prefix, resourceTypes, ordering)
+
+      if (traits.nonEmpty) result += TraitExtendsEmitter(prefix, traits, ordering)
+
+      result
+    }
+  }
+
+  case class TraitExtendsEmitter(prefix: String, traits: Seq[ParametrizedTrait], ordering: SpecOrdering)
+      extends Emitter {
+    override def emit(): Unit = {
+      entry { () =>
+        raw(prefix + "is")
+
+        array { () =>
+          val result = ListBuffer[Emitter]()
+
+          traits.foreach(t => result += ParametrizedDeclarationEmitter(t, ordering))
+
+          traverse(ordering.sorted(result))
+        }
+      }
+    }
+
+    override def position(): Position = traits.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
+  }
+
+  case class EndPointExtendsEmitter(prefix: String,
+                                    resourceTypes: Seq[ParametrizedResourceType],
+                                    ordering: SpecOrdering)
+      extends Emitter {
+    override def emit(): Unit = {
+      entry { () =>
+        raw(prefix + "type")
+        ParametrizedDeclarationEmitter(resourceTypes.head, ordering).emit()
+      }
+    }
+
+    override def position(): Position =
+      resourceTypes.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
+  }
+
+  case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)
+      extends Emitter {
+    override def emit(): Unit = {
+      if (declaration.variables.nonEmpty) {
+        map { () =>
+          entry { () =>
+            val result = ListBuffer[Emitter]()
+
+            declaration.variables.foreach(variable =>
+              result += EntryEmitter(variable.name, variable.value, position = pos(variable.annotations)))
+
+            raw(declaration.name)
+            map { () =>
+              traverse(ordering.sorted(result))
+            }
+          }
+        }
+      } else {
+        raw(declaration.name)
+      }
+    }
+
+    override def position(): Position = pos(declaration.annotations)
+  }
+
+  case class AbstractDeclarationsEmitter(key: String, declarations: Seq[AbstractDeclaration], ordering: SpecOrdering)
+      extends Emitter {
+    override def emit(): Unit = {
+      entry { () =>
+        raw(key)
+        map { () =>
+          traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering))))
+        }
+      }
+    }
+
+    override def position(): Position = declarations.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+  }
+
+  case class AbstractDeclarationEmitter(declaration: AbstractDeclaration, ordering: SpecOrdering) extends Emitter {
+    override def position(): Position = pos(declaration.annotations)
+
+    override def emit(): Unit = {
+      entry { () =>
+        val name = Option(declaration.name)
+          .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
+
+        raw(name)
+        DataNodeEmitter(declaration.dataNode, ordering).emit()
+      }
+    }
+  }
+
   case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, ordering: SpecOrdering) extends Emitter {
-    val annotations: Annotations = dataNode.propertyAnnotations(property)
+    val annotations: Annotations     = dataNode.propertyAnnotations(property)
     val propertyValue: Seq[DataNode] = dataNode.properties(property)
 
     override def emit(): Unit = {

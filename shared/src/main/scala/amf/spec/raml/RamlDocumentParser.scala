@@ -16,7 +16,7 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.Shape
-import amf.spec.common.{AbstractVariables, AnnotationParser, DataNodeParser}
+import amf.spec.common.AnnotationParser
 import amf.spec.common.BaseSpecParser._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
@@ -250,34 +250,6 @@ case class EndpointParser(entry: YMapEntry,
         entries.foreach(EndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
       }
     )
-  }
-}
-
-case class ParametrizedDeclarationParser(value: YValue,
-                                         producer: String => ParametrizedDeclaration,
-                                         declarations: Map[String, AbstractDeclaration]) {
-  def parse(): ParametrizedDeclaration = {
-    value match {
-      case map: YMap =>
-        // TODO is it always the first child?
-        val entry = map.entries.head
-
-        val name = entry.key.value.toScalar.text
-        val declaration =
-          producer(name).add(Annotations(value)).set(ParametrizedDeclarationModel.Target, declarations(name).id)
-        val variables = entry.value.value.toMap.entries.map(
-          variableEntry =>
-            VariableValue(variableEntry)
-              .withName(variableEntry.key.value.toScalar.text)
-              .withValue(variableEntry.value.value.toScalar.text))
-
-        declaration.withVariables(variables)
-      case scalar: YScalar =>
-        producer(scalar.text)
-          .add(Annotations(value))
-          .set(ParametrizedDeclarationModel.Target, declarations(scalar.text).id)
-      case _ => throw new Exception("Invalid model extension.")
-    }
   }
 }
 
@@ -730,19 +702,5 @@ class RamlSpecParser(val root: Root) {
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })
     }
-  }
-}
-
-case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, entry: YMapEntry) {
-  def parse(): AbstractDeclaration = {
-    val key        = entry.key.value.toScalar.text
-    val parameters = AbstractVariables()
-    val dataNode   = DataNodeParser(entry.value, parameters, Some(parent + s"/$key")).parse()
-
-    declaration.withName(key).adopted(parent).withDataNode(dataNode)
-
-    parameters.ifNonEmpty(p => declaration.withVariables(p))
-
-    declaration
   }
 }

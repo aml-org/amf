@@ -1,18 +1,20 @@
 package amf.spec.common
 
 import amf.domain.Annotation.ExplicitField
+import amf.domain.`abstract`.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.domain.{Annotations, CreativeWork, License, Organization}
+import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
 import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
-import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
 import scala.collection.mutable
 
 /**
-  * Created by pedro.colunga on 9/15/17.
+  * Base spec parser.
   */
 private[spec] object BaseSpecParser {
 
@@ -144,6 +146,48 @@ private[spec] object BaseSpecParser {
       })
 
       serializer
+    }
+  }
+
+  case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, entry: YMapEntry) {
+    def parse(): AbstractDeclaration = {
+      val key        = entry.key.value.toScalar.text
+      val parameters = AbstractVariables()
+      val dataNode   = DataNodeParser(entry.value, parameters, Some(parent + s"/$key")).parse()
+
+      declaration.withName(key).adopted(parent).withDataNode(dataNode)
+
+      parameters.ifNonEmpty(p => declaration.withVariables(p))
+
+      declaration
+    }
+  }
+
+  case class ParametrizedDeclarationParser(value: YValue,
+                                           producer: String => ParametrizedDeclaration,
+                                           declarations: Map[String, AbstractDeclaration]) {
+    def parse(): ParametrizedDeclaration = {
+      value match {
+        case map: YMap =>
+          // TODO is it always the first child?
+          val entry = map.entries.head
+
+          val name = entry.key.value.toScalar.text
+          val declaration =
+            producer(name).add(Annotations(value)).set(ParametrizedDeclarationModel.Target, declarations(name).id)
+          val variables = entry.value.value.toMap.entries.map(
+            variableEntry =>
+              VariableValue(variableEntry)
+                .withName(variableEntry.key.value.toScalar.text)
+                .withValue(variableEntry.value.value.toScalar.text))
+
+          declaration.withVariables(variables)
+        case scalar: YScalar =>
+          producer(scalar.text)
+            .add(Annotations(value))
+            .set(ParametrizedDeclarationModel.Target, declarations(scalar.text).id)
+        case _ => throw new Exception("Invalid model extension.")
+      }
     }
   }
 

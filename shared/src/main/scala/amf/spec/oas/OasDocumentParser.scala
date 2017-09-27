@@ -12,6 +12,7 @@ import amf.domain.Annotation.{
   _
 }
 import amf.domain._
+import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain._
@@ -202,6 +203,20 @@ case class EndpointParser(entry: YMapEntry,
       }
     )
 
+    map.key(
+      "x-type",
+      entry =>
+        ParametrizedDeclarationParser(entry.value.value, endpoint.withResourceType, declarations.resourceTypes).parse()
+    )
+
+    map.key(
+      "x-is",
+      entry => {
+        entry.value.value.toSequence.values.map(value =>
+          ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.traits).parse())
+      }
+    )
+
     collector += endpoint
 
     AnnotationParser(endpoint, map).parse()
@@ -306,6 +321,16 @@ case class OperationParser(entry: YMapEntry,
       entry => {
         val value = ArrayNode(entry.value.value.toSequence)
         operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
+      }
+    )
+
+    map.key(
+      "x-is",
+      entry => {
+        val traits = entry.value.value.toSequence.nodes.map(value => {
+          ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+        })
+        if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
       }
     )
 
@@ -641,9 +666,43 @@ case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) 
 
 class OasSpecParser(root: Root) {
 
-  protected def parseDeclares(map: YMap): Seq[DomainElement] =
-    parseTypeDeclarations(map, root.location + "#/declarations") ++
-      parseAnnotationTypeDeclarations(map, root.location + "#/declarations")
+  protected def parseDeclares(map: YMap): Seq[DomainElement] = {
+    val types = parseTypeDeclarations(map, root.location + "#/declarations")
+
+    types ++
+      parseAnnotationTypeDeclarations(map, root.location + "#/declarations", types) ++
+      parseResourceTypeDeclarations(map, root.location + "#/declarations") ++
+      parseTraitDeclarations(map, root.location + "#/declarations")
+  }
+
+  def parseTraitDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+    val traits = ListBuffer[AbstractDeclaration]()
+
+    map.key(
+      "x-traits",
+      e => {
+        e.value.value.toMap.entries.map(traitEntry =>
+          traits += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry).parse())
+      }
+    )
+
+    traits
+  }
+
+  def parseResourceTypeDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+    val resourceTypes = ListBuffer[AbstractDeclaration]()
+
+    map.key(
+      "x-resourceTypes",
+      e => {
+        e.value.value.toMap.entries.map(resourceEntry =>
+          resourceTypes += AbstractDeclarationParser(ResourceType(resourceEntry), customProperties, resourceEntry)
+            .parse())
+      }
+    )
+
+    resourceTypes
+  }
 
   def parseTypeDeclarations(map: YMap, typesPrefix: String): Seq[Shape] = {
     val types = ListBuffer[Shape]()
@@ -666,7 +725,9 @@ class OasSpecParser(root: Root) {
     types
   }
 
-  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Seq[CustomDomainProperty] = {
+  def parseAnnotationTypeDeclarations(map: YMap,
+                                      customProperties: String,
+                                      types: Seq[Shape]): Seq[CustomDomainProperty] = {
     val customDomainProperties = ListBuffer[CustomDomainProperty]()
 
     map.key(
@@ -679,7 +740,7 @@ class OasSpecParser(root: Root) {
                                                        customProperty
                                                          .withName(typeName)
                                                          .adopted(customProperties),
-                                                     Declarations(customDomainProperties)).parse()
+                                                     Declarations(types ++ customDomainProperties)).parse()
           customDomainProperties += customProperty.add(DeclaredElement())
         })
       }

@@ -157,6 +157,8 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
+          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
+
           val parameters = endPointParameters()
 
           if (parameters.nonEmpty)
@@ -260,6 +262,8 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
           fs.entry(OperationModel.Documentation).map(f => result += CreativeWorkEmitter("externalDocs", f, ordering))
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
+
+          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
 
           Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, endpointPayloadEmitted))
 
@@ -675,6 +679,12 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       if (declarations.annotations.nonEmpty)
         result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
+
+      if (declarations.resourceTypes.nonEmpty)
+        result += AbstractDeclarationsEmitter("x-resourceTypes", declarations.resourceTypes.values.toSeq, ordering)
+
+      if (declarations.traits.nonEmpty)
+        result += AbstractDeclarationsEmitter("x-traits", declarations.traits.values.toSeq, ordering)
 
       result
     }

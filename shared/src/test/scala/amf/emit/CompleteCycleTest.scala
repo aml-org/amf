@@ -48,6 +48,18 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("traits-resource-types.raml", "traits-resource-types.raml", RamlYamlHint, Raml)
   }
 
+  test("Traits and resourceTypes oas to amf test") {
+    assertCycle("traits-resource-types.json", "traits-resource-types.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Traits and resourceTypes oas to oas test") {
+    assertCycle("traits-resource-types.json", "traits-resource-types.json", OasJsonHint, Oas)
+  }
+
+  test("Traits and resourceTypes raml to oas test") {
+    assertCycle("traits-resource-types.raml", "traits-resource-types.raml.json", RamlYamlHint, Oas)
+  }
+
 //  test("Full cycle raml to amf test") {
 //    cycle("full-example.raml", RamlYamlHint, Amf)
 //  }

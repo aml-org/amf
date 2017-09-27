@@ -25,7 +25,11 @@ object WellKnownAnnotation {
     "(tuple)"               -> true,
     "(format)"              -> true,
     "(exclusiveMaximum)"    -> true,
-    "(exclusiveMinimum)"    -> true
+    "(exclusiveMinimum)"    -> true,
+    "x-traits"              -> true,
+    "x-resourceTypes"       -> true,
+    "x-is"                  -> true,
+    "x-type"                -> true
   )
 
   def normalAnnotation(field: String): Boolean =

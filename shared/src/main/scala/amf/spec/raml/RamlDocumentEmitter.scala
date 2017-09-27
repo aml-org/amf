@@ -5,7 +5,6 @@ import amf.compiler.RamlHeader
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.`abstract`._
 import amf.domain.extensions.{
   ArrayNode => DataArrayNode,
   ObjectNode => DataObjectNode,
@@ -204,7 +203,7 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
           fs.entry(EndPointModel.UriParameters).map(f => result += ParametersEmitter("uriParameters", f, ordering))
 
-          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering).emitters())
+          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
@@ -227,78 +226,6 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
     }
 
     override def position(): Position = pos(endpoint.annotations)
-  }
-
-  case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering) {
-    def emitters(): Seq[Emitter] = {
-      val result = ListBuffer[Emitter]()
-      val resourceTypes: Seq[ParametrizedResourceType] = field.array.values.collect {
-        case a: ParametrizedResourceType => a
-      }
-      val traits: Seq[ParametrizedTrait] = field.array.values.collect { case a: ParametrizedTrait => a }
-
-      if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(resourceTypes, ordering)
-
-      if (traits.nonEmpty) result += TraitExtendsEmitter(traits, ordering)
-
-      result
-    }
-  }
-
-  case class TraitExtendsEmitter(traits: Seq[ParametrizedTrait], ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw("is")
-
-        array { () =>
-          val result = ListBuffer[Emitter]()
-
-          traits.foreach(t => result += ParametrizedDeclarationEmitter(t, ordering))
-
-          traverse(ordering.sorted(result))
-        }
-      }
-    }
-
-    override def position(): Position = traits.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
-  }
-
-  case class EndPointExtendsEmitter(resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw("type")
-        ParametrizedDeclarationEmitter(resourceTypes.head, ordering).emit()
-      }
-    }
-
-    override def position(): Position =
-      resourceTypes.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
-  }
-
-  case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)
-      extends Emitter {
-    override def emit(): Unit = {
-      if (declaration.variables.nonEmpty) {
-        map { () =>
-          entry { () =>
-            val result = ListBuffer[Emitter]()
-
-            declaration.variables.foreach(variable =>
-              result += EntryEmitter(variable.name, variable.value, position = pos(variable.annotations)))
-
-            raw(declaration.name)
-            map { () =>
-              traverse(ordering.sorted(result))
-            }
-          }
-        }
-      } else {
-        raw(declaration.name)
-      }
-    }
-
-    override def position(): Position = pos(declaration.annotations)
   }
 
   case class OperationEmitter(operation: Operation, ordering: SpecOrdering) extends Emitter {
@@ -324,7 +251,7 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering).emitters())
+          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
           result ++= RamlAnnotationsEmitter(operation, ordering).emitters
 
@@ -635,20 +562,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
-  case class AbstractDeclarationsEmitter(key: String, declarations: Seq[AbstractDeclaration], ordering: SpecOrdering)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(key)
-        map { () =>
-          traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering))))
-        }
-      }
-    }
-
-    override def position(): Position = declarations.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
-  }
-
   case class DeclaredTypesEmitters(types: Seq[Shape], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       entry { () =>
@@ -660,20 +573,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
-  }
-
-  case class AbstractDeclarationEmitter(declaration: AbstractDeclaration, ordering: SpecOrdering) extends Emitter {
-    override def position(): Position = pos(declaration.annotations)
-
-    override def emit(): Unit = {
-      entry { () =>
-        val name = Option(declaration.name)
-          .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
-
-        raw(name)
-        DataNodeEmitter(declaration.dataNode, ordering).emit()
-      }
-    }
   }
 
   case class NamedTypeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {
