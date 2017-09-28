@@ -5,23 +5,32 @@ import amf.vocabulary.Namespace
 
 trait DialectWrapper {
   def extractString(node: DomainEntity, property: String): Option[String] = {
-    val profileProperty = node.definition.props(property)
-    node.string(profileProperty)
+    node.definition.props.get(property) match {
+      case Some(profileProperty) => node.string(profileProperty)
+      case _                     => None
+    }
   }
 
   def extractStrings(node: DomainEntity, property: String): Seq[String] = {
-    val profileProperty = node.definition.props(property)
-    node.strings(profileProperty)
+    node.definition.props.get(property) match {
+      case Some(profileProperty) => node.strings(profileProperty)
+      case None                  => Seq()
+    }
   }
 
   def mapEntities[T](node: DomainEntity, property: String, f: (DomainEntity) => T): Seq[T] = {
-    val profileProperty = node.definition.props(property)
-    node.entities(profileProperty).map(f)
+    node.definition.props.get(property) match {
+      case Some(profileProperty) => node.entities(profileProperty).map(f)
+      case None                  => Seq()
+    }
   }
 
   def mapEntity[T](node: DomainEntity, property: String, f: (DomainEntity) => T): Option[T] = {
-    val profileProperty = node.definition.props(property)
-    node.entity(profileProperty).map(f)
+    node.definition.props.get(property) match {
+      case Some(profileProperty) => node.entity(profileProperty).map(f)
+      case _                     => None
+    }
+
   }
 
   def mandatory[T](message: String, x: Option[T]): T = x match {

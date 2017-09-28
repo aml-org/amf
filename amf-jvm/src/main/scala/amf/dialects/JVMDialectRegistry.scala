@@ -1,9 +1,9 @@
 package amf.dialects
 
 import amf.compiler.AMFCompiler
-import amf.remote.{Platform, RamlYamlHint}
+import amf.remote.{Context, Platform, RamlYamlHint}
 
-import  scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class JVMDialectRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
   override def registerDialect(uri: String) =  {
@@ -14,6 +14,13 @@ class JVMDialectRegistry(platform: Platform) extends PlatformDialectRegistry(pla
         add(dialect)
         dialect
       }
+  }
+
+  override def registerDialect(url: String, dialectCode: String) = {
+    platform.cacheResourceText(url, dialectCode)
+    val res = registerDialect(url)
+    platform.removeCacheResourceText(url)
+    res
   }
 }
 

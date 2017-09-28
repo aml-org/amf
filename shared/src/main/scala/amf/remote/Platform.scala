@@ -1,9 +1,11 @@
 package amf.remote
 
 import amf.dialects.PlatformDialectRegistry
+import amf.lexer.CharSequenceStream
 import amf.validation.core.SHACLValidator
 
-import scala.concurrent.Future
+import scala.collection.mutable
+import scala.concurrent.{Future, Promise}
 
 /**
   *
@@ -13,10 +15,30 @@ trait Platform {
   /** Resolve remote url. */
   def resolve(url: String, context: Option[Context]): Future[Content] = {
     url match {
-      case Http(_, _, _)                       => fetchHttp(url)
-      case File(path)                          => fetchFile(path)
+      case Http(_, _, _)                       => checkCache(url, () => fetchHttp(url))
+      case File(path)                          => checkCache(path, () => fetchFile(path))
       case Relative(path) if context.isDefined => resolve(context.get resolve path, None)
       case _                                   => Future.failed(new Exception(s"Unsupported url: $url"))
+    }
+  }
+
+
+  // Dealing with parsing of strings and HTTP caching
+  val resourceCache: mutable.Map[String,Content] = mutable.HashMap()
+  def cacheResourceText(url: String, text: String, mimeType: Option[String] = None): Unit = {
+    val content = Content(new CharSequenceStream(url, text), url, mimeType)
+    resourceCache += (url -> content)
+  }
+  def removeCacheResourceText(url: String): Option[Content] = resourceCache.remove(url)
+  def resetResourceCache(): Unit = resourceCache.clear()
+
+  def checkCache(url: String, eventualContent: () => Future[Content]): Future[_root_.amf.remote.Content] = {
+    resourceCache.get(url) match {
+      case Some(content) =>
+        val p:Promise[Content] = Promise()
+        p.success(content)
+        p.future
+      case None => eventualContent()
     }
   }
 

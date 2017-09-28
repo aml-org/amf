@@ -12,7 +12,9 @@ class DialectRegistry {
 
   protected var map: Map[String,Dialect] = Map()
 
-  def knowsHeader(h: String): Boolean = map.contains(h.trim)
+  def knowsHeader(h: String): Boolean = {
+    map.contains(h.trim)
+  }
 
   def add(dialect: Dialect): DialectRegistry = {
     map = map + (dialect.header.replace("#","") -> dialect)
@@ -29,6 +31,7 @@ abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {
   add(DialectLanguageDefinition)
 
   def registerDialect(uri: String): Future[Dialect]
+  def registerDialect(uri: String, dialect: String): Future[Dialect]
 }
 
 object DialectRegistry {

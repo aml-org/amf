@@ -10,14 +10,14 @@ import amf.generator.JsonGenerator
 import amf.graph.GraphEmitter
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
-import amf.validation.core.ValidationResult
+import amf.validation.core.{ValidationDialectText, ValidationResult}
 import amf.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.validation.model._
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Future, Promise}
 
 object ValidationProfileNames {
   val AMF  = "AMF"
@@ -108,10 +108,17 @@ object SeverityLevels {
 
 class Validation(platform: Platform) {
 
+  val url = "http://raml.org/dialects/validation.raml"
+
   /**
     * Loads the validation dialect from the provided URL
     */
-  def loadValidationDialect(validationDialectUrl: String): Future[Dialect] = platform.dialectsRegistry.registerDialect(validationDialectUrl)
+  def loadValidationDialect(): Future[Dialect] = {
+    platform.dialectsRegistry.get("%Validation Profile 1.0") match {
+      case Some(dialect) => Promise().success(dialect).future
+      case None          => platform.dialectsRegistry.registerDialect(url, ValidationDialectText.text)
+    }
+  }
 
 
   var profile: Option[ValidationProfile] = None

@@ -45,6 +45,27 @@ However there's work in progress that will be delivered in first version:
 
 To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
 
+### Comand line usage
+You can build a standalone Java executable running the following SBT target:
+
+```bash
+sbt assembly
+```
+This will create a single stand-alone jar located in `target/artifact/amf.jar`.
+
+Using this jar you can execute it passing one of the following commands:
+
+- parse <input_file> -in FORMAT
+- translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
+- validate <input_file> -in FORMAT_IN
+
+An interactive section can be started using the `repl` command.
+
+If you want to parse any other RAML dialect than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
+
+Please refer to the usage of the application for additional commands and explanations.
+
+
 ### JVM artifacts (private repository)
 
 To use, specify dependency. 
