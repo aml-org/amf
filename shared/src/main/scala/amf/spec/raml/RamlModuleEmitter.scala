@@ -23,7 +23,7 @@ case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
     val usageEmitter: Option[ValueEmitter] =
       module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
 
-    //TODO invoke traits end resource types
+    // TODO invoke traits end resource types
 
     emitter.document({ () =>
       comment(RamlHeader.Raml10Library.text)

@@ -15,18 +15,18 @@ import scala.collection.mutable
 /**
   * Created by Pavel Petrochenko on 12/09/17.
   */
-case class Dialect(name:String,
+case class Dialect(name: String,
                    version: String,
                    root: DialectNode,
-                   resolver: ResolverFactory = NullReferenceResolverFactory ) {
+                   resolver: ResolverFactory = NullReferenceResolverFactory) {
   root.dialect = Some(this)
 
   var refiner: Option[Refiner] = None
-  def header: String = ("#%" + name + " " + version).trim
+  def header: String           = ("#%" + name + " " + version).trim
 }
 
 trait ResolverFactory {
-  def resolver(root:Root): ReferenceResolver
+  def resolver(root: Root): ReferenceResolver
 }
 
 object NullReferenceResolverFactory extends ResolverFactory {
@@ -34,11 +34,11 @@ object NullReferenceResolverFactory extends ResolverFactory {
 }
 
 trait LocalNameProviderFactory {
-  def apply(root:DomainEntity): LocalNameProvider
+  def apply(root: DomainEntity): LocalNameProvider
 }
 
 trait ReferenceResolver {
-  def resolve(root: Root,name:String,t:Type): Option[String]
+  def resolve(root: Root, name: String, t: Type): Option[String]
 }
 
 object NullReferenceResolver extends ReferenceResolver {
@@ -46,16 +46,16 @@ object NullReferenceResolver extends ReferenceResolver {
 }
 
 trait LocalNameProvider {
-   def localName(refValue: String, property: DialectPropertyMapping): String
+  def localName(refValue: String, property: DialectPropertyMapping): String
 }
 
 trait Refiner {
-  def refine(root:DomainEntity)
+  def refine(root: DomainEntity)
 }
 
 case class DialectPropertyMapping(name: String,
                                   range: Type,
-                                  unionTypes: Option[List[Type]]=None,
+                                  unionTypes: Option[List[Type]] = None,
                                   required: Boolean = false,
                                   collection: Boolean = false,
                                   referenceTarget: Option[DialectNode] = None,
@@ -67,13 +67,13 @@ case class DialectPropertyMapping(name: String,
                                   namespace: Option[Namespace] = None,
                                   rdfName: Option[String] = None,
                                   jsonld: Boolean = true,
-                                  owningNode: Option[DialectNode]=None,
-                                  scalaNameOverride:Option[String]=None,
-                                  allowInplace: Boolean=false,
-                                  pattern:Option[String]=None,
-                                  enum: Option[Seq[String]]=None,
-                                  minimum: Option[Int]=None,
-                                  maximum: Option[Int]=None) {
+                                  owningNode: Option[DialectNode] = None,
+                                  scalaNameOverride: Option[String] = None,
+                                  allowInplace: Boolean = false,
+                                  pattern: Option[String] = None,
+                                  enum: Option[Seq[String]] = None,
+                                  minimum: Option[Int] = None,
+                                  maximum: Option[Int] = None) {
 
   def isRef: Boolean = referenceTarget.isDefined
 
@@ -90,8 +90,8 @@ case class DialectPropertyMapping(name: String,
 
   def adopt(dialectNode: DialectNode): DialectPropertyMapping =
     namespace match {
-      case None => copy(namespace = Some(dialectNode.namespace),owningNode=Option(dialectNode))
-      case _    => copy(owningNode=Option(dialectNode))
+      case None => copy(namespace = Some(dialectNode.namespace), owningNode = Option(dialectNode))
+      case _    => copy(owningNode = Option(dialectNode))
     }
 
   def fieldName: ValueType = this.rdfName match {
@@ -99,21 +99,20 @@ case class DialectPropertyMapping(name: String,
     case _         => namespace.get + name
   }
 
-  def rangeAsDialect:Option[DialectNode] = this.range match {
+  def rangeAsDialect: Option[DialectNode] = this.range match {
     case node: DialectNode => Some(node)
-    case _ => None
+    case _                 => None
   }
 
   def field(): amf.metadata.Field = {
-    val `type` = if (collection || isMap) Type.Array(range)
-                 else range
-
-
+    val `type` =
+      if (collection || isMap) Type.Array(range)
+      else range
 
     Field(`type`, fieldName, jsonld)
   }
 
-  def iri():String=this.fieldName.iri();
+  def iri(): String = this.fieldName.iri();
 
 }
 
@@ -122,10 +121,11 @@ trait TypeCalculator {
 }
 
 class FieldValueDiscriminator(val dialectPropertyMapping: DialectPropertyMapping,
-                              val valueMap: mutable.Map[String,ValueType] = new mutable.ListMap()) extends TypeCalculator{
+                              val valueMap: mutable.Map[String, ValueType] = new mutable.ListMap())
+    extends TypeCalculator {
 
   def add(n: String, v: ValueType): FieldValueDiscriminator = {
-    valueMap.put(n,v)
+    valueMap.put(n, v)
     this
   }
 
@@ -138,7 +138,7 @@ class FieldValueDiscriminator(val dialectPropertyMapping: DialectPropertyMapping
     domainEntity.fields.get(field) match {
       case scalar: AmfScalar => calcScalar(scalar)
       case arr: AmfArray     => calcArray(arr)
-      case _ => List()
+      case _                 => List()
     }
   }
 
@@ -149,7 +149,7 @@ class FieldValueDiscriminator(val dialectPropertyMapping: DialectPropertyMapping
     } else {
       defaultValue match {
         case Some(default) => List(default)
-        case None => List()
+        case None          => List()
       }
     }
   }
@@ -158,13 +158,13 @@ class FieldValueDiscriminator(val dialectPropertyMapping: DialectPropertyMapping
     var buf: Set[ValueType] = Set()
 
     for {
-      member  <- arr.values
-      iri     <- valueMap.get(member.toString)
+      member <- arr.values
+      iri    <- valueMap.get(member.toString)
     } yield {
       buf += iri
     }
 
-    if (buf.isEmpty && this.defaultValue.isDefined){
+    if (buf.isEmpty && this.defaultValue.isDefined) {
       buf += defaultValue.get
     }
     buf.toList
@@ -173,9 +173,11 @@ class FieldValueDiscriminator(val dialectPropertyMapping: DialectPropertyMapping
 }
 
 object FieldValueDiscriminator {
-  def apply(dialectPropertyMapping: DialectPropertyMapping): FieldValueDiscriminator = apply(dialectPropertyMapping, mutable.Map())
+  def apply(dialectPropertyMapping: DialectPropertyMapping): FieldValueDiscriminator =
+    apply(dialectPropertyMapping, mutable.Map())
 
-  def apply(dialectPropertyMapping: DialectPropertyMapping, valueMap: mutable.Map[String,ValueType]): FieldValueDiscriminator =
+  def apply(dialectPropertyMapping: DialectPropertyMapping,
+            valueMap: mutable.Map[String, ValueType]): FieldValueDiscriminator =
     new FieldValueDiscriminator(dialectPropertyMapping, valueMap)
 }
 
@@ -183,15 +185,16 @@ trait Builtins extends LocalNameProvider with ReferenceResolver {
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = b2id.get(name)
 
-  override def localName(refValue: String, property: DialectPropertyMapping): String = id2b.getOrElse(refValue, refValue)
+  override def localName(refValue: String, property: DialectPropertyMapping): String =
+    id2b.getOrElse(refValue, refValue)
 
-  val b2id: mutable.HashMap[String, String] = mutable.HashMap[String,String]()
-  val id2b: mutable.HashMap[String, String] = mutable.HashMap[String,String]()
-  val id2t: mutable.HashMap[String, Type]   = mutable.HashMap[String,Type]()
+  val b2id: mutable.HashMap[String, String] = mutable.HashMap[String, String]()
+  val id2b: mutable.HashMap[String, String] = mutable.HashMap[String, String]()
+  val id2t: mutable.HashMap[String, Type]   = mutable.HashMap[String, Type]()
 
-  def buitInType(id:String): Option[Type] = id2t.get(id)
+  def buitInType(id: String): Option[Type] = id2t.get(id)
 
-  def add(id:String, builtin:String, t:Type): Builtins = {
+  def add(id: String, builtin: String, t: Type): Builtins = {
     b2id.put(builtin, id)
     id2t.put(id, t)
     id2b.put(id, builtin)
@@ -199,7 +202,7 @@ trait Builtins extends LocalNameProvider with ReferenceResolver {
   }
 }
 
-trait TypeBuiltins extends Builtins{
+trait TypeBuiltins extends Builtins {
   add(TypeBuiltins.STRING, "string", Type.Str)
   add(TypeBuiltins.INTEGER, "integer", Type.Int)
   add(TypeBuiltins.NUMBER, "number", Type.Int)
@@ -209,22 +212,24 @@ trait TypeBuiltins extends Builtins{
   add(TypeBuiltins.ANY, "any", Type.Any)
 }
 
-object TypeBuiltins{
-  val STRING: String  = (Namespace.Xsd +  "string").iri()
-  val INTEGER: String = (Namespace.Xsd +  "integer").iri()
-  val FLOAT: String   = (Namespace.Xsd +  "float").iri()
-  val NUMBER: String  = (Namespace.Xsd +  "float").iri()
-  val BOOLEAN: String = (Namespace.Xsd +  "boolean").iri()
-  val URI: String     = (Namespace.Xsd +  "anyURI").iri()
-  val ANY: String     = (Namespace.Xsd +  "anyType").iri()
+object TypeBuiltins {
+  val STRING: String  = (Namespace.Xsd + "string").iri()
+  val INTEGER: String = (Namespace.Xsd + "integer").iri()
+  val FLOAT: String   = (Namespace.Xsd + "float").iri()
+  val NUMBER: String  = (Namespace.Xsd + "float").iri()
+  val BOOLEAN: String = (Namespace.Xsd + "boolean").iri()
+  val URI: String     = (Namespace.Xsd + "anyURI").iri()
+  val ANY: String     = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(override val root: Root, val externals: List[DialectPropertyMapping]) extends RamlSpecParser(root) with TypeBuiltins  {
+class BasicResolver(override val root: Root, val externals: List[DialectPropertyMapping])
+    extends RamlSpecParser(root)
+    with TypeBuiltins {
 
-  val REGEX_URI = "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
-  private val externalsMap: mutable.HashMap[String,String] = new mutable.HashMap()
-  private var base:String=root.location + "#"
-
+  val REGEX_URI =
+    "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
+  private val externalsMap: mutable.HashMap[String, String] = new mutable.HashMap()
+  private var base: String                                  = root.location + "#"
 
   initReferences(root)
 
@@ -249,30 +254,30 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
       }
     }
 
-
   private def initReferences(root: Root): Unit = {
     // val ast = root.ast.last
     // val entries = Entries(ast)
 
-      root.document.value.foreach { value: YValue =>
-        val entries = value.toMap.entries
+    root.document.value.foreach { value: YValue =>
+      val entries = value.toMap.entries
 
+      for {
+        mapping <- externals
+        node    <- entries.find(_.key.value.toScalar.text == mapping.name)
+      } yield
         for {
-          mapping              <- externals
-          node                 <- entries.find(_.key.value.toScalar.text == mapping.name)
-        } yield for {
-          (alias, nestedEntry) <-  node.value.value.toMap.map
+          (alias, nestedEntry) <- node.value.value.toMap.map
         } yield {
           externalsMap.put(alias, nestedEntry)
         }
 
-        for {
-          entry <- entries.find(_.key.value.toScalar.text == "base")
-          node  = ValueNode(entry.value).string().value
-          if node.isInstanceOf[String]
-        } yield {
-          base = node.asInstanceOf[String]
-        }
+      for {
+        entry <- entries.find(_.key.value.toScalar.text == "base")
+        node = ValueNode(entry.value).string().value
+        if node.isInstanceOf[String]
+      } yield {
+        base = node.asInstanceOf[String]
+      }
     }
   }
 
@@ -285,7 +290,7 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
               case Some(bid) => Some(bid)
               case _         => Some(resolveBasicRef(name, root))
             }
-          case None        => Some(TypeBuiltins.ANY)
+          case None => Some(TypeBuiltins.ANY)
         }
 
       case _ => Some(resolveBasicRef(name, root))
@@ -294,13 +299,14 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
 }
 
 object BasicResolver {
-  def apply(root:Root, externals: List[DialectPropertyMapping]) = new BasicResolver(root, externals)
+  def apply(root: Root, externals: List[DialectPropertyMapping]) = new BasicResolver(root, externals)
 }
 
-class BasicNameProvider(root:DomainEntity, val namespaceDeclarators: List[DialectPropertyMapping]) extends TypeBuiltins {
+class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[DialectPropertyMapping])
+    extends TypeBuiltins {
 
-  val namespaces: mutable.Map[String, String]         = mutable.Map[String,String]()
-  var declarations: mutable.Map[String, DomainEntity] = mutable.Map[String,DomainEntity]()
+  val namespaces: mutable.Map[String, String]         = mutable.Map[String, String]()
+  var declarations: mutable.Map[String, DomainEntity] = mutable.Map[String, DomainEntity]()
 
   {
     for {
@@ -312,9 +318,10 @@ class BasicNameProvider(root:DomainEntity, val namespaceDeclarators: List[Dialec
       namespaces.put(uri, name)
     }
 
-    root.traverse { case (domainEntity: DomainEntity, mapping: DialectPropertyMapping) =>
-      if (mapping.isDeclaration) declarations.put(domainEntity.id, domainEntity)
-      true
+    root.traverse {
+      case (domainEntity: DomainEntity, mapping: DialectPropertyMapping) =>
+        if (mapping.isDeclaration) declarations.put(domainEntity.id, domainEntity)
+        true
     }
   }
 
@@ -336,8 +343,9 @@ class BasicNameProvider(root:DomainEntity, val namespaceDeclarators: List[Dialec
           if (uri.indexOf(root.id) > -1) {
             uri.replace(root.id, "")
           } else {
-            namespaces.find { case (p, _) =>
-              uri.indexOf(p) > -1
+            namespaces.find {
+              case (p, _) =>
+                uri.indexOf(p) > -1
             } match {
               case Some((p, v)) => uri.replace(p, s"$v.")
               case _            => uri
@@ -350,49 +358,54 @@ class BasicNameProvider(root:DomainEntity, val namespaceDeclarators: List[Dialec
 
 class DialectNode(val shortName: String, val namespace: Namespace) extends Type with Obj {
 
-  override val dynamicType: Boolean  = true
-  protected var typeCalculator: Option[TypeCalculator] = None
-  protected val extraTypes:mutable.ListBuffer[ValueType] = mutable.ListBuffer()
-  override val `type`: List[ValueType] = List(ValueType(namespace,shortName))
-  val keyProperty: Option[DialectPropertyMapping] = None
-  var nameProvider: Option[LocalNameProviderFactory] = None
-  val props:mutable.Map[String,DialectPropertyMapping] = new mutable.LinkedHashMap()
-  private [dialects] var dialect: Option[Dialect] = None
+  override val dynamicType: Boolean                       = true
+  protected var typeCalculator: Option[TypeCalculator]    = None
+  protected val extraTypes: mutable.ListBuffer[ValueType] = mutable.ListBuffer()
+  override val `type`: List[ValueType]                    = List(ValueType(namespace, shortName))
+  val keyProperty: Option[DialectPropertyMapping]         = None
+  var nameProvider: Option[LocalNameProviderFactory]      = None
+  val props: mutable.Map[String, DialectPropertyMapping]  = new mutable.LinkedHashMap()
+  private[dialects] var dialect: Option[Dialect]          = None
 
   var id: Option[String] = None
 
-
   def mappings(): List[DialectPropertyMapping] = props.values.toList
 
-  def obj(propertyMapping: String, dialectNode: DialectNode, adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
+  def obj(propertyMapping: String,
+          dialectNode: DialectNode,
+          adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(adapter(DialectPropertyMapping(propertyMapping, dialectNode)))
 
-  def str(propertyMapping: String, adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
+  def str(propertyMapping: String,
+          adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(adapter(DialectPropertyMapping(propertyMapping, Type.Str)))
 
-  def bool(propertyMapping: String, adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
+  def bool(propertyMapping: String,
+           adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(adapter(DialectPropertyMapping(propertyMapping, Type.Bool)))
 
-  def ref(propertyMapping: String, dialectNode :DialectNode, adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
+  def ref(propertyMapping: String,
+          dialectNode: DialectNode,
+          adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(adapter(DialectPropertyMapping(propertyMapping, Type.Iri, referenceTarget = Some(dialectNode))))
 
-  def map(propertyMapping: String, hash: DialectPropertyMapping, node: DialectNode,
+  def map(propertyMapping: String,
+          hash: DialectPropertyMapping,
+          node: DialectNode,
           adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(
       adapter(
-        DialectPropertyMapping(
-          propertyMapping,
-          node, // DialectNode inherits from Type !!!
-          hash = Some(hash))))
-
+        DialectPropertyMapping(propertyMapping,
+                               node, // DialectNode inherits from Type !!!
+                               hash = Some(hash))))
 
   def add(p: DialectPropertyMapping): DialectPropertyMapping = {
     val mapping = p.adopt(this)
     props.put(mapping.name, mapping)
     mapping
- }
+  }
 
-  def withType(t:String): Unit =  extraTypes += ValueType(t)
+  def withType(t: String): Unit = extraTypes += ValueType(t)
 
   def fieldValueDiscriminator(prop: DialectPropertyMapping): FieldValueDiscriminator = {
     val discriminator = FieldValueDiscriminator(prop)

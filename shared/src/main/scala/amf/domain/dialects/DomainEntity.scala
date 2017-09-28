@@ -4,7 +4,8 @@ import amf.domain.{Annotations, DomainElement, Fields}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 
-case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations) extends DomainElement {
+case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations)
+    extends DomainElement {
 
   override def adopted(parent: String): this.type = {
     if (Option(this.id).isEmpty) {
@@ -15,7 +16,7 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
             case '#' => withId(s"$parent$link")
             case _   => withId(s"$parent/$link")
           }
-        case _          =>
+        case _ =>
           withId(parent)
       }
     }
@@ -23,16 +24,16 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
   }
 
   def traverse(visitor: DomainEntityVisitor): Unit =
-      definition.mappings().foreach { mapping =>
-        if (!mapping.isScalar) {
-          val element = fields.get(mapping.field())
-          element match {
-            case array: AmfArray => array.values.foreach(visitElement(visitor, mapping, _))
-            case _ =>
-          }
-          visitElement(visitor, mapping, element)
+    definition.mappings().foreach { mapping =>
+      if (!mapping.isScalar) {
+        val element = fields.get(mapping.field())
+        element match {
+          case array: AmfArray => array.values.foreach(visitElement(visitor, mapping, _))
+          case _               =>
         }
+        visitElement(visitor, mapping, element)
       }
+    }
 
   private def visitElement(visitor: DomainEntityVisitor, mapping: DialectPropertyMapping, element: AmfElement): Unit =
     element match {
@@ -56,18 +57,19 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
 
   def addValue(mapping: DialectPropertyMapping, value: String): Unit = add(mapping.field(), AmfScalar(value))
 
-  private def mappingToStrings(m :DialectPropertyMapping): Seq[Option[String]] =
+  private def mappingToStrings(m: DialectPropertyMapping): Seq[Option[String]] =
     this.fields.get(m.field()) match {
       case scalar: AmfScalar => List(Some(scalar.toString))
 
-      case array: AmfArray   => array.values.map {
-        case scalarMember: AmfScalar => Some(scalarMember.toString)
-        case _ => None
-      }
+      case array: AmfArray =>
+        array.values.map {
+          case scalarMember: AmfScalar => Some(scalarMember.toString)
+          case _                       => None
+        }
 
-      case _                 => List.empty
+      case _ => List.empty
     }
-  def strings(m: DialectPropertyMapping): Seq[String] = mappingToStrings(m).filter(_.isDefined).map(_.get)
+  def strings(m: DialectPropertyMapping): Seq[String]    = mappingToStrings(m).filter(_.isDefined).map(_.get)
   def rawstrings(m: DialectPropertyMapping): Seq[String] = mappingToStrings(m).map(_.getOrElse(""))
 
   def entity(m: DialectPropertyMapping): Option[DomainEntity] =
@@ -76,19 +78,17 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
       case _                    => None
     }
 
-
-  def entities(m:DialectPropertyMapping):Seq[DomainEntity] =
+  def entities(m: DialectPropertyMapping): Seq[DomainEntity] =
     fields.get(m.field()) match {
       case entity: DomainEntity => List(entity)
       case array: AmfArray      => array.values.filter(_.isInstanceOf[DomainEntity]).asInstanceOf[List[DomainEntity]]
       case _                    => List()
     }
 
-  def mapElementWithId(m:DialectPropertyMapping,id:String): Option[DomainEntity] ={
+  def mapElementWithId(m: DialectPropertyMapping, id: String): Option[DomainEntity] = {
     fields.get(m.field()) match {
       case array: AmfArray =>
-        array
-          .values
+        array.values
           .filter(v => v.isInstanceOf[DomainEntity])
           .find { case x: DomainEntity => x.id == id }
           .asInstanceOf[Option[DomainEntity]]
@@ -99,6 +99,6 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
   override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
 }
 
-object DomainEntity{
-  def apply(d:DialectNode): DomainEntity = DomainEntity(None, d, Fields(), Annotations())
+object DomainEntity {
+  def apply(d: DialectNode): DomainEntity = DomainEntity(None, d, Fields(), Annotations())
 }

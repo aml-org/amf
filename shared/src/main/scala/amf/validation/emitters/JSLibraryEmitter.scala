@@ -64,7 +64,7 @@ object JSLibraryEmitter {
     """.stripMargin
 
   def prefixes: String = {
-    "{\n" + Namespace.ns.map { case(prefix, ns) => "  \"" + prefix+"\": \"" + ns.base + "\"" }.mkString(",\n") + "}"
+    "{\n" + Namespace.ns.map { case (prefix, ns) => "  \"" + prefix + "\": \"" + ns.base + "\"" }.mkString(",\n") + "}"
   }
 }
 
@@ -99,9 +99,10 @@ class JSLibraryEmitter {
       val constraint = validation.functionConstraint.get
 
       text +=
-      s"""
+        s"""
         |
-        |function ${constraint.computeFunctionName(validation.id())}($$this, ${constraint.validatorArgument(validation.id())}) {
+        |function ${constraint.computeFunctionName(validation.id())}($$this, ${constraint.validatorArgument(
+             validation.id())}) {
         |  var innerFn = ${constraint.code.get};
         |  var input = amfFindNode($$this, {});
         |  // print(JSON.stringify(input))

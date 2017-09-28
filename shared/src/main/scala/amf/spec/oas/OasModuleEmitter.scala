@@ -22,7 +22,7 @@ case class OasModuleEmitter(module: Module) extends OasSpecEmitter {
     val usageEmitter: Option[ValueEmitter] =
       module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
 
-    //TODO invoke traits end resource types
+    // TODO invoke traits end resource types
 
     emitter.document({ () =>
       map { () =>
