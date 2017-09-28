@@ -3,13 +3,16 @@ import sbt.Keys.{libraryDependencies, resolvers}
 
 name := "AMF"
 
+jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
+
 val settings = Common.settings ++ Seq(
   name := "amf",
   version := "0.0.1-SNAPSHOT",
 
   libraryDependencies ++= Seq(
     "org.mulesoft" %%% "syaml" % "0.0.2",
-    "org.scalatest" %%% "scalatest" % "3.0.0" % Test
+    "org.scalatest" %%% "scalatest" % "3.0.0" % Test,
+    "com.github.scopt" %%% "scopt" % "3.7.0"
   ),
 
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
@@ -19,6 +22,7 @@ val settings = Common.settings ++ Seq(
 lazy val root = project
   .in(file("."))
   .aggregate(amfJS, amfJVM)
+  .enablePlugins(ScalaJSPlugin)
 
 lazy val importScalaTask = TaskKey[Unit]("tsvScalaImport", "Import validations from AMF TSV files and generates a Scala object with the information")
 
@@ -32,12 +36,16 @@ lazy val amf = crossProject
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s" %% "json4s-jackson" % "3.5.2",
+    //
+    // This is temporary until SHACL has been published in some Maven repository
     unmanagedJars in Compile += file("lib/shacl-1.0.1-SNAPSHOT.jar"),
     // libraryDependencies += "org.topbraid" % "shacl" % "1.0.1-SNAPSHOT",
+    //
     test in assembly := {},
     assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",
-    fullRunTask(importScalaTask, Compile, "amf.validation.tsvimport.ScalaExporter")
+    fullRunTask(importScalaTask, Compile, "amf.validation.tsvimport.ScalaExporter"),
+    mainClass in Compile := Some("amf.client.Main")
   )
   .jsSettings(
     publish := {
@@ -46,7 +54,8 @@ lazy val amf = crossProject
     jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
-    scalaJSModuleKind := ModuleKind.CommonJSModule
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    scalaJSUseMainModuleInitializer := true
   )
 
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))

@@ -25,7 +25,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
   test("Loading and serializing validations") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed.raml")
+    val actual = validation.loadValidationDialect()
         .flatMap(unit =>
           AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
             .build()
@@ -40,7 +40,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
   test("Loading and serializing validations with inplace definition of encodes") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed2.raml")
+    val actual = validation.loadValidationDialect()
       .flatMap(unit =>
         AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
           .build())
@@ -53,7 +53,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
   test("Loading and serializing validations with inplace definition of range") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect(basePath + "validation_dialect_fixed3.raml")
+    val actual = validation.loadValidationDialect()
       .flatMap(unit =>
         AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
           .build())
@@ -65,7 +65,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
   test("Loading and serializing validations with union type") {
     val validation = Validation(platform)
     val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect(basePath + "validation_dialect_unions.raml")
+    val actual = validation.loadValidationDialect()
       .flatMap(unit =>
         AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
           .build())
@@ -93,7 +93,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     val validation = Validation(platform)
     for {
       model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationDialect()
       _      <- validation.loadValidationProfile(examplesPath + "data/error1_ignore_profile.raml")
       report <- validation.validate(model, "Test Profile")
     } yield {
@@ -107,7 +107,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     val validation = Validation(platform)
     for {
       model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationDialect()
       _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_success.raml")
       report <- validation.validate(model, "Test Profile")
     } yield {
@@ -121,7 +121,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     val validation = Validation(platform)
     for {
       model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationDialect()
       _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
       report <- validation.validate(model, "Test Profile")
     } yield {
@@ -136,7 +136,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     val validation = Validation(platform)
     for {
       model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationDialect()
       _      <- validation.loadValidationProfile(examplesPath + "data/error1_custom_validation_profile.raml")
       report <- validation.validate(model, "Test Profile")
     } yield {
@@ -152,12 +152,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-  test("Validation report generation") {
+  test("HERE_HERE Validation report generation") {
 
     val validation = Validation(platform)
     for {
       model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect(vocabulariesPath + "validation_dialect_fixed.raml")
+      _      <- validation.loadValidationDialect()
       _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
       report <- validation.validate(model, "Test Profile")
     } yield {

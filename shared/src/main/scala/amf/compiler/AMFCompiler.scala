@@ -72,8 +72,10 @@ class AMFCompiler private (val url: String,
     val option = RamlHeader(root).map({
       case RamlHeader.Raml10                 => RamlDocumentParser(root).parseDocument()
       case RamlHeader.Raml10Library          => RamlModuleParser(root).parseModule()
+      // this includes vocabularies and dialect definitions and dialect documents
+      // They are all defined internally in terms of dialects definitions
       case RamlHeader(header)
-         if dialects.knowsHeader(header) => makeDialect(root)
+         if dialects.knowsHeader(header)     => makeDialect(root)
       case _                                 => throw new UnableToResolveUnitException
     })
     option match {

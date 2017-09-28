@@ -17,6 +17,8 @@ class TrunkDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(
   add(DialectLanguageDefinition)
 
   override def registerDialect(uri: String) = throw new Exception("Not supported in trunk platform")
+
+  override def registerDialect(uri: String, dialect: String) = throw new Exception("Not supported in trunk platform")
 }
 
 class TrunkValidator extends SHACLValidator {
