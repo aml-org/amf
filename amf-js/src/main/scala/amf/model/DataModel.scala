@@ -52,11 +52,8 @@ case class ObjectNode(private[amf] val objectNode: amf.domain.extensions.ObjectN
 @JSExportAll
 case class ScalarNode(private[amf] val scalarNode: amf.domain.extensions.ScalarNode) extends DataNode(scalarNode) {
 
-  val value: String = scalarNode.value
-  val dataType: String = scalarNode.dataType match {
-    case Some(t) => t
-    case None    => null
-  }
+  val value: String    = scalarNode.value
+  val dataType: String = scalarNode.dataType.orNull
 
   override private[amf] def element = scalarNode
 

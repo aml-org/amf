@@ -54,6 +54,6 @@ object Shape {
       case array: amf.shape.ArrayShape   => Some(new ArrayShape(array))
       case matrix: amf.shape.MatrixShape => Some(new MatrixShape(matrix.toArrayShape))
       case tuple: amf.shape.TupleShape   => Some(TupleShape(tuple))
-      case a                             => None
+      case _                             => None
     }).orNull
 }

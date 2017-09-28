@@ -6,6 +6,7 @@ import amf.shape
 import scala.language.postfixOps
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
+import amf.domain.`abstract`
 
 trait DeclaresModel {
 
@@ -20,6 +21,8 @@ trait DeclaresModel {
         case tuple: shape.TupleShape                   => TupleShape(tuple)
         case matrix: shape.MatrixShape                 => MatrixShape(matrix)
         case property: extensions.CustomDomainProperty => CustomDomainProperty(property)
+        case tr: `abstract`.Trait                      => Trait(tr)
+        case resourceType: `abstract`.ResourceType     => ResourceType(resourceType)
         case _                                         => throw new RuntimeException("unsupported domain element type in module declaration")
       }
     declarations.toJSArray

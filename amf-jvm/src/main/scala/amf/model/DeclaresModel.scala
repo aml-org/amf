@@ -3,6 +3,7 @@ package amf.model
 import java.util
 
 import amf.domain.extensions
+import amf.domain.`abstract`
 import amf.shape
 
 import scala.collection.JavaConverters._
@@ -21,6 +22,8 @@ trait DeclaresModel {
         case tuple: shape.TupleShape                   => TupleShape(tuple)
         case matrix: shape.MatrixShape                 => MatrixShape(matrix)
         case property: extensions.CustomDomainProperty => CustomDomainProperty(property)
+        case tr: `abstract`.Trait                      => Trait(tr)
+        case resourceType: `abstract`.ResourceType     => ResourceType(resourceType)
         case _                                         => throw new RuntimeException("Unsupported domain element type in module declaration")
       }
     declarations.asJava
