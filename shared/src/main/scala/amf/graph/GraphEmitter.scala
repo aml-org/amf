@@ -1,13 +1,14 @@
 package amf.graph
 
 import amf.client.GenerationOptions
+import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.metadata.document.{DocumentModel, ModuleModel}
+import amf.metadata.document.{DocumentModel, FragmentModel, ModuleModel}
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
@@ -131,6 +132,9 @@ object GraphEmitter {
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit): Unit = {
       t match {
+        case t: DomainElement with Linkable if t.linkTarget.isDefined =>
+          t.linkTarget.foreach(l => iri(l.id))
+          sources(v)
         case _: Obj =>
           obj(v.value.asInstanceOf[AmfObject], parent)
           sources(v)
@@ -317,27 +321,27 @@ object GraphEmitter {
 
   /** Metadata Type references. */
   private def metaModel(instance: Any): Obj = instance match {
-    case _: Document                 => DocumentModel
-    case _: WebApi                   => WebApiModel
-    case _: Organization             => OrganizationModel
-    case _: License                  => LicenseModel
-    case _: CreativeWork             => CreativeWorkModel
-    case _: EndPoint                 => EndPointModel
-    case _: Operation                => OperationModel
-    case _: Parameter                => ParameterModel
-    case _: Request                  => RequestModel
-    case _: Response                 => ResponseModel
-    case _: Payload                  => PayloadModel
-    case _: NodeShape                => NodeShapeModel
-    case _: ArrayShape               => ArrayShapeModel
-    case _: ScalarShape              => ScalarShapeModel
+    case _: Document             => DocumentModel
+    case _: WebApi               => WebApiModel
+    case _: Organization         => OrganizationModel
+    case _: License              => LicenseModel
+    case _: CreativeWork         => CreativeWorkModel
+    case _: EndPoint             => EndPointModel
+    case _: Operation            => OperationModel
+    case _: Parameter            => ParameterModel
+    case _: Request              => RequestModel
+    case _: Response             => ResponseModel
+    case _: Payload              => PayloadModel
+    case _: NodeShape            => NodeShapeModel
+    case _: ArrayShape           => ArrayShapeModel
+    case _: ScalarShape          => ScalarShapeModel
     case _: NilShape                 => NilShapeModel
-    case _: PropertyShape            => PropertyShapeModel
-    case _: XMLSerializer            => XMLSerializerModel
-    case _: PropertyDependencies     => PropertyDependenciesModel
-    case _: DomainExtension          => DomainExtensionModel
-    case _: CustomDomainProperty     => CustomDomainPropertyModel
-    case _: DataNode                 => DataNodeModel
+    case _:PropertyShape        => PropertyShapeModel
+    case _: XMLSerializer        => XMLSerializerModel
+    case _: PropertyDependencies => PropertyDependenciesModel
+    case _: DomainExtension      => DomainExtensionModel
+    case _: CustomDomainProperty => CustomDomainPropertyModel
+    case _: DataNode             => DataNodeModel
     case _: Module                   => ModuleModel
     case _: ResourceType             => ResourceTypeModel
     case _: Trait                    => TraitModel
@@ -345,7 +349,9 @@ object GraphEmitter {
     case _: ParametrizedTrait        => ParametrizedTraitModel
     case _: Variable                 => VariableModel
     case _: VariableValue            => VariableValueModel
-    case entity: DomainEntity        => new DialectEntityModel(entity)
-    case _                           => throw new Exception(s"Missing metadata mapping for $instance")
+    caseentity: DomainEntity    => new DialectEntityModel(entity)
+
+    case _: Fragment             => FragmentModel
+    case _                       => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

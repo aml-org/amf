@@ -2,11 +2,11 @@ package amf.metadata.shape
 
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
-import amf.metadata.domain.{CreativeWorkModel, DomainElementModel}
+import amf.metadata.domain.{CreativeWorkModel, DomainElementModel, LinkableElementModel}
 import amf.vocabulary.Namespace.{Schema, Shacl, Shapes}
 import amf.vocabulary.ValueType
 
-trait ShapeModel extends DomainElementModel {
+trait ShapeModel extends DomainElementModel with LinkableElementModel {
 
   val Name = Field(Str, Shacl + "name")
 
@@ -25,8 +25,13 @@ trait ShapeModel extends DomainElementModel {
 
 object ShapeModel extends ShapeModel {
 
-  override val fields: List[Field] =
-    List(Name, DisplayName, Description, Default, Values, Documentation, XMLSerialization)
+  override val fields: List[Field] = LinkableElementModel.fields ++ List(Name,
+                                                                         DisplayName,
+                                                                         Description,
+                                                                         Default,
+                                                                         Values,
+                                                                         Documentation,
+                                                                         XMLSerialization)
 
   override val `type`: List[ValueType] = List(Shacl + "Shape", Shapes + "Shape")
 }
