@@ -16,19 +16,19 @@ trait ParametrizedDeclarationModel extends DomainElementModel {
 }
 
 object ParametrizedDeclarationModel extends ParametrizedDeclarationModel {
-  override val fields: List[Field] = List(Name, Target, Variables) ++ DomainElementModel.fields
+  override val fields: List[Field] = List(Name, Target, Variables) ++ Option(DomainElementModel.fields).getOrElse(List())
 
-  override val `type`: List[ValueType] = Document + "ParametrizedDeclaration" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = Document + "ParametrizedDeclaration" :: Option(DomainElementModel.`type`).getOrElse(List())
 }
 
 object ParametrizedTraitModel extends ParametrizedDeclarationModel {
-  override val `type`: List[ValueType] = Document + "ParametrizedTrait" :: ParametrizedDeclarationModel.`type`
+  override val `type`: List[ValueType] = Document + "ParametrizedTrait" :: Option(ParametrizedDeclarationModel.`type`).getOrElse(List())
 
-  override def fields: List[Field] = ParametrizedDeclarationModel.fields
+  override def fields: List[Field] = Option(ParametrizedDeclarationModel.fields).getOrElse(List())
 }
 
 object ParametrizedResourceTypeModel extends ParametrizedDeclarationModel {
-  override val `type`: List[ValueType] = Document + "ParametrizedResourceType" :: ParametrizedDeclarationModel.`type`
+  override val `type`: List[ValueType] = Document + "ParametrizedResourceType" :: Option(ParametrizedDeclarationModel.`type`).getOrElse(List())
 
-  override def fields: List[Field] = ParametrizedDeclarationModel.fields
+  override def fields: List[Field] = Option(ParametrizedDeclarationModel.fields).getOrElse(List())
 }
