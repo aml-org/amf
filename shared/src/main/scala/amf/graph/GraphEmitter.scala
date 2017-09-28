@@ -82,18 +82,16 @@ object GraphEmitter {
     }
 
     def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
-      if (Option(element).isDefined && Option(obj).isDefined) {
-        createTypeNode(obj, Some(element))
+      createTypeNode(obj, Some(element))
 
-        obj.fields.map(element.fields.entryJsonld).foreach {
-          case Some(FieldEntry(f, v)) =>
-            entry { () =>
-              val url = f.value.iri()
-              raw(url)
-              value(f.`type`, v, id, sources.property(url))
-            }
-          case None => // Missing field
-        }
+      obj.fields.map(element.fields.entryJsonld).foreach {
+        case Some(FieldEntry(f, v)) =>
+          entry { () =>
+            val url = f.value.iri()
+            raw(url)
+            value(f.`type`, v, id, sources.property(url))
+          }
+        case None => // Missing field
       }
     }
 
@@ -242,18 +240,11 @@ object GraphEmitter {
       entry { () =>
         raw("@type")
         array { () =>
-          try {
-            Option(obj.`type`).getOrElse(Seq()).foreach(t => raw(t.iri()))
-            if (obj.dynamicType) {
-              maybeElement match {
-                case Some(element) => element.dynamicTypes().foreach(t => raw(t))
-                case _ => // ignore
-              }
-            }
-          } catch {
-            case e: Exception => {
-              println("ERRRO!!!!!!!!")
-              println(obj)
+          obj.`type`.foreach(t => raw(t.iri()))
+          if (obj.dynamicType) {
+            maybeElement match {
+              case Some(element) => element.dynamicTypes().foreach(t => raw(t))
+              case _             => // ignore
             }
           }
         }

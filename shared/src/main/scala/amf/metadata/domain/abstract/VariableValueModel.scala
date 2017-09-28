@@ -12,7 +12,7 @@ object VariableValueModel extends DomainElementModel {
 
   val Value = Field(Str, Document + "value")
 
-  override val fields: List[Field] = List(Name, Value) ++ Option(DomainElementModel.fields).getOrElse(Seq())
+  override val fields: List[Field] = List(Name, Value) ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = Document + "VariableValue" :: Option(DomainElementModel.`type`).getOrElse(List())
+  override val `type`: List[ValueType] = Document + "VariableValue" :: DomainElementModel.`type`
 }
