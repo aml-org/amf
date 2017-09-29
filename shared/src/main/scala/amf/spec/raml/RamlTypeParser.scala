@@ -110,27 +110,14 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     val shape = NodeShape(ast).withName(name)
     adopt(shape)
     ahead match {
-      case map: YMap => NodeShapeParser(shape, map, declarations).parse()
+      case map: YMap => NodeShapeParser(shape, map, declarations).parse()// i have to do the adopt before parser childrens shapes. Other way the childrens will not have the father id
       case scalar: YScalar =>
         declarations.find(scalar.text) match {
-          case Some(s: Shape) => copyShapeDeclaration(scalar, s)
+          case Some(s: Shape) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
           case _              => shape
         }
       case _ => shape
     }
-  }
-
-  private def copyShapeDeclaration(scalar: YScalar, declaration: Shape): Shape = {
-    val shape = declaration match {
-      case node: NodeShape          => node.copy()
-      case scalarShape: ScalarShape => scalarShape.copy()
-      case property: PropertyShape  => property.copy()
-      case tuple: TupleShape        => tuple.copy()
-      case matrix: MatrixShape      => matrix.copy()
-      case array: ArrayShape        => array.copy()
-    }
-    shape.withName(name).add(ReferencedElement(scalar.text, shape))
-
   }
 }
 

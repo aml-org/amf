@@ -1,14 +1,14 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.document.Fragment.Fragment
+import amf.document.Fragment._
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.metadata.document.{DocumentModel, FragmentModel, ModuleModel}
+import amf.metadata.document._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
@@ -349,9 +349,11 @@ object GraphEmitter {
     case _: ParametrizedTrait        => ParametrizedTraitModel
     case _: Variable                 => VariableModel
     case _: VariableValue            => VariableValueModel
-    caseentity: DomainEntity    => new DialectEntityModel(entity)
-
-    case _: Fragment             => FragmentModel
+    case entity: DomainEntity    => new DialectEntityModel(entity)
+    case _: DocumentationItem         => DocumentationItemModel
+    case _: DataType                  => DataTypeModel
+    case _: NamedExample              => NamedExampleModel
+    case _: AnnotationTypeDeclaration => AnnotationTypeDeclarationModel
     case _                       => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

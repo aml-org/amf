@@ -7,12 +7,13 @@ import amf.metadata.domain.DomainElementModel._
 import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
-trait Linkable {
-  this: DomainElement with Linkable =>
-  var isLink = false
-  var linkLabel: Option[String] = None
+trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   var linkTarget: Option[DomainElement with Linkable] = None
-  var linkAnnotations: Option[Annotations] = None
+  var linkAnnotations: Option[Annotations]            = None
+
+
+
+  def linkLabel: Option[String] = Some(fields(Label))
 
   def linkCopy(): DomainElement with Linkable
 

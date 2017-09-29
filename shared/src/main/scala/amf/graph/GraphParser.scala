@@ -1,12 +1,14 @@
 package amf.graph
 
-import amf.document.{BaseUnit, Document, Module}
+import amf.document.Fragment._
+import amf.{document, metadata}
+import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
-import amf.metadata.document.{BaseUnitModel, DocumentModel, ModuleModel}
+import amf.metadata.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.shape._
@@ -15,6 +17,8 @@ import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape._
 import org.yaml.model._
+
+import scala.collection.mutable
 
 /**
   * AMF Graph parser
@@ -27,6 +31,7 @@ object GraphParser extends GraphParserHelpers {
   }
 
   case class Parser(var nodes: Map[String, AmfElement]) {
+    private val unresolvedReferences = mutable.Map[String, DomainElement with Linkable]()
 
     val dynamicGraphParser = new DynamicGraphParser(nodes)
 
@@ -77,12 +82,35 @@ object GraphParser extends GraphParserHelpers {
 
       // parsing custom extensions
       instance match {
-        case elm: DomainElement => parseCustomProperties(map, elm)
-        case _                  => // ignore
+        case l: DomainElement with Linkable => parseLinkableProperties(map, l)
+        case elm: DomainElement             => parseCustomProperties(map, elm)
+        case _                              => // ignore
       }
 
       nodes = nodes + (id -> instance)
       instance
+    }
+
+    private def parseLinkableProperties(map: YMap, instance: DomainElement with Linkable) = {
+      map
+        .key(LinkableElementModel.TargetId.value.iri())
+        .map(entry => {
+          retrieveId(entry.value.value.toSequence.nodes.head.value.toMap)
+        })
+        .foreach(unresolvedReferences += _ -> instance)
+
+      map
+        .key(LinkableElementModel.Label.value.iri())
+        .flatMap(entry => {
+          entry.value.value.toSequence.nodes.head.value.toMap.key("@value").map(_.value.value.toScalar.text)
+        })
+        .foreach(s => instance.withLinkLabel(s))
+
+      val unresolvedOption = unresolvedReferences.get(instance.id)
+      unresolvedOption.foreach(u => {
+        u.withLinkTarget(instance)
+        unresolvedReferences.remove(instance.id)
+      }) // todo remove?
     }
 
     private def parseCustomProperties(map: YMap, instance: DomainElement) = {
@@ -146,20 +174,28 @@ object GraphParser extends GraphParserHelpers {
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
-    DocumentModel                 -> Document.apply,
-    WebApiModel                   -> WebApi.apply,
-    OrganizationModel             -> Organization.apply,
-    LicenseModel                  -> License.apply,
-    CreativeWorkModel             -> CreativeWork.apply,
-    EndPointModel                 -> EndPoint.apply,
-    OperationModel                -> Operation.apply,
-    ParameterModel                -> Parameter.apply,
-    PayloadModel                  -> Payload.apply,
-    RequestModel                  -> Request.apply,
-    ResponseModel                 -> Response.apply,
-    NodeShapeModel                -> NodeShape.apply,
-    ArrayShapeModel               -> ArrayShape.apply,
-    ScalarShapeModel              -> ScalarShape.apply,
+    DocumentModel                  -> Document.apply,
+    WebApiModel                    -> WebApi.apply,
+    OrganizationModel              -> Organization.apply,
+    LicenseModel                   -> License.apply,
+    CreativeWorkModel              -> CreativeWork.apply,
+    EndPointModel                  -> EndPoint.apply,
+    OperationModel                 -> Operation.apply,
+    ParameterModel                 -> Parameter.apply,
+    PayloadModel                   -> Payload.apply,
+    RequestModel                   -> Request.apply,
+    ResponseModel                  -> Response.apply,
+    NodeShapeModel                 -> NodeShape.apply,
+    ArrayShapeModel                -> ArrayShape.apply,
+    ScalarShapeModel               -> ScalarShape.apply,
+    PropertyShapeModel             -> PropertyShape.apply,
+    XMLSerializerModel             -> XMLSerializer.apply,
+    PropertyDependenciesModel      -> PropertyDependencies.apply,
+    ModuleModel                    -> Module.apply,
+    DocumentationItemModel         -> DocumentationItem.apply,
+    DataTypeModel                  -> DataType.apply,
+    NamedExampleModel              -> NamedExample.apply,
+    AnnotationTypeDeclarationModel -> AnnotationTypeDeclaration.apply,
     NilShapeModel                 -> NilShape.apply,
     PropertyShapeModel            -> PropertyShape.apply,
     XMLSerializerModel            -> XMLSerializer.apply,

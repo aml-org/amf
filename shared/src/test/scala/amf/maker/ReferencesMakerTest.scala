@@ -52,7 +52,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
   private val dataTypeFragment: Fragment = {
     DataType()
-      .withId("/shared/src/test/resources/references/fragments/person.raml")
+      .withId("file:/shared/src/test/resources/references/fragments/person.raml")
       .withEncodes(person)
   }
 
