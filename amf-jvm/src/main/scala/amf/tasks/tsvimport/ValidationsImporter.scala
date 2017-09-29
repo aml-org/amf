@@ -43,7 +43,7 @@ object ValidationsImporter {
 
     s"""
        |// auto-generated class from ValidationsImporter.toScala
-       |package amf.validation
+       |package amf.validation.model
        |
       |object AMFRawValidations {
        |  val raw = List(

@@ -64,22 +64,22 @@ trait ImportUtils {
 
   protected def validationId(validation: AMFValidation): String =
     validation.uri match {
-      case Some(s) => Namespace.expand(s).iri()
+      case Some(s) => Namespace.expand(s.trim).iri()
       case None    =>
         val classPostfix = postfix(validation.owlClass, "domain")
         val propertyPostfix = postfix(validation.owlProperty, "property")
         val constraint = postfix(Some(validation.constraint), "constraint")
-        Namespace.AmfParser.base + classPostfix + "-" + propertyPostfix + "-" + constraint
+        Namespace.AmfParser.base + classPostfix + "-" + propertyPostfix.trim + "-" + constraint.trim
     }
 
   protected def postfix(s: Option[String], default: String): String = s match {
     case Some(p) =>
       if (p.indexOf("#") > -1) {
-        p.split("#")(1)
+        p.split("#")(1).trim
       } else if(p.indexOf("/") == -1 && p.indexOf(":") != -1) {
-        p.split(":")(1)
+        p.split(":")(1).trim
       } else {
-        p.split("/").last
+        p.split("/").last.trim
       }
     case None => default
   }
@@ -115,7 +115,7 @@ object DefaultAMFValidations extends ImportUtils {
   private def parseValidation(validations: List[AMFValidation]): List[ValidationSpecification] = {
     validations.map { validation =>
       val uri = validation.uri match {
-        case Some(s) => s
+        case Some(s) => s.trim
         case _ => validationId(validation)
       }
 
@@ -127,7 +127,7 @@ object DefaultAMFValidations extends ImportUtils {
         targetClass = Seq(validation.owlClass.getOrElse((Namespace.Document + "DomainElement").iri()))
       )
 
-      Namespace.expand(validation.target).iri() match {
+      Namespace.expand(validation.target.trim).iri() match {
         case "http://www.w3.org/ns/shacl#path" =>
           spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop",validation)))
         case "http://www.w3.org/ns/shacl#targetObjectsOf" if validation.owlProperty.isDefined =>
@@ -147,7 +147,7 @@ object DefaultAMFValidations extends ImportUtils {
       message = validation.message
     )
 
-    Namespace.expand(validation.constraint).iri() match {
+    Namespace.expand(validation.constraint.trim).iri() match {
       case "http://www.w3.org/ns/shacl#minCount"     => constraint.copy(minCount = Some(validation.value))
       case "http://www.w3.org/ns/shacl#maxCount"     => constraint.copy(maxCount =  Some(validation.value))
       case "http://www.w3.org/ns/shacl#pattern"      => constraint.copy(pattern = Some(validation.value))
