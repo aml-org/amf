@@ -55,6 +55,26 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
     assertReferences("data-type-fragment.raml", Seq("fragments/person.raml"), RamlYamlHint, Raml)
   }
 
+  test("data type fragment oas to oas") {
+    assertReferences("data-type-fragment.json", Seq("fragments/person.json"), OasJsonHint, Oas)
+  }
+
+  test("data type fragment raml to oas") {
+    assertReferences("data-type-fragment.raml", Seq("fragments/person.json"), RamlJsonHint, Oas)
+  }
+
+  test("data type fragment oas to raml") {
+    assertReferences("data-type-fragment.json", Seq("fragments/person.raml"), OasJsonHint, Raml)
+  }
+
+  test("data type fragment amf to raml from include") {
+    assertReferences("data-type-fragment.raml.jsonld", Seq("fragments/person.raml"), AmfJsonHint, Raml)
+  }
+
+  test("data type fragment amf to oas from include") {
+    assertReferences("data-type-fragment.json.jsonld", Seq("fragments/person.json"), AmfJsonHint, Oas)
+  }
+
   def assertReferences(documentRootPath: String, goldens: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
 
     val expecteds: Future[Seq[ModuleContent]] = Future.sequence(goldens.map(g => {

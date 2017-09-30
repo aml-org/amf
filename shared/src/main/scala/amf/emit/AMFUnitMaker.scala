@@ -7,7 +7,7 @@ import amf.domain.dialects.DomainEntity
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
 import amf.spec.dialects.DialectEmitter
-import amf.spec.oas.{OasDocumentEmitter, OasModuleEmitter}
+import amf.spec.oas.{OasDocumentEmitter, OasFragmentEmitter, OasFragmentParser, OasModuleEmitter}
 import amf.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument
 
@@ -48,6 +48,7 @@ class AMFUnitMaker {
   private def makeOasUnit(unit: BaseUnit): YDocument = unit match {
     case module: Module     => OasModuleEmitter(module).emitModule()
     case document: Document => OasDocumentEmitter(document).emitDocument()
+    case fragment: Fragment => OasFragmentEmitter(fragment).emitFragment()
     case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 

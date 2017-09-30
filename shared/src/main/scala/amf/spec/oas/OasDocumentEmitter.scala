@@ -1,6 +1,6 @@
 package amf.spec.oas
 
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.{CustomDomainProperty, idCounter}
@@ -94,25 +94,26 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
     private case class InfoEmitter(fs: Fields, ordering: SpecOrdering) extends Emitter {
       override def emit(): Unit = {
-        entry { () =>
-          raw("info")
-          val result = mutable.ListBuffer[Emitter]()
+        val result = mutable.ListBuffer[Emitter]()
 
-          fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
+        fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
 
-          fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
+        fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService", f))
+        fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService", f))
 
-          fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
+        fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
 
-          fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
+        fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
 
-          map { () =>
-            traverse(ordering.sorted(result))
+        if (result.nonEmpty)
+          entry { () =>
+            raw("info")
+            map { () =>
+              traverse(ordering.sorted(result))
+            }
           }
 
-        }
       }
 
       override def position(): Position = {
@@ -647,7 +648,8 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
   case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
-      if (references.nonEmpty) {
+      val modules = references.collect({ case m: Module => m })
+      if (modules.nonEmpty) {
         entry { () =>
           raw("x-uses")
           map { () =>
@@ -728,7 +730,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
   }
 
-  protected def ref(url: String): Unit = EntryEmitter("$ref", url, YType("$ref")) // todo
+  protected def ref(url: String): Unit = EntryEmitter("$ref", url).emit() // todo YType("$ref")
 
   case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {

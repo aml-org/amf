@@ -98,7 +98,7 @@ case class OasFragmentEmitter(fragment: Fragment) extends OasSpecEmitter {
 
   case class OasHeaderEmitter(oasHeader: OasHeader) extends Emitter {
     override def emit(): Unit = {
-      EntryEmitter(oasHeader.key, oasHeader.value)
+      EntryEmitter(oasHeader.key, oasHeader.value).emit()
     }
 
     override def position(): Position = Position.ZERO
