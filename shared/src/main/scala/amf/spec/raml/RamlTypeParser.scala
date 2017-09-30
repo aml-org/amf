@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, NilType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -66,12 +66,16 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
   }
 
   private def parseScalarType(name: String, typeDef: TypeDef, ahead: YValue): Shape = {
-    val shape = ScalarShape(entry).withName(name)
-    adopt(shape)
-    ahead match {
-      case map: YMap => ScalarShapeParser(typeDef, shape, map).parse()
-      case value =>
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(value)))
+    if (typeDef.isNil) {
+      NilShape(entry).withName(name)
+    } else {
+      val shape = ScalarShape(entry).withName(name)
+      adopt(shape)
+      ahead match {
+        case map: YMap => ScalarShapeParser(typeDef, shape, map).parse()
+        case value =>
+          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(value)))
+      }
     }
   }
 

@@ -152,7 +152,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-  test("HERE_HERE Validation report generation") {
+  test("Validation report generation") {
 
     val validation = Validation(platform)
     for {

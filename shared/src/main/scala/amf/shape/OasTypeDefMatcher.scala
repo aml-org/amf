@@ -15,6 +15,7 @@ object OasTypeDefMatcher {
         case "password"  => PasswordType
         case _           => StrType
       }
+    case "null"          => NilType
     case "integer"       => IntType
     case "number"        => FloatType
     case "boolean"       => BoolType
