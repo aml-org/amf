@@ -57,7 +57,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
     }
 
     private val person: NodeShape = {
-      val shape = NodeShape().withClosed(false)
+      val shape = NodeShape().withName("type").withClosed(false)
       shape
         .withProperty("name")
         .withMinCount(minCount)

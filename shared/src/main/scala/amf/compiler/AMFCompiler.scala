@@ -70,14 +70,13 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     val option = RamlHeader(root).map({
-      case RamlHeader.Raml10                 => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Library          => RamlModuleParser(root).parseModule()
+      case RamlHeader.Raml10         => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Library  => RamlModuleParser(root).parseModule()
       case RamlHeader.Raml10Fragment => RamlFragmentParser(root).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
-      case RamlHeader(header)
-         if dialects.knowsHeader(header)     => makeDialect(root)
-      case _                                 => throw new UnableToResolveUnitException
+      case RamlHeader(header) if dialects.knowsHeader(header) => makeDialect(root)
+      case _                                                  => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit
@@ -148,7 +147,12 @@ case class ParsedDocument(comment: Option[YComment], document: YDocument)
 case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String)
 
 object AMFCompiler {
-  def apply(url: String, remote: Platform, hint: Hint, context: Option[Context] = None, cache: Option[Cache] = None, dialects: DialectRegistry = DialectRegistry.default) =
+  def apply(url: String,
+            remote: Platform,
+            hint: Hint,
+            context: Option[Context] = None,
+            cache: Option[Cache] = None,
+            dialects: DialectRegistry = DialectRegistry.default) =
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), dialects)
 
   val RAML_10 = "#%RAML 1.0\n"

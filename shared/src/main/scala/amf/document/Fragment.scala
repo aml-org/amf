@@ -49,9 +49,9 @@ object Fragment {
 
   case class NamedExample(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class ResourceType(fields: Fields, annotations: Annotations) extends Fragment
+  case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class Trait(fields: Fields, annotations: Annotations) extends Fragment
+  case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment
 
   case class AnnotationTypeDeclaration(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
@@ -83,16 +83,16 @@ object Fragment {
     def apply(annotations: Annotations): NamedExample = apply(Fields(), annotations)
   }
 
-  object ResourceType {
-    def apply(): ResourceType = apply(Annotations())
+  object ResourceTypeFragment {
+    def apply(): ResourceTypeFragment = apply(Annotations())
 
-    def apply(annotations: Annotations): ResourceType = apply(Fields(), annotations)
+    def apply(annotations: Annotations): ResourceTypeFragment = apply(Fields(), annotations)
   }
 
-  object Trait {
-    def apply(): Trait = apply(Annotations())
+  object TraitFragment {
+    def apply(): TraitFragment = apply(Annotations())
 
-    def apply(annotations: Annotations): Trait = apply(Fields(), annotations)
+    def apply(annotations: Annotations): TraitFragment = apply(Fields(), annotations)
   }
 
   object AnnotationTypeDeclaration {

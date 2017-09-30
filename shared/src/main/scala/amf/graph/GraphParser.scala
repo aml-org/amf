@@ -1,7 +1,6 @@
 package amf.graph
 
 import amf.document.Fragment._
-import amf.{document, metadata}
 import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
@@ -174,39 +173,41 @@ object GraphParser extends GraphParserHelpers {
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
-    DocumentModel                  -> Document.apply,
-    WebApiModel                    -> WebApi.apply,
-    OrganizationModel              -> Organization.apply,
-    LicenseModel                   -> License.apply,
-    CreativeWorkModel              -> CreativeWork.apply,
-    EndPointModel                  -> EndPoint.apply,
-    OperationModel                 -> Operation.apply,
-    ParameterModel                 -> Parameter.apply,
-    PayloadModel                   -> Payload.apply,
-    RequestModel                   -> Request.apply,
-    ResponseModel                  -> Response.apply,
-    NodeShapeModel                 -> NodeShape.apply,
-    ArrayShapeModel                -> ArrayShape.apply,
-    ScalarShapeModel               -> ScalarShape.apply,
-    PropertyShapeModel             -> PropertyShape.apply,
-    XMLSerializerModel             -> XMLSerializer.apply,
-    PropertyDependenciesModel      -> PropertyDependencies.apply,
-    ModuleModel                    -> Module.apply,
-    DocumentationItemModel         -> DocumentationItem.apply,
-    DataTypeModel                  -> DataType.apply,
-    NamedExampleModel              -> NamedExample.apply,
-    AnnotationTypeDeclarationModel -> AnnotationTypeDeclaration.apply,
-    NilShapeModel                 -> NilShape.apply,
-    PropertyShapeModel            -> PropertyShape.apply,
-    XMLSerializerModel            -> XMLSerializer.apply,
-    PropertyDependenciesModel     -> PropertyDependencies.apply,
-    ModuleModel                   -> Module.apply,
-    ResourceTypeModel             -> ResourceType.apply,
-    TraitModel                    -> Trait.apply,
-    ParametrizedResourceTypeModel -> ParametrizedResourceType.apply,
-    ParametrizedTraitModel        -> ParametrizedTrait.apply,
-    VariableModel                 -> Variable.apply,
-    VariableValueModel            -> VariableValue.apply
+    DocumentModel                                       -> Document.apply,
+    WebApiModel                                         -> WebApi.apply,
+    OrganizationModel                                   -> Organization.apply,
+    LicenseModel                                        -> License.apply,
+    CreativeWorkModel                                   -> CreativeWork.apply,
+    EndPointModel                                       -> EndPoint.apply,
+    OperationModel                                      -> Operation.apply,
+    ParameterModel                                      -> Parameter.apply,
+    PayloadModel                                        -> Payload.apply,
+    RequestModel                                        -> Request.apply,
+    ResponseModel                                       -> Response.apply,
+    NodeShapeModel                                      -> NodeShape.apply,
+    ArrayShapeModel                                     -> ArrayShape.apply,
+    ScalarShapeModel                                    -> ScalarShape.apply,
+    PropertyShapeModel                                  -> PropertyShape.apply,
+    XMLSerializerModel                                  -> XMLSerializer.apply,
+    PropertyDependenciesModel                           -> PropertyDependencies.apply,
+    ModuleModel                                         -> Module.apply,
+    NilShapeModel                                       -> NilShape.apply,
+    PropertyShapeModel                                  -> PropertyShape.apply,
+    XMLSerializerModel                                  -> XMLSerializer.apply,
+    PropertyDependenciesModel                           -> PropertyDependencies.apply,
+    ModuleModel                                         -> Module.apply,
+    FragmentsTypesModels.ResourceTypeModel              -> Fragment.ResourceTypeFragment.apply,
+    FragmentsTypesModels.TraitModel                     -> Fragment.TraitFragment.apply,
+    FragmentsTypesModels.DocumentationItemModel         -> Fragment.DocumentationItem.apply,
+    FragmentsTypesModels.DataTypeModel                  -> Fragment.DataType.apply,
+    FragmentsTypesModels.NamedExampleModel              -> Fragment.NamedExample.apply,
+    FragmentsTypesModels.AnnotationTypeDeclarationModel -> Fragment.AnnotationTypeDeclaration.apply,
+    TraitModel                                          -> Trait.apply,
+    ResourceTypeModel                                   -> ResourceType.apply,
+    ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,
+    ParametrizedTraitModel                              -> ParametrizedTrait.apply,
+    VariableModel                                       -> Variable.apply,
+    VariableValueModel                                  -> VariableValue.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

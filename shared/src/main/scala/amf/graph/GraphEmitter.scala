@@ -2,7 +2,7 @@ package amf.graph
 
 import amf.client.GenerationOptions
 import amf.document.Fragment._
-import amf.document.{BaseUnit, Document, Module}
+import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
@@ -321,39 +321,41 @@ object GraphEmitter {
 
   /** Metadata Type references. */
   private def metaModel(instance: Any): Obj = instance match {
-    case _: Document             => DocumentModel
-    case _: WebApi               => WebApiModel
-    case _: Organization         => OrganizationModel
-    case _: License              => LicenseModel
-    case _: CreativeWork         => CreativeWorkModel
-    case _: EndPoint             => EndPointModel
-    case _: Operation            => OperationModel
-    case _: Parameter            => ParameterModel
-    case _: Request              => RequestModel
-    case _: Response             => ResponseModel
-    case _: Payload              => PayloadModel
-    case _: NodeShape            => NodeShapeModel
-    case _: ArrayShape           => ArrayShapeModel
-    case _: ScalarShape          => ScalarShapeModel
-    case _: NilShape                 => NilShapeModel
-    case _:PropertyShape        => PropertyShapeModel
-    case _: XMLSerializer        => XMLSerializerModel
-    case _: PropertyDependencies => PropertyDependenciesModel
-    case _: DomainExtension      => DomainExtensionModel
-    case _: CustomDomainProperty => CustomDomainPropertyModel
-    case _: DataNode             => DataNodeModel
-    case _: Module                   => ModuleModel
-    case _: ResourceType             => ResourceTypeModel
-    case _: Trait                    => TraitModel
-    case _: ParametrizedResourceType => ParametrizedResourceTypeModel
-    case _: ParametrizedTrait        => ParametrizedTraitModel
-    case _: Variable                 => VariableModel
-    case _: VariableValue            => VariableValueModel
-    case entity: DomainEntity    => new DialectEntityModel(entity)
-    case _: DocumentationItem         => DocumentationItemModel
-    case _: DataType                  => DataTypeModel
-    case _: NamedExample              => NamedExampleModel
-    case _: AnnotationTypeDeclaration => AnnotationTypeDeclarationModel
-    case _                       => throw new Exception(s"Missing metadata mapping for $instance")
+    case _: Document                           => DocumentModel
+    case _: WebApi                             => WebApiModel
+    case _: Organization                       => OrganizationModel
+    case _: License                            => LicenseModel
+    case _: CreativeWork                       => CreativeWorkModel
+    case _: EndPoint                           => EndPointModel
+    case _: Operation                          => OperationModel
+    case _: Parameter                          => ParameterModel
+    case _: Request                            => RequestModel
+    case _: Response                           => ResponseModel
+    case _: Payload                            => PayloadModel
+    case _: NodeShape                          => NodeShapeModel
+    case _: ArrayShape                         => ArrayShapeModel
+    case _: ScalarShape                        => ScalarShapeModel
+    case _: NilShape                           => NilShapeModel
+    case _: PropertyShape                      => PropertyShapeModel
+    case _: XMLSerializer                      => XMLSerializerModel
+    case _: PropertyDependencies               => PropertyDependenciesModel
+    case _: DomainExtension                    => DomainExtensionModel
+    case _: CustomDomainProperty               => CustomDomainPropertyModel
+    case _: DataNode                           => DataNodeModel
+    case _: Module                             => ModuleModel
+    case _: ParametrizedResourceType           => ParametrizedResourceTypeModel
+    case _: ParametrizedTrait                  => ParametrizedTraitModel
+    case _: Variable                           => VariableModel
+    case _: VariableValue                      => VariableValueModel
+    case entity: DomainEntity                  => new DialectEntityModel(entity)
+    case _: Fragment.DocumentationItem         => FragmentsTypesModels.DocumentationItemModel
+    case _: Fragment.DataType                  => FragmentsTypesModels.DataTypeModel
+    case _: Fragment.ResourceTypeFragment      => FragmentsTypesModels.ResourceTypeModel
+    case _: Fragment.TraitFragment             => FragmentsTypesModels.TraitModel
+    case _: Fragment.NamedExample              => FragmentsTypesModels.NamedExampleModel
+    case _: Fragment.AnnotationTypeDeclaration => FragmentsTypesModels.AnnotationTypeDeclarationModel
+    case _: Trait                              => TraitModel
+    case _: ResourceType                       => ResourceTypeModel
+    case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

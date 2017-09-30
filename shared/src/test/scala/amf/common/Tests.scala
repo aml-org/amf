@@ -60,8 +60,7 @@ object Tests {
       println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
       println(expected)
       println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-       */
-      println(actual) /*
+      println(actual)
       println("==============================================")
       fail("\n" + Diff.makeString(diffs))
     }

@@ -584,12 +584,12 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
     override def emit(): Unit = {
 
-      val referencedOption: Option[ReferencedElement] = shape.annotations.find(classOf[ReferencedElement])
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
-        if (referencedOption.isEmpty) emitLocalType()
-        else referencedOption.foreach(r => TagToReferenceEmitter(r, references).emit())
+        if (shape.linkTarget.isDefined)
+          shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel.getOrElse(l.id), references).emit())
+        else emitLocalType()
       }
     }
 
@@ -600,15 +600,17 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
-  case class TagToReferenceEmitter(referencedElement: ReferencedElement, refences: Seq[BaseUnit]) {
+  case class TagToReferenceEmitter(reference: DomainElement with Linkable,
+                                   referenceText: String,
+                                   refences: Seq[BaseUnit]) {
     def emit(): Unit = {
       val referenceOption: Option[BaseUnit] = refences.find {
-        case m: Module   => m.declares.contains(referencedElement.referenced)
-        case f: Fragment => f.encodes == referencedElement.referenced
+        case m: Module   => m.declares.contains(reference)
+        case f: Fragment => f.encodes == reference
       }
       referenceOption.foreach({
-        case _: Module => raw(referencedElement.parsedUrl)
-        case _         => link(referencedElement.parsedUrl)
+        case _: Module => raw(referenceText)
+        case _         => ref(referenceText)
       })
     }
   }
@@ -683,12 +685,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case link: Shape if link.isLink =>
-          Seq(new Emitter() {
-            override def emit(): Unit = raw(link.linkTarget.get.id)
-
-            override def position(): Position = pos(link.linkAnnotations.getOrElse(Annotations()))
-          })
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
