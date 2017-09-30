@@ -674,6 +674,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         case matrix: MatrixShape =>
           val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1)))
           ArrayShapeEmitter(copiedMatrix.toArrayShape, ordering).emitters()
+        case nil: NilShape =>
+          val copiedNode = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
+          Seq(NilShapeEmitter(copiedNode, ordering))
         case _ => Seq()
       }
     }
@@ -803,6 +806,16 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class NilShapeEmitter(shape: NilShape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit =
+      entry { () =>
+        raw("type")
+        raw("nil")
+      }
+
+    override def position(): Position = pos(shape.annotations)
   }
 
   case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) {

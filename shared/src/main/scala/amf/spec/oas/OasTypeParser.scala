@@ -51,9 +51,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def parseScalarType(typeDef: TypeDef): Shape = {
-    val shape = ScalarShape(ast).withName(name)
-    adopt(shape)
-    ScalarShapeParser(typeDef, shape, map).parse()
+    if (typeDef.isNil) {
+      val shape = NilShape(ast).withName(name)
+      adopt(shape)
+      shape
+    } else {
+      val shape = ScalarShape(ast).withName(name)
+      adopt(shape)
+      ScalarShapeParser(typeDef, shape, map).parse()
+    }
   }
 
   private def parseArrayType(): Shape = {

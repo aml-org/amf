@@ -757,6 +757,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
         case array: ArrayShape =>
           val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
           ArrayShapeEmitter(copiedArray, ordering).emitters()
+        case nil: NilShape =>
+          val copiedNil = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
+          Seq(NilShapeEmitter(copiedNil, ordering))
         case scalar: ScalarShape =>
           val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
           ScalarShapeEmitter(copiedScalar, ordering).emitters()
@@ -978,6 +981,17 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(property.annotations) // TODO check this
+  }
+
+  case class NilShapeEmitter(nil: NilShape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit =
+      entry { () =>
+        raw("type")
+        raw("null")
+      }
+
+
+    override def position(): Position = pos(nil.annotations)
   }
 
   case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) {
