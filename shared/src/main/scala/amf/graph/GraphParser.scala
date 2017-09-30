@@ -161,6 +161,7 @@ object GraphParser extends GraphParserHelpers {
     ArrayShapeModel               -> ArrayShape.apply,
     ScalarShapeModel              -> ScalarShape.apply,
     NilShapeModel                 -> NilShape.apply,
+    AnyShapeModel                 -> AnyShape.apply,
     PropertyShapeModel            -> PropertyShape.apply,
     XMLSerializerModel            -> XMLSerializer.apply,
     PropertyDependenciesModel     -> PropertyDependencies.apply,

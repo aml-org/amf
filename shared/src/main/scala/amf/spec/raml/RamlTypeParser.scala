@@ -26,6 +26,8 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
         Some(parseObjectType(name, ahead, declarations))
       case ArrayType =>
         Some(parseArrayType(name, ahead))
+      case typeDef if typeDef.isAny =>
+        Some(parseAnyType(name, typeDef, ahead))
       case typeDef if typeDef.isScalar =>
         Some(parseScalarType(name, typeDef, ahead))
       case _ => None
@@ -78,6 +80,8 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
       }
     }
   }
+
+  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YValue): Shape = AnyShape(entry).withName(name)
 
   def parseArrayType(name: String, ahead: YValue): Shape = {
     val shape = ahead match {
