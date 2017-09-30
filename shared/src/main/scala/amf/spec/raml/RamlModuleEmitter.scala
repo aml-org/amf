@@ -55,7 +55,7 @@ case class RamlFragmentEmitter(fragment: Fragment) extends RamlSpecEmitter {
     emitter.document({ () =>
       map { () =>
         comment(typeEmitter.header.text)
-        traverse(typeEmitter.elementsEmitters)
+        traverse(typeEmitter.elementsEmitters ++ referenceEmitter)
       }
     })
 

@@ -237,6 +237,28 @@
               }
             ]
           }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file:/shared/src/test/resources/references/fragments/person.raml/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file:/shared/src/test/resources/references/fragments/person.raml"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(4,16)]"
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ]

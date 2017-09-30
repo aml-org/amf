@@ -1,10 +1,12 @@
-package amf.spec.raml
+package amf.spec.oas
 
-import amf.compiler.RamlFragmentHeader._
-import amf.compiler.{RamlFragmentHeader, Root}
+import amf.compiler.OasFragmentHeader._
+import amf.compiler.{OasFragmentHeader, OasHeader, Root}
 import amf.document.Fragment._
+import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.domain.extensions.CustomDomainProperty
+import amf.metadata.document.BaseUnitModel
 import amf.parser.YValueOps
 import amf.shape.Shape
 import amf.spec.Declarations
@@ -13,7 +15,7 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(root) {
+case class OasFragmentParser(root: Root) extends OasSpecParser(root) {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -21,25 +23,33 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
     val rootMap: YMap =
       root.document.value.map(_.toMap).getOrElse(throw new RuntimeException("Cannot parse empty map"))
 
-    val fragment: Fragment = RamlFragmentHeader(root) match {
-      case Some(Raml10DocumentationItem)         => DocumentationItemFragmentParser(rootMap).parse()
-      case Some(Raml10DataType)                  => DataTypeFragmentParser(rootMap).parse()
-      case Some(Raml10NamedExample)              => throw new IllegalStateException("to be implemented")
-      case Some(Raml10ResourceType)              => throw new IllegalStateException("to be implemented")
-      case Some(Raml10Trait)                     => throw new IllegalStateException("to be implemented")
-      case Some(Raml10AnnotationTypeDeclaration) => AnnotationFragmentParser(rootMap).parse()
-      case _                                     => throw new IllegalStateException("Unsupported fragment type")
+    val fragment = detectType() match {
+      case Some(Oas20DocumentationItem) => DocumentationItemFragmentParser(rootMap).parse()
+      case Some(Oas20DataType)          => DataTypeFragmentParser(rootMap).parse()
+      //      case Some(Oas20NamedExample)              =>
+      //      case Some(Oas20ResourceType)              => ResourceType()
+      //      case Some(Oas20Trait)                     => Trait()
+      case Some(Oas20AnnotationTypeDeclaration) => AnnotationFragmentParser(rootMap).parse()
+      case _                                    => throw new IllegalStateException("Unsuported raml type")
     }
+
+    fragment
+      .add(Annotations(root.document))
 
     UsageParser(rootMap, fragment).parse()
 
-    fragment.add(Annotations(root.document))
-
-    val environmentRef = ModulesParser(rootMap, root.references).parse()
+    val environmentRef = ReferencesParser(rootMap, root.references).parse()
 
     if (environmentRef.nonEmpty)
       fragment.withReferences(environmentRef.values.toSeq)
     fragment
+  }
+
+  def detectType(): Option[OasHeader] = {
+
+    OasHeader(root).flatMap(_ => {
+      OasFragmentHeader(root)
+    })
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
@@ -58,7 +68,7 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
       val dataType = DataType().adopted(root.location)
 
       val shapeOption =
-        RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations()).parse()
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations()).parse()
       shapeOption.map(dataType.withEncodes(_))
 
       dataType

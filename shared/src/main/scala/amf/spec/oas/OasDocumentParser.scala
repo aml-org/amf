@@ -2,6 +2,7 @@ package amf.spec.oas
 
 import amf.common.Lazy
 import amf.compiler.{ParsedReference, Root}
+import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.{
   DeclaredElement,
@@ -40,24 +41,25 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
 
     root.document.value.foreach(value => {
       val map            = value.toMap
-      val declarations   = parseDeclares(map)
       val environmentRef = ReferencesParser(map, root.references).parse()
 
-      parseWebApi(map, Declarations(environmentRef.toMap).add(declarations))
-        .map(api => document.withEncodes(api.add(SourceVendor(root.vendor))))
+      val declarations     = Declarations(environmentRef)
+      val declaredElements = parseDeclares(map, declarations)
 
+      val api = parseWebApi(map, declarations.add(declaredElements)).add(SourceVendor(root.vendor))
       document
+        .withEncodes(api)
         .adopted(root.location)
 
-      if (declarations.nonEmpty) document.withDeclares(declarations)
+      if (declaredElements.nonEmpty) document.withDeclares(declaredElements)
       if (environmentRef.nonEmpty) document.withReferences(environmentRef.values.toSeq)
     })
     document
   }
 
-  private def parseWebApi(map: YMap, declarations: Declarations): Option[WebApi] = {
+  private def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
 
-    val api = new Lazy[WebApi](() => WebApi(map).adopted(root.location))
+    val api = WebApi(map).adopted(root.location)
 
     map.key(
       "info",
@@ -66,29 +68,29 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
 
         info.key("title", entry => {
           val value = ValueNode(entry.value)
-          api.getOrCreate.set(WebApiModel.Name, value.string(), Annotations(entry))
+          api.set(WebApiModel.Name, value.string(), Annotations(entry))
         })
 
         info.key("description", entry => {
           val value = ValueNode(entry.value)
-          api.getOrCreate.set(WebApiModel.Description, value.string(), Annotations(entry))
+          api.set(WebApiModel.Description, value.string(), Annotations(entry))
         })
 
         info.key("termsOfService", entry => {
           val value = ValueNode(entry.value)
-          api.getOrCreate.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
+          api.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
         })
 
         info.key("version", entry => {
           val value = ValueNode(entry.value)
-          api.getOrCreate.set(WebApiModel.Version, value.string(), Annotations(entry))
+          api.set(WebApiModel.Version, value.string(), Annotations(entry))
         })
 
         info.key(
           "license",
           entry => {
             val license: License = LicenseParser(entry.value.value.toMap).parse()
-            api.getOrCreate.set(WebApiModel.License, license, Annotations(entry))
+            api.set(WebApiModel.License, license, Annotations(entry))
           }
         )
       }
@@ -96,17 +98,15 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
 
     map.key("host", entry => {
       val value = ValueNode(entry.value)
-      api.getOrCreate.set(WebApiModel.Host, value.string(), Annotations(entry))
+      api.set(WebApiModel.Host, value.string(), Annotations(entry))
     })
 
     map.key(
       "x-base-uri-parameters",
       entry => {
         val uriParameters =
-          HeaderParametersParser(entry.value.value.toMap, api.getOrCreate.withBaseUriParameter, declarations).parse()
-        api.getOrCreate.set(WebApiModel.BaseUriParameters,
-                            AmfArray(uriParameters, Annotations(entry.value)),
-                            Annotations(entry))
+          HeaderParametersParser(entry.value.value.toMap, api.withBaseUriParameter, declarations).parse()
+        api.set(WebApiModel.BaseUriParameters, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -114,30 +114,30 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
       "basePath",
       entry => {
         val value = ValueNode(entry.value)
-        api.getOrCreate.set(WebApiModel.BasePath, value.string(), Annotations(entry))
+        api.set(WebApiModel.BasePath, value.string(), Annotations(entry))
       }
     )
 
     map.key("consumes", entry => {
       val value = ArrayNode(entry.value.value.toSequence)
-      api.getOrCreate.set(WebApiModel.Accepts, value.strings(), Annotations(entry))
+      api.set(WebApiModel.Accepts, value.strings(), Annotations(entry))
     })
 
     map.key("produces", entry => {
       val value = ArrayNode(entry.value.value.toSequence)
-      api.getOrCreate.set(WebApiModel.ContentType, value.strings(), Annotations(entry))
+      api.set(WebApiModel.ContentType, value.strings(), Annotations(entry))
     })
 
     map.key("schemes", entry => {
       val value = ArrayNode(entry.value.value.toSequence)
-      api.getOrCreate.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+      api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
     })
 
     map.key(
       "contact",
       entry => {
         val organization: Organization = OrganizationParser(entry.value.value.toMap).parse()
-        api.getOrCreate.set(WebApiModel.Provider, organization, Annotations(entry))
+        api.set(WebApiModel.Provider, organization, Annotations(entry))
       }
     )
 
@@ -145,7 +145,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
       "externalDocs",
       entry => {
         val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
-        api.getOrCreate.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
+        api.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
       }
     )
 
@@ -157,16 +157,16 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
           "^/.*",
           entries => {
             val endpoints = mutable.ListBuffer[EndPoint]()
-            entries.foreach(EndpointParser(_, api.getOrCreate.withEndPoint, endpoints, declarations).parse())
-            api.getOrCreate.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+            entries.foreach(EndpointParser(_, api.withEndPoint, endpoints, declarations).parse())
+            api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
           }
         )
       }
     )
 
-    AnnotationParser(() => api.getOrCreate, map).parse()
+    AnnotationParser(() => api, map).parse()
 
-    api.option
+    api
   }
 }
 
@@ -602,15 +602,20 @@ case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter
     parameter
   }
 }
+object AnnotationTypesParser {
+  def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations): AnnotationTypesParser =
+    AnnotationTypesParser(ast, ast.key.value.toScalar.text, ast.value.value.toMap, adopt, declarations)
+}
 
-case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations) {
+case class AnnotationTypesParser(ast: YPart,
+                                 annotationName: String,
+                                 map: YMap,
+                                 adopt: (CustomDomainProperty) => Unit,
+                                 declarations: Declarations) {
   def parse(): CustomDomainProperty = {
-    val custom         = CustomDomainProperty(node)
-    val annotationName = node.key.value.toScalar.text
+    val custom = CustomDomainProperty(ast)
     custom.withName(annotationName)
     adopt(custom)
-
-    val map = node.value.value.toMap
 
     map.key(
       "allowedTargets",
@@ -666,8 +671,8 @@ case class AnnotationTypesParser(node: YMapEntry, adopt: (CustomDomainProperty) 
 
 class OasSpecParser(root: Root) {
 
-  protected def parseDeclares(map: YMap): Seq[DomainElement] = {
-    val types = parseTypeDeclarations(map, root.location + "#/declarations")
+  protected def parseDeclares(map: YMap, declarations: Declarations): Seq[DomainElement] = {
+    val types = parseTypeDeclarations(map, root.location + "#/declarations", declarations)
 
     types ++
       parseAnnotationTypeDeclarations(map, root.location + "#/declarations", types) ++
@@ -704,7 +709,7 @@ class OasSpecParser(root: Root) {
     resourceTypes
   }
 
-  def parseTypeDeclarations(map: YMap, typesPrefix: String): Seq[Shape] = {
+  def parseTypeDeclarations(map: YMap, typesPrefix: String, declarations: Declarations): Seq[Shape] = {
     val types = ListBuffer[Shape]()
 
     map.key(
@@ -713,7 +718,9 @@ class OasSpecParser(root: Root) {
 
         entry.value.value.toMap.entries.foreach(e => {
           val typeName = e.key.value.toScalar.text
-          OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))
+          OasTypeParser(e,
+                        shape => shape.withName(typeName).adopted(typesPrefix),
+                        declarations.copy(declarations = types))
             .parse() match {
             case Some(shape) =>
               types += shape.add(DeclaredElement())
@@ -751,7 +758,7 @@ class OasSpecParser(root: Root) {
 
   // producer? whe lose id?
   case class ReferencesParser(map: YMap, rootReferences: Seq[ParsedReference]) {
-    def parse(): mutable.Map[String, BaseUnit] = {
+    def parse(): Map[String, BaseUnit] = {
 
       val references = mutable.Map[String, BaseUnit]()
 
@@ -766,7 +773,9 @@ class OasSpecParser(root: Root) {
           })
       )
 
-      references
+      references ++= rootReferences.collect({ case ParsedReference(f: Fragment, s: String) => s -> f }).toMap
+
+      references.toMap
     }
 
     private def target(originalUrl: String): Option[BaseUnit] =
@@ -779,6 +788,24 @@ class OasSpecParser(root: Root) {
         val value = ValueNode(entry.value)
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })
+    }
+  }
+
+  case class UserDocumentationParser(map: YMap) {
+    def parse(): UserDocumentation = {
+
+      val documentation = UserDocumentation(Annotations(map))
+      // todo
+      map.key("title", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(UserDocumentationModel.Title, value.string(), Annotations(entry))
+      })
+
+      map.key("content", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(UserDocumentationModel.Content, value.string(), Annotations(entry))
+      })
+      documentation
     }
   }
 

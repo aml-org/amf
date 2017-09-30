@@ -1,14 +1,14 @@
 package amf.compiler
 
 import amf.dialects.DialectRegistry
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Fragment}
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.dialects.DialectParser
-import amf.spec.oas.{OasDocumentParser, OasModuleParser}
+import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
 import org.yaml.model.{YComment, YDocument, YPart}
 import org.yaml.parser.YamlParser
@@ -87,8 +87,8 @@ class AMFCompiler private (val url: String,
 
   private def makeOasUnit(root: Root): BaseUnit = {
     val option = OasHeader(root).map({
-      case OasHeader.Oas_20 => resolveOasUnit(root: Root)
-      case _                => throw new UnableToResolveUnitException
+      case OasHeader.Oas20 => resolveOasUnit(root: Root)
+      case _               => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit
@@ -99,6 +99,7 @@ class AMFCompiler private (val url: String,
   private def resolveOasUnit(root: Root): BaseUnit = {
     hint.kind match {
       case Library => OasModuleParser(root).parseModule()
+      case Link    => OasFragmentParser(root).parseFragment()
       case _       => OasDocumentParser(root).parseDocument()
     }
   }

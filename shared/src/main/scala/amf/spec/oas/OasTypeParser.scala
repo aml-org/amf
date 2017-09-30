@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, LinkType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -21,6 +21,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   def parse(): Option[Shape] = {
 
     detect() match {
+      case LinkType =>
+        parseLinkType()
       case ObjectType =>
         Some(parseObjectType())
       case ArrayType =>
@@ -32,13 +34,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def detect(): TypeDef =
-    detectType()
+    detectDependency()
+      .orElse(detectType())
       .orElse(detectProperties())
       .getOrElse(if (map.entries.isEmpty) ObjectType else UndefinedType)
 
-  private def detectProperties(): Option[TypeDef.ObjectType.type] = {
+  private def detectProperties(): Option[TypeDef.ObjectType.type] =
     map.key("properties").orElse(map.key("allOf")).map(_ => ObjectType)
-  }
+
+  private def detectDependency(): Option[TypeDef] = map.key("$ref").map(_ => LinkType)
 
   private def detectType(): Option[TypeDef] = {
     map
@@ -64,6 +68,20 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
   private def parseArrayType(): Shape = {
     DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape), declarations).parse()
+  }
+
+  private def parseLinkType(): Option[Shape] = {
+    map
+      .key("$ref")
+      .map(_.value.value.toScalar.text)
+      .map(text =>
+        declarations.find(text) match {
+          case Some(s: Shape) =>
+            val copied = s.link(Some(text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
+            adopt(copied)
+            copied
+          case _ => NodeShape(ast).withName(name)
+      }) // todo check if empty its ok if i dondt find the key in the declarations map/)
   }
 
   private def parseObjectType(): Shape = {

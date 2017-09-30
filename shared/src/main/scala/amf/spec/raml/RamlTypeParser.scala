@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, LinkType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._

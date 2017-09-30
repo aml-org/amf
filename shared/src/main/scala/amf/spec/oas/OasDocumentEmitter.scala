@@ -710,12 +710,25 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
+        if (shape.linkTarget.isDefined)
+          shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel).emit())
         map { () =>
           traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
         }
       }
     }
   }
+
+  case class TagToReferenceEmitter(linkTarget: DomainElement with Linkable, label: Option[String]) {
+    def emit(): Unit = {
+      val refVal = label.getOrElse(linkTarget.id)
+      map { () =>
+        ref(refVal)
+      }
+    }
+  }
+
+  protected def ref(url: String): Unit = EntryEmitter("$ref", url, YType("$ref")) // todo
 
   case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
@@ -1138,6 +1151,23 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  // todo to check, extention?
+  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering) extends Emitter {
+
+    override def emit(): Unit = {
+      val result = ListBuffer[Emitter]()
+      val fs     = userDocumentation.fields
+      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
+      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
+
+      map { () =>
+        traverse(ordering.sorted(result))
+      }
+    }
+
+    override def position(): Position = pos(userDocumentation.annotations)
   }
 
 }

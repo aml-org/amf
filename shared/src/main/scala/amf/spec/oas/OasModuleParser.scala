@@ -7,6 +7,7 @@ import amf.domain.Annotations
 import amf.metadata.document.{BaseUnitModel, ModuleModel}
 import amf.model.AmfArray
 import amf.parser.YValueOps
+import amf.spec.Declarations
 
 /**
   *
@@ -24,7 +25,7 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
 
       val enviromentRef = ReferencesParser(rootMap, root.references).parse()
 
-      val declares = parseDeclares(rootMap)
+      val declares = parseDeclares(rootMap, Declarations(enviromentRef))
 
       // TODO invoke when it's done
       //    resourceTypes?

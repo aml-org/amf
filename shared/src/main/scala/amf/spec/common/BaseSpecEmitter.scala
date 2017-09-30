@@ -53,8 +53,6 @@ trait BaseSpecEmitter {
 
   protected def comment(text: String): Unit = emitter.comment(text)
 
-  protected def link(url: String): Unit = emitter.scalar("!include " + url, YType("!include")) // todo
-
   /** Emit a single value from an array as an entry. */
   case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
     override def emit(): Unit = {

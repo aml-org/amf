@@ -396,6 +396,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   test("Test data type fragment amf to amf") {
     assertCycle("data-type-fragment.raml.jsonld", "data-type-fragment.raml.jsonld", AmfJsonHint, Amf, referencesPath)
   }
+//
+//  test("Test data type fragment amf to amf") {
+//    assertCycle("data-type-fragment.raml.jsonld", "data-type-fragment.raml.jsonld", AmfJsonHint, Amf, referencesPath)
+//  }
 
   // todo what we do when library file name changes changes on dump
   ignore("Test libraries raml to oas") {

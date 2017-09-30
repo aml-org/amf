@@ -24,7 +24,7 @@ import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{BaseUriSplitter, Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -550,7 +550,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       val result = ListBuffer[Emitter]()
 
       if (declarations.shapes.nonEmpty)
-        result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, references: Seq[BaseUnit], ordering)
+        result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, references, ordering)
 
       if (declarations.annotations.nonEmpty)
         result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
@@ -571,7 +571,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       entry { () =>
         raw("types")
         map { () =>
-          traverse(ordering.sorted(types.map(s => NamedTypeEmitter(s, references: Seq[BaseUnit], ordering))))
+          traverse(ordering.sorted(types.map(s => NamedTypeEmitter(s, references, ordering))))
         }
       }
     }
@@ -1107,4 +1107,5 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = pos(userDocumentation.annotations)
   }
 
+  protected def ref(url: String): Unit = emitter.scalar("!include " + url, YType("!include")) // todo
 }
