@@ -9,6 +9,7 @@ import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
+import amf.spec.Declarations
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
 import scala.collection.mutable
@@ -149,17 +150,45 @@ private[spec] object BaseSpecParser {
     }
   }
 
-  case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, entry: YMapEntry) {
+  object AbstractDeclarationParser {
+
+    def apply(declaration: AbstractDeclaration,
+              parent: String,
+              entry: YMapEntry,
+              declarations: Declarations): AbstractDeclarationParser =
+      new AbstractDeclarationParser(declaration, parent, entry.key.value.toScalar.text, entry.value, declarations)
+  }
+
+  case class AbstractDeclarationParser(declaration: AbstractDeclaration,
+                                       parent: String,
+                                       key: String,
+                                       entryValue: YNode,
+                                       declarations: Declarations) {
     def parse(): AbstractDeclaration = {
-      val key        = entry.key.value.toScalar.text
-      val parameters = AbstractVariables()
-      val dataNode   = DataNodeParser(entry.value, parameters, Some(parent + s"/$key")).parse()
 
-      declaration.withName(key).adopted(parent).withDataNode(dataNode)
+      if (entryValue.tag.text.contains("!include")) // todo review this. Todo oas?
+        parseReferenced(entryValue.value.toScalar.text, Annotations(entryValue))
+      else {
+        val parameters = AbstractVariables()
+        val dataNode   = DataNodeParser(entryValue, parameters, Some(parent + s"/$key")).parse()
 
-      parameters.ifNonEmpty(p => declaration.withVariables(p))
+        declaration.withName(key).adopted(parent).withDataNode(dataNode)
 
-      declaration
+        parameters.ifNonEmpty(p => declaration.withVariables(p))
+
+        declaration
+      }
+    }
+
+    def parseReferenced(parsedUrl: String, annotations: Annotations): AbstractDeclaration = {
+      declarations
+        .find(parsedUrl)
+        .map({
+          case a: AbstractDeclaration =>
+            val copied: AbstractDeclaration = a.link(Some(parsedUrl), Some(annotations))
+            copied.withName(key)
+        })
+        .getOrElse(throw new IllegalStateException("Could not find abstract declaration in references map for link"))
     }
   }
 

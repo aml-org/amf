@@ -553,13 +553,21 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, references, ordering)
 
       if (declarations.annotations.nonEmpty)
-        result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
+        result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, references, ordering)
 
       if (declarations.resourceTypes.nonEmpty)
-        result += AbstractDeclarationsEmitter("resourceTypes", declarations.resourceTypes.values.toSeq, ordering)
+        result += AbstractDeclarationsEmitter(
+          "resourceTypes",
+          declarations.resourceTypes.values.toSeq,
+          ordering,
+          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, key, references))
 
       if (declarations.traits.nonEmpty)
-        result += AbstractDeclarationsEmitter("traits", declarations.traits.values.toSeq, ordering)
+        result += AbstractDeclarationsEmitter(
+          "traits",
+          declarations.traits.values.toSeq,
+          ordering,
+          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, key, references))
 
       result
     }
@@ -602,7 +610,8 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
   case class TagToReferenceEmitter(reference: DomainElement with Linkable,
                                    referenceText: String,
-                                   refences: Seq[BaseUnit]) {
+                                   refences: Seq[BaseUnit])
+      extends Emitter {
     def emit(): Unit = {
       val referenceOption: Option[BaseUnit] = refences.find {
         case m: Module   => m.declares.contains(reference)
@@ -613,33 +622,49 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         case _         => ref(referenceText)
       })
     }
+
+    override def position(): Position = pos(reference.annotations)
   }
 
-  case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering) extends Emitter {
+  case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty],
+                                     references: Seq[BaseUnit],
+                                     ordering: SpecOrdering)
+      extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         raw("annotationTypes")
         map { () =>
-          traverse(ordering.sorted(properties.map(p => NamedPropertyTypeEmitter(p, ordering))))
+          traverse(ordering.sorted(properties.map(p => NamedPropertyTypeEmitter(p, references, ordering))))
         }
       }
     }
     override def position(): Position = properties.headOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO)
   }
 
-  case class NamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ordering: SpecOrdering) extends Emitter {
+  case class NamedPropertyTypeEmitter(annotationType: CustomDomainProperty,
+                                      references: Seq[BaseUnit],
+                                      ordering: SpecOrdering)
+      extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         val name = Option(annotationType.name)
           .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
           .get
         raw(name)
-        map { () =>
-          val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
-          traverse(ordering.sorted(emitters))
-        }
+        if (annotationType.linkTarget.isDefined)
+          annotationType.linkTarget.foreach(l =>
+            TagToReferenceEmitter(l, annotationType.linkLabel.getOrElse(l.id), references).emit())
+        else
+          emitInline()
       }
 
+    }
+
+    private def emitInline(): Unit = {
+      map { () =>
+        val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
+        traverse(ordering.sorted(emitters))
+      }
     }
 
     override def position(): Position = pos(annotationType.annotations)
@@ -924,9 +949,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
                   properties.get(iri.value.toString).map(p => AmfScalar(p.name, iri.annotations)))
               })
 
-            targets.foreach(t => {
+            targets.foreach(target => {
               array { () =>
-                traverse(ordering.sorted(t.map(ScalarEmitter)))
+                traverse(ordering.sorted(target.map(t => ScalarEmitter(t))))
               }
             })
           }

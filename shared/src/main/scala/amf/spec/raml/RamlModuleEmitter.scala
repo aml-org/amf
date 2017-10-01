@@ -1,8 +1,9 @@
 package amf.spec.raml
 
 import amf.compiler.{RamlFragmentHeader, RamlHeader}
-import amf.document.Fragment.{AnnotationTypeDeclaration, DataType, DocumentationItem, Fragment}
+import amf.document.Fragment._
 import amf.document.Module
+import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
 import amf.remote.Raml
 import amf.spec.{Emitter, SpecOrdering}
@@ -45,8 +46,8 @@ case class RamlFragmentEmitter(fragment: Fragment) extends RamlSpecEmitter {
       case di: DocumentationItem => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataType          => DataTypeFragmentEmitter(dt, ordering)
       //      case _: NamedExample              => Raml10NamedExample
-      //      case _: ResourceType              => Raml10ResourceType
-      //      case _: Trait                     => Raml10Trait
+      case rt: ResourceTypeFragment      => ResourceTypeFragmentEmitter(rt, ordering)
+      case tf: TraitFragment             => TraitFragmentEmitter(tf, ordering)
       case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
       case _                             => throw new UnsupportedOperationException("Unsupported fragment type")
     }
@@ -89,5 +90,25 @@ case class RamlFragmentEmitter(fragment: Fragment) extends RamlSpecEmitter {
 
     val elementsEmitters: Seq[Emitter] =
       AnnotationTypeEmitter(annotation.encodes, ordering).emitters()
+  }
+
+  case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
+
+    override val header: RamlHeader = RamlFragmentHeader.Raml10ResourceType
+
+    val elementsEmitters: Seq[Emitter] =
+      DataNodeEmitter(resourceTypeFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
+        .emitters() // todo review with gute the map and sequence for oas
+  }
+
+  case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
+
+    override val header: RamlHeader = RamlFragmentHeader.Raml10Trait
+
+    val elementsEmitters: Seq[Emitter] =
+      DataNodeEmitter(traitFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
+        .emitters() // todo review with gute the map and sequence for oas
   }
 }

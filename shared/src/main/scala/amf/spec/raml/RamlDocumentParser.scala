@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.common.Lazy
 import amf.compiler.{ParsedReference, Root}
 import amf.document.Fragment.Fragment
-import amf.document.{BaseUnit, Document, Fragment}
+import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.`abstract`._
@@ -12,7 +12,6 @@ import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
-import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
@@ -531,10 +530,33 @@ case class ParameterParser(entry: YMapEntry, producer: String => Parameter, decl
 }
 
 object AnnotationTypesParser {
-  def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations): AnnotationTypesParser =
-    AnnotationTypesParser(ast, ast.key.value.toScalar.text, ast.value.value.toMap, adopt, declarations)
+  def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations): CustomDomainProperty =
+    ast.value.value match {
+      case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
+      case scalar: YScalar =>
+        LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
+      case _ => throw new IllegalArgumentException("Invalid value Ypart type for annotation types parser")
+    }
+
 }
 
+case class LinkedAnnotationTypeParser(ast: YPart,
+                                      annotationName: String,
+                                      scalar: YScalar,
+                                      adopt: (CustomDomainProperty) => Unit,
+                                      declarations: Declarations) {
+  def parse(): CustomDomainProperty = {
+    declarations
+      .find(scalar.text)
+      .map({
+        case a: CustomDomainProperty =>
+          val copied: CustomDomainProperty = a.link(Some(scalar.text), Some(Annotations(ast)))
+          adopt(copied.withName(annotationName))
+          copied
+      })
+      .getOrElse(throw new UnsupportedOperationException("Could not find declared annotation link in references"))
+  }
+}
 case class AnnotationTypesParser(ast: YPart,
                                  annotationName: String,
                                  map: YMap,
@@ -601,12 +623,12 @@ case class AnnotationTypesParser(ast: YPart,
 abstract class RamlSpecParser(val root: Root) {
 
   protected def parseDeclares(map: YMap, declarations: Declarations): Seq[DomainElement] = {
-    val types = parseTypeDeclarations(map, root.location + "#/declarations", declarations)
-
+    val types                 = parseTypeDeclarations(map, root.location + "#/declarations", declarations)
+    val declarationsWithTypes = declarations.add(types)
     types ++
-      parseAnnotationTypeDeclarations(map, root.location + "#/declarations", types) ++
-      parseResourceTypeDeclarations(map, root.location + "#/declarations") ++
-      parseTraitDeclarations(map, root.location + "#/declarations")
+      parseAnnotationTypeDeclarations(map, root.location + "#/declarations", declarationsWithTypes) ++
+      parseResourceTypeDeclarations(map, root.location + "#/declarations", declarationsWithTypes) ++
+      parseTraitDeclarations(map, root.location + "#/declarations", declarations.add(types))
   }
 
   // producer? whe lose id?
@@ -635,29 +657,37 @@ abstract class RamlSpecParser(val root: Root) {
       rootReferences.find(r => r.parsedUrl.equals(originalUrl)).map(_.baseUnit)
   }
 
-  def parseTraitDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+  def parseTraitDeclarations(map: YMap,
+                             customProperties: String,
+                             declarations: Declarations): Seq[AbstractDeclaration] = {
     val traits = ListBuffer[AbstractDeclaration]()
 
     map.key(
       "traits",
       e => {
         e.value.value.toMap.entries.map(traitEntry =>
-          traits += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry).parse())
+          traits += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry, declarations).parse())
       }
     )
 
     traits
   }
 
-  def parseResourceTypeDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+  def parseResourceTypeDeclarations(map: YMap,
+                                    customProperties: String,
+                                    declarations: Declarations): Seq[AbstractDeclaration] = {
     val resourceTypes = ListBuffer[AbstractDeclaration]()
 
     map.key(
       "resourceTypes",
       e => {
-        e.value.value.toMap.entries.map(resourceEntry =>
-          resourceTypes += AbstractDeclarationParser(ResourceType(resourceEntry), customProperties, resourceEntry)
-            .parse())
+        e.value.value.toMap.entries.map(
+          resourceEntry =>
+            resourceTypes += AbstractDeclarationParser(ResourceType(resourceEntry),
+                                                       customProperties,
+                                                       resourceEntry,
+                                                       declarations)
+              .parse())
       }
     )
 
@@ -690,7 +720,7 @@ abstract class RamlSpecParser(val root: Root) {
 
   def parseAnnotationTypeDeclarations(map: YMap,
                                       customProperties: String,
-                                      types: Seq[Shape]): Seq[CustomDomainProperty] = {
+                                      declarations: Declarations): Seq[CustomDomainProperty] = {
     val customDomainProperties = ListBuffer[CustomDomainProperty]()
 
     map.key(
@@ -703,7 +733,7 @@ abstract class RamlSpecParser(val root: Root) {
                                                        customProperty
                                                          .withName(typeName)
                                                          .adopted(customProperties),
-                                                     Declarations(types ++ customDomainProperties)).parse()
+                                                     declarations.add(customDomainProperties))
           customDomainProperties += customProperty.add(DeclaredElement())
         })
       }

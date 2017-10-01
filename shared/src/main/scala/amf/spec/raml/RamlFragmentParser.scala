@@ -4,10 +4,12 @@ import amf.compiler.RamlFragmentHeader._
 import amf.compiler.{RamlFragmentHeader, Root}
 import amf.document.Fragment._
 import amf.domain.Annotations
+import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.parser.YValueOps
 import amf.shape.Shape
 import amf.spec.Declarations
+import amf.spec.common.BaseSpecParser.AbstractDeclarationParser
 import org.yaml.model.YMap
 
 /**
@@ -25,8 +27,8 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
       case Some(Raml10DocumentationItem)         => DocumentationItemFragmentParser(rootMap).parse()
       case Some(Raml10DataType)                  => DataTypeFragmentParser(rootMap).parse()
       case Some(Raml10NamedExample)              => throw new IllegalStateException("to be implemented")
-      case Some(Raml10ResourceType)              => throw new IllegalStateException("to be implemented")
-      case Some(Raml10Trait)                     => throw new IllegalStateException("to be implemented")
+      case Some(Raml10ResourceType)              => ResourceTypeFragmentParser(rootMap).parse()
+      case Some(Raml10Trait)                     => TraitFragmentParser(rootMap).parse()
       case Some(Raml10AnnotationTypeDeclaration) => AnnotationFragmentParser(rootMap).parse()
       case _                                     => throw new IllegalStateException("Unsupported fragment type")
     }
@@ -63,6 +65,29 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
 
       dataType
       //
+    }
+  }
+
+  case class ResourceTypeFragmentParser(map: YMap) {
+    def parse(): ResourceTypeFragment = {
+      val resourceType = ResourceTypeFragment().adopted(root.location)
+
+      val abstractDeclaration =
+        new AbstractDeclarationParser(ResourceType(map), resourceType.id, "resourceType", map, Declarations()).parse()
+
+      resourceType.withEncodes(abstractDeclaration)
+
+    }
+  }
+
+  case class TraitFragmentParser(map: YMap) {
+    def parse(): TraitFragment = {
+      val traitFragment = TraitFragment().adopted(root.location)
+
+      val abstractDeclaration =
+        new AbstractDeclarationParser(Trait(map), traitFragment.id, "trait", map, Declarations()).parse()
+
+      traitFragment.withEncodes(abstractDeclaration)
     }
   }
 

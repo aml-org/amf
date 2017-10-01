@@ -602,9 +602,34 @@ case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter
     parameter
   }
 }
+
 object AnnotationTypesParser {
-  def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations): AnnotationTypesParser =
-    AnnotationTypesParser(ast, ast.key.value.toScalar.text, ast.value.value.toMap, adopt, declarations)
+  def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit, declarations: Declarations): CustomDomainProperty =
+    ast.value.value match {
+      case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
+      case scalar: YScalar =>
+        LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
+      case _ => throw new IllegalArgumentException("Invalid value Ypart type for annotation types parser")
+    }
+
+}
+
+case class LinkedAnnotationTypeParser(ast: YPart,
+                                      annotationName: String,
+                                      scalar: YScalar,
+                                      adopt: (CustomDomainProperty) => Unit,
+                                      declarations: Declarations) {
+  def parse(): CustomDomainProperty = {
+    declarations
+      .find(scalar.text)
+      .map({
+        case a: CustomDomainProperty =>
+          val copied: CustomDomainProperty = a.link(Some(scalar.text), Some(Annotations(ast)))
+          adopt(copied.withName(annotationName))
+          copied
+      })
+      .getOrElse(throw new UnsupportedOperationException("Could not find declared annotation link in references"))
+  }
 }
 
 case class AnnotationTypesParser(ast: YPart,
@@ -672,37 +697,46 @@ case class AnnotationTypesParser(ast: YPart,
 class OasSpecParser(root: Root) {
 
   protected def parseDeclares(map: YMap, declarations: Declarations): Seq[DomainElement] = {
-    val types = parseTypeDeclarations(map, root.location + "#/declarations", declarations)
+    val types                 = parseTypeDeclarations(map, root.location + "#/declarations", declarations)
+    val declarationsWithTypes = declarations.add(types)
 
     types ++
-      parseAnnotationTypeDeclarations(map, root.location + "#/declarations", types) ++
-      parseResourceTypeDeclarations(map, root.location + "#/declarations") ++
-      parseTraitDeclarations(map, root.location + "#/declarations")
+      parseAnnotationTypeDeclarations(map, root.location + "#/declarations", declarationsWithTypes) ++
+      parseResourceTypeDeclarations(map, root.location + "#/declarations", declarationsWithTypes) ++
+      parseTraitDeclarations(map, root.location + "#/declarations", declarationsWithTypes)
   }
 
-  def parseTraitDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+  def parseTraitDeclarations(map: YMap,
+                             customProperties: String,
+                             declarations: Declarations): Seq[AbstractDeclaration] = {
     val traits = ListBuffer[AbstractDeclaration]()
 
     map.key(
       "x-traits",
       e => {
         e.value.value.toMap.entries.map(traitEntry =>
-          traits += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry).parse())
+          traits += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry, declarations).parse())
       }
     )
 
     traits
   }
 
-  def parseResourceTypeDeclarations(map: YMap, customProperties: String): Seq[AbstractDeclaration] = {
+  def parseResourceTypeDeclarations(map: YMap,
+                                    customProperties: String,
+                                    declarations: Declarations): Seq[AbstractDeclaration] = {
     val resourceTypes = ListBuffer[AbstractDeclaration]()
 
     map.key(
       "x-resourceTypes",
       e => {
-        e.value.value.toMap.entries.map(resourceEntry =>
-          resourceTypes += AbstractDeclarationParser(ResourceType(resourceEntry), customProperties, resourceEntry)
-            .parse())
+        e.value.value.toMap.entries.map(
+          resourceEntry =>
+            resourceTypes += AbstractDeclarationParser(ResourceType(resourceEntry),
+                                                       customProperties,
+                                                       resourceEntry,
+                                                       declarations)
+              .parse())
       }
     )
 
@@ -734,7 +768,7 @@ class OasSpecParser(root: Root) {
 
   def parseAnnotationTypeDeclarations(map: YMap,
                                       customProperties: String,
-                                      types: Seq[Shape]): Seq[CustomDomainProperty] = {
+                                      declarations: Declarations): Seq[CustomDomainProperty] = {
     val customDomainProperties = ListBuffer[CustomDomainProperty]()
 
     map.key(
@@ -747,7 +781,7 @@ class OasSpecParser(root: Root) {
                                                        customProperty
                                                          .withName(typeName)
                                                          .adopted(customProperties),
-                                                     Declarations(types ++ customDomainProperties)).parse()
+                                                     declarations.add(customDomainProperties))
           customDomainProperties += customProperty.add(DeclaredElement())
         })
       }

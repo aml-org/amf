@@ -683,10 +683,18 @@ class OasSpecEmitter extends BaseSpecEmitter {
         result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
 
       if (declarations.resourceTypes.nonEmpty)
-        result += AbstractDeclarationsEmitter("x-resourceTypes", declarations.resourceTypes.values.toSeq, ordering)
+        result += AbstractDeclarationsEmitter(
+          "x-resourceTypes",
+          declarations.resourceTypes.values.toSeq,
+          ordering,
+          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, Some(key)))
 
       if (declarations.traits.nonEmpty)
-        result += AbstractDeclarationsEmitter("x-traits", declarations.traits.values.toSeq, ordering)
+        result += AbstractDeclarationsEmitter(
+          "x-traits",
+          declarations.traits.values.toSeq,
+          ordering,
+          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, Some(key)))
 
       result
     }
@@ -721,13 +729,15 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
   }
 
-  case class TagToReferenceEmitter(linkTarget: DomainElement with Linkable, label: Option[String]) {
+  case class TagToReferenceEmitter(linkTarget: DomainElement with Linkable, label: Option[String]) extends Emitter {
     def emit(): Unit = {
       val refVal = label.getOrElse(linkTarget.id)
       map { () =>
         ref(refVal)
       }
     }
+
+    override def position(): Position = pos(linkTarget.annotations)
   }
 
   protected def ref(url: String): Unit = EntryEmitter("$ref", url).emit() // todo YType("$ref")
@@ -752,12 +762,18 @@ class OasSpecEmitter extends BaseSpecEmitter {
           .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
           .get
         raw(name)
-        map { () =>
-          val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
-          traverse(ordering.sorted(emitters))
-        }
+        if (annotationType.linkTarget.isDefined)
+          annotationType.linkTarget.foreach(l => TagToReferenceEmitter(l, annotationType.linkLabel).emit())
+        else
+          emitAnnotationFields()
       }
+    }
 
+    def emitAnnotationFields(): Unit = {
+      map { () =>
+        val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
+        traverse(ordering.sorted(emitters))
+      }
     }
 
     override def position(): Position = pos(annotationType.annotations)
@@ -986,9 +1002,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
                   properties.get(iri.value.toString).map(p => AmfScalar(p.name, iri.annotations)))
               })
 
-            targets.foreach(t => {
+            targets.foreach(target => {
               array { () =>
-                traverse(ordering.sorted(t.map(ScalarEmitter)))
+                traverse(ordering.sorted(target.map(t => ScalarEmitter(t))))
               }
             })
           }
@@ -1004,7 +1020,6 @@ class OasSpecEmitter extends BaseSpecEmitter {
         raw("type")
         raw("null")
       }
-
 
     override def position(): Position = pos(nil.annotations)
   }
