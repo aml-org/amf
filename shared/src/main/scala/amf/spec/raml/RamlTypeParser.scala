@@ -28,16 +28,17 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
 //      case ref: YReference =>
 //        processRef(ref)
 //      case _ =>
-      detect() match {
-        case ObjectType =>
-          Some(parseObjectType(name, part, declarations))
-        case ArrayType =>
-          Some(parseArrayType(name, part))
-        case typeDef if typeDef.isScalar =>
-          Some(parseScalarType(name, typeDef, part))
-        case _ => None
-      }
-
+    detect() match {
+      case ObjectType =>
+        Some(parseObjectType(name, part, declarations))
+      case ArrayType =>
+        Some(parseArrayType(name, part))
+      case typeDef if typeDef.isAny =>
+        Some(parseAnyType(name, typeDef, ahead))
+      case typeDef if typeDef.isScalar =>
+        Some(parseScalarType(name, typeDef, part))
+      case _ => None
+    }
   }
 //
 //  def retrieveRefShape(ref: YReference): Shape = {
@@ -94,6 +95,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     }
   }
 
+  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YValue): Shape = AnyShape(entry).withName(name)
+
   def parseArrayType(name: String, ahead: YPart): Shape = {
     val shape = ahead match {
       case map: YMap => DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape), declarations).parse()
@@ -110,7 +113,9 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     val shape = NodeShape(ast).withName(name)
     adopt(shape)
     ahead match {
-      case map: YMap => NodeShapeParser(shape, map, declarations).parse()// i have to do the adopt before parser childrens shapes. Other way the childrens will not have the father id
+      case map: YMap =>
+        NodeShapeParser(shape, map, declarations)
+          .parse() // i have to do the adopt before parser childrens shapes. Other way the childrens will not have the father id
       case scalar: YScalar =>
         declarations.find(scalar.text) match {
           case Some(s: Shape) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)

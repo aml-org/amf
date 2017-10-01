@@ -782,6 +782,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
+        case any: AnyShape =>
+          val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+          Seq(AnyShapeEmitter(copiedNode, ordering))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           NodeShapeEmitter(copiedNode, ordering).emitters()
@@ -821,6 +824,13 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       result
     }
+  }
+
+  case class AnyShapeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      // ignore
+    }
+    override def position(): Position = pos(shape.annotations)
   }
 
   case class ArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering) {

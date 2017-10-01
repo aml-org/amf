@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, LinkType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{AnyType, ArrayType, LinkType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -25,6 +25,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         parseLinkType()
       case ObjectType =>
         Some(parseObjectType())
+      case AnyType =>
+        Some(parseAnyType())
       case ArrayType =>
         Some(parseArrayType())
       case typeDef if typeDef.isScalar =>
@@ -37,7 +39,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     detectDependency()
       .orElse(detectType())
       .orElse(detectProperties())
-      .getOrElse(if (map.entries.isEmpty) ObjectType else UndefinedType)
+      .getOrElse(if (map.entries.isEmpty) AnyType else UndefinedType)
 
   private def detectProperties(): Option[TypeDef.ObjectType.type] =
     map.key("properties").orElse(map.key("allOf")).map(_ => ObjectType)
@@ -64,6 +66,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       adopt(shape)
       ScalarShapeParser(typeDef, shape, map).parse()
     }
+  }
+
+  private def parseAnyType(): Shape = {
+    val shape = AnyShape(ast).withName(name)
+    adopt(shape)
+    shape
   }
 
   private def parseArrayType(): Shape = {
