@@ -34,7 +34,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
       case ArrayType =>
         Some(parseArrayType(name, part))
       case typeDef if typeDef.isAny =>
-        Some(parseAnyType(name, typeDef, ahead))
+        Some(parseAnyType(name, typeDef, part))
       case typeDef if typeDef.isScalar =>
         Some(parseScalarType(name, typeDef, part))
       case _ => None
@@ -95,7 +95,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     }
   }
 
-  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YValue): Shape = AnyShape(entry).withName(name)
+  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YPart): Shape = AnyShape(ast).withName(name)
 
   def parseArrayType(name: String, ahead: YPart): Shape = {
     val shape = ahead match {
