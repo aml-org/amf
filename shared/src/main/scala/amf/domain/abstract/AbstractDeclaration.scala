@@ -25,7 +25,7 @@ abstract class AbstractDeclaration(fields: Fields, annotations: Annotations) ext
 }
 
 case class ResourceType(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
-  override def linkCopy(): DomainElement with Linkable = ResourceType().withId(id)
+  override def linkCopy(): ResourceType = ResourceType().withId(id)
 }
 
 object ResourceType {
@@ -37,7 +37,7 @@ object ResourceType {
 }
 
 case class Trait(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
-  override def linkCopy(): DomainElement with Linkable = Trait().withId(id)
+  override def linkCopy(): Trait = Trait().withId(id)
 }
 
 object Trait {

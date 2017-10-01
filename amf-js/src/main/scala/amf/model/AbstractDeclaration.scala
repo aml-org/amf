@@ -8,7 +8,8 @@ import scala.scalajs.js.annotation.JSExportAll
   * JVM AbstractDeclaration model class.
   */
 abstract class AbstractDeclaration private[model] (private val declaration: amf.domain.`abstract`.AbstractDeclaration)
-    extends DomainElement {
+    extends DomainElement
+    with Linkable {
   override private[amf] def element: amf.domain.`abstract`.AbstractDeclaration
 
   val name: String                     = declaration.name
@@ -42,6 +43,11 @@ case class ResourceType private[model] (private val resourceType: amf.domain.`ab
   def this() = this(amf.domain.`abstract`.ResourceType())
 
   override private[amf] def element: amf.domain.`abstract`.ResourceType = resourceType
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.domain.`abstract`.ResourceType => ResourceType(l) })
+
+  override def linkCopy(): DomainElement with Linkable = ResourceType(element.linkCopy())
 }
 
 @JSExportAll
@@ -49,4 +55,9 @@ case class Trait private[model] (private val tr: amf.domain.`abstract`.Trait) ex
   def this() = this(amf.domain.`abstract`.Trait())
 
   override private[amf] def element: amf.domain.`abstract`.Trait = tr
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.domain.`abstract`.Trait => Trait(l) })
+
+  override def linkCopy(): DomainElement with Linkable = Trait(element.linkCopy())
 }

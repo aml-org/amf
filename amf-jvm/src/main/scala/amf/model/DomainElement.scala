@@ -29,3 +29,33 @@ trait DomainElement {
 
   def withTrait(name: String): ParametrizedTrait = ParametrizedTrait(element.withTrait(name))
 }
+
+trait Linkable { this: DomainElement with Linkable =>
+
+  private[amf] def element: amf.domain.DomainElement with amf.domain.Linkable
+
+  def linkTarget: Option[DomainElement with Linkable]
+
+  def isLink: Boolean           = linkTarget.isDefined
+  def linkLabel: Option[String] = element.linkLabel
+
+  def linkCopy(): DomainElement with Linkable
+
+  def withLinkTarget(target: DomainElement with Linkable): this.type = {
+    element.withLinkTarget(target.element)
+    this
+  }
+
+  def withLinkLabel(label: String): this.type = {
+    element.withLinkLabel(label)
+    this
+  }
+
+  def link[T](label: Option[String] = None): T = {
+    val href = linkCopy()
+    href.withLinkTarget(this)
+    label.map(href.withLinkLabel)
+
+    href.asInstanceOf[T]
+  }
+}

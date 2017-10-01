@@ -33,7 +33,7 @@ case class ScalarShape(fields: Fields, annotations: Annotations) extends Shape {
 
   override def adopted(parent: String): this.type = withId(parent + "/scalar/" + name)
 
-  override def linkCopy() = PropertyShape().withId(id)
+  override def linkCopy(): ScalarShape = ScalarShape().withId(id)
 }
 
 object ScalarShape {

@@ -5,7 +5,7 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement {
+abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement with Linkable {
 
   val name: String                    = shape.name
   val displayName: String             = shape.displayName

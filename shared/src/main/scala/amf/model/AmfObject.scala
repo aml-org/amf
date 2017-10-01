@@ -76,7 +76,8 @@ trait AmfObject extends AmfElement {
   /** Set field value. */
   def set(field: Field, value: AmfElement, annotations: Annotations): this.type = {
     value match {
-      case link: Linkable if link.isLink => fields.link(field, link.linkTarget.get, annotations)
+      case link: Linkable if link.isLink =>
+        fields.link(field, link.linkTarget.get.asInstanceOf[AmfObject], annotations)
       case _ => fields.set(id, field, value, annotations)
     }
     this

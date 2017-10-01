@@ -13,7 +13,7 @@ import org.yaml.model.YDocument
 object Fragment {
 
   /** Units encoding domain fragments */
-  sealed trait Fragment extends BaseUnit with EncodesModel {
+  trait Fragment extends BaseUnit with EncodesModel {
 
     /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
     override val references: Seq[BaseUnit] = fields(DocumentModel.References)

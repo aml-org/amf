@@ -55,4 +55,9 @@ case class ScalarShape(private[amf] val scalar: amf.shape.ScalarShape) extends S
   }
 
   override private[amf] def element = scalar
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.shape.ScalarShape => ScalarShape(l) })
+
+  override def linkCopy(): DomainElement with Linkable = ScalarShape(element.linkCopy())
 }

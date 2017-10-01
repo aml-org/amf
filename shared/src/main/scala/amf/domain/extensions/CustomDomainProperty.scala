@@ -23,7 +23,7 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations) extend
   override def adopted(parent: String): this.type =
     if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
 
-  override def linkCopy(): DomainElement with Linkable = CustomDomainProperty().withId(id)
+  override def linkCopy(): CustomDomainProperty = CustomDomainProperty().withId(id)
 }
 
 object CustomDomainProperty {

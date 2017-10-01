@@ -33,6 +33,11 @@ class ArrayShape(private[amf] override val array: amf.shape.ArrayShape) extends 
   }
 
   override private[amf] def element = array
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.shape.ArrayShape => ArrayShape(l) })
+
+  override def linkCopy(): DomainElement with Linkable = ArrayShape(element.linkCopy())
 }
 
 object ArrayShape {
@@ -65,4 +70,9 @@ case class TupleShape(private[amf] override val array: amf.shape.TupleShape) ext
   }
 
   override private[amf] def element = array
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.shape.TupleShape => TupleShape(l) })
+
+  override def linkCopy(): DomainElement with Linkable = TupleShape(element.linkCopy())
 }
