@@ -260,6 +260,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                     List(
                       Parameter()
                         .withName("Time-Ago")
+                        .withBinding("header")
                         .withSchema(
                           ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
                         .withRequired(true)

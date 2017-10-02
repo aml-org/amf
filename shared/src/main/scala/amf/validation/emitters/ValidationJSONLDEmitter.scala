@@ -157,7 +157,7 @@ class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
         genPropertyConstraintValue("minInclusive", v)
       }
       constraint.pattern.foreach { v =>
-        genPropertyConstraintValue("pattern", escapeRegex(v))
+         genPropertyConstraintValue("pattern", escapeRegex(v))
       }
       constraint.node.foreach { v =>
         genPropertyConstraintValue("node", v)

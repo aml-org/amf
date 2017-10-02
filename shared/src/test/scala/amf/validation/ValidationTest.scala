@@ -165,6 +165,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
+  test("Banking example validation") {
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "banking/api.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect()
+      _      <- validation.loadValidationProfile(examplesPath + "banking/profile.raml")
+      report <- validation.validate(model, "Banking")
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 10)
+    }
+  }
+
 
   val testValidations = Map(
     "bad_domain/amf.jsonld"            -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),

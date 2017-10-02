@@ -56,6 +56,7 @@ object JSLibraryEmitter {
       |
       |    return acc;
       |}
+      |
       |if (typeof(console) === "undefined") {
       |  console = {
       |    log: function(x) { print(x) }
@@ -101,12 +102,17 @@ class JSLibraryEmitter {
       text +=
         s"""
         |
-        |function ${constraint.computeFunctionName(validation.id())}($$this, ${constraint.validatorArgument(
-             validation.id())}) {
+        |function ${constraint.computeFunctionName(validation.id())}($$this) {
         |  var innerFn = ${constraint.code.get};
         |  var input = amfFindNode($$this, {});
         |  // print(JSON.stringify(input))
-        |  return innerFn(input);
+        |  try {
+        |    return innerFn(input);
+        |  } catch(e) {
+        |    console.log("Error in validation function");
+        |    console.log(e);
+        |    return false;
+        |  }
         |}
         |
       """.stripMargin

@@ -49,7 +49,13 @@ case class FunctionConstraint(message: Option[String],
   def constraintId(validationId: String) = s"${validationId}Constraint"
   def validatorId(validationId: String) = s"${validationId}Validator"
   def validatorPath(validationId: String) = s"${validationId}Path"
-  def validatorArgument(validationId: String) = "$" + validatorPath(validationId).split("#").last
+  def validatorArgument(validationId: String) = {
+    "$" + validatorPath(validationId)
+      .split("#")
+      .last
+      .replace("-","_")
+      .replace(".","_")
+  }
   def computeFunctionName(validationId: String) = functionName match {
     case Some(fnName) => fnName
     case _            => {
