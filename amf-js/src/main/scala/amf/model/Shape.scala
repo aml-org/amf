@@ -5,6 +5,16 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
+case class AnyShape(private[amf] val any: amf.shape.AnyShape) extends Shape(any) {
+  override private[amf] def element = any
+}
+
+@JSExportAll
+case class NilShape(private[amf] val nil: amf.shape.NilShape) extends Shape(nil) {
+  override private[amf] def element = nil
+}
+
+@JSExportAll
 abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement {
 
   val name: String                    = shape.name
@@ -49,6 +59,9 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
 object Shape {
   def apply(shape: amf.shape.Shape): Shape =
     (shape match {
+      case file: amf.shape.FileShape     => Some(FileShape(file))
+      case any: amf.shape.AnyShape       => Some(AnyShape(any))
+      case nil: amf.shape.NilShape       => Some(NilShape(nil))
       case node: amf.shape.NodeShape     => Some(NodeShape(node))
       case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
       case array: amf.shape.ArrayShape   => Some(new ArrayShape(array))

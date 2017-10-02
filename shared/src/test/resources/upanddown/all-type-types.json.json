@@ -10,6 +10,14 @@
     "AnyType": {
 
     },
+    "FileType": {
+      "maxLength": "307200",
+      "x-fileTypes": [
+        "image/jpeg",
+        "image/png"
+      ],
+      "type": "file"
+    },
     "TimeOnlyType": {
       "type": "string",
       "format": "time-only"

@@ -6,15 +6,15 @@ types:
       - a1
       - a2
     type: string
-    pattern: blabla.+
     minLength: 1
     maxLength: 20
+    pattern: blabla.+
   IntegerTest:
     type: integer
-    minimum: 2
-    maximum: 25
     (exclusiveMinimum): 4
     (exclusiveMaximum): 20
+    minimum: 2
+    maximum: 25
     multipleOf: 2
     format: int32
   ObjectTest:
