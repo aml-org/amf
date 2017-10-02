@@ -25,6 +25,7 @@ object OasTypeDefMatcher {
     case "datetime-only" => DateTimeOnlyType
     case "object"        => ObjectType
     case "array"         => ArrayType
+    case "file"          => FileType
     case _               => UndefinedType
   }
 }

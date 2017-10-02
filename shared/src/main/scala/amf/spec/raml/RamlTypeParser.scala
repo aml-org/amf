@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, NilType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -69,7 +69,9 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
 
   private def parseScalarType(name: String, typeDef: TypeDef, ahead: YValue): Shape = {
     if (typeDef.isNil) {
-      NilShape(entry).withName(name)
+      val nilShape = NilShape(entry).withName(name)
+      adopt(nilShape)
+      nilShape
     } else {
       val shape = ScalarShape(entry).withName(name)
       adopt(shape)
@@ -81,7 +83,11 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
     }
   }
 
-  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YValue): Shape = AnyShape(entry).withName(name)
+  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YValue): Shape = {
+    val shape = AnyShape(entry).withName(name)
+    adopt(shape)
+    shape
+  }
 
   def parseArrayType(name: String, ahead: YValue): Shape = {
     val shape = ahead match {
@@ -92,27 +98,34 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
   }
 
   private def parseObjectType(name: String, ahead: YValue, declarations: Declarations): Shape = {
-    val shape = NodeShape(entry).withName(name)
-    adopt(shape)
+    if (isFileType(ahead)) {
+      val shape = FileShapeParser(ahead.asInstanceOf[YMap]).parse()
+      adopt(shape)
+      shape
+    } else {
+      val shape = NodeShape(entry).withName(name)
+      adopt(shape)
+      ahead match {
+        case map: YMap => NodeShapeParser(shape, map, declarations).parse()
+        case _ => shape
+      }
+    }
+  }
+
+  private def isFileType(ahead: YValue): Boolean = {
     ahead match {
-      case map: YMap => NodeShapeParser(shape, map, declarations).parse()
-      case _         => shape
+      case ymap: YMap =>
+        ymap.map.get("type").isDefined &&
+        ymap.map("type").value.isInstanceOf[YScalar] &&
+        ymap.map("type").value.asInstanceOf[YScalar].text == "file"
+      case _ => false
     }
   }
 
 }
 
-case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() {
-  override def parse(): ScalarShape = {
-
-    super.parse()
-
-    map
-      .key("type")
-      .fold(
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
-        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
-
+trait CommonOASFieldsParser {
+  def parseOASFields(map: YMap, shape: Shape) = {
     map.key("pattern", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
@@ -128,15 +141,6 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
       shape.set(ScalarShapeModel.MaxLength, value.integer(), Annotations(entry))
     })
 
-    map.key("minimum", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
-    })
-
-    map.key("maximum", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
-    })
 
     map.key("(exclusiveMinimum)", entry => {
       val value = ValueNode(entry.value)
@@ -146,6 +150,27 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
     map.key("(exclusiveMaximum)", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), Annotations(entry))
+    })
+  }
+}
+case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() with CommonOASFieldsParser {
+  override def parse(): ScalarShape = {
+    super.parse()
+    parseOASFields(map, shape)
+    map
+      .key("type")
+      .fold(
+        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
+        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
+
+    map.key("minimum", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+    })
+
+    map.key("maximum", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
     })
 
     map.key("format", entry => {
@@ -163,6 +188,49 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
     shape
   }
 }
+
+case class FileShapeParser(override val map: YMap) extends ShapeParser() with CommonOASFieldsParser {
+  override val shape = FileShape(Annotations(map))
+
+  override def parse(): FileShape = {
+    super.parse()
+    parseOASFields(map, shape)
+
+    map.key("fileTypes", {
+      entry => entry.value.value match {
+        case seq: YSequence =>
+          val value = ArrayNode(seq)
+          shape.set(FileShapeModel.FileTypes, value.strings(), Annotations(seq))
+      }
+    })
+
+    map.key("(minimum)", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+    })
+
+    map.key("(maximum)", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+    })
+
+    map.key("(format)", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
+    })
+
+    // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
+
+    map.key("(multipleOf)", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
+    })
+
+
+    shape
+  }
+}
+
 
 case class DataArrangementParser(name: String, ast: YPart, map: YMap, adopt: Shape => Unit, declarations: Declarations) {
 

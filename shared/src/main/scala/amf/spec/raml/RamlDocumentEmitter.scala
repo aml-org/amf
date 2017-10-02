@@ -662,6 +662,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
+        case file: FileShape =>
+          val copiedFile = file.copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
+          FileShapeEmitter(copiedFile, ordering).emitters()
         case scalar: ScalarShape =>
           val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
           ScalarShapeEmitter(copiedScalar, ordering).emitters()
@@ -831,7 +834,19 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = pos(shape.annotations)
   }
 
-  case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) {
+  trait CommonOASFieldsEmitter {
+    def emitOASFields(fs: Fields, result: ListBuffer[Emitter]): Unit = {
+      fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
+
+      fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
+
+      fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("(exclusiveMinimum)", f))
+
+      fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("(exclusiveMaximum)", f))
+
+    }
+  }
+  case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) with CommonOASFieldsEmitter {
     override def emitters(): Seq[Emitter] = {
       val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
 
@@ -850,24 +865,43 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
                 else
                   pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
+      emitOASFields(fs, result)
+
       fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
-
-      fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
-
-      fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
 
       fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum", f))
 
       fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("maximum", f))
 
-      fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("(exclusiveMinimum)", f))
-
-      fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("(exclusiveMaximum)", f))
-
       fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("multipleOf", f))
 
       if (format.nonEmpty) result += EntryEmitter("(format)", format)
       else fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f)) // todo mutually exclusive?
+
+      result
+    }
+  }
+
+  case class FileShapeEmitter(scalar: FileShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) with CommonOASFieldsEmitter {
+    override def emitters(): Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+
+      val fs = scalar.fields
+
+      result += EntryEmitter( "type", "file")
+
+
+      emitOASFields(fs, result)
+
+      fs.entry(FileShapeModel.FileTypes).map(f => result += ArrayEmitter("fileTypes", f, ordering))
+
+      fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("(pattern)", f))
+
+      fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("(minimum)", f))
+
+      fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("(maximum)", f))
+
+      fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("(multipleOf)", f))
 
       result
     }

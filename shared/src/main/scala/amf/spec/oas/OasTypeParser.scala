@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
-import amf.shape.TypeDef.{AnyType, ArrayType, ObjectType, UndefinedType}
+import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -53,15 +53,17 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def parseScalarType(typeDef: TypeDef): Shape = {
-    if (typeDef.isNil) {
-      val shape = NilShape(ast).withName(name)
-      adopt(shape)
-      shape
-    } else {
-      val shape = ScalarShape(ast).withName(name)
-      adopt(shape)
-      ScalarShapeParser(typeDef, shape, map).parse()
+    val parsed = typeDef match {
+      case NilType => NilShape(ast).withName(name)
+      case FileType =>
+        val shape = FileShape(ast).withName(name)
+        FileShapeParser(typeDef, shape, map).parse()
+      case _        =>
+        val shape = ScalarShape(ast).withName(name)
+        ScalarShapeParser(typeDef, shape, map).parse()
     }
+    adopt(parsed)
+    parsed
   }
 
   private def parseAnyType(): Shape = {
@@ -86,17 +88,8 @@ object OasTypeParser {
     OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations)
 }
 
-case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() {
-  override def parse(): ScalarShape = {
-
-    super.parse()
-
-    map
-      .key("type")
-      .fold(
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
-        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
-
+trait CommonScalarParsingLogic {
+  def parseScalar(map: YMap, shape: Shape): Unit = {
     map.key("pattern", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
@@ -142,6 +135,18 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
       shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
     })
 
+  }
+}
+case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
+  override def parse(): ScalarShape = {
+    super.parse()
+    map
+      .key("type")
+      .fold(
+        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
+        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
+
+    parseScalar(map, shape)
     shape
   }
 }
@@ -425,6 +430,24 @@ abstract class ShapeParser() {
         shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
       }
     )
+
+    shape
+  }
+}
+
+case class FileShapeParser(typeDef: TypeDef, shape: FileShape, map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
+  override def parse(): Shape = {
+    super.parse()
+
+    parseScalar(map, shape)
+
+    map.key("x-fileTypes", {
+      entry => entry.value.value match {
+        case seq: YSequence =>
+          val value = ArrayNode(seq)
+          shape.set(FileShapeModel.FileTypes, value.strings(), Annotations(seq))
+      }
+    })
 
     shape
   }
