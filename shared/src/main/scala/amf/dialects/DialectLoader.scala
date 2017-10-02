@@ -180,9 +180,7 @@ class DialectLoader {
 
     val name = domainEntity.name()
     val `type`: List[Type] = resolveType(domainEntity, dialects,props)
-    if (`type`.isEmpty){
-      println("A")
-    }
+
     var res =  DialectPropertyMapping(name.get,`type`.head)
     if (`type`.size>1) {
       res=res.copy(unionTypes = Some(`type`))
