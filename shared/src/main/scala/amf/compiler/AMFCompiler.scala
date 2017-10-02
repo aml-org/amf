@@ -121,7 +121,7 @@ class AMFCompiler private (val url: String,
         refs
           .filter(_.isRemote)
           .foreach(link => {
-            references += link.resolve(remote, context, cache, hint).map(r => ParsedReference(r, link.url))
+            references += link.resolve(remote, context, cache, hint,dialects).map(r => ParsedReference(r, link.url))
           })
 
         Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor) })

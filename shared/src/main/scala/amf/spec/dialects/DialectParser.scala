@@ -3,15 +3,17 @@ package amf.spec.dialects
 import amf.compiler.Root
 import amf.dialects.{DialectRegistry, DialectValidator}
 import amf.document.Document
+import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration, SynthesizedField}
 import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YMapOps
 import amf.spec.common.BaseSpecParser._
 import amf.spec.raml.RamlSpecParser
 import org.yaml.model._
+import amf.parser.{YMapOps, YValueOps}
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 
@@ -25,21 +27,44 @@ trait DomainEntityVisitor{
 
 class DialectParser(val dialect: Dialect, override val root: Root) extends RamlSpecParser(root) {
 
-  private val resolver = dialect.resolver.resolver(root)
+  private var resolver:ReferenceResolver = NullReferenceResolverFactory.resolver(root,mutable.Map());
 
   def parseDocument(): Document = {
-    val dialectDocument = parse()
-
-    Document()
+    val document=Document()
       .adopted(root.location)
-      .withEncodes(dialectDocument)
+
+    root.document.value.foreach(value => {
+      val map = value.toMap
+      val environmentRef = ReferencesParser(map, root.references).parse()
+      resolver=dialect.resolver.resolver(root,environmentRef);
+
+      val entity=parse();
+      if (environmentRef.nonEmpty) {
+        val usesMap:mutable.Map[String,String]=mutable.Map();
+        map.key(
+          "uses",
+          entry =>
+            entry.value.value.toMap.entries.foreach(e => {
+              usesMap.put(e.key.value.toScalar.text,e.value.value.toScalar.text);
+            })
+        )
+        entity.annotations += NamespaceImportsDeclaration(usesMap.toMap);
+        document.withReferences(environmentRef.values.toSeq)
+      }
+      document.withEncodes(entity)
+
+    })
+    document
   }
+
+
 
   def parse(): DomainEntity =  root.document.value.map { case entries: YMap =>
     parse(entries)
   }.get
 
   def parse(entries: YMap): DomainEntity = {
+
     val entity = DomainEntity(None, dialect.root, Fields(), Annotations(entries))
       .withId(root.location + "#")
 
@@ -52,7 +77,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
     entity
   }
 
-  def parseNode(node: YValue, domainEntity: DomainEntity): Unit = {
+  def parseNode(node: YValue, domainEntity: DomainEntity):Unit  = {
     node match {
       case entries: YMap =>
         for {
@@ -65,7 +90,9 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
         }
 
         domainEntity.definition.mappings().foreach(mapping => {
-          entries.key(mapping.name, entryNode => {
+          val ev=entries.key(mapping.name);
+          ev.foreach(
+           entryNode => {
             if (mapping.isMap) {
               parseMap(mapping, entryNode, domainEntity)
             } else if (mapping.collection) {
@@ -76,15 +103,31 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
               parseScalarValue(domainEntity, mapping, entryNode)
             }
           })
+          if (!ev.isDefined){
+            mapping.defaultValue.foreach(v=>{
+              domainEntity.set(mapping.field(), v, Annotations()+=(SynthesizedField()))
+            })
+          }
         })
 
       case scalar: YScalar  =>
-        domainEntity.definition
+        val maybeMapping = domainEntity.definition
           .mappings()
           .find(_.fromVal)
+        maybeMapping
           .foreach(f => {
             setScalar(domainEntity, f, scalar)
           })
+        if (!maybeMapping.isDefined){
+          val nm = scalar.value.toString
+          val entity=resolver.resolveToEndity(root,nm,domainEntity.definition)
+          entity.foreach(e=>{
+            e.fields.into(domainEntity.fields)
+            domainEntity.annotations+=SynthesizedField()
+            domainEntity.annotations+=DomainElementReference(nm,Some(e))
+          })
+          entity.orElse(Some(domainEntity.annotations+=DomainElementReference(nm,None)))
+        }
     }
   }
 

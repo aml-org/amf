@@ -1,0 +1,242 @@
+[
+  {
+    "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#",
+        "@type": [
+          "http://raml.org/vocabularies/amf-validation#Profile"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "Barclays UK"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "Custom profile that can be used as the base set of validations for all Barclays UK API specs"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#extendsProfile": [
+          {
+            "@value": "RAML"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#version": [
+          {
+            "@value": "0.1-SNAPSHOT"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#setSeverityViolation": [
+          {
+            "@value": "amf-parser.empty-endpoints"
+          },
+          {
+            "@value": "get-operations-with-response-js"
+          },
+          {
+            "@value": "camel-case-types"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#setSeverityInfo": [
+          {
+            "@value": "amf-parser.empty-responses"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#setSeverityWarning": [
+          {
+            "@value": "amf-parser.strict-url-strings"
+          },
+          {
+            "@value": "all-names-must-be-camel-case"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#disableValidation": [
+          {
+            "@value": "amf-parser.raml-schemes"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#validations": [
+          {
+            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#case-insensitive-schema",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#ShapeValidation"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "case-insensitive-schema"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "This is not a valid scheme"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "http.WebAPI"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#case-insensitive-schema/http.host",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape"
+                ],
+                "http://raml.org/vocabularies/amf-validation#ramlPropertyId": [
+                  {
+                    "@value": "http.host"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#pattern": [
+                  {
+                    "@value": "^(h|H)(t|T){2}(p|P)(s|S)?$"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#camel-case-types",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#ShapeValidation"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "camel-case-types"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Type declarations must be camel cased"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-shapes.Shape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#camel-case-types/schema-org.name",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape"
+                ],
+                "http://raml.org/vocabularies/amf-validation#ramlPropertyId": [
+                  {
+                    "@value": "schema-org.name"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#pattern": [
+                  {
+                    "@value": "([a-z]+[A-Z]+\\w+)+"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#all-names-must-be-camel-case",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#ShapeValidation"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "all-names-must-be-camel-case"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "All declarations"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-doc.DomainEntity"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#all-names-must-be-camel-case/schema-org.name",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape"
+                ],
+                "http://raml.org/vocabularies/amf-validation#ramlPropertyId": [
+                  {
+                    "@value": "schema-org.name"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#pattern": [
+                  {
+                    "@value": "([a-z]+[A-Z]+\\w+)+"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-responses-sparql",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#QueryValidation"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "get-operations-with-responses-sparql"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "GET operations must have a response"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#targetQuery": [
+              {
+                "@value": "?request a hydra:Operation ;"
+              }
+            ]
+          },
+          {
+            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-response-js",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "get-operations-with-response-js"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "GET operations must have a response"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "http.Operation"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-response-js/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint"
+                ],
+                "http://www.w3.org/ns/shacl#jsCode": [
+                  {
+                    "@value": "function(operations) {}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
