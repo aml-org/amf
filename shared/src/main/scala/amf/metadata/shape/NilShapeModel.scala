@@ -9,7 +9,8 @@ object NilShapeModel extends DomainElementModel {
 
   val Name = Field(Str, Namespace.Shacl + "name")
 
-  override def fields: List[Field] = List(Name)
+  override val fields: List[Field] = List(Name)
 
-  override val `type`: List[ValueType] = List(Namespace.Shapes + "NilShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
+  override val `type`: List[ValueType] =
+    List(Namespace.Shapes + "NilShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
 }

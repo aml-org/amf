@@ -12,7 +12,7 @@ import amf.vocabulary.ValueType
   */
 trait DomainElementModel extends Obj {
 
-  val Extends = Field(Array(ParametrizedDeclarationModel), Document + "extends")
+  lazy val Extends = Field(Array(ParametrizedDeclarationModel), Document + "extends")
 
   val Includes = Field(Array(DomainElementModel), Document + "includes")
 
@@ -32,6 +32,5 @@ object DomainElementModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = List(Document + "DomainElement")
 
-  override val fields: List[Field] = List(Extends, Includes)
-
+  override def fields: List[Field] = List(Extends, Includes)
 }

@@ -9,7 +9,7 @@ import amf.vocabulary.ValueType
 trait Type {
   val `type`: List[ValueType]
 
-  val dynamicType: Boolean  = false
+  val dynamicType: Boolean = false
 }
 
 trait Obj extends Type {
@@ -39,7 +39,7 @@ object Type {
   object RegExp extends Scalar("token")
 
   object ObjType extends Obj {
-    override val fields: List[Field]     = Nil
+    override def fields: List[Field]     = Nil
     override val `type`: List[ValueType] = Nil
   }
 

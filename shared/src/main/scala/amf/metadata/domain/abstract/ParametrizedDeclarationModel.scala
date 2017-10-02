@@ -16,7 +16,7 @@ trait ParametrizedDeclarationModel extends DomainElementModel {
 }
 
 object ParametrizedDeclarationModel extends ParametrizedDeclarationModel {
-  override val fields: List[Field] = List(Name, Target, Variables) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, Target, Variables) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Document + "ParametrizedDeclaration" :: DomainElementModel.`type`
 }
