@@ -43,7 +43,7 @@ case class ArrayShape(fields: Fields, annotations: Annotations) extends DataArra
 
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations)
 
-  override def linkCopy() = ArrayShape().withId(id)
+  override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 }
 
 object ArrayShape {

@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.common.Lazy
 import amf.compiler.{ParsedReference, Root}
 import amf.document.Fragment.Fragment
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.`abstract`._
@@ -37,19 +37,15 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     root.document.value.foreach(value => {
       val map = value.toMap
 
-      val environmentRef = ModulesParser(map, root.references).parse()
-      val declarations   = Declarations(environmentRef)
-
-      val declaredElements = parseDeclares(map, declarations)
+      val references = ReferencesParser(map, root.references).parse()
+      parseDeclares(map, references.declarations)
 
       val api = parseWebApi(map, declarations.add(declaredElements)).add(SourceVendor(root.vendor))
 
       document.withEncodes(api)
 
       if (declaredElements.nonEmpty) document.withDeclares(declaredElements)
-
-      if (environmentRef.nonEmpty)
-        document.withReferences(environmentRef.values.toSeq)
+      if (references.references.nonEmpty) document.withReferences(references.references)
     })
     document
   }
@@ -559,6 +555,7 @@ case class LinkedAnnotationTypeParser(ast: YPart,
       .getOrElse(throw new UnsupportedOperationException("Could not find declared annotation link in references"))
   }
 }
+
 case class AnnotationTypesParser(ast: YPart,
                                  annotationName: String,
                                  map: YMap,
@@ -634,29 +631,52 @@ abstract class RamlSpecParser(val root: Root) {
   }
 
   // producer? whe lose id?
-  case class ModulesParser(map: YMap, rootReferences: Seq[ParsedReference]) {
-    def parse(): Map[String, BaseUnit] = {
+  case class ReferencesParser(map: YMap, references: Seq[ParsedReference]) {
+    def parse(): ReferenceDeclarations = {
+      val result: ReferenceDeclarations = parseLibraries()
 
-      val references = mutable.Map[String, BaseUnit]()
+      references.foreach {
+        case ParsedReference(f: Fragment, s: String) => result += (s, f)
+        case _                                       =>
+      }
+
+      result
+    }
+
+    private def target(url: String): Option[BaseUnit] =
+      references.find(r => r.parsedUrl.equals(url)).map(_.baseUnit)
+
+    private def parseLibraries(): ReferenceDeclarations = {
+      val result = ReferenceDeclarations()
 
       map.key(
         "uses",
         entry =>
           entry.value.value.toMap.entries.foreach(e => {
-            target(e.value.value.toScalar.text).foreach(bu => {
-              val alias = e.key.value.toScalar.text
-              references += alias -> bu
-            })
+            target(e.value).foreach {
+              case module: Module => result.references += module
+            }
           })
       )
 
-      references ++= rootReferences.collect({ case ParsedReference(f: Fragment, s: String) => s -> f }).toMap
+      result
+    }
+  }
 
-      references.toMap
+  case class ReferenceDeclarations(references: ListBuffer[BaseUnit] = ListBuffer(),
+                                   declarations: Declarations = Declarations()) {
+
+    private[raml] def +=(alias: String, module: Module) = {
+      references += module
+      val library = declarations.getOrCreateLibrary(alias)
+      module.declares.foreach(library += _)
     }
 
-    private def target(originalUrl: String): Option[BaseUnit] =
-      rootReferences.find(r => r.parsedUrl.equals(originalUrl)).map(_.baseUnit)
+    private[raml] def +=(url: String, fragment: Fragment) = {
+      references += fragment
+      declarations += (url -> fragment.encodes)
+    }
+
   }
 
   def parseTraitDeclarations(map: YMap,
@@ -705,9 +725,7 @@ abstract class RamlSpecParser(val root: Root) {
 
         entry.value.value.toMap.entries.flatMap(entry => {
           val typeName = entry.key.value.toScalar.text
-          RamlTypeParser(entry,
-                         shape => shape.withName(typeName).adopted(typesPrefix),
-                         declarations.copy(declarations = types))
+          RamlTypeParser(entry, shape => shape.withName(typeName).adopted(typesPrefix), declarations.add(types))
             .parse() match {
             case Some(shape) =>
               types += shape.add(DeclaredElement())

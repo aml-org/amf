@@ -23,7 +23,7 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
     root.document.value.foreach(document => {
 
       val rootMap        = document.toMap
-      val environmentRef = ModulesParser(rootMap, root.references).parse()
+      val environmentRef = ReferencesParser(rootMap, root.references).parse()
 
       val declares = parseDeclares(rootMap, Declarations(environmentRef))
 

@@ -57,4 +57,9 @@ case class FileShape(private val file: amf.shape.FileShape) extends Shape(file) 
   }
 
   override private[amf] def element = file
+
+  override def linkTarget: Option[FileShape] =
+    element.linkTarget.map({ case l: amf.shape.FileShape => FileShape(l) })
+
+  override def linkCopy(): FileShape = FileShape(element.linkCopy())
 }

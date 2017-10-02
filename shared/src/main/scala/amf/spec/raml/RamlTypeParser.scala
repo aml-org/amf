@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, LinkType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{AnyType, ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -16,10 +16,12 @@ import scala.collection.mutable
 
 object RamlTypeParser {
   def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key.value.toScalar.text, ast.value.value, adopt, declarations)
+    new RamlTypeParser(ast, ast.key.value.toScalar.text, ast.value, adopt, declarations)
 }
 
-case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape => Shape, declarations: Declarations) {
+case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations) {
+
+  private val value = part.value
 
   def parse(): Option[Shape] = {
 
@@ -29,15 +31,11 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
 //        processRef(ref)
 //      case _ =>
     detect() match {
-      case ObjectType =>
-        Some(parseObjectType(name, part, declarations))
-      case ArrayType =>
-        Some(parseArrayType(name, part))
-      case typeDef if typeDef.isAny =>
-        Some(parseAnyType(name, typeDef, part))
-      case typeDef if typeDef.isScalar =>
-        Some(parseScalarType(name, typeDef, part))
-      case _ => None
+      case ObjectType                  => Some(parseObjectType())
+      case ArrayType                   => Some(parseArrayType())
+      case AnyType                     => Some(parseAnyType())
+      case typeDef if typeDef.isScalar => Some(parseScalarType(typeDef))
+      case _                           => None
     }
   }
 //
@@ -48,7 +46,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
 //
 //  def processRef(ref: YReference): Option[Shape] = Some(retrieveRefShape(ref).link(None, Some(Annotations(ref))))
 
-  private def detect(): TypeDef = part match {
+  private def detect(): TypeDef = part.value match {
     case scalar: YScalar => matchType(scalar.text)
     case _: YSequence    => ObjectType
     case map: YMap =>
@@ -81,7 +79,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
       })
   }
 
-  private def parseScalarType(name: String, typeDef: TypeDef, ahead: YPart): Shape = {
+  private def parseScalarType(typeDef: TypeDef): Shape = {
     if (typeDef.isNil) {
       val nilShape = NilShape(ast).withName(name)
       adopt(nilShape)
@@ -89,7 +87,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     } else {
       val shape = ScalarShape(ast).withName(name)
       adopt(shape)
-      ahead match {
+      value match {
         case map: YMap => ScalarShapeParser(typeDef, shape, map).parse()
         case v =>
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(v)))
@@ -97,48 +95,52 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
     }
   }
 
-  private def parseAnyType(name: String, typeDef: TypeDef, ahead: YPart): Shape = {
+  private def parseAnyType(): Shape = {
     val shape = AnyShape(ast).withName(name)
     adopt(shape)
     shape
   }
 
-  def parseArrayType(name: String, ahead: YPart): Shape = {
-    val shape = ahead match {
+  def parseArrayType(): Shape = {
+    val shape = value match {
       case map: YMap => DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape), declarations).parse()
       case _         => ArrayShape(ast).withName(name)
     }
     shape
   }
 
-  private def parseObjectType(name: String, ahead: YValue, declarations: Declarations): Shape = {
-    if (isFileType(ahead)) {
-      val shape = FileShapeParser(ahead.asInstanceOf[YMap]).parse()
+  private def parseObjectType(): Shape = {
+    if (isFileType) {
+      val shape = FileShapeParser(value.toMap).parse()
       adopt(shape)
       shape
     } else {
       val shape = NodeShape(ast).withName(name)
       adopt(shape)
-      ahead match {
+      value match {
         case map: YMap =>
           NodeShapeParser(shape, map, declarations)
-            .parse() // i have to do the adopt before parser childrens shapes. Other way the childrens will not have the father id
+            .parse() // I have to do the adopt before parser children shapes. Other way the children will not have the father id
         case scalar: YScalar =>
           declarations.find(scalar.text) match {
             case Some(s: Shape) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
-            case _              => shape
+            case _              => throw new Exception("Reference not found")
           }
         case _ => shape
       }
     }
   }
 
-  private def isFileType(ahead: YValue): Boolean = {
-    ahead match {
-      case ymap: YMap =>
-        ymap.map.get("type").isDefined &&
-          ymap.map("type").value.isInstanceOf[YScalar] &&
-          ymap.map("type").value.asInstanceOf[YScalar].text == "file"
+  private def isFileType: Boolean = {
+
+    value match {
+      case map: YMap =>
+        map
+          .key("type")
+          .exists(entry => {
+            val t: String = entry.value
+            t == "file"
+          })
       case _ => false
     }
   }
@@ -146,7 +148,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YPart, adopt: Shape =>
 }
 
 trait CommonOASFieldsParser {
-  def parseOASFields(map: YMap, shape: Shape) = {
+  def parseOASFields(map: YMap, shape: Shape): Unit = {
     map.key("pattern", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))

@@ -36,7 +36,7 @@ case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragmen
 
     fragment.add(Annotations(root.document))
 
-    val environmentRef = ModulesParser(rootMap, root.references).parse()
+    val environmentRef = ReferencesParser(rootMap, root.references).parse()
 
     if (environmentRef.nonEmpty)
       fragment.withReferences(environmentRef.values.toSeq)
@@ -60,7 +60,7 @@ case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragmen
 
       RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations())
         .parse()
-        .map(dataType.withEncodes(_))
+        .foreach(dataType.withEncodes(_))
 
       dataType
     }

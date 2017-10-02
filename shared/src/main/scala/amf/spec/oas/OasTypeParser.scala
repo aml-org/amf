@@ -21,17 +21,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   def parse(): Option[Shape] = {
 
     detect() match {
-      case LinkType =>
-        parseLinkType()
-      case ObjectType =>
-        Some(parseObjectType())
-      case AnyType =>
-        Some(parseAnyType())
-      case ArrayType =>
-        Some(parseArrayType())
-      case typeDef if typeDef.isScalar =>
-        Some(parseScalarType(typeDef))
-      case _ => None
+      case LinkType                    => parseLinkType()
+      case ObjectType                  => Some(parseObjectType())
+      case ArrayType                   => Some(parseArrayType())
+      case AnyType                     => Some(parseAnyType())
+      case typeDef if typeDef.isScalar => Some(parseScalarType(typeDef))
+      case _                           => None
     }
   }
 
