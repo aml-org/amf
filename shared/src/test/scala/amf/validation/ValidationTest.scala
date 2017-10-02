@@ -76,6 +76,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   }
 
+
   test("Load dialect") {
     val validation = Validation(platform)
     for {

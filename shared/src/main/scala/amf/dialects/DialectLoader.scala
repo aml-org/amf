@@ -1,9 +1,11 @@
 package amf.dialects
 
+import amf.compiler.Root
 import amf.dialects.RAML_1_0_DialectTopLevel.{NodeDefinitionObject, PropertyMappingObject}
 import amf.document.{BaseUnit, Document}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
+import amf.model.AmfScalar
 import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
@@ -31,7 +33,10 @@ object NM{
 
 class DialectLoader {
 
-  val builtins: TypeBuiltins = new TypeBuiltins(){}
+  val builtins: TypeBuiltins = new TypeBuiltins(){
+
+    override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] = None
+  }
 
   private def retrieveDomainEntity(unit:BaseUnit) = unit match {
     case document: Document => document.encodes.asInstanceOf[DomainEntity]
@@ -53,6 +58,7 @@ class DialectLoader {
       ramlNode     <- dialectObject.raml()
       ramlDocument <- ramlNode.document()
       root         <- ramlDocument.resolvedEncodes()
+
     } yield {
       root
     }
@@ -74,13 +80,38 @@ class DialectLoader {
         }
 
         fillHashes( propertyMap)
-
+        val fragmentList:mutable.Map[String,DialectNode]=mutable.Map();
         val dialect = for {
           dialectName    <- dialectObject.dialect()
           dialectVersion <- dialectObject.version()
           dialectNode    <- dialectMap.get(encodedRootEntity.entity.id)
+
         } yield {
-          Dialect(dialectName, dialectVersion, dialectNode)
+          dialectObject.raml().foreach(r=>{
+            r.fragments().foreach(f=>{
+              f.encodes().foreach(rm=>{
+                rm.resolvedDeclaredNode().foreach(rdn=>{
+                  rm.name().foreach(fn=>{
+                      dialectMap.get(rdn.entity.id).foreach(dn=>{
+                        fragmentList.put(fn,dn);
+                      })
+                  });
+                })
+              })
+            })
+          })
+          val dmap: mutable.Map[String, DialectNode] = fillModule(dialectMap,dialectObject)
+          if (dmap.nonEmpty){
+            var mn=new DialectNode("module",Namespace.Document);
+            dmap.keys.foreach(k=>{
+              mn.map(k,new DialectPropertyMapping("name",Type.Str,namespace=Some(Namespace.Schema)),dmap.get(k).get);
+            })
+            // now we have a library node
+            Dialect(dialectName, dialectVersion, dialectNode, resolver = (root, refs) => BasicResolver(root, List(), refs),Some(mn),fragmentList.toMap)
+          }
+          else {
+            Dialect(dialectName, dialectVersion, dialectNode, resolver = (root, refs) => BasicResolver(root, List(), refs),None,fragmentList.toMap)
+          }
         }
 
         dialect match {
@@ -93,7 +124,22 @@ class DialectLoader {
   }
 
 
-
+  private def fillModule(dialectMap: mutable.Map[String,DialectNode],dialectObject: RAML_1_0_DialectTopLevel.dialectObject) = {
+    val dmap: mutable.Map[String, DialectNode] = mutable.Map();
+    dialectObject.raml().foreach(v => {
+      v.module().foreach(m => {
+        m.declares().foreach(d => {
+          for {
+            nodeName <- d.name();
+            resolvedNode <- d.resolvedDeclaredNode()
+          } yield {
+              dialectMap.get(resolvedNode.entity.id).foreach(d => dmap.put(nodeName, d));
+            }
+        })
+      })
+    })
+    dmap
+  }
 
   private def fillHashes(propertyMap: mutable.Map[DialectPropertyMapping, PropertyMappingObject]) = {
     for {
@@ -134,7 +180,9 @@ class DialectLoader {
 
     val name = domainEntity.name()
     val `type`: List[Type] = resolveType(domainEntity, dialects,props)
-
+    if (`type`.isEmpty){
+      println("A")
+    }
     var res =  DialectPropertyMapping(name.get,`type`.head)
     if (`type`.size>1) {
       res=res.copy(unionTypes = Some(`type`))
@@ -161,6 +209,14 @@ class DialectLoader {
     domainEntity.pattern().foreach { p =>
       res=res.copy(pattern = Some(p))
     }
+    domainEntity.defaultValue().foreach(v=>{
+      val sc:AmfScalar=res.range match {
+        case Type.Int=>AmfScalar(v.toInt)
+        case Type.Bool=>AmfScalar(v.toBoolean)
+        case _=>AmfScalar(v)
+      }
+      res=res.copy(defaultValue = Some(sc))
+    })
     val ev=domainEntity.`enum`()
 
     if (ev.nonEmpty){

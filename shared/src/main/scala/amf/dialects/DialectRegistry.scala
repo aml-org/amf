@@ -18,6 +18,15 @@ class DialectRegistry {
 
   def add(dialect: Dialect): DialectRegistry = {
     map = map + (dialect.header.replace("#","") -> dialect)
+    dialect.module.foreach(module=>{
+      val moduleHeader = "%RAML Library / " + dialect.header.substring(2)
+      map = map + (moduleHeader->Dialect(moduleHeader.substring(1),dialect.version,module,dialect.resolver))
+    })
+    dialect.fragments.foreach(fr=>{
+      val (k,v)=fr;
+      val fragmentHeader = "%RAML " + dialect.header.substring(2) + " / " + k
+      map = map + (fragmentHeader->Dialect(fragmentHeader.substring(1),"",v,dialect.resolver))
+    })
     this
   }
 

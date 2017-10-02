@@ -1,7 +1,8 @@
 package amf.spec.dialects
 
 import amf.document.{BaseUnit, Document}
-import amf.domain.FieldEntry
+import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration}
+import amf.domain.{ FieldEntry}
 import amf.domain.dialects.DomainEntity
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
@@ -222,29 +223,64 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           }
 
         case None =>
-          comment_text.foreach(c => comment(c))
-          map { () =>
-            obj.definition
-              .mappings()
-              .foreach(mapping => {
-                createEmitter(obj, mapping) match {
-                  case Some(emitterCreated) =>
-                    try {
 
-                      emitterCreated.emit()
-                    } catch {
-                      case e: Exception => e.printStackTrace()
-                    }
+          obj.annotations.find(classOf[DomainElementReference]) match{
+            case Some(ref)=>{
+              raw(ref.name)
+            }
+            case _=> {
 
-                  case _ => // ignore
-                }
-              })
+                  map { () =>
+                    comment_text.foreach(c => comment(c))
+                    emitUsesMap
+                    emitObject
+                  }
+
+            }
           }
       }
+    }
+    private def emitUsesMap = {
+      obj.annotations.find(classOf[NamespaceImportsDeclaration]) match {
+        case Some(ref) => {
+          entry(() => {
+            raw("uses")
+            map(() => {
+              ref.uses.foreach(e=>{
+                entry(()=>{
+                  val (k,v)=e
+                  raw(k)
+                  raw(v)
+                })
+              })
+            })
+          })
+        }
+        case _ =>
+      }
+    }
+
+    private def emitObject = {
+      obj.definition
+        .mappings()
+        .foreach(mapping => {
+          createEmitter(obj, mapping) match {
+            case Some(emitterCreated) =>
+              try {
+
+                emitterCreated.emit()
+              } catch {
+                case e: Exception => e.printStackTrace()
+              }
+
+            case _ => // ignore
+          }
+        })
     }
 
     override def position(): Position = Position.ZERO
   }
+
 
 }
 

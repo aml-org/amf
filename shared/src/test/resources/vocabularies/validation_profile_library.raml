@@ -1,0 +1,40 @@
+#%RAML Library / Validation Profile 1.0
+external:
+  schema-org: "http://schema.org/"
+  shacl: "http://www.w3.org/ns/shacl#"
+
+validations:
+
+  case-insensitive-schema:
+    message: This is not a valid scheme
+    targetClass: http.WebAPI
+    propertyConstraints:
+      http.host:
+        pattern: "^(h|H)(t|T){2}(p|P)(s|S)?$"
+
+  camel-case-types:
+    message: Type declarations must be camel cased
+    # only check shapes (raml types and json schema)
+    targetClass: raml-shapes.Shape
+    propertyConstraints:
+      schema-org.name:
+        pattern: ([a-z]+[A-Z]+\\w+)+
+
+  all-names-must-be-camel-case:
+    message: All declarations
+    # This will select every entity in the domain model
+    targetClass: raml-doc.DomainEntity
+    propertyConstraints:
+      schema-org.name:
+        pattern: ([a-z]+[A-Z]+\\w+)+
+
+  get-operations-with-responses-sparql:
+    message: GET operations must have a response
+    targetQuery: ?request a hydra:Operation ;
+
+
+  get-operations-with-response-js:
+    message: GET operations must have a response
+    targetClass: http.Operation
+    functionConstraint:
+      code: function(operations) {}

@@ -17,7 +17,7 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
   test("Generate Vocabulary Domain Objects"){
 
     val code= new TopLevelGenerator(VocabularyLanguageDefinition).generate()
-    // platform.write("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",code)
+    //  platform.write("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",code)
     val expected = platform
       .resolve("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",None)
       .map(_.stream.toString)
