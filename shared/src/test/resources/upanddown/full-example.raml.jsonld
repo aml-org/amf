@@ -1002,6 +1002,11 @@
                             "@value": true
                           }
                         ],
+                        "http://raml.org/vocabularies/http#binding": [
+                          {
+                            "@value": "header"
+                          }
+                        ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
                             "@id": "file:/shared/src/test/resources/upanddown/full-example.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/200/parameter/Time-Ago/scalar/schema",

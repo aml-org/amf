@@ -331,13 +331,14 @@ object GraphEmitter {
     case _: NodeShape                => NodeShapeModel
     case _: ArrayShape               => ArrayShapeModel
     case _: ScalarShape              => ScalarShapeModel
+    case _: AnyShape                 => AnyShapeModel
+    case _: NilShape                 => NilShapeModel
     case _: PropertyShape            => PropertyShapeModel
     case _: XMLSerializer            => XMLSerializerModel
     case _: PropertyDependencies     => PropertyDependenciesModel
     case _: DomainExtension          => DomainExtensionModel
     case _: CustomDomainProperty     => CustomDomainPropertyModel
     case _: DataNode                 => DataNodeModel
-    case entity: DomainEntity        => new DialectEntityModel(entity)
     case _: Module                   => ModuleModel
     case _: ResourceType             => ResourceTypeModel
     case _: Trait                    => TraitModel
@@ -345,6 +346,7 @@ object GraphEmitter {
     case _: ParametrizedTrait        => ParametrizedTraitModel
     case _: Variable                 => VariableModel
     case _: VariableValue            => VariableValueModel
+    case entity: DomainEntity        => new DialectEntityModel(entity)
     case _                           => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

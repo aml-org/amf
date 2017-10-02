@@ -751,12 +751,18 @@ class OasSpecEmitter extends BaseSpecEmitter {
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
+        case any: AnyShape =>
+          val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+          Seq(AnyShapeEmitter(copiedNode, ordering))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           NodeShapeEmitter(copiedNode, ordering).emitters()
         case array: ArrayShape =>
           val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
           ArrayShapeEmitter(copiedArray, ordering).emitters()
+        case nil: NilShape =>
+          val copiedNil = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
+          Seq(NilShapeEmitter(copiedNil, ordering))
         case scalar: ScalarShape =>
           val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
           ScalarShapeEmitter(copiedScalar, ordering).emitters()
@@ -787,6 +793,13 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       result
     }
+  }
+
+  case class AnyShapeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit =  {
+      // ignore
+    }
+    override def position(): Position = pos(shape.annotations)
   }
 
   case class ArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering) {
@@ -978,6 +991,17 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(property.annotations) // TODO check this
+  }
+
+  case class NilShapeEmitter(nil: NilShape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit =
+      entry { () =>
+        raw("type")
+        raw("null")
+      }
+
+
+    override def position(): Position = pos(nil.annotations)
   }
 
   case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) {

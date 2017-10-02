@@ -108,7 +108,7 @@ object SeverityLevels {
 
 class Validation(platform: Platform) {
 
-  val url = "http://raml.org/dialects/validation.raml"
+  val url = "http://raml.org/dialects/profile.raml"
 
   /**
     * Loads the validation dialect from the provided URL
@@ -233,7 +233,7 @@ class Validation(platform: Platform) {
     val shapesJSON = shapesGraph(validations, messageStyle)
     val jsLibrary = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
 
-    /*
+/*
     println("\n\nGRAPH")
     println(modelJSON)
     println("===========================")
@@ -242,7 +242,7 @@ class Validation(platform: Platform) {
     println("===========================")
     println(jsLibrary)
     println("===========================")
-    */
+*/
 
     jsLibrary match {
       case Some(code) => {
@@ -257,7 +257,7 @@ class Validation(platform: Platform) {
       )
     } yield {
       val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
-                    shaclReport.results.map(r => buildValidationResult(model, r, messageStyle, validations))
+                    shaclReport.results.map(r => buildValidationResult(model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
         model = model.id,
@@ -296,17 +296,17 @@ class Validation(platform: Platform) {
     new AMFValidationResult(message, severity, result.targetNode, result.targetProperty, spec.id(), result.position)
   }
 
-  protected def buildValidationResult(model: BaseUnit, result: ValidationResult, messageStyle: String, validations: EffectiveValidations): AMFValidationResult = {
+  protected def buildValidationResult(model: BaseUnit, result: ValidationResult, messageStyle: String, validations: EffectiveValidations): Option[AMFValidationResult] = {
     val validationSpecToLook = if (result.sourceShape.startsWith(Namespace.Data.base)) {
       result.sourceShape.replace(Namespace.Data.base, "") // this is for custom validations they are all prefixed with the data namespace
     } else {
       result.sourceShape // by default we expect to find a URI here
     }
     val idMapping: mutable.HashMap[String,String] = mutable.HashMap()
-    val targetSpec = validations.all.get(validationSpecToLook) match {
+    val maybeTargetSpec: Option[ValidationSpecification] = validations.all.get(validationSpecToLook) match {
       case Some(validationSpec) =>
         idMapping.put(result.sourceShape, validationSpecToLook)
-        validationSpec
+        Some(validationSpec)
 
       case None => validations.all.find { case (v, _) =>
         // processing property shapes Id computed as constraintID + "/prop"
@@ -314,27 +314,37 @@ class Validation(platform: Platform) {
       } match {
         case Some((v, spec)) =>
           idMapping.put(result.sourceShape, v)
-          spec
-        case None => throw new Exception(s"Cannot find validation spec for validation error:\n $result")
+          Some(spec)
+        case None => if (validationSpecToLook.startsWith("_:")) {
+          None
+        }  else {
+          throw new Exception(s"Cannot find validation spec for validation error:\n $result")
+        }
       }
     }
 
-    var message = messageStyle match {
-      case ValidationProfileNames.RAML => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-      case ValidationProfileNames.OAS  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-      case _                           => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
+    maybeTargetSpec match {
+      case Some(targetSpec) =>
+        var message = messageStyle match {
+          case ValidationProfileNames.RAML => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case ValidationProfileNames.OAS  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case _                           => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
+        }
+
+        if (Option(message).isEmpty || message == "") {
+          message = result.message.getOrElse("Constraint violation")
+        }
+
+        val finalId = idMapping(result.sourceShape).startsWith("http") match {
+          case true  => idMapping(result.sourceShape)
+          case false => Namespace.Data.base + idMapping(result.sourceShape) // we put back the prefix for the custom validations
+        }
+        val severity = findLevel(idMapping(result.sourceShape), validations)
+        Some(AMFValidationResult.withShapeId(finalId, AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
+      case _ => None
     }
 
-    if (Option(message).isEmpty || message == "") {
-      message = result.message.getOrElse("Constraint violation")
-    }
 
-    val finalId = idMapping(result.sourceShape).startsWith("http") match {
-      case true  => idMapping(result.sourceShape)
-      case false => Namespace.Data.base + idMapping(result.sourceShape) // we put back the prefix for the custom validations
-    }
-    val severity = findLevel(idMapping(result.sourceShape), validations)
-    AMFValidationResult.withShapeId(finalId, AMFValidationResult.fromSHACLValidation(model, message, severity, result))
   }
 }
 

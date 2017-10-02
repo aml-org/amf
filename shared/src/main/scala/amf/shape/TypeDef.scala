@@ -13,11 +13,23 @@ trait TypeDef {
     case _: ScalarType => true
     case _             => false
   }
+
+  def isNil: Boolean = this match {
+    case NilType => true
+    case _       => false
+  }
+
+  def isAny: Boolean = this match {
+    case AnyType => true
+    case _       => false
+  }
 }
 
 trait ScalarType
 
 object TypeDef {
+  object AnyType          extends TypeDef
+  object NilType          extends TypeDef with ScalarType
   object StrType          extends TypeDef with ScalarType
   object IntType          extends TypeDef with ScalarType
   object FloatType        extends TypeDef with ScalarType

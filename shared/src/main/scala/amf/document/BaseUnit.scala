@@ -46,7 +46,7 @@ trait BaseUnit extends AmfObject {
     if (element.id == id) {
       Some(element)
     } else {
-      findModelByIdInSeq(id, this.fields.fields().map(_.element).toSeq)
+      findModelByIdInSeq(id, element.fields.fields().map(_.element).toSeq)
     }
   }
 
