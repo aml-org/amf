@@ -31,16 +31,17 @@ object ScalarShapeModel extends ShapeModel with DomainElementModel {
 
   val MultipleOf = Field(Int, Shapes + "multipleOf")
 
-  override val fields: List[Field] = List(DataType,
-                                          Pattern,
-                                          MinLength,
-                                          MaxLength,
-                                          Minimum,
-                                          Maximum,
-                                          ExclusiveMinimum,
-                                          ExclusiveMaximum,
-                                          Format,
-                                          MultipleOf) ++ ShapeModel.fields ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(DataType,
+         Pattern,
+         MinLength,
+         MaxLength,
+         Minimum,
+         Maximum,
+         ExclusiveMinimum,
+         ExclusiveMaximum,
+         Format,
+         MultipleOf) ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 }

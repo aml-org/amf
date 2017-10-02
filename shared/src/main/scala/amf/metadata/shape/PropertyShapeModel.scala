@@ -21,6 +21,6 @@ object PropertyShapeModel extends ShapeModel {
 
   override val `type`: List[ValueType] = List(Shacl + "PropertyShape") ++ ShapeModel.`type`
 
-  override val fields
-    : List[Field] = List(Path, Range, MinCount, MaxCount) ++ ShapeModel.fields ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(Path, Range, MinCount, MaxCount) ++ ShapeModel.fields ++ DomainElementModel.fields
 }

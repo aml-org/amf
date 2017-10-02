@@ -16,5 +16,5 @@ object PayloadModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
 
-  override val fields: List[Field] = MediaType :: Schema :: DomainElementModel.fields
+  override def fields: List[Field] = MediaType :: Schema :: DomainElementModel.fields
 }

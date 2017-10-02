@@ -16,5 +16,5 @@ object LicenseModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Http + "License" :: DomainElementModel.`type`
 
-  override val fields: List[Field] = Url :: Name :: DomainElementModel.fields
+  override def fields: List[Field] = Url :: Name :: DomainElementModel.fields
 }

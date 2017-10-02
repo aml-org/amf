@@ -19,7 +19,7 @@ object DataNodeModel extends DomainElementModel {
   val Name: Field = Field(Str, Schema + "name")
 
   // We set this so it can be re-used in the definition of the dynamic types
-  override val fields: List[Field]     = List(Name) ++ DomainElementModel.fields
+  override def fields: List[Field]     = List(Name) ++ DomainElementModel.fields
   override val `type`: List[ValueType] = Data + "Node" :: DomainElementModel.`type`
 
   // This is a dynamic class, the structure is not known before parsing

@@ -13,22 +13,18 @@ trait ParametrizedDeclarationModel extends DomainElementModel {
   val Target = Field(Iri, Document + "target")
 
   val Variables = Field(Array(VariableValueModel), Document + "variable")
+
+  override def fields: List[Field] = List(Name, Target, Variables) ++ DomainElementModel.fields
 }
 
 object ParametrizedDeclarationModel extends ParametrizedDeclarationModel {
-  override def fields: List[Field] = List(Name, Target, Variables) ++ DomainElementModel.fields
-
   override val `type`: List[ValueType] = Document + "ParametrizedDeclaration" :: DomainElementModel.`type`
 }
 
 object ParametrizedTraitModel extends ParametrizedDeclarationModel {
   override val `type`: List[ValueType] = Document + "ParametrizedTrait" :: ParametrizedDeclarationModel.`type`
-
-  override def fields: List[Field] = ParametrizedDeclarationModel.fields
 }
 
 object ParametrizedResourceTypeModel extends ParametrizedDeclarationModel {
   override val `type`: List[ValueType] = Document + "ParametrizedResourceType" :: ParametrizedDeclarationModel.`type`
-
-  override def fields: List[Field] = ParametrizedDeclarationModel.fields
 }

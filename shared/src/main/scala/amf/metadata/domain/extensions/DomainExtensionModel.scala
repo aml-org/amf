@@ -19,7 +19,7 @@ object DomainExtensionModel extends DomainElementModel {
   val DefinedBy = Field(CustomDomainPropertyModel, Document + "definedBy")
   val Extension = Field(DataNodeModel, Document + "extension")
 
-  override val fields: List[Field] = List(DefinedBy, Extension) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(DefinedBy, Extension) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Http + "DomainExtension" :: DomainElementModel.`type`
 }
