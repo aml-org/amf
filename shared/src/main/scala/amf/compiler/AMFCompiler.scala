@@ -70,9 +70,9 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     val option = RamlHeader(root).map({
-      case RamlHeader.Raml10         => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Library  => RamlModuleParser(root).parseModule()
-      case RamlHeader.Raml10Fragment => RamlFragmentParser(root).parseFragment()
+      case RamlHeader.Raml10        => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Library => RamlModuleParser(root).parseModule()
+      case fragment: RamlFragment   => RamlFragmentParser(root, fragment).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case RamlHeader(header) if dialects.knowsHeader(header) => makeDialect(root)

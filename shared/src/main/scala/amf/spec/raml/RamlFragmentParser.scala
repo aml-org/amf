@@ -1,7 +1,7 @@
 package amf.spec.raml
 
 import amf.compiler.RamlFragmentHeader._
-import amf.compiler.{RamlFragmentHeader, Root}
+import amf.compiler.{RamlFragment, Root}
 import amf.document.Fragment._
 import amf.domain.Annotations
 import amf.domain.`abstract`.{ResourceType, Trait}
@@ -15,7 +15,7 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(root) {
+case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragment) extends RamlSpecParser(root) {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -23,14 +23,13 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
     val rootMap: YMap =
       root.document.value.map(_.toMap).getOrElse(throw new RuntimeException("Cannot parse empty map"))
 
-    val fragment: Fragment = RamlFragmentHeader(root) match {
-      case Some(Raml10DocumentationItem)         => DocumentationItemFragmentParser(rootMap).parse()
-      case Some(Raml10DataType)                  => DataTypeFragmentParser(rootMap).parse()
-      case Some(Raml10NamedExample)              => throw new IllegalStateException("to be implemented")
-      case Some(Raml10ResourceType)              => ResourceTypeFragmentParser(rootMap).parse()
-      case Some(Raml10Trait)                     => TraitFragmentParser(rootMap).parse()
-      case Some(Raml10AnnotationTypeDeclaration) => AnnotationFragmentParser(rootMap).parse()
-      case _                                     => throw new IllegalStateException("Unsupported fragment type")
+    val fragment: Fragment = fragmentType match {
+      case Raml10DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
+      case Raml10DataType                  => DataTypeFragmentParser(rootMap).parse()
+      case Raml10ResourceType              => ResourceTypeFragmentParser(rootMap).parse()
+      case Raml10Trait                     => TraitFragmentParser(rootMap).parse()
+      case Raml10AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
+      case _                               => throw new IllegalStateException("Unsupported fragment type")
     }
 
     UsageParser(rootMap, fragment).parse()
@@ -59,12 +58,11 @@ case class RamlFragmentParser(override val root: Root) extends RamlSpecParser(ro
     def parse(): DataType = {
       val dataType = DataType().adopted(root.location)
 
-      val shapeOption =
-        RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations()).parse()
-      shapeOption.map(dataType.withEncodes(_))
+      RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations())
+        .parse()
+        .map(dataType.withEncodes(_))
 
       dataType
-      //
     }
   }
 
