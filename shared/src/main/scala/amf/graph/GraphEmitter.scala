@@ -334,6 +334,7 @@ object GraphEmitter {
     case _: Payload                            => PayloadModel
     case _: NodeShape                          => NodeShapeModel
     case _: ArrayShape                         => ArrayShapeModel
+    case _: FileShape                          => FileShapeModel
     case _: ScalarShape                        => ScalarShapeModel
     case _: AnyShape                           => AnyShapeModel
     case _: NilShape                           => NilShapeModel

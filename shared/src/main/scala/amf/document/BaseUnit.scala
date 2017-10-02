@@ -21,7 +21,7 @@ trait BaseUnit extends AmfObject {
     */
   def findById(id: String): Option[DomainElement] = {
     findInEncodedModel(id, this) match {
-      case None => findInDeclaredModel(id, this)
+      case None  => findInDeclaredModel(id, this)
       case found => found
     }
   }
@@ -38,7 +38,7 @@ trait BaseUnit extends AmfObject {
   private def findInDeclaredModel(id: String, encoder: BaseUnit): Option[DomainElement] = {
     encoder match {
       case encoder: DeclaresModel => findModelByIdInSeq(id, encoder.declares)
-      case _                     => None
+      case _                      => None
     }
   }
 
@@ -46,7 +46,7 @@ trait BaseUnit extends AmfObject {
     if (element.id == id) {
       Some(element)
     } else {
-      findModelByIdInSeq(id, this.fields.fields().map(_.element).toSeq)
+      findModelByIdInSeq(id, element.fields.fields().map(_.element).toSeq)
     }
   }
 
@@ -63,7 +63,7 @@ trait BaseUnit extends AmfObject {
 
         case arr: AmfArray =>
           findModelByIdInSeq(id, arr.values) match {
-            case None => findModelByIdInSeq(id, elements.tail)
+            case None         => findModelByIdInSeq(id, elements.tail)
             case foundElement => foundElement
           }
 
@@ -73,4 +73,3 @@ trait BaseUnit extends AmfObject {
   }
 
 }
-

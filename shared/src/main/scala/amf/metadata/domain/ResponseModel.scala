@@ -21,6 +21,6 @@ object ResponseModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Http + "Response" :: DomainElementModel.`type`
 
-  override val fields
-    : List[Field] = List(Name, Description, StatusCode, Headers, Payloads) ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(Name, Description, StatusCode, Headers, Payloads) ++ DomainElementModel.fields
 }

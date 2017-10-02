@@ -14,37 +14,52 @@ import scala.concurrent.ExecutionContext
 
 case class ExpectedReport(conforms: Boolean, numErrors: Integer, profile: String)
 
-class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
+class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath="file://shared/src/test/resources/vocabularies/"
+  val basePath         = "file://shared/src/test/resources/vocabularies/"
   val vocabulariesPath = "file://shared/src/test/resources/vocabularies/"
-  val examplesPath = "file://shared/src/test/resources/validations/"
+  val examplesPath     = "file://shared/src/test/resources/validations/"
 
   test("Loading and serializing validations") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-        .flatMap(unit =>
-          AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-            .build()
-        )
-    actual.flatMap({ unit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }).zip(expected)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap({ unit =>
+        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+      })
+      .zip(expected)
       .map(checkDiff)
   }
 
-
   test("Loading and serializing validations with inplace definition of encodes") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build())
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
@@ -52,24 +67,40 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   test("Loading and serializing validations with inplace definition of range") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build())
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
   }
   test("Loading and serializing validations with union type") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build())
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
@@ -165,6 +196,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
+  test("Banking example validation") {
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "banking/api.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect()
+      _      <- validation.loadValidationProfile(examplesPath + "banking/profile.raml")
+      report <- validation.validate(model, "Banking")
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 10)
+    }
+  }
 
   val testValidations = Map(
     "bad_domain/amf.jsonld"            -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),
@@ -194,13 +237,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   private def validate(file: String, expectedReport: ExpectedReport) = {
     platform.resolve(examplesPath + file, None).flatMap { data =>
-      val model = data.stream.toString
-      val validation = Validation(platform)
+      val model                = data.stream.toString
+      val validation           = Validation(platform)
       val effectiveValidations = validation.computeValidations(expectedReport.profile)
-      val shapes = validation.shapesGraph(effectiveValidations)
+      val shapes               = validation.shapesGraph(effectiveValidations)
       platform.validator.report(
-        model, "application/ld+json",
-        shapes, "application/ld+json"
+        model,
+        "application/ld+json",
+        shapes,
+        "application/ld+json"
       ) flatMap { report =>
         assert(expectedReport == ExpectedReport(report.conforms, report.results.length, expectedReport.profile))
       }

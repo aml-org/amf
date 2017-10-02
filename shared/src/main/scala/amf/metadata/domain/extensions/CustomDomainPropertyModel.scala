@@ -43,7 +43,7 @@ object CustomDomainPropertyModel extends DomainElementModel {
     */
   val Schema = Field(ShapeModel, Shapes + "schema")
 
-  override val fields: List[Field] = List(Domain, Schema, Name) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Domain, Schema, Name) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Rdf + "Property" :: Document + "DomainProperty" :: DomainElementModel.`type`
 }

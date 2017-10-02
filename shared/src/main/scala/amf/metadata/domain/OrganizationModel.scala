@@ -18,5 +18,5 @@ object OrganizationModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Schema + "Organization" :: DomainElementModel.`type`
 
-  override val fields: List[Field] = List(Url, Name, Email) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Url, Name, Email) ++ DomainElementModel.fields
 }

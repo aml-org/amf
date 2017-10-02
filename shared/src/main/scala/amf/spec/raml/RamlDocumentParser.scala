@@ -455,7 +455,9 @@ case class ResponseParser(entry: YMapEntry, producer: (String) => Response, decl
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value.value.toMap, response.withHeader, declarations).parse()
+          ParametersParser(entry.value.value.toMap, response.withHeader, declarations)
+            .parse()
+            .map(_.withBinding("header"))
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
       }
     )

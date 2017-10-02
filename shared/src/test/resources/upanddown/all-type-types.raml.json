@@ -19,6 +19,14 @@
     "TimeOnlyType": {
       "type": "string"
     },
+    "FileType": {
+      "type": "file",
+      "maxLength": "307200",
+      "x-fileTypes": [
+        "image/jpeg",
+        "image/png"
+      ]
+    },
     "BinaryType": {
       "type": "binary"
     },

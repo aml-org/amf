@@ -7,7 +7,7 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.shape.{ScalarShape, XMLSerializer,PropertyDependencies}
+import amf.shape.{ScalarShape, XMLSerializer, PropertyDependencies}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -260,6 +260,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                     List(
                       Parameter()
                         .withName("Time-Ago")
+                        .withBinding("header")
                         .withSchema(
                           ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
                         .withRequired(true)

@@ -22,5 +22,5 @@ object ParameterModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Http + "Parameter" :: DomainElementModel.`type`
 
-  override val fields: List[Field] = List(Name, Description, Required, Binding, Schema) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, Description, Required, Binding, Schema) ++ DomainElementModel.fields
 }

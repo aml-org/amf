@@ -14,6 +14,12 @@ types:
     format: time-only
   Nulltype:
     type: nil
+  FileType:
+    type: file
+    maxLength: 307200
+    fileTypes:
+      - image/jpeg
+      - image/png
   BinaryType:
     type: string
     (format): binary

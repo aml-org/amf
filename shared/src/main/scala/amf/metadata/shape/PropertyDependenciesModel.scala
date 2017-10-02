@@ -15,7 +15,7 @@ object PropertyDependenciesModel extends DomainElementModel {
 
   val PropertyTarget = Field(Array(Iri), Shapes + "propertyTarget")
 
-  override val fields: List[Field] = List(PropertySource, PropertyTarget) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(PropertySource, PropertyTarget) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shapes + "PropertyDependencies") ++ DomainElementModel.`type`
 }
