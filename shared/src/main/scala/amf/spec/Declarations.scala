@@ -12,21 +12,17 @@ import scala.collection.mutable
 /**
   * Declarations object.
   */
-case class Declarations(var libraries: Map[String, Declarations],
-                        var fragments: Map[String, BaseUnit],
-                        var shapes: Map[String, Shape],
-                        var annotations: Map[String, CustomDomainProperty],
-                        var resourceTypes: Map[String, ResourceType],
-                        var documentations: Map[String, UserDocumentation],
-                        var traits: Map[String, Trait]) {
+case class Declarations(var libraries: Map[String, Declarations] = Map(),
+                        var fragments: Map[String, DomainElement] = Map(),
+                        var shapes: Map[String, Shape] = Map(),
+                        var annotations: Map[String, CustomDomainProperty] = Map(),
+                        var resourceTypes: Map[String, ResourceType] = Map(),
+                        var documentations: Map[String, UserDocumentation] = Map(),
+                        var traits: Map[String, Trait] = Map()) {
 
-  def +=(element: (String, DomainElement)): Declarations = {
-    element match {
-      case (url, r: ResourceType)         => resourceTypes = resourceTypes + (url   -> r)
-      case (url, u: UserDocumentation)    => documentations = documentations + (url -> u)
-      case (url, t: Trait)                => traits = traits + (url                 -> t)
-      case (url, a: CustomDomainProperty) => annotations = annotations + (url       -> a)
-      case (url, s: Shape)                => shapes = shapes + (url                 -> s)
+  def +=(fragment: (String, Fragment)): Declarations = {
+    fragment match {
+      case (url, f) => fragments = fragments + (url -> f.encodes)
     }
     this
   }
@@ -52,9 +48,12 @@ case class Declarations(var libraries: Map[String, Declarations],
         result
     }
   }
+
+  def declarables(): Seq[DomainElement] =
+    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values).toSeq
 }
 
-class Declarations(private val declarations: Seq[DomainElement], private val references: Map[String, DomainElement]) {
+/*class Declarations(private val declarations: Seq[DomainElement], private val references: Map[String, DomainElement]) {
   val shapes: Map[String, Shape] = declarations.collect { case d: Shape => d.name -> d }.toMap
 
   val annotations: Map[String, CustomDomainProperty] = declarations.collect {
@@ -83,11 +82,9 @@ class Declarations(private val declarations: Seq[DomainElement], private val ref
 
   def add(elements: Seq[DomainElement]): Declarations =
     this.copy(declarations = this.declarations ++ elements)
-}
+}*/
 
 object Declarations {
-
-  def apply(): Declarations = apply(Nil)
 
   def apply(map: Map[String, BaseUnit]): Declarations = new Declarations(Nil, plaintReferences(map))
 

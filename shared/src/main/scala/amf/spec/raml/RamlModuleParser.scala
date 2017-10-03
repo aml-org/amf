@@ -25,7 +25,7 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
       val rootMap        = document.toMap
       val environmentRef = ReferencesParser(rootMap, root.references).parse()
 
-      val declares = parseDeclares(rootMap, Declarations(environmentRef))
+      val declares = parseDeclarations(rootMap, Declarations(environmentRef))
 
       // TODO invoke when it's done
       //    resourceTypes?

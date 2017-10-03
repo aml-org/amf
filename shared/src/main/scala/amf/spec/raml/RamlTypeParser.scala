@@ -16,7 +16,7 @@ import scala.collection.mutable
 
 object RamlTypeParser {
   def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key.value.toScalar.text, ast.value, adopt, declarations)
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)
 }
 
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations) {
