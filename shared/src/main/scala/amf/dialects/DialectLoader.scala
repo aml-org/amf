@@ -1,9 +1,11 @@
 package amf.dialects
 
+import amf.compiler.Root
 import amf.dialects.RAML_1_0_DialectTopLevel.{NodeDefinitionObject, PropertyMappingObject}
 import amf.document.{BaseUnit, Document}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
+import amf.model.AmfScalar
 import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
@@ -13,16 +15,16 @@ import scala.collection.mutable
   * Created by Pavel Petrochenko on 15/09/17.
   */
 
-case class NM(namespace: Namespace, name:String){ }
-object NM{
-  def apply(s:String): Option[NM] ={
+case class NamespaceMap(namespace: Namespace, name:String){ }
+object NamespaceMap{
+  def apply(s:String): Option[NamespaceMap] ={
 
     val ind: Int = Math.max(s.lastIndexOf('/'), s.lastIndexOf('#'))
 
     if (ind > 0) {
       val namespace = Namespace(s.substring(0, ind + 1))
       val str1 = s.substring(ind + 1)
-      Some(NM(namespace,str1))
+      Some(NamespaceMap(namespace,str1))
     } else {
       None
     }
@@ -31,7 +33,7 @@ object NM{
 
 class DialectLoader {
 
-  val builtins: TypeBuiltins = new TypeBuiltins(){}
+  val builtins: TypeBuiltins = (root: Root, name: String, t: Type) => None
 
   private def retrieveDomainEntity(unit:BaseUnit) = unit match {
     case document: Document => document.encodes.asInstanceOf[DomainEntity]
@@ -41,9 +43,8 @@ class DialectLoader {
   def loadDialect(document: BaseUnit): Dialect = loadDialect(retrieveDomainEntity(document))
 
   private def registerType (n:NodeDefinitionObject,dialectMap:mutable.Map[String,DialectNode]) =
-    NM(n.classTerm().get) match {
-      case Some(ns) =>
-        dialectMap.put(n.entity.id, new DialectNode(ns.name, ns.namespace))
+    NamespaceMap(n.classTerm().get) match {
+      case Some(ns) => dialectMap.put(n.entity.id, new DialectNode(ns.name, ns.namespace))
       case _        => // ignore
     }
 
@@ -53,6 +54,7 @@ class DialectLoader {
       ramlNode     <- dialectObject.raml()
       ramlDocument <- ramlNode.document()
       root         <- ramlDocument.resolvedEncodes()
+
     } yield {
       root
     }
@@ -60,27 +62,28 @@ class DialectLoader {
     rootEntity match {
 
       case Some(encodedRootEntity) =>
+
         val dialectMap = mutable.Map[String,DialectNode]()
-        val propertyMap = mutable.Map[DialectPropertyMapping, PropertyMappingObject]()
+        processMappings(encodedRootEntity, dialectObject, dialectMap)
 
-        dialectObject.nodeMappings().foreach {registerType(_, dialectMap)}
-
-        if (!dialectMap.contains(encodedRootEntity.entity.id)){
-          registerType(encodedRootEntity, dialectMap)
-          parseNodeMapping(encodedRootEntity, dialectMap, propertyMap)
-        }
-        dialectObject.nodeMappings().foreach { n =>
-          parseNodeMapping(n, dialectMap, propertyMap)
-        }
-
-        fillHashes( propertyMap)
 
         val dialect = for {
           dialectName    <- dialectObject.dialect()
           dialectVersion <- dialectObject.version()
           dialectNode    <- dialectMap.get(encodedRootEntity.entity.id)
         } yield {
-          Dialect(dialectName, dialectVersion, dialectNode)
+
+          val fragmentList: mutable.Map[String,DialectNode] = processFragments(dialectObject, dialectMap)
+
+          val moduleInfo = processModuleInfo(dialectObject, dialectMap)
+
+          Dialect(
+            dialectName,
+            dialectVersion,
+            dialectNode,
+            resolver = (root, refs) => BasicResolver(root, List(), refs),
+            moduleInfo,
+            fragmentList.toMap)
         }
 
         dialect match {
@@ -92,25 +95,99 @@ class DialectLoader {
     }
   }
 
+  private def processFragments(dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
+                               dialectMap: mutable.Map[String,DialectNode]) = {
+
+    val fragmentList: mutable.Map[String,DialectNode] = mutable.Map()
+
+    for {
+      ramlMapping          <- dialectObject.raml()
+      fragmentDeclarations <- ramlMapping.fragments()
+    } yield {
+      fragmentDeclarations.encodes() foreach { encodedFragment =>
+        for {
+          resolvedDeclaredNode <- encodedFragment.resolvedDeclaredNode()
+          fragmentName         <- encodedFragment.name()
+          fragmentNode         <- dialectMap.get(resolvedDeclaredNode.entity.id)
+        } yield {
+          fragmentList.put(fragmentName, fragmentNode)
+        }
+      }
+    }
+
+    fragmentList
+  }
+
+  private def processModuleInfo(dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
+                                dialectMap: mutable.Map[String,DialectNode]) = {
+    val dmap: mutable.Map[String, DialectNode] = fillModule(dialectMap, dialectObject)
+    if (dmap.nonEmpty) {
+      val mn = new DialectNode("module",Namespace.Document)
+      dmap.keys.foreach(k=>{
+        mn.map(k, DialectPropertyMapping("name", Type.Str, namespace=Some(Namespace.Schema)), dmap(k))
+      })
+      // now we have a library node
+      Some(mn)
+    } else {
+      None
+    }
+  }
+
+  private def processMappings(encodedRootEntity: RAML_1_0_DialectTopLevel.NodeDefinitionObject,
+                              dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
+                              dialectMap: mutable.Map[String,DialectNode]) = {
+
+    val propertyMap = mutable.Map[DialectPropertyMapping, PropertyMappingObject]()
+
+    // process all the node mappings
+    dialectObject.nodeMappings().foreach { registerType(_, dialectMap) }
+    dialectObject.nodeMappings().foreach { n => parseNodeMapping(n, dialectMap, propertyMap) }
+
+    // if it hasn't been processed, also the root mapping
+    if (!dialectMap.contains(encodedRootEntity.entity.id)) {
+      registerType(encodedRootEntity, dialectMap)
+      parseNodeMapping(encodedRootEntity, dialectMap, propertyMap)
+    }
+
+    // now we fill the hashes
+    fillHashes(propertyMap)
+
+  }
 
 
+  private def fillModule(dialectMap: mutable.Map[String,DialectNode],dialectObject: RAML_1_0_DialectTopLevel.dialectObject) = {
+    val dmap: mutable.Map[String, DialectNode] = mutable.Map()
+    dialectObject.raml().foreach(v => {
+      v.module().foreach(m => {
+        m.declares().foreach(d => {
+          for {
+            nodeName <- d.name()
+            resolvedNode <- d.resolvedDeclaredNode()
+          } yield {
+              dialectMap.get(resolvedNode.entity.id).foreach(d => dmap.put(nodeName, d))
+            }
+        })
+      })
+    })
+    dmap
+  }
 
   private def fillHashes(propertyMap: mutable.Map[DialectPropertyMapping, PropertyMappingObject]) = {
     for {
       (dialectPropertyMapping, v) <- propertyMap
-      hash <- v.hash()
-    } yield
-      {
-        val r=dialectPropertyMapping.range
-        if (dialectPropertyMapping.unionTypes.isDefined){
-          dialectPropertyMapping.unionTypes.get.foreach { uoption =>
-            processHashRange(dialectPropertyMapping, hash, uoption)
-          }
-        }
-        else {
-          processHashRange(dialectPropertyMapping, hash, r)
+      hash                        <- v.hash()
+    } yield {
+      val range = dialectPropertyMapping.range
+
+      if (dialectPropertyMapping.unionTypes.isDefined){
+        dialectPropertyMapping.unionTypes.get.foreach { unionOption =>
+          processHashRange(dialectPropertyMapping, hash, unionOption)
         }
       }
+      else {
+        processHashRange(dialectPropertyMapping, hash, range)
+      }
+    }
   }
 
   private def processHashRange(dialectPropertyMapping: DialectPropertyMapping, hash: String, r: Type) = {
@@ -148,7 +225,7 @@ class DialectLoader {
     }
 
     domainEntity.propertyTerm().foreach { term =>
-      NM(term) foreach { ns =>
+      NamespaceMap(term) foreach { ns =>
         res = res.copy(namespace = Some(ns.namespace), rdfName = Some(ns.name))
       }
     }
@@ -161,6 +238,14 @@ class DialectLoader {
     domainEntity.pattern().foreach { p =>
       res=res.copy(pattern = Some(p))
     }
+    domainEntity.defaultValue().foreach(v=>{
+      val sc:AmfScalar=res.range match {
+        case Type.Int=>AmfScalar(v.toInt)
+        case Type.Bool=>AmfScalar(v.toBoolean)
+        case _=>AmfScalar(v)
+      }
+      res=res.copy(defaultValue = Some(sc))
+    })
     val ev=domainEntity.`enum`()
 
     if (ev.nonEmpty){
@@ -203,7 +288,7 @@ class DialectLoader {
   def parseNodeMapping(domainEntity: NodeDefinitionObject, dialects: mutable.Map[String,DialectNode], props: mutable.Map[DialectPropertyMapping,PropertyMappingObject]): DialectNode = {
     val node = dialects(domainEntity.entity.id)
 
-    domainEntity.mapping().foreach { p=>
+    domainEntity.mapping().foreach { p =>
       val mapping = node.add(parsePropertyMapping(p, dialects,props))
       props.put(mapping,p);
     }

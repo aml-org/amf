@@ -1,9 +1,12 @@
 package amf.dialects
 
 import amf.compiler.Root
+import amf.document.BaseUnit
 import amf.metadata.Type
 import amf.spec.dialects._
 import amf.vocabulary.Namespace
+
+import scala.collection.mutable
 
 /**
   * Created by Pavel Petrochenko on 14/09/17.
@@ -38,6 +41,7 @@ object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
   val allowMultiple: DialectPropertyMapping = bool("allowMultiple")
   val asMap: DialectPropertyMapping         = bool("asMap")
   val hash: DialectPropertyMapping          = str("hash", _.copy(referenceTarget = Some(PropertyTerm), required = true))
+  val defaultValue:DialectPropertyMapping   = str("defaultValue")
 }
 
 object ClassTermRef extends DialectLanguageNode("ClassTermRef") {
@@ -91,14 +95,14 @@ object DialectDefinition extends DialectLanguageNode("dialect") {
   }
 }
 
-case class DialectLanguageResolver(override val root:Root) extends BasicResolver(root, List(DialectDefinition.externals,DialectDefinition.vocabularies)){
+case class DialectLanguageResolver(override val root:Root,uses:mutable.Map[String,BaseUnit]) extends BasicResolver(root, List(DialectDefinition.externals,DialectDefinition.vocabularies), uses){
 
   override def resolve(root: Root, name:String, t:Type): Option[String] = {
     t match {
       case NodeDefinition if b2id.get(name).isDefined => Some(b2id(name))
-      case _                                          => Some(resolveBasicRef(name,root))
+      case _                                          => Some(resolveBasicRef(name, root, t))
     }
   }
 }
 
-object DialectLanguageDefinition extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, r => { DialectLanguageResolver(r) } ){}
+object DialectLanguageDefinition extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r,uses) => { DialectLanguageResolver(r,uses) } ){}

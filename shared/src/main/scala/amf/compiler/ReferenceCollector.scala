@@ -1,12 +1,12 @@
 package amf.compiler
 
+import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.parser.{YMapOps, YValueOps}
 import amf.remote._
 import org.yaml.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.Future
 
@@ -99,8 +99,8 @@ case class Reference(url: String, kind: Kind, ast: YAggregate) {
 
   def isRemote: Boolean = !url.startsWith("#")
 
-  def resolve(remote: Platform, context: Context, cache: Cache, hint: Hint): Future[BaseUnit] = {
-    AMFCompiler(url, remote, hint + kind, Some(context), Some(cache))
+  def resolve(remote: Platform, context: Context, cache: Cache, hint: Hint, dialectRegistry: DialectRegistry = DialectRegistry.default): Future[BaseUnit] = {
+    AMFCompiler(url, remote, hint + kind, Some(context), Some(cache), dialectRegistry)
       .build()
       .map(root => {
 //        target = root

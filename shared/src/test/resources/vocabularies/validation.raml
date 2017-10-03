@@ -31,6 +31,12 @@ classTerms:
       - targetQuery
       - shacl.property
       - shacl.js
+  FunctionValidation:
+    extends: Validation
+  ShapeValidation:
+    extends: Validation
+  QueryValidation:
+    extends: Validation
 
   shacl.PropertyShape:
     displayName: Property Shape
@@ -95,6 +101,8 @@ propertyTerms:
     displayName: validations
     description: Custom validations declared in a profile
     range: Validation
+  version:
+    range: string
 
   shacl.severity:
     displayName: severity

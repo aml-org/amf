@@ -92,6 +92,8 @@ object RAML_1_0_DialectTopLevel {
     def withAsMap(value: Boolean): PropertyMappingObject = { entity.set(PropertyMapping.asMap.field() , AmfScalar(value)); this }
     def hash(): Option[String] = entity.string(PropertyMapping.hash)
     def withHash(value: String): PropertyMappingObject = { entity.set(PropertyMapping.hash.field() , AmfScalar(value)); this }
+    def defaultValue(): Option[String] = entity.string(PropertyMapping.defaultValue)
+    def withDefaultValue(value: String): PropertyMappingObject = { entity.set(PropertyMapping.defaultValue.field() , AmfScalar(value)); this }
   }
 
   case class DocumentObject(entity: DomainEntity = DomainEntity(MainNode), override val parent:Option[TopLevelObject] = None) extends TopLevelObject(entity, parent){

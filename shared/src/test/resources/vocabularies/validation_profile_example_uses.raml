@@ -1,0 +1,33 @@
+#%Validation Profile 1.0
+
+profile: Barclays UK
+description: Custom profile that can be used as the base set of validations for all Barclays UK API specs
+
+# use RAML as the basic set of validations
+extends: RAML
+
+violation:
+  # We want a raise a violation if the API has no endpoints, like in OpenAPI
+  - amf-parser.empty-endpoints
+  - get-operations-with-response-js
+  - camel-case-types
+
+info:
+  # info if there's an operation without responses
+  - amf-parser.empty-responses
+
+warning:
+  # We just want a warning if a URL object value is not a valid URL
+  - amf-parser.strict-url-strings
+  - all-names-must-be-camel-case
+
+disabled:
+  # We don't want to restrict the schemes to http, HTTP, https, HTTPS
+  - amf-parser.raml-schemes
+uses:
+  v: validation_profile_example.raml
+
+validations:
+  case-insensitive-schema: v.case-insensitive-schema
+  camel-case-types: v.camel-case-types
+  all-names-must-be-camel-case: v.all-names-must-be-camel-case
