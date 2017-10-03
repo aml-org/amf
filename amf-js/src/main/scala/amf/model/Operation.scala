@@ -19,6 +19,8 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   val summary: String                  = operation.summary
   val documentation: CreativeWork      = Option(operation.documentation).map(CreativeWork).orNull
   val schemes: js.Iterable[String]     = operation.schemes.toJSArray
+  val accepts: js.Iterable[String]     = operation.accepts.toJSArray
+  val contentType: js.Iterable[String] = operation.contentType.toJSArray
   val request: Request                 = Option(operation.request).map(Request).orNull
   val responses: js.Iterable[Response] = operation.responses.map(Response).toJSArray
 
@@ -63,6 +65,18 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   /** Set schemes property of this [[Operation]]. */
   def withSchemes(schemes: js.Iterable[String]): this.type = {
     operation.withSchemes(schemes.toSeq)
+    this
+  }
+
+  /** Set accepts property of this [[Operation]]. */
+  def withAccepts(accepts: js.Iterable[String]): this.type = {
+    operation.withAccepts(accepts.toSeq)
+    this
+  }
+
+  /** Set contentType property of this [[Operation]]. */
+  def withContentType(contentType: js.Iterable[String]): this.type = {
+    operation.withContentType(contentType.toSeq)
     this
   }
 

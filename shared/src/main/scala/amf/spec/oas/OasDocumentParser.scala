@@ -324,6 +324,16 @@ case class OperationParser(entry: YMapEntry,
       }
     )
 
+    map.key("consumes", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
+    })
+
+    map.key("produces", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
+    })
+
     map.key(
       "x-is",
       entry => {

@@ -251,6 +251,10 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
+          fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("(consumes)", f, ordering))
+
+          fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("(produces)", f, ordering))
+
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
           result ++= RamlAnnotationsEmitter(operation, ordering).emitters
@@ -846,7 +850,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
     }
   }
-  case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) with CommonOASFieldsEmitter {
+  case class ScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering)
+      extends ShapeEmitter(scalar, ordering)
+      with CommonOASFieldsEmitter {
     override def emitters(): Seq[Emitter] = {
       val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
 
@@ -882,14 +888,15 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
-  case class FileShapeEmitter(scalar: FileShape, ordering: SpecOrdering) extends ShapeEmitter(scalar, ordering) with CommonOASFieldsEmitter {
+  case class FileShapeEmitter(scalar: FileShape, ordering: SpecOrdering)
+      extends ShapeEmitter(scalar, ordering)
+      with CommonOASFieldsEmitter {
     override def emitters(): Seq[Emitter] = {
       val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
 
       val fs = scalar.fields
 
-      result += EntryEmitter( "type", "file")
-
+      result += EntryEmitter("type", "file")
 
       emitOASFields(fs, result)
 

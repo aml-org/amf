@@ -24,6 +24,10 @@ object OperationModel extends DomainElementModel {
 
   val Schemes = Field(Array(Str), Http + "scheme")
 
+  val Accepts = Field(Array(Str), Http + "accepts")
+
+  val ContentType = Field(Array(Str), Http + "contentType")
+
   val Request = Field(RequestModel, Hydra + "expects")
 
   val Responses = Field(Array(ResponseModel), Hydra + "returns")
@@ -37,6 +41,8 @@ object OperationModel extends DomainElementModel {
                                           Summary,
                                           Documentation,
                                           Schemes,
+                                          Accepts,
+                                          ContentType,
                                           Request,
                                           Responses) ++ DomainElementModel.fields
 }

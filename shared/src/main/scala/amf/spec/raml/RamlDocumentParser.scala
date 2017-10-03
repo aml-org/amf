@@ -11,7 +11,6 @@ import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
-import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
@@ -363,6 +362,16 @@ case class OperationParser(entry: YMapEntry, producer: (String) => Operation, de
         operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
       }
     )
+
+    map.key("(consumes)", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
+    })
+
+    map.key("(produces)", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
+    })
 
     map.key(
       "is",

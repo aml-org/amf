@@ -16,6 +16,8 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   val summary: String                     = operation.summary
   val documentation: CreativeWork         = Option(operation.documentation).map(CreativeWork).orNull
   val schemes: java.util.List[String]     = operation.schemes.asJava
+  val accepts: java.util.List[String]     = operation.accepts.asJava
+  val contentType: java.util.List[String] = operation.contentType.asJava
   val request: Request                    = Option(operation.request).map(Request).orNull
   val responses: java.util.List[Response] = operation.responses.map(Response).asJava
 
@@ -60,6 +62,18 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   /** Set schemes property of this [[Operation]]. */
   def withSchemes(schemes: java.util.List[String]): this.type = {
     operation.withSchemes(schemes.asScala)
+    this
+  }
+
+  /** Set accepts property of this [[Operation]]. */
+  def withAccepts(accepts: java.util.List[String]): this.type = {
+    operation.withAccepts(accepts.asScala)
+    this
+  }
+
+  /** Set contentType property of this [[Operation]]. */
+  def withContentType(contentType: java.util.List[String]): this.type = {
+    operation.withContentType(contentType.asScala)
     this
   }
 
