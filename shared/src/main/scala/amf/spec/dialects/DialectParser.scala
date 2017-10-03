@@ -8,10 +8,10 @@ import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
-import amf.spec.common.BaseSpecParser._
+import amf.parser.{YMapOps, YValueOps}
+import amf.spec.Declarations
 import amf.spec.raml.RamlSpecParser
 import org.yaml.model._
-import amf.parser.{YMapOps, YValueOps}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -25,30 +25,33 @@ trait DomainEntityVisitor {
 
 class DialectParser(val dialect: Dialect, override val root: Root) extends RamlSpecParser(root) {
 
-  private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, mutable.Map());
+  private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty)
 
   def parseDocument(): Document = {
     val document = Document()
       .adopted(root.location)
 
     root.document.value.foreach(value => {
-      val map            = value.toMap
-      val environmentRef = ReferencesParser(map, root.references).parse()
-      resolver = dialect.resolver.resolver(root, environmentRef);
+      val map = value.toMap
 
-      val entity = parse();
-      if (environmentRef.nonEmpty) {
-        val usesMap: mutable.Map[String, String] = mutable.Map();
+      val references = ReferencesParser("uses", map, root.references).parse()
+
+      resolver = dialect.resolver.resolver(root, references.references.toMap)
+
+      val entity = parse()
+      if (references.references.nonEmpty) {
+        document.withReferences(references.references.values.toSeq)
+        val usesMap: mutable.Map[String, String] = mutable.Map()
         map.key(
           "uses",
           entry =>
             entry.value.value.toMap.entries.foreach(e => {
-              usesMap.put(e.key.value.toScalar.text, e.value.value.toScalar.text);
+              usesMap.put(e.key.value.toScalar.text, e.value.value.toScalar.text)
             })
         )
-        entity.annotations += NamespaceImportsDeclaration(usesMap.toMap);
-        document.withReferences(environmentRef.values.toSeq)
+        entity.annotations += NamespaceImportsDeclaration(usesMap.toMap)
       }
+
       document.withEncodes(entity)
 
     })
@@ -90,7 +93,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
         domainEntity.definition
           .mappings()
           .foreach(mapping => {
-            val ev = entries.key(mapping.name);
+            val ev = entries.key(mapping.name)
             ev.foreach(entryNode => {
               if (mapping.isMap) {
                 parseMap(mapping, entryNode, domainEntity)
@@ -102,9 +105,9 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
                 parseScalarValue(domainEntity, mapping, entryNode)
               }
             })
-            if (!ev.isDefined) {
+            if (ev.isEmpty) {
               mapping.defaultValue.foreach(v => {
-                domainEntity.set(mapping.field(), v, Annotations() += (SynthesizedField()))
+                domainEntity.set(mapping.field(), v, Annotations() += SynthesizedField())
               })
             }
           })
@@ -117,7 +120,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
           .foreach(f => {
             setScalar(domainEntity, f, scalar)
           })
-        if (!maybeMapping.isDefined) {
+        if (maybeMapping.isEmpty) {
           val nm     = scalar.value.toString
           val entity = resolver.resolveToEndity(root, nm, domainEntity.definition)
           entity.foreach(e => {

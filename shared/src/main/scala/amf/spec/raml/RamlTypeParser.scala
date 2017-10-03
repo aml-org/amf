@@ -9,6 +9,7 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{AnyType, ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
+import amf.spec.common.BaseSpecParser
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -18,7 +19,10 @@ object RamlTypeParser {
     new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)
 }
 
-case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations) {
+case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
+    extends BaseSpecParser {
+
+  override implicit val spec = RamlSpecParserContext
 
   private val value = part.value
 
@@ -144,412 +148,411 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     }
   }
 
-}
+  trait CommonScalarParsingLogic {
+    def parseOASFields(map: YMap, shape: Shape): Unit = {
+      map.key("pattern", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
+      })
 
-trait CommonScalarParsingLogic {
-  def parseOASFields(map: YMap, shape: Shape): Unit = {
-    map.key("pattern", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
-    })
+      map.key("minLength", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.MinLength, value.integer(), Annotations(entry))
+      })
 
-    map.key("minLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MinLength, value.integer(), Annotations(entry))
-    })
+      map.key("maxLength", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.MaxLength, value.integer(), Annotations(entry))
+      })
 
-    map.key("maxLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MaxLength, value.integer(), Annotations(entry))
-    })
+      map.key("(exclusiveMinimum)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.ExclusiveMinimum, value.string(), Annotations(entry))
+      })
 
-    map.key("(exclusiveMinimum)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.ExclusiveMinimum, value.string(), Annotations(entry))
-    })
-
-    map.key("(exclusiveMaximum)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), Annotations(entry))
-    })
-  }
-}
-
-case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
-    extends ShapeParser()
-    with CommonScalarParsingLogic {
-  override def parse(): ScalarShape = {
-    super.parse()
-    parseOASFields(map, shape)
-    map
-      .key("type")
-      .fold(
-        shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
-        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
-
-    map.key("minimum", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
-    })
-
-    map.key("maximum", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
-    })
-
-    map.key("format", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
-    })
-
-    // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
-
-    map.key("multipleOf", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
-    })
-
-    shape
-  }
-}
-
-case class FileShapeParser(override val map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
-  override val shape = FileShape(Annotations(map))
-
-  override def parse(): FileShape = {
-    super.parse()
-    parseOASFields(map, shape)
-
-    map.key(
-      "fileTypes", { entry =>
-        entry.value.value match {
-          case seq: YSequence =>
-            val value = ArrayNode(seq)
-            shape.set(FileShapeModel.FileTypes, value.strings(), Annotations(seq))
-        }
-      }
-    )
-
-    map.key("(minimum)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
-    })
-
-    map.key("(maximum)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
-    })
-
-    map.key("(format)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
-    })
-
-    // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
-
-    map.key("(multipleOf)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
-    })
-
-    shape
-  }
-}
-
-case class DataArrangementParser(name: String, ast: YPart, map: YMap, adopt: Shape => Unit, declarations: Declarations) {
-
-  def lookAhead(): Either[TupleShape, ArrayShape] = {
-    map.key("(tuple)") match {
-      case Some(entry) =>
-        entry.value.value match {
-          // this is a sequence, we need to create a tuple
-          case _: YSequence => Left(TupleShape(ast).withName(name))
-          // not an array regular array parsing
-          case _ => throw new Exception("Tuples must have a list of types")
-
-        }
-      case None => Right(ArrayShape(ast).withName(name))
+      map.key("(exclusiveMaximum)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), Annotations(entry))
+      })
     }
   }
 
-  def parse(): Shape = {
-    lookAhead() match {
-      case Left(tuple)  => TupleShapeParser(tuple, map, adopt, declarations).parse()
-      case Right(array) => ArrayShapeParser(array, map, adopt, declarations).parse()
+  case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
+      extends ShapeParser()
+      with CommonScalarParsingLogic {
+    override def parse(): ScalarShape = {
+      super.parse()
+      parseOASFields(map, shape)
+      map
+        .key("type")
+        .fold(shape
+          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
+          entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
+
+      map.key("minimum", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+      })
+
+      map.key("maximum", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+      })
+
+      map.key("format", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
+      })
+
+      // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
+
+      map.key("multipleOf", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
+      })
+
+      shape
     }
   }
 
-}
+  case class FileShapeParser(override val map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
+    override val shape = FileShape(Annotations(map))
 
-case class ArrayShapeParser(override val shape: ArrayShape,
-                            map: YMap,
-                            adopt: Shape => Unit,
-                            declarations: Declarations)
-    extends ShapeParser() {
+    override def parse(): FileShape = {
+      super.parse()
+      parseOASFields(map, shape)
 
-  override def parse(): Shape = {
-    adopt(shape)
-
-    super.parse()
-
-    map.key("type", _ => shape.add(ExplicitField()))
-
-    map.key("minItems", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-    })
-
-    map.key("maxItems", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-    })
-
-    map.key("uniqueItems", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
-    })
-
-    val finalShape = for {
-      itemsEntry <- map.key("items")
-      item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), declarations).parse()
-    } yield {
-      item match {
-        case array: ArrayShape   => shape.withItems(array).toMatrixShape
-        case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
-        case other: Shape        => shape.withItems(other)
-      }
-    }
-
-    finalShape match {
-      case Some(parsed: Shape) => parsed
-      case None                => throw new Exception("Cannot parse data arrangement shape")
-    }
-  }
-}
-
-case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit, declarations: Declarations)
-    extends ShapeParser() {
-
-  override def parse(): Shape = {
-    adopt(shape)
-
-    super.parse()
-
-    map.key("type", _ => shape.add(ExplicitField()))
-
-    map.key("minItems", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-    })
-
-    map.key("maxItems", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-    })
-
-    map.key("uniqueItems", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
-    })
-
-    map.key(
-      "items",
-      entry => {
-        val items = entry.value.value.toMap.entries.zipWithIndex
-          .map {
-            case (elem, index) =>
-              RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+      map.key(
+        "fileTypes", { entry =>
+          entry.value.value match {
+            case seq: YSequence =>
+              val value = ArrayNode(seq)
+              shape.set(FileShapeModel.FileTypes, value.strings(), Annotations(seq))
           }
-        shape.withItems(items.filter(_.isDefined).map(_.get))
-      }
-    )
+        }
+      )
 
-    shape
+      map.key("(minimum)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+      })
+
+      map.key("(maximum)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+      })
+
+      map.key("(format)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
+      })
+
+      // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
+
+      map.key("(multipleOf)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
+      })
+
+      shape
+    }
   }
-}
 
-case class NodeShapeParser(shape: NodeShape, map: YMap, declarations: Declarations) extends ShapeParser() {
-  override def parse(): NodeShape = {
+  case class DataArrangementParser(name: String,
+                                   ast: YPart,
+                                   map: YMap,
+                                   adopt: Shape => Unit,
+                                   declarations: Declarations) {
 
-    super.parse()
+    def lookAhead(): Either[TupleShape, ArrayShape] = {
+      map.key("(tuple)") match {
+        case Some(entry) =>
+          entry.value.value match {
+            // this is a sequence, we need to create a tuple
+            case _: YSequence => Left(TupleShape(ast).withName(name))
+            // not an array regular array parsing
+            case _ => throw new Exception("Tuples must have a list of types")
 
-    map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+          }
+        case None => Right(ArrayShape(ast).withName(name))
+      }
+    }
 
-    map.key(
-      "type",
-      entry => {
-        entry.value.value match {
-          case scalar: YScalar if scalar.text != "object" =>
-            shape.set(NodeShapeModel.Inherits,
-                      AmfArray(Seq(declarations.shapes(scalar.text)), Annotations(entry.value)),
-                      Annotations(entry))
-          case sequence: YSequence =>
-            val inherits = ArrayNode(sequence)
-              .strings()
-              .scalars
-              .map(scalar => declarations.shapes(scalar.toString))
+    def parse(): Shape = {
+      lookAhead() match {
+        case Left(tuple)  => TupleShapeParser(tuple, map, adopt, declarations).parse()
+        case Right(array) => ArrayShapeParser(array, map, adopt, declarations).parse()
+      }
+    }
 
-            shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
-          case _: YMap =>
-            RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
-              .parse()
-              .foreach(s => shape.set(NodeShapeModel.Inherits, s, Annotations(entry)))
-          case _ =>
-            shape.add(ExplicitField()) // TODO store annotation in dataType field.
+  }
+
+  case class ArrayShapeParser(override val shape: ArrayShape,
+                              map: YMap,
+                              adopt: Shape => Unit,
+                              declarations: Declarations)
+      extends ShapeParser() {
+
+    override def parse(): Shape = {
+      adopt(shape)
+
+      super.parse()
+
+      map.key("type", _ => shape.add(ExplicitField()))
+
+      map.key("minItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
+      })
+
+      map.key("maxItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
+      })
+
+      map.key("uniqueItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
+      })
+
+      val finalShape = for {
+        itemsEntry <- map.key("items")
+        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), declarations).parse()
+      } yield {
+        item match {
+          case array: ArrayShape   => shape.withItems(array).toMatrixShape
+          case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
+          case other: Shape        => shape.withItems(other)
         }
       }
-    )
 
-    map.key("minProperties", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.MinProperties, value.integer(), Annotations(entry))
-    })
-
-    map.key("maxProperties", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.MaxProperties, value.integer(), Annotations(entry))
-    })
-
-    shape.set(NodeShapeModel.Closed, value = false)
-
-    map.key("additionalProperties", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.Closed, value.negated(), Annotations(entry) += ExplicitField())
-    })
-
-    map.key("discriminator", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.Discriminator, value.string(), Annotations(entry))
-    })
-
-    map.key("discriminatorValue", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.DiscriminatorValue, value.string(), Annotations(entry))
-    })
-
-    map.key("(readOnly)", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(NodeShapeModel.ReadOnly, value.boolean(), Annotations(entry))
-    })
-
-    map.key(
-      "properties",
-      entry => {
-        val properties: Seq[PropertyShape] =
-          PropertiesParser(entry.value.value.toMap, shape.withProperty, declarations).parse()
-        shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+      finalShape match {
+        case Some(parsed: Shape) => parsed
+        case None                => throw new Exception("Cannot parse data arrangement shape")
       }
-    )
-
-    val properties = mutable.ListMap[String, PropertyShape]()
-    shape.properties.foreach(p => properties += (p.name -> p))
-
-    map.key(
-      "(dependencies)",
-      entry => {
-        val dependencies: Seq[PropertyDependencies] =
-          ShapeDependenciesParser(entry.value.value.toMap, properties).parse()
-        shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
-      }
-    )
-
-    shape
+    }
   }
-}
 
-case class PropertiesParser(ast: YMap, producer: String => PropertyShape, declarations: Declarations) {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit, declarations: Declarations)
+      extends ShapeParser() {
 
-  def parse(): Seq[PropertyShape] = {
-    ast.entries
-      .map(entry => PropertyShapeParser(entry, producer, declarations).parse())
+    override def parse(): Shape = {
+      adopt(shape)
+
+      super.parse()
+
+      map.key("type", _ => shape.add(ExplicitField()))
+
+      map.key("minItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
+      })
+
+      map.key("maxItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
+      })
+
+      map.key("uniqueItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
+      })
+
+      map.key(
+        "items",
+        entry => {
+          val items = entry.value.value.toMap.entries.zipWithIndex
+            .map {
+              case (elem, index) =>
+                RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+            }
+          shape.withItems(items.filter(_.isDefined).map(_.get))
+        }
+      )
+
+      shape
+    }
   }
-}
 
-case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape, declarations: Declarations) {
+  case class NodeShapeParser(shape: NodeShape, map: YMap, declarations: Declarations) extends ShapeParser() {
+    override def parse(): NodeShape = {
 
-  def parse(): PropertyShape = {
+      super.parse()
 
-    val name     = entry.key.value.toScalar.text
-    val property = producer(name).add(Annotations(entry))
+      map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
-    entry.value.value match {
-      case map: YMap =>
-        map.key(
-          "required",
-          entry => {
-            val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
-            property.set(PropertyShapeModel.MinCount,
-                         AmfScalar(if (required) 1 else 0),
-                         Annotations(entry) += ExplicitField())
+      map.key(
+        "type",
+        entry => {
+          entry.value.value match {
+            case scalar: YScalar if scalar.text != "object" =>
+              shape.set(NodeShapeModel.Inherits,
+                        AmfArray(Seq(declarations.shapes(scalar.text)), Annotations(entry.value)),
+                        Annotations(entry))
+            case sequence: YSequence =>
+              val inherits = ArrayNode(sequence)
+                .strings()
+                .scalars
+                .map(scalar => declarations.shapes(scalar.toString))
+
+              shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
+            case _: YMap =>
+              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
+                .parse()
+                .foreach(s => shape.set(NodeShapeModel.Inherits, s, Annotations(entry)))
+            case _ =>
+              shape.add(ExplicitField()) // TODO store annotation in dataType field.
           }
-        )
-      case _ =>
+        }
+      )
+
+      map.key("minProperties", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(NodeShapeModel.MinProperties, value.integer(), Annotations(entry))
+      })
+
+      map.key("maxProperties", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(NodeShapeModel.MaxProperties, value.integer(), Annotations(entry))
+      })
+
+      shape.set(NodeShapeModel.Closed, value = false)
+
+      map.key("additionalProperties", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(NodeShapeModel.Closed, value.negated(), Annotations(entry) += ExplicitField())
+      })
+
+      map.key("discriminator", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(NodeShapeModel.Discriminator, value.string(), Annotations(entry))
+      })
+
+      map.key("discriminatorValue", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(NodeShapeModel.DiscriminatorValue, value.string(), Annotations(entry))
+      })
+
+      map.key("(readOnly)", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(NodeShapeModel.ReadOnly, value.boolean(), Annotations(entry))
+      })
+
+      map.key(
+        "properties",
+        entry => {
+          val properties: Seq[PropertyShape] =
+            PropertiesParser(entry.value.value.toMap, shape.withProperty, declarations).parse()
+          shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
+      val properties = mutable.ListMap[String, PropertyShape]()
+      shape.properties.foreach(p => properties += (p.name -> p))
+
+      map.key(
+        "(dependencies)",
+        entry => {
+          val dependencies: Seq[PropertyDependencies] =
+            ShapeDependenciesParser(entry.value.value.toMap, properties).parse()
+          shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
+      shape
     }
-
-    if (property.fields.entry(PropertyShapeModel.MinCount).isEmpty) {
-      val required = !name.endsWith("?")
-
-      property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
-      property.set(PropertyShapeModel.Name, if (required) name else name.stripSuffix("?")) // TODO property id is using a name that is not final.
-    }
-
-    // todo path
-
-    RamlTypeParser(entry, shape => shape.adopted(property.id), declarations)
-      .parse()
-      .foreach(range => property.set(PropertyShapeModel.Name, range.name).set(PropertyShapeModel.Range, range))
-
-    property
   }
-}
 
-case class Property(var typeDef: TypeDef = UndefinedType) {
-  def withTypeDef(value: TypeDef): Unit = typeDef = value
-}
+  case class PropertiesParser(ast: YMap, producer: String => PropertyShape, declarations: Declarations) {
 
-abstract class ShapeParser() {
+    def parse(): Seq[PropertyShape] = {
+      ast.entries
+        .map(entry => PropertyShapeParser(entry, producer, declarations).parse())
+    }
+  }
 
-  val shape: Shape
-  val map: YMap
+  case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape, declarations: Declarations) {
 
-  def parse(): Shape = {
+    def parse(): PropertyShape = {
 
-    map.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
-    })
+      val name     = entry.key.value.toScalar.text
+      val property = producer(name).add(Annotations(entry))
 
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Description, value.string(), Annotations(entry))
-    })
-
-    map.key("default", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Default, value.string(), Annotations(entry))
-    })
-
-    map.key("enum", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
-      shape.set(ShapeModel.Values, value.strings(), Annotations(entry))
-    })
-
-    map.key(
-      "(externalDocs)",
-      entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
-        shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
+      entry.value.value match {
+        case map: YMap =>
+          map.key(
+            "required",
+            entry => {
+              val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+              property.set(PropertyShapeModel.MinCount,
+                           AmfScalar(if (required) 1 else 0),
+                           Annotations(entry) += ExplicitField())
+            }
+          )
+        case _ =>
       }
-    )
 
-    map.key(
-      "xml",
-      entry => {
-        val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value.value.toMap).parse()
-        shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
+      if (property.fields.entry(PropertyShapeModel.MinCount).isEmpty) {
+        val required = !name.endsWith("?")
+
+        property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
+        property.set(PropertyShapeModel.Name, if (required) name else name.stripSuffix("?")) // TODO property id is using a name that is not final.
       }
-    )
 
-    shape
+      // todo path
+
+      RamlTypeParser(entry, shape => shape.adopted(property.id), declarations)
+        .parse()
+        .foreach(range => property.set(PropertyShapeModel.Name, range.name).set(PropertyShapeModel.Range, range))
+
+      property
+    }
+  }
+
+  abstract class ShapeParser() {
+
+    val shape: Shape
+    val map: YMap
+
+    def parse(): Shape = {
+
+      map.key("displayName", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
+      })
+
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ShapeModel.Description, value.string(), Annotations(entry))
+      })
+
+      map.key("default", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ShapeModel.Default, value.string(), Annotations(entry))
+      })
+
+      map.key("enum", entry => {
+        val value = ArrayNode(entry.value.value.toSequence)
+        shape.set(ShapeModel.Values, value.strings(), Annotations(entry))
+      })
+
+      map.key(
+        "(externalDocs)",
+        entry => {
+          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+          shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
+        }
+      )
+
+      map.key(
+        "xml",
+        entry => {
+          val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value.value.toMap).parse()
+          shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
+        }
+      )
+
+      shape
+    }
   }
 }

@@ -9,7 +9,6 @@ import amf.domain.extensions.CustomDomainProperty
 import amf.parser.YValueOps
 import amf.shape.Shape
 import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser.{AbstractDeclarationParser, ReferencesParser}
 import org.yaml.model.YMap
 
 /**
@@ -38,7 +37,7 @@ case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragmen
 
     val references = ReferencesParser("uses", rootMap, root.references).parse()
 
-    if (references.references.nonEmpty) fragment.withReferences(references.references)
+    if (references.references.nonEmpty) fragment.withReferences(references.references.values.toSeq)
     fragment
   }
 

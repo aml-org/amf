@@ -140,7 +140,7 @@ object Tests {
   }
 
   def diff(a: Reader, aName: String, b: Reader, bName: String): Option[String] = {
-    val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
+    val diffs: List[Diff.Delta[String]] = Diff.trimming.diff(a, b)
     if (diffs.isEmpty) Option.empty
     else Option("\ndiff -y -W 150 " + aName + " " + bName + "\n" + Diff.makeString(diffs))
   }

@@ -4,11 +4,7 @@ import amf.compiler.Root
 import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
-import amf.metadata.document.{BaseUnitModel, ModuleModel}
-import amf.model.AmfArray
 import amf.parser.YValueOps
-import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser.ReferencesParser
 
 /**
   *
@@ -37,7 +33,7 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
 
       val declarables = references.declarations.declarables()
       if (declarables.nonEmpty) module.withDeclares(declarables)
-      if (references.references.nonEmpty) module.withReferences(references.references)
+      if (references.references.nonEmpty) module.withReferences(references.references.values.toSeq)
     })
     module
 

@@ -7,10 +7,9 @@ import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
-import amf.spec.common.BaseSpecParser._
 import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}
-import org.yaml.model.{YScalar, YValue}
+import org.yaml.model.YValue
 
 import scala.collection.mutable
 
@@ -31,11 +30,11 @@ case class Dialect(name: String,
 }
 
 trait ResolverFactory {
-  def resolver(root: Root, references: mutable.Map[String, BaseUnit]): ReferenceResolver
+  def resolver(root: Root, references: Map[String, BaseUnit]): ReferenceResolver
 }
 
 object NullReferenceResolverFactory extends ResolverFactory {
-  override def resolver(root: Root, references: mutable.Map[String, BaseUnit]): ReferenceResolver =
+  override def resolver(root: Root, references: Map[String, BaseUnit]): ReferenceResolver =
     NullReferenceResolver
 }
 
@@ -234,9 +233,7 @@ object TypeBuiltins {
   val ANY: String     = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(override val root: Root,
-                    val externals: List[DialectPropertyMapping],
-                    uses: mutable.Map[String, BaseUnit])
+class BasicResolver(override val root: Root, val externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit])
     extends RamlSpecParser(root)
     with TypeBuiltins {
 
@@ -303,24 +300,24 @@ class BasicResolver(override val root: Root,
     // val ast = root.ast.last
     // val entries = Entries(ast)
 
-    this.uses.foreach(e => {
-      val (namespace, unit) = e
-      val ent               = retrieveDomainEntity(unit)
-      ent.definition.props.values.foreach(p => {
-        if (p.isMap)
-          ent
-            .entities(p)
-            .foreach(decl => {
-              p.hash.foreach(h => {
-                decl
-                  .string(h)
-                  .foreach(localName => {
-                    declarationsFromLibraries.put(typedName(namespace + "." + localName, p.range), decl)
-                  })
+    uses.foreach {
+      case (namespace, unit) =>
+        val ent = retrieveDomainEntity(unit)
+        ent.definition.props.values.foreach(p => {
+          if (p.isMap)
+            ent
+              .entities(p)
+              .foreach(decl => {
+                p.hash.foreach(h => {
+                  decl
+                    .string(h)
+                    .foreach(localName => {
+                      declarationsFromLibraries.put(typedName(namespace + "." + localName, p.range), decl)
+                    })
+                })
               })
-            })
-      })
-    })
+        })
+    }
 
     root.document.value.foreach { value: YValue =>
       val entries = value.toMap.entries
@@ -364,7 +361,7 @@ class BasicResolver(override val root: Root,
 }
 
 object BasicResolver {
-  def apply(root: Root, externals: List[DialectPropertyMapping], uses: mutable.Map[String, BaseUnit]) =
+  def apply(root: Root, externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit]) =
     new BasicResolver(root, externals, uses)
 }
 

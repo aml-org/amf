@@ -4,11 +4,8 @@ import amf.compiler.Root
 import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
-import amf.metadata.document.{BaseUnitModel, ModuleModel}
-import amf.model.AmfArray
+import amf.metadata.document.BaseUnitModel
 import amf.parser.YValueOps
-import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser.ReferencesParser
 
 /**
   *
@@ -36,7 +33,7 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
 
       val declarable = references.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
-      if (references.references.nonEmpty) module.withReferences(references.references)
+      if (references.references.nonEmpty) module.withReferences(references.references.values.toSeq)
     })
 
     module

@@ -16,7 +16,6 @@ import amf.spec.Declarations
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 /**
   * Base spec parser.
@@ -156,17 +155,17 @@ private[spec] trait BaseSpecParser {
     }
   }
 
-  case class ReferenceDeclarations(references: ListBuffer[BaseUnit] = ListBuffer(),
+  case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mutable.Map(),
                                    declarations: Declarations = Declarations()) {
 
     def +=(alias: String, module: Module): Unit = {
-      references += module
+      references += (alias -> module)
       val library = declarations.getOrCreateLibrary(alias)
       module.declares.foreach(library += _)
     }
 
     def +=(url: String, fragment: Fragment): Unit = {
-      references += fragment
+      references += (url   -> fragment)
       declarations += (url -> fragment)
     }
 
@@ -194,8 +193,9 @@ private[spec] trait BaseSpecParser {
         key,
         entry =>
           entry.value.value.toMap.entries.foreach(e => {
-            target(e.value).foreach {
-              case module: Module => result.references += module
+            val key: String = e.value
+            target(key).foreach {
+              case module: Module => result.references += (key -> module)
             }
           })
       )

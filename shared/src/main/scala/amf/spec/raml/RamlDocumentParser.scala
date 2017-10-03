@@ -41,7 +41,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
 
       val declarables = references.declarations.declarables()
       if (declarables.nonEmpty) document.withDeclares(declarables)
-      if (references.references.nonEmpty) document.withReferences(references.references)
+      if (references.references.nonEmpty) document.withReferences(references.references.values.toSeq)
     })
     document
   }
@@ -360,23 +360,25 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         }
       )
 
-    map.key("(consumes)", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
-      operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
-    })
+      map.key("(consumes)", entry => {
+        val value = ArrayNode(entry.value.value.toSequence)
+        operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
+      })
 
-    map.key("(produces)", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
-      operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
-    })map.key(
-      "is",
-      entry => {
-        val traits = entry.value.value.toSequence.nodes.map(value => {
-          ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
-        })
-        if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
-      }
-    )
+      map.key("(produces)", entry => {
+        val value = ArrayNode(entry.value.value.toSequence)
+        operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
+      })
+
+      map.key(
+        "is",
+        entry => {
+          val traits = entry.value.value.toSequence.nodes.map(value => {
+            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+          })
+          if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
+        }
+      )
 
       RequestParser(map, () => operation.withRequest(), declarations)
         .parse()
@@ -716,7 +718,7 @@ object RamlSpecParserContext extends SpecParserContext {
 
   override def link(node: YNode): Either[String, YNode] = {
     node match {
-      case _ if isInclude(node) => Left(node)
+      case _ if isInclude(node) => Left(node.value.toScalar.text)
       case _                    => Right(node)
     }
   }
