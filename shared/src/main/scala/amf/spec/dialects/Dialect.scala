@@ -20,7 +20,10 @@ import scala.collection.mutable
 case class Dialect(name: String,
                    version: String,
                    root: DialectNode,
-                   resolver: ResolverFactory = NullReferenceResolverFactory,module:Option[DialectNode]=None,fragments:Map[String,DialectNode]=Map()) {
+                   resolver: ResolverFactory = NullReferenceResolverFactory,
+                   module:Option[DialectNode] = None,
+                   fragments:Map[String,DialectNode] = Map()) {
+
   root.dialect = Some(this)
 
   var refiner: Option[Refiner] = None
@@ -80,7 +83,8 @@ case class DialectPropertyMapping(name: String,
                                   pattern: Option[String] = None,
                                   enum: Option[Seq[String]] = None,
                                   minimum: Option[Int] = None,
-                                  maximum: Option[Int] = None, defaultValue: Option[AmfScalar]= None) {
+                                  maximum: Option[Int] = None,
+                                  defaultValue: Option[AmfScalar]= None) {
 
   def isRef: Boolean = referenceTarget.isDefined
 
@@ -119,7 +123,7 @@ case class DialectPropertyMapping(name: String,
     Field(`type`, fieldName, jsonld)
   }
 
-  def iri(): String = this.fieldName.iri();
+  def iri(): String = this.fieldName.iri()
 
 }
 
@@ -236,7 +240,7 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
   val REGEX_URI =
     "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
   private val externalsMap: mutable.HashMap[String, String] = new mutable.HashMap()
-  private val declarationsFromLibraries=mutable.Map[String,DomainEntity]();
+  private val declarationsFromLibraries                     = mutable.Map[String,DomainEntity]()
   private var base: String                                  = root.location + "#"
 
   initReferences(root)
@@ -266,7 +270,7 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
       throw new Exception("Empty name for basic ref")
     } else if (name.indexOf(".") > -1) {
       if (declarationsFromLibraries.contains(typedName(name, t))){
-        declarationsFromLibraries.get(typedName(name, t)).get.id
+        declarationsFromLibraries(typedName(name, t)).id
       }
       else name.split("\\.") match {
         case Array(alias, suffix) =>
@@ -297,23 +301,20 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
     // val ast = root.ast.last
     // val entries = Entries(ast)
 
-    this.uses.foreach( e=>{
-      val (namespace,unit)=e;
+    this.uses.foreach(e => {
+      val (namespace,unit) = e
       val ent=retrieveDomainEntity(unit)
-      ent.definition.props.values.foreach(p=>{
-        if (p.isMap){
-            ent.entities(p).foreach(decl=>{
-              p.hash.foreach(h=>{
-                decl.string(h).foreach(localName=>{
-                  declarationsFromLibraries.put(typedName(namespace + "." + localName, p.range), decl);
-                })
-              })
-
+      ent.definition.props.values.foreach(p => {
+        if (p.isMap) ent.entities(p).foreach(decl => {
+          p.hash.foreach(h => {
+            decl.string(h).foreach(localName => {
+              declarationsFromLibraries.put(typedName(namespace + "." + localName, p.range), decl)
             })
-        }
+          })
+        })
       })
-      //unit.
     })
+    
     root.document.value.foreach { value: YValue =>
       val entries = value.toMap.entries
 
