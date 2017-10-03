@@ -560,14 +560,14 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
           "resourceTypes",
           declarations.resourceTypes.values.toSeq,
           ordering,
-          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, key, references))
+          (e: DomainElement, key: String) => TagToReferenceEmitter(e, key, references))
 
       if (declarations.traits.nonEmpty)
         result += AbstractDeclarationsEmitter(
           "traits",
           declarations.traits.values.toSeq,
           ordering,
-          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, key, references))
+          (e: DomainElement, key: String) => TagToReferenceEmitter(e, key, references))
 
       result
     }
@@ -608,9 +608,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
-  case class TagToReferenceEmitter(reference: DomainElement with Linkable,
-                                   referenceText: String,
-                                   refences: Seq[BaseUnit])
+  case class TagToReferenceEmitter(reference: DomainElement, referenceText: String, refences: Seq[BaseUnit])
       extends Emitter {
     def emit(): Unit = {
       val referenceOption: Option[BaseUnit] = refences.find {

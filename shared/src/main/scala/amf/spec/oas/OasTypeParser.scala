@@ -80,8 +80,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       .key("$ref")
       .map(_.value.value.toScalar.text)
       .map(text =>
-        declarations.find(text) match {
-          case Some(s: Shape) =>
+        declarations.findType(text) match {
+          case Some(s) =>
             val copied = s.link(Some(text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
             adopt(copied)
             copied

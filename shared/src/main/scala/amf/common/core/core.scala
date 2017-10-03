@@ -7,6 +7,9 @@ package object core {
     */
   implicit class Strings(val str: String) extends AnyVal {
 
+    /** If the String is not null returns the String, else returns "". */
+    def notNull: String = if (str == null) "" else str
+
     /** Add quotes to string. */
     def quote: String = {
       if (isQuoted) str
@@ -35,5 +38,24 @@ package object core {
       }
       result.toString()
     }
+  }
+
+  case class QName(qualification: String, name: String) {
+    val isQualified: Boolean = qualification.nonEmpty
+    val isEmpty: Boolean     = qualification.isEmpty && name.isEmpty
+  }
+
+  object QName {
+
+    def apply(fqn: String): QName = {
+      if (fqn.notNull.trim.nonEmpty) {
+        fqn.lastIndexOf('.') match {
+          case -1  => QName("", fqn)
+          case dot => QName(fqn.substring(0, dot), fqn.substring(dot + 1))
+        }
+      } else Empty
+    }
+
+    val Empty = QName("", "")
   }
 }

@@ -1,12 +1,10 @@
 package amf.spec.raml
 
 import amf.common.Lazy
-import amf.compiler.{ParsedReference, Root}
-import amf.document.Fragment.Fragment
-import amf.document.{BaseUnit, Document, Module}
+import amf.compiler.Root
+import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.`abstract`._
 import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain.EndPointModel.Path
@@ -16,7 +14,7 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.spec.common.AnnotationParser
-import amf.spec.common.BaseSpecParser._
+import amf.spec.common.BaseSpecParser.{parseResourceTypeDeclarations, parseTraitDeclarations, _}
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -36,14 +34,14 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     root.document.value.foreach(value => {
       val map = value.toMap
 
-      val references = ReferencesParser(map, root.references).parse()
+      val references = ReferencesParser("uses", map, root.references).parse()
       parseDeclarations(map, references.declarations)
 
       val api = parseWebApi(map, references.declarations).add(SourceVendor(root.vendor))
       document.withEncodes(api)
 
-      val declarable = references.declarations.declarables()
-      if (declarable.nonEmpty) document.withDeclares(declarable)
+      val declarables = references.declarations.declarables()
+      if (declarables.nonEmpty) document.withDeclares(declarables)
       if (references.references.nonEmpty) document.withReferences(references.references)
     })
     document
@@ -544,13 +542,12 @@ case class LinkedAnnotationTypeParser(ast: YPart,
                                       declarations: Declarations) {
   def parse(): CustomDomainProperty = {
     declarations
-      .find(scalar.text)
-      .map({
-        case a: CustomDomainProperty =>
-          val copied: CustomDomainProperty = a.link(Some(scalar.text), Some(Annotations(ast)))
-          adopt(copied.withName(annotationName))
-          copied
-      })
+      .findAnnotation(scalar.text)
+      .map { a =>
+        val copied: CustomDomainProperty = a.link(Some(scalar.text), Some(Annotations(ast)))
+        adopt(copied.withName(annotationName))
+        copied
+      }
       .getOrElse(throw new UnsupportedOperationException("Could not find declared annotation link in references"))
   }
 }
@@ -624,78 +621,26 @@ abstract class RamlSpecParser(val root: Root) {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent, declarations)
     parseAnnotationTypeDeclarations(map, parent, declarations)
-    parseResourceTypeDeclarations(map, parent, declarations)
-    parseTraitDeclarations(map, parent, declarations)
-  }
-
-  // producer? whe lose id?
-  case class ReferencesParser(map: YMap, references: Seq[ParsedReference]) {
-    def parse(): ReferenceDeclarations = {
-      val result: ReferenceDeclarations = parseLibraries()
-
-      references.foreach {
-        case ParsedReference(f: Fragment, s: String) => result += (s, f)
-        case _                                       =>
-      }
-
-      result
-    }
-
-    private def target(url: String): Option[BaseUnit] =
-      references.find(r => r.parsedUrl.equals(url)).map(_.baseUnit)
-
-    private def parseLibraries(): ReferenceDeclarations = {
-      val result = ReferenceDeclarations()
-
-      map.key(
-        "uses",
-        entry =>
-          entry.value.value.toMap.entries.foreach(e => {
-            target(e.value).foreach {
-              case module: Module => result.references += module
-            }
-          })
-      )
-
-      result
-    }
-  }
-
-  case class ReferenceDeclarations(references: ListBuffer[BaseUnit] = ListBuffer(),
-                                   declarations: Declarations = Declarations()) {
-
-    private[raml] def +=(alias: String, module: Module) = {
-      references += module
-      val library = declarations.getOrCreateLibrary(alias)
-      module.declares.foreach(library += _)
-    }
-
-    private[raml] def +=(url: String, fragment: Fragment) = {
-      references += fragment
-      declarations += (url -> fragment)
-    }
+    parseResourceTypeDeclarations("resourceTypes", map, parent, declarations)
+    parseTraitDeclarations("traits", map, parent, declarations)
 
   }
 
-  private def parseTraitDeclarations(map: YMap, parent: String, declarations: Declarations) = {
+  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String, declarations: Declarations): Unit = {
+
     map.key(
-      "traits",
+      "annotationTypes",
       e => {
-        e.value.value.toMap.entries.foreach { entry =>
-          declarations += AbstractDeclarationParser(Trait(entry), parent, entry, declarations).parse()
-        }
-      }
-    )
-  }
-
-  private def parseResourceTypeDeclarations(map: YMap, parent: String, declarations: Declarations) = {
-    map.key(
-      "resourceTypes",
-      e => {
-        e.value.value.toMap.entries.foreach { entry =>
-          declarations += AbstractDeclarationParser(ResourceType(entry), parent, entry, declarations)
-            .parse()
-        }
+        e.value.value.toMap.entries.map(entry => {
+          val typeName = entry.key.value.toScalar.text
+          val customProperty = AnnotationTypesParser(entry,
+                                                     customProperty =>
+                                                       customProperty
+                                                         .withName(typeName)
+                                                         .adopted(customProperties),
+                                                     declarations)
+          declarations += customProperty.add(DeclaredElement())
+        })
       }
     )
   }
@@ -709,21 +654,6 @@ abstract class RamlSpecParser(val root: Root) {
             case Some(shape) => declarations += shape.add(DeclaredElement())
             case None        => throw new Exception(s"Error parsing shape '$entry'")
           }
-        }
-      }
-    )
-  }
-
-  private def parseAnnotationTypeDeclarations(map: YMap, parent: String, declarations: Declarations) = {
-    map.key(
-      "annotationTypes",
-      e => {
-        e.value.value.toMap.entries.foreach { entry =>
-          val annotation =
-            AnnotationTypesParser(entry,
-                                  customProperty => customProperty.withName(entry.key).adopted(parent),
-                                  declarations)
-          declarations += annotation.add(DeclaredElement())
         }
       }
     )

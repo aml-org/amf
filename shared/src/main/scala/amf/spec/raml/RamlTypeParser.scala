@@ -122,9 +122,9 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           NodeShapeParser(shape, map, declarations)
             .parse() // I have to do the adopt before parser children shapes. Other way the children will not have the father id
         case scalar: YScalar =>
-          declarations.find(scalar.text) match {
-            case Some(s: Shape) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
-            case _              => throw new Exception("Reference not found")
+          declarations.findType(scalar.text) match {
+            case Some(s) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
+            case _       => throw new Exception("Reference not found")
           }
         case _ => shape
       }

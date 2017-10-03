@@ -9,18 +9,19 @@ import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
 trait Linkable extends AmfObject { this: DomainElement with Linkable =>
-  var linkTarget: Option[DomainElement with Linkable] = None
-  var linkAnnotations: Option[Annotations]            = None
+  var linkTarget: Option[DomainElement]    = None
+  var linkAnnotations: Option[Annotations] = None
 
   def isLink: Boolean           = linkTarget.isDefined
-  def linkLabel: Option[String] = Some(fields(LinkableElementModel.Label))
+  def linkLabel: Option[String] = Option(fields(LinkableElementModel.Label))
 
-  def linkCopy(): DomainElement with Linkable
+  def linkCopy(): Linkable
 
-  def withLinkTarget(target: DomainElement with Linkable): this.type = {
+  def withLinkTarget(target: DomainElement): this.type = {
     linkTarget = Some(target)
     set(LinkableElementModel.TargetId, target.id)
   }
+
   def withLinkLabel(label: String): this.type = set(LinkableElementModel.Label, label)
 
   def link[T](label: Option[String] = None, annotations: Option[Annotations] = None): T = {

@@ -8,6 +8,7 @@ import amf.metadata.document.{BaseUnitModel, ModuleModel}
 import amf.model.AmfArray
 import amf.parser.YValueOps
 import amf.spec.Declarations
+import amf.spec.common.BaseSpecParser.ReferencesParser
 
 /**
   *
@@ -23,9 +24,9 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
     root.document.value.foreach(value => {
       val rootMap = value.toMap
 
-      val enviromentRef = ReferencesParser(rootMap, root.references).parse()
+      val references = ReferencesParser("x-uses", rootMap, root.references).parse()
 
-      val declares = parseDeclares(rootMap, Declarations(enviromentRef))
+      parseDeclarations(rootMap, references.declarations)
 
       // TODO invoke when it's done
       //    resourceTypes?
@@ -33,8 +34,9 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
       //      securitySchemes?
       UsageParser(rootMap, module).parse()
 
-      if (enviromentRef.nonEmpty) module.set(BaseUnitModel.References, AmfArray(enviromentRef.values.toSeq))
-      if (declares.nonEmpty) module.set(ModuleModel.Declares, AmfArray(declares))
+      val declarable = references.declarations.declarables()
+      if (declarable.nonEmpty) module.withDeclares(declarable)
+      if (references.references.nonEmpty) module.withReferences(references.references)
     })
 
     module

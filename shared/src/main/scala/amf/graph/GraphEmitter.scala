@@ -132,7 +132,7 @@ object GraphEmitter {
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit): Unit = {
       t match {
-        case t: DomainElement with Linkable if t.linkTarget.isDefined =>
+        case t: DomainElement with Linkable if t.isLink =>
           t.linkTarget.foreach(l => iri(l.id))
           sources(v)
         case _: Obj =>

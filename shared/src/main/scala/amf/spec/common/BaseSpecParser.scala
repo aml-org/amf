@@ -1,7 +1,10 @@
 package amf.spec.common
 
+import amf.compiler.ParsedReference
+import amf.document.Fragment.Fragment
+import amf.document.{BaseUnit, Module}
 import amf.domain.Annotation.ExplicitField
-import amf.domain.`abstract`.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.domain.`abstract`._
 import amf.domain.{Annotations, CreativeWork, License, Organization}
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
@@ -13,6 +16,7 @@ import amf.spec.Declarations
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Base spec parser.
@@ -150,6 +154,83 @@ private[spec] object BaseSpecParser {
     }
   }
 
+  case class ReferenceDeclarations(references: ListBuffer[BaseUnit] = ListBuffer(),
+                                   declarations: Declarations = Declarations()) {
+
+    def +=(alias: String, module: Module): Unit = {
+      references += module
+      val library = declarations.getOrCreateLibrary(alias)
+      module.declares.foreach(library += _)
+    }
+
+    def +=(url: String, fragment: Fragment): Unit = {
+      references += fragment
+      declarations += (url -> fragment)
+    }
+
+  }
+
+  case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference]) {
+    def parse(): ReferenceDeclarations = {
+      val result: ReferenceDeclarations = parseLibraries()
+
+      references.foreach {
+        case ParsedReference(f: Fragment, s: String) => result += (s, f)
+        case _                                       =>
+      }
+
+      result
+    }
+
+    private def target(url: String): Option[BaseUnit] =
+      references.find(r => r.parsedUrl.equals(url)).map(_.baseUnit)
+
+    private def parseLibraries(): ReferenceDeclarations = {
+      val result = ReferenceDeclarations()
+
+      map.key(
+        key,
+        entry =>
+          entry.value.value.toMap.entries.foreach(e => {
+            target(e.value).foreach {
+              case module: Module => result.references += module
+            }
+          })
+      )
+
+      result
+    }
+  }
+
+  def parseResourceTypeDeclarations(key: String,
+                                    map: YMap,
+                                    customProperties: String,
+                                    declarations: Declarations): Unit = {
+
+    map.key(
+      key,
+      e => {
+        e.value.value.toMap.entries.map(
+          resourceEntry =>
+            declarations += AbstractDeclarationParser(ResourceType(resourceEntry),
+                                                      customProperties,
+                                                      resourceEntry,
+                                                      declarations).parse())
+      }
+    )
+  }
+
+  def parseTraitDeclarations(key: String, map: YMap, customProperties: String, declarations: Declarations): Unit = {
+    map.key(
+      key,
+      e => {
+        e.value.value.toMap.entries.map(traitEntry =>
+          declarations += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry, declarations)
+            .parse())
+      }
+    )
+  }
+
   object AbstractDeclarationParser {
 
     def apply(declaration: AbstractDeclaration,
@@ -167,7 +248,7 @@ private[spec] object BaseSpecParser {
     def parse(): AbstractDeclaration = {
 
       if (entryValue.tag.text.contains("!include")) // todo review this. Todo oas?
-        parseReferenced(entryValue.value.toScalar.text, Annotations(entryValue))
+        parseReferenced(declaration, entryValue.value.toScalar.text, Annotations(entryValue))
       else {
         val parameters = AbstractVariables()
         val dataNode   = DataNodeParser(entryValue, parameters, Some(parent + s"/$key")).parse()
@@ -180,14 +261,17 @@ private[spec] object BaseSpecParser {
       }
     }
 
-    def parseReferenced(parsedUrl: String, annotations: Annotations): AbstractDeclaration = {
-      declarations
-        .find(parsedUrl)
-        .map({
-          case a: AbstractDeclaration =>
-            val copied: AbstractDeclaration = a.link(Some(parsedUrl), Some(annotations))
-            copied.withName(key)
-        })
+    def parseReferenced(declared: AbstractDeclaration,
+                        parsedUrl: String,
+                        annotations: Annotations): AbstractDeclaration = {
+      val d = declared match {
+        case _: Trait        => declarations.findTrait(parsedUrl)
+        case _: ResourceType => declarations.findResourceType(parsedUrl)
+      }
+      d.map { a =>
+          val copied: AbstractDeclaration = a.link(Some(parsedUrl), Some(annotations))
+          copied.withName(key)
+        }
         .getOrElse(throw new IllegalStateException("Could not find abstract declaration in references map for link"))
     }
   }

@@ -683,18 +683,16 @@ class OasSpecEmitter extends BaseSpecEmitter {
         result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
 
       if (declarations.resourceTypes.nonEmpty)
-        result += AbstractDeclarationsEmitter(
-          "x-resourceTypes",
-          declarations.resourceTypes.values.toSeq,
-          ordering,
-          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, Some(key)))
+        result += AbstractDeclarationsEmitter("x-resourceTypes",
+                                              declarations.resourceTypes.values.toSeq,
+                                              ordering,
+                                              (e: DomainElement, key: String) => TagToReferenceEmitter(e, Some(key)))
 
       if (declarations.traits.nonEmpty)
-        result += AbstractDeclarationsEmitter(
-          "x-traits",
-          declarations.traits.values.toSeq,
-          ordering,
-          (e: DomainElement with Linkable, key: String) => TagToReferenceEmitter(e, Some(key)))
+        result += AbstractDeclarationsEmitter("x-traits",
+                                              declarations.traits.values.toSeq,
+                                              ordering,
+                                              (e: DomainElement, key: String) => TagToReferenceEmitter(e, Some(key)))
 
       result
     }
@@ -720,7 +718,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
-        if (shape.linkTarget.isDefined)
+        if (shape.isLink)
           shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel).emit())
         map { () =>
           traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
@@ -729,15 +727,15 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
   }
 
-  case class TagToReferenceEmitter(linkTarget: DomainElement with Linkable, label: Option[String]) extends Emitter {
+  case class TagToReferenceEmitter(target: DomainElement, label: Option[String]) extends Emitter {
     def emit(): Unit = {
-      val refVal = label.getOrElse(linkTarget.id)
+      val refVal = label.getOrElse(target.id)
       map { () =>
         ref(refVal)
       }
     }
 
-    override def position(): Position = pos(linkTarget.annotations)
+    override def position(): Position = pos(target.annotations)
   }
 
   protected def ref(url: String): Unit = EntryEmitter("$ref", url).emit() // todo YType("$ref")

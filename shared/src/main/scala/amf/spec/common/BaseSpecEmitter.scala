@@ -284,7 +284,7 @@ trait BaseSpecEmitter {
   case class AbstractDeclarationsEmitter(key: String,
                                          declarations: Seq[AbstractDeclaration],
                                          ordering: SpecOrdering,
-                                         tagEmitter: (DomainElement with Linkable, String) => Emitter)
+                                         tagEmitter: (DomainElement, String) => Emitter)
       extends Emitter {
     override def emit(): Unit = {
       entry { () =>
@@ -300,7 +300,7 @@ trait BaseSpecEmitter {
 
   case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
                                         ordering: SpecOrdering,
-                                        tagEmitter: (DomainElement with Linkable, String) => Emitter)
+                                        tagEmitter: (DomainElement, String) => Emitter)
       extends Emitter {
     override def position(): Position = pos(declaration.annotations)
 
@@ -309,7 +309,7 @@ trait BaseSpecEmitter {
         val name = Option(declaration.name)
           .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
         raw(name)
-        if (declaration.linkTarget.isDefined)
+        if (declaration.isLink)
           declaration.linkTarget.foreach(l => tagEmitter(l, declaration.linkLabel.getOrElse(l.id)).emit())
         else
           DataNodeEmitter(declaration.dataNode, ordering).emit()
