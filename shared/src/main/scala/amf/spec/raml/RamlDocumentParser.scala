@@ -360,15 +360,23 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         }
       )
 
-      map.key(
-        "is",
-        entry => {
-          val traits = entry.value.value.toSequence.nodes.map(value => {
-            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
-          })
-          if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
-        }
-      )
+    map.key("(consumes)", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
+    })
+
+    map.key("(produces)", entry => {
+      val value = ArrayNode(entry.value.value.toSequence)
+      operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
+    })map.key(
+      "is",
+      entry => {
+        val traits = entry.value.value.toSequence.nodes.map(value => {
+          ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+        })
+        if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
+      }
+    )
 
       RequestParser(map, () => operation.withRequest(), declarations)
         .parse()

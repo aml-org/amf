@@ -103,7 +103,7 @@ trait BaseSpecEmitter {
 
   protected def link(id: String): Unit = map { () =>
     entry { () =>
-      raw("@id"); raw(id)
+      raw("@id"); raw(id.trim)
     }
   }
 

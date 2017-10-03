@@ -2,6 +2,7 @@ package amf.spec.dialects
 
 import amf.compiler.Root
 import amf.dialects._
+import amf.document.{BaseUnit, Document}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
@@ -10,6 +11,7 @@ import amf.spec.common.BaseSpecParser._
 import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YScalar, YValue}
+
 import scala.collection.mutable
 
 /**
@@ -18,7 +20,10 @@ import scala.collection.mutable
 case class Dialect(name: String,
                    version: String,
                    root: DialectNode,
-                   resolver: ResolverFactory = NullReferenceResolverFactory) {
+                   resolver: ResolverFactory = NullReferenceResolverFactory,
+                   module: Option[DialectNode] = None,
+                   fragments: Map[String, DialectNode] = Map()) {
+
   root.dialect = Some(this)
 
   var refiner: Option[Refiner] = None
@@ -26,11 +31,12 @@ case class Dialect(name: String,
 }
 
 trait ResolverFactory {
-  def resolver(root: Root): ReferenceResolver
+  def resolver(root: Root, references: mutable.Map[String, BaseUnit]): ReferenceResolver
 }
 
 object NullReferenceResolverFactory extends ResolverFactory {
-  override def resolver(root: Root) = NullReferenceResolver
+  override def resolver(root: Root, references: mutable.Map[String, BaseUnit]): ReferenceResolver =
+    NullReferenceResolver
 }
 
 trait LocalNameProviderFactory {
@@ -39,10 +45,15 @@ trait LocalNameProviderFactory {
 
 trait ReferenceResolver {
   def resolve(root: Root, name: String, t: Type): Option[String]
+
+  def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity]
 }
 
 object NullReferenceResolver extends ReferenceResolver {
   override def resolve(root: Root, name: String, t: Type): Option[String] = None
+
+  override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] = None
+
 }
 
 trait LocalNameProvider {
@@ -73,7 +84,8 @@ case class DialectPropertyMapping(name: String,
                                   pattern: Option[String] = None,
                                   enum: Option[Seq[String]] = None,
                                   minimum: Option[Int] = None,
-                                  maximum: Option[Int] = None) {
+                                  maximum: Option[Int] = None,
+                                  defaultValue: Option[AmfScalar] = None) {
 
   def isRef: Boolean = referenceTarget.isDefined
 
@@ -112,7 +124,7 @@ case class DialectPropertyMapping(name: String,
     Field(`type`, fieldName, jsonld)
   }
 
-  def iri(): String = this.fieldName.iri();
+  def iri(): String = this.fieldName.iri()
 
 }
 
@@ -222,30 +234,59 @@ object TypeBuiltins {
   val ANY: String     = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(override val root: Root, val externals: List[DialectPropertyMapping])
+class BasicResolver(override val root: Root,
+                    val externals: List[DialectPropertyMapping],
+                    uses: mutable.Map[String, BaseUnit])
     extends RamlSpecParser(root)
     with TypeBuiltins {
 
   val REGEX_URI =
     "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
   private val externalsMap: mutable.HashMap[String, String] = new mutable.HashMap()
+  private val declarationsFromLibraries                     = mutable.Map[String, DomainEntity]()
   private var base: String                                  = root.location + "#"
 
   initReferences(root)
 
-  def resolveBasicRef(name: String, root: Root): String =
+  private def retrieveDomainEntity(unit: BaseUnit) = unit match {
+    case document: Document =>
+      document.encodes match {
+        case unit: DomainEntity => unit
+        case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
+      }
+    case _ => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
+  }
+
+  def typeId(t: Type): String = {
+    t match {
+      case d: DialectNode => d.namespace.toString + d.shortName;
+      case _              => ""
+    }
+  }
+
+  override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] =
+    declarationsFromLibraries.get(typedName(name, t))
+
+  def resolveBasicRef(name: String, root: Root, t: Type): String =
     if (Option(name).isEmpty) {
       throw new Exception("Empty name for basic ref")
     } else if (name.indexOf(".") > -1) {
-      name.split("\\.") match {
-        case Array(alias, suffix) =>
-          externalsMap.get(alias) match {
-            case Some(resolved) => s"$resolved$suffix"
-            case _              => throw new Exception(s"Cannot find prefix $name")
-          }
-        case _ =>
-          throw new Exception(s"Error in class/property name $name, multiple .")
-      }
+      if (declarationsFromLibraries.contains(typedName(name, t))) {
+        declarationsFromLibraries(typedName(name, t)).id
+      } else
+        name.split("\\.") match {
+          case Array(alias, suffix) =>
+            externalsMap.get(alias) match {
+              case Some(resolved) => s"$resolved$suffix"
+              case _ =>
+                if (uses.contains(alias)) {
+                  throw new Exception(s"Cannot find entity $suffix in $alias")
+                }
+                throw new Exception(s"Cannot find prefix $name")
+            }
+          case _ =>
+            throw new Exception(s"Error in class/property name $name, multiple .")
+        }
     } else {
       if (name.matches(REGEX_URI)) {
         name
@@ -254,9 +295,32 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
       }
     }
 
+  private def typedName(name: String, t: Type) = {
+    name + typeId(t)
+  }
+
   private def initReferences(root: Root): Unit = {
     // val ast = root.ast.last
     // val entries = Entries(ast)
+
+    this.uses.foreach(e => {
+      val (namespace, unit) = e
+      val ent               = retrieveDomainEntity(unit)
+      ent.definition.props.values.foreach(p => {
+        if (p.isMap)
+          ent
+            .entities(p)
+            .foreach(decl => {
+              p.hash.foreach(h => {
+                decl
+                  .string(h)
+                  .foreach(localName => {
+                    declarationsFromLibraries.put(typedName(namespace + "." + localName, p.range), decl)
+                  })
+              })
+            })
+      })
+    })
 
     root.document.value.foreach { value: YValue =>
       val entries = value.toMap.entries
@@ -282,24 +346,26 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
   }
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = {
+
     t match {
       case ClassTerm =>
         Option(name) match {
           case Some(range) =>
             super.resolve(root, range, t) match {
               case Some(bid) => Some(bid)
-              case _         => Some(resolveBasicRef(name, root))
+              case _         => Some(resolveBasicRef(name, root, t))
             }
           case None => Some(TypeBuiltins.ANY)
         }
 
-      case _ => Some(resolveBasicRef(name, root))
+      case _ => Some(resolveBasicRef(name, root, t))
     }
   }
 }
 
 object BasicResolver {
-  def apply(root: Root, externals: List[DialectPropertyMapping]) = new BasicResolver(root, externals)
+  def apply(root: Root, externals: List[DialectPropertyMapping], uses: mutable.Map[String, BaseUnit]) =
+    new BasicResolver(root, externals, uses)
 }
 
 class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[DialectPropertyMapping])
@@ -324,6 +390,8 @@ class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[Diale
         true
     }
   }
+
+  override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
   override def localName(uri: String, property: DialectPropertyMapping): String = {
     val foundLocalName = for {

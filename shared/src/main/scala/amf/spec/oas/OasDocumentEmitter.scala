@@ -264,6 +264,10 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
 
+          fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
+
+          fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
+
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
 
           Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, endpointPayloadEmitted))

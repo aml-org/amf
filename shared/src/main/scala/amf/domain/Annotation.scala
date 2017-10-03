@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.domain.dialects.DomainEntity
 import amf.model.AmfElement
 import amf.parser.Range
 import amf.remote.Vendor
@@ -46,6 +47,16 @@ object Annotation {
   case class ExplicitField() extends Annotation
 
   case class SynthesizedField() extends Annotation
+
+  case class DomainElementReference(name: String, ref: Option[DomainEntity]) extends SerializableAnnotation {
+    override val value: String = name
+  }
+
+  case class NamespaceImportsDeclaration(uses: Map[String, String]) extends SerializableAnnotation {
+    override val name: String = "uses"
+
+    override val value: String = uses.toString()
+  }
 
   case class EndPointBodyParameter() extends Annotation
 

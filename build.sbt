@@ -44,7 +44,7 @@ lazy val amf = crossProject
     test in assembly := {},
     assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",
-    fullRunTask(importScalaTask, Compile, "amf.validation.tsvimport.ScalaExporter"),
+    fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
     mainClass in Compile := Some("amf.client.Main")
   )
   .jsSettings(

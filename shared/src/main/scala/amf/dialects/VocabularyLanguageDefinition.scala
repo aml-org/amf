@@ -104,7 +104,7 @@ object VocabularyLanguageDefinition
     extends Dialect("RAML 1.0 Vocabulary",
                     "",
                     Vocabulary,
-                    resolver = (root: Root) => new BasicResolver(root, List(Vocabulary.externals))) {
+                    resolver = (root: Root, uses) => new BasicResolver(root, List(Vocabulary.externals), uses)) {
   refiner = {
     val ref = new VocabularyRefiner()
     Some(ref)

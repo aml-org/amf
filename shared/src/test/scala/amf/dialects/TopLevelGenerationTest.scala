@@ -10,16 +10,14 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath="file://shared/src/test/resources/vocabularies/"
+  val basePath = "file://shared/src/test/resources/vocabularies/"
 
+  test("Generate Vocabulary Domain Objects") {
 
-
-  test("Generate Vocabulary Domain Objects"){
-
-    val code= new TopLevelGenerator(VocabularyLanguageDefinition).generate()
-    // platform.write("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",code)
+    val code = new TopLevelGenerator(VocabularyLanguageDefinition).generate()
+    //  platform.write("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",code)
     val expected = platform
-      .resolve("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",None)
+      .resolve("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala", None)
       .map(_.stream.toString)
     expected
       .zip(Future(code))
@@ -27,13 +25,13 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
 
   }
 
-  test("Generate Class Domain Objects"){
+  test("Generate Class Domain Objects") {
 
-    val code= new TopLevelGenerator(DialectLanguageDefinition).generate()
+    val code = new TopLevelGenerator(DialectLanguageDefinition).generate()
     // platform.write("file://shared/src/main/scala/amf/dialects/DialectTopLevel.scala",code)
 
     val expected = platform
-      .resolve("file://shared/src/main/scala/amf/dialects/DialectTopLevel.scala",None)
+      .resolve("file://shared/src/main/scala/amf/dialects/DialectTopLevel.scala", None)
       .map(_.stream.toString)
     expected
       .zip(Future(code))

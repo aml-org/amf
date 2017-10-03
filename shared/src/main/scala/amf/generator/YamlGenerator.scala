@@ -20,8 +20,9 @@ class YamlGenerator {
       case document: YDocument =>
         visitChildren(document, forceLine = false)
       case map: YMap =>
-        if (!previousSequence) writer.indent()
-        visitChildren(map, forceLine = !previousSequence)
+        val hasContent = !writer.isEmpty()
+        if (!previousSequence && hasContent) writer.indent()
+        visitChildren(map, forceLine = !previousSequence && hasContent)
         writer.outdent()
       case seq: YSequence =>
         writer.line().indent()

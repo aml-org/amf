@@ -10,7 +10,6 @@ import scala.collection.JavaConverters._
 /**
   * Created by antoniogarrote on 17/07/2017.
   */
-
 /**
   * Creates a new Validation File pointing to a TSV file with validations.
   * Includes the logic to parse the validations file.
@@ -20,25 +19,35 @@ class ValidationsFile(validationsFile: File) {
 
   def parseLine(line: String): Option[AMFValidation] =
     line.split("\t") match {
-      case Array(uri, message, spec: String, level, owlClass, owlProperty, shape, target, constraint, value, ramlErrorMessage, openAPIErrorMessage) =>
+      case Array(uri,
+                 message,
+                 spec: String,
+                 level,
+                 owlClass,
+                 owlProperty,
+                 shape,
+                 target,
+                 constraint,
+                 value,
+                 ramlErrorMessage,
+                 openAPIErrorMessage) =>
         Some(
           AMFValidation(
-            nonNullString(Namespace.uri(uri).iri()),
-            nonNullString(message),
-            spec,
-            level,
-            nonNullString(Namespace.uri(owlClass).iri()),
-            nonNullString(Namespace.uri(owlProperty).iri()),
-            shape,
-            Namespace.uri(target).iri(),
-            Namespace.uri(constraint).iri(),
-            Namespace.uri(value).iri(), // this might not be a URI, but trying to expand it is still safe
-            ramlErrorMessage,
-            openAPIErrorMessage
+            nonNullString(Namespace.uri(uri.trim).iri()),
+            nonNullString(message.trim),
+            spec.trim,
+            level.trim,
+            nonNullString(Namespace.uri(owlClass.trim).iri()),
+            nonNullString(Namespace.uri(owlProperty.trim).iri()),
+            shape.trim,
+            Namespace.uri(target.trim).iri(),
+            Namespace.uri(constraint.trim).iri(),
+            Namespace.uri(value.trim).iri(), // this might not be a URI, but trying to expand it is still safe
+            ramlErrorMessage.trim,
+            openAPIErrorMessage.trim
           ))
-      case _ =>  None
+      case _ => None
     }
-
 
   def validations(): List[AMFValidation] =
     new BufferedReader(new FileReader(validationsFile))
@@ -59,6 +68,5 @@ class ValidationsFile(validationsFile: File) {
       .drop(1)
       .toList
 
-
-  protected def nonNullString(s: String): Option[String] = if(s == "") { None } else { Some(s) }
+  protected def nonNullString(s: String): Option[String] = if (s == "") { None } else { Some(s.trim) }
 }

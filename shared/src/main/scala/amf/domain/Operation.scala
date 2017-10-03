@@ -13,6 +13,8 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def summary: String             = fields(Summary)
   def documentation: CreativeWork = fields(Documentation)
   def schemes: Seq[String]        = fields(Schemes)
+  def accepts: Seq[String]        = fields(Accepts)
+  def contentType: Seq[String]    = fields(ContentType)
   def request: Request            = fields(OperationRequest)
   def responses: Seq[Response]    = fields(Responses)
 
@@ -23,6 +25,8 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def withSummary(summary: String): this.type                   = set(Summary, summary)
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
   def withSchemes(schemes: Seq[String]): this.type              = set(Schemes, schemes.toList)
+  def withAccepts(accepts: Seq[String]): this.type              = set(Accepts, accepts.toList)
+  def withContentType(contentType: Seq[String]): this.type      = set(ContentType, contentType.toList)
   def withRequest(request: Request): this.type                  = set(OperationRequest, request)
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
 

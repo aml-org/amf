@@ -252,6 +252,10 @@ case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
+          fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("(consumes)", f, ordering))
+
+          fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("(produces)", f, ordering))
+
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
           result ++= RamlAnnotationsEmitter(operation, ordering).emitters

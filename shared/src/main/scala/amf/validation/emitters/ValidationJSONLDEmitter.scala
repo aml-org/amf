@@ -349,9 +349,9 @@ class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
 
   private def expandRamlId(s: String): String =
     if (s.startsWith("http://") || s.startsWith("https://")) {
-      s
+      s.trim
     } else {
-      Namespace.expand(s.replace(".", ":")).iri()
+      Namespace.expand(s.replace(".", ":")).iri().trim
     }
 
   private def genNonEmptyList(): Unit = {

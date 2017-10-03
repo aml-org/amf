@@ -46,6 +46,7 @@ However there's work in progress that will be delivered in first version:
 To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
 
 ### Comand line usage
+
 You can build a standalone Java executable running the following SBT target:
 
 ```bash
@@ -240,3 +241,4 @@ This is a node project that demonstrates how amf parses and generates an OAS/RAM
     - Open *localhost:3000* in the browser
     
 You can now start trying AMF by reading and dumping from/to different API Design specs.
+
