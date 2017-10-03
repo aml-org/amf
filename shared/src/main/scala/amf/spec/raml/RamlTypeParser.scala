@@ -6,7 +6,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType}
+import amf.shape.TypeDef.{ArrayType, ObjectType, UndefinedType, UnionType}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser._
@@ -22,6 +22,8 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
     val ahead = entry.value.value
 
     detect(ahead) match {
+      case UnionType =>
+        Some(parseUnionType(name, ahead, declarations))
       case ObjectType =>
         Some(parseObjectType(name, ahead, declarations))
       case ArrayType =>
@@ -37,8 +39,9 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
   private def detect(property: YValue): TypeDef = property match {
     case scalar: YScalar => matchType(scalar.text)
     case _: YSequence    => ObjectType
-    case map: YMap =>
+    case map: YMap       =>
       detectTypeOrSchema(map)
+        .orElse(detectAnyOf(map))
         .orElse(detectProperties(map))
         .orElse(detectItems(map))
         .getOrElse(UndefinedType)
@@ -50,6 +53,10 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
 
   private def detectItems(map: YMap): Option[TypeDef] = {
     map.key("items").map(_ => ArrayType)
+  }
+
+  private def detectAnyOf(map: YMap): Option[TypeDef] = {
+    map.key("anyOf").map(_ => UnionType)
   }
 
   private def detectTypeOrSchema(map: YMap) = {
@@ -97,6 +104,12 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
     shape
   }
 
+  private def parseUnionType(name: String, ahead: YValue, declarations: Declarations): UnionShape = {
+    val shape = UnionShapeParser(ahead.asInstanceOf[YMap], declarations).parse()
+    adopt(shape)
+    shape
+  }
+
   private def parseObjectType(name: String, ahead: YValue, declarations: Declarations): Shape = {
     if (isFileType(ahead)) {
       val shape = FileShapeParser(ahead.asInstanceOf[YMap]).parse()
@@ -118,6 +131,13 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
         ymap.map.get("type").isDefined &&
         ymap.map("type").value.isInstanceOf[YScalar] &&
         ymap.map("type").value.asInstanceOf[YScalar].text == "file"
+      case _ => false
+    }
+  }
+
+  private def isUnionType(ahead: YValue): Boolean = {
+    ahead match {
+      case ymap: YMap => ymap.map.get("anyOf").isDefined && ymap.map("anyOf").value.isInstanceOf[YSequence]
       case _ => false
     }
   }
@@ -183,6 +203,29 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap) ex
     map.key("multipleOf", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
+    })
+
+    shape
+  }
+}
+
+case class UnionShapeParser(override val map: YMap, declarations: Declarations) extends ShapeParser() {
+  override val shape = UnionShape(Annotations(map))
+
+  override def parse(): UnionShape = {
+    super.parse()
+
+    map.key("anyOf", { entry =>
+      entry.value.value match {
+        case seq: YSequence =>
+          val unionNodes = seq.nodes.zipWithIndex.map { case (node, index) =>
+            val entry = YMapEntry(YNode(YScalar(s"item$index", true, node.range)), node)
+            RamlTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+          }.filter(_.isDefined)
+           .map(_.get)
+          shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
+        case _ => throw new Exception("Unions are built from multiple shape nodes")
+      }
     })
 
     shape

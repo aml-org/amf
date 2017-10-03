@@ -128,7 +128,6 @@ And then:
 npm install --save @mulesoft/amf-js@latest
 ```
 
-
 ## Installation
 
 ### Requirements

@@ -328,6 +328,7 @@ object GraphEmitter {
     case _: Request                  => RequestModel
     case _: Response                 => ResponseModel
     case _: Payload                  => PayloadModel
+    case _: UnionShape               => UnionShapeModel
     case _: NodeShape                => NodeShapeModel
     case _: ArrayShape               => ArrayShapeModel
     case _: FileShape                => FileShapeModel
