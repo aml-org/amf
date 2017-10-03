@@ -9,7 +9,6 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef.{AnyType, ArrayType, ObjectType, UndefinedType}
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser._
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -147,7 +146,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
 }
 
-trait CommonOASFieldsParser {
+trait CommonScalarParsingLogic {
   def parseOASFields(map: YMap, shape: Shape): Unit = {
     map.key("pattern", entry => {
       val value = ValueNode(entry.value)
@@ -175,9 +174,10 @@ trait CommonOASFieldsParser {
     })
   }
 }
+
 case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
     extends ShapeParser()
-    with CommonOASFieldsParser {
+    with CommonScalarParsingLogic {
   override def parse(): ScalarShape = {
     super.parse()
     parseOASFields(map, shape)
@@ -213,7 +213,7 @@ case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
   }
 }
 
-case class FileShapeParser(override val map: YMap) extends ShapeParser() with CommonOASFieldsParser {
+case class FileShapeParser(override val map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
   override val shape = FileShape(Annotations(map))
 
   override def parse(): FileShape = {

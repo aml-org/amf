@@ -21,7 +21,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Base spec parser.
   */
-private[spec] object BaseSpecParser {
+private[spec] trait BaseSpecParser {
+
+  implicit val spec: SpecParserContext
 
   case class CreativeWorkParser(map: YMap) {
     def parse(): CreativeWork = {
@@ -247,17 +249,17 @@ private[spec] object BaseSpecParser {
                                        declarations: Declarations) {
     def parse(): AbstractDeclaration = {
 
-      if (entryValue.tag.text.contains("!include")) // todo review this. Todo oas?
-        parseReferenced(declaration, entryValue.value.toScalar.text, Annotations(entryValue))
-      else {
-        val parameters = AbstractVariables()
-        val dataNode   = DataNodeParser(entryValue, parameters, Some(parent + s"/$key")).parse()
+      spec.link(entryValue) match {
+        case Left(link) => parseReferenced(declaration, link, Annotations(entryValue))
+        case Right(value) =>
+          val parameters = AbstractVariables()
+          val dataNode   = DataNodeParser(value, parameters, Some(parent + s"/$key")).parse()
 
-        declaration.withName(key).adopted(parent).withDataNode(dataNode)
+          declaration.withName(key).adopted(parent).withDataNode(dataNode)
 
-        parameters.ifNonEmpty(p => declaration.withVariables(p))
+          parameters.ifNonEmpty(p => declaration.withVariables(p))
 
-        declaration
+          declaration
       }
     }
 
@@ -341,4 +343,8 @@ private[spec] object BaseSpecParser {
     private def annotations() = Annotations(ast)
   }
 
+}
+
+trait SpecParserContext {
+  def link(node: YNode): Either[String, YNode]
 }
