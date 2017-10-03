@@ -157,6 +157,7 @@ object GraphParser extends GraphParserHelpers {
     PayloadModel                  -> Payload.apply,
     RequestModel                  -> Request.apply,
     ResponseModel                 -> Response.apply,
+    UnionShapeModel               -> UnionShape.apply,
     NodeShapeModel                -> NodeShape.apply,
     ArrayShapeModel               -> ArrayShape.apply,
     FileShapeModel                -> FileShape.apply,

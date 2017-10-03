@@ -26,6 +26,7 @@ object RamlTypeDefMatcher {
     case "date-only"     => DateOnlyType
     case "array"         => ArrayType
     case "object"        => ObjectType
+    case "union"         => UnionType
     case _               => ObjectType
   }
 

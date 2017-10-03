@@ -14,6 +14,11 @@ types:
     format: time-only
   Nulltype:
     type: nil
+  UnionType:
+    type: union
+    anyOf:
+      - type: string
+      - type: integer
   FileType:
     type: file
     maxLength: 307200
