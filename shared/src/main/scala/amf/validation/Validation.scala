@@ -233,7 +233,7 @@ class Validation(platform: Platform) {
     val shapesJSON = shapesGraph(validations, messageStyle)
     val jsLibrary = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
 
-/*
+    /*
     println("\n\nGRAPH")
     println(modelJSON)
     println("===========================")
@@ -242,12 +242,11 @@ class Validation(platform: Platform) {
     println("===========================")
     println(jsLibrary)
     println("===========================")
-*/
+    */
+
 
     jsLibrary match {
-      case Some(code) => {
-        platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code);
-      }
+      case Some(code) =>  platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore
     }
     for {
