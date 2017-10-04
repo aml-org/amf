@@ -1,15 +1,14 @@
 package amf.spec.dialects
 
-import amf.compiler.Root
+import amf.compiler.{RamlHeader, Root}
 import amf.dialects.{DialectRegistry, DialectValidator}
-import amf.document.Document
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration, SynthesizedField}
 import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
-import amf.spec.Declarations
 import amf.spec.raml.RamlSpecParser
 import org.yaml.model._
 
@@ -27,11 +26,34 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
 
   private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty)
 
-  def parseDocument(): Document = {
-    val document = Document()
-      .adopted(root.location)
+  def parseUnit(): BaseUnit = {
+    dialect.kind match {
+      case ModuleKind   => parseModule
+      case FragmentKind => parseFragment
+      case DocumentKind => parseDocument
+    }
+  }
 
-    root.document.value.foreach(value => {
+  private def parseDocument = {
+    val document = Document().adopted(root.location)
+    document.withEncodes(parseEntity(document))
+    document
+  }
+
+  private def parseFragment = {
+    val fragment = DialectFragment().adopted(root.location)
+    fragment.withEncodes(parseEntity(fragment))
+    fragment
+  }
+
+  private def parseModule = {
+    val module = Module().adopted(root.location)
+    module.withDeclares(Seq(parseEntity(module)))
+    module
+  }
+
+  private def parseEntity(unit: BaseUnit): DomainEntity = {
+    val result = root.document.value.map(value => {
       val map = value.toMap
 
       val references = ReferencesParser("uses", map, root.references).parse()
@@ -39,8 +61,10 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
       resolver = dialect.resolver.resolver(root, references.references.toMap)
 
       val entity = parse()
+
       if (references.references.nonEmpty) {
-        document.withReferences(references.references.values.toSeq)
+        unit.withReferences(references.references.values.toSeq)
+
         val usesMap: mutable.Map[String, String] = mutable.Map()
         map.key(
           "uses",
@@ -51,11 +75,13 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
         )
         entity.annotations += NamespaceImportsDeclaration(usesMap.toMap)
       }
-
-      document.withEncodes(entity)
-
+      entity
     })
-    document
+
+    result match {
+      case Some(e) => e
+      case _       => throw new Exception("Empty document.")
+    }
   }
 
   def parse(): DomainEntity =
@@ -300,11 +326,10 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
 
 object DialectParser {
 
-  def apply(root: Root, dialects: DialectRegistry): DialectParser = {
-    val dialectDeclaration = root.parsed.comment.get.metaText
-    dialects.get(dialectDeclaration) match {
+  def apply(root: Root, header: RamlHeader, dialects: DialectRegistry): DialectParser = {
+    dialects.get(header.text) match {
       case Some(dialect) => new DialectParser(dialect, root)
-      case _             => throw new Exception(s"Unknown dialect $dialectDeclaration")
+      case _             => throw new Exception(s"Unknown dialect ${header.text}")
     }
   }
 

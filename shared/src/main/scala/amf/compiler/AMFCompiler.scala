@@ -75,8 +75,8 @@ class AMFCompiler private (val url: String,
       case fragment: RamlFragment   => RamlFragmentParser(root, fragment).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
-      case RamlHeader(header) if dialects.knowsHeader(header) => makeDialect(root)
-      case _                                                  => throw new UnableToResolveUnitException
+      case header if dialects.knowsHeader(header) => makeDialect(root, header)
+      case _                                      => throw new UnableToResolveUnitException
     })
     option match {
       case Some(unit) => unit
@@ -103,9 +103,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeDialect(root: Root): Document = {
-    DialectParser(root, dialects).parseDocument()
-  }
+  private def makeDialect(root: Root, header: RamlHeader): BaseUnit = DialectParser(root, header, dialects).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
 

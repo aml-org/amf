@@ -2,11 +2,14 @@ package amf.spec.dialects
 
 import amf.compiler.Root
 import amf.dialects._
-import amf.document.{BaseUnit, Document}
+import amf.document.Fragment.Fragment
+import amf.document.{BaseUnit, EncodesModel, Module}
 import amf.domain.dialects.DomainEntity
+import amf.domain.{Annotations, Fields}
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
+import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YValue
@@ -21,7 +24,8 @@ case class Dialect(name: String,
                    root: DialectNode,
                    resolver: ResolverFactory = NullReferenceResolverFactory,
                    module: Option[DialectNode] = None,
-                   fragments: Map[String, DialectNode] = Map()) {
+                   fragments: Map[String, DialectNode] = Map(),
+                   kind: DialectKind = DocumentKind) {
 
   root.dialect = Some(this)
 
@@ -244,15 +248,6 @@ class BasicResolver(override val root: Root, val externals: List[DialectProperty
   private var base: String                                  = root.location + "#"
 
   initReferences(root)
-
-  private def retrieveDomainEntity(unit: BaseUnit) = unit match {
-    case document: Document =>
-      document.encodes match {
-        case unit: DomainEntity => unit
-        case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
-      }
-    case _ => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
-  }
 
   def typeId(t: Type): String = {
     t match {
@@ -490,6 +485,30 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Type 
   def withGlobalIdField(field: String): this.type = {
     id = Some(field)
     this
+  }
+}
+
+sealed trait DialectKind
+
+object DocumentKind extends DialectKind
+object ModuleKind   extends DialectKind
+object FragmentKind extends DialectKind
+
+case class DialectFragment(fields: Fields = Fields(), annotations: Annotations = Annotations()) extends Fragment
+
+object Dialect {
+
+  def retrieveDomainEntity(unit: BaseUnit): DomainEntity = unit match {
+    case unit: EncodesModel =>
+      unit.encodes match {
+        case unit: DomainEntity => unit
+        case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
+      }
+    case module: Module =>
+      (module.declares collect {
+        case unit: DomainEntity => unit
+      }).head
+    case _ => throw new Exception(s"Cannot extract domain entity from unit: $unit")
   }
 }
 

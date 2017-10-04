@@ -1,6 +1,8 @@
 package amf.document
 
 import amf.domain.DomainElement
+import amf.metadata.document.DocumentModel.{Declares, References}
+import amf.metadata.document.{BaseUnitModel, FragmentModel}
 import amf.model.{AmfArray, AmfElement, AmfObject}
 
 /** Any parseable unit, backed by a source URI. */
@@ -14,6 +16,12 @@ trait BaseUnit extends AmfObject {
 
   /** Returns the usage comment for de element */
   def usage: String
+
+  def withReferences(references: Seq[BaseUnit]): this.type = setArrayWithoutId(References, references)
+
+  def withLocation(location: String): this.type = set(BaseUnitModel.Location, location)
+
+  def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
 
   /**
     * finds in the nested model structure an AmfObject with the requested Id

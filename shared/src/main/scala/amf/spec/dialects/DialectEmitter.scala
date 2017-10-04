@@ -2,11 +2,12 @@ package amf.spec.dialects
 
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration}
-import amf.domain.{FieldEntry}
+import amf.domain.FieldEntry
 import amf.domain.dialects.DomainEntity
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
 import amf.spec.Emitter
+import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecEmitter
 import org.yaml.model.YDocument
 
@@ -19,15 +20,6 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
   var nameProvider: Option[LocalNameProvider] = root.definition.nameProvider match {
     case Some(np) => Some(np(root))
     case None     => None
-  }
-
-  private def retrieveDomainEntity(unit: BaseUnit) = unit match {
-    case document: Document =>
-      document.encodes match {
-        case unit: DomainEntity => unit
-        case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
-      }
-    case _ => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
   }
 
   private def emitRef(parent: DialectPropertyMapping, element: AmfElement): Unit = {

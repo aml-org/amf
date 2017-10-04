@@ -30,11 +30,6 @@ object Fragment {
     override def encodes: DomainElement = fields(FragmentModel.Encodes)
 
     override def location: String = fields(BaseUnitModel.Location)
-
-    def withLocation(location: String): this.type            = set(BaseUnitModel.Location, location)
-    def withReferences(references: Seq[BaseUnit]): this.type = setArrayWithoutId(BaseUnitModel.References, references)
-    def withEncodes(encoded: DomainElement): this.type       = set(FragmentModel.Encodes, encoded)
-    def withUsage(usage: String): this.type                  = set(BaseUnitModel.Usage, usage)
   }
 
   // todo review
@@ -103,8 +98,10 @@ object Fragment {
 
 }
 
-trait EncodesModel {
+trait EncodesModel extends AmfObject {
 
   /** Encoded [[amf.domain.DomainElement]] described in the document element. */
   def encodes: DomainElement
+
+  def withEncodes(encoded: DomainElement): this.type = set(FragmentModel.Encodes, encoded)
 }

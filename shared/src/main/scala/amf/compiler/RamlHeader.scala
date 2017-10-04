@@ -48,8 +48,7 @@ object RamlFragmentHeader {
 
   def isFragment(text: String): Boolean = fragmentNames.contains(text)
 
-  def apply(root: Root): Option[RamlHeader] =
-    root.parsed.comment.flatMap(c => fromText(c.metaText))
+  def apply(root: Root): Option[RamlHeader] = root.parsed.comment.flatMap(c => fromText(c.metaText))
 
   def unapply(text: String): Option[RamlHeader] = fromText(text)
 
