@@ -5,9 +5,12 @@ import amf.document.Fragment._
 import amf.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
+import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.remote.Raml
 import amf.spec.{Emitter, SpecOrdering}
 import org.yaml.model.YDocument
+
+import scala.collection.mutable.ListBuffer
 
 /**
   *
@@ -34,10 +37,9 @@ case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
       }
     })
   }
-
 }
 
-case class RamlFragmentEmitter(fragment: Fragment) extends RamlSpecEmitter {
+class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragment) {
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.annotations)
@@ -49,17 +51,22 @@ case class RamlFragmentEmitter(fragment: Fragment) extends RamlSpecEmitter {
       case rt: ResourceTypeFragment      => ResourceTypeFragmentEmitter(rt, ordering)
       case tf: TraitFragment             => TraitFragmentEmitter(tf, ordering)
       case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
+      case ef: ExtensionFragment         => ExtensionFragmentEmitter(ef, ordering)
+      case of: OverlayFragment           => OverlayFragmentEmitter(of, ordering)
       case _                             => throw new UnsupportedOperationException("Unsupported fragment type")
     }
+
+    val usageEmitter: Option[ValueEmitter] =
+      fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
+
     val referenceEmitter = Seq(ReferencesEmitter(fragment.references, ordering))
 
     emitter.document({ () =>
       map { () =>
         comment(typeEmitter.header.text)
-        traverse(typeEmitter.elementsEmitters ++ referenceEmitter)
+        traverse(ordering.sorted(typeEmitter.elementsEmitters ++ usageEmitter ++ referenceEmitter))
       }
     })
-
   }
 
   trait RamlFragmentTypeEmitter {
@@ -90,6 +97,36 @@ case class RamlFragmentEmitter(fragment: Fragment) extends RamlSpecEmitter {
 
     val elementsEmitters: Seq[Emitter] =
       AnnotationTypeEmitter(annotation.encodes, ordering).emitters()
+  }
+
+  case class ExtensionFragmentEmitter(extension: ExtensionFragment, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
+
+    override val header: RamlHeader = RamlFragmentHeader.Raml10Extension
+
+    val elementsEmitters: Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer()
+      extension.fields
+        .entry(ExtensionModel.Extends)
+        .foreach(f => result += EntryEmitter("extends", f.scalar.toString, position = pos(f.value.annotations)))
+      result ++= WebApiEmitter(extension.encodes, ordering, Some(Raml)).emitters // RamlDocumentEmitter(extension).emitWebApi(ordering)
+      result
+    }
+  }
+
+  case class OverlayFragmentEmitter(extension: OverlayFragment, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
+
+    override val header: RamlHeader = RamlFragmentHeader.Raml10Overlay
+
+    val elementsEmitters: Seq[Emitter] = {
+      val result: ListBuffer[Emitter] = ListBuffer()
+      extension.fields
+        .entry(OverlayModel.Extends)
+        .foreach(f => result += EntryEmitter("extends", f.scalar.toString, position = pos(f.value.annotations)))
+      result ++= WebApiEmitter(extension.encodes, ordering, Some(Raml)).emitters
+      result
+    }
   }
 
   case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)

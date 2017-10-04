@@ -46,7 +46,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     document
   }
 
-  private def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
+  def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
 
     val api = WebApi(map).adopted(root.location)
 
@@ -568,7 +568,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
     )
   }
 
-  private def parseTypeDeclarations(map: YMap, parent: String, declarations: Declarations) = {
+  private def parseTypeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
     map.key(
       "types",
       e => {

@@ -426,6 +426,22 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("libraries.json", "libraries.raml.raml", OasJsonHint, Raml, referencesPath)
   }
 
+  test("Extension fragment raml to amf") {
+    assertCycle("extension.raml", "extension.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Extension fragment raml to raml") {
+    assertCycle("extension.raml", "extension.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Overlay fragment raml to amf") {
+    assertCycle("overlay.raml", "overlay.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Overlay fragment raml to raml") {
+    assertCycle("overlay.raml", "overlay.raml.raml", RamlYamlHint, Raml)
+  }
+
   def assertCycle(source: String,
                   golden: String,
                   hint: Hint,

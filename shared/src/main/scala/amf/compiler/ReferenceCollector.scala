@@ -17,15 +17,41 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
 
   private val references = new ArrayBuffer[Reference]
 
-  def traverse(): Seq[Reference] = {
+  def traverse(isRamlOverlayOrExtension: Boolean): Seq[Reference] = {
     if (vendor != Amf) {
       libraries(document)
       links(document)
+      if (isRamlOverlayOrExtension) overlaysAndExtensions(document)
     }
     references
   }
 
-  private def links(part: YPart) = {
+  private def overlaysAndExtensions(document: YDocument): Unit = {
+    document.node.value match {
+      case map: YMap =>
+        val ext = vendor match {
+          case Raml => Some("extends")
+          case Oas  => Some("x-extends")
+          case Amf  => None
+        }
+
+        ext.foreach { u =>
+          map
+            .key(u)
+            .foreach(entry =>
+              entry.value.value match {
+                case _: YScalar => extension(entry)
+                case _          => throw new Exception(s"Expected scalar but found: ${entry.value}")
+            })
+        }
+    }
+  }
+
+  private def extension(entry: YMapEntry) = {
+    references += Reference(entry.value.value.toScalar.text, Extension, entry)
+  }
+
+  private def links(part: YPart): Unit = {
     vendor match {
       case Raml => ramlLinks(part)
       case Oas  => oasLinks(part)
@@ -33,7 +59,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
     }
   }
 
-  private def libraries(document: YDocument) = {
+  private def libraries(document: YDocument): Unit = {
     document.value.foreach({
       case map: YMap =>
         val uses = vendor match {

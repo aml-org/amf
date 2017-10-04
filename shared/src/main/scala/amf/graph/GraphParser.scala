@@ -1,6 +1,5 @@
 package amf.graph
 
-import amf.document.Fragment._
 import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
@@ -90,7 +89,7 @@ object GraphParser extends GraphParserHelpers {
       instance
     }
 
-    private def parseLinkableProperties(map: YMap, instance: DomainElement with Linkable) = {
+    private def parseLinkableProperties(map: YMap, instance: DomainElement with Linkable): Unit = {
       map
         .key(LinkableElementModel.TargetId.value.iri())
         .map(entry => {
@@ -204,6 +203,8 @@ object GraphParser extends GraphParserHelpers {
     FragmentsTypesModels.DataTypeModel                  -> Fragment.DataType.apply,
     FragmentsTypesModels.NamedExampleModel              -> Fragment.NamedExample.apply,
     FragmentsTypesModels.AnnotationTypeDeclarationModel -> Fragment.AnnotationTypeDeclaration.apply,
+    FragmentsTypesModels.ExtensionModel                 -> Fragment.ExtensionFragment.apply,
+    FragmentsTypesModels.OverlayModel                   -> Fragment.OverlayFragment.apply,
     TraitModel                                          -> Trait.apply,
     ResourceTypeModel                                   -> ResourceType.apply,
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,

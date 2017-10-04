@@ -47,7 +47,7 @@ class AMFUnitMaker {
   private def makeRamlUnit(unit: BaseUnit): YDocument = unit match {
     case module: Module     => RamlModuleEmitter(module).emitModule()
     case document: Document => RamlDocumentEmitter(document).emitDocument()
-    case fragment: Fragment => RamlFragmentEmitter(fragment).emitFragment()
+    case fragment: Fragment => new RamlFragmentEmitter(fragment).emitFragment()
     case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 

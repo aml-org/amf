@@ -40,6 +40,8 @@ sealed trait Kind
 
 object Library extends Kind
 
+object Extension extends Kind
+
 object Link extends Kind
 
 object Unspecified extends Kind

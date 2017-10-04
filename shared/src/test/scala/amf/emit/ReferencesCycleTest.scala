@@ -83,9 +83,9 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
     assertReferences("trait-fragment.raml", Seq("fragments/trait.raml"), RamlYamlHint, Raml)
   }
 
-  def assertReferences(documentRootPath: String, goldens: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
+  def assertReferences(documentRootPath: String, golden: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
 
-    val expecteds: Future[Seq[ModuleContent]] = Future.sequence(goldens.map(g => {
+    val expected: Future[Seq[ModuleContent]] = Future.sequence(golden.map(g => {
       platform
         .resolve(basePath + g, None)
         .map(c => ModuleContent(c.url, c.stream.toString))
@@ -101,7 +101,7 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
         }))
       })
 
-    expecteds
+    expected
       .zip(actualModules)
       .map(DiffModule.checkListDiff)
 

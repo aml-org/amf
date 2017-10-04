@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.dialects.DialectRegistry
-import amf.document.{BaseUnit, Document, Fragment}
+import amf.document.{BaseUnit, Document}
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
@@ -107,6 +107,18 @@ class AMFCompiler private (val url: String,
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
 
+  // TODO take this away when dialects don't use 'extends' keyword.
+  def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
+    document.comment match {
+      case Some(c) =>
+        RamlHeader.fromText(c.metaText) match {
+          case Some(RamlFragmentHeader.Raml10Overlay | RamlFragmentHeader.Raml10Extension) if vendor == Raml => true
+          case _                                                                                             => false
+        }
+      case None => false
+    }
+  }
+
   private def parse(content: Content): Future[Root] = {
     val parser = YamlParser(content.stream.toString)
 
@@ -115,7 +127,8 @@ class AMFCompiler private (val url: String,
     parsed match {
       case Some(document) =>
         val vendor = resolveVendor(content)
-        val refs   = new ReferenceCollector(document.document, vendor).traverse()
+        val refs =
+          new ReferenceCollector(document.document, vendor).traverse(isRamlOverlayOrExtension(vendor, document))
 
         refs
           .filter(_.isRemote)

@@ -1,7 +1,6 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.document.Fragment._
 import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
@@ -356,6 +355,8 @@ object GraphEmitter {
     case _: Fragment.TraitFragment             => FragmentsTypesModels.TraitModel
     case _: Fragment.NamedExample              => FragmentsTypesModels.NamedExampleModel
     case _: Fragment.AnnotationTypeDeclaration => FragmentsTypesModels.AnnotationTypeDeclarationModel
+    case _: Fragment.ExtensionFragment         => FragmentsTypesModels.ExtensionModel
+    case _: Fragment.OverlayFragment           => FragmentsTypesModels.OverlayModel
     case _: Trait                              => TraitModel
     case _: ResourceType                       => ResourceTypeModel
     case _                                     => throw new Exception(s"Missing metadata mapping for $instance")

@@ -2,7 +2,7 @@ package amf.spec.raml
 
 import amf.common.TSort.tsort
 import amf.compiler.RamlHeader
-import amf.document.Fragment.Fragment
+import amf.document.Fragment.{ExtensionFragment, Fragment, OverlayFragment}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
@@ -30,20 +30,23 @@ import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-case class RamlDocumentEmitter(document: Document) extends RamlSpecEmitter {
+case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
   private def retrieveWebApi(): WebApi = document match {
-    case document: Document => document.encodes.asInstanceOf[WebApi]
+    case document: Document           => document.encodes.asInstanceOf[WebApi]
+    case extension: ExtensionFragment => extension.encodes
+    case overlay: OverlayFragment     => overlay.encodes
+    case _                            => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
 
   def emitDocument(): YDocument = {
-
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml, document.encodes.annotations)
+    val doc                    = document.asInstanceOf[Document]
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml, doc.encodes.annotations)
 
     val apiEmitters = emitWebApi(ordering)
     // TODO ordering??
-    val declares         = DeclarationsEmitter(document.declares, document.references, ordering).emitters
-    val referenceEmitter = ReferencesEmitter(document.references, ordering)
+    val declares         = DeclarationsEmitter(doc.declares, doc.references, ordering).emitters
+    val referenceEmitter = ReferencesEmitter(doc.references, ordering)
 
     emitter.document { () =>
       comment(RamlHeader.Raml10.text)

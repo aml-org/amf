@@ -16,7 +16,7 @@ object RamlHeader {
     root.parsed.comment.flatMap(c => fromText(c.metaText))
   }
 
-  private def fromText(text: String): Option[RamlHeader] = text match {
+  def fromText(text: String): Option[RamlHeader] = text match {
     case t if t.equals(Raml10.text)        => Some(Raml10)
     case t if t.equals(Raml10Library.text) => Some(Raml10Library)
     case RamlFragmentHeader(fragment)      => Some(fragment)
@@ -33,9 +33,8 @@ object RamlFragmentHeader {
   object Raml10ResourceType              extends RamlHeader("%RAML 1.0 ResourceType") with RamlFragment
   object Raml10Trait                     extends RamlHeader("%RAML 1.0 Trait") with RamlFragment
   object Raml10AnnotationTypeDeclaration extends RamlHeader("%RAML 1.0 AnnotationTypeDeclaration") with RamlFragment
-  //  Overlay	An overlay file	Overlays
-  //  Extension	An extension file	Extensions
-  //  SecurityScheme
+  object Raml10Overlay                   extends RamlHeader("%RAML 1.0 Overlay") with RamlFragment
+  object Raml10Extension                 extends RamlHeader("%RAML 1.0 Extension") with RamlFragment
 
   val fragmentNames = Seq(
     Raml10DocumentationItem.text,
@@ -43,7 +42,9 @@ object RamlFragmentHeader {
     Raml10NamedExample.text,
     Raml10ResourceType.text,
     Raml10Trait.text,
-    Raml10AnnotationTypeDeclaration.text
+    Raml10AnnotationTypeDeclaration.text,
+    Raml10Overlay.text,
+    Raml10Extension.text
   )
 
   def isFragment(text: String): Boolean = fragmentNames.contains(text)
@@ -59,6 +60,8 @@ object RamlFragmentHeader {
     case t if t.equals(Raml10ResourceType.text)              => Some(Raml10ResourceType)
     case t if t.equals(Raml10Trait.text)                     => Some(Raml10Trait)
     case t if t.equals(Raml10AnnotationTypeDeclaration.text) => Some(Raml10AnnotationTypeDeclaration)
+    case t if t.equals(Raml10Overlay.text)                   => Some(Raml10Overlay)
+    case t if t.equals(Raml10Extension.text)                 => Some(Raml10Extension)
     case _                                                   => None
   }
 }

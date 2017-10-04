@@ -1,11 +1,11 @@
 package amf.document
 
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.{Annotations, DomainElement, Fields, UserDocumentation}
-import amf.metadata.document.{BaseUnitModel, DocumentModel, FragmentModel, ModuleModel}
+import amf.domain._
+import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
+import amf.metadata.document.{BaseUnitModel, DocumentModel, FragmentModel}
 import amf.model.AmfObject
 import amf.shape.Shape
-import org.yaml.model.YDocument
 
 /**
   * RAML Fragments
@@ -17,11 +17,6 @@ object Fragment {
 
     /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
     override val references: Seq[BaseUnit] = fields(DocumentModel.References)
-
-//    override val fields: Fields = new Fields()
-
-    /** Set of annotations for object. */
-//    override val annotations: Annotations = Annotations()
 
     override def adopted(parent: String): this.type = withId(parent)
 
@@ -47,6 +42,20 @@ object Fragment {
   case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment
 
   case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment
+
+  case class ExtensionFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: WebApi = super.encodes.asInstanceOf[WebApi]
+    def extend: String           = fields(ExtensionModel.Extends)
+
+    def withExtend(extend: BaseUnit): this.type = set(ExtensionModel.Extends, extend)
+  }
+
+  case class OverlayFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: WebApi = super.encodes.asInstanceOf[WebApi]
+    def extend: String           = fields(OverlayModel.Extends)
+
+    def withExtend(extend: BaseUnit): this.type = set(OverlayModel.Extends, extend)
+  }
 
   case class AnnotationTypeDeclaration(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
@@ -96,6 +105,17 @@ object Fragment {
     def apply(annotations: Annotations): AnnotationTypeDeclaration = apply(Fields(), annotations)
   }
 
+  object ExtensionFragment {
+    def apply(): ExtensionFragment = apply(Annotations())
+
+    def apply(annotations: Annotations): ExtensionFragment = apply(Fields(), annotations)
+  }
+
+  object OverlayFragment {
+    def apply(): OverlayFragment = apply(Annotations())
+
+    def apply(annotations: Annotations): OverlayFragment = apply(Fields(), annotations)
+  }
 }
 
 trait EncodesModel extends AmfObject {

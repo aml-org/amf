@@ -2,7 +2,7 @@ package amf.spec.common
 
 import amf.compiler.ParsedReference
 import amf.document.Fragment.Fragment
-import amf.document.{BaseUnit, Module}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation.ExplicitField
 import amf.domain.`abstract`._
 import amf.domain.{Annotations, CreativeWork, License, Organization}
@@ -169,6 +169,7 @@ private[spec] trait BaseSpecParser {
       declarations += (url -> fragment)
     }
 
+    def +=(url: String, fragment: Document): Unit = references += (url -> fragment)
   }
 
   case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference]) {
@@ -177,6 +178,7 @@ private[spec] trait BaseSpecParser {
 
       references.foreach {
         case ParsedReference(f: Fragment, s: String) => result += (s, f)
+        case ParsedReference(d: Document, s: String) => result += (s, d)
         case _                                       =>
       }
 
