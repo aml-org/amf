@@ -15,6 +15,10 @@ import scala.scalajs.js
   */
 class JsServerPlatform extends Platform {
 
+  override def exit(code: Int) = {
+    js.Dynamic.global.process.exit(code)
+  }
+
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = {
     val promise: Promise[Content] = Promise()

@@ -54,7 +54,20 @@ sbt assembly
 ```
 This will create a single stand-alone jar located in `target/artifact/amf.jar`.
 
-Using this jar you can execute it passing one of the following commands:
+The command line tool can also be built for node.js:
+
+``` bash
+./amf-js/build-scripts/buildjs.sh
+```
+
+This will create a single executable JS in the root directory:
+
+
+``` bash
+./amf.js
+```
+
+Using this jar or the node script, you can execute it passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
@@ -69,7 +82,7 @@ Please refer to the usage of the application for additional commands and explana
 
 ### JVM artifacts (private repository)
 
-To use, specify dependency. 
+To use, specify dependency.
 
 Gradle example:
 
@@ -238,6 +251,5 @@ This is a node project that demonstrates how amf parses and generates an OAS/RAM
     - Check if you have a *"public/build"* in the *site* directory. In not, create it.
     - Run *npm start* from *site* directory
     - Open *localhost:3000* in the browser
-    
-You can now start trying AMF by reading and dumping from/to different API Design specs.
 
+You can now start trying AMF by reading and dumping from/to different API Design specs.

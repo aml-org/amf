@@ -26,13 +26,13 @@ object Main extends PlatformSecrets  {
           case Some(ParserConfig.PARSE)     => runParse(cfg)
           case _                            => failCommand()
         }
-      case _ => System.exit(ExitCodes.WrongInvocation)
+      case _ => platform.exit(ExitCodes.WrongInvocation)
     }
   }
 
   def failCommand() = {
     System.err.println("Wrong command")
-    System.exit(ExitCodes.WrongInvocation)
+    platform.exit(ExitCodes.WrongInvocation)
   }
 
   def runRepl() = throw new Exception("REPL not available yet in Node version")

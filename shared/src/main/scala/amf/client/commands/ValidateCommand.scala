@@ -23,7 +23,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res.onComplete {
       case Failure(ex) => {
         System.err.println(ex)
-        System.exit(ExitCodes.Exception)
+        platform.exit(ExitCodes.Exception)
       }
       case Success(other) => {
         other
@@ -53,7 +53,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     if (!report.conforms) {
-      System.exit(ExitCodes.FailingValidation)
+      platform.exit(ExitCodes.FailingValidation)
     }
   }
 }

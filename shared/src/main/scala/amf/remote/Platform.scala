@@ -12,6 +12,8 @@ import scala.concurrent.{Future, Promise}
   */
 trait Platform {
 
+  def exit(code: Int) = System.exit(code)
+
   /** Resolve remote url. */
   def resolve(url: String, context: Option[Context]): Future[Content] = {
     url match {

@@ -55,7 +55,15 @@ lazy val amf = crossProject
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    scalaJSUseMainModuleInitializer := true
+    scalaJSUseMainModuleInitializer := true,
+    assemblyMergeStrategy in assembly := {
+      case "JS_DEPENDENCIES"             => MergeStrategy.discard
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => {
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+      }
+    }
   )
 
 lazy val amfJVM = amf.jvm.in(file("amf-jvm"))

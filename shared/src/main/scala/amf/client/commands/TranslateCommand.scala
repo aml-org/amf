@@ -25,28 +25,34 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res.onComplete {
       case Failure(ex) => {
         System.err.println(ex)
-        System.exit(ExitCodes.Exception)
+        platform.exit(ExitCodes.Exception)
       }
       case Success(other) => other
     }
     res
   }
 
-  def setupValidationTranslate(config:ParserConfig): Future[Option[Validation]] = {
+  def setupValidationTranslate(config:ParserConfig): Future[Unit] = {
     if (config.validate) {
-      setupValidation(config).map(Some(_))
+      setupValidation(config).map { validation =>
+        this.validation = Some(validation)
+      }
     } else {
-      Promise().success(None).future
+      Promise().success().future
     }
   }
 
   def checkValidation(config: ParserConfig, model: BaseUnit): Future[Unit] = {
     Future {
       if (validation.isDefined) {
-        validation.get.validate(model, config.validationProfile, config.validationProfile) map { report =>
+        val profile = config.customProfile match {
+          case Some(_) => validation.get.profile.get.name
+          case None    => config.validationProfile
+        }
+        validation.get.validate(model, profile, config.validationProfile) map { report =>
           if (!report.conforms) {
             System.err.println(report)
-            System.exit(ExitCodes.FailingValidation)
+            platform.exit(ExitCodes.FailingValidation)
           }
         }
       }

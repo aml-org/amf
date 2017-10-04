@@ -2,16 +2,17 @@ package amf.client.commands
 
 import amf.client.ParserConfig
 import amf.validation.ValidationProfileNames
+import scopt.OptionParser
 
 object CmdLineParser {
 
-  def knownSpec(f: String) = {
+  def knownSpec(f: String): Boolean = {
     ValidationProfileNames.RAML == f ||
     ValidationProfileNames.OAS == f ||
     ValidationProfileNames.AMF == f
   }
 
-  val parser = new scopt.OptionParser[ParserConfig]("amf") {
+  val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {
     head("Application Modeling Framework", "1.0-pre")
 
     arg[String]("<file_in> [<file_out>]")
@@ -26,6 +27,33 @@ object CmdLineParser {
       .text("List of dialects files that will loaded before parsing")
       .action((x,c) =>  c.copy(dialects = x))
 
+    opt[String]("format-in").abbr("in")
+      .text("Input format for the file to parse")
+      .validate({ f =>
+        if (knownSpec(f)) {
+          success
+        } else {
+          failure("Invalid value, values supported: RAML,OpenAPI,AMF")
+        }
+      })
+      .action((f,c) => c.copy(inputFormat = Some(f)))
+
+    opt[String]("validation-profile").abbr("p")
+      .text("Standard validation profile to use")
+      .validate({ f =>
+        if (knownSpec(f)) {
+          success
+        } else {
+          failure("Invalid value, values supported: RAML,OpenAPI,AMF")
+        }
+      })
+      .action((f,c) => c.copy(validationProfile = f))
+
+    opt[String]("custom-validation-profile").abbr("cp")
+      .text("Custom validation profile location")
+      .action((f,c) => c.copy(customProfile = Some(f)))
+
+
     cmd("repl")
       .text("Run in interactive mode")
       .action((_,c) => c.copy(mode =  Some(ParserConfig.REPL)))
@@ -35,16 +63,6 @@ object CmdLineParser {
       .action((_, c) => c.copy(mode = Some(ParserConfig.PARSE)))
       .children {
 
-        opt[String]("format-in").abbr("in")
-          .text("Input format for the file to parse")
-          .validate({ f =>
-            if (knownSpec(f)) {
-              success
-            } else {
-              failure("Invalid value, values supported: RAML,OpenAPI,AMF")
-            }
-          })
-          .action((f,c) => c.copy(inputFormat = Some(f)))
 
         opt[Boolean]("source-maps").abbr("sm")
           .text("Generate source maps in AMF output")
@@ -53,38 +71,12 @@ object CmdLineParser {
         opt[Boolean]("validate").abbr("v")
           .text("Perform validation")
           .action((f,c) => c.copy(validate = f))
-
-        opt[String]("validation-profile").abbr("p")
-          .text("Standard validation profile to use")
-          .validate({ f =>
-            if (knownSpec(f)) {
-              success
-            } else {
-              failure("Invalid value, values supported: RAML,OpenAPI,AMF")
-            }
-          })
-          .action((f,c) => c.copy(validationProfile = f))
-
-        opt[String]("custom-validation-profile").abbr("cp")
-          .text("Custom validation profile location")
-          .action((f,c) => c.copy(customProfile = Some(f)))
       }
 
     cmd("translate")
         .text("Translates the input file into a different format")
       .action((_, c) => c.copy(mode = Some(ParserConfig.TRANSLATE)))
       .children {
-
-        opt[String]("format-int").abbr("in")
-          .text("Input format for the file to parse")
-          .validate({ f =>
-            if (knownSpec(f)) {
-              success
-            } else {
-              failure("Invalid value, values supported: RAML,OpenAPI,AMF")
-            }
-          })
-          .action((f,c) => c.copy(inputFormat = Some(f)))
 
         opt[String]("format-out").abbr("out")
           .text("Output format for the file to parse")
@@ -104,54 +96,11 @@ object CmdLineParser {
         opt[Boolean]("validate").abbr("v")
           .text("Perform validation")
           .action((f,c) => c.copy(validate = f))
-
-        opt[String]("validation-profile").abbr("p")
-          .text("Standard validation profile to use")
-          .validate({ f =>
-            if (knownSpec(f)) {
-              success
-            } else {
-              failure("Invalid value, values supported: RAML,OpenAPI,AMF")
-            }
-          })
-          .action((f,c) => c.copy(validationProfile = f))
-
-        opt[String]("custom-validation").abbr("cv")
-          .text("Custom validation profile location")
-          .action((f,c) => c.copy(customProfile = Some(f)))
       }
 
     cmd("validate")
       .text("Validates the spec and generates the validation report")
       .action((_, c) => c.copy(mode = Some(ParserConfig.VALIDATE)))
-      .children {
-
-        opt[String]("validation-profile").abbr("p")
-          .text("Standard validation profile to use")
-          .validate({ f =>
-            if (knownSpec(f)) {
-              success
-            } else {
-              failure("Invalid value, values supported: RAML,OpenAPI,AMF")
-            }
-          })
-          .action((f,c) => c.copy(validationProfile = f))
-
-        opt[String]("format-in").abbr("in")
-          .text("Input format for the file to parse")
-          .validate({ f =>
-            if (knownSpec(f)) {
-              success
-            } else {
-              failure("Invalid value, values supported: RAML,OpenAPI,AMF")
-            }
-          })
-          .action((f,c) => c.copy(inputFormat = Some(f)))
-
-        opt[String]("custom-validation").abbr("cv")
-          .text("Custom validation profile location")
-          .action((f,c) => c.copy(customProfile = Some(f)))
-      }
 
     checkConfig( c => {
       var error = ""
