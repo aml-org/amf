@@ -1,8 +1,8 @@
 package amf.dialects
 
-import amf.common.Tests.checkDiff
+import amf.common.Tests.checkDiffIgnoreAllSpaces
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -21,7 +21,7 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
       .map(_.stream.toString)
     expected
       .zip(Future(code))
-      .map(checkDiff)
+      .map(checkDiffForGenScalaFiles)
 
   }
 
@@ -35,7 +35,14 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
       .map(_.stream.toString)
     expected
       .zip(Future(code))
-      .map(checkDiff)
+      .map(checkDiffForGenScalaFiles)
 
+  }
+
+  /** Compare all the class in one single line ignoring white spaces for avoid diff because of the formatter plugin */
+  private def checkDiffForGenScalaFiles(tuple: (String, String)): Assertion = tuple match {
+    case (actual, expected) =>
+      checkDiffIgnoreAllSpaces(actual.replace("\n", ""), expected.replace("\n", ""))
+      Succeeded
   }
 }

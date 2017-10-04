@@ -193,9 +193,13 @@ private[spec] trait BaseSpecParser {
         key,
         entry =>
           entry.value.value.toMap.entries.foreach(e => {
-            val key: String = e.value
-            target(key).foreach {
-              case module: Module => result.references += (key -> module)
+            val alias: String = e.key
+            val url: String   = e.value
+            target(url).foreach {
+//              case module: Module => result.references += (key -> module)
+              // todo: we shoul only return modules and not any type of base unit
+              bu: BaseUnit =>
+                result.references += (alias -> bu)
             }
           })
       )
