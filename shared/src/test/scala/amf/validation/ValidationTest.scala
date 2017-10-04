@@ -180,7 +180,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-
   val testValidations = Map(
     "bad_domain/amf.jsonld"               -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),
     "bad_domain/valid.jsonld"             -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),

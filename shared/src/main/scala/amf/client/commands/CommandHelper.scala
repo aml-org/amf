@@ -27,11 +27,11 @@ trait CommandHelper {
 
   def setupValidation(config: ParserConfig): Future[Validation] = {
     val validation = Validation(platform)
-    validation.loadValidationDialect()
-
-    config.customProfile match {
-      case Some(profileFile) => validation.loadValidationProfile(profileFile).map(_ => validation)
-      case _                 => Promise().success(validation).future
+    validation.loadValidationDialect() flatMap  { loadedDialect =>
+      config.customProfile match {
+        case Some(profileFile) => validation.loadValidationProfile(profileFile).map(_ => validation)
+        case _                 => Promise().success(validation).future
+      }
     }
   }
 

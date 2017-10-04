@@ -14,8 +14,8 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
       validation <- setupValidation(config)
-      model <- parseInput(config)
-      report <- report(model, validation, config)
+      model      <- parseInput(config)
+      report     <- report(model, validation, config)
     } yield {
       processOutput(report, config)
     }
