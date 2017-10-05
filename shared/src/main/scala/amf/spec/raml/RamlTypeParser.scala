@@ -52,7 +52,10 @@ case class RamlTypeParser(entry: YMapEntry, adopt: Shape => Unit, declarations: 
   }
 
   private def detectItems(map: YMap): Option[TypeDef] = {
-    map.key("items").map(_ => ArrayType)
+    map.key("items") match {
+      case (Some(_)) => Some(ArrayType)
+      case None      => None
+    }
   }
 
   private def detectAnyOf(map: YMap): Option[TypeDef] = {

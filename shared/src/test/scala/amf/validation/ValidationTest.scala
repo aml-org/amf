@@ -180,6 +180,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
+  /*
+  test("HERE_HERE Library example validation") {
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "library/api.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect()
+      report <- validation.validate(model, ValidationProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 10)
+    }
+  }
+  */
+  
   val testValidations = Map(
     "bad_domain/amf.jsonld"               -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),
     "bad_domain/valid.jsonld"             -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),

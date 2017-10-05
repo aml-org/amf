@@ -666,7 +666,6 @@ class RamlSpecParser(val root: Root) {
     map.key(
       "types",
       entry => {
-
         entry.value.value.toMap.entries.flatMap(entry => {
           val typeName = entry.key.value.toScalar.text
           RamlTypeParser(entry, shape => shape.withName(typeName).adopted(typesPrefix), Declarations(types))

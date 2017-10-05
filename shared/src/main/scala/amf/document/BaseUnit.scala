@@ -2,6 +2,9 @@ package amf.document
 
 import amf.domain.DomainElement
 import amf.model.{AmfArray, AmfElement, AmfObject}
+import amf.vocabulary.ValueType
+
+import scala.collection.mutable.ListBuffer
 
 /** Any parseable unit, backed by a source URI. */
 trait BaseUnit extends AmfObject {
@@ -20,57 +23,76 @@ trait BaseUnit extends AmfObject {
     * @param id URI of the model element
     */
   def findById(id: String): Option[DomainElement] = {
-    findInEncodedModel(id, this) match {
-      case None => findInDeclaredModel(id, this)
-      case found => found
-    }
+    val predicate = (element: DomainElement) => element.id == id
+    findInEncodedModel(predicate, this, first = true).headOption.orElse(
+      findInDeclaredModel(predicate, this, first = true, ListBuffer.empty).headOption.orElse(
+        findInReferencedModels(id, this.references).headOption
+      )
+    )
   }
+
 
   // Private lookup methods
 
-  private def findInEncodedModel(id: String, encoder: BaseUnit): Option[DomainElement] = {
+  private def findInEncodedModel(predicate:(DomainElement) => Boolean, encoder: BaseUnit, first: Boolean = false, acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement]) = {
     encoder match {
-      case encoder: EncodesModel => findModelById(id, encoder.encodes)
-      case _                     => None
+      case encoder: EncodesModel => findModelByCondition(predicate, encoder.encodes, first, acc)
+      case _                     => ListBuffer.empty
     }
   }
 
-  private def findInDeclaredModel(id: String, encoder: BaseUnit): Option[DomainElement] = {
+  private def findInDeclaredModel(predicate:(DomainElement) => Boolean, encoder: BaseUnit, first: Boolean, acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
     encoder match {
-      case encoder: DeclaresModel => findModelByIdInSeq(id, encoder.declares)
-      case _                     => None
+      case encoder: DeclaresModel => findModelByConditionInSeq(predicate, encoder.declares, first, acc)
+      case _                      => ListBuffer.empty
     }
   }
 
-  private def findModelById(id: String, element: DomainElement): Option[DomainElement] = {
-    if (element.id == id) {
-      Some(element)
+  private def findInReferencedModels(id: String, units: Seq[BaseUnit]): ListBuffer[DomainElement] = {
+    if (units.isEmpty) {
+      ListBuffer.empty
     } else {
-      findModelByIdInSeq(id, element.fields.fields().map(_.element).toSeq)
+      units.head.findById(id) match {
+        case Some(element) => ListBuffer(element)
+        case None          => findInReferencedModels(id, units.tail)
+      }
     }
   }
 
-  private def findModelByIdInSeq(id: String, elements: Seq[AmfElement]): Option[DomainElement] = {
+  private def findModelByCondition(predicate:(DomainElement) => Boolean, element: DomainElement, first: Boolean, acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
+    val found = predicate(element)
+    if (found) { acc += element }
+    if (found && first) {
+      acc
+    } else {
+      findModelByConditionInSeq(predicate, element.fields.fields().map(_.element).toSeq, first, acc)
+    }
+  }
+
+  private def findModelByConditionInSeq(predicate:(DomainElement) => Boolean, elements: Seq[AmfElement], first: Boolean, acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
     if (elements.isEmpty) {
-      None
+      acc
     } else {
       elements.head match {
         case obj: DomainElement =>
-          findModelById(id, obj) match {
-            case None         => findModelByIdInSeq(id, elements.tail)
-            case foundElement => foundElement
+          val res = findModelByCondition(predicate, obj, first, acc)
+          if (first && res.nonEmpty) {
+            res
+          } else {
+            findModelByConditionInSeq(predicate, elements.tail, first, res)
           }
 
         case arr: AmfArray =>
-          findModelByIdInSeq(id, arr.values) match {
-            case None => findModelByIdInSeq(id, elements.tail)
-            case foundElement => foundElement
+          val res = findModelByConditionInSeq(predicate, arr.values, first, acc)
+          if (first && res.nonEmpty) {
+            res
+          } else {
+            findModelByConditionInSeq(predicate, elements.tail, first, res)
           }
 
-        case _ => findModelByIdInSeq(id, elements.tail)
+        case _ => findModelByConditionInSeq(predicate, elements.tail, first, acc)
       }
     }
   }
 
 }
-
