@@ -1,5 +1,7 @@
 package amf.compiler
 
+import amf.parser.YValueOps
+
 /**
   * Raml header comment
   */
@@ -13,7 +15,10 @@ object RamlHeader {
   object Raml10Library extends RamlHeader("%RAML 1.0 Library")
 
   def apply(root: Root): Option[RamlHeader] = {
-    root.parsed.comment.flatMap(c => fromText(c.metaText))
+    root.parsed.comment.flatMap(c => fromText(c.metaText)) match {
+      case Some(header) => Option(header)
+      case _            => RamlFragmentHeader(root)
+    }
   }
 
   def fromText(text: String): Option[RamlHeader] = text match {
@@ -49,7 +54,26 @@ object RamlFragmentHeader {
 
   def isFragment(text: String): Boolean = fragmentNames.contains(text)
 
-  def apply(root: Root): Option[RamlHeader] = root.parsed.comment.flatMap(c => fromText(c.metaText))
+  def fromRoot(root: Root): Option[RamlHeader] = root.parsed.comment.flatMap(c => fromText(c.metaText)) match {
+    case Some(header) => Option(header)
+    case _ =>
+      root.parsed.document.value
+        .flatMap(m =>
+          FragmentTypes(m.toMap) match {
+            case FragmentTypes.DataTypeFragment          => Some(Raml10DataType)
+            case FragmentTypes.DocumentationItemFragment => Some(Raml10DocumentationItem)
+            case FragmentTypes.ResourceTypeFragment      => Some(Raml10ResourceType)
+            case FragmentTypes.TraitFragment             => Some(Raml10Trait)
+            case FragmentTypes.AnnotationTypeFragment    => Some(Raml10AnnotationTypeDeclaration)
+            case FragmentTypes.ExtensionFragment         => Some(Raml10Extension)
+            case FragmentTypes.OverlayFragment           => Some(Raml10Overlay)
+            case _                                       => None //UnknowFragment
+        })
+  }
+
+  def unapply(root: Root): Option[RamlHeader] = fromRoot(root)
+
+  def apply(root: Root): Option[RamlHeader] = fromRoot(root)
 
   def unapply(text: String): Option[RamlHeader] = fromText(text)
 

@@ -5,6 +5,7 @@ import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, DeclaresModel, Document, Module}
 import amf.domain.Annotation.ExplicitField
 import amf.domain.`abstract`._
+import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, CreativeWork, License, Organization}
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
@@ -160,8 +161,9 @@ private[spec] trait BaseSpecParser {
 
     def +=(alias: String, module: Module): Unit = {
       references += (alias -> module)
-      val library = declarations.getOrCreateLibrary(alias)
-      module.declares.foreach(library += _)
+      val library          = declarations.getOrCreateLibrary(alias)
+      val entitiesDeclared = module.declares.collect({ case d: DomainEntity => d }) // todo : ignore domain entities of vocabularies?
+      module.declares.filter(!entitiesDeclared.contains(_)).foreach(library += _)
     }
 
     def +=(url: String, fragment: Fragment): Unit = {
