@@ -6,7 +6,9 @@ import amf.document.Fragment._
 import amf.domain.Annotations
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.parser.YValueOps
+import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
+import amf.model.AmfScalar
+import amf.parser.{YValueOps, _}
 import amf.shape.Shape
 import amf.spec.Declarations
 import org.yaml.model.YMap
@@ -14,7 +16,7 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class OasFragmentParser(root: Root) extends OasSpecParser(root) {
+case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) extends OasSpecParser(root) {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -22,14 +24,16 @@ case class OasFragmentParser(root: Root) extends OasSpecParser(root) {
     val rootMap: YMap =
       root.document.value.map(_.toMap).getOrElse(throw new RuntimeException("Cannot parse empty map"))
 
-    val fragment = detectType() match {
-      case Some(Oas20DocumentationItem) => DocumentationItemFragmentParser(rootMap).parse()
-      case Some(Oas20DataType)          => DataTypeFragmentParser(rootMap).parse()
-      //      case Some(Oas20NamedExample)              =>
-      case Some(Oas20ResourceType)              => ResourceTypeFragmentParser(rootMap).parse()
-      case Some(Oas20Trait)                     => TraitFragmentParser(rootMap).parse()
-      case Some(Oas20AnnotationTypeDeclaration) => AnnotationFragmentParser(rootMap).parse()
-      case _                                    => throw new IllegalStateException("Unsuported raml type")
+    val fragment = (detectType() map {
+      case Oas20DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
+      case Oas20DataType                  => DataTypeFragmentParser(rootMap).parse()
+      case Oas20ResourceType              => ResourceTypeFragmentParser(rootMap).parse()
+      case Oas20Trait                     => TraitFragmentParser(rootMap).parse()
+      case Oas20AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
+      case Oas20Extension                 => ExtensionFragmentParser(rootMap).parse()
+      case Oas20Overlay                   => OverlayFragmentParser(rootMap).parse()
+    }).getOrElse {
+      throw new IllegalStateException("Unsuported oas type")
     }
 
     fragment
@@ -44,10 +48,10 @@ case class OasFragmentParser(root: Root) extends OasSpecParser(root) {
   }
 
   def detectType(): Option[OasHeader] = {
-
-    OasHeader(root).flatMap(_ => {
-      OasFragmentHeader(root)
-    })
+    fragment match {
+      case t if t.isDefined => t
+      case _                => OasFragmentHeader(root)
+    }
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
@@ -110,4 +114,56 @@ case class OasFragmentParser(root: Root) extends OasSpecParser(root) {
       traitFragment.withEncodes(abstractDeclaration)
     }
   }
+
+  case class ExtensionFragmentParser(map: YMap) {
+    def parse(): ExtensionFragment = {
+      val extension = ExtensionFragment().adopted(root.location)
+
+      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
+      extension.withEncodes(api)
+
+      map
+        .key("extends")
+        .foreach(e => {
+          spec.link(e.value) match {
+            case Left(url) =>
+              root.references
+                .find(_.parsedUrl == url)
+                .foreach(extend =>
+                  extension
+                    .set(ExtensionModel.Extends, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
+            case _ =>
+          }
+        })
+
+      extension
+    }
+  }
+
+  case class OverlayFragmentParser(map: YMap) {
+    def parse(): OverlayFragment = {
+      val overlay = OverlayFragment().adopted(root.location)
+
+      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
+      overlay.withEncodes(api)
+
+      map
+        .key("extends")
+        .foreach(e => {
+          spec.link(e.value) match {
+            case Left(url) =>
+              root.references
+                .find(_.parsedUrl == url)
+                .foreach(extend =>
+                  overlay
+                    .set(OverlayModel.Extends, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
+            case _ =>
+          }
+        })
+
+      overlay
+    }
+
+  }
+
 }

@@ -99,7 +99,14 @@ class AMFCompiler private (val url: String,
     hint.kind match {
       case Library => OasModuleParser(root).parseModule()
       case Link    => OasFragmentParser(root).parseFragment()
-      case _       => OasDocumentParser(root).parseDocument()
+      case _       => detectOasUnit(root)
+    }
+  }
+
+  private def detectOasUnit(root: Root): BaseUnit = {
+    OasFragmentHeader(root) match {
+      case f if f.isDefined => OasFragmentParser(root, f).parseFragment()
+      case _                => OasDocumentParser(root).parseDocument()
     }
   }
 

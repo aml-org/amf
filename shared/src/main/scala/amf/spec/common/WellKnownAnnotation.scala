@@ -31,7 +31,9 @@ object WellKnownAnnotation {
     "x-is"                  -> true,
     "x-type"                -> true,
     "(consumes)"            -> true,
-    "(produces)"            -> true
+    "(produces)"            -> true,
+    "x-fragment-type"       -> true,
+    "x-usage"               -> true
   )
 
   def normalAnnotation(field: String): Boolean =

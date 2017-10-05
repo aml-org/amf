@@ -427,23 +427,39 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Extension fragment raml to amf") {
-    assertCycle("extension.raml", "extension.raml.jsonld", RamlYamlHint, Amf)
+    assertCycle("extension.raml", "extension.raml.jsonld", RamlYamlHint, Amf, referencesPath + "extensions/")
   }
 
   test("Extension fragment raml to raml") {
-    assertCycle("extension.raml", "extension.raml.raml", RamlYamlHint, Raml)
+    assertCycle("extension.raml", "extension.raml.raml", RamlYamlHint, Raml, referencesPath + "extensions/")
   }
 
   test("Overlay fragment raml to amf") {
-    assertCycle("overlay.raml", "overlay.raml.jsonld", RamlYamlHint, Amf)
+    assertCycle("overlay.raml", "overlay.raml.jsonld", RamlYamlHint, Amf, referencesPath + "extensions/")
   }
 
   test("Overlay fragment raml to raml") {
-    assertCycle("overlay.raml", "overlay.raml.raml", RamlYamlHint, Raml)
+    assertCycle("overlay.raml", "overlay.raml.raml", RamlYamlHint, Raml, referencesPath + "extensions/")
   }
 
   test("Test libraries references in delares raml to raml") {
     assertCycle("lib-alias-reference.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
+  test("Overlay fragment oas to amf") {
+    assertCycle("overlay.json", "overlay.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
+  }
+
+  test("Overlay fragment oas to oas") {
+    assertCycle("overlay.json", "overlay.json.json", OasJsonHint, Oas, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment oas to amf") {
+    assertCycle("extension.json", "extension.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment oas to oas") {
+    assertCycle("extension.json", "extension.json.json", OasJsonHint, Oas, referencesPath + "extensions/")
   }
 
   def assertCycle(source: String,

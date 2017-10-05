@@ -54,7 +54,7 @@ class AMFUnitMaker {
   private def makeOasUnit(unit: BaseUnit): YDocument = unit match {
     case module: Module     => OasModuleEmitter(module).emitModule()
     case document: Document => OasDocumentEmitter(document).emitDocument()
-    case fragment: Fragment => OasFragmentEmitter(fragment).emitFragment()
+    case fragment: Fragment => new OasFragmentEmitter(fragment).emitFragment()
     case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 

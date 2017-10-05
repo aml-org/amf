@@ -1,5 +1,6 @@
 package amf.spec.oas
 
+import amf.document.Fragment.{ExtensionFragment, OverlayFragment}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
@@ -11,7 +12,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{ASTEmitter, Position}
-import amf.remote.Oas
+import amf.remote.{Oas, Vendor}
 import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{Declarations, Emitter, SpecOrdering}
@@ -25,20 +26,23 @@ import scala.collection.mutable.ListBuffer
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
+case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
-  private def retrieveWebApi(): WebApi = document.encodes match {
-    case webApi: WebApi => webApi
-    case _              => throw new Exception("Cannot emit OAS api from document that does not encode a WebAPI")
+  private def retrieveWebApi(): WebApi = document match {
+    case document: Document           => document.encodes.asInstanceOf[WebApi]
+    case extension: ExtensionFragment => extension.encodes
+    case overlay: OverlayFragment     => overlay.encodes
+    case _                            => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
 
   def emitDocument(): YDocument = {
+    val doc = document.asInstanceOf[Document]
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, document.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, doc.encodes.annotations)
 
     val apiEmitters = emitWebApi(ordering)
     // TODO ordering??
-    val declares         = DeclarationsEmitter(document.declares, ordering).emitters
+    val declares         = DeclarationsEmitter(doc.declares, ordering).emitters
     val referenceEmitter = ReferencesEmitter(document.references, ordering)
 
     emitter.document { () =>
@@ -53,12 +57,13 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
   }
 
   def emitWebApi(ordering: SpecOrdering): Seq[Emitter] = {
-    val model = retrieveWebApi()
-    val api   = WebApiEmitter(model, ordering)
+    val model  = retrieveWebApi()
+    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val api    = WebApiEmitter(model, ordering, vendor)
     api.emitters
   }
 
-  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering) {
+  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[Vendor]) {
     val emitters: Seq[Emitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[Emitter]()
@@ -742,6 +747,19 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = pos(target.annotations)
   }
 
+  case class NamedRefEmitter(key: String, url: String, pos: Position = Position.ZERO) extends Emitter {
+    override def emit(): Unit = {
+      entry { () =>
+        raw(key)
+        map { () =>
+          ref(url)
+        }
+      }
+    }
+
+    override def position(): Position = pos
+  }
+
   protected def ref(url: String): Unit = EntryEmitter("$ref", url).emit() // todo YType("$ref")
 
   case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering) extends Emitter {
@@ -1040,7 +1058,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
   }
 
   trait CommonOASFieldsEmitter {
-    def emitCommonFields(fs: Fields, result: ListBuffer[Emitter]) = {
+    def emitCommonFields(fs: Fields, result: ListBuffer[Emitter]): Option[result.type] = {
       fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 
       fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))

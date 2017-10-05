@@ -52,7 +52,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
     document
   }
 
-  private def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
+  def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
 
     val api = WebApi(map).adopted(root.location)
 

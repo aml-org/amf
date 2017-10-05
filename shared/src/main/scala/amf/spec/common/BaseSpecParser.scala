@@ -161,9 +161,14 @@ private[spec] trait BaseSpecParser {
 
     def +=(alias: String, module: Module): Unit = {
       references += (alias -> module)
-      val library          = declarations.getOrCreateLibrary(alias)
-      val entitiesDeclared = module.declares.collect({ case d: DomainEntity => d }) // todo : ignore domain entities of vocabularies?
-      module.declares.filter(!entitiesDeclared.contains(_)).foreach(library += _)
+      val library = declarations.getOrCreateLibrary(alias)
+      // todo : ignore domain entities of vocabularies?
+      module.declares
+        .filter({
+          case d: DomainEntity => false
+          case _               => true
+        })
+        .foreach(library += _)
     }
 
     def +=(url: String, fragment: Fragment): Unit = {
