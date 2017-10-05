@@ -15,6 +15,10 @@ import scala.scalajs.js
   */
 class JsServerPlatform extends Platform {
 
+  override def exit(code: Int) = {
+    js.Dynamic.global.process.exit(code)
+  }
+
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = {
     val promise: Promise[Content] = Promise()
@@ -26,7 +30,9 @@ class JsServerPlatform extends Platform {
           promise.failure(new Exception(s"Could not load file $path from fs"))
         } else {
           promise.success(
-            Content(new CharSequenceStream(path, content.toString), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension)))
+            Content(new CharSequenceStream(path, content.toString),
+                    ensureFileAuthority(path),
+                    extension(path).flatMap(mimeFromExtension)))
         }
       }
     )
@@ -81,5 +87,5 @@ class JsServerPlatform extends Platform {
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
 
   override val dialectsRegistry = JSDialectRegistry(this)
-  override val validator = new SHACLValidator()
+  override val validator        = new SHACLValidator()
 }

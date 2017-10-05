@@ -718,6 +718,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
+        case union: UnionShape =>
+          val copiedNode = union.copy(fields = union.fields.filter(f => !ignored.contains(f._1)))
+          Seq(UnionShapeEmitter(copiedNode, ordering))
         case file: FileShape =>
           val copiedFile = file.copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
           FileShapeEmitter(copiedFile, ordering).emitters()
@@ -1133,6 +1136,34 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class UnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+
+      entry { () =>
+        raw("type")
+        raw("union")
+      }
+
+      val anyOfEmitters: mutable.ListBuffer[Emitter] = mutable.ListBuffer()
+      shape.anyOf.map { shape =>
+        anyOfEmitters ++= RamlTypeEmitter(shape, ordering).emitters()
+      }
+
+      entry { () =>
+        raw("anyOf")
+        array { () =>
+          ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
+            map { () =>
+              typeEmitter.emit()
+            }
+          }
+        }
+      }
+    }
+
+    override def position(): Position = pos(shape.annotations)
   }
 
   case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {

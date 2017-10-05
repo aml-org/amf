@@ -244,7 +244,6 @@ class Validation(platform: Platform) {
     println("===========================")
     */
 
-
     jsLibrary match {
       case Some(code) =>  platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore

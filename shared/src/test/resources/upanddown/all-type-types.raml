@@ -35,4 +35,9 @@ types:
     type: file
     fileTypes: ['image/jpeg', 'image/png']
     maxLength: 307200
+  UnionType:
+    type: union
+    anyOf:
+      - type: string
+      - type: integer
 title: test title

@@ -28,6 +28,7 @@ trait TypeDef {
 trait ScalarType
 
 object TypeDef {
+  object UnionType        extends TypeDef
   object AnyType          extends TypeDef
   object NilType          extends TypeDef with ScalarType
   object StrType          extends TypeDef with ScalarType

@@ -12,10 +12,10 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
   override def run(origConfig: ParserConfig): Future[Any] = {
     val config = origConfig.copy(outputFormat = Some(ValidationProfileNames.AMF))
     val res = for {
-      _          <- setupValidation(config)
-      model      <- parseInput(config)
-      _          <- checkValidation(config, model)
-      generated  <- generateOutput(config, model)
+      _         <- setupValidationTranslate(config)
+      model     <- parseInput(config)
+      _         <- checkValidation(config, model)
+      generated <- generateOutput(config, model)
     } yield {
       generated
     }
@@ -23,7 +23,7 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
     res.onComplete {
       case Failure(ex) => {
         System.err.println(ex)
-        System.exit(ExitCodes.Exception)
+        platform.exit(ExitCodes.Exception)
       }
       case Success(other) => other
     }
@@ -33,6 +33,6 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
 
 }
 
-object ParseCommand{
+object ParseCommand {
   def apply(platform: Platform) = new ParseCommand(platform)
 }

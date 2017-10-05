@@ -1,7 +1,7 @@
 package amf.metadata.shape
 
 import amf.metadata.Field
-import amf.metadata.Type.{Array, Str}
+import amf.metadata.Type.{Array, SortedArray, Str}
 import amf.metadata.domain.{CreativeWorkModel, DomainElementModel, LinkableElementModel}
 import amf.vocabulary.Namespace.{Schema, Shacl, Shapes}
 import amf.vocabulary.ValueType
@@ -16,7 +16,7 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel {
 
   val Default = Field(Str, Shacl + "defaultValue")
 
-  val Values = Field(Array(Str), Shacl + "in")
+  val Values = Field(SortedArray(Str), Shacl + "in")
 
   val Documentation = Field(CreativeWorkModel, Schema + "documentation")
 

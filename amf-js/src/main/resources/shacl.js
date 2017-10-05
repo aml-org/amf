@@ -33546,6 +33546,7 @@ var T = RDFQuery.T;
 
 var errorHandler = function(e){
     _dereq_("debug")("rdflib-graph::error")(e);
+    console.log(e);
     throw(e);
 };
 

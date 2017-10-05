@@ -14,8 +14,8 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
       validation <- setupValidation(config)
-      model <- parseInput(config)
-      report <- report(model, validation, config)
+      model      <- parseInput(config)
+      report     <- report(model, validation, config)
     } yield {
       processOutput(report, config)
     }
@@ -23,7 +23,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res.onComplete {
       case Failure(ex) => {
         System.err.println(ex)
-        System.exit(ExitCodes.Exception)
+        platform.exit(ExitCodes.Exception)
       }
       case Success(other) => {
         other
@@ -31,7 +31,6 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     }
     res
   }
-
 
   def report(model: BaseUnit, validation: Validation, config: ParserConfig) = {
     val profile = validation.profile match {
@@ -48,12 +47,12 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
       case Some(f) => {
         platform.write(f, json)
       }
-      case None    => {
+      case None => {
         println(json)
       }
     }
     if (!report.conforms) {
-      System.exit(ExitCodes.FailingValidation)
+      platform.exit(ExitCodes.FailingValidation)
     }
   }
 }

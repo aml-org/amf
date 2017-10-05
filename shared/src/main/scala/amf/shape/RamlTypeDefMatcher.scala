@@ -8,8 +8,8 @@ import amf.shape.TypeDef._
 object RamlTypeDefMatcher {
 
   def matchType(ramlType: String, format: String = ""): TypeDef = ramlType match {
-    case "nil" => NilType
-    case "any" => AnyType
+    case "nil" | "" => NilType
+    case "any"      => AnyType
     case "string" =>
       format match {
         case "byte"     => ByteType
@@ -26,6 +26,7 @@ object RamlTypeDefMatcher {
     case "date-only"     => DateOnlyType
     case "array"         => ArrayType
     case "object"        => ObjectType
+    case "union"         => UnionType
     case _               => ObjectType
   }
 

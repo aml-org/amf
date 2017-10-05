@@ -16,7 +16,7 @@ trait CommandHelper {
 
   def ensureUrl(inputFile: String): String =
     if (!inputFile.startsWith("file:") && !inputFile.startsWith("http:") && !inputFile.startsWith("https:")) {
-      if(inputFile.startsWith("/")) {
+      if (inputFile.startsWith("/")) {
         s"file:/$inputFile"
       } else {
         s"file://$inputFile"
@@ -27,11 +27,11 @@ trait CommandHelper {
 
   def setupValidation(config: ParserConfig): Future[Validation] = {
     val validation = Validation(platform)
-    validation.loadValidationDialect()
-
-    config.customProfile match {
-      case Some(profileFile) => validation.loadValidationProfile(profileFile).map(_ => validation)
-      case _                 => Promise().success(validation).future
+    validation.loadValidationDialect() flatMap { loadedDialect =>
+      config.customProfile match {
+        case Some(profileFile) => validation.loadValidationProfile(profileFile).map(_ => validation)
+        case _                 => Promise().success(validation).future
+      }
     }
   }
 
@@ -42,10 +42,7 @@ trait CommandHelper {
     }
 
     Future.sequence(dialectFutures).flatMap[BaseUnit] { _ =>
-
-
       val inputFormat = config.inputFormat.get
-
 
       val hint = inputFormat match {
         case ValidationProfileNames.RAML => RamlYamlHint
@@ -77,10 +74,11 @@ trait CommandHelper {
     val dumper = AMFDumper(unit, outputFormat, hint, generateOptions)
     config.output match {
       case Some(f) => dumper.dumpToFile(platform, f)
-      case None    => dumper.dumpToString.map { generated =>
-        println(generated)
-        generated
-      }
+      case None =>
+        dumper.dumpToString.map { generated =>
+          println(generated)
+          generated
+        }
     }
   }
 

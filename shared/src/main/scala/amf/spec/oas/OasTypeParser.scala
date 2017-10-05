@@ -10,7 +10,7 @@ import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser
-import org.yaml.model.{YMap, YMapEntry, YPart, YSequence}
+import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
 
 import scala.collection.mutable
 
@@ -30,6 +30,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   def parse(): Option[Shape] = {
 
     detect() match {
+      case UnionType =>
+        Some(parseUnionType())
       case LinkType                    => parseLinkType()
       case ObjectType                  => Some(parseObjectType())
       case ArrayType                   => Some(parseArrayType())
@@ -43,12 +45,17 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     detectDependency()
       .orElse(detectType())
       .orElse(detectProperties())
+      .orElse(detectAnyOf())
       .getOrElse(if (map.entries.isEmpty) AnyType else UndefinedType)
 
   private def detectProperties(): Option[TypeDef.ObjectType.type] =
     map.key("properties").orElse(map.key("allOf")).map(_ => ObjectType)
 
   private def detectDependency(): Option[TypeDef] = map.key("$ref").map(_ => LinkType)
+
+  private def detectAnyOf(): Option[TypeDef.UnionType.type] = {
+    map.key("anyOf").map(_ => UnionType)
+  }
 
   private def detectType(): Option[TypeDef] = {
     map
@@ -102,6 +109,10 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     val shape = NodeShape(ast).withName(name)
     adopt(shape)
     NodeShapeParser(shape, map, declarations).parse()
+  }
+
+  private def parseUnionType(): Shape = {
+    UnionShapeParser(map, name, declarations).parse()
   }
 
   trait CommonScalarParsingLogic {
@@ -165,6 +176,34 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
       parseScalar(map, shape)
+      shape
+    }
+  }
+
+  case class UnionShapeParser(override val map: YMap, name: String, declarations: Declarations) extends ShapeParser() {
+    override val shape = UnionShape(Annotations(map)).withName(name)
+
+    override def parse(): UnionShape = {
+      super.parse()
+
+      map.key(
+        "anyOf", { entry =>
+          entry.value.value match {
+            case seq: YSequence =>
+              val unionNodes = seq.nodes.zipWithIndex
+                .map {
+                  case (node, index) =>
+                    val entry = YMapEntry(YNode(YScalar(s"item$index", true, node.range)), node)
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+                }
+                .filter(_.isDefined)
+                .map(_.get)
+              shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
+            case _ => throw new Exception("Unions are built from multiple shape nodes")
+          }
+        }
+      )
+
       shape
     }
   }

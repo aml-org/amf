@@ -56,6 +56,16 @@
     },
     "ObjectType": {
       "type": "object"
+    },
+    "UnionType": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ]
     }
   }
 }

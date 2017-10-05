@@ -10,8 +10,7 @@ import js.JSConverters._
 /**
   * Main entry point for the application
   */
-object Main extends PlatformSecrets  {
-
+object Main extends PlatformSecrets {
 
   // Nothing is passed in the main args in ScalaJS
   def main(a: Array[String]): Unit = {
@@ -26,16 +25,16 @@ object Main extends PlatformSecrets  {
           case Some(ParserConfig.PARSE)     => runParse(cfg)
           case _                            => failCommand()
         }
-      case _ => System.exit(ExitCodes.WrongInvocation)
+      case _ => platform.exit(ExitCodes.WrongInvocation)
     }
   }
 
   def failCommand() = {
     System.err.println("Wrong command")
-    System.exit(ExitCodes.WrongInvocation)
+    platform.exit(ExitCodes.WrongInvocation)
   }
 
-  def runRepl() = throw new Exception("REPL not available yet in Node version")
+  def runRepl()                                       = throw new Exception("REPL not available yet in Node version")
   def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform).run(config)
   def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform).run(config)
   def runParse(config: ParserConfig): Future[Any]     = ParseCommand(platform).run(config)

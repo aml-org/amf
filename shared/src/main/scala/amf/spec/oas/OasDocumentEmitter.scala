@@ -712,7 +712,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         raw("definitions")
         map { () =>
-          traverse(ordering.sorted(types.map(t => NamedTypeEmitter(t, ordering))))
+          val namedEntities       = types.map(t => NamedTypeEmitter(t, ordering))
+          val sortedNamedEntities = ordering.sorted(namedEntities)
+          traverse(sortedNamedEntities)
         }
       }
     }
@@ -730,7 +732,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
         if (shape.isLink)
           shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel).emit())
         map { () =>
-          traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
+          val emitters       = OasTypeEmitter(shape, ordering).emitters()
+          val sortedEmitters = ordering.sorted(emitters)
+          traverse(sortedEmitters)
         }
       }
     }
@@ -808,6 +812,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           NodeShapeEmitter(copiedNode, ordering).emitters()
+        case union: UnionShape =>
+          val copiedNode = union.copy(fields = union.fields.filter(f => !ignored.contains(f._1)))
+          Seq(UnionShapeEmitter(copiedNode, ordering))
         case array: ArrayShape =>
           val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
           ArrayShapeEmitter(copiedArray, ordering).emitters()
@@ -847,6 +854,29 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       result
     }
+  }
+
+  case class UnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+
+      val anyOfEmitters: mutable.ListBuffer[Emitter] = mutable.ListBuffer()
+      shape.anyOf.map { shape =>
+        anyOfEmitters ++= OasTypeEmitter(shape, ordering).emitters()
+      }
+
+      entry { () =>
+        raw("anyOf")
+        array { () =>
+          ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
+            map { () =>
+              typeEmitter.emit()
+            }
+          }
+        }
+      }
+    }
+
+    override def position(): Position = pos(shape.annotations)
   }
 
   case class AnyShapeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {

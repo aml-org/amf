@@ -2,7 +2,7 @@ package amf.spec.common
 
 import amf.compiler.ParsedReference
 import amf.document.Fragment.Fragment
-import amf.document.{BaseUnit, DeclaresModel, Document, Module}
+import amf.document.{BaseUnit, DeclaresModel, Document}
 import amf.domain.Annotation.ExplicitField
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
@@ -159,16 +159,19 @@ private[spec] trait BaseSpecParser {
   case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mutable.Map(),
                                    declarations: Declarations = Declarations()) {
 
-    def +=(alias: String, module: Module): Unit = {
-      references += (alias -> module)
+    def +=(alias: String, unit: BaseUnit): Unit = {
+      references += (alias -> unit)
       val library = declarations.getOrCreateLibrary(alias)
       // todo : ignore domain entities of vocabularies?
-      module.declares
-        .filter({
-          case d: DomainEntity => false
-          case _               => true
-        })
-        .foreach(library += _)
+      unit match {
+        case d: DeclaresModel =>
+          d.declares
+            .filter({
+              case d: DomainEntity => false
+              case _               => true
+            })
+            .foreach(library += _)
+      }
     }
 
     def +=(url: String, fragment: Fragment): Unit = {
@@ -205,7 +208,7 @@ private[spec] trait BaseSpecParser {
             val alias: String = e.key
             val url: String   = e.value
             target(url).foreach {
-              case module: DeclaresModel => result.references += (alias -> module)  //this is
+              case module: DeclaresModel => result += (alias, module) // this is
               case other =>
                 throw new Exception(s"Expected module but found: $other") // todo Uses should only reference modules...
             }
