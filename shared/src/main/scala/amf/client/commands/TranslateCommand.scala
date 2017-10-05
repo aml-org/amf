@@ -43,19 +43,19 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
   }
 
   def checkValidation(config: ParserConfig, model: BaseUnit): Future[Unit] = {
-    Future {
-      if (validation.isDefined) {
-        val profile = config.customProfile match {
-          case Some(_) => validation.get.profile.get.name
-          case None    => config.validationProfile
-        }
-        validation.get.validate(model, profile, config.validationProfile) map { report =>
-          if (!report.conforms) {
-            System.err.println(report)
-            platform.exit(ExitCodes.FailingValidation)
-          }
+    if (validation.isDefined) {
+      val profile = config.customProfile match {
+        case Some(_) => validation.get.profile.get.name
+        case None => config.validationProfile
+      }
+      validation.get.validate(model, profile, config.validationProfile) map { report =>
+        if (!report.conforms) {
+          System.err.println(report)
+          platform.exit(ExitCodes.FailingValidation)
         }
       }
+    } else {
+      Promise().success().future
     }
   }
 }
