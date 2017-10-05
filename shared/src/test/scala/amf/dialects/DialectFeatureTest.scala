@@ -78,29 +78,29 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .map(checkDiff)
   }
 
-  test("Uses (in dialect)") {
-    val validation = platform.dialectsRegistry.registerDialect(basePath + "validation_dialect_unions.raml")
-    val expected =
-      platform.resolve(basePath + "validation_profile_example_uses_gold.raml", None).map(_.stream.toString)
-    val actual = validation
-      .flatMap(unit => {
-        val dl = new DialectRegistry();
-        dl.add(unit)
-        AMFCompiler(basePath + "validation_profile_example_uses.raml", platform, RamlYamlHint, None, None, dl)
-          .build()
-      })
-    actual
-      .flatMap({ unit =>
-        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-
-      })
-      .map(v => {
-        // platform.write(basePath + "validation_profile_example_uses_gold.raml",v);
-        v
-      })
-      .zip(expected)
-      .map(checkDiff)
-  }
+//  test("Uses (in dialect)") {
+//    val validation = platform.dialectsRegistry.registerDialect(basePath + "validation_dialect_unions.raml")
+//    val expected =
+//      platform.resolve(basePath + "validation_profile_example_uses_gold.raml", None).map(_.stream.toString)
+//    val actual = validation
+//      .flatMap(unit => {
+//        val dl = new DialectRegistry();
+//        dl.add(unit)
+//        AMFCompiler(basePath + "validation_profile_example_uses.raml", platform, RamlYamlHint, None, None, dl)
+//          .build()
+//      })
+//    actual
+//      .flatMap({ unit =>
+//        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+//
+//      })
+//      .map(v => {
+//        // platform.write(basePath + "validation_profile_example_uses_gold.raml",v);
+//        v
+//      })
+//      .zip(expected)
+//      .map(checkDiff)
+//  }
 
   test("Uses (in dialect (real library))") {
     val validation = platform.dialectsRegistry.registerDialect(basePath + "validation_dialect_unions.raml")

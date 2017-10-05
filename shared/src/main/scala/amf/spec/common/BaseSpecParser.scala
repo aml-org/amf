@@ -2,7 +2,7 @@ package amf.spec.common
 
 import amf.compiler.ParsedReference
 import amf.document.Fragment.Fragment
-import amf.document.{BaseUnit, Document, Module}
+import amf.document.{BaseUnit, DeclaresModel, Document, Module}
 import amf.domain.Annotation.ExplicitField
 import amf.domain.`abstract`._
 import amf.domain.{Annotations, CreativeWork, License, Organization}
@@ -198,7 +198,7 @@ private[spec] trait BaseSpecParser {
             val alias: String = e.key
             val url: String   = e.value
             target(url).foreach {
-              case module: Module => result.references += (alias -> module)
+              case module: DeclaresModel => result.references += (alias -> module)  //this is
               case other =>
                 throw new Exception(s"Expected module but found: $other") // todo Uses should only reference modules...
             }
