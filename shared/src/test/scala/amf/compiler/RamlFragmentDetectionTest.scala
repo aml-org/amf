@@ -46,8 +46,6 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
     assertHeader("two-match-without-header.raml", None)
   }
 
-  object UnknowFragment extends FragmentType("?")
-
   private def assertHeader(path: String, expectedOption: Option[RamlHeader]): Future[Assertion] = {
     AMFCompiler(basePath + path, platform, RamlYamlHint)
       .root()

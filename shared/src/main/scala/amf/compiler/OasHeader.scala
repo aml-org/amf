@@ -37,13 +37,21 @@ object OasFragmentHeader {
 
   object Oas20AnnotationTypeDeclaration extends OasHeader(extentionName, "2.0 AnnotationTypeDeclaration")
 
+  object Oas20Extension extends OasHeader(extentionName, "2.0 Extension")
+
+  object Oas20Overlay extends OasHeader(extentionName, "2.0 Overlay")
+
   def apply(root: Root): Option[OasHeader] = {
-    for {
-      map                 <- root.document.value.flatMap(_.asMap)
-      value               <- map.key(extentionName).map(_.value.value)
-      fragmentType        <- value.asScalar.map(s => apply(s.text))
-      detectedFragmenType <- fragmentType.orElse(toOasType(FragmentTypes(map)))
-    } yield detectedFragmenType
+    root.document.value
+      .flatMap(_.asMap)
+      .flatMap(map => {
+        val headerOption = for {
+          value        <- map.key(extentionName).map(_.value.value)
+          fragmentType <- value.asScalar.flatMap(s => apply(s.text))
+        } yield fragmentType
+
+        headerOption.orElse(toOasType(FragmentTypes(map)))
+      })
   }
 
   def apply(text: String): Option[OasHeader] = text match {
@@ -53,6 +61,8 @@ object OasFragmentHeader {
     case Oas20ResourceType.value              => Some(Oas20ResourceType)
     case Oas20Trait.value                     => Some(Oas20Trait)
     case Oas20AnnotationTypeDeclaration.value => Some(Oas20AnnotationTypeDeclaration)
+    case Oas20Extension.value                 => Some(Oas20Extension)
+    case Oas20Overlay.value                   => Some(Oas20Overlay)
     case _                                    => None
   }
 
@@ -63,6 +73,8 @@ object OasFragmentHeader {
       case TraitFragment             => Some(Oas20Trait)
       case AnnotationTypeFragment    => Some(Oas20AnnotationTypeDeclaration)
       case DocumentationItemFragment => Some(Oas20DocumentationItem)
+      case ExtensionFragment         => Some(Oas20Extension)
+      case OverlayFragment           => Some(Oas20Overlay)
       case _                         => None //UnknowFragment
     }
 
