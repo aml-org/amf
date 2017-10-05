@@ -18,7 +18,7 @@ package object core {
 
     /** Url encoded string. */
     def urlEncoded: String = {
-      str.replaceAll("/", "%2F") // TODO encode
+      str.replaceAll("/", "%2F").replaceAll("\\{","%7B").replaceAll("\\}","%7D") // TODO encode
     }
 
     def escape: String = {
