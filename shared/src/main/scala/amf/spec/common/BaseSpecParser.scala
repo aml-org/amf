@@ -198,7 +198,7 @@ private[spec] trait BaseSpecParser {
             val alias: String = e.key
             val url: String   = e.value
             target(url).foreach {
-              case module: Module => result.references += (alias -> module)
+              case module: Module => result += (alias, module)
               case other =>
                 throw new Exception(s"Expected module but found: $other") // todo Uses should only reference modules...
             }

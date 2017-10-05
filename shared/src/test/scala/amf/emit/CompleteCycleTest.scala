@@ -442,6 +442,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("overlay.raml", "overlay.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Test libraries references in delares raml to raml") {
+    assertCycle("lib-alias-reference.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
   def assertCycle(source: String,
                   golden: String,
                   hint: Hint,
