@@ -89,7 +89,7 @@ propertyTerms:
 
 That will be translated into the following RDF graph:
 
-``` turtle
+``` n3
 base:extendsProfile rdfs:type owl:ObjectProperty ;
   schema-org:name "extends profile" ;
   schema-org:description "Optional profile this validation is going to inherit from" ;
@@ -112,7 +112,7 @@ propertyTerms:
 
 With OWL semantics:
 
-``` turtle
+``` n3
 base:ramlClassId rdfs:type owl:DatatypeProperty ;
   schema-org:name "RAML class ID" ;
   schema-org:description "A well known string identifier for a RAML vocabulary class" ;
@@ -148,7 +148,7 @@ propertyTerms:
     range: Profile
 ```
 
-``` turtle
+``` n3
 base:extendsProfile rdfs:type owl:ObjectProperty ;
   schema-org:name "extends profile"
   rdfs:subPropertyOf vocab:extends ;
@@ -157,13 +157,13 @@ base:extendsProfile rdfs:type owl:ObjectProperty ;
 
 Meaning that for each assertion:
 
-``` turtle
+``` n3
 myProfile base:extendsProfile otherProfile .
 ```
 
 The following assertion can be inferred:
 
-``` turtle
+``` n3
 myProfile base:extendsProfile otherProfile .
 myProfile extends otherProfile .
 ```
@@ -190,7 +190,7 @@ classTerm:
 ```
 The semantics of class terms are provided by the translation into OWL.
 
-```turtle
+```n3
 base:Profile rdfs:type owl:Class .
 ```
 
@@ -206,7 +206,7 @@ classTerm:
 ```
 The OWL translation for these properties is:
 
-``` turtle
+``` n3
 base:Profile schema-org:name "Profile" ;
   schema-org:description "A set of validations that will be applied together over a parsed RAML HTTP data model" .
 ```
@@ -227,7 +227,7 @@ classTerms:
 
 Semantics of class extensions matches OWL semantics:
 
-``` turtle
+``` n3
 base:Validation rdfs:subClassOf shacl:Shape .
 ```
 
@@ -245,19 +245,19 @@ Semantics of the property domain are provided by the OWL translation.
 ```
 
 
-``` turtle
+``` n3
 vocab:jsCode rdfs:domain vocab:JSConstraint
 ```
 
 The implications of introducing a class in the domain of a property is that provided this assertion based on the previous example:
 
-``` turtle
+``` n3
 a vocab:jsCode b .
 ```
 
 The following assertion could be inferred:
 
-``` turtle
+``` n3
 a vocab:jsCode b .
 a rdfs:type vocab:JSConstraint
 ```
