@@ -157,6 +157,11 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#name"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/name/scalar/name",
@@ -251,6 +256,11 @@
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#lastName"
+                                  }
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
@@ -347,6 +357,11 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#address"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/address/address",
@@ -368,6 +383,11 @@
                                           "http://www.w3.org/ns/shacl#PropertyShape",
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://raml.org/vocabularies/shapes#Shape"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#path": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/data#city"
+                                          }
                                         ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
@@ -464,6 +484,11 @@
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://raml.org/vocabularies/shapes#Shape"
                                         ],
+                                        "http://www.w3.org/ns/shacl#path": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/data#street"
+                                          }
+                                        ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
                                             "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/address/address/property/street/scalar/street",
@@ -559,6 +584,11 @@
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://raml.org/vocabularies/shapes#Shape"
                                         ],
+                                        "http://www.w3.org/ns/shacl#path": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/data#number"
+                                          }
+                                        ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
                                             "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/address/address/property/number/scalar/number",
@@ -653,6 +683,11 @@
                                           "http://www.w3.org/ns/shacl#PropertyShape",
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://raml.org/vocabularies/shapes#Shape"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#path": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/data#postal"
+                                          }
                                         ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
@@ -1167,6 +1202,11 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#credit_card"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/application/raml/schema/property/credit_card/scalar/credit_card",
@@ -1261,6 +1301,11 @@
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#city"
+                                  }
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
@@ -1357,6 +1402,11 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#street"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/application/raml/schema/property/street/scalar/street",
@@ -1452,6 +1502,11 @@
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#number"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/types-dependency.raml#/web-api/end-points/%2Flevel-zero/get/request/application/raml/schema/property/number/scalar/number",
@@ -1546,6 +1601,11 @@
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#postal"
+                                  }
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {

@@ -68,6 +68,11 @@ class Fields {
     this
   }
 
+  def remove(field: Field): this.type = {
+    fs = fs - field
+    this
+  }
+
   def into(other: Fields): Unit = {
     // TODO array copy with references instead of instance
     other.fs = other.fs ++ fs

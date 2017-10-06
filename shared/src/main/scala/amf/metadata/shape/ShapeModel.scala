@@ -21,6 +21,8 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel {
   val Documentation = Field(CreativeWorkModel, Schema + "documentation")
 
   val XMLSerialization = Field(XMLSerializerModel, Shapes + "xmlSerialization")
+
+  val Inherits = Field(Array(ShapeModel), Shapes + "inherits")
 }
 
 object ShapeModel extends ShapeModel {

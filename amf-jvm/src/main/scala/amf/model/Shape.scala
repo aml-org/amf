@@ -28,6 +28,7 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
   val values: java.util.List[String]  = shape.values.asJava
   val documentation: CreativeWork     = Option(shape.documentation).map(amf.model.CreativeWork).orNull
   val xmlSerialization: XMLSerializer = Option(shape.xmlSerialization).map(amf.model.XMLSerializer).orNull
+  val inherits: java.util.List[Shape] = shape.inherits.map(Shape(_)).asJava
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -58,6 +59,12 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
     shape.withXMLSerialization(xmlSerialization.xmlSerializer)
     this
   }
+
+  def withInherits(inherits: java.util.List[Shape]): this.type = {
+    shape.withInherits(inherits.asScala.map(_.shape))
+    this
+  }
+
 }
 
 object Shape {

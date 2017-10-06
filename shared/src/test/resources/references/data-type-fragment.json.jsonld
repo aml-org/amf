@@ -108,6 +108,11 @@
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://raml.org/vocabularies/shapes#Shape"
                 ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://raml.org/vocabularies/data#name"
+                  }
+                ],
                 "http://raml.org/vocabularies/shapes#range": [
                   {
                     "@id": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name",

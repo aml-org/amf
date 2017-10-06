@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.compiler.AMFCompiler
 import amf.document.{BaseUnit, Document}
@@ -18,12 +19,6 @@ import amf.vocabulary.Namespace
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
-
-object ValidationProfileNames {
-  val AMF  = "AMF"
-  val OAS  = "OpenAPI"
-  val RAML = "RAML"
-}
 
 case class AMFValidationResult(message: String,
                                level: String,
@@ -199,17 +194,17 @@ class Validation(platform: Platform) {
     */
   def computeValidations(profileName: String, computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     profileName match {
-      case ValidationProfileNames.AMF =>
-        allEffective(defaultProfiles.find(_.name == ValidationProfileNames.AMF).get.validations, computed)
-      case ValidationProfileNames.RAML =>
-        allEffective(defaultProfiles.find(_.name == ValidationProfileNames.RAML).get.validations, computeValidations(ValidationProfileNames.AMF, computed))
-      case ValidationProfileNames.OAS =>
-        allEffective(defaultProfiles.find(_.name == ValidationProfileNames.OAS).get.validations, computeValidations(ValidationProfileNames.AMF, computed))
+      case ProfileNames.AMF =>
+        allEffective(defaultProfiles.find(_.name == ProfileNames.AMF).get.validations, computed)
+      case ProfileNames.RAML =>
+        allEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get.validations, computeValidations(ProfileNames.AMF, computed))
+      case ProfileNames.OAS =>
+        allEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get.validations, computeValidations(ProfileNames.AMF, computed))
       case _ if profile.isDefined && profile.get.name == profileName=>
         if (profile.get.baseProfileName.isDefined) {
           someEffective(profile.get, computeValidations(profile.get.baseProfileName.get, computed))
         } else {
-          someEffective(profile.get, computeValidations(ValidationProfileNames.AMF, computed))
+          someEffective(profile.get, computeValidations(ProfileNames.AMF, computed))
         }
       case _ => throw new Exception(s"Validation profile $profileName not defined")
     }
@@ -220,11 +215,11 @@ class Validation(platform: Platform) {
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
-  def shapesGraph(validations: EffectiveValidations, messageStyle: String = ValidationProfileNames.RAML): String = {
+  def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = {
     new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq)
   }
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = ValidationProfileNames.RAML): Future[AMFValidationReport] = {
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
     val graphAST  = GraphEmitter.emit(model, GenerationOptions())
     val modelJSON = new JsonGenerator().generate(graphAST).toString
     val validations = computeValidations(profileName)
@@ -282,8 +277,8 @@ class Validation(platform: Platform) {
     }
 
     var message: String = messageStyle match {
-      case ValidationProfileNames.RAML => spec.ramlMessage.getOrElse(result.message)
-      case ValidationProfileNames.OAS  => spec.oasMessage.getOrElse(result.message)
+      case ProfileNames.RAML => spec.ramlMessage.getOrElse(result.message)
+      case ProfileNames.OAS  => spec.oasMessage.getOrElse(result.message)
       case _                           => spec.message
     }
     if (message == "") {
@@ -324,8 +319,8 @@ class Validation(platform: Platform) {
     maybeTargetSpec match {
       case Some(targetSpec) =>
         var message = messageStyle match {
-          case ValidationProfileNames.RAML => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case ValidationProfileNames.OAS  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case ProfileNames.RAML => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case ProfileNames.OAS  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
           case _                           => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
         }
 

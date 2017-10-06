@@ -27,6 +27,11 @@
               "http://www.w3.org/ns/shacl#Shape",
               "http://raml.org/vocabularies/shapes#Shape"
             ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://raml.org/vocabularies/data#objProp1"
+              }
+            ],
             "http://raml.org/vocabularies/shapes#range": [
               {
                 "@id": "file:/shared/src/test/resources/references/lib/lib.raml#/declarations/ObjectType/property/objProp1/scalar/objProp1",
@@ -121,6 +126,11 @@
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://raml.org/vocabularies/data#objProp2"
+              }
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {

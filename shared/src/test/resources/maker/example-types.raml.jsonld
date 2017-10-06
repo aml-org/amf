@@ -210,6 +210,11 @@
                                     "@value": "name"
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#name"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/name/source-map",
@@ -291,6 +296,11 @@
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
                                     "@value": "lastName"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#lastName"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -398,6 +408,11 @@
                                             "@value": "city"
                                           }
                                         ],
+                                        "http://www.w3.org/ns/shacl#path": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/data#city"
+                                          }
+                                        ],
                                         "http://raml.org/vocabularies/document-source-maps#sources": [
                                           {
                                             "@id": "file:/shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/address/address/property/city/source-map",
@@ -481,6 +496,11 @@
                                             "@value": "postal"
                                           }
                                         ],
+                                        "http://www.w3.org/ns/shacl#path": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/data#postal"
+                                          }
+                                        ],
                                         "http://raml.org/vocabularies/document-source-maps#sources": [
                                           {
                                             "@id": "file:/shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/property/address/address/property/postal/source-map",
@@ -554,6 +574,11 @@
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
                                     "@value": "address"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#address"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -1194,6 +1219,11 @@
                                     "@value": "number"
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#number"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/header-two/schema/property/number/source-map",
@@ -1459,6 +1489,11 @@
                                     "@value": "howmuch"
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#howmuch"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file:/shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/request/application/json/schema/property/howmuch/source-map",
@@ -1693,6 +1728,11 @@
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
                                     "@value": "invented"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#invented"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [

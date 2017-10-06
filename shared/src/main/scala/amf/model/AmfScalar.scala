@@ -12,4 +12,11 @@ case class AmfScalar(value: Any, annotations: Annotations = new Annotations()) e
       case None    => ""
     }
   }
+
+  def toNumber: Number = {
+    Option(value) match {
+      case Some(v) => v.asInstanceOf[Number]
+      case None    => throw new Exception("Cannot transform null value into Number")
+    }
+  }
 }

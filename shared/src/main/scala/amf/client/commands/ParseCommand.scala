@@ -1,8 +1,8 @@
 package amf.client.commands
 
+import amf.ProfileNames
 import amf.client.{ExitCodes, ParserConfig}
 import amf.remote.Platform
-import amf.validation.ValidationProfileNames
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
 class ParseCommand(override val platform: Platform) extends TranslateCommand(platform) {
 
   override def run(origConfig: ParserConfig): Future[Any] = {
-    val config = origConfig.copy(outputFormat = Some(ValidationProfileNames.AMF))
+    val config = origConfig.copy(outputFormat = Some(ProfileNames.AMF))
     val res = for {
       _         <- setupValidationTranslate(config)
       model     <- parseInput(config)
