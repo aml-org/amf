@@ -19,7 +19,7 @@ object FragmentTypes {
   object DocumentationItemFragment extends FragmentType("DocumentationItem")
   object OverlayFragment           extends FragmentType("Overlay")
   object ExtensionFragment         extends FragmentType("Extension")
-  object UnknowFragment            extends FragmentType("?")
+  object UnknownFragment           extends FragmentType("?")
   def apply(map: YMap): FragmentType = FragmentTypeDetection(map).detect()
 }
 
@@ -52,7 +52,7 @@ case class FragmentTypeDetection(map: YMap) {
       */
     matchingTypes.size match {
       case s if s == 1 => matchingTypes.head
-      case _           => UnknowFragment
+      case _           => UnknownFragment
     }
   }
 }
