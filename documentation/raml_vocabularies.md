@@ -5,7 +5,7 @@ A RAML Vocabulary defines a hierarchy of classes and properties according to the
 
 ## Vocabulary declaration
 
-RAML Vocabularies are declares using the `#RAML 1.0 Vocabulary` header and must provide a mandatory `base` property providing a [URI prefix](https://www.w3.org/TR/curie/) that will be used to generate unique URIs for all terms in the vocabulary.
+RAML Vocabularies are declares using the `#%RAML 1.0 Vocabulary` header and must provide a mandatory `base` property providing a [URI prefix](https://www.w3.org/TR/curie/) that will be used to generate unique URIs for all terms in the vocabulary.
 
 ``` yaml
 #%RAML 1.0 Vocabulary
@@ -165,7 +165,7 @@ The following assertion can be inferred:
 
 ``` n3
 myProfile base:extendsProfile otherProfile .
-myProfile extends otherProfile .
+myProfile vocab:extends otherProfile .
 ```
 
 
