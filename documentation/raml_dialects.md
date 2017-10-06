@@ -1,6 +1,7 @@
 # RAML Dialect 1.0
 
-RAML Dialect defines a set of constraints over a RDF data-model composed by a graph of nodes connected by properties, where node types and properties all have associated terms defined in a RAML Vocabulary.
+RAML Dialect defines a set of constraints over a RDF data-model composed by a graph of nodes connected by properties.
+In this data-model node types and properties all have associated terms defined in a RAML Vocabulary.
 When this graph of data nodes is projected over a RAML document, RAML Library or RAML fragment (the RAML Document Model), a full set of new RAML documents for the vocabulary terms are defined.
 A RAML Dialect parser must accept this set of constraints and the projection over the RAML Document Model, as specified in the RAML dialect, and produce a parser capable of transforming valid documents for the new RAML dialect and produce a valid output RDF graph where the constraints introduced by the dialect are met.
 
