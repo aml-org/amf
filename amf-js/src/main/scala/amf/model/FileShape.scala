@@ -7,16 +7,16 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class FileShape(private val file: amf.shape.FileShape) extends Shape(file) {
 
-  val fileTypes: js.Iterable[String]    = file.fileTypes.toJSArray
-  val pattern: String                   = file.pattern
-  val minLength: Int                    = file.minLength
-  val maxLength: Int                    = file.maxLength
-  val minimum: String                   = file.minimum
-  val maximum: String                   = file.maximum
-  val exclusiveMinimum: String          = file.exclusiveMinimum
-  val exclusiveMaximum: String          = file.exclusiveMaximum
-  val format: String                    = file.format
-  val multipleOf: Int                   = file.multipleOf
+  val fileTypes: js.Iterable[String] = file.fileTypes.toJSArray
+  val pattern: String                = file.pattern
+  val minLength: Int                 = file.minLength
+  val maxLength: Int                 = file.maxLength
+  val minimum: String                = file.minimum
+  val maximum: String                = file.maximum
+  val exclusiveMinimum: String       = file.exclusiveMinimum
+  val exclusiveMaximum: String       = file.exclusiveMaximum
+  val format: String                 = file.format
+  val multipleOf: Int                = file.multipleOf
 
   def withFileTypes(fileTypes: js.Iterable[String]): this.type = {
     file.withFileTypes(fileTypes.toSeq)
@@ -60,4 +60,9 @@ case class FileShape(private val file: amf.shape.FileShape) extends Shape(file) 
   }
 
   override private[amf] def element = file
+
+  override def linkTarget: Option[FileShape] =
+    element.linkTarget.map({ case l: amf.shape.FileShape => FileShape(l) })
+
+  override def linkCopy(): FileShape = FileShape(element.linkCopy())
 }

@@ -4,8 +4,34 @@ import amf.domain.`abstract`.{ParametrizedDeclaration, ParametrizedResourceType,
 import amf.domain.extensions.DomainExtension
 import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel._
+import amf.metadata.domain.LinkableElementModel
 import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.ValueType
+
+trait Linkable extends AmfObject { this: DomainElement with Linkable =>
+  var linkTarget: Option[DomainElement]    = None
+  var linkAnnotations: Option[Annotations] = None
+
+  def isLink: Boolean           = linkTarget.isDefined
+  def linkLabel: Option[String] = Option(fields(LinkableElementModel.Label))
+
+  def linkCopy(): Linkable
+
+  def withLinkTarget(target: DomainElement): this.type = {
+    linkTarget = Some(target)
+    set(LinkableElementModel.TargetId, target.id)
+  }
+
+  def withLinkLabel(label: String): this.type = set(LinkableElementModel.Label, label)
+
+  def link[T](label: Option[String] = None, annotations: Option[Annotations] = None): T = {
+    val href = linkCopy()
+    href.withLinkTarget(this)
+    label.map(href.withLinkLabel)
+
+    href.asInstanceOf[T]
+  }
+}
 
 /**
   * Internal model for any domain element

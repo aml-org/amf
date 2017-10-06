@@ -1,22 +1,97 @@
 package amf.spec
 
-import amf.document.BaseUnit
+import amf.common.core.QName
+import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.{DomainElement, EndPoint, Operation}
+import amf.domain.{DomainElement, UserDocumentation}
 import amf.shape.Shape
 
 /**
   * Declarations object.
   */
-case class Declarations(private val declarations: Seq[DomainElement], references: Map[String, BaseUnit] = Map()) {
-  val shapes: Map[String, Shape] = declarations.collect { case d: Shape => d.name -> d }.toMap
+case class Declarations(var libraries: Map[String, Declarations] = Map(),
+                        var fragments: Map[String, DomainElement] = Map(),
+                        var shapes: Map[String, Shape] = Map(),
+                        var annotations: Map[String, CustomDomainProperty] = Map(),
+                        var resourceTypes: Map[String, ResourceType] = Map(),
+                        var documentations: Map[String, UserDocumentation] = Map(),
+                        var traits: Map[String, Trait] = Map()) {
 
-  val annotations: Map[String, CustomDomainProperty] = declarations.collect {
-    case d: CustomDomainProperty => d.name -> d
-  }.toMap
+  def +=(fragment: (String, Fragment)): Declarations = {
+    fragment match {
+      case (url, f) => fragments = fragments + (url -> f.encodes)
+    }
+    this
+  }
 
-  val resourceTypes: Map[String, ResourceType] = declarations.collect { case d: ResourceType => d.name -> d }.toMap
+  def +=(element: DomainElement): Declarations = {
+    element match {
+      case r: ResourceType         => resourceTypes = resourceTypes + (r.name    -> r)
+      case u: UserDocumentation    => documentations = documentations + (u.title -> u)
+      case t: Trait                => traits = traits + (t.name                  -> t)
+      case a: CustomDomainProperty => annotations = annotations + (a.name        -> a)
+      case s: Shape                => shapes = shapes + (s.name                  -> s)
+    }
+    this
+  }
 
-  val traits: Map[String, Trait] = declarations.collect { case d: Trait => d.name -> d }.toMap
+  /** Get or create specified library. */
+  def getOrCreateLibrary(alias: String): Declarations = {
+    libraries.get(alias) match {
+      case Some(lib) => lib
+      case None =>
+        val result = Declarations()
+        libraries = libraries + (alias -> result)
+        result
+    }
+  }
+
+  def declarables(): Seq[DomainElement] =
+    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values).toSeq
+
+  def findResourceType(key: String): Option[ResourceType] = findForType(key, _.resourceTypes) collect {
+    case r: ResourceType => r
+  }
+
+  def findDocumentations(key: String): Option[UserDocumentation] = findForType(key, _.documentations) collect {
+    case u: UserDocumentation => u
+  }
+
+  def findTrait(key: String): Option[Trait] = findForType(key, _.traits) collect {
+    case t: Trait => t
+  }
+
+  def findAnnotation(key: String): Option[CustomDomainProperty] = findForType(key, _.annotations) collect {
+    case a: CustomDomainProperty => a
+  }
+
+  def findType(key: String): Option[Shape] = findForType(key, _.shapes) collect {
+    case s: Shape => s
+  }
+
+  private def findForType(key: String, map: Declarations => Map[String, DomainElement]): Option[DomainElement] = {
+    val fqn = QName(key)
+
+    val result = if (fqn.isQualified) {
+      libraries.get(fqn.qualification).flatMap(_.findForType(fqn.name, map))
+    } else None
+
+    result
+      .orElse {
+        map(this).get(key)
+      }
+      .orElse {
+        fragments.get(key)
+      }
+  }
+}
+
+object Declarations {
+
+  def apply(declarations: Seq[DomainElement]): Declarations = {
+    val result = Declarations()
+    declarations.foreach(result += _)
+    result
+  }
 }

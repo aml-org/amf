@@ -11,9 +11,11 @@ case class ScalarShape(fields: Fields, annotations: Annotations) extends Shape w
 
   def dataType: String = fields(DataType)
 
-  def withDataType(dataType: String): this.type    = set(DataType, dataType)
+  def withDataType(dataType: String): this.type = set(DataType, dataType)
 
   override def adopted(parent: String): this.type = withId(parent + "/scalar/" + name)
+
+  override def linkCopy(): ScalarShape = ScalarShape().withId(id)
 }
 
 object ScalarShape {

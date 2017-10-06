@@ -22,10 +22,8 @@ object ValidationsImporter {
   protected def validationFiles(): List[ValidationsFile] = {
     val folder = validationsFolder
     if (folder.exists && folder.isDirectory) {
-      folder
-        .listFiles
-        .toList
-        .map( new ValidationsFile(_) )
+      folder.listFiles.toList
+        .map(new ValidationsFile(_))
     } else {
       List[ValidationsFile]()
     }
@@ -37,9 +35,11 @@ object ValidationsImporter {
     */
   def toScala: String = {
     val validations: List[String] = validationFiles().flatMap(_.lines())
-    val lines = validations.map { (line) =>
-      "\t\"" + line + "\""
-    }.reduce(_ + ",\n" + _)
+    val lines = validations
+      .map { (line) =>
+        "\t\"" + line + "\""
+      }
+      .reduce(_ + ",\n" + _)
 
     s"""
        |// auto-generated class from ValidationsImporter.toScala

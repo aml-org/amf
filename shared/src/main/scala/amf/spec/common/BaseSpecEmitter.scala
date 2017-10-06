@@ -14,7 +14,7 @@ import amf.domain.extensions.{
   ObjectNode => DataObjectNode,
   ScalarNode => DataScalarNode
 }
-import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
+import amf.domain._
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{ASTEmitter, Position}
@@ -65,8 +65,8 @@ trait BaseSpecEmitter {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ScalarEmitter(v: AmfScalar) extends Emitter {
-    override def emit(): Unit = sourceOr(v.annotations, raw(v.value.toString))
+  case class ScalarEmitter(v: AmfScalar, tag: YType = YType.Str) extends Emitter {
+    override def emit(): Unit = sourceOr(v.annotations, raw(v.value.toString, tag))
 
     override def position(): Position = pos(v.annotations)
   }
@@ -158,30 +158,48 @@ trait BaseSpecEmitter {
       }
     }
 
-    def emitObject(objectNode: DataObjectNode): Unit = {
-      val emitters = objectNode.properties.keys.map { property =>
-        DataPropertyEmitter(property, objectNode, ordering)
-      }.toSeq
-      map { () =>
-        ordering.sorted(emitters).foreach(_.emit())
+    def emitters(): Seq[Emitter] = {
+      dataNode match {
+        case scalar: DataScalarNode => Seq(scalarEmitter(scalar))
+        case array: DataArrayNode   => arrayEmitters(array)
+        case obj: DataObjectNode    => objectEmitters(obj)
       }
     }
 
+    def objectEmitters(objectNode: DataObjectNode): Seq[Emitter] = {
+      objectNode.properties.keys.map { property =>
+        DataPropertyEmitter(property, objectNode, ordering)
+      }.toSeq
+    }
+
+    def emitObject(objectNode: DataObjectNode): Unit = {
+      map { () =>
+        ordering.sorted(objectEmitters(objectNode)).foreach(_.emit())
+      }
+    }
+
+    def arrayEmitters(arrayNode: DataArrayNode): Seq[Emitter] = {
+      arrayNode.members.map(DataNodeEmitter(_, ordering))
+    }
+
     def emitArray(arrayNode: DataArrayNode): Unit = {
-      val emitters = arrayNode.members.map(DataNodeEmitter(_, ordering))
       array { () =>
-        ordering.sorted(emitters).foreach(_.emit())
+        ordering.sorted(arrayEmitters(arrayNode)).foreach(_.emit())
       }
     }
 
     def emitScalar(scalar: DataScalarNode): Unit = {
+      scalarEmitter(scalar).emit()
+    }
+
+    def scalarEmitter(scalar: DataScalarNode): Emitter = {
       scalar.dataType match {
-        case Some(t) if t == xsdString  => raw(scalar.value)
-        case Some(t) if t == xsdInteger => raw(scalar.value, YType.Int)
-        case Some(t) if t == xsdFloat   => raw(scalar.value, YType.Float)
-        case Some(t) if t == xsdBoolean => raw(scalar.value, YType.Bool)
-        case Some(t) if t == xsdNil     => raw("null")
-        case _                          => raw(scalar.value)
+        case Some(t) if t == xsdString  => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Str)
+        case Some(t) if t == xsdInteger => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Int)
+        case Some(t) if t == xsdFloat   => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Float)
+        case Some(t) if t == xsdBoolean => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Bool)
+        case Some(t) if t == xsdNil     => ScalarEmitter(AmfScalar("null", Annotations()), YType.Str)
+        case _                          => ScalarEmitter(AmfScalar(scalar.value, Annotations()), YType.Str)
       }
     }
 
@@ -263,13 +281,16 @@ trait BaseSpecEmitter {
     override def position(): Position = pos(declaration.annotations)
   }
 
-  case class AbstractDeclarationsEmitter(key: String, declarations: Seq[AbstractDeclaration], ordering: SpecOrdering)
+  case class AbstractDeclarationsEmitter(key: String,
+                                         declarations: Seq[AbstractDeclaration],
+                                         ordering: SpecOrdering,
+                                         tagEmitter: (DomainElement, String) => Emitter)
       extends Emitter {
     override def emit(): Unit = {
       entry { () =>
         raw(key)
         map { () =>
-          traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering))))
+          traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering, tagEmitter))))
         }
       }
     }
@@ -277,16 +298,21 @@ trait BaseSpecEmitter {
     override def position(): Position = declarations.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
   }
 
-  case class AbstractDeclarationEmitter(declaration: AbstractDeclaration, ordering: SpecOrdering) extends Emitter {
+  case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
+                                        ordering: SpecOrdering,
+                                        tagEmitter: (DomainElement, String) => Emitter)
+      extends Emitter {
     override def position(): Position = pos(declaration.annotations)
 
     override def emit(): Unit = {
       entry { () =>
         val name = Option(declaration.name)
           .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
-
         raw(name)
-        DataNodeEmitter(declaration.dataNode, ordering).emit()
+        if (declaration.isLink)
+          declaration.linkTarget.foreach(l => tagEmitter(l, declaration.linkLabel.getOrElse(l.id)).emit())
+        else
+          DataNodeEmitter(declaration.dataNode, ordering).emit()
       }
     }
   }

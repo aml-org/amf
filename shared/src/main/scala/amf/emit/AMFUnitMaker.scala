@@ -1,13 +1,14 @@
 package amf.emit
 
 import amf.client.GenerationOptions
+import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.graph.GraphEmitter
 import amf.remote.{Amf, Oas, Raml, Vendor}
-import amf.spec.dialects.DialectEmitter
-import amf.spec.oas.{OasDocumentEmitter, OasModuleEmitter}
-import amf.spec.raml.{RamlDocumentEmitter, RamlModuleEmitter}
+import amf.spec.dialects.{DialectEmitter, DialectFragment}
+import amf.spec.oas.{OasDocumentEmitter, OasFragmentEmitter, OasModuleEmitter}
+import amf.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument
 
 /**
@@ -21,9 +22,15 @@ class AMFUnitMaker {
       case Raml | Oas => makeUnitWithSpec(unit, vendor)
     }
   }
-  private def isDialect(unit:BaseUnit) = unit match {
+  private def isDialect(unit: BaseUnit) = unit match {
     case document: Document => document.encodes.isInstanceOf[DomainEntity]
-    case _ => false
+    case module: Module =>
+      module.declares exists {
+        case _: DomainEntity => true
+        case _               => false
+      }
+    case _: DialectFragment => true
+    case _                  => false
   }
 
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): YDocument = {
@@ -31,7 +38,7 @@ class AMFUnitMaker {
       case Raml if isDialect(unit) => makeRamlDialect(unit)
       case Raml                    => makeRamlUnit(unit)
       case Oas                     => makeOasUnit(unit)
-      case _ => throw new IllegalStateException("Invalid vendor " + vendor)
+      case _                       => throw new IllegalStateException("Invalid vendor " + vendor)
     }
   }
 
@@ -40,12 +47,14 @@ class AMFUnitMaker {
   private def makeRamlUnit(unit: BaseUnit): YDocument = unit match {
     case module: Module     => RamlModuleEmitter(module).emitModule()
     case document: Document => RamlDocumentEmitter(document).emitDocument()
+    case fragment: Fragment => new RamlFragmentEmitter(fragment).emitFragment()
     case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 
   private def makeOasUnit(unit: BaseUnit): YDocument = unit match {
     case module: Module     => OasModuleEmitter(module).emitModule()
     case document: Document => OasDocumentEmitter(document).emitDocument()
+    case fragment: Fragment => new OasFragmentEmitter(fragment).emitFragment()
     case _                  => throw new IllegalStateException("Invalid base unit form maker")
   }
 

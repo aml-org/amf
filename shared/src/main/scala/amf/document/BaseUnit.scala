@@ -1,6 +1,8 @@
 package amf.document
 
 import amf.domain.DomainElement
+import amf.metadata.document.DocumentModel.{Declares, References}
+import amf.metadata.document.{BaseUnitModel, FragmentModel}
 import amf.model.{AmfArray, AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
@@ -18,6 +20,12 @@ trait BaseUnit extends AmfObject {
   /** Returns the usage comment for de element */
   def usage: String
 
+  def withReferences(references: Seq[BaseUnit]): this.type = setArrayWithoutId(References, references)
+
+  def withLocation(location: String): this.type = set(BaseUnitModel.Location, location)
+
+  def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
+
   /**
     * finds in the nested model structure an AmfObject with the requested Id
     * @param id URI of the model element
@@ -31,17 +39,22 @@ trait BaseUnit extends AmfObject {
     )
   }
 
-
   // Private lookup methods
 
-  private def findInEncodedModel(predicate:(DomainElement) => Boolean, encoder: BaseUnit, first: Boolean = false, acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement]) = {
+  private def findInEncodedModel(predicate: (DomainElement) => Boolean,
+                                 encoder: BaseUnit,
+                                 first: Boolean = false,
+                                 acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement]) = {
     encoder match {
       case encoder: EncodesModel => findModelByCondition(predicate, encoder.encodes, first, acc)
       case _                     => ListBuffer.empty
     }
   }
 
-  private def findInDeclaredModel(predicate:(DomainElement) => Boolean, encoder: BaseUnit, first: Boolean, acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
+  private def findInDeclaredModel(predicate: (DomainElement) => Boolean,
+                                  encoder: BaseUnit,
+                                  first: Boolean,
+                                  acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
     encoder match {
       case encoder: DeclaresModel => findModelByConditionInSeq(predicate, encoder.declares, first, acc)
       case _                      => ListBuffer.empty
@@ -59,7 +72,10 @@ trait BaseUnit extends AmfObject {
     }
   }
 
-  private def findModelByCondition(predicate:(DomainElement) => Boolean, element: DomainElement, first: Boolean, acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
+  private def findModelByCondition(predicate: (DomainElement) => Boolean,
+                                   element: DomainElement,
+                                   first: Boolean,
+                                   acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
     val found = predicate(element)
     if (found) { acc += element }
     if (found && first) {
@@ -69,7 +85,10 @@ trait BaseUnit extends AmfObject {
     }
   }
 
-  private def findModelByConditionInSeq(predicate:(DomainElement) => Boolean, elements: Seq[AmfElement], first: Boolean, acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
+  private def findModelByConditionInSeq(predicate: (DomainElement) => Boolean,
+                                        elements: Seq[AmfElement],
+                                        first: Boolean,
+                                        acc: ListBuffer[DomainElement]): ListBuffer[DomainElement] = {
     if (elements.isEmpty) {
       acc
     } else {

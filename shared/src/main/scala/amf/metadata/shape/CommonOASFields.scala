@@ -24,13 +24,6 @@ trait CommonOASFields {
 
   val MultipleOf = Field(Int, Shapes + "multipleOf")
 
-  val commonOASFields = List(Pattern,
-    MinLength,
-    MaxLength,
-    Minimum,
-    Maximum,
-    ExclusiveMinimum,
-    ExclusiveMaximum,
-    Format,
-    MultipleOf)
+  val commonOASFields =
+    List(Pattern, MinLength, MaxLength, Minimum, Maximum, ExclusiveMinimum, ExclusiveMaximum, Format, MultipleOf)
 }

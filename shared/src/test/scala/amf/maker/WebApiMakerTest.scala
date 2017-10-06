@@ -7,7 +7,7 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.shape.{ScalarShape, XMLSerializer,PropertyDependencies}
+import amf.shape.{ScalarShape, XMLSerializer, PropertyDependencies}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

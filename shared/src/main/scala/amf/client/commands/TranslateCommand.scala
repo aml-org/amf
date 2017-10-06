@@ -10,15 +10,15 @@ import scala.util.{Failure, Success}
 
 class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
-  val validationCommand = new ValidateCommand(platform)
+  val validationCommand              = new ValidateCommand(platform)
   var validation: Option[Validation] = None
 
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
-      _          <- setupValidationTranslate(config)
-      model      <- parseInput(config)
-      _          <- checkValidation(config, model)
-      generated  <- generateOutput(config, model)
+      _         <- setupValidationTranslate(config)
+      model     <- parseInput(config)
+      _         <- checkValidation(config, model)
+      generated <- generateOutput(config, model)
     } yield {
       generated
     }
@@ -32,7 +32,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def setupValidationTranslate(config:ParserConfig): Future[Unit] = {
+  def setupValidationTranslate(config: ParserConfig): Future[Unit] = {
     if (config.validate) {
       setupValidation(config).map { validation =>
         this.validation = Some(validation)
@@ -46,7 +46,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     if (validation.isDefined) {
       val profile = config.customProfile match {
         case Some(_) => validation.get.profile.get.name
-        case None => config.validationProfile
+        case None    => config.validationProfile
       }
       validation.get.validate(model, profile, config.validationProfile) map { report =>
         if (!report.conforms) {
@@ -63,4 +63,3 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
 object TranslateCommand {
   def apply(platform: Platform) = new TranslateCommand(platform)
 }
-

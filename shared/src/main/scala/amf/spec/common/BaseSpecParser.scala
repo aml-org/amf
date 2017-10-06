@@ -1,7 +1,11 @@
 package amf.spec.common
 
+import amf.compiler.ParsedReference
+import amf.document.Fragment.Fragment
+import amf.document.{BaseUnit, DeclaresModel, Document}
 import amf.domain.Annotation.ExplicitField
-import amf.domain.`abstract`.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.domain.`abstract`._
+import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, CreativeWork, License, Organization}
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
@@ -9,6 +13,7 @@ import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
+import amf.spec.Declarations
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
 import scala.collection.mutable
@@ -16,7 +21,9 @@ import scala.collection.mutable
 /**
   * Base spec parser.
   */
-private[spec] object BaseSpecParser {
+private[spec] trait BaseSpecParser {
+
+  implicit val spec: SpecParserContext
 
   case class CreativeWorkParser(map: YMap) {
     def parse(): CreativeWork = {
@@ -32,7 +39,7 @@ private[spec] object BaseSpecParser {
         creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
       })
 
-      AnnotationParser(creativeWork, map).parse()
+      AnnotationParser(() => creativeWork, map).parse()
 
       creativeWork
     }
@@ -58,7 +65,7 @@ private[spec] object BaseSpecParser {
         organization.set(OrganizationModel.Email, value.string(), Annotations(entry))
       })
 
-      AnnotationParser(organization, map).parse()
+      AnnotationParser(() => organization, map).parse()
 
       organization
     }
@@ -78,7 +85,7 @@ private[spec] object BaseSpecParser {
         license.set(LicenseModel.Name, value.string(), Annotations(entry))
       })
 
-      AnnotationParser(license, map).parse()
+      AnnotationParser(() => license, map).parse()
 
       license
     }
@@ -149,17 +156,140 @@ private[spec] object BaseSpecParser {
     }
   }
 
-  case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, entry: YMapEntry) {
+  case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mutable.Map(),
+                                   declarations: Declarations = Declarations()) {
+
+    def +=(alias: String, unit: BaseUnit): Unit = {
+      references += (alias -> unit)
+      val library = declarations.getOrCreateLibrary(alias)
+      // todo : ignore domain entities of vocabularies?
+      unit match {
+        case d: DeclaresModel =>
+          d.declares
+            .filter({
+              case d: DomainEntity => false
+              case _               => true
+            })
+            .foreach(library += _)
+      }
+    }
+
+    def +=(url: String, fragment: Fragment): Unit = {
+      references += (url   -> fragment)
+      declarations += (url -> fragment)
+    }
+
+    def +=(url: String, fragment: Document): Unit = references += (url -> fragment)
+  }
+
+  case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference]) {
+    def parse(): ReferenceDeclarations = {
+      val result: ReferenceDeclarations = parseLibraries()
+
+      references.foreach {
+        case ParsedReference(f: Fragment, s: String) => result += (s, f)
+        case ParsedReference(d: Document, s: String) => result += (s, d)
+        case _                                       =>
+      }
+
+      result
+    }
+
+    private def target(url: String): Option[BaseUnit] =
+      references.find(r => r.parsedUrl.equals(url)).map(_.baseUnit)
+
+    private def parseLibraries(): ReferenceDeclarations = {
+      val result = ReferenceDeclarations()
+
+      map.key(
+        key,
+        entry =>
+          entry.value.value.toMap.entries.foreach(e => {
+            val alias: String = e.key
+            val url: String   = e.value
+            target(url).foreach {
+              case module: DeclaresModel => result += (alias, module) // this is
+              case other =>
+                throw new Exception(s"Expected module but found: $other") // todo Uses should only reference modules...
+            }
+          })
+      )
+
+      result
+    }
+  }
+
+  def parseResourceTypeDeclarations(key: String,
+                                    map: YMap,
+                                    customProperties: String,
+                                    declarations: Declarations): Unit = {
+
+    map.key(
+      key,
+      e => {
+        e.value.value.toMap.entries.map(
+          resourceEntry =>
+            declarations += AbstractDeclarationParser(ResourceType(resourceEntry),
+                                                      customProperties,
+                                                      resourceEntry,
+                                                      declarations).parse())
+      }
+    )
+  }
+
+  def parseTraitDeclarations(key: String, map: YMap, customProperties: String, declarations: Declarations): Unit = {
+    map.key(
+      key,
+      e => {
+        e.value.value.toMap.entries.map(traitEntry =>
+          declarations += AbstractDeclarationParser(Trait(traitEntry), customProperties, traitEntry, declarations)
+            .parse())
+      }
+    )
+  }
+
+  object AbstractDeclarationParser {
+
+    def apply(declaration: AbstractDeclaration,
+              parent: String,
+              entry: YMapEntry,
+              declarations: Declarations): AbstractDeclarationParser =
+      new AbstractDeclarationParser(declaration, parent, entry.key.value.toScalar.text, entry.value, declarations)
+  }
+
+  case class AbstractDeclarationParser(declaration: AbstractDeclaration,
+                                       parent: String,
+                                       key: String,
+                                       entryValue: YNode,
+                                       declarations: Declarations) {
     def parse(): AbstractDeclaration = {
-      val key        = entry.key.value.toScalar.text
-      val parameters = AbstractVariables()
-      val dataNode   = DataNodeParser(entry.value, parameters, Some(parent + s"/$key")).parse()
 
-      declaration.withName(key).adopted(parent).withDataNode(dataNode)
+      spec.link(entryValue) match {
+        case Left(link) => parseReferenced(declaration, link, Annotations(entryValue))
+        case Right(value) =>
+          val parameters = AbstractVariables()
+          val dataNode   = DataNodeParser(value, parameters, Some(parent + s"/$key")).parse()
 
-      parameters.ifNonEmpty(p => declaration.withVariables(p))
+          declaration.withName(key).adopted(parent).withDataNode(dataNode)
 
-      declaration
+          parameters.ifNonEmpty(p => declaration.withVariables(p))
+
+          declaration
+      }
+    }
+
+    def parseReferenced(declared: AbstractDeclaration,
+                        parsedUrl: String,
+                        annotations: Annotations): AbstractDeclaration = {
+      val d = declared match {
+        case _: Trait        => declarations.findTrait(parsedUrl)
+        case _: ResourceType => declarations.findResourceType(parsedUrl)
+      }
+      d.map { a =>
+          val copied: AbstractDeclaration = a.link(Some(parsedUrl), Some(annotations))
+          copied.withName(key)
+        }
+        .getOrElse(throw new IllegalStateException("Could not find abstract declaration in references map for link"))
     }
   }
 
@@ -228,4 +358,8 @@ private[spec] object BaseSpecParser {
     private def annotations() = Annotations(ast)
   }
 
+}
+
+trait SpecParserContext {
+  def link(node: YNode): Either[String, YNode]
 }

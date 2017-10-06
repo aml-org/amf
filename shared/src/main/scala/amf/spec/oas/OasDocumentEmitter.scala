@@ -1,6 +1,7 @@
 package amf.spec.oas
 
-import amf.document.{BaseUnit, Document}
+import amf.document.Fragment.{ExtensionFragment, OverlayFragment}
+import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.{CustomDomainProperty, idCounter}
@@ -11,7 +12,7 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position.ZERO
 import amf.parser.{ASTEmitter, Position}
-import amf.remote.Oas
+import amf.remote.{Oas, Vendor}
 import amf.shape._
 import amf.spec.common.BaseSpecEmitter
 import amf.spec.{Declarations, Emitter, SpecOrdering}
@@ -25,20 +26,23 @@ import scala.collection.mutable.ListBuffer
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
+case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
-  private def retrieveWebApi(): WebApi = document.encodes match {
-    case webApi: WebApi => webApi
-    case _              => throw new Exception("Cannot emit OAS api from document that does not encode a WebAPI")
+  private def retrieveWebApi(): WebApi = document match {
+    case document: Document           => document.encodes.asInstanceOf[WebApi]
+    case extension: ExtensionFragment => extension.encodes
+    case overlay: OverlayFragment     => overlay.encodes
+    case _                            => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
 
   def emitDocument(): YDocument = {
+    val doc = document.asInstanceOf[Document]
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, document.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, doc.encodes.annotations)
 
     val apiEmitters = emitWebApi(ordering)
     // TODO ordering??
-    val declares         = DeclarationsEmitter(document.declares, ordering).emitters
+    val declares         = DeclarationsEmitter(doc.declares, ordering).emitters
     val referenceEmitter = ReferencesEmitter(document.references, ordering)
 
     emitter.document { () =>
@@ -53,12 +57,13 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
   }
 
   def emitWebApi(ordering: SpecOrdering): Seq[Emitter] = {
-    val model = retrieveWebApi()
-    val api   = WebApiEmitter(model, ordering)
+    val model  = retrieveWebApi()
+    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val api    = WebApiEmitter(model, ordering, vendor)
     api.emitters
   }
 
-  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering) {
+  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[Vendor]) {
     val emitters: Seq[Emitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[Emitter]()
@@ -94,25 +99,26 @@ case class OasDocumentEmitter(document: Document) extends OasSpecEmitter {
 
     private case class InfoEmitter(fs: Fields, ordering: SpecOrdering) extends Emitter {
       override def emit(): Unit = {
-        entry { () =>
-          raw("info")
-          val result = mutable.ListBuffer[Emitter]()
+        val result = mutable.ListBuffer[Emitter]()
 
-          fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
+        fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
 
-          fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
+        fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
 
-          fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService", f))
+        fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService", f))
 
-          fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
+        fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
 
-          fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
+        fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
 
-          map { () =>
-            traverse(ordering.sorted(result))
+        if (result.nonEmpty)
+          entry { () =>
+            raw("info")
+            map { () =>
+              traverse(ordering.sorted(result))
+            }
           }
 
-        }
       }
 
       override def position(): Position = {
@@ -651,7 +657,8 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
   case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
-      if (references.nonEmpty) {
+      val modules = references.collect({ case m: Module => m })
+      if (modules.nonEmpty) {
         entry { () =>
           raw("x-uses")
           map { () =>
@@ -685,10 +692,16 @@ class OasSpecEmitter extends BaseSpecEmitter {
         result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
 
       if (declarations.resourceTypes.nonEmpty)
-        result += AbstractDeclarationsEmitter("x-resourceTypes", declarations.resourceTypes.values.toSeq, ordering)
+        result += AbstractDeclarationsEmitter("x-resourceTypes",
+                                              declarations.resourceTypes.values.toSeq,
+                                              ordering,
+                                              (e: DomainElement, key: String) => TagToReferenceEmitter(e, Some(key)))
 
       if (declarations.traits.nonEmpty)
-        result += AbstractDeclarationsEmitter("x-traits", declarations.traits.values.toSeq, ordering)
+        result += AbstractDeclarationsEmitter("x-traits",
+                                              declarations.traits.values.toSeq,
+                                              ordering,
+                                              (e: DomainElement, key: String) => TagToReferenceEmitter(e, Some(key)))
 
       result
     }
@@ -699,7 +712,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         raw("definitions")
         map { () =>
-          val namedEntities = types.map(t => NamedTypeEmitter(t, ordering))
+          val namedEntities       = types.map(t => NamedTypeEmitter(t, ordering))
           val sortedNamedEntities = ordering.sorted(namedEntities)
           traverse(sortedNamedEntities)
         }
@@ -716,14 +729,42 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
+        if (shape.isLink)
+          shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel).emit())
         map { () =>
-          val emitters = OasTypeEmitter(shape, ordering).emitters()
+          val emitters       = OasTypeEmitter(shape, ordering).emitters()
           val sortedEmitters = ordering.sorted(emitters)
           traverse(sortedEmitters)
         }
       }
     }
   }
+
+  case class TagToReferenceEmitter(target: DomainElement, label: Option[String]) extends Emitter {
+    def emit(): Unit = {
+      val refVal = label.getOrElse(target.id)
+      map { () =>
+        ref(refVal)
+      }
+    }
+
+    override def position(): Position = pos(target.annotations)
+  }
+
+  case class NamedRefEmitter(key: String, url: String, pos: Position = Position.ZERO) extends Emitter {
+    override def emit(): Unit = {
+      entry { () =>
+        raw(key)
+        map { () =>
+          ref(url)
+        }
+      }
+    }
+
+    override def position(): Position = pos
+  }
+
+  protected def ref(url: String): Unit = EntryEmitter("$ref", url).emit() // todo YType("$ref")
 
   case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
@@ -745,12 +786,18 @@ class OasSpecEmitter extends BaseSpecEmitter {
           .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
           .get
         raw(name)
-        map { () =>
-          val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
-          traverse(ordering.sorted(emitters))
-        }
+        if (annotationType.linkTarget.isDefined)
+          annotationType.linkTarget.foreach(l => TagToReferenceEmitter(l, annotationType.linkLabel).emit())
+        else
+          emitAnnotationFields()
       }
+    }
 
+    def emitAnnotationFields(): Unit = {
+      map { () =>
+        val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
+        traverse(ordering.sorted(emitters))
+      }
     }
 
     override def position(): Position = pos(annotationType.annotations)
@@ -831,7 +878,6 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
     override def position(): Position = pos(shape.annotations)
   }
-
 
   case class AnyShapeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
@@ -1019,9 +1065,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
                   properties.get(iri.value.toString).map(p => AmfScalar(p.name, iri.annotations)))
               })
 
-            targets.foreach(t => {
+            targets.foreach(target => {
               array { () =>
-                traverse(ordering.sorted(t.map(ScalarEmitter)))
+                traverse(ordering.sorted(target.map(t => ScalarEmitter(t))))
               }
             })
           }
@@ -1042,7 +1088,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
   }
 
   trait CommonOASFieldsEmitter {
-    def emitCommonFields(fs: Fields, result: ListBuffer[Emitter]) = {
+    def emitCommonFields(fs: Fields, result: ListBuffer[Emitter]): Option[result.type] = {
       fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 
       fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
@@ -1211,6 +1257,23 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  // todo to check, extention?
+  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering) extends Emitter {
+
+    override def emit(): Unit = {
+      val result = ListBuffer[Emitter]()
+      val fs     = userDocumentation.fields
+      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
+      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
+
+      map { () =>
+        traverse(ordering.sorted(result))
+      }
+    }
+
+    override def position(): Position = pos(userDocumentation.annotations)
   }
 
 }

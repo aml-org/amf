@@ -11,6 +11,7 @@ object UnionShapeModel extends ShapeModel with DomainElementModel {
 
   override def fields: List[Field] = List(AnyOf) ++ ShapeModel.fields ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = List(Namespace.Shapes + "UnionShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
+  override val `type`: List[ValueType] =
+    List(Namespace.Shapes + "UnionShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
 
 }

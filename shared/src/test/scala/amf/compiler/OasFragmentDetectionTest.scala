@@ -1,0 +1,55 @@
+package amf.compiler
+
+import amf.remote.OasJsonHint
+import amf.unsafe.PlatformSecrets
+import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Matchers._
+import scala.concurrent.{ExecutionContext, Future}
+
+/**
+  *
+  */
+class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  private val basePath = "file://shared/src/test/resources/references/fragments/"
+
+  test("Detect Oas Data Type Fragment") {
+    assertHeader("data-type-without-header.json", Some(OasFragmentHeader.Oas20DataType))
+  }
+
+  test("Detect Oas ResourceType") {
+    assertHeader("resource-type-without-header.json", Some(OasFragmentHeader.Oas20ResourceType))
+  }
+
+  test("Detect Oas Trait") {
+    assertHeader("trait-without-header.json", Some(OasFragmentHeader.Oas20Trait))
+  }
+
+  test("Detect Oas DocumentationItem") {
+    assertHeader("documentation-item-without-header.json", Some(OasFragmentHeader.Oas20DocumentationItem))
+  }
+
+  test("Detect Oas Annotation Type Declaration") {
+    assertHeader("annotation-without-header.json", Some(OasFragmentHeader.Oas20AnnotationTypeDeclaration))
+  }
+
+  test("Detect Oas Extention") {
+    assertHeader("extension-without-header.json", Some(OasFragmentHeader.Oas20Extension))
+  }
+
+  test("Detect Oas Any matching fragment") {
+    assertHeader("no-match-without-header.json", None)
+  }
+
+  test("Detect Oas More than one matching fragment") {
+    assertHeader("two-match-without-header.json", None)
+  }
+
+  private def assertHeader(path: String, expectedOption: Option[OasHeader]): Future[Assertion] = {
+    AMFCompiler(basePath + path, platform, OasJsonHint)
+      .root()
+      .map(OasFragmentHeader(_) shouldBe expectedOption)
+  }
+
+}

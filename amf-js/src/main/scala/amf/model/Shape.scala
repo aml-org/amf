@@ -7,15 +7,25 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class AnyShape(private[amf] val any: amf.shape.AnyShape) extends Shape(any) {
   override private[amf] def element = any
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.shape.AnyShape => AnyShape(l) })
+
+  override def linkCopy(): DomainElement with Linkable = AnyShape(element.linkCopy())
 }
 
 @JSExportAll
 case class NilShape(private[amf] val nil: amf.shape.NilShape) extends Shape(nil) {
   override private[amf] def element = nil
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.shape.NilShape => NilShape(l) })
+
+  override def linkCopy(): DomainElement with Linkable = NilShape(element.linkCopy())
 }
 
 @JSExportAll
-abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement {
+abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement with Linkable {
 
   val name: String                    = shape.name
   val displayName: String             = shape.displayName

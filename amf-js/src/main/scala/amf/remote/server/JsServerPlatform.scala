@@ -30,7 +30,9 @@ class JsServerPlatform extends Platform {
           promise.failure(new Exception(s"Could not load file $path from fs"))
         } else {
           promise.success(
-            Content(new CharSequenceStream(path, content.toString), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension)))
+            Content(new CharSequenceStream(path, content.toString),
+                    ensureFileAuthority(path),
+                    extension(path).flatMap(mimeFromExtension)))
         }
       }
     )
@@ -85,5 +87,5 @@ class JsServerPlatform extends Platform {
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
 
   override val dialectsRegistry = JSDialectRegistry(this)
-  override val validator = new SHACLValidator()
+  override val validator        = new SHACLValidator()
 }

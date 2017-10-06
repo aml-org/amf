@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.domain.{Annotations, Fields}
+import amf.domain._
 import amf.metadata.Field
 
 /**
@@ -75,9 +75,13 @@ trait AmfObject extends AmfElement {
 
   /** Set field value. */
   def set(field: Field, value: AmfElement, annotations: Annotations): this.type = {
-    fields.set(id, field, value, annotations)
+    value match {
+      case link: Linkable if link.isLink =>
+        fields.link(field, link.linkTarget.get.asInstanceOf[AmfObject], annotations)
+      case _ => fields.set(id, field, value, annotations)
+    }
     this
   }
-   def dynamicTypes(): Seq[String] =List();
 
+  def dynamicTypes(): Seq[String] = List()
 }

@@ -17,7 +17,7 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://shared/src/test/resources/referencesCycle/"
+  val basePath = "file://shared/src/test/resources/references/"
 
   test("simple library raml") {
     assertReferences("libraries.raml", Seq("lib/lib.raml"), RamlYamlHint, Raml)
@@ -51,9 +51,45 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
     assertReferences("libraries.raml.jsonld", Seq("lib/lib.raml"), AmfJsonHint, Raml)
   }
 
-  def assertReferences(documentRootPath: String, goldens: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
+  test("data type fragment raml to raml") {
+    assertReferences("data-type-fragment.raml", Seq("fragments/person.raml"), RamlYamlHint, Raml)
+  }
 
-    val expecteds: Future[Seq[ModuleContent]] = Future.sequence(goldens.map(g => {
+  test("data type fragment oas to oas") {
+    assertReferences("data-type-fragment.json", Seq("fragments/person.json"), OasJsonHint, Oas)
+  }
+
+  test("data type fragment raml to oas") {
+    assertReferences("data-type-fragment.raml", Seq("fragments/person.json"), RamlJsonHint, Oas)
+  }
+
+  test("data type fragment oas to raml") {
+    assertReferences("data-type-fragment.json", Seq("fragments/person.raml"), OasJsonHint, Raml)
+  }
+
+  test("data type fragment amf to raml from include") {
+    assertReferences("data-type-fragment.raml.jsonld", Seq("fragments/person.raml"), AmfJsonHint, Raml)
+  }
+
+  test("data type fragment amf to oas from include") {
+    assertReferences("data-type-fragment.json.jsonld", Seq("fragments/person.json"), AmfJsonHint, Oas)
+  }
+
+  test("resource type fragment raml to raml") {
+    assertReferences("resource-type-fragment.raml", Seq("fragments/resource-type.raml"), RamlYamlHint, Raml)
+  }
+
+  test("trait fragment raml to raml") {
+    assertReferences("trait-fragment.raml", Seq("fragments/trait.raml"), RamlYamlHint, Raml)
+  }
+
+  test("Alias library reference raml test") {
+    assertReferences("lib-alias-reference.raml", Seq("lib/lib-declaration.raml"), RamlYamlHint, Raml)
+  }
+
+  def assertReferences(documentRootPath: String, golden: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
+
+    val expected: Future[Seq[ModuleContent]] = Future.sequence(golden.map(g => {
       platform
         .resolve(basePath + g, None)
         .map(c => ModuleContent(c.url, c.stream.toString))
@@ -69,7 +105,7 @@ class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
         }))
       })
 
-    expecteds
+    expected
       .zip(actualModules)
       .map(DiffModule.checkListDiff)
 

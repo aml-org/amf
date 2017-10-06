@@ -65,4 +65,9 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
   def withInheritsScalar(name: String): ScalarShape = ScalarShape(node.withInheritsScalar(name))
 
   override private[amf] def element = node
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.shape.NodeShape => NodeShape(l) })
+
+  override def linkCopy(): DomainElement with Linkable = NodeShape(element.linkCopy())
 }

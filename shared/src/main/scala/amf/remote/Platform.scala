@@ -24,20 +24,19 @@ trait Platform {
     }
   }
 
-
   // Dealing with parsing of strings and HTTP caching
-  val resourceCache: mutable.Map[String,Content] = mutable.HashMap()
+  val resourceCache: mutable.Map[String, Content] = mutable.HashMap()
   def cacheResourceText(url: String, text: String, mimeType: Option[String] = None): Unit = {
     val content = Content(new CharSequenceStream(url, text), url, mimeType)
     resourceCache += (url -> content)
   }
   def removeCacheResourceText(url: String): Option[Content] = resourceCache.remove(url)
-  def resetResourceCache(): Unit = resourceCache.clear()
+  def resetResourceCache(): Unit                            = resourceCache.clear()
 
   def checkCache(url: String, eventualContent: () => Future[Content]): Future[_root_.amf.remote.Content] = {
     resourceCache.get(url) match {
       case Some(content) =>
-        val p:Promise[Content] = Promise()
+        val p: Promise[Content] = Promise()
         p.success(content)
         p.future
       case None => eventualContent()
@@ -48,7 +47,7 @@ trait Platform {
 
   val validator: SHACLValidator
 
-  def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file:/$str"}
+  def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file:/$str" }
 
   /** Test path resolution. */
   def resolvePath(path: String): String

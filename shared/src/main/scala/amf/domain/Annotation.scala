@@ -48,21 +48,24 @@ object Annotation {
 
   case class SynthesizedField() extends Annotation
 
-  case class DomainElementReference(name: String,ref:Option[DomainEntity]) extends SerializableAnnotation{
-    override val value: String = name}
+  case class DomainElementReference(name: String, ref: Option[DomainEntity]) extends SerializableAnnotation {
+    override val value: String = name
+  }
 
-  case class NamespaceImportsDeclaration(uses:Map[String,String]) extends SerializableAnnotation{
+  case class NamespaceImportsDeclaration(uses: Map[String, String]) extends SerializableAnnotation {
     override val name: String = "uses"
 
     override val value: String = uses.toString()
   }
-
 
   case class EndPointBodyParameter() extends Annotation
 
   case class DefaultPayload() extends Annotation
 
   case class EndPointParameter() extends Annotation
+
+  // save original text link?
+  case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
 
   case class SingleValueArray() extends SerializableAnnotation {
 

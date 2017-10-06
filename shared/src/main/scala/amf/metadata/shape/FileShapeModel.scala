@@ -9,7 +9,9 @@ object FileShapeModel extends ShapeModel with DomainElementModel with CommonOASF
 
   val FileTypes = Field(Array(Str), Namespace.Shapes + "fileType")
 
-  override def fields: List[Field] = List(FileTypes) ++ commonOASFields ++ ShapeModel.fields ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(FileTypes) ++ commonOASFields ++ ShapeModel.fields ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = List(Namespace.Shapes + "FileShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
+  override val `type`: List[ValueType] =
+    List(Namespace.Shapes + "FileShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
 }

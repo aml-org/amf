@@ -32,7 +32,6 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-
   def report(model: BaseUnit, validation: Validation, config: ParserConfig) = {
     val profile = validation.profile match {
       case Some(prof) => prof.name
@@ -48,7 +47,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
       case Some(f) => {
         platform.write(f, json)
       }
-      case None    => {
+      case None => {
         println(json)
       }
     }

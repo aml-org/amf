@@ -1,6 +1,11 @@
 package amf.document
 
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.extensions.CustomDomainProperty
+import amf.domain._
+import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
+import amf.metadata.document.{BaseUnitModel, DocumentModel, FragmentModel}
+import amf.model.AmfObject
+import amf.shape.Shape
 
 /**
   * RAML Fragments
@@ -8,44 +13,115 @@ import amf.domain.{Annotations, DomainElement, Fields}
 object Fragment {
 
   /** Units encoding domain fragments */
-  sealed trait Fragment extends BaseUnit with EncodesModel {
+  trait Fragment extends BaseUnit with EncodesModel {
 
     /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
-    override val references: Seq[BaseUnit] = Nil
-
-    override val fields: Fields = new Fields()
-
-    /** Set of annotations for object. */
-    override val annotations: Annotations = Annotations()
+    override val references: Seq[BaseUnit] = fields(DocumentModel.References)
 
     override def adopted(parent: String): this.type = withId(parent)
 
     override def usage: String = ""
+
+    override def encodes: DomainElement = fields(FragmentModel.Encodes)
+
+    override def location: String = fields(BaseUnitModel.Location)
   }
 
-  case class DocumentationItem(location: String, encodes: DomainElement) extends Fragment
+  // todo review
 
-  case class DataType(location: String, encodes: DomainElement) extends Fragment
+  case class DocumentationItem(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: UserDocumentation = super.encodes.asInstanceOf[UserDocumentation]
+  }
 
-  case class NamedExample(location: String, encodes: DomainElement) extends Fragment
+  case class DataType(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: Shape = super.encodes.asInstanceOf[Shape]
+  }
 
-  case class ResourceType(location: String, encodes: DomainElement) extends Fragment
+  case class NamedExample(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class Trait(location: String, encodes: DomainElement) extends Fragment
+  case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class AnnotationTypeDeclaration(location: String, encodes: DomainElement) extends Fragment
+  case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class Overlay(location: String, encodes: DomainElement) extends Fragment
+  case class ExtensionFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: WebApi = super.encodes.asInstanceOf[WebApi]
+    def extend: String           = fields(ExtensionModel.Extends)
 
-  case class Extension(location: String, encodes: DomainElement) extends Fragment
+    def withExtend(extend: BaseUnit): this.type = set(ExtensionModel.Extends, extend)
+  }
 
-  case class SecurityScheme(location: String, encodes: DomainElement) extends Fragment
+  case class OverlayFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: WebApi = super.encodes.asInstanceOf[WebApi]
+    def extend: String           = fields(OverlayModel.Extends)
 
-  case class Default(location: String, encodes: DomainElement) extends Fragment
+    def withExtend(extend: BaseUnit): this.type = set(OverlayModel.Extends, extend)
+  }
+
+  case class AnnotationTypeDeclaration(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
+  }
+
+  case class Overlay(fields: Fields, annotations: Annotations) extends Fragment
+
+  case class Extension(fields: Fields, annotations: Annotations) extends Fragment
+
+  case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment
+
+  case class Default(fields: Fields, annotations: Annotations) extends Fragment
+
+  object DocumentationItem {
+    def apply(): DocumentationItem = apply(Annotations())
+
+    def apply(annotations: Annotations): DocumentationItem = apply(Fields(), annotations)
+  }
+
+  object DataType {
+    def apply(): DataType = apply(Annotations())
+
+    def apply(annotations: Annotations): DataType = apply(Fields(), annotations)
+  }
+
+  object NamedExample {
+    def apply(): NamedExample = apply(Annotations())
+
+    def apply(annotations: Annotations): NamedExample = apply(Fields(), annotations)
+  }
+
+  object ResourceTypeFragment {
+    def apply(): ResourceTypeFragment = apply(Annotations())
+
+    def apply(annotations: Annotations): ResourceTypeFragment = apply(Fields(), annotations)
+  }
+
+  object TraitFragment {
+    def apply(): TraitFragment = apply(Annotations())
+
+    def apply(annotations: Annotations): TraitFragment = apply(Fields(), annotations)
+  }
+
+  object AnnotationTypeDeclaration {
+    def apply(): AnnotationTypeDeclaration = apply(Annotations())
+
+    def apply(annotations: Annotations): AnnotationTypeDeclaration = apply(Fields(), annotations)
+  }
+
+  object ExtensionFragment {
+    def apply(): ExtensionFragment = apply(Annotations())
+
+    def apply(annotations: Annotations): ExtensionFragment = apply(Fields(), annotations)
+  }
+
+  object OverlayFragment {
+    def apply(): OverlayFragment = apply(Annotations())
+
+    def apply(annotations: Annotations): OverlayFragment = apply(Fields(), annotations)
+  }
 }
 
-trait EncodesModel {
+trait EncodesModel extends AmfObject {
 
   /** Encoded [[amf.domain.DomainElement]] described in the document element. */
   def encodes: DomainElement
+
+  def withEncodes(encoded: DomainElement): this.type = set(FragmentModel.Encodes, encoded)
 }

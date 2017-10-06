@@ -4,9 +4,7 @@ import amf.compiler.Root
 import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
-import amf.metadata.document.{BaseUnitModel, ModuleModel}
-import amf.model.AmfArray
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YValueOps
 
 /**
   *
@@ -17,14 +15,15 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
     val module = Module(Annotations(root.document))
       .adopted(root.location)
       .add(SourceVendor(root.vendor))
-    module.set(BaseUnitModel.Location, root.location)
+
+    module.withLocation(root.location)
 
     root.document.value.foreach(document => {
 
-      val rootMap       = document.toMap
-      val enviromentRef = ReferencesParser(rootMap, root.references).parse()
+      val rootMap    = document.toMap
+      val references = ReferencesParser("uses", rootMap, root.references).parse()
 
-      val declares = parseDeclares(rootMap)
+      parseDeclarations(rootMap, references.declarations)
 
       // TODO invoke when it's done
       //    resourceTypes?
@@ -32,8 +31,9 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
       //      securitySchemes?
       UsageParser(rootMap, module).parse()
 
-      if (declares.nonEmpty) module.set(ModuleModel.Declares, AmfArray(declares))
-      if (enviromentRef.nonEmpty) module.set(BaseUnitModel.References, AmfArray(enviromentRef.values.toSeq))
+      val declarables = references.declarations.declarables()
+      if (declarables.nonEmpty) module.withDeclares(declarables)
+      if (references.references.nonEmpty) module.withReferences(references.references.values.toSeq)
     })
     module
 

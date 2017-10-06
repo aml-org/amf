@@ -22,7 +22,7 @@ class YamlGenerator {
       case map: YMap =>
         val hasContent = !writer.isEmpty()
         if (!previousSequence && hasContent) writer.indent()
-        visitChildren(map, forceLine = !previousSequence&&hasContent)
+        visitChildren(map, forceLine = !previousSequence && hasContent)
         writer.outdent()
       case seq: YSequence =>
         writer.line().indent()

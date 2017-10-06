@@ -14,7 +14,8 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://shared/src/test/resources/upanddown/"
+  val basePath       = "file://shared/src/test/resources/upanddown/"
+  val referencesPath = "file://shared/src/test/resources/references/"
 
   test("Full raml to raml test") {
     assertCycle("full-example.raml", "full-example.raml.raml", RamlYamlHint, Raml)
@@ -361,44 +362,132 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Test libraries raml to raml") {
-    assertCycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml)
+    assertCycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml, referencesPath)
   }
 
   test("Test libraries oas to oas") {
-    assertCycle("libraries.json", "libraries.json.json", OasJsonHint, Oas)
+    assertCycle("libraries.json", "libraries.json.json", OasJsonHint, Oas, referencesPath)
   }
 
   test("Test libraries raml to amf") {
-    assertCycle("libraries.raml", "libraries.raml.jsonld", RamlYamlHint, Amf)
+    assertCycle("libraries.raml", "libraries.raml.jsonld", RamlYamlHint, Amf, referencesPath)
   }
 
   test("Test libraries amf to raml") {
-    assertCycle("libraries.raml.jsonld", "libraries.raml.raml", AmfJsonHint, Raml)
+    assertCycle("libraries.raml.jsonld", "libraries.raml.raml", AmfJsonHint, Raml, referencesPath)
   }
 
   test("Test libraries oas to amf") {
-    assertCycle("libraries.json", "libraries.json.jsonld", OasJsonHint, Amf)
+    assertCycle("libraries.json", "libraries.json.jsonld", OasJsonHint, Amf, referencesPath)
   }
 
   test("Test libraries amf to oas") {
-    assertCycle("libraries.json.jsonld", "libraries.json.json", AmfJsonHint, Oas)
+    assertCycle("libraries.json.jsonld", "libraries.json.json", AmfJsonHint, Oas, referencesPath)
+  }
+
+  test("Test data type fragment raml to raml") {
+    assertCycle("data-type-fragment.raml", "data-type-fragment.raml", AmfJsonHint, Raml, referencesPath)
+  }
+
+  test("Test data type fragment amf to raml") {
+    assertCycle("data-type-fragment.raml.jsonld", "data-type-fragment.raml", AmfJsonHint, Raml, referencesPath)
+  }
+
+  test("Test data type fragment amf to amf") {
+    assertCycle("data-type-fragment.raml.jsonld", "data-type-fragment.raml.jsonld", AmfJsonHint, Amf, referencesPath)
+  }
+
+  test("Test data type fragment oas to oas") {
+    assertCycle("data-type-fragment.json", "data-type-fragment.json", OasJsonHint, Oas, referencesPath)
+  }
+
+  test("Test data type fragment oas to amf") {
+    assertCycle("data-type-fragment.json", "data-type-fragment.json.jsonld", OasJsonHint, Amf, referencesPath)
+  }
+
+  test("Test data type fragment amf to oas") {
+    assertCycle("data-type-fragment.json.jsonld", "data-type-fragment.json", AmfJsonHint, Oas, referencesPath)
+  }
+
+  test("resource type fragment raml to raml") {
+    assertCycle("resource-type-fragment.raml", "resource-type-fragment.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
+  test("trait fragment raml to raml") {
+    assertCycle("trait-fragment.raml", "trait-fragment.raml", RamlYamlHint, Raml, referencesPath)
   }
 
   // todo what we do when library file name changes changes on dump
   ignore("Test libraries raml to oas") {
-    assertCycle("libraries.raml", "libraries.json.json", RamlYamlHint, Oas)
+    assertCycle("libraries.raml", "libraries.json.json", RamlYamlHint, Oas, referencesPath)
   }
 
   ignore("Test libraries oas to raml") {
-    assertCycle("libraries.json", "libraries.raml.raml", OasJsonHint, Raml)
+    assertCycle("libraries.json", "libraries.raml.raml", OasJsonHint, Raml, referencesPath)
   }
 
-  def assertCycle(source: String, golden: String, hint: Hint, target: Vendor): Future[Assertion] = {
+  test("Extension fragment raml to amf") {
+    assertCycle("extension.raml", "extension.raml.jsonld", RamlYamlHint, Amf, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment raml to raml") {
+    assertCycle("extension.raml", "extension.raml.raml", RamlYamlHint, Raml, referencesPath + "extensions/")
+  }
+
+  test("Overlay fragment raml to amf") {
+    assertCycle("overlay.raml", "overlay.raml.jsonld", RamlYamlHint, Amf, referencesPath + "extensions/")
+  }
+
+  test("Overlay fragment raml to raml") {
+    assertCycle("overlay.raml", "overlay.raml.raml", RamlYamlHint, Raml, referencesPath + "extensions/")
+  }
+
+  test("Test libraries references in delares raml to raml") {
+    assertCycle("lib-alias-reference.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
+  test("Overlay fragment oas to amf") {
+    assertCycle("overlay.json", "overlay.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
+  }
+
+  test("Overlay fragment oas to oas") {
+    assertCycle("overlay.json", "overlay.json.json", OasJsonHint, Oas, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment oas to amf") {
+    assertCycle("extension.json", "extension.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment oas to oas") {
+    assertCycle("extension.json", "extension.json.json", OasJsonHint, Oas, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment jsonld to oas") {
+    assertCycle("extension.json.jsonld", "extension.json.json", AmfJsonHint, Oas, referencesPath + "extensions/")
+  }
+
+  test("Overlay fragment jsonld to oas") {
+    assertCycle("overlay.json.jsonld", "overlay.json.json", AmfJsonHint, Oas, referencesPath + "extensions/")
+  }
+
+  test("Extension fragment jsonld to raml") {
+    assertCycle("extension.raml.jsonld", "extension.raml.raml", AmfJsonHint, Raml, referencesPath + "extensions/")
+  }
+
+  test("Overlay fragment jsonld to raml") {
+    assertCycle("overlay.raml.jsonld", "overlay.raml.raml", AmfJsonHint, Raml, referencesPath + "extensions/")
+  }
+
+  def assertCycle(source: String,
+                  golden: String,
+                  hint: Hint,
+                  target: Vendor,
+                  path: String = basePath): Future[Assertion] = {
     val expected = platform
-      .resolve(basePath + golden, None)
+      .resolve(path + golden, None)
       .map(_.stream.toString)
 
-    val actual = AMFCompiler(basePath + source, platform, hint)
+    val actual = AMFCompiler(path + source, platform, hint)
       .build()
       .flatMap(unit =>
         new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)

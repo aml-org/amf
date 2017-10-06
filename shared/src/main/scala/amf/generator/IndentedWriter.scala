@@ -53,7 +53,7 @@ class IndentedWriter {
 
   override def toString: String = builder.toString
 
-  def isEmpty()= builder.isEmpty
+  def isEmpty() = builder.isEmpty
 
   private val builder: StringBuilder = new StringBuilder()
   private var indents                = 0

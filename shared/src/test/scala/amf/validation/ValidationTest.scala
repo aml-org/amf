@@ -14,37 +14,53 @@ import scala.concurrent.ExecutionContext
 
 case class ExpectedReport(conforms: Boolean, numErrors: Integer, profile: String)
 
-class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
+class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath="file://shared/src/test/resources/vocabularies/"
+  val basePath         = "file://shared/src/test/resources/vocabularies/"
   val vocabulariesPath = "file://shared/src/test/resources/vocabularies/"
-  val examplesPath = "file://shared/src/test/resources/validations/"
+  val examplesPath     = "file://shared/src/test/resources/validations/"
 
   test("Loading and serializing validations") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build()
-      )
-    actual.flatMap({ unit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }).zip(expected)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+
+    actual
+      .flatMap({ unit =>
+        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+      })
+      .zip(expected)
       .map(checkDiff)
   }
 
-
   test("Loading and serializing validations with inplace definition of encodes") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build())
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
@@ -52,12 +68,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   test("Loading and serializing validations with inplace definition of range") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build())
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
@@ -65,17 +89,24 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   test("Loading and serializing validations with union type") {
     val validation = Validation(platform)
-    val expected = platform.resolve(basePath+"validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation.loadValidationDialect()
-      .flatMap(unit =>
-        AMFCompiler(basePath + "validation_profile_example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-          .build())
-    actual.flatMap(unit=>new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+    val actual = validation
+      .loadValidationDialect()
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_profile_example.raml",
+                      platform,
+                      RamlYamlHint,
+                      None,
+                      None,
+                      platform.dialectsRegistry)
+            .build())
+    actual
+      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
   }
-
 
   test("Load dialect") {
     val validation = Validation(platform)
@@ -180,7 +211,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-
   test("Library example validation") {
     val validation = Validation(platform)
     for {
@@ -193,31 +223,30 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
     }
   }
 
-
   val testValidations = Map(
-    "bad_domain/amf.jsonld"               -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),
-    "bad_domain/valid.jsonld"             -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),
-    "endpoint/amf.jsonld"                 -> ExpectedReport(conforms = false, 1, ValidationProfileNames.AMF),
-    "endpoint/valid.jsonld"               -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
-    "operation/amf.jsonld"                -> ExpectedReport(conforms = false, 1, ValidationProfileNames.AMF),
-    "operation/valid.jsonld"              -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
-    "parameters/amf_properties.jsonld"    -> ExpectedReport(conforms = false, 4, ValidationProfileNames.AMF),
-    "parameters/amf_empty.jsonld"         -> ExpectedReport(conforms = false, 4, ValidationProfileNames.AMF),
-    "parameters/amf_valid.jsonld"         -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
-    "shapes/enum_amf.jsonld"              -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS),
-    "shapes/enum_valid.jsonld"            -> ExpectedReport(conforms = true, 0, ValidationProfileNames.OAS),
-    "webapi/amf.jsonld"                   -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS),
-    "webapi/valid.jsonld"                 -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),
-    "webapi/valid.jsonld"                 -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "webapi/bad_protocol.jsonld"          -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
-    "types/scalars/missing_type.jsonld"        -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
-    "types/scalars/missing_type_valid.jsonld"  -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/scalars/wrong_facet.jsonld"         -> ExpectedReport(conforms = false, 2, ValidationProfileNames.RAML),
-    "types/scalars/valid_facet.jsonld"         -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/arrays/wrong_items.jsonld"          -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
-    "types/arrays/right_items.jsonld"          -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"          -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"          -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS)
+    "bad_domain/amf.jsonld"                   -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),
+    "bad_domain/valid.jsonld"                 -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),
+    "endpoint/amf.jsonld"                     -> ExpectedReport(conforms = false, 1, ValidationProfileNames.AMF),
+    "endpoint/valid.jsonld"                   -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
+    "operation/amf.jsonld"                    -> ExpectedReport(conforms = false, 1, ValidationProfileNames.AMF),
+    "operation/valid.jsonld"                  -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
+    "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 4, ValidationProfileNames.AMF),
+    "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 4, ValidationProfileNames.AMF),
+    "parameters/amf_valid.jsonld"             -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
+    "shapes/enum_amf.jsonld"                  -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS),
+    "shapes/enum_valid.jsonld"                -> ExpectedReport(conforms = true, 0, ValidationProfileNames.OAS),
+    "webapi/amf.jsonld"                       -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS),
+    "webapi/valid.jsonld"                     -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),
+    "webapi/valid.jsonld"                     -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
+    "webapi/bad_protocol.jsonld"              -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
+    "types/scalars/missing_type.jsonld"       -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
+    "types/scalars/missing_type_valid.jsonld" -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
+    "types/scalars/wrong_facet.jsonld"        -> ExpectedReport(conforms = false, 2, ValidationProfileNames.RAML),
+    "types/scalars/valid_facet.jsonld"        -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
+    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
+    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
+    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
+    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS)
   )
 
   for {
@@ -230,13 +259,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets  {
 
   private def validate(file: String, expectedReport: ExpectedReport) = {
     platform.resolve(examplesPath + file, None).flatMap { data =>
-      val model = data.stream.toString
-      val validation = Validation(platform)
+      val model                = data.stream.toString
+      val validation           = Validation(platform)
       val effectiveValidations = validation.computeValidations(expectedReport.profile)
-      val shapes = validation.shapesGraph(effectiveValidations)
+      val shapes               = validation.shapesGraph(effectiveValidations)
       platform.validator.report(
-        model, "application/ld+json",
-        shapes, "application/ld+json"
+        model,
+        "application/ld+json",
+        shapes,
+        "application/ld+json"
       ) flatMap { report =>
         assert(expectedReport == ExpectedReport(report.conforms, report.results.length, expectedReport.profile))
       }

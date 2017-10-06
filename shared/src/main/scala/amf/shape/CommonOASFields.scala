@@ -2,8 +2,7 @@ package amf.shape
 
 import amf.metadata.shape.ScalarShapeModel._
 
-trait CommonOASFields {
-  self: Shape =>
+trait CommonOASFields { self: Shape =>
 
   def pattern: String          = fields(Pattern)
   def minLength: Int           = fields(MinLength)

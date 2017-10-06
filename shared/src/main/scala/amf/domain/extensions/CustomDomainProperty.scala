@@ -1,12 +1,12 @@
 package amf.domain.extensions
 
 import amf.common.core._
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.{Annotations, DomainElement, Fields, Linkable}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel._
 import amf.shape.Shape
-import org.yaml.model.YMapEntry
+import org.yaml.model.YPart
 
-case class CustomDomainProperty(fields: Fields, annotations: Annotations) extends DomainElement {
+case class CustomDomainProperty(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
   def name: String        = fields(Name)
   def displayName: String = fields(DisplayName)
@@ -22,12 +22,14 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations) extend
 
   override def adopted(parent: String): this.type =
     if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
+
+  override def linkCopy(): CustomDomainProperty = CustomDomainProperty().withId(id)
 }
 
 object CustomDomainProperty {
   def apply(): CustomDomainProperty = apply(Annotations())
 
-  def apply(ast: YMapEntry): CustomDomainProperty = apply(Annotations(ast))
+  def apply(ast: YPart): CustomDomainProperty = apply(Annotations(ast))
 
   def apply(annotations: Annotations): CustomDomainProperty = CustomDomainProperty(Fields(), annotations)
 }

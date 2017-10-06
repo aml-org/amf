@@ -45,5 +45,6 @@ object TypeDef {
   object FileType         extends TypeDef with ScalarType
   object ArrayType        extends TypeDef
   object ObjectType       extends TypeDef
+  object LinkType         extends TypeDef
   object UndefinedType    extends TypeDef
 }

@@ -10,7 +10,6 @@ import scala.collection.JavaConverters._
 /**
   * Created by antoniogarrote on 17/07/2017.
   */
-
 /**
   * Creates a new Validation File pointing to a TSV file with validations.
   * Includes the logic to parse the validations file.
@@ -20,7 +19,18 @@ class ValidationsFile(validationsFile: File) {
 
   def parseLine(line: String): Option[AMFValidation] =
     line.split("\t") match {
-      case Array(uri, message, spec: String, level, owlClass, owlProperty, shape, target, constraint, value, ramlErrorMessage, openAPIErrorMessage) =>
+      case Array(uri,
+                 message,
+                 spec: String,
+                 level,
+                 owlClass,
+                 owlProperty,
+                 shape,
+                 target,
+                 constraint,
+                 value,
+                 ramlErrorMessage,
+                 openAPIErrorMessage) =>
         Some(
           AMFValidation(
             nonNullString(Namespace.uri(uri.trim).iri()),
@@ -38,7 +48,6 @@ class ValidationsFile(validationsFile: File) {
           ))
       case _ => None
     }
-
 
   def validations(): List[AMFValidation] =
     new BufferedReader(new FileReader(validationsFile))
@@ -59,6 +68,5 @@ class ValidationsFile(validationsFile: File) {
       .drop(1)
       .toList
 
-
-  protected def nonNullString(s: String): Option[String] = if(s == "") { None } else { Some(s.trim) }
+  protected def nonNullString(s: String): Option[String] = if (s == "") { None } else { Some(s.trim) }
 }

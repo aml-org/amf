@@ -42,6 +42,8 @@ case class ArrayShape(fields: Fields, annotations: Annotations) extends DataArra
   def withItems(items: Shape): this.type = set(Items, items)
 
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations)
+
+  override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 }
 
 object ArrayShape {
@@ -60,6 +62,8 @@ case class MatrixShape(fields: Fields, annotations: Annotations) extends DataArr
 
   def toArrayShape               = ArrayShape(fields, annotations)
   def toMatrixShape: MatrixShape = this
+
+  override def linkCopy() = MatrixShape().withId(id)
 }
 
 object MatrixShape {
@@ -75,6 +79,8 @@ object MatrixShape {
 case class TupleShape(fields: Fields, annotations: Annotations) extends DataArrangementShape {
   def items: Seq[Shape]                       = fields(Items)
   def withItems(items: Seq[Shape]): this.type = setArray(Items, items)
+
+  override def linkCopy() = TupleShape().withId(id)
 }
 
 object TupleShape {

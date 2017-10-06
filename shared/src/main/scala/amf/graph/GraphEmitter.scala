@@ -1,13 +1,13 @@
 package amf.graph
 
 import amf.client.GenerationOptions
-import amf.document.{BaseUnit, Document, Module}
+import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.metadata.document.{DocumentModel, ModuleModel}
+import amf.metadata.document._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
@@ -131,6 +131,9 @@ object GraphEmitter {
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit): Unit = {
       t match {
+        case t: DomainElement with Linkable if t.isLink =>
+          t.linkTarget.foreach(l => iri(l.id))
+          sources(v)
         case _: Obj =>
           obj(v.value.asInstanceOf[AmfObject], parent)
           sources(v)
@@ -317,38 +320,46 @@ object GraphEmitter {
 
   /** Metadata Type references. */
   private def metaModel(instance: Any): Obj = instance match {
-    case _: Document                 => DocumentModel
-    case _: WebApi                   => WebApiModel
-    case _: Organization             => OrganizationModel
-    case _: License                  => LicenseModel
-    case _: CreativeWork             => CreativeWorkModel
-    case _: EndPoint                 => EndPointModel
-    case _: Operation                => OperationModel
-    case _: Parameter                => ParameterModel
-    case _: Request                  => RequestModel
-    case _: Response                 => ResponseModel
-    case _: Payload                  => PayloadModel
-    case _: UnionShape               => UnionShapeModel
-    case _: NodeShape                => NodeShapeModel
-    case _: ArrayShape               => ArrayShapeModel
-    case _: FileShape                => FileShapeModel
-    case _: ScalarShape              => ScalarShapeModel
-    case _: AnyShape                 => AnyShapeModel
-    case _: NilShape                 => NilShapeModel
-    case _: PropertyShape            => PropertyShapeModel
-    case _: XMLSerializer            => XMLSerializerModel
-    case _: PropertyDependencies     => PropertyDependenciesModel
-    case _: DomainExtension          => DomainExtensionModel
-    case _: CustomDomainProperty     => CustomDomainPropertyModel
-    case _: DataNode                 => DataNodeModel
-    case _: Module                   => ModuleModel
-    case _: ResourceType             => ResourceTypeModel
-    case _: Trait                    => TraitModel
-    case _: ParametrizedResourceType => ParametrizedResourceTypeModel
-    case _: ParametrizedTrait        => ParametrizedTraitModel
-    case _: Variable                 => VariableModel
-    case _: VariableValue            => VariableValueModel
-    case entity: DomainEntity        => new DialectEntityModel(entity)
-    case _                           => throw new Exception(s"Missing metadata mapping for $instance")
+    case _: Document                           => DocumentModel
+    case _: WebApi                             => WebApiModel
+    case _: Organization                       => OrganizationModel
+    case _: License                            => LicenseModel
+    case _: CreativeWork                       => CreativeWorkModel
+    case _: EndPoint                           => EndPointModel
+    case _: Operation                          => OperationModel
+    case _: Parameter                          => ParameterModel
+    case _: Request                            => RequestModel
+    case _: Response                           => ResponseModel
+    case _: Payload                            => PayloadModel
+    case _: UnionShape                         => UnionShapeModel
+    case _: NodeShape                          => NodeShapeModel
+    case _: ArrayShape                         => ArrayShapeModel
+    case _: FileShape                          => FileShapeModel
+    case _: ScalarShape                        => ScalarShapeModel
+    case _: AnyShape                           => AnyShapeModel
+    case _: NilShape                           => NilShapeModel
+    case _: PropertyShape                      => PropertyShapeModel
+    case _: XMLSerializer                      => XMLSerializerModel
+    case _: PropertyDependencies               => PropertyDependenciesModel
+    case _: DomainExtension                    => DomainExtensionModel
+    case _: CustomDomainProperty               => CustomDomainPropertyModel
+    case _: DataNode                           => DataNodeModel
+    case _: Module                             => ModuleModel
+    case _: ParametrizedResourceType           => ParametrizedResourceTypeModel
+    case _: ParametrizedTrait                  => ParametrizedTraitModel
+    case _: Variable                           => VariableModel
+    case _: VariableValue                      => VariableValueModel
+    case entity: DomainEntity                  => new DialectEntityModel(entity)
+    case _: Fragment.DocumentationItem         => FragmentsTypesModels.DocumentationItemModel
+    case _: Fragment.DataType                  => FragmentsTypesModels.DataTypeModel
+    case _: Fragment.ResourceTypeFragment      => FragmentsTypesModels.ResourceTypeModel
+    case _: Fragment.TraitFragment             => FragmentsTypesModels.TraitModel
+    case _: Fragment.NamedExample              => FragmentsTypesModels.NamedExampleModel
+    case _: Fragment.AnnotationTypeDeclaration => FragmentsTypesModels.AnnotationTypeDeclarationModel
+    case _: Fragment.ExtensionFragment         => FragmentsTypesModels.ExtensionModel
+    case _: Fragment.OverlayFragment           => FragmentsTypesModels.OverlayModel
+    case _: Trait                              => TraitModel
+    case _: ResourceType                       => ResourceTypeModel
+    case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
   }
 }

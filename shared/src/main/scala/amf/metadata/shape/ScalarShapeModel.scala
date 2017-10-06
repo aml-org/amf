@@ -13,7 +13,8 @@ object ScalarShapeModel extends ShapeModel with DomainElementModel with CommonOA
 
   val DataType = Field(Iri, Shacl + "datatype")
 
-  override val fields: List[Field] = List(DataType) ++ commonOASFields ++ ShapeModel.fields ++ DomainElementModel.fields
+  override val fields
+    : List[Field] = List(DataType) ++ commonOASFields ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 }

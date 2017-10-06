@@ -26,7 +26,7 @@ object OasTypeDefMatcher {
     case "object"        => ObjectType
     case "array"         => ArrayType
     case "file"          => FileType
-    case _               => UndefinedType
+    case _               => ObjectType
   }
 }
 

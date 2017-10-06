@@ -53,9 +53,27 @@ object Tests {
       Succeeded
   }
 
+  def checkDiffIgnoreAllSpaces(tuple: (String, String)): Assertion = tuple match {
+    case (actual, expected) =>
+      checkDiffIgnoreAllSpaces(actual, expected)
+      Succeeded
+  }
+
   /** Diff between 2 strings. */
   def checkDiff(actual: String, expected: String): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.trimming.ignoreEmptyLines.diff(actual, expected)
+    if (diffs.nonEmpty) {
+      println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+      println(expected)
+      println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+      println(actual)
+      println("==============================================")
+      fail("\n" + Diff.makeString(diffs))
+    }
+  }
+
+  def checkDiffIgnoreAllSpaces(actual: String, expected: String): Unit = {
+    val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(actual, expected)
     if (diffs.nonEmpty) {
       println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
       println(expected)

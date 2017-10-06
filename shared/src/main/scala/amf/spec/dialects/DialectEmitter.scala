@@ -2,11 +2,12 @@ package amf.spec.dialects
 
 import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration}
-import amf.domain.{ FieldEntry}
+import amf.domain.FieldEntry
 import amf.domain.dialects.DomainEntity
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
 import amf.spec.Emitter
+import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecEmitter
 import org.yaml.model.YDocument
 
@@ -19,15 +20,6 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
   var nameProvider: Option[LocalNameProvider] = root.definition.nameProvider match {
     case Some(np) => Some(np(root))
     case None     => None
-  }
-
-  private def retrieveDomainEntity(unit: BaseUnit) = unit match {
-    case document: Document =>
-      document.encodes match {
-        case unit: DomainEntity => unit
-        case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
-      }
-    case _ => throw new Exception(s"Cannot extract domain entity from unit that is not a document: $unit")
   }
 
   private def emitRef(parent: DialectPropertyMapping, element: AmfElement): Unit = {
@@ -223,18 +215,17 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           }
 
         case None =>
-
-          obj.annotations.find(classOf[DomainElementReference]) match{
-            case Some(ref)=>{
+          obj.annotations.find(classOf[DomainElementReference]) match {
+            case Some(ref) => {
               raw(ref.name)
             }
-            case _=> {
+            case _ => {
 
-                  map { () =>
-                    comment_text.foreach(c => comment(c))
-                    emitUsesMap
-                    emitObject
-                  }
+              map { () =>
+                comment_text.foreach(c => comment(c))
+                emitUsesMap
+                emitObject
+              }
 
             }
           }
@@ -246,9 +237,9 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           entry(() => {
             raw("uses")
             map(() => {
-              ref.uses.foreach(e=>{
-                entry(()=>{
-                  val (k,v)=e
+              ref.uses.foreach(e => {
+                entry(() => {
+                  val (k, v) = e
                   raw(k)
                   raw(v)
                 })
@@ -280,7 +271,6 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
     override def position(): Position = Position.ZERO
   }
-
 
 }
 

@@ -3,7 +3,8 @@ package amf.model
 import scala.collection.JavaConverters._
 
 case class CustomDomainProperty(private[amf] val customDomainProperty: amf.domain.extensions.CustomDomainProperty)
-    extends DomainElement {
+    extends DomainElement
+    with Linkable {
 
   def name: String                   = customDomainProperty.name
   def displayName: String            = customDomainProperty.displayName
@@ -38,4 +39,9 @@ case class CustomDomainProperty(private[amf] val customDomainProperty: amf.domai
   def this() = this(amf.domain.extensions.CustomDomainProperty())
 
   override private[amf] def element: amf.domain.extensions.CustomDomainProperty = customDomainProperty
+
+  override def linkTarget: Option[DomainElement with Linkable] =
+    element.linkTarget.map({ case l: amf.domain.extensions.CustomDomainProperty => CustomDomainProperty(l) })
+
+  override def linkCopy(): DomainElement with Linkable = CustomDomainProperty(element.linkCopy())
 }
