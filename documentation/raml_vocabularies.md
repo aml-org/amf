@@ -55,7 +55,7 @@ In the first case, we will be defining a data type property, in the second case 
 The `range` property can be used to define the type of property:
 
 - if the range of the property is the identifier of a class term or a external URI, we will be introducing an object property
-- if the range of the property is a data type identifier, we will be introducing an object property.
+- if the range of the property is a data type identifier, we will be introducing an data type property.
 
 The semantics of data type properties and object properties are provided by the translation into OWL.
 
