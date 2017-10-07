@@ -1,6 +1,6 @@
 package amf.document
 
-import amf.domain.DomainElement
+import amf.domain.{DomainElement, Value}
 import amf.metadata.MetaModelTypeMapping
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.document.DocumentModel.References
@@ -151,8 +151,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
       }
     } else {
       element.fields.foreach {
-        case (f, v: AmfObject) =>
-          Option(transformByCondition(v, predicate, transformation)) match {
+        case (f, v: Value) if v.value.isInstanceOf[AmfObject] =>
+          Option(transformByCondition(v.value.asInstanceOf[AmfObject], predicate, transformation)) match {
             case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
             case Some(_)                           => // ignore
             case None                              => element.fields.remove(f)

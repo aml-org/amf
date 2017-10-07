@@ -23,7 +23,8 @@ class YamlGenerator {
         val hasContent = !writer.isEmpty()
         if (!previousSequence && hasContent) writer.indent()
         visitChildren(map, forceLine = !previousSequence && hasContent)
-        writer.outdent()
+        if (!previousSequence)
+          writer.outdent()
       case seq: YSequence =>
         writer.line().indent()
         visitChildren(seq, "- ", forceLine = false)
@@ -49,8 +50,14 @@ class YamlGenerator {
       .foreach(c => {
         if (!first || forceLine) { writer.line() }
         writer.write(prefix)
+        if (prefix != "") {
+          writer.indent()
+        }
         visit(c, previousSequence = parent.isInstanceOf[YSequence])
         first = false
+        if (prefix != "") {
+          writer.outdent()
+        }
       })
   }
 }

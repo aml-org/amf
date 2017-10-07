@@ -534,7 +534,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       RamlTypeParser(entry, shape => shape.adopted(property.id), declarations)
         .parse()
-        .foreach(range => property.set(PropertyShapeModel.Name, range.name).set(PropertyShapeModel.Range, range))
+        .foreach(range => property.set(PropertyShapeModel.Range, range))
 
       property
     }

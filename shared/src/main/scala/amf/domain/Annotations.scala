@@ -28,6 +28,11 @@ class Annotations {
     this
   }
 
+  def reject(p:(Annotation) => Boolean): this.type = {
+    annotations --= annotations.filter(p)
+    this
+  }
+
   /** Return [[SerializableAnnotation]]s only. */
   def serializables(): Seq[SerializableAnnotation] =
     annotations.filter(_.isInstanceOf[SerializableAnnotation]).map(_.asInstanceOf[SerializableAnnotation])

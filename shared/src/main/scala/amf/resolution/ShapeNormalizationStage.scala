@@ -1,8 +1,9 @@
 package amf.resolution
 
 import amf.document.BaseUnit
+import amf.domain.Annotation.{ExplicitField, LexicalInformation}
 import amf.domain.DomainElement
-import amf.metadata.MetaModelTypeMapping
+import amf.metadata.{MetaModelTypeMapping, Obj}
 import amf.metadata.shape._
 import amf.model.AmfArray
 import amf.resolution.shape_normalization.MinShapeAlgorithm
@@ -15,13 +16,16 @@ import scala.collection.mutable.ListBuffer
   * Computes the cannonical form for all the shapes in the model
   * We are assuming certain pre-conditions in the state of the shape:
   *  - All type references have been replaced by their expanded forms
-  * @param model
   * @param profile
   * @return the resolved model
   */
-class ShapeNormalizationStage(model: BaseUnit, profile: String) extends ResolutionStage(profile) with MetaModelTypeMapping with MinShapeAlgorithm {
+class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) with MetaModelTypeMapping with MinShapeAlgorithm {
 
-  val findShapesPredicate = (element: DomainElement) => metaModel(element).`type`.contains { t:ValueType => t.iri() == (Namespace.Shapes + "Shape").iri() }
+  val findShapesPredicate = (element: DomainElement) => {
+    val metaModelFound: Obj = metaModel(element)
+    val targetIri = (Namespace.Shapes + "Shape").iri()
+    metaModelFound.`type`.exists { t: ValueType => t.iri() == targetIri }
+  }
 
   override def resolve(model:BaseUnit, context: Any): BaseUnit = {
     model.transform(findShapesPredicate, transform)
@@ -33,6 +37,11 @@ class ShapeNormalizationStage(model: BaseUnit, profile: String) extends Resoluti
     }
   }
 
+  protected def cleanLexicalInfo(shape: Shape): Shape = {
+    shape.annotations.reject(_.isInstanceOf[LexicalInformation])
+    shape
+  }
+
   protected def transform(element: DomainElement): Option[DomainElement] = element match {
     case shape: Shape => Some(canonical(expand(shape)))
     case other        => Some(other)
@@ -40,6 +49,7 @@ class ShapeNormalizationStage(model: BaseUnit, profile: String) extends Resoluti
 
   protected def expand(shape: Shape): Shape = {
     ensureCorrect(shape)
+    cleanLexicalInfo(shape)
     shape match {
       case union: UnionShape       => expandUnion(union)
       case scalar: ScalarShape     => scalar
@@ -167,6 +177,7 @@ class ShapeNormalizationStage(model: BaseUnit, profile: String) extends Resoluti
   }
 
   protected def canonicalNode(node: NodeShape): Shape = {
+    node.add(ExplicitField())
     if (Option(node.inherits).isDefined && node.inherits.nonEmpty) {
       val superTypes = node.inherits
       var accNode: Shape = canonical(node.withInherits(Seq()))
@@ -270,6 +281,9 @@ class ShapeNormalizationStage(model: BaseUnit, profile: String) extends Resoluti
   protected def cloneShape[T <: Shape](cloned: T, from: Shape): T = {
     from.fields.foreach {
       case (f,v) => cloned.fields.setWithoutId(f, v.value, v.annotations)
+    }
+    if (cloned.isInstanceOf[NodeShape]) {
+      cloned.add(ExplicitField())
     }
     cloned
   }
