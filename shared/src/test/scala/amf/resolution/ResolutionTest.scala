@@ -18,20 +18,29 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   val basePath = "file://shared/src/test/resources/resolution/"
 
-  test("HERE_HERE Resolve data type") {
-    val expected   = platform.resolve(basePath + "union1_resolved.raml", None).map(_.stream.toString)
-    AMFCompiler(basePath + "union1.raml",
-      platform,
-      RamlYamlHint,
-      None,
-      None,
-      platform.dialectsRegistry)
-      .build().map { model =>
-      new ShapeNormalizationStage(ProfileNames.RAML).resolve(model, null)
-    }.flatMap({ unit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    })
-      .zip(expected)
-      .map(checkDiff)
+  val examples = Seq(
+    "union1",
+    "union2"
+    // "inheritance1"
+  )
+
+  examples.foreach { example =>
+    test(s"Resolve data types: $example") {
+      val expected   = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
+      AMFCompiler(basePath + s"${example}.raml",
+        platform,
+        RamlYamlHint,
+        None,
+        None,
+        platform.dialectsRegistry)
+        .build().map { model =>
+        new ShapeNormalizationStage(ProfileNames.RAML).resolve(model, null)
+      }.flatMap({ unit =>
+        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+      })
+        .zip(expected)
+        .map(checkDiff)
+    }
   }
+
 }
