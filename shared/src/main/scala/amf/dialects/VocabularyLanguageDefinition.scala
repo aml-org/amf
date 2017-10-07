@@ -24,7 +24,11 @@ object ClassTerm extends Declaration("Class", Namespace.Owl) {
   val displayName: DialectPropertyMapping =
     str("displayName", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("name")))
   val description: DialectPropertyMapping  = str("description", _.copy(namespace = Some(Namespace.Schema)))
+
+  val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
+
   val `extends`: DialectPropertyMapping    = ref("extends", ClassTerm, _.copy(collection = true, jsonld = false))
+
   val `properties`: DialectPropertyMapping = ref("properties", PropertyTerm, _.copy(collection = true, jsonld = false))
 
   typeCalculator = {
@@ -38,6 +42,9 @@ object ClassTerm extends Declaration("Class", Namespace.Owl) {
 
 object PropertyTerm extends Declaration("Property") {
   val description: DialectPropertyMapping = str("description", _.copy(namespace = Some(Namespace.Schema)))
+
+  val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
+
   val domain: DialectPropertyMapping =
     ref("domain", ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs)))
   val range: DialectPropertyMapping = ref(
@@ -68,7 +75,7 @@ object External extends VocabPartDialect("External") {
 object Vocabulary extends VocabPartDialect("Vocabulary") {
 
   val base: DialectPropertyMapping            = str("base")
-  val dialectProperty: DialectPropertyMapping = str("dialect", _.copy(scalaNameOverride = Some("dialectProperty")))
+  val vocabularyProperty: DialectPropertyMapping = str("vocabulary", _.copy(scalaNameOverride = Some("vocabularyProperty")))
   val version: DialectPropertyMapping         = str("version")
   var usage: DialectPropertyMapping =
     str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
