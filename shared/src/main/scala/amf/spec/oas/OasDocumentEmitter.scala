@@ -806,6 +806,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
+        case l: Linkable if l.isLink                                   => Seq(TagToReferenceEmitter(shape, l.linkLabel))
         case any: AnyShape =>
           val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           Seq(AnyShapeEmitter(copiedNode, ordering))

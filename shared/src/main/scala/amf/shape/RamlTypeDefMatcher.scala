@@ -7,28 +7,36 @@ import amf.shape.TypeDef._
   */
 object RamlTypeDefMatcher {
 
-  def matchType(ramlType: String, format: String = ""): TypeDef = ramlType match {
-    case "nil" | "" => NilType
-    case "any"      => AnyType
-    case "string" =>
-      format match {
-        case "byte"     => ByteType
-        case "binary"   => BinaryType
-        case "password" => PasswordType
-        case _          => StrType
-      }
-    case "integer"       => IntType
-    case "number"        => FloatType
-    case "boolean"       => BoolType
-    case "datetime"      => DateTimeType
-    case "datetime-only" => DateTimeOnlyType
-    case "time-only"     => TimeOnlyType
-    case "date-only"     => DateOnlyType
-    case "array"         => ArrayType
-    case "object"        => ObjectType
-    case "union"         => UnionType
-    case _               => ObjectType
+  def matchType(ramlType: String, format: String = ""): TypeDef =
+    if (isTypeExpression(ramlType)) TypeExpressionType
+    else {
+      ramlType match {
+      case "nil" | "" => NilType
+      case "any" => AnyType
+      case "string" =>
+        format match {
+          case "byte" => ByteType
+          case "binary" => BinaryType
+          case "password" => PasswordType
+          case _ => StrType
+        }
+      case "integer" => IntType
+      case "number" => FloatType
+      case "boolean" => BoolType
+      case "datetime" => DateTimeType
+      case "datetime-only" => DateTimeOnlyType
+      case "time-only" => TimeOnlyType
+      case "date-only" => DateOnlyType
+      case "array" => ArrayType
+      case "object" => ObjectType
+      case "union" => UnionType
+      case _ => ObjectType
+    }
   }
+
+  def isTypeExpression(str: String) =
+    str.indexOf("[") > -1 || str.indexOf("|") > -1 || str.indexOf("(") > -1 ||
+    str.indexOf("]") > -1 || str.indexOf(")") > -1
 
   def isFormatExtention(format: String = ""): Boolean = format match {
     case "byte" | "binary" | "password" => true

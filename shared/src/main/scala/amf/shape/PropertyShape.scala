@@ -19,7 +19,13 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def withMinCount(min: Int): this.type  = set(MinCount, min)
   def withMaxCount(max: Int): this.type  = set(MaxCount, max)
 
-  override def adopted(parent: String): this.type = withId(parent + "/property/" + name)
+  override def adopted(parent: String): this.type = {
+    withId(parent + "/property/" + name)
+    if (Option(range).isDefined) {
+      range.adopted(id)
+    }
+    this
+  }
 
   def withObjectRange(name: String): NodeShape = {
     val node = NodeShape().withName(name)

@@ -34,7 +34,17 @@ abstract class DataArrangementShape() extends Shape {
     array
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/array/" + name)
+  override def adopted(parent: String): this.type = {
+    withId(parent + "/array/" + name)
+    fields.entry(Items) match {
+      case Some(items) =>
+        items.value.value match {
+          case shape: Shape => shape.adopted(id)
+        }
+      case _ => // ignore
+    }
+    this
+  }
 }
 
 case class ArrayShape(fields: Fields, annotations: Annotations) extends DataArrangementShape {
@@ -81,6 +91,14 @@ case class TupleShape(fields: Fields, annotations: Annotations) extends DataArra
   def withItems(items: Seq[Shape]): this.type = setArray(Items, items)
 
   override def linkCopy() = TupleShape().withId(id)
+
+  override def adopted(parent: String): this.type = {
+    withId(parent + "/array/" + name)
+    if (Option(items).isDefined) {
+      items.foreach(_.adopted(id))
+    }
+    this
+  }
 }
 
 object TupleShape {

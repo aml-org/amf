@@ -1,5 +1,6 @@
 package amf.shape
 
+import amf.domain.Annotation.ParsedFromTypeExpression
 import amf.domain.{CreativeWork, DomainElement, Linkable}
 import amf.metadata.shape.ShapeModel._
 
@@ -25,4 +26,11 @@ abstract class Shape extends DomainElement with Linkable {
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
   def withInherits(inherits: Seq[Shape]): this.type                    = setArray(Inherits, inherits)
+
+  def fromTypeExpression: Boolean =  this.annotations.contains(classOf[ParsedFromTypeExpression])
+  def typeExpression: String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
+    case Some(expr: ParsedFromTypeExpression) => expr.value
+    case _                                    => throw new Exception("Trying to extract non existent type expression")
+  }
+
 }

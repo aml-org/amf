@@ -715,6 +715,8 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
+        case _ if Option(shape).isDefined && shape.fromTypeExpression  => Seq(TypeExpressionEmitter(shape))
+        case l: Linkable if l.isLink                                   => Seq(LocalReferenceEmitter(shape))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
@@ -819,6 +821,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       if (node.annotations.contains(classOf[ExplicitField]))
         result += EntryEmitter("type", "object")
 
+      fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
+
+
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
       fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
@@ -839,8 +844,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
 
       fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
-
-      fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
 
       result
     }
@@ -1206,6 +1209,15 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
+  case class LocalReferenceEmitter(reference: Linkable) extends Emitter {
+    override def emit(): Unit = reference.linkLabel match {
+      case Some(label) => raw(label)
+      case None        => throw new Exception("Missing link label")
+    }
+
+    override def position(): Position = pos(reference.annotations)
+  }
+
   case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering) extends Emitter {
 
     override def emit(): Unit = {
@@ -1220,6 +1232,12 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(userDocumentation.annotations)
+  }
+
+  case class TypeExpressionEmitter(shape: Shape) extends Emitter {
+    override def emit(): Unit = raw(shape.typeExpression)
+
+    override def position(): Position = pos(shape.annotations)
   }
 
   protected def ref(url: String): Unit = emitter.scalar("!include " + url, YType("!include")) // todo

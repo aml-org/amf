@@ -22,6 +22,11 @@ trait SerializableAnnotation extends Annotation {
 
 object Annotation {
 
+  case class ParsedFromTypeExpression(expression: String) extends SerializableAnnotation {
+    override val name: String = "type-exprssion"
+    override val value: String = expression
+  }
+
   case class LexicalInformation(range: Range) extends SerializableAnnotation {
     override val name: String = "lexical"
 

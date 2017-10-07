@@ -51,7 +51,11 @@ case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
     result
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name)
+  override def adopted(parent: String): this.type = {
+    withId(parent + "/" + name)
+    properties.foreach(_.adopted(id))
+    this
+  }
 
   override def linkCopy(): NodeShape = NodeShape().withId(id)
 }
