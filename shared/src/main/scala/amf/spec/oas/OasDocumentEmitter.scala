@@ -867,6 +867,14 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         raw("anyOf")
         array { () =>
+          val anyOfEmitters = shape.anyOf.map { shape =>
+            ordering.sorted(OasTypeEmitter(shape, ordering).emitters())
+          }.map { emitters =>
+            new Emitter {
+              override def position(): Position = emitters.head.position()
+              override def emit(): Unit =  emitters.foreach(_.emit())
+            }
+          }
           ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
             map { () =>
               typeEmitter.emit()
