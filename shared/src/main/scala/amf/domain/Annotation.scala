@@ -22,7 +22,7 @@ trait SerializableAnnotation extends Annotation {
 
 object Annotation {
 
-  case class ParsedFromTypeExprssion(expression: String) extends SerializableAnnotation {
+  case class ParsedFromTypeExpression(expression: String) extends SerializableAnnotation {
     override val name: String = "type-exprssion"
     override val value: String = expression
   }

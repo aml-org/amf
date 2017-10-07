@@ -7,7 +7,7 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
-import amf.shape.{ArrayShape, MatrixShape, ScalarShape, UnionShape}
+import amf.shape._
 import amf.spec.Declarations
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.unsafe.PlatformSecrets
@@ -21,44 +21,45 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("TypeExpressions") {
+    
+    val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-    var res = RamlTypeExpressionParser("/test", Declarations()).parse("integer")
+    var res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("(integer)")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("((integer))")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("((integer))")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("integer[]")
-    println(res)
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[]")
     assert(res.get.isInstanceOf[ArrayShape])
     assert(res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(res != null)
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("(integer)[]")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)[]")
     assert(res.get.isInstanceOf[ArrayShape])
     assert(res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(res != null)
 
     var error = false
     try {
-      RamlTypeExpressionParser("/test", Declarations()).parse("[]")
+      RamlTypeExpressionParser(adopt, Declarations()).parse("[]")
     } catch {
       case e: Exception => error = true
     }
     assert(error)
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("integer | string")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string")
     assert(res.get.isInstanceOf[UnionShape])
     var union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 2)
@@ -68,7 +69,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(res != null)
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("(integer )| (string)")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer )| (string)")
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 2)
@@ -77,7 +78,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("(integer | string) | number")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string) | number")
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 3)
@@ -86,7 +87,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Xsd + "float").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("(integer | string)[]")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string)[]")
     assert(res.get.isInstanceOf[ArrayShape])
     var array = res.get.asInstanceOf[ArrayShape]
     assert(array.items.isInstanceOf[UnionShape])
@@ -97,7 +98,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(res != null)
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("(integer | string[])")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string[])")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
@@ -108,7 +109,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string").iri())
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("integer | string[]")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string[]")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
@@ -119,7 +120,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string").iri())
 
 
-    res = RamlTypeExpressionParser("/test", Declarations()).parse("integer[][]")
+    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[][]")
     assert(res != null)
     assert(res.get.isInstanceOf[MatrixShape])
     var matrix = res.get.asInstanceOf[MatrixShape]

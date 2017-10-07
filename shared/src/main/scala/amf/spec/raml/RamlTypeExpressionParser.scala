@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.domain.Annotation.ParsedFromTypeExprssion
+import amf.domain.Annotation.ParsedFromTypeExpression
 import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.shape._
@@ -9,7 +9,7 @@ import amf.vocabulary.Namespace
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: Int = 0) {
+class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations, var i: Int = 0) {
   var parsedShape: Option[Shape] = None
   var acc: String = ""
   var parsingArray = false
@@ -20,7 +20,7 @@ class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: In
     parseInput(input).result match {
       case Some(t) =>
         ensureNotEmptyArray(t)
-        t.annotations += ParsedFromTypeExprssion(expression)
+        t.annotations += ParsedFromTypeExpression(expression)
         Some(t)
       case None => None
     }
@@ -37,7 +37,7 @@ class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: In
           ParsingResult(parsedShape, input.tail)
         case '(' =>
           processChars()
-          val result = new RamlTypeExpressionParser(id, declarations, i + 1).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '|' =>
@@ -46,7 +46,7 @@ class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: In
           }
           processChars()
           toUnion()
-          val result = new RamlTypeExpressionParser(id, declarations, i + 1).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '[' =>
@@ -84,9 +84,8 @@ class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: In
           case _       => throw new Exception("Reference not found")
         }
       }
-      if (Option(shape.id).isDefined) {
-        shape.id = id + s"/parsed$i"
-        i += 1
+      if (Option(shape.id).isEmpty) {
+        adopt(shape)
       }
       acc = ""
       acceptShape(Some(shape))
@@ -98,15 +97,15 @@ class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: In
       case None                => throw new Exception("Syntax error, cannot create empty Union")
       case Some(_: UnionShape) => // ignore
       case Some(shape)         =>
-        val union = UnionShape().withId(id + s"/parsed$i")
-        i += 1
+        val union = UnionShape()
+        adopt(union)
         parsedShape = Some(union.withAnyOf(Seq(shape)))
     }
   }
 
   def toArray() = {
-    val array = ArrayShape().withId(id + s"/parsed$i")
-    i += 1
+    val array = ArrayShape()
+    adopt(array)
     parsedShape match {
       case None =>
         parsedShape = Some(array)
@@ -193,5 +192,5 @@ class RamlTypeExpressionParser(id: String, declarations: Declarations, var i: In
 }
 
 object RamlTypeExpressionParser {
-  def apply(id: String, declarations: Declarations) = new RamlTypeExpressionParser(id, declarations)
+  def apply(adopt: Shape => Shape, declarations: Declarations) = new RamlTypeExpressionParser(adopt, declarations)
 }

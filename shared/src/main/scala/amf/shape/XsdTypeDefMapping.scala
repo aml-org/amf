@@ -41,7 +41,7 @@ object TypeDefXsdMapping {
       case s if s == (Xsd + "byte").iri()         => ByteType
       case s if s == (Xsd + "base64Binary").iri() => BinaryType
       case s if s == (Xsd + "string").iri()       => PasswordType
-      case _                                      => throw new RuntimeException("Unknown mapping")
+      case s                                      => throw new RuntimeException(s"Unknown mapping: $s")
     }
 
 }

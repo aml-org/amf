@@ -35,6 +35,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     //        processRef(ref)
     //      case _ =>
     detect() match {
+      case TypeExpressionType => Some(parseTypeExpression())
       case UnionType => Some(parseUnionType())
       case ObjectType => Some(parseObjectType())
       case ArrayType => Some(parseArrayType())
@@ -91,6 +92,11 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _: YSequence | _: YMap => ObjectType
           case _ => UndefinedType
         })
+  }
+
+  private def parseTypeExpression(): Shape = {
+    val expression = part.value.asInstanceOf[YScalar].text
+    RamlTypeExpressionParser(adopt, declarations).parse(expression).get
   }
 
   private def parseScalarType(typeDef: TypeDef): Shape = {
@@ -157,10 +163,13 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       case map: YMap =>
         map
           .key("type")
-          .exists(entry => {
-            val t: String = entry.value
-            t == "file"
-          })
+          .exists { entry: YMapEntry =>
+            entry.value.value match {
+              case scalar: YScalar =>
+                scalar.text == "file"
+              case _ => false
+            }
+          }
       case _ => false
     }
   }
@@ -433,8 +442,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       super.parse()
 
-      map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
-
       parseInheritance(declarations)
 
       map.key("minProperties", entry => {
@@ -602,6 +609,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
               shape.set(NodeShapeModel.Inherits,
                 AmfArray(Seq(declarations.shapes(scalar.text)), Annotations(entry.value)),
                 Annotations(entry))
+
             case sequence: YSequence =>
               val inherits = ArrayNode(sequence)
                 .strings()
@@ -609,10 +617,12 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                 .map(scalar => declarations.shapes(scalar.toString))
 
               shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
+
             case _: YMap =>
               RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
                 .parse()
                 .foreach(s => shape.set(NodeShapeModel.Inherits, s, Annotations(entry)))
+
             case _ =>
               shape.add(ExplicitField()) // TODO store annotation in dataType field.
           }

@@ -47,4 +47,5 @@ object TypeDef {
   object ObjectType       extends TypeDef
   object LinkType         extends TypeDef
   object UndefinedType    extends TypeDef
+  object TypeExpressionType extends TypeDef
 }

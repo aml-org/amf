@@ -1,0 +1,85 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "E": {
+      "allOf": [
+        {
+          "properties": {
+            "a": {
+              {
+                "$ref": "A"
+              }
+            },
+            "b": {
+              {
+                "$ref": "B"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "a": {
+              {
+                "$ref": "A"
+              }
+            },
+            "b": {
+              {
+                "$ref": "B"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "F": {
+      "anyOf": [
+        {
+          {
+            "$ref": "C"
+          }
+        },
+        {
+          {
+            "$ref": "D"
+          }
+        }
+      ]
+    },
+    "A": {
+      "type": "string"
+    },
+    "B": {
+      "type": "integer"
+    },
+    "C": {
+      "properties": {
+        "a": {
+          {
+            "$ref": "A"
+          }
+        },
+        "b": {
+          {
+            "$ref": "B"
+          }
+        }
+      }
+    },
+    "D": {
+      "properties": {
+        "a": {
+          {
+            "$ref": "A"
+          }
+        },
+        "b": {
+          {
+            "$ref": "B"
+          }
+        }
+      }
+    }
+  }
+}

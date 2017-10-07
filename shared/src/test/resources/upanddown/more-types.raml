@@ -1,23 +1,17 @@
-#%RAML 1.0 Library
-
+#%RAML 1.0
 types:
-
   A: string
   B: integer
-
   C:
     properties:
       a: A
       b: B
-
   D:
     properties:
       a: A
       b: B
-
   E:
     type:
       - C
       - D
-
   F: C | D
