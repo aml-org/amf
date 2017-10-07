@@ -1,6 +1,6 @@
 package amf.client
 
-import amf.validation.ValidationProfileNames
+import amf.ProfileNames
 
 case class ParserConfig(mode: Option[String] = None,
                         input: Option[String] = None,
@@ -9,7 +9,7 @@ case class ParserConfig(mode: Option[String] = None,
                         outputFormat: Option[String] = None,
                         withSourceMaps: Boolean = false,
                         validate: Boolean = true,
-                        validationProfile: String = ValidationProfileNames.AMF,
+                        validationProfile: String = ProfileNames.AMF,
                         customProfile: Option[String] = None,
                         // list of dialects that will be loaded in the registry
                         // before parsing

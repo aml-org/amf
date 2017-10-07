@@ -17,7 +17,6 @@ case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
   def readOnly: Boolean                       = fields(ReadOnly)
   def properties: Seq[PropertyShape]          = fields(Properties)
   def dependencies: Seq[PropertyDependencies] = fields(Dependencies)
-  def inherits: Seq[Shape]                    = fields(Inherits)
 
   def withMinProperties(min: Int): this.type                               = set(MinProperties, min)
   def withMaxProperties(max: Int): this.type                               = set(MaxProperties, max)
@@ -27,7 +26,6 @@ case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
   def withReadOnly(readOnly: Boolean): this.type                           = set(ReadOnly, readOnly)
   def withProperties(properties: Seq[PropertyShape]): this.type            = setArray(Properties, properties)
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
-  def withInherits(inherits: Seq[Shape]): this.type                        = setArray(Inherits, inherits)
 
   def withDependency(): PropertyDependencies = {
     val result = PropertyDependencies()

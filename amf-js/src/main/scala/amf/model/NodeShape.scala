@@ -15,7 +15,6 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
   val readOnly: Boolean                               = node.readOnly
   val properties: js.Iterable[PropertyShape]          = node.properties.map(PropertyShape).toJSArray
   val dependencies: js.Iterable[PropertyDependencies] = node.dependencies.map(PropertyDependencies).toJSArray
-  val inherits: js.Iterable[Shape]                    = node.inherits.map(Shape(_)).toJSArray
 
   def withMinProperties(min: Int): this.type = {
     node.withMinProperties(min)
@@ -54,11 +53,6 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
   }
 
   def withDependency(): PropertyDependencies = PropertyDependencies(node.withDependency())
-
-  def withInherits(inherits: js.Iterable[Shape]): this.type = {
-    node.withInherits(inherits.toList.map(_.shape))
-    this
-  }
 
   def withInheritsObject(name: String): NodeShape = NodeShape(node.withInheritsObject(name))
 

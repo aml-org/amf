@@ -60,6 +60,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
       val shape = NodeShape().withName("type").withClosed(false)
       shape
         .withProperty("name")
+        .withPath("http://raml.org/vocabularies/data#name")
         .withMinCount(minCount)
         .withScalarSchema("name")
         .withDataType("http://www.w3.org/2001/XMLSchema#string")

@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
@@ -112,7 +113,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation = Validation(platform)
     for {
       model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      report <- validation.validate(model, ValidationProfileNames.RAML)
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -216,7 +217,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       model  <- AMFCompiler(examplesPath + "library/nested.raml", platform, RamlYamlHint).build()
       _      <- validation.loadValidationDialect()
-      report <- validation.validate(model, ValidationProfileNames.RAML)
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -224,29 +225,29 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   val testValidations = Map(
-    "bad_domain/amf.jsonld"                   -> ExpectedReport(conforms = false, 3, ValidationProfileNames.OAS),
-    "bad_domain/valid.jsonld"                 -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),
-    "endpoint/amf.jsonld"                     -> ExpectedReport(conforms = false, 1, ValidationProfileNames.AMF),
-    "endpoint/valid.jsonld"                   -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
-    "operation/amf.jsonld"                    -> ExpectedReport(conforms = false, 1, ValidationProfileNames.AMF),
-    "operation/valid.jsonld"                  -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
-    "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 4, ValidationProfileNames.AMF),
-    "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 4, ValidationProfileNames.AMF),
-    "parameters/amf_valid.jsonld"             -> ExpectedReport(conforms = true, 0, ValidationProfileNames.AMF),
-    "shapes/enum_amf.jsonld"                  -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS),
-    "shapes/enum_valid.jsonld"                -> ExpectedReport(conforms = true, 0, ValidationProfileNames.OAS),
-    "webapi/amf.jsonld"                       -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS),
-    "webapi/valid.jsonld"                     -> ExpectedReport(conforms = false, 1, ValidationProfileNames.OAS),
-    "webapi/valid.jsonld"                     -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "webapi/bad_protocol.jsonld"              -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
-    "types/scalars/missing_type.jsonld"       -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
-    "types/scalars/missing_type_valid.jsonld" -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/scalars/wrong_facet.jsonld"        -> ExpectedReport(conforms = false, 2, ValidationProfileNames.RAML),
-    "types/scalars/valid_facet.jsonld"        -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ValidationProfileNames.RAML),
-    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = true, 0, ValidationProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 2, ValidationProfileNames.OAS)
+    "bad_domain/amf.jsonld"               -> ExpectedReport(conforms = false, 3, ProfileNames.OAS),
+    "bad_domain/valid.jsonld"             -> ExpectedReport(conforms = false, 1, ProfileNames.OAS),
+    "endpoint/amf.jsonld"                 -> ExpectedReport(conforms = false, 1, ProfileNames.AMF),
+    "endpoint/valid.jsonld"               -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
+    "operation/amf.jsonld"                -> ExpectedReport(conforms = false, 1, ProfileNames.AMF),
+    "operation/valid.jsonld"              -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
+    "parameters/amf_properties.jsonld"    -> ExpectedReport(conforms = false, 4, ProfileNames.AMF),
+    "parameters/amf_empty.jsonld"         -> ExpectedReport(conforms = false, 4, ProfileNames.AMF),
+    "parameters/amf_valid.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
+    "shapes/enum_amf.jsonld"              -> ExpectedReport(conforms = false, 2, ProfileNames.OAS),
+    "shapes/enum_valid.jsonld"            -> ExpectedReport(conforms = true, 0, ProfileNames.OAS),
+    "webapi/amf.jsonld"                   -> ExpectedReport(conforms = false, 2, ProfileNames.OAS),
+    "webapi/valid.jsonld"                 -> ExpectedReport(conforms = false, 1, ProfileNames.OAS),
+    "webapi/valid.jsonld"                 -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+    "webapi/bad_protocol.jsonld"          -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+    "types/scalars/missing_type.jsonld"        -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+    "types/scalars/missing_type_valid.jsonld"  -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+    "types/scalars/wrong_facet.jsonld"         -> ExpectedReport(conforms = false, 2, ProfileNames.RAML),
+    "types/scalars/valid_facet.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+    "types/arrays/wrong_items.jsonld"          -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+    "types/arrays/right_items.jsonld"          -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+    "types/arrays/empty_items.jsonld"          -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+    "types/arrays/empty_items.jsonld"          -> ExpectedReport(conforms = false, 2, ProfileNames.OAS)
   )
 
   for {

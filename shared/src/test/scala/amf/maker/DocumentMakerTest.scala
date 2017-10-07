@@ -58,32 +58,38 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     person
       .withProperty("name")
+      .withPath("http://raml.org/vocabularies/data#name")
       .withMinCount(minCount)
       .withScalarSchema("name")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     person
       .withProperty("description")
+      .withPath("http://raml.org/vocabularies/data#description")
       .withMinCount(minCount)
       .withScalarSchema("description")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     person
       .withProperty("age")
+      .withPath("http://raml.org/vocabularies/data#age")
       .withMinCount(minCount)
       .withScalarSchema("age")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
     val address = person
       .withProperty("address")
+      .withPath("http://raml.org/vocabularies/data#address")
       .withMinCount(minCount)
       .withObjectRange("address")
     address
       .withClosed(false)
       .withProperty("street")
+      .withPath("http://raml.org/vocabularies/data#street")
       .withMinCount(minCount)
       .withScalarSchema("street")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     address
       .withProperty("number")
+      .withPath("http://raml.org/vocabularies/data#number")
       .withMinCount(minCount)
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
@@ -114,16 +120,19 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     human
       .withProperty("name")
+      .withPath("http://raml.org/vocabularies/data#name")
       .withMinCount(minCount)
       .withScalarSchema("name")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     human
       .withProperty("description")
+      .withPath("http://raml.org/vocabularies/data#description")
       .withMinCount(minCount)
       .withScalarSchema("description")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     human
       .withProperty("age")
+      .withPath("http://raml.org/vocabularies/data#age")
       .withMinCount(minCount)
       .withScalarSchema("age")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
@@ -133,6 +142,7 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withClosed(false)
     person
       .withProperty("omnipotent")
+      .withPath("http://raml.org/vocabularies/data#omnipotent")
       .withMinCount(minCount)
       .withScalarSchema("omnipotent")
       .withDataType("http://www.w3.org/2001/XMLSchema#boolean")
@@ -140,16 +150,19 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     val address = person
       .withProperty("address")
+      .withPath("http://raml.org/vocabularies/data#address")
       .withMinCount(minCount)
       .withObjectRange("address")
     address
       .withClosed(false)
       .withProperty("street")
+      .withPath("http://raml.org/vocabularies/data#street")
       .withMinCount(minCount)
       .withScalarSchema("street")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     address
       .withProperty("number")
+      .withPath("http://raml.org/vocabularies/data#number")
       .withMinCount(minCount)
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")

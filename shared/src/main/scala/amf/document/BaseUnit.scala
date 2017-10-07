@@ -1,15 +1,16 @@
 package amf.document
 
 import amf.domain.DomainElement
-import amf.metadata.document.DocumentModel.{Declares, References}
-import amf.metadata.document.{BaseUnitModel, FragmentModel}
+import amf.metadata.MetaModelTypeMapping
+import amf.metadata.document.BaseUnitModel
+import amf.metadata.document.DocumentModel.References
 import amf.model.{AmfArray, AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
 import scala.collection.mutable.ListBuffer
 
 /** Any parseable unit, backed by a source URI. */
-trait BaseUnit extends AmfObject {
+trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   def references: Seq[BaseUnit]
@@ -37,6 +38,34 @@ trait BaseUnit extends AmfObject {
         findInReferencedModels(id, this.references).headOption
       )
     )
+  }
+
+  /**
+    * Finds in the nested model structure AmfObjects with the requested types
+    * @param shapeType
+    * @return
+    */
+  def findByType(shapeType: String): Seq[DomainElement] = {
+    val predicate = (element: DomainElement) => metaModel(element).`type`.contains { t:ValueType => t.iri() == shapeType }
+    findInDeclaredModel(predicate, this, first = true, ListBuffer.empty) ++ findInEncodedModel(predicate, this, first = true)
+  }
+
+
+  def transform(selector: (DomainElement) => Boolean, transformation: (DomainElement) => Option[DomainElement]): BaseUnit = {
+    val domainElementAdapter = (o: AmfObject) => {
+      o match {
+        case e: DomainElement => selector(e)
+        case _ => false
+      }
+    }
+    val transformationAdatper = (o: AmfObject) => {
+      o match {
+        case e: DomainElement => transformation(e)
+        case _                => Some(o)
+      }
+    }
+    transformByCondition(this, domainElementAdapter, transformationAdatper)
+    this
   }
 
   // Private lookup methods
@@ -111,6 +140,26 @@ trait BaseUnit extends AmfObject {
 
         case _ => findModelByConditionInSeq(predicate, elements.tail, first, acc)
       }
+    }
+  }
+
+  private def transformByCondition(element: AmfObject, predicate: (AmfObject) => Boolean, transformation: (AmfObject) => Option[AmfObject]): AmfObject = {
+    if (predicate(element)) {
+      transformation(element) match {
+        case Some(o) => o
+        case _       => null
+      }
+    } else {
+      element.fields.foreach {
+        case (f, v: AmfObject) =>
+          Option(transformByCondition(v, predicate, transformation)) match {
+            case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
+            case Some(_)                           => // ignore
+            case None                              => element.fields.remove(f)
+          }
+        case _ => // ignore
+      }
+      element
     }
   }
 

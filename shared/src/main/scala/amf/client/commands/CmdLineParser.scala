@@ -1,15 +1,15 @@
 package amf.client.commands
 
+import amf.ProfileNames
 import amf.client.ParserConfig
-import amf.validation.ValidationProfileNames
 import scopt.OptionParser
 
 object CmdLineParser {
 
-  def knownSpec(f: String): Boolean = {
-    ValidationProfileNames.RAML == f ||
-    ValidationProfileNames.OAS == f ||
-    ValidationProfileNames.AMF == f
+  def knownSpec(f: String) = {
+    ProfileNames.RAML == f ||
+    ProfileNames.OAS == f ||
+    ProfileNames.AMF == f
   }
 
   val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {

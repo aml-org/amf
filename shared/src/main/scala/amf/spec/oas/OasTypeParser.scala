@@ -10,6 +10,7 @@ import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.BaseSpecParser
+import amf.vocabulary.Namespace
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
 
 import scala.collection.mutable
@@ -435,7 +436,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         .add(Annotations(entry))
         .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations() += ExplicitField())
 
-      // todo path
+      property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.value.toScalar.text).iri())
 
       OasTypeParser(entry, shape => shape.adopted(property.id), declarations)
         .parse()
