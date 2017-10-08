@@ -40,7 +40,6 @@ However there's work in progress that will be delivered in first version:
 - Improved yaml/json lexer integration
 - Improved error handling
 
-
 ## Usage
 
 To use AMF you should first generate or get the right distribution for your project and import them as dependencies.

@@ -3,11 +3,13 @@ import amf.dialects._
 import amf.model.AmfScalar
 import amf.domain.dialects.DomainEntity
 object RAML_1_0_VocabularyTopLevel {
-  case class VocabularyObject(entity: DomainEntity = DomainEntity(Vocabulary), override val parent:Option[TopLevelObject] = None) extends TopLevelObject(entity, parent){
+  case class VocabularyObject(entity: DomainEntity = DomainEntity(Vocabulary), 
+override val parent:Option[TopLevelObject] = None) 
+extends TopLevelObject(entity, parent){
     def base(): Option[String] = entity.string(Vocabulary.base)
     def withBase(value: String): VocabularyObject = { entity.set(Vocabulary.base.field() , AmfScalar(value)); this }
-    def dialect(): Option[String] = entity.string(Vocabulary.dialectProperty)
-    def withDialect(value: String): VocabularyObject = { entity.set(Vocabulary.dialectProperty.field() , AmfScalar(value)); this }
+    def vocabulary(): Option[String] = entity.string(Vocabulary.vocabularyProperty)
+    def withVocabulary(value: String): VocabularyObject = { entity.set(Vocabulary.vocabularyProperty.field() , AmfScalar(value)); this }
     def version(): Option[String] = entity.string(Vocabulary.version)
     def withVersion(value: String): VocabularyObject = { entity.set(Vocabulary.version.field() , AmfScalar(value)); this }
     def usage(): Option[String] = entity.string(Vocabulary.usage)
@@ -20,20 +22,26 @@ object RAML_1_0_VocabularyTopLevel {
     def withPropertyTerms(value: PropertyObject): VocabularyObject = { entity.add(Vocabulary.propertyTerms.field() , value.entity); this }
   }
 
-  case class ExternalObject(entity: DomainEntity = DomainEntity(External), override val parent:Option[TopLevelObject] = None) extends TopLevelObject(entity, parent){
+  case class ExternalObject(entity: DomainEntity = DomainEntity(External), 
+override val parent:Option[TopLevelObject] = None) 
+extends TopLevelObject(entity, parent){
     def name(): Option[String] = entity.string(External.name)
     def withName(value: String): ExternalObject = { entity.set(External.name.field() , AmfScalar(value)); this }
     def uri(): Option[String] = entity.string(External.uri)
     def withUri(value: String): ExternalObject = { entity.set(External.uri.field() , AmfScalar(value)); this }
   }
 
-  case class ClassObject(entity: DomainEntity = DomainEntity(ClassTerm), override val parent:Option[TopLevelObject] = None) extends TopLevelObject(entity, parent){
+  case class ClassObject(entity: DomainEntity = DomainEntity(ClassTerm), 
+override val parent:Option[TopLevelObject] = None) 
+extends TopLevelObject(entity, parent){
     def id(): Option[String] = entity.string(ClassTerm.idProperty)
     def withId(value: String): ClassObject = { entity.set(ClassTerm.idProperty.field() , AmfScalar(value)); this }
     def displayName(): Option[String] = entity.string(ClassTerm.displayName)
     def withDisplayName(value: String): ClassObject = { entity.set(ClassTerm.displayName.field() , AmfScalar(value)); this }
     def description(): Option[String] = entity.string(ClassTerm.description)
     def withDescription(value: String): ClassObject = { entity.set(ClassTerm.description.field() , AmfScalar(value)); this }
+    def example(): Seq[String] = entity.strings(ClassTerm.example)
+    def withExample(value: String): ClassObject = { entity.add(ClassTerm.example.field() , AmfScalar(value)); this }
     def `extends`(): Seq[String] = entity.strings(ClassTerm.`extends`)
     def withExtends(value: String): ClassObject = { entity.add(ClassTerm.`extends`.field() , AmfScalar(value)); this }
     def resolvedExtends(): List[Option[ClassObject]] = resolveReferences2Options(ClassTerm.`extends`,
@@ -46,11 +54,15 @@ object RAML_1_0_VocabularyTopLevel {
       , e => PropertyObject(e, Some(this)))
   }
 
-  case class PropertyObject(entity: DomainEntity = DomainEntity(PropertyTerm), override val parent:Option[TopLevelObject] = None) extends TopLevelObject(entity, parent){
+  case class PropertyObject(entity: DomainEntity = DomainEntity(PropertyTerm), 
+override val parent:Option[TopLevelObject] = None) 
+extends TopLevelObject(entity, parent){
     def id(): Option[String] = entity.string(PropertyTerm.idProperty)
     def withId(value: String): PropertyObject = { entity.set(PropertyTerm.idProperty.field() , AmfScalar(value)); this }
     def description(): Option[String] = entity.string(PropertyTerm.description)
     def withDescription(value: String): PropertyObject = { entity.set(PropertyTerm.description.field() , AmfScalar(value)); this }
+    def example(): Seq[String] = entity.strings(PropertyTerm.example)
+    def withExample(value: String): PropertyObject = { entity.add(PropertyTerm.example.field() , AmfScalar(value)); this }
     def domain(): Seq[String] = entity.strings(PropertyTerm.domain)
     def withDomain(value: String): PropertyObject = { entity.add(PropertyTerm.domain.field() , AmfScalar(value)); this }
     def resolvedDomain(): List[Option[ClassObject]] = resolveReferences2Options(PropertyTerm.domain,
