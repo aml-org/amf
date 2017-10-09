@@ -6,10 +6,10 @@ import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef.{toString => _, _}
+import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser
+import amf.spec.common.{BaseSpecParser, SpecParserContext}
 import amf.vocabulary.Namespace
 import org.yaml.model._
 
@@ -23,7 +23,7 @@ object RamlTypeParser {
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
     extends BaseSpecParser {
 
-  override implicit val spec = RamlSpecParserContext
+  override implicit val spec: SpecParserContext = RamlSpecParserContext
 
   private val value = part.value
 
@@ -40,12 +40,16 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     }
 
     // Add 'inline' annotation for shape
-    result.map(shape =>
-      part.value match {
-        case _: YScalar => shape.add(InlineDefinition())
-        case _          => shape
-    })
+    result
+      .map(shape =>
+        part.value match {
+          case _: YScalar => shape.add(InlineDefinition())
+          case _          => shape
+      })
+      .map(resolveShape)
   }
+
+  def resolveShape(shape: Shape): Shape = ???
 
   private def detect(): TypeDef = part.value match {
     case scalar: YScalar => matchType(scalar.text)
@@ -144,7 +148,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         case scalar: YScalar =>
           declarations.findType(scalar.text) match {
             case Some(s) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
-            case _       => throw new Exception("Reference not found")
+            case _       => UnresolvedShape(ast).withName(name)
           }
         case _ => shape
       }
@@ -165,13 +169,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
             }
           }
       case _ => false
-    }
-  }
-
-  private def isUnionType(ahead: YValue): Boolean = {
-    ahead match {
-      case ymap: YMap => ymap.map.get("anyOf").isDefined && ymap.map("anyOf").value.isInstanceOf[YSequence]
-      case _          => false
     }
   }
 
@@ -255,7 +252,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
               val unionNodes = seq.nodes.zipWithIndex
                 .map {
                   case (node, index) =>
-                    val entry = YMapEntry(YNode(YScalar(s"item$index", true, node.range)), node)
+                    val entry = YMapEntry(YNode(YScalar(s"item$index", plain = true, node.range)), node)
                     RamlTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
                 }
                 .filter(_.isDefined)
@@ -592,7 +589,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       }
     }
 
-    protected def parseInheritance(declarations: Declarations) = {
+    protected def parseInheritance(declarations: Declarations): Unit = {
       map.key(
         "type",
         entry => {

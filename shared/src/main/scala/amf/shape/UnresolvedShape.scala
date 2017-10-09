@@ -8,9 +8,9 @@ import org.yaml.model.YPart
   */
 case class UnresolvedShape(fields: Fields, annotations: Annotations) extends Shape {
 
-  override def linkCopy(): Linkable = ???
+  override def linkCopy(): Linkable = this
 
-  override def adopted(parent: String): this.type = ???
+  override def adopted(parent: String): this.type = this
 }
 
 object UnresolvedShape {

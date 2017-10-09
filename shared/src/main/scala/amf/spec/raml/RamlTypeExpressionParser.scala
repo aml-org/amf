@@ -81,7 +81,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
         case other =>
           declarations.findType(other) match {
             case Some(s) => s.link(Some(other)).asInstanceOf[Shape]
-            case _       => throw new Exception("Reference not found")
+            case _       => UnresolvedShape().withName(other)
           }
       }
       if (Option(shape.id).isEmpty) {
@@ -167,7 +167,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
     }
   }
 
-  private def ensureNotEmptyArray(t: Shape) = {
+  private def ensureNotEmptyArray(t: Shape): Unit = {
     val empty = t match {
       case a: ArrayShape  => isEmptyArray(a)
       case m: MatrixShape => isEmptyArray(m)
