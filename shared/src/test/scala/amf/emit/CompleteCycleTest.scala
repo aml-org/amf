@@ -486,6 +486,13 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     assertCycle("more-types.raml", "more-types.raml.json", RamlYamlHint, Oas)
   }
 
+  test("Types forward references raml to raml test") {
+    cycle("forward-references-types.raml", RamlYamlHint, Raml)
+  }
+
+  test("Types forward references oas to oas test") {
+    cycle("forward-references-types.json", OasJsonHint, Oas)
+  }
 
   def assertCycle(source: String,
                   golden: String,

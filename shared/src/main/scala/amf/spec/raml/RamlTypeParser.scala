@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.domain.Annotation.{ExplicitField, Inferred}
+import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition}
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -29,12 +29,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
   def parse(): Option[Shape] = {
 
-    // todo review and change if necessary
-    //    part match {
-    //      case ref: YReference =>
-    //        processRef(ref)
-    //      case _ =>
-    detect() match {
+    val result = detect() match {
       case TypeExpressionType          => Some(parseTypeExpression())
       case UnionType                   => Some(parseUnionType())
       case ObjectType                  => Some(parseObjectType())
@@ -43,15 +38,14 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       case typeDef if typeDef.isScalar => Some(parseScalarType(typeDef))
       case _                           => None
     }
-  }
 
-  //
-  //  def retrieveRefShape(ref: YReference): Shape = {
-  //    // this should look in the context for a matching reference
-  //    throw new Exception(s"Shape for ref ${ref.name}, not implemented yet")
-  //  }
-  //
-  //  def processRef(ref: YReference): Option[Shape] = Some(retrieveRefShape(ref).link(None, Some(Annotations(ref))))
+    // Add 'inline' annotation for shape
+    result.map(shape =>
+      part.value match {
+        case _: YScalar => shape.add(InlineDefinition())
+        case _          => shape
+    })
+  }
 
   private def detect(): TypeDef = part.value match {
     case scalar: YScalar => matchType(scalar.text)
@@ -511,8 +505,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
     def parse(): PropertyShape = {
 
-      val name     = entry.key.value.toScalar.text
-      val property = producer(name).add(Annotations(entry))
+      val name: String = entry.key
+      val property     = producer(name).add(Annotations(entry))
 
       entry.value.value match {
         case map: YMap =>
@@ -603,10 +597,15 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         "type",
         entry => {
           entry.value.value match {
+
             case scalar: YScalar if !wellKnownType(scalar.text) =>
-              shape.set(NodeShapeModel.Inherits,
-                        AmfArray(Seq(declarations.shapes(scalar.text)), Annotations(entry.value)),
-                        Annotations(entry))
+              declarations.findType(scalar.text) match {
+                case Some(ancestor) =>
+                  shape.set(NodeShapeModel.Inherits,
+                            AmfArray(Seq(ancestor), Annotations(entry.value)),
+                            Annotations(entry))
+                case None => throw new Exception("Reference not found")
+              }
 
             case sequence: YSequence =>
               val inherits = ArrayNode(sequence)

@@ -744,7 +744,10 @@ class OasSpecEmitter extends BaseSpecEmitter {
     def emit(): Unit = {
       val refVal = label.getOrElse(target.id)
       map { () =>
-        ref(refVal)
+        target match {
+          case _: Shape => ref(appendDefinitionsPrefix(refVal))
+          case other    => throw new Exception(s"Unknown target '$target' of type $other")
+        }
       }
     }
 
@@ -806,7 +809,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case l: Linkable if l.isLink                                   => Seq(TagToReferenceEmitter(shape, l.linkLabel))
+        case l: Linkable if l.isLink => Seq(TagToReferenceEmitter(shape, l.linkLabel))
         case any: AnyShape =>
           val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           Seq(AnyShapeEmitter(copiedNode, ordering))
@@ -868,14 +871,16 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         raw("anyOf")
         array { () =>
-          val anyOfEmitters = shape.anyOf.map { shape =>
-            ordering.sorted(OasTypeEmitter(shape, ordering).emitters())
-          }.map { emitters =>
-            new Emitter {
-              override def position(): Position = emitters.head.position()
-              override def emit(): Unit =  emitters.foreach(_.emit())
+          val anyOfEmitters = shape.anyOf
+            .map { shape =>
+              ordering.sorted(OasTypeEmitter(shape, ordering).emitters())
             }
-          }
+            .map { emitters =>
+              new Emitter {
+                override def position(): Position = emitters.head.position()
+                override def emit(): Unit         = emitters.foreach(_.emit())
+              }
+            }
           ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
             map { () =>
               typeEmitter.emit()
@@ -1232,9 +1237,17 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       entry { () =>
         raw("schema")
-        map { () =>
-          val emitters = OasTypeEmitter(shape, ordering).emitters()
-          traverse(ordering.sorted(emitters))
+
+        val emitters = OasTypeEmitter(shape, ordering).emitters()
+
+        if (emitters.nonEmpty) {
+          emitters.head match {
+            case e: TagToReferenceEmitter if emitters.size == 1 => e.emit()
+            case _ =>
+              map { () =>
+                traverse(emitters)
+              }
+          }
         }
       }
     }

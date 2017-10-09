@@ -715,8 +715,8 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case _ if Option(shape).isDefined && shape.fromTypeExpression  => Seq(TypeExpressionEmitter(shape))
-        case l: Linkable if l.isLink                                   => Seq(LocalReferenceEmitter(shape))
+        case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(TypeExpressionEmitter(shape))
+        case l: Linkable if l.isLink                                  => Seq(LocalReferenceEmitter(shape))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
@@ -822,7 +822,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         result += EntryEmitter("type", "object")
 
       fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
-
 
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
@@ -1151,20 +1150,21 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       val anyOfEmitters: mutable.ListBuffer[Emitter] = mutable.ListBuffer()
 
-
       entry { () =>
         raw("anyOf")
         array { () =>
-          val anyOfEmitters = shape.anyOf.map { shape =>
-            ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
-          }.map { emitters =>
-            new Emitter {
-              override def position(): Position = emitters.head.position()
-              override def emit(): Unit =   {
-                emitters.foreach(_.emit())
+          val anyOfEmitters = shape.anyOf
+            .map { shape =>
+              ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
+            }
+            .map { emitters =>
+              new Emitter {
+                override def position(): Position = emitters.head.position()
+                override def emit(): Unit = {
+                  emitters.foreach(_.emit())
+                }
               }
             }
-          }
           ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
             map { () =>
               typeEmitter.emit()

@@ -1,0 +1,25 @@
+#%RAML 1.0
+types:
+  Person:
+    properties:
+      name: string
+      age: integer
+      address:
+        properties:
+          street: string
+          number: integer
+          document:
+            type: object
+          lastName:
+            type: string
+/person-response:
+  get:
+    responses:
+      200:
+        body: Person
+/address-response:
+  get:
+    responses:
+      200:
+        body:
+           type: Person

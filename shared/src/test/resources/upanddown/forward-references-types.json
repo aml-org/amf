@@ -1,0 +1,40 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "Person": {
+      "properties": {
+        "age": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/person-response": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          }
+        }
+      }
+    },
+    "/address-response": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          }
+        }
+      }
+    }
+  }
+}
