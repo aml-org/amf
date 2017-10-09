@@ -1,12 +1,12 @@
-package amf.resolution
+package amf.resolution.stages
 
 import amf.document.BaseUnit
-import amf.domain.Annotation.{ExplicitField, LexicalInformation}
-import amf.domain.DomainElement
-import amf.metadata.{MetaModelTypeMapping, Obj}
+import amf.domain.Annotation.{ExplicitField, LexicalInformation, ParsedFromTypeExpression}
+import amf.domain.{Annotations, DomainElement, Value}
 import amf.metadata.shape._
-import amf.model.AmfArray
-import amf.resolution.shape_normalization.MinShapeAlgorithm
+import amf.metadata.{MetaModelTypeMapping, Obj}
+import amf.model.{AmfArray, AmfScalar}
+import amf.resolution.stages.shape_normalization.MinShapeAlgorithm
 import amf.shape._
 import amf.vocabulary.{Namespace, ValueType}
 
@@ -16,23 +16,14 @@ import scala.collection.mutable.ListBuffer
   * Computes the canonical form for all the shapes in the model
   * We are assuming certain pre-conditions in the state of the shape:
   *  - All type references have been replaced by their expanded forms
-  * @param profile resolution profile
-  * @return the resolved model
+  * @param profile
   */
 class ShapeNormalizationStage(profile: String)
     extends ResolutionStage(profile)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {
 
-  private val findShapesPredicate = (element: DomainElement) => {
-    val metaModelFound: Obj = metaModel(element)
-    val targetIri           = (Namespace.Shapes + "Shape").iri()
-    metaModelFound.`type`.exists { t: ValueType =>
-      t.iri() == targetIri
-    }
-  }
-
-  override def resolve(model: BaseUnit, context: Any): BaseUnit = {
+  override def resolve(model:BaseUnit): BaseUnit = {
     model.transform(findShapesPredicate, transform)
   }
 
@@ -44,13 +35,21 @@ class ShapeNormalizationStage(profile: String)
 
   protected def cleanLexicalInfo(shape: Shape): Shape = {
     shape.annotations.reject(_.isInstanceOf[LexicalInformation])
+    shape.annotations.reject(_.isInstanceOf[ParsedFromTypeExpression])
     shape
+  }
+
+  def findShapesPredicate(element: DomainElement) = {
+    val metaModelFound: Obj = metaModel(element)
+    val targetIri = (Namespace.Shapes + "Shape").iri()
+    metaModelFound.`type`.exists { t: ValueType => t.iri() == targetIri }
   }
 
   protected def transform(element: DomainElement): Option[DomainElement] = element match {
     case shape: Shape => Some(canonical(expand(shape)))
     case other        => Some(other)
   }
+
 
   protected def expand(shape: Shape): Shape = {
     ensureCorrect(shape)
@@ -99,22 +98,38 @@ class ShapeNormalizationStage(profile: String)
       val newInherits = node.inherits.map(shape => expand(shape))
       node.setArrayWithoutId(NodeShapeModel.Inherits, newInherits, oldInherits.annotations)
     }
+
+    // We make explicit the implicit fields
+    node.fields.entry(NodeShapeModel.Closed) match {
+      case Some(entry) => node.fields.setWithoutId(NodeShapeModel.Closed, entry.value.value, entry.value.annotations += ExplicitField())
+      case None        => node.set(NodeShapeModel.Closed, AmfScalar(false), Annotations() += ExplicitField())
+    }
+
     node
   }
 
   protected def expandProperty(property: PropertyShape): PropertyShape = {
-    // property is mandatory
-    if (Option(property.fields.getValue(PropertyShapeModel.MinCount)).isEmpty) {
-      property.withMinCount(0)
+    // property is mandatory and must be explicit
+    var required: Boolean = false
+    property.fields.entry(PropertyShapeModel.MinCount) match {
+      case None        => throw new Exception("MinCount field is mandatory in a shape")
+      case Some(entry) => if (entry.value.value.asInstanceOf[AmfScalar].toNumber.intValue() != 0) {
+        required = true
+      }
     }
 
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
     if (Option(oldRange).isDefined) {
-      property.fields.setWithoutId(PropertyShapeModel.Range, expand(property.range), oldRange.annotations)
+      val expandedRange = expand(property.range)
+      // Making the required property explicit
+      Option(expandedRange.fields.getValue(ShapeModel.RequiredShape)) match {
+        case Some(v) => v.annotations += ExplicitField()
+        case None    => expandedRange.fields.setWithoutId(ShapeModel.RequiredShape, AmfScalar(required), Annotations() += ExplicitField())
+      }
+      property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
       throw new Exception(s"Resolution error: Property shape with missing range: $property")
     }
-
     property
   }
 
@@ -152,7 +167,10 @@ class ShapeNormalizationStage(profile: String)
       val superTypes     = array.inherits
       var accNode: Shape = canonical(array.withInherits(Seq()))
       superTypes.foreach { superNode =>
-        accNode = canonical(minShape(accNode, canonical(superNode)))
+        val canonicalSuperNode = canonical(superNode)
+        val newMinShape = minShape(accNode, canonicalSuperNode)
+        val canonicalMinShape = canonical(newMinShape)
+        accNode = canonicalMinShape
       }
       accNode
     } else {
@@ -186,8 +204,12 @@ class ShapeNormalizationStage(profile: String)
       val superTypes     = node.inherits
       var accNode: Shape = canonical(node.withInherits(Seq()))
       superTypes.foreach { superNode =>
-        accNode = canonical(minShape(accNode, canonical(superNode)))
+        val canonicalSuperNode = canonical(superNode)
+        val newMinShape = minShape(accNode, canonicalSuperNode)
+        val canonicalMinShape = canonical(newMinShape)
+        accNode = canonicalMinShape
       }
+      accNode.fields.remove(NodeShapeModel.Inherits)
       accNode
     } else {
       var acc = Seq(cloneShape(NodeShape(), node))

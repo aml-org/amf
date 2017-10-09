@@ -2,14 +2,18 @@
 type: union
 anyOf:
   - type: object
+    additionalProperties: true
     properties:
       a:
         type: string
+        required: true
       b:
         type: string
   - type: object
+    additionalProperties: true
     properties:
       a:
         type: string
+        required: true
       b:
         type: integer

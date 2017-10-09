@@ -7,6 +7,7 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
+import amf.resolution.stages.ShapeNormalizationStage
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.raml.RamlTypeExpressionParser
@@ -134,12 +135,12 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   val examples = Seq(
     "union1",
-    "union2"
-    // "inheritance1"
+    "union2",
+    "inheritance1"
   )
 
   examples.foreach { example =>
-    test(s"Resolve data types: $example") {
+    test(s"HERE_HERE Resolve data types: $example") {
       val expected   = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
       AMFCompiler(basePath + s"$example.raml",
         platform,
@@ -148,7 +149,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
         None,
         platform.dialectsRegistry)
         .build().map { model =>
-        new ShapeNormalizationStage(ProfileNames.RAML).resolve(model, null)
+        model.resolve(ProfileNames.RAML)
       }.flatMap({ unit =>
         AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
       })

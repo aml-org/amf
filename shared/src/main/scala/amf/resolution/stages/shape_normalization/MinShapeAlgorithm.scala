@@ -1,5 +1,6 @@
-package amf.resolution.shape_normalization
+package amf.resolution.stages.shape_normalization
 
+import amf.domain.Annotations
 import amf.metadata.Field
 import amf.metadata.shape._
 import amf.model.AmfArray
@@ -74,7 +75,7 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
         }
 
       // fallback error
-      case _ =>  throw new Exception(s"incompatible types: [${baseShape}, ${superShape}]")
+      case _ =>  throw new Exception(s"incompatible types: [$baseShape, $superShape]")
     }
   }
 
@@ -162,10 +163,15 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
       case (path, false) =>
         val superProp = superProperties.find(_.path == path)
         val baseProp = baseProperties.find(_.path == path)
-        superProp.getOrElse(superProp.get)
+        superProp.getOrElse(baseProp.get)
     }
 
-    baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), baseNode.fields.getValue(NodeShapeModel.Properties).annotations)
+    // This can be nil in the case of inheritance
+    val annotations = Option(baseNode.fields.getValue(NodeShapeModel.Properties)) match {
+      case Some(field) => field.annotations
+      case None        => Annotations()
+    }
+    baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), annotations)
 
     computeNarrowRestrictions(NodeShapeModel.fields, baseNode, superNode, filteredFields = Seq(NodeShapeModel.Properties))
 

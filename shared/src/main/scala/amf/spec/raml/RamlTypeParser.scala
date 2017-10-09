@@ -1,7 +1,7 @@
 package amf.spec.raml
 
 import amf.domain.Annotation.{ExplicitField, Inferred}
-import amf.domain.{Annotations, CreativeWork}
+import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
@@ -514,12 +514,14 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       val name     = entry.key.value.toScalar.text
       val property = producer(name).add(Annotations(entry))
 
+      var explicitRequired: Option[Value] = None
       entry.value.value match {
         case map: YMap =>
           map.key(
             "required",
             entry => {
               val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+              explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
               property.set(PropertyShapeModel.MinCount,
                            AmfScalar(if (required) 1 else 0),
                            Annotations(entry) += ExplicitField())
@@ -539,7 +541,12 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       RamlTypeParser(entry, shape => shape.adopted(property.id), declarations)
         .parse()
-        .foreach(range => property.set(PropertyShapeModel.Range, range))
+        .foreach { range =>
+          if (explicitRequired.isDefined) {
+            range.fields.setWithoutId(ShapeModel.RequiredShape, explicitRequired.get.value, explicitRequired.get.annotations)
+          }
+          property.set(PropertyShapeModel.Range, range)
+        }
 
       property
     }

@@ -6,12 +6,7 @@ import amf.document.Fragment.{ExtensionFragment, Fragment, OverlayFragment}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.{
-  ArrayNode => DataArrayNode,
-  ObjectNode => DataObjectNode,
-  ScalarNode => DataScalarNode,
-  _
-}
+import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -754,6 +749,13 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       val result = ListBuffer[Emitter]()
       val fs     = shape.fields
+
+      Option(fs.getValue(ShapeModel.RequiredShape)) match {
+        case Some(v) => if (v.annotations.contains(classOf[ExplicitField])) {
+          fs.entry(ShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
+        }
+        case None => // ignore
+      }
 
       fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
 

@@ -16,7 +16,7 @@ abstract class Shape extends DomainElement with Linkable {
   def values: Seq[String]             = fields(Values)
   def documentation: CreativeWork     = fields(Documentation)
   def xmlSerialization: XMLSerializer = fields(XMLSerialization)
-  def inherits: Seq[Shape]                    = fields(Inherits)
+  def inherits: Seq[Shape]            = fields(Inherits)
 
   def withName(name: String): this.type                                = set(Name, name)
   def withDisplayName(name: String): this.type                         = set(DisplayName, name)
