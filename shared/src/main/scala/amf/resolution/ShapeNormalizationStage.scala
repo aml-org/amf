@@ -13,21 +13,26 @@ import amf.vocabulary.{Namespace, ValueType}
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Computes the cannonical form for all the shapes in the model
+  * Computes the canonical form for all the shapes in the model
   * We are assuming certain pre-conditions in the state of the shape:
   *  - All type references have been replaced by their expanded forms
-  * @param profile
+  * @param profile resolution profile
   * @return the resolved model
   */
-class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) with MetaModelTypeMapping with MinShapeAlgorithm {
+class ShapeNormalizationStage(profile: String)
+    extends ResolutionStage(profile)
+    with MetaModelTypeMapping
+    with MinShapeAlgorithm {
 
-  val findShapesPredicate = (element: DomainElement) => {
+  private val findShapesPredicate = (element: DomainElement) => {
     val metaModelFound: Obj = metaModel(element)
-    val targetIri = (Namespace.Shapes + "Shape").iri()
-    metaModelFound.`type`.exists { t: ValueType => t.iri() == targetIri }
+    val targetIri           = (Namespace.Shapes + "Shape").iri()
+    metaModelFound.`type`.exists { t: ValueType =>
+      t.iri() == targetIri
+    }
   }
 
-  override def resolve(model:BaseUnit, context: Any): BaseUnit = {
+  override def resolve(model: BaseUnit, context: Any): BaseUnit = {
     model.transform(findShapesPredicate, transform)
   }
 
@@ -77,7 +82,7 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
   }
 
   protected def expandTuple(tuple: TupleShape): TupleShape = {
-    val oldItems = tuple.fields.getValue(ArrayShapeModel.Items)
+    val oldItems      = tuple.fields.getValue(ArrayShapeModel.Items)
     val newItemShapes = tuple.items.map(shape => expand(shape))
     tuple.setArrayWithoutId(TupleShapeModel.Items, newItemShapes, oldItems.annotations)
     tuple
@@ -140,12 +145,11 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
     }
   }
 
-
-  protected def canonicalShape(shape: Shape) = shape
+  private def canonicalShape(shape: Shape) = shape
 
   protected def canonicalArray(array: ArrayShape): Shape = {
     if (Option(array.inherits).isDefined && array.inherits.nonEmpty) {
-      val superTypes = array.inherits
+      val superTypes     = array.inherits
       var accNode: Shape = canonical(array.withInherits(Seq()))
       superTypes.foreach { superNode =>
         accNode = canonical(minShape(accNode, canonical(superNode)))
@@ -168,7 +172,7 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
       case unionItems: UnionShape =>
         val newUnionItems = unionItems.anyOf.map {
           case a: ArrayShape => cloneShape(MatrixShape(), matrix).withItems(a)
-          case o => cloneShape(ArrayShape(), matrix.toArrayShape).withItems(o)
+          case o             => cloneShape(ArrayShape(), matrix.toArrayShape).withItems(o)
         }
         unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
       case a: ArrayShape => matrix.withItems(a)
@@ -179,7 +183,7 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
   protected def canonicalNode(node: NodeShape): Shape = {
     node.add(ExplicitField())
     if (Option(node.inherits).isDefined && node.inherits.nonEmpty) {
-      val superTypes = node.inherits
+      val superTypes     = node.inherits
       var accNode: Shape = canonical(node.withInherits(Seq()))
       superTypes.foreach { superNode =>
         accNode = canonical(minShape(accNode, canonical(superNode)))
@@ -231,7 +235,9 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
   }
 
   protected def canonicalProperty(property: PropertyShape): Shape = {
-    property.fields.setWithoutId(PropertyShapeModel.Range, canonical(property.range), property.fields.getValue(PropertyShapeModel.Range).annotations)
+    property.fields.setWithoutId(PropertyShapeModel.Range,
+                                 canonical(property.range),
+                                 property.fields.getValue(PropertyShapeModel.Range).annotations)
     property
   }
 
@@ -243,7 +249,9 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
         case other: Shape      => anyOfAcc += other
       }
     }
-    union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(anyOfAcc), union.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    union.fields.setWithoutId(UnionShapeModel.AnyOf,
+                              AmfArray(anyOfAcc),
+                              union.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
     union
   }
@@ -254,7 +262,7 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
     val sources: Seq[Seq[Shape]] = tuple.items.map { shape =>
       canonical(shape) match {
         case union: UnionShape => union.anyOf
-        case other: Shape => Seq(other)
+        case other: Shape      => Seq(other)
       }
     }
 
@@ -265,12 +273,16 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
     }
 
     if (acc.length == 1) {
-      tuple.fields.setWithoutId(TupleShapeModel.Items, AmfArray(acc.head), tuple.fields.getValue(TupleShapeModel.Items).annotations)
+      tuple.fields.setWithoutId(TupleShapeModel.Items,
+                                AmfArray(acc.head),
+                                tuple.fields.getValue(TupleShapeModel.Items).annotations)
       tuple
     } else {
       val tuples = acc.map { items =>
         val newTuple = cloneShape(TupleShape(), tuple)
-        newTuple.fields.setWithoutId(TupleShapeModel.Items, AmfArray(items), tuple.fields.getValue(TupleShapeModel.Items).annotations)
+        newTuple.fields.setWithoutId(TupleShapeModel.Items,
+                                     AmfArray(items),
+                                     tuple.fields.getValue(TupleShapeModel.Items).annotations)
       }
       val union = UnionShape()
       union.id = tuple.id + "resolved"
@@ -280,7 +292,7 @@ class ShapeNormalizationStage(profile: String) extends ResolutionStage(profile) 
 
   protected def cloneShape[T <: Shape](cloned: T, from: Shape): T = {
     from.fields.foreach {
-      case (f,v) => cloned.fields.setWithoutId(f, v.value, v.annotations)
+      case (f, v) => cloned.fields.setWithoutId(f, v.value, v.annotations)
     }
     if (cloned.isInstanceOf[NodeShape]) {
       cloned.add(ExplicitField())

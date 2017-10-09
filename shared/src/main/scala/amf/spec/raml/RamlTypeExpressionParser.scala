@@ -11,9 +11,8 @@ protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
 class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations, var i: Int = 0) {
   var parsedShape: Option[Shape] = None
-  var acc: String = ""
-  var parsingArray = false
-
+  var acc: String                = ""
+  var parsingArray               = false
 
   def parse(expression: String): Option[Shape] = {
     val input: Seq[Char] = expression.replaceAll("\\s*", "").toCharArray.toSeq
@@ -29,7 +28,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
   protected def parseInput(input: Seq[Char]): ParsingResult = {
     if (input.isEmpty) {
       processChars()
-      ParsingResult(parsedShape,Seq())
+      ParsingResult(parsedShape, Seq())
     } else {
       input.head match {
         case ')' =>
@@ -45,7 +44,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
             throw new Exception("Syntax error, cannot parse Union with empty values")
           }
           processChars()
-          toUnion()
+          parsedShape = Some(toUnion)
           val result = new RamlTypeExpressionParser(adopt, declarations, i + 1).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
@@ -57,7 +56,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
         case ']' =>
           if (!parsingArray) { throw new Exception("Syntax error, Not matching ]") }
           parsingArray = false
-          toArray()
+          parsedShape = Some(toArray)
           parseInput(input.tail)
         case char =>
           acc += char
@@ -66,7 +65,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
     }
   }
 
-  def processChars() = {
+  private def processChars() = {
     if (acc != "") {
       val shape = acc match {
         case "nil"           => NilShape()
@@ -79,10 +78,11 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
         case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
         case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
         case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
-        case other           => declarations.findType(other) match {
-          case Some(s) => s.link(Some(other)).asInstanceOf[Shape]
-          case _       => throw new Exception("Reference not found")
-        }
+        case other =>
+          declarations.findType(other) match {
+            case Some(s) => s.link(Some(other)).asInstanceOf[Shape]
+            case _       => throw new Exception("Reference not found")
+          }
       }
       if (Option(shape.id).isEmpty) {
         adopt(shape)
@@ -92,48 +92,39 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
     }
   }
 
-  def toUnion() = {
+  private def toUnion: Shape = {
     parsedShape match {
       case None                => throw new Exception("Syntax error, cannot create empty Union")
-      case Some(_: UnionShape) => // ignore
-      case Some(shape)         =>
+      case Some(u: UnionShape) => u
+      case Some(shape) =>
         val union = UnionShape()
         adopt(union)
-        parsedShape = Some(union.withAnyOf(Seq(shape)))
+        union.withAnyOf(Seq(shape))
     }
   }
 
-  def toArray() = {
+  private def toArray: Shape = {
     val array = ArrayShape()
     adopt(array)
     parsedShape match {
-      case None =>
-        parsedShape = Some(array)
-      case Some(a: ArrayShape) =>
-        val m = MatrixShape().withId(array.id)
-        m.withItems(a)
-        parsedShape = Some(m)
-      case Some(a: MatrixShape) =>
-        val m = MatrixShape().withId(array.id)
-        m.withItems(a)
-        parsedShape = Some(m)
-      case Some(other) =>
-        parsedShape = Some(array.withItems(other))
+      case None                 => array
+      case Some(a: ArrayShape)  => MatrixShape().withId(array.id).withItems(a)
+      case Some(a: MatrixShape) => MatrixShape().withId(array.id).withItems(a)
+      case Some(other)          => array.withItems(other)
     }
   }
 
-  def acceptShape(maybeShape: Option[Shape]) = {
+  private def acceptShape(maybeShape: Option[Shape]) = {
     maybeShape match {
       case None => // ignore
-      case Some(array: ArrayShape) if isEmptyArray(array) => {
+      case Some(array: ArrayShape) if isEmptyArray(array) =>
         parsedShape match {
-          case None => parsedShape = Some(array)
-          case Some(shape) => parsedShape = Some(fillEmptyArray(array))
+          case None    => parsedShape = Some(array)
+          case Some(_) => parsedShape = Some(fillEmptyArray(array))
         }
-      }
       case Some(shape) =>
         parsedShape match {
-          case None                => parsedShape = Some(shape)
+          case None => parsedShape = Some(shape)
           case Some(union: UnionShape) =>
             shape match {
               case otherUnion: UnionShape =>
@@ -145,40 +136,38 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
                 union.fields.remove(UnionShapeModel.AnyOf)
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
-          case _ => throw new Exception(s"Error parsing type expression, cannot accept type ${shape}")
+          case _ => throw new Exception(s"Error parsing type expression, cannot accept type $shape")
         }
     }
   }
 
   protected def isEmptyArray(shape: DataArrangementShape): Boolean = {
     shape match {
-      case array: ArrayShape  => Option(array.items).isEmpty
+      case array: ArrayShape   => Option(array.items).isEmpty
       case matrix: MatrixShape => isEmptyArray(matrix.items.asInstanceOf[DataArrangementShape])
     }
   }
 
-  protected def fillEmptyArray(shape: DataArrangementShape) = {
+  private def fillEmptyArray(shape: DataArrangementShape) = {
     shape match {
-      case array: ArrayShape => {
+      case array: ArrayShape =>
         parsedShape match {
-          case None => shape
+          case None                 => shape
           case Some(a: ArrayShape)  => array.toMatrixShape.withItems(a)
           case Some(m: MatrixShape) => array.toMatrixShape.withItems(m)
           case Some(other)          => array.withItems(other)
         }
-      }
-      case matrix: MatrixShape => {
+      case matrix: MatrixShape =>
         parsedShape match {
-          case None => shape
+          case None                 => shape
           case Some(a: ArrayShape)  => matrix.withItems(a)
           case Some(m: MatrixShape) => matrix.withItems(m)
           case Some(other)          => matrix.toArrayShape.withItems(other)
         }
-      }
     }
   }
 
-  protected def ensureNotEmptyArray(t: Shape) = {
+  private def ensureNotEmptyArray(t: Shape) = {
     val empty = t match {
       case a: ArrayShape  => isEmptyArray(a)
       case m: MatrixShape => isEmptyArray(m)
