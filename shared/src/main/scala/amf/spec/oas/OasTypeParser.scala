@@ -99,11 +99,11 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       .map(text =>
         declarations.findType(text) match {
           case Some(s) =>
-            val copied = s.link(Some(text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
+            val copied = s.link(text, Annotations(ast)).asInstanceOf[Shape].withName(name)
             adopt(copied)
             copied
-          case None => throw new Exception("Reference not found")
-      }) // todo check if empty its ok if i dondt find the key in the declarations map/)
+          case None => UnresolvedShape(text, map).withName(name)
+      })
   }
 
   private def parseObjectType(): Shape = {

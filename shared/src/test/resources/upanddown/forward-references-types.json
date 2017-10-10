@@ -8,6 +8,23 @@
         },
         "name": {
           "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "parent": {
+          "$ref": "#/definitions/Person"
+        }
+      },
+      "type": "object"
+    },
+    "Address": {
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "number"
         }
       },
       "type": "object"
@@ -30,7 +47,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Person"
+              "$ref": "#/definitions/Address"
             }
           }
         }

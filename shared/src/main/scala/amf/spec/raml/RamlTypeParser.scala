@@ -46,10 +46,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _: YScalar => shape.add(InlineDefinition())
           case _          => shape
       })
-      .map(resolveShape)
   }
-
-  def resolveShape(shape: Shape): Shape = ???
 
   private def detect(): TypeDef = part.value match {
     case scalar: YScalar => matchType(scalar.text)
@@ -147,8 +144,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
             .parse() // I have to do the adopt before parser children shapes. Other way the children will not have the father id
         case scalar: YScalar =>
           declarations.findType(scalar.text) match {
-            case Some(s) => s.link(Some(scalar.text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
-            case _       => UnresolvedShape(ast).withName(name)
+            case Some(s) => s.link(scalar.text, Annotations(part)).asInstanceOf[Shape].withName(name)
+            case _       => UnresolvedShape(scalar.text, part).withName(name)
           }
         case _ => shape
       }

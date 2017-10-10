@@ -79,8 +79,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
         .withId("/Users/hernan.najles/mulesoft/amf/shared/src/test/resources/references/" + file)
         .withEncodes(WebApi().withId("shared/src/test/resources/references/" + file + "#/web-api"))
         .withReferences(Seq(dataTypeFragment))
-        .withDeclares(
-          Seq(person.link(Some("fragments/" + fragmentFile), None).asInstanceOf[NodeShape].withName("person")))
+        .withDeclares(Seq(person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")))
     }
   }
 }

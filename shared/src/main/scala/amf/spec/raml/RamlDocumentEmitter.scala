@@ -602,7 +602,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
-        if (shape.linkTarget.isDefined)
+        if (shape.isLink)
           shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel.getOrElse(l.id), references).emit())
         else emitLocalType()
       }

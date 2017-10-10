@@ -24,12 +24,12 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
 
   def withLinkLabel(label: String): this.type = set(LinkableElementModel.Label, label)
 
-  def link[T](label: Option[String] = None, annotations: Option[Annotations] = None): T = {
-    val href = linkCopy()
-    href.withLinkTarget(this)
-    label.map(href.withLinkLabel)
-
-    href.asInstanceOf[T]
+  def link[T](label: String, annotations: Annotations = Annotations()): T = {
+    linkCopy()
+      .withLinkTarget(this)
+      .withLinkLabel(label)
+      .add(annotations)
+      .asInstanceOf[T]
   }
 }
 

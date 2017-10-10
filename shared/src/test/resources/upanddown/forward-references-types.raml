@@ -4,14 +4,24 @@ types:
     properties:
       name: string
       age: integer
-      address:
+      address: Address
+      parent: Person
+  Address:
         properties:
           street: string
           number: integer
-          document:
-            type: object
-          lastName:
-            type: string
+  Figure:
+    properties:
+      area: integer
+      context: (Circle | Square)[]
+  Circle:
+    type: Figure
+    properties:
+      radius: integer
+  Square:
+    type: Figure
+    properties:
+      side: integer
 /person-response:
   get:
     responses:
@@ -21,5 +31,4 @@ types:
   get:
     responses:
       200:
-        body:
-           type: Person
+        body: Address

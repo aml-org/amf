@@ -286,7 +286,7 @@ private[spec] trait BaseSpecParser {
         case _: ResourceType => declarations.findResourceType(parsedUrl)
       }
       d.map { a =>
-          val copied: AbstractDeclaration = a.link(Some(parsedUrl), Some(annotations))
+          val copied: AbstractDeclaration = a.link(parsedUrl, annotations)
           copied.withName(key)
         }
         .getOrElse(throw new IllegalStateException("Could not find abstract declaration in references map for link"))

@@ -546,7 +546,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
     parseAnnotationTypeDeclarations(map, parent, declarations)
     parseResourceTypeDeclarations("resourceTypes", map, parent, declarations)
     parseTraitDeclarations("traits", map, parent, declarations)
-
+    declarations.resolve()
   }
 
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String, declarations: Declarations): Unit = {
@@ -642,7 +642,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
       declarations
         .findAnnotation(scalar.text)
         .map { a =>
-          val copied: CustomDomainProperty = a.link(Some(scalar.text), Some(Annotations(ast)))
+          val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
           adopt(copied.withName(annotationName))
           copied
         }

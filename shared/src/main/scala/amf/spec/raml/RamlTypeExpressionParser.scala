@@ -80,8 +80,8 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
         case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
         case other =>
           declarations.findType(other) match {
-            case Some(s) => s.link(Some(other)).asInstanceOf[Shape]
-            case _       => UnresolvedShape().withName(other)
+            case Some(s) => s.link(other).asInstanceOf[Shape]
+            case _       => UnresolvedShape(other).withName(other)
           }
       }
       if (Option(shape.id).isEmpty) {
