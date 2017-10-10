@@ -51,6 +51,7 @@ lazy val amf = crossProject
     publish := {
       "./amf-js/build-scripts/deploy-develop.sh".!
     },
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-module.js",
     jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
