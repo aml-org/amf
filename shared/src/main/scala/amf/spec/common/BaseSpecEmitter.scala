@@ -71,6 +71,13 @@ trait BaseSpecEmitter {
     override def position(): Position = pos(v.annotations)
   }
 
+  case class RawEmitter(content: String, tag: YType = YType.Str, annotations: Annotations = Annotations())
+      extends Emitter {
+    override def emit(): Unit = sourceOr(annotations, raw(content, tag))
+
+    override def position(): Position = pos(annotations)
+  }
+
   case class ValueEmitter(key: String, f: FieldEntry, tag: YType = YType.Str) extends Emitter {
     override def emit(): Unit = {
       sourceOr(f.value, entry { () =>

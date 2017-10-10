@@ -6,7 +6,12 @@ import amf.document.Fragment.{ExtensionFragment, Fragment, OverlayFragment}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
+import amf.domain.extensions.{
+  ArrayNode => DataArrayNode,
+  ObjectNode => DataObjectNode,
+  ScalarNode => DataScalarNode,
+  _
+}
 import amf.metadata.Field
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -597,7 +602,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
-        if (shape.linkTarget.isDefined)
+        if (shape.isLink)
           shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel.getOrElse(l.id), references).emit())
         else emitLocalType()
       }
@@ -710,8 +715,8 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case _ if Option(shape).isDefined && shape.fromTypeExpression  => Seq(TypeExpressionEmitter(shape))
-        case l: Linkable if l.isLink                                   => Seq(LocalReferenceEmitter(shape))
+        case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(TypeExpressionEmitter(shape))
+        case l: Linkable if l.isLink                                  => Seq(LocalReferenceEmitter(shape))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
@@ -751,9 +756,10 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       val fs     = shape.fields
 
       Option(fs.getValue(ShapeModel.RequiredShape)) match {
-        case Some(v) => if (v.annotations.contains(classOf[ExplicitField])) {
-          fs.entry(ShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
-        }
+        case Some(v) =>
+          if (v.annotations.contains(classOf[ExplicitField])) {
+            fs.entry(ShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
+          }
         case None => // ignore
       }
 
@@ -825,7 +831,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
 
-
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
       fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
@@ -877,7 +882,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
     override def position(): Position = pos(f.value.annotations)
   }
-
 
   case class AnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering) extends ShapeEmitter(shape, ordering) {
     override def emitters() = {
@@ -1042,16 +1046,18 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       entry { () =>
         raw("anyOf")
         array { () =>
-          val anyOfEmitters = shape.anyOf.map { shape =>
-            ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
-          }.map { emitters =>
-            new Emitter {
-              override def position(): Position = emitters.head.position()
-              override def emit(): Unit =   {
-                emitters.foreach(_.emit())
+          val anyOfEmitters = shape.anyOf
+            .map { shape =>
+              ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
+            }
+            .map { emitters =>
+              new Emitter {
+                override def position(): Position = emitters.head.position()
+                override def emit(): Unit = {
+                  emitters.foreach(_.emit())
+                }
               }
             }
-          }
           ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
             map { () =>
               typeEmitter.emit()

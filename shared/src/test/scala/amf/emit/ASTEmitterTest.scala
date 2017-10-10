@@ -1,8 +1,9 @@
-package amf.parser
+package amf.emit
 
+import amf.parser.ASTEmitter
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
-import org.yaml.model.{YTag, YType}
+import org.yaml.model.YType
 
 /**
   * [[ASTEmitter]] test

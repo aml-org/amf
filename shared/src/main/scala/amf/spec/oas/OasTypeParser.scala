@@ -95,15 +95,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   private def parseLinkType(): Option[Shape] = {
     map
       .key("$ref")
-      .map(_.value.value.toScalar.text)
+      .map(e => stripDefinitionsPrefix(e.value))
       .map(text =>
         declarations.findType(text) match {
           case Some(s) =>
-            val copied = s.link(Some(text), Some(Annotations(ast))).asInstanceOf[Shape].withName(name)
+            val copied = s.link(text, Annotations(ast)).asInstanceOf[Shape].withName(name)
             adopt(copied)
             copied
-          case _ => NodeShape(ast).withName(name)
-      }) // todo check if empty its ok if i dondt find the key in the declarations map/)
+          case None => UnresolvedShape(text, map).withName(name)
+      })
   }
 
   private def parseObjectType(): Shape = {
@@ -518,5 +518,4 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       shape
     }
   }
-
 }

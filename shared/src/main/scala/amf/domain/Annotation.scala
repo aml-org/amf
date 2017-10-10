@@ -23,7 +23,7 @@ trait SerializableAnnotation extends Annotation {
 object Annotation {
 
   case class ParsedFromTypeExpression(expression: String) extends SerializableAnnotation {
-    override val name: String = "type-exprssion"
+    override val name: String  = "type-exprssion"
     override val value: String = expression
   }
 
@@ -46,6 +46,8 @@ object Annotation {
   }
 
   case class SourceAST(ast: YPart) extends Annotation
+
+  case class InlineDefinition() extends Annotation
 
   case class DeclaredElement() extends Annotation
 

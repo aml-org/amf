@@ -146,14 +146,14 @@ object Tests {
     }
   }
 
-  def checkDiff(a: Reader, aName: String, b: Reader, bName: String): Unit = {
+  def checkDiff(a: Reader, fileA: String, b: Reader, fileB: String): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
-    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + aName + " " + bName + "\n" + Diff.makeString(diffs))
+    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + fileA + " " + fileB + "\n" + Diff.makeString(diffs))
   }
 
-  def checkDiff(a: String, aName: String, b: String, bName: String): Assertion = {
+  def checkDiff(a: String, fileA: String, b: String, fileB: String): Assertion = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
-    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + aName + " " + bName + "\n" + Diff.makeString(diffs))
+    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + fileA + " " + fileB + "\n" + Diff.makeString(diffs))
     Succeeded
   }
 

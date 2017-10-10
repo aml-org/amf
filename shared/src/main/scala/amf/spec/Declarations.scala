@@ -5,7 +5,8 @@ import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{DomainElement, UserDocumentation}
-import amf.shape.Shape
+import amf.model.AmfArray
+import amf.shape.{Shape, UnresolvedShape}
 
 /**
   * Declarations object.
@@ -68,6 +69,36 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def findType(key: String): Option[Shape] = findForType(key, _.shapes) collect {
     case s: Shape => s
+  }
+
+  /** Resolve all [[UnresolvedShape]] references or fail. */
+  def resolve(): Unit = shapes.values.foreach(resolveShape)
+
+  private def resolveShape(shape: Shape): Shape = {
+    shape.fields.foreach {
+      case (field, value) =>
+        val resolved = value.value match {
+          case u: UnresolvedShape => resolveOrFail(u)
+          case s: Shape           => resolveShape(s)
+          case a: AmfArray =>
+            AmfArray(a.values.map {
+              case u: UnresolvedShape => resolveOrFail(u)
+              case s: Shape           => resolveShape(s)
+              case o                  => o
+            }, a.annotations)
+          case o => o
+        }
+
+        shape.fields.setWithoutId(field, resolved, value.annotations)
+    }
+    shape
+  }
+
+  private def resolveOrFail(unresolved: UnresolvedShape): Shape = {
+    shapes.get(unresolved.reference) match {
+      case Some(target) => unresolved.resolve(target)
+      case None         => throw new Exception(s"Reference '${unresolved.reference}' not found")
+    }
   }
 
   private def findForType(key: String, map: Declarations => Map[String, DomainElement]): Option[DomainElement] = {

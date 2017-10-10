@@ -712,9 +712,8 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         raw("definitions")
         map { () =>
-          val namedEntities       = types.map(t => NamedTypeEmitter(t, ordering))
-          val sortedNamedEntities = ordering.sorted(namedEntities)
-          traverse(sortedNamedEntities)
+          val definitions = types.map(t => NamedTypeEmitter(t, ordering))
+          traverse(ordering.sorted(definitions))
         }
       }
     }
@@ -729,22 +728,37 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
         raw(name)
-        if (shape.isLink)
-          shape.linkTarget.foreach(l => TagToReferenceEmitter(l, shape.linkLabel).emit())
-        map { () =>
-          val emitters       = OasTypeEmitter(shape, ordering).emitters()
-          val sortedEmitters = ordering.sorted(emitters)
-          traverse(sortedEmitters)
-        }
+        if (shape.isLink) TagToReferenceEmitter(shape, shape.linkLabel).emit() else emitLocalType()
+      }
+    }
+
+    private def emitLocalType() = {
+      map { () =>
+        traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
       }
     }
   }
 
   case class TagToReferenceEmitter(target: DomainElement, label: Option[String]) extends Emitter {
     def emit(): Unit = {
-      val refVal = label.getOrElse(target.id)
+      val reference = label.getOrElse(target.id)
       map { () =>
-        ref(refVal)
+        follow() match {
+          case s: Shape if s.annotations.contains(classOf[DeclaredElement]) => ref(appendDefinitionsPrefix(reference))
+          case _                                                            => ref(reference)
+        }
+      }
+    }
+
+    /** Follow links. */
+    private def follow(): DomainElement = {
+      target match {
+        case s: Linkable if s.isLink =>
+          s.linkTarget match {
+            case Some(t) => t
+            case _       => throw new Exception(s"Expected shape link target on $target")
+          }
+        case other => other
       }
     }
 
@@ -786,8 +800,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
           .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
           .get
         raw(name)
-        if (annotationType.linkTarget.isDefined)
-          annotationType.linkTarget.foreach(l => TagToReferenceEmitter(l, annotationType.linkLabel).emit())
+        if (annotationType.isLink) TagToReferenceEmitter(annotationType, annotationType.linkLabel).emit()
         else
           emitAnnotationFields()
       }
@@ -806,7 +819,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
   case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[Emitter] = {
       shape match {
-        case l: Linkable if l.isLink                                   => Seq(TagToReferenceEmitter(shape, l.linkLabel))
+        case l: Linkable if l.isLink => Seq(TagToReferenceEmitter(shape, l.linkLabel))
         case any: AnyShape =>
           val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           Seq(AnyShapeEmitter(copiedNode, ordering))
@@ -868,14 +881,16 @@ class OasSpecEmitter extends BaseSpecEmitter {
       entry { () =>
         raw("anyOf")
         array { () =>
-          val anyOfEmitters = shape.anyOf.map { shape =>
-            ordering.sorted(OasTypeEmitter(shape, ordering).emitters())
-          }.map { emitters =>
-            new Emitter {
-              override def position(): Position = emitters.head.position()
-              override def emit(): Unit =  emitters.foreach(_.emit())
+          val anyOfEmitters = shape.anyOf
+            .map { shape =>
+              ordering.sorted(OasTypeEmitter(shape, ordering).emitters())
             }
-          }
+            .map { emitters =>
+              new Emitter {
+                override def position(): Position = emitters.head.position()
+                override def emit(): Unit         = emitters.foreach(_.emit())
+              }
+            }
           ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
             map { () =>
               typeEmitter.emit()
@@ -1182,8 +1197,16 @@ class OasSpecEmitter extends BaseSpecEmitter {
     def emit(): Unit = {
       entry { () =>
         raw(property.name)
-        map { () =>
-          traverse(ordering.sorted(OasTypeEmitter(property.range, ordering).emitters()))
+        val emitters = ordering.sorted(OasTypeEmitter(property.range, ordering).emitters())
+
+        if (emitters.nonEmpty) {
+          emitters.head match {
+            case e: TagToReferenceEmitter if emitters.size == 1 => e.emit()
+            case _ =>
+              map { () =>
+                traverse(emitters)
+              }
+          }
         }
       }
     }
@@ -1232,9 +1255,17 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       entry { () =>
         raw("schema")
-        map { () =>
-          val emitters = OasTypeEmitter(shape, ordering).emitters()
-          traverse(ordering.sorted(emitters))
+
+        val emitters = ordering.sorted(OasTypeEmitter(shape, ordering).emitters())
+
+        if (emitters.nonEmpty) {
+          emitters.head match {
+            case e: TagToReferenceEmitter if emitters.size == 1 => e.emit()
+            case _ =>
+              map { () =>
+                traverse(emitters)
+              }
+          }
         }
       }
     }

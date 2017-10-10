@@ -1,8 +1,10 @@
 package amf.client
 
+import amf.ProfileNames
 import amf.common.AmfObjectTestMatcher
-import amf.model.{Document, Module, WebApi}
+import amf.model.{BaseUnit, Document, Module, WebApi}
 import amf.unsafe.PlatformSecrets
+import amf.validation.AMFValidationReport
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -98,6 +100,24 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
           case _ => fail("unexpected type")
         }
     }
+  }
+
+  test("Validation model interface") {
+    val examplesPath = "file://shared/src/test/resources/validations/"
+
+    val unit   = new RamlParser().parseFileAsync(examplesPath + "library/nested.raml").get()
+    val report = unit.validate(ProfileNames.RAML).get()
+    assert(!report.conforms)
+    assert(report.results.length == 1)
+  }
+
+  test("Custom validation model interface") {
+    val examplesPath = "file://shared/src/test/resources/validations/"
+
+    val unit   = new RamlParser().parseFileAsync(examplesPath + "banking/api.raml").get()
+    val report = unit.customValidation(examplesPath + "banking/profile.raml").get()
+    assert(!report.conforms)
+    assert(report.results.nonEmpty)
   }
 
   def assertModule(actual: Module, expected: Module): Assertion = {

@@ -6,28 +6,20 @@
         {
           "properties": {
             "a": {
-              {
-                "$ref": "A"
-              }
+              "$ref": "#/definitions/A"
             },
             "b": {
-              {
-                "$ref": "B"
-              }
+              "$ref": "#/definitions/B"
             }
           }
         },
         {
           "properties": {
             "a": {
-              {
-                "$ref": "A"
-              }
+              "$ref": "#/definitions/A"
             },
             "b": {
-              {
-                "$ref": "B"
-              }
+              "$ref": "#/definitions/B"
             }
           }
         }
@@ -37,12 +29,12 @@
       "anyOf": [
         {
           {
-            "$ref": "C"
+            "$ref": "#/definitions/C"
           }
         },
         {
           {
-            "$ref": "D"
+            "$ref": "#/definitions/D"
           }
         }
       ]
@@ -56,28 +48,20 @@
     "C": {
       "properties": {
         "a": {
-          {
-            "$ref": "A"
-          }
+          "$ref": "#/definitions/A"
         },
         "b": {
-          {
-            "$ref": "B"
-          }
+          "$ref": "#/definitions/B"
         }
       }
     },
     "D": {
       "properties": {
         "a": {
-          {
-            "$ref": "A"
-          }
+          "$ref": "#/definitions/A"
         },
         "b": {
-          {
-            "$ref": "B"
-          }
+          "$ref": "#/definitions/B"
         }
       }
     }
