@@ -13,8 +13,7 @@ case class ParserConfig(mode: Option[String] = None,
                         customProfile: Option[String] = None,
                         // list of dialects that will be loaded in the registry
                         // before parsing
-                        dialects: Seq[String] = Seq()
-                       )
+                        dialects: Seq[String] = Seq())
 
 object ParserConfig {
   val PARSE     = "parse"
@@ -24,8 +23,8 @@ object ParserConfig {
 }
 
 object ExitCodes {
-  val Success: Int = 0
-  val WrongInvocation: Int = -1
+  val Success: Int           = 0
+  val WrongInvocation: Int   = -1
   val FailingValidation: Int = -2
-  val Exception: Int = -3
+  val Exception: Int         = -3
 }
