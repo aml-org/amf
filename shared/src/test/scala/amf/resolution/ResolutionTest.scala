@@ -137,10 +137,22 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     "union2",
     "union3",
     "union4",
+    "union5",
     "inheritance1",
     "inheritance2",
+    "inheritance3",
+    "inheritance4",
+    "inheritance5",
+    "inheritance6",
+    "inheritance7",
+    "inheritance8",
     "array_inheritance1",
-    "array_inheritance2"
+    "array_inheritance2",
+    "array_inheritance3",
+    "complex_example1",
+    "shape1",
+    "shape2",
+    "shape3"
   )
 
   examples.foreach { example =>
@@ -164,7 +176,8 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   val errorExamples = Seq(
     "inheritance_error1",
-    "inheritance_error2"
+    "inheritance_error2",
+    "inheritance_error3"
   )
 
   errorExamples.foreach { example =>

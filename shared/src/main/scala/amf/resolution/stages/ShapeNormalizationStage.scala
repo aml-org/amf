@@ -189,6 +189,7 @@ class ShapeNormalizationStage(profile: String)
       canonicalInheritance(array)
     } else {
       val newItems = canonical(array.items)
+      array.annotations += ExplicitField()
       array.fields.remove(ArrayShapeModel.Items)
       newItems match {
         case unionItems: UnionShape =>
@@ -289,7 +290,7 @@ class ShapeNormalizationStage(profile: String)
       if (acc.length == 1) {
         acc.head
       } else {
-        UnionShape().withId(node.id + "/resolved").setArrayWithoutId(UnionShapeModel.AnyOf, acc)
+        UnionShape().withId(node.id + "/resolved").setArrayWithoutId(UnionShapeModel.AnyOf, acc).withName(node.name)
       }
     }
   }
@@ -344,6 +345,7 @@ class ShapeNormalizationStage(profile: String)
       }
       val union = UnionShape()
       union.id = tuple.id + "resolved"
+      union.withName(tuple.name)
       union
     }
   }

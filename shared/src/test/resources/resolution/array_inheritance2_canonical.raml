@@ -54,7 +54,8 @@ types:
   C:
     type: union
     anyOf:
-      - items:
+      - type: array
+        items:
           type: object
           additionalProperties: true
           properties:
@@ -67,7 +68,8 @@ types:
             c:
               required: true
               type: number
-      - items:
+      - type: array
+        items:
           type: object
           additionalProperties: true
           properties:

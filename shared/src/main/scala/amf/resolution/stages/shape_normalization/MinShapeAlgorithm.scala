@@ -47,6 +47,9 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       case baseUnion: UnionShape if superShape.isInstanceOf[UnionShape] =>
         val superUnion = superShape.asInstanceOf[UnionShape]
         computeMinUnion(baseUnion, superUnion)
+      case baseUnion: UnionShape if superShape.isInstanceOf[NodeShape] =>
+        val superNode = superShape.asInstanceOf[NodeShape]
+        computeMinUnionNode(baseUnion, superNode)
 
       // super Unions
       case base: Shape if superShape.isInstanceOf[UnionShape] =>
@@ -203,6 +206,20 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
     computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
+
+    baseUnion
+  }
+
+  protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
+    val newUnionItems = for {
+      baseUnionElement <- baseUnion.anyOf
+    } yield {
+      minShape(baseUnionElement, superNode)
+    }
+
+    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }

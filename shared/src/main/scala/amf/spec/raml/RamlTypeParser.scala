@@ -58,9 +58,9 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     case _: YSequence    => ObjectType
     case map: YMap =>
       detectItems(map)
+        .orElse(detectProperties(map))
         .orElse(detectTypeOrSchema(map))
         .orElse(detectAnyOf(map))
-        .orElse(detectProperties(map))
         .getOrElse(UndefinedType)
   }
 
@@ -95,8 +95,12 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
   }
 
   private def parseTypeExpression(): Shape = {
-    val expression: String = part
-    RamlTypeExpressionParser(adopt, declarations).parse(expression).get
+    part.value match {
+      case expression: YScalar =>
+        RamlTypeExpressionParser(adopt, declarations).parse(expression.text).get
+
+      case _: YMap => parseObjectType()
+    }
   }
 
   private def parseScalarType(typeDef: TypeDef): Shape = {
@@ -359,18 +363,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       super.parse()
 
-      // map.key("type", _ => shape.add(ExplicitField()))
       parseInheritance(declarations)
-
-      map.key("minItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-      })
 
       map.key("uniqueItems", entry => {
         val value = ValueNode(entry.value)
@@ -580,6 +573,16 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         shape.set(ShapeModel.Values, value.strings(), Annotations(entry))
       })
 
+      map.key("minItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
+      })
+
+      map.key("maxItems", entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
+      })
+
       map.key(
         "(externalDocs)",
         entry => {
@@ -616,24 +619,62 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                         AmfArray(Seq(declarations.shapes(scalar.text)), Annotations(entry.value)),
                         Annotations(entry))
 
+            case scalar: YScalar if RamlTypeDefMatcher.TypeExpression.unapply(scalar.text).isDefined =>
+              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
+                .parse()
+                .foreach(s => shape.set(NodeShapeModel.Inherits,
+                                        AmfArray(Seq(s), Annotations(entry.value)),
+                                        Annotations(entry)))
+
             case sequence: YSequence =>
               val inherits = ArrayNode(sequence)
                 .strings()
                 .scalars
-                .map(scalar => declarations.shapes(scalar.toString))
+                .map { scalar =>
+                  scalar.toString match {
+                    case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
+                      RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations).parse().get
+                    case s if declarations.shapes.get(s).isDefined  =>
+                      declarations.shapes(s)
+                    case s if wellKnownType(s) =>
+                      parseWellKnownTypeRef(s)
+                  }
+                }
 
-              shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
+              shape.set(ShapeModel.Inherits,
+                        AmfArray(inherits, Annotations(entry.value)),
+                        Annotations(entry))
 
             case _: YMap =>
               RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
                 .parse()
-                .foreach(s => shape.set(NodeShapeModel.Inherits, s, Annotations(entry)))
+                .foreach(s => shape.set(NodeShapeModel.Inherits,
+                                        AmfArray(Seq(s), Annotations(entry.value)),
+                                        Annotations(entry)))
 
             case _ =>
               shape.add(ExplicitField()) // TODO store annotation in dataType field.
           }
         }
       )
+    }
+
+    def parseWellKnownTypeRef(ramlType: String): Shape = {
+      ramlType match {
+        case "nil" | ""      => NilShape()
+        case "any"           => AnyShape()
+        case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
+        case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
+        case "number"        => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
+        case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
+        case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+        case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+        case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
+        case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
+        case "array"         => ArrayShape()
+        case "object"        => NodeShape()
+        case "union"         => UnionShape()
+      }
     }
   }
 

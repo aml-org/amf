@@ -32,7 +32,7 @@ object RamlTypeDefMatcher {
       case _               => ObjectType
     }
 
-  private object TypeExpression {
+  object TypeExpression {
     def unapply(str: String): Option[String] =
       if (str.contains("[") || str.contains("|") || str.contains("(") || str.contains("]") || str.contains(")"))
         Some(str)
