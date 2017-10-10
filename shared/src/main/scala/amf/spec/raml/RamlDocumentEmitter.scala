@@ -722,7 +722,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
           NodeShapeEmitter(copiedNode, ordering).emitters()
         case union: UnionShape =>
           val copiedNode = union.copy(fields = union.fields.filter(f => !ignored.contains(f._1)))
-          Seq(UnionShapeEmitter(copiedNode, ordering))
+          UnionShapeEmitter(copiedNode, ordering).emitters()
         case file: FileShape =>
           val copiedFile = file.copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
           FileShapeEmitter(copiedFile, ordering).emitters()
@@ -740,10 +740,10 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
           ArrayShapeEmitter(copiedMatrix.toArrayShape, ordering).emitters()
         case any: AnyShape =>
           val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1)))
-          Seq(AnyShapeEmitter(copiedNode, ordering))
+          AnyShapeEmitter(copiedNode, ordering).emitters()
         case nil: NilShape =>
           val copiedNode = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
-          Seq(NilShapeEmitter(copiedNode, ordering))
+          NilShapeEmitter(copiedNode, ordering).emitters()
         case _ => Seq()
       }
     }
@@ -754,6 +754,14 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       val result = ListBuffer[Emitter]()
       val fs     = shape.fields
+
+      Option(fs.getValue(ShapeModel.RequiredShape)) match {
+        case Some(v) =>
+          if (v.annotations.contains(classOf[ExplicitField])) {
+            fs.entry(ShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
+          }
+        case None => // ignore
+      }
 
       fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
 
@@ -875,24 +883,20 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class AnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit =
-      entry { () =>
-        raw("type")
-        raw("any")
-      }
-
-    override def position(): Position = pos(shape.annotations)
+  case class AnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering) extends ShapeEmitter(shape, ordering) {
+    override def emitters() = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+      result += EntryEmitter("type", "any")
+      result
+    }
   }
 
-  case class NilShapeEmitter(shape: NilShape, ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit =
-      entry { () =>
-        raw("type")
-        raw("nil")
-      }
-
-    override def position(): Position = pos(shape.annotations)
+  case class NilShapeEmitter(shape: NilShape, ordering: SpecOrdering) extends ShapeEmitter(shape, ordering) {
+    override def emitters() = {
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+      result += EntryEmitter("type", "nil")
+      result
+    }
   }
 
   trait CommonOASFieldsEmitter {
@@ -1021,6 +1025,51 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = pos(property.annotations) // TODO check this
   }
 
+  case class UnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering) extends ShapeEmitter(shape, ordering) {
+    override def emitters(): Seq[Emitter] = {
+
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+
+      val fs = shape.fields
+
+      result += EntryEmitter("type", "union")
+
+      result += AnyOfShapeEmitter(shape, ordering)
+
+      result
+    }
+  }
+
+  case class AnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val anyOfEmitters: mutable.ListBuffer[Emitter] = mutable.ListBuffer()
+      entry { () =>
+        raw("anyOf")
+        array { () =>
+          val anyOfEmitters = shape.anyOf
+            .map { shape =>
+              ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
+            }
+            .map { emitters =>
+              new Emitter {
+                override def position(): Position = emitters.head.position()
+                override def emit(): Unit = {
+                  emitters.foreach(_.emit())
+                }
+              }
+            }
+          ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
+            map { () =>
+              typeEmitter.emit()
+            }
+          }
+        }
+      }
+    }
+
+    override def position(): Position = pos(shape.fields.getValue(UnionShapeModel.AnyOf).annotations)
+  }
+
   case class ArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering) extends ShapeEmitter(array, ordering) {
     override def emitters(): Seq[Emitter] = {
       val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
@@ -1068,11 +1117,15 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     def emit(): Unit = {
       entry { () =>
         raw("items")
-        RamlTypeEmitter(array.items, ordering).emitters().foreach(_.emit())
+        map { () =>
+          RamlTypeEmitter(array.items, ordering).emitters().foreach(_.emit())
+        }
       }
     }
 
-    override def position(): Position = pos(array.items.fields.getValue(ArrayShapeModel.Items).annotations)
+    override def position(): Position = {
+      pos(array.fields.getValue(ArrayShapeModel.Items).annotations)
+    }
   }
 
   case class TupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering) extends Emitter {
@@ -1138,43 +1191,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(f.value.annotations)
-  }
-
-  case class UnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit = {
-
-      entry { () =>
-        raw("type")
-        raw("union")
-      }
-
-      val anyOfEmitters: mutable.ListBuffer[Emitter] = mutable.ListBuffer()
-
-      entry { () =>
-        raw("anyOf")
-        array { () =>
-          val anyOfEmitters = shape.anyOf
-            .map { shape =>
-              ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
-            }
-            .map { emitters =>
-              new Emitter {
-                override def position(): Position = emitters.head.position()
-                override def emit(): Unit = {
-                  emitters.foreach(_.emit())
-                }
-              }
-            }
-          ordering.sorted(anyOfEmitters).foreach { typeEmitter =>
-            map { () =>
-              typeEmitter.emit()
-            }
-          }
-        }
-      }
-    }
-
-    override def position(): Position = pos(shape.annotations)
   }
 
   case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {

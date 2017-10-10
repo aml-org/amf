@@ -105,7 +105,7 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
   test("Validation model interface") {
     val examplesPath = "file://shared/src/test/resources/validations/"
 
-    val unit = new RamlParser().parseFileAsync(examplesPath + "library/nested.raml").get()
+    val unit   = new RamlParser().parseFileAsync(examplesPath + "library/nested.raml").get()
     val report = unit.validate(ProfileNames.RAML).get()
     assert(!report.conforms)
     assert(report.results.length == 1)
@@ -114,12 +114,11 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
   test("Custom validation model interface") {
     val examplesPath = "file://shared/src/test/resources/validations/"
 
-    val unit = new RamlParser().parseFileAsync(examplesPath + "banking/api.raml").get()
+    val unit   = new RamlParser().parseFileAsync(examplesPath + "banking/api.raml").get()
     val report = unit.customValidation(examplesPath + "banking/profile.raml").get()
     assert(!report.conforms)
     assert(report.results.nonEmpty)
   }
-
 
   def assertModule(actual: Module, expected: Module): Assertion = {
     actual should be(expected)

@@ -1,7 +1,7 @@
-package amf.resolution
+package amf.resolution.stages
 
 import amf.document.BaseUnit
 
 abstract class ResolutionStage(profile: String) {
-    def resolve(model: BaseUnit, context: Any): BaseUnit
+    def resolve(model: BaseUnit): BaseUnit
 }

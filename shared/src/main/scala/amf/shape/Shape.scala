@@ -1,8 +1,9 @@
 package amf.shape
 
-import amf.domain.Annotation.ParsedFromTypeExpression
+import amf.domain.Annotation.{ExplicitField, ParsedFromTypeExpression}
 import amf.domain.{CreativeWork, DomainElement, Linkable}
 import amf.metadata.shape.ShapeModel._
+import amf.model.AmfArray
 
 /**
   * Shape.
@@ -16,7 +17,7 @@ abstract class Shape extends DomainElement with Linkable {
   def values: Seq[String]             = fields(Values)
   def documentation: CreativeWork     = fields(Documentation)
   def xmlSerialization: XMLSerializer = fields(XMLSerialization)
-  def inherits: Seq[Shape]                    = fields(Inherits)
+  def inherits: Seq[Shape]            = fields(Inherits)
 
   def withName(name: String): this.type                                = set(Name, name)
   def withDisplayName(name: String): this.type                         = set(DisplayName, name)
@@ -31,6 +32,39 @@ abstract class Shape extends DomainElement with Linkable {
   def typeExpression: String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
     case Some(expr: ParsedFromTypeExpression) => expr.value
     case _                                    => throw new Exception("Trying to extract non existent type expression")
+  }
+
+  def cloneShape(): this.type = {
+    val cloned = this match {
+      case _: UnionShape    => UnionShape()
+      case _: ScalarShape   => ScalarShape()
+      case _: ArrayShape    => ArrayShape()
+      case _: MatrixShape   => MatrixShape()
+      case _: TupleShape    => TupleShape()
+      case _: PropertyShape => PropertyShape()
+      case _: FileShape     => FileShape()
+      case _: AnyShape      => AnyShape()
+      case _: NilShape      => NilShape()
+      case _: NodeShape     => NodeShape()
+    }
+    cloned.id = this.id
+    this.fields.foreach {
+      case (f,v) =>
+        val clonedValue = v.value match {
+          case s:Shape => s.cloneShape()
+          case a:AmfArray => AmfArray(a.values.map {
+            case e: Shape => e.cloneShape()
+            case o        => o
+          }, a.annotations)
+          case o          => o
+        }
+
+        cloned.fields.setWithoutId(f, clonedValue, v.annotations)
+    }
+    if (cloned.isInstanceOf[NodeShape]) {
+      cloned.add(ExplicitField())
+    }
+    cloned.asInstanceOf[this.type]
   }
 
 }

@@ -1,6 +1,6 @@
-package amf.resolution.shape_normalization
+package amf.resolution.stages.shape_normalization
 
-import amf.metadata.Field
+import amf.domain.Annotations
 import amf.metadata.shape._
 import amf.model.AmfArray
 import amf.shape._
@@ -9,9 +9,10 @@ import amf.vocabulary.Namespace
 import scala.collection.mutable
 
 
-trait MinShapeAlgorithm extends  RestrictionComputation {
+trait MinShapeAlgorithm extends RestrictionComputation {
 
-  protected def minShape(baseShape: Shape, superShape: Shape): Shape = {
+  protected def minShape(baseShapeOrig: Shape, superShape: Shape): Shape = {
+    val baseShape = baseShapeOrig.cloneShape() // this is destructive, we need to clone
     baseShape match {
 
       // Scalars
@@ -46,6 +47,9 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
       case baseUnion: UnionShape if superShape.isInstanceOf[UnionShape] =>
         val superUnion = superShape.asInstanceOf[UnionShape]
         computeMinUnion(baseUnion, superUnion)
+      case baseUnion: UnionShape if superShape.isInstanceOf[NodeShape] =>
+        val superNode = superShape.asInstanceOf[NodeShape]
+        computeMinUnionNode(baseUnion, superNode)
 
       // super Unions
       case base: Shape if superShape.isInstanceOf[UnionShape] =>
@@ -68,16 +72,28 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
       case _ if baseShape.isInstanceOf[AnyShape] || superShape.isInstanceOf[AnyShape] =>
         baseShape match {
           case shape: AnyShape =>
-            computeMinAny(superShape, shape)
+            restrictShape(shape, superShape)
           case _ =>
             computeMinAny(baseShape, superShape.asInstanceOf[AnyShape])
         }
 
+      // Generic inheritance
+      case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) =>
+        computeMinGeneric(baseGeneric, superShape)
+
       // fallback error
-      case _ =>  throw new Exception(s"incompatible types: [${baseShape}, ${superShape}]")
+      case _ =>  {
+        throw new Exception(s"incompatible types: [$baseShape, $superShape]")
+      }
     }
   }
 
+  protected def isGenericNodeShape(shape: Shape) = {
+    shape match {
+      case node: NodeShape => Option(node.properties).getOrElse(Seq()).isEmpty
+      case _               => false
+    }
+  }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
     computeNarrowRestrictions(ScalarShapeModel.fields, baseScalar, superScalar)
@@ -91,6 +107,8 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
     baseShape
   }
+
+  protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape) = restrictShape(baseShape, superShape)
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
     val superItems = baseMatrix.items
@@ -162,10 +180,15 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
       case (path, false) =>
         val superProp = superProperties.find(_.path == path)
         val baseProp = baseProperties.find(_.path == path)
-        superProp.getOrElse(superProp.get)
+        superProp.getOrElse(baseProp.get)
     }
 
-    baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), baseNode.fields.getValue(NodeShapeModel.Properties).annotations)
+    // This can be nil in the case of inheritance
+    val annotations = Option(baseNode.fields.getValue(NodeShapeModel.Properties)) match {
+      case Some(field) => field.annotations
+      case None        => Annotations()
+    }
+    baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), annotations)
 
     computeNarrowRestrictions(NodeShapeModel.fields, baseNode, superNode, filteredFields = Seq(NodeShapeModel.Properties))
 
@@ -183,6 +206,20 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
     computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
+
+    baseUnion
+  }
+
+  protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
+    val newUnionItems = for {
+      baseUnionElement <- baseUnion.anyOf
+    } yield {
+      minShape(baseUnionElement, superNode)
+    }
+
+    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }

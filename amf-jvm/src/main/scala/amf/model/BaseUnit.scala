@@ -60,12 +60,14 @@ trait BaseUnit extends PlatformSecrets {
     * @param customProfilePath Path to a profile validation file to use in validation
     * @return The validation report
     */
-  protected def validateProfile(p: Platform, profile: Option[String] = Some("RAML"), customProfilePath: Option[String] = None): Future[AMFValidationReport] = {
+  protected def validateProfile(p: Platform,
+                                profile: Option[String] = Some("RAML"),
+                                customProfilePath: Option[String] = None): Future[AMFValidationReport] = {
     val config = ParserConfig(customProfile = customProfilePath)
     val helper = new CommandHelper {
       override val platform: Platform = p
     }
-    val f = helper.setupValidation(config) flatMap  { validation =>
+    val f = helper.setupValidation(config) flatMap { validation =>
       val profileName = validation.profile match {
         case Some(prof) => prof.name
         case None       => profile.get

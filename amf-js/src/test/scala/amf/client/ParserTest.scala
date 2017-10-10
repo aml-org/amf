@@ -124,7 +124,6 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
     }
   }
 
-
   def assertWebApi(actual: WebApi, expected: WebApi): Assertion = {
     actual should be(expected)
     succeed

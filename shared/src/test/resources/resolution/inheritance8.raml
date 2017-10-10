@@ -1,0 +1,15 @@
+#%RAML 1.0 Library
+
+types:
+  CatWithCity:
+    properties:
+      city: string
+  CatWithAddress:
+    properties:
+      address: string
+  Cat:
+    type:
+      - CatWithAddress
+      - CatWithCity
+    properties:
+      age: string | number

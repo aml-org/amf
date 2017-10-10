@@ -12,9 +12,9 @@ import amf.spec.Declarations
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.unsafe.PlatformSecrets
 import amf.vocabulary.Namespace
-import org.scalatest.AsyncFunSuite
+import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Promise}
 
 class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -134,8 +134,25 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   val examples = Seq(
     "union1",
-    "union2"
-    // "inheritance1"
+    "union2",
+    "union3",
+    "union4",
+    "union5",
+    "inheritance1",
+    "inheritance2",
+    "inheritance3",
+    "inheritance4",
+    "inheritance5",
+    "inheritance6",
+    "inheritance7",
+    "inheritance8",
+    "array_inheritance1",
+    "array_inheritance2",
+    "array_inheritance3",
+    "complex_example1",
+    "shape1",
+    "shape2",
+    "shape3"
   )
 
   examples.foreach { example =>
@@ -148,7 +165,7 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
         None,
         platform.dialectsRegistry)
         .build().map { model =>
-        new ShapeNormalizationStage(ProfileNames.RAML).resolve(model, null)
+        model.resolve(ProfileNames.RAML)
       }.flatMap({ unit =>
         AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
       })
@@ -157,4 +174,36 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  val errorExamples = Seq(
+    "inheritance_error1",
+    "inheritance_error2",
+    "inheritance_error3"
+  )
+
+  errorExamples.foreach { example =>
+    test(s"Fails on erroneous data types: $example") {
+      val res = AMFCompiler(basePath + s"$example.raml",
+        platform,
+        RamlYamlHint,
+        None,
+        None,
+        platform.dialectsRegistry)
+        .build().map { model =>
+        model.resolve(ProfileNames.RAML)
+      }
+
+      val p = Promise[Assertion]()
+      res.onComplete { res =>
+        if (res.isSuccess) {
+          AMFDumper(res.get, Raml, Yaml, GenerationOptions()).dumpToString.map { doc =>
+            println(doc)
+            p.success(assert(res.isFailure))
+          }
+        }  else {
+          p.success(assert(res.isFailure))
+        }
+      }
+      p.future
+    }
+  }
 }

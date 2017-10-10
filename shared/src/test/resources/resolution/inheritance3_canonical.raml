@@ -1,27 +1,37 @@
-#%RAML 1.0 DataType
-anyOf:
-  - type: object
+#%RAML 1.0 Library
+
+types:
+  A:
+    type: object
     additionalProperties: true
     properties:
       a:
-        type: string
         required: true
-  - type: object
+        type: string
+  B:
+    type: object
     additionalProperties: true
     properties:
       b:
-        type: string
         required: true
-  - type: object
+        type: integer
+  C:
+    type: object
     additionalProperties: true
     properties:
       c:
-        type: string
         required: true
-  - type: object
+        type: any
+  D:
+    type: object
     additionalProperties: true
     properties:
-      d:
-        type: string
+      b:
         required: true
-type: union
+        type: integer
+      a:
+        required: true
+        type: string
+      c:
+        required: true
+        type: any

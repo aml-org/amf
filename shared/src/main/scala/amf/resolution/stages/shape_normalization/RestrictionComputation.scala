@@ -1,4 +1,4 @@
-package amf.resolution.shape_normalization
+package amf.resolution.stages.shape_normalization
 
 import amf.metadata.Field
 import amf.metadata.shape._
@@ -22,6 +22,18 @@ trait RestrictionComputation {
     }
 
     baseShape
+  }
+
+  protected def restrictShape(restriction: Shape, shape: Shape): Shape = {
+    restriction.fields.foreach { case (field, baseValue) =>
+      if (field != NodeShapeModel.Inherits) {
+        Option(shape.fields.getValue(field)) match {
+          case Some(superValue) => shape.set(field, computeNarrow(field, baseValue.value, superValue.value))
+          case None => shape.fields.setWithoutId(field, baseValue.value, baseValue.annotations)
+        }
+      }
+    }
+    shape
   }
 
   protected def computeNumericRestriction(comparison: String, lvalue: AmfElement, rvalue: AmfElement): AmfElement = {
@@ -82,8 +94,8 @@ trait RestrictionComputation {
       lvalue.isInstanceOf[AmfScalar] && lvalue.asInstanceOf[AmfScalar].value != null &&
         rvalue.isInstanceOf[AmfScalar] && rvalue.asInstanceOf[AmfScalar].value != null
     ) {
-      val lbool = lvalue.asInstanceOf[AmfScalar].asInstanceOf[Boolean]
-      val rbool = rvalue.asInstanceOf[AmfScalar].asInstanceOf[Boolean]
+      val lbool = lvalue.asInstanceOf[AmfScalar].toBool
+      val rbool = rvalue.asInstanceOf[AmfScalar].toBool
       lbool == lcomparison && rbool == rcomparison
     } else {
       throw new Exception("Cannot compare non boolean or missing values")

@@ -16,6 +16,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
 
   def withPath(path: String): this.type  = set(Path, path)
   def withRange(range: Shape): this.type = set(Range, range)
+
   def withMinCount(min: Int): this.type  = set(MinCount, min)
   def withMaxCount(max: Int): this.type  = set(MaxCount, max)
 

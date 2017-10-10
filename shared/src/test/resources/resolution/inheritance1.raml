@@ -4,11 +4,7 @@ types:
 
   A: string
   B: integer
-
-  C:
-    properties:
-      a: A
-      b: B
+  C: number
 
   D:
     properties:
@@ -16,8 +12,13 @@ types:
       b: B
 
   E:
-    type:
-      - C
-      - D
+    properties:
+      a: A
+      c: C
 
-  F: C | D
+  F:
+    type:
+      - D
+      - E
+
+  G: D | E
