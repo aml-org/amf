@@ -7,15 +7,14 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
-import amf.resolution.stages.ShapeNormalizationStage
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.unsafe.PlatformSecrets
 import amf.vocabulary.Namespace
-import org.scalatest.AsyncFunSuite
+import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Promise}
 
 class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -136,11 +135,16 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
   val examples = Seq(
     "union1",
     "union2",
-    "inheritance1"
+    "union3",
+    "union4",
+    "inheritance1",
+    "inheritance2",
+    "array_inheritance1",
+    "array_inheritance2"
   )
 
   examples.foreach { example =>
-    test(s"HERE_HERE Resolve data types: $example") {
+    test(s"Resolve data types: $example") {
       val expected   = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
       AMFCompiler(basePath + s"$example.raml",
         platform,
@@ -158,4 +162,35 @@ class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  val errorExamples = Seq(
+    "inheritance_error1",
+    "inheritance_error2"
+  )
+
+  errorExamples.foreach { example =>
+    test(s"Fails on erroneous data types: $example") {
+      val res = AMFCompiler(basePath + s"$example.raml",
+        platform,
+        RamlYamlHint,
+        None,
+        None,
+        platform.dialectsRegistry)
+        .build().map { model =>
+        model.resolve(ProfileNames.RAML)
+      }
+
+      val p = Promise[Assertion]()
+      res.onComplete { res =>
+        if (res.isSuccess) {
+          AMFDumper(res.get, Raml, Yaml, GenerationOptions()).dumpToString.map { doc =>
+            println(doc)
+            p.success(assert(res.isFailure))
+          }
+        }  else {
+          p.success(assert(res.isFailure))
+        }
+      }
+      p.future
+    }
+  }
 }

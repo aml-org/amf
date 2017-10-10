@@ -1,0 +1,16 @@
+#%RAML 1.0 Library
+
+types:
+  A:
+    items:
+      properties:
+        a: string | integer
+        b: any
+  B:
+    type: A
+
+  C:
+    type: B
+    items:
+      properties:
+        c: number

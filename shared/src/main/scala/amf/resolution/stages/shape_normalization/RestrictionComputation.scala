@@ -24,6 +24,18 @@ trait RestrictionComputation {
     baseShape
   }
 
+  protected def restrictShape(restriction: Shape, shape: Shape): Shape = {
+    restriction.fields.foreach { case (field, baseValue) =>
+      if (field != NodeShapeModel.Inherits) {
+        Option(shape.fields.getValue(field)) match {
+          case Some(superValue) => shape.set(field, computeNarrow(field, baseValue.value, superValue.value))
+          case None => shape.fields.setWithoutId(field, baseValue.value, baseValue.annotations)
+        }
+      }
+    }
+    shape
+  }
+
   protected def computeNumericRestriction(comparison: String, lvalue: AmfElement, rvalue: AmfElement): AmfElement = {
     if (
       lvalue.isInstanceOf[AmfScalar] && lvalue.asInstanceOf[AmfScalar].value != null &&

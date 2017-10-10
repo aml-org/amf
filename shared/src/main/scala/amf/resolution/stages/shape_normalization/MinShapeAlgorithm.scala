@@ -1,7 +1,6 @@
 package amf.resolution.stages.shape_normalization
 
 import amf.domain.Annotations
-import amf.metadata.Field
 import amf.metadata.shape._
 import amf.model.AmfArray
 import amf.shape._
@@ -10,9 +9,10 @@ import amf.vocabulary.Namespace
 import scala.collection.mutable
 
 
-trait MinShapeAlgorithm extends  RestrictionComputation {
+trait MinShapeAlgorithm extends RestrictionComputation {
 
-  protected def minShape(baseShape: Shape, superShape: Shape): Shape = {
+  protected def minShape(baseShapeOrig: Shape, superShape: Shape): Shape = {
+    val baseShape = baseShapeOrig.cloneShape() // this is destructive, we need to clone
     baseShape match {
 
       // Scalars
@@ -69,16 +69,28 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
       case _ if baseShape.isInstanceOf[AnyShape] || superShape.isInstanceOf[AnyShape] =>
         baseShape match {
           case shape: AnyShape =>
-            computeMinAny(superShape, shape)
+            restrictShape(shape, superShape)
           case _ =>
             computeMinAny(baseShape, superShape.asInstanceOf[AnyShape])
         }
 
+      // Generic inheritance
+      case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) =>
+        computeMinGeneric(baseGeneric, superShape)
+
       // fallback error
-      case _ =>  throw new Exception(s"incompatible types: [$baseShape, $superShape]")
+      case _ =>  {
+        throw new Exception(s"incompatible types: [$baseShape, $superShape]")
+      }
     }
   }
 
+  protected def isGenericNodeShape(shape: Shape) = {
+    shape match {
+      case node: NodeShape => Option(node.properties).getOrElse(Seq()).isEmpty
+      case _               => false
+    }
+  }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
     computeNarrowRestrictions(ScalarShapeModel.fields, baseScalar, superScalar)
@@ -92,6 +104,8 @@ trait MinShapeAlgorithm extends  RestrictionComputation {
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
     baseShape
   }
+
+  protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape) = restrictShape(baseShape, superShape)
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
     val superItems = baseMatrix.items

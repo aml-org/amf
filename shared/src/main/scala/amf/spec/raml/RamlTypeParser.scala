@@ -57,10 +57,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     case scalar: YScalar => matchType(scalar.text)
     case _: YSequence    => ObjectType
     case map: YMap =>
-      detectTypeOrSchema(map)
+      detectItems(map)
+        .orElse(detectTypeOrSchema(map))
         .orElse(detectAnyOf(map))
         .orElse(detectProperties(map))
-        .orElse(detectItems(map))
         .getOrElse(UndefinedType)
   }
 
@@ -359,7 +359,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       super.parse()
 
-      map.key("type", _ => shape.add(ExplicitField()))
+      // map.key("type", _ => shape.add(ExplicitField()))
+      parseInheritance(declarations)
 
       map.key("minItems", entry => {
         val value = ValueNode(entry.value)
