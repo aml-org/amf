@@ -1,11 +1,20 @@
 package amf.model
 
+import java.util.concurrent.Future
+
+import amf.client.ParserConfig
+import amf.client.commands.CommandHelper
 import amf.document
+import amf.remote.Platform
+import amf.validation.AMFValidationReport
+import amf.remote.FutureConverter.converters
+import amf.unsafe.PlatformSecrets
 
 import scala.collection.JavaConverters._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Any parsable unit, backed by a source URI. */
-trait BaseUnit {
+trait BaseUnit extends PlatformSecrets {
 
   private[amf] val element: amf.document.BaseUnit
 
@@ -27,4 +36,44 @@ trait BaseUnit {
   def location: String = element.location
 
   def usage: String = element.usage
+
+  /**
+    * Validates the model
+    * @param profile Name of the standard profile to use in validation: RAML, OpenAPI, AMF
+    * @return The validation report
+    */
+  def validate(profile: String): Future[AMFValidationReport] =
+    validateProfile(platform, Some(profile))
+
+  /**
+    * Validates the model
+    * @param customProfilePath Path to a profile validation file to use in validation
+    * @return The validation report
+    */
+  def customValidation(customProfilePath: String): Future[AMFValidationReport] =
+    validateProfile(platform, None, Some(customProfilePath))
+
+  /**
+    * Validates the model
+    * @param p Platform support logic
+    * @param profile Name of the standard profile to use in validation: RAML, OpenAPI, AMF
+    * @param customProfilePath Path to a profile validation file to use in validation
+    * @return The validation report
+    */
+  protected def validateProfile(p: Platform, profile: Option[String] = Some("RAML"), customProfilePath: Option[String] = None): Future[AMFValidationReport] = {
+    val config = ParserConfig(customProfile = customProfilePath)
+    val helper = new CommandHelper {
+      override val platform: Platform = p
+    }
+    val f = helper.setupValidation(config) flatMap  { validation =>
+      val profileName = validation.profile match {
+        case Some(prof) => prof.name
+        case None       => profile.get
+      }
+
+      validation.validate(element, profileName)
+    }
+    f.asJava
+  }
+
 }

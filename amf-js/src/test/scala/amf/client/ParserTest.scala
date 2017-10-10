@@ -1,5 +1,6 @@
 package amf.client
 
+import amf.ProfileNames
 import amf.common.AmfObjectTestMatcher
 import amf.model.{BaseUnit, Document, Module, WebApi}
 import amf.unsafe.PlatformSecrets
@@ -100,6 +101,29 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
         }
     }
   }
+
+  test("Validation model interface") {
+    val examplesPath = "file://shared/src/test/resources/validations/"
+    for {
+      model  <- new RamlParser().parseFileAsync(examplesPath + "library/nested.raml").toFuture
+      report <- model.validate(ProfileNames.RAML).toFuture
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("Custom validation model interface") {
+    val examplesPath = "file://shared/src/test/resources/validations/"
+    for {
+      model  <- new RamlParser().parseFileAsync(examplesPath + "banking/api.raml").toFuture
+      report <- model.customValidation(examplesPath + "banking/profile.raml").toFuture
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.nonEmpty)
+    }
+  }
+
 
   def assertWebApi(actual: WebApi, expected: WebApi): Assertion = {
     actual should be(expected)

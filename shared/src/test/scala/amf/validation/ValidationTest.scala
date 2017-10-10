@@ -208,7 +208,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(model, "Banking")
     } yield {
       assert(!report.conforms)
-      assert(report.results.length == 10)
+      assert(report.results.nonEmpty)
     }
   }
 
