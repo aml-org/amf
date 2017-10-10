@@ -48,24 +48,18 @@ lazy val amf = crossProject
     mainClass in Compile := Some("amf.client.Main")
   )
   .jsSettings(
-    publish := {
-      "./amf-js/build-scripts/deploy-develop.sh".!
-    },
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-module.js",
     jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-//    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-module.js",
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "js-main-module.js",
     scalaJSUseMainModuleInitializer := true,
     assemblyMergeStrategy in assembly := {
       case "JS_DEPENDENCIES"              => MergeStrategy.discard
       case PathList("META-INF", xs @ _ *) => MergeStrategy.discard
-      case x => {
+      case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)
-      }
     }
   )
 
@@ -77,18 +71,15 @@ lazy val module = crossProject
   .dependsOn(amf)
   .enablePlugins(ScalaJSPlugin)
   .jsSettings(
-    jsSettings("amf-module.js", useMainModule = false): _*
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / ".." / "target" / "artifact" / "amf-module.js",
+    scalaJSUseMainModuleInitializer := false,
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
+    publish := {
+      "./amf-js/build-scripts/deploy-develop.sh".!
+    }
   )
   .js
-
-def jsSettings(fileName: String, useMainModule: Boolean): Array[Def.SettingsDefinition] = Array(
-  artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / ".." / "target" / "artifact" / fileName,
-  scalaJSUseMainModuleInitializer := useMainModule,
-  scalaJSModuleKind := ModuleKind.CommonJSModule
-)
-
-//addCommandAlias("generate", "; clean; amfJS/fullOptJS; generateJVM")
-//addCommandAlias("generateJSMainModule", "; moduleJS/fullOptJS")
 
 addCommandAlias("generate", "; clean; moduleJS/fullOptJS; generateJSMainModule; generateJVM")
 addCommandAlias("generateJSMainModule", "; amfJS/fullOptJS")
