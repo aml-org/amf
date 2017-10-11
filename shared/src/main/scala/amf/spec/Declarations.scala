@@ -4,6 +4,7 @@ import amf.common.core.QName
 import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.domain.security.SecurityScheme
 import amf.domain.{DomainElement, UserDocumentation}
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}
@@ -17,7 +18,8 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         var annotations: Map[String, CustomDomainProperty] = Map(),
                         var resourceTypes: Map[String, ResourceType] = Map(),
                         var documentations: Map[String, UserDocumentation] = Map(),
-                        var traits: Map[String, Trait] = Map()) {
+                        var traits: Map[String, Trait] = Map(),
+                        var securitySchemes: Map[String, SecurityScheme] = Map()) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
@@ -28,11 +30,12 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def +=(element: DomainElement): Declarations = {
     element match {
-      case r: ResourceType         => resourceTypes = resourceTypes + (r.name    -> r)
-      case u: UserDocumentation    => documentations = documentations + (u.title -> u)
-      case t: Trait                => traits = traits + (t.name                  -> t)
-      case a: CustomDomainProperty => annotations = annotations + (a.name        -> a)
-      case s: Shape                => shapes = shapes + (s.name                  -> s)
+      case r: ResourceType         => resourceTypes = resourceTypes + (r.name      -> r)
+      case u: UserDocumentation    => documentations = documentations + (u.title   -> u)
+      case t: Trait                => traits = traits + (t.name                    -> t)
+      case a: CustomDomainProperty => annotations = annotations + (a.name          -> a)
+      case s: Shape                => shapes = shapes + (s.name                    -> s)
+      case ss: SecurityScheme      => securitySchemes = securitySchemes + (ss.name -> ss)
     }
     this
   }
@@ -69,6 +72,10 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def findType(key: String): Option[Shape] = findForType(key, _.shapes) collect {
     case s: Shape => s
+  }
+
+  def findSecurityScheme(key: String): Option[SecurityScheme] = findForType(key, _.securitySchemes) collect {
+    case ss: SecurityScheme => ss
   }
 
   /** Resolve all [[UnresolvedShape]] references or fail. */

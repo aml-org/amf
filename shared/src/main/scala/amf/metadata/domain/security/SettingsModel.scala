@@ -9,12 +9,11 @@ import amf.vocabulary.ValueType
 trait SettingsModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = List(Security + "Settings")
-}
-
-object SettingsModel extends SettingsModel {
 
   override def fields: List[Field] = DomainElementModel.fields
 }
+
+object SettingsModel extends SettingsModel
 
 object OAuth1SettingsModel extends SettingsModel {
 
@@ -40,7 +39,7 @@ object OAuth2SettingsModel extends SettingsModel {
 
   val Flow = Field(Str, Security + "flow")
 
-  val Scopes = Field(Array(Str), Security + "scopes")
+  val Scopes = Field(Array(ScopeModel), Security + "scopes")
 
   override def fields: List[Field] =
     List(AuthorizationUri, AccessTokenUri, AuthorizationGrants, Flow, Scopes) ++ SettingsModel.fields
@@ -52,9 +51,5 @@ object ApiKeySettingsModel extends SettingsModel {
 
   val In = Field(Str, Security + "in")
 
-  val AuthorizationGrants = Field(Str, Security + "authorizationGrants")
-
-  val Scopes = Field(Array(Str), Security + "scopes")
-
-  override def fields: List[Field] = List(Name, In, AuthorizationGrants, Scopes) ++ SettingsModel.fields
+  override def fields: List[Field] = List(Name, In) ++ SettingsModel.fields
 }

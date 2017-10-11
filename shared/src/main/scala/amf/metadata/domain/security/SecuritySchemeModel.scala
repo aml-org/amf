@@ -6,7 +6,7 @@ import amf.metadata.domain.{DomainElementModel, ParameterModel, ResponseModel}
 import amf.vocabulary.Namespace.Security
 import amf.vocabulary.ValueType
 
-object SecurityScheme extends DomainElementModel {
+object SecuritySchemeModel extends DomainElementModel {
   val Name = Field(Str, Security + "name")
 
   val Type = Field(Str, Security + "type")
