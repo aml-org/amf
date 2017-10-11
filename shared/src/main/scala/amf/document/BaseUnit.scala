@@ -28,7 +28,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
 
-  /** Resolves the model */
+  /** Resolves the model **/
   def resolve(profile: String): BaseUnit = ResolutionPipeline.forProfile(profile).resolve(this)
 
   /**
@@ -50,21 +50,16 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     * @return
     */
   def findByType(shapeType: String): Seq[DomainElement] = {
-    val predicate = (element: DomainElement) =>
-      metaModel(element).`type`.contains { t: ValueType =>
-        t.iri() == shapeType
-    }
-    findInDeclaredModel(predicate, this, first = true, ListBuffer.empty) ++ findInEncodedModel(predicate,
-                                                                                               this,
-                                                                                               first = true)
+    val predicate = (element: DomainElement) => metaModel(element).`type`.contains { t:ValueType => t.iri() == shapeType }
+    findInDeclaredModel(predicate, this, first = true, ListBuffer.empty) ++ findInEncodedModel(predicate, this, first = true)
   }
 
-  def transform(selector: (DomainElement) => Boolean,
-                transformation: (DomainElement) => Option[DomainElement]): BaseUnit = {
+
+  def transform(selector: (DomainElement) => Boolean, transformation: (DomainElement) => Option[DomainElement]): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
       o match {
         case e: DomainElement => selector(e)
-        case _                => false
+        case _ => false
       }
     }
     val transformationAdatper = (o: AmfObject) => {
@@ -152,11 +147,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     }
   }
 
-  private def transformByCondition(element: AmfObject,
-                                   predicate: (AmfObject) => Boolean,
-                                   transformation: (AmfObject) => Option[AmfObject]): AmfObject = {
+  private def transformByCondition(element: AmfObject, predicate: (AmfObject) => Boolean, transformation: (AmfObject) => Option[AmfObject]): AmfObject = {
     if (predicate(element)) {
-      transformation(element).orNull
+      transformation(element) match {
+        case Some(o) => o
+        case _       => null
+      }
     } else {
       element.fields.foreach {
         case (f, v: Value) if v.value.isInstanceOf[AmfObject] =>
@@ -166,17 +162,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
             case None                              => element.fields.remove(f)
           }
         case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
-          val newElements = v.value
-            .asInstanceOf[AmfArray]
-            .values
-            .map {
-              case elem: AmfObject =>
-                Option(transformByCondition(elem, predicate, transformation))
-              case other =>
-                Some(other)
-            }
-            .filter(_.isDefined)
-            .map(_.get)
+          val newElements = v.value.asInstanceOf[AmfArray].values.map {
+            case elem:AmfObject =>
+              Option(transformByCondition(elem, predicate, transformation))
+            case other          =>
+              Some(other)
+          }.filter(_.isDefined).map(_.get)
           element.fields.setWithoutId(f, AmfArray(newElements), v.annotations)
         case _ => // ignore
       }

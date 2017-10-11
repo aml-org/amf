@@ -67,7 +67,7 @@ object RamlFragmentHeader {
             case FragmentTypes.AnnotationTypeFragment    => Some(Raml10AnnotationTypeDeclaration)
             case FragmentTypes.ExtensionFragment         => Some(Raml10Extension)
             case FragmentTypes.OverlayFragment           => Some(Raml10Overlay)
-            case _                                       => None // UnknowFragment
+            case _                                       => None //UnknowFragment
         })
   }
 

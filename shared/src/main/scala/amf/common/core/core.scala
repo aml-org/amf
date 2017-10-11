@@ -8,7 +8,7 @@ package object core {
   implicit class Strings(val str: String) extends AnyVal {
 
     /** If the String is not null returns the String, else returns "". */
-    def notNull: String = Option(str).getOrElse("")
+    def notNull: String = if (str == null) "" else str
 
     /** Add quotes to string. */
     def quote: String = {

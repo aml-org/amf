@@ -23,30 +23,30 @@ object OasHeader {
 
 object OasFragmentHeader {
 
-  val extensionName = "x-fragment-type"
+  val extentionName = "x-fragment-type"
 
-  object Oas20DocumentationItem extends OasHeader(extensionName, "2.0 DocumentationItem")
+  object Oas20DocumentationItem extends OasHeader(extentionName, "2.0 DocumentationItem")
 
-  object Oas20DataType extends OasHeader(extensionName, "2.0 DataType")
+  object Oas20DataType extends OasHeader(extentionName, "2.0 DataType")
 
-  object Oas20NamedExample extends OasHeader(extensionName, "2.0 NamedExample")
+  object Oas20NamedExample extends OasHeader(extentionName, "2.0 NamedExample")
 
-  object Oas20ResourceType extends OasHeader(extensionName, "2.0 ResourceType")
+  object Oas20ResourceType extends OasHeader(extentionName, "2.0 ResourceType")
 
-  object Oas20Trait extends OasHeader(extensionName, "2.0 Trait")
+  object Oas20Trait extends OasHeader(extentionName, "2.0 Trait")
 
-  object Oas20AnnotationTypeDeclaration extends OasHeader(extensionName, "2.0 AnnotationTypeDeclaration")
+  object Oas20AnnotationTypeDeclaration extends OasHeader(extentionName, "2.0 AnnotationTypeDeclaration")
 
-  object Oas20Extension extends OasHeader(extensionName, "2.0 Extension")
+  object Oas20Extension extends OasHeader(extentionName, "2.0 Extension")
 
-  object Oas20Overlay extends OasHeader(extensionName, "2.0 Overlay")
+  object Oas20Overlay extends OasHeader(extentionName, "2.0 Overlay")
 
   def apply(root: Root): Option[OasHeader] = {
     root.document.value
       .flatMap(_.asMap)
       .flatMap(map => {
         val headerOption = for {
-          value        <- map.key(extensionName).map(_.value.value)
+          value        <- map.key(extentionName).map(_.value.value)
           fragmentType <- value.asScalar.flatMap(s => apply(s.text))
         } yield fragmentType
 
@@ -75,7 +75,7 @@ object OasFragmentHeader {
       case DocumentationItemFragment => Some(Oas20DocumentationItem)
       case ExtensionFragment         => Some(Oas20Extension)
       case OverlayFragment           => Some(Oas20Overlay)
-      case _                         => None // UnknowFragment
+      case _                         => None //UnknowFragment
     }
 
 }
