@@ -13,6 +13,8 @@ object Namespace {
 
   val Http = Namespace("http://raml.org/vocabularies/http#")
 
+  val Security = Namespace("http://raml.org/vocabularies/security#")
+
   val Shapes = Namespace("http://raml.org/vocabularies/shapes#")
 
   val Data = Namespace("http://raml.org/vocabularies/data#")
@@ -64,7 +66,7 @@ object Namespace {
   )
 
   def uri(s: String): ValueType = {
-    if (s.indexOf(":") > -1){
+    if (s.indexOf(":") > -1) {
       expand(s)
     } else {
       ns.values.find(n => s.indexOf(n.base) == 0) match {
@@ -79,10 +81,11 @@ object Namespace {
       ValueType(uri)
     } else {
       uri.split(":") match {
-        case Array(prefix, postfix) => resolve(prefix) match {
-          case Some(n) => ValueType(n, postfix)
-          case _ => ValueType(uri)
-        }
+        case Array(prefix, postfix) =>
+          resolve(prefix) match {
+            case Some(n) => ValueType(n, postfix)
+            case _       => ValueType(uri)
+          }
         case _ => ValueType(uri)
       }
     }
@@ -97,12 +100,11 @@ case class ValueType(ns: Namespace, name: String) {
   def iri(): String = ns.base + name
 }
 
-class UriType(id: String) extends ValueType(Namespace.Document,""){
+class UriType(id: String) extends ValueType(Namespace.Document, "") {
   override def iri(): String = id
 }
 
 object ValueType {
   def apply(ns: Namespace, name: String) = new ValueType(ns, name)
-  def apply(iri: String) = new UriType(iri)
+  def apply(iri: String)                 = new UriType(iri)
 }
-
