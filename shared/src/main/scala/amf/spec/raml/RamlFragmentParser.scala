@@ -44,7 +44,7 @@ case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragmen
 
     val references = ReferencesParser("uses", rootMap, root.references).parse()
 
-    if (references.references.nonEmpty) fragment.withReferences(references.references.values.toSeq)
+    if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment
   }
 

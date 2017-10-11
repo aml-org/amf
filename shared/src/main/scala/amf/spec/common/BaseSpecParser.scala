@@ -3,7 +3,7 @@ package amf.spec.common
 import amf.compiler.ParsedReference
 import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, DeclaresModel, Document}
-import amf.domain.Annotation.ExplicitField
+import amf.domain.Annotation.{Aliases, ExplicitField}
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, CreativeWork, License, Organization}
@@ -180,6 +180,8 @@ private[spec] trait BaseSpecParser {
     }
 
     def +=(url: String, fragment: Document): Unit = references += (url -> fragment)
+
+    def solvedReferences(): Seq[BaseUnit] = references.values.toSet.toSeq
   }
 
   case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference]) {
@@ -208,7 +210,7 @@ private[spec] trait BaseSpecParser {
             val alias: String = e.key
             val url: String   = e.value
             target(url).foreach {
-              case module: DeclaresModel => result += (alias, module) // this is
+              case module: DeclaresModel => result += (alias, addAlias(module, alias)) // this is
               case other =>
                 throw new Exception(s"Expected module but found: $other") // todo Uses should only reference modules...
             }
@@ -216,6 +218,19 @@ private[spec] trait BaseSpecParser {
       )
 
       result
+    }
+
+    private def addAlias(module: BaseUnit, alias: String): BaseUnit = {
+      val aliasesOption = module.annotations.find(classOf[Aliases])
+      if (aliasesOption.isDefined)
+        aliasesOption.foreach(a => {
+          module.annotations.reject(_.isInstanceOf[Aliases])
+          module.add(a.copy(aliases = a.aliases ++ Seq(alias)))
+        })
+      else
+        module.add(Aliases(Seq(alias)))
+
+      module
     }
   }
 

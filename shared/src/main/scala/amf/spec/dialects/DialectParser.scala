@@ -63,7 +63,7 @@ class DialectParser(val dialect: Dialect, override val root: Root) extends RamlS
       val entity = parse()
 
       if (references.references.nonEmpty) {
-        unit.withReferences(references.references.values.toSeq)
+        unit.withReferences(references.solvedReferences())
 
         val usesMap: mutable.Map[String, String] = mutable.Map()
         map.key(

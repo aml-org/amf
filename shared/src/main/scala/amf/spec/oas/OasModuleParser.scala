@@ -33,7 +33,7 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
 
       val declarable = references.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
-      if (references.references.nonEmpty) module.withReferences(references.references.values.toSeq)
+      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
     })
 
     module

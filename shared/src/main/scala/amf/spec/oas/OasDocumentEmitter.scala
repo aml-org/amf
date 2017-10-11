@@ -663,7 +663,8 @@ class OasSpecEmitter extends BaseSpecEmitter {
           raw("x-uses")
           map { () =>
             idCounter.reset()
-            traverse(ordering.sorted(references.map(r => ReferenceEmitter(r, ordering, idCounter.genId("uses")))))
+            traverse(
+              ordering.sorted(references.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))))
           }
         }
       }
@@ -672,9 +673,20 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = Position.ZERO
   }
 
-  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, alias: String) extends Emitter {
+  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)
+      extends Emitter {
 
-    override def emit(): Unit = EntryEmitter(alias, reference.id).emit()
+    override def emit(): Unit = {
+      val aliasOption = reference.annotations.find(classOf[Aliases])
+
+      if (aliasOption.isDefined)
+        aliasOption.foreach(_.aliases.foreach(emitAlias))
+      else
+        emitAlias(aliasGenerator())
+    }
+
+    private def emitAlias(alias: String) =
+      EntryEmitter(alias, reference.id).emit()
 
     override def position(): Position = Position.ZERO
 

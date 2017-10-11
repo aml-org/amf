@@ -41,7 +41,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
 
       val declarables = references.declarations.declarables()
       if (declarables.nonEmpty) document.withDeclares(declarables)
-      if (references.references.nonEmpty) document.withReferences(references.references.values.toSeq)
+      if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
     })
     document
   }

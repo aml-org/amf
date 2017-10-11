@@ -33,7 +33,7 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
 
       val declarables = references.declarations.declarables()
       if (declarables.nonEmpty) module.withDeclares(declarables)
-      if (references.references.nonEmpty) module.withReferences(references.references.values.toSeq)
+      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
     })
     module
 

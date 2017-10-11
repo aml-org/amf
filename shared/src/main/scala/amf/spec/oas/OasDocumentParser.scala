@@ -47,7 +47,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
 
       val declarable = references.declarations.declarables()
       if (declarable.nonEmpty) document.withDeclares(declarable)
-      if (references.references.nonEmpty) document.withReferences(references.references.values.toSeq)
+      if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
     })
     document
   }

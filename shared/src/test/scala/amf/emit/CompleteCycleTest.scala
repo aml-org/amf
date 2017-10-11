@@ -365,6 +365,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml, referencesPath)
   }
 
+  test("Test libraries raml to raml with 3 uses of alias") {
+    cycle("libraries-3-alias.raml", "libraries-3-alias.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
   test("Test libraries oas to oas") {
     cycle("libraries.json", "libraries.json.json", OasJsonHint, Oas, referencesPath)
   }

@@ -6,6 +6,8 @@ import amf.parser.Range
 import amf.remote.Vendor
 import org.yaml.model.YPart
 
+import scala.collection.mutable
+
 /**
   * Annotation type
   */
@@ -85,12 +87,22 @@ object Annotation {
 
   case class Inferred() extends Annotation
 
+  case class Aliases(aliases: Seq[String]) extends SerializableAnnotation {
+
+    /** Extension name. */
+    override val name: String = "aliases-array"
+
+    /** Value as string. */
+    override val value: String = aliases.mkString(",")
+  }
+
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     annotation match {
       case "lexical"            => Some(lexical)
       case "parent-end-point"   => Some(parentEndPoint)
       case "source-vendor"      => Some(sourceVendor)
       case "single-value-array" => Some(singleValueArray)
+      case "aliases-array"      => Some(aliases)
       case _                    => None // Unknown annotation
     }
 
@@ -111,5 +123,9 @@ object Annotation {
 
   private def lexical(value: String, objects: Map[String, AmfElement]) = {
     LexicalInformation(Range.apply(value))
+  }
+
+  private def aliases(value: String, objects: Map[String, AmfElement]) = {
+    Aliases(value.split(",").toSeq)
   }
 }

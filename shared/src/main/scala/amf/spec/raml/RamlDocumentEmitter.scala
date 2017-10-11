@@ -525,7 +525,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
           raw("uses")
           map(() => {
             idCounter.reset()
-            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, idCounter.genId("uses")))))
+            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))))
           })
         }
       }
@@ -534,10 +534,20 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = Position.ZERO
   }
 
-  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, alias: String) extends Emitter {
+  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)
+      extends Emitter {
 
     // todo review with PEdro. We dont serialize location, so when parse amf to dump spec, we lose de location (we only have the id)
-    override def emit(): Unit =
+    override def emit(): Unit = {
+      val aliasOption = reference.annotations.find(classOf[Aliases])
+
+      if (aliasOption.isDefined)
+        aliasOption.foreach(_.aliases.foreach(emitAlias))
+      else
+        emitAlias(aliasGenerator())
+    }
+
+    private def emitAlias(alias: String) =
       EntryEmitter(alias, name).emit()
 
     override def position(): Position = Position.ZERO
