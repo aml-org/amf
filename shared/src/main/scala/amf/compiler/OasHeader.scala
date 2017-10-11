@@ -75,7 +75,7 @@ object OasFragmentHeader {
       case DocumentationItemFragment => Some(Oas20DocumentationItem)
       case ExtensionFragment         => Some(Oas20Extension)
       case OverlayFragment           => Some(Oas20Overlay)
-      case _                         => None //UnknowFragment
+      case _                         => None // UnknowFragment
     }
 
 }
