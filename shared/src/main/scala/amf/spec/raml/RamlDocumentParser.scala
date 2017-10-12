@@ -6,14 +6,16 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
+import amf.domain.security.{Scope, SecurityScheme, Settings}
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
+import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
-import amf.spec.common.{AnnotationParser, BaseSpecParser, SpecParserContext}
+import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -407,6 +409,274 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       operation
     }
   }
+}
+
+abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
+
+  override implicit val spec: SpecParserContext = RamlSpecParserContext
+
+  protected def parseDeclarations(map: YMap, declarations: Declarations): Unit = {
+    val parent = root.location + "#/declarations"
+    parseTypeDeclarations(map, parent, declarations)
+    parseAnnotationTypeDeclarations(map, parent, declarations)
+    parseResourceTypeDeclarations("resourceTypes", map, parent, declarations)
+    parseTraitDeclarations("traits", map, parent, declarations)
+    parseSecuritySchemeDeclarations(map, parent, declarations)
+    declarations.resolve()
+  }
+
+  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String, declarations: Declarations): Unit = {
+
+    map.key(
+      "annotationTypes",
+      e => {
+        e.value.value.toMap.entries.map(entry => {
+          val typeName = entry.key.value.toScalar.text
+          val customProperty = AnnotationTypesParser(entry,
+                                                     customProperty =>
+                                                       customProperty
+                                                         .withName(typeName)
+                                                         .adopted(customProperties),
+                                                     declarations)
+          declarations += customProperty.add(DeclaredElement())
+        })
+      }
+    )
+  }
+
+  private def parseTypeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
+    map.key(
+      "types",
+      e => {
+        e.value.value.toMap.entries.foreach { entry =>
+          RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent), declarations).parse() match {
+            case Some(shape) => declarations += shape.add(DeclaredElement())
+            case None        => throw new Exception(s"Error parsing shape '$entry'")
+          }
+        }
+      }
+    )
+  }
+
+  private def parseSecuritySchemeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
+    map.key(
+      "securitySchemes",
+      e => {
+        e.value.value.toMap.entries.foreach { entry =>
+          declarations += SecuritySchemeParser(entry,
+                                               scheme => scheme.withName(entry.key).adopted(parent),
+                                               declarations).parse().add(DeclaredElement())
+        }
+      }
+    )
+  }
+
+  case class SecuritySchemeParser(entry: YMapEntry,
+                                  adopt: (SecurityScheme) => SecurityScheme,
+                                  declarations: Declarations) {
+    def parse(): SecurityScheme = {
+      spec.link(entry.value) match {
+        case Left(link) => parseReferenced(entry.key, link, Annotations(entry.value))
+        case Right(value) =>
+          val scheme = adopt(SecurityScheme(entry))
+
+          val map = value.value.toMap
+
+          map.key("type", entry => {
+            val value = ValueNode(entry.value)
+            scheme.set(SecuritySchemeModel.Type, value.string(), Annotations(entry))
+          })
+
+          map.key("displayName", entry => {
+            val value = ValueNode(entry.value)
+            scheme.set(SecuritySchemeModel.DisplayName, value.string(), Annotations(entry))
+          })
+
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
+          })
+
+          map.key(
+            "describedBy",
+            entry => {
+              val value = entry.value.value.toMap
+
+              value.key(
+                "headers",
+                entry => {
+                  val parameters: Seq[Parameter] =
+                    ParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
+                      .parse()
+                      .map(_.withBinding("header"))
+                  scheme.set(SecuritySchemeModel.Headers,
+                             AmfArray(parameters, Annotations(entry.value)),
+                             Annotations(entry))
+                }
+              )
+
+              value.key(
+                "queryParameters",
+                entry => {
+                  val parameters: Seq[Parameter] =
+                    ParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
+                      .parse()
+                      .map(_.withBinding("query"))
+                  scheme.set(SecuritySchemeModel.QueryParameters,
+                             AmfArray(parameters, Annotations(entry.value)),
+                             Annotations(entry))
+                }
+              )
+
+              // TODO queryString.
+
+              value.key(
+                "responses",
+                entry => {
+                  entry.value.value.toMap.regex(
+                    "\\d{3}",
+                    entries => {
+                      val responses = mutable.ListBuffer[Response]()
+                      entries.foreach(entry => {
+                        responses += ResponseParser(entry, scheme.withResponse, declarations).parse()
+                      })
+                      scheme.set(SecuritySchemeModel.Responses,
+                                 AmfArray(responses, Annotations(entry.value)),
+                                 Annotations(entry))
+                    }
+                  )
+                }
+              )
+            }
+          )
+
+          map.key(
+            "settings",
+            entry => {
+              val settings = SecuritySettingsParser(entry.value.value.toMap, scheme).parse()
+
+              scheme.set(SecuritySchemeModel.Settings, settings, Annotations(entry))
+            }
+          )
+
+          AnnotationParser(() => scheme, map).parse()
+
+          scheme
+      }
+    }
+
+    def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
+      val declared = declarations.findSecurityScheme(parsedUrl)
+      declared
+        .map { ss =>
+          val copied: SecurityScheme = ss.link(parsedUrl, annotations)
+          copied.withName(name)
+        }
+        .getOrElse(throw new IllegalStateException(s"Could not find security scheme in references map to link $name"))
+    }
+  }
+
+  case class SecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
+    def parse(): Settings = {
+      val result = scheme.`type` match {
+        case s if s equals "OAuth 1.0" => oauth1()
+        case s if s equals "OAuth 2.0" => oauth2()
+        case s if s equals "x-apiKey"  => apiKey()
+        case _                         => dynamicSettings(scheme.withDefaultSettings())
+      }
+
+      AnnotationParser(() => result, map).parse()
+
+      result.add(Annotations(map))
+    }
+
+    def dynamicSettings(settings: Settings, properties: String*): Settings = {
+      val entries = map.entries.filterNot { entry =>
+        val key: String = entry.key
+        properties.contains(key) || WellKnownAnnotation.isRamlAnnotation(key)
+      }
+
+      if (entries.nonEmpty) {
+        val node = DataNodeParser(YNode(YMap(entries)), parent = Some(settings.id)).parse()
+        settings.set(SettingsModel.AdditionalProperties, node)
+      }
+      settings
+    }
+
+    private def apiKey() = {
+      val s = scheme.withApiKeySettings()
+      map.key("name", entry => {
+        val value = ValueNode(entry.value)
+        s.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
+      })
+
+      map.key("in", entry => {
+        val value = ValueNode(entry.value)
+        s.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
+      })
+
+      dynamicSettings(s, "name", "in")
+    }
+
+    private def oauth2() = {
+      val settings = scheme.withOAuth2Settings()
+      map.key("authorizationUri", entry => {
+        val value = ValueNode(entry.value)
+        settings.set(OAuth2SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
+      })
+
+      map.key("accessTokenUri", entry => {
+        val value = ValueNode(entry.value)
+        settings.set(OAuth2SettingsModel.AccessTokenUri, value.string(), Annotations(entry))
+      })
+
+      map.key(
+        "authorizationGrants",
+        entry => {
+          val value = ArrayNode(entry.value.value.toSequence)
+          settings.set(OAuth2SettingsModel.AuthorizationGrants, value.strings(), Annotations(entry))
+        }
+      )
+
+      map.key(
+        "scopes",
+        entry => {
+          val value = ArrayNode(entry.value.value.toSequence)
+            .strings()
+            .values
+            .map(v => Scope().set(ScopeModel.Name, v).adopted(scheme.id))
+          settings.setArray(OAuth2SettingsModel.Scopes, value, Annotations(entry))
+        }
+      )
+
+      dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
+    }
+
+    private def oauth1() = {
+      val settings = scheme.withOAuth1Settings()
+      map.key("requestTokenUri", entry => {
+        val value = ValueNode(entry.value)
+        settings.set(OAuth1SettingsModel.RequestTokenUri, value.string(), Annotations(entry))
+      })
+
+      map.key("authorizationUri", entry => {
+        val value = ValueNode(entry.value)
+        settings.set(OAuth1SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
+      })
+
+      map.key("tokenCredentialsUri", entry => {
+        val value = ValueNode(entry.value)
+        settings.set(OAuth1SettingsModel.TokenCredentialsUri, value.string(), Annotations(entry))
+      })
+
+      map.key("signatures", entry => {
+        val value = ArrayNode(entry.value.value.toSequence)
+        settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
+      })
+
+      dynamicSettings(settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
+    }
+  }
 
   case class ParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
     def parse(): Seq[Parameter] =
@@ -414,29 +684,37 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         .map(entry => ParameterParser(entry, producer, declarations).parse())
   }
 
-  // todo review!
-  case class PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations) {
-    def parse(): Payload = {
+  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
+    def parse(): Parameter = {
 
-      val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
+      val name      = entry.key.value.toScalar.text
+      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+      val map       = entry.value.value.toMap
 
-      entry.value.value match {
-        case map: YMap =>
-          // TODO
-          // Should we clean the annotations here so they are not parsed again in the shape?
-          AnnotationParser(() => payload, map).parse()
-        case _ =>
+      map.key("required", entry => {
+        val value = ValueNode(entry.value)
+        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+      })
+
+      if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
+        val required = !name.endsWith("?")
+
+        parameter.set(ParameterModel.Required, required)
+        parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
       }
 
-      entry.value.tag.tagType match {
-        case YType.Null =>
-        case _ =>
-          RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
-            .parse()
-            .foreach(payload.withSchema)
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+      })
 
-      }
-      payload
+      RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
+        .parse()
+        .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+
+      AnnotationParser(() => parameter, map).parse()
+
+      parameter
     }
   }
 
@@ -501,85 +779,29 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     }
   }
 
-  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
-    def parse(): Parameter = {
+  case class PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations) {
+    def parse(): Payload = {
 
-      val name      = entry.key.value.toScalar.text
-      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
-      val map       = entry.value.value.toMap
+      val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
 
-      map.key("required", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-      })
-
-      if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
-        val required = !name.endsWith("?")
-
-        parameter.set(ParameterModel.Required, required)
-        parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+      entry.value.value match {
+        case map: YMap =>
+          // TODO
+          // Should we clean the annotations here so they are not parsed again in the shape?
+          AnnotationParser(() => payload, map).parse()
+        case _ =>
       }
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-      })
+      entry.value.tag.tagType match {
+        case YType.Null =>
+        case _ =>
+          RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
+            .parse()
+            .foreach(payload.withSchema)
 
-      RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
-        .parse()
-        .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
-
-      AnnotationParser(() => parameter, map).parse()
-
-      parameter
+      }
+      payload
     }
-  }
-}
-
-abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
-
-  override implicit val spec = RamlSpecParserContext
-
-  protected def parseDeclarations(map: YMap, declarations: Declarations): Unit = {
-    val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent, declarations)
-    parseAnnotationTypeDeclarations(map, parent, declarations)
-    parseResourceTypeDeclarations("resourceTypes", map, parent, declarations)
-    parseTraitDeclarations("traits", map, parent, declarations)
-    declarations.resolve()
-  }
-
-  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String, declarations: Declarations): Unit = {
-
-    map.key(
-      "annotationTypes",
-      e => {
-        e.value.value.toMap.entries.map(entry => {
-          val typeName = entry.key.value.toScalar.text
-          val customProperty = AnnotationTypesParser(entry,
-                                                     customProperty =>
-                                                       customProperty
-                                                         .withName(typeName)
-                                                         .adopted(customProperties),
-                                                     declarations)
-          declarations += customProperty.add(DeclaredElement())
-        })
-      }
-    )
-  }
-
-  private def parseTypeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
-    map.key(
-      "types",
-      e => {
-        e.value.value.toMap.entries.foreach { entry =>
-          RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent), declarations).parse() match {
-            case Some(shape) => declarations += shape.add(DeclaredElement())
-            case None        => throw new Exception(s"Error parsing shape '$entry'")
-          }
-        }
-      }
-    )
   }
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
@@ -630,7 +852,6 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
           LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
         case _ => throw new IllegalArgumentException("Invalid value Ypart type for annotation types parser")
       }
-
   }
 
   case class LinkedAnnotationTypeParser(ast: YPart,

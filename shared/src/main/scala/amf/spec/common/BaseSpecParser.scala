@@ -167,7 +167,7 @@ private[spec] trait BaseSpecParser {
         case d: DeclaresModel =>
           d.declares
             .filter({
-              case d: DomainEntity => false
+              case _: DomainEntity => false
               case _               => true
             })
             .foreach(library += _)
@@ -282,12 +282,12 @@ private[spec] trait BaseSpecParser {
       spec.link(entryValue) match {
         case Left(link) => parseReferenced(declaration, link, Annotations(entryValue))
         case Right(value) =>
-          val parameters = AbstractVariables()
-          val dataNode   = DataNodeParser(value, parameters, Some(parent + s"/$key")).parse()
+          val variables = AbstractVariables()
+          val dataNode  = DataNodeParser(value, variables, Some(parent + s"/$key")).parse()
 
           declaration.withName(key).adopted(parent).withDataNode(dataNode)
 
-          parameters.ifNonEmpty(p => declaration.withVariables(p))
+          variables.ifNonEmpty(p => declaration.withVariables(p))
 
           declaration
       }

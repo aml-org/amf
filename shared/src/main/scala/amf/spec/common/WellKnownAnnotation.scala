@@ -37,12 +37,14 @@ object WellKnownAnnotation {
   )
 
   def normalAnnotation(field: String): Boolean =
-    if ((field.startsWith("(") && field.endsWith(")")) ||
-        (field.startsWith("x-") || field.startsWith("X-"))) {
+    if (isRamlAnnotation(field) || isOasAnnotation(field)) {
       !annotations.getOrElse(field, false)
     } else {
       false
     }
+
+  def isOasAnnotation(field: String): Boolean  = field.startsWith("x-") || field.startsWith("X-")
+  def isRamlAnnotation(field: String): Boolean = field.startsWith("(") && field.endsWith(")")
 
   def parseRamlName(s: String): String = s.replace("(", "").replace(")", "")
   def parseOasName(s: String): String  = s.replace("x-", "").replace("X-", "")

@@ -4,11 +4,13 @@ import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.extensions._
+import amf.domain.security._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
+import amf.metadata.domain.security._
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
@@ -211,7 +213,13 @@ object GraphParser extends GraphParserHelpers {
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,
     ParametrizedTraitModel                              -> ParametrizedTrait.apply,
     VariableModel                                       -> Variable.apply,
-    VariableValueModel                                  -> VariableValue.apply
+    VariableValueModel                                  -> VariableValue.apply,
+    SecuritySchemeModel                                 -> SecurityScheme.apply,
+    SettingsModel                                       -> Settings.apply,
+    OAuth2SettingsModel                                 -> OAuth2Settings.apply,
+    OAuth1SettingsModel                                 -> OAuth1Settings.apply,
+    ApiKeySettingsModel                                 -> ApiKeySettings.apply,
+    ScopeModel                                          -> Scope.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap

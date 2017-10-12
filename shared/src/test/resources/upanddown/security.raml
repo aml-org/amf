@@ -1,0 +1,37 @@
+#%RAML 1.0
+title: Example API
+baseUri: https://example.com/api
+securitySchemes:
+  oauth_2_0:
+    type: OAuth 2.0
+    settings:
+      authorizationUri: https://example.com/oauth/authorize
+      accessTokenUri: https://example.com/oauth/token
+      authorizationGrants: [authorization_code, implicit, 'urn:ietf:params:oauth:grant-type:saml2-bearer']
+      scopes:
+        - profile
+        - history
+    describedBy:
+      headers:
+        Authorization:
+          description: Used to send a valid OAuth 2 access token.
+          type: string
+      queryParameters:
+        access_token:
+          description: Used to send a valid OAuth 2 access token.
+      responses:
+        401:
+          description: Authorization error.
+  basic_auth:
+    type: Basic Authentication
+  digest_auth:
+    type: Digest Authentication
+  api_key:
+    type: x-apiKey
+    settings:
+      name: HeaderName
+      in: header_location
+  custom_auth:
+    type: x-custom
+    settings:
+      custom: Setting

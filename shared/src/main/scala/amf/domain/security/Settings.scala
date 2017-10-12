@@ -1,23 +1,42 @@
 package amf.domain.security
 
+import amf.domain.extensions.DataNode
 import amf.domain.{Annotations, DomainElement, Fields}
-import amf.metadata.domain.security.{OAuth1SettingsModel, OAuth2SettingsModel, ApiKeySettingsModel}
+import amf.metadata.domain.security.ApiKeySettingsModel._
+import amf.metadata.domain.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
+import amf.metadata.domain.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
+import amf.metadata.domain.security.SettingsModel._
 
-abstract class Settings(fields: Fields, annotations: Annotations) extends DomainElement
+class Settings(val fields: Fields, val annotations: Annotations) extends DomainElement {
+  def additionalProperties: DataNode = fields(AdditionalProperties)
 
-case class OAuth1Settings(fields: Fields, annotations: Annotations) extends Settings(fields, annotations) {
-  def requestTokenUri: String     = fields(OAuth1SettingsModel.RequestTokenUri)
-  def authorizationUri: String    = fields(OAuth1SettingsModel.AuthorizationUri)
-  def tokenCredentialsUri: String = fields(OAuth1SettingsModel.TokenCredentialsUri)
-  def signatures: Seq[String]     = fields(OAuth1SettingsModel.Signatures)
+  def withAdditionalProperties(additionalProperties: DataNode): this.type =
+    set(AdditionalProperties, additionalProperties)
+
+  override def adopted(parent: String): this.type = withId(parent + "/settings/default")
+}
+
+object Settings {
+
+  def apply(): Settings = apply(Annotations())
+
+  def apply(annotations: Annotations): Settings = new Settings(Fields(), annotations)
+}
+
+case class OAuth1Settings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+  def requestTokenUri: String     = fields(RequestTokenUri)
+  def authorizationUri: String    = fields(AuthorizationUri1)
+  def tokenCredentialsUri: String = fields(TokenCredentialsUri)
+  def signatures: Seq[String]     = fields(Signatures)
 
   def withRequestTokenUri(requestTokenUri: String): this.type =
-    set(OAuth1SettingsModel.RequestTokenUri, requestTokenUri)
+    set(RequestTokenUri, requestTokenUri)
   def withAuthorizationUri(authorizationUri: String): this.type =
-    set(OAuth1SettingsModel.AuthorizationUri, authorizationUri)
+    set(AuthorizationUri1, authorizationUri)
   def withTokenCredentialsUri(tokenCredentialsUri: String): this.type =
-    set(OAuth1SettingsModel.TokenCredentialsUri, tokenCredentialsUri)
-  def withSignatures(signatures: Seq[String]): this.type = set(OAuth1SettingsModel.Signatures, signatures)
+    set(TokenCredentialsUri, tokenCredentialsUri)
+  def withSignatures(signatures: Seq[String]): this.type = set(Signatures, signatures)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
 }
@@ -29,20 +48,21 @@ object OAuth1Settings {
   def apply(annotations: Annotations): OAuth1Settings = new OAuth1Settings(Fields(), annotations)
 }
 
-case class OAuth2Settings(fields: Fields, annotations: Annotations) extends Settings(fields, annotations) {
-  def authorizationUri: String    = fields(OAuth2SettingsModel.AuthorizationUri)
-  def accessTokenUri: String      = fields(OAuth2SettingsModel.AccessTokenUri)
-  def authorizationGrants: String = fields(OAuth2SettingsModel.AuthorizationGrants)
-  def flow: String                = fields(OAuth2SettingsModel.Flow)
-  def scopes: Seq[Scope]          = fields(OAuth2SettingsModel.Scopes)
+case class OAuth2Settings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+  def authorizationUri: String         = fields(AuthorizationUri2)
+  def accessTokenUri: String           = fields(AccessTokenUri)
+  def authorizationGrants: Seq[String] = fields(AuthorizationGrants)
+  def flow: String                     = fields(Flow)
+  def scopes: Seq[Scope]               = fields(Scopes)
 
   def withAuthorizationUri(authorizationUri: String): this.type =
-    set(OAuth2SettingsModel.AuthorizationUri, authorizationUri)
-  def withAccessTokenUri(accessTokenUri: String): this.type = set(OAuth2SettingsModel.AccessTokenUri, accessTokenUri)
-  def withAuthorizationGrants(authorizationGrants: String): this.type =
-    set(OAuth2SettingsModel.AuthorizationGrants, authorizationGrants)
-  def withFlow(flow: String): this.type         = set(OAuth2SettingsModel.Flow, flow)
-  def withScopes(scopes: Seq[Scope]): this.type = setArray(OAuth2SettingsModel.Scopes, scopes)
+    set(AuthorizationUri2, authorizationUri)
+  def withAccessTokenUri(accessTokenUri: String): this.type = set(AccessTokenUri, accessTokenUri)
+  def withAuthorizationGrants(authorizationGrants: Seq[String]): this.type =
+    set(AuthorizationGrants, authorizationGrants)
+  def withFlow(flow: String): this.type         = set(Flow, flow)
+  def withScopes(scopes: Seq[Scope]): this.type = setArray(Scopes, scopes)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
 }
@@ -54,12 +74,13 @@ object OAuth2Settings {
   def apply(annotations: Annotations): OAuth2Settings = new OAuth2Settings(Fields(), annotations)
 }
 
-case class ApiKeySettings(fields: Fields, annotations: Annotations) extends Settings(fields, annotations) {
-  def name: String = fields(ApiKeySettingsModel.Name)
-  def in: String   = fields(ApiKeySettingsModel.In)
+case class ApiKeySettings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+  def name: String = fields(Name)
+  def in: String   = fields(In)
 
-  def withName(name: String): this.type = set(ApiKeySettingsModel.Name, name)
-  def withIn(in: String): this.type     = set(ApiKeySettingsModel.In, in)
+  def withName(name: String): this.type = set(Name, name)
+  def withIn(in: String): this.type     = set(In, in)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
 }

@@ -52,7 +52,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   }
 
   def declarables(): Seq[DomainElement] =
-    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values).toSeq
+    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values ++ securitySchemes.values).toSeq
 
   def findResourceType(key: String): Option[ResourceType] = findForType(key, _.resourceTypes) collect {
     case r: ResourceType => r
