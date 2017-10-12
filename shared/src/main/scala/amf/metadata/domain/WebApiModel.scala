@@ -32,7 +32,7 @@ object WebApiModel extends DomainElementModel {
 
   val License = Field(LicenseModel, Schema + "license")
 
-  val Documentation = Field(CreativeWorkModel, Schema + "documentation")
+  val Documentations = Field(Array(CreativeWorkModel), Schema + "documentation")
 
   val EndPoints = Field(Array(EndPointModel), Http + "endpoint")
 
@@ -52,7 +52,7 @@ object WebApiModel extends DomainElementModel {
          TermsOfService,
          Provider,
          License,
-         Documentation,
+         Documentations,
          EndPoints,
          BaseUriParameters) ++ DomainElementModel.fields
 }

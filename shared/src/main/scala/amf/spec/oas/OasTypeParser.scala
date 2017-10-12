@@ -9,7 +9,6 @@ import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser
 import amf.vocabulary.Namespace
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
 
@@ -24,7 +23,7 @@ object OasTypeParser {
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, declarations: Declarations)
-    extends BaseSpecParser {
+    extends OasSpecParser {
 
   override implicit val spec = OasSpecParserContext
 
@@ -480,7 +479,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key(
         "externalDocs",
         entry => {
-          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
           shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
         }
       )

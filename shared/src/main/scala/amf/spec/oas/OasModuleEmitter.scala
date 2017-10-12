@@ -1,6 +1,6 @@
 package amf.spec.oas
 
-import amf.compiler.{OasFragmentHeader, OasHeader, RamlHeader}
+import amf.compiler.{OasFragmentHeader, OasHeader}
 import amf.document.Fragment._
 import amf.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
@@ -85,7 +85,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
 
     override val headerEmitter: Emitter = OasHeaderEmitter(OasFragmentHeader.Oas20DocumentationItem)
 
-    val elementsEmitters: Seq[Emitter] = Seq(UserDocumentationEmitter(documentationItem.encodes, ordering))
+    val elementsEmitters: Seq[Emitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
   }
 
   case class DataTypeFragmentEmitter(dataType: DataType, ordering: SpecOrdering) extends OasFragmentTypeEmitter {

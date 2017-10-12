@@ -33,7 +33,9 @@ object WellKnownAnnotation {
     "(consumes)"            -> true,
     "(produces)"            -> true,
     "x-fragment-type"       -> true,
-    "x-usage"               -> true
+    "x-usage"               -> true,
+    "x-title"               -> true,
+    "x-user-documentation"  -> true
   )
 
   def normalAnnotation(field: String): Boolean =

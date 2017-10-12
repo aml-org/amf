@@ -4,7 +4,7 @@ import amf.common.core.QName
 import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.{DomainElement, UserDocumentation}
+import amf.domain.{CreativeWork, DomainElement}
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}
 
@@ -16,7 +16,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         var shapes: Map[String, Shape] = Map(),
                         var annotations: Map[String, CustomDomainProperty] = Map(),
                         var resourceTypes: Map[String, ResourceType] = Map(),
-                        var documentations: Map[String, UserDocumentation] = Map(),
+                        var documentations: Map[String, CreativeWork] = Map(),
                         var traits: Map[String, Trait] = Map()) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
@@ -29,7 +29,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   def +=(element: DomainElement): Declarations = {
     element match {
       case r: ResourceType         => resourceTypes = resourceTypes + (r.name    -> r)
-      case u: UserDocumentation    => documentations = documentations + (u.title -> u)
+      case u: CreativeWork         => documentations = documentations + (u.title -> u)
       case t: Trait                => traits = traits + (t.name                  -> t)
       case a: CustomDomainProperty => annotations = annotations + (a.name        -> a)
       case s: Shape                => shapes = shapes + (s.name                  -> s)
@@ -55,8 +55,8 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
     case r: ResourceType => r
   }
 
-  def findDocumentations(key: String): Option[UserDocumentation] = findForType(key, _.documentations) collect {
-    case u: UserDocumentation => u
+  def findDocumentations(key: String): Option[CreativeWork] = findForType(key, _.documentations) collect {
+    case u: CreativeWork => u
   }
 
   def findTrait(key: String): Option[Trait] = findForType(key, _.traits) collect {

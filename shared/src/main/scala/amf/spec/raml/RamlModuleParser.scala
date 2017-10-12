@@ -9,7 +9,7 @@ import amf.parser.YValueOps
 /**
   *
   */
-case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root) {
+case class RamlModuleParser(root: Root) extends RamlSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))
@@ -23,7 +23,7 @@ case class RamlModuleParser(override val root: Root) extends RamlSpecParser(root
       val rootMap    = document.toMap
       val references = ReferencesParser("uses", rootMap, root.references).parse()
 
-      parseDeclarations(rootMap, references.declarations)
+      parseDeclarations(root, rootMap, references.declarations)
 
       // TODO invoke when it's done
       //    resourceTypes?

@@ -30,7 +30,7 @@ object Fragment {
   // todo review
 
   case class DocumentationItem(fields: Fields, annotations: Annotations) extends Fragment {
-    override def encodes: UserDocumentation = super.encodes.asInstanceOf[UserDocumentation]
+    override def encodes: CreativeWork = super.encodes.asInstanceOf[CreativeWork]
   }
 
   case class DataType(fields: Fields, annotations: Annotations) extends Fragment {

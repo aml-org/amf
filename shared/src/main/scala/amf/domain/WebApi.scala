@@ -19,24 +19,24 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   def termsOfService: String            = fields(TermsOfService)
   def provider: Organization            = fields(Provider)
   def license: License                  = fields(WebApiLicense)
-  def documentation: CreativeWork       = fields(Documentation)
+  def documentations: Seq[CreativeWork] = fields(Documentations)
   def endPoints: Seq[EndPoint]          = fields(EndPoints)
   def baseUriParameters: Seq[Parameter] = fields(BaseUriParameters)
 
-  def withName(name: String): this.type                            = set(Name, name)
-  def withDescription(description: String): this.type              = set(Description, description)
-  def withHost(host: String): this.type                            = set(Host, host)
-  def withSchemes(schemes: Seq[String]): this.type                 = set(Schemes, schemes)
-  def withEndPoints(endPoints: Seq[EndPoint]): this.type           = setArray(EndPoints, endPoints)
-  def withBasePath(path: String): this.type                        = set(BasePath, path)
-  def withAccepts(accepts: Seq[String]): this.type                 = set(Accepts, accepts)
-  def withContentType(contentType: Seq[String]): this.type         = set(ContentType, contentType)
-  def withVersion(version: String): this.type                      = set(Version, version)
-  def withTermsOfService(terms: String): this.type                 = set(TermsOfService, terms)
-  def withProvider(provider: Organization): this.type              = set(Provider, provider)
-  def withLicense(license: License): this.type                     = set(WebApiLicense, license)
-  def withDocumentation(documentation: CreativeWork): this.type    = set(Documentation, documentation)
-  def withBaseUriParameters(parameters: Seq[Parameter]): this.type = setArray(BaseUriParameters, parameters)
+  def withName(name: String): this.type                                = set(Name, name)
+  def withDescription(description: String): this.type                  = set(Description, description)
+  def withHost(host: String): this.type                                = set(Host, host)
+  def withSchemes(schemes: Seq[String]): this.type                     = set(Schemes, schemes)
+  def withEndPoints(endPoints: Seq[EndPoint]): this.type               = setArray(EndPoints, endPoints)
+  def withBasePath(path: String): this.type                            = set(BasePath, path)
+  def withAccepts(accepts: Seq[String]): this.type                     = set(Accepts, accepts)
+  def withContentType(contentType: Seq[String]): this.type             = set(ContentType, contentType)
+  def withVersion(version: String): this.type                          = set(Version, version)
+  def withTermsOfService(terms: String): this.type                     = set(TermsOfService, terms)
+  def withProvider(provider: Organization): this.type                  = set(Provider, provider)
+  def withLicense(license: License): this.type                         = set(WebApiLicense, license)
+  def withDocumentations(documentations: Seq[CreativeWork]): this.type = setArray(Documentations, documentations)
+  def withBaseUriParameters(parameters: Seq[Parameter]): this.type     = setArray(BaseUriParameters, parameters)
 
   def withEndPoint(path: String): EndPoint = {
     val result = EndPoint().withPath(path)
@@ -47,6 +47,18 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   def withBaseUriParameter(name: String): Parameter = {
     val result = Parameter().withName(name)
     add(BaseUriParameters, result)
+    result
+  }
+
+  def withDocumentationTitle(title: String): CreativeWork = {
+    val result = CreativeWork().withTitle(title)
+    add(Documentations, result)
+    result
+  }
+
+  def withDocumentationUrl(url: String): CreativeWork = {
+    val result = CreativeWork().withUrl(url)
+    add(Documentations, result)
     result
   }
 

@@ -88,7 +88,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
       fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact", f, ordering))
 
-      fs.entry(WebApiModel.Documentation).map(f => result += CreativeWorkEmitter("externalDocs", f, ordering))
+      fs.entry(WebApiModel.Documentations).map(f => result ++= UserDocumentationsEmitter(f, ordering).emitters())
 
       fs.entry(WebApiModel.EndPoints).map(f => result += EndpointsEmitter("paths", f, ordering))
 
@@ -265,7 +265,12 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
           fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
 
-          fs.entry(OperationModel.Documentation).map(f => result += CreativeWorkEmitter("externalDocs", f, ordering))
+          fs.entry(OperationModel.Documentation)
+            .map(
+              f =>
+                result += OasEntryCreativeWorkEmitter("externalDocs",
+                                                      f.value.value.asInstanceOf[CreativeWork],
+                                                      ordering))
 
           fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
 
@@ -872,7 +877,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
-      fs.entry(ShapeModel.Documentation).map(f => result += CreativeWorkEmitter("externalDocs", f, ordering))
+      fs.entry(ShapeModel.Documentation)
+        .map(f =>
+          result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering))
 
       fs.entry(ShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
@@ -1285,47 +1292,32 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class CreativeWorkEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(
-        f.value,
-        entry { () =>
-          raw(key)
+  case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
 
-          val fs     = f.obj.fields
-          val result = mutable.ListBuffer[Emitter]()
+      val documents: List[CreativeWork] = f.array.values.collect({ case c: CreativeWork => c }).toList
 
-          fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
+      documents match {
+        case head :: Nil => Seq(OasEntryCreativeWorkEmitter("externalDocs", head, ordering))
+        case head :: tail =>
+          Seq(OasEntryCreativeWorkEmitter("externalDocs", head, ordering), RamlCreativeWorkEmitters(tail, ordering))
+        case _ => Nil
+      }
 
-          fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
-
-          result ++= OasAnnotationsEmitter(f.domainElement, ordering).emitters
-
-          map { () =>
-            traverse(ordering.sorted(result))
-          }
-        }
-      )
     }
-
-    override def position(): Position = pos(f.value.annotations)
   }
 
-  // todo to check, extention?
-  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering) extends Emitter {
-
+  case class RamlCreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
-      val result = ListBuffer[Emitter]()
-      val fs     = userDocumentation.fields
-      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
-      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
-
-      map { () =>
-        traverse(ordering.sorted(result))
+      entry { () =>
+        raw("x-user-documentation")
+        array { () =>
+          traverse(ordering.sorted(documents.map(RamlCreativeWorkEmitter(_, ordering, false))))
+        }
       }
     }
 
-    override def position(): Position = pos(userDocumentation.annotations)
+    override def position(): Position = pos(documents.head.annotations)
   }
 
 }

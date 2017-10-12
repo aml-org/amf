@@ -24,11 +24,12 @@ import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Oas 2.0 spec parser
   */
-case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
+case class OasDocumentParser(root: Root) extends OasSpecParser {
 
   def parseDocument(): Document = {
 
@@ -38,7 +39,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
       val map = value.toMap
 
       val references = ReferencesParser("x-uses", map, root.references).parse()
-      parseDeclarations(map, references.declarations)
+      parseDeclarations(root: Root, map, references.declarations)
 
       val api = parseWebApi(map, references.declarations).add(SourceVendor(root.vendor))
       document
@@ -136,13 +137,24 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
       }
     )
 
+    val documentations = ListBuffer[CreativeWork]()
     map.key(
       "externalDocs",
       entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
-        api.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
+        documentations += OasCreativeWorkParser(entry.value.value.toMap).parse()
       }
     )
+
+    map.key(
+      "x-user-documentation",
+      entry => {
+        documentations ++= UserDocumentationParser(entry.value.value.toSequence, declarations, withExtention = false)
+          .parse()
+      }
+    )
+
+    if (documentations.nonEmpty)
+      api.setArray(WebApiModel.Documentations, documentations)
 
     map.key(
       "paths",
@@ -306,7 +318,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
       map.key(
         "externalDocs",
         entry => {
-          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
           operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
         }
       )
@@ -611,11 +623,11 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
   }
 }
 
-abstract class OasSpecParser(root: Root) extends BaseSpecParser {
+abstract class OasSpecParser extends BaseSpecParser {
 
   override implicit val spec = OasSpecParserContext
 
-  protected def parseDeclarations(map: YMap, declarations: Declarations): Unit = {
+  protected def parseDeclarations(root: Root, map: YMap, declarations: Declarations): Unit = {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent, declarations)
     parseAnnotationTypeDeclarations(map, parent, declarations)
@@ -668,24 +680,6 @@ abstract class OasSpecParser(root: Root) extends BaseSpecParser {
         val value = ValueNode(entry.value)
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })
-    }
-  }
-
-  case class UserDocumentationParser(map: YMap) {
-    def parse(): UserDocumentation = {
-
-      val documentation = UserDocumentation(Annotations(map))
-      // todo
-      map.key("title", entry => {
-        val value = ValueNode(entry.value)
-        documentation.set(UserDocumentationModel.Title, value.string(), Annotations(entry))
-      })
-
-      map.key("content", entry => {
-        val value = ValueNode(entry.value)
-        documentation.set(UserDocumentationModel.Content, value.string(), Annotations(entry))
-      })
-      documentation
     }
   }
 
@@ -779,6 +773,19 @@ abstract class OasSpecParser(root: Root) extends BaseSpecParser {
 
       custom
     }
+  }
+
+  case class UserDocumentationParser(seq: YSequence, declarations: Declarations, withExtention: Boolean) {
+    def parse(): Seq[CreativeWork] =
+      seq.nodes.map(n =>
+        n.value match {
+          case m: YMap => RamlCreativeWorkParser(m, withExtention).parse()
+          case s: YScalar =>
+            declarations.findDocumentations(s.text) match {
+              case Some(doc) => doc.link(s.text, Annotations(n)).asInstanceOf[CreativeWork]
+              case _         => throw new IllegalArgumentException(s"not supported scalar $s.text for documentation item")
+            }
+      })
   }
 
 }

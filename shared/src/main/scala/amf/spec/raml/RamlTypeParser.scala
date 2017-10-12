@@ -9,7 +9,7 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.{BaseSpecParser, SpecParserContext}
+import amf.spec.common.SpecParserContext
 import amf.vocabulary.Namespace
 import org.yaml.model._
 
@@ -21,9 +21,9 @@ object RamlTypeParser {
 }
 
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
-    extends BaseSpecParser {
+    extends RamlSpecParser {
 
-  override implicit val spec: SpecParserContext = RamlSpecParserContext
+//  override implicit val spec: SpecParserContext = RamlSpecParserContext
 
   private val value = part.value
 
@@ -576,7 +576,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       map.key(
         "(externalDocs)",
         entry => {
-          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
           shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
         }
       )
