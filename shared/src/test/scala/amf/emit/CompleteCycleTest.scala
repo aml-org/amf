@@ -217,6 +217,22 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("operation-response.raml", "operation-response.raml.json", RamlYamlHint, Oas)
   }
 
+  test("Complete with parameter references oas to oas test") {
+    cycle("parameters.json", "parameters.json", OasJsonHint, Oas)
+  }
+
+  test("Complete with parameter references oas to amf test") {
+    cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Complete with parameter references oas to raml test") {
+    cycle("parameters.json", "parameters.raml", OasJsonHint, Raml)
+  }
+
+  test("Complete with parameter references raml to amf test") {
+    cycle("parameters.raml", "parameters.raml.jsonld", RamlYamlHint, Amf)
+  }
+
   test("Complete with payloads raml to raml test") {
     cycle("payloads.raml", "payloads.raml.raml", RamlYamlHint, Raml)
   }

@@ -502,39 +502,6 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
     }
   }
 
-  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
-    def parse(): Parameter = {
-
-      val name      = entry.key.value.toScalar.text
-      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
-      val map       = entry.value.value.toMap
-
-      map.key("required", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-      })
-
-      if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
-        val required = !name.endsWith("?")
-
-        parameter.set(ParameterModel.Required, required)
-        parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
-      }
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-      })
-
-      RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
-        .parse()
-        .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
-
-      AnnotationParser(() => parameter, map).parse()
-
-      parameter
-    }
-  }
 }
 
 abstract class RamlSpecParser extends BaseSpecParser {
@@ -547,6 +514,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
     parseAnnotationTypeDeclarations(map, parent, declarations)
     parseResourceTypeDeclarations("resourceTypes", map, parent, declarations)
     parseTraitDeclarations("traits", map, parent, declarations)
+    parseParameterDeclarations("(parameters)", map, root.location + "#/parameters", declarations)
     declarations.resolve()
   }
 
@@ -581,6 +549,71 @@ abstract class RamlSpecParser extends BaseSpecParser {
         }
       }
     )
+  }
+
+  def parseParameterDeclarations(key: String,
+                                 map: YMap,
+                                 parentPath: String,
+                                 declarations: Declarations): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value.value.toMap.entries.foreach(e => {
+          val parameter = ParameterParser(e, (name) => Parameter().withId(parentPath + "/" + name).withName(name), declarations).parse()
+          if (Option(parameter.binding).isEmpty) {
+            throw new Exception("Missing binding information in declared parameter")
+          }
+          declarations.registerParameter(parameter.add(DeclaredElement()), Payload().withSchema(parameter.schema))
+        })
+      }
+    )
+  }
+
+  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
+    def parse(): Parameter = {
+
+      val name      = entry.key.value.toScalar.text
+      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+      entry.value.value match {
+        case ref: YScalar => declarations.findParameter(ref.text) match {
+          case Some(s) => s.link(ref.text, Annotations(entry)).asInstanceOf[Parameter].withName(name)
+          case _       => throw new Exception("Cannot declare unresolved parameter")
+        }
+        case map: YMap =>
+          val map       = entry.value.value.toMap
+
+          map.key("required", entry => {
+            val value = ValueNode(entry.value)
+            parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+          })
+
+          if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
+            val required = !name.endsWith("?")
+
+            parameter.set(ParameterModel.Required, required)
+            parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+          }
+
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+          })
+
+          map.key("(binding)", entry => {
+            val value = ValueNode(entry.value)
+            val annotations: Annotations = Annotations(entry) += ExplicitField()
+            parameter.set(ParameterModel.Binding, value.string(), annotations)
+          })
+
+          RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
+            .parse()
+            .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+
+          AnnotationParser(() => parameter, map).parse()
+
+          parameter
+      }
+      }
   }
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
