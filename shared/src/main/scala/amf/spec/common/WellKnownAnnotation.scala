@@ -4,6 +4,8 @@ object WellKnownAnnotation {
 
   val annotations: Map[Object, Boolean] = Map(
     "(termsOfService)"      -> true,
+    "(parameters)"          -> true,
+    "(binding)"             -> true,
     "(contact)"             -> true,
     "(externalDocs)"        -> true,
     "(license)"             -> true,

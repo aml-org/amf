@@ -176,12 +176,16 @@ object GraphEmitter extends MetaModelTypeMapping {
           }
       }
     }
-
+    // case e: DomainElement with Linkable if e.isLink => e.linkTarget.foreach(l => iri(l.id))
     private def obj(element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
-      val obj = () =>
-        map { () =>
-          traverse(element, parent)
+      val obj = element match {
+        case _ =>
+          () =>
+            map { () =>
+              traverse(element, parent)
+            }
       }
+
       if (inArray) {
         obj()
       } else {

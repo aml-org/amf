@@ -4,7 +4,7 @@ import amf.common.core.QName
 import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.{CreativeWork, DomainElement}
+import amf.domain.{CreativeWork, DomainElement, Parameter, Payload}
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}
 
@@ -17,6 +17,8 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         var annotations: Map[String, CustomDomainProperty] = Map(),
                         var resourceTypes: Map[String, ResourceType] = Map(),
                         var documentations: Map[String, CreativeWork] = Map(),
+                        var parameters: Map[String, Parameter] = Map(),
+                        var payloads: Map[String, Payload] = Map(),
                         var traits: Map[String, Trait] = Map()) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
@@ -33,9 +35,17 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
       case t: Trait                => traits = traits + (t.name                  -> t)
       case a: CustomDomainProperty => annotations = annotations + (a.name        -> a)
       case s: Shape                => shapes = shapes + (s.name                  -> s)
+      case p: Parameter            => parameters = parameters + (p.name          -> p)
     }
     this
   }
+
+  def registerParameter(parameter: Parameter, payload: Payload): Unit = {
+    parameters = parameters + (parameter.name -> parameter)
+    payloads = payloads + (parameter.name -> payload)
+  }
+
+  def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name)
 
   /** Get or create specified library. */
   def getOrCreateLibrary(alias: String): Declarations = {
@@ -49,7 +59,11 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   }
 
   def declarables(): Seq[DomainElement] =
-    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values).toSeq
+    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values ++ parameters.values).toSeq
+
+  def findParameter(key: String): Option[Parameter] = findForType(key, _.parameters) collect {
+    case p: Parameter => p
+  }
 
   def findResourceType(key: String): Option[ResourceType] = findForType(key, _.resourceTypes) collect {
     case r: ResourceType => r
