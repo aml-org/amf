@@ -16,7 +16,7 @@ import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Promise}
 
-class ResolutionTest extends AsyncFunSuite with PlatformSecrets {
+class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

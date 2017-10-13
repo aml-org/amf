@@ -236,11 +236,15 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
     }
   }
 
-  case class RequestParser(map: YMap, global: OasParameters, producer: () => Request, declarations: Declarations) {
+  case class RequestParser(map: YMap, globalOrig: OasParameters, producer: () => Request, declarations: Declarations) {
     def parse(): Option[Request] = {
       val request = new Lazy[Request](producer)
 
-      var parameters = global
+      // we remove the path parameters to the empty becase the request
+      // can overwrite the path parameters and this would be lost if were not
+      // adding them here
+      var parameters = globalOrig.copy(path = Seq())
+      val global = globalOrig.copy(path = Seq())
 
       map.key(
         "parameters",
@@ -248,15 +252,17 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
           parameters =
             global.merge(ParametersParser(entry.value.value.toSequence, request.getOrCreate.id, declarations).parse())
           parameters match {
-            case OasParameters(query, _, header, _) =>
-              if (query.nonEmpty)
+            case OasParameters(query, path, header, _) =>
+              // query parameters and overwritten path parameters
+              if (query.nonEmpty || path.nonEmpty)
                 request.getOrCreate.set(RequestModel.QueryParameters,
-                                        AmfArray(query, Annotations(entry.value)),
+                                        AmfArray(query ++ path, Annotations(entry.value)),
                                         Annotations(entry))
               if (header.nonEmpty)
                 request.getOrCreate.set(RequestModel.Headers,
                                         AmfArray(header, Annotations(entry.value)),
                                         Annotations(entry))
+
           }
         }
       )

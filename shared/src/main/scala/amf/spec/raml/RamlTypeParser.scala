@@ -20,6 +20,47 @@ object RamlTypeParser {
     new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)
 }
 
+trait RamlTypeSyntax {
+  def parseWellKnownTypeRef(ramlType: String): Shape = {
+    ramlType match {
+      case "nil" | ""      => NilShape()
+      case "any"           => AnyShape()
+      case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
+      case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
+      case "number"        => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
+      case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
+      case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
+      case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
+      case "array"         => ArrayShape()
+      case "object"        => NodeShape()
+      case "union"         => UnionShape()
+    }
+  }
+  def wellKnownType(str: String) =
+    if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str.indexOf("}") > -1) {
+      false
+    } else {
+      str match {
+        case "nil" | "" => true
+        case "any" => true
+        case "string" => true
+        case "integer" => true
+        case "number" => true
+        case "boolean" => true
+        case "datetime" => true
+        case "datetime-only" => true
+        case "time-only" => true
+        case "date-only" => true
+        case "array" => true
+        case "object" => true
+        case "union" => true
+        case _ => false
+      }
+    }
+}
+
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
     extends RamlSpecParser {
 
@@ -536,7 +577,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     }
   }
 
-  abstract class ShapeParser() {
+  abstract class ShapeParser() extends RamlTypeSyntax {
 
     val shape: Shape
     val map: YMap
@@ -592,18 +633,17 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       shape
     }
 
-    protected def wellKnownType(typeId: String): Boolean = {
-      RamlTypeDefMatcher.matchType(typeId) match {
-        case ObjectType if typeId != "object" => false
-        case _                                => true
-      }
-    }
-
     protected def parseInheritance(declarations: Declarations): Unit = {
       map.key(
         "type",
         entry => {
           entry.value.value match {
+
+            case scalar: YScalar if RamlTypeDefMatcher.TypeExpression.unapply(scalar.text).isDefined =>
+              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
+                .parse()
+                .foreach(s =>
+                  shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
             case scalar: YScalar if !wellKnownType(scalar.text) =>
               declarations.findType(scalar.text) match {
@@ -613,12 +653,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                             Annotations(entry))
                 case None => throw new Exception("Reference not found")
               }
-
-            case scalar: YScalar if RamlTypeDefMatcher.TypeExpression.unapply(scalar.text).isDefined =>
-              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
-                .parse()
-                .foreach(s =>
-                  shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
             case sequence: YSequence =>
               val inherits = ArrayNode(sequence)
@@ -648,24 +682,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           }
         }
       )
-    }
-
-    def parseWellKnownTypeRef(ramlType: String): Shape = {
-      ramlType match {
-        case "nil" | ""      => NilShape()
-        case "any"           => AnyShape()
-        case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
-        case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
-        case "number"        => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
-        case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
-        case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-        case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-        case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
-        case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
-        case "array"         => ArrayShape()
-        case "object"        => NodeShape()
-        case "union"         => UnionShape()
-      }
     }
   }
 
