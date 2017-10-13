@@ -33,7 +33,16 @@ object WellKnownAnnotation {
     "(consumes)"            -> true,
     "(produces)"            -> true,
     "x-fragment-type"       -> true,
-    "x-usage"               -> true
+    "x-usage"               -> true,
+    "(flow)"                -> true,
+    "x-displayName"         -> true,
+    "x-describedBy"         -> true,
+    "x-requestTokenUri"     -> true,
+    "x-authorizationUri"    -> true,
+    "x-tokenCredentialsUri" -> true,
+    "x-signatures"          -> true,
+    "x-settings"            -> true,
+    "x-securitySchemes"     -> true
   )
 
   def normalAnnotation(field: String): Boolean =

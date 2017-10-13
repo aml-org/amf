@@ -1,0 +1,57 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Example API"
+  },
+  "securityDefinitions": {
+    "oauth_2_0": {
+      "type": "oauth2",
+      "x-settings": {
+        "authorizationGrants": ["authorization_code", "implicit", "urn:ietf:params:oauth:grant-type:saml2-bearer"]
+      },
+      "authorizationUrl": "https://example.com/oauth/authorize",
+      "tokenUrl": "https://example.com/oauth/token",
+      "scopes": {
+        "profile": "",
+        "history": ""
+      },
+      "x-describedBy": {
+        "headers": {
+          "Authorization": {
+            "description": "Used to send a valid OAuth 2 access token.",
+            "type": "string"
+            }
+          },
+        "queryParameters": {
+          "access_token": {
+            "description": "Used to send a valid OAuth 2 access token."
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Authorization error."
+          }
+        }
+      }
+    },
+    "basic_auth": {
+      "type": "basic"
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "HeaderName",
+      "in": "header_location"
+    }
+  },
+  "x-securitySchemes": {
+    "digest_auth": {
+      "type": "Digest Authentication"
+    },
+    "custom_auth": {
+      "type": "x-custom",
+      "x-settings": {
+        "custom": "Setting"
+      }
+    }
+  }
+}

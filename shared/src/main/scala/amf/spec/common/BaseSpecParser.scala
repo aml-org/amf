@@ -6,15 +6,16 @@ import amf.document.{BaseUnit, DeclaresModel, Document}
 import amf.domain.Annotation.{Aliases, ExplicitField}
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
-import amf.domain.{Annotations, CreativeWork, License, Organization}
+import amf.domain._
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
-import amf.metadata.domain.{CreativeWorkModel, LicenseModel, OrganizationModel}
+import amf.metadata.domain._
 import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
 import amf.spec.Declarations
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
+import amf.spec.raml.RamlTypeParser
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YType, YValue}
 
 import scala.collection.mutable
 
@@ -333,6 +334,132 @@ private[spec] trait BaseSpecParser {
             .set(ParametrizedDeclarationModel.Target, declarations(scalar.text).id)
         case _ => throw new Exception("Invalid model extension.")
       }
+    }
+  }
+
+  case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
+    def parse(): Seq[Parameter] =
+      map.entries
+        .map(entry => RamlParameterParser(entry, producer, declarations).parse())
+  }
+
+  case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
+    def parse(): Parameter = {
+
+      val name      = entry.key.value.toScalar.text
+      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+      val map       = entry.value.value.toMap
+
+      map.key("required", entry => {
+        val value = ValueNode(entry.value)
+        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+      })
+
+      if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
+        val required = !name.endsWith("?")
+
+        parameter.set(ParameterModel.Required, required)
+        parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+      }
+
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+      })
+
+      RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
+        .parse()
+        .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+
+      AnnotationParser(() => parameter, map).parse()
+
+      parameter
+    }
+  }
+
+  case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, declarations: Declarations) {
+    def parse(): Response = {
+
+      val node = ValueNode(entry.key)
+
+      val response = producer(node.string().value.toString).add(Annotations(entry))
+      val map      = entry.value.value.toMap
+
+      response.set(ResponseModel.StatusCode, node.string())
+
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        response.set(ResponseModel.Description, value.string(), Annotations(entry))
+      })
+
+      map.key(
+        "headers",
+        entry => {
+          val parameters: Seq[Parameter] =
+            RamlParametersParser(entry.value.value.toMap, response.withHeader, declarations)
+              .parse()
+              .map(_.withBinding("header"))
+          response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
+      map.key(
+        "body",
+        entry => {
+          val payloads = mutable.ListBuffer[Payload]()
+
+          val payload = Payload()
+          payload.adopted(response.id) // TODO review
+
+          RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), declarations)
+            .parse()
+            .foreach(payloads += payload.withSchema(_))
+
+          entry.value.value match {
+            case map: YMap =>
+              map.regex(
+                ".*/.*",
+                entries => {
+                  entries.foreach(entry => {
+                    payloads += RamlPayloadParser(entry, response.withPayload, declarations).parse()
+                  })
+                }
+              )
+            case _ =>
+          }
+          if (payloads.nonEmpty)
+            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
+      AnnotationParser(() => response, map).parse()
+
+      response
+    }
+  }
+
+  case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations) {
+    def parse(): Payload = {
+
+      val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
+
+      entry.value.value match {
+        case map: YMap =>
+          // TODO
+          // Should we clean the annotations here so they are not parsed again in the shape?
+          AnnotationParser(() => payload, map).parse()
+        case _ =>
+      }
+
+      entry.value.tag.tagType match {
+        case YType.Null =>
+        case _ =>
+          RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
+            .parse()
+            .foreach(payload.withSchema)
+
+      }
+      payload
     }
   }
 

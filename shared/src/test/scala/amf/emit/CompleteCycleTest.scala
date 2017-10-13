@@ -498,8 +498,12 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("forward-references-types.json", OasJsonHint, Oas)
   }
 
-  test("Seurity schemes raml to amf") {
+  test("Security schemes raml to amf") {
     cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Security schemes oas to amf") {
+    cycle("security.json", "security.json.jsonld", OasJsonHint, Amf)
   }
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */

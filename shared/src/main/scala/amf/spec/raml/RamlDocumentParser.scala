@@ -61,7 +61,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       "baseUriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          ParametersParser(entry.value.value.toMap, api.withBaseUriParameter, declarations)
+          RamlParametersParser(entry.value.value.toMap, api.withBaseUriParameter, declarations)
             .parse()
             .map(_.withBinding("path"))
         api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -207,7 +207,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         "uriParameters",
         entry => {
           val parameters: Seq[Parameter] =
-            ParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations)
+            RamlParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations)
               .parse()
               .map(_.withBinding("path"))
           endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -262,7 +262,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         entry => {
 
           val parameters: Seq[Parameter] =
-            ParametersParser(entry.value.value.toMap, request.getOrCreate.withQueryParameter, declarations)
+            RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withQueryParameter, declarations)
               .parse()
               .map(_.withBinding("query"))
           request.getOrCreate.set(RequestModel.QueryParameters,
@@ -275,7 +275,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         "headers",
         entry => {
           val parameters: Seq[Parameter] =
-            ParametersParser(entry.value.value.toMap, request.getOrCreate.withHeader, declarations)
+            RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withHeader, declarations)
               .parse()
               .map(_.withBinding("header"))
           request.getOrCreate.set(RequestModel.Headers,
@@ -298,7 +298,8 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
               ".*/.*",
               entries => {
                 entries.foreach(entry => {
-                  payloads += PayloadParser(entry, producer = request.getOrCreate.withPayload, declarations).parse()
+                  payloads += RamlPayloadParser(entry, producer = request.getOrCreate.withPayload, declarations)
+                    .parse()
                 })
               }
             )
@@ -394,7 +395,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
             entries => {
               val responses = mutable.ListBuffer[Response]()
               entries.foreach(entry => {
-                responses += ResponseParser(entry, operation.withResponse, declarations).parse()
+                responses += RamlResponseParser(entry, operation.withResponse, declarations).parse()
               })
               operation.set(OperationModel.Responses,
                             AmfArray(responses, Annotations(entry.value)),
@@ -506,7 +507,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
                 "headers",
                 entry => {
                   val parameters: Seq[Parameter] =
-                    ParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
+                    RamlParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
                       .parse()
                       .map(_.withBinding("header"))
                   scheme.set(SecuritySchemeModel.Headers,
@@ -519,7 +520,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
                 "queryParameters",
                 entry => {
                   val parameters: Seq[Parameter] =
-                    ParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
+                    RamlParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
                       .parse()
                       .map(_.withBinding("query"))
                   scheme.set(SecuritySchemeModel.QueryParameters,
@@ -538,7 +539,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
                     entries => {
                       val responses = mutable.ListBuffer[Response]()
                       entries.foreach(entry => {
-                        responses += ResponseParser(entry, scheme.withResponse, declarations).parse()
+                        responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
                       })
                       scheme.set(SecuritySchemeModel.Responses,
                                  AmfArray(responses, Annotations(entry.value)),
@@ -579,10 +580,10 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
   case class SecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
     def parse(): Settings = {
       val result = scheme.`type` match {
-        case s if s equals "OAuth 1.0" => oauth1()
-        case s if s equals "OAuth 2.0" => oauth2()
-        case s if s equals "x-apiKey"  => apiKey()
-        case _                         => dynamicSettings(scheme.withDefaultSettings())
+        case "OAuth 1.0" => oauth1()
+        case "OAuth 2.0" => oauth2()
+        case "x-apiKey"  => apiKey()
+        case _           => dynamicSettings(scheme.withDefaultSettings())
       }
 
       AnnotationParser(() => result, map).parse()
@@ -630,6 +631,11 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
         settings.set(OAuth2SettingsModel.AccessTokenUri, value.string(), Annotations(entry))
       })
 
+      map.key("(flow)", entry => {
+        val value = ValueNode(entry.value)
+        settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
+      })
+
       map.key(
         "authorizationGrants",
         entry => {
@@ -675,132 +681,6 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
       })
 
       dynamicSettings(settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
-    }
-  }
-
-  case class ParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
-    def parse(): Seq[Parameter] =
-      map.entries
-        .map(entry => ParameterParser(entry, producer, declarations).parse())
-  }
-
-  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
-    def parse(): Parameter = {
-
-      val name      = entry.key.value.toScalar.text
-      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
-      val map       = entry.value.value.toMap
-
-      map.key("required", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-      })
-
-      if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
-        val required = !name.endsWith("?")
-
-        parameter.set(ParameterModel.Required, required)
-        parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
-      }
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-      })
-
-      RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
-        .parse()
-        .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
-
-      AnnotationParser(() => parameter, map).parse()
-
-      parameter
-    }
-  }
-
-  case class ResponseParser(entry: YMapEntry, producer: (String) => Response, declarations: Declarations) {
-    def parse(): Response = {
-
-      val node = ValueNode(entry.key)
-
-      val response = producer(node.string().value.toString).add(Annotations(entry))
-      val map      = entry.value.value.toMap
-
-      response.set(ResponseModel.StatusCode, node.string())
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        response.set(ResponseModel.Description, value.string(), Annotations(entry))
-      })
-
-      map.key(
-        "headers",
-        entry => {
-          val parameters: Seq[Parameter] =
-            ParametersParser(entry.value.value.toMap, response.withHeader, declarations)
-              .parse()
-              .map(_.withBinding("header"))
-          response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-        }
-      )
-
-      map.key(
-        "body",
-        entry => {
-          val payloads = mutable.ListBuffer[Payload]()
-
-          val payload = Payload()
-          payload.adopted(response.id) // TODO review
-
-          RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), declarations)
-            .parse()
-            .foreach(payloads += payload.withSchema(_))
-
-          entry.value.value match {
-            case map: YMap =>
-              map.regex(
-                ".*/.*",
-                entries => {
-                  entries.foreach(entry => {
-                    payloads += PayloadParser(entry, response.withPayload, declarations).parse()
-                  })
-                }
-              )
-            case _ =>
-          }
-          if (payloads.nonEmpty)
-            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-        }
-      )
-
-      AnnotationParser(() => response, map).parse()
-
-      response
-    }
-  }
-
-  case class PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations) {
-    def parse(): Payload = {
-
-      val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
-
-      entry.value.value match {
-        case map: YMap =>
-          // TODO
-          // Should we clean the annotations here so they are not parsed again in the shape?
-          AnnotationParser(() => payload, map).parse()
-        case _ =>
-      }
-
-      entry.value.tag.tagType match {
-        case YType.Null =>
-        case _ =>
-          RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), declarations)
-            .parse()
-            .foreach(payload.withSchema)
-
-      }
-      payload
     }
   }
 

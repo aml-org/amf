@@ -2,6 +2,7 @@ package amf.domain.security
 
 import amf.domain.{Annotations, DomainElement, Fields}
 import amf.metadata.domain.security.ScopeModel._
+import org.yaml.model.YPart
 
 case class Scope(fields: Fields, annotations: Annotations) extends DomainElement {
   def name: String        = fields(Name)
@@ -16,6 +17,8 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
 object Scope {
 
   def apply(): Scope = apply(Annotations())
+
+  def apply(part: YPart): Scope = apply(Annotations(part))
 
   def apply(annotations: Annotations): Scope = new Scope(Fields(), annotations)
 }
