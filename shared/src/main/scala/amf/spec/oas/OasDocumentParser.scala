@@ -13,7 +13,7 @@ import amf.domain.Annotation.{
 }
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.security.{Scope, SecurityScheme, Settings}
+import amf.domain.security.{ParametrizedSecurityScheme, Scope, SecurityScheme, Settings}
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -147,6 +147,17 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
     )
 
     map.key(
+      "security",
+      entry => {
+        // TODO check for empty array for resolution ?
+        val securedBy =
+          entry.value.asSeq.map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
+
+        api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
+    map.key(
       "paths",
       entry => {
         val paths = entry.value.value.toMap
@@ -164,6 +175,38 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
     AnnotationParser(() => api, map).parse()
 
     api
+  }
+
+  case class ParametrizedSecuritySchemeParser(s: YNode,
+                                              producer: String => ParametrizedSecurityScheme,
+                                              declarations: Declarations) {
+    def parse(): ParametrizedSecurityScheme = s.tagType match {
+      case YType.Str =>
+        val name   = s.asString
+        val scheme = producer(name).add(Annotations(s))
+
+        parseTarget(name, scheme)
+
+      case YType.Map =>
+        val schemeEntry = s.asMap.head
+        val name        = schemeEntry._1.asString
+        val scheme      = producer(name).add(Annotations(s))
+
+        parseTarget(name, scheme)
+
+        val scopes = ArrayNode(schemeEntry._2.value.toSequence)
+        scheme.set(ParametrizedSecuritySchemeModel.Scopes, scopes.strings(), Annotations(schemeEntry._2))
+
+        scheme
+      case _ => throw new Exception(s"Invalid type ${s.tagType}")
+    }
+
+    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme) = {
+      declarations.findSecurityScheme(name) match {
+        case Some(declaration)            => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+        case None if !name.equals("null") => throw new Exception(s"Security scheme '$name' not found in declarations.")
+      }
+    }
   }
 
   case class EndpointParser(entry: YMapEntry,
@@ -338,6 +381,17 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
             ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
           })
           if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
+        }
+      )
+
+      map.key(
+        "security",
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value.asSeq.map(s =>
+            ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
+
+          operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
       )
 

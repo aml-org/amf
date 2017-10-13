@@ -6,7 +6,7 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.security.{Scope, SecurityScheme, Settings}
+import amf.domain.security._
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain.OperationModel.Method
@@ -172,9 +172,55 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       }
     )
 
+    map.key(
+      "securedBy",
+      entry => {
+        // TODO check for empty array for resolution ?
+        val securedBy =
+          entry.value.asSeq.map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
+
+        api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
     AnnotationParser(() => api, map).parse()
 
     api
+  }
+
+  case class ParametrizedSecuritySchemeParser(s: YNode,
+                                              producer: String => ParametrizedSecurityScheme,
+                                              declarations: Declarations) {
+    def parse(): ParametrizedSecurityScheme = s.tagType match {
+      case YType.Str =>
+        val name   = s.asString
+        val scheme = producer(name).add(Annotations(s))
+
+        declarations.findSecurityScheme(name) match {
+          case Some(declaration) => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+          case None if !name.equals("null") =>
+            throw new Exception(s"Security scheme '$name' not found in declarations.")
+        }
+
+      case YType.Map =>
+        val schemeEntry = s.asMap.head
+        val name        = schemeEntry._1.asString
+        val scheme      = producer(name).add(Annotations(s))
+
+        declarations.findSecurityScheme(name) match {
+          case Some(declaration) =>
+            scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+
+            val settings = SecuritySettingsParser(schemeEntry._2.value.toMap, declaration.`type`, scheme).parse()
+
+            scheme.set(SecuritySchemeModel.Settings, settings)
+          case None =>
+            throw new Exception(s"Security scheme '$name' not found in declarations (and name cannot be 'null').")
+        }
+
+        scheme
+      case _ => throw new Exception(s"Invalid type ${s.tagType}")
+    }
   }
 
   case class EndpointParser(entry: YMapEntry,
@@ -237,6 +283,17 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
             operations += OperationParser(entry, endpoint.withOperation, declarations).parse()
           })
           endpoint.set(EndPointModel.Operations, AmfArray(operations))
+        }
+      )
+
+      map.key(
+        "securedBy",
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value.asSeq.map(s =>
+            ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+
+          endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
       )
 
@@ -405,6 +462,17 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
         }
       )
 
+      map.key(
+        "securedBy",
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value.asSeq.map(s =>
+            ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
+
+          operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
       AnnotationParser(() => operation, map).parse()
 
       operation
@@ -554,7 +622,7 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
           map.key(
             "settings",
             entry => {
-              val settings = SecuritySettingsParser(entry.value.value.toMap, scheme).parse()
+              val settings = SecuritySettingsParser(entry.value.value.toMap, scheme.`type`, scheme).parse()
 
               scheme.set(SecuritySchemeModel.Settings, settings, Annotations(entry))
             }
@@ -577,9 +645,9 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
     }
   }
 
-  case class SecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
+  case class SecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings) {
     def parse(): Settings = {
-      val result = scheme.`type` match {
+      val result = `type` match {
         case "OAuth 1.0" => oauth1()
         case "OAuth 2.0" => oauth2()
         case "x-apiKey"  => apiKey()

@@ -91,3 +91,12 @@ object ApiKeySettings {
 
   def apply(annotations: Annotations): ApiKeySettings = new ApiKeySettings(Fields(), annotations)
 }
+
+trait WithSettings {
+  def withDefaultSettings(): Settings
+  def withOAuth1Settings(): OAuth1Settings
+  def withOAuth2Settings(): OAuth2Settings
+  def withApiKeySettings(): ApiKeySettings
+
+  def id: String
+}

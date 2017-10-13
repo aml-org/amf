@@ -4,7 +4,10 @@ import amf.domain._
 import amf.metadata.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import org.yaml.model.YPart
 
-case class SecurityScheme(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class SecurityScheme(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with Linkable
+    with WithSettings {
   def name: String                    = fields(Name)
   def `type`: String                  = fields(Type)
   def displayName: String             = fields(DisplayName)
