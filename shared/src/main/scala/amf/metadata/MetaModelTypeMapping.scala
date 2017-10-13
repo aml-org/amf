@@ -56,6 +56,7 @@ trait MetaModelTypeMapping {
     case _: ApiKeySettings                     => ApiKeySettingsModel
     case _: Settings                           => SettingsModel
     case _: Scope                              => ScopeModel
+    case _: ParametrizedSecurityScheme         => ParametrizedSecuritySchemeModel
     case entity: DomainEntity                  => new DialectEntityModel(entity)
     case _: Fragment.DocumentationItem         => FragmentsTypesModels.DocumentationItemModel
     case _: Fragment.DataType                  => FragmentsTypesModels.DataTypeModel

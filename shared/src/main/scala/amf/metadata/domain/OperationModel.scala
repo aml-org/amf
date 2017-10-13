@@ -2,8 +2,9 @@ package amf.metadata.domain
 
 import amf.metadata.Field
 import amf.metadata.Type._
+import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
-import amf.vocabulary.ValueType
+import amf.vocabulary.{Namespace, ValueType}
 
 /**
   * Operation metamodel
@@ -32,6 +33,8 @@ object OperationModel extends DomainElementModel {
 
   val Responses = Field(Array(ResponseModel), Hydra + "returns")
 
+  val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
+
   override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`
 
   override val fields: List[Field] = List(Method,
@@ -44,5 +47,6 @@ object OperationModel extends DomainElementModel {
                                           Accepts,
                                           ContentType,
                                           Request,
-                                          Responses) ++ DomainElementModel.fields
+                                          Responses,
+                                          Security) ++ DomainElementModel.fields
 }
