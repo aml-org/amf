@@ -502,6 +502,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Security schemes raml to raml") {
+    cycle("declared-security-schemes.raml", "declared-security-schemes.raml", RamlYamlHint, Raml)
+  }
+
   test("Security schemes oas to amf") {
     cycle("security.json", "security.json.jsonld", OasJsonHint, Amf)
   }
