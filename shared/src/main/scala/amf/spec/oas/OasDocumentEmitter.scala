@@ -15,8 +15,9 @@ import amf.parser.{ASTEmitter, Position}
 import amf.remote.{Oas, Vendor}
 import amf.shape._
 import amf.spec.common.BaseSpecEmitter
-import amf.spec.{Declarations, Emitter, SpecOrdering}
+import amf.spec.{Declarations, Emitter, EntryEmitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YType}
 
 import scala.collection.immutable.ListMap
@@ -236,7 +237,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
         payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
 
-        result += EntryEmitter("in", "body")
+        result += MapEntryEmitter("in", "body")
 
         result ++= OasAnnotationsEmitter(payload, ordering).emitters
 
@@ -674,7 +675,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
   case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, alias: String) extends Emitter {
 
-    override def emit(): Unit = EntryEmitter(alias, reference.id).emit()
+    override def emit(): Unit = MapEntryEmitter(alias, reference.id).emit()
 
     override def position(): Position = Position.ZERO
 
@@ -721,15 +722,14 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
   }
 
-  case class NamedTypeEmitter(shape: Shape, ordering: SpecOrdering) extends Emitter {
-    override def position(): Position = pos(shape.annotations)
+  case class NamedTypeEmitter(shape: Shape, ordering: SpecOrdering) extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
+      b.entry(name, if (shape.isLink) emitLink else emitLocalType())
+    }
 
-    override def emit(): Unit = {
-      entry { () =>
-        val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
-        raw(name)
-        if (shape.isLink) TagToReferenceEmitter(shape, shape.linkLabel).emit() else emitLocalType()
-      }
+    private def emitLink(b: PartBuilder) = {
+      TagToReferenceEmitter(shape, shape.linkLabel).emit()
     }
 
     private def emitLocalType() = {
@@ -737,6 +737,8 @@ class OasSpecEmitter extends BaseSpecEmitter {
         traverse(ordering.sorted(OasTypeEmitter(shape, ordering).emitters()))
       }
     }
+
+    override def position(): Position = pos(shape.annotations)
   }
 
   case class TagToReferenceEmitter(target: DomainElement, label: Option[String]) extends Emitter {
@@ -778,7 +780,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = pos
   }
 
-  protected def ref(url: String): Unit = EntryEmitter("$ref", url).emit() // todo YType("$ref")
+  protected def ref(url: String): Unit = MapEntryEmitter("$ref", url).emit() // todo YType("$ref")
 
   case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
@@ -915,7 +917,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       val result = ListBuffer[Emitter]()
       val fs     = shape.fields
 
-      result += EntryEmitter("type", "array")
+      result += MapEntryEmitter("type", "array")
 
       result += ItemsShapeEmitter(shape, ordering)
 
@@ -988,7 +990,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       // TODO annotation for original position?
       if (node.annotations.contains(classOf[ExplicitField]))
-        result += EntryEmitter("type", "object")
+        result += MapEntryEmitter("type", "object")
 
       fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
@@ -996,8 +998,11 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       fs.entry(NodeShapeModel.Closed)
         .filter(_.value.annotations.contains(classOf[ExplicitField]))
-        .map(f =>
-          result += EntryEmitter("additionalProperties", (!node.closed).toString, position = pos(f.value.annotations)))
+        .map(
+          f =>
+            result += MapEntryEmitter("additionalProperties",
+                                      (!node.closed).toString,
+                                      position = pos(f.value.annotations)))
 
       fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 
@@ -1146,7 +1151,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       fs.entry(ScalarShapeModel.DataType)
         .map(
           f =>
-            result += EntryEmitter(
+            result += MapEntryEmitter(
               "type",
               typeDef,
               position =
@@ -1167,7 +1172,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       val fs = scalar.fields
 
-      result += EntryEmitter("type", "file")
+      result += MapEntryEmitter("type", "file")
 
       emitCommonFields(fs, result)
 
@@ -1233,9 +1238,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
         val finalArray      = AmfArray(scalars, f.array.annotations)
         val finalFieldEntry = FieldEntry(f.field, Value(finalArray, f.value.annotations))
 
-        if (f.value.annotations.contains(classOf[SingleValueArray]))
-          result += ArrayValueEmitter("allowedTargets", finalFieldEntry)
-        else result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
+        result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
       }
 
       fs.entry(CustomDomainPropertyModel.Schema)

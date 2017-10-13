@@ -100,7 +100,7 @@ case class ASTEmitter() {
         pop(YNode(buildParts(), mutable.Map[String, YNode]()))
       case EndScalar =>
         addToken(token)
-        pop(YScalar(text, plain = true, InputRange.Zero, getTokens))
+        pop(YScalar(text))
       case EndMapping =>
         addToken(token)
         pop(YMap(buildParts()))
