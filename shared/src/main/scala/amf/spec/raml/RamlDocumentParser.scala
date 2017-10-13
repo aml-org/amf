@@ -13,6 +13,7 @@ import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
+import amf.shape.Shape
 import amf.spec.common.{AnnotationParser, BaseSpecParser, SpecParserContext}
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
@@ -320,92 +321,98 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
       val method = entry.key.value.toScalar.text
 
       val operation = producer(method).add(Annotations(entry))
-
-      val map = entry.value.value.toMap
-
       operation.set(Method, ValueNode(entry.key).string())
 
-      map.key("displayName", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Name, value.string(), Annotations(entry))
-      })
+      entry.value.value match {
+        // Empty operation
+        case s: YScalar if s.text == "" => operation
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Description, value.string(), Annotations(entry))
-      })
+        // Regular operation
+        case map: YMap =>
 
-      map.key("(deprecated)", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
-      })
 
-      map.key("(summary)", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Summary, value.string(), Annotations(entry))
-      })
 
-      map.key(
-        "(externalDocs)",
-        entry => {
-          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
-          operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
-        }
-      )
-
-      map.key(
-        "protocols",
-        entry => {
-          val value = ArrayNode(entry.value.value.toSequence)
-          operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
-        }
-      )
-
-      map.key("(consumes)", entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
-        operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
-      })
-
-      map.key("(produces)", entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
-        operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
-      })
-
-      map.key(
-        "is",
-        entry => {
-          val traits = entry.value.value.toSequence.nodes.map(value => {
-            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+          map.key("displayName", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Name, value.string(), Annotations(entry))
           })
-          if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
-        }
-      )
 
-      RequestParser(map, () => operation.withRequest(), declarations)
-        .parse()
-        .map(operation.set(OperationModel.Request, _))
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Description, value.string(), Annotations(entry))
+          })
 
-      map.key(
-        "responses",
-        entry => {
-          entry.value.value.toMap.regex(
-            "\\d{3}",
-            entries => {
-              val responses = mutable.ListBuffer[Response]()
-              entries.foreach(entry => {
-                responses += ResponseParser(entry, operation.withResponse, declarations).parse()
-              })
-              operation.set(OperationModel.Responses,
-                            AmfArray(responses, Annotations(entry.value)),
-                            Annotations(entry))
+          map.key("(deprecated)", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
+          })
+
+          map.key("(summary)", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Summary, value.string(), Annotations(entry))
+          })
+
+          map.key(
+            "(externalDocs)",
+            entry => {
+              val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
+              operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
             }
           )
-        }
-      )
 
-      AnnotationParser(() => operation, map).parse()
+          map.key(
+            "protocols",
+            entry => {
+              val value = ArrayNode(entry.value.value.toSequence)
+              operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
+            }
+          )
 
-      operation
+          map.key("(consumes)", entry => {
+            val value = ArrayNode(entry.value.value.toSequence)
+            operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
+          })
+
+          map.key("(produces)", entry => {
+            val value = ArrayNode(entry.value.value.toSequence)
+            operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
+          })
+
+          map.key(
+            "is",
+            entry => {
+              val traits = entry.value.value.toSequence.nodes.map(value => {
+                ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+              })
+              if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
+            }
+          )
+
+          RequestParser(map, () => operation.withRequest(), declarations)
+            .parse()
+            .map(operation.set(OperationModel.Request, _))
+
+          map.key(
+            "responses",
+            entry => {
+              entry.value.value.toMap.regex(
+                "\\d{3}",
+                entries => {
+                  val responses = mutable.ListBuffer[Response]()
+                  entries.foreach(entry => {
+                    responses += ResponseParser(entry, operation.withResponse, declarations).parse()
+                  })
+                  operation.set(OperationModel.Responses,
+                    AmfArray(responses, Annotations(entry.value)),
+                    Annotations(entry))
+                }
+              )
+            }
+          )
+          AnnotationParser(() => operation, map).parse()
+
+          operation
+      }
     }
   }
 
@@ -569,18 +576,29 @@ abstract class RamlSpecParser extends BaseSpecParser {
     )
   }
 
-  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
+  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) extends RamlTypeSyntax {
+
     def parse(): Parameter = {
 
-      val name      = entry.key.value.toScalar.text
+      val name = entry.key.value.toScalar.text
       val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
       entry.value.value match {
-        case ref: YScalar => declarations.findParameter(ref.text) match {
-          case Some(s) => s.link(ref.text, Annotations(entry)).asInstanceOf[Parameter].withName(name)
-          case _       => throw new Exception("Cannot declare unresolved parameter")
-        }
+        case ref: YScalar if declarations.findParameter(ref.text).isDefined =>
+          declarations.findParameter(ref.text).get.link(ref.text, Annotations(entry)).asInstanceOf[Parameter].withName(name)
+
+        case ref: YScalar if declarations.findType(ref.text).isDefined =>
+          val schema = declarations.findType(ref.text).get.link[Shape](ref.text, Annotations(entry)).withName("schema").adopted(parameter.id)
+          parameter.withSchema(schema)
+
+        case ref: YScalar if wellKnownType(ref.text) =>
+          val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+          parameter.withSchema(schema)
+
+        case _: YScalar =>
+          throw new Exception("Cannot declare unresolved parameter")
+
         case map: YMap =>
-          val map       = entry.value.value.toMap
+          val map = entry.value.value.toMap
 
           map.key("required", entry => {
             val value = ValueNode(entry.value)
@@ -613,8 +631,9 @@ abstract class RamlSpecParser extends BaseSpecParser {
 
           parameter
       }
-      }
+    }
   }
+
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
