@@ -4,7 +4,7 @@ import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
 import amf.model.{BaseUnit, Document}
-import amf.remote.{Amf, Oas, Raml, Vendor}
+import amf.remote._
 
 class Repl(val in: InputStream, val out: PrintStream) {
 
@@ -75,9 +75,10 @@ class Repl(val in: InputStream, val out: PrintStream) {
   }
 
   private def parser(vendor: Vendor) = vendor match {
-    case Raml => new RamlParser
-    case Oas  => new OasParser
-    case Amf  => new AmfParser
+    case Raml    => new RamlParser
+    case Oas     => new OasParser
+    case Amf     => new AmfParser
+    case Unknown => throw new Exception("Cannot find a parser for Uknown vendor")
   }
 
   private object Generate {

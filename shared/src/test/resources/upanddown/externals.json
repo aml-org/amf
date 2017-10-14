@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Example of request bodies"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/groups": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "object",
+              "x-media-type": "application/xml",
+              "x-schema": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
+            },
+            "x-media-type": "text/xml",
+            "in": "body"
+          }
+        ]
+      }
+    },
+    "/groups/2": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "object",
+              "x-media-type": "application/xml",
+              "x-schema": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
+            },
+            "x-media-type": "text/xml",
+            "in": "body"
+          }
+        ]
+      }
+    }
+  }
+}

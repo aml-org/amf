@@ -66,6 +66,12 @@ object FragmentsTypesModels {
     override val `type`: List[ValueType] = List(Document + "AnnotationTypeDeclaration") ++ FragmentModel.`type`
   }
 
+  object ExternalFragmentModel extends FragmentModel {
+    override def fields: List[Field] = FragmentModel.fields
+
+    override val `type`: List[ValueType] = List(Document + "ExternalModel") ++ FragmentModel.`type`
+  }
+
   object ExtensionModel extends FragmentModel {
 
     val Extends = Field(Iri, Document + "extends")

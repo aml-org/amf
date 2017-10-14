@@ -785,6 +785,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
     def emitters(): Seq[Emitter] = {
       shape match {
         case l: Linkable if l.isLink => Seq(TagToReferenceEmitter(shape, l.linkLabel))
+        case schema: SchemaShape =>
+          val copiedNode = schema.copy(fields = schema.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
+          SchemaShapeEmitter(copiedNode, ordering).emitters()
         case any: AnyShape =>
           val copiedNode = any.copy(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
           Seq(AnyShapeEmitter(copiedNode, ordering))
@@ -897,6 +900,24 @@ class OasSpecEmitter extends BaseSpecEmitter {
       result
     }
   }
+
+  case class SchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering) {
+    def emitters(): Seq[Emitter] = {
+      val result = ListBuffer[Emitter]()
+      val fs     = shape.fields
+
+      result += EntryEmitter("type", "object")
+
+      fs.entry(SchemaShapeModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
+
+      fs.entry(SchemaShapeModel.Raw).map(f => result += ValueEmitter("x-schema", f))
+
+      result ++= OasAnnotationsEmitter(shape, ordering).emitters
+
+      result
+    }
+  }
+
 
   case class ItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering) extends Emitter {
     def emit(): Unit = {

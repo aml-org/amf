@@ -30,8 +30,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   def parse(): Option[Shape] = {
 
     detect() match {
-      case UnionType =>
-        Some(parseUnionType())
+      case UnionType                   => Some(parseUnionType())
       case LinkType                    => parseLinkType()
       case ObjectType                  => Some(parseObjectType())
       case ArrayType                   => Some(parseArrayType())
@@ -106,9 +105,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def parseObjectType(): Shape = {
-    val shape = NodeShape(ast).withName(name)
-    adopt(shape)
-    NodeShapeParser(shape, map, declarations).parse()
+    if (map.key("x-schema").isDefined) {
+      val shape = SchemaShape(ast).withName(name)
+      adopt(shape)
+      SchemaShapeParser(shape, map, declarations).parse()
+    } else {
+      val shape = NodeShape(ast).withName(name)
+      adopt(shape)
+      NodeShapeParser(shape, map, declarations).parse()
+    }
   }
 
   private def parseUnionType(): Shape = {
@@ -517,4 +522,31 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       shape
     }
   }
+
+  case class SchemaShapeParser(shape: SchemaShape, map: YMap, declarations: Declarations)
+    extends ShapeParser()
+      with CommonScalarParsingLogic {
+    super.parse()
+
+    override def parse(): Shape = {
+      map.key("x-schema", { entry =>
+        entry.value.value match {
+          case str: YScalar =>
+            shape.withRaw(str.text)
+          case _ => throw new Exception("Cannot parse non string schema shape")
+        }
+      })
+
+      map.key("x-media-type", { entry =>
+        entry.value.value match {
+          case str: YScalar =>
+            shape.withMediaType(str.text)
+          case _ => throw new Exception("Cannot parse non string schema shape")
+        }
+      })
+
+      shape
+    }
+  }
+
 }

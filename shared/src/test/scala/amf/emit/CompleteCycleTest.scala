@@ -514,6 +514,22 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("forward-references-types.json", OasJsonHint, Oas)
   }
 
+  test("Schema types raml to amf test") {
+    cycle("externals.raml", "externals.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Schema types raml to oas test") {
+    cycle("externals.raml", "externals.json", RamlYamlHint, Oas)
+  }
+
+  test("Schema types oas to amf test") {
+    cycle("externals.json", "externals.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Schema types amf to oas test") {
+    cycle("externals.json.jsonld", "externals.json", AmfJsonHint, Oas)
+  }
+
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = cycle(source, source, hint, target)
 

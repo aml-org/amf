@@ -69,6 +69,11 @@ object Fragment {
 
   case class Default(fields: Fields, annotations: Annotations) extends Fragment
 
+  case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
+  }
+
+
   object DocumentationItem {
     def apply(): DocumentationItem = apply(Annotations())
 
@@ -115,6 +120,11 @@ object Fragment {
     def apply(): OverlayFragment = apply(Annotations())
 
     def apply(annotations: Annotations): OverlayFragment = apply(Fields(), annotations)
+  }
+
+  object ExternalFragment {
+    def apply(): ExternalFragment = apply(Annotations())
+    def apply(annotations: Annotations): ExternalFragment = ExternalFragment(Fields(), annotations)
   }
 }
 

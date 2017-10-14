@@ -38,9 +38,10 @@ class ParameterResolutionTest extends AsyncFunSuite with TmpTests {
       .build()
       .map { model =>
         target match {
-          case Raml => model.resolve(ProfileNames.RAML)
-          case Oas  => model.resolve(ProfileNames.OAS)
-          case Amf  => model.resolve(ProfileNames.AMF)
+          case Raml    => model.resolve(ProfileNames.RAML)
+          case Oas     => model.resolve(ProfileNames.OAS)
+          case Amf     => model.resolve(ProfileNames.AMF)
+          case Unknown => throw new Exception("Cannot resolve uknown fragment")
         }
       }
       .flatMap(new AMFDumper(_, Amf, Amf.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)

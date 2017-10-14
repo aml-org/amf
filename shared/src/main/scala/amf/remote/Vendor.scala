@@ -1,6 +1,6 @@
 package amf.remote
 
-import amf.remote.Syntax.{Json, Syntax, Yaml}
+import amf.remote.Syntax.{Json, PlainText, Syntax, Yaml}
 
 /**
   * Created by pedro.colunga on 10/9/17.
@@ -34,4 +34,9 @@ object Oas extends Vendor {
 object Amf extends Vendor {
   override val name: String          = "amf"
   override val defaultSyntax: Syntax = Json
+}
+
+object Unknown extends Vendor {
+  override val name: String          = "external"
+  override val defaultSyntax: Syntax = PlainText
 }

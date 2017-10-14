@@ -36,6 +36,7 @@ trait MetaModelTypeMapping {
     case _: AnyShape                           => AnyShapeModel
     case _: NilShape                           => NilShapeModel
     case _: PropertyShape                      => PropertyShapeModel
+    case _: SchemaShape                        => SchemaShapeModel
     case _: XMLSerializer                      => XMLSerializerModel
     case _: PropertyDependencies               => PropertyDependenciesModel
     case _: DomainExtension                    => DomainExtensionModel
@@ -48,7 +49,9 @@ trait MetaModelTypeMapping {
     case _: ParametrizedTrait                  => ParametrizedTraitModel
     case _: Variable                           => VariableModel
     case _: VariableValue                      => VariableValueModel
+    case _: ExternalDomainElement              => ExternalDomainElementModel
     case entity: DomainEntity                  => new DialectEntityModel(entity)
+    case _: Fragment.ExternalFragment          => FragmentsTypesModels.ExternalFragmentModel
     case _: Fragment.DocumentationItem         => FragmentsTypesModels.DocumentationItemModel
     case _: Fragment.DataType                  => FragmentsTypesModels.DataTypeModel
     case _: Fragment.ResourceTypeFragment      => FragmentsTypesModels.ResourceTypeModel

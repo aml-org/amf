@@ -5,7 +5,7 @@ import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.graph.GraphEmitter
-import amf.remote.{Amf, Oas, Raml, Vendor}
+import amf.remote._
 import amf.spec.dialects.{DialectEmitter, DialectFragment}
 import amf.spec.oas.{OasDocumentEmitter, OasFragmentEmitter, OasModuleEmitter}
 import amf.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
@@ -20,6 +20,7 @@ class AMFUnitMaker {
     vendor match {
       case Amf        => makeAmfWebApi(unit, options)
       case Raml | Oas => makeUnitWithSpec(unit, vendor)
+      case Unknown    => throw new Exception("Cannot make unit for unknown provider")
     }
   }
   private def isDialect(unit: BaseUnit) = unit match {

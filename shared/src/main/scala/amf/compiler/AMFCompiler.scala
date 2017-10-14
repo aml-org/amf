@@ -1,7 +1,9 @@
 package amf.compiler
 
 import amf.dialects.DialectRegistry
+import amf.document.Fragment.ExternalFragment
 import amf.document.{BaseUnit, Document}
+import amf.domain.ExternalDomainElement
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
@@ -10,7 +12,7 @@ import amf.remote._
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
-import org.yaml.model.{YComment, YDocument, YPart}
+import org.yaml.model.{YComment, YDocument, YMap, YPart, YScalar, YSequence}
 import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
@@ -62,10 +64,17 @@ class AMFCompiler private (val url: String,
 
   private def make(root: Root): BaseUnit = {
     root match {
-      case Root(_, _, _, Amf)  => makeAmfUnit(root)
-      case Root(_, _, _, Raml) => makeRamlUnit(root)
-      case Root(_, _, _, Oas)  => makeOasUnit(root)
+      case Root(_, _, _, Amf, _)      => makeAmfUnit(root)
+      case Root(_, _, _, Raml, _)     => makeRamlUnit(root)
+      case Root(_, _, _, Oas, _)      => makeOasUnit(root)
+      case Root(_, _, _, Unknown, _)  => makeExternalUnit(root)
     }
+  }
+
+  private def makeExternalUnit(root: Root): BaseUnit = {
+    val external = ExternalDomainElement().withRaw(root.raw)
+    external.adopted(root.location)
+    ExternalFragment().withLocation(root.location).withEncodes(external)
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
@@ -127,25 +136,41 @@ class AMFCompiler private (val url: String,
   }
 
   private def parse(content: Content): Future[Root] = {
-    val parser = YamlParser(content.stream.toString)
+    val raw = content.stream.toString
+    val parser = YamlParser(raw)
 
     val parsed = toDocument(parser.parse(true))
 
     parsed match {
-      case Some(document) =>
-        val vendor = resolveVendor(content)
-        val refs =
-          new ReferenceCollector(document.document, vendor).traverse(isRamlOverlayOrExtension(vendor, document))
+      case Some(document)  =>
+        document.document.value match {
+          case Some(_: YMap) =>
+            parseDoc(content, document, raw)
 
-        refs
-          .filter(_.isRemote)
-          .foreach(link => {
-            references += link.resolve(remote, context, cache, hint, dialects).map(r => ParsedReference(r, link.url))
-          })
+          case Some(_: YScalar) =>
+            Future(Root(document, content.url, Seq(), Unknown, raw))
 
-        Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor) })
+          case Some(nodes: YSequence) if hint == AmfJsonHint && nodes.nodes.length == 1 =>
+            parseDoc(content, document, raw)
+
+          case _ => Future.failed(new Exception("Unable to parse document."))
+        }
       case None => Future.failed(new Exception("Unable to parse document."))
     }
+  }
+
+  private def parseDoc(content: Content, document: ParsedDocument, raw: String) = {
+    val vendor = resolveVendor(content)
+    val refs =
+      new ReferenceCollector(document.document, vendor).traverse(isRamlOverlayOrExtension(vendor, document))
+
+    refs
+      .filter(_.isRemote)
+      .foreach(link => {
+        references += link.resolve(remote, context, cache, hint, dialects).map(r => ParsedReference(r, link.url))
+      })
+
+    Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor, raw) })
   }
 
   private def toDocument(parts: Seq[YPart]) = {
@@ -156,7 +181,7 @@ class AMFCompiler private (val url: String,
   }
 }
 
-case class Root(parsed: ParsedDocument, location: String, references: Seq[ParsedReference], vendor: Vendor) {
+case class Root(parsed: ParsedDocument, location: String, references: Seq[ParsedReference], vendor: Vendor, raw: String) {
   val document: YDocument = parsed.document
 }
 

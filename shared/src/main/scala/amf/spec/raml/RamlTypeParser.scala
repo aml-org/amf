@@ -1,7 +1,8 @@
 package amf.spec.raml
 
+import amf.document.Fragment.ExternalFragment
 import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition}
-import amf.domain.{Annotations, CreativeWork, Value}
+import amf.domain.{Annotations, CreativeWork, ExternalDomainElement, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
@@ -9,7 +10,6 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.SpecParserContext
 import amf.vocabulary.Namespace
 import org.yaml.model._
 
@@ -71,6 +71,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
   def parse(): Option[Shape] = {
 
     val result = detect() match {
+      case XMLSchemaType               => Some(parseXMLSchemaExpression())
       case TypeExpressionType          => Some(parseTypeExpression())
       case UnionType                   => Some(parseUnionType())
       case ObjectType                  => Some(parseObjectType())
@@ -128,6 +129,24 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _: YSequence | _: YMap => ObjectType
           case _                      => UndefinedType
       })
+  }
+
+  private def parseXMLSchemaExpression(): Shape = {
+    part.value match {
+      case scalar: YScalar =>
+        val shape = SchemaShape().withRaw(scalar.text).withMediaType("application/xml")
+        adopt(shape)
+        shape
+      case map: YMap =>
+        map.key("type") match {
+          case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
+            val shape = SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
+            adopt(shape)
+            shape
+          case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+        }
+      case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+    }
   }
 
   private def parseTypeExpression(): Shape = {
@@ -633,6 +652,23 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       shape
     }
 
+    def parseSchemaType(parent: String, encodes: ExternalDomainElement): Shape = {
+      Option(encodes.raw) match {
+        case Some(rawText) if rawText.startsWith("<") =>
+          val schema: SchemaShape = SchemaShape().withRaw(rawText).withMediaType("application/xml")
+          schema.adopted(parent)
+          schema
+
+        case Some(rawText) =>
+          val schema: SchemaShape = SchemaShape().withRaw(rawText)
+          schema.adopted(parent)
+          schema
+
+        case None =>
+          throw new Exception("Error, cannot parse schema type without schema text")
+      }
+    }
+
     protected def parseInheritance(declarations: Declarations): Unit = {
       map.key(
         "type",
@@ -646,12 +682,14 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                   shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
             case scalar: YScalar if !wellKnownType(scalar.text) =>
+
+              // it might be a named type
               declarations.findType(scalar.text) match {
                 case Some(ancestor) =>
                   shape.set(NodeShapeModel.Inherits,
                             AmfArray(Seq(ancestor), Annotations(entry.value)),
                             Annotations(entry))
-                case None => throw new Exception("Reference not found")
+                case _ => throw new Exception("Reference not found")
               }
 
             case sequence: YSequence =>

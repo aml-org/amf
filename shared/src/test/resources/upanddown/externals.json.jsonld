@@ -1,0 +1,495 @@
+[
+  {
+    "@id": "file:/shared/src/test/resources/upanddown/externals.json",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "Example of request bodies"
+          }
+        ],
+        "http://raml.org/vocabularies/http#accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://raml.org/vocabularies/http#contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://raml.org/vocabularies/http#endpoint": [
+          {
+            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/groups"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#expects": [
+                  {
+                    "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Request",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request/text/xml",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "text/xml"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request/default/schema/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#SchemaShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#mediaType": [
+                              {
+                                "@value": "application/xml"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#raw": [
+                              {
+                                "@value": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request/default/schema/schema/source-map",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request/default/schema/schema"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(17,12)-(21,13)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request/text/xml/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://raml.org/vocabularies/http#schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(17,12)-(21,13)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/request/text/xml"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(16,10)-(24,11)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://raml.org/vocabularies/http#mediaType"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(22,12)-(22,38)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/post"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(14,6)-(26,7)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(13,4)-(27,5)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/groups/2"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#expects": [
+                  {
+                    "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Request",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request/text/xml",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "text/xml"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request/default/schema/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#SchemaShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#mediaType": [
+                              {
+                                "@value": "application/xml"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#raw": [
+                              {
+                                "@value": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request/default/schema/schema/source-map",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request/default/schema/schema"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(32,12)-(36,13)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request/text/xml/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://raml.org/vocabularies/http#schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(32,12)-(36,13)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/request/text/xml"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(31,10)-(39,11)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://raml.org/vocabularies/http#mediaType"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(37,12)-(37,38)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/post"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(29,6)-(41,7)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/end-points/%2Fgroups%2F2"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(28,4)-(42,5)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file:/shared/src/test/resources/upanddown/externals.json#/web-api/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "oas"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#endpoint"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,11)-(43,3)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#accepts"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,2)-(8,3)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file:/shared/src/test/resources/upanddown/externals.json#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(44,1)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,4)-(4,40)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#contentType"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(9,2)-(11,3)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
