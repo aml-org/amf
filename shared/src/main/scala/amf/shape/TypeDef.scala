@@ -49,4 +49,5 @@ object TypeDef {
   object UndefinedType      extends TypeDef
   object TypeExpressionType extends TypeDef
   object XMLSchemaType      extends TypeDef
+  object JSONSchemaType     extends TypeDef
 }

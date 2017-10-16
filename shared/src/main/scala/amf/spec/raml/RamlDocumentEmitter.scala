@@ -729,6 +729,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       shape match {
         case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(TypeExpressionEmitter(shape))
         case l: Linkable if l.isLink                                  => Seq(LocalReferenceEmitter(shape))
+        case schema: SchemaShape => Seq(SchemaShapeEmitter(schema))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
@@ -795,6 +796,12 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
   }
 
+  case class SchemaShapeEmitter(schema: SchemaShape) extends Emitter {
+    override def emit(): Unit = raw(schema.raw)
+
+    override def position(): Position = pos(schema.annotations)
+  }
+
   case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
@@ -835,38 +842,48 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
   case class NodeShapeEmitter(node: NodeShape, ordering: SpecOrdering) extends ShapeEmitter(node, ordering) {
     override def emitters(): Seq[Emitter] = {
-      val result: ListBuffer[Emitter] = ListBuffer[Emitter]() ++ super.emitters()
+      val result: ListBuffer[Emitter] = ListBuffer[Emitter]()
+      node.annotations.find(classOf[ParsedJSONSchema]) match {
+        case Some(jsonParsedAnnotation) =>
+          result += new Emitter() {
+            override def emit(): Unit = raw(jsonParsedAnnotation.value)
 
-      val fs = node.fields
+            override def position(): Position = pos(node.annotations)
+          }
+        case None =>
+          result ++= super.emitters()
 
-      // TODO annotation for original position?
-      if (node.annotations.contains(classOf[ExplicitField]))
-        result += EntryEmitter("type", "object")
+          val fs = node.fields
 
-      fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
+          // TODO annotation for original position?
+          if (node.annotations.contains(classOf[ExplicitField]))
+            result += EntryEmitter("type", "object")
 
-      fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
+          fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
 
-      fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
+          fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
-      fs.entry(NodeShapeModel.Closed)
-        .filter(_.value.annotations.contains(classOf[ExplicitField]))
-        .map(f =>
-          result += EntryEmitter("additionalProperties", (!node.closed).toString, position = pos(f.value.annotations)))
+          fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
-      fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
+          fs.entry(NodeShapeModel.Closed)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f =>
+              result += EntryEmitter("additionalProperties", (!node.closed).toString, position = pos(f.value.annotations)))
 
-      fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
+          fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 
-      fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
+          fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
 
-      fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
+          fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
 
-      val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
+          fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
 
-      fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
+          val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
 
-      result
+          fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
+
+          result
+      }
     }
 
   }

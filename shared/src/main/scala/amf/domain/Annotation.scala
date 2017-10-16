@@ -41,6 +41,11 @@ object Annotation {
     override val value: String = parent.id
   }
 
+  case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
+    override val name: String = "parsed-json-schema"
+    override val value: String = rawText
+  }
+
   case class SourceVendor(vendor: Vendor) extends SerializableAnnotation {
     override val name: String = "source-vendor"
 
@@ -103,6 +108,7 @@ object Annotation {
       case "source-vendor"      => Some(sourceVendor)
       case "single-value-array" => Some(singleValueArray)
       case "aliases-array"      => Some(aliases)
+      case "parsed-json-schema" => Some(parsedJsonSchema)
       case _                    => None // Unknown annotation
     }
 
@@ -127,5 +133,9 @@ object Annotation {
 
   private def aliases(value: String, objects: Map[String, AmfElement]) = {
     Aliases(value.split(",").toSeq)
+  }
+
+  private def parsedJsonSchema(value: String, objects: Map[String, AmfElement]) = {
+    ParsedJSONSchema(value)
   }
 }

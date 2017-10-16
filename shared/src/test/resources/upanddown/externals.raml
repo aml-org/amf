@@ -6,9 +6,12 @@ mediaType: application/json
   post:
     body:
       text/xml: <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>
+      application/json: "{ 'type': 'object', 'properties': { 'a': {'type': 'string'} } }"
 
 /groups/2:
   post:
     body:
       text/xml:
         type: <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>
+      application/json:
+        type: "{ 'type': 'object', 'properties': { 'a': {'type': 'string'} } }"

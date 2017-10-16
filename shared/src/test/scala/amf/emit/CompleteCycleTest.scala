@@ -518,6 +518,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("externals.raml", "externals.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Schema types jsonld to raml test") {
+    cycle("externals.raml.jsonld", "externals.raml.jsonld.raml", AmfJsonHint, Raml)
+  }
+
   test("Schema types raml to oas test") {
     cycle("externals.raml", "externals.json", RamlYamlHint, Oas)
   }
@@ -527,7 +531,7 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
   }
 
   test("Schema types amf to oas test") {
-    cycle("externals.json.jsonld", "externals.json", AmfJsonHint, Oas)
+    cycle("externals.json.jsonld", "externals.json.jsonld.json", AmfJsonHint, Oas)
   }
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */

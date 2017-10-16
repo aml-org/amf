@@ -1,7 +1,6 @@
 package amf.spec.raml
 
-import amf.document.Fragment.ExternalFragment
-import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition}
+import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
 import amf.domain.{Annotations, CreativeWork, ExternalDomainElement, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -10,8 +9,10 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
+import amf.spec.oas.OasTypeParser
 import amf.vocabulary.Namespace
 import org.yaml.model._
+import org.yaml.parser.YamlParser
 
 import scala.collection.mutable
 
@@ -43,20 +44,20 @@ trait RamlTypeSyntax {
       false
     } else {
       str match {
-        case "nil" | "" => true
-        case "any" => true
-        case "string" => true
-        case "integer" => true
-        case "number" => true
-        case "boolean" => true
-        case "datetime" => true
+        case "nil" | ""      => true
+        case "any"           => true
+        case "string"        => true
+        case "integer"       => true
+        case "number"        => true
+        case "boolean"       => true
+        case "datetime"      => true
         case "datetime-only" => true
-        case "time-only" => true
-        case "date-only" => true
-        case "array" => true
-        case "object" => true
-        case "union" => true
-        case _ => false
+        case "time-only"     => true
+        case "date-only"     => true
+        case "array"         => true
+        case "object"        => true
+        case "union"         => true
+        case _               => false
       }
     }
 }
@@ -71,7 +72,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
   def parse(): Option[Shape] = {
 
     val result = detect() match {
-      case XMLSchemaType               => Some(parseXMLSchemaExpression())
+      case XMLSchemaType               => Some(parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry]))
+      case JSONSchemaType              => Some(parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry]))
       case TypeExpressionType          => Some(parseTypeExpression())
       case UnionType                   => Some(parseUnionType())
       case ObjectType                  => Some(parseObjectType())
@@ -131,21 +133,44 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       })
   }
 
-  private def parseXMLSchemaExpression(): Shape = {
-    part.value match {
+  private def parseXMLSchemaExpression(entry: YMapEntry): Shape = {
+    entry.value.value match {
       case scalar: YScalar =>
         val shape = SchemaShape().withRaw(scalar.text).withMediaType("application/xml")
+        shape.withName(entry.key)
         adopt(shape)
         shape
       case map: YMap =>
         map.key("type") match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
             val shape = SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
+            shape.withName(entry.key)
             adopt(shape)
             shape
           case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
         }
       case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+    }
+  }
+
+  private def parseJSONSchemaExpression(entry: YMapEntry): Shape = {
+    val text = entry.value.value match {
+      case scalar: YScalar => scalar.text
+      case map: YMap =>
+        map.key("type") match {
+          case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
+            typeEntry.value.value.asInstanceOf[YScalar].text
+          case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+        }
+      case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+    }
+    val schemaAst = YamlParser(text).parse(true)
+    val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
+    OasTypeParser(schemaEntry, (shape) => adopt(shape), declarations).parse() match {
+      case Some(shape) =>
+        shape.annotations += ParsedJSONSchema(text)
+        shape
+      case None => throw new Exception("Cannot parse JSON Schema")
     }
   }
 
@@ -658,6 +683,12 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           val schema: SchemaShape = SchemaShape().withRaw(rawText).withMediaType("application/xml")
           schema.adopted(parent)
           schema
+
+        /*
+        case Some(rawText) if rawText.startsWith("{") || rawText.startsWith("[") =>
+          val parts = YamlParser(rawText).parse(true)
+          OasTypeParser(parts.head.asInstanceOf[], (shape) => shape.adopted(parent), declarations)
+         */
 
         case Some(rawText) =>
           val schema: SchemaShape = SchemaShape().withRaw(rawText)
