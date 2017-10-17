@@ -1,6 +1,7 @@
 package amf.spec.common
 
 import amf.domain.Annotation.LexicalInformation
+import amf.domain._
 import amf.domain.`abstract`.{
   AbstractDeclaration,
   ParametrizedDeclaration,
@@ -14,7 +15,6 @@ import amf.domain.extensions.{
   ObjectNode => DataObjectNode,
   ScalarNode => DataScalarNode
 }
-import amf.domain._
 import amf.model.AmfScalar
 import amf.parser.Position.ZERO
 import amf.parser.{ASTEmitter, Position}

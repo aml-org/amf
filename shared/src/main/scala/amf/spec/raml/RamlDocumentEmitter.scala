@@ -485,7 +485,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       entry { () =>
         val name = Option(securityScheme.name)
-          .getOrElse(throw new Exception(s"Cannot declare shape without name $securityScheme"))
+          .getOrElse(throw new Exception(s"Cannot declare security scheme without name $securityScheme"))
         raw(name)
         if (securityScheme.isLink)
           securityScheme.linkTarget.foreach(l =>
@@ -671,10 +671,24 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       fs.entry(OAuth2SettingsModel.AuthorizationGrants)
         .map(f => results += ArrayEmitter("authorizationGrants", f, ordering))
 
-      fs.entry(OAuth2SettingsModel.Scopes).map(f => { ArrayEmitter("protocols", f, ordering) })
+      fs.entry(OAuth2SettingsModel.Scopes).map(f => { results += OAuth2ScopeEmitter("protocols", f, ordering) })
 
       results
     }
+  }
+
+  case class OAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val namesEmitters = f.array.values.collect({ case s: Scope => RawEmitter(s.name) })
+
+      entry { () =>
+        raw(key)
+        array { () =>
+          traverse(ordering.sorted(namesEmitters))
+        }
+      }
+    } // todo : name and description?
+    override def position(): Position = pos(f.value.annotations)
   }
 
   case class ApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrdering) {

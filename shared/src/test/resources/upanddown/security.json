@@ -7,7 +7,11 @@
     "oauth_2_0": {
       "type": "oauth2",
       "x-settings": {
-        "authorizationGrants": ["authorization_code", "implicit", "urn:ietf:params:oauth:grant-type:saml2-bearer"]
+        "authorizationGrants": [
+          "authorization_code",
+          "implicit",
+          "urn:ietf:params:oauth:grant-type:saml2-bearer"
+        ]
       },
       "authorizationUrl": "https://example.com/oauth/authorize",
       "tokenUrl": "https://example.com/oauth/token",

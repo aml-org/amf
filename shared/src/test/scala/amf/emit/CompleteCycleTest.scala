@@ -510,6 +510,10 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("security.json", "security.json.jsonld", OasJsonHint, Amf)
   }
 
+  test("Security schemes oas to oas") {
+    cycle("security.json", "security.json", OasJsonHint, Oas)
+  }
+
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = cycle(source, source, hint, target)
 
