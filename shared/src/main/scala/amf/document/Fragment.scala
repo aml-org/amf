@@ -65,7 +65,10 @@ object Fragment {
 
   case class Extension(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment
+  case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: amf.domain.security.SecurityScheme =
+      super.encodes.asInstanceOf[amf.domain.security.SecurityScheme]
+  }
 
   case class Default(fields: Fields, annotations: Annotations) extends Fragment
 
@@ -115,6 +118,12 @@ object Fragment {
     def apply(): OverlayFragment = apply(Annotations())
 
     def apply(annotations: Annotations): OverlayFragment = apply(Fields(), annotations)
+  }
+
+  object SecurityScheme {
+    def apply(): SecurityScheme = apply(Annotations())
+
+    def apply(annotations: Annotations): SecurityScheme = apply(Fields(), annotations)
   }
 }
 

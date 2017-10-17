@@ -40,6 +40,7 @@ object RamlFragmentHeader {
   object Raml10AnnotationTypeDeclaration extends RamlHeader("%RAML 1.0 AnnotationTypeDeclaration") with RamlFragment
   object Raml10Overlay                   extends RamlHeader("%RAML 1.0 Overlay") with RamlFragment
   object Raml10Extension                 extends RamlHeader("%RAML 1.0 Extension") with RamlFragment
+  object Raml10SecurityScheme            extends RamlHeader("%RAML 1.0 SecurityScheme") with RamlFragment
 
   val fragmentNames = Seq(
     Raml10DocumentationItem.text,
@@ -49,7 +50,8 @@ object RamlFragmentHeader {
     Raml10Trait.text,
     Raml10AnnotationTypeDeclaration.text,
     Raml10Overlay.text,
-    Raml10Extension.text
+    Raml10Extension.text,
+    Raml10SecurityScheme.text
   )
 
   def isFragment(text: String): Boolean = fragmentNames.contains(text)
@@ -67,6 +69,7 @@ object RamlFragmentHeader {
             case FragmentTypes.AnnotationTypeFragment    => Some(Raml10AnnotationTypeDeclaration)
             case FragmentTypes.ExtensionFragment         => Some(Raml10Extension)
             case FragmentTypes.OverlayFragment           => Some(Raml10Overlay)
+            case FragmentTypes.SecuritySchemeFragment    => Some(Raml10SecurityScheme)
             case _                                       => None // UnknowFragment
         })
   }
@@ -86,6 +89,7 @@ object RamlFragmentHeader {
     case t if t.equals(Raml10AnnotationTypeDeclaration.text) => Some(Raml10AnnotationTypeDeclaration)
     case t if t.equals(Raml10Overlay.text)                   => Some(Raml10Overlay)
     case t if t.equals(Raml10Extension.text)                 => Some(Raml10Extension)
+    case t if t.equals(Raml10SecurityScheme.text)            => Some(Raml10SecurityScheme)
     case _                                                   => None
   }
 }

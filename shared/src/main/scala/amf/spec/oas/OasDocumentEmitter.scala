@@ -670,7 +670,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
       fs.entry(SecuritySchemeModel.Settings).map(f => results ++= SecuritySettingsEmitter(f, ordering).emitters())
 
-      results
+      ordering.sorted(results)
     }
   }
 

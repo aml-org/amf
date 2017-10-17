@@ -743,14 +743,23 @@ abstract class OasSpecParser(root: Root) extends BaseSpecParser {
     )
   }
 
-  case class SecuritySchemeParser(entry: YMapEntry,
+  object SecuritySchemeParser {
+    def apply(entry: YMapEntry,
+              adopt: (SecurityScheme) => SecurityScheme,
+              declarations: Declarations): SecuritySchemeParser =
+      SecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
+  }
+
+  case class SecuritySchemeParser(ast: YPart,
+                                  key: String,
+                                  node: YNode,
                                   adopt: (SecurityScheme) => SecurityScheme,
                                   declarations: Declarations) {
     def parse(): SecurityScheme = {
-      spec.link(entry.value) match {
-        case Left(link) => parseReferenced(entry.key, link, Annotations(entry.value))
+      spec.link(node) match {
+        case Left(link) => parseReferenced(key, link, Annotations(node))
         case Right(value) =>
-          val scheme = adopt(SecurityScheme(entry))
+          val scheme = adopt(SecurityScheme(ast))
 
           val map = value.value.toMap
 
@@ -833,7 +842,7 @@ abstract class OasSpecParser(root: Root) extends BaseSpecParser {
 
           SecuritySettingsParser(map, scheme)
             .parse()
-            .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(entry)))
+            .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(ast)))
 
           AnnotationParser(() => scheme, map).parse()
 

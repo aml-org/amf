@@ -19,6 +19,7 @@ object FragmentTypes {
   object DocumentationItemFragment extends FragmentType("DocumentationItem")
   object OverlayFragment           extends FragmentType("Overlay")
   object ExtensionFragment         extends FragmentType("Extension")
+  object SecuritySchemeFragment    extends FragmentType("SecurityScheme")
   object UnknownFragment           extends FragmentType("?")
   def apply(map: YMap): FragmentType = FragmentTypeDetection(map).detect()
 }
@@ -46,6 +47,24 @@ case class FragmentTypeDetection(map: YMap) {
     map.regex("get|patch|put|post|delete|options|head").headOption.foreach(_ => matchingTypes += ResourceTypeFragment)
 
     map.key("extends").foreach(_ => matchingTypes += ExtensionFragment) // overlay??
+
+    val entries = map.regex("describedBy|settings|x-describedBy|x-settings")
+    if (entries.isEmpty)
+      map
+        .key("type")
+        .filter(
+          f =>
+            List("OAuth 1.0",
+                 "OAuth 2.0",
+                 "Basic Authentication",
+                 "Digest Authentication",
+                 "Pass Through",
+                 "basic",
+                 "apiKey",
+                 "oauth2").contains(f.value.toString))
+        .foreach(_ => matchingTypes += SecuritySchemeFragment)
+    else
+      matchingTypes += SecuritySchemeFragment
 
     /** If none, or more than one know fragment type applies to the given fields, will return unknow for safety.
       * Only return the finded type if one and only one matches

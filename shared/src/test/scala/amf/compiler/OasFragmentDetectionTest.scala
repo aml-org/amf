@@ -46,6 +46,14 @@ class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
     assertHeader("two-match-without-header.json", None)
   }
 
+  test("Detect Oas SecurityScheme") {
+    assertHeader("security-scheme.json", Some(OasFragmentHeader.Oas20SecurityScheme))
+  }
+
+  test("Detect Oas SecurityScheme without header") {
+    assertHeader("security-scheme-without-header.json", Some(OasFragmentHeader.Oas20SecurityScheme))
+  }
+
   private def assertHeader(path: String, expectedOption: Option[OasHeader]): Future[Assertion] = {
     AMFCompiler(basePath + path, platform, OasJsonHint)
       .root()

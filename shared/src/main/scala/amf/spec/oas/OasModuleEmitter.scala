@@ -1,6 +1,6 @@
 package amf.spec.oas
 
-import amf.compiler.{OasFragmentHeader, OasHeader, RamlHeader}
+import amf.compiler.{OasFragmentHeader, OasHeader, RamlFragmentHeader, RamlHeader}
 import amf.document.Fragment._
 import amf.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
@@ -57,6 +57,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
       case ef: ExtensionFragment         => ExtensionFragmentEmitter(ef, ordering)
       case of: OverlayFragment           => OverlayFragmentEmitter(of, ordering)
+      case sc: SecurityScheme            => SecuritySchemeFragmentEmitter(sc, ordering)
       //      case _: NamedExample              => Raml10NamedExample
       case _ => throw new UnsupportedOperationException("Unsupported fragment type")
     }
@@ -151,6 +152,17 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas)).emitters
       result
     }
+  }
+
+  case class SecuritySchemeFragmentEmitter(securityScheme: SecurityScheme, ordering: SpecOrdering)
+      extends OasFragmentTypeEmitter {
+
+    override val headerEmitter: Emitter = OasHeaderEmitter(OasFragmentHeader.Oas20SecurityScheme)
+
+    val elementsEmitters: Seq[Emitter] =
+      SecuritySchemeEmitter(securityScheme.encodes,
+                            OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`),
+                            ordering).emitters()
   }
 
   case class OasHeaderEmitter(oasHeader: OasHeader) extends Emitter {

@@ -53,6 +53,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
       case ef: ExtensionFragment         => ExtensionFragmentEmitter(ef, ordering)
       case of: OverlayFragment           => OverlayFragmentEmitter(of, ordering)
+      case sc: SecurityScheme            => SecuritySchemeFragmentEmitter(sc, ordering)
       case _                             => throw new UnsupportedOperationException("Unsupported fragment type")
     }
 
@@ -127,6 +128,14 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       result ++= WebApiEmitter(extension.encodes, ordering, Some(Raml)).emitters
       result
     }
+  }
+
+  case class SecuritySchemeFragmentEmitter(securityScheme: SecurityScheme, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
+
+    override val header: RamlHeader = RamlFragmentHeader.Raml10SecurityScheme
+
+    val elementsEmitters: Seq[Emitter] = SecuritySchemeEmitter(securityScheme.encodes, ordering).emitters()
   }
 
   case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)

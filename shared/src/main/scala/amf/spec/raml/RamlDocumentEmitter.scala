@@ -671,7 +671,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       fs.entry(OAuth2SettingsModel.AuthorizationGrants)
         .map(f => results += ArrayEmitter("authorizationGrants", f, ordering))
 
-      fs.entry(OAuth2SettingsModel.Scopes).map(f => { results += OAuth2ScopeEmitter("protocols", f, ordering) })
+      fs.entry(OAuth2SettingsModel.Scopes).map(f => { results += OAuth2ScopeEmitter("scopes", f, ordering) })
 
       results
     }

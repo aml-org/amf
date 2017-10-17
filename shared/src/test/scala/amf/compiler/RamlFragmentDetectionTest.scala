@@ -46,6 +46,14 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
     assertHeader("two-match-without-header.raml", None)
   }
 
+  test("Detect Raml SecurityScheme") {
+    assertHeader("security-scheme.raml", Some(RamlFragmentHeader.Raml10SecurityScheme))
+  }
+
+  test("Detect Raml SecurityScheme without header") {
+    assertHeader("security-scheme-without-header.raml", Some(RamlFragmentHeader.Raml10SecurityScheme))
+  }
+
   private def assertHeader(path: String, expectedOption: Option[RamlHeader]): Future[Assertion] = {
     AMFCompiler(basePath + path, platform, RamlYamlHint)
       .root()
