@@ -12,6 +12,7 @@ import amf.remote._
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
+import amf.validation.Validation
 import org.yaml.model.{YComment, YDocument, YMap, YPart, YScalar, YSequence}
 import org.yaml.parser.YamlParser
 
@@ -34,6 +35,8 @@ class AMFCompiler private (val url: String,
   def build(): Future[BaseUnit] = {
     // Reset the data node counter
     idCounter.reset()
+    // we restart the parser-side validations
+    Validation.restartValidations()
 
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else

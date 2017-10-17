@@ -224,6 +224,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Closed shapes validation") {
+    val validation = Validation(platform)
+    for {
+      model  <- AMFCompiler(examplesPath + "closed_nodes/api.raml", platform, RamlYamlHint).build()
+      _      <- validation.loadValidationDialect()
+      report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 6)
+    }
+  }
+
   val testValidations = Map(
     "bad_domain/amf.jsonld"                   -> ExpectedReport(conforms = false, 3, ProfileNames.OAS),
     "bad_domain/valid.jsonld"                 -> ExpectedReport(conforms = false, 1, ProfileNames.OAS),

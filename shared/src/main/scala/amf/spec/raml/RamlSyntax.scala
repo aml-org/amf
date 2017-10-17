@@ -193,9 +193,10 @@ trait RamlSyntax {
     ),
 
     "annotation" -> Map(
-      "displayName" -> true,
-      "description" -> true,
-      "allowedTarget" -> true
+      "displayName"   -> true,
+      "description"   -> true,
+      "allowedTarget" -> true,
+      "type"          -> true
     )
   )
 
@@ -211,7 +212,7 @@ trait RamlSyntax {
               case Some(true) => // ignore
               case _          => Validation.reportConstraintFailure(
                 SeverityLevels.VIOLATION,
-                (Namespace.AmfParser + "closedShape").iri(),
+                (Namespace.AmfParser + "closed-shape").iri(),
                 id,
                 None,
                 s"Property $key not supported in a RAML $nodeType node",

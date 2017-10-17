@@ -1,5 +1,6 @@
 package amf.validation.model
 
+import amf.ProfileNames
 import amf.vocabulary.Namespace
 
 /**
@@ -95,6 +96,19 @@ trait ImportUtils {
 
 }
 
+
+object ParserSideValidations {
+  def validations: List[ValidationSpecification] = List(
+    ValidationSpecification(
+      (Namespace.AmfParser + "closed-shape").iri(),
+      "invalid property for node",
+      None,
+      None,
+      Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+    )
+  )
+}
+
 object DefaultAMFValidations extends ImportUtils {
 
   private def validations(): List[AMFValidation] =
@@ -113,7 +127,7 @@ object DefaultAMFValidations extends ImportUtils {
           name = profile,
           baseProfileName = if (profile == "AMF") { None } else { Some("AMF") },
           violationLevel = validations.map(_.name),
-          validations = validations
+          validations = validations ++ ParserSideValidations.validations
         )
 
     }.toList

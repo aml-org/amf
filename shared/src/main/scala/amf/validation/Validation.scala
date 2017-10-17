@@ -216,7 +216,7 @@ class Validation(platform: Platform) {
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = {
-    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq)
+    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq.filter(s => !s.isParserSide()))
   }
 
   def validate(model: BaseUnit, profileName: String, messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
@@ -361,6 +361,11 @@ object Validation {
     case None    => if (level == SeverityLevels.VIOLATION) {
       throw new Exception(s"Violation: $message at node $targetNode, property $targetProperty and position $position")
     }
+  }
+
+  def restartValidations() = currentValidation match {
+    case Some(v) => v.reset()
+    case _       => // ignore
   }
 
 }
