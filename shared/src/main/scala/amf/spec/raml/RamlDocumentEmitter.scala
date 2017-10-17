@@ -821,9 +821,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         "type",
         b => {
           if (inlineShapes.nonEmpty) {
-            b.map { b =>
-              traverse(ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering).emitters())), b)
-            }
+            b.map(traverse(ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering).emitters())), _))
           } else {
             b.list { b =>
               declaredShapes.foreach(s => raw(b, s.name))
@@ -979,7 +977,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       b.entry(
         "anyOf",
         _.list { b =>
-          val anyOfEmitters = shape.anyOf
+          val emitters = shape.anyOf
             .map { shape =>
               ordering.sorted(RamlTypeEmitter(shape, ordering).emitters())
             }
@@ -989,7 +987,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
                 override def emit(b: EntryBuilder): Unit = emitters.foreach(_.emit(b))
               }
             }
-          ordering.sorted(anyOfEmitters).foreach { emitter =>
+          ordering.sorted(emitters).foreach { emitter =>
             b.map { emitter.emit }
           }
         }
@@ -1153,21 +1151,6 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(reference.annotations)
-  }
-
-  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering)
-      extends EntryEmitter {
-
-    override def emit(b: EntryBuilder): Unit = {
-      val result = ListBuffer[EntryEmitter]()
-      val fs     = userDocumentation.fields
-      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
-      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
-
-      traverse(ordering.sorted(result), b)
-    }
-
-    override def position(): Position = pos(userDocumentation.annotations)
   }
 
   case class TypeExpressionEmitter(shape: Shape) extends PartEmitter {

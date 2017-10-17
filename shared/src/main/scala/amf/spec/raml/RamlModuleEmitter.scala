@@ -127,23 +127,28 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     }
   }
 
-  case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)
+  case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10ResourceType
 
-    val emitters: Seq[Emitter] =
-      DataNodeEmitter(resourceTypeFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
-        .emitters() // todo review with gute the map and sequence for oas
+    val emitters: Seq[EntryEmitter] =
+      DataNodeEmitter(fragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
+        .emitters() collect {
+        case e: EntryEmitter => e
+        case other           => throw new Exception(s"Fragment not encoding DataObjectNode but $other")
+      }
   }
 
-  case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)
-      extends RamlFragmentTypeEmitter {
+  case class TraitFragmentEmitter(fragment: TraitFragment, ordering: SpecOrdering) extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Trait
 
-    val emitters: Seq[Emitter] =
-      DataNodeEmitter(traitFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
-        .emitters() // todo review with gute the map and sequence for oas
+    val emitters: Seq[EntryEmitter] =
+      DataNodeEmitter(fragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
+        .emitters() collect {
+        case e: EntryEmitter => e
+        case other           => throw new Exception(s"Fragment not encoding DataObjectNode but $other")
+      }
   }
 }

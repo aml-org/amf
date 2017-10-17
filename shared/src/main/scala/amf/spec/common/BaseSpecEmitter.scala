@@ -15,6 +15,7 @@ import amf.domain.extensions.{
   ObjectNode => DataObjectNode,
   ScalarNode => DataScalarNode
 }
+import amf.metadata.domain.UserDocumentationModel
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
@@ -105,12 +106,8 @@ trait BaseSpecEmitter {
     }
   }
 
-  case class AnnotationsEmitter(domainElement: DomainElement, ordering: SpecOrdering, format: AnnotationFormat) {
-    def emitters: Seq[EntryEmitter] = {
-      domainElement.customDomainProperties.map { pro =>
-        AnnotationEmitter(pro, ordering, format)
-      }
-    }
+  case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering, format: AnnotationFormat) {
+    def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(AnnotationEmitter(_, ordering, format))
   }
 
   case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering, format: AnnotationFormat)
@@ -140,6 +137,21 @@ trait BaseSpecEmitter {
   object OasAnnotationsEmitter {
     def apply(domainElement: DomainElement, ordering: SpecOrdering) =
       AnnotationsEmitter(domainElement, ordering, OasAnnotationFormat)
+  }
+
+  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering)
+      extends EntryEmitter {
+
+    override def emit(b: EntryBuilder): Unit = {
+      val result = ListBuffer[EntryEmitter]()
+      val fs     = userDocumentation.fields
+      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
+      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
+
+      traverse(ordering.sorted(result), b)
+    }
+
+    override def position(): Position = pos(userDocumentation.annotations)
   }
 
   case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends PartEmitter {
