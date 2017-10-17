@@ -3,7 +3,7 @@ package amf.spec.common
 import amf.compiler.ParsedReference
 import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, DeclaresModel, Document}
-import amf.domain.Annotation.ExplicitField
+import amf.domain.Annotation.{Aliases, ExplicitField}
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, CreativeWork, License, Organization}
@@ -24,26 +24,6 @@ import scala.collection.mutable
 private[spec] trait BaseSpecParser {
 
   implicit val spec: SpecParserContext
-
-  case class CreativeWorkParser(map: YMap) {
-    def parse(): CreativeWork = {
-      val creativeWork = CreativeWork(map)
-
-      map.key("url", entry => {
-        val value = ValueNode(entry.value)
-        creativeWork.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
-      })
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
-      })
-
-      AnnotationParser(() => creativeWork, map).parse()
-
-      creativeWork
-    }
-  }
 
   case class OrganizationParser(map: YMap) {
     def parse(): Organization = {
@@ -180,6 +160,8 @@ private[spec] trait BaseSpecParser {
     }
 
     def +=(url: String, fragment: Document): Unit = references += (url -> fragment)
+
+    def solvedReferences(): Seq[BaseUnit] = references.values.toSet.toSeq
   }
 
   case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference]) {
@@ -208,7 +190,7 @@ private[spec] trait BaseSpecParser {
             val alias: String = e.key
             val url: String   = e.value
             target(url).foreach {
-              case module: DeclaresModel => result += (alias, module) // this is
+              case module: DeclaresModel => result += (alias, addAlias(module, alias)) // this is
               case other =>
                 throw new Exception(s"Expected module but found: $other") // todo Uses should only reference modules...
             }
@@ -216,6 +198,19 @@ private[spec] trait BaseSpecParser {
       )
 
       result
+    }
+
+    private def addAlias(module: BaseUnit, alias: String): BaseUnit = {
+      val aliasesOption = module.annotations.find(classOf[Aliases])
+      if (aliasesOption.isDefined)
+        aliasesOption.foreach(a => {
+          module.annotations.reject(_.isInstanceOf[Aliases])
+          module.add(a.copy(aliases = a.aliases ++ Seq(alias)))
+        })
+      else
+        module.add(Aliases(Seq(alias)))
+
+      module
     }
   }
 
@@ -356,6 +351,61 @@ private[spec] trait BaseSpecParser {
     private def scalar = ast.value.toScalar
 
     private def annotations() = Annotations(ast)
+  }
+
+  case class OasCreativeWorkParser(map: YMap) {
+    def parse(): CreativeWork = {
+
+      val creativeWork = CreativeWork(map)
+
+      map.key("url", entry => {
+        val value = ValueNode(entry.value)
+        creativeWork.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
+      })
+
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
+      })
+
+      map.key("x-title", entry => {
+        val value = ValueNode(entry.value)
+        creativeWork.set(CreativeWorkModel.Title, value.string(), Annotations(entry))
+      })
+
+      AnnotationParser(() => creativeWork, map).parse()
+
+      creativeWork
+    }
+  }
+
+  case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean) {
+    def parse(): CreativeWork = {
+
+      val documentation = CreativeWork(Annotations(map))
+
+      map.key("title", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(CreativeWorkModel.Title, value.string(), Annotations(entry))
+      })
+
+      map.key("content", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
+      })
+
+      if (withExtention)
+        map.key("(url)", entry => {
+          val value = ValueNode(entry.value)
+          documentation.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
+        })
+      else
+        map.key("url", entry => {
+          val value = ValueNode(entry.value)
+          documentation.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
+        })
+      documentation
+    }
   }
 
 }

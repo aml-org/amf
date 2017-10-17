@@ -26,11 +26,13 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Vocabulary") {
-    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint).build().onComplete(unit => {
-      assert(unit.isSuccess)
-    })
+    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint)
+      .build()
+      .onComplete(unit => {
+        assert(unit.isSuccess)
+      })
 
-    true shouldBe(true)
+    true shouldBe (true)
   }
 
   test("Api (oas)") {
@@ -80,7 +82,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Libraries (raml)") {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint)
       .root() map {
-      case Root(root, _, references, _) =>
+      case Root(root, _, references, _, _) =>
         val body = root.document.value.get.toMap
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references.map(_.baseUnit))
@@ -90,7 +92,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Libraries (oas)") {
     AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint)
       .root() map {
-      case Root(root, _, references, _) =>
+      case Root(root, _, references, _, _) =>
         val body = root.document.value.get.toMap
         body.entries.size should be(3)
         assertUses(body.key("x-uses").get, references.map(_.baseUnit))

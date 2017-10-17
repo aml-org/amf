@@ -9,7 +9,6 @@ import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.BaseSpecParser
 import amf.vocabulary.Namespace
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
 
@@ -24,15 +23,14 @@ object OasTypeParser {
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, declarations: Declarations)
-    extends BaseSpecParser {
+    extends OasSpecParser {
 
   override implicit val spec = OasSpecParserContext
 
   def parse(): Option[Shape] = {
 
     detect() match {
-      case UnionType =>
-        Some(parseUnionType())
+      case UnionType                   => Some(parseUnionType())
       case LinkType                    => parseLinkType()
       case ObjectType                  => Some(parseObjectType())
       case ArrayType                   => Some(parseArrayType())
@@ -107,9 +105,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def parseObjectType(): Shape = {
-    val shape = NodeShape(ast).withName(name)
-    adopt(shape)
-    NodeShapeParser(shape, map, declarations).parse()
+    if (map.key("x-schema").isDefined) {
+      val shape = SchemaShape(ast).withName(name)
+      adopt(shape)
+      SchemaShapeParser(shape, map, declarations).parse()
+    } else {
+      val shape = NodeShape(ast).withName(name)
+      adopt(shape)
+      NodeShapeParser(shape, map, declarations).parse()
+    }
   }
 
   private def parseUnionType(): Shape = {
@@ -480,7 +484,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key(
         "externalDocs",
         entry => {
-          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
           shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
         }
       )
@@ -518,4 +522,33 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       shape
     }
   }
+
+  case class SchemaShapeParser(shape: SchemaShape, map: YMap, declarations: Declarations)
+      extends ShapeParser()
+      with CommonScalarParsingLogic {
+    super.parse()
+
+    override def parse(): Shape = {
+      map.key("x-schema", { entry =>
+        entry.value.value match {
+          case str: YScalar =>
+            shape.withRaw(str.text)
+          case _ => throw new Exception("Cannot parse non string schema shape")
+        }
+      })
+
+      map.key(
+        "x-media-type", { entry =>
+          entry.value.value match {
+            case str: YScalar =>
+              shape.withMediaType(str.text)
+            case _ => throw new Exception("Cannot parse non string schema shape")
+          }
+        }
+      )
+
+      shape
+    }
+  }
+
 }

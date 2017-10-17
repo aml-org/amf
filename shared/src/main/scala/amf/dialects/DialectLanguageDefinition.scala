@@ -103,7 +103,7 @@ object DialectDefinition extends DialectLanguageNode("dialect") {
   }
 }
 
-case class DialectLanguageResolver(override val root: Root, uses: Map[String, BaseUnit])
+case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
     extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses) {
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = {

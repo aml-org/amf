@@ -28,7 +28,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
 
-  /** Resolves the model */
+  /** Resolves the model **/
   def resolve(profile: String): BaseUnit = ResolutionPipeline.forProfile(profile).resolve(this)
 
   /**

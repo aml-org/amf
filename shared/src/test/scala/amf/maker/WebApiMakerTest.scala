@@ -33,7 +33,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withTermsOfService("terminos")
       .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
       .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
-      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+    api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
     assertFixture(api, "completeExample.raml", RamlYamlHint)
   }
@@ -360,7 +360,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
-      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+
+    api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
     assertFixture(api, "partialExample.raml", RamlYamlHint)
   }
@@ -379,7 +380,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withTermsOfService("terminos")
       .withProvider(Organization().withUrl("urlContact").withName("nameContact").withEmail("emailContact"))
       .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
-      .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
+
+    api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
     assertFixture(api, "completeExample.json", OasJsonHint)
   }
@@ -626,7 +628,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withPath("http://raml.org/vocabularies/data#lastName")
       .withScalarSchema("lastName")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    val address = param1Shape.withProperty("address")
+    val address = param1Shape
+      .withProperty("address")
       .withMinCount(1)
       .withPath("http://raml.org/vocabularies/data#address")
       .withObjectRange("address")

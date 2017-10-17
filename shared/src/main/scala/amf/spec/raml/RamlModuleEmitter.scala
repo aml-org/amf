@@ -79,7 +79,8 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DocumentationItem
 
-    val emitters: Seq[EntryEmitter] = Seq(UserDocumentationEmitter(documentationItem.encodes, ordering))
+    val emitters: Seq[EntryEmitter] =
+      RamlCreativeWorkItemsEmitter(documentationItem.encodes, ordering, withExtention = true).emitters()
   }
 
   case class DataTypeFragmentEmitter(dataType: DataType, ordering: SpecOrdering) extends RamlFragmentTypeEmitter {

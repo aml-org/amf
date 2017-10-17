@@ -77,7 +77,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
 
     override val header = OasHeaderEmitter(OasFragmentHeader.Oas20DocumentationItem)
 
-    val emitters: Seq[EntryEmitter] = Seq(UserDocumentationEmitter(documentationItem.encodes, ordering))
+    val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
   }
 
   case class DataTypeFragmentEmitter(dataType: DataType, ordering: SpecOrdering) extends OasFragmentTypeEmitter {

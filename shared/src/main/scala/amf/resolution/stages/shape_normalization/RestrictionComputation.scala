@@ -42,49 +42,63 @@ trait RestrictionComputation {
   }
 
   protected def computeNumericRestriction(comparison: String, lvalue: AmfElement, rvalue: AmfElement): AmfElement = {
-    if (lvalue.isInstanceOf[AmfScalar] && Option(lvalue.asInstanceOf[AmfScalar].value).isDefined &&
-        rvalue.isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined) {
-      val lnum = lvalue.asInstanceOf[AmfScalar].toNumber
-      val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
+            rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lnum = scalar.toNumber
+        val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
 
-      comparison match {
-        case "max" =>
-          if (lnum.intValue() <= rnum.intValue()) { rvalue } else { lvalue }
-        case "min" =>
-          if (lnum.intValue() >= rnum.intValue()) { rvalue } else { lvalue }
-        case _ => throw new Exception(s"Unknown numeric comparison $comparison")
-      }
-    } else {
-      throw new Error("Cannot compare non numeric or missing values")
+        comparison match {
+          case "max" =>
+            if (lnum.intValue() <= rnum.intValue()) {
+              rvalue
+            } else {
+              lvalue
+            }
+          case "min" =>
+            if (lnum.intValue() >= rnum.intValue()) {
+              rvalue
+            } else {
+              lvalue
+            }
+          case _ => throw new Exception(s"Unknown numeric comparison $comparison")
+        }
+      case _ =>
+        throw new Error("Cannot compare non numeric or missing values")
     }
   }
 
   protected def computeStringEquality(lvalue: AmfElement, rvalue: AmfElement): Boolean = {
-    if (lvalue.isInstanceOf[AmfScalar] && Option(lvalue.asInstanceOf[AmfScalar].value).isDefined &&
-        rvalue.isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined) {
-      val lstr = lvalue.asInstanceOf[AmfScalar].toString
-      val rstr = rvalue.asInstanceOf[AmfScalar].toString
-      lstr == rstr
-    } else {
-      throw new Exception("Cannot compare non numeric or missing values")
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
+            rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lstr = scalar.toString
+        val rstr = rvalue.asInstanceOf[AmfScalar].toString
+        lstr == rstr
+      case _ =>
+        throw new Exception("Cannot compare non numeric or missing values")
     }
   }
 
   protected def computeNumericComparison(comparison: String, lvalue: AmfElement, rvalue: AmfElement): Boolean = {
-    if (lvalue.isInstanceOf[AmfScalar] && Option(lvalue.asInstanceOf[AmfScalar].value).isDefined &&
-        rvalue.isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined) {
-      val lnum = lvalue.asInstanceOf[AmfScalar].toNumber
-      val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
+            rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lnum = scalar.toNumber
+        val rnum = rvalue.asInstanceOf[AmfScalar].toNumber
 
-      comparison match {
-        case "<=" =>
-          lnum.intValue() <= rnum.intValue()
-        case ">=" =>
-          lnum.intValue() >= rnum.intValue()
-        case _ => throw new Exception(s"Unknown numeric comparison $comparison")
-      }
-    } else {
-      throw new Exception("Cannot compare non numeric or missing values")
+        comparison match {
+          case "<=" =>
+            lnum.intValue() <= rnum.intValue()
+          case ">=" =>
+            lnum.intValue() >= rnum.intValue()
+          case _ => throw new Exception(s"Unknown numeric comparison $comparison")
+        }
+      case _ =>
+        throw new Exception("Cannot compare non numeric or missing values")
     }
   }
 
@@ -92,13 +106,15 @@ trait RestrictionComputation {
                                          rcomparison: Boolean,
                                          lvalue: AmfElement,
                                          rvalue: AmfElement): Boolean = {
-    if (lvalue.isInstanceOf[AmfScalar] && Option(lvalue.asInstanceOf[AmfScalar].value).isDefined &&
-        rvalue.isInstanceOf[AmfScalar] && Option(rvalue.asInstanceOf[AmfScalar].value).isDefined) {
-      val lbool = lvalue.asInstanceOf[AmfScalar].toBool
-      val rbool = rvalue.asInstanceOf[AmfScalar].toBool
-      lbool == lcomparison && rbool == rcomparison
-    } else {
-      throw new Exception("Cannot compare non boolean or missing values")
+    lvalue match {
+      case scalar: AmfScalar
+          if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
+            rvalue.asInstanceOf[AmfScalar].value).isDefined =>
+        val lbool = scalar.toBool
+        val rbool = rvalue.asInstanceOf[AmfScalar].toBool
+        lbool == lcomparison && rbool == rcomparison
+      case _ =>
+        throw new Exception("Cannot compare non boolean or missing values")
     }
   }
 
@@ -198,9 +214,9 @@ trait RestrictionComputation {
         }
 
       case ArrayShapeModel.UniqueItems =>
-        if (computeBooleanComparison(true, true, superValue, baseValue) ||
-            computeBooleanComparison(false, false, superValue, baseValue) ||
-            computeBooleanComparison(false, true, superValue, baseValue)) {
+        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, baseValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, baseValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, baseValue)) {
           baseValue
         } else {
           throw new Exception("different values for unique items constraint")
@@ -235,9 +251,9 @@ trait RestrictionComputation {
         }
 
       case NodeShapeModel.Closed =>
-        if (computeBooleanComparison(true, true, superValue, baseValue) ||
-            computeBooleanComparison(false, false, superValue, baseValue) ||
-            computeBooleanComparison(false, true, superValue, baseValue)) {
+        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, baseValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, baseValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, baseValue)) {
           baseValue
         } else {
           throw new Exception("different values for unique items constraint")

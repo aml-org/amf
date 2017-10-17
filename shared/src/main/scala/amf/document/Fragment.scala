@@ -30,7 +30,7 @@ object Fragment {
   // todo review
 
   case class DocumentationItem(fields: Fields, annotations: Annotations) extends Fragment {
-    override def encodes: UserDocumentation = super.encodes.asInstanceOf[UserDocumentation]
+    override def encodes: CreativeWork = super.encodes.asInstanceOf[CreativeWork]
   }
 
   case class DataType(fields: Fields, annotations: Annotations) extends Fragment {
@@ -68,6 +68,10 @@ object Fragment {
   case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment
 
   case class Default(fields: Fields, annotations: Annotations) extends Fragment
+
+  case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
+  }
 
   object DocumentationItem {
     def apply(): DocumentationItem = apply(Annotations())
@@ -115,6 +119,11 @@ object Fragment {
     def apply(): OverlayFragment = apply(Annotations())
 
     def apply(annotations: Annotations): OverlayFragment = apply(Fields(), annotations)
+  }
+
+  object ExternalFragment {
+    def apply(): ExternalFragment                         = apply(Annotations())
+    def apply(annotations: Annotations): ExternalFragment = ExternalFragment(Fields(), annotations)
   }
 }
 

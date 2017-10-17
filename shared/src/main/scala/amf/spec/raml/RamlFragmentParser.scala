@@ -19,7 +19,7 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragment) extends RamlSpecParser(root) {
+case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends RamlSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -44,7 +44,7 @@ case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragmen
 
     val references = ReferencesParser("uses", rootMap, root.references).parse()
 
-    if (references.references.nonEmpty) fragment.withReferences(references.references.values.toSeq)
+    if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment
   }
 
@@ -53,7 +53,7 @@ case class RamlFragmentParser(override val root: Root, fragmentType: RamlFragmen
 
       val item = DocumentationItem().adopted(root.location)
 
-      item.withEncodes(UserDocumentationParser(map).parse())
+      item.withEncodes(RamlCreativeWorkParser(map, withExtention = true).parse())
 
       item
     }

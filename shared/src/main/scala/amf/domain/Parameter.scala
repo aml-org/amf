@@ -8,7 +8,7 @@ import org.yaml.model.YPart
 /**
   * Parameter internal model.
   */
-case class Parameter(fields: Fields, annotations: Annotations) extends DomainElement {
+case class Parameter(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
   def name: String        = fields(Name)
   def description: String = fields(Description)
@@ -41,6 +41,7 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
     scalar
   }
 
+  override def linkCopy() = Parameter().withBinding(binding).withId(id)
 }
 
 object Parameter {

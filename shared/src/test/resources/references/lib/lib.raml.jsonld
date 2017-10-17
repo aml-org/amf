@@ -273,7 +273,7 @@
         "@type": [
           "http://raml.org/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+        "http://raml.org/vocabularies/document-source-maps#aliases-array": [
           {
             "http://raml.org/vocabularies/document-source-maps#element": [
               {
@@ -282,7 +282,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
-                "@value": "raml"
+                "@value": "lib"
               }
             ]
           }
@@ -309,6 +309,20 @@
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(2,0)-(9,20)]"
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file:/shared/src/test/resources/references/lib/lib.raml"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "raml"
               }
             ]
           }

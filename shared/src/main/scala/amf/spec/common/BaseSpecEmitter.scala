@@ -15,7 +15,7 @@ import amf.domain.extensions.{
   ObjectNode => DataObjectNode,
   ScalarNode => DataScalarNode
 }
-import amf.metadata.domain.UserDocumentationModel
+import amf.metadata.domain.CreativeWorkModel
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
@@ -137,21 +137,6 @@ trait BaseSpecEmitter {
   object OasAnnotationsEmitter {
     def apply(domainElement: DomainElement, ordering: SpecOrdering) =
       AnnotationsEmitter(domainElement, ordering, OasAnnotationFormat)
-  }
-
-  case class UserDocumentationEmitter(userDocumentation: UserDocumentation, ordering: SpecOrdering)
-      extends EntryEmitter {
-
-    override def emit(b: EntryBuilder): Unit = {
-      val result = ListBuffer[EntryEmitter]()
-      val fs     = userDocumentation.fields
-      fs.entry(UserDocumentationModel.Title).map(f => result += ValueEmitter("title", f))
-      fs.entry(UserDocumentationModel.Content).map(f => result += ValueEmitter("content", f))
-
-      traverse(ordering.sorted(result), b)
-    }
-
-    override def position(): Position = pos(userDocumentation.annotations)
   }
 
   case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends PartEmitter {
@@ -370,5 +355,77 @@ trait BaseSpecEmitter {
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class RamlCreativeWorkItemsEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtention: Boolean) {
+    def emitters(): Seq[EntryEmitter] = {
+      val result = ListBuffer[EntryEmitter]()
+
+      val fs = documentation.fields
+
+      fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter(if (withExtention) "(url)" else "url", f))
+
+      fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("content", f))
+
+      fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("title", f))
+
+      result ++= RamlAnnotationsEmitter(documentation, ordering).emitters
+      ordering.sorted(result)
+    }
+  }
+
+  case class RamlCreativeWorkEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtension: Boolean)
+      extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
+      sourceOr(
+        documentation.annotations,
+        b.map(traverse(RamlCreativeWorkItemsEmitter(documentation, ordering, withExtension).emitters(), _))
+      )
+    }
+
+    override def position(): Position = pos(documentation.annotations)
+  }
+
+  case class OasCreativeWorkItemsEmitter(document: CreativeWork, ordering: SpecOrdering) {
+    def emitters(): Seq[EntryEmitter] = {
+      val fs     = document.fields
+      val result = ListBuffer[EntryEmitter]()
+
+      fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
+
+      fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
+
+      fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("x-title", f))
+
+      result ++= OasAnnotationsEmitter(document, ordering).emitters
+
+      ordering.sorted(result)
+    }
+  }
+
+  case class OasCreativeWorkEmitter(document: CreativeWork, ordering: SpecOrdering) extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
+      if (document.isLink)
+        raw(b, document.linkLabel.getOrElse(document.linkTarget.get.id))
+      else
+        b.map(traverse(OasCreativeWorkItemsEmitter(document, ordering).emitters(), _))
+    }
+
+    override def position(): Position = pos(document.annotations)
+  }
+
+  case class OasEntryCreativeWorkEmitter(key: String, documentation: CreativeWork, ordering: SpecOrdering)
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      sourceOr(
+        documentation.annotations,
+        b.entry(
+          key,
+          OasCreativeWorkEmitter(documentation, ordering).emit(_)
+        )
+      )
+    }
+
+    override def position(): Position = pos(documentation.annotations)
   }
 }

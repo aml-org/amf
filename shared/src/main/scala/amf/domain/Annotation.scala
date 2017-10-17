@@ -6,6 +6,8 @@ import amf.parser.Range
 import amf.remote.Vendor
 import org.yaml.model.YPart
 
+import scala.collection.mutable
+
 /**
   * Annotation type
   */
@@ -37,6 +39,11 @@ object Annotation {
     override val name: String = "parent-end-point"
 
     override val value: String = parent.id
+  }
+
+  case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
+    override val name: String  = "parsed-json-schema"
+    override val value: String = rawText
   }
 
   case class SourceVendor(vendor: Vendor) extends SerializableAnnotation {
@@ -85,12 +92,23 @@ object Annotation {
 
   case class Inferred() extends Annotation
 
+  case class Aliases(aliases: Seq[String]) extends SerializableAnnotation {
+
+    /** Extension name. */
+    override val name: String = "aliases-array"
+
+    /** Value as string. */
+    override val value: String = aliases.mkString(",")
+  }
+
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     annotation match {
       case "lexical"            => Some(lexical)
       case "parent-end-point"   => Some(parentEndPoint)
       case "source-vendor"      => Some(sourceVendor)
       case "single-value-array" => Some(singleValueArray)
+      case "aliases-array"      => Some(aliases)
+      case "parsed-json-schema" => Some(parsedJsonSchema)
       case _                    => None // Unknown annotation
     }
 
@@ -111,5 +129,13 @@ object Annotation {
 
   private def lexical(value: String, objects: Map[String, AmfElement]) = {
     LexicalInformation(Range.apply(value))
+  }
+
+  private def aliases(value: String, objects: Map[String, AmfElement]) = {
+    Aliases(value.split(",").toSeq)
+  }
+
+  private def parsedJsonSchema(value: String, objects: Map[String, AmfElement]) = {
+    ParsedJSONSchema(value)
   }
 }

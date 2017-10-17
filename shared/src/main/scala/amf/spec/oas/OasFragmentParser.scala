@@ -16,7 +16,7 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) extends OasSpecParser(root) {
+case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) extends OasSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -43,7 +43,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
 
     val references = ReferencesParser("x-uses", rootMap, root.references).parse()
 
-    if (references.references.nonEmpty) fragment.withReferences(references.references.values.toSeq)
+    if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment
   }
 
@@ -59,7 +59,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
 
       val item = DocumentationItem().adopted(root.location)
 
-      item.withEncodes(UserDocumentationParser(map).parse())
+      item.withEncodes(OasCreativeWorkParser(map).parse())
 
       item
     }

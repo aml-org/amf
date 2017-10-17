@@ -10,7 +10,7 @@ import amf.parser.YValueOps
 /**
   *
   */
-case class OasModuleParser(root: Root) extends OasSpecParser(root) {
+case class OasModuleParser(root: Root) extends OasSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))
@@ -23,7 +23,7 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
 
       val references = ReferencesParser("x-uses", rootMap, root.references).parse()
 
-      parseDeclarations(rootMap, references.declarations)
+      parseDeclarations(root, rootMap, references.declarations)
 
       // TODO invoke when it's done
       //    resourceTypes?
@@ -33,7 +33,7 @@ case class OasModuleParser(root: Root) extends OasSpecParser(root) {
 
       val declarable = references.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
-      if (references.references.nonEmpty) module.withReferences(references.references.values.toSeq)
+      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
     })
 
     module

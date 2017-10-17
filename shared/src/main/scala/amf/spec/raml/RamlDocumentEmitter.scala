@@ -44,7 +44,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
     val doc                    = document.asInstanceOf[Document]
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, doc.encodes.annotations)
 
-    val api        = apiEmitters(ordering)
+    val api        = apiEmitters(ordering, doc.references)
     val declares   = DeclarationsEmitter(doc.declares, doc.references, ordering).emitters
     val references = ReferencesEmitter(doc.references, ordering)
 
@@ -56,13 +56,16 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
     })
   }
 
-  def apiEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
+  def apiEmitters(ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()
     val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    WebApiEmitter(model, ordering, vendor).emitters
+    WebApiEmitter(model, ordering, vendor, references).emitters
   }
 
-  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[Vendor]) {
+  case class WebApiEmitter(api: WebApi,
+                           ordering: SpecOrdering,
+                           vendor: Option[Vendor],
+                           references: Seq[BaseUnit] = Seq()) {
 
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
@@ -70,7 +73,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
       fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
 
-      fs.entry(WebApiModel.BaseUriParameters).map(f => result += ParametersEmitter("baseUriParameters", f, ordering))
+      fs.entry(WebApiModel.BaseUriParameters)
+        .map(f => result += ParametersEmitter("baseUriParameters", f, ordering, references))
 
       fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
 
@@ -86,7 +90,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
       fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("(contact)", f, ordering))
 
-      fs.entry(WebApiModel.Documentation).map(f => result += CreativeWorkEmitter("(externalDocs)", f, ordering))
+      fs.entry(WebApiModel.Documentations).map(f => result += UserDocumentationsEmitter(f, ordering))
 
       fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("(license)", f, ordering))
 
@@ -115,7 +119,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
         val graph                                           = endpoints.map(e => (e, e.parent.toSet)).toMap
         val all: mutable.ListMap[EndPoint, EndPointEmitter] = mutable.ListMap[EndPoint, EndPointEmitter]()
         tsort(graph, Seq()).foreach(e => {
-          val emitter = EndPointEmitter(e, ordering)
+          val emitter = EndPointEmitter(e, ordering, ListBuffer(), references)
           e.parent match {
             case Some(parent) =>
               all(parent) += emitter
@@ -130,7 +134,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
             .toSeq)
 
       } else {
-        endpoints.map(EndPointEmitter(_, ordering))
+        endpoints.map(EndPointEmitter(_, ordering, ListBuffer(), references))
       }
 
     }
@@ -177,7 +181,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
   case class EndPointEmitter(endpoint: EndPoint,
                              ordering: SpecOrdering,
-                             children: mutable.ListBuffer[EndPointEmitter] = mutable.ListBuffer())
+                             children: mutable.ListBuffer[EndPointEmitter] = mutable.ListBuffer(),
+                             references: Seq[BaseUnit] = Seq())
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
@@ -197,7 +202,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
             fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
-            fs.entry(EndPointModel.UriParameters).map(f => result += ParametersEmitter("uriParameters", f, ordering))
+            fs.entry(EndPointModel.UriParameters)
+              .map(f => result += ParametersEmitter("uriParameters", f, ordering, references))
 
             fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
@@ -219,16 +225,16 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
     private def operations(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
       f.array.values
-        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering))
+        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering, references))
     }
 
     override def position(): Position = pos(endpoint.annotations)
   }
 
-  case class OperationEmitter(operation: Operation, ordering: SpecOrdering) extends EntryEmitter {
+  case class OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val fs = operation.fields
-
       sourceOr(
         operation.annotations,
         b.complexEntry(
@@ -245,7 +251,11 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
             fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("(summary)", f))
 
             fs.entry(OperationModel.Documentation)
-              .map(f => result += CreativeWorkEmitter("(externalDocs)", f, ordering))
+              .map(
+                f =>
+                  result += OasEntryCreativeWorkEmitter("(externalDocs)",
+                                                        f.value.value.asInstanceOf[CreativeWork],
+                                                        ordering))
 
             fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
@@ -262,13 +272,16 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
               fields
                 .entry(RequestModel.QueryParameters)
-                .map(f => result += ParametersEmitter("queryParameters", f, ordering))
+                .map(f => result += ParametersEmitter("queryParameters", f, ordering, references))
 
-              fields.entry(RequestModel.Headers).map(f => result += ParametersEmitter("headers", f, ordering))
+              fields
+                .entry(RequestModel.Headers)
+                .map(f => result += ParametersEmitter("headers", f, ordering, references))
               fields.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
             }
 
-            fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
+            fs.entry(OperationModel.Responses)
+              .map(f => result += ResponsesEmitter("responses", f, ordering, references))
 
             traverse(ordering.sorted(result), b)
           }
@@ -279,26 +292,27 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
     override def position(): Position = pos(operation.annotations)
   }
 
-  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       sourceOr(
         f.value.annotations,
-        b.entry(key, _.map { traverse(responses(f, ordering), _) })
+        b.entry(key, _.map { traverse(responses(f, ordering, references), _) })
       )
     }
 
-    private def responses(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
-      val result = f.array.values.map(e => ResponseEmitter(e.asInstanceOf[Response], ordering))
+    private def responses(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
+      val result = f.array.values.map(e => ResponseEmitter(e.asInstanceOf[Response], ordering, references))
       ordering.sorted(result)
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ResponseEmitter(response: Response, ordering: SpecOrdering) extends EntryEmitter {
+  case class ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val fs = response.fields
-
       sourceOr(
         response.annotations,
         b.complexEntry(
@@ -307,7 +321,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
             val result = mutable.ListBuffer[EntryEmitter]()
 
             fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))
-            fs.entry(RequestModel.Headers).map(f => result += ParametersEmitter("headers", f, ordering))
+            fs.entry(RequestModel.Headers).map(f => result += ParametersEmitter("headers", f, ordering, references))
             fs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
 
             result ++= RamlAnnotationsEmitter(response, ordering).emitters
@@ -367,69 +381,27 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
     override def position(): Position = pos(payload.annotations)
   }
 
-  case class ParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+  case class ParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       sourceOr(
         f.value.annotations,
         b.entry(
           key,
-          _.map(traverse(parameters(f, ordering), _))
+          _.map(traverse(parameters(f, ordering, references), _))
         )
       )
     }
 
-    private def parameters(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
+    private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
       val result = mutable.ListBuffer[EntryEmitter]()
       f.array.values
-        .foreach(e => result += ParameterEmitter(e.asInstanceOf[Parameter], ordering))
+        .foreach(e => result += ParameterEmitter(e.asInstanceOf[Parameter], ordering, references))
 
       ordering.sorted(result)
     }
 
     override def position(): Position = pos(f.value.annotations)
-  }
-
-  case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering) extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val fs = parameter.fields
-
-      sourceOr(
-        parameter.annotations,
-        b.complexEntry(
-          b => {
-            val explicit = fs
-              .entry(ParameterModel.Required)
-              .exists(_.value.annotations.contains(classOf[ExplicitField]))
-
-            if (!explicit && !parameter.required) {
-              ScalarEmitter(AmfScalar(parameter.name + "?")).emit(b)
-            } else {
-              val name = fs.entry(ParameterModel.Name).get.scalar
-              ScalarEmitter(name).emit(b)
-            }
-          },
-          b => {
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
-
-            fs.entry(ParameterModel.Required)
-              .filter(_.value.annotations.contains(classOf[ExplicitField]))
-              .map(f => result += ValueEmitter("required", f))
-
-            result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description)).emitters()
-
-            result ++= RamlAnnotationsEmitter(parameter, ordering).emitters
-
-            b.map { b =>
-              traverse(ordering.sorted(result), b)
-            }
-          }
-        )
-      )
-    }
-
-    override def position(): Position = pos(parameter.annotations)
   }
 
   case class LicenseEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
@@ -491,27 +463,38 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       if (modules.nonEmpty) {
         b.entry("uses", _.map { b =>
           idCounter.reset()
-          traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, idCounter.genId("uses")))), b)
+          traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))), b)
         })
       }
     }
 
-    override def position(): Position = Position.ZERO
+    override def position(): Position = ZERO
   }
 
-  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, alias: String) extends EntryEmitter {
+  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)
+      extends EntryEmitter {
 
     // todo review with PEdro. We dont serialize location, so when parse amf to dump spec, we lose de location (we only have the id)
-    override def emit(b: EntryBuilder): Unit = MapEntryEmitter(alias, name).emit(b)
+    override def emit(b: EntryBuilder): Unit = {
+      val alias = reference.annotations.find(classOf[Aliases])
 
-    override def position(): Position = Position.ZERO
+      def entry(alias: String) = MapEntryEmitter(alias, name).emit(b)
 
-    def name: String = {
+      alias.fold {
+        entry(aliasGenerator())
+      } { _ =>
+        alias.foreach(_.aliases.foreach(entry))
+      }
+    }
+
+    private def name: String = {
       Option(reference.location) match {
         case Some(location) => location
         case None           => reference.id
       }
     }
+
+    override def position(): Position = ZERO
   }
 
   case class DeclarationsEmitter(declares: Seq[DomainElement], references: Seq[BaseUnit], ordering: SpecOrdering) {
@@ -540,6 +523,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
           ordering,
           (e: DomainElement, key: String) => TagToReferenceEmitter(e, key, references))
 
+      if (declarations.parameters.nonEmpty)
+        result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, references)
+
       result
     }
   }
@@ -552,7 +538,19 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       })
     }
 
-    override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+    override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
+  }
+
+  case class DeclaredParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        "(parameters)",
+        _.map(traverse(ordering.sorted(parameters.map(NamedParameterEmitter(_, ordering, references))), _))
+      )
+    }
+
+    override def position(): Position = parameters.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
   }
 
   case class NamedTypeEmitter(shape: Shape, references: Seq[BaseUnit], ordering: SpecOrdering) extends EntryEmitter {
@@ -574,6 +572,16 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     }
 
     override def position(): Position = pos(shape.annotations)
+  }
+
+  case class NamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      parameter.fields.get(ParameterModel.Binding).annotations += ExplicitField()
+      ParameterEmitter(parameter, ordering, references).emit(b)
+    }
+
+    override def position(): Position = pos(parameter.annotations)
   }
 
   case class TagToReferenceEmitter(reference: DomainElement, text: String, references: Seq[BaseUnit])
@@ -602,7 +610,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
         traverse(ordering.sorted(properties.map(p => NamedPropertyTypeEmitter(p, references, ordering))), b)
       })
     }
-    override def position(): Position = properties.headOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO)
+    override def position(): Position = properties.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
   }
 
   case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
@@ -630,23 +638,33 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
     override def position(): Position = pos(annotation.annotations)
   }
 
-  case class CreativeWorkEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+  case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        "documentation",
+        _.list { b =>
+          f.array.values
+            .collect({ case c: CreativeWork => c })
+            .foreach(
+              c =>
+                if (c.isLink)
+                  raw(b, c.linkLabel.getOrElse(c.linkTarget.get.id))
+                else
+                  RamlCreativeWorkEmitter(c, ordering, withExtension = true).emit(b))
+        }
+      )
+    }
+
+    override def position(): Position = pos(f.array.values.head.annotations)
+  }
+
+  case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       sourceOr(
-        f.value,
+        f.value.annotations,
         b.entry(
-          key,
-          _.map { b =>
-            val fs     = f.obj.fields
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
-            fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
-
-            result ++= RamlAnnotationsEmitter(f.domainElement, ordering).emitters
-
-            traverse(ordering.sorted(result), b)
-          }
+          "(externalDocs)",
+          OasCreativeWorkEmitter(f.value.value.asInstanceOf[CreativeWork], ordering).emit(_)
         )
       )
     }
@@ -657,16 +675,17 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil) {
     def emitters(): Seq[EntryEmitter] = {
       shape match {
-//        case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(TypeExpressionEmitter(shape))
+        //        case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(TypeExpressionEmitter(shape))
         case _ if Option(shape).isDefined && shape.fromTypeExpression => {
           println("Grrrrr")
           ???
         }
-//        case l: Linkable if l.isLink                                  => Seq(LocalReferenceEmitter(shape))
+        //        case l: Linkable if l.isLink                                  => Seq(LocalReferenceEmitter(shape))
         case l: Linkable if l.isLink => {
           println("Grrrrr")
           ???
         }
+        case schema: SchemaShape => Seq(SchemaShapeEmitter(schema))
         case node: NodeShape =>
           val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
           NodeShapeEmitter(copiedNode, ordering).emitters()
@@ -721,7 +740,9 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
-      fs.entry(ShapeModel.Documentation).map(f => result += CreativeWorkEmitter("(externalDocs)", f, ordering))
+      fs.entry(ShapeModel.Documentation)
+        .map(f =>
+          result += OasEntryCreativeWorkEmitter("(externalDocs)", f.value.value.asInstanceOf[CreativeWork], ordering))
 
       fs.entry(ShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
@@ -729,6 +750,15 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       result
     }
+  }
+
+  case class SchemaShapeEmitter(schema: SchemaShape) extends EntryEmitter {
+//    override def emit(b: EntryBuilder): Unit = raw(schema.raw)
+    override def emit(b: EntryBuilder): Unit = {
+      ??? //todo syaml raw...
+    }
+
+    override def position(): Position = pos(schema.annotations)
   }
 
   case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
@@ -772,41 +802,55 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
   case class NodeShapeEmitter(node: NodeShape, ordering: SpecOrdering) extends ShapeEmitter(node, ordering) {
     override def emitters(): Seq[EntryEmitter] = {
-      val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
+      val result: ListBuffer[EntryEmitter] = ListBuffer()
+      node.annotations.find(classOf[ParsedJSONSchema]) match {
+        case Some(jsonParsedAnnotation) =>
+          result += new EntryEmitter() {
+            override def emit(b: EntryBuilder): Unit = {
+//              raw(jsonParsedAnnotation.value)
+              ???
+            }
 
-      val fs = node.fields
+            override def position(): Position = pos(node.annotations)
+          }
+        case None =>
+          result ++= super.emitters()
 
-      // TODO annotation for original position?
-      if (node.annotations.contains(classOf[ExplicitField]))
-        result += MapEntryEmitter("type", "object")
+          val fs = node.fields
 
-      fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
+          // TODO annotation for original position?
+          if (node.annotations.contains(classOf[ExplicitField]))
+            result += MapEntryEmitter("type", "object")
 
-      fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
+          fs.entry(NodeShapeModel.Inherits).map(f => result += ShapeInheritsEmitter(f, ordering))
 
-      fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
+          fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
-      fs.entry(NodeShapeModel.Closed)
-        .filter(_.value.annotations.contains(classOf[ExplicitField]))
-        .map(
-          f =>
-            result += MapEntryEmitter("additionalProperties",
-                                      (!node.closed).toString,
-                                      position = pos(f.value.annotations)))
+          fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
-      fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
+          fs.entry(NodeShapeModel.Closed)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(
+              f =>
+                result += MapEntryEmitter("additionalProperties",
+                                          (!node.closed).toString,
+                                          position = pos(f.value.annotations)))
 
-      fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
+          fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 
-      fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
+          fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
 
-      fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
+          fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
 
-      val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
+          fs.entry(NodeShapeModel.Properties).map(f => result += PropertiesShapeEmitter(f, ordering))
 
-      fs.entry(NodeShapeModel.Dependencies).map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
+          val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
 
-      result
+          fs.entry(NodeShapeModel.Dependencies)
+            .map(f => result += ShapeDependenciesEmitter(f, ordering, propertiesMap))
+
+          result
+      }
     }
 
   }
@@ -871,7 +915,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
               "type",
               typeDef,
               position =
-                if (f.value.annotations.contains(classOf[Inferred])) Position.ZERO
+                if (f.value.annotations.contains(classOf[Inferred])) ZERO
                 else
                   pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
@@ -1160,4 +1204,76 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
   }
 
   protected def ref(b: PartBuilder, url: String): Unit = b.scalar(YNode(YScalar("!include " + url), YType("!include")))
+
+  case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      sourceOr(
+        parameter.annotations,
+        if (parameter.isLink) emitLink(b) else emitParameter(b)
+      )
+    }
+
+    private def emitLink(b: EntryBuilder) = {
+      val fs = parameter.linkTarget.get.fields
+
+      b.complexEntry(
+        emitParameterKey(fs, _),
+        b => {
+          parameter.linkTarget.foreach(l =>
+            TagToReferenceEmitter(l, parameter.linkLabel.getOrElse(l.id), references).emit(b))
+        }
+      )
+    }
+
+    private def emitParameter(b: EntryBuilder) = {
+      val fs = parameter.fields
+
+      b.complexEntry(
+        emitParameterKey(fs, _),
+        _.map { b =>
+          val result = mutable.ListBuffer[EntryEmitter]()
+
+          fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
+
+          fs.entry(ParameterModel.Required)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f => result += ValueEmitter("required", f))
+
+          result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description)).emitters()
+
+          result ++= RamlAnnotationsEmitter(parameter, ordering).emitters
+
+          Option(parameter.fields.getValue(ParameterModel.Binding)) match {
+            case Some(v) =>
+              v.annotations.find(classOf[ExplicitField]) match {
+                case Some(_) =>
+                  fs.entry(ParameterModel.Binding).map { f =>
+                    result += ValueEmitter("(binding)", f)
+                  }
+                case None => // ignore
+              }
+            case _ => // ignore
+          }
+
+          traverse(ordering.sorted(result), b)
+        }
+      )
+
+    }
+
+    private def emitParameterKey(fs: Fields, b: PartBuilder) = {
+      val explicit = fs
+        .entry(ParameterModel.Required)
+        .exists(_.value.annotations.contains(classOf[ExplicitField]))
+
+      if (!explicit && !parameter.required) {
+        ScalarEmitter(AmfScalar(parameter.name + "?")).emit(b)
+      } else {
+        ScalarEmitter(fs.entry(ParameterModel.Name).get.scalar).emit(b)
+      }
+    }
+
+    override def position(): Position = pos(parameter.annotations)
+  }
 }

@@ -21,7 +21,7 @@ case class WebApi private (private val webApi: amf.domain.WebApi) extends Domain
   val termsOfService: String                       = webApi.termsOfService
   val provider: Organization                       = Option(webApi.provider).map(amf.model.Organization).orNull
   val license: License                             = Option(webApi.license).map(amf.model.License).orNull
-  val documentation: CreativeWork                  = Option(webApi.documentation).map(amf.model.CreativeWork).orNull
+  val documentations: java.util.List[CreativeWork] = webApi.documentations.map(CreativeWork).asJava
   val baseUriParameters: java.util.List[Parameter] = webApi.baseUriParameters.map(Parameter).asJava
 
   override private[amf] def element: amf.domain.WebApi = webApi
@@ -99,10 +99,22 @@ case class WebApi private (private val webApi: amf.domain.WebApi) extends Domain
   }
 
   /** Set documentation property of this [[WebApi]] using a [[CreativeWork]]. */
-  def withDocumentation(documentation: CreativeWork): this.type = {
-    webApi.withDocumentation(documentation.element)
+  def withDocumentations(documentations: java.util.List[CreativeWork]): this.type = {
+    webApi.withDocumentations(documentations.asScala.map(_.element))
     this
   }
+
+  /**
+    * Adds one [[CreativeWork]] to the documentations property of this [[WebApi]] and returns it for population.
+    * Path property of the CreativeWork is required.
+    */
+  def withDocumentationTitle(title: String): CreativeWork = CreativeWork(webApi.withDocumentationTitle(title))
+
+  /**
+    * Adds one [[CreativeWork]] to the documentations property of this [[WebApi]] and returns it for population.
+    * Path property of the CreativeWork is required.
+    */
+  def withDocumentationUrl(url: String): CreativeWork = CreativeWork(webApi.withDocumentationUrl(url))
 
   /** Set baseUriParameters property of this [[WebApi]]. */
   def withBaseUriParameters(parameters: java.util.List[Parameter]): this.type = {

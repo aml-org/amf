@@ -1,8 +1,7 @@
 package amf.dialects
-
-import amf.domain.dialects.DomainEntity
+import amf.dialects._
 import amf.model.AmfScalar
-
+import amf.domain.dialects.DomainEntity
 object RAML_1_0_VocabularyTopLevel {
   case class VocabularyObject(entity: DomainEntity = DomainEntity(Vocabulary),
                               override val parent: Option[TopLevelObject] = None)
