@@ -25,7 +25,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Raml 1.0 spec parser
   */
-case class RamlDocumentParser(root: Root) extends RamlSpecParser {
+case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax {
 
   def parseDocument(): Document = {
 
@@ -50,6 +50,8 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
   def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
 
     val api = WebApi(map).adopted(root.location)
+
+    validateClosedShape(api.id, map, "webApi")
 
     map.key("title", entry => {
       val value = ValueNode(entry.value)
@@ -191,6 +193,8 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
 
       val map = entry.value.value.toMap
 
+      validateClosedShape(endpoint.id, map, "endPoint")
+
       endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
       map.key("displayName", entry => {
@@ -331,6 +335,7 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
         case map: YMap =>
 
 
+          validateClosedShape(operation.id, map, "operation")
 
           map.key("displayName", entry => {
             val value = ValueNode(entry.value)
@@ -455,6 +460,8 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
 
       val response = producer(node.string().value.toString).add(Annotations(entry))
       val map      = entry.value.value.toMap
+
+      validateClosedShape(response.id, map, "response")
 
       response.set(ResponseModel.StatusCode, node.string())
 
@@ -698,12 +705,14 @@ abstract class RamlSpecParser extends BaseSpecParser {
                                    annotationName: String,
                                    map: YMap,
                                    adopt: (CustomDomainProperty) => Unit,
-                                   declarations: Declarations) {
+                                   declarations: Declarations) extends RamlSyntax {
     def parse(): CustomDomainProperty = {
 
       val custom = CustomDomainProperty(ast)
       custom.withName(annotationName)
       adopt(custom)
+
+      validateClosedShape(custom.id, map, "annotation")
 
       map.key(
         "allowedTargets",

@@ -14,6 +14,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
 import amf.spec.Declarations
+import amf.spec.raml.RamlSyntax
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
 import scala.collection.mutable
@@ -97,7 +98,7 @@ private[spec] trait BaseSpecParser {
     }
   }
 
-  case class XMLSerializerParser(defaultName: String, map: YMap) {
+  case class XMLSerializerParser(defaultName: String, map: YMap) extends RamlSyntax {
     def parse(): XMLSerializer = {
       val serializer = XMLSerializer(map)
         .set(XMLSerializerModel.Attribute, value = false)
@@ -131,6 +132,8 @@ private[spec] trait BaseSpecParser {
         val value = ValueNode(entry.value)
         serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
       })
+
+      validateClosedShape(serializer.id, map, "xmlSerialization")
 
       serializer
     }
