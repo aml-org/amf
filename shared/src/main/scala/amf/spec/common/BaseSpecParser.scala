@@ -14,6 +14,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
 import amf.spec.Declarations
+import amf.spec.oas.OasSyntax
 import amf.spec.raml.RamlSyntax
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YSequence, YValue}
 
@@ -26,7 +27,7 @@ private[spec] trait BaseSpecParser {
 
   implicit val spec: SpecParserContext
 
-  case class OrganizationParser(map: YMap) {
+  case class OrganizationParser(map: YMap) extends OasSyntax {
     def parse(): Organization = {
 
       val organization = Organization(map)
@@ -48,11 +49,13 @@ private[spec] trait BaseSpecParser {
 
       AnnotationParser(() => organization, map).parse()
 
+      validateClosedShape(organization.id, map, "contact")
+
       organization
     }
   }
 
-  case class LicenseParser(map: YMap) {
+  case class LicenseParser(map: YMap) extends OasSyntax {
     def parse(): License = {
       val license = License(map)
 
@@ -67,6 +70,8 @@ private[spec] trait BaseSpecParser {
       })
 
       AnnotationParser(() => license, map).parse()
+
+      validateClosedShape(license.id, map, "license")
 
       license
     }

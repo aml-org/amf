@@ -70,7 +70,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       val dataType = DataType().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations()).parse()
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), "schema").parse()
       shapeOption.map(dataType.withEncodes(_))
 
       dataType
@@ -123,7 +123,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       extension.withEncodes(api)
 
       map
-        .key("extends")
+        .key("x-extends")
         .foreach(e => {
           spec.link(e.value) match {
             case Left(url) =>
@@ -148,7 +148,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       overlay.withEncodes(api)
 
       map
-        .key("extends")
+        .key("x-extends")
         .foreach(e => {
           spec.link(e.value) match {
             case Left(url) =>

@@ -18,18 +18,18 @@ import scala.collection.mutable
   * OpenAPI Type Parser.
   */
 object OasTypeParser {
-  def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations): OasTypeParser =
-    OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations)
+  def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations, oasNode: String = "schema"): OasTypeParser =
+    OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations, oasNode)
 }
 
-case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, declarations: Declarations)
-    extends OasSpecParser {
+case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, declarations: Declarations, oasNode: String)
+    extends OasSpecParser with OasSyntax {
 
   override implicit val spec = OasSpecParserContext
 
   def parse(): Option[Shape] = {
 
-    detect() match {
+    val parsedShape = detect() match {
       case UnionType                   => Some(parseUnionType())
       case LinkType                    => parseLinkType()
       case ObjectType                  => Some(parseObjectType())
@@ -37,6 +37,13 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       case AnyType                     => Some(parseAnyType())
       case typeDef if typeDef.isScalar => Some(parseScalarType(typeDef))
       case _                           => None
+    }
+
+    parsedShape match {
+      case Some(shape: Shape) =>
+        validateClosedShape(shape.id, map, oasNode)
+        Some(shape)
+      case None       => None
     }
   }
 
@@ -181,6 +188,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
       parseScalar(map, shape)
+
       shape
     }
   }
@@ -408,7 +416,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   case class AllOfParser(array: YSequence, declarations: Declarations, adopt: Shape => Unit) {
     def parse(): Seq[Shape] =
       array.values.flatMap(map =>
-        declarationsRef(map.toMap).orElse(OasTypeParser(map, "", map.toMap, adopt, declarations).parse()))
+        declarationsRef(map.toMap).orElse(OasTypeParser(map, "", map.toMap, adopt, declarations, "schema").parse()))
 
     private def declarationsRef(entries: YMap): Option[Shape] = {
       entries

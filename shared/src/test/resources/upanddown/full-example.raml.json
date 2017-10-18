@@ -8,6 +8,11 @@
     "license": {
       "url": "licenseUrl",
       "name": "licenseName"
+    },
+    "contact": {
+      "url": "contactUrl",
+      "name": "contactName",
+      "email": "contactEmail"
     }
   },
   "host": "api.example.com",
@@ -31,11 +36,6 @@
     "http",
     "https"
   ],
-  "contact": {
-    "url": "contactUrl",
-    "name": "contactName",
-    "email": "contactEmail"
-  },
   "externalDocs": {
     "url": "externalDocsUrl",
     "description": "externalDocsDescription",
@@ -50,11 +50,11 @@
   ],
   "paths": {
     "/levelzero": {
-      "displayName": "Name"
+      "x-displayName": "Name"
     },
     "/levelzero/level-one": {
-      "displayName": "One display name",
-      "description": "and this description!",
+      "x-displayName": "One display name",
+      "x-description": "and this description!",
       "parameters": [
         {
           "name": "two",

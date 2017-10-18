@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "x-fragment-type": "2.0 Extension",
-  "extends": {
+  "x-extends": {
     "$ref": "file:/shared/src/test/resources/upanddown/banking-api.raml"
   },
   "paths": {
     "/books": {
-      "description": "La colección de libros de la biblioteca"
+      "x-description": "La colección de libros de la biblioteca"
     }
   },
   "x-usage": "Spanish localization"

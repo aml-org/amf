@@ -22,7 +22,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas 2.0 spec parser
   */
-case class OasDocumentParser(root: Root) extends OasSpecParser {
+case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
 
   def parseDocument(): Document = {
 
@@ -55,6 +55,8 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
       entry => {
         val info = entry.value.value.toMap
 
+        validateClosedShape(api.id, info, "info")
+
         info.key("title", entry => {
           val value = ValueNode(entry.value)
           api.set(WebApiModel.Name, value.string(), Annotations(entry))
@@ -74,6 +76,14 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
           val value = ValueNode(entry.value)
           api.set(WebApiModel.Version, value.string(), Annotations(entry))
         })
+
+        info.key(
+          "contact",
+          entry => {
+            val organization: Organization = OrganizationParser(entry.value.value.toMap).parse()
+            api.set(WebApiModel.Provider, organization, Annotations(entry))
+          }
+        )
 
         info.key(
           "license",
@@ -122,14 +132,6 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
       api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
     })
 
-    map.key(
-      "contact",
-      entry => {
-        val organization: Organization = OrganizationParser(entry.value.value.toMap).parse()
-        api.set(WebApiModel.Provider, organization, Annotations(entry))
-      }
-    )
-
     val documentations = ListBuffer[CreativeWork]()
     map.key(
       "externalDocs",
@@ -166,6 +168,8 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
 
     AnnotationParser(() => api, map).parse()
 
+    validateClosedShape(api.id, map, "webApi")
+
     api
   }
 
@@ -179,12 +183,14 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
       val endpoint = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry))
       val map      = entry.value.value.toMap
 
-      map.key("displayName", entry => {
+      validateClosedShape(endpoint.id, map, "pathItem")
+
+      map.key("x-displayName", entry => {
         val value = ValueNode(entry.value)
         endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
       })
 
-      map.key("description", entry => {
+      map.key("x-description", entry => {
         val value = ValueNode(entry.value)
         endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
       })
@@ -374,6 +380,8 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
 
       AnnotationParser(() => operation, map).parse()
 
+      validateClosedShape(operation.id, map, "operation")
+
       operation
     }
   }
@@ -461,6 +469,8 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
         response.set(ResponseModel.Payloads, AmfArray(payloads))
 
       AnnotationParser(() => response, map).parse()
+
+      validateClosedShape(response.id, map, "response")
 
       response
     }
@@ -627,7 +637,7 @@ abstract class OasSpecParser extends BaseSpecParser {
     )
   }
 
-  case class ParameterParser(map: YMap, parentId: String, declarations: Declarations) {
+  case class ParameterParser(map: YMap, parentId: String, declarations: Declarations) extends OasSyntax {
     def parse(): OasParameter = {
       map.key("$ref") match {
         case Some(ref) => parseParameterRef(ref, parentId)
@@ -665,7 +675,7 @@ abstract class OasSpecParser extends BaseSpecParser {
             map.key(
               "schema",
               entry => {
-                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations)
+                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations, "schema")
                   .parse()
                   .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
               }
@@ -679,7 +689,10 @@ abstract class OasSpecParser extends BaseSpecParser {
           } else {
             // type
             parameter.parameter.adopted(parentId)
-            OasTypeParser(map, "", map, shape => shape.withName("schema").adopted(parameter.parameter.id), declarations)
+
+            validateClosedShape(parameter.parameter.id, map, "parameter")
+
+            OasTypeParser(map, "", map, shape => shape.withName("schema").adopted(parameter.parameter.id), declarations, "parameter")
               .parse()
               .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
           }

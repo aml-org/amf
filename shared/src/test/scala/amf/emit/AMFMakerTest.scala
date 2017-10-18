@@ -33,7 +33,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
          ("description", "test description"),
          ("version", "1.1"),
          ("termsOfService", "termsOfService"),
-         ("license", List(("url", "licenseUrl"), ("name", "licenseName")))
+         ("license", List(("url", "licenseUrl"), ("name", "licenseName"))),
+         ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test")))
        ))
     )
     assertNode(root, ("schemes", Array("http", "https")))
@@ -41,8 +42,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     assertNode(root, ("host", "localhost.com"))
     assertNode(root, ("consumes", Array("application/json")))
     assertNode(root, ("produces", Array("application/json")))
-    assertNode(root,
-               ("contact", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
 
     assertNode(root,
                ("externalDocs",

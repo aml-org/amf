@@ -1,6 +1,5 @@
 package amf.validation.model
 
-import amf.ProfileNames
 import amf.vocabulary.Namespace
 
 /**

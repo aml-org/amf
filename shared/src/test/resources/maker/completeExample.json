@@ -8,6 +8,11 @@
     "license": {
       "url": "urlLicense",
       "name": "nameLicense"
+    },
+    "contact" : {
+      "url" : "urlContact",
+      "name": "nameContact",
+      "email": "emailContact"
     }
   },
   "host": "api.example.com",
@@ -15,11 +20,6 @@
   "basePath": "http://api.example.com/path",
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "contact" : {
-    "url" : "urlContact",
-    "name": "nameContact",
-    "email": "emailContact"
-  },
   "externalDocs":{
     "url": "urlExternalDocs",
     "description": "descriptionExternalDocs"

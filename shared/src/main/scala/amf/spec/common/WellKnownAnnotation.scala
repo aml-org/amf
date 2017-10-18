@@ -37,7 +37,10 @@ object WellKnownAnnotation {
     "x-fragment-type"       -> true,
     "x-usage"               -> true,
     "x-title"               -> true,
-    "x-user-documentation"  -> true
+    "x-user-documentation"  -> true,
+    "x-description"         -> true,
+    "x-displayName"         -> true,
+    "x-extends"             -> true
   )
 
   def normalAnnotation(field: String): Boolean =

@@ -1,5 +1,10 @@
 package amf.spec.oas
 
+import amf.domain.Annotation.LexicalInformation
+import amf.validation.{SeverityLevels, Validation}
+import amf.vocabulary.Namespace
+import org.yaml.model.{YMap, YScalar}
+
 trait OasSyntax {
 
   val nodes: Map[String, Map[String, Boolean]] = Map(
@@ -41,7 +46,15 @@ trait OasSyntax {
       "url"   -> true
     ),
 
-    "endPoint" -> Map(
+    "xmlSerialization" -> Map(
+      "attribute" -> true,
+      "wrapped"   -> true,
+      "name"      -> true,
+      "namespace" -> true,
+      "prefix"    -> true
+    ),
+
+    "pathItem" -> Map(
       "get"        -> true,
       "put"        -> true,
       "post"       -> true,
@@ -73,13 +86,6 @@ trait OasSyntax {
     ),
 
     "parameter" -> Map(
-      "name"        -> true,
-      "in"          -> true,
-      "description" -> true,
-      "required"    -> true
-    ),
-
-    "bodyParameter" -> Map(
       "name"             -> true,
       "in"               -> true,
       "description"      -> true,
@@ -104,6 +110,14 @@ trait OasSyntax {
       "enum"             -> true,
       "multipleOf"       -> true,
       "items"            -> true
+    ),
+
+    "bodyParameter" -> Map(
+      "name"             -> true,
+      "in"               -> true,
+      "description"      -> true,
+      "required"         -> true,
+      "schema"           -> true
     ),
 
     "response" -> Map(
@@ -167,7 +181,35 @@ trait OasSyntax {
       "readOnly"             -> true,
       "xml"                  -> true,
       "externalDocs"         -> true,
-      "example"              -> true
+      "example"              -> true,
+      "allOf"                -> true,
+      "anyOf"                -> true,
+      "dependencies"         -> true
     )
   )
+
+  def validateClosedShape(id: String, ast: YMap, nodeType: String) = {
+    nodes.get(nodeType) match {
+      case Some(properties) =>
+        ast.entries.foreach { entry =>
+          val key = entry.key.value.asInstanceOf[YScalar].text
+          if (key.startsWith("x-") || key == "$ref" || (key.startsWith("/") && nodeType == "webApi")) {
+            // annotation or path in endpoint/webapi => ignore
+          } else {
+            properties.get(key) match {
+              case Some(true) => // ignore
+              case _          => Validation.reportConstraintFailure(
+                SeverityLevels.VIOLATION,
+                (Namespace.AmfParser + "closed-shape").iri(),
+                id,
+                None,
+                s"Property $key not supported in a OpenAPI $nodeType node",
+                Some(LexicalInformation(amf.parser.Range(ast.range)))
+              )
+            }
+          }
+        }
+      case None => throw new Exception(s"Cannot validate unknown node type $nodeType")
+    }
+  }
 }
