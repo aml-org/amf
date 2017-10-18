@@ -91,6 +91,7 @@ trait BaseSpecEmitter {
 
   case class MapEntryEmitter(key: String, value: String, tag: YType = YType.Str, position: Position = Position.ZERO)
       extends EntryEmitter {
+
     override def emit(b: EntryBuilder): Unit = {
       b.entry(
         key,
@@ -99,12 +100,14 @@ trait BaseSpecEmitter {
     }
   }
 
-  protected def link(id: String): Unit = map { () =>
-    entry { () =>
-      raw("@id")
-      raw(id.trim)
-    }
+  object MapEntryEmitter {
+    def apply(tuple: (String, String), tag: YType = YType.Str, position: Position = Position.ZERO): MapEntryEmitter =
+      tuple match {
+        case (key, value) => MapEntryEmitter(key, value, tag, position)
+      }
   }
+
+  protected def link(b: PartBuilder, id: String): Unit = b.map(_.entry("@id", id.trim))
 
   case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering, format: AnnotationFormat) {
     def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(AnnotationEmitter(_, ordering, format))
