@@ -30,9 +30,10 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
     document.node.value match {
       case map: YMap =>
         val ext = vendor match {
-          case Raml => Some("extends")
-          case Oas  => Some("x-extends")
-          case Amf  => None
+          case Raml    => Some("extends")
+          case Oas     => Some("x-extends")
+          case Amf     => None
+          case Unknown => None
         }
 
         ext.foreach { u =>
@@ -53,9 +54,10 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
 
   private def links(part: YPart): Unit = {
     vendor match {
-      case Raml => ramlLinks(part)
-      case Oas  => oasLinks(part)
-      case Amf  =>
+      case Raml    => ramlLinks(part)
+      case Oas     => oasLinks(part)
+      case Amf     =>
+      case Unknown =>
     }
   }
 
@@ -63,9 +65,10 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
     document.value.foreach({
       case map: YMap =>
         val uses = vendor match {
-          case Raml => Some("uses")
-          case Oas  => Some("x-uses")
-          case Amf  => None
+          case Raml    => Some("uses")
+          case Oas     => Some("x-uses")
+          case Amf     => None
+          case Unknown => None
         }
         uses.foreach(u => {
           map
