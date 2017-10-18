@@ -7,196 +7,196 @@ import org.yaml.model.{YMap, YScalar}
 
 trait RamlSyntax {
 
-  val nodes: Map[String, Map[String, Boolean]] = Map(
-    "webApi" -> Map(
-      "title"             -> true,
-      "description"       -> true,
-      "version"           -> true,
-      "baseUri"           -> true,
-      "baseUriParameters" -> true,
-      "protocols"         -> true,
-      "mediaType"         -> true,
-      "documentation"     -> true,
-      "schemas"           -> true,
-      "types"             -> true,
-      "traits"            -> true,
-      "resourceTypes"     -> true,
-      "annotationTypes"   -> true,
-      "securitySchemes"   -> true,
-      "securedBy"         -> true,
-      "uses"              -> true
+  val nodes: Map[String, Set[String]] = Map(
+    "webApi" -> Set(
+      "title",
+      "description",
+      "version",
+      "baseUri",
+      "baseUriParameters",
+      "protocols",
+      "mediaType",
+      "documentation",
+      "schemas",
+      "types",
+      "traits",
+      "resourceTypes",
+      "annotationTypes",
+      "securitySchemes",
+      "securedBy",
+      "uses"
     ),
-    "userDocumentation" -> Map(
-      "title" -> true,
-      "content" -> true
+    "userDocumentation" -> Set(
+      "title",
+      "content"
     ),
-    "shape" -> Map(
-      "type"        -> true,
-      "default"     -> true,
-      "schema"      -> true,
-      "example"     -> true,
-      "examples"    -> true,
-      "displayName" -> true,
-      "description" -> true,
-      "facets"      -> true,
-      "xml"         -> true,
-      "enum"        -> true,
-      "required"    -> true
-    ),
-
-    "nodeShape" -> Map(
-      "type"               -> true,
-      "default"            -> true,
-      "schema"             -> true,
-      "example"            -> true,
-      "examples"           -> true,
-      "displayName"        -> true,
-      "description"        -> true,
-      "facets"             -> true,
-      "xml"                -> true,
-      "enum"               -> true,
-      "properties"         -> true,
-      "minProperties"      -> true,
-      "maxProperties"      -> true,
-      "discriminator"      -> true,
-      "discriminatorValue" -> true,
-      "required"           -> true
+    "shape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "required"
     ),
 
-    "arrayShape" -> Map(
-      "type"        -> true,
-      "default"     -> true,
-      "schema"      -> true,
-      "example"     -> true,
-      "examples"    -> true,
-      "displayName" -> true,
-      "description" -> true,
-      "facets"      -> true,
-      "xml"         -> true,
-      "enum"        -> true,
-      "uniqueItems" -> true,
-      "items"       -> true,
-      "minItems"    -> true,
-      "maxItems"    -> true,
-      "required"    -> true
+    "nodeShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "properties",
+      "minProperties",
+      "maxProperties",
+      "discriminator",
+      "discriminatorValue",
+      "required"
     ),
 
-    "stringScalarShape" -> Map(
-      "type"        -> true,
-      "default"     -> true,
-      "schema"      -> true,
-      "example"     -> true,
-      "examples"    -> true,
-      "displayName" -> true,
-      "description" -> true,
-      "facets"      -> true,
-      "xml"         -> true,
-      "enum"        -> true,
-      "pattern"     -> true,
-      "minLength"   -> true,
-      "maxLength"   -> true,
-      "required"    -> true
+    "arrayShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "uniqueItems",
+      "items",
+      "minItems",
+      "maxItems",
+      "required"
     ),
 
-    "numberScalarShape" -> Map(
-      "type"        -> true,
-      "default"     -> true,
-      "schema"      -> true,
-      "example"     -> true,
-      "examples"    -> true,
-      "displayName" -> true,
-      "description" -> true,
-      "facets"      -> true,
-      "xml"         -> true,
-      "enum"        -> true,
-      "minimum"     -> true,
-      "maximum"     -> true,
-      "format"      -> true,
-      "multipleOf"  -> true,
-      "required"    -> true
+    "stringScalarShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "pattern",
+      "minLength",
+      "maxLength",
+      "required"
     ),
 
-    "fileShape" -> Map(
-      "type"        -> true,
-      "default"     -> true,
-      "schema"      -> true,
-      "example"     -> true,
-      "examples"    -> true,
-      "displayName" -> true,
-      "description" -> true,
-      "facets"      -> true,
-      "xml"         -> true,
-      "enum"        -> true,
-      "fileTypes"   -> true,
-      "minLength"   -> true,
-      "maxLength"   -> true,
-      "required"    -> true
+    "numberScalarShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "minimum",
+      "maximum",
+      "format",
+      "multipleOf",
+      "required"
     ),
 
-    "example" -> Map(
-      "displayName" -> true,
-      "description" -> true,
-      "value"       -> true,
-      "strict"      -> true
+    "fileShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "fileTypes",
+      "minLength",
+      "maxLength",
+      "required"
     ),
 
-    "xmlSerialization" -> Map(
-      "attribute" -> true,
-      "wrapped"   -> true,
-      "name"      -> true,
-      "namespace" -> true,
-      "prefix"    -> true
+    "example" -> Set(
+      "displayName",
+      "description",
+      "value",
+      "strict"
     ),
 
-    "endPoint" -> Map(
-      "displayName"   -> true,
-      "description"   -> true,
-      "get"           -> true,
-      "patch"         -> true,
-      "put"           -> true,
-      "post"          -> true,
-      "delete"        -> true,
-      "options"       -> true,
-      "head"          -> true,
-      "is"            -> true,
-      "type"          -> true,
-      "securedBy"     -> true,
-      "uriParameters" -> true
+    "xmlSerialization" -> Set(
+      "attribute",
+      "wrapped",
+      "name",
+      "namespace",
+      "prefix"
     ),
 
-    "operation" -> Map(
-      "displayName"     -> true,
-      "description"     -> true,
-      "queryParameters" -> true,
-      "headers"         -> true,
-      "queryString"     -> true,
-      "responses"       -> true,
-      "body"            -> true,
-      "protocols"       -> true,
-      "is"              -> true,
-      "securedBy"       -> true
+    "endPoint" -> Set(
+      "displayName",
+      "description",
+      "get",
+      "patch",
+      "put",
+      "post",
+      "delete",
+      "options",
+      "head",
+      "is",
+      "type",
+      "securedBy",
+      "uriParameters"
     ),
 
-    "response" -> Map(
-      "displayName" -> true,
-      "description" -> true,
-      "headers"     -> true,
-      "body"        -> true
+    "operation" -> Set(
+      "displayName",
+      "description",
+      "queryParameters",
+      "headers",
+      "queryString",
+      "responses",
+      "body",
+      "protocols",
+      "is",
+      "securedBy"
     ),
 
-    "securitySchema" -> Map(
-      "type"        -> true,
-      "displayName" -> true,
-      "description" -> true,
-      "decribedBy"  -> true,
-      "settings"    -> true
+    "response" -> Set(
+      "displayName",
+      "description",
+      "headers",
+      "body"
     ),
 
-    "annotation" -> Map(
-      "displayName"   -> true,
-      "description"   -> true,
-      "allowedTarget" -> true,
-      "type"          -> true
+    "securitySchema" -> Set(
+      "type",
+      "displayName",
+      "description",
+      "decribedBy",
+      "settings"
+    ),
+
+    "annotation" -> Set(
+      "displayName",
+      "description",
+      "allowedTarget",
+      "type"
     )
   )
 
@@ -208,9 +208,9 @@ trait RamlSyntax {
           if ((key.startsWith("(") && key.endsWith(")")) || (key.startsWith("/") && (nodeType == "webApi" || nodeType == "endPoint"))) {
             // annotation or path in endpoint/webapi => ignore
           } else {
-            properties.get(key) match {
-              case Some(true) => // ignore
-              case _          => Validation.reportConstraintFailure(
+            properties(key) match {
+              case true  => // ignore
+              case false => Validation.reportConstraintFailure(
                 SeverityLevels.VIOLATION,
                 (Namespace.AmfParser + "closed-shape").iri(),
                 id,

@@ -7,184 +7,184 @@ import org.yaml.model.{YMap, YScalar}
 
 trait OasSyntax {
 
-  val nodes: Map[String, Map[String, Boolean]] = Map(
-    "webApi" -> Map(
-      "swagger"             -> true,
-      "info"                -> true,
-      "host"                -> true,
-      "basePath"            -> true,
-      "schemes"             -> true,
-      "consumes"            -> true,
-      "produces"            -> true,
-      "paths"               -> true,
-      "definitions"         -> true,
-      "parameters"          -> true,
-      "responses"           -> true,
-      "securityDefinitions" -> true,
-      "security"            -> true,
-      "tags"                -> true,
-      "externalDocs"        -> true
+  val nodes: Map[String, Set[String]] = Map(
+    "webApi" -> Set(
+      "swagger",
+      "info",
+      "host",
+      "basePath",
+      "schemes",
+      "consumes",
+      "produces",
+      "paths",
+      "definitions",
+      "parameters",
+      "responses",
+      "securityDefinitions",
+      "security",
+      "tags",
+      "externalDocs"
     ),
 
-    "info" -> Map(
-      "title"          -> true,
-      "description"    -> true,
-      "termsOfService" -> true,
-      "contact"        -> true,
-      "license"        -> true,
-      "version"        -> true
+    "info" -> Set(
+      "title",
+      "description",
+      "termsOfService",
+      "contact",
+      "license",
+      "version"
     ),
 
-    "contact" -> Map(
-      "name"  -> true,
-      "url"   -> true,
-      "email" -> true
+    "contact" -> Set(
+      "name",
+      "url",
+      "email"
     ),
 
-    "license" -> Map(
-      "name"  -> true,
-      "url"   -> true
+    "license" -> Set(
+      "name",
+      "url"
     ),
 
-    "xmlSerialization" -> Map(
-      "attribute" -> true,
-      "wrapped"   -> true,
-      "name"      -> true,
-      "namespace" -> true,
-      "prefix"    -> true
+    "xmlSerialization" -> Set(
+      "attribute",
+      "wrapped",
+      "name",
+      "namespace",
+      "prefix"
     ),
 
-    "pathItem" -> Map(
-      "get"        -> true,
-      "put"        -> true,
-      "post"       -> true,
-      "delete"     -> true,
-      "options"    -> true,
-      "head"       -> true,
-      "patch"      -> true,
-      "parameters" -> true,
-      "$ref"       -> true
+    "pathItem" -> Set(
+      "get",
+      "put",
+      "post",
+      "delete",
+      "options",
+      "head",
+      "patch",
+      "parameters",
+      "$ref"
     ),
 
-    "operation"-> Map(
-      "tags"         -> true,
-      "summary"      -> true,
-      "description"  -> true,
-      "externalDocs" -> true,
-      "operationId"  -> true,
-      "consumes"     -> true,
-      "produces"     -> true,
-      "parameters"   -> true,
-      "responses"    -> true,
-      "schemes"      -> true,
-      "deprecated"   -> true,
-      "security"     -> true
+    "operation"-> Set(
+      "tags",
+      "summary",
+      "description",
+      "externalDocs",
+      "operationId",
+      "consumes",
+      "produces",
+      "parameters",
+      "responses",
+      "schemes",
+      "deprecated",
+      "security"
     ),
 
-    "externalDoc" -> Map(
-      "url" -> true
+    "externalDoc" -> Set(
+      "url"
     ),
 
-    "parameter" -> Map(
-      "name"             -> true,
-      "in"               -> true,
-      "description"      -> true,
-      "required"         -> true,
-      "type"             -> true,
-      "format"           -> true,
-      "allowEmptyValue"  -> true,
-      "items"            -> true,
-      "collectionFormat" -> true,
-      "default"          -> true,
-      "maximum"          -> true,
-      "exclusiveMaximum" -> true,
-      "minimum"          -> true,
-      "exclusiveMinimum" -> true,
-      "maxLength"        -> true,
-      "minLength"        -> true,
-      "pattern"          -> true,
-      "maxItems"         -> true,
-      "minItems"         -> true,
-      "multipleOf"       -> true,
-      "uniqueItems"      -> true,
-      "enum"             -> true,
-      "multipleOf"       -> true,
-      "items"            -> true
+    "parameter" -> Set(
+      "name",
+      "in",
+      "description",
+      "required",
+      "type",
+      "format",
+      "allowEmptyValue",
+      "items",
+      "collectionFormat",
+      "default",
+      "maximum",
+      "exclusiveMaximum",
+      "minimum",
+      "exclusiveMinimum",
+      "maxLength",
+      "minLength",
+      "pattern",
+      "maxItems",
+      "minItems",
+      "multipleOf",
+      "uniqueItems",
+      "enum",
+      "multipleOf",
+      "items"
     ),
 
-    "bodyParameter" -> Map(
-      "name"             -> true,
-      "in"               -> true,
-      "description"      -> true,
-      "required"         -> true,
-      "schema"           -> true
+    "bodyParameter" -> Set(
+      "name",
+      "in",
+      "description",
+      "required",
+      "schema"
     ),
 
-    "response" -> Map(
-      "description" -> true,
-      "schema"      -> true,
-      "headers"     -> true,
-      "examples"    -> true
+    "response" -> Set(
+      "description",
+      "schema",
+      "headers",
+      "examples"
     ),
 
-    "headerParameter" -> Map(
-      "description"      -> true,
-      "type"             -> true,
-      "items"            -> true,
-      "collectionFormat" -> true,
-      "default"          -> true,
-      "maximum"          -> true,
-      "exclusiveMaximum" -> true,
-      "minimum"          -> true,
-      "exclusiveMinimum" -> true,
-      "maxLength"        -> true,
-      "minLength"        -> true,
-      "pattern"          -> true,
-      "maxItems"         -> true,
-      "minItems"         -> true,
-      "uniqueItems"      -> true,
-      "enum"             -> true,
-      "multipleOf"       -> true
+    "headerParameter" -> Set(
+      "description",
+      "type",
+      "items",
+      "collectionFormat",
+      "default",
+      "maximum",
+      "exclusiveMaximum",
+      "minimum",
+      "exclusiveMinimum",
+      "maxLength",
+      "minLength",
+      "pattern",
+      "maxItems",
+      "minItems",
+      "uniqueItems",
+      "enum",
+      "multipleOf"
     ),
 
-    "tag" -> Map(
-      "name"         -> true,
-      "description"  -> true,
-      "externalDocs" -> true
+    "tag" -> Set(
+      "name",
+      "description",
+      "externalDocs"
     ),
 
-    "schema" -> Map(
-      "$ref"                 -> true,
-      "format"               -> true,
-      "title"                -> true,
-      "description"          -> true,
-      "maximum"              -> true,
-      "exclusiveMaximum"     -> true,
-      "minimum"              -> true,
-      "exclusiveMinimum"     -> true,
-      "maxLength"            -> true,
-      "minLength"            -> true,
-      "pattern"              -> true,
-      "maxItems"             -> true,
-      "minItems"             -> true,
-      "uniqueItems"          -> true,
-      "maxProperties"        -> true,
-      "minProperties"        -> true,
-      "required"             -> true,
-      "enum"                 -> true,
-      "type"                 -> true,
-      "items"                -> true,
-      "allOf"                -> true,
-      "properties"           -> true,
-      "additionalProperties" -> true,
-      "discriminator"        -> true,
-      "readOnly"             -> true,
-      "xml"                  -> true,
-      "externalDocs"         -> true,
-      "example"              -> true,
-      "allOf"                -> true,
-      "anyOf"                -> true,
-      "dependencies"         -> true
+    "schema" -> Set(
+      "$ref",
+      "format",
+      "title",
+      "description",
+      "maximum",
+      "exclusiveMaximum",
+      "minimum",
+      "exclusiveMinimum",
+      "maxLength",
+      "minLength",
+      "pattern",
+      "maxItems",
+      "minItems",
+      "uniqueItems",
+      "maxProperties",
+      "minProperties",
+      "required",
+      "enum",
+      "type",
+      "items",
+      "allOf",
+      "properties",
+      "additionalProperties",
+      "discriminator",
+      "readOnly",
+      "xml",
+      "externalDocs",
+      "example",
+      "allOf",
+      "anyOf",
+      "dependencies"
     )
   )
 
@@ -196,9 +196,9 @@ trait OasSyntax {
           if (key.startsWith("x-") || key == "$ref" || (key.startsWith("/") && nodeType == "webApi")) {
             // annotation or path in endpoint/webapi => ignore
           } else {
-            properties.get(key) match {
-              case Some(true) => // ignore
-              case _          => Validation.reportConstraintFailure(
+            properties(key) match {
+              case true  => // ignore
+              case false => Validation.reportConstraintFailure(
                 SeverityLevels.VIOLATION,
                 (Namespace.AmfParser + "closed-shape").iri(),
                 id,
