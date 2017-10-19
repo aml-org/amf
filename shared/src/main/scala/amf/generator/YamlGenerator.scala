@@ -53,7 +53,7 @@ class YamlGenerator {
         if (prefix != "") {
           writer.indent()
         }
-        visit(c, previousSequence = parent.isInstanceOf[YSequence])
+        visit(c, previousSequence = parent.isInstanceOf[YSequence] || parent.isInstanceOf[YDocument])
         first = false
         if (prefix != "") {
           writer.outdent()

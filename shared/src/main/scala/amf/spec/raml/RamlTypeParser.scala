@@ -66,8 +66,6 @@ trait RamlTypeSyntax {
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
     extends RamlSpecParser {
 
-//  override implicit val spec: SpecParserContext = RamlSpecParserContext
-
   private val value = part.value
 
   def parse(): Option[Shape] = {
@@ -340,8 +338,11 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
               val unionNodes = seq.nodes.zipWithIndex
                 .map {
                   case (node, index) =>
-                    val entry = YMapEntry(YNode(YScalar(s"item$index", plain = true, node.range)), node)
-                    RamlTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+                    RamlTypeParser(node,
+                                   s"item$index",
+                                   node,
+                                   item => item.adopted(shape.id + "/items/" + index),
+                                   declarations).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)

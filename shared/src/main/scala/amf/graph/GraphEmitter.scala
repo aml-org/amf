@@ -248,7 +248,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         case (a, values) =>
           b.entry(
             ValueType(SourceMaps, a).iri(),
-            _.list(b => values.foreach(tuple => createAnnotationValueNode(b, tuple)))
+            _.list(b => values.foreach(createAnnotationValueNode(b, _)))
           )
       })
     }
@@ -256,7 +256,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def createAnnotationValueNode(b: PartBuilder, tuple: (String, String)): Unit = tuple match {
       case (iri, v) =>
         b.map { b =>
-          b.entry(SourceMapModel.Element.value.iri(), iri)
+          b.entry(SourceMapModel.Element.value.iri(), scalar(_, iri))
           b.entry(SourceMapModel.Value.value.iri(), scalar(_, v))
         }
     }

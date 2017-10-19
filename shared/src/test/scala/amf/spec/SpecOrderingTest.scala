@@ -43,8 +43,6 @@ class SpecOrderingTest extends FunSuite {
   }
 
   case class PosEmitter(id: String, position: Position) extends Emitter {
-    override def emit(): Unit = {}
-
     override def toString: String = id
   }
 }

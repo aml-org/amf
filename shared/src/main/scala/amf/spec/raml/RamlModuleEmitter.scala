@@ -30,12 +30,10 @@ case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
 
     // TODO invoke traits end resource types
 
-    YDocument {
-      _.map { b =>
-        b.comment(RamlHeader.Raml10Library.text)
-        traverse(ordering.sorted(declares ++ usage ++ references), b)
-      }
-    }
+    YDocument(b => {
+      b.comment(RamlHeader.Raml10Library.text)
+      b.map(traverse(ordering.sorted(declares ++ usage ++ references), _))
+    })
   }
 }
 
@@ -60,12 +58,10 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     val references = Seq(ReferencesEmitter(fragment.references, ordering))
 
-    YDocument {
-      _.map { b =>
-        b.comment(typeEmitter.header.text)
-        traverse(ordering.sorted(typeEmitter.emitters ++ usage ++ references), b)
-      }
-    }
+    YDocument(b => {
+      b.comment(typeEmitter.header.text)
+      b.map(traverse(ordering.sorted(typeEmitter.emitters ++ usage ++ references), _))
+    })
   }
 
   trait RamlFragmentTypeEmitter {
@@ -87,7 +83,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DataType
 
-    val emitters: Seq[EntryEmitter] = RamlTypeEmitter(dataType.encodes, ordering).emitters()
+    val emitters: Seq[EntryEmitter] = RamlTypeEmitter(dataType.encodes, ordering).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclaration, ordering: SpecOrdering)
@@ -118,8 +114,8 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Overlay
 
-    val emitters: Seq[Emitter] = {
-      val result: ListBuffer[Emitter] = ListBuffer()
+    val emitters: Seq[EntryEmitter] = {
+      val result: ListBuffer[EntryEmitter] = ListBuffer()
       extension.fields
         .entry(OverlayModel.Extends)
         .foreach(f => result += MapEntryEmitter("extends", f.scalar.toString, position = pos(f.value.annotations)))

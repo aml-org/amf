@@ -8,7 +8,7 @@ import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import org.scalatest.Matchers._
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 import org.yaml.model.YMapEntry
 
 import scala.concurrent.ExecutionContext
@@ -27,12 +27,9 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Vocabulary") {
     AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint)
-      .build()
-      .onComplete(unit => {
-        assert(unit.isSuccess)
-      })
-
-    true shouldBe (true)
+      .build() map {
+      _ should not be null
+    }
   }
 
   test("Api (oas)") {
@@ -111,7 +108,8 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     val libraries = uses.value.value.toMap
 
     libraries.map.values.foreach(value => {
-      value.asString should include("libraries")
+      val s: String = value
+      s should include("libraries")
     })
 
     libraries.entries.length should be(references.size)

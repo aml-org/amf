@@ -32,7 +32,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
         val ext = vendor match {
           case Raml => Some("extends")
           case Oas  => Some("x-extends")
-          case Amf  => None
+          case _    => None
         }
 
         ext.foreach { u =>
@@ -55,7 +55,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
     vendor match {
       case Raml => ramlLinks(part)
       case Oas  => oasLinks(part)
-      case Amf  =>
+      case _    => // Ignore
     }
   }
 
@@ -65,7 +65,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
         val uses = vendor match {
           case Raml => Some("uses")
           case Oas  => Some("x-uses")
-          case Amf  => None
+          case _    => None
         }
         uses.foreach(u => {
           map

@@ -34,8 +34,6 @@ object OasAnnotationFormat  extends AnnotationFormat {}
 
 trait BaseSpecEmitter {
 
-//  val emitter: ASTEmitter
-
   protected def pos(annotations: Annotations): Position =
     annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
@@ -53,14 +51,6 @@ trait BaseSpecEmitter {
 
   protected def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
     b.scalar(YNode(YScalar(content), tag))
-
-  protected def entry(inner: () => Unit): Unit = emitter.entry(inner)
-
-  protected def array(inner: () => Unit): Unit = emitter.sequence(inner)
-
-  protected def map(inner: () => Unit): Unit = emitter.mapping(inner)
-
-  protected def comment(text: String): Unit = emitter.comment(text)
 
   case class ScalarEmitter(v: AmfScalar, tag: YType = YType.Str) extends PartEmitter {
     override def emit(b: PartBuilder): Unit = sourceOr(v.annotations, b.scalar(YNode(YScalar(v.value), tag)))
@@ -101,9 +91,9 @@ trait BaseSpecEmitter {
   }
 
   object MapEntryEmitter {
-    def apply(tuple: (String, String), tag: YType = YType.Str, position: Position = Position.ZERO): MapEntryEmitter =
+    def apply(tuple: (String, String)): MapEntryEmitter =
       tuple match {
-        case (key, value) => MapEntryEmitter(key, value, tag, position)
+        case (key, value) => MapEntryEmitter(key, value)
       }
   }
 
@@ -324,13 +314,14 @@ trait BaseSpecEmitter {
     override def position(): Position = pos(annotations)
   }
 
-  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, force: Boolean = false)
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val single = f.value.annotations.contains(classOf[SingleValueArray])
 
       sourceOr(
         f.value,
-        if (single) emitSingle(b) else emitValues(b)
+        if (single && !force) emitSingle(b) else emitValues(b)
       )
     }
 

@@ -2,7 +2,6 @@ package amf.spec
 
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
-import amf.graph.GraphEmitter.Emitter
 import amf.remote.{Amf, Vendor}
 
 /**
