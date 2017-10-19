@@ -103,6 +103,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
       result ++= RamlAnnotationsEmitter(api, ordering).emitters
 
+      fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter(f, ordering))
+
       ordering.sorted(result)
     }
 
@@ -187,6 +189,47 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
   }
 
+  case class ParametrizedSecuritiesSchemeEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val schemes = f.array.values.collect({ case p: ParametrizedSecurityScheme => p })
+
+      entry { () =>
+        raw("securedBy")
+        array { () =>
+          traverse(ordering.sorted(schemes.map(ParametrizedSecuritySchemeEmitter(_, ordering))))
+        }
+      }
+
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme, ordering: SpecOrdering)
+      extends Emitter {
+    override def emit(): Unit = {
+
+      val fs = parametrizedScheme.fields
+
+      fs.entry(ParametrizedSecuritySchemeModel.Settings) match {
+        case Some(f) =>
+          map { () =>
+            entry { () =>
+              raw(parametrizedScheme.name)
+              map { () =>
+                traverse(ordering.sorted(SecuritySettingsValuesEmitters(f, ordering).emitters))
+              }
+            }
+          }
+        case None =>
+          RawEmitter(parametrizedScheme.name).emit()
+      }
+
+    }
+
+    override def position(): Position = pos(parametrizedScheme.annotations)
+  }
+
   case class EndPointEmitter(endpoint: EndPoint,
                              ordering: SpecOrdering,
                              children: mutable.ListBuffer[EndPointEmitter] = mutable.ListBuffer())
@@ -212,6 +255,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
+
+          fs.entry(EndPointModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter(f, ordering))
 
           result ++= RamlAnnotationsEmitter(endpoint, ordering).emitters
 
@@ -278,6 +323,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
           })
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
+
+          fs.entry(OperationModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter(f, ordering))
 
           map { () =>
             traverse(ordering.sorted(result))
@@ -617,7 +664,18 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
   case class SecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
+      entry { () =>
+        raw("settings")
+        map { () =>
+          traverse(ordering.sorted(SecuritySettingsValuesEmitters(f, ordering).emitters))
+        }
+      }
+    }
+    override def position(): Position = pos(f.value.annotations)
+  }
 
+  case class SecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering) {
+    def emitters: Seq[Emitter] = {
       val settings = f.value.value.asInstanceOf[Settings]
       val results  = ListBuffer[Emitter]()
 
@@ -631,16 +689,8 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
       settings.fields
         .entry(SettingsModel.AdditionalProperties)
         .foreach(f => results ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering).emitters())
-
-      entry { () =>
-        raw("settings")
-        map { () =>
-          traverse(ordering.sorted(results))
-        }
-      }
+      results
     }
-
-    override def position(): Position = pos(f.value.annotations)
   }
 
   case class OAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering) {
@@ -654,7 +704,7 @@ class RamlSpecEmitter() extends BaseSpecEmitter {
 
       fs.entry(OAuth1SettingsModel.TokenCredentialsUri).map(f => results += ValueEmitter("tokenCredentialsUri", f))
 
-      fs.entry(OAuth1SettingsModel.Signatures).map(f => results += ValueEmitter("signatures", f))
+      fs.entry(OAuth1SettingsModel.Signatures).map(f => results += ArrayEmitter("signatures", f, ordering))
       results
     }
   }

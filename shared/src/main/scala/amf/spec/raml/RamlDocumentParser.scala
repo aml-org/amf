@@ -192,6 +192,9 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
                                               producer: String => ParametrizedSecurityScheme,
                                               declarations: Declarations) {
     def parse(): ParametrizedSecurityScheme = s.tagType match {
+      case YType.Null =>
+        val name = s.value.asScalar.map(_.text).getOrElse("null")
+        producer(name).add(Annotations(s))
       case YType.Str =>
         val name   = s.asString
         val scheme = producer(name).add(Annotations(s))

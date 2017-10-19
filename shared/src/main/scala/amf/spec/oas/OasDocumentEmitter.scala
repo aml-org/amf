@@ -16,7 +16,7 @@ import amf.parser.Position.ZERO
 import amf.parser.{ASTEmitter, Position}
 import amf.remote.{Oas, Vendor}
 import amf.shape._
-import amf.spec.common.{AnnotationParser, BaseSpecEmitter, WellKnownAnnotation}
+import amf.spec.common.BaseSpecEmitter
 import amf.spec.{Declarations, Emitter, SpecOrdering}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model.{YDocument, YType}
@@ -94,6 +94,8 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
       fs.entry(WebApiModel.EndPoints).map(f => result += EndpointsEmitter("paths", f, ordering))
 
+      fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
+
       result ++= OasAnnotationsEmitter(api, ordering).emitters
 
       ordering.sorted(result)
@@ -150,6 +152,41 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
   }
 
+  case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
+    override def emit(): Unit = {
+      val schemes = f.array.values.collect({ case p: ParametrizedSecurityScheme => p })
+
+      entry { () =>
+        raw(key)
+        array { () =>
+          traverse(ordering.sorted(schemes.map(ParametrizedSecuritySchemeEmitter(_, ordering))))
+        }
+      }
+
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme, ordering: SpecOrdering)
+      extends Emitter {
+    override def emit(): Unit = {
+
+      val fs = parametrizedScheme.fields
+
+      fs.entry(ParametrizedSecuritySchemeModel.Scopes) match {
+        case Some(f) =>
+          map { () =>
+            ArrayEmitter(parametrizedScheme.name, f, ordering).emit()
+          }
+        case None =>
+          RawEmitter(parametrizedScheme.name).emit()
+      }
+    }
+
+    override def position(): Position = pos(parametrizedScheme.annotations)
+  }
+
   case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
       sourceOr(
@@ -173,6 +210,9 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
             result += ParametersEmitter("parameters", parameters.parameters(), ordering, parameters.body)
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering, parameters.body.isDefined))
+
+          fs.entry(EndPointModel.Security)
+            .map(f => result += ParametrizedSecuritiesSchemeEmitter("x-security", f, ordering))
 
           result ++= OasAnnotationsEmitter(endpoint, ordering).emitters
 
@@ -230,6 +270,8 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
           fs.entry(OperationModel.Responses).map(f => result += ResponsesEmitter("responses", f, ordering))
 
+          fs.entry(OperationModel.Security)
+            .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
           result ++= OasAnnotationsEmitter(operation, ordering).emitters
 
           map { () =>
@@ -604,21 +646,24 @@ class OasSpecEmitter extends BaseSpecEmitter {
       val securityTypes: Map[OasSecuritySchemeType, SecurityScheme] =
         securitySchemes.map(s => OasSecuritySchemeTypeMapping.fromText(s.`type`) -> s).toMap
       val (oasSecurityDefinitions, extensionDefinitions) = securityTypes.partition(m => m._1.isOas)
-      entry { () =>
-        raw("securityDefinitions")
-        map { () =>
-          traverse(
-            ordering.sorted(oasSecurityDefinitions.map(s => NamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq))
-        }
-      }
 
-      entry { () =>
-        raw("x-securitySchemes")
-        map { () =>
-          traverse(
-            ordering.sorted(extensionDefinitions.map(s => NamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq))
+      if (oasSecurityDefinitions.nonEmpty)
+        entry { () =>
+          raw("securityDefinitions")
+          map { () =>
+            traverse(
+              ordering.sorted(oasSecurityDefinitions.map(s => NamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq))
+          }
         }
-      }
+
+      if (extensionDefinitions.nonEmpty)
+        entry { () =>
+          raw("x-securitySchemes")
+          map { () =>
+            traverse(
+              ordering.sorted(extensionDefinitions.map(s => NamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq))
+          }
+        }
     }
 
     override def position(): Position =
@@ -770,16 +815,19 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
   case class OAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
     override def emit(): Unit = {
-      val namesEmitters = f.array.values.collect({ case s: Scope => EntryEmitter(s.name, s.description) })
 
       entry { () =>
         raw(key)
         map { () =>
-          traverse(ordering.sorted(namesEmitters))
+          traverse(ordering.sorted(ScopeValuesEmitters(f).emitters()))
         }
       }
     } // todo : name and description?
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class ScopeValuesEmitters(f: FieldEntry) {
+    def emitters(): Seq[Emitter] = f.array.values.collect({ case s: Scope => EntryEmitter(s.name, s.description) })
   }
 
   case class SettingsTypeEmitter(settingsEntries: Seq[Emitter], settings: Settings, ordering: SpecOrdering)

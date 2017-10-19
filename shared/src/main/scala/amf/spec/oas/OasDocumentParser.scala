@@ -263,6 +263,17 @@ case class OasDocumentParser(root: Root) extends OasSpecParser(root) {
 
       AnnotationParser(() => endpoint, map).parse()
 
+      map.key(
+        "x-security",
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value.asSeq.map(s =>
+            ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+
+          endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
       map.regex(
         "get|patch|put|post|delete|options|head",
         entries => {
