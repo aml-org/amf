@@ -44,8 +44,8 @@
   "produces": ["application/yaml"],
   "paths": {
     "/level-zero": {
-      "displayName": "One display name",
-      "description": "and this description!",
+      "x-displayName": "One display name",
+      "x-description": "and this description!",
       "get": {
         "operationId": "Some title",
         "parameters": [
@@ -87,12 +87,6 @@
           {
             "name": "Header-One",
             "type": "string",
-            "xml": {
-              "attribute": true,
-              "prefix": "pref",
-              "name": "Xml-name",
-              "namespace": "xsd"
-            },
             "in": "header"
           },
           {
@@ -116,7 +110,13 @@
                 "howmuch": {
                   "type": "integer"
                 }
-              }
+              },
+              "xml": {
+                "attribute": true,
+                "prefix": "pref",
+                "name": "Xml-name",
+                "namespace": "xsd"
+              },
             }
           }
         ],

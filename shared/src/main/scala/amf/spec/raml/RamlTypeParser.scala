@@ -63,7 +63,7 @@ trait RamlTypeSyntax {
 }
 
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
-    extends RamlSpecParser {
+    extends RamlSpecParser with RamlSyntax {
 
 //  override implicit val spec: SpecParserContext = RamlSpecParserContext
 
@@ -321,6 +321,13 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
+      val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
+        case "integer" | "float" => "numberScalarShape"
+        case "string"            => "stringScalarShape"
+        case _                   => "shape"
+      }
+      validateClosedShape(shape.id, map, syntaxType)
+
       shape
     }
   }
@@ -392,6 +399,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
+      validateClosedShape(shape.id, map, "fileShape")
+
       shape
     }
   }
@@ -455,7 +464,9 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       }
 
       finalShape match {
-        case Some(parsed: Shape) => parsed
+        case Some(parsed: Shape) =>
+          validateClosedShape(parsed.id, map, "arrayShape")
+          parsed
         case None                => throw new Exception("Cannot parse data arrangement shape")
       }
     }
@@ -497,6 +508,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
       )
+
+      validateClosedShape(shape.id, map, "arrayShape")
 
       shape
     }
@@ -561,6 +574,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
         }
       )
+
+      validateClosedShape(shape.id, map, "nodeShape")
 
       shape
     }

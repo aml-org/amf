@@ -36,6 +36,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
           case Json => new JsonGenerator().generate(ast).toString
           case _    => unsupported
         }
+      case Unknown => unsupported
     }
   }
 

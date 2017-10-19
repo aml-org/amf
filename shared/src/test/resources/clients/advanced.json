@@ -8,6 +8,11 @@
     "license": {
       "url": "licenseUrl",
       "name": "licenseName"
+    },
+    "contact": {
+      "url": "organizationUrl",
+      "name": "organizationName",
+      "email": "test@test"
     }
   },
   "host": "localhost.com",
@@ -22,19 +27,14 @@
     "http",
     "https"
   ],
-  "contact": {
-    "url": "organizationUrl",
-    "name": "organizationName",
-    "email": "test@test"
-  },
   "externalDocs": {
     "url": "creativoWorkUrl",
     "description": "creativeWorkDescription"
   },
   "paths": {
     "/endpoint": {
-      "displayName": "endpoint",
-      "description": "test endpoint",
+      "x-displayName": "endpoint",
+      "x-description": "test endpoint",
       "get": {
         "operationId": "test get",
         "description": "test operation get",

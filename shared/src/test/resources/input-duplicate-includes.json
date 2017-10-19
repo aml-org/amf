@@ -1,13 +1,14 @@
 {
   "swagger" : "2.0",
-  "a": 1,
-  "b": {
-    "$ref": "includes/include1.json"
+  "info": {
+    "title": "API"
   },
-  "c": [
-    2
-  ],
-  "d": {
-    "$ref": "includes/include1.json"
+  "definitions": {
+    "a": {
+      "$ref": "includes/include1.json"
+    },
+    "b": {
+      "$ref": "includes/include1.json"
+    }
   }
 }

@@ -216,7 +216,7 @@ class Validation(platform: Platform) {
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = {
-    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq)
+    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq.filter(s => !s.isParserSide()))
   }
 
   def validate(model: BaseUnit, profileName: String, messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
@@ -342,5 +342,30 @@ class Validation(platform: Platform) {
 }
 
 object Validation {
-  def apply(platform: Platform): Validation = new Validation(platform)
+  var currentValidation: Option[Validation] = None
+  def apply(platform: Platform): Validation = {
+    currentValidation = Some(new Validation(platform))
+    currentValidation.get
+  }
+
+  /**
+    * Client code can use this function to register a new validation failure
+    */
+  def reportConstraintFailure(level: String,
+                              validationId: String,
+                              targetNode: String,
+                              targetProperty: Option[String] = None,
+                              message: String = "",
+                              position: Option[LexicalInformation] = None): Unit = currentValidation match {
+    case Some(v) => v.reportConstraintFailure(level, validationId, targetNode, targetProperty, message, position)
+    case None    => if (level == SeverityLevels.VIOLATION) {
+      throw new Exception(s"Violation: $message at node $targetNode, property $targetProperty and position $position")
+    }
+  }
+
+  def restartValidations() = currentValidation match {
+    case Some(v) => v.reset()
+    case _       => // ignore
+  }
+
 }

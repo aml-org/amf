@@ -132,7 +132,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       val result: ListBuffer[Emitter] = ListBuffer()
       extension.fields
         .entry(ExtensionModel.Extends)
-        .foreach(f => result += NamedRefEmitter("extends", f.scalar.toString, pos = pos(f.value.annotations)))
+        .foreach(f => result += NamedRefEmitter("x-extends", f.scalar.toString, pos = pos(f.value.annotations)))
       result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas)).emitters
       result
     }
@@ -147,7 +147,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       val result: ListBuffer[Emitter] = ListBuffer()
       extension.fields
         .entry(OverlayModel.Extends)
-        .foreach(f => result += NamedRefEmitter("extends", f.scalar.toString, pos = pos(f.value.annotations)))
+        .foreach(f => result += NamedRefEmitter("x-extends", f.scalar.toString, pos = pos(f.value.annotations)))
       result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas)).emitters
       result
     }

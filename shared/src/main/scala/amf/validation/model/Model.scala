@@ -133,9 +133,14 @@ case class ValidationSpecification(name: String,
       }
     }
   }
+
+  def isParserSide() = targetClass.head == ValidationSpecification.PARSER_SIDE_VALIDATION
 }
 
 object ValidationSpecification extends DialectWrapper {
+
+  val PARSER_SIDE_VALIDATION = (Namespace.Shapes + "ParserShape").iri()
+
   def apply(node: DomainEntity): ValidationSpecification = {
     ValidationSpecification(
       name                = mandatory("name in validation specification", extractString(node, "name")),

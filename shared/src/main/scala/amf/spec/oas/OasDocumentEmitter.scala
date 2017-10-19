@@ -86,8 +86,6 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       fs.entry(WebApiModel.Schemes)
         .map(f => result += ArrayEmitter("schemes", f, ordering))
 
-      fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact", f, ordering))
-
       fs.entry(WebApiModel.Documentations).map(f => result ++= UserDocumentationsEmitter(f, ordering).emitters())
 
       fs.entry(WebApiModel.EndPoints).map(f => result += EndpointsEmitter("paths", f, ordering))
@@ -110,6 +108,8 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
         fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
 
         fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
+
+        fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact", f, ordering))
 
         if (result.nonEmpty)
           entry { () =>
@@ -159,9 +159,9 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
           val result = mutable.ListBuffer[Emitter]()
 
-          fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName", f))
+          fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("x-displayName", f))
 
-          fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
+          fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("x-description", f))
 
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
 

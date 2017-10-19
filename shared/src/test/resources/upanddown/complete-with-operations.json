@@ -8,6 +8,11 @@
     "license": {
       "url": "licenseUrl",
       "name": "licenseName"
+    },
+    "contact": {
+      "url": "contactUrl",
+      "name": "contactName",
+      "email": "contactEmail"
     }
   },
   "host": "api.example.com",
@@ -22,18 +27,13 @@
     "http",
     "https"
   ],
-  "contact": {
-    "url": "contactUrl",
-    "name": "contactName",
-    "email": "contactEmail"
-  },
   "externalDocs": {
     "url": "externalDocsUrl",
     "description": "externalDocsDescription"
   },
   "paths": {
     "/levelzero": {
-      "displayName": "Name",
+      "x-displayName": "Name",
       "get": {
         "operationId": "Some title",
         "description": "Some description",
@@ -68,8 +68,8 @@
       }
     },
     "/levelzero/level-one": {
-      "displayName": "One display name",
-      "description": "and this description!",
+      "x-displayName": "One display name",
+      "x-description": "and this description!",
       "get": {
         "operationId": "Some title level one",
         "description": "Some description level one",
@@ -86,10 +86,10 @@
       }
     },
     "/levelzero/another-level-one": {
-      "displayName": "some other display name"
+      "x-displayName": "some other display name"
     },
     "/another-levelzero": {
-      "displayName": "Root name",
+      "x-displayName": "Root name",
       "post": {
         "operationId": "Some title another level 0",
         "description": "Some description another level 0",

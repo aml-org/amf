@@ -6,17 +6,17 @@
   "basePath": "/some/base/uri",
   "paths": {
     "/levelzero": {
-      "displayName": "Name"
+      "x-displayName": "Name"
     },
     "/levelzero/level-one": {
-      "displayName": "One display name",
-      "description": "and this description!"
+      "x-displayName": "One display name",
+      "x-description": "and this description!"
     },
     "/levelzero/another-level-one": {
-      "displayName": "some other display name"
+      "x-displayName": "some other display name"
     },
     "/another-levelzero": {
-      "displayName": "Root name"
+      "x-displayName": "Root name"
     }
   }
 }
