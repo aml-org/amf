@@ -99,6 +99,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withSummary("This is a summary")
       .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
       .withSchemes(List("http", "https"))
+
     operationPost
       .withName("Some title")
       .withDescription("Some description")
@@ -478,13 +479,6 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withRequired(false)
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
-      .withXMLSerialization(
-        XMLSerializer()
-          .withAttribute(true)
-          .withWrapped(false)
-          .withName("Xml-name")
-          .withNamespace("xsd")
-          .withPrefix("pref"))
 
     //header with object type
     val header2Type =
@@ -505,6 +499,13 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withPayload(Some("application/json"))
       .withObjectSchema("schema")
       .withClosed(false)
+      .withXMLSerialization(
+        XMLSerializer()
+          .withAttribute(true)
+          .withWrapped(false)
+          .withName("Xml-name")
+          .withNamespace("xsd")
+          .withPrefix("pref"))
       .withProperty("howmuch")
       .withPath("http://raml.org/vocabularies/data#howmuch")
       .withMinCount(0)
@@ -708,8 +709,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withResponse("200")
 
     default
-      .withPayload()
-      .withObjectSchema("default")
+      .withPayload(Some("application/json"))
+      .withObjectSchema("schema")
       .withClosed(false)
       .withProperty("invented")
       .withPath("http://raml.org/vocabularies/data#invented")

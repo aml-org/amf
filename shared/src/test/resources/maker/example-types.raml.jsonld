@@ -1655,6 +1655,11 @@
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
                             "@id": "file:/shared/src/test/resources/upanddown/example-types.raml#/web-api/end-points/%2Flevel-zero/get/200/default/default",
@@ -1761,7 +1766,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "default"
+                                "@value": "schema"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [

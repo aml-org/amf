@@ -64,9 +64,10 @@ protocols:
     responses:
       200:
         body:
-          type: object
-          properties:
-            invented: string
+          application/json:
+            type: object
+            properties:
+              invented: string
           application/xml: string
       404:
         body: integer
