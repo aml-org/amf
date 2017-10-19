@@ -88,8 +88,7 @@
           {
             "@id": "http://raml.org/vocabularies/async#AsyncAPI",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#RootDomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -99,16 +98,20 @@
             "http://schema.org/description": [
               {
                 "@value": "The top level element of any RAML Async is the AsyncAPI node. It introduces some meta-information about the API like the title, version and description of the API.
-It also holds the information of the Connection, global Bindings and the EndPoints defined in the spec.
-"
+                It also holds the information of the Connection, global Bindings and the EndPoints defined in the spec.
+                "
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#RootDomainElement"
               }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#Connection",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -118,17 +121,21 @@ It also holds the information of the Connection, global Bindings and the EndPoin
             "http://schema.org/description": [
               {
                 "@value": "The `Connection` node contains global connection information that can be used by clients to gain access to the API endpoints and use the async operations interface.
-It can be used to define a base identifier for the end points as well as to set-up specific `Bindings` for the transport layer.
-This node can also be used to define connection parameters to a 'messaging broker' in the messaging systems that using this kind of functionality.
-"
+                It can be used to define a base identifier for the end points as well as to set-up specific `Bindings` for the transport layer.
+                This node can also be used to define connection parameters to a 'messaging broker' in the messaging systems that using this kind of functionality.
+                "
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
               }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#EndPoint",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -138,16 +145,20 @@ This node can also be used to define connection parameters to a 'messaging broke
             "http://schema.org/description": [
               {
                 "@value": "Each of the discoverable communication units in the API with support for the asynchronous interface are defined as EndPoint nodes.
-EndPoints are defined by an identifier, the list of asynchronous operations supported and an optional set of transport bindings.
-"
+                EndPoints are defined by an identifier, the list of asynchronous operations supported and an optional set of transport bindings.
+                "
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
               }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#Parameter",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -158,13 +169,17 @@ EndPoints are defined by an identifier, the list of asynchronous operations supp
               {
                 "@value": "Information about the replacement options that can be used in a parametric EndPoint"
               }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
+              }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#AsyncOperation",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -175,13 +190,17 @@ EndPoints are defined by an identifier, the list of asynchronous operations supp
               {
                 "@value": "Each of the operations in the asynchronous interface"
               }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
+              }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#Message",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -192,13 +211,17 @@ EndPoints are defined by an identifier, the list of asynchronous operations supp
               {
                 "@value": "Unit of data passed as the argument of an asyn operation"
               }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
+              }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#Header",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
             ],
             "http://schema.org/name": [
               {
@@ -209,13 +232,22 @@ EndPoints are defined by an identifier, the list of asynchronous operations supp
               {
                 "@value": "Meta information for a message"
               }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
+              }
             ]
           },
           {
             "@id": "http://raml.org/vocabularies/async#Bindings",
             "@type": [
-              "http://www.w3.org/2002/07/owl#Class",
-              "http://raml.org/vocabularies/doc#DomainElement"
+              "http://www.w3.org/2002/07/owl#Class"
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+              {
+                "@id": "http://raml.org/vocabularies/doc#DomainElement"
+              }
             ]
           }
         ],
@@ -292,7 +324,7 @@ EndPoints are defined by an identifier, the list of asynchronous operations supp
                 "@id": "http://www.w3.org/ns/shacl#Shape"
               }
             ],
-            "http://raml.org/vocabularies/meta#extends": [
+            "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
               {
                 "@id": "http://raml.org/vocabularies/doc#declarationProperty"
               }

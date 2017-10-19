@@ -27,16 +27,9 @@ object ClassTerm extends Declaration("Class", Namespace.Owl) {
 
   val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
 
-  val `extends`: DialectPropertyMapping    = ref("extends", ClassTerm, _.copy(collection = true, jsonld = false))
+  val `extends`: DialectPropertyMapping    = ref("extends", ClassTerm, _.copy(collection = true, rdfName = Some("subClassOf"), namespace = Some(Namespace.Rdfs)))
 
   val `properties`: DialectPropertyMapping = ref("properties", PropertyTerm, _.copy(collection = true, jsonld = false))
-
-  typeCalculator = {
-    val calculator: TypeCalculator = { (domainEntity: DomainEntity) =>
-      domainEntity.strings(`extends`).map(ValueType(_).asInstanceOf[ValueType]).toList
-    }
-    Some(calculator)
-  }
 
 }
 
@@ -51,7 +44,7 @@ object PropertyTerm extends Declaration("Property") {
     "range",
     ClassTerm,
     _.copy(collection = true, referenceTarget = Some(ClassTerm), namespace = Some(Namespace.Rdfs)))
-  val `extends`: DialectPropertyMapping = ref("extends", PropertyTerm, _.copy(collection = true))
+  val `extends`: DialectPropertyMapping = ref("extends", PropertyTerm, _.copy(collection = true, rdfName = Some("subPropertyOf"), namespace = Some(Namespace.Rdfs)))
 
   val DATATYPE_PROPERTY = ValueType("http://www.w3.org/2002/07/owl#DatatypeProperty")
   val OBJECT_PROPERTY   = ValueType("http://www.w3.org/2002/07/owl#ObjectProperty")
