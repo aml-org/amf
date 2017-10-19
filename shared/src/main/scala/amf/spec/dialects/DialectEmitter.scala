@@ -98,7 +98,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
   def emit(): YDocument = {
     YDocument {
-      _.map(ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1))).emit(_))
+      ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1))).emit(_)
     }
   }
 
