@@ -47,11 +47,10 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
           .withName("licenseName")
           .withUrl("licenseUrl")
       )
-      .withDocumentation(
-        CreativeWork()
-          .withUrl("creativoWorkUrl")
-          .withDescription("creativeWorkDescription")
-      )
+      .withDocumentationUrl("creativoWorkUrl")
+      .withDescription("creativeWorkDescription")
+
+    api
   }
 
   private def advanced(): WebApi = {

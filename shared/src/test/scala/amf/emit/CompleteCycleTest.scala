@@ -217,6 +217,22 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("operation-response.raml", "operation-response.raml.json", RamlYamlHint, Oas)
   }
 
+  test("Complete with parameter references oas to oas test") {
+    cycle("parameters.json", "parameters.json", OasJsonHint, Oas)
+  }
+
+  test("Complete with parameter references oas to amf test") {
+    cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Complete with parameter references oas to raml test") {
+    cycle("parameters.json", "parameters.raml", OasJsonHint, Raml)
+  }
+
+  test("Complete with parameter references raml to amf test") {
+    cycle("parameters.raml", "parameters.raml.jsonld", RamlYamlHint, Amf)
+  }
+
   test("Complete with payloads raml to raml test") {
     cycle("payloads.raml", "payloads.raml.raml", RamlYamlHint, Raml)
   }
@@ -496,6 +512,26 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
 
   test("Types forward references oas to oas test") {
     cycle("forward-references-types.json", OasJsonHint, Oas)
+  }
+
+  test("Schema types raml to amf test") {
+    cycle("externals.raml", "externals.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Schema types jsonld to raml test") {
+    cycle("externals.raml.jsonld", "externals.raml.jsonld.raml", AmfJsonHint, Raml)
+  }
+
+  test("Schema types raml to oas test") {
+    cycle("externals.raml", "externals.json", RamlYamlHint, Oas)
+  }
+
+  test("Schema types oas to amf test") {
+    cycle("externals.json", "externals.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Schema types amf to oas test") {
+    cycle("externals.json.jsonld", "externals.json.jsonld.json", AmfJsonHint, Oas)
   }
 
   test("Security schemes raml to amf") {

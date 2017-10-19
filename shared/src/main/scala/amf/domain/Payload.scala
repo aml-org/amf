@@ -8,7 +8,7 @@ import org.yaml.model.YMap
 /**
   * Payload internal model.
   */
-case class Payload(fields: Fields, annotations: Annotations) extends DomainElement {
+case class Payload(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
   def mediaType: String = fields(MediaType)
   def schema: Shape     = fields(Schema)
@@ -38,6 +38,8 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
     set(PayloadModel.Schema, array)
     array
   }
+
+  override def linkCopy() = Payload().withId(id)
 }
 
 object Payload {

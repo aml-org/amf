@@ -237,8 +237,8 @@ object TypeBuiltins {
   val ANY: String     = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(override val root: Root, val externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit])
-    extends RamlSpecParser(root)
+class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit])
+    extends RamlSpecParser
     with TypeBuiltins {
 
   val REGEX_URI =

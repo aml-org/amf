@@ -48,4 +48,6 @@ object TypeDef {
   object LinkType           extends TypeDef
   object UndefinedType      extends TypeDef
   object TypeExpressionType extends TypeDef
+  object XMLSchemaType      extends TypeDef
+  object JSONSchemaType     extends TypeDef
 }

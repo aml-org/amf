@@ -33,7 +33,7 @@ object WebApiModel extends DomainElementModel {
 
   val License = Field(LicenseModel, Schema + "license")
 
-  val Documentation = Field(CreativeWorkModel, Schema + "documentation")
+  val Documentations = Field(Array(CreativeWorkModel), Schema + "documentation")
 
   val EndPoints = Field(Array(EndPointModel), Http + "endpoint")
 
@@ -44,19 +44,21 @@ object WebApiModel extends DomainElementModel {
   override val `type`: List[ValueType] = Schema + "WebAPI" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name,
-         Description,
-         Host,
-         Schemes,
-         BasePath,
-         Accepts,
-         ContentType,
-         Version,
-         TermsOfService,
-         Provider,
-         License,
-         Documentation,
-         EndPoints,
-         BaseUriParameters,
-         Security) ++ DomainElementModel.fields
+    List(
+      Name,
+      Description,
+      Host,
+      Schemes,
+      BasePath,
+      Accepts,
+      ContentType,
+      Version,
+      TermsOfService,
+      Provider,
+      License,
+      Documentations,
+      EndPoints,
+      BaseUriParameters,
+      Security
+    ) ++ DomainElementModel.fields
 }

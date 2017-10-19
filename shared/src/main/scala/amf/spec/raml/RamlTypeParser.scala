@@ -1,7 +1,7 @@
 package amf.spec.raml
 
-import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition}
-import amf.domain.{Annotations, CreativeWork, Value}
+import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
+import amf.domain.{Annotations, CreativeWork, ExternalDomainElement, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
@@ -9,9 +9,10 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.common.{BaseSpecParser, SpecParserContext}
+import amf.spec.oas.OasTypeParser
 import amf.vocabulary.Namespace
 import org.yaml.model._
+import org.yaml.parser.YamlParser
 
 import scala.collection.mutable
 
@@ -20,16 +21,58 @@ object RamlTypeParser {
     new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)
 }
 
-case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
-    extends BaseSpecParser {
+trait RamlTypeSyntax {
+  def parseWellKnownTypeRef(ramlType: String): Shape = {
+    ramlType match {
+      case "nil" | ""      => NilShape()
+      case "any"           => AnyShape()
+      case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
+      case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
+      case "number"        => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
+      case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
+      case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
+      case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
+      case "array"         => ArrayShape()
+      case "object"        => NodeShape()
+      case "union"         => UnionShape()
+    }
+  }
+  def wellKnownType(str: String) =
+    if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
+          .indexOf("}") > -1) {
+      false
+    } else {
+      str match {
+        case "nil" | ""      => true
+        case "any"           => true
+        case "string"        => true
+        case "integer"       => true
+        case "number"        => true
+        case "boolean"       => true
+        case "datetime"      => true
+        case "datetime-only" => true
+        case "time-only"     => true
+        case "date-only"     => true
+        case "array"         => true
+        case "object"        => true
+        case "union"         => true
+        case _               => false
+      }
+    }
+}
 
-  override implicit val spec: SpecParserContext = RamlSpecParserContext
+case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
+    extends RamlSpecParser {
 
   private val value = part.value
 
   def parse(): Option[Shape] = {
 
     val result = detect() match {
+      case XMLSchemaType               => Some(parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry]))
+      case JSONSchemaType              => Some(parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry]))
       case TypeExpressionType          => Some(parseTypeExpression())
       case UnionType                   => Some(parseUnionType())
       case ObjectType                  => Some(parseObjectType())
@@ -87,6 +130,48 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _: YSequence | _: YMap => ObjectType
           case _                      => UndefinedType
       })
+  }
+
+  private def parseXMLSchemaExpression(entry: YMapEntry): Shape = {
+    entry.value.value match {
+      case scalar: YScalar =>
+        val shape = SchemaShape().withRaw(scalar.text).withMediaType("application/xml")
+        shape.withName(entry.key)
+        adopt(shape)
+        shape
+      case map: YMap =>
+        map.key("type") match {
+          case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
+            val shape =
+              SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
+            shape.withName(entry.key)
+            adopt(shape)
+            shape
+          case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+        }
+      case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+    }
+  }
+
+  private def parseJSONSchemaExpression(entry: YMapEntry): Shape = {
+    val text = entry.value.value match {
+      case scalar: YScalar => scalar.text
+      case map: YMap =>
+        map.key("type") match {
+          case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
+            typeEntry.value.value.asInstanceOf[YScalar].text
+          case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+        }
+      case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+    }
+    val schemaAst   = YamlParser(text).parse(true)
+    val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
+    OasTypeParser(schemaEntry, (shape) => adopt(shape), declarations).parse() match {
+      case Some(shape) =>
+        shape.annotations += ParsedJSONSchema(text)
+        shape
+      case None => throw new Exception("Cannot parse JSON Schema")
+    }
   }
 
   private def parseTypeExpression(): Shape = {
@@ -253,8 +338,11 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
               val unionNodes = seq.nodes.zipWithIndex
                 .map {
                   case (node, index) =>
-                    val entry = YMapEntry(YNode(YScalar(s"item$index", plain = true, node.range)), node)
-                    RamlTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+                    RamlTypeParser(node,
+                                   s"item$index",
+                                   node,
+                                   item => item.adopted(shape.id + "/items/" + index),
+                                   declarations).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -536,7 +624,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
     }
   }
 
-  abstract class ShapeParser() {
+  abstract class ShapeParser() extends RamlTypeSyntax {
 
     val shape: Shape
     val map: YMap
@@ -576,7 +664,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       map.key(
         "(externalDocs)",
         entry => {
-          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
+          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
           shape.set(ShapeModel.Documentation, creativeWork, Annotations(entry))
         }
       )
@@ -592,10 +680,26 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       shape
     }
 
-    protected def wellKnownType(typeId: String): Boolean = {
-      RamlTypeDefMatcher.matchType(typeId) match {
-        case ObjectType if typeId != "object" => false
-        case _                                => true
+    def parseSchemaType(parent: String, encodes: ExternalDomainElement): Shape = {
+      Option(encodes.raw) match {
+        case Some(rawText) if rawText.startsWith("<") =>
+          val schema: SchemaShape = SchemaShape().withRaw(rawText).withMediaType("application/xml")
+          schema.adopted(parent)
+          schema
+
+        /*
+        case Some(rawText) if rawText.startsWith("{") || rawText.startsWith("[") =>
+          val parts = YamlParser(rawText).parse(true)
+          OasTypeParser(parts.head.asInstanceOf[], (shape) => shape.adopted(parent), declarations)
+         */
+
+        case Some(rawText) =>
+          val schema: SchemaShape = SchemaShape().withRaw(rawText)
+          schema.adopted(parent)
+          schema
+
+        case None =>
+          throw new Exception("Error, cannot parse schema type without schema text")
       }
     }
 
@@ -605,20 +709,21 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         entry => {
           entry.value.value match {
 
-            case scalar: YScalar if !wellKnownType(scalar.text) =>
-              declarations.findType(scalar.text) match {
-                case Some(ancestor) =>
-                  shape.set(NodeShapeModel.Inherits,
-                            AmfArray(Seq(ancestor), Annotations(entry.value)),
-                            Annotations(entry))
-                case None => throw new Exception("Reference not found")
-              }
-
             case scalar: YScalar if RamlTypeDefMatcher.TypeExpression.unapply(scalar.text).isDefined =>
               RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
                 .parse()
                 .foreach(s =>
                   shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
+
+            case scalar: YScalar if !wellKnownType(scalar.text) =>
+              // it might be a named type
+              declarations.findType(scalar.text) match {
+                case Some(ancestor) =>
+                  shape.set(NodeShapeModel.Inherits,
+                            AmfArray(Seq(ancestor), Annotations(entry.value)),
+                            Annotations(entry))
+                case _ => throw new Exception("Reference not found")
+              }
 
             case sequence: YSequence =>
               val inherits = ArrayNode(sequence)
@@ -648,24 +753,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           }
         }
       )
-    }
-
-    def parseWellKnownTypeRef(ramlType: String): Shape = {
-      ramlType match {
-        case "nil" | ""      => NilShape()
-        case "any"           => AnyShape()
-        case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
-        case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
-        case "number"        => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
-        case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
-        case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-        case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-        case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
-        case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
-        case "array"         => ArrayShape()
-        case "object"        => NodeShape()
-        case "union"         => UnionShape()
-      }
     }
   }
 

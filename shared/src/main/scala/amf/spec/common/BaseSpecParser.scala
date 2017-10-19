@@ -26,26 +26,6 @@ private[spec] trait BaseSpecParser {
 
   implicit val spec: SpecParserContext
 
-  case class CreativeWorkParser(map: YMap) {
-    def parse(): CreativeWork = {
-      val creativeWork = CreativeWork(map)
-
-      map.key("url", entry => {
-        val value = ValueNode(entry.value)
-        creativeWork.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
-      })
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
-      })
-
-      AnnotationParser(() => creativeWork, map).parse()
-
-      creativeWork
-    }
-  }
-
   case class OrganizationParser(map: YMap) {
     def parse(): Organization = {
 
@@ -498,6 +478,61 @@ private[spec] trait BaseSpecParser {
     private def scalar = ast.value.toScalar
 
     private def annotations() = Annotations(ast)
+  }
+
+  case class OasCreativeWorkParser(map: YMap) {
+    def parse(): CreativeWork = {
+
+      val creativeWork = CreativeWork(map)
+
+      map.key("url", entry => {
+        val value = ValueNode(entry.value)
+        creativeWork.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
+      })
+
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        creativeWork.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
+      })
+
+      map.key("x-title", entry => {
+        val value = ValueNode(entry.value)
+        creativeWork.set(CreativeWorkModel.Title, value.string(), Annotations(entry))
+      })
+
+      AnnotationParser(() => creativeWork, map).parse()
+
+      creativeWork
+    }
+  }
+
+  case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean) {
+    def parse(): CreativeWork = {
+
+      val documentation = CreativeWork(Annotations(map))
+
+      map.key("title", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(CreativeWorkModel.Title, value.string(), Annotations(entry))
+      })
+
+      map.key("content", entry => {
+        val value = ValueNode(entry.value)
+        documentation.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
+      })
+
+      if (withExtention)
+        map.key("(url)", entry => {
+          val value = ValueNode(entry.value)
+          documentation.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
+        })
+      else
+        map.key("url", entry => {
+          val value = ValueNode(entry.value)
+          documentation.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
+        })
+      documentation
+    }
   }
 
 }

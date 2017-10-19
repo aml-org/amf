@@ -1,5 +1,7 @@
 package amf.spec.common
 
+import amf.domain.Annotation.{LexicalInformation, SingleValueArray}
+import amf.domain._
 import amf.domain.Annotation.LexicalInformation
 import amf.domain._
 import amf.domain.`abstract`.{
@@ -15,12 +17,14 @@ import amf.domain.extensions.{
   ObjectNode => DataObjectNode,
   ScalarNode => DataScalarNode
 }
+import amf.metadata.domain.CreativeWorkModel
 import amf.model.AmfScalar
+import amf.parser.Position
 import amf.parser.Position.ZERO
-import amf.parser.{ASTEmitter, Position}
-import amf.spec.{Emitter, SpecOrdering}
+import amf.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.vocabulary.Namespace
-import org.yaml.model.YType
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -32,58 +36,37 @@ object OasAnnotationFormat  extends AnnotationFormat {}
 
 trait BaseSpecEmitter {
 
-  val emitter: ASTEmitter
-
   protected def pos(annotations: Annotations): Position =
     annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
-  protected def traverse(emitters: Seq[Emitter]): Unit = {
+  protected def traverse(emitters: Seq[EntryEmitter], b: EntryBuilder): Unit = {
     emitters.foreach(e => {
-      e.emit()
+      e.emit(b)
     })
   }
 
-  protected def raw(content: String, tag: YType = YType.Str): Unit = emitter.scalar(content, tag)
-
-  protected def entry(inner: () => Unit): Unit = emitter.entry(inner)
-
-  protected def array(inner: () => Unit): Unit = emitter.sequence(inner)
-
-  protected def map(inner: () => Unit): Unit = emitter.mapping(inner)
-
-  protected def comment(text: String): Unit = emitter.comment(text)
-
-  /** Emit a single value from an array as an entry. */
-  case class ArrayValueEmitter(key: String, f: FieldEntry) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(f.value, entry { () =>
-        raw(key)
-        raw(f.array.scalars.headOption.map(_.toString).getOrElse(""))
-      })
-    }
-
-    override def position(): Position = pos(f.value.annotations)
+  protected def traverse(emitters: Seq[PartEmitter], b: PartBuilder): Unit = {
+    emitters.foreach(e => {
+      e.emit(b)
+    })
   }
 
-  case class ScalarEmitter(v: AmfScalar, tag: YType = YType.Str) extends Emitter {
-    override def emit(): Unit = sourceOr(v.annotations, raw(v.value.toString, tag))
+  protected def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
+    b.scalar(YNode(YScalar(content), tag))
+
+  case class ScalarEmitter(v: AmfScalar, tag: YType = YType.Str) extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = sourceOr(v.annotations, b.scalar(YNode(YScalar(v.value), tag)))
 
     override def position(): Position = pos(v.annotations)
   }
 
-  case class RawEmitter(content: String, tag: YType = YType.Str, annotations: Annotations = Annotations())
-      extends Emitter {
-    override def emit(): Unit = sourceOr(annotations, raw(content, tag))
-
-    override def position(): Position = pos(annotations)
-  }
-
-  case class ValueEmitter(key: String, f: FieldEntry, tag: YType = YType.Str) extends Emitter {
-    override def emit(): Unit = {
-      sourceOr(f.value, entry { () =>
-        raw(key)
-        raw(f.scalar.toString, tag)
-      })
+  case class ValueEmitter(key: String, f: FieldEntry, tag: YType = YType.Str) extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      sourceOr(f.value,
+               b.entry(
+                 key,
+                 YNode(YScalar(f.scalar.value), tag)
+               ))
     }
 
     override def position(): Position = pos(f.value.annotations)
@@ -98,43 +81,44 @@ trait BaseSpecEmitter {
     inner
   }
 
-  case class EntryEmitter(key: String, value: String, tag: YType = YType.Str, position: Position = Position.ZERO)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(key)
-        raw(value, tag)
-      }
+  case class MapEntryEmitter(key: String, value: String, tag: YType = YType.Str, position: Position = Position.ZERO)
+      extends EntryEmitter {
+
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        key,
+        raw(_, value, tag)
+      )
     }
   }
 
-  protected def link(id: String): Unit = map { () =>
-    entry { () =>
-      raw("@id"); raw(id.trim)
-    }
+  object MapEntryEmitter {
+    def apply(tuple: (String, String)): MapEntryEmitter =
+      tuple match {
+        case (key, value) => MapEntryEmitter(key, value)
+      }
   }
 
-  case class AnnotationsEmitter(domainElement: DomainElement, ordering: SpecOrdering, format: AnnotationFormat) {
-    def emitters: Seq[Emitter] = {
-      domainElement.customDomainProperties.map { pro =>
-        AnnotationEmitter(pro, ordering, format)
-      }
-    }
+  protected def link(b: PartBuilder, id: String): Unit = b.map(_.entry("@id", id.trim))
+
+  case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering, format: AnnotationFormat) {
+    def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(AnnotationEmitter(_, ordering, format))
   }
 
   case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering, format: AnnotationFormat)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        format match {
-          case RamlAnnotationFormat => raw("(" + domainExtension.definedBy.name + ")")
-          case OasAnnotationFormat  => raw("x-" + domainExtension.definedBy.name)
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.complexEntry(
+        b => {
+          format match {
+            case RamlAnnotationFormat => b.scalar("(" + domainExtension.definedBy.name + ")")
+            case OasAnnotationFormat  => raw(b, "x-" + domainExtension.definedBy.name)
+          }
+        },
+        b => {
+          Option(domainExtension.extension).foreach { DataNodeEmitter(_, ordering).emit(b) }
         }
-
-        Option(domainExtension.extension).foreach { dataNode =>
-          DataNodeEmitter(dataNode, ordering).emit()
-        }
-      }
+      )
     }
 
     override def position(): Position = pos(domainExtension.annotations)
@@ -150,18 +134,18 @@ trait BaseSpecEmitter {
       AnnotationsEmitter(domainElement, ordering, OasAnnotationFormat)
   }
 
-  case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends Emitter {
+  case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends PartEmitter {
     private val xsdString: String  = (Namespace.Xsd + "string").iri()
     private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
     private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
     private val xsdBoolean: String = (Namespace.Xsd + "boolean").iri()
     private val xsdNil: String     = (Namespace.Xsd + "nil").iri()
 
-    override def emit(): Unit = {
+    override def emit(b: PartBuilder): Unit = {
       dataNode match {
-        case scalar: DataScalarNode => emitScalar(scalar)
-        case array: DataArrayNode   => emitArray(array)
-        case obj: DataObjectNode    => emitObject(obj)
+        case scalar: DataScalarNode => emitScalar(scalar, b)
+        case array: DataArrayNode   => emitArray(array, b)
+        case obj: DataObjectNode    => emitObject(obj, b)
       }
     }
 
@@ -173,33 +157,31 @@ trait BaseSpecEmitter {
       }
     }
 
-    def objectEmitters(objectNode: DataObjectNode): Seq[Emitter] = {
+    def objectEmitters(objectNode: DataObjectNode): Seq[EntryEmitter] = {
       objectNode.properties.keys.map { property =>
         DataPropertyEmitter(property, objectNode, ordering)
       }.toSeq
     }
 
-    def emitObject(objectNode: DataObjectNode): Unit = {
-      map { () =>
-        ordering.sorted(objectEmitters(objectNode)).foreach(_.emit())
-      }
+    def emitObject(objectNode: DataObjectNode, b: PartBuilder): Unit = {
+      b.map(b => {
+        ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b))
+      })
     }
 
-    def arrayEmitters(arrayNode: DataArrayNode): Seq[Emitter] = {
-      arrayNode.members.map(DataNodeEmitter(_, ordering))
+    def arrayEmitters(arrayNode: DataArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering))
+
+    def emitArray(arrayNode: DataArrayNode, b: PartBuilder): Unit = {
+      b.list(b => {
+        ordering.sorted(arrayEmitters(arrayNode)).foreach(_.emit(b))
+      })
     }
 
-    def emitArray(arrayNode: DataArrayNode): Unit = {
-      array { () =>
-        ordering.sorted(arrayEmitters(arrayNode)).foreach(_.emit())
-      }
+    def emitScalar(scalar: DataScalarNode, b: PartBuilder): Unit = {
+      scalarEmitter(scalar).emit(b)
     }
 
-    def emitScalar(scalar: DataScalarNode): Unit = {
-      scalarEmitter(scalar).emit()
-    }
-
-    def scalarEmitter(scalar: DataScalarNode): Emitter = {
+    def scalarEmitter(scalar: DataScalarNode): PartEmitter = {
       scalar.dataType match {
         case Some(t) if t == xsdString  => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Str)
         case Some(t) if t == xsdInteger => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Int)
@@ -214,15 +196,15 @@ trait BaseSpecEmitter {
   }
 
   case class ExtendsEmitter(prefix: String, field: FieldEntry, ordering: SpecOrdering) {
-    def emitters(): Seq[Emitter] = {
-      val result = ListBuffer[Emitter]()
+    def emitters(): Seq[EntryEmitter] = {
+      val result = ListBuffer[EntryEmitter]()
+
       val resourceTypes: Seq[ParametrizedResourceType] = field.array.values.collect {
         case a: ParametrizedResourceType => a
       }
-      val traits: Seq[ParametrizedTrait] = field.array.values.collect { case a: ParametrizedTrait => a }
-
       if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(prefix, resourceTypes, ordering)
 
+      val traits: Seq[ParametrizedTrait] = field.array.values.collect { case a: ParametrizedTrait => a }
       if (traits.nonEmpty) result += TraitExtendsEmitter(prefix, traits, ordering)
 
       result
@@ -230,19 +212,12 @@ trait BaseSpecEmitter {
   }
 
   case class TraitExtendsEmitter(prefix: String, traits: Seq[ParametrizedTrait], ordering: SpecOrdering)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(prefix + "is")
-
-        array { () =>
-          val result = ListBuffer[Emitter]()
-
-          traits.foreach(t => result += ParametrizedDeclarationEmitter(t, ordering))
-
-          traverse(ordering.sorted(result))
-        }
-      }
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        prefix + "is",
+        _.list(traverse(ordering.sorted(traits.map(ParametrizedDeclarationEmitter(_, ordering))), _))
+      )
     }
 
     override def position(): Position = traits.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
@@ -251,12 +226,12 @@ trait BaseSpecEmitter {
   case class EndPointExtendsEmitter(prefix: String,
                                     resourceTypes: Seq[ParametrizedResourceType],
                                     ordering: SpecOrdering)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(prefix + "type")
-        ParametrizedDeclarationEmitter(resourceTypes.head, ordering).emit()
-      }
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        prefix + "type",
+        ParametrizedDeclarationEmitter(resourceTypes.head, ordering).emit(_)
+      )
     }
 
     override def position(): Position =
@@ -264,24 +239,22 @@ trait BaseSpecEmitter {
   }
 
   case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)
-      extends Emitter {
-    override def emit(): Unit = {
+      extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
       if (declaration.variables.nonEmpty) {
-        map { () =>
-          entry { () =>
-            val result = ListBuffer[Emitter]()
+        b.map {
+          _.entry(
+            declaration.name,
+            _.map { b =>
+              val result = declaration.variables.map(variable =>
+                MapEntryEmitter(variable.name, variable.value, position = pos(variable.annotations)))
 
-            declaration.variables.foreach(variable =>
-              result += EntryEmitter(variable.name, variable.value, position = pos(variable.annotations)))
-
-            raw(declaration.name)
-            map { () =>
-              traverse(ordering.sorted(result))
+              traverse(ordering.sorted(result), b)
             }
-          }
+          )
         }
       } else {
-        raw(declaration.name)
+        raw(b, declaration.name)
       }
     }
 
@@ -291,15 +264,12 @@ trait BaseSpecEmitter {
   case class AbstractDeclarationsEmitter(key: String,
                                          declarations: Seq[AbstractDeclaration],
                                          ordering: SpecOrdering,
-                                         tagEmitter: (DomainElement, String) => Emitter)
-      extends Emitter {
-    override def emit(): Unit = {
-      entry { () =>
-        raw(key)
-        map { () =>
-          traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering, tagEmitter))))
-        }
-      }
+                                         tagEmitter: (DomainElement, String) => PartEmitter)
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(key, _.map { b =>
+        traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering, tagEmitter))), b)
+      })
     }
 
     override def position(): Position = declarations.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
@@ -307,59 +277,151 @@ trait BaseSpecEmitter {
 
   case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
                                         ordering: SpecOrdering,
-                                        tagEmitter: (DomainElement, String) => Emitter)
-      extends Emitter {
-    override def position(): Position = pos(declaration.annotations)
+                                        tagEmitter: (DomainElement, String) => PartEmitter)
+      extends EntryEmitter {
 
-    override def emit(): Unit = {
-      entry { () =>
-        val name = Option(declaration.name)
-          .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
-        raw(name)
-        if (declaration.isLink)
-          declaration.linkTarget.foreach(l => tagEmitter(l, declaration.linkLabel.getOrElse(l.id)).emit())
-        else
-          DataNodeEmitter(declaration.dataNode, ordering).emit()
-      }
+    override def emit(b: EntryBuilder): Unit = {
+      val name = Option(declaration.name)
+        .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
+
+      b.entry(
+        name,
+        b => {
+          if (declaration.isLink)
+            declaration.linkTarget.foreach(l => tagEmitter(l, declaration.linkLabel.getOrElse(l.id)).emit(b))
+          else
+            DataNodeEmitter(declaration.dataNode, ordering).emit(b)
+        }
+      )
     }
+
+    override def position(): Position = pos(declaration.annotations)
   }
 
-  case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, ordering: SpecOrdering) extends Emitter {
+  case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, ordering: SpecOrdering)
+      extends EntryEmitter {
     val annotations: Annotations     = dataNode.propertyAnnotations(property)
     val propertyValue: Seq[DataNode] = dataNode.properties(property)
 
-    override def emit(): Unit = {
-      entry { () =>
-        raw(property)
-        // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(propertyValue.head, ordering).emit()
-      }
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        property,
+        b => {
+          // In the current implementation ther can only be one value, we are NOT flattening arrays
+          DataNodeEmitter(propertyValue.head, ordering).emit(b)
+        }
+      )
     }
 
     override def position(): Position = pos(annotations)
   }
 
-  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends Emitter {
-    override def emit(): Unit = {
+  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, force: Boolean = false)
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      val single = f.value.annotations.contains(classOf[SingleValueArray])
+
       sourceOr(
         f.value,
-        entry { () =>
-          raw(key)
+        if (single && !force) emitSingle(b) else emitValues(b)
+      )
+    }
 
-          val result = mutable.ListBuffer[Emitter]()
+    private def emitSingle(b: EntryBuilder) = {
+      val value = f.array.scalars.headOption.map(_.toString).getOrElse("")
+      b.entry(key, value)
+    }
+
+    private def emitValues(b: EntryBuilder) = {
+      b.entry(
+        key,
+        b => {
+          val result = mutable.ListBuffer[PartEmitter]()
 
           f.array.scalars
             .foreach(v => {
               result += ScalarEmitter(v)
             })
 
-          array { () =>
-            traverse(ordering.sorted(result))
-          }
+          b.list(b => {
+            traverse(ordering.sorted(result), b)
+          })
         }
       )
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class RamlCreativeWorkItemsEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtention: Boolean) {
+    def emitters(): Seq[EntryEmitter] = {
+      val result = ListBuffer[EntryEmitter]()
+
+      val fs = documentation.fields
+
+      fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter(if (withExtention) "(url)" else "url", f))
+
+      fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("content", f))
+
+      fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("title", f))
+
+      result ++= RamlAnnotationsEmitter(documentation, ordering).emitters
+      ordering.sorted(result)
+    }
+  }
+
+  case class RamlCreativeWorkEmitter(documentation: CreativeWork, ordering: SpecOrdering, withExtension: Boolean)
+      extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
+      sourceOr(
+        documentation.annotations,
+        b.map(traverse(RamlCreativeWorkItemsEmitter(documentation, ordering, withExtension).emitters(), _))
+      )
+    }
+
+    override def position(): Position = pos(documentation.annotations)
+  }
+
+  case class OasCreativeWorkItemsEmitter(document: CreativeWork, ordering: SpecOrdering) {
+    def emitters(): Seq[EntryEmitter] = {
+      val fs     = document.fields
+      val result = ListBuffer[EntryEmitter]()
+
+      fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter("url", f))
+
+      fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
+
+      fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("x-title", f))
+
+      result ++= OasAnnotationsEmitter(document, ordering).emitters
+
+      ordering.sorted(result)
+    }
+  }
+
+  case class OasCreativeWorkEmitter(document: CreativeWork, ordering: SpecOrdering) extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
+      if (document.isLink)
+        raw(b, document.linkLabel.getOrElse(document.linkTarget.get.id))
+      else
+        b.map(traverse(OasCreativeWorkItemsEmitter(document, ordering).emitters(), _))
+    }
+
+    override def position(): Position = pos(document.annotations)
+  }
+
+  case class OasEntryCreativeWorkEmitter(key: String, documentation: CreativeWork, ordering: SpecOrdering)
+      extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      sourceOr(
+        documentation.annotations,
+        b.entry(
+          key,
+          OasCreativeWorkEmitter(documentation, ordering).emit(_)
+        )
+      )
+    }
+
+    override def position(): Position = pos(documentation.annotations)
   }
 }

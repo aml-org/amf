@@ -2,7 +2,7 @@ package amf.metadata.document
 
 import amf.metadata.Field
 import amf.metadata.Type.Iri
-import amf.metadata.domain.{DomainElementModel, UserDocumentationModel}
+import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType
 
@@ -64,6 +64,12 @@ object FragmentsTypesModels {
     override def fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "AnnotationTypeDeclaration") ++ FragmentModel.`type`
+  }
+
+  object ExternalFragmentModel extends FragmentModel {
+    override def fields: List[Field] = FragmentModel.fields
+
+    override val `type`: List[ValueType] = List(Document + "ExternalModel") ++ FragmentModel.`type`
   }
 
   object ExtensionModel extends FragmentModel {

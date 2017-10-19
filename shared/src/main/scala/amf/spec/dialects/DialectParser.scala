@@ -22,7 +22,7 @@ trait DomainEntityVisitor {
   def visit(entity: DomainEntity, prop: DialectPropertyMapping): Boolean
 }
 
-class DialectParser(val dialect: Dialect, override val root: Root) extends RamlSpecParser(root) {
+class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
 
   private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty)
 

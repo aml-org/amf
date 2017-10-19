@@ -1,25 +1,20 @@
 #%RAML 1.0
 
-  types:
-    A:
+  types: 
+    A: 
       type: string
-    B:
+    B: 
       type: integer
-    C:
-      properties:
-        a:
-          A
-        b:
-          B
-    D:
-      properties:
-        a:
-          A
-        b:
-          B
-    E:
-      type:
+    C: 
+      properties: 
+        a: A
+        b: B
+    D: 
+      properties: 
+        a: A
+        b: B
+    E: 
+      type: 
         - C
         - D
-    F:
-      C | D
+    F: C | D

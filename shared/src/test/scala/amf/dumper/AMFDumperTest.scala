@@ -250,7 +250,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |        ],
         |        "http://schema.org/documentation": [
         |          {
-        |            "@id": "file:///tmp/test#/web-api/creative-work",
+        |            "@id": "file:///tmp/test#/web-api/creative-work/creativoWorkUrl",
         |            "@type": [
         |              "http://schema.org/CreativeWork",
         |              "http://raml.org/vocabularies/document#DomainElement"
@@ -318,7 +318,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |                ],
         |                "http://schema.org/documentation": [
         |                  {
-        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work",
+        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work/localhost:8080/endpoint/operation",
         |                    "@type": [
         |                      "http://schema.org/CreativeWork",
         |                      "http://raml.org/vocabularies/document#DomainElement"
@@ -374,7 +374,7 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |                ],
         |                "http://schema.org/documentation": [
         |                  {
-        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work",
+        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work/localhost:8080/endpoint/operation",
         |                    "@type": [
         |                      "http://schema.org/CreativeWork",
         |                      "http://raml.org/vocabularies/document#DomainElement"

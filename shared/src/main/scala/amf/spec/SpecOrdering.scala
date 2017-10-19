@@ -10,13 +10,13 @@ import amf.remote.{Amf, Vendor}
 object SpecOrdering {
 
   object Default extends SpecOrdering {
-    override def sorted(values: Seq[Emitter]): Seq[Emitter] = values
+    override def sorted[T <: Emitter](values: Seq[T]): Seq[T] = values
 
     override def compare(x: Emitter, y: Emitter): Int = 1
   }
 
   object Lexical extends SpecOrdering {
-    def sorted(values: Seq[Emitter]): Seq[Emitter] = values.partition(_.position().isZero) match {
+    def sorted[T <: Emitter](values: Seq[T]): Seq[T] = values.partition(_.position().isZero) match {
       case (without, lexical) => lexical.sorted(this) ++ without
     }
 
@@ -34,5 +34,5 @@ object SpecOrdering {
 trait SpecOrdering extends Ordering[Emitter] {
 
   /** Return sorted values. */
-  def sorted(values: Seq[Emitter]): Seq[Emitter]
+  def sorted[T <: Emitter](values: Seq[T]): Seq[T]
 }

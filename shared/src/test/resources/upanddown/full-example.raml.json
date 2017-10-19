@@ -38,8 +38,16 @@
   },
   "externalDocs": {
     "url": "externalDocsUrl",
-    "description": "externalDocsDescription"
+    "description": "externalDocsDescription",
+    "x-title": "Home"
   },
+  "x-user-documentation": [
+    {
+      "url": "externalDocsUrl2",
+      "content": "externalDocsDescription2",
+      "title": "Home2"
+    }
+  ],
   "paths": {
     "/levelzero": {
       "displayName": "Name"

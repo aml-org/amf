@@ -15,6 +15,7 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
+import amf.shape.Shape
 import amf.spec.common._
 import amf.spec.{BaseUriSplitter, Declarations}
 import amf.vocabulary.VocabularyMappings
@@ -26,7 +27,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Raml 1.0 spec parser
   */
-case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(root) {
+case class RamlDocumentParser(root: Root) extends RamlSpecParser {
 
   def parseDocument(): Document = {
 
@@ -36,7 +37,7 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       val map = value.toMap
 
       val references = ReferencesParser("uses", map, root.references).parse()
-      parseDeclarations(map, references.declarations)
+      parseDeclarations(root, map, references.declarations)
 
       val api = parseWebApi(map, references.declarations).add(SourceVendor(root.vendor))
       document.withEncodes(api)
@@ -122,14 +123,6 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
     )
 
     map.key(
-      "(externalDocs)",
-      entry => {
-        val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
-        api.set(WebApiModel.Documentation, creativeWork, Annotations(entry))
-      }
-    )
-
-    map.key(
       "(license)",
       entry => {
         val license: License = LicenseParser(entry.value.value.toMap).parse()
@@ -180,6 +173,15 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
           entry.value.asSeq.map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
 
         api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
+    map.key(
+      "documentation",
+      entry => {
+        api.setArray(WebApiModel.Documentations,
+                     UserDocumentationsParser(entry.value.value.toSequence, declarations).parse(),
+                     Annotations(entry))
       }
     )
 
@@ -382,70 +384,73 @@ case class RamlDocumentParser(override val root: Root) extends RamlSpecParser(ro
       val method = entry.key.value.toScalar.text
 
       val operation = producer(method).add(Annotations(entry))
-
-      val map = entry.value.value.toMap
-
       operation.set(Method, ValueNode(entry.key).string())
 
-      map.key("displayName", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Name, value.string(), Annotations(entry))
-      })
+      entry.value.value match {
+        // Empty operation
+        case s: YScalar if s.text == "" => operation
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Description, value.string(), Annotations(entry))
-      })
-
-      map.key("(deprecated)", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
-      })
-
-      map.key("(summary)", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Summary, value.string(), Annotations(entry))
-      })
-
-      map.key(
-        "(externalDocs)",
-        entry => {
-          val creativeWork: CreativeWork = CreativeWorkParser(entry.value.value.toMap).parse()
-          operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
-        }
-      )
-
-      map.key(
-        "protocols",
-        entry => {
-          val value = ArrayNode(entry.value.value.toSequence)
-          operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
-        }
-      )
-
-      map.key("(consumes)", entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
-        operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
-      })
-
-      map.key("(produces)", entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
-        operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
-      })
-
-      map.key(
-        "is",
-        entry => {
-          val traits = entry.value.value.toSequence.nodes.map(value => {
-            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+        // Regular operation
+        case map: YMap =>
+          map.key("displayName", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Name, value.string(), Annotations(entry))
           })
-          if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
-        }
-      )
 
-      RequestParser(map, () => operation.withRequest(), declarations)
-        .parse()
-        .map(operation.set(OperationModel.Request, _))
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Description, value.string(), Annotations(entry))
+          })
+
+          map.key("(deprecated)", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
+          })
+
+          map.key("(summary)", entry => {
+            val value = ValueNode(entry.value)
+            operation.set(OperationModel.Summary, value.string(), Annotations(entry))
+          })
+
+          map.key(
+            "(externalDocs)",
+            entry => {
+              val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
+              operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
+            }
+          )
+
+          map.key(
+            "protocols",
+            entry => {
+              val value = ArrayNode(entry.value.value.toSequence)
+              operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
+            }
+          )
+
+          map.key("(consumes)", entry => {
+            val value = ArrayNode(entry.value.value.toSequence)
+            operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
+          })
+
+          map.key("(produces)", entry => {
+            val value = ArrayNode(entry.value.value.toSequence)
+            operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
+          })
+
+          map.key(
+            "is",
+            entry => {
+              val traits = entry.value.value.toSequence.nodes.map(value => {
+                ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+              })
+              if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
+            }
+          )
+
+          RequestParser(map, () => operation.withRequest(), declarations)
+            .parse()
+            .map(operation.set(OperationModel.Request, _))
 
       map.key(
         "responses",
@@ -487,13 +492,14 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
 
   override implicit val spec: SpecParserContext = RamlSpecParserContext
 
-  protected def parseDeclarations(map: YMap, declarations: Declarations): Unit = {
+  protected def parseDeclarations(root: Root, map: YMap, declarations: Declarations): Unit = {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent, declarations)
     parseAnnotationTypeDeclarations(map, parent, declarations)
     parseResourceTypeDeclarations("resourceTypes", map, parent, declarations)
     parseTraitDeclarations("traits", map, parent, declarations)
     parseSecuritySchemeDeclarations(map, parent, declarations)
+    parseParameterDeclarations("(parameters)", map, root.location + "#/parameters", declarations)
     declarations.resolve()
   }
 
@@ -764,6 +770,95 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
     }
   }
 
+  def parseParameterDeclarations(key: String, map: YMap, parentPath: String, declarations: Declarations): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value.value.toMap.entries.foreach(e => {
+          val parameter = ParameterParser(e,
+                                          (name) => Parameter().withId(parentPath + "/" + name).withName(name),
+                                          declarations).parse()
+          if (Option(parameter.binding).isEmpty) {
+            throw new Exception("Missing binding information in declared parameter")
+          }
+          declarations.registerParameter(parameter.add(DeclaredElement()), Payload().withSchema(parameter.schema))
+        })
+      }
+    )
+  }
+
+  case class ParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations)
+      extends RamlTypeSyntax {
+
+    def parse(): Parameter = {
+
+      val name      = entry.key.value.toScalar.text
+      val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+      entry.value.value match {
+        case ref: YScalar if declarations.findParameter(ref.text).isDefined =>
+          declarations
+            .findParameter(ref.text)
+            .get
+            .link(ref.text, Annotations(entry))
+            .asInstanceOf[Parameter]
+            .withName(name)
+
+        case ref: YScalar if declarations.findType(ref.text).isDefined =>
+          val schema = declarations
+            .findType(ref.text)
+            .get
+            .link[Shape](ref.text, Annotations(entry))
+            .withName("schema")
+            .adopted(parameter.id)
+          parameter.withSchema(schema)
+
+        case ref: YScalar if wellKnownType(ref.text) =>
+          val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+          parameter.withSchema(schema)
+
+        case _: YScalar =>
+          throw new Exception("Cannot declare unresolved parameter")
+
+        case map: YMap =>
+          val map = entry.value.value.toMap
+
+          map.key("required", entry => {
+            val value = ValueNode(entry.value)
+            parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+          })
+
+          if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
+            val required = !name.endsWith("?")
+
+            parameter.set(ParameterModel.Required, required)
+            parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+          }
+
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+          })
+
+          map.key(
+            "(binding)",
+            entry => {
+              val value                    = ValueNode(entry.value)
+              val annotations: Annotations = Annotations(entry) += ExplicitField()
+              parameter.set(ParameterModel.Binding, value.string(), annotations)
+            }
+          )
+
+          RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
+            .parse()
+            .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+
+          AnnotationParser(() => parameter, map).parse()
+
+          parameter
+      }
+    }
+  }
+
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
       map.key("usage", entry => {
@@ -773,32 +868,23 @@ abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
     }
   }
 
-  case class UserDocumentationsParser(map: YMap) {
-    def parse(): Seq[UserDocumentation] = {
-      val results = ListBuffer[UserDocumentation]()
+  case class UserDocumentationsParser(seq: YSequence, declarations: Declarations) {
+    def parse(): Seq[CreativeWork] = {
+      val results = ListBuffer[CreativeWork]()
 
-      map.key("documentation", seq => {
-        seq.value.value.toSequence.values.foreach(value => results += UserDocumentationParser(value.toMap).parse())
-      })
+      seq.nodes
+        .foreach(n =>
+          n.value match {
+            case m: YMap => results += RamlCreativeWorkParser(m, withExtention = true).parse()
+            case scalar: YScalar =>
+              declarations.findDocumentations(scalar.text) match {
+                case Some(doc) =>
+                  results += doc.link(scalar.text, Annotations()).asInstanceOf[CreativeWork]
+                case _ => throw new IllegalArgumentException(s"not supported scalar $scalar.text for documentation")
+              }
+        })
+
       results
-    }
-  }
-
-  case class UserDocumentationParser(map: YMap) {
-    def parse(): UserDocumentation = {
-
-      val documentation = UserDocumentation(Annotations(map))
-
-      map.key("title", entry => {
-        val value = ValueNode(entry.value)
-        documentation.set(UserDocumentationModel.Title, value.string(), Annotations(entry))
-      })
-
-      map.key("content", entry => {
-        val value = ValueNode(entry.value)
-        documentation.set(UserDocumentationModel.Content, value.string(), Annotations(entry))
-      })
-      documentation
     }
   }
 

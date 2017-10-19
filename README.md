@@ -2,18 +2,18 @@
 
 # API Modeling Framework
 
-This project aims to provide a common programming interface that lets developers interact with any API specification, whether it is written in OpenAPI Specification (OAS) or RAML, in a similar way to how the HTML DOM allows programmatic interaction with an HTML document.
+This project aims to provide a common programming interface that lets developers interact with any API specification, whether it is written in OpenAPI Specification (OAS) or RAML, similar to the way the HTML DOM allows programmatic interaction with an HTML document.
 
 ## Vision
 
-The API Modeling Framework (AMF) allows users to formally describe different kind of APIs, parse and generate instances of those APIS as sets of modular documents and to store those connected descriptions into a single unified data graph.
+The API Modeling Framework (AMF) allows users to formally describe different kinds of APIs, parse and generate instances of those APIS as sets of modular documents and  store those connected descriptions into a single unified data graph.
 
 ![Overview](https://raw.githubusercontent.com/raml-org/api-modeling-framework/gh-pages/images/diagram.png)
 
 ## Status
 
 AMF is under active development.
-Artifacts have been pushed to private repositories. Can be built from the source code as well, as described bellow.
+Artifacts have been pushed to private repositories. Can be built from the source code as well, as described below.
 Changes to the current interfaces and vocabularies are to be expected, as well as a possible split of the library into smaller units.
 
 ## Goals
@@ -24,7 +24,7 @@ Changes to the current interfaces and vocabularies are to be expected, as well a
 - Support for validation at document and service layers
 - Produce a formal specification for the language
 - Extensible, single document model for multiple domain vocabularies
-- Consistent parsing behaviour
+- Consistent parsing behavior
 
 ## On development features
 The library supports many of the required uses cases:
@@ -66,7 +66,7 @@ This will create a single executable JS in the root directory:
 ./amf.js
 ```
 
-Using this jar or the node script, you can execute it passing one of the following commands:
+Using this jar or the node script, you can execute the JS by passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
@@ -74,9 +74,9 @@ Using this jar or the node script, you can execute it passing one of the followi
 
 An interactive section can be started using the `repl` command.
 
-If you want to parse any other RAML dialect than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
+If you want to parse any RAML dialect other than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
 
-Please refer to the usage of the application for additional commands and explanations.
+Refer to the usage of the application for additional commands and explanations.
 
 
 ### JVM artifacts (private repository)
@@ -164,7 +164,7 @@ sbt coverage test coverageReport
 sbt generate
 ```
 This will generate two *JS artifacts*:
-- **Client**: JS file in amf-js/target/artifact/amf-browser.js that can be imported from a script tag to be used in client side.
+- **Client**: JS file in amf-js/target/artifact/amf-browser.js that can be imported from a script tag to be used on the client side.
 - **Server**: JS file in amf-js/target/artifact/amf-module.js that has commonJS modules, and can be installed as a node module.
 
 And two *JVM artifacts*:
@@ -201,7 +201,7 @@ const parser = new RamlParser()
 
 ## Examples
 
-Inside the *usage* folder we have an example for each of the three usages and a *converter* project to give the library some UI.
+Inside the *usage* folder we have an example for each of the three usages and a *converter* project for adding some UI features to the library.
 
 ### Browser-client
 
@@ -209,23 +209,23 @@ It shows a static *html* file that imports the *amf-browser.js* artifact as a sc
 
 #### Usage
 
-Just open the *html* file in any browser and play with what's inside the script tag!
+Just open the *html* file in any browser and play with what's inside the script tag.
 
 ### NodeJS Client
 
-This example has a *node.js* file **index.js** where amf library will be imported and can be used as a node module.
+This example has a *node.js* file **index.js** where the amf library will be imported and can be used as a node module.
 
 #### Usage
 
-1. Run *cd usage/jsClient* while standing on the root of the project
-2. Run *npm install*
-3. Make sure that artifacts for amf have been generated (Run *sbt generate*)
-4. Run *npm install ../../amf-js/* (This will pick up configurations from *package.json* to install the *amf-module.js* file as a node module in the jsClient project)
-5. Run *node start*
-6. Open *localhost:3000* in the browser
+1. Run *cd usage/jsClient* while positioned at the root of the project.
+2. Run *npm install*.
+3. Make sure that artifacts for amf have been generated (Run *sbt generate*).
+4. Run *npm install ../../amf-js/*. (This will pick up configurations from *package.json* to install the *amf-module.js* file as a node module in the jsClient project.)
+5. Run *node start*.
+6. Open *localhost:3000* in the browser.
 
-You can see *index.js* with examples of use and play with the module!
-Modify *parser* and generator *modules* to change the use of the library server side.
+You can see *index.js* with examples of use and play with the module.
+Modify *parser* and generator *modules* to change the server-side use of the library.
 
 ### JVM Client
 
@@ -233,22 +233,22 @@ This is a simple example that uses the **JVM jar artifact** in a gradle projects
 
 #### Usage
 
-1. Make sure that artifacts for amf have been generated (Run *sbt generate*), as the project will pick up the jar from the generated location
-2. Play with the library in java files! (There's a main class in src/main/java/ with some examples)
+1. Make sure that artifacts for amf have been generated (Run *sbt generate*), as the project will pick up the jar from the generated location.
+2. Play with the library in java files. (There's a main class in src/main/java/ with some examples.)
 
 ### Converter
 
-This is a node project that demonstrates how amf parses and generates an OAS/RAML document. Please note that it's not a conversion tool per se as you can quickly see in the code. AMF will build the model every time.
+This is a node project that demonstrates how amf parses and generates an OAS/RAML document. Note that it's not a conversion tool per se as you can quickly see in the code. AMF will build the model every time.
 
 #### Usage
 
-1. Make sure that artifacts for amf have been generated (Run *sbt generate*)
+1. Make sure that artifacts for amf have been generated (Run *sbt generate*).
 
 2. Inside the *site* directory (*cd usage/site*):
-    - Create directory *"build"*
-    - Run *npm install*
+    - Create directory *"build"*.
+    - Run *npm install*.
     - Check if you have a *"public/build"* in the *site* directory. In not, create it.
-    - Run *npm start* from *site* directory
-    - Open *localhost:3000* in the browser
+    - Run *npm start* from *site* directory.
+    - Open *localhost:3000* in the browser.
 
 You can now start trying AMF by reading and dumping from/to different API Design specs.

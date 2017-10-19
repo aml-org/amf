@@ -9,6 +9,8 @@ object RamlTypeDefMatcher {
 
   def matchType(ramlType: String, format: String = ""): TypeDef =
     ramlType match {
+      case XMLSchema(_)      => XMLSchemaType
+      case JSONSchema(_)     => JSONSchemaType
       case TypeExpression(_) => TypeExpressionType
       case "nil" | ""        => NilType
       case "any"             => AnyType
@@ -32,9 +34,22 @@ object RamlTypeDefMatcher {
       case _               => ObjectType
     }
 
+  object XMLSchema {
+    def unapply(str: String): Option[String] =
+      if (str.startsWith("<")) Some(str)
+      else None
+  }
+
+  object JSONSchema {
+    def unapply(str: String): Option[String] =
+      if (str.startsWith("[") || str.startsWith("{")) Some(str)
+      else None
+  }
+
   object TypeExpression {
     def unapply(str: String): Option[String] =
-      if (str.contains("[") || str.contains("|") || str.contains("(") || str.contains("]") || str.contains(")"))
+      if ((str.contains("[") && !str.startsWith("[")) || str.contains("|") || str.contains("(") || str.contains("]") || str
+            .contains(")"))
         Some(str)
       else None
   }

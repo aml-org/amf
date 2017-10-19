@@ -18,6 +18,10 @@ object Syntax {
     override val extension: String = "json"
   }
 
+  case object PlainText extends Syntax {
+    override val extension: String = "txt"
+  }
+
   /** Attempt to resolve [[Syntax]] from [[Mimes]]. */
   def unapply(mime: Option[String]): Option[Syntax] = mime match {
     case Some(`TEXT/YAML`) | Some(`TEXT/X-YAML`) | Some(`APPLICATION/YAML`) | Some(`APPLICATION/X-YAML`) | Some(
