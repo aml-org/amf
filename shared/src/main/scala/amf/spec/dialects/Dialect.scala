@@ -49,13 +49,13 @@ trait LocalNameProviderFactory {
 trait ReferenceResolver {
   def resolve(root: Root, name: String, t: Type): Option[String]
 
-  def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity]
+  def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity]
 }
 
 object NullReferenceResolver extends ReferenceResolver {
   override def resolve(root: Root, name: String, t: Type): Option[String] = None
 
-  override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] = None
+  override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
 }
 
@@ -256,7 +256,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
     }
   }
 
-  override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] =
+  override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] =
     declarationsFromLibraries.get(typedName(name, t))
 
   def resolveBasicRef(name: String, root: Root, t: Type): String =
@@ -383,7 +383,7 @@ class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[Diale
     }
   }
 
-  override def resolveToEndity(root: Root, name: String, t: Type): Option[DomainEntity] = None
+  override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
   override def localName(uri: String, property: DialectPropertyMapping): String = {
     val foundLocalName = for {

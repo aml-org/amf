@@ -23,12 +23,12 @@ This information will be used to define the RAML declaration for the documents o
 #%Validation Profile 1.0
 ```
 
-## Importing vocabularies
+## Using vocabularies
 
-Dialects provide a mapping from vocabulary terms to the structure of a graph of data nodes. To establish this mapping, we need first to import vocabularies in the dialect document. The `vocabularies` property can be used for this:
+Dialects provide a mapping from vocabulary terms to the structure of a graph of data nodes. To establish this mapping, we need first to import vocabularies in the dialect document as RAML libraries. The `uses` property can be used for this:
 
 ``` yaml
-vocabularies:
+uses:
   validation: validation.raml
 ```
 Class terms and property terms from the vocabulary can then be referenced using the alias declared in the `vocabularies` property.
