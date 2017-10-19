@@ -2,12 +2,18 @@ package amf.resolution.pipelines
 
 import amf.ProfileNames
 import amf.document.BaseUnit
-import amf.resolution.stages.{ParametersNormalizationStage, ReferenceResolutionStage, ShapeNormalizationStage}
+import amf.resolution.stages.{
+  MediaTypeResolutionStage,
+  ParametersNormalizationStage,
+  ReferenceResolutionStage,
+  ShapeNormalizationStage
+}
 
 class AmfResolutionPipeline extends ResolutionPipeline {
   val references = new ReferenceResolutionStage(ProfileNames.AMF)
   val shapes     = new ShapeNormalizationStage(ProfileNames.AMF)
   val parameters = new ParametersNormalizationStage(ProfileNames.AMF)
+  val mediaTypes = new MediaTypeResolutionStage(ProfileNames.AMF)
 
   override def resolve(model: BaseUnit): BaseUnit = {
     withModel(model) { () =>
@@ -16,8 +22,9 @@ class AmfResolutionPipeline extends ResolutionPipeline {
     }
   }
 
-  protected def commonSteps() = {
+  protected def commonSteps(): Unit = {
     step(references)
     step(shapes)
+    step(mediaTypes)
   }
 }

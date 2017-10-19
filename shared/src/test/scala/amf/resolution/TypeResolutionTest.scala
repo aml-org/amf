@@ -10,44 +10,41 @@ import amf.remote.{Raml, RamlYamlHint}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.raml.RamlTypeExpressionParser
-import amf.unsafe.PlatformSecrets
 import amf.vocabulary.Namespace
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Promise}
 
-class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
+class TypeResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("TypeExpressions") {
-    
+
     val adopt = (shape: Shape) => { shape.adopted("/test") }
 
     var res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
-
 
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("((integer))")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[]")
     assert(res.get.isInstanceOf[ArrayShape])
-    assert(res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+    assert(
+      res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(res != null)
-
 
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)[]")
     assert(res.get.isInstanceOf[ArrayShape])
-    assert(res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+    assert(
+      res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(res != null)
 
     var error = false
@@ -58,7 +55,6 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
     }
     assert(error)
 
-
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string")
     assert(res.get.isInstanceOf[UnionShape])
     var union = res.get.asInstanceOf[UnionShape]
@@ -67,7 +63,6 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
       e.asInstanceOf[ScalarShape].dataType
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
-
 
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer )| (string)")
     assert(res.get.isInstanceOf[UnionShape])
@@ -97,7 +92,6 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string[])")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
@@ -106,8 +100,9 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(union.anyOf.head.isInstanceOf[ScalarShape])
     assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(union.anyOf.last.isInstanceOf[ArrayShape])
-    assert(union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string").iri())
-
+    assert(
+      union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
+        .iri())
 
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string[]")
     assert(res != null)
@@ -117,8 +112,9 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(union.anyOf.head.isInstanceOf[ScalarShape])
     assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(union.anyOf.last.isInstanceOf[ArrayShape])
-    assert(union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string").iri())
-
+    assert(
+      union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
+        .iri())
 
     res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[][]")
     assert(res != null)
@@ -130,7 +126,7 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
     assert(array.items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
   }
 
-  val basePath = "file://shared/src/test/resources/resolution/"
+  override val basePath = "file://shared/src/test/resources/resolution/"
 
   val examples = Seq(
     "union1",
@@ -157,18 +153,15 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   examples.foreach { example =>
     test(s"Resolve data types: $example") {
-      val expected   = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
-      AMFCompiler(basePath + s"$example.raml",
-        platform,
-        RamlYamlHint,
-        None,
-        None,
-        platform.dialectsRegistry)
-        .build().map { model =>
-        model.resolve(ProfileNames.RAML)
-      }.flatMap({ unit =>
-        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-      })
+      val expected = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
+      AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
+        .build()
+        .map { model =>
+          model.resolve(ProfileNames.RAML)
+        }
+        .flatMap({ unit =>
+          AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+        })
         .zip(expected)
         .map(checkDiff)
     }
@@ -182,15 +175,11 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
 
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      val res = AMFCompiler(basePath + s"$example.raml",
-        platform,
-        RamlYamlHint,
-        None,
-        None,
-        platform.dialectsRegistry)
-        .build().map { model =>
-        model.resolve(ProfileNames.RAML)
-      }
+      val res = AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
+        .build()
+        .map { model =>
+          model.resolve(ProfileNames.RAML)
+        }
 
       val p = Promise[Assertion]()
       res.onComplete { res =>
@@ -199,7 +188,7 @@ class TypeResolutionTest extends AsyncFunSuite with PlatformSecrets {
             println(doc)
             p.success(assert(res.isFailure))
           }
-        }  else {
+        } else {
           p.success(assert(res.isFailure))
         }
       }

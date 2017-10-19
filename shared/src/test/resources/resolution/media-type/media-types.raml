@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: API
+mediaType:
+  - application/json
+  - application/xml
+/levelzero:
+  /level-one:
+    get:
+      body:
+        type: object
+        properties:
+          one: integer
+          two: string
+      responses:
+        404:
+          body: string
