@@ -170,7 +170,9 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
       entry => {
         // TODO check for empty array for resolution ?
         val securedBy =
-          entry.value.asSeq.map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
+          entry.value.value.toSequence.nodes
+            .collect({ case v: YNode => v })
+            .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
 
         api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
@@ -198,7 +200,7 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
         val name = s.value.asScalar.map(_.text).getOrElse("null")
         producer(name).add(Annotations(s))
       case YType.Str =>
-        val name   = s.asString
+        val name   = s.value.toScalar.text
         val scheme = producer(name).add(Annotations(s))
 
         declarations.findSecurityScheme(name) match {
@@ -208,15 +210,15 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
         }
 
       case YType.Map =>
-        val schemeEntry = s.asMap.head
-        val name        = schemeEntry._1.asString
+        val schemeEntry = s.value.toMap.entries.head
+        val name        = schemeEntry.key
         val scheme      = producer(name).add(Annotations(s))
 
         declarations.findSecurityScheme(name) match {
           case Some(declaration) =>
             scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
 
-            val settings = SecuritySettingsParser(schemeEntry._2.value.toMap, declaration.`type`, scheme).parse()
+            val settings = SecuritySettingsParser(schemeEntry.value.value.toMap, declaration.`type`, scheme).parse()
 
             scheme.set(SecuritySchemeModel.Settings, settings)
           case None =>
@@ -295,8 +297,9 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
         "securedBy",
         entry => {
           // TODO check for empty array for resolution ?
-          val securedBy = entry.value.asSeq.map(s =>
-            ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+          val securedBy = entry.value.value.toSequence.nodes
+            .collect({ case n: YNode => n })
+            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
 
           endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
@@ -452,43 +455,46 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser {
             .parse()
             .map(operation.set(OperationModel.Request, _))
 
-      map.key(
-        "responses",
-        entry => {
-          entry.value.value.toMap.regex(
-            "\\d{3}",
-            entries => {
-              val responses = mutable.ListBuffer[Response]()
-              entries.foreach(entry => {
-                responses += RamlResponseParser(entry, operation.withResponse, declarations).parse()
-              })
-              operation.set(OperationModel.Responses,
-                            AmfArray(responses, Annotations(entry.value)),
-                            Annotations(entry))
+          map.key(
+            "responses",
+            entry => {
+              entry.value.value.toMap.regex(
+                "\\d{3}",
+                entries => {
+                  val responses = mutable.ListBuffer[Response]()
+                  entries.foreach(entry => {
+                    responses += RamlResponseParser(entry, operation.withResponse, declarations).parse()
+                  })
+                  operation.set(OperationModel.Responses,
+                                AmfArray(responses, Annotations(entry.value)),
+                                Annotations(entry))
+                }
+              )
             }
           )
-        }
-      )
 
-      map.key(
-        "securedBy",
-        entry => {
-          // TODO check for empty array for resolution ?
-          val securedBy = entry.value.asSeq.map(s =>
-            ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
+          map.key(
+            "securedBy",
+            entry => {
+              // TODO check for empty array for resolution ?
+              val securedBy = entry.value.value.toSequence.nodes
+                .collect({ case n: YNode => n })
+                .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
 
-          operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-        }
-      )
+              operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+            }
+          )
 
-      AnnotationParser(() => operation, map).parse()
+          AnnotationParser(() => operation, map).parse()
 
-      operation
+          operation
+      }
     }
   }
+
 }
 
-abstract class RamlSpecParser(val root: Root) extends BaseSpecParser {
+abstract class RamlSpecParser() extends BaseSpecParser {
 
   override implicit val spec: SpecParserContext = RamlSpecParserContext
 

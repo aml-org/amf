@@ -5,7 +5,6 @@ import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
-import amf.domain.{DomainElement, UserDocumentation}
 import amf.domain.{CreativeWork, DomainElement, Parameter, Payload}
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}

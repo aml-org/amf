@@ -2,7 +2,7 @@ package amf.spec.raml
 
 import amf.compiler.{RamlFragmentHeader, RamlHeader}
 import amf.document.Fragment._
-import amf.document.Module
+import amf.document.{BaseUnit, Module}
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
@@ -61,14 +61,14 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     YDocument(b => {
       b.comment(typeEmitter.header.text)
-      b.map(traverse(ordering.sorted(typeEmitter.emitters ++ usage ++ references), _))
+      b.map(traverse(ordering.sorted(typeEmitter.emitters(fragment.references) ++ usage ++ references), _))
     })
   }
 
   trait RamlFragmentTypeEmitter {
     val header: RamlHeader
 
-    val emitters: Seq[EntryEmitter]
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter]
   }
 
   case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItem, ordering: SpecOrdering)
@@ -76,7 +76,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DocumentationItem
 
-    val emitters: Seq[EntryEmitter] =
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       RamlCreativeWorkItemsEmitter(documentationItem.encodes, ordering, withExtention = true).emitters()
   }
 
@@ -84,7 +84,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DataType
 
-    val emitters: Seq[EntryEmitter] = RamlTypeEmitter(dataType.encodes, ordering).entries()
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = RamlTypeEmitter(dataType.encodes, ordering).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclaration, ordering: SpecOrdering)
@@ -92,7 +92,8 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10AnnotationTypeDeclaration
 
-    val emitters: Seq[EntryEmitter] = AnnotationTypeEmitter(annotation.encodes, ordering).emitters()
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
+      AnnotationTypeEmitter(annotation.encodes, ordering).emitters()
   }
 
   case class ExtensionFragmentEmitter(extension: ExtensionFragment, ordering: SpecOrdering)
@@ -100,7 +101,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Extension
 
-    val emitters: Seq[EntryEmitter] = {
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = {
       val result: ListBuffer[EntryEmitter] = ListBuffer()
       extension.fields
         .entry(ExtensionModel.Extends)
@@ -115,7 +116,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Overlay
 
-    val emitters: Seq[EntryEmitter] = {
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = {
       val result: ListBuffer[EntryEmitter] = ListBuffer()
       extension.fields
         .entry(OverlayModel.Extends)
@@ -130,7 +131,8 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10SecurityScheme
 
-    val elementsEmitters: Seq[Emitter] = SecuritySchemeEmitter(securityScheme.encodes, ordering).emitters()
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
+      SecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
   }
 
   case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)
@@ -138,7 +140,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10ResourceType
 
-    val emitters: Seq[EntryEmitter] =
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       DataNodeEmitter(fragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
         .emitters() collect {
         case e: EntryEmitter => e
@@ -150,7 +152,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Trait
 
-    val emitters: Seq[EntryEmitter] =
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       DataNodeEmitter(fragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
         .emitters() collect {
         case e: EntryEmitter => e

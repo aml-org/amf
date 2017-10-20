@@ -1,6 +1,5 @@
 package amf.spec.oas
 
-import amf.compiler.{OasFragmentHeader, OasHeader, RamlFragmentHeader, RamlHeader}
 import amf.compiler.{OasFragmentHeader, OasHeader}
 import amf.document.Fragment._
 import amf.document.Module
@@ -156,9 +155,9 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
   case class SecuritySchemeFragmentEmitter(securityScheme: SecurityScheme, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    override val headerEmitter: Emitter = OasHeaderEmitter(OasFragmentHeader.Oas20SecurityScheme)
+    override val header = OasHeaderEmitter(OasFragmentHeader.Oas20SecurityScheme)
 
-    val elementsEmitters: Seq[Emitter] =
+    val emitters: Seq[EntryEmitter] =
       SecuritySchemeEmitter(securityScheme.encodes,
                             OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`),
                             ordering).emitters()

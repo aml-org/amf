@@ -51,6 +51,13 @@ trait BaseSpecEmitter {
     })
   }
 
+  case class RawEmitter(content: String, tag: YType = YType.Str, annotations: Annotations = Annotations())
+      extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = sourceOr(annotations, raw(b, content, tag))
+
+    override def position(): Position = pos(annotations)
+  }
+
   protected def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
     b.scalar(YNode(YScalar(content), tag))
 
@@ -149,11 +156,14 @@ trait BaseSpecEmitter {
       }
     }
 
-    def emitters(): Seq[Emitter] = {
-      dataNode match {
+    def emitters(): Seq[EntryEmitter] = {
+      (dataNode match {
         case scalar: DataScalarNode => Seq(scalarEmitter(scalar))
         case array: DataArrayNode   => arrayEmitters(array)
         case obj: DataObjectNode    => objectEmitters(obj)
+      }) collect {
+        case e: EntryEmitter => e
+        case other           => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
       }
     }
 
