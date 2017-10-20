@@ -148,7 +148,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
           })
         if (maybeMapping.isEmpty) {
           val nm     = scalar.value.toString
-          val entity = resolver.resolveToEndity(root, nm, domainEntity.definition)
+          val entity = resolver.resolveToEntity(root, nm, domainEntity.definition)
           entity.foreach(e => {
             e.fields.into(domainEntity.fields)
             domainEntity.annotations += SynthesizedField()
