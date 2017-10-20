@@ -152,8 +152,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
       entry => {
         // TODO check for empty array for resolution ?
         val securedBy =
-          entry.value.value.toSequence.nodes
-            .collect({ case n: YNode => n })
+          entry.value.value.toSequence.values
             .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
 
         api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -191,20 +190,14 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
     api
   }
 
-  case class ParametrizedSecuritySchemeParser(s: YNode,
+  case class ParametrizedSecuritySchemeParser(value: YValue,
                                               producer: String => ParametrizedSecurityScheme,
                                               declarations: Declarations) {
-    def parse(): ParametrizedSecurityScheme = s.tagType match {
-      case YType.Str =>
-        val name   = s.value.toScalar.text
-        val scheme = producer(name).add(Annotations(s))
-
-        parseTarget(name, scheme)
-
-      case YType.Map =>
-        val schemeEntry = s.value.toMap.entries.head
+    def parse(): ParametrizedSecurityScheme = value match {
+      case map: YMap =>
+        val schemeEntry = map.entries.head
         val name        = schemeEntry.key
-        val scheme      = producer(name).add(Annotations(s))
+        val scheme      = producer(name).add(Annotations(map))
 
         parseTarget(name, scheme)
 
@@ -212,7 +205,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
         scheme.set(ParametrizedSecuritySchemeModel.Scopes, scopes.strings(), Annotations(schemeEntry.value))
 
         scheme
-      case _ => throw new Exception(s"Invalid type ${s.tagType}")
+      case other => throw new Exception(s"Invalid type $other")
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme) = {
@@ -281,8 +274,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
         "x-security",
         entry => {
           // TODO check for empty array for resolution ?
-          val securedBy = entry.value.value.toSequence.nodes
-            .collect({ case n: YNode => n })
+          val securedBy = entry.value.value.toSequence.values
             .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
 
           endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -420,8 +412,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser {
         "security",
         entry => {
           // TODO check for empty array for resolution ?
-          val securedBy = entry.value.value.toSequence.nodes
-            .collect({ case n: YNode => n })
+          val securedBy = entry.value.value.toSequence.values
             .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
 
           operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))

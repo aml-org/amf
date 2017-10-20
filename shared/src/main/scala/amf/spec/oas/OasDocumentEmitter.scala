@@ -151,22 +151,22 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val schemes = f.array.values.collect({ case p: ParametrizedSecurityScheme => p })
 
-      b.entry(key, _.map(traverse(ordering.sorted(schemes.map(ParametrizedSecuritySchemeEmitter(_, ordering))), _)))
+      b.entry(key, _.list(traverse(ordering.sorted(schemes.map(ParametrizedSecuritySchemeEmitter(_, ordering))), _)))
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
   case class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme, ordering: SpecOrdering)
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
+      extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
       val fs = parametrizedScheme.fields
 
       fs.entry(ParametrizedSecuritySchemeModel.Scopes) match {
         case Some(f) =>
-          ArrayEmitter(parametrizedScheme.name, f, ordering)
+          b.map(ArrayEmitter(parametrizedScheme.name, f, ordering).emit(_))
         case None =>
-          b.entry(parametrizedScheme.name, _.list(b => {}))
+          b.map(_.entry(parametrizedScheme.name, _.list(b => {})))
       }
 
     }
@@ -844,22 +844,17 @@ class OasSpecEmitter extends BaseSpecEmitter {
       sourceOr(
         response.annotations,
         b.complexEntry(
-          _ => {
-            ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit(_)
-          },
-          v => {
+          ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit(_),
+          _.map { b =>
+            val result = mutable.ListBuffer[EntryEmitter]()
+
             fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))
-
             fs.entry(RequestModel.Headers).map(f => result += RamlParametersEmitter("headers", f, ordering))
-
-            // todo : refactor extract ramltypes
-
-            //fs.entry(RequestModel.Payloads).map(f => result += RamlPayloadsEmitter("body", f, ordering))
+//            fs.entry(RequestModel.Payloads).map(f => result += PayloadsEmitter("body", f, ordering))
 
             result ++= RamlAnnotationsEmitter(response, ordering).emitters
 
-            v.map(traverse(ordering.sorted(result), _))
-
+            traverse(ordering.sorted(result), b)
           }
         )
       )

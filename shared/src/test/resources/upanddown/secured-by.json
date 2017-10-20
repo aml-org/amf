@@ -1,7 +1,11 @@
 {
   "swagger": "2.0",
   "security": [
-    "oauth_2_0"
+    {
+      "oauth_2_0": [
+
+      ]
+    }
   ],
   "x-securitySchemes": {
     "oauth_1_0": {
@@ -21,8 +25,16 @@
     "/users": {
       "get": {
         "security": [
-          "oauth_2_0",
-          "oauth_1_0"
+          {
+            "oauth_2_0": [
+
+            ]
+          },
+          {
+            "oauth_1_0": [
+              
+            ]
+          }
         ]
       }
     },
