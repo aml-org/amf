@@ -320,6 +320,8 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
             fs.entry(OperationModel.Responses)
               .map(f => result += ResponsesEmitter("responses", f, ordering, references))
 
+            fs.entry(EndPointModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter(f, ordering))
+
             traverse(ordering.sorted(result), b)
           }
         )

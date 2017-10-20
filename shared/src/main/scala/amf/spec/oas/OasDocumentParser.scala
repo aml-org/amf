@@ -1031,61 +1031,81 @@ abstract class OasSpecParser extends BaseSpecParser {
 
   case class ParameterParser(map: YMap, parentId: String, declarations: Declarations) {
     def parse(): OasParameter = {
-      val parameter = OasParameter(map)
+      map.key("$ref") match {
+        case Some(ref) => parseParameterRef(ref, parentId)
+        case None =>
+          val parameter = OasParameter(map)
 
-      parameter.parameter.set(ParameterModel.Required, value = false)
+          parameter.parameter.set(ParameterModel.Required, value = false)
 
-      map.key("name", entry => {
-        val value = ValueNode(entry.value)
-        parameter.parameter.set(ParameterModel.Name, value.string(), Annotations(entry))
-      })
+          map.key("name", entry => {
+            val value = ValueNode(entry.value)
+            parameter.parameter.set(ParameterModel.Name, value.string(), Annotations(entry))
+          })
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        parameter.parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-      })
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            parameter.parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+          })
 
-      map.key(
-        "required",
-        entry => {
-          val value = ValueNode(entry.value)
-          parameter.parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-        }
-      )
+          map.key(
+            "required",
+            entry => {
+              val value = ValueNode(entry.value)
+              parameter.parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+            }
+          )
 
-      map.key("in", entry => {
-        val value = ValueNode(entry.value)
-        parameter.parameter.set(ParameterModel.Binding, value.string(), Annotations(entry))
-      })
+          map.key("in", entry => {
+            val value = ValueNode(entry.value)
+            parameter.parameter.set(ParameterModel.Binding, value.string(), Annotations(entry))
+          })
 
-      // TODO generate parameter with parent id or adopt
-      if (parameter.isBody) {
-        parameter.payload.adopted(parentId)
-        map.key(
-          "schema",
-          entry => {
-            OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations)
+          // TODO generate parameter with parent id or adopt
+          if (parameter.isBody) {
+            parameter.payload.adopted(parentId)
+            map.key(
+              "schema",
+              entry => {
+                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations)
+                  .parse()
+                  .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
+              }
+            )
+
+            map.key("x-media-type", entry => {
+              val value = ValueNode(entry.value)
+              parameter.payload.set(PayloadModel.MediaType, value.string(), Annotations(entry))
+            })
+
+          } else {
+            // type
+            parameter.parameter.adopted(parentId)
+            OasTypeParser(map,
+                          "",
+                          map,
+                          shape => shape.withName("schema").adopted(parameter.parameter.id),
+                          declarations)
               .parse()
-              .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
+              .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
           }
-        )
 
-        map.key("x-media-type", entry => {
-          val value = ValueNode(entry.value)
-          parameter.payload.set(PayloadModel.MediaType, value.string(), Annotations(entry))
-        })
+          AnnotationParser(() => parameter.parameter, map).parse()
 
-      } else {
-        // type
-        parameter.parameter.adopted(parentId)
-        OasTypeParser(map, "", map, shape => shape.withName("schema").adopted(parameter.parameter.id), declarations)
-          .parse()
-          .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
+          parameter
       }
+    }
 
-      AnnotationParser(() => parameter.parameter, map).parse()
-
-      parameter
+    protected def parseParameterRef(ref: YMapEntry, parentId: String): OasParameter = {
+      val refUrl = stripParameterDefinitionsPrefix(ref.value)
+      declarations.findParameter(refUrl) match {
+        case Some(p) =>
+          val payload: Payload     = declarations.parameterPayload(p)
+          val parameter: Parameter = p.link(refUrl, Annotations(map))
+          parameter.withName(refUrl).adopted(parentId)
+          OasParameter(parameter, payload)
+        case None => throw new Exception(s"Cannot find parameter reference $refUrl")
+      }
     }
   }
 
@@ -1125,14 +1145,15 @@ abstract class OasSpecParser extends BaseSpecParser {
     }
   }
 
-  case class OasParameter(ast: YMap) {
-    val parameter = Parameter(ast)
-    val payload   = Payload(ast)
-
+  case class OasParameter(parameter: Parameter, payload: Payload) {
     def isBody: Boolean   = parameter.isBody
     def isQuery: Boolean  = parameter.isQuery
     def isPath: Boolean   = parameter.isPath
     def isHeader: Boolean = parameter.isHeader
+  }
+
+  object OasParameter {
+    def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast))
   }
 
   case class HeaderParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
