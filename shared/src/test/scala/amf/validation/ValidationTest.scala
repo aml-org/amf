@@ -37,11 +37,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                       None,
                       platform.dialectsRegistry)
             .build())
-
     actual
-      .flatMap({ unit =>
-        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-      })
+      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
   }
@@ -61,7 +58,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                       platform.dialectsRegistry)
             .build())
     actual
-      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
@@ -82,7 +79,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                       platform.dialectsRegistry)
             .build())
     actual
-      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 
@@ -103,7 +100,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                       platform.dialectsRegistry)
             .build())
     actual
-      .flatMap(unit => new AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString)
+      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
       .zip(expected)
       .map(checkDiff)
 

@@ -1100,7 +1100,8 @@ abstract class OasSpecParser extends BaseSpecParser {
                           "",
                           map,
                           shape => shape.withName("schema").adopted(parameter.parameter.id),
-                          declarations)
+                          declarations,
+                          "parameter")
               .parse()
               .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
           }

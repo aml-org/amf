@@ -212,8 +212,8 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           obj.annotations.find(classOf[DomainElementReference]) match {
             case Some(ref) => raw(b, ref.name)
             case _ =>
+              comment.foreach(b.comment)
               b.map { b =>
-                comment.foreach(b.comment)
                 emitUsesMap(b)
                 emitObject(b)
               }
