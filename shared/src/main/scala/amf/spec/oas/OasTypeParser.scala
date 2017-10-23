@@ -8,7 +8,7 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
-import amf.spec.Declarations
+import amf.spec.{Declarations, OasDefinitions}
 import amf.vocabulary.Namespace
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
 
@@ -93,7 +93,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   private def parseLinkType(): Option[Shape] = {
     map
       .key("$ref")
-      .map(e => stripDefinitionsPrefix(e.value))
+      .map(e => OasDefinitions.stripDefinitionsPrefix(e.value))
       .map(text =>
         declarations.findType(text) match {
           case Some(s) =>

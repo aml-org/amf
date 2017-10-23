@@ -2,7 +2,7 @@ package amf.validation.emitters
 
 import amf.domain.Annotation
 import amf.generator.JsonGenerator
-import amf.spec.common.BaseSpecEmitter
+import amf.spec.common.BaseEmitters._
 import amf.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.vocabulary.Namespace
 import org.yaml.model.YDocument.PartBuilder
@@ -11,7 +11,7 @@ import org.yaml.model.{YDocument, YType}
 /**
   * Generates a JSON-LD graph with for an AMF validation report
   */
-object ValidationReportJSONLDEmitter extends BaseSpecEmitter {
+object ValidationReportJSONLDEmitter {
 
   def shacl(postfix: String): String = (Namespace.Shacl + postfix).iri()
 

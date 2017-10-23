@@ -7,6 +7,8 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 scalaVersion in ThisBuild := "2.12.2"
 
+val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
+
 val settings = Common.settings ++ Seq(
   name := "amf",
   version := "0.0.1-SNAPSHOT",
@@ -15,7 +17,7 @@ val settings = Common.settings ++ Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
   ),
-  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
+  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, ivyLocal),
   credentials ++= Common.credentials()
 )
 

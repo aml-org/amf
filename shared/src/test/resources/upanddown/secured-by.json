@@ -15,6 +15,24 @@
         "requestTokenUri": "https://api.mysampleapi.com/1/oauth/request_token",
         "authorizationUri": "https://api.mysampleapi.com/1/oauth/authorize",
         "tokenCredentialsUri": "https://api.mysampleapi.com/1/oauth/access_token"
+      },
+      "x-describedBy": {
+        "headers": {
+          "Authorization": {
+            "description": "Used to send a valid OAuth 2 access token.",
+            "type": "string"
+          }
+        },
+        "queryParameters": {
+          "access_token": {
+            "description": "Used to send a valid OAuth 2 access token."
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Authorization error."
+          }
+        }
       }
     },
     "oauth_2_0": {

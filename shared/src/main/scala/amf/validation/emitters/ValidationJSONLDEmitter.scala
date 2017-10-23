@@ -3,7 +3,7 @@ package amf.validation.emitters
 import amf.generator.JsonGenerator
 import amf.parser.Position
 import amf.spec.PartEmitter
-import amf.spec.common.BaseSpecEmitter
+import amf.spec.common.BaseEmitters._
 import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.vocabulary.Namespace
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -15,7 +15,7 @@ import scala.collection.mutable.ListBuffer
   * Generates a JSON-LD graph with the shapes for a set of validations
   * @param targetProfile which kind of messages should be generated
   */
-class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
+class ValidationJSONLDEmitter(targetProfile: String) {
 
   private val jsValidatorEmitters: ListBuffer[PartEmitter]  = ListBuffer()
   private val jsConstraintEmitters: ListBuffer[PartEmitter] = ListBuffer()

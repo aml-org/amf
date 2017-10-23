@@ -7,7 +7,9 @@ import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.remote.Raml
-import amf.spec.{Emitter, EntryEmitter, SpecOrdering}
+import amf.spec.common.BaseEmitters._
+import amf.spec.declaration._
+import amf.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
@@ -132,7 +134,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     override val header: RamlHeader = RamlFragmentHeader.Raml10SecurityScheme
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
-      SecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
+      RamlSecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
   }
 
   case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)

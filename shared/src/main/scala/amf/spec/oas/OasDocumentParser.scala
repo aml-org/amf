@@ -19,11 +19,13 @@ import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
+import amf.parser.YValueOps
 import amf.spec.Declarations
 import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model.{YNode, _}
+import amf.spec.OasDefinitions
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -1097,7 +1099,7 @@ abstract class OasSpecParser extends BaseSpecParser {
     }
 
     protected def parseParameterRef(ref: YMapEntry, parentId: String): OasParameter = {
-      val refUrl = stripParameterDefinitionsPrefix(ref.value)
+      val refUrl = OasDefinitions.stripParameterDefinitionsPrefix(ref.value)
       declarations.findParameter(refUrl) match {
         case Some(p) =>
           val payload: Payload     = declarations.parameterPayload(p)

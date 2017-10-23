@@ -8,6 +8,8 @@ import amf.metadata.document.BaseUnitModel
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.parser.Position
 import amf.remote.Oas
+import amf.spec.common.BaseEmitters._
+import amf.spec.declaration._
 import amf.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -158,9 +160,9 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     override val header = OasHeaderEmitter(OasFragmentHeader.Oas20SecurityScheme)
 
     val emitters: Seq[EntryEmitter] =
-      SecuritySchemeEmitter(securityScheme.encodes,
-                            OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`),
-                            ordering).emitters()
+      OasSecuritySchemeEmitter(securityScheme.encodes,
+                               OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`),
+                               ordering).emitters()
   }
 
   case class OasHeaderEmitter(oasHeader: OasHeader) extends EntryEmitter {
