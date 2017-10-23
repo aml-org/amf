@@ -18,6 +18,12 @@ securitySchemes:
       responses:
         401:
           description: Authorization error.
+          body:
+            application/json:
+              properties:
+                merge:
+                  type: string
+              type: object
     settings:
       requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token
       authorizationUri: https://api.mysampleapi.com/1/oauth/authorize

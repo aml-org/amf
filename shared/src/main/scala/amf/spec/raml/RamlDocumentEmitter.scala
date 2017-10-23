@@ -20,7 +20,7 @@ import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
 import amf.spec._
 import amf.spec.common.BaseEmitters._
-import amf.spec.common.{AnnotationFormat, BaseSpecEmitter, RamlAnnotationFormat, SpecEmitterContext}
+import amf.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.spec.declaration._
 import amf.spec.domain._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -348,7 +348,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
 }
 
-class RamlSpecEmitter() extends BaseSpecEmitter {
+trait RamlSpecEmitter extends BaseSpecEmitter {
 
   case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
@@ -550,6 +550,4 @@ object RamlSpecEmitterContext extends SpecEmitterContext {
   override val vendor: Vendor = Raml
 
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
-
-  override val annotationFormat: AnnotationFormat = RamlAnnotationFormat
 }

@@ -4,6 +4,7 @@ import amf.document.BaseUnit
 import amf.domain.Annotation.{LexicalInformation, SingleValueArray}
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
+import amf.metadata.Type
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
@@ -15,11 +16,6 @@ import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.mutable
 
-trait AnnotationFormat {}
-
-object RamlAnnotationFormat extends AnnotationFormat {}
-object OasAnnotationFormat  extends AnnotationFormat {}
-
 trait SpecEmitterContext {
   def tagToReference(l: DomainElement, linkLabel: Option[String], references: Seq[BaseUnit]): PartEmitter =
     TagToReferenceEmitter(l, linkLabel, vendor, references)
@@ -28,9 +24,6 @@ trait SpecEmitterContext {
 
   def localReference(reference: Linkable): PartEmitter
   val vendor: Vendor
-
-  val annotationFormat: AnnotationFormat
-
 }
 
 trait BaseSpecEmitter {
@@ -61,7 +54,7 @@ package object BaseEmitters {
     override def position(): Position = pos(annotations)
   }
 
-  protected[amf] def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
+  def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
     b.scalar(YNode(YScalar(content), tag))
 
   case class ScalarEmitter(v: AmfScalar, tag: YType = YType.Str) extends PartEmitter {
@@ -70,7 +63,16 @@ package object BaseEmitters {
     override def position(): Position = pos(v.annotations)
   }
 
-  case class ValueEmitter(key: String, f: FieldEntry, tag: YType = YType.Str) extends EntryEmitter {
+  case class ValueEmitter(key: String, f: FieldEntry) extends EntryEmitter {
+
+    private val tag: YType = {
+      f.field.`type` match {
+        case Type.Int  => YType.Int
+        case Type.Bool => YType.Bool
+        case _         => YType.Str
+      }
+    }
+
     override def emit(b: EntryBuilder): Unit = {
       sourceOr(f.value,
                b.entry(

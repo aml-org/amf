@@ -1,20 +1,13 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.{
-  CustomDomainProperty,
-  DataNode,
-  DomainExtension,
-  ArrayNode => DataArrayNode,
-  ObjectNode => DataObjectNode,
-  ScalarNode => DataScalarNode
-}
+import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position
 import amf.remote.{Oas, Raml}
 import amf.spec.common.BaseEmitters._
-import amf.spec.common.{OasAnnotationFormat, RamlAnnotationFormat, SpecEmitterContext}
+import amf.spec.common.SpecEmitterContext
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.vocabulary.{Namespace, VocabularyMappings}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -35,9 +28,9 @@ case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrd
   override def emit(b: EntryBuilder): Unit = {
     b.complexEntry(
       b => {
-        spec.annotationFormat match {
-          case RamlAnnotationFormat => b.scalar("(" + domainExtension.definedBy.name + ")")
-          case OasAnnotationFormat  => raw(b, "x-" + domainExtension.definedBy.name)
+        spec.vendor match {
+          case Raml => b.scalar("(" + domainExtension.definedBy.name + ")")
+          case Oas  => raw(b, "x-" + domainExtension.definedBy.name)
           case other                => throw new IllegalArgumentException(s"Unsupported annotation format $other")
         }
       },

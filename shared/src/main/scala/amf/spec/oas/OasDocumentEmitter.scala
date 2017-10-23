@@ -16,8 +16,8 @@ import amf.spec.common.BaseEmitters._
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain.{ParametrizedSecuritiesSchemeEmitter, RamlParametersEmitter}
+import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YDocument, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -201,7 +201,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
             fs.entry(OperationModel.Name).map(f => result += ValueEmitter("operationId", f))
             fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
-            fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f, YType.Bool))
+            fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
             fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
             fs.entry(OperationModel.Documentation)
               .map(
@@ -705,7 +705,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required)
-            .map(f => result += ValueEmitter("required", f, YType.Bool))
+            .map(f => result += ValueEmitter("required", f))
 
           fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
@@ -756,6 +756,4 @@ object OasSpecEmitterContext extends SpecEmitterContext {
 
   override def localReference(reference: Linkable): PartEmitter =
     OasTagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel)
-
-  override val annotationFormat: AnnotationFormat = OasAnnotationFormat
 }

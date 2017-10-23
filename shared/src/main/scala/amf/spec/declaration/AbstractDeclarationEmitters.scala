@@ -1,13 +1,12 @@
 package amf.spec.declaration
 
 import amf.document.BaseUnit
-import amf.domain.DomainElement
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.parser.Position
-import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
-import org.yaml.model.YDocument.EntryBuilder
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
+import amf.spec.{EntryEmitter, SpecOrdering}
+import org.yaml.model.YDocument.EntryBuilder
 
 /**
   *

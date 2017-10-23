@@ -8,8 +8,8 @@
         "a2"
       ],
       "pattern": "blabla.+",
-      "minLength": "1",
-      "maxLength": "20"
+      "minLength": 1,
+      "maxLength": 20
     },
     "IntegerTest": {
       "type": "integer",
@@ -18,7 +18,7 @@
       "exclusiveMinimum": "4",
       "exclusiveMaximum": "20",
       "format": "int32",
-      "multipleOf": "2"
+      "multipleOf": 2
     },
     "ObjectTest": {
       "title": "that person",
@@ -33,15 +33,15 @@
           "type": "string"
         }
       },
-      "minProperties": "1",
-      "maxProperties": "5",
+      "minProperties": 1,
+      "maxProperties": 5,
       "additionalProperties": "true",
       "discriminator": "ddd",
       "x-discriminator-value": "valueD",
-      "readOnly": "false",
+      "readOnly": false,
       "xml": {
-        "attribute": "true",
-        "wrapped": "true",
+        "attribute": true,
+        "wrapped": true,
         "name": "test",
         "namespace": "namespacetest",
         "prefix": "blabla"
