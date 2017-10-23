@@ -4,6 +4,7 @@ import amf.common.core.QName
 import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.domain.security.SecurityScheme
 import amf.domain.{CreativeWork, DomainElement, Parameter, Payload}
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}
@@ -19,7 +20,8 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         var documentations: Map[String, CreativeWork] = Map(),
                         var parameters: Map[String, Parameter] = Map(),
                         var payloads: Map[String, Payload] = Map(),
-                        var traits: Map[String, Trait] = Map()) {
+                        var traits: Map[String, Trait] = Map(),
+                        var securitySchemes: Map[String, SecurityScheme] = Map()) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
@@ -30,19 +32,20 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def +=(element: DomainElement): Declarations = {
     element match {
-      case r: ResourceType         => resourceTypes = resourceTypes + (r.name    -> r)
-      case u: CreativeWork         => documentations = documentations + (u.title -> u)
-      case t: Trait                => traits = traits + (t.name                  -> t)
-      case a: CustomDomainProperty => annotations = annotations + (a.name        -> a)
-      case s: Shape                => shapes = shapes + (s.name                  -> s)
-      case p: Parameter            => parameters = parameters + (p.name          -> p)
+      case r: ResourceType         => resourceTypes = resourceTypes + (r.name      -> r)
+      case u: CreativeWork         => documentations = documentations + (u.title   -> u)
+      case t: Trait                => traits = traits + (t.name                    -> t)
+      case a: CustomDomainProperty => annotations = annotations + (a.name          -> a)
+      case s: Shape                => shapes = shapes + (s.name                    -> s)
+      case p: Parameter            => parameters = parameters + (p.name            -> p)
+      case ss: SecurityScheme      => securitySchemes = securitySchemes + (ss.name -> ss)
     }
     this
   }
 
   def registerParameter(parameter: Parameter, payload: Payload): Unit = {
     parameters = parameters + (parameter.name -> parameter)
-    payloads = payloads + (parameter.name -> payload)
+    payloads = payloads + (parameter.name     -> payload)
   }
 
   def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name)
@@ -59,7 +62,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   }
 
   def declarables(): Seq[DomainElement] =
-    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values ++ parameters.values).toSeq
+    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toSeq
 
   def findParameter(key: String): Option[Parameter] = findForType(key, _.parameters) collect {
     case p: Parameter => p
@@ -83,6 +86,10 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def findType(key: String): Option[Shape] = findForType(key, _.shapes) collect {
     case s: Shape => s
+  }
+
+  def findSecurityScheme(key: String): Option[SecurityScheme] = findForType(key, _.securitySchemes) collect {
+    case ss: SecurityScheme => ss
   }
 
   /** Resolve all [[UnresolvedShape]] references or fail. */

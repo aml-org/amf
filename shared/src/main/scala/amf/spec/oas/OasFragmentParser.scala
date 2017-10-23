@@ -32,6 +32,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       case Oas20AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
       case Oas20Extension                 => ExtensionFragmentParser(rootMap).parse()
       case Oas20Overlay                   => OverlayFragmentParser(rootMap).parse()
+      case Oas20SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
     }).getOrElse {
       throw new IllegalStateException("Unsuported oas type")
     }
@@ -70,7 +71,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       val dataType = DataType().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), "schema").parse()
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), "schema")
+          .parse()
       shapeOption.map(dataType.withEncodes(_))
 
       dataType
@@ -164,6 +166,20 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       overlay
     }
 
+  }
+
+  case class SecuritySchemeFragmentParser(map: YMap) {
+    def parse(): SecurityScheme = {
+      val security = SecurityScheme().adopted(root.location)
+
+      security.withEncodes(
+        SecuritySchemeParser(map,
+                             "securityDefinitions",
+                             map,
+                             (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
+                             Declarations())
+          .parse())
+    }
   }
 
 }

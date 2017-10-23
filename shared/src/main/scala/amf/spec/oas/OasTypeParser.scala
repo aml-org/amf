@@ -8,7 +8,7 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
-import amf.spec.Declarations
+import amf.spec.{Declarations, OasDefinitions}
 import amf.vocabulary.Namespace
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
 
@@ -18,12 +18,21 @@ import scala.collection.mutable
   * OpenAPI Type Parser.
   */
 object OasTypeParser {
-  def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations, oasNode: String = "schema"): OasTypeParser =
+  def apply(entry: YMapEntry,
+            adopt: Shape => Unit,
+            declarations: Declarations,
+            oasNode: String = "schema"): OasTypeParser =
     OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations, oasNode)
 }
 
-case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, declarations: Declarations, oasNode: String)
-    extends OasSpecParser with OasSyntax {
+case class OasTypeParser(ast: YPart,
+                         name: String,
+                         map: YMap,
+                         adopt: Shape => Unit,
+                         declarations: Declarations,
+                         oasNode: String)
+    extends OasSpecParser
+    with OasSyntax {
 
   override implicit val spec = OasSpecParserContext
 
@@ -43,7 +52,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       case Some(shape: Shape) =>
         validateClosedShape(shape.id, map, oasNode)
         Some(shape)
-      case None       => None
+      case None => None
     }
   }
 
@@ -100,7 +109,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   private def parseLinkType(): Option[Shape] = {
     map
       .key("$ref")
-      .map(e => stripDefinitionsPrefix(e.value))
+      .map(e => OasDefinitions.stripDefinitionsPrefix(e.value))
       .map(text =>
         declarations.findType(text) match {
           case Some(s) =>
@@ -532,7 +541,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   case class SchemaShapeParser(shape: SchemaShape, map: YMap, declarations: Declarations)
-    extends ShapeParser()
+      extends ShapeParser()
       with CommonScalarParsingLogic {
     super.parse()
 
@@ -545,13 +554,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         }
       })
 
-      map.key("x-media-type", { entry =>
-        entry.value.value match {
-          case str: YScalar =>
-            shape.withMediaType(str.text)
-          case _ => throw new Exception("Cannot parse non string schema shape")
+      map.key(
+        "x-media-type", { entry =>
+          entry.value.value match {
+            case str: YScalar =>
+              shape.withMediaType(str.text)
+            case _ => throw new Exception("Cannot parse non string schema shape")
+          }
         }
-      })
+      )
 
       shape
     }

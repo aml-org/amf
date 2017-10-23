@@ -40,7 +40,8 @@ trait RamlTypeSyntax {
     }
   }
   def wellKnownType(str: String) =
-    if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str.indexOf("}") > -1) {
+    if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
+          .indexOf("}") > -1) {
       false
     } else {
       str match {
@@ -63,9 +64,8 @@ trait RamlTypeSyntax {
 }
 
 case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
-    extends RamlSpecParser with RamlSyntax {
-
-//  override implicit val spec: SpecParserContext = RamlSpecParserContext
+    extends RamlSpecParser
+    with RamlSyntax {
 
   private val value = part.value
 
@@ -143,7 +143,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       case map: YMap =>
         map.key("type") match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
-            val shape = SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
+            val shape =
+              SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
             shape.withName(entry.key)
             adopt(shape)
             shape
@@ -164,7 +165,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         }
       case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
     }
-    val schemaAst = YamlParser(text).parse(true)
+    val schemaAst   = YamlParser(text).parse(true)
     val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
     OasTypeParser(schemaEntry, (shape) => adopt(shape), declarations).parse() match {
       case Some(shape) =>
@@ -345,8 +346,11 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
               val unionNodes = seq.nodes.zipWithIndex
                 .map {
                   case (node, index) =>
-                    val entry = YMapEntry(YNode(YScalar(s"item$index", plain = true, node.range)), node)
-                    RamlTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+                    RamlTypeParser(node,
+                                   s"item$index",
+                                   node,
+                                   item => item.adopted(shape.id + "/items/" + index),
+                                   declarations).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -467,7 +471,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         case Some(parsed: Shape) =>
           validateClosedShape(parsed.id, map, "arrayShape")
           parsed
-        case None                => throw new Exception("Cannot parse data arrangement shape")
+        case None => throw new Exception("Cannot parse data arrangement shape")
       }
     }
   }
@@ -728,7 +732,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                   shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
             case scalar: YScalar if !wellKnownType(scalar.text) =>
-
               // it might be a named type
               declarations.findType(scalar.text) match {
                 case Some(ancestor) =>

@@ -43,7 +43,6 @@ trait RamlSyntax {
       "enum",
       "required"
     ),
-
     "nodeShape" -> Set(
       "type",
       "default",
@@ -62,7 +61,6 @@ trait RamlSyntax {
       "discriminatorValue",
       "required"
     ),
-
     "arrayShape" -> Set(
       "type",
       "default",
@@ -80,7 +78,6 @@ trait RamlSyntax {
       "maxItems",
       "required"
     ),
-
     "stringScalarShape" -> Set(
       "type",
       "default",
@@ -97,7 +94,6 @@ trait RamlSyntax {
       "maxLength",
       "required"
     ),
-
     "numberScalarShape" -> Set(
       "type",
       "default",
@@ -115,7 +111,6 @@ trait RamlSyntax {
       "multipleOf",
       "required"
     ),
-
     "fileShape" -> Set(
       "type",
       "default",
@@ -132,14 +127,12 @@ trait RamlSyntax {
       "maxLength",
       "required"
     ),
-
     "example" -> Set(
       "displayName",
       "description",
       "value",
       "strict"
     ),
-
     "xmlSerialization" -> Set(
       "attribute",
       "wrapped",
@@ -147,7 +140,6 @@ trait RamlSyntax {
       "namespace",
       "prefix"
     ),
-
     "endPoint" -> Set(
       "displayName",
       "description",
@@ -163,7 +155,6 @@ trait RamlSyntax {
       "securedBy",
       "uriParameters"
     ),
-
     "operation" -> Set(
       "displayName",
       "description",
@@ -176,14 +167,12 @@ trait RamlSyntax {
       "is",
       "securedBy"
     ),
-
     "response" -> Set(
       "displayName",
       "description",
       "headers",
       "body"
     ),
-
     "securitySchema" -> Set(
       "type",
       "displayName",
@@ -191,7 +180,6 @@ trait RamlSyntax {
       "decribedBy",
       "settings"
     ),
-
     "annotation" -> Set(
       "displayName",
       "description",
@@ -200,7 +188,7 @@ trait RamlSyntax {
     )
   )
 
-  def validateClosedShape(id: String, ast: YMap, nodeType: String) = {
+  def validateClosedShape(id: String, ast: YMap, nodeType: String): Unit = {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
@@ -208,9 +196,8 @@ trait RamlSyntax {
           if ((key.startsWith("(") && key.endsWith(")")) || (key.startsWith("/") && (nodeType == "webApi" || nodeType == "endPoint"))) {
             // annotation or path in endpoint/webapi => ignore
           } else {
-            properties(key) match {
-              case true  => // ignore
-              case false => Validation.reportConstraintFailure(
+            if (!properties(key)) {
+              Validation.reportConstraintFailure(
                 SeverityLevels.VIOLATION,
                 (Namespace.AmfParser + "closed-shape").iri(),
                 id,

@@ -3,7 +3,7 @@ package amf.domain
 import amf.metadata.domain.ExternalDomainElementModel.Raw
 import org.yaml.model.YMap
 
-case class ExternalDomainElement(fields: Fields, annotations: Annotations) extends  DomainElement {
+case class ExternalDomainElement(fields: Fields, annotations: Annotations) extends DomainElement {
 
   def raw: String = fields(Raw)
 

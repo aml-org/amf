@@ -11,7 +11,7 @@ val settings = Common.settings ++ Seq(
   name := "amf",
   version := "0.0.1-SNAPSHOT",
   libraryDependencies ++= Seq(
-    "org.mulesoft"     %%% "syaml"     % "0.0.2",
+    "org.mulesoft"     %%% "syaml"     % "0.0.3-SNAPSHOT",
     "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
   ),
@@ -71,6 +71,8 @@ lazy val module = crossProject
   .dependsOn(amf)
   .enablePlugins(ScalaJSPlugin)
   .jsSettings(
+    resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
+    credentials ++= Common.credentials(),
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / ".." / ".." / "target" / "artifact" / "amf-module.js",
     scalaJSUseMainModuleInitializer := false,
     scalaJSModuleKind := ModuleKind.CommonJSModule,

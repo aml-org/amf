@@ -11,8 +11,8 @@
       ],
       "type": "string",
       "pattern": "blabla.+",
-      "minLength": "1",
-      "maxLength": "20"
+      "minLength": 1,
+      "maxLength": 20
     },
     "IntegerTest": {
       "type": "integer",
@@ -20,7 +20,7 @@
       "maximum": "25",
       "exclusiveMinimum": "4",
       "exclusiveMaximum": "20",
-      "multipleOf": "2",
+      "multipleOf": 2,
       "format": "int32"
     },
     "ObjectTest": {
@@ -32,18 +32,18 @@
         "description": "externalDocsDescription"
       },
       "xml": {
-        "attribute": "true",
-        "wrapped": "true",
+        "attribute": true,
+        "wrapped": true,
         "name": "test",
         "namespace": "namespacetest",
         "prefix": "blabla"
       },
-      "minProperties": "1",
-      "maxProperties": "5",
+      "minProperties": 1,
+      "maxProperties": 5,
       "additionalProperties": "true",
       "discriminator": "ddd",
       "x-discriminator-value": "valueD",
-      "readOnly": "false",
+      "readOnly": false,
       "properties": {
         "name": {
           "type": "string"

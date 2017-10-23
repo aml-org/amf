@@ -41,6 +41,8 @@ object OasFragmentHeader {
 
   object Oas20Overlay extends OasHeader(extentionName, "2.0 Overlay")
 
+  object Oas20SecurityScheme extends OasHeader(extentionName, "2.0 SecurityScheme")
+
   def apply(root: Root): Option[OasHeader] = {
     root.document.value
       .flatMap(_.asMap)
@@ -63,6 +65,7 @@ object OasFragmentHeader {
     case Oas20AnnotationTypeDeclaration.value => Some(Oas20AnnotationTypeDeclaration)
     case Oas20Extension.value                 => Some(Oas20Extension)
     case Oas20Overlay.value                   => Some(Oas20Overlay)
+    case Oas20SecurityScheme.value            => Some(Oas20SecurityScheme)
     case _                                    => None
   }
 
@@ -75,6 +78,7 @@ object OasFragmentHeader {
       case DocumentationItemFragment => Some(Oas20DocumentationItem)
       case ExtensionFragment         => Some(Oas20Extension)
       case OverlayFragment           => Some(Oas20Overlay)
+      case SecuritySchemeFragment    => Some(Oas20SecurityScheme)
       case _                         => None // UnknowFragment
     }
 

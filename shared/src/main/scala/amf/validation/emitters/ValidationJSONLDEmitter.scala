@@ -1,12 +1,12 @@
 package amf.validation.emitters
 
-import amf.client.GenerationOptions
 import amf.generator.JsonGenerator
-import amf.graph.GraphEmitter.Emitter
-import amf.parser.ASTEmitter
-import amf.spec.common.BaseSpecEmitter
+import amf.parser.Position
+import amf.spec.PartEmitter
+import amf.spec.common.BaseEmitters._
 import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.vocabulary.Namespace
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YType}
 
 import scala.collection.mutable.ListBuffer
@@ -15,43 +15,35 @@ import scala.collection.mutable.ListBuffer
   * Generates a JSON-LD graph with the shapes for a set of validations
   * @param targetProfile which kind of messages should be generated
   */
-class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
+class ValidationJSONLDEmitter(targetProfile: String) {
 
-  override val emitter = ASTEmitter()
-
-  val jsValidatorEmitters: ListBuffer[() => Unit]  = ListBuffer()
-  val jsConstraintEmitters: ListBuffer[() => Unit] = ListBuffer()
+  private val jsValidatorEmitters: ListBuffer[PartEmitter]  = ListBuffer()
+  private val jsConstraintEmitters: ListBuffer[PartEmitter] = ListBuffer()
 
   /**
     * Emit the JSON-LD for these validations
-    * @param validations
+    * @param validations validations
     * @return JSON-LD graph with the validations
     */
   def emitJSON(validations: Seq[ValidationSpecification]): String =
     new JsonGenerator().generate(emitJSONLDAST(validations)).toString
 
   private def emitJSONLDAST(validations: Seq[ValidationSpecification]): YDocument = {
-    Emitter(emitter, GenerationOptions()).emitter.document { () =>
-      array { () =>
-        validations.foreach(emitValidation)
-        jsValidatorEmitters.foreach(e => e())
-        jsConstraintEmitters.foreach(e => e())
+    YDocument {
+      _.list { b =>
+        validations.foreach(emitValidation(b, _))
+        jsValidatorEmitters.foreach(_.emit(b))
+        jsConstraintEmitters.foreach(_.emit(b))
       }
     }
   }
 
-  private def emitValidation(validation: ValidationSpecification): Unit = {
+  private def emitValidation(b: PartBuilder, validation: ValidationSpecification): Unit = {
     val validationId = validation.id()
 
-    map { () =>
-      entry { () =>
-        raw("@id")
-        raw(validationId)
-      }
-
-      entry { () =>
-        raw("@type"); raw((Namespace.Shacl + "NodeShape").iri())
-      }
+    b.map { b =>
+      b.entry("@id", validationId)
+      b.entry("@type", (Namespace.Shacl + "NodeShape").iri())
 
       val message = targetProfile match {
         case "RAML" => validation.ramlMessage.getOrElse(validation.message)
@@ -59,293 +51,178 @@ class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
         case _      => validation.message
       }
       if (message != "") {
-        entry { () =>
-          raw((Namespace.Shacl + "message").iri())
-          genValue(message)
-        }
+        b.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
       }
 
       for {
         targetClass <- validation.targetClass
       } yield {
-        entry { () =>
-          raw((Namespace.Shacl + "targetClass").iri())
-          link(expandRamlId(targetClass))
-        }
+        b.entry((Namespace.Shacl + "targetClass").iri(), link(_, expandRamlId(targetClass)))
       }
 
       for {
         targetClass <- validation.targetObject
       } yield {
-        entry { () =>
-          raw((Namespace.Shacl + "targetObjectsOf").iri())
-          link(Namespace.expand(targetClass).iri())
-        }
+        b.entry((Namespace.Shacl + "targetObjectsOf").iri(), link(_, Namespace.expand(targetClass).iri()))
       }
 
       validation.functionConstraint match {
-        case Some(f) => emitFunctionConstraint(validationId, f)
+        case Some(f) => emitFunctionConstraint(b, validationId, f)
         case _       => // ignore
       }
 
       for {
         (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
       } yield {
-        entry { () =>
-          raw(Namespace.expand(constraint).iri())
-          array { () =>
-            values.foreach(v => link(Namespace.expand(v.value).iri()))
-          }
-        }
+        b.entry(Namespace.expand(constraint).iri(),
+                _.list(b => values.foreach(v => link(b, Namespace.expand(v.value).iri()))))
       }
 
       if (validation.propertyConstraints.nonEmpty) {
-        entry { () =>
-          raw((Namespace.Shacl + "property").iri())
-          array { () =>
+        b.entry(
+          (Namespace.Shacl + "property").iri(),
+          _.list { b =>
             for {
               constraint <- validation.propertyConstraints
             } yield {
               if (constraint.name.startsWith("http://") || constraint.name.startsWith("https://")) {
                 // These are the standard constraints for AMF/RAML/OAS they have already being sanitised
-                emitConstraint(constraint.name, constraint)
+                emitConstraint(b, constraint.name, constraint)
               } else {
                 // this happens when the constraint comes from a profile document
                 // an alias for a model element is all the name we provide
-                emitConstraint(s"$validationId/prop/${constraint.name.replace(".", "-")}", constraint)
+                emitConstraint(b, s"$validationId/prop/${constraint.name.replace(".", "-")}", constraint)
               }
             }
           }
-        }
+        )
       }
     }
   }
 
-  def escapeRegex(v: String): _root_.scala.Predef.String = {
+  private def escapeRegex(v: String): _root_.scala.Predef.String = {
     v flatMap { c =>
       if (c == '\\') { Seq('\\', '\\') } else { Seq(c) }
     }
   }
 
-  private def emitConstraint(constraintId: String, constraint: PropertyConstraint): Unit = {
-    map { () =>
-      entry { () =>
-        raw("@id")
-        raw(constraintId)
-      }
-      entry { () =>
-        raw((Namespace.Shacl + "path").iri())
-        link(expandRamlId(constraint.ramlPropertyId))
-      }
+  private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
+    b.map { b =>
+      b.entry("@id", constraintId)
+      b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
 
-      constraint.maxCount.foreach { v =>
-        genPropertyConstraintValue("maxCount", v)
-      }
-      constraint.minCount.foreach { v =>
-        genPropertyConstraintValue("minCount", v)
-      }
-      constraint.maxExclusive.foreach { v =>
-        genPropertyConstraintValue("maxExclusive", v)
-      }
-      constraint.minExclusive.foreach { v =>
-        genPropertyConstraintValue("maxExclusive", v)
-      }
-      constraint.maxInclusive.foreach { v =>
-        genPropertyConstraintValue("maxInclusive", v)
-      }
-      constraint.minInclusive.foreach { v =>
-        genPropertyConstraintValue("minInclusive", v)
-      }
-      constraint.pattern.foreach { v =>
-        genPropertyConstraintValue("pattern", escapeRegex(v))
-      }
-      constraint.node.foreach { v =>
-        genPropertyConstraintValue("node", v)
-      }
-      constraint.datatype.foreach { v =>
-        entry { () =>
-          raw((Namespace.Shacl + "datatype").iri())
-          link(v)
-        }
-      }
-      constraint.`class`.foreach { v =>
-        entry { () =>
-          raw((Namespace.Shacl + "class").iri())
-          link(v)
-        }
-      }
+      constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _))
+      constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _))
+      constraint.maxExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _))
+      constraint.minExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _))
+      constraint.maxInclusive.foreach(genPropertyConstraintValue(b, "maxInclusive", _))
+      constraint.minInclusive.foreach(genPropertyConstraintValue(b, "minInclusive", _))
+      constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", escapeRegex(v)))
+      constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
+      constraint.datatype.foreach(v => b.entry((Namespace.Shacl + "datatype").iri(), link(_, v)))
+      constraint.`class`.foreach(v => b.entry((Namespace.Shacl + "class").iri(), link(_, v)))
+
       if (constraint.in.nonEmpty) {
-        entry { () =>
-          raw((Namespace.Shacl + "in").iri())
-          map { () =>
-            entry { () =>
-              raw("@list")
-              array { () =>
-                constraint.in.foreach(genValue)
-              }
-            }
+        b.entry(
+          (Namespace.Shacl + "in").iri(),
+          _.map {
+            _.entry("@list", _.list(b => constraint.in.foreach(genValue(b, _))))
           }
-        }
+        )
       }
     }
   }
 
-  protected def emitFunctionConstraint(validationId: String, f: FunctionConstraint): Unit = {
+  private def emitFunctionConstraint(b: EntryBuilder, validationId: String, f: FunctionConstraint): Unit = {
     genJSValidator(validationId, f)
     genJSConstraint(validationId, f)
-    entry { () =>
-      raw(f.validatorPath(validationId))
-      genValue("true")
-    }
+    b.entry(f.validatorPath(validationId), genValue(_, "true"))
   }
 
-  protected def genJSConstraint(validationId: String, f: FunctionConstraint): jsConstraintEmitters.type = {
+  private def genJSConstraint(validationId: String, f: FunctionConstraint) = {
     val constraintId  = f.constraintId(validationId)
     val validatorId   = f.validatorId(validationId)
     val validatorPath = f.validatorPath(validationId)
 
-    jsConstraintEmitters += (() => {
-      map { () =>
-        entry { () =>
-          raw("@id")
-          raw(constraintId)
-        }
-        entry { () =>
-          raw("@type")
-          raw((Namespace.Shacl + "ConstraintComponent").iri())
-        }
-        entry { () =>
-          raw((Namespace.Shacl + "parameter").iri())
-          map { () =>
-            entry { () =>
-              raw((Namespace.Shacl + "path").iri())
-              map { () =>
-                entry { () =>
-                  raw("@id")
-                  raw(validatorPath)
-                }
-              }
+    jsConstraintEmitters += new PartEmitter {
+      override def emit(b: PartBuilder): Unit = {
+        b.map { b =>
+          b.entry("@id", constraintId)
+          b.entry("@type", (Namespace.Shacl + "ConstraintComponent").iri())
+          b.entry(
+            (Namespace.Shacl + "parameter").iri(),
+            _.map { b =>
+              b.entry(
+                (Namespace.Shacl + "path").iri(),
+                _.map(_.entry("@id", validatorPath))
+              )
+              b.entry(
+                (Namespace.Shacl + "datatype").iri(),
+                _.map(_.entry("@id", (Namespace.Xsd + "boolean").iri()))
+              )
             }
-            entry { () =>
-              raw((Namespace.Shacl + "datatype").iri())
-              map { () =>
-                entry { () =>
-                  raw("@id")
-                  raw((Namespace.Xsd + "boolean").iri())
-                }
-              }
-            }
-          }
-        }
-        entry { () =>
-          raw((Namespace.Shacl + "validator").iri())
-          map { () =>
-            entry { () =>
-              raw("@id")
-              raw(validatorId)
-            }
-          }
+          )
+          b.entry((Namespace.Shacl + "validator").iri(), _.map(_.entry("@id", validatorId)))
         }
       }
-    })
-  }
-  protected def genJSValidator(validationId: String, f: FunctionConstraint): jsValidatorEmitters.type = {
-    val validatorId = f.validatorId(validationId)
-    jsValidatorEmitters += (() => {
-      f.functionName match {
-        case Some(fnName) =>
-          map { () =>
-            entry { () =>
-              raw("@id")
-              raw(validatorId)
-            }
-            entry { () =>
-              raw("@type")
-              raw((Namespace.Shacl + "JSValidator").iri())
-            }
-            f.message match {
-              case Some(msg) =>
-                entry { () =>
-                  raw((Namespace.Shacl + "message").iri())
-                  genValue(msg)
-                }
-              case _ => // no message
-            }
-            entry { () =>
-              raw((Namespace.Shacl + "jsLibrary").iri())
-              array { () =>
-                for { library <- f.libraries } {
-                  map { () =>
-                    entry { () =>
-                      raw((Namespace.Shacl + "jsLibraryURL").iri())
-                      map { () =>
-                        entry { () =>
-                          raw("@value")
-                          raw(ValidationJSONLDEmitter.validationLibraryUrl)
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            entry { () =>
-              raw((Namespace.Shacl + "jsFunctionName").iri())
-              genValue(fnName)
-            }
-          }
-
-        case None =>
-          f.code match {
-            case Some(_) =>
-              map { () =>
-                entry { () =>
-                  raw("@id")
-                  raw(validatorId)
-                }
-                entry { () =>
-                  raw("@type")
-                  raw((Namespace.Shacl + "JSValidator").iri())
-                }
-                f.message match {
-                  case Some(msg) =>
-                    entry { () =>
-                      raw((Namespace.Shacl + "message").iri())
-                      genValue(msg)
-                    }
-                  case _ => // no message
-                }
-                entry { () =>
-                  raw((Namespace.Shacl + "jsLibrary").iri())
-                  map { () =>
-                    entry { () =>
-                      raw((Namespace.Shacl + "jsLibraryURL").iri())
-                      map { () =>
-                        entry { () =>
-                          raw("@value")
-                          raw(ValidationJSONLDEmitter.validationLibraryUrl)
-                        }
-                      }
-                    }
-                  }
-                }
-                entry { () =>
-                  raw((Namespace.Shacl + "jsFunctionName").iri())
-                  genValue(f.computeFunctionName(validationId))
-                }
-              }
-            case _ => throw new Exception("Cannot emit validator without JS code or JS function name")
-          }
-      }
-    })
-  }
-
-  private def genPropertyConstraintValue(constraintName: String, value: String): Unit = {
-    entry { () =>
-      raw((Namespace.Shacl + constraintName).iri())
-      genValue(value)
+      override def position(): Position = Position.ZERO
     }
   }
+
+  private def genJSValidator(validationId: String, f: FunctionConstraint) = {
+    val validatorId = f.validatorId(validationId)
+    jsValidatorEmitters += new PartEmitter {
+      override def emit(b: PartBuilder): Unit = {
+        f.functionName match {
+          case Some(fnName) =>
+            b.map { b =>
+              b.entry("@id", validatorId)
+              b.entry("@type", (Namespace.Shacl + "JSValidator").iri())
+              f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
+              b.entry(
+                (Namespace.Shacl + "jsLibrary").iri(),
+                _.list { b =>
+                  for { library <- f.libraries } {
+                    b.map {
+                      _.entry(
+                        (Namespace.Shacl + "jsLibraryURL").iri(),
+                        _.map(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
+                      )
+                    }
+                  }
+                }
+              )
+              b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, fnName))
+            }
+
+          case None =>
+            f.code match {
+              case Some(_) =>
+                b.map { b =>
+                  b.entry("@id", validatorId)
+                  b.entry("@type", (Namespace.Shacl + "JSValidator").iri())
+                  f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
+                  b.entry(
+                    (Namespace.Shacl + "jsLibrary").iri(),
+                    _.map {
+                      _.entry(
+                        (Namespace.Shacl + "jsLibraryURL").iri(),
+                        _.map(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
+                      )
+                    }
+                  )
+                  b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, f.computeFunctionName(validationId)))
+                }
+              case _ => throw new Exception("Cannot emit validator without JS code or JS function name")
+            }
+        }
+      }
+      override def position(): Position = Position.ZERO
+    }
+  }
+
+  private def genPropertyConstraintValue(b: EntryBuilder, constraintName: String, value: String): Unit =
+    b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value))
 
   private def expandRamlId(s: String): String =
     if (s.startsWith("http://") || s.startsWith("https://")) {
@@ -354,65 +231,40 @@ class ValidationJSONLDEmitter(targetProfile: String) extends BaseSpecEmitter {
       Namespace.expand(s.replace(".", ":")).iri().trim
     }
 
-  private def genNonEmptyList(): Unit = {
-    map { () =>
-      entry { () =>
-        raw("@type"); raw((Namespace.Shacl + "NodeShape").iri())
-      }
-      entry { () =>
-        raw((Namespace.Shacl + "message").iri()); raw("List cannot be empty")
-      }
-      entry { () =>
-        raw((Namespace.Shacl + "property").iri())
-        array { () =>
-          map { () =>
-            entry { () =>
-              raw((Namespace.Shacl + "path").iri()); link((Namespace.Rdf + "first").iri())
-            }
-            entry { () =>
-              raw((Namespace.Shacl + "minCount").iri())
-              map { () =>
-                entry { () =>
-                  raw("@value")
-                  raw("1", YType.Int)
-                }
+  private def genNonEmptyList(b: PartBuilder): Unit = {
+    b.map { b =>
+      b.entry("@type", raw(_, (Namespace.Shacl + "NodeShape").iri()))
+      b.entry((Namespace.Shacl + "message").iri(), raw(_, "List cannot be empty"))
+      b.entry(
+        (Namespace.Shacl + "property").iri(),
+        _.list {
+          _.map { b =>
+            b.entry((Namespace.Shacl + "path").iri(), link(_, (Namespace.Rdf + "first").iri()))
+            b.entry(
+              (Namespace.Shacl + "minCount").iri(),
+              _.map {
+                _.entry("@value", raw(_, "1", YType.Int))
               }
-            }
+            )
           }
         }
-      }
+      )
     }
   }
 
-  private def genValue(s: String): Unit = {
+  private def genValue(b: PartBuilder, s: String): Unit = {
     if (s.matches("[\\d]+")) {
-      map { () =>
-        entry { () =>
-          raw("@value")
-          raw(s, YType.Int)
-        }
-      }
+      b.map(_.entry("@value", raw(_, s, YType.Int)))
     } else if (s == "true" || s == "false") {
-      map { () =>
-        entry { () =>
-          raw("@value")
-          raw(s, YType.Bool)
-        }
-      }
+      b.map(_.entry("@value", raw(_, s, YType.Bool)))
     } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
-      genNonEmptyList()
+      genNonEmptyList(b)
     } else if (s.startsWith("http://") || s.startsWith("https://")) {
-      link(s)
+      link(b, s)
     } else {
-      map { () =>
-        entry { () =>
-          raw("@value")
-          raw(s)
-        }
-      }
+      b.map(_.entry("@value", s))
     }
   }
-
 }
 
 object ValidationJSONLDEmitter {

@@ -1,21 +1,17 @@
 package amf.validation.emitters
 
-import amf.client.GenerationOptions
 import amf.domain.Annotation
 import amf.generator.JsonGenerator
-import amf.graph.GraphEmitter.Emitter
-import amf.parser.ASTEmitter
-import amf.spec.common.BaseSpecEmitter
+import amf.spec.common.BaseEmitters._
 import amf.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.vocabulary.Namespace
+import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YType}
 
 /**
   * Generates a JSON-LD graph with for an AMF validation report
   */
-object ValidationReportJSONLDEmitter extends BaseSpecEmitter {
-
-  override val emitter = ASTEmitter()
+object ValidationReportJSONLDEmitter {
 
   def shacl(postfix: String): String = (Namespace.Shacl + postfix).iri()
 
@@ -25,139 +21,77 @@ object ValidationReportJSONLDEmitter extends BaseSpecEmitter {
     new JsonGenerator().generate(emitJSONLDAST(report)).toString
 
   def emitJSONLDAST(report: AMFValidationReport): YDocument = {
-    Emitter(emitter, GenerationOptions()).emitter.document { () =>
-      map { () =>
-        entry { () =>
-          raw("@type")
-          raw(shacl("ValidationReport"))
-        }
-        entry { () =>
-          raw(shacl("conforms"))
-          raw(report.conforms.toString, YType.Bool)
-        }
+    YDocument {
+      _.map { b =>
+        b.entry("@type", shacl("ValidationReport"))
+        b.entry(shacl("conforms"), raw(_, report.conforms.toString, YType.Bool))
         if (report.results.nonEmpty) {
-          entry { () =>
-            raw(shacl("result"))
-            array { () =>
-              report.results.foreach(result => emitResult(result))
-            }
-          }
+          b.entry(
+            shacl("result"),
+            _.list(b => report.results.foreach(emitResult(b, _)))
+          )
         }
       }
     }
   }
 
-  def emitResult(result: AMFValidationResult): Unit = {
-    map { () =>
-      entry { () =>
-        raw("@type")
-        raw(shacl("ValidationResult"))
-      }
-
-      entry { () =>
-        raw(shacl("resultSeverity"))
-        emitViolation(result.level)
-      }
-      entry { () =>
-        raw(shacl("focusNode"))
-        map { () =>
-          entry { () =>
-            raw("@id")
-            raw(result.targetNode)
-          }
-        }
-      }
-      result.targetProperty match {
-        case Some(path) if path != "" => entry { () =>
-          raw(shacl("resultPath"))
-          map { () =>
-            entry { () =>
-              raw("@id")
-              raw(path)
-            }
-          }
-        }
+  private def emitResult(b: PartBuilder, result: AMFValidationResult): Unit = {
+    b.map { b =>
+      b.entry("@type", shacl("ValidationResult"))
+      b.entry(shacl("resultSeverity"), emitViolation(_, result.level))
+      b.entry(
+        shacl("focusNode"),
+        _.map(_.entry("@id", result.targetNode))
+      )
+      result.targetProperty foreach {
+        case path if path != "" =>
+          b.entry(
+            shacl("resultPath"),
+            _.map(_.entry("@id", path))
+          )
         case _ => // ignore
       }
-      entry { () =>
-        raw(shacl("resultMessage"))
-        raw(result.message)
-      }
-      entry { () =>
-        raw(shacl("sourceShape"))
-        map { () =>
-          entry { () =>
-            raw("@id")
-            raw(result.validationId)
-          }
-        }
-      }
-      result.position match {
-        case Some(pos) => entry { () =>
-          raw(amfParser("lexicalPosition"))
-          emitPosition(pos)
-        }
-        case _ => // ignore
-      }
+      b.entry(shacl("resultMessage"), result.message)
+      b.entry(
+        shacl("sourceShape"),
+        _.map(_.entry("@id", result.validationId))
+      )
+      result.position.foreach(pos => b.entry(amfParser("lexicalPosition"), emitPosition(_, pos)))
     }
   }
 
-  def emitViolation(severity: String): Unit = {
-    val level = severity match {
-      case SeverityLevels.INFO => shacl("Info")
-      case SeverityLevels.WARNING => shacl("Warning")
-      case SeverityLevels.VIOLATION => shacl("Violation")
-      case _ => throw new Exception(s"Unknown severity level $severity")
-    }
-    map { () =>
-      entry { () =>
-        raw("@id")
-        raw(level)
-      }
-    }
+  private def emitViolation(b: PartBuilder, severity: String): Unit = {
+    b.map(
+      _.entry(
+        "@id",
+        severity match {
+          case SeverityLevels.INFO      => shacl("Info")
+          case SeverityLevels.WARNING   => shacl("Warning")
+          case SeverityLevels.VIOLATION => shacl("Violation")
+          case _                        => throw new Exception(s"Unknown severity level $severity")
+        }
+      ))
   }
 
-  def emitPosition(pos: Annotation.LexicalInformation): Unit = {
-    map { () =>
-      entry { () =>
-        raw("@type")
-        raw(amfParser("Position"))
-      }
-      entry { () =>
-        raw(amfParser("start"))
-        map { () =>
-          entry { () =>
-            raw("@type")
-            raw(amfParser("Location"))
-          }
-          entry { () =>
-            raw(amfParser("line"))
-            raw(pos.range.start.line.toString, YType.Int)
-          }
-          entry { () =>
-            raw(amfParser("column"))
-            raw(pos.range.start.column.toString, YType.Int)
-          }
+  def emitPosition(b: PartBuilder, pos: Annotation.LexicalInformation): Unit = {
+    b.map { b =>
+      b.entry("@type", amfParser("Position"))
+      b.entry(
+        amfParser("start"),
+        _.map { b =>
+          b.entry("@type", amfParser("Location"))
+          b.entry(amfParser("line"), raw(_, pos.range.start.line.toString, YType.Int))
+          b.entry(amfParser("column"), raw(_, pos.range.start.column.toString, YType.Int))
         }
-      }
-      entry { () =>
-        raw(amfParser("end"))
-        map { () =>
-          entry { () =>
-            raw("@type")
-            raw(amfParser("Location"))
-          }
-          entry { () =>
-            raw(amfParser("line"))
-            raw(pos.range.end.line.toString, YType.Int)
-          }
-          entry { () =>
-            raw(amfParser("column"))
-            raw(pos.range.end.column.toString, YType.Int)
-          }
+      )
+      b.entry(
+        amfParser("end"),
+        _.map { b =>
+          b.entry("@type", amfParser("Location"))
+          b.entry(amfParser("line"), raw(_, pos.range.end.line.toString, YType.Int))
+          b.entry(amfParser("column"), raw(_, pos.range.end.column.toString, YType.Int))
         }
-      }
+      )
     }
   }
-
 }

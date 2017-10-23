@@ -35,6 +35,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
       case Raml10AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
       case Raml10Extension                 => ExtensionFragmentParser(rootMap).parse()
       case Raml10Overlay                   => OverlayFragmentParser(rootMap).parse()
+      case Raml10SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
       case _                               => throw new IllegalStateException("Unsupported fragment type")
     }
 
@@ -148,4 +149,19 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
       overlay
     }
   }
+
+  case class SecuritySchemeFragmentParser(map: YMap) {
+    def parse(): SecurityScheme = {
+      val security = SecurityScheme().adopted(root.location)
+
+      security.withEncodes(
+        SecuritySchemeParser(map,
+                             "securityDefinitions",
+                             map,
+                             (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
+                             Declarations())
+          .parse())
+    }
+  }
+
 }

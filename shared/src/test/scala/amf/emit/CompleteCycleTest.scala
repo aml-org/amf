@@ -534,6 +534,30 @@ class CompleteCycleTest extends AsyncFunSuite with TmpTests {
     cycle("externals.json.jsonld", "externals.json.jsonld.json", AmfJsonHint, Oas)
   }
 
+  test("Security schemes raml to amf") {
+    cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Security schemes raml to raml") {
+    cycle("declared-security-schemes.raml", "declared-security-schemes.raml", RamlYamlHint, Raml)
+  }
+
+  test("Security schemes oas to amf") {
+    cycle("security.json", "security.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Security schemes oas to oas") {
+    cycle("security.json", "security.json", OasJsonHint, Oas)
+  }
+
+  test("SecuredBy raml to raml") {
+    cycle("secured-by.raml", "secured-by.raml", RamlYamlHint, Raml)
+  }
+
+  test("SecuredBy oas to oas") {
+    cycle("secured-by.json", "secured-by.json", OasJsonHint, Oas)
+  }
+
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, target: Vendor): Future[Assertion] = cycle(source, source, hint, target)
 

@@ -2,8 +2,9 @@ package amf.metadata.domain
 
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
+import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.vocabulary.Namespace._
-import amf.vocabulary.ValueType
+import amf.vocabulary.{Namespace, ValueType}
 
 /**
   * Web Api metamodel
@@ -38,21 +39,26 @@ object WebApiModel extends DomainElementModel {
 
   val BaseUriParameters = Field(Array(ParameterModel), Http + "parameter")
 
+  val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
+
   override val `type`: List[ValueType] = Schema + "WebAPI" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name,
-         Description,
-         Host,
-         Schemes,
-         BasePath,
-         Accepts,
-         ContentType,
-         Version,
-         TermsOfService,
-         Provider,
-         License,
-         Documentations,
-         EndPoints,
-         BaseUriParameters) ++ DomainElementModel.fields
+    List(
+      Name,
+      Description,
+      Host,
+      Schemes,
+      BasePath,
+      Accepts,
+      ContentType,
+      Version,
+      TermsOfService,
+      Provider,
+      License,
+      Documentations,
+      EndPoints,
+      BaseUriParameters,
+      Security
+    ) ++ DomainElementModel.fields
 }

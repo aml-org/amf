@@ -3,18 +3,29 @@ package amf.spec.oas
 import amf.common.Lazy
 import amf.compiler.Root
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
+import amf.domain.Annotation.{
+  DeclaredElement,
+  DefaultPayload,
+  EndPointBodyParameter,
+  ExplicitField,
+  SingleValueArray,
+  _
+}
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
+import amf.domain.security.{ParametrizedSecurityScheme, Scope, SecurityScheme, Settings}
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
+import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
+import amf.parser.YValueOps
 import amf.spec.Declarations
 import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model._
+import org.yaml.model.{YNode, _}
+import amf.spec.OasDefinitions
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -141,6 +152,18 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
     )
 
     map.key(
+      "security",
+      entry => {
+        // TODO check for empty array for resolution ?
+        val securedBy =
+          entry.value.value.toSequence.values
+            .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
+
+        api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
+    map.key(
       "x-user-documentation",
       entry => {
         documentations ++= UserDocumentationParser(entry.value.value.toSequence, declarations, withExtention = false)
@@ -171,6 +194,32 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
     validateClosedShape(api.id, map, "webApi")
 
     api
+  }
+
+  case class ParametrizedSecuritySchemeParser(value: YValue,
+                                              producer: String => ParametrizedSecurityScheme,
+                                              declarations: Declarations) {
+    def parse(): ParametrizedSecurityScheme = value match {
+      case map: YMap =>
+        val schemeEntry = map.entries.head
+        val name        = schemeEntry.key
+        val scheme      = producer(name).add(Annotations(map))
+
+        parseTarget(name, scheme)
+
+        val scopes = ArrayNode(schemeEntry.value.value.toSequence)
+        scheme.set(ParametrizedSecuritySchemeModel.Scopes, scopes.strings(), Annotations(schemeEntry.value))
+
+        scheme
+      case other => throw new Exception(s"Invalid type $other")
+    }
+
+    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme) = {
+      declarations.findSecurityScheme(name) match {
+        case Some(declaration)            => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+        case None if !name.equals("null") => throw new Exception(s"Security scheme '$name' not found in declarations.")
+      }
+    }
   }
 
   case class EndpointParser(entry: YMapEntry,
@@ -229,6 +278,17 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
 
       AnnotationParser(() => endpoint, map).parse()
 
+      map.key(
+        "x-security",
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value.value.toSequence.values
+            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+
+          endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
       map.regex(
         "get|patch|put|post|delete|options|head",
         entries => {
@@ -250,7 +310,7 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
       // can overwrite the path parameters and this would be lost if were not
       // adding them here
       var parameters = globalOrig.copy(path = Seq())
-      val global = globalOrig.copy(path = Seq())
+      val global     = globalOrig.copy(path = Seq())
 
       map.key(
         "parameters",
@@ -356,6 +416,17 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
         }
       )
 
+      map.key(
+        "security",
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value.value.toSequence.values
+            .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
+
+          operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
       RequestParser(map, global, () => operation.withRequest(), declarations)
         .parse()
         .map(operation.set(OperationModel.Request, _))
@@ -383,46 +454,6 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
       validateClosedShape(operation.id, map, "operation")
 
       operation
-    }
-  }
-
-  case class ParametersParser(ast: YSequence, parentId: String, declarations: Declarations) {
-    def parse(): OasParameters = {
-      val parameters = ast.values
-        .map(value => ParameterParser(value.toMap, parentId, declarations).parse())
-
-      OasParameters(
-        parameters.filter(_.isQuery).map(_.parameter),
-        parameters.filter(_.isPath).map(_.parameter),
-        parameters.filter(_.isHeader).map(_.parameter),
-        parameters.filter(_.isBody).map(_.payload).headOption
-      )
-    }
-  }
-
-  case class PayloadParser(map: YMap, producer: (Option[String]) => Payload, declarations: Declarations) {
-    def parse(): Payload = {
-
-      val payload = producer(
-        map.key("mediaType").map(entry => ValueNode(entry.value).string().value.toString)
-      ).add(Annotations(map))
-
-      // todo set again for not lose annotations?
-      map.key("mediaType",
-              entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), Annotations(entry)))
-
-      map.key(
-        "schema",
-        entry => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id), declarations)
-            .parse()
-            .map(payload.set(PayloadModel.Schema, _, Annotations(entry)))
-        }
-      )
-
-      AnnotationParser(() => payload, map).parse()
-
-      payload
     }
   }
 
@@ -495,77 +526,36 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
     }
   }
 
+  case class PayloadParser(map: YMap, producer: (Option[String]) => Payload, declarations: Declarations) {
+    def parse(): Payload = {
 
-  case class OasParameters(query: Seq[Parameter] = Nil,
-                           path: Seq[Parameter] = Nil,
-                           header: Seq[Parameter] = Nil,
-                           body: Option[Payload] = None) {
-    def merge(inner: OasParameters): OasParameters = {
-      OasParameters(merge(query, inner.query),
-                    merge(path, inner.path),
-                    merge(header, inner.header),
-                    merge(body, inner.body))
-    }
+      val payload = producer(
+        map.key("mediaType").map(entry => ValueNode(entry.value).string().value.toString)
+      ).add(Annotations(map))
 
-    private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
-      inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
-
-    private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
-      val globalMap = global.map(p => p.name -> p.copy().add(Annotation.EndPointParameter())).toMap
-      val innerMap  = inner.map(p => p.name  -> p.copy()).toMap
-
-      (globalMap ++ innerMap).values.toSeq
-    }
-  }
-
-  case class HeaderParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
-    def parse(): Seq[Parameter] = {
-      map.entries
-        .map(entry => HeaderParameterParser(entry, producer, declarations).parse())
-    }
-  }
-
-  case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
-    def parse(): Parameter = {
-
-      val name      = entry.key.value.toScalar.text
-      val parameter = producer(name).add(Annotations(entry))
-
-      parameter
-        .set(ParameterModel.Required, !name.endsWith("?"))
-        .set(ParameterModel.Name, ValueNode(entry.key).string())
-
-      val map = entry.value.value.toMap
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-      })
-
-      map.key("required", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-      })
+      // todo set again for not lose annotations?
+      map.key("mediaType",
+              entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), Annotations(entry)))
 
       map.key(
-        "type",
-        _ => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id), declarations)
+        "schema",
+        entry => {
+          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id), declarations)
             .parse()
-            .map(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+            .map(payload.set(PayloadModel.Schema, _, Annotations(entry)))
         }
       )
 
-      AnnotationParser(() => parameter, map).parse()
+      AnnotationParser(() => payload, map).parse()
 
-      parameter
+      payload
     }
   }
 }
 
 abstract class OasSpecParser extends BaseSpecParser {
 
-  override implicit val spec = OasSpecParserContext
+  override implicit val spec: SpecParserContext = OasSpecParserContext
 
   protected def parseDeclarations(root: Root, map: YMap, declarations: Declarations): Unit = {
     val parent = root.location + "#/declarations"
@@ -573,6 +563,7 @@ abstract class OasSpecParser extends BaseSpecParser {
     parseAnnotationTypeDeclarations(map, parent, declarations)
     parseResourceTypeDeclarations("x-resourceTypes", map, parent, declarations)
     parseTraitDeclarations("x-traits", map, parent, declarations)
+    parseSecuritySchemeDeclarations(map, parent, declarations)
     parseParameterDeclarations("parameters", map, parent, declarations)
     declarations.resolve()
   }
@@ -615,10 +606,309 @@ abstract class OasSpecParser extends BaseSpecParser {
     )
   }
 
-  def parseParameterDeclarations(key: String,
-                                 map: YMap,
-                                 parentPath: String,
-                                 declarations: Declarations): Unit = {
+  private def parseSecuritySchemeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
+    map.key(
+      "securityDefinitions",
+      e => {
+        e.value.value.toMap.entries.foreach { entry =>
+          declarations += SecuritySchemeParser(entry,
+                                               scheme => scheme.withName(entry.key).adopted(parent),
+                                               declarations).parse().add(DeclaredElement())
+        }
+      }
+    )
+
+    map.key(
+      "x-securitySchemes",
+      e => {
+        e.value.value.toMap.entries.foreach { entry =>
+          declarations += SecuritySchemeParser(entry,
+                                               scheme => scheme.withName(entry.key).adopted(parent),
+                                               declarations).parse().add(DeclaredElement())
+        }
+      }
+    )
+  }
+
+  object SecuritySchemeParser {
+    def apply(entry: YMapEntry,
+              adopt: (SecurityScheme) => SecurityScheme,
+              declarations: Declarations): SecuritySchemeParser =
+      SecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
+  }
+
+  case class SecuritySchemeParser(ast: YPart,
+                                  key: String,
+                                  node: YNode,
+                                  adopt: (SecurityScheme) => SecurityScheme,
+                                  declarations: Declarations) {
+    def parse(): SecurityScheme = {
+      spec.link(node) match {
+        case Left(link) => parseReferenced(key, link, Annotations(node))
+        case Right(value) =>
+          val scheme = adopt(SecurityScheme(ast))
+
+          val map = value.value.toMap
+
+          map.key(
+            "type",
+            entry => {
+              val t: String = entry.value.value.toScalar.text match {
+                case "oauth2" => "OAuth 2.0"
+                case "basic"  => "Basic Authentication"
+                case "apiKey" => "x-apiKey"
+                case s        => s
+              }
+
+              scheme.set(SecuritySchemeModel.Type, AmfScalar(t, Annotations(entry.value)), Annotations(entry))
+            }
+          )
+
+          map.key("x-displayName", entry => {
+            val value = ValueNode(entry.value)
+            scheme.set(SecuritySchemeModel.DisplayName, value.string(), Annotations(entry))
+          })
+
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
+          })
+
+          map.key(
+            "x-describedBy",
+            entry => {
+              val value = entry.value.value.toMap
+
+              value.key(
+                "headers",
+                entry => {
+                  val parameters: Seq[Parameter] =
+                    RamlParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
+                      .parse()
+                      .map(_.withBinding("header"))
+                  scheme.set(SecuritySchemeModel.Headers,
+                             AmfArray(parameters, Annotations(entry.value)),
+                             Annotations(entry))
+                }
+              )
+
+              value.key(
+                "queryParameters",
+                entry => {
+                  val parameters: Seq[Parameter] =
+                    RamlParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
+                      .parse()
+                      .map(_.withBinding("query"))
+                  scheme.set(SecuritySchemeModel.QueryParameters,
+                             AmfArray(parameters, Annotations(entry.value)),
+                             Annotations(entry))
+                }
+              )
+
+              // TODO queryString.
+
+              value.key(
+                "responses",
+                entry => {
+                  entry.value.value.toMap.regex(
+                    "\\d{3}",
+                    entries => {
+                      val responses = mutable.ListBuffer[Response]()
+                      entries.foreach(entry => {
+                        responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
+                      })
+                      scheme.set(SecuritySchemeModel.Responses,
+                                 AmfArray(responses, Annotations(entry.value)),
+                                 Annotations(entry))
+                    }
+                  )
+                }
+              )
+            }
+          )
+
+          SecuritySettingsParser(map, scheme)
+            .parse()
+            .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(ast)))
+
+          AnnotationParser(() => scheme, map).parse()
+
+          scheme
+      }
+    }
+
+    case class SecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
+      def parse(): Option[Settings] = {
+        val result = scheme.`type` match {
+          case "OAuth 1.0" => Some(oauth1())
+          case "OAuth 2.0" => Some(oauth2())
+          case "x-apiKey"  => Some(apiKey())
+          case _ =>
+            map
+              .key("x-settings")
+              .map(entry => dynamicSettings(entry.value.value.toMap, scheme.withDefaultSettings()))
+        }
+
+        result.map(ss => {
+          AnnotationParser(() => ss, map).parse()
+          ss.add(Annotations(map))
+        })
+      }
+
+      def dynamicSettings(xSettings: YMap, settings: Settings, properties: String*): Settings = {
+        val entries = xSettings.entries.filterNot { entry =>
+          val key: String = entry.key
+          properties.contains(key) || WellKnownAnnotation.isOasAnnotation(key)
+        }
+
+        if (entries.nonEmpty) {
+          val node = DataNodeParser(YNode(YMap(entries)), parent = Some(settings.id)).parse()
+          settings.set(SettingsModel.AdditionalProperties, node)
+        }
+
+        AnnotationParser(() => scheme, xSettings).parse()
+
+        settings
+      }
+
+      private def apiKey() = {
+        val settings = scheme.withApiKeySettings()
+
+        map.key("name", entry => {
+          val value = ValueNode(entry.value)
+          settings.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
+        })
+
+        map.key("in", entry => {
+          val value = ValueNode(entry.value)
+          settings.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
+        })
+
+        map.key(
+          "x-settings",
+          entry => dynamicSettings(entry.value.value.toMap, settings, "name", "in")
+        )
+
+        settings
+      }
+
+      private def oauth2() = {
+        val settings = scheme.withOAuth2Settings()
+
+        map.key("authorizationUrl", entry => {
+          val value = ValueNode(entry.value)
+          settings.set(OAuth2SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
+        })
+
+        map.key("tokenUrl", entry => {
+          val value = ValueNode(entry.value)
+          settings.set(OAuth2SettingsModel.AccessTokenUri, value.string(), Annotations(entry))
+        })
+
+        // TODO we should find similarity between raml authorizationGrants and this to map between values.
+        map.key(
+          "flow",
+          entry => {
+            val value = ValueNode(entry.value)
+            settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
+          }
+        )
+
+        map.key(
+          "scopes",
+          entry => {
+            val scopeMap = entry.value.value.toMap
+            val scopes =
+              scopeMap.entries.filterNot(entry => WellKnownAnnotation.isOasAnnotation(entry.key)).map(parseScope)
+
+            AnnotationParser(() => scheme, scopeMap).parse()
+
+            settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(entry))
+          }
+        )
+
+        map.key(
+          "x-settings",
+          entry => {
+            val xSettings = entry.value.value.toMap
+
+            xSettings.key(
+              "authorizationGrants",
+              entry => {
+                val value = ArrayNode(entry.value.value.toSequence)
+                settings.set(OAuth2SettingsModel.AuthorizationGrants, value.strings(), Annotations(entry))
+              }
+            )
+
+            dynamicSettings(xSettings, settings, "authorizationGrants")
+          }
+        )
+
+        settings
+      }
+
+      private def parseScope(scopeEntry: YMapEntry) = {
+        val name: String        = scopeEntry.key
+        val description: String = scopeEntry.value
+
+        Scope(scopeEntry)
+          .set(ScopeModel.Name, AmfScalar(name), Annotations(scopeEntry.key))
+          .set(ScopeModel.Description, AmfScalar(description), Annotations(scopeEntry.value))
+      }
+
+      private def oauth1() = {
+        val settings = scheme.withOAuth1Settings()
+
+        map.key(
+          "x-settings",
+          entry => {
+            val xSettings = entry.value.value.toMap
+
+            xSettings.key("requestTokenUri", entry => {
+              val value = ValueNode(entry.value)
+              settings.set(OAuth1SettingsModel.RequestTokenUri, value.string(), Annotations(entry))
+            })
+
+            xSettings.key("authorizationUri", entry => {
+              val value = ValueNode(entry.value)
+              settings.set(OAuth1SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
+            })
+
+            xSettings.key("tokenCredentialsUri", entry => {
+              val value = ValueNode(entry.value)
+              settings.set(OAuth1SettingsModel.TokenCredentialsUri, value.string(), Annotations(entry))
+            })
+
+            xSettings.key("signatures", entry => {
+              val value = ArrayNode(entry.value.value.toSequence)
+              settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
+            })
+
+            dynamicSettings(xSettings,
+                            settings,
+                            "requestTokenUri",
+                            "authorizationUri",
+                            "tokenCredentialsUri",
+                            "signatures")
+          }
+        )
+
+        settings
+      }
+    }
+
+    def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
+      val declared = declarations.findSecurityScheme(parsedUrl)
+      declared
+        .map { ss =>
+          val copied: SecurityScheme = ss.link(parsedUrl, annotations)
+          copied.withName(name)
+        }
+        .getOrElse(throw new IllegalStateException(s"Could not find security scheme in references map to link $name"))
+    }
+  }
+
+  def parseParameterDeclarations(key: String, map: YMap, parentPath: String, declarations: Declarations): Unit = {
     map.key(
       "parameters",
       entry => {
@@ -635,85 +925,6 @@ abstract class OasSpecParser extends BaseSpecParser {
         })
       }
     )
-  }
-
-  case class ParameterParser(map: YMap, parentId: String, declarations: Declarations) extends OasSyntax {
-    def parse(): OasParameter = {
-      map.key("$ref") match {
-        case Some(ref) => parseParameterRef(ref, parentId)
-        case None      =>
-          val parameter = OasParameter(map)
-
-          parameter.parameter.set(ParameterModel.Required, value = false)
-
-          map.key("name", entry => {
-            val value = ValueNode(entry.value)
-            parameter.parameter.set(ParameterModel.Name, value.string(), Annotations(entry))
-          })
-
-          map.key("description", entry => {
-            val value = ValueNode(entry.value)
-            parameter.parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-          })
-
-          map.key(
-            "required",
-            entry => {
-              val value = ValueNode(entry.value)
-              parameter.parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-            }
-          )
-
-          map.key("in", entry => {
-            val value = ValueNode(entry.value)
-            parameter.parameter.set(ParameterModel.Binding, value.string(), Annotations(entry))
-          })
-
-          // TODO generate parameter with parent id or adopt
-          if (parameter.isBody) {
-            parameter.payload.adopted(parentId)
-            map.key(
-              "schema",
-              entry => {
-                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations, "schema")
-                  .parse()
-                  .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
-              }
-            )
-
-            map.key("x-media-type", entry => {
-              val value = ValueNode(entry.value)
-              parameter.payload.set(PayloadModel.MediaType, value.string(), Annotations(entry))
-            })
-
-          } else {
-            // type
-            parameter.parameter.adopted(parentId)
-
-            validateClosedShape(parameter.parameter.id, map, "parameter")
-
-            OasTypeParser(map, "", map, shape => shape.withName("schema").adopted(parameter.parameter.id), declarations, "parameter")
-              .parse()
-              .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
-          }
-
-          AnnotationParser(() => parameter.parameter, map).parse()
-
-          parameter
-      }
-    }
-
-    protected def parseParameterRef(ref: YMapEntry, parentId: String): OasParameter = {
-      val refUrl = stripParameterDefinitionsPrefix(ref.value)
-      declarations.findParameter(refUrl) match {
-        case Some(p) =>
-          val payload: Payload = declarations.parameterPayload(p)
-          val parameter: Parameter = p.link(refUrl, Annotations(map))
-          parameter.withName(refUrl).adopted(parentId)
-          OasParameter(parameter, payload)
-        case None    => throw new Exception(s"Cannot find parameter reference ${refUrl}")
-      }
-    }
   }
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
@@ -828,6 +1039,180 @@ abstract class OasSpecParser extends BaseSpecParser {
               case _         => throw new IllegalArgumentException(s"not supported scalar $s.text for documentation item")
             }
       })
+  }
+
+  case class ParameterParser(map: YMap, parentId: String, declarations: Declarations) extends OasSyntax {
+    def parse(): OasParameter = {
+      map.key("$ref") match {
+        case Some(ref) => parseParameterRef(ref, parentId)
+        case None =>
+          val parameter = OasParameter(map)
+
+          parameter.parameter.set(ParameterModel.Required, value = false)
+
+          map.key("name", entry => {
+            val value = ValueNode(entry.value)
+            parameter.parameter.set(ParameterModel.Name, value.string(), Annotations(entry))
+          })
+
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            parameter.parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+          })
+
+          map.key(
+            "required",
+            entry => {
+              val value = ValueNode(entry.value)
+              parameter.parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+            }
+          )
+
+          map.key("in", entry => {
+            val value = ValueNode(entry.value)
+            parameter.parameter.set(ParameterModel.Binding, value.string(), Annotations(entry))
+          })
+
+          // TODO generate parameter with parent id or adopt
+          if (parameter.isBody) {
+            parameter.payload.adopted(parentId)
+            map.key(
+              "schema",
+              entry => {
+                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations)
+                  .parse()
+                  .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
+              }
+            )
+
+            map.key("x-media-type", entry => {
+              val value = ValueNode(entry.value)
+              parameter.payload.set(PayloadModel.MediaType, value.string(), Annotations(entry))
+            })
+
+          } else {
+            // type
+            parameter.parameter.adopted(parentId)
+
+            validateClosedShape(parameter.parameter.id, map, "parameter")
+
+            OasTypeParser(map,
+                          "",
+                          map,
+                          shape => shape.withName("schema").adopted(parameter.parameter.id),
+                          declarations)
+              .parse()
+              .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
+          }
+
+          AnnotationParser(() => parameter.parameter, map).parse()
+
+          parameter
+      }
+    }
+
+    protected def parseParameterRef(ref: YMapEntry, parentId: String): OasParameter = {
+      val refUrl = OasDefinitions.stripParameterDefinitionsPrefix(ref.value)
+      declarations.findParameter(refUrl) match {
+        case Some(p) =>
+          val payload: Payload     = declarations.parameterPayload(p)
+          val parameter: Parameter = p.link(refUrl, Annotations(map))
+          parameter.withName(refUrl).adopted(parentId)
+          OasParameter(parameter, payload)
+        case None => throw new Exception(s"Cannot find parameter reference $refUrl")
+      }
+    }
+  }
+
+  case class ParametersParser(ast: YSequence, parentId: String, declarations: Declarations) {
+    def parse(): OasParameters = {
+      val parameters = ast.values
+        .map(value => ParameterParser(value.toMap, parentId, declarations).parse())
+
+      OasParameters(
+        parameters.filter(_.isQuery).map(_.parameter),
+        parameters.filter(_.isPath).map(_.parameter),
+        parameters.filter(_.isHeader).map(_.parameter),
+        parameters.filter(_.isBody).map(_.payload).headOption
+      )
+    }
+  }
+
+  case class OasParameters(query: Seq[Parameter] = Nil,
+                           path: Seq[Parameter] = Nil,
+                           header: Seq[Parameter] = Nil,
+                           body: Option[Payload] = None) {
+    def merge(inner: OasParameters): OasParameters = {
+      OasParameters(merge(query, inner.query),
+                    merge(path, inner.path),
+                    merge(header, inner.header),
+                    merge(body, inner.body))
+    }
+
+    private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
+      inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
+
+    private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
+      val globalMap = global.map(p => p.name -> p.copy().add(Annotation.EndPointParameter())).toMap
+      val innerMap  = inner.map(p => p.name  -> p.copy()).toMap
+
+      (globalMap ++ innerMap).values.toSeq
+    }
+  }
+
+  case class OasParameter(parameter: Parameter, payload: Payload) {
+    def isBody: Boolean   = parameter.isBody
+    def isQuery: Boolean  = parameter.isQuery
+    def isPath: Boolean   = parameter.isPath
+    def isHeader: Boolean = parameter.isHeader
+  }
+
+  object OasParameter {
+    def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast))
+  }
+
+  case class HeaderParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
+    def parse(): Seq[Parameter] = {
+      map.entries
+        .map(entry => HeaderParameterParser(entry, producer, declarations).parse())
+    }
+  }
+
+  case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
+    def parse(): Parameter = {
+
+      val name      = entry.key.value.toScalar.text
+      val parameter = producer(name).add(Annotations(entry))
+
+      parameter
+        .set(ParameterModel.Required, !name.endsWith("?"))
+        .set(ParameterModel.Name, ValueNode(entry.key).string())
+
+      val map = entry.value.value.toMap
+
+      map.key("description", entry => {
+        val value = ValueNode(entry.value)
+        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
+      })
+
+      map.key("required", entry => {
+        val value = ValueNode(entry.value)
+        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
+      })
+
+      map.key(
+        "type",
+        _ => {
+          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id), declarations)
+            .parse()
+            .map(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+        }
+      )
+
+      AnnotationParser(() => parameter, map).parse()
+
+      parameter
+    }
   }
 
 }

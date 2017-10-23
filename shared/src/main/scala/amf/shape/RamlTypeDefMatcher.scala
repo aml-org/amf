@@ -48,7 +48,8 @@ object RamlTypeDefMatcher {
 
   object TypeExpression {
     def unapply(str: String): Option[String] =
-      if ((str.contains("[") && !str.startsWith("[")) || str.contains("|") || str.contains("(") || str.contains("]") || str.contains(")"))
+      if ((str.contains("[") && !str.startsWith("[")) || str.contains("|") || str.contains("(") || str.contains("]") || str
+            .contains(")"))
         Some(str)
       else None
   }

@@ -65,14 +65,16 @@ object Fragment {
 
   case class Extension(fields: Fields, annotations: Annotations) extends Fragment
 
-  case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment
+  case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: amf.domain.security.SecurityScheme =
+      super.encodes.asInstanceOf[amf.domain.security.SecurityScheme]
+  }
 
   case class Default(fields: Fields, annotations: Annotations) extends Fragment
 
   case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
   }
-
 
   object DocumentationItem {
     def apply(): DocumentationItem = apply(Annotations())
@@ -123,8 +125,14 @@ object Fragment {
   }
 
   object ExternalFragment {
-    def apply(): ExternalFragment = apply(Annotations())
+    def apply(): ExternalFragment                         = apply(Annotations())
     def apply(annotations: Annotations): ExternalFragment = ExternalFragment(Fields(), annotations)
+  }
+
+  object SecurityScheme {
+    def apply(): SecurityScheme = apply(Annotations())
+
+    def apply(annotations: Annotations): SecurityScheme = apply(Fields(), annotations)
   }
 }
 

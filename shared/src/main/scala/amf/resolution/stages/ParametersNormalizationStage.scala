@@ -7,7 +7,6 @@ import amf.model.AmfArray
 
 import scala.collection.mutable
 
-
 /**
   * Place parameter models in the right locations according to the RAML/OpenAPI specs and our own
   * criterium for AMF
@@ -15,7 +14,7 @@ import scala.collection.mutable
   */
 class ParametersNormalizationStage(profile: String) extends ResolutionStage(profile) {
 
-  val paramsAcc: mutable.HashMap[String,Seq[Parameter]] = mutable.HashMap()
+  val paramsAcc: mutable.HashMap[String, Seq[Parameter]] = mutable.HashMap()
 
   override def resolve(model: BaseUnit): BaseUnit = {
     profile match {
@@ -37,7 +36,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
     unit match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
         // collect baseUri paraemters
-        val webapi = doc.encodes.asInstanceOf[WebApi]
+        val webapi            = doc.encodes.asInstanceOf[WebApi]
         val baseUriParameters = Option(webapi.baseUriParameters).getOrElse(Seq())
         webapi.fields.remove(WebApiModel.BaseUriParameters)
         // collect endpoint path parameters
@@ -50,13 +49,14 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
               case Some(request) =>
                 val queryParameters = request.queryParameters
                 // set the full list of parameters at the operation level
-                request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(baseUriParameters ++ endpointParameters ++ queryParameters))
+                request.fields.setWithoutId(RequestModel.QueryParameters,
+                                            AmfArray(baseUriParameters ++ endpointParameters ++ queryParameters))
               case _ => // ignore
             }
           }
         }
         doc
-      case _  => unit
+      case _ => unit
     }
   }
 
@@ -88,7 +88,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           }
         }
         doc
-      case _  => unit
+      case _ => unit
     }
   }
 
@@ -111,7 +111,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val endpointParameters = Option(endpoint.parameters).getOrElse(Seq())
           endpoint.fields.remove(EndPointModel.UriParameters)
           // we filter path parameters and the remaining parameters
-          val pathParameters = endpointParameters.filter(p => p.binding == "path")
+          val pathParameters      = endpointParameters.filter(p => p.binding == "path")
           val pathQueryParameters = endpointParameters.filter(p => p.binding != "path")
           // we re-assign path parametes at the endpoint, we push the rest
           endpoint.fields.setWithoutId(EndPointModel.UriParameters, AmfArray(pathParameters))
@@ -128,7 +128,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           }
         }
         doc
-      case _  => unit
+      case _ => unit
     }
   }
 

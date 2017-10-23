@@ -9,10 +9,10 @@ import amf.metadata._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
 import amf.model.{AmfArray, AmfObject, AmfScalar}
-import amf.parser.ASTEmitter
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
-import org.yaml.model.{YDocument, YType}
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 import scala.collection.mutable.ListBuffer
 
@@ -21,297 +21,244 @@ import scala.collection.mutable.ListBuffer
   */
 object GraphEmitter extends MetaModelTypeMapping {
 
-  def emit(unit: BaseUnit, options: GenerationOptions): YDocument = {
-    val emitter = Emitter(ASTEmitter(), options)
-    emitter.root(unit)
-  }
+  def emit(unit: BaseUnit, options: GenerationOptions): YDocument = Emitter(options).root(unit)
 
-  case class Emitter(emitter: ASTEmitter, options: GenerationOptions) {
+  case class Emitter(options: GenerationOptions) {
 
     def root(unit: BaseUnit): YDocument = {
-      emitter.document { () =>
-        array { () =>
-          map { () =>
-            traverse(unit, unit.location)
+      YDocument {
+        _.list {
+          _.map {
+            traverse(unit, unit.location, _)
           }
         }
       }
     }
 
-    def traverse(element: AmfObject, parent: String): Unit = {
+    def traverse(element: AmfObject, parent: String, b: EntryBuilder): Unit = {
       val id = element.id
-      createIdNode(id)
+      createIdNode(b, id)
 
       val sources = SourceMap(id, element)
 
       val obj = metaModel(element)
-      if (obj.dynamic) {
-        traverseDynamicMetaModel(id, element, sources, obj, parent)
-      } else {
-        traverseStaticMetamodel(id, element, sources, obj, parent)
-      }
 
-      createCustomExtensions(element, parent)
+      if (obj.dynamic) traverseDynamicMetaModel(id, element, sources, obj, parent, b)
+      else traverseStaticMetamodel(id, element, sources, obj, parent, b)
 
-      createSourcesNode(id + "/source-map", sources)
+      createCustomExtensions(element, parent, b)
+
+      createSourcesNode(id + "/source-map", sources, b)
     }
 
-    def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
+    def traverseDynamicMetaModel(id: String,
+                                 element: AmfObject,
+                                 sources: SourceMap,
+                                 obj: Obj,
+                                 parent: String,
+                                 b: EntryBuilder): Unit = {
       val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
-      createDynamicTypeNode(schema)
+      createDynamicTypeNode(schema, b)
 
       schema.dynamicFields.foreach { f: Field =>
         schema.valueForField(f).foreach { amfElement =>
-          entry { () =>
-            val propertyUri = f.value.iri()
-            raw(propertyUri)
-            value(f.`type`, Value(amfElement, amfElement.annotations), id, { (_) =>
-              })
-          }
+          b.entry(
+            f.value.iri(),
+            value(f.`type`, Value(amfElement, amfElement.annotations), id, _ => {}, _)
+          )
         }
       }
     }
 
-    def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, parent: String): Unit = {
-      createTypeNode(obj, Some(element))
+    def traverseStaticMetamodel(id: String,
+                                element: AmfObject,
+                                sources: SourceMap,
+                                obj: Obj,
+                                parent: String,
+                                b: EntryBuilder): Unit = {
+      createTypeNode(b, obj, Some(element))
 
-      obj.fields.map(element.fields.entryJsonld).foreach {
+      obj.fields.map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
-          entry { () =>
-            val url = f.value.iri()
-            raw(url)
-            value(f.`type`, v, id, sources.property(url))
-          }
+          val url = f.value.iri()
+          b.entry(
+            url,
+            value(f.`type`, v, id, sources.property(url), _)
+          )
         case None => // Missing field
       }
     }
 
-    private def createCustomExtensions(element: AmfObject, parent: String): Unit = {
+    private def createCustomExtensions(element: AmfObject, parent: String, b: EntryBuilder): Unit = {
       val customProperties: ListBuffer[String] = ListBuffer()
 
-      element.fields.entry(DomainElementModel.CustomDomainProperties) match {
-        case Some(FieldEntry(_, v)) =>
+      element.fields.entry(DomainElementModel.CustomDomainProperties) foreach {
+        case FieldEntry(_, v) =>
           v.value match {
             case AmfArray(values, _) =>
               values.foreach {
-                case customExtension: DomainExtension =>
-                  val propertyUri = customExtension.definedBy.id
+                case extension: DomainExtension =>
+                  val propertyUri = extension.definedBy.id
                   customProperties += propertyUri
-                  entry { () =>
-                    raw(propertyUri)
-                    map { () =>
-                      traverse(customExtension.extension, parent)
+                  b.entry(
+                    propertyUri,
+                    _.map {
+                      traverse(extension.extension, parent, _)
                     }
-                  }
+                  )
               }
-
             case _ => // ignore
           }
-        case None => // ignore
       }
 
-      if (customProperties.nonEmpty) {
-        entry { () =>
-          raw((Namespace.Document + "customDomainProperties").iri())
-          array { () =>
-            customProperties.foreach(iri(_, inArray = true))
+      if (customProperties.nonEmpty)
+        b.entry(
+          (Namespace.Document + "customDomainProperties").iri(),
+          _.list { b =>
+            customProperties.foreach(iri(b, _, inArray = true))
           }
-        }
-      }
+        )
     }
 
-    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit): Unit = {
+    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder): Unit = {
       t match {
         case t: DomainElement with Linkable if t.isLink =>
-          t.linkTarget.foreach(l => iri(l.id))
+          t.linkTarget.foreach(l => iri(b, l.id))
           sources(v)
         case _: Obj =>
-          obj(v.value.asInstanceOf[AmfObject], parent)
+          obj(b, v.value.asInstanceOf[AmfObject], parent)
           sources(v)
         case Iri =>
-          iri(v.value.asInstanceOf[AmfScalar].toString)
+          iri(b, v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Str | RegExp =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString)
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Bool =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
           sources(v)
         case Type.Int =>
-          scalar(v.value.asInstanceOf[AmfScalar].toString, YType.Int)
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
         case a: SortedArray =>
-          map { () =>
-            entry { () =>
-              raw("@list")
-              array { () =>
-                val seq = v.value.asInstanceOf[AmfArray]
+          b.map {
+            _.entry(
+              "@list",
+              _.list { b =>
                 sources(v)
+                val seq = v.value.asInstanceOf[AmfArray]
                 a.element match {
-                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
-                  case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
+                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(obj(b, _, parent, inArray = true))
+                  case Str =>
+                    seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(b, e.toString, inArray = true))
                 }
               }
-            }
+            )
           }
         case a: Array =>
-          array { () =>
+          b.list { b =>
             val seq = v.value.asInstanceOf[AmfArray]
             sources(v)
             a.element match {
-              case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(e => obj(e, parent, inArray = true))
-              case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(e.toString, inArray = true))
-              case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
+              case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(obj(b, _, parent, inArray = true))
+              case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(b, e.toString, inArray = true))
+              case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
               case Type.Int =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Int, inArray = true))
+                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Int, inArray = true))
               case Bool =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
-              case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(e.toString, inArray = true))
+                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
+              case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
             }
           }
       }
     }
-    // case e: DomainElement with Linkable if e.isLink => e.linkTarget.foreach(l => iri(l.id))
-    private def obj(element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
-      val obj = element match {
-        case _ =>
-          () =>
-            map { () =>
-              traverse(element, parent)
-            }
-      }
 
-      if (inArray) {
-        obj()
-      } else {
-        array { () =>
-          obj()
-        }
-      }
+    private def obj(b: PartBuilder, element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder) = b.map(traverse(element, parent, _))
+
+      if (inArray) emit(b) else b.list(emit)
     }
 
-    private def iriValue(content: String): Unit = {
-      map { () =>
-        entry { () =>
-          raw("@id")
-          raw(content)
-        }
-      }
+    private def iri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder): Unit = b.map(_.entry("@id", raw(_, content)))
+
+      if (inArray) emit(b) else b.list(emit)
     }
 
-    private def iri(content: String, inArray: Boolean = false): Unit = {
-      if (inArray) {
-        iriValue(content)
-      } else {
-        array { () =>
-          iriValue(content)
-        }
-      }
+    private def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder): Unit = b.map(_.entry("@value", raw(_, content, tag)))
+
+      if (inArray) emit(b) else b.list(emit)
     }
 
-    private def scalar(content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
-      if (inArray) {
-        value(content, tag)
-      } else {
-        array { () =>
-          value(content, tag)
-        }
-      }
-    }
+    private def createIdNode(b: EntryBuilder, id: String): Unit = b.entry(
+      "@id",
+      raw(_, id)
+    )
 
-    private def value(content: String, tag: YType): Unit = {
-      map { () =>
-        entry { () =>
-          raw("@value")
-          raw(content, tag)
-        }
-      }
-    }
-
-    private def createIdNode(id: String): Unit = entry("@id", id)
-
-    private def createTypeNode(obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {
-      entry { () =>
-        raw("@type")
-        array { () =>
-          obj.`type`.foreach(t => raw(t.iri()))
+    private def createTypeNode(b: EntryBuilder, obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {
+      b.entry(
+        "@type",
+        _.list { b =>
+          obj.`type`.foreach(t => raw(b, t.iri()))
           if (obj.dynamicType) {
             maybeElement match {
-              case Some(element) => element.dynamicTypes().foreach(t => raw(t))
+              case Some(element) => element.dynamicTypes().foreach(t => raw(b, t))
               case _             => // ignore
             }
           }
         }
-      }
+      )
     }
 
-    private def createDynamicTypeNode(obj: DynamicDomainElement): Unit = {
-      entry { () =>
-        raw("@type")
-        array { () =>
-          obj.dynamicType.foreach(t => raw(t.iri()))
+    private def createDynamicTypeNode(obj: DynamicDomainElement, b: EntryBuilder): Unit = {
+      b.entry(
+        "@type",
+        _.list { b =>
+          obj.dynamicType.foreach(t => raw(b, t.iri()))
         }
-      }
+      )
     }
 
-    private def entry(k: String, v: String): Unit = entry { () =>
-      raw(k)
-      raw(v)
-    }
+    private def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
+      b.scalar(YNode(YScalar(content), tag))
 
-    private def raw(content: String, tag: YType = YType.Str): Unit = emitter.scalar(content, tag)
-
-    private def entry(inner: () => Unit): Unit = emitter.entry(inner)
-
-    private def array(inner: () => Unit): Unit = emitter.sequence(inner)
-
-    private def map(inner: () => Unit): Unit = emitter.mapping(inner)
-
-    private def createSourcesNode(id: String, sources: SourceMap): Unit = {
+    private def createSourcesNode(id: String, sources: SourceMap, b: EntryBuilder): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {
-        entry { () =>
-          raw(Sources.value.iri())
-          array { () =>
-            map { () =>
-              createIdNode(id)
-              createTypeNode(SourceMapModel)
-              createAnnotationNodes(sources)
+        b.entry(
+          Sources.value.iri(),
+          _.list {
+            _.map { b =>
+              createIdNode(b, id)
+              createTypeNode(b, SourceMapModel)
+              createAnnotationNodes(b, sources)
             }
           }
-        }
+        )
       }
     }
 
-    private def createAnnotationNodes(sources: SourceMap): Unit = {
+    private def createAnnotationNodes(b: EntryBuilder, sources: SourceMap): Unit = {
       sources.annotations.foreach({
         case (a, values) =>
-          entry { () =>
-            raw(ValueType(SourceMaps, a).iri())
-            array { () =>
-              values.foreach(createAnnotationValueNode)
-            }
-          }
+          b.entry(
+            ValueType(SourceMaps, a).iri(),
+            _.list(b => values.foreach(createAnnotationValueNode(b, _)))
+          )
       })
     }
 
-    private def createAnnotationValueNode(tuple: (String, String)): Unit = tuple match {
+    private def createAnnotationValueNode(b: PartBuilder, tuple: (String, String)): Unit = tuple match {
       case (iri, v) =>
-        map { () =>
-          entry { () =>
-            raw(SourceMapModel.Element.value.iri())
-            scalar(iri)
-          }
-          entry { () =>
-            raw(SourceMapModel.Value.value.iri())
-            scalar(v)
-          }
+        b.map { b =>
+          b.entry(SourceMapModel.Element.value.iri(), scalar(_, iri))
+          b.entry(SourceMapModel.Value.value.iri(), scalar(_, v))
         }
     }
   }
-
 }

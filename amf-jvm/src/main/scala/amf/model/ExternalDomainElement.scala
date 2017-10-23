@@ -1,5 +1,3 @@
 package amf.model
 
-class ExternalDomainElement {
-
-}
+class ExternalDomainElement {}

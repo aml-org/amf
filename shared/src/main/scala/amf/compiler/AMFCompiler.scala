@@ -67,10 +67,10 @@ class AMFCompiler private (val url: String,
 
   private def make(root: Root): BaseUnit = {
     root match {
-      case Root(_, _, _, Amf, _)      => makeAmfUnit(root)
-      case Root(_, _, _, Raml, _)     => makeRamlUnit(root)
-      case Root(_, _, _, Oas, _)      => makeOasUnit(root)
-      case Root(_, _, _, Unknown, _)  => makeExternalUnit(root)
+      case Root(_, _, _, Amf, _)     => makeAmfUnit(root)
+      case Root(_, _, _, Raml, _)    => makeRamlUnit(root)
+      case Root(_, _, _, Oas, _)     => makeOasUnit(root)
+      case Root(_, _, _, Unknown, _) => makeExternalUnit(root)
     }
   }
 
@@ -139,13 +139,13 @@ class AMFCompiler private (val url: String,
   }
 
   private def parse(content: Content): Future[Root] = {
-    val raw = content.stream.toString
+    val raw    = content.stream.toString
     val parser = YamlParser(raw)
 
     val parsed = toDocument(parser.parse(true))
 
     parsed match {
-      case Some(document)  =>
+      case Some(document) =>
         document.document.value match {
           case Some(_: YMap) =>
             parseDoc(content, document, raw)
@@ -184,7 +184,11 @@ class AMFCompiler private (val url: String,
   }
 }
 
-case class Root(parsed: ParsedDocument, location: String, references: Seq[ParsedReference], vendor: Vendor, raw: String) {
+case class Root(parsed: ParsedDocument,
+                location: String,
+                references: Seq[ParsedReference],
+                vendor: Vendor,
+                raw: String) {
   val document: YDocument = parsed.document
 }
 

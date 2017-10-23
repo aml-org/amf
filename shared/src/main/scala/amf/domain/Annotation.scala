@@ -42,7 +42,7 @@ object Annotation {
   }
 
   case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
-    override val name: String = "parsed-json-schema"
+    override val name: String  = "parsed-json-schema"
     override val value: String = rawText
   }
 

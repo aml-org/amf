@@ -5,11 +5,13 @@ import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension}
+import amf.domain.security._
 import amf.metadata.document.{DocumentModel, FragmentsTypesModels, ModuleModel}
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
 import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel}
+import amf.metadata.domain.security._
 import amf.metadata.shape._
 import amf.shape._
 
@@ -50,6 +52,13 @@ trait MetaModelTypeMapping {
     case _: Variable                           => VariableModel
     case _: VariableValue                      => VariableValueModel
     case _: ExternalDomainElement              => ExternalDomainElementModel
+    case _: SecurityScheme                     => SecuritySchemeModel
+    case _: OAuth1Settings                     => OAuth1SettingsModel
+    case _: OAuth2Settings                     => OAuth2SettingsModel
+    case _: ApiKeySettings                     => ApiKeySettingsModel
+    case _: Settings                           => SettingsModel
+    case _: Scope                              => ScopeModel
+    case _: ParametrizedSecurityScheme         => ParametrizedSecuritySchemeModel
     case entity: DomainEntity                  => new DialectEntityModel(entity)
     case _: Fragment.ExternalFragment          => FragmentsTypesModels.ExternalFragmentModel
     case _: Fragment.DocumentationItem         => FragmentsTypesModels.DocumentationItemModel
