@@ -120,14 +120,26 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", escapeRegex(v)))
       constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
       constraint.datatype.foreach(v => b.entry((Namespace.Shacl + "datatype").iri(), link(_, v)))
-      constraint.`class`.foreach(v => b.entry((Namespace.Shacl + "class").iri(), link(_, v)))
+      if (constraint.`class`.nonEmpty) {
+        if (constraint.`class`.length == 1) {
+          b.entry((Namespace.Shacl + "class").iri(), link(_, constraint.`class`.head))
+        } else {
+          b.entry((Namespace.Shacl + "or").iri(), _.obj {
+            _.entry("@list",
+              _.list(l => constraint.`class`.foreach { v =>
+                l.obj {
+                  _.entry((Namespace.Shacl + "class").iri(), link(_, v))
+                }
+              })
+            )}
+          )
+        }
+      }
 
       if (constraint.in.nonEmpty) {
         b.entry(
           (Namespace.Shacl + "in").iri(),
-          _.map {
-            _.entry("@list", _.list(b => constraint.in.foreach(genValue(b, _))))
-          }
+          _.obj { _.entry("@list", _.list(b => constraint.in.foreach(genValue(b, _)))) }
         )
       }
     }

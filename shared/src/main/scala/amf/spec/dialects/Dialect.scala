@@ -257,14 +257,14 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
   }
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] =
-    declarationsFromLibraries.get(typedName(name, t))
+    declarationsFromLibraries.get(name)
 
   def resolveBasicRef(name: String, root: Root, t: Type): String =
     if (Option(name).isEmpty) {
       throw new Exception("Empty name for basic ref")
     } else if (name.indexOf(".") > -1) {
-      if (declarationsFromLibraries.contains(typedName(name, t))) {
-        declarationsFromLibraries(typedName(name, t)).id
+      if (declarationsFromLibraries.contains(name)) {
+        declarationsFromLibraries(name).id
       } else
         name.split("\\.") match {
           case Array(alias, suffix) =>
@@ -287,10 +287,6 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
       }
     }
 
-  private def typedName(name: String, t: Type) = {
-    name + typeId(t)
-  }
-
   private def initReferences(root: Root): Unit = {
     // val ast = root.ast.last
     // val entries = Entries(ast)
@@ -307,7 +303,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
                   decl
                     .string(h)
                     .foreach(localName => {
-                      declarationsFromLibraries.put(typedName(namespace + "." + localName, p.range), decl)
+                      declarationsFromLibraries.put(namespace + "." + localName, decl)
                     })
                 })
               })

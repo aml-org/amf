@@ -90,7 +90,7 @@ case class PropertyConstraint(ramlPropertyId: String,
                               maxInclusive: Option[String] = None,
                               node: Option[String] = None,
                               datatype: Option[String] = None,
-                             `class`: Option[String] = None,
+                             `class`: Seq[String] = Seq(),
                               in: Seq[String] = Seq.empty
                              ) {}
 
