@@ -62,7 +62,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
 
     YDocument {
       _.map { b =>
-        traverse(Seq(OasHeaderEmitter(OasHeader.Oas20), typeEmitter.header)
+        traverse(Seq(typeEmitter.header)
                    ++ typeEmitter.emitters ++ usage :+ references,
                  b)
       }
