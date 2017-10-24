@@ -104,6 +104,13 @@ object ParserSideValidations {
       None,
       None,
       Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+    ),
+    ValidationSpecification(
+      (Namespace.AmfParser + "dialectAmbiguousRange").iri(),
+      "Ambiguous entity range",
+      None,
+      None,
+      Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
     )
   )
 }
@@ -178,7 +185,7 @@ object DefaultAMFValidations extends ImportUtils {
       case "http://www.w3.org/ns/shacl#in"           => constraint.copy(in = validation.value.split("\\s*,\\s*"))
       case "http://www.w3.org/ns/shacl#node"         => constraint.copy(node = Some(validation.value))
       case "http://www.w3.org/ns/shacl#datatype"     => constraint.copy(datatype = Some(validation.value))
-      case "http://www.w3.org/ns/shacl#class"        => constraint.copy(`class` = Some(validation.value))
+      case "http://www.w3.org/ns/shacl#class"        => constraint.copy(`class` = Seq(validation.value))
       case _                                         => throw new Exception(s"Unsupported constraint ${validation.constraint}")
     }
   }

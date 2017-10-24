@@ -2,10 +2,13 @@ package amf.remote
 
 import amf.dialects.PlatformDialectRegistry
 import amf.lexer.CharSequenceStream
+import amf.validation.Validation
 import amf.validation.core.SHACLValidator
+import amf.vocabulary.Namespace
 
 import scala.collection.mutable
 import scala.concurrent.{Future, Promise}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   *
@@ -47,10 +50,18 @@ trait Platform {
 
   val validator: SHACLValidator
 
+  protected def setupValidationBase(): Future[Validation] = {
+    val validation = Validation(this)
+    validation.loadValidationDialect().map { x => validation }
+  }
+
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file:/$str" }
 
   /** Test path resolution. */
   def resolvePath(path: String): String
+
+  /** Register an alias for a namespace */
+  def registerNamespace(alias: String, prefix: String) = Namespace.registerNamespace(alias, prefix)
 
   /** Resolve file on specified path. */
   protected def fetchFile(path: String): Future[Content]

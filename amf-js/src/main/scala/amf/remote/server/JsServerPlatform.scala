@@ -5,10 +5,13 @@ import amf.interop.{Path, _}
 import amf.lexer.CharSequenceStream
 import amf.remote.File.FILE_PROTOCOL
 import amf.remote.{Content, File, Http, Platform}
-import amf.validation.SHACLValidator
+import amf.validation.{SHACLValidator, Validation}
 
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.{JSExport, JSExportAll}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   *
@@ -88,4 +91,19 @@ class JsServerPlatform extends Platform {
 
   override val dialectsRegistry = JSDialectRegistry(this)
   override val validator        = new SHACLValidator()
+
+  @JSExport
+  def setupValidation(): js.Promise[Validation] = setupValidationBase().toJSPromise
+}
+
+@JSExportAll
+object JsServerPlatform {
+  private var singleton: Option[JsServerPlatform] = None
+
+  def instance(): JsServerPlatform = singleton  match {
+    case Some(p) => p
+    case None =>
+      singleton = Some(new JsServerPlatform())
+      singleton.get
+  }
 }

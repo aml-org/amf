@@ -5,6 +5,8 @@ import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.DialectPropertyMapping
+import amf.validation.core.ValidationReport
+import amf.validation.model.AMFDialectValidations
 
 import scala.collection.mutable
 
@@ -31,7 +33,7 @@ trait ErrorReporter{
 class DialectValidator(val reporter: ErrorReporter) {
 
     def validate(e: DomainEntity): Unit = {
-       e.definition.props.values.foreach { prop =>
+      e.definition.props.values.foreach { prop =>
          val isDefined = e.fields.raw(prop.field()).isDefined
 
          if (prop.required && !isDefined)
@@ -41,15 +43,15 @@ class DialectValidator(val reporter: ErrorReporter) {
            val value = e.fields.get(prop.field())
            value match {
              case array: AmfArray =>
-               array.values.foreach { v => vaidateValue(e, prop, v) }
+               array.values.foreach { v => validateValue(e, prop, v) }
              case _ =>
-               vaidateValue(e, prop, value)
+               validateValue(e, prop, value)
            }
          }
        }
     }
 
-  private def vaidateValue(e:DomainEntity,prop: DialectPropertyMapping, value: AmfElement): Unit = {
+  private def validateValue(e:DomainEntity,prop: DialectPropertyMapping, value: AmfElement): Unit = {
     value match {
       case scalar:AmfScalar =>
         validateScalar(scalar, e, prop)
@@ -96,7 +98,7 @@ class DialectValidator(val reporter: ErrorReporter) {
 
   private def validateEnum(scalar:AmfScalar,e: DomainEntity, prop: DialectPropertyMapping): Unit = {
     prop.enum.foreach { ev =>
-      if (ev.indexOf(scalar.toString) == -1) {
+        if (ev.indexOf(scalar.toString) == -1) {
         reporter.accept(ValidationIssue(s"property ${prop.name} should be one of  $ev", e))
       }
     }

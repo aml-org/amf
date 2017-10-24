@@ -2,11 +2,12 @@ package amf.remote
 
 import java.io.FileWriter
 import java.net.{HttpURLConnection, URI}
+import java.util.concurrent.CompletableFuture
 
 import amf.dialects.JVMDialectRegistry
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
-import amf.validation.core.ValidationResult
-import amf.validation.{JVMValidationResult, SHACLValidator}
+import amf.remote.FutureConverter.converters
+import amf.validation.{SHACLValidator, Validation}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -67,6 +68,19 @@ class JvmPlatform extends Platform {
 
   override val dialectsRegistry = JVMDialectRegistry(this)
   override val validator = new SHACLValidator
+
+  def setupValidation(): CompletableFuture[Validation] = setupValidationBase().asJava
+}
+
+object JvmPlatform {
+  private var singleton: Option[JvmPlatform] = None
+
+  def instance(): JvmPlatform = singleton  match {
+    case Some(p) => p
+    case None =>
+      singleton = Some(PlatformBuilder())
+      singleton.get
+  }
 }
 
 object PlatformBuilder {

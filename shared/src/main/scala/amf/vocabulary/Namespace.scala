@@ -1,5 +1,7 @@
 package amf.vocabulary
 
+import scala.collection.mutable
+
 /**
   * Namespaces
   */
@@ -44,7 +46,7 @@ object Namespace {
 
   val AmfParser = Namespace("http://raml.org/vocabularies/amf/parser#")
 
-  val ns = Map(
+  val ns = mutable.HashMap(
     "rdf"         -> Rdf,
     "sh"          -> Shacl,
     "shacl"       -> Shacl,
@@ -75,6 +77,8 @@ object Namespace {
       }
     }
   }
+
+  def registerNamespace(alias: String, prefix: String) = ns.put(alias, Namespace(prefix))
 
   def expand(uri: String): ValueType = {
     if (uri.startsWith("http://")) { // we have http: as  a valid prefix, we need to disambiguate

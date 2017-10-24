@@ -36,7 +36,7 @@ class TrunkValidator extends SHACLValidator {
   override def registerLibrary(url: String, code: String): Unit = throw new Exception("Error, validation is not supported")
 }
 
-case class TrunkPlatform(content: String) extends Platform {
+case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = None) extends Platform {
 
   /** Test path resolution. */
   override def resolvePath(path: String): String = path
@@ -62,6 +62,13 @@ case class TrunkPlatform(content: String) extends Platform {
     fetchFile(url)
   }
 
-  override val dialectsRegistry = new TrunkDialectsRegistry(this)
-  override val validator = new TrunkValidator()
+  override val dialectsRegistry = wrappedPlatform match {
+    case Some(p) => p.dialectsRegistry
+    case None    => new TrunkDialectsRegistry(this)
+  }
+
+  override val validator = wrappedPlatform match {
+    case Some(p) => p.validator
+    case None    => new TrunkValidator()
+  }
 }

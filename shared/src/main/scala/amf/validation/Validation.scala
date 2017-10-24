@@ -9,6 +9,7 @@ import amf.domain.DomainElement
 import amf.domain.dialects.DomainEntity
 import amf.generator.JsonGenerator
 import amf.graph.GraphEmitter
+import amf.model.AmfArray
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.validation.core.{ValidationDialectText, ValidationResult}
@@ -62,7 +63,14 @@ object AMFValidationResult {
     if (validation.path != null && validation.path != "") {
       val foundPosition = node.fields.fields().find(f => f.field.value.iri() == validation.path) match {
         case Some(f) =>
-          f.element.annotations.find(classOf[LexicalInformation])
+          f.element.annotations.find(classOf[LexicalInformation]).orElse {
+            f.value.annotations.find(classOf[LexicalInformation]).orElse {
+              f.element match {
+                case arr:AmfArray if arr.values.nonEmpty => arr.values.head.annotations.find(classOf[LexicalInformation])
+                case _ => None
+              }
+            }
+          }
         case _ => None
       }
       foundPosition
@@ -145,8 +153,14 @@ class Validation(platform: Platform) {
       }
   }
 
+  /**
+    * Loads a validation profile generated out of a RAML Dialect
+    * @param dialect RAML dialect to be parsed as a Validation Profile
+    */
+  def loadDialectValidationProfile(dialect: Dialect): Unit = profile = Some(new AMFDialectValidations(dialect).profile())
+
   private def setLevel(id: String, validations: EffectiveValidations, targetLevel: String) = {
-    val validationName = if (!id.startsWith("http://") && !id.startsWith("https://")) { Namespace.expand(id.replace(".",":")).iri() } else { id }
+    val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) { Namespace.expand(id.replace(".",":")).iri() } else { id }
     validations.all.get(validationName) match {
       case None             => throw new Exception(s"Cannot enable with $targetLevel level unknown validation $validationName")
       case Some(validation) =>
@@ -171,7 +185,7 @@ class Validation(platform: Platform) {
     profile.violationLevel.foreach( id => setLevel(id, computed, SeverityLevels.VIOLATION))
 
     profile.disabled foreach { id =>
-      val validationName = if (!id.startsWith("http://") && !id.startsWith("https://")) { Namespace.expand(id.replace(".",":")).iri() } else { id }
+      val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) { Namespace.expand(id.replace(".",":")).iri() } else { id }
       computed.effective.remove(validationName)
     }
 
@@ -200,7 +214,10 @@ class Validation(platform: Platform) {
         allEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get.validations, computeValidations(ProfileNames.AMF, computed))
       case ProfileNames.OAS =>
         allEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get.validations, computeValidations(ProfileNames.AMF, computed))
-      case _ if profile.isDefined && profile.get.name == profileName=>
+      case _ if platform.dialectsRegistry.knowsHeader("%" + profileName) =>
+        val dialectValidationProfile = new AMFDialectValidations(platform.dialectsRegistry.get("%" + profileName).get).profile()
+        someEffective(dialectValidationProfile, computed)
+      case _ if profile.isDefined && profile.get.name == profileName =>
         if (profile.get.baseProfileName.isDefined) {
           someEffective(profile.get, computeValidations(profile.get.baseProfileName.get, computed))
         } else {
@@ -336,8 +353,6 @@ class Validation(platform: Platform) {
         Some(AMFValidationResult.withShapeId(finalId, AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
       case _ => None
     }
-
-
   }
 }
 

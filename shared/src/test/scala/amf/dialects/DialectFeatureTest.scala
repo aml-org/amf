@@ -108,7 +108,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       platform.resolve(basePath + "validation_profile_example_uses_gold2.raml", None).map(_.stream.toString)
     val actual = validation
       .flatMap(unit => {
-        val dl = new DialectRegistry();
+        val dl = new DialectRegistry()
         dl.add(unit)
         AMFCompiler(basePath + "validation_profile_example_uses2.raml", platform, RamlYamlHint, None, None, dl)
           .build()

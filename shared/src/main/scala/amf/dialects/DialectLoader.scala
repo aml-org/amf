@@ -43,7 +43,10 @@ class DialectLoader {
 
   private def registerType(n: NodeDefinitionObject, dialectMap: mutable.Map[String, DialectNode]) =
     NamespaceMap(n.classTerm().get) match {
-      case Some(ns) => dialectMap.put(n.entity.id, new DialectNode(ns.name, ns.namespace))
+      case Some(ns) =>
+        val node = new DialectNode(ns.name, ns.namespace)
+        node.id = Some(n.entity.id)
+        dialectMap.put(n.entity.id, node)
       case _        => // ignore
     }
 
