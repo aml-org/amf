@@ -205,13 +205,11 @@ object GraphEmitter extends MetaModelTypeMapping {
       b.entry(
         "@type",
         _.list { b =>
-          obj.`type`.foreach(t => raw(b, t.iri()))
-          if (obj.dynamicType) {
-            maybeElement match {
-              case Some(element) => element.dynamicTypes().foreach(t => raw(b, t))
-              case _             => // ignore
-            }
-          }
+          val allTypes = obj.`type`.map(_.iri()) ++ (maybeElement match {
+            case Some(element) => element.dynamicTypes()
+            case _ => List()
+          })
+          allTypes.distinct.foreach(t => raw(b, t))
         }
       )
     }

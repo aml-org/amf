@@ -3,7 +3,6 @@ package amf.client
 import amf.common.AmfObjectTestMatcher
 import amf.common.Tests._
 import amf.compiler.AMFCompiler
-import amf.dialects.JVMDialectRegistry
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Json
 import amf.remote.{Amf, RamlYamlHint}
@@ -15,7 +14,7 @@ import scala.concurrent.ExecutionContext
 class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("Load Dialect from yaml") {
+  test("HERE_HERE Load Dialect from yaml") {
     val l = platform.dialectsRegistry
 
     val expected = platform
@@ -25,6 +24,8 @@ class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMF
     val actual = l.registerDialect("file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml").flatMap( x =>
       AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint, None, None, l).build()
     ).flatMap { u =>
+      val encoded = u.asInstanceOf[amf.document.Document].encodes
+      assert(encoded.getTypeIds().length == 2)
       new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
     }
 

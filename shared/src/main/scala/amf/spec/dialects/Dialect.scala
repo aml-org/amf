@@ -472,10 +472,11 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Type 
   def fields: List[Field] = props.values.toList.map(_.field())
 
   def calcTypes(domainEntity: DomainEntity): List[ValueType] = {
-    typeCalculator match {
+    val calculated = typeCalculator match {
       case Some(calculator) => extraTypes.toList ++ calculator.calcTypes(domainEntity)
       case None             => extraTypes.toList
     }
+    (calculated ++ domainEntity.definition.`type`).distinct
   }
 
   def withGlobalIdField(field: String): this.type = {
