@@ -285,7 +285,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
             fs.entry(OperationModel.Responses)
               .map(f => result += RamlResponsesEmitter("responses", f, ordering, references))
 
-            fs.entry(EndPointModel.Security)
+            fs.entry(OperationModel.Security)
               .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
 
             traverse(ordering.sorted(result), b)

@@ -207,8 +207,7 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax
 
         declarations.findSecurityScheme(name) match {
           case Some(declaration) => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
-          case None if !name.equals("null") =>
-            throw new Exception(s"Security scheme '$name' not found in declarations.")
+          case None              => throw new Exception(s"Security scheme '$name' not found in declarations.")
         }
 
       case YType.Map =>
@@ -222,7 +221,7 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax
 
             val settings = SecuritySettingsParser(schemeEntry.value.value.toMap, declaration.`type`, scheme).parse()
 
-            scheme.set(SecuritySchemeModel.Settings, settings)
+            scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
           case None =>
             throw new Exception(s"Security scheme '$name' not found in declarations (and name cannot be 'null').")
         }
@@ -484,7 +483,6 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax
             entry => {
               // TODO check for empty array for resolution ?
               val securedBy = entry.value.value.toSequence.nodes
-                .collect({ case n: YNode => n })
                 .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
 
               operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -831,7 +829,7 @@ abstract class RamlSpecParser() extends BaseSpecParser {
         case _: YScalar =>
           throw new Exception("Cannot declare unresolved parameter")
 
-        case map: YMap =>
+        case _: YMap =>
           val map = entry.value.value.toMap
 
           map.key("required", entry => {

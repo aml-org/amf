@@ -12,11 +12,9 @@ object ParametrizedSecuritySchemeModel extends DomainElementModel {
 
   val Scheme = Field(Iri, Security + "scheme")
 
-  val Scopes = Field(Type.Array(Str), Security + "scopes")
-
   val Settings = Field(SettingsModel, Security + "settings")
 
-  override def fields: List[Field] = List(Name, Scheme, Scopes, Settings) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, Scheme, Settings) ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = List(Security + "ParametrizedSecurityScheme")
+  override val `type`: List[ValueType] = List(Security + "ParametrizedSecurityScheme") ++ DomainElementModel.`type`
 }

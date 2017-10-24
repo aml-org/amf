@@ -7,14 +7,12 @@ import org.yaml.model.YPart
 case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     extends DomainElement
     with WithSettings {
-  def name: String        = fields(Name)
-  def scheme: String      = fields(Scheme)
-  def scopes: Seq[String] = fields(Scopes)
-  def settings: Settings  = fields(SettingsField)
+  def name: String       = fields(Name)
+  def scheme: String     = fields(Scheme)
+  def settings: Settings = fields(SettingsField)
 
   def withName(name: String): this.type           = set(Name, name)
   def withScheme(scheme: String): this.type       = set(Scheme, scheme)
-  def withScopes(scopes: Seq[String]): this.type  = set(Scopes, scopes)
   def withSettings(settings: Settings): this.type = set(SettingsField, settings)
 
   def withDefaultSettings(): Settings = {

@@ -1,6 +1,7 @@
 package amf.domain
 
 import amf.metadata.domain.ResponseModel._
+import amf.model.AmfArray
 
 /**
   * Response internal model.
@@ -33,6 +34,27 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   }
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
+
+  def cloneResponse(parent: String): Response = {
+    val cloned = Response(annotations).withName(name).adopted(parent)
+
+    this.fields.foreach {
+      case (f, v) =>
+        val clonedValue = v.value match {
+          case a: AmfArray =>
+            AmfArray(a.values.map {
+              case p: Parameter => p.cloneParameter(cloned.id)
+              case p: Payload   => p.clonePayload(cloned.id)
+              case o            => o
+            }, a.annotations)
+          case o => o
+        }
+
+        cloned.set(f, clonedValue, v.annotations)
+    }
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object Response {

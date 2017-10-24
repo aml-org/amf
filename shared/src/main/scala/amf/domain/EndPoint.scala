@@ -4,7 +4,6 @@ import amf.common.core.Strings
 import amf.domain.Annotation.ParentEndPoint
 import amf.domain.security.ParametrizedSecurityScheme
 import amf.metadata.domain.EndPointModel._
-import amf.metadata.domain.WebApiModel.Security
 
 /**
   * EndPoint internal model

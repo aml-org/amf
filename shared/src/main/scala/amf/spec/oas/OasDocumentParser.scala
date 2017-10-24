@@ -13,7 +13,7 @@ import amf.domain.Annotation.{
 }
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.security.{ParametrizedSecurityScheme, Scope, SecurityScheme, Settings}
+import amf.domain.security._
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
@@ -205,19 +205,31 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
         val name        = schemeEntry.key
         val scheme      = producer(name).add(Annotations(map))
 
-        parseTarget(name, scheme)
+        var declaration = parseTarget(name, scheme)
+        declaration = declaration.linkTarget match {
+          case Some(d) => d.asInstanceOf[SecurityScheme]
+          case None    => declaration
+        }
 
-        val scopes = ArrayNode(schemeEntry.value.value.toSequence)
-        scheme.set(ParametrizedSecuritySchemeModel.Scopes, scopes.strings(), Annotations(schemeEntry.value))
+        if (declaration.`type` == "OAuth 2.0") {
+          val settings = OAuth2Settings().adopted(scheme.id)
+          val scopes = schemeEntry.value.value.toSequence.nodes.map(n =>
+            Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+
+          scheme.set(ParametrizedSecuritySchemeModel.Settings,
+                     settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value.value)))
+        }
 
         scheme
       case other => throw new Exception(s"Invalid type $other")
     }
 
-    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme) = {
+    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme): SecurityScheme = {
       declarations.findSecurityScheme(name) match {
-        case Some(declaration)            => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
-        case None if !name.equals("null") => throw new Exception(s"Security scheme '$name' not found in declarations.")
+        case Some(declaration) =>
+          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+          declaration
+        case None => throw new Exception(s"Security scheme '$name' not found in declarations.")
       }
     }
   }

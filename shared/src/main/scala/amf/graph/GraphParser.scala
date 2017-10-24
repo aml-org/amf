@@ -210,6 +210,7 @@ object GraphParser extends GraphParserHelpers {
     FragmentsTypesModels.ExtensionModel                 -> Fragment.ExtensionFragment.apply,
     FragmentsTypesModels.OverlayModel                   -> Fragment.OverlayFragment.apply,
     FragmentsTypesModels.ExternalFragmentModel          -> Fragment.ExternalFragment.apply,
+    FragmentsTypesModels.SecuritySchemeModel            -> Fragment.SecurityScheme.apply,
     TraitModel                                          -> Trait.apply,
     ResourceTypeModel                                   -> ResourceType.apply,
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,

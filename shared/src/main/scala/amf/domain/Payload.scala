@@ -40,6 +40,22 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
   }
 
   override def linkCopy(): Payload = Payload().withId(id)
+
+  def clonePayload(parent: String): Payload = {
+    val cloned = Payload(annotations).withMediaType(mediaType).adopted(parent)
+
+    this.fields.foreach {
+      case (f, v) =>
+        val clonedValue = v.value match {
+          case s: Shape => s.cloneShape()
+          case o        => o
+        }
+
+        cloned.set(f, clonedValue, v.annotations)
+    }
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object Payload {

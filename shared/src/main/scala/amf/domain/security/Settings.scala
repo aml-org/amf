@@ -6,6 +6,7 @@ import amf.metadata.domain.security.ApiKeySettingsModel._
 import amf.metadata.domain.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.metadata.domain.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
 import amf.metadata.domain.security.SettingsModel._
+import amf.model.AmfArray
 
 class Settings(val fields: Fields, val annotations: Annotations) extends DomainElement {
   def additionalProperties: DataNode = fields(AdditionalProperties)
@@ -14,6 +15,32 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
     set(AdditionalProperties, additionalProperties)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/default")
+
+  def cloneSettings(parent: String): Settings = {
+    val cloned = this match {
+      case _: OAuth1Settings => OAuth1Settings(annotations)
+      case _: OAuth2Settings => OAuth2Settings(annotations)
+      case _: ApiKeySettings => ApiKeySettings(annotations)
+      case _: Settings       => Settings(annotations)
+    }
+    cloned.adopted(parent)
+
+    this.fields.foreach {
+      case (f, v) =>
+        val clonedValue = v.value match {
+          case a: AmfArray =>
+            AmfArray(a.values.map {
+              case s: Scope => s.cloneScope()
+              case o        => o
+            }, a.annotations)
+          case o => o
+        }
+
+        cloned.set(f, clonedValue, v.annotations)
+    }
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object Settings {
@@ -64,7 +91,7 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   def withFlow(flow: String): this.type         = set(Flow, flow)
   def withScopes(scopes: Seq[Scope]): this.type = setArray(Scopes, scopes)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
+  override def adopted(parent: String): this.type = withId(parent + "/settings/oauth2")
 }
 
 object OAuth2Settings {
@@ -82,7 +109,7 @@ case class ApiKeySettings(override val fields: Fields, override val annotations:
   def withName(name: String): this.type = set(Name, name)
   def withIn(in: String): this.type     = set(In, in)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
+  override def adopted(parent: String): this.type = withId(parent + "/settings/api-key")
 }
 
 object ApiKeySettings {

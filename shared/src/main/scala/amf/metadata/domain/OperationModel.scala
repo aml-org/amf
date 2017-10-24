@@ -33,7 +33,7 @@ object OperationModel extends DomainElementModel {
 
   val Responses = Field(Array(ResponseModel), Hydra + "returns")
 
-  val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
+  val Security = Field(Array(DomainElementModel), Namespace.Security + "security")
 
   override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`
 

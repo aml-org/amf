@@ -41,7 +41,23 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
     scalar
   }
 
-  override def linkCopy() = Parameter().withBinding(binding).withId(id)
+  override def linkCopy(): Parameter = Parameter().withBinding(binding).withId(id)
+
+  def cloneParameter(parent: String): Parameter = {
+    val cloned = Parameter(annotations).withName(name).adopted(parent)
+
+    this.fields.foreach {
+      case (f, v) =>
+        val clonedValue = v.value match {
+          case s: Shape => s.cloneShape()
+          case o        => o
+        }
+
+        cloned.set(f, clonedValue, v.annotations)
+    }
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object Parameter {

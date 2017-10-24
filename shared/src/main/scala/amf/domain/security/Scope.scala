@@ -12,6 +12,16 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
   def withDescription(description: String): this.type = set(Description, description)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
+
+  def cloneScope(): Scope = {
+    val cloned = Scope(annotations)
+
+    this.fields.foreach {
+      case (f, v) => cloned.set(f, v.value, v.annotations)
+    }
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object Scope {

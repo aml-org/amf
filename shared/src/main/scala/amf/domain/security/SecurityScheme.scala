@@ -2,6 +2,8 @@ package amf.domain.security
 
 import amf.domain._
 import amf.metadata.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
+import amf.model.AmfArray
+import amf.shape.Shape
 import org.yaml.model.YPart
 
 case class SecurityScheme(fields: Fields, annotations: Annotations)
@@ -68,6 +70,28 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
     val settings = ApiKeySettings()
     set(SettingsField, settings)
     settings
+  }
+
+  def cloneScheme(parent: String): SecurityScheme = {
+    val cloned = SecurityScheme(annotations).withName(name).adopted(parent)
+
+    this.fields.foreach {
+      case (f, v) =>
+        val clonedValue = v.value match {
+          case s: Settings => s.cloneSettings(cloned.id)
+          case a: AmfArray =>
+            AmfArray(a.values.map {
+              case p: Parameter => p.cloneParameter(cloned.id)
+              case r: Response  => r.cloneResponse(cloned.id)
+              case o            => o
+            }, a.annotations)
+          case o => o
+        }
+
+        cloned.set(f, clonedValue, v.annotations)
+    }
+
+    cloned.asInstanceOf[this.type]
   }
 
   override def linkCopy(): SecurityScheme = SecurityScheme().withId(id)

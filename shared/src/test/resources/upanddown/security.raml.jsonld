@@ -571,7 +571,7 @@
         ],
         "http://raml.org/vocabularies/security#settings": [
           {
-            "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth1",
+            "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth2",
             "@type": [
               "http://raml.org/vocabularies/security#OAuth2Settings",
               "http://raml.org/vocabularies/security#Settings",
@@ -600,9 +600,10 @@
             ],
             "http://raml.org/vocabularies/security#scopes": [
               {
-                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth1/profile",
+                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth2/profile",
                 "@type": [
-                  "http://raml.org/vocabularies/security#Scope"
+                  "http://raml.org/vocabularies/security#Scope",
+                  "http://raml.org/vocabularies/document#DomainElement"
                 ],
                 "http://raml.org/vocabularies/security#name": [
                   {
@@ -611,9 +612,10 @@
                 ]
               },
               {
-                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth1/history",
+                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth2/history",
                 "@type": [
-                  "http://raml.org/vocabularies/security#Scope"
+                  "http://raml.org/vocabularies/security#Scope",
+                  "http://raml.org/vocabularies/document#DomainElement"
                 ],
                 "http://raml.org/vocabularies/security#name": [
                   {
@@ -624,7 +626,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth1/source-map",
+                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth2/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -656,7 +658,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth1"
+                        "@value": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth2"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -795,7 +797,7 @@
         ],
         "http://raml.org/vocabularies/security#settings": [
           {
-            "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/api_key/settings/oauth1",
+            "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/api_key/settings/api-key",
             "@type": [
               "http://raml.org/vocabularies/security#ApiKeySettings",
               "http://raml.org/vocabularies/security#Settings",
@@ -813,7 +815,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/api_key/settings/oauth1/source-map",
+                "@id": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/api_key/settings/api-key/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -833,7 +835,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/api_key/settings/oauth1"
+                        "@value": "file:/shared/src/test/resources/upanddown/security.raml#/declarations/api_key/settings/api-key"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [

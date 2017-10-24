@@ -1,8 +1,9 @@
 package amf.spec.domain
 
 import amf.domain.FieldEntry
-import amf.domain.security.ParametrizedSecurityScheme
+import amf.domain.security.{OAuth2Settings, ParametrizedSecurityScheme}
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
+import amf.model.AmfScalar
 import amf.parser.Position
 import amf.remote.{Oas, Raml}
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
@@ -18,7 +19,7 @@ case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, order
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val schemes = f.array.values.collect({ case p: ParametrizedSecurityScheme => p })
+    val schemes = f.array.values.collect { case p: ParametrizedSecurityScheme => p }
 
     b.entry(key, _.list(traverse(ordering.sorted(schemes.map(chooseParametrizedEmitter(_, ordering))), _)))
   }
@@ -39,11 +40,18 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
   override def emit(b: PartBuilder): Unit = {
     val fs = parametrizedScheme.fields
 
-    fs.entry(ParametrizedSecuritySchemeModel.Scopes) match {
+    fs.entry(ParametrizedSecuritySchemeModel.Settings) match {
       case Some(f) =>
-        b.map(ArrayEmitter(parametrizedScheme.name, f, ordering).emit(_))
+        f.element match {
+          case settings: OAuth2Settings =>
+            val scopes = settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name, s.annotations)))
+            b.map {
+              _.entry(parametrizedScheme.name, _.list(traverse(ordering.sorted(scopes), _)))
+            }
+        }
+
       case None =>
-        b.map(_.entry(parametrizedScheme.name, _.list(b => {})))
+        b.map(_.entry(parametrizedScheme.name, _.list(_ => {})))
     }
   }
 

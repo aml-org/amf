@@ -14,5 +14,5 @@ object ScopeModel extends DomainElementModel {
 
   override def fields: List[Field] = List(Name, Description) ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = List(Security + "Scope")
+  override val `type`: List[ValueType] = List(Security + "Scope") ++ DomainElementModel.`type`
 }
