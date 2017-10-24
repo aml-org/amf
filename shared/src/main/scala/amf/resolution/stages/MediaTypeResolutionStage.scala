@@ -1,7 +1,8 @@
 package amf.resolution.stages
 
+import amf.ProfileNames
 import amf.document.{BaseUnit, Document}
-import amf.domain.{DomainElement, Payload, Request, WebApi}
+import amf.domain.{DomainElement, Payload, WebApi}
 import amf.metadata.Field
 import amf.metadata.domain.{OperationModel, PayloadModel, RequestModel, WebApiModel}
 import amf.model.AmfScalar
@@ -37,14 +38,16 @@ class MediaTypeResolutionStage(profile: String) extends ResolutionStage(profile)
         Option(operation.request).foreach { request =>
           // Use accepts field.
           accepts.foreach { a =>
-            request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id)) // TODO annotations?
+            if (profile == ProfileNames.OAS) operation.set(OperationModel.Accepts, a)
+            request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
           }
         }
 
         operation.responses.foreach { response =>
-          // Use contentType field
+          // Use contentType field.
           contentType.foreach { ct =>
-            response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id)) // TODO annotations?
+            if (profile == ProfileNames.OAS) operation.set(OperationModel.ContentType, ct)
+            response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
           }
         }
       }

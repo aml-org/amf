@@ -32,7 +32,7 @@ abstract class ResolutionTest extends AsyncFunSuite with TmpTests {
           case Raml    => model.resolve(ProfileNames.RAML)
           case Oas     => model.resolve(ProfileNames.OAS)
           case Amf     => model.resolve(ProfileNames.AMF)
-          case Unknown => throw new Exception("Cannot resolve uknown fragment")
+          case Unknown => throw new Exception("Cannot resolve unknown fragment")
         }
       }
       .flatMap(new AMFDumper(_, Amf, Amf.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)

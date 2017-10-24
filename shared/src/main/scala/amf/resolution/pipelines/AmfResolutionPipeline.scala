@@ -21,13 +21,13 @@ class AmfResolutionPipeline extends ResolutionPipeline {
     withModel(model) { () =>
       commonSteps()
       step(parameters)
+      step(mediaTypes)
     }
   }
 
   protected def commonSteps(): Unit = {
     step(references)
     step(shapes)
-    step(mediaTypes)
     step(security)
   }
 }
