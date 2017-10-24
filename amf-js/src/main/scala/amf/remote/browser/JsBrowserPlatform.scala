@@ -3,11 +3,14 @@ package amf.remote.browser
 import amf.dialects.JSDialectRegistry
 import amf.lexer.CharSequenceStream
 import amf.remote.{Content, Platform}
-import amf.validation.SHACLValidator
+import amf.validation.{SHACLValidator, Validation}
 import org.scalajs.dom.ext.Ajax
 
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 
 /**
   *
@@ -45,4 +48,20 @@ class JsBrowserPlatform extends Platform {
 
   override val dialectsRegistry = JSDialectRegistry(this)
   override val validator = new SHACLValidator()
+
+  @JSExport
+  def setupValidation(): js.Promise[Validation] = setupValidationBase().toJSPromise
 }
+
+@JSExportAll
+object JsBrowserPlatform {
+  private var singleton: Option[JsBrowserPlatform] = None
+
+  def instance(): JsBrowserPlatform = singleton  match {
+    case Some(p) => p
+    case None =>
+      singleton = Some(new JsBrowserPlatform())
+      singleton.get
+  }
+}
+

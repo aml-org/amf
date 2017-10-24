@@ -1,8 +1,11 @@
 package amf.dialects
 
-import amf.compiler.AMFCompiler
-import amf.remote.{Context, Platform, RamlYamlHint}
+import java.util.concurrent.CompletableFuture
 
+import amf.compiler.AMFCompiler
+import amf.remote.{Platform, RamlYamlHint}
+import amf.spec.dialects.Dialect
+import amf.remote.FutureConverter.converters
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class JVMDialectRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
@@ -22,6 +25,9 @@ class JVMDialectRegistry(platform: Platform) extends PlatformDialectRegistry(pla
     platform.removeCacheResourceText(url)
     res
   }
+
+  def register(url:String): CompletableFuture[Dialect] = registerDialect(url).asJava
+  def register(url: String, dialectCode: String): CompletableFuture[Dialect] = registerDialect(url, dialectCode).asJava
 }
 
 object JVMDialectRegistry {

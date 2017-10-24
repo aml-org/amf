@@ -6,11 +6,11 @@ import amf.document
 import amf.remote.Platform
 import amf.unsafe.PlatformSecrets
 import amf.validation.AMFValidationReport
+import amf.vocabulary.Namespace
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Any parsable unit, backed by a source URI. */
@@ -53,6 +53,16 @@ trait BaseUnit extends PlatformSecrets {
     */
   def customValidation(customProfilePath: String): js.Promise[AMFValidationReport] =
     validateProfile(platform, None, Some(customProfilePath))
+
+  def findById(id: String): DomainElement = {
+    element.findById(Namespace.uri(id).iri()) match {
+      case Some(e: DomainElement) => DomainElement(e)
+      case _                      => null
+    }
+  }
+
+  def findByType(typeId: String): js.Iterable[DomainElement] =
+    element.findByType(Namespace.expand(typeId).iri()).map(e => DomainElement(e)).toJSIterable
 
   /**
     * Validates the model

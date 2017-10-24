@@ -96,6 +96,7 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
     }
   }
 
+  val dynamicType: Boolean = true
   override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
 }
 

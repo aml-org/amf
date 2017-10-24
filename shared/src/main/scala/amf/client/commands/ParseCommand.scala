@@ -12,6 +12,7 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
   override def run(origConfig: ParserConfig): Future[Any] = {
     val config = origConfig.copy(outputFormat = Some(ProfileNames.AMF))
     val res = for {
+      _         <- processDialects(config)
       _         <- setupValidationTranslate(config)
       model     <- parseInput(config)
       _         <- checkValidation(config, model)

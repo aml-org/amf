@@ -214,7 +214,10 @@ class Validation(platform: Platform) {
         allEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get.validations, computeValidations(ProfileNames.AMF, computed))
       case ProfileNames.OAS =>
         allEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get.validations, computeValidations(ProfileNames.AMF, computed))
-      case _ if profile.isDefined && profile.get.name == profileName=>
+      case _ if platform.dialectsRegistry.knowsHeader("%" + profileName) =>
+        val dialectValidationProfile = new AMFDialectValidations(platform.dialectsRegistry.get("%" + profileName).get).profile()
+        someEffective(dialectValidationProfile, computed)
+      case _ if profile.isDefined && profile.get.name == profileName =>
         if (profile.get.baseProfileName.isDefined) {
           someEffective(profile.get, computeValidations(profile.get.baseProfileName.get, computed))
         } else {

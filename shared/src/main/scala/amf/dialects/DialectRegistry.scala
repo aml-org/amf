@@ -13,9 +13,9 @@ class DialectRegistry {
 
   protected var map: Map[String, Dialect] = Map()
 
-  def knowsHeader(header: RamlHeader): Boolean = {
-    map.contains(header.text.trim)
-  }
+  def knowsHeader(header: RamlHeader): Boolean = knowsHeader(header.text)
+
+  def knowsHeader(header: String): Boolean = map.contains(header.trim)
 
   def add(dialect: Dialect): DialectRegistry = {
     map = map + (dialect.header.replace("#", "") -> dialect)
@@ -40,6 +40,8 @@ class DialectRegistry {
   }
 
   def get(h: String): Option[Dialect] = map.get(h.trim)
+
+  def dialects: Seq[Dialect] = map.values.toSeq
 }
 
 abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {

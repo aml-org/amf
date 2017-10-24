@@ -1,6 +1,6 @@
 package amf.model
 
-import java.util.concurrent.Future
+import java.util.concurrent.{CompletableFuture, Future}
 
 import amf.client.ParserConfig
 import amf.client.commands.CommandHelper
@@ -8,13 +8,13 @@ import amf.document
 import amf.remote.Platform
 import amf.validation.AMFValidationReport
 import amf.remote.FutureConverter.converters
-import amf.unsafe.PlatformSecrets
+import amf.vocabulary.Namespace
 
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Any parsable unit, backed by a source URI. */
-trait BaseUnit extends PlatformSecrets {
+trait BaseUnit {
 
   private[amf] val element: amf.document.BaseUnit
 
@@ -42,7 +42,7 @@ trait BaseUnit extends PlatformSecrets {
     * @param profile Name of the standard profile to use in validation: RAML, OpenAPI, AMF
     * @return The validation report
     */
-  def validate(profile: String): Future[AMFValidationReport] =
+  def validate(profile: String, platform: Platform): CompletableFuture[AMFValidationReport] =
     validateProfile(platform, Some(profile))
 
   /**
@@ -50,8 +50,18 @@ trait BaseUnit extends PlatformSecrets {
     * @param customProfilePath Path to a profile validation file to use in validation
     * @return The validation report
     */
-  def customValidation(customProfilePath: String): Future[AMFValidationReport] =
+  def customValidation(customProfilePath: String, platform: Platform): CompletableFuture[AMFValidationReport] =
     validateProfile(platform, None, Some(customProfilePath))
+
+  def findById(id: String): DomainElement = {
+    element.findById(Namespace.uri(id).iri()) match {
+      case Some(e: DomainElement) => DomainElement(e)
+      case _                      => null
+    }
+  }
+
+  def findByType(typeId: String): java.util.List[DomainElement] =
+    element.findByType(Namespace.expand(typeId).iri()).map(e => DomainElement(e)).asJava
 
   /**
     * Validates the model
@@ -62,7 +72,7 @@ trait BaseUnit extends PlatformSecrets {
     */
   protected def validateProfile(p: Platform,
                                 profile: Option[String] = Some("RAML"),
-                                customProfilePath: Option[String] = None): Future[AMFValidationReport] = {
+                                customProfilePath: Option[String] = None): CompletableFuture[AMFValidationReport] = {
     val config = ParserConfig(customProfile = customProfilePath)
     val helper = new CommandHelper {
       override val platform: Platform = p

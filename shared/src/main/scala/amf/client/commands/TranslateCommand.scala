@@ -15,6 +15,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
+      _         <- processDialects(config)
       _         <- setupValidationTranslate(config)
       model     <- parseInput(config)
       _         <- checkValidation(config, model)

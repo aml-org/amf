@@ -27,7 +27,7 @@ trait CommandHelper {
     }
 
   def setupValidation(config: ParserConfig): Future[Validation] = {
-    val validation = Validation(platform)
+    val validation = Validation.currentValidation.getOrElse(Validation(platform))
     validation.loadValidationDialect() flatMap { loadedDialect =>
       config.customProfile match {
         case Some(profileFile) => validation.loadValidationProfile(profileFile).map(_ => validation)
@@ -36,22 +36,23 @@ trait CommandHelper {
     }
   }
 
-  protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
-    var inputFile = ensureUrl(config.input.get)
+  protected def processDialects(config: ParserConfig): Future[Unit] = {
     val dialectFutures = config.dialects.map { dialect =>
       platform.dialectsRegistry.registerDialect(ensureUrl(dialect))
     }
+    Future.sequence(dialectFutures).map[Unit] { _ => }
+  }
 
-    Future.sequence(dialectFutures).flatMap[BaseUnit] { _ =>
-      val inputFormat = config.inputFormat.get
+  protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
+    var inputFile = ensureUrl(config.input.get)
+    val inputFormat = config.inputFormat.get
 
-      val hint = inputFormat match {
-        case ProfileNames.RAML => RamlYamlHint
-        case ProfileNames.OAS  => OasJsonHint
-        case ProfileNames.AMF  => AmfJsonHint
-      }
-      AMFCompiler(inputFile, platform, hint, None, None, platform.dialectsRegistry).build()
+    val hint = inputFormat match {
+      case ProfileNames.RAML => RamlYamlHint
+      case ProfileNames.OAS  => OasJsonHint
+      case ProfileNames.AMF  => AmfJsonHint
     }
+    AMFCompiler(inputFile, platform, hint, None, None, platform.dialectsRegistry).build()
   }
 
   protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[String] = {

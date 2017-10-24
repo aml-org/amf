@@ -15,8 +15,11 @@ private[client] abstract class PlatformParser extends PlatformSecrets {
   protected val vendor: Vendor
   protected val syntax: Syntax
 
-  protected def parseAsync(url: String, overridePlatForm: Option[Platform] = None): Future[BaseUnit] =
-    AMFCompiler(url, overridePlatForm.getOrElse(platform), hint()).build()
+  protected def parseAsync(url: String, overridePlatForm: Option[Platform] = None): Future[BaseUnit] = {
+    val effectivePlatform = overridePlatForm.getOrElse(platform)
+    AMFCompiler(url, effectivePlatform, hint(), None, None, effectivePlatform.dialectsRegistry).build()
+  }
+
 
   protected def parse(url: String, handler: Handler[BaseUnit], overridePlatForm: Option[Platform] = None): Unit =
     parseAsync(url, overridePlatForm)

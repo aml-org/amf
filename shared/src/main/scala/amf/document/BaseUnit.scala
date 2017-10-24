@@ -1,12 +1,11 @@
 package amf.document
 
-import amf.domain.{DomainElement, Value}
+import amf.domain.{DomainElement, DynamicDomainElement, Value}
 import amf.metadata.MetaModelTypeMapping
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.document.DocumentModel.References
 import amf.model.{AmfArray, AmfElement, AmfObject}
 import amf.resolution.pipelines.ResolutionPipeline
-import amf.vocabulary.ValueType
 
 import scala.collection.mutable.ListBuffer
 
@@ -50,9 +49,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     * @return
     */
   def findByType(shapeType: String): Seq[DomainElement] = {
-    val predicate = (element: DomainElement) =>
-      metaModel(element).`type`.contains { t: ValueType =>
-        t.iri() == shapeType
+    val predicate = { (element: DomainElement) =>
+      val types = element match {
+        case e: DynamicDomainElement => e.dynamicType.map(t => t.iri()) ++ element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
+        case _ => element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
+      }
+      types.contains(shapeType)
     }
     findInDeclaredModel(predicate, this, first = true, ListBuffer.empty) ++ findInEncodedModel(predicate,
                                                                                                this,
