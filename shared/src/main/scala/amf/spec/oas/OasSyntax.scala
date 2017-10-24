@@ -25,7 +25,6 @@ trait OasSyntax {
       "tags",
       "externalDocs"
     ),
-
     "info" -> Set(
       "title",
       "description",
@@ -34,18 +33,15 @@ trait OasSyntax {
       "license",
       "version"
     ),
-
     "contact" -> Set(
       "name",
       "url",
       "email"
     ),
-
     "license" -> Set(
       "name",
       "url"
     ),
-
     "xmlSerialization" -> Set(
       "attribute",
       "wrapped",
@@ -53,7 +49,6 @@ trait OasSyntax {
       "namespace",
       "prefix"
     ),
-
     "pathItem" -> Set(
       "get",
       "put",
@@ -65,8 +60,7 @@ trait OasSyntax {
       "parameters",
       "$ref"
     ),
-
-    "operation"-> Set(
+    "operation" -> Set(
       "tags",
       "summary",
       "description",
@@ -80,11 +74,9 @@ trait OasSyntax {
       "deprecated",
       "security"
     ),
-
     "externalDoc" -> Set(
       "url"
     ),
-
     "parameter" -> Set(
       "name",
       "in",
@@ -111,7 +103,6 @@ trait OasSyntax {
       "multipleOf",
       "items"
     ),
-
     "bodyParameter" -> Set(
       "name",
       "in",
@@ -119,14 +110,12 @@ trait OasSyntax {
       "required",
       "schema"
     ),
-
     "response" -> Set(
       "description",
       "schema",
       "headers",
       "examples"
     ),
-
     "headerParameter" -> Set(
       "description",
       "type",
@@ -146,13 +135,11 @@ trait OasSyntax {
       "enum",
       "multipleOf"
     ),
-
     "tag" -> Set(
       "name",
       "description",
       "externalDocs"
     ),
-
     "schema" -> Set(
       "$ref",
       "format",
@@ -184,7 +171,9 @@ trait OasSyntax {
       "example",
       "allOf",
       "anyOf",
-      "dependencies"
+      "dependencies",
+      "multipleOf",
+      "default"
     )
   )
 
@@ -197,15 +186,16 @@ trait OasSyntax {
             // annotation or path in endpoint/webapi => ignore
           } else {
             properties(key) match {
-              case true  => // ignore
-              case false => Validation.reportConstraintFailure(
-                SeverityLevels.VIOLATION,
-                (Namespace.AmfParser + "closed-shape").iri(),
-                id,
-                None,
-                s"Property $key not supported in a OpenAPI $nodeType node",
-                Some(LexicalInformation(amf.parser.Range(ast.range)))
-              )
+              case true => // ignore
+              case false =>
+                Validation.reportConstraintFailure(
+                  SeverityLevels.VIOLATION,
+                  (Namespace.AmfParser + "closed-shape").iri(),
+                  id,
+                  None,
+                  s"Property $key not supported in a OpenAPI $nodeType node",
+                  Some(LexicalInformation(amf.parser.Range(ast.range)))
+                )
             }
           }
         }

@@ -24,213 +24,263 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val examplesPath     = "file://shared/src/test/resources/validations/"
 
   test("Loading and serializing validations") {
-    val validation = Validation(platform)
-    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation
-      .loadValidationDialect()
-      .flatMap(
-        unit =>
-          AMFCompiler(basePath + "validation_profile_example.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry)
-            .build())
-    actual
-      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
-      .zip(expected)
-      .map(checkDiff)
+    Validation(
+      platform,
+      validation => {
+        val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+        val actual = validation
+          .loadValidationDialect()
+          .flatMap(
+            unit =>
+              AMFCompiler(basePath + "validation_profile_example.raml",
+                          platform,
+                          RamlYamlHint,
+                          None,
+                          None,
+                          platform.dialectsRegistry)
+                .build())
+        actual
+          .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
+          .zip(expected)
+          .map(checkDiff)
+      }
+    )
   }
 
   test("Loading and serializing validations with inplace definition of encodes") {
-    val validation = Validation(platform)
-    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation
-      .loadValidationDialect()
-      .flatMap(
-        unit =>
-          AMFCompiler(basePath + "validation_profile_example.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry)
-            .build())
-    actual
-      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
-      .zip(expected)
-      .map(checkDiff)
-
+    Validation(
+      platform,
+      validation => {
+        val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+        val actual = validation
+          .loadValidationDialect()
+          .flatMap(
+            unit =>
+              AMFCompiler(basePath + "validation_profile_example.raml",
+                          platform,
+                          RamlYamlHint,
+                          None,
+                          None,
+                          platform.dialectsRegistry)
+                .build())
+        actual
+          .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
+          .zip(expected)
+          .map(checkDiff)
+      }
+    )
   }
 
   test("Loading and serializing validations with inplace definition of range") {
-    val validation = Validation(platform)
-    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation
-      .loadValidationDialect()
-      .flatMap(
-        unit =>
-          AMFCompiler(basePath + "validation_profile_example.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry)
-            .build())
-    actual
-      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
-      .zip(expected)
-      .map(checkDiff)
+    Validation(
+      platform,
+      validation => {
+        val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+        val actual = validation
+          .loadValidationDialect()
+          .flatMap(
+            unit =>
+              AMFCompiler(basePath + "validation_profile_example.raml",
+                          platform,
+                          RamlYamlHint,
+                          None,
+                          None,
+                          platform.dialectsRegistry)
+                .build())
+        actual
+          .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
+          .zip(expected)
+          .map(checkDiff)
+      }
+    )
 
   }
 
   test("Loading and serializing validations with union type") {
-    val validation = Validation(platform)
-    val expected   = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
-    val actual = validation
-      .loadValidationDialect()
-      .flatMap(
-        unit =>
-          AMFCompiler(basePath + "validation_profile_example.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry)
-            .build())
-    actual
-      .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
-      .zip(expected)
-      .map(checkDiff)
-
+    Validation(
+      platform,
+      validation => {
+        val expected = platform.resolve(basePath + "validation_profile_example_gold.raml", None).map(_.stream.toString)
+        val actual = validation
+          .loadValidationDialect()
+          .flatMap(
+            unit =>
+              AMFCompiler(basePath + "validation_profile_example.raml",
+                          platform,
+                          RamlYamlHint,
+                          None,
+                          None,
+                          platform.dialectsRegistry)
+                .build())
+        actual
+          .flatMap(AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString)
+          .zip(expected)
+          .map(checkDiff)
+      }
+    )
   }
 
   test("Load dialect") {
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 1)
-      assert(report.results.head.validationId == "http://raml.org/vocabularies/amf/parser#raml-schemes")
-      assert(report.results.head.targetProperty.contains("http://raml.org/vocabularies/http#scheme"))
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, ProfileNames.RAML)
+        } yield {
+          assert(!report.conforms)
+          assert(report.results.length == 1)
+          assert(report.results.head.validationId == "http://raml.org/vocabularies/amf/parser#raml-schemes")
+          assert(report.results.head.targetProperty.contains("http://raml.org/vocabularies/http#scheme"))
+        }
+      }
+    )
   }
 
   test("Validation test, ignore profile") {
 
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      _      <- validation.loadValidationProfile(examplesPath + "data/error1_ignore_profile.raml")
-      report <- validation.validate(model, "Test Profile")
-    } yield {
-      assert(report.conforms)
-      assert(report.results.isEmpty)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          _      <- validation.loadValidationProfile(examplesPath + "data/error1_ignore_profile.raml")
+          model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, "Test Profile")
+        } yield {
+          assert(report.conforms)
+          assert(report.results.isEmpty)
+        }
+      }
+    )
   }
 
   test("Custom function validation success test") {
 
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_success.raml")
-      report <- validation.validate(model, "Test Profile")
-    } yield {
-      assert(report.conforms)
-      assert(report.results.isEmpty)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_success.raml")
+          model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, "Test Profile")
+        } yield {
+          assert(report.conforms)
+          assert(report.results.isEmpty)
+        }
+      }
+    )
   }
 
   test("Custom function validation failure test") {
 
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
-      report <- validation.validate(model, "Test Profile")
-    } yield {
-      assert(report.conforms)
-      assert(report.results.length == 1)
-      assert(report.results.head.validationId == "http://raml.org/vocabularies/data#my_custom_validation")
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
+          model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, "Test Profile")
+        } yield {
+          assert(report.conforms)
+          assert(report.results.length == 1)
+          assert(report.results.head.validationId == "http://raml.org/vocabularies/data#my_custom_validation")
+        }
+      }
+    )
   }
 
   test("Validation test, custom validation profile") {
 
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      _      <- validation.loadValidationProfile(examplesPath + "data/error1_custom_validation_profile.raml")
-      report <- validation.validate(model, "Test Profile")
-    } yield {
-      assert(report.conforms)
-      assert(report.results.length == 1)
-      val result = report.results.head
-      assert(result.level == "Info")
-      assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")
-      assert(result.targetNode == "file:/shared/src/test/resources/validations/data/error1.raml#/web-api")
-      assert(result.targetProperty.get == "http://raml.org/vocabularies/http#scheme")
-      assert(result.message == "error wadus")
-      assert(result.position.isDefined)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          _      <- validation.loadValidationProfile(examplesPath + "data/error1_custom_validation_profile.raml")
+          model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, "Test Profile")
+        } yield {
+          assert(report.conforms)
+          assert(report.results.length == 1)
+          val result = report.results.head
+          assert(result.level == "Info")
+          assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")
+          assert(result.targetNode == "file:/shared/src/test/resources/validations/data/error1.raml#/web-api")
+          assert(result.targetProperty.get == "http://raml.org/vocabularies/http#scheme")
+          assert(result.message == "error wadus")
+          assert(result.position.isDefined)
+        }
+      }
+    )
   }
 
   test("Validation report generation") {
 
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
-      report <- validation.validate(model, "Test Profile")
-    } yield {
-      assert(Option(ValidationReportJSONLDEmitter.emitJSON(report)).isDefined)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          _      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_error.raml")
+          model  <- AMFCompiler(examplesPath + "data/error1.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, "Test Profile")
+        } yield {
+          assert(Option(ValidationReportJSONLDEmitter.emitJSON(report)).isDefined)
+        }
+      }
+    )
   }
 
   test("Banking example validation") {
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "banking/api.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      _      <- validation.loadValidationProfile(examplesPath + "banking/profile.raml")
-      report <- validation.validate(model, "Banking")
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.nonEmpty)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          _      <- validation.loadValidationProfile(examplesPath + "banking/profile.raml")
+          model  <- AMFCompiler(examplesPath + "banking/api.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, "Banking")
+        } yield {
+          assert(!report.conforms)
+          assert(report.results.nonEmpty)
+        }
+      }
+    )
   }
 
   test("Library example validation") {
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "library/nested.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 1)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          model  <- AMFCompiler(examplesPath + "library/nested.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, ProfileNames.RAML)
+        } yield {
+          assert(!report.conforms)
+          assert(report.results.length == 1)
+        }
+      }
+    )
   }
 
   test("Closed shapes validation") {
-    val validation = Validation(platform)
-    for {
-      model  <- AMFCompiler(examplesPath + "closed_nodes/api.raml", platform, RamlYamlHint).build()
-      _      <- validation.loadValidationDialect()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 6)
-    }
+    Validation(
+      platform,
+      validation => {
+        for {
+          _      <- validation.loadValidationDialect()
+          model  <- AMFCompiler(examplesPath + "closed_nodes/api.raml", platform, RamlYamlHint).build()
+          report <- validation.validate(model, ProfileNames.RAML)
+        } yield {
+          assert(!report.conforms)
+          assert(report.results.length == 6)
+        }
+      }
+    )
   }
 
   val testValidations = Map(
@@ -269,18 +319,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   private def validate(file: String, expectedReport: ExpectedReport) = {
     platform.resolve(examplesPath + file, None).flatMap { data =>
-      val model                = data.stream.toString
-      val validation           = Validation(platform)
-      val effectiveValidations = validation.computeValidations(expectedReport.profile)
-      val shapes               = validation.shapesGraph(effectiveValidations)
-      platform.validator.report(
-        model,
-        "application/ld+json",
-        shapes,
-        "application/ld+json"
-      ) flatMap { report =>
-        assert(expectedReport == ExpectedReport(report.conforms, report.results.length, expectedReport.profile))
-      }
+      Validation(
+        platform,
+        validation => {
+          val model                = data.stream.toString
+          val effectiveValidations = validation.computeValidations(expectedReport.profile)
+          val shapes               = validation.shapesGraph(effectiveValidations)
+          platform.validator.report(
+            model,
+            "application/ld+json",
+            shapes,
+            "application/ld+json"
+          ) flatMap { report =>
+            assert(expectedReport == ExpectedReport(report.conforms, report.results.length, expectedReport.profile))
+          }
+        }
+      )
     }
   }
 }

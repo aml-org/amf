@@ -257,19 +257,49 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
       })
 
       var parameters = OasParameters()
-
-      map.key(
-        "parameters",
-        entry => {
-          parameters = ParametersParser(entry.value.value.toSequence, endpoint.id, declarations).parse()
-          parameters.body.foreach(_.add(EndPointBodyParameter()))
-          parameters match {
-            case OasParameters(_, path, _, _) if path.nonEmpty =>
-              endpoint.set(EndPointModel.UriParameters, AmfArray(path, Annotations(entry.value)), Annotations(entry))
-            case _ =>
+      val entries    = ListBuffer[YMapEntry]()
+      map
+        .key("parameters")
+        .foreach(
+          entry => {
+            entries += entry
+            parameters = parameters.addFromOperation(
+              ParametersParser(entry.value.value.toSequence, endpoint.id, declarations).parse())
+            parameters.body.foreach(_.add(EndPointBodyParameter()))
           }
-        }
-      )
+        )
+
+      map
+        .key("x-queryParameters")
+        .foreach(
+          entry => {
+            entries += entry
+            val queryParameters =
+              RamlParametersParser(entry.value.value.toMap,
+                                   (name: String) => Parameter().withName(name).adopted(endpoint.id),
+                                   declarations).parse().map(_.withBinding("query"))
+            parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
+          }
+        )
+
+      map
+        .key("x-headers")
+        .foreach(
+          entry => {
+            entries += entry
+            val headers =
+              RamlParametersParser(entry.value.value.toMap,
+                                   (name: String) => Parameter().withName(name).adopted(endpoint.id),
+                                   declarations).parse().map(_.withBinding("header"))
+            parameters = parameters.addFromOperation(OasParameters(header = headers))
+          }
+        )
+
+      parameters match {
+        case OasParameters(_, path, _, _) if path.nonEmpty =>
+          endpoint.set(EndPointModel.UriParameters, AmfArray(path, Annotations(entry.value)), Annotations(entry))
+        case _ =>
+      }
 
       map.key(
         "x-type",
@@ -323,27 +353,57 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
       // adding them here
       var parameters = globalOrig.copy(path = Seq())
       val global     = globalOrig.copy(path = Seq())
+      var entries    = ListBuffer[YMapEntry]()
 
-      map.key(
-        "parameters",
-        entry => {
-          parameters =
-            global.merge(ParametersParser(entry.value.value.toSequence, request.getOrCreate.id, declarations).parse())
-          parameters match {
-            case OasParameters(query, path, header, _) =>
-              // query parameters and overwritten path parameters
-              if (query.nonEmpty || path.nonEmpty)
-                request.getOrCreate.set(RequestModel.QueryParameters,
-                                        AmfArray(query ++ path, Annotations(entry.value)),
-                                        Annotations(entry))
-              if (header.nonEmpty)
-                request.getOrCreate.set(RequestModel.Headers,
-                                        AmfArray(header, Annotations(entry.value)),
-                                        Annotations(entry))
-
+      val parsedParameters = ListBuffer[Parameter]()
+      map
+        .key("parameters")
+        .foreach(
+          entry => {
+            entries += entry
+            parameters = parameters.merge(
+              ParametersParser(entry.value.value.toSequence, request.getOrCreate.id, declarations).parse())
           }
-        }
-      )
+        )
+
+      map
+        .key("x-queryParameters")
+        .foreach(
+          entry => {
+            entries += entry
+            val queryParameters =
+              RamlParametersParser(entry.value.value.toMap,
+                                   (name: String) => Parameter().withName(name).adopted(request.getOrCreate.id),
+                                   declarations).parse().map(_.withBinding("query"))
+            parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
+          }
+        )
+
+      map
+        .key("x-headers")
+        .foreach(
+          entry => {
+            entries += entry
+            val headers =
+              RamlParametersParser(entry.value.value.toMap,
+                                   (name: String) => Parameter().withName(name).adopted(request.getOrCreate.id),
+                                   declarations).parse().map(_.withBinding("header"))
+            parameters = parameters.addFromOperation(OasParameters(header = headers))
+          }
+        )
+
+      parameters match {
+        case OasParameters(query, path, header, _) =>
+          // query parameters and overwritten path parameters
+          if (query.nonEmpty || path.nonEmpty)
+            request.getOrCreate.set(RequestModel.QueryParameters,
+                                    AmfArray(query ++ path, Annotations(entries.head)),
+                                    Annotations(entries.head))
+          if (header.nonEmpty)
+            request.getOrCreate.set(RequestModel.Headers,
+                                    AmfArray(header, Annotations(entries.head)),
+                                    Annotations(entries.head))
+      }
 
       val payloads = mutable.ListBuffer[Payload]()
       parameters.body.foreach(payloads += _)
@@ -1162,12 +1222,26 @@ abstract class OasSpecParser extends BaseSpecParser {
                     merge(body, inner.body))
     }
 
+    def addFromOperation(inner: OasParameters): OasParameters = {
+      OasParameters(add(query, inner.query), add(path, inner.path), add(header, inner.header), add(body, inner.body))
+    }
+
     private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
+      inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
+
+    private def add(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
       inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
 
     private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
       val globalMap = global.map(p => p.name -> p.copy().add(Annotation.EndPointParameter())).toMap
       val innerMap  = inner.map(p => p.name  -> p.copy()).toMap
+
+      (globalMap ++ innerMap).values.toSeq
+    }
+
+    private def add(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
+      val globalMap = global.map(p => p.name -> p).toMap
+      val innerMap  = inner.map(p => p.name  -> p).toMap
 
       (globalMap ++ innerMap).values.toSeq
     }

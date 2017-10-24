@@ -15,7 +15,7 @@ import amf.spec._
 import amf.spec.common.BaseEmitters._
 import amf.spec.common._
 import amf.spec.declaration._
-import amf.spec.domain.{ParametrizedSecuritiesSchemeEmitter, RamlParametersEmitter}
+import amf.spec.domain.{ParametrizedSecuritiesSchemeEmitter, RamlParameterEmitter, RamlParametersEmitter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -159,7 +159,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
             val parameters = endPointParameters()
 
             if (parameters.nonEmpty)
-              result += ParametersEmitter("parameters", parameters.parameters(), ordering, parameters.body)
+              result ++= ParametersEmitter("parameters", parameters.parameters(), ordering, parameters.body).emitters()
 
             fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering, parameters.body.isDefined))
 
@@ -239,7 +239,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       val payloads   = Payloads(request.payloads, endpointPayloadEmitted)
 
       if (parameters.nonEmpty || payloads.default.isDefined)
-        result += ParametersEmitter("parameters", parameters, ordering, payloads.default)
+        result ++= ParametersEmitter("parameters", parameters, ordering, payloads.default).emitters()
 
       if (payloads.other.nonEmpty) result += PayloadsEmitter("x-request-payloads", payloads.other, ordering)
 
@@ -667,26 +667,62 @@ class OasSpecEmitter extends BaseSpecEmitter {
   case class ParametersEmitter(key: String,
                                parameters: Seq[Parameter],
                                ordering: SpecOrdering,
-                               payloadOption: Option[Payload] = None)
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      b.entry(
-        key,
-        _.list(traverse(parameters(ordering), _))
-      )
+                               payloadOption: Option[Payload] = None) {
+    def emitters(): Seq[EntryEmitter] = {
+
+      val results = ListBuffer[EntryEmitter]()
+      val (oasParameters, ramlParameters) =
+        parameters.partition(p => Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape])
+
+      if (oasParameters.nonEmpty || payloadOption.isDefined)
+        results += OasParameterEmitter(oasParameters)
+
+      if (ramlParameters.nonEmpty) {
+        val query  = ramlParameters.filter(_.isQuery)
+        val header = ramlParameters.filter(_.isHeader)
+        if (query.nonEmpty)
+          results += XRamlParameterEmitter("x-queryParameters", query)
+        if (header.nonEmpty)
+          results += XRamlParameterEmitter("x-headers", header)
+      }
+      results
     }
 
-    private def parameters(ordering: SpecOrdering): Seq[PartEmitter] = {
+    case class OasParameterEmitter(oasParameters: Seq[Parameter]) extends EntryEmitter {
+      override def emit(b: EntryBuilder): Unit = {
+        if (oasParameters.nonEmpty || payloadOption.isDefined)
+          b.entry(
+            key,
+            _.list(traverse(parameters(oasParameters, ordering), _))
+          )
+      }
+
+      override def position(): Position =
+        oasParameters.headOption
+          .map(p => pos(p.annotations))
+          .getOrElse(payloadOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO))
+    }
+
+    case class XRamlParameterEmitter(key: String, ramlParameters: Seq[Parameter]) extends EntryEmitter {
+      override def emit(b: EntryBuilder): Unit = {
+        if (ramlParameters.nonEmpty)
+          b.entry(
+            key,
+            _.map(traverse(ramlParameters.map(p => RamlParameterEmitter(p, ordering, Nil)), _))
+          )
+      }
+
+      override def position(): Position =
+        ramlParameters.headOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO)
+    }
+
+    private def parameters(parameters: Seq[Parameter], ordering: SpecOrdering): Seq[PartEmitter] = {
       val result = ListBuffer[PartEmitter]()
       parameters.foreach(e => result += ParameterEmitter(e, ordering))
       payloadOption.foreach(payload => result += PayloadAsParameterEmitter(payload, ordering))
       ordering.sorted(result)
     }
 
-    override def position(): Position = {
-      if (parameters.nonEmpty) pos(parameters.head.annotations)
-      else payloadOption.fold[Position](ZERO)(payload => pos(payload.annotations))
-    }
   }
 
   case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering) extends PartEmitter {

@@ -40,7 +40,10 @@ case class AMFValidationResult(message: String,
 
 object AMFValidationResult {
 
-  def fromSHACLValidation(model: BaseUnit, message: String, level: String, validation: ValidationResult): AMFValidationResult = {
+  def fromSHACLValidation(model: BaseUnit,
+                          message: String,
+                          level: String,
+                          validation: ValidationResult): AMFValidationResult = {
     model.findById(validation.focusNode) match {
       case None => throw new Exception(s"Cannot find node with validation error ${validation.focusNode}")
       case Some(node) =>
@@ -57,7 +60,12 @@ object AMFValidationResult {
   }
 
   def withShapeId(shapeId: String, validation: AMFValidationResult): AMFValidationResult =
-    AMFValidationResult(validation.message, validation.level, validation.targetNode, validation.targetProperty, shapeId, validation.position)
+    AMFValidationResult(validation.message,
+                        validation.level,
+                        validation.targetNode,
+                        validation.targetProperty,
+                        shapeId,
+                        validation.position)
 
   def findPosition(node: DomainElement, validation: ValidationResult): Option[LexicalInformation] = {
     if (validation.path != null && validation.path != "") {
@@ -66,7 +74,8 @@ object AMFValidationResult {
           f.element.annotations.find(classOf[LexicalInformation]).orElse {
             f.value.annotations.find(classOf[LexicalInformation]).orElse {
               f.element match {
-                case arr:AmfArray if arr.values.nonEmpty => arr.values.head.annotations.find(classOf[LexicalInformation])
+                case arr: AmfArray if arr.values.nonEmpty =>
+                  arr.values.head.annotations.find(classOf[LexicalInformation])
                 case _ => None
               }
             }
@@ -87,25 +96,26 @@ case class AMFValidationReport(conforms: Boolean, model: String, profile: String
     str += s"Profile: $profile\n"
     str += s"Conforms? $conforms\n"
     str += s"Number of results: ${results.length}\n"
-    results.groupBy(_.level) foreach { case (level, results) =>
-      str += s"\nLevel: $level\n"
-      for { result <- results } {
-        str += result
-      }
+    results.groupBy(_.level) foreach {
+      case (level, results) =>
+        str += s"\nLevel: $level\n"
+        for { result <- results } {
+          str += result
+        }
     }
     str
   }
 }
 
-class EffectiveValidations(val effective: mutable.HashMap[String,ValidationSpecification] = mutable.HashMap(),
-                           val info: mutable.HashMap[String,ValidationSpecification] = mutable.HashMap(),
-                           val warning: mutable.HashMap[String,ValidationSpecification] = mutable.HashMap(),
-                           val violation: mutable.HashMap[String,ValidationSpecification] = mutable.HashMap(),
-                           val all: mutable.HashMap[String,ValidationSpecification] = mutable.HashMap())
+class EffectiveValidations(val effective: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
+                           val info: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
+                           val warning: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
+                           val violation: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
+                           val all: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap())
 
 object SeverityLevels {
-  val WARNING = "Warning"
-  val INFO = "Info"
+  val WARNING   = "Warning"
+  val INFO      = "Info"
   val VIOLATION = "Violation"
 }
 
@@ -123,11 +133,12 @@ class Validation(platform: Platform) {
     }
   }
 
-
   var profile: Option[ValidationProfile] = None
 
   // The aggregated report
-  def reset(): Unit = { aggregatedReport = List() }
+  def reset(): Unit = {
+    aggregatedReport = List()
+  }
   var aggregatedReport: List[AMFValidationResult] = List()
 
   /**
@@ -148,8 +159,9 @@ class Validation(platform: Platform) {
     AMFCompiler(validationProfilePath, platform, RamlYamlHint, None, None, platform.dialectsRegistry)
       .build()
       .map { case parsed: Document => parsed.encodes }
-      .map { case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
-        profile = Some(ValidationProfile(encoded))
+      .map {
+        case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
+          profile = Some(ValidationProfile(encoded))
       }
   }
 
@@ -157,35 +169,43 @@ class Validation(platform: Platform) {
     * Loads a validation profile generated out of a RAML Dialect
     * @param dialect RAML dialect to be parsed as a Validation Profile
     */
-  def loadDialectValidationProfile(dialect: Dialect): Unit = profile = Some(new AMFDialectValidations(dialect).profile())
+  def loadDialectValidationProfile(dialect: Dialect): Unit =
+    profile = Some(new AMFDialectValidations(dialect).profile())
 
   private def setLevel(id: String, validations: EffectiveValidations, targetLevel: String) = {
-    val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) { Namespace.expand(id.replace(".",":")).iri() } else { id }
+    val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) {
+      Namespace.expand(id.replace(".", ":")).iri()
+    } else { id }
     validations.all.get(validationName) match {
-      case None             => throw new Exception(s"Cannot enable with $targetLevel level unknown validation $validationName")
+      case None => throw new Exception(s"Cannot enable with $targetLevel level unknown validation $validationName")
       case Some(validation) =>
         validations.info.remove(validationName)
         validations.warning.remove(validationName)
         validations.violation.remove(validationName)
         targetLevel match {
-          case SeverityLevels.INFO      => validations.info += (validationName -> validation)
-          case SeverityLevels.WARNING   => validations.warning += (validationName -> validation)
+          case SeverityLevels.INFO      => validations.info += (validationName      -> validation)
+          case SeverityLevels.WARNING   => validations.warning += (validationName   -> validation)
           case SeverityLevels.VIOLATION => validations.violation += (validationName -> validation)
         }
         validations.effective += (validationName -> validation)
     }
   }
 
-  private def someEffective(profile: ValidationProfile, computed: EffectiveValidations): _root_.amf.validation.EffectiveValidations = {
+  private def someEffective(profile: ValidationProfile,
+                            computed: EffectiveValidations): _root_.amf.validation.EffectiveValidations = {
     // we aggregate all of the validations to the total validations map
-    profile.validations.foreach { spec => computed.all += spec.name -> spec}
+    profile.validations.foreach { spec =>
+      computed.all += spec.name -> spec
+    }
 
-    profile.infoLevel.foreach( id => setLevel(id, computed, SeverityLevels.INFO))
-    profile.warningLevel.foreach( id => setLevel(id, computed, SeverityLevels.WARNING))
-    profile.violationLevel.foreach( id => setLevel(id, computed, SeverityLevels.VIOLATION))
+    profile.infoLevel.foreach(id => setLevel(id, computed, SeverityLevels.INFO))
+    profile.warningLevel.foreach(id => setLevel(id, computed, SeverityLevels.WARNING))
+    profile.violationLevel.foreach(id => setLevel(id, computed, SeverityLevels.VIOLATION))
 
     profile.disabled foreach { id =>
-      val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) { Namespace.expand(id.replace(".",":")).iri() } else { id }
+      val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) {
+        Namespace.expand(id.replace(".", ":")).iri()
+      } else { id }
       computed.effective.remove(validationName)
     }
 
@@ -194,7 +214,7 @@ class Validation(platform: Platform) {
 
   private def allEffective(specifications: Seq[ValidationSpecification], validations: EffectiveValidations) = {
     specifications foreach { spec =>
-      validations.all += (spec.name -> spec)
+      validations.all += (spec.name       -> spec)
       validations.effective += (spec.name -> spec)
       validations.violation += (spec.name -> spec)
     }
@@ -206,16 +226,20 @@ class Validation(platform: Platform) {
     * @param profileName Name of the profile
     * @return list of effective validations: matching the profile and not filtered
     */
-  def computeValidations(profileName: String, computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
+  def computeValidations(profileName: String,
+                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     profileName match {
       case ProfileNames.AMF =>
         allEffective(defaultProfiles.find(_.name == ProfileNames.AMF).get.validations, computed)
       case ProfileNames.RAML =>
-        allEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get.validations, computeValidations(ProfileNames.AMF, computed))
+        allEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get.validations,
+                     computeValidations(ProfileNames.AMF, computed))
       case ProfileNames.OAS =>
-        allEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get.validations, computeValidations(ProfileNames.AMF, computed))
+        allEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get.validations,
+                     computeValidations(ProfileNames.AMF, computed))
       case _ if platform.dialectsRegistry.knowsHeader("%" + profileName) =>
-        val dialectValidationProfile = new AMFDialectValidations(platform.dialectsRegistry.get("%" + profileName).get).profile()
+        val dialectValidationProfile =
+          new AMFDialectValidations(platform.dialectsRegistry.get("%" + profileName).get).profile()
         someEffective(dialectValidationProfile, computed)
       case _ if profile.isDefined && profile.get.name == profileName =>
         if (profile.get.baseProfileName.isDefined) {
@@ -227,23 +251,25 @@ class Validation(platform: Platform) {
     }
   }
 
-
   /**
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = {
-    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq.filter(s => !s.isParserSide()))
+    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq.filter(s =>
+      !s.isParserSide()))
   }
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
-    val graphAST  = GraphEmitter.emit(model, GenerationOptions())
-    val modelJSON = new JsonGenerator().generate(graphAST).toString
+  def validate(model: BaseUnit,
+               profileName: String,
+               messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
+    val graphAST    = GraphEmitter.emit(model, GenerationOptions())
+    val modelJSON   = new JsonGenerator().generate(graphAST).toString
     val validations = computeValidations(profileName)
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
     val shapesJSON = shapesGraph(validations, messageStyle)
-    val jsLibrary = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
+    val jsLibrary  = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
 
     /*
     println("\n\nGRAPH")
@@ -254,20 +280,25 @@ class Validation(platform: Platform) {
     println("===========================")
     println(jsLibrary)
     println("===========================")
-    */
+     */
 
     jsLibrary match {
-      case Some(code) =>  platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+      case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore
     }
     for {
       shaclReport <- platform.validator.report(
-        modelJSON, "application/ld+json",
-        shapesJSON, "application/ld+json",
+        modelJSON,
+        "application/ld+json",
+        shapesJSON,
+        "application/ld+json"
       )
     } yield {
       val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
-                    shaclReport.results.map(r => buildValidationResult(model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
+        shaclReport.results
+          .map(r => buildValidationResult(model, r, messageStyle, validations))
+          .filter(_.isDefined)
+          .map(_.get)
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
         model = model.id,
@@ -287,16 +318,18 @@ class Validation(platform: Platform) {
     }
   }
 
-  protected def processAggregatedResult(result: AMFValidationResult, messageStyle: String, validations: EffectiveValidations): AMFValidationResult = {
+  protected def processAggregatedResult(result: AMFValidationResult,
+                                        messageStyle: String,
+                                        validations: EffectiveValidations): AMFValidationResult = {
     val spec = validations.all.get(result.validationId) match {
       case Some(s) => s
-      case None       => throw new Exception(s"Cannot find spec for aggregated validation result ${result.validationId}")
+      case None    => throw new Exception(s"Cannot find spec for aggregated validation result ${result.validationId}")
     }
 
     var message: String = messageStyle match {
       case ProfileNames.RAML => spec.ramlMessage.getOrElse(result.message)
       case ProfileNames.OAS  => spec.oasMessage.getOrElse(result.message)
-      case _                           => spec.message
+      case _                 => spec.message
     }
     if (message == "") {
       message = "Constraint violation"
@@ -306,31 +339,38 @@ class Validation(platform: Platform) {
     new AMFValidationResult(message, severity, result.targetNode, result.targetProperty, spec.id(), result.position)
   }
 
-  protected def buildValidationResult(model: BaseUnit, result: ValidationResult, messageStyle: String, validations: EffectiveValidations): Option[AMFValidationResult] = {
+  protected def buildValidationResult(model: BaseUnit,
+                                      result: ValidationResult,
+                                      messageStyle: String,
+                                      validations: EffectiveValidations): Option[AMFValidationResult] = {
     val validationSpecToLook = if (result.sourceShape.startsWith(Namespace.Data.base)) {
-      result.sourceShape.replace(Namespace.Data.base, "") // this is for custom validations they are all prefixed with the data namespace
+      result.sourceShape
+        .replace(Namespace.Data.base, "") // this is for custom validations they are all prefixed with the data namespace
     } else {
       result.sourceShape // by default we expect to find a URI here
     }
-    val idMapping: mutable.HashMap[String,String] = mutable.HashMap()
+    val idMapping: mutable.HashMap[String, String] = mutable.HashMap()
     val maybeTargetSpec: Option[ValidationSpecification] = validations.all.get(validationSpecToLook) match {
       case Some(validationSpec) =>
         idMapping.put(result.sourceShape, validationSpecToLook)
         Some(validationSpec)
 
-      case None => validations.all.find { case (v, _) =>
-        // processing property shapes Id computed as constraintID + "/prop"
-        validationSpecToLook.startsWith(v)
-      } match {
-        case Some((v, spec)) =>
-          idMapping.put(result.sourceShape, v)
-          Some(spec)
-        case None => if (validationSpecToLook.startsWith("_:")) {
-          None
-        }  else {
-          throw new Exception(s"Cannot find validation spec for validation error:\n $result")
+      case None =>
+        validations.all.find {
+          case (v, _) =>
+            // processing property shapes Id computed as constraintID + "/prop"
+            validationSpecToLook.startsWith(v)
+        } match {
+          case Some((v, spec)) =>
+            idMapping.put(result.sourceShape, v)
+            Some(spec)
+          case None =>
+            if (validationSpecToLook.startsWith("_:")) {
+              None
+            } else {
+              throw new Exception(s"Cannot find validation spec for validation error:\n $result")
+            }
         }
-      }
     }
 
     maybeTargetSpec match {
@@ -338,7 +378,7 @@ class Validation(platform: Platform) {
         var message = messageStyle match {
           case ProfileNames.RAML => targetSpec.ramlMessage.getOrElse(targetSpec.message)
           case ProfileNames.OAS  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case _                           => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
+          case _                 => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
         }
 
         if (Option(message).isEmpty || message == "") {
@@ -346,11 +386,14 @@ class Validation(platform: Platform) {
         }
 
         val finalId = idMapping(result.sourceShape).startsWith("http") match {
-          case true  => idMapping(result.sourceShape)
-          case false => Namespace.Data.base + idMapping(result.sourceShape) // we put back the prefix for the custom validations
+          case true => idMapping(result.sourceShape)
+          case false =>
+            Namespace.Data.base + idMapping(result.sourceShape) // we put back the prefix for the custom validations
         }
         val severity = findLevel(idMapping(result.sourceShape), validations)
-        Some(AMFValidationResult.withShapeId(finalId, AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
+        Some(
+          AMFValidationResult.withShapeId(finalId,
+                                          AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
       case _ => None
     }
   }
@@ -358,9 +401,20 @@ class Validation(platform: Platform) {
 
 object Validation {
   var currentValidation: Option[Validation] = None
+
   def apply(platform: Platform): Validation = {
     currentValidation = Some(new Validation(platform))
     currentValidation.get
+  }
+
+  def apply[T](platform: Platform, current: Validation => Future[T]): Future[T] = {
+    val validation = new Validation(platform)
+    currentValidation = Some(validation)
+    val result = current(validation)
+    result.map(r => {
+      currentValidation = None
+      r
+    })
   }
 
   /**
@@ -373,9 +427,11 @@ object Validation {
                               message: String = "",
                               position: Option[LexicalInformation] = None): Unit = currentValidation match {
     case Some(v) => v.reportConstraintFailure(level, validationId, targetNode, targetProperty, message, position)
-    case None    => if (level == SeverityLevels.VIOLATION) {
-      throw new Exception(s"Violation: $message at node $targetNode, property $targetProperty and position $position")
-    }
+    case None =>
+      if (level == SeverityLevels.VIOLATION) {
+        throw new Exception(
+          s"Violation: $message at node $targetNode, property $targetProperty and position $position")
+      }
   }
 
   def restartValidations() = currentValidation match {

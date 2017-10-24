@@ -9,21 +9,17 @@
       "x-description": "and this description!",
       "get": {
         "operationId": "Some title",
-        "parameters": [
-          {
-            "name": "param1",
+        "x-queryParameters": {
+          "param1": {
             "description": "Some descr",
             "required": true,
-            "in": "query",
             "properties": {
               "name": {
                 "type": "string"
               }
             }
           },
-          {
-            "name": "param2",
-            "in": "query",
+          "param2?": {
             "properties": {
               "lastName": {
                 "type": "string"
@@ -31,7 +27,7 @@
             },
             "type": "object"
           }
-        ]
+        }
       }
     }
   }

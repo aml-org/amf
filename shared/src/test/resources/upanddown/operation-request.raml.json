@@ -26,23 +26,22 @@
         "operationId": "Some title",
         "parameters": [
           {
-            "name": "param1",
-            "description": "Some descr",
-            "required": true,
+            "name": "param2",
             "in": "query",
+            "type": "string"
+          }
+        ],
+        "x-queryParameters": {
+          "param1": {
+            "description": "Some descr",
             "type": "object",
             "properties": {
               "name": {
                 "type": "string"
               }
             }
-          },
-          {
-            "name": "param2",
-            "in": "query",
-            "type": "string"
           }
-        ]
+        }
       },
       "post": {
         "operationId": "Some title",

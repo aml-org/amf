@@ -24,6 +24,8 @@ trait RamlSyntax {
       "annotationTypes",
       "securitySchemes",
       "securedBy",
+      "usage",
+      "extends",
       "uses"
     ),
     "userDocumentation" -> Set(
@@ -59,7 +61,8 @@ trait RamlSyntax {
       "maxProperties",
       "discriminator",
       "discriminatorValue",
-      "required"
+      "required",
+      "additionalProperties"
     ),
     "arrayShape" -> Set(
       "type",
@@ -183,7 +186,7 @@ trait RamlSyntax {
     "annotation" -> Set(
       "displayName",
       "description",
-      "allowedTarget",
+      "allowedTargets",
       "type"
     )
   )
