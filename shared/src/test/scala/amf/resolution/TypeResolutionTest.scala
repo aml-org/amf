@@ -10,6 +10,7 @@ import amf.remote.{Raml, RamlYamlHint}
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.raml.RamlTypeExpressionParser
+import amf.validation.Validation
 import amf.vocabulary.Namespace
 import org.scalatest.Assertion
 
@@ -153,17 +154,26 @@ class TypeResolutionTest extends ResolutionTest {
 
   examples.foreach { example =>
     test(s"Resolve data types: $example") {
-      val expected = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
-      AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-        .build()
-        .map { model =>
-          model.resolve(ProfileNames.RAML)
+      Validation(
+        platform,
+        validation => {
+          validation
+            .loadValidationDialect()
+            .flatMap(_ => {
+              val expected = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
+              AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
+                .build()
+                .map { model =>
+                  model.resolve(ProfileNames.RAML)
+                }
+                .flatMap({ unit =>
+                  AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+                })
+                .zip(expected)
+                .map(checkDiff)
+            })
         }
-        .flatMap({ unit =>
-          AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-        })
-        .zip(expected)
-        .map(checkDiff)
+      )
     }
   }
 
