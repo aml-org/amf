@@ -9,20 +9,21 @@ case class WebApi private (private val webApi: amf.domain.WebApi) extends Domain
 
   def this() = this(amf.domain.WebApi())
 
-  val name: String                                 = webApi.name
-  val description: String                          = webApi.description
-  val host: String                                 = webApi.host
-  val schemes: java.util.List[String]              = webApi.schemes.asJava
-  val endPoints: java.util.List[EndPoint]          = webApi.endPoints.map(EndPoint).asJava
-  val basePath: String                             = webApi.basePath
-  val accepts: java.util.List[String]              = webApi.accepts.asJava
-  val contentType: java.util.List[String]          = webApi.contentType.asJava
-  val version: String                              = webApi.version
-  val termsOfService: String                       = webApi.termsOfService
-  val provider: Organization                       = Option(webApi.provider).map(amf.model.Organization).orNull
-  val license: License                             = Option(webApi.license).map(amf.model.License).orNull
-  val documentations: java.util.List[CreativeWork] = webApi.documentations.map(CreativeWork).asJava
-  val baseUriParameters: java.util.List[Parameter] = webApi.baseUriParameters.map(Parameter).asJava
+  val name: String                                         = webApi.name
+  val description: String                                  = webApi.description
+  val host: String                                         = webApi.host
+  val schemes: java.util.List[String]                      = webApi.schemes.asJava
+  val endPoints: java.util.List[EndPoint]                  = webApi.endPoints.map(EndPoint).asJava
+  val basePath: String                                     = webApi.basePath
+  val accepts: java.util.List[String]                      = webApi.accepts.asJava
+  val contentType: java.util.List[String]                  = webApi.contentType.asJava
+  val version: String                                      = webApi.version
+  val termsOfService: String                               = webApi.termsOfService
+  val provider: Organization                               = Option(webApi.provider).map(amf.model.Organization).orNull
+  val license: License                                     = Option(webApi.license).map(amf.model.License).orNull
+  val documentations: java.util.List[CreativeWork]         = webApi.documentations.map(CreativeWork).asJava
+  val baseUriParameters: java.util.List[Parameter]         = webApi.baseUriParameters.map(Parameter).asJava
+  def security: java.util.List[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).asJava
 
   override private[amf] def element: amf.domain.WebApi = webApi
 
@@ -101,6 +102,12 @@ case class WebApi private (private val webApi: amf.domain.WebApi) extends Domain
   /** Set documentation property of this [[WebApi]] using a [[CreativeWork]]. */
   def withDocumentations(documentations: java.util.List[CreativeWork]): this.type = {
     webApi.withDocumentations(documentations.asScala.map(_.element))
+    this
+  }
+
+  /** Set security property of this [[WebApi]] using a list of [[ParametrizedSecurityScheme]]. */
+  def withSecurity(security: java.util.List[ParametrizedSecurityScheme]): this.type = {
+    webApi.withSecurity(security.asScala.map(_.element))
     this
   }
 

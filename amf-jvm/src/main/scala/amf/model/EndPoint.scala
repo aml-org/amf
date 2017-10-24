@@ -9,11 +9,12 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
 
   def this() = this(amf.domain.EndPoint())
 
-  val name: String                          = endPoint.name
-  val description: String                   = endPoint.description
-  val path: String                          = endPoint.path
-  val operations: java.util.List[Operation] = endPoint.operations.map(Operation).asJava
-  val parameters: java.util.List[Parameter] = endPoint.parameters.map(Parameter).asJava
+  val name: String                                         = endPoint.name
+  val description: String                                  = endPoint.description
+  val path: String                                         = endPoint.path
+  val operations: java.util.List[Operation]                = endPoint.operations.map(Operation).asJava
+  val parameters: java.util.List[Parameter]                = endPoint.parameters.map(Parameter).asJava
+  def security: java.util.List[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).asJava
 
   override private[amf] def element: amf.domain.EndPoint = endPoint
 
@@ -47,6 +48,12 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
   /** Set parameters property of this [[EndPoint]]. */
   def withParameters(parameters: java.util.List[Parameter]): this.type = {
     endPoint.withParameters(parameters.asScala.map(_.element))
+    this
+  }
+
+  /** Set security property of this [[EndPoint]] using a list of [[ParametrizedSecurityScheme]]. */
+  def withSecurity(security: java.util.List[ParametrizedSecurityScheme]): this.type = {
+    endPoint.withSecurity(security.asScala.map(_.element))
     this
   }
 

@@ -9,17 +9,18 @@ case class Operation private[model] (private val operation: amf.domain.Operation
 
   def this() = this(amf.domain.Operation())
 
-  val method: String                      = operation.method
-  val name: String                        = operation.name
-  val description: String                 = operation.description
-  val deprecated: Boolean                 = operation.deprecated
-  val summary: String                     = operation.summary
-  val documentation: CreativeWork         = Option(operation.documentation).map(CreativeWork).orNull
-  val schemes: java.util.List[String]     = operation.schemes.asJava
-  val accepts: java.util.List[String]     = operation.accepts.asJava
-  val contentType: java.util.List[String] = operation.contentType.asJava
-  val request: Request                    = Option(operation.request).map(Request).orNull
-  val responses: java.util.List[Response] = operation.responses.map(Response).asJava
+  val method: String                          = operation.method
+  val name: String                            = operation.name
+  val description: String                     = operation.description
+  val deprecated: Boolean                     = operation.deprecated
+  val summary: String                         = operation.summary
+  val documentation: CreativeWork             = Option(operation.documentation).map(CreativeWork).orNull
+  val schemes: java.util.List[String]         = operation.schemes.asJava
+  val accepts: java.util.List[String]         = operation.accepts.asJava
+  val contentType: java.util.List[String]     = operation.contentType.asJava
+  val request: Request                        = Option(operation.request).map(Request).orNull
+  val responses: java.util.List[Response]     = operation.responses.map(Response).asJava
+  def security: java.util.List[DomainElement] = operation.security.map(DomainElement(_)).asJava
 
   override private[amf] def element: amf.domain.Operation = operation
 
@@ -86,6 +87,12 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   /** Set responses property of this [[Operation]]. */
   def withResponses(responses: java.util.List[Response]): this.type = {
     operation.withResponses(responses.asScala.map(_.element))
+    this
+  }
+
+  /** Set security property of this [[Operation]]. */
+  def withSecurity(security: java.util.List[DomainElement]): this.type = {
+    operation.withSecurity(security.asScala.map(_.element))
     this
   }
 

@@ -12,17 +12,18 @@ case class Operation private[model] (private val operation: amf.domain.Operation
 
   def this() = this(amf.domain.Operation())
 
-  val method: String                   = operation.method
-  val name: String                     = operation.name
-  val description: String              = operation.description
-  val deprecated: Boolean              = operation.deprecated
-  val summary: String                  = operation.summary
-  val documentation: CreativeWork      = Option(operation.documentation).map(CreativeWork).orNull
-  val schemes: js.Iterable[String]     = operation.schemes.toJSArray
-  val accepts: js.Iterable[String]     = operation.accepts.toJSArray
-  val contentType: js.Iterable[String] = operation.contentType.toJSArray
-  val request: Request                 = Option(operation.request).map(Request).orNull
-  val responses: js.Iterable[Response] = operation.responses.map(Response).toJSArray
+  val method: String                       = operation.method
+  val name: String                         = operation.name
+  val description: String                  = operation.description
+  val deprecated: Boolean                  = operation.deprecated
+  val summary: String                      = operation.summary
+  val documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
+  val schemes: js.Iterable[String]         = operation.schemes.toJSArray
+  val accepts: js.Iterable[String]         = operation.accepts.toJSArray
+  val contentType: js.Iterable[String]     = operation.contentType.toJSArray
+  val request: Request                     = Option(operation.request).map(Request).orNull
+  val responses: js.Iterable[Response]     = operation.responses.map(Response).toJSArray
+  def security: js.Iterable[DomainElement] = operation.security.map(DomainElement(_)).toJSArray
 
   override private[amf] def element: amf.domain.Operation = operation
 
@@ -89,6 +90,12 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   /** Set responses property of this [[Operation]]. */
   def withResponses(responses: js.Iterable[Response]): this.type = {
     operation.withResponses(responses.toSeq.map(_.element))
+    this
+  }
+
+  /** Set security property of this [[Operation]]. */
+  def withSecurity(security: js.Iterable[DomainElement]): this.type = {
+    operation.withSecurity(security.toSeq.map(_.element))
     this
   }
 

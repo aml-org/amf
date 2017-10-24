@@ -13,20 +13,21 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
   @JSExportTopLevel("WebApi")
   def this() = this(amf.domain.WebApi())
 
-  val name: String                              = webApi.name
-  val description: String                       = webApi.description
-  val host: String                              = webApi.host
-  val schemes: js.Iterable[String]              = webApi.schemes.toJSArray
-  val endPoints: js.Iterable[EndPoint]          = webApi.endPoints.map(amf.model.EndPoint).toJSArray
-  val basePath: String                          = webApi.basePath
-  val accepts: js.Iterable[String]              = webApi.accepts.toJSArray
-  val contentType: js.Iterable[String]          = webApi.contentType.toJSArray
-  val version: String                           = webApi.version
-  val termsOfService: String                    = webApi.termsOfService
-  val provider: Organization                    = Option(webApi.provider).map(amf.model.Organization).orNull
-  val license: License                          = Option(webApi.license).map(amf.model.License).orNull
-  val documentations: js.Iterable[CreativeWork] = webApi.documentations.map(CreativeWork).toJSArray
-  val baseUriParameters: js.Iterable[Parameter] = webApi.baseUriParameters.map(amf.model.Parameter).toJSArray
+  val name: String                                      = webApi.name
+  val description: String                               = webApi.description
+  val host: String                                      = webApi.host
+  val schemes: js.Iterable[String]                      = webApi.schemes.toJSArray
+  val endPoints: js.Iterable[EndPoint]                  = webApi.endPoints.map(amf.model.EndPoint).toJSArray
+  val basePath: String                                  = webApi.basePath
+  val accepts: js.Iterable[String]                      = webApi.accepts.toJSArray
+  val contentType: js.Iterable[String]                  = webApi.contentType.toJSArray
+  val version: String                                   = webApi.version
+  val termsOfService: String                            = webApi.termsOfService
+  val provider: Organization                            = Option(webApi.provider).map(amf.model.Organization).orNull
+  val license: License                                  = Option(webApi.license).map(amf.model.License).orNull
+  val documentations: js.Iterable[CreativeWork]         = webApi.documentations.map(CreativeWork).toJSArray
+  val baseUriParameters: js.Iterable[Parameter]         = webApi.baseUriParameters.map(amf.model.Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: amf.domain.WebApi = webApi
 
@@ -105,6 +106,12 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
   /** Set documentation property of this [[WebApi]] using a [[CreativeWork]]. */
   def withDocumentation(documentations: js.Iterable[CreativeWork]): this.type = {
     webApi.withDocumentations(documentations.toSeq.map(_.element))
+    this
+  }
+
+  /** Set security property of this [[WebApi]] using a list of [[ParametrizedSecurityScheme]]. */
+  def withSecurity(security: js.Iterable[ParametrizedSecurityScheme]): this.type = {
+    webApi.withSecurity(security.toSeq.map(_.element))
     this
   }
 

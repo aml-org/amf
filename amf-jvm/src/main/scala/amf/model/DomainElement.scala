@@ -42,33 +42,38 @@ trait DomainElement {
 
   def getPropertyIds(): java.util.List[String] = element.getPropertyIds().asJava
 
-  def getScalarByPropertyId(propertyId: String): java.util.List[Object] = element.getScalarByPropertyId(propertyId).map(_.asInstanceOf[Object]).asJava
+  def getScalarByPropertyId(propertyId: String): java.util.List[Object] =
+    element.getScalarByPropertyId(propertyId).map(_.asInstanceOf[Object]).asJava
 
-  def getObjectByPropertyId(propertyId: String): java.util.List[DomainElement] = element.getObjectByPropertyId(propertyId).map(d => DomainElement(d)).asJava
+  def getObjectByPropertyId(propertyId: String): java.util.List[DomainElement] =
+    element.getObjectByPropertyId(propertyId).map(d => DomainElement(d)).asJava
 }
 
 object DomainElement {
-  def apply(domainElement: amf.domain.DomainElement) = domainElement match {
-    case o: amf.domain.WebApi => WebApi(o)
-    case o: amf.domain.Operation => Operation(o)
-    case o: amf.domain.Organization => Organization(o)
-    case o: amf.domain.ExternalDomainElement => throw new Exception("Not supported yet")
-    case o: amf.domain.Parameter => Parameter(o)
-    case o: amf.domain.Payload => Payload(o)
-    case o: amf.domain.CreativeWork => CreativeWork(o)
-    case o: amf.domain.EndPoint => EndPoint(o)
-    case o: amf.domain.Request => Request(o)
-    case o: amf.domain.Response => Response(o)
-    case o: amf.domain.extensions.ObjectNode => ObjectNode(o)
-    case o: amf.domain.extensions.ScalarNode => ScalarNode(o)
-    case o: amf.domain.extensions.CustomDomainProperty => CustomDomainProperty(o)
-    case o: amf.domain.extensions.ArrayNode => ArrayNode(o)
-    case o: amf.domain.extensions.DomainExtension => DomainExtension(o)
-    case o: amf.shape.Shape => Shape(o)
-    case o: amf.domain.dialects.DomainEntity => DomainEntity(o)
-    case o => new DomainElement {
-      override private[amf] def element = o
-    }
+  def apply(domainElement: amf.domain.DomainElement): DomainElement = domainElement match {
+    case o: amf.domain.WebApi                              => WebApi(o)
+    case o: amf.domain.Operation                           => Operation(o)
+    case o: amf.domain.Organization                        => Organization(o)
+    case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")
+    case o: amf.domain.Parameter                           => Parameter(o)
+    case o: amf.domain.Payload                             => Payload(o)
+    case o: amf.domain.CreativeWork                        => CreativeWork(o)
+    case o: amf.domain.EndPoint                            => EndPoint(o)
+    case o: amf.domain.Request                             => Request(o)
+    case o: amf.domain.Response                            => Response(o)
+    case o: amf.domain.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(o)
+    case o: amf.domain.security.SecurityScheme             => SecurityScheme(o)
+    case o: amf.domain.extensions.ObjectNode               => ObjectNode(o)
+    case o: amf.domain.extensions.ScalarNode               => ScalarNode(o)
+    case o: amf.domain.extensions.CustomDomainProperty     => CustomDomainProperty(o)
+    case o: amf.domain.extensions.ArrayNode                => ArrayNode(o)
+    case o: amf.domain.extensions.DomainExtension          => DomainExtension(o)
+    case o: amf.shape.Shape                                => Shape(o)
+    case o: amf.domain.dialects.DomainEntity               => DomainEntity(o)
+    case o =>
+      new DomainElement {
+        override private[amf] def element = o
+      }
   }
 }
 

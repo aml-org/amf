@@ -61,10 +61,6 @@ object Fragment {
     override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
   }
 
-  case class Overlay(fields: Fields, annotations: Annotations) extends Fragment
-
-  case class Extension(fields: Fields, annotations: Annotations) extends Fragment
-
   case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: amf.domain.security.SecurityScheme =
       super.encodes.asInstanceOf[amf.domain.security.SecurityScheme]

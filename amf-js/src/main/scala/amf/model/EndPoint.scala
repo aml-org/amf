@@ -12,11 +12,12 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
 
   def this() = this(amf.domain.EndPoint())
 
-  val name: String                       = endPoint.name
-  val description: String                = endPoint.description
-  val path: String                       = endPoint.path
-  val operations: js.Iterable[Operation] = endPoint.operations.map(Operation).toJSArray
-  val parameters: js.Iterable[Parameter] = endPoint.parameters.map(Parameter).toJSArray
+  val name: String                                      = endPoint.name
+  val description: String                               = endPoint.description
+  val path: String                                      = endPoint.path
+  val operations: js.Iterable[Operation]                = endPoint.operations.map(Operation).toJSArray
+  val parameters: js.Iterable[Parameter]                = endPoint.parameters.map(Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: amf.domain.EndPoint = endPoint
 
@@ -50,6 +51,12 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
   /** Set parameters property of this [[EndPoint]]. */
   def withParameters(parameters: js.Iterable[Parameter]): this.type = {
     endPoint.withParameters(parameters.toSeq.map(_.element))
+    this
+  }
+
+  /** Set security property of this [[EndPoint]] using a list of [[ParametrizedSecurityScheme]]. */
+  def withSecurity(security: js.Iterable[ParametrizedSecurityScheme]): this.type = {
+    endPoint.withSecurity(security.toSeq.map(_.element))
     this
   }
 

@@ -41,3 +41,21 @@ case class AnnotationTypeDeclaration(
     extends Fragment(annotationTypeDeclaration) {
   def this() = this(amf.document.Fragment.AnnotationTypeDeclaration())
 }
+
+case class OverlayFragment(private[amf] val overlayFragment: amf.document.Fragment.OverlayFragment)
+    extends Fragment(overlayFragment) {
+
+  def this() = this(amf.document.Fragment.OverlayFragment())
+}
+
+case class ExtensionFragment(private[amf] val extensionFragment: amf.document.Fragment.ExtensionFragment)
+    extends Fragment(extensionFragment) {
+
+  def this() = this(amf.document.Fragment.ExtensionFragment())
+}
+
+case class SecuritySchemeFragment(private[amf] val extensionFragment: amf.document.Fragment.SecurityScheme)
+    extends Fragment(extensionFragment) {
+
+  def this() = this(amf.document.Fragment.SecurityScheme())
+}
