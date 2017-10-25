@@ -4,7 +4,7 @@ import amf.domain.extensions.CustomDomainProperty
 import amf.domain._
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.metadata.document.{BaseUnitModel, DocumentModel, FragmentModel}
-import amf.model.AmfObject
+import amf.model.{AmfElement, AmfObject}
 import amf.shape.Shape
 
 /**

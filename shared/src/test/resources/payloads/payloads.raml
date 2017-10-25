@@ -1,0 +1,66 @@
+#%RAML 1.0 Library
+
+types:
+  A:
+    type: object
+    properties:
+      a:
+        type: string
+      b:
+        type: integer
+        required: false
+
+  B:
+    type: A
+    properties:
+      c:
+        type: string
+
+  C:
+    type: object
+    properties:
+      a:
+        type: string
+        minLength: 5
+      b:
+        type: string
+        maxLength: 5
+      c:
+        type: number
+        minimum: 10
+      d:
+        type: number
+        maximum: 10
+
+  D:
+    type: object
+    properties:
+      a:
+        type: A
+      c:
+         type: integer
+
+  E:
+    type: string
+
+  F:
+    type: array
+    items: integer
+
+  G1:
+    type: object
+    properties:
+      a:
+        type: string
+  G2:
+    type: object
+    properties:
+      a:
+        type: integer
+  G: G1 | G2
+
+  H:
+    type: object
+    properties:
+      a: string
+    additionalProperties: false

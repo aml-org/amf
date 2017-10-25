@@ -121,7 +121,14 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     if (found && first) {
       acc
     } else {
-      findModelByConditionInSeq(predicate, element.fields.fields().map(_.element).toSeq, first, acc)
+      val elements = element match {
+        case dynamicElement: DynamicDomainElement =>
+          val values = dynamicElement.dynamicFields.map(f => dynamicElement.valueForField(f)).filter(_.isDefined).map(_.get)
+          values.filter(v => v.isInstanceOf[DomainElement]).asInstanceOf[Seq[DomainElement]]
+        case _ =>
+          element.fields.fields().map(_.element).toSeq
+      }
+      findModelByConditionInSeq(predicate, elements, first, acc)
     }
   }
 

@@ -84,6 +84,8 @@ case class PropertyConstraint(ramlPropertyId: String,
                               pattern: Option[String] = None,
                               maxCount: Option[String] = None,
                               minCount: Option[String] = None,
+                              minLength: Option[String] = None,
+                              maxLength: Option[String] = None,
                               minExclusive: Option[String] = None,
                               maxExclusive: Option[String] = None,
                               minInclusive: Option[String] = None,
@@ -103,6 +105,8 @@ object PropertyConstraint extends DialectWrapper {
       pattern             = extractString(node, "pattern"),
       maxCount            = extractString(node, "maxCount"),
       minCount            = extractString(node, "minCount"),
+      maxLength           = extractString(node, "maxLength"),
+      minLength           = extractString(node, "minLength"),
       maxExclusive        = extractString(node, "maxExclusive"),
       minExclusive        = extractString(node, "minExclusive"),
       maxInclusive        = extractString(node, "maxInclusive"),
@@ -116,25 +120,28 @@ case class ValidationSpecification(name: String,
                                    message: String,
                                    ramlMessage: Option[String] = None,
                                    oasMessage: Option[String] = None,
+                                   targetInstance: Seq[String] = Seq.empty,
                                    targetClass: Seq[String] = Seq.empty,
                                    targetObject: Seq[String] = Seq.empty,
+                                   unionConstraints: Seq[String] = Seq.empty,
                                    propertyConstraints: Seq[PropertyConstraint] = Seq.empty,
                                    nodeConstraints: Seq[NodeConstraint] = Seq.empty,
+                                   closed: Option[Boolean] = None,
                                    functionConstraint: Option[FunctionConstraint] = None
                                   ) {
 
   def id(): String = {
-    if (name.startsWith("http://") || name.startsWith("https://")) {
+    if (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) {
       name
     } else {
       Namespace.expand(name).iri() match {
-        case s if s.startsWith("http://") || s.startsWith("https://") => s
+        case s if s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:") => s
         case s  => (Namespace.Data + s).iri()
       }
     }
   }
 
-  def isParserSide() = targetClass.head == ValidationSpecification.PARSER_SIDE_VALIDATION
+  def isParserSide() = targetClass.nonEmpty && targetClass.head == ValidationSpecification.PARSER_SIDE_VALIDATION
 }
 
 object ValidationSpecification extends DialectWrapper {

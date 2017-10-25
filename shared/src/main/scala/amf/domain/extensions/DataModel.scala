@@ -117,10 +117,9 @@ class ScalarNode(var value: String,
 
   override def defaultName: String = idCounter.genId("scalar")
 
-  // val Range: Field = Field(Iri, Namespace.Rdfs + "range")
   val Value: Field = Field(Str, Namespace.Data + "value")
 
-  override def dynamicFields: List[Field] = List(/*Range, */Value) ++ DataNodeModel.fields
+  override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
 
   override def dynamicType = List(ScalarNode.builderType)
 
@@ -128,13 +127,6 @@ class ScalarNode(var value: String,
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
-      /*
-    case Range =>
-      dataType match {
-        case Some(dt) => Some(AmfScalar(dt))
-        case None     => None
-      }
-      */
     case Value =>
       val annotations = dataType match {
         case Some(dt) => Annotations() += ScalarType(dt)

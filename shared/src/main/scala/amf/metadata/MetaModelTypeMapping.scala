@@ -6,7 +6,7 @@ import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension}
 import amf.domain.security._
-import amf.metadata.document.{DocumentModel, FragmentsTypesModels, ModuleModel}
+import amf.metadata.document.{DocumentModel, FragmentModel, FragmentsTypesModels, ModuleModel}
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
@@ -70,6 +70,7 @@ trait MetaModelTypeMapping {
     case _: Fragment.ExtensionFragment         => FragmentsTypesModels.ExtensionModel
     case _: Fragment.OverlayFragment           => FragmentsTypesModels.OverlayModel
     case _: Fragment.SecurityScheme            => FragmentsTypesModels.SecuritySchemeModel
+    case _: Fragment.Fragment                  => FragmentModel
     case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
   }
 

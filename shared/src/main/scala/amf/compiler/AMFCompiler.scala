@@ -145,9 +145,19 @@ class AMFCompiler private (val url: String,
           case Some(_: YMap) =>
             parseDoc(content, document, raw)
 
+          // Payloads scalar
+          case Some(_: YScalar) if hint == PayloadJsonHint || hint == PayloadYamlHint =>
+            Future(Root(document, content.url, Seq(), Payload, raw))
+
+          // Payloads array
+          case Some(_: YSequence) if hint == PayloadJsonHint || hint == PayloadYamlHint =>
+            Future(Root(document, content.url, Seq(), Payload, raw))
+
+          // Unknown text
           case Some(_: YScalar) =>
             Future(Root(document, content.url, Seq(), Unknown, raw))
 
+          // AMF JSON-LD with a single element in array
           case Some(nodes: YSequence) if hint == AmfJsonHint && nodes.nodes.length == 1 =>
             parseDoc(content, document, raw)
 

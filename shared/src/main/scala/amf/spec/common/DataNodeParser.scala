@@ -41,7 +41,7 @@ case class DataNodeParser(value: YNode,
     val node = DataArrayNode(Annotations(value))
     parent.foreach(node.adopted)
     value.nodes.foreach { ast =>
-      val element = DataNodeParser(ast, parameters).parse()
+      val element = DataNodeParser(ast, parameters, Some(node.id)).parse()
       node.addMember(element)
     }
     node

@@ -1,7 +1,9 @@
 package amf.compiler
 
+import amf.client.GenerationOptions
 import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
+import amf.dumper.AMFDumper
 import amf.exception.CyclicReferenceException
 import amf.parser.{YMapOps, YValueOps}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
@@ -95,6 +97,22 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
         assertUses(body.key("x-uses").get, references.map(_.baseUnit))
     }
   }
+
+  /*
+  test("HERE_HERE Parse payloads") {
+    val path = "file://shared/src/test/resources/payloads/a_valid.json"
+    AMFCompiler(path, platform, PayloadJsonHint)
+        .build() map { parsed: BaseUnit =>
+      assert(parsed != null)
+      parsed
+    } flatMap  { parsed =>
+      new AMFDumper(parsed, Payload, Json, GenerationOptions()).dumpToString map { actual =>
+        println(actual)
+        assert(actual != null)
+      }
+    }
+  }
+  */
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {
     case d: Document =>
