@@ -1,15 +1,6 @@
 package amf.resolution
 
-import amf.ProfileNames
-import amf.client.GenerationOptions
-import amf.compiler.AMFCompiler
-import amf.dumper.AMFDumper
-import amf.io.TmpTests
 import amf.remote._
-import org.scalatest.{Assertion, AsyncFunSuite}
-import amf.common.Tests.checkDiff
-
-import scala.concurrent.{ExecutionContext, Future}
 
 class SecurityResolutionTest extends ResolutionTest {
 

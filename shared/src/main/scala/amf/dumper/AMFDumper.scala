@@ -4,10 +4,9 @@ import amf.client.GenerationOptions
 import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.emit.AMFUnitMaker
-import amf.generator.{JsonGenerator, YamlGenerator}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
-import org.yaml.render.YamlRender
+import org.yaml.render.{JsonRender, YamlRender}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -29,13 +28,12 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
     vendor match {
       case Raml =>
         syntax match {
-//          case Yaml => new YamlGenerator().generate(ast).toString
           case Yaml => YamlRender.render(ast)
           case _    => unsupported
         }
       case Oas | Amf =>
         syntax match {
-          case Json => new JsonGenerator().generate(ast).toString
+          case Json => JsonRender.render(ast)
           case _    => unsupported
         }
       case Unknown => unsupported
