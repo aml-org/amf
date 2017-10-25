@@ -55,7 +55,7 @@ trait Platform {
     validation.loadValidationDialect().map { x => validation }
   }
 
-  def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file:/$str" }
+  def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 
   /** Test path resolution. */
   def resolvePath(path: String): String

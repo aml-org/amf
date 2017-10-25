@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file:/shared/src/test/resources/references/data-type-fragment.json",
+    "@id": "file://shared/src/test/resources/references/data-type-fragment.json",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,14 +9,14 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file:/shared/src/test/resources/references/data-type-fragment.json#/web-api",
+        "@id": "file://shared/src/test/resources/references/data-type-fragment.json#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file:/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map",
+            "@id": "file://shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -24,7 +24,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/data-type-fragment.json#/web-api"
+                    "@value": "file://shared/src/test/resources/references/data-type-fragment.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -38,7 +38,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/data-type-fragment.json#/web-api"
+                    "@value": "file://shared/src/test/resources/references/data-type-fragment.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -54,7 +54,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file:/shared/src/test/resources/references/data-type-fragment.json#/declarations/person",
+        "@id": "file://shared/src/test/resources/references/data-type-fragment.json#/declarations/person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -63,7 +63,7 @@
         ],
         "http://raml.org/vocabularies/document#link-target": [
           {
-            "@id": "file:/shared/src/test/resources/references/fragments/person.json/type"
+            "@id": "file://shared/src/test/resources/references/fragments/person.json/type"
           }
         ],
         "http://raml.org/vocabularies/document#link-label": [
@@ -78,7 +78,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file:/shared/src/test/resources/references/data-type-fragment.json#/declarations/person/source-map",
+            "@id": "file://shared/src/test/resources/references/data-type-fragment.json#/declarations/person/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -86,7 +86,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/data-type-fragment.json#/declarations/person"
+                    "@value": "file://shared/src/test/resources/references/data-type-fragment.json#/declarations/person"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -102,7 +102,7 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "file:/shared/src/test/resources/references/fragments/person.json",
+        "@id": "file://shared/src/test/resources/references/fragments/person.json",
         "@type": [
           "http://raml.org/vocabularies/document#DataType",
           "http://raml.org/vocabularies/document#Fragment",
@@ -110,7 +110,7 @@
         ],
         "http://raml.org/vocabularies/document#encodes": [
           {
-            "@id": "file:/shared/src/test/resources/references/fragments/person.json/type",
+            "@id": "file://shared/src/test/resources/references/fragments/person.json/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -124,7 +124,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name",
+                "@id": "file://shared/src/test/resources/references/fragments/person.json/type/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -137,7 +137,7 @@
                 ],
                 "http://raml.org/vocabularies/shapes#range": [
                   {
-                    "@id": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name",
+                    "@id": "file://shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name",
                     "@type": [
                       "http://www.w3.org/ns/shacl#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -156,7 +156,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name/source-map",
+                        "@id": "file://shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -176,7 +176,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name"
+                                "@value": "file://shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -202,7 +202,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name/source-map",
+                    "@id": "file://shared/src/test/resources/references/fragments/person.json/type/property/name/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -210,7 +210,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file:/shared/src/test/resources/references/fragments/person.json/type/property/name"
+                            "@value": "file://shared/src/test/resources/references/fragments/person.json/type/property/name"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -231,7 +231,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file:/shared/src/test/resources/references/fragments/person.json/type/source-map",
+                "@id": "file://shared/src/test/resources/references/fragments/person.json/type/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -251,7 +251,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file:/shared/src/test/resources/references/fragments/person.json/type"
+                        "@value": "file://shared/src/test/resources/references/fragments/person.json/type"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -267,7 +267,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file:/shared/src/test/resources/references/fragments/person.json/source-map",
+            "@id": "file://shared/src/test/resources/references/fragments/person.json/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -275,7 +275,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/fragments/person.json"
+                    "@value": "file://shared/src/test/resources/references/fragments/person.json"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

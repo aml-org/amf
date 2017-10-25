@@ -6,7 +6,7 @@ import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
-import amf.remote.{Raml, RamlYamlHint}
+import amf.remote.{Context, Raml, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -208,7 +208,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
           val result = report.results.head
           assert(result.level == "Info")
           assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")
-          assert(result.targetNode == "file:/shared/src/test/resources/validations/data/error1.raml#/web-api")
+          assert(result.targetNode == "file://shared/src/test/resources/validations/data/error1.raml#/web-api")
           assert(result.targetProperty.get == "http://raml.org/vocabularies/http#scheme")
           assert(result.message == "error wadus")
           assert(result.position.isDefined)

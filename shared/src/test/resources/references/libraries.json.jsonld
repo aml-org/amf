@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file:/shared/src/test/resources/references/libraries.json",
+    "@id": "file://shared/src/test/resources/references/libraries.json",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file:/shared/src/test/resources/references/libraries.json#/web-api",
+        "@id": "file://shared/src/test/resources/references/libraries.json#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -21,7 +21,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file:/shared/src/test/resources/references/libraries.json#/web-api/source-map",
+            "@id": "file://shared/src/test/resources/references/libraries.json#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -29,7 +29,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/libraries.json#/web-api"
+                    "@value": "file://shared/src/test/resources/references/libraries.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -55,7 +55,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/libraries.json#/web-api"
+                    "@value": "file://shared/src/test/resources/references/libraries.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -71,14 +71,14 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "file:/shared/src/test/resources/references/lib/lib.json",
+        "@id": "file://shared/src/test/resources/references/lib/lib.json",
         "@type": [
           "http://raml.org/vocabularies/document#Module",
           "http://raml.org/vocabularies/document#Unit"
         ],
         "http://raml.org/vocabularies/document#declares": [
           {
-            "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType",
+            "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -92,7 +92,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1",
+                "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -105,7 +105,7 @@
                 ],
                 "http://raml.org/vocabularies/shapes#range": [
                   {
-                    "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1",
+                    "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1",
                     "@type": [
                       "http://www.w3.org/ns/shacl#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -124,7 +124,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1/source-map",
+                        "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -144,7 +144,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1"
+                                "@value": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -170,7 +170,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/source-map",
+                    "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -178,7 +178,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1"
+                            "@value": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -192,7 +192,7 @@
                 ]
               },
               {
-                "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2",
+                "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -205,7 +205,7 @@
                 ],
                 "http://raml.org/vocabularies/shapes#range": [
                   {
-                    "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2",
+                    "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2",
                     "@type": [
                       "http://www.w3.org/ns/shacl#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -224,7 +224,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2/source-map",
+                        "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -244,7 +244,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2"
+                                "@value": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -270,7 +270,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/source-map",
+                    "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -278,7 +278,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2"
+                            "@value": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -299,7 +299,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/source-map",
+                "@id": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -319,7 +319,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file:/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType"
+                        "@value": "file://shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -340,7 +340,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file:/shared/src/test/resources/references/lib/lib.json/source-map",
+            "@id": "file://shared/src/test/resources/references/lib/lib.json/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -348,7 +348,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/lib/lib.json"
+                    "@value": "file://shared/src/test/resources/references/lib/lib.json"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -374,7 +374,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/lib/lib.json"
+                    "@value": "file://shared/src/test/resources/references/lib/lib.json"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -388,7 +388,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file:/shared/src/test/resources/references/lib/lib.json"
+                    "@value": "file://shared/src/test/resources/references/lib/lib.json"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

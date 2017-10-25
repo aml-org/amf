@@ -64,7 +64,16 @@ class JvmPlatform extends Platform {
   override def customValidationLibraryHelperLocation: String = "classpath:validations/amf_validation.js"
 
 
-  override def resolvePath(path: String): String = new URI(path).normalize.toString
+  override def resolvePath(path: String): String = {
+    val res = new URI(path).normalize.toString
+    if (res.startsWith("file://") || res.startsWith("file:///")) {
+      res
+    } else if (res.startsWith("file:/")) {
+      res.replace("file:/", "file:///")
+    } else {
+      res
+    }
+  }
 
   override val dialectsRegistry = JVMDialectRegistry(this)
   override val validator = new SHACLValidator
