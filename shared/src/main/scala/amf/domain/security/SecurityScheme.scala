@@ -18,6 +18,7 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   def queryParameters: Seq[Parameter] = fields(QueryParameters)
   def responses: Seq[Response]        = fields(Responses)
   def settings: Settings              = fields(SettingsField)
+  def queryParameter: Shape           = fields(QueryString)
 
   def withName(name: String): this.type                               = set(Name, name)
   def withType(`type`: String): this.type                             = set(Type, `type`)
@@ -27,6 +28,7 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   def withQueryParameters(queryParameters: Seq[Parameter]): this.type = setArray(QueryParameters, queryParameters)
   def withResponses(responses: Seq[Response]): this.type              = setArray(Responses, responses)
   def withSettings(settings: Settings): this.type                     = set(SettingsField, settings)
+  def withQueryString(queryString: Shape): this.type                  = set(QueryString, queryString)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
 
@@ -67,6 +69,12 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   }
 
   def withApiKeySettings(): ApiKeySettings = {
+    val settings = ApiKeySettings()
+    set(SettingsField, settings)
+    settings
+  }
+
+  def withObject(): ApiKeySettings = {
     val settings = ApiKeySettings()
     set(SettingsField, settings)
     settings

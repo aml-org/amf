@@ -51,7 +51,8 @@ object WellKnownAnnotation {
     "x-settings"            -> true,
     "x-securitySchemes"     -> true,
     "x-queryParameters"     -> true,
-    "x-headers"             -> true
+    "x-headers"             -> true,
+    "x-queryString"         -> true
   )
 
   def normalAnnotation(field: String): Boolean =

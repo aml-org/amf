@@ -20,5 +20,5 @@ object RequestModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Http + "Request" :: DomainElementModel.`type`
 
-  override def fields: List[Field] = List(QueryParameters, Headers, Payloads) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(QueryParameters, Headers, Payloads, QueryString) ++ DomainElementModel.fields
 }

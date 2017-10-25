@@ -6,13 +6,12 @@ import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.security._
 import amf.metadata.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
-import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
+import amf.remote.{Raml, Vendor}
 import amf.shape.Shape
 import amf.spec.common._
 import amf.spec.declaration._
@@ -258,120 +257,6 @@ abstract class RamlSpecParser() extends BaseSpecParser {
     )
   }
 
-  object SecuritySchemeParser {
-    def apply(entry: YMapEntry,
-              adopt: (SecurityScheme) => SecurityScheme,
-              declarations: Declarations): SecuritySchemeParser =
-      SecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
-  }
-
-  case class SecuritySchemeParser(ast: YPart,
-                                  key: String,
-                                  node: YNode,
-                                  adopt: (SecurityScheme) => SecurityScheme,
-                                  declarations: Declarations) {
-    def parse(): SecurityScheme = {
-      spec.link(node) match {
-        case Left(link) => parseReferenced(key, link, Annotations(node))
-        case Right(value) =>
-          val scheme = adopt(SecurityScheme(ast))
-
-          val map = value.value.toMap
-
-          map.key("type", entry => {
-            val value = ValueNode(entry.value)
-            scheme.set(SecuritySchemeModel.Type, value.string(), Annotations(entry))
-          })
-
-          map.key("displayName", entry => {
-            val value = ValueNode(entry.value)
-            scheme.set(SecuritySchemeModel.DisplayName, value.string(), Annotations(entry))
-          })
-
-          map.key("description", entry => {
-            val value = ValueNode(entry.value)
-            scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
-          })
-
-          map.key(
-            "describedBy",
-            entry => {
-              val value = entry.value.value.toMap
-
-              value.key(
-                "headers",
-                entry => {
-                  val parameters: Seq[Parameter] =
-                    RamlParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
-                      .parse()
-                      .map(_.withBinding("header"))
-                  scheme.set(SecuritySchemeModel.Headers,
-                             AmfArray(parameters, Annotations(entry.value)),
-                             Annotations(entry))
-                }
-              )
-
-              value.key(
-                "queryParameters",
-                entry => {
-                  val parameters: Seq[Parameter] =
-                    RamlParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
-                      .parse()
-                      .map(_.withBinding("query"))
-                  scheme.set(SecuritySchemeModel.QueryParameters,
-                             AmfArray(parameters, Annotations(entry.value)),
-                             Annotations(entry))
-                }
-              )
-
-              // TODO queryString.
-
-              value.key(
-                "responses",
-                entry => {
-                  entry.value.value.toMap.regex(
-                    "\\d{3}",
-                    entries => {
-                      val responses = mutable.ListBuffer[Response]()
-                      entries.foreach(entry => {
-                        responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
-                      })
-                      scheme.set(SecuritySchemeModel.Responses,
-                                 AmfArray(responses, Annotations(entry.value)),
-                                 Annotations(entry))
-                    }
-                  )
-                }
-              )
-            }
-          )
-
-          map.key(
-            "settings",
-            entry => {
-              val settings = RamlSecuritySettingsParser(entry.value.value.toMap, scheme.`type`, scheme).parse()
-
-              scheme.set(SecuritySchemeModel.Settings, settings, Annotations(entry))
-            }
-          )
-
-          AnnotationParser(() => scheme, map).parse()
-
-          scheme
-      }
-    }
-
-    def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
-      val declared = declarations.findSecurityScheme(parsedUrl)
-      declared
-        .map { ss =>
-          val copied: SecurityScheme = ss.link(parsedUrl, annotations)
-          copied.withName(name)
-        }
-        .getOrElse(throw new IllegalStateException(s"Could not find security scheme in references map to link $name"))
-    }
-  }
-
   def parseParameterDeclarations(key: String, map: YMap, parentPath: String, declarations: Declarations): Unit = {
     map.key(
       key,
@@ -598,4 +483,6 @@ object RamlSpecParserContext extends SpecParserContext {
   private def isInclude(node: YNode) = {
     node.tagType == YType.Unknown && node.tag.text == "!include"
   }
+
+  override val vendor: Vendor = Raml
 }

@@ -552,4 +552,49 @@ class CompleteCycleTest extends BuildCycleTests {
   test("QueryString raml to raml") {
     cycle("query-string.raml", "query-string.raml.raml", RamlYamlHint, Raml)
   }
+
+  test("QueryString oas to oas") {
+    cycle("query-string.json", "query-string.json", OasJsonHint, Oas)
+  }
+
+  test("QueryString oas to amf") {
+    cycle("query-string.json", "query-string.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("QueryString amf to oas") {
+    cycle("query-string.json.jsonld", "query-string.json", AmfJsonHint, Oas)
+  }
+
+  test("QueryString raml to amf") {
+    cycle("query-string.raml", "query-string.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("QueryString amf to raml") {
+    cycle("query-string.raml.jsonld", "query-string.raml.raml", AmfJsonHint, Raml)
+  }
+
+  test("Security with QueryString raml to raml") {
+    cycle("security-with-query-string.raml", "security-with-query-string.raml", RamlYamlHint, Raml)
+  }
+
+  test("Security with QueryString raml to amf") {
+    cycle("security-with-query-string.raml", "security-with-query-string.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Security with QueryString amf to raml") {
+    cycle("security-with-query-string.raml.jsonld", "security-with-query-string.raml", AmfJsonHint, Raml)
+  }
+
+  test("Security with QueryString oas to oas") {
+    cycle("security-with-query-string.json", "security-with-query-string.json", OasJsonHint, Oas)
+  }
+
+  test("Security with QueryString oas to amf") {
+    cycle("security-with-query-string.json", "security-with-query-string.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Security with QueryString amf to oas") {
+    cycle("security-with-query-string.json.jsonld", "security-with-query-string.json", AmfJsonHint, Oas)
+  }
+
 }

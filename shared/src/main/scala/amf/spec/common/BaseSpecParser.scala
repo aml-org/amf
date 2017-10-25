@@ -3,6 +3,7 @@ package amf.spec.common
 import amf.domain._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
+import amf.remote.Vendor
 import org.yaml.model._
 
 /**
@@ -16,6 +17,7 @@ private[spec] trait BaseSpecParser {
 
 trait SpecParserContext {
   def link(node: YNode): Either[String, YNode]
+  val vendor: Vendor
 }
 
 case class ArrayNode(ast: YSequence) {

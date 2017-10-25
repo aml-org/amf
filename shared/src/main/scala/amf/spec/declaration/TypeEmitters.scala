@@ -1,5 +1,6 @@
 package amf.spec.declaration
 
+import amf.document.BaseUnit
 import amf.domain.Annotation._
 import amf.domain.{CreativeWork, FieldEntry, Fields, Linkable}
 import amf.metadata.Field
@@ -7,7 +8,6 @@ import amf.metadata.shape._
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
-import amf.remote.{Oas, Raml}
 import amf.shape._
 import amf.spec._
 import amf.spec.common.BaseEmitters._
@@ -21,10 +21,39 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class TypePartEmitter(shape: Shape,
-                           ordering: SpecOrdering,
-                           annotations: Option[AnnotationsEmitter],
-                           ignored: Seq[Field] = Nil)(implicit spec: SpecEmitterContext)
+case class RamlNamedTypeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit] = Nil)(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
+    b.entry(name, if (shape.isLink) emitLink _ else emitInline _)
+  }
+
+  private def emitLink(b: PartBuilder): Unit = {
+    shape.linkTarget.foreach { l =>
+      spec.tagToReference(l, shape.linkLabel, references).emit(b)
+    }
+  }
+
+  private def emitInline(b: PartBuilder): Unit = RamlTypePartEmitter(shape, ordering, None).emit(b)
+
+  override def position(): Position = pos(shape.annotations)
+}
+
+case class OasNamedTypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
+    b.entry(name, OasTypePartEmitter(shape, ordering).emit(_))
+  }
+
+  override def position(): Position = pos(shape.annotations)
+}
+
+case class RamlTypePartEmitter(shape: Shape,
+                               ordering: SpecOrdering,
+                               annotations: Option[AnnotationsEmitter],
+                               ignored: Seq[Field] = Nil)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit =
@@ -35,13 +64,8 @@ case class TypePartEmitter(shape: Shape,
 
   override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)
 
-  private val emittersForSpec: Seq[Emitter] = spec.vendor match {
-    case Raml  => RamlTypeEmitter(shape, ordering, ignored).emitters()
-    case Oas   => OasTypeEmitter(shape, ordering, ignored).emitters()
-    case other => throw new IllegalArgumentException(s"Unsupported vendor $other for types generation")
-  }
-
-  private val emitters = ordering.sorted(emittersForSpec ++ annotations.map(_.emitters).getOrElse(Nil))
+  private val emitters =
+    ordering.sorted(RamlTypeEmitter(shape, ordering, ignored).emitters() ++ annotations.map(_.emitters).getOrElse(Nil))
 
   private val emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitters match {
     case Seq(p: PartEmitter)                           => Left(p)
@@ -413,7 +437,7 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering)(impl
     b.entry(
       "anyOf",
       _.list { b =>
-        val emitters = shape.anyOf.map(TypePartEmitter(_, ordering, None))
+        val emitters = shape.anyOf.map(RamlTypePartEmitter(_, ordering, None))
         ordering.sorted(emitters).foreach(_.emit(b))
       }
     )
@@ -526,7 +550,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       property.name,
-      TypePartEmitter(property.range, ordering, None).emit(_)
+      RamlTypePartEmitter(property.range, ordering, None).emit(_)
     )
   }
 
@@ -539,7 +563,7 @@ case class RamlSchemaEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spe
     val shape = f.value.value.asInstanceOf[Shape]
     b.entry(
       "type",
-      TypePartEmitter(shape, ordering, None).emit(_)
+      RamlTypePartEmitter(shape, ordering, None).emit(_)
     )
   }
 

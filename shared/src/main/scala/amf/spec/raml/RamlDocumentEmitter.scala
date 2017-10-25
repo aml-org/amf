@@ -284,7 +284,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
                 fields
                   .entry(RequestModel.QueryString)
-                  .map(f => result += NamedTypeEmitter(f.value.value.asInstanceOf[Shape], references, ordering))
+                  .map(f => result += RamlNamedTypeEmitter(f.value.value.asInstanceOf[Shape], ordering, references))
             }
 
             fs.entry(OperationModel.Responses)
@@ -429,7 +429,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       b.entry("types", _.obj { b =>
-        traverse(ordering.sorted(types.map(s => NamedTypeEmitter(s, references, ordering))), b)
+        traverse(ordering.sorted(types.map(s => RamlNamedTypeEmitter(s, ordering, references))), b)
       })
     }
 
@@ -446,23 +446,6 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     }
 
     override def position(): Position = parameters.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
-  }
-
-  case class NamedTypeEmitter(shape: Shape, references: Seq[BaseUnit], ordering: SpecOrdering) extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
-      b.entry(name, if (shape.isLink) emitLink _ else emitInline _)
-    }
-
-    private def emitLink(b: PartBuilder): Unit = {
-      shape.linkTarget.foreach { l =>
-        spec.tagToReference(l, shape.linkLabel, references).emit(b)
-      }
-    }
-
-    private def emitInline(b: PartBuilder): Unit = TypePartEmitter(shape, ordering, None).emit(b)
-
-    override def position(): Position = pos(shape.annotations)
   }
 
   case class NamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])

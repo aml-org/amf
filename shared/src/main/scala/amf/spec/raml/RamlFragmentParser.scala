@@ -14,7 +14,7 @@ import amf.parser.YValueOps
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.Declarations
-import amf.spec.declaration.{AbstractDeclarationParser, RamlCreativeWorkParser, RamlTypeParser, ReferencesParser}
+import amf.spec.declaration._
 import org.yaml.model.YMap
 
 /**
@@ -156,11 +156,11 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
       val security = SecurityScheme().adopted(root.location)
 
       security.withEncodes(
-        SecuritySchemeParser(map,
-                             "securityDefinitions",
-                             map,
-                             (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                             Declarations())
+        RamlSecuritySchemeParser(map,
+                                 "securityDefinitions",
+                                 map,
+                                 (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
+                                 Declarations())
           .parse())
     }
   }

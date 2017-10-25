@@ -6,8 +6,6 @@ import amf.parser.Range
 import amf.remote.Vendor
 import org.yaml.model.YPart
 
-import scala.collection.mutable
-
 /**
   * Annotation type
   */
@@ -52,11 +50,15 @@ object Annotation {
     override val value: String = vendor.name
   }
 
+  case class DeclaredElement() extends SerializableAnnotation {
+    override val name: String = "declared-element"
+
+    override val value: String = ""
+  }
+
   case class SourceAST(ast: YPart) extends Annotation
 
   case class InlineDefinition() extends Annotation
-
-  case class DeclaredElement() extends Annotation
 
   case class ExplicitField() extends Annotation
 
@@ -109,6 +111,8 @@ object Annotation {
       case "single-value-array" => Some(singleValueArray)
       case "aliases-array"      => Some(aliases)
       case "parsed-json-schema" => Some(parsedJsonSchema)
+      case "declared-element"   => Some(declaredElement)
+      case "type-exprssion"     => Some(typeExpression)
       case _                    => None // Unknown annotation
     }
 
@@ -137,5 +141,13 @@ object Annotation {
 
   private def parsedJsonSchema(value: String, objects: Map[String, AmfElement]) = {
     ParsedJSONSchema(value)
+  }
+
+  private def declaredElement(value: String, objects: Map[String, AmfElement]) = {
+    DeclaredElement()
+  }
+
+  private def typeExpression(value: String, objects: Map[String, AmfElement]) = {
+    ParsedFromTypeExpression(value)
   }
 }

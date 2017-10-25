@@ -11,7 +11,7 @@ import amf.model.AmfScalar
 import amf.parser.{YValueOps, _}
 import amf.shape.Shape
 import amf.spec.Declarations
-import amf.spec.declaration.{AbstractDeclarationParser, OasCreativeWorkParser, OasTypeParser, ReferencesParser}
+import amf.spec.declaration._
 import org.yaml.model.YMap
 
 /**
@@ -174,11 +174,11 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       val security = SecurityScheme().adopted(root.location)
 
       security.withEncodes(
-        SecuritySchemeParser(map,
-                             "securityDefinitions",
-                             map,
-                             (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                             Declarations())
+        OasSecuritySchemeParser(map,
+                                "securityDefinitions",
+                                map,
+                                (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
+                                Declarations())
           .parse())
     }
   }

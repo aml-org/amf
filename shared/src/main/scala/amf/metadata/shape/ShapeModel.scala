@@ -39,6 +39,7 @@ object ShapeModel extends ShapeModel {
                                                                          Default,
                                                                          Values,
                                                                          Documentation,
+                                                                         Inherits,
                                                                          XMLSerialization)
 
   override val `type`: List[ValueType] = List(Shacl + "Shape", Shapes + "Shape")

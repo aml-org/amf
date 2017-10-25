@@ -3,6 +3,7 @@ package amf.metadata.domain.security
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
 import amf.metadata.domain.{DomainElementModel, ParameterModel, ResponseModel}
+import amf.metadata.shape.ShapeModel
 import amf.vocabulary.Namespace.Security
 import amf.vocabulary.ValueType
 
@@ -23,8 +24,10 @@ object SecuritySchemeModel extends DomainElementModel {
 
   val Settings = Field(SettingsModel, Security + "settings")
 
+  val QueryString = Field(ShapeModel, Security + "queryString")
+
   override val `type`: List[ValueType] = Security + "SecurityScheme" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings) ++ DomainElementModel.fields
+    List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ DomainElementModel.fields
 }

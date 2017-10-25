@@ -4,7 +4,7 @@ import amf.domain.{FieldEntry, Payload}
 import amf.metadata.domain.PayloadModel
 import amf.parser.Position
 import amf.spec.common.BaseEmitters.ScalarEmitter
-import amf.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter, TypePartEmitter}
+import amf.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter, RamlTypePartEmitter}
 import amf.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.spec.common.BaseEmitters._
@@ -21,7 +21,7 @@ case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit
       .foreach(mediaType => {
         b.complexEntry(
           ScalarEmitter(mediaType.scalar).emit(_),
-          TypePartEmitter(payload.schema, ordering, Some(AnnotationsEmitter(payload, ordering))).emit(_)
+          RamlTypePartEmitter(payload.schema, ordering, Some(AnnotationsEmitter(payload, ordering))).emit(_)
         )
       })
   }

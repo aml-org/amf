@@ -245,7 +245,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
       request.fields
         .entry(RequestModel.QueryString)
-        .map(f => result += NamedTypeEmitter(f.value.value.asInstanceOf[Shape], ordering))
+        .map(f => result += RamlNamedTypeEmitter(f.value.value.asInstanceOf[Shape], ordering))
 
       result ++= AnnotationsEmitter(request, ordering).emitters
 
@@ -554,7 +554,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
 
   case class DeclaredTypesEmitters(types: Seq[Shape], ordering: SpecOrdering) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      b.entry("definitions", _.obj(traverse(ordering.sorted(types.map(NamedTypeEmitter(_, ordering))), _)))
+      b.entry("definitions", _.obj(traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering))), _)))
     }
 
     override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
@@ -569,15 +569,6 @@ class OasSpecEmitter extends BaseSpecEmitter {
     }
 
     override def position(): Position = parameters.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
-  }
-
-  case class NamedTypeEmitter(shape: Shape, ordering: SpecOrdering) extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val name = Option(shape.name).getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
-      b.entry(name, OasTypePartEmitter(shape, ordering).emit(_))
-    }
-
-    override def position(): Position = pos(shape.annotations)
   }
 
   case class NamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering) extends EntryEmitter {

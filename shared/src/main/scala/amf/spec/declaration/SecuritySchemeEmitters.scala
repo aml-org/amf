@@ -6,6 +6,7 @@ import amf.domain.extensions.DataNode
 import amf.domain.security._
 import amf.metadata.domain.security._
 import amf.parser.Position
+import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.domain.{RamlParametersEmitter, RamlResponsesEmitter}
@@ -344,9 +345,6 @@ case class OasSettingsTypeEmitter(settingsEntries: Seq[EntryEmitter], settings: 
   override def position(): Position = settingsEntries.headOption.map(_.position()).getOrElse(Position.ZERO)
 }
 
-//"describedBy" rmal
-//"x-describedBy" oas
-
 case class DescribedByEmitter(key: String,
                               securityScheme: SecurityScheme,
                               ordering: SpecOrdering,
@@ -362,6 +360,9 @@ case class DescribedByEmitter(key: String,
       .foreach(f => results += RamlParametersEmitter("queryParameters", f, ordering, references))
     fs.entry(SecuritySchemeModel.Responses)
       .foreach(f => results += RamlResponsesEmitter("responses", f, ordering, references))
+    fs.entry(SecuritySchemeModel.QueryString)
+      .foreach(f => results += RamlNamedTypeEmitter(f.value.value.asInstanceOf[Shape], ordering, references))
+
     results ++= AnnotationsEmitter(securityScheme, ordering).emitters
 
     if (results.nonEmpty)
