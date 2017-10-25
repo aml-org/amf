@@ -17,7 +17,7 @@ case class AbstractDeclarationsEmitter(key: String,
                                        references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(key, _.map { b =>
+    b.entry(key, _.obj { b =>
       traverse(ordering.sorted(declarations.map(d => AbstractDeclarationEmitter(d, ordering, references))), b)
     })
   }

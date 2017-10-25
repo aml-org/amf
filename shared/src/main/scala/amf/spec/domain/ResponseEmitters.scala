@@ -21,7 +21,7 @@ case class RamlResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       f.value.annotations,
-      b.entry(key, _.map { traverse(responses(f, ordering, references), _) })
+      b.entry(key, _.obj { traverse(responses(f, ordering, references), _) })
     )
   }
 
@@ -42,7 +42,7 @@ case class RamlResponseEmitter(response: Response, ordering: SpecOrdering, refer
       response.annotations,
       b.complexEntry(
         ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit(_),
-        _.map { b =>
+        _.obj { b =>
           val result = mutable.ListBuffer[EntryEmitter]()
 
           fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))

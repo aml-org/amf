@@ -28,14 +28,14 @@ case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], orde
 
     if (oasSecurityDefinitions.nonEmpty)
       b.entry("securityDefinitions",
-              _.map(
+              _.obj(
                 traverse(ordering.sorted(
                            oasSecurityDefinitions.map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq),
                          _)))
     if (extensionDefinitions.nonEmpty)
       b.entry(
         "x-securitySchemes",
-        _.map(
+        _.obj(
           traverse(
             ordering.sorted(extensionDefinitions.map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq),
             _)))
@@ -53,7 +53,7 @@ case class RamlSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme],
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "securitySchemes",
-      _.map(
+      _.obj(
         traverse(ordering.sorted(securitySchemes.map(s => RamlNamedSecuritySchemeEmitter(s, references, ordering))),
                  _)))
 
@@ -84,7 +84,7 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   }
 
   private def emitInline(b: PartBuilder): Unit =
-    b.map(traverse(ordering.sorted(OasSecuritySchemeEmitter(securityScheme, mapType, ordering).emitters()), _))
+    b.obj(traverse(ordering.sorted(OasSecuritySchemeEmitter(securityScheme, mapType, ordering).emitters()), _))
 
 }
 
@@ -108,7 +108,7 @@ case class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   }
 
   private def emitInline(b: PartBuilder): Unit =
-    b.map(traverse(ordering.sorted(RamlSecuritySchemeEmitter(securityScheme, references, ordering).emitters()), _))
+    b.obj(traverse(ordering.sorted(RamlSecuritySchemeEmitter(securityScheme, references, ordering).emitters()), _))
 
 }
 
@@ -160,7 +160,7 @@ case class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry("settings", _.map(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _)))
+    b.entry("settings", _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _)))
   }
   override def position(): Position = pos(f.value.annotations)
 }
@@ -325,7 +325,7 @@ case class RamlOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrde
 
 case class OasOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(key, _.map(traverse(ordering.sorted(OasScopeValuesEmitters(f).emitters()), _)))
+    b.entry(key, _.obj(traverse(ordering.sorted(OasScopeValuesEmitters(f).emitters()), _)))
   } // todo : name and description?
   override def position(): Position = pos(f.value.annotations)
 }
@@ -338,7 +338,7 @@ case class OasScopeValuesEmitters(f: FieldEntry) {
 case class OasSettingsTypeEmitter(settingsEntries: Seq[EntryEmitter], settings: Settings, ordering: SpecOrdering)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    sourceOr(settings.annotations, b.entry("x-settings", _.map(traverse(ordering.sorted(settingsEntries), _))))
+    sourceOr(settings.annotations, b.entry("x-settings", _.obj(traverse(ordering.sorted(settingsEntries), _))))
   }
 
   override def position(): Position = settingsEntries.headOption.map(_.position()).getOrElse(Position.ZERO)
@@ -365,7 +365,7 @@ case class DescribedByEmitter(key: String,
     results ++= AnnotationsEmitter(securityScheme, ordering).emitters
 
     if (results.nonEmpty)
-      b.entry(key, _.map(traverse(ordering.sorted(results), _)))
+      b.entry(key, _.obj(traverse(ordering.sorted(results), _)))
 
   }
 

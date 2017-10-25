@@ -30,7 +30,7 @@ case class TypePartEmitter(shape: Shape,
   override def emit(b: PartBuilder): Unit =
     emitter match {
       case Left(p)        => p.emit(b)
-      case Right(entries) => b.map(traverse(entries, _))
+      case Right(entries) => b.obj(traverse(entries, _))
     }
 
   override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)
@@ -181,9 +181,7 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
 
           result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
 
-          b.map { b =>
-            traverse(ordering.sorted(result), b)
-          }
+          b.obj(traverse(ordering.sorted(result), _))
         }
       )
     )
@@ -248,7 +246,7 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering)(impli
       "type",
       b => {
         if (inlineShapes.nonEmpty) {
-          b.map(traverse(ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering).entries())), _))
+          b.obj(traverse(ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering).entries())), _))
         } else {
           b.list { b =>
             declaredShapes.foreach {
@@ -357,7 +355,7 @@ case class RamlShapeDependenciesEmitter(f: FieldEntry, ordering: SpecOrdering, p
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "(dependencies)",
-      _.map { b =>
+      _.obj { b =>
         val result =
           f.array.values.map(v =>
             RamlPropertyDependenciesEmitter(v.asInstanceOf[PropertyDependencies], ordering, props))
@@ -475,7 +473,7 @@ case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering)(impl
     b.entry(
       "items",
       //todo garrote review ordering
-      _.map(b => RamlTypeEmitter(array.items, ordering).entries().foreach(_.emit(b)))
+      _.obj(b => RamlTypeEmitter(array.items, ordering).entries().foreach(_.emit(b)))
     )
   }
 
@@ -512,7 +510,7 @@ case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "properties",
-      _.map { b =>
+      _.obj { b =>
         val result = f.array.values.map(v => RamlPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering))
         traverse(ordering.sorted(result), b)
       }
@@ -569,7 +567,7 @@ case class OasTypePartEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq
   override def emit(b: PartBuilder): Unit =
     emitter match {
       case Left(p)        => p.emit(b)
-      case Right(entries) => b.map(traverse(entries, _))
+      case Right(entries) => b.obj(traverse(entries, _))
     }
 
   override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)
@@ -783,7 +781,7 @@ case class OasShapeDependenciesEmitter(f: FieldEntry,
 
     b.entry(
       "dependencies",
-      _.map { b =>
+      _.obj { b =>
         val result = f.array.values.map(v =>
           OasPropertyDependenciesEmitter(v.asInstanceOf[PropertyDependencies], ordering, propertiesMap))
         traverse(ordering.sorted(result), b)
@@ -902,7 +900,7 @@ case class OasPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
 
     b.entry(
       "properties",
-      _.map { b =>
+      _.obj { b =>
         val result = f.array.values.map(v => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering))
         traverse(ordering.sorted(result), b)
       }

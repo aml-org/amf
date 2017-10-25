@@ -37,7 +37,7 @@ case class RamlPayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrderin
         payloads(f, ordering) match {
           case Seq(p: PartEmitter) => b.entry(key, b => p.emit(b))
           case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
-            b.entry(key, _.map(traverse(es.collect { case e: EntryEmitter => e }, _)))
+            b.entry(key, _.obj(traverse(es.collect { case e: EntryEmitter => e }, _)))
           case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
         }
       }

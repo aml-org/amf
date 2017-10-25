@@ -1,6 +1,5 @@
 package amf.validation.emitters
 
-import amf.generator.JsonGenerator
 import amf.parser.Position
 import amf.spec.PartEmitter
 import amf.spec.common.BaseEmitters._
@@ -8,6 +7,7 @@ import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationS
 import amf.vocabulary.Namespace
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YType}
+import org.yaml.render.JsonRender
 
 import scala.collection.mutable.ListBuffer
 
@@ -26,7 +26,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     * @return JSON-LD graph with the validations
     */
   def emitJSON(validations: Seq[ValidationSpecification]): String =
-    new JsonGenerator().generate(emitJSONLDAST(validations)).toString
+    JsonRender.render(emitJSONLDAST(validations))
 
   private def emitJSONLDAST(validations: Seq[ValidationSpecification]): YDocument = {
     YDocument {
@@ -41,7 +41,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
   private def emitValidation(b: PartBuilder, validation: ValidationSpecification): Unit = {
     val validationId = validation.id()
 
-    b.map { b =>
+    b.obj { b =>
       b.entry("@id", validationId)
       b.entry("@type", (Namespace.Shacl + "NodeShape").iri())
 
@@ -107,7 +107,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
   }
 
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
-    b.map { b =>
+    b.obj { b =>
       b.entry("@id", constraintId)
       b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
 
@@ -124,14 +124,17 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         if (constraint.`class`.length == 1) {
           b.entry((Namespace.Shacl + "class").iri(), link(_, constraint.`class`.head))
         } else {
-          b.entry((Namespace.Shacl + "or").iri(), _.obj {
-            _.entry("@list",
-              _.list(l => constraint.`class`.foreach { v =>
-                l.obj {
-                  _.entry((Namespace.Shacl + "class").iri(), link(_, v))
-                }
-              })
-            )}
+          b.entry(
+            (Namespace.Shacl + "or").iri(),
+            _.obj {
+              _.entry("@list",
+                      _.list(l =>
+                        constraint.`class`.foreach { v =>
+                          l.obj {
+                            _.entry((Namespace.Shacl + "class").iri(), link(_, v))
+                          }
+                      }))
+            }
           )
         }
       }
@@ -158,23 +161,23 @@ class ValidationJSONLDEmitter(targetProfile: String) {
 
     jsConstraintEmitters += new PartEmitter {
       override def emit(b: PartBuilder): Unit = {
-        b.map { b =>
+        b.obj { b =>
           b.entry("@id", constraintId)
           b.entry("@type", (Namespace.Shacl + "ConstraintComponent").iri())
           b.entry(
             (Namespace.Shacl + "parameter").iri(),
-            _.map { b =>
+            _.obj { b =>
               b.entry(
                 (Namespace.Shacl + "path").iri(),
-                _.map(_.entry("@id", validatorPath))
+                _.obj(_.entry("@id", validatorPath))
               )
               b.entry(
                 (Namespace.Shacl + "datatype").iri(),
-                _.map(_.entry("@id", (Namespace.Xsd + "boolean").iri()))
+                _.obj(_.entry("@id", (Namespace.Xsd + "boolean").iri()))
               )
             }
           )
-          b.entry((Namespace.Shacl + "validator").iri(), _.map(_.entry("@id", validatorId)))
+          b.entry((Namespace.Shacl + "validator").iri(), _.obj(_.entry("@id", validatorId)))
         }
       }
       override def position(): Position = Position.ZERO
@@ -187,7 +190,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       override def emit(b: PartBuilder): Unit = {
         f.functionName match {
           case Some(fnName) =>
-            b.map { b =>
+            b.obj { b =>
               b.entry("@id", validatorId)
               b.entry("@type", (Namespace.Shacl + "JSValidator").iri())
               f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
@@ -195,10 +198,10 @@ class ValidationJSONLDEmitter(targetProfile: String) {
                 (Namespace.Shacl + "jsLibrary").iri(),
                 _.list { b =>
                   for { library <- f.libraries } {
-                    b.map {
+                    b.obj {
                       _.entry(
                         (Namespace.Shacl + "jsLibraryURL").iri(),
-                        _.map(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
+                        _.obj(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
                       )
                     }
                   }
@@ -210,16 +213,16 @@ class ValidationJSONLDEmitter(targetProfile: String) {
           case None =>
             f.code match {
               case Some(_) =>
-                b.map { b =>
+                b.obj { b =>
                   b.entry("@id", validatorId)
                   b.entry("@type", (Namespace.Shacl + "JSValidator").iri())
                   f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
                   b.entry(
                     (Namespace.Shacl + "jsLibrary").iri(),
-                    _.map {
+                    _.obj {
                       _.entry(
                         (Namespace.Shacl + "jsLibraryURL").iri(),
-                        _.map(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
+                        _.obj(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
                       )
                     }
                   )
@@ -244,17 +247,17 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     }
 
   private def genNonEmptyList(b: PartBuilder): Unit = {
-    b.map { b =>
+    b.obj { b =>
       b.entry("@type", raw(_, (Namespace.Shacl + "NodeShape").iri()))
       b.entry((Namespace.Shacl + "message").iri(), raw(_, "List cannot be empty"))
       b.entry(
         (Namespace.Shacl + "property").iri(),
         _.list {
-          _.map { b =>
+          _.obj { b =>
             b.entry((Namespace.Shacl + "path").iri(), link(_, (Namespace.Rdf + "first").iri()))
             b.entry(
               (Namespace.Shacl + "minCount").iri(),
-              _.map {
+              _.obj {
                 _.entry("@value", raw(_, "1", YType.Int))
               }
             )
@@ -266,15 +269,15 @@ class ValidationJSONLDEmitter(targetProfile: String) {
 
   private def genValue(b: PartBuilder, s: String): Unit = {
     if (s.matches("[\\d]+")) {
-      b.map(_.entry("@value", raw(_, s, YType.Int)))
+      b.obj(_.entry("@value", raw(_, s, YType.Int)))
     } else if (s == "true" || s == "false") {
-      b.map(_.entry("@value", raw(_, s, YType.Bool)))
+      b.obj(_.entry("@value", raw(_, s, YType.Bool)))
     } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
       genNonEmptyList(b)
     } else if (s.startsWith("http://") || s.startsWith("https://")) {
       link(b, s)
     } else {
-      b.map(_.entry("@value", s))
+      b.obj(_.entry("@value", s))
     }
   }
 }

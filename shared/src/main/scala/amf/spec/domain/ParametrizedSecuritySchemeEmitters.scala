@@ -45,13 +45,13 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
         f.element match {
           case settings: OAuth2Settings =>
             val scopes = settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name, s.annotations)))
-            b.map {
+            b.obj {
               _.entry(parametrizedScheme.name, _.list(traverse(ordering.sorted(scopes), _)))
             }
         }
 
       case None =>
-        b.map(_.entry(parametrizedScheme.name, _.list(_ => {})))
+        b.obj(_.entry(parametrizedScheme.name, _.list(_ => {})))
     }
   }
 
@@ -67,9 +67,9 @@ case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrize
 
     fs.entry(ParametrizedSecuritySchemeModel.Settings) match {
       case Some(f) =>
-        b.map(
+        b.obj(
           _.entry(parametrizedScheme.name,
-                  _.map(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))))
+                  _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))))
       case None =>
         b.scalar(parametrizedScheme.name)
     }

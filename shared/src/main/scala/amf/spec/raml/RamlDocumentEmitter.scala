@@ -48,7 +48,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
     YDocument(b => {
       b.comment(RamlHeader.Raml10.text)
-      b.map { b =>
+      b.obj { b =>
         traverse(ordering.sorted(api ++ declares :+ references), b)
       }
     })
@@ -196,7 +196,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
             endpoint.parent.fold(ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(b))(_ =>
               ScalarEmitter(AmfScalar(endpoint.relativePath)).emit(b))
           },
-          _.map { b =>
+          _.obj { b =>
             val result = mutable.ListBuffer[EntryEmitter]()
 
             fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName", f))
@@ -241,7 +241,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
         operation.annotations,
         b.complexEntry(
           ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
-          _.map { b =>
+          _.obj { b =>
             val result = mutable.ListBuffer[EntryEmitter]()
 
             fs.entry(OperationModel.Name).map(f => result += ValueEmitter("displayName", f))
@@ -308,7 +308,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
         f.value,
         b.entry(
           key,
-          _.map { b =>
+          _.obj { b =>
             val fs     = f.obj.fields
             val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -332,7 +332,7 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
         f.value,
         b.entry(
           key,
-          _.map { b =>
+          _.obj { b =>
             val fs     = f.obj.fields
             val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -359,7 +359,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val modules = references.collect({ case m: Module => m })
       if (modules.nonEmpty) {
-        b.entry("uses", _.map { b =>
+        b.entry("uses", _.obj { b =>
           idCounter.reset()
           traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))), b)
         })
@@ -428,7 +428,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
   case class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      b.entry("types", _.map { b =>
+      b.entry("types", _.obj { b =>
         traverse(ordering.sorted(types.map(s => NamedTypeEmitter(s, references, ordering))), b)
       })
     }
@@ -441,7 +441,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     override def emit(b: EntryBuilder): Unit = {
       b.entry(
         "(parameters)",
-        _.map(traverse(ordering.sorted(parameters.map(NamedParameterEmitter(_, ordering, references))), _))
+        _.obj(traverse(ordering.sorted(parameters.map(NamedParameterEmitter(_, ordering, references))), _))
       )
     }
 
@@ -480,7 +480,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
                                      ordering: SpecOrdering)
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      b.entry("annotationTypes", _.map { b =>
+      b.entry("annotationTypes", _.obj { b =>
         traverse(ordering.sorted(properties.map(p => NamedPropertyTypeEmitter(p, references, ordering))), b)
       })
     }
@@ -504,7 +504,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     }
 
     private def emitInline(b: PartBuilder): Unit = {
-      b.map { b =>
+      b.obj { b =>
         traverse(ordering.sorted(AnnotationTypeEmitter(annotation, ordering).emitters()), b)
       }
     }

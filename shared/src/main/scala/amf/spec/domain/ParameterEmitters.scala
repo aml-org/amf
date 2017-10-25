@@ -26,7 +26,7 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
       f.value.annotations,
       b.entry(
         key,
-        _.map(traverse(parameters(f, ordering, references), _))
+        _.obj(traverse(parameters(f, ordering, references), _))
       )
     )
   }
@@ -68,7 +68,7 @@ case class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, re
 
     b.complexEntry(
       emitParameterKey(fs, _),
-      _.map { b =>
+      _.obj { b =>
         val result = mutable.ListBuffer[EntryEmitter]()
 
         fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))

@@ -57,10 +57,10 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     if (declaration.variables.nonEmpty) {
-      b.map {
+      b.obj {
         _.entry(
           declaration.name,
-          _.map { b =>
+          _.obj { b =>
             val result = declaration.variables.map(variable =>
               MapEntryEmitter(variable.name, variable.value, position = pos(variable.annotations)))
 

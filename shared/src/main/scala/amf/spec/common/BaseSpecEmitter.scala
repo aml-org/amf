@@ -111,7 +111,7 @@ package object BaseEmitters {
       }
   }
 
-  protected[amf] def link(b: PartBuilder, id: String): Unit = b.map(_.entry("@id", id.trim))
+  protected[amf] def link(b: PartBuilder, id: String): Unit = b.obj(_.entry("@id", id.trim))
 
   case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, force: Boolean = false)
       extends EntryEmitter {

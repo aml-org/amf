@@ -7,7 +7,6 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.LexicalInformation
 import amf.domain.DomainElement
 import amf.domain.dialects.DomainEntity
-import amf.generator.JsonGenerator
 import amf.graph.GraphEmitter
 import amf.model.AmfArray
 import amf.remote.{Platform, RamlYamlHint}
@@ -16,6 +15,7 @@ import amf.validation.core.{ValidationDialectText, ValidationResult}
 import amf.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.validation.model._
 import amf.vocabulary.Namespace
+import org.yaml.render.JsonRender
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -264,7 +264,7 @@ class Validation(platform: Platform) {
                profileName: String,
                messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
     val graphAST    = GraphEmitter.emit(model, GenerationOptions())
-    val modelJSON   = new JsonGenerator().generate(graphAST).toString
+    val modelJSON   = JsonRender.render(graphAST)
     val validations = computeValidations(profileName)
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))

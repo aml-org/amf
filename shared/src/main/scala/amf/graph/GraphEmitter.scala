@@ -28,7 +28,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     def root(unit: BaseUnit): YDocument = {
       YDocument {
         _.list {
-          _.map {
+          _.obj {
             traverse(unit, unit.location, _)
           }
         }
@@ -103,7 +103,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                   customProperties += propertyUri
                   b.entry(
                     propertyUri,
-                    _.map {
+                    _.obj {
                       traverse(extension.extension, parent, _)
                     }
                   )
@@ -142,7 +142,7 @@ object GraphEmitter extends MetaModelTypeMapping {
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
         case a: SortedArray =>
-          b.map {
+          b.obj {
             _.entry(
               "@list",
               _.list { b =>
@@ -179,19 +179,19 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def obj(b: PartBuilder, element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder) = b.map(traverse(element, parent, _))
+      def emit(b: PartBuilder) = b.obj(traverse(element, parent, _))
 
       if (inArray) emit(b) else b.list(emit)
     }
 
     private def iri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = b.map(_.entry("@id", raw(_, content)))
+      def emit(b: PartBuilder): Unit = b.obj(_.entry("@id", raw(_, content)))
 
       if (inArray) emit(b) else b.list(emit)
     }
 
     private def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = b.map(_.entry("@value", raw(_, content, tag)))
+      def emit(b: PartBuilder): Unit = b.obj(_.entry("@value", raw(_, content, tag)))
 
       if (inArray) emit(b) else b.list(emit)
     }
@@ -207,7 +207,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         _.list { b =>
           val allTypes = obj.`type`.map(_.iri()) ++ (maybeElement match {
             case Some(element) => element.dynamicTypes()
-            case _ => List()
+            case _             => List()
           })
           allTypes.distinct.foreach(t => raw(b, t))
         }
@@ -231,7 +231,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         b.entry(
           Sources.value.iri(),
           _.list {
-            _.map { b =>
+            _.obj { b =>
               createIdNode(b, id)
               createTypeNode(b, SourceMapModel)
               createAnnotationNodes(b, sources)
@@ -253,7 +253,7 @@ object GraphEmitter extends MetaModelTypeMapping {
 
     private def createAnnotationValueNode(b: PartBuilder, tuple: (String, String)): Unit = tuple match {
       case (iri, v) =>
-        b.map { b =>
+        b.obj { b =>
           b.entry(SourceMapModel.Element.value.iri(), scalar(_, iri))
           b.entry(SourceMapModel.Value.value.iri(), scalar(_, v))
         }

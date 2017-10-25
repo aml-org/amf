@@ -83,9 +83,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
   }
 
   def emitObject(objectNode: DataObjectNode, b: PartBuilder): Unit = {
-    b.map(b => {
-      ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b))
-    })
+    b.obj(b => ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b)))
   }
 
   def arrayEmitters(arrayNode: DataArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering))

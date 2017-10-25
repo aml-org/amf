@@ -160,7 +160,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
       if (values.values.nonEmpty) {
         b.entry(
           mapping.name,
-          _.map { b =>
+          _.obj { b =>
             values.values.foreach {
               case entity: DomainEntity =>
                 b.complexEntry(
@@ -213,7 +213,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
             case Some(ref) => raw(b, ref.name)
             case _ =>
               comment.foreach(b.comment)
-              b.map { b =>
+              b.obj { b =>
                 emitUsesMap(b)
                 emitObject(b)
               }
@@ -235,7 +235,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
       obj.annotations.find(classOf[NamespaceImportsDeclaration]) foreach { ref =>
         b.entry(
           "uses",
-          _.map { b =>
+          _.obj { b =>
             ref.uses.foreach(MapEntryEmitter(_).emit(b))
           }
         )

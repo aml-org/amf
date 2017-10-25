@@ -59,7 +59,7 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
 }
 
 case class OasRefEmitter(url: String, position: Position = Position.ZERO) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = b.map(MapEntryEmitter("$ref", url).emit(_))
+  override def emit(b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
 
 }
 

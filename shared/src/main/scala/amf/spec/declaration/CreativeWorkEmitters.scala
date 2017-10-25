@@ -37,7 +37,7 @@ case class RamlCreativeWorkEmitter(documentation: CreativeWork, ordering: SpecOr
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       documentation.annotations,
-      b.map(traverse(RamlCreativeWorkItemsEmitter(documentation, ordering, withExtension).emitters(), _))
+      b.obj(traverse(RamlCreativeWorkItemsEmitter(documentation, ordering, withExtension).emitters(), _))
     )
   }
 
@@ -68,7 +68,7 @@ case class OasCreativeWorkEmitter(document: CreativeWork, ordering: SpecOrdering
     if (document.isLink)
       raw(b, document.linkLabel.getOrElse(document.linkTarget.get.id))
     else
-      b.map(traverse(OasCreativeWorkItemsEmitter(document, ordering).emitters(), _))
+      b.obj(traverse(OasCreativeWorkItemsEmitter(document, ordering).emitters(), _))
   }
 
   override def position(): Position = pos(document.annotations)

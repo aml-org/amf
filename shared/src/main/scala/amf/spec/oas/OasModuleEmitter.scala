@@ -30,8 +30,8 @@ case class OasModuleEmitter(module: Module) extends OasSpecEmitter {
     val usages     = module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
 
     YDocument {
-      _.map { b =>
-        b.entry("swagger", "2.0")
+      _.obj { b =>
+        b.swagger = "2.0"
         traverse(ordering.sorted(declares ++ usages ++ references), b)
       }
     }
@@ -61,7 +61,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
 
     YDocument {
-      _.map { b =>
+      _.obj { b =>
         traverse(Seq(typeEmitter.header)
                    ++ typeEmitter.emitters ++ usage :+ references,
                  b)

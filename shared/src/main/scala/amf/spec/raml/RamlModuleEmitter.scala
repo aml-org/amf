@@ -34,7 +34,7 @@ case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
 
     YDocument(b => {
       b.comment(RamlHeader.Raml10Library.text)
-      b.map(traverse(ordering.sorted(declares ++ usage ++ references), _))
+      b.obj(traverse(ordering.sorted(declares ++ usage ++ references), _))
     })
   }
 }
@@ -63,7 +63,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     YDocument(b => {
       b.comment(typeEmitter.header.text)
-      b.map(traverse(ordering.sorted(typeEmitter.emitters(fragment.references) ++ usage ++ references), _))
+      b.obj(traverse(ordering.sorted(typeEmitter.emitters(fragment.references) ++ usage ++ references), _))
     })
   }
 
