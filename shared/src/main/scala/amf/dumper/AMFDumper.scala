@@ -31,7 +31,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
           case Yaml => YamlRender.render(ast)
           case _    => unsupported
         }
-      case Oas | Amf =>
+      case Oas | Amf | Payload =>
         syntax match {
           case Json => JsonRender.render(ast)
           case _    => unsupported

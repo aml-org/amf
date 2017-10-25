@@ -2,6 +2,7 @@ package amf.graph
 
 import amf.client.GenerationOptions
 import amf.document.BaseUnit
+import amf.domain.Annotation.ScalarType
 import amf.domain._
 import amf.domain.extensions._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
@@ -133,7 +134,10 @@ object GraphEmitter extends MetaModelTypeMapping {
           iri(b, v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Str | RegExp =>
-          scalar(b, v.value.asInstanceOf[AmfScalar].toString)
+          v.annotations.find(classOf[ScalarType]) match {
+            case Some(annotation) => typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
+            case None             => scalar(b, v.value.asInstanceOf[AmfScalar].toString)
+          }
           sources(v)
         case Bool =>
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
@@ -162,7 +166,13 @@ object GraphEmitter extends MetaModelTypeMapping {
             sources(v)
             a.element match {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(obj(b, _, parent, inArray = true))
-              case Str    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(b, e.toString, inArray = true))
+              case Str    =>
+                seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
+                  e.annotations.find(classOf[ScalarType]) match {
+                    case Some(annotation) => typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray =  true)
+                    case None             => scalar(b, e.toString, inArray = true)
+                  }
+                }
               case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
               case Type.Int =>
                 seq.values
@@ -192,6 +202,15 @@ object GraphEmitter extends MetaModelTypeMapping {
 
     private def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder): Unit = b.obj(_.entry("@value", raw(_, content, tag)))
+
+      if (inArray) emit(b) else b.list(emit)
+    }
+
+    private def typedScalar(b: PartBuilder, content: String, dataType: String, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder): Unit = b.map{ m =>
+        m.entry("@value", raw(_, content, YType.Str))
+        m.entry("@type", raw(_, dataType, YType.Str))
+      }
 
       if (inArray) emit(b) else b.list(emit)
     }

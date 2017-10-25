@@ -99,20 +99,16 @@
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
-                "custom": [
+                "http://raml.org/vocabularies/data#custom": [
                   {
                     "@id": "file://shared/src/test/resources/upanddown/security.json#/declarations/custom_auth/settings/default/object_1/scalar_2",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
-                    "http://www.w3.org/2000/01/rdf-schema#range": [
-                      {
-                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
                     "http://raml.org/vocabularies/data#value": [
                       {
-                        "@value": "Setting"
+                        "@value": "Setting",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [

@@ -24,14 +24,10 @@
           "@type": [
             "http://raml.org/vocabularies/data#Scalar"
           ],
-          "http://www.w3.org/2000/01/rdf-schema#range": [
-            {
-              "@id": "http://www.w3.org/2001/XMLSchema#string"
-            }
-          ],
           "http://raml.org/vocabularies/data#value": [
             {
-              "@value": "hello"
+              "@value": "hello",
+              "@type": "http://www.w3.org/2001/XMLSchema#string"
             }
           ],
           "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -62,7 +58,7 @@
           "@type": [
             "http://raml.org/vocabularies/data#Object"
           ],
-          "b": [
+          "http://raml.org/vocabularies/data#b": [
             {
               "@id": "file://shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_2/array_4",
               "@type": [
@@ -75,14 +71,10 @@
                   "@type": [
                     "http://raml.org/vocabularies/data#Scalar"
                   ],
-                  "http://www.w3.org/2000/01/rdf-schema#range": [
-                    {
-                      "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                    }
-                  ],
                   "http://raml.org/vocabularies/data#value": [
                     {
-                      "@value": "1"
+                      "@value": "1",
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer"
                     }
                   ],
                   "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -113,14 +105,10 @@
                   "@type": [
                     "http://raml.org/vocabularies/data#Scalar"
                   ],
-                  "http://www.w3.org/2000/01/rdf-schema#range": [
-                    {
-                      "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                    }
-                  ],
                   "http://raml.org/vocabularies/data#value": [
                     {
-                      "@value": "2"
+                      "@value": "2",
+                      "@type": "http://www.w3.org/2001/XMLSchema#integer"
                     }
                   ],
                   "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -171,20 +159,16 @@
               ]
             }
           ],
-          "a": [
+          "http://raml.org/vocabularies/data#a": [
             {
               "@id": "file://shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_2/scalar_3",
               "@type": [
                 "http://raml.org/vocabularies/data#Scalar"
               ],
-              "http://www.w3.org/2000/01/rdf-schema#range": [
-                {
-                  "@id": "http://www.w3.org/2001/XMLSchema#string"
-                }
-              ],
               "http://raml.org/vocabularies/data#value": [
                 {
-                  "@value": "is"
+                  "@value": "is",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
                 }
               ],
               "http://raml.org/vocabularies/document-source-maps#sources": [

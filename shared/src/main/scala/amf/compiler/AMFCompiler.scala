@@ -11,6 +11,7 @@ import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
+import amf.spec.pyaload.PayloadParser
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
 import amf.validation.Validation
 import org.yaml.model._
@@ -70,6 +71,7 @@ class AMFCompiler private (val url: String,
       case Root(_, _, _, Amf, _)     => makeAmfUnit(root)
       case Root(_, _, _, Raml, _)    => makeRamlUnit(root)
       case Root(_, _, _, Oas, _)     => makeOasUnit(root)
+      case Root(_, _, _, Payload, _) => makePayloadUnit(root)
       case Root(_, _, _, Unknown, _) => makeExternalUnit(root)
     }
   }
@@ -116,6 +118,8 @@ class AMFCompiler private (val url: String,
   private def makeDialect(root: Root, header: RamlHeader): BaseUnit = DialectParser(root, header, dialects).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
+
+  private def makePayloadUnit(root: Root): BaseUnit  = PayloadParser(root.document, root.location).parseUnit()
 
   // TODO take this away when dialects don't use 'extends' keyword.
   def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
