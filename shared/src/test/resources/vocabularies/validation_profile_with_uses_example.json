@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml",
+    "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#",
+        "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#",
         "@type": [
           "http://raml.org/vocabularies/amf-validation#Profile"
         ],
@@ -64,7 +64,7 @@
         ],
         "http://raml.org/vocabularies/amf-validation#validations": [
           {
-            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#case-insensitive-schema",
+            "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#case-insensitive-schema",
             "@type": [
               "http://raml.org/vocabularies/amf-validation#ShapeValidation"
             ],
@@ -85,7 +85,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#case-insensitive-schema/http.host",
+                "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#case-insensitive-schema/http.host",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape"
                 ],
@@ -103,7 +103,7 @@
             ]
           },
           {
-            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#camel-case-types",
+            "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#camel-case-types",
             "@type": [
               "http://raml.org/vocabularies/amf-validation#ShapeValidation"
             ],
@@ -124,7 +124,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#camel-case-types/schema-org.name",
+                "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#camel-case-types/schema-org.name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape"
                 ],
@@ -142,7 +142,7 @@
             ]
           },
           {
-            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#all-names-must-be-camel-case",
+            "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#all-names-must-be-camel-case",
             "@type": [
               "http://raml.org/vocabularies/amf-validation#ShapeValidation"
             ],
@@ -163,7 +163,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#all-names-must-be-camel-case/schema-org.name",
+                "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#all-names-must-be-camel-case/schema-org.name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape"
                 ],
@@ -181,7 +181,7 @@
             ]
           },
           {
-            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-responses-sparql",
+            "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-responses-sparql",
             "@type": [
               "http://raml.org/vocabularies/amf-validation#QueryValidation"
             ],
@@ -202,7 +202,7 @@
             ]
           },
           {
-            "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-response-js",
+            "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-response-js",
             "@type": [
               "http://raml.org/vocabularies/amf-validation#FunctionValidation"
             ],
@@ -223,7 +223,7 @@
             ],
             "http://www.w3.org/ns/shacl#js": [
               {
-                "@id": "file:/shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-response-js/functionConstraint",
+                "@id": "file://shared/src/test/resources/vocabularies/validation_profile_example.raml#get-operations-with-response-js/functionConstraint",
                 "@type": [
                   "http://www.w3.org/ns/shacl#JSConstraint"
                 ],
