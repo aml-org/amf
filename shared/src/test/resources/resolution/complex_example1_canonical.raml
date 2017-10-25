@@ -1,5 +1,4 @@
 #%RAML 1.0 Library
-
 types:
   Phone:
     type: object
@@ -30,7 +29,8 @@ types:
   Main:
     type: union
     anyOf:
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           kind:
@@ -70,7 +70,8 @@ types:
               kind:
                 required: true
                 type: string
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           kind:
@@ -110,7 +111,8 @@ types:
               kind:
                 required: true
                 type: string
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           kind:
@@ -150,7 +152,8 @@ types:
               kind:
                 required: true
                 type: string
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           kind:

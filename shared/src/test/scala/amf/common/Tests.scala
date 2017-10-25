@@ -148,12 +148,16 @@ object Tests {
 
   def checkDiff(a: Reader, fileA: String, b: Reader, fileB: String): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
-    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + fileA + " " + fileB + "\n" + Diff.makeString(diffs))
+    if (diffs.nonEmpty)
+      fail(
+        "\ndiff -y -W 150 " + trimFileProtocol(fileA) + " " + trimFileProtocol(fileB) + "\n" + Diff.makeString(diffs))
   }
 
   def checkDiff(a: String, fileA: String, b: String, fileB: String): Assertion = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
-    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + fileA + " " + fileB + "\n" + Diff.makeString(diffs))
+    if (diffs.nonEmpty)
+      fail(
+        "\ndiff -y -W 150 " + trimFileProtocol(fileA) + " " + trimFileProtocol(fileB) + "\n" + Diff.makeString(diffs))
     Succeeded
   }
 
@@ -167,6 +171,8 @@ object Tests {
     val n: Int = s.indexOf(chr)
     if (n <= 0) s.length() else n
   }
+
+  private def trimFileProtocol(name: String) = name.stripPrefix("file://").stripPrefix("file:/")
 
   //~ Inner Classes ................................................................................................................................
 

@@ -1,10 +1,10 @@
 #%RAML 1.0 Library
-
 types:
   A:
     type: union
     anyOf:
-      - type: array
+      -
+        type: array
         items:
           type: object
           additionalProperties: true
@@ -15,7 +15,8 @@ types:
             b:
               required: true
               type: any
-      - type: array
+      -
+        type: array
         items:
           type: object
           additionalProperties: true
@@ -29,7 +30,8 @@ types:
   B:
     type: union
     anyOf:
-      - type: array
+      -
+        type: array
         items:
           type: object
           additionalProperties: true
@@ -40,7 +42,8 @@ types:
             b:
               required: true
               type: any
-      - type: array
+      -
+        type: array
         items:
           type: object
           additionalProperties: true
@@ -54,7 +57,8 @@ types:
   C:
     type: union
     anyOf:
-      - type: array
+      -
+        type: array
         items:
           type: object
           additionalProperties: true
@@ -68,7 +72,8 @@ types:
             c:
               required: true
               type: number
-      - type: array
+      -
+        type: array
         items:
           type: object
           additionalProperties: true

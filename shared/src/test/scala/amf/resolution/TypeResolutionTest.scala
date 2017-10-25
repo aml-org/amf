@@ -2,9 +2,10 @@ package amf.resolution
 
 import amf.ProfileNames
 import amf.client.GenerationOptions
-import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
+import amf.document.BaseUnit
 import amf.dumper.AMFDumper
+import amf.io.BuildCycleTests
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
 import amf.shape._
@@ -14,11 +15,9 @@ import amf.validation.Validation
 import amf.vocabulary.Namespace
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Promise}
+import scala.concurrent.Promise
 
-class TypeResolutionTest extends ResolutionTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class TypeResolutionTest extends BuildCycleTests {
 
   test("TypeExpressions") {
 
@@ -159,23 +158,13 @@ class TypeResolutionTest extends ResolutionTest {
         validation => {
           validation
             .loadValidationDialect()
-            .flatMap(_ => {
-              val expected = platform.resolve(basePath + s"${example}_canonical.raml", None).map(_.stream.toString)
-              AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
-                .build()
-                .map { model =>
-                  model.resolve(ProfileNames.RAML)
-                }
-                .flatMap({ unit =>
-                  AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-                })
-                .zip(expected)
-                .map(checkDiff)
-            })
+            .flatMap(_ => cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml))
         }
       )
     }
   }
+
+  override def map(unit: BaseUnit, config: CycleConfig): BaseUnit = unit.resolve(ProfileNames.RAML)
 
   val errorExamples = Seq(
     "inheritance_error1",

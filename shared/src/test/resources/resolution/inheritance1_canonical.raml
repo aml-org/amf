@@ -1,5 +1,4 @@
 #%RAML 1.0 Library
-
 types:
   E:
     type: object
@@ -29,7 +28,8 @@ types:
   G:
     type: union
     anyOf:
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           a:
@@ -38,7 +38,8 @@ types:
           b:
             required: true
             type: integer
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           a:

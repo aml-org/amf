@@ -1,5 +1,4 @@
 #%RAML 1.0 Library
-
 types:
   CatWithCity:
     type: object
@@ -18,7 +17,8 @@ types:
   Cat:
     type: union
     anyOf:
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           address:
@@ -30,7 +30,8 @@ types:
           city:
             required: true
             type: string
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           address:

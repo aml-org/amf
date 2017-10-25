@@ -4,20 +4,18 @@ import amf.client.GenerationOptions
 import amf.common.Diff
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
-import amf.io.TmpTests
+import amf.io.BuildCycleTests
 import amf.remote._
-import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
+import org.scalatest.{Assertion, Succeeded}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 /**
   * Created by hernan.najles on 9/19/17.
   */
-class ReferencesCycleTest extends AsyncFunSuite with TmpTests {
+class ReferencesCycleTest extends BuildCycleTests {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  val basePath = "file://shared/src/test/resources/references/"
+  override val basePath = "file://shared/src/test/resources/references/"
 
   test("simple library raml") {
     assertReferences("libraries.raml", Seq("lib/lib.raml"), RamlYamlHint, Raml)

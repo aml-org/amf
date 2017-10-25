@@ -1,23 +1,19 @@
 package amf.parser
 
-import amf.io.TmpTests
-import org.scalatest.AsyncFunSuite
-import amf.client.GenerationOptions
-import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.dumper.AMFDumper
-import amf.io.TmpTests
+import amf.io.BuildCycleTests
 import amf.remote._
-import org.scalatest.{Assertion, AsyncFunSuite}
+import amf.unsafe.PlatformSecrets
+import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
 /**
   * Created by pedro.colunga on 10/10/17.
   */
-class ForwardReferencesTest extends AsyncFunSuite with TmpTests {
+class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
 
-  val basePath = "file://shared/src/test/resources/upanddown/"
+  private val basePath = "file://shared/src/test/resources/upanddown/"
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

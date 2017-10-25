@@ -1,5 +1,4 @@
 #%RAML 1.0 Library
-
 types:
   AnimalWithAddress:
     type: object
@@ -11,7 +10,8 @@ types:
   Cat:
     type: union
     anyOf:
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           address:
@@ -20,7 +20,8 @@ types:
           age:
             required: true
             type: integer
-      - type: object
+      -
+        type: object
         additionalProperties: true
         properties:
           address:

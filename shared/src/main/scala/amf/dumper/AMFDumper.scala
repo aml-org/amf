@@ -29,9 +29,9 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
     vendor match {
       case Raml =>
         syntax match {
-          case Yaml => new YamlGenerator().generate(ast).toString
-//          case Yaml => YamlRender.render(ast)
-          case _ => unsupported
+//          case Yaml => new YamlGenerator().generate(ast).toString
+          case Yaml => YamlRender.render(ast)
+          case _    => unsupported
         }
       case Oas | Amf =>
         syntax match {

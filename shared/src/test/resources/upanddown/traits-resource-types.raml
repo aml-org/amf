@@ -3,7 +3,7 @@ title: Example API
 version: v1
 resourceTypes:
   searchableCollection:
-   get:
+    get:
       queryParameters:
         <<queryParamName>>:
           description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
@@ -29,7 +29,9 @@ traits:
     - descr
   get:
     is:
-      - secured:
+      -
+        secured:
           tokenName: access_token
-      - paged:
+      -
+        paged:
           maxPages: 10
