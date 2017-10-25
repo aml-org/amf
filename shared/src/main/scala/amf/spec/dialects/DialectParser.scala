@@ -3,12 +3,19 @@ package amf.spec.dialects
 import amf.compiler.{RamlHeader, Root}
 import amf.dialects.{DialectRegistry, DialectValidator}
 import amf.document.{BaseUnit, Document, Module}
-import amf.domain.Annotation.{DomainElementReference, LexicalInformation, NamespaceImportsDeclaration, SynthesizedField}
+import amf.domain.Annotation.{
+  DomainElementReference,
+  LexicalInformation,
+  NamespaceImportsDeclaration,
+  SynthesizedField
+}
 import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
+import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.declaration.ReferencesParser
 import amf.spec.raml.RamlSpecParser
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
@@ -197,21 +204,12 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
         val classTerms = ListBuffer[DomainEntity]()
         orderedMap(entries).foreach {
           case (mapKey: YScalar, entry) if mapping.range.isInstanceOf[DialectNode] =>
-            val actualRange = getActualRange(
-              mapKey.text,
-              mapping,
-              entry,
-              mapping.hash,
-              Some(mapKey.text),
-              Some(parentDomainEntity))
+            val actualRange =
+              getActualRange(mapKey.text, mapping, entry, mapping.hash, Some(mapKey.text), Some(parentDomainEntity))
 
             actualRange match {
               case Some(rangeNode: DialectNode) =>
-                val domainEntity = DomainEntity(
-                  Some(mapKey.text),
-                  rangeNode,
-                  Fields(),
-                  Annotations(entry))
+                val domainEntity = DomainEntity(Some(mapKey.text), rangeNode, Fields(), Annotations(entry))
 
                 mapping.hash.foreach { hashProperty =>
                   domainEntity.set(hashProperty.field(), entryNode.key.value.asInstanceOf[YScalar].text)
@@ -314,7 +312,12 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
     }
   }
 
-  private def getActualRange(key: String, mapping: DialectPropertyMapping, entryNode: YValue, hash: Option[DialectPropertyMapping], hashValue: Option[String], parentDomainEntity: Option[DomainEntity]): Option[Type] = {
+  private def getActualRange(key: String,
+                             mapping: DialectPropertyMapping,
+                             entryNode: YValue,
+                             hash: Option[DialectPropertyMapping],
+                             hashValue: Option[String],
+                             parentDomainEntity: Option[DomainEntity]): Option[Type] = {
     if (mapping.unionTypes.isDefined) {
 
       var nodeId: Option[String] = None
@@ -341,16 +344,19 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
           nodeId.get,
           Some(mapping.iri()),
           s"Ambiguous range for property $key, multiple possible values for range ${types.filter(r => r._2.isEmpty).map(_._1.shortName)}",
-          Some(LexicalInformation(amf.parser.Range(entryNode.range))))
+          Some(LexicalInformation(amf.parser.Range(entryNode.range)))
+        )
       }
-      if (types.count(r =>  r._2.isEmpty) == 0) {
+      if (types.count(r => r._2.isEmpty) == 0) {
         val sb = new mutable.StringBuilder()
-        sb.append(s"  Unknown range for property $key, no valid value for range ${mapping.unionTypes.get.map(_.asInstanceOf[DialectNode].shortName)}")
-        types.foreach { case (m, issues) =>
-          sb.append(s"\n   Error in range for property $key and mapping ${m.shortName}")
-          issues.foreach { issue =>
-            sb.append(s"\n    - ${issue.message}")
-          }
+        sb.append(s"  Unknown range for property $key, no valid value for range ${mapping.unionTypes.get
+          .map(_.asInstanceOf[DialectNode].shortName)}")
+        types.foreach {
+          case (m, issues) =>
+            sb.append(s"\n   Error in range for property $key and mapping ${m.shortName}")
+            issues.foreach { issue =>
+              sb.append(s"\n    - ${issue.message}")
+            }
         }
         Validation.reportConstraintFailure(
           SeverityLevels.VIOLATION,
@@ -358,7 +364,8 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
           nodeId.get,
           Some(mapping.iri()),
           sb.mkString,
-          Some(LexicalInformation(amf.parser.Range(entryNode.range))))
+          Some(LexicalInformation(amf.parser.Range(entryNode.range)))
+        )
       }
 
       types.find(r => r._2.isEmpty) match {

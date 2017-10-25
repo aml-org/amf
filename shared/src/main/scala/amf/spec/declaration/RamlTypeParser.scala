@@ -1,4 +1,4 @@
-package amf.spec.raml
+package amf.spec.declaration
 
 import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
 import amf.domain.{Annotations, CreativeWork, ExternalDomainElement, Value}
@@ -9,7 +9,8 @@ import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
-import amf.spec.oas.OasTypeParser
+import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.raml._
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -748,7 +749,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                 .map { scalar =>
                   scalar.toString match {
                     case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
-                      RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations).parse().get
+                      RamlTypeExpressionParser(adopt, declarations).parse(s).get
+//                      RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations).parse().get
                     case s if declarations.shapes.get(s).isDefined =>
                       declarations.shapes(s)
                     case s if wellKnownType(s) =>

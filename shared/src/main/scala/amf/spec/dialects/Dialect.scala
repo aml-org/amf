@@ -9,6 +9,7 @@ import amf.domain.{Annotations, Fields}
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
+import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}

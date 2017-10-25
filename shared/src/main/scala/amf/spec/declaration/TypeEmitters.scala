@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation.{DeclaredElement, ExplicitField, Inferred, ParsedJSONSchema}
+import amf.domain.Annotation._
 import amf.domain.{CreativeWork, FieldEntry, Fields, Linkable}
 import amf.metadata.Field
 import amf.metadata.shape._
@@ -238,7 +238,11 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering)(impli
   override def emit(b: EntryBuilder): Unit = {
 
     val (declaredShapes, inlineShapes) =
-      f.array.values.map(_.asInstanceOf[Shape]).partition(_.annotations.contains(classOf[DeclaredElement]))
+      f.array.values
+        .map(_.asInstanceOf[Shape])
+        .partition(s =>
+          s.annotations.contains(classOf[DeclaredElement]) ||
+            s.annotations.contains(classOf[ParsedFromTypeExpression]))
 
     b.entry(
       "type",
@@ -247,7 +251,11 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering)(impli
           b.map(traverse(ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering).entries())), _))
         } else {
           b.list { b =>
-            declaredShapes.foreach(s => raw(b, s.name))
+            declaredShapes.foreach {
+              case shape: Shape if shape.annotations.contains(classOf[ParsedFromTypeExpression]) =>
+                RamlTypeExpressionEmitter(shape).emit(b)
+              case s => raw(b, s.name)
+            }
           }
         }
       }

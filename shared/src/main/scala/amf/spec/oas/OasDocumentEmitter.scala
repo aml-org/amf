@@ -243,6 +243,10 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
       if (payloads.other.nonEmpty) result += PayloadsEmitter("x-request-payloads", payloads.other, ordering)
 
+      request.fields
+        .entry(RequestModel.QueryString)
+        .map(f => result += NamedTypeEmitter(f.value.value.asInstanceOf[Shape], ordering))
+
       result ++= AnnotationsEmitter(request, ordering).emitters
 
       result

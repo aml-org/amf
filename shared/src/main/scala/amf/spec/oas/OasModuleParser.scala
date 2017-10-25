@@ -6,6 +6,7 @@ import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.metadata.document.BaseUnitModel
 import amf.parser.YValueOps
+import amf.spec.declaration.ReferencesParser
 
 /**
   *

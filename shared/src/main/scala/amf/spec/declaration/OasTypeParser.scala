@@ -1,4 +1,4 @@
-package amf.spec.oas
+package amf.spec.declaration
 
 import amf.domain.Annotation.{ExplicitField, Inferred}
 import amf.domain.{Annotations, CreativeWork}
@@ -8,9 +8,11 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
+import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.oas.{OasSpecParser, OasSpecParserContext, OasSyntax}
 import amf.spec.{Declarations, OasDefinitions}
 import amf.vocabulary.Namespace
-import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence}
+import org.yaml.model._
 
 import scala.collection.mutable
 

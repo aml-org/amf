@@ -11,6 +11,7 @@ import amf.model.AmfScalar
 import amf.parser.{YValueOps, _}
 import amf.shape.Shape
 import amf.spec.Declarations
+import amf.spec.declaration.{AbstractDeclarationParser, OasCreativeWorkParser, OasTypeParser, ReferencesParser}
 import org.yaml.model.YMap
 
 /**

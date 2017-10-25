@@ -12,6 +12,7 @@ import amf.domain.Annotation.{
   _
 }
 import amf.domain._
+import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security._
 import amf.metadata.document.BaseUnitModel
@@ -26,6 +27,8 @@ import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model.{YNode, _}
 import amf.spec.OasDefinitions
+import amf.spec.declaration._
+import amf.spec.domain._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -417,6 +420,15 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
 
       if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
 
+      map.key(
+        "x-queryString",
+        queryEntry => {
+          RamlTypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id), declarations)
+            .parse()
+            .map(request.getOrCreate.withQueryString(_))
+        }
+      )
+
       AnnotationParser(() => request.getOrCreate, map).parse()
 
       request.option
@@ -633,8 +645,9 @@ abstract class OasSpecParser extends BaseSpecParser {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent, declarations)
     parseAnnotationTypeDeclarations(map, parent, declarations)
-    parseResourceTypeDeclarations("x-resourceTypes", map, parent, declarations)
-    parseTraitDeclarations("x-traits", map, parent, declarations)
+    AbstractDeclarationsParser("x-resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent, declarations)
+      .parse()
+    AbstractDeclarationsParser("x-traits", (entry: YMapEntry) => Trait(entry), map, parent, declarations).parse()
     parseSecuritySchemeDeclarations(map, parent, declarations)
     parseParameterDeclarations("parameters", map, parent, declarations)
     declarations.resolve()

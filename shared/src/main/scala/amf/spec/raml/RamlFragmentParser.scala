@@ -14,6 +14,7 @@ import amf.parser.YValueOps
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.Declarations
+import amf.spec.declaration.{AbstractDeclarationParser, RamlCreativeWorkParser, RamlTypeParser, ReferencesParser}
 import org.yaml.model.YMap
 
 /**

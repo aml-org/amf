@@ -269,17 +269,22 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
             result ++= AnnotationsEmitter(operation, ordering).emitters
 
-            Option(operation.request).foreach { req =>
-              val fields = req.fields
+            Option(operation.request).foreach {
+              req =>
+                val fields = req.fields
 
-              fields
-                .entry(RequestModel.QueryParameters)
-                .map(f => result += RamlParametersEmitter("queryParameters", f, ordering, references))
+                fields
+                  .entry(RequestModel.QueryParameters)
+                  .map(f => result += RamlParametersEmitter("queryParameters", f, ordering, references))
 
-              fields
-                .entry(RequestModel.Headers)
-                .map(f => result += RamlParametersEmitter("headers", f, ordering, references))
-              fields.entry(RequestModel.Payloads).map(f => result += RamlPayloadsEmitter("body", f, ordering))
+                fields
+                  .entry(RequestModel.Headers)
+                  .map(f => result += RamlParametersEmitter("headers", f, ordering, references))
+                fields.entry(RequestModel.Payloads).map(f => result += RamlPayloadsEmitter("body", f, ordering))
+
+                fields
+                  .entry(RequestModel.QueryString)
+                  .map(f => result += NamedTypeEmitter(f.value.value.asInstanceOf[Shape], references, ordering))
             }
 
             fs.entry(OperationModel.Responses)
