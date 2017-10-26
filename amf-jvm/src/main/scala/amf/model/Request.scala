@@ -12,6 +12,7 @@ case class Request private[model] (private val request: amf.domain.Request) exte
   val queryParameters: java.util.List[Parameter] = request.queryParameters.map(Parameter).asJava
   val headers: java.util.List[Parameter]         = request.headers.map(Parameter).asJava
   val payloads: java.util.List[Payload]          = request.payloads.map(Payload).asJava
+  val queryString: Shape                         = Option(request.queryString).map(Shape(_)).orNull
 
   override private[amf] def element: amf.domain.Request = request
 
@@ -50,4 +51,10 @@ case class Request private[model] (private val request: amf.domain.Request) exte
 
   /** Adds one [[Payload]] to the payloads property of this [[Request]] with the given media type and returns it for population. */
   def withPayload(mediaType: String): Payload = Payload(request.withPayload(Some(mediaType)))
+
+  /** Set query string property of this [[Request]]. */
+  def withQueryString(queryString: Shape): this.type = {
+    request.withQueryString(queryString.shape)
+    this
+  }
 }

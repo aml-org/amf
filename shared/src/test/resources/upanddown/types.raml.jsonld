@@ -2940,6 +2940,20 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/upanddown/types.raml#/declarations/Person"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [

@@ -3,7 +3,7 @@ package amf.resolution
 import amf.remote.{Amf, OasJsonHint, RamlYamlHint}
 
 /**
-  * Created by hernan.najles on 10/25/17.
+  *
   */
 class QueryStringResolutionTest extends ResolutionTest {
   override val basePath: String = "file://shared/src/test/resources/resolution/queryString/"

@@ -18,7 +18,7 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   def queryParameters: Seq[Parameter] = fields(QueryParameters)
   def responses: Seq[Response]        = fields(Responses)
   def settings: Settings              = fields(SettingsField)
-  def queryParameter: Shape           = fields(QueryString)
+  def queryString: Shape              = fields(QueryString)
 
   def withName(name: String): this.type                               = set(Name, name)
   def withType(`type`: String): this.type                             = set(Type, `type`)

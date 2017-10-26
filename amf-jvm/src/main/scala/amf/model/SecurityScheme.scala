@@ -18,6 +18,7 @@ case class SecurityScheme private[model] (private val scheme: amf.domain.securit
   val queryParameters: java.util.List[Parameter] = scheme.queryParameters.map(Parameter).asJava
   val responses: java.util.List[Response]        = scheme.responses.map(Response).asJava
   val settings: Settings                         = Settings(scheme.settings)
+  val queryString: Shape                         = Option(scheme.queryString).map(Shape(_)).orNull
 
   def withName(name: String): this.type = {
     scheme.withName(name)
@@ -56,6 +57,11 @@ case class SecurityScheme private[model] (private val scheme: amf.domain.securit
 
   def withSettings(settings: Settings): this.type = {
     scheme.withSettings(settings.element)
+    this
+  }
+
+  def withQueryString(queryString: Shape): this.type = {
+    scheme.withQueryString(queryString.shape)
     this
   }
 
