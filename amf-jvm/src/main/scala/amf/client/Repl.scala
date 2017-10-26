@@ -78,7 +78,8 @@ class Repl(val in: InputStream, val out: PrintStream) {
     case Raml    => new RamlParser
     case Oas     => new OasParser
     case Amf     => new AmfParser
-    case Unknown => throw new Exception("Cannot find a parser for Uknown vendor")
+    case Payload => throw new Exception("Cannot find a parser for Payload vendor")
+    case Unknown => throw new Exception("Cannot find a parser for Unknown vendor")
   }
 
   private object Generate {

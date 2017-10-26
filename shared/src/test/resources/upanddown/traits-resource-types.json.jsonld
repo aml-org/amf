@@ -527,38 +527,34 @@
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
-            "get": [
+            "http://raml.org/vocabularies/data#get": [
               {
                 "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/object_1/object_2",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
-                "queryParameters": [
+                "http://raml.org/vocabularies/data#queryParameters": [
                   {
                     "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/object_1/object_2/object_3",
                     "@type": [
                       "http://raml.org/vocabularies/data#Object"
                     ],
-                    "<<queryParamName>>": [
+                    "http://raml.org/vocabularies/data#<<queryParamName>>": [
                       {
                         "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/object_1/object_2/object_3/object_4",
                         "@type": [
                           "http://raml.org/vocabularies/data#Object"
                         ],
-                        "description": [
+                        "http://raml.org/vocabularies/data#description": [
                           {
                             "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/object_1/object_2/object_3/object_4/scalar_5",
                             "@type": [
                               "http://raml.org/vocabularies/data#Scalar"
                             ],
-                            "http://www.w3.org/2000/01/rdf-schema#range": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
                             "http://raml.org/vocabularies/data#value": [
                               {
-                                "@value": "Return <<resourcePathName>> that have their <<queryParamName>> matching the given value"
+                                "@value": "Return <<resourcePathName>> that have their <<queryParamName>> matching the given value",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -609,26 +605,22 @@
                         ]
                       }
                     ],
-                    "<<fallbackParamName>>": [
+                    "http://raml.org/vocabularies/data#<<fallbackParamName>>": [
                       {
                         "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/object_1/object_2/object_3/object_6",
                         "@type": [
                           "http://raml.org/vocabularies/data#Object"
                         ],
-                        "description": [
+                        "http://raml.org/vocabularies/data#description": [
                           {
                             "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/object_1/object_2/object_3/object_6/scalar_7",
                             "@type": [
                               "http://raml.org/vocabularies/data#Scalar"
                             ],
-                            "http://www.w3.org/2000/01/rdf-schema#range": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
                             "http://raml.org/vocabularies/data#value": [
                               {
-                                "@value": "If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead"
+                                "@value": "If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead",
+                                "@type": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -830,32 +822,28 @@
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
-            "queryParameters": [
+            "http://raml.org/vocabularies/data#queryParameters": [
               {
                 "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/secured/object_8/object_9",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
-                "<<tokenName>>": [
+                "http://raml.org/vocabularies/data#<<tokenName>>": [
                   {
                     "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/secured/object_8/object_9/object_10",
                     "@type": [
                       "http://raml.org/vocabularies/data#Object"
                     ],
-                    "description": [
+                    "http://raml.org/vocabularies/data#description": [
                       {
                         "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/secured/object_8/object_9/object_10/scalar_11",
                         "@type": [
                           "http://raml.org/vocabularies/data#Scalar"
                         ],
-                        "http://www.w3.org/2000/01/rdf-schema#range": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
                         "http://raml.org/vocabularies/data#value": [
                           {
-                            "@value": "A valid <<tokenName>> is required"
+                            "@value": "A valid <<tokenName>> is required",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -1009,32 +997,28 @@
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
-            "queryParameters": [
+            "http://raml.org/vocabularies/data#queryParameters": [
               {
                 "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/paged/object_12/object_13",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
-                "numPages": [
+                "http://raml.org/vocabularies/data#numPages": [
                   {
                     "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/paged/object_12/object_13/object_14",
                     "@type": [
                       "http://raml.org/vocabularies/data#Object"
                     ],
-                    "description": [
+                    "http://raml.org/vocabularies/data#description": [
                       {
                         "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/paged/object_12/object_13/object_14/scalar_15",
                         "@type": [
                           "http://raml.org/vocabularies/data#Scalar"
                         ],
-                        "http://www.w3.org/2000/01/rdf-schema#range": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
                         "http://raml.org/vocabularies/data#value": [
                           {
-                            "@value": "The number of pages to return, not to exceed <<maxPages | !singularize>>"
+                            "@value": "The number of pages to return, not to exceed <<maxPages | !singularize>>",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -1193,20 +1177,16 @@
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
-            "description": [
+            "http://raml.org/vocabularies/data#description": [
               {
                 "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/descr/object_16/scalar_17",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
-                "http://www.w3.org/2000/01/rdf-schema#range": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
                 "http://raml.org/vocabularies/data#value": [
                   {
-                    "@value": "Some requests require authentication."
+                    "@value": "Some requests require authentication.",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [

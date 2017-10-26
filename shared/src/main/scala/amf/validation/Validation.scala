@@ -74,13 +74,12 @@ object AMFValidationResult {
           f.element.annotations.find(classOf[LexicalInformation]).orElse {
             f.value.annotations.find(classOf[LexicalInformation]).orElse {
               f.element match {
-                case arr: AmfArray if arr.values.nonEmpty =>
-                  arr.values.head.annotations.find(classOf[LexicalInformation])
-                case _ => None
+                case arr:AmfArray if arr.values.nonEmpty => arr.values.head.annotations.find(classOf[LexicalInformation])
+                case _ => node.annotations.find(classOf[LexicalInformation])
               }
             }
           }
-        case _ => None
+        case _ => node.annotations.find(classOf[LexicalInformation])
       }
       foundPosition
     } else {
@@ -241,6 +240,8 @@ class Validation(platform: Platform) {
         val dialectValidationProfile =
           new AMFDialectValidations(platform.dialectsRegistry.get("%" + profileName).get).profile()
         someEffective(dialectValidationProfile, computed)
+      case _ if profile.isDefined && profile.get.name == "Payload" =>
+        allEffective(profile.get.validations, computed)
       case _ if profile.isDefined && profile.get.name == profileName =>
         if (profile.get.baseProfileName.isDefined) {
           someEffective(profile.get, computeValidations(profile.get.baseProfileName.get, computed))
@@ -295,16 +296,20 @@ class Validation(platform: Platform) {
       )
     } yield {
       val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
-        shaclReport.results
-          .map(r => buildValidationResult(model, r, messageStyle, validations))
-          .filter(_.isDefined)
-          .map(_.get)
+        shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
         model = model.id,
         profile = profileName,
         results = results
       )
+    }
+  }
+
+  protected def buildValidationForProfile(profileName: String, model: BaseUnit, r: ValidationResult, messageStyle: String, validations: EffectiveValidations): Option[AMFValidationResult] = {
+    profileName match {
+      case "Payload" => buildPayloadValidationResult(model, r, validations)
+      case _         => buildValidationResult(model, r, messageStyle, validations)
     }
   }
 
@@ -355,22 +360,20 @@ class Validation(platform: Platform) {
         idMapping.put(result.sourceShape, validationSpecToLook)
         Some(validationSpec)
 
-      case None =>
-        validations.all.find {
-          case (v, _) =>
-            // processing property shapes Id computed as constraintID + "/prop"
-            validationSpecToLook.startsWith(v)
-        } match {
-          case Some((v, spec)) =>
-            idMapping.put(result.sourceShape, v)
-            Some(spec)
-          case None =>
-            if (validationSpecToLook.startsWith("_:")) {
-              None
-            } else {
-              throw new Exception(s"Cannot find validation spec for validation error:\n $result")
-            }
+      case None => validations.all.find { case (v, _) =>
+        // processing property shapes Id computed as constraintID + "/prop"
+
+        validationSpecToLook.startsWith(v)
+      } match {
+        case Some((v, spec)) =>
+          idMapping.put(result.sourceShape, v)
+          Some(spec)
+        case None => if (validationSpecToLook.startsWith("_:")) {
+          None
+        } else {
+          throw new Exception(s"Cannot find validation spec for validation error:\n $result")
         }
+      }
     }
 
     maybeTargetSpec match {
@@ -391,9 +394,57 @@ class Validation(platform: Platform) {
             Namespace.Data.base + idMapping(result.sourceShape) // we put back the prefix for the custom validations
         }
         val severity = findLevel(idMapping(result.sourceShape), validations)
-        Some(
-          AMFValidationResult.withShapeId(finalId,
-                                          AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
+        Some(AMFValidationResult.withShapeId(finalId,AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
+      case _ => None
+    }
+  }
+
+  protected def buildPayloadValidationResult(model: BaseUnit, result: ValidationResult, validations: EffectiveValidations): Option[AMFValidationResult] = {
+    val validationSpecToLook = if (result.sourceShape.startsWith(Namespace.Data.base)) {
+      result.sourceShape.replace(Namespace.Data.base, "") // this is for custom validations they are all prefixed with the data namespace
+    } else {
+      result.sourceShape // by default we expect to find a URI here
+    }
+    val maybeTargetSpec: Option[ValidationSpecification] = validations.all.get(validationSpecToLook) match {
+      case Some(validationSpec) =>
+        Some(validationSpec)
+
+      case None => validations.all.find { case (v, validation) =>
+        // processing property shapes Id computed as constraintID + "/prop"
+        validation.propertyConstraints.find(p => p.name == validationSpecToLook) match {
+          case Some(p) => true
+          case None    => validationSpecToLook.startsWith(v)
+        }
+      } match {
+        case Some((v, spec)) =>
+          Some(spec)
+        case None => if (validationSpecToLook.startsWith("_:")) {
+          None
+        }  else {
+          throw new Exception(s"Cannot find validation spec for validation error:\n $result")
+        }
+      }
+    }
+
+    maybeTargetSpec match {
+      case Some(targetSpec) =>
+        val propertyConstraint = targetSpec.propertyConstraints.find(p => p.name == validationSpecToLook)
+
+        var message = propertyConstraint match {
+          case Some(p) => p.message.getOrElse(targetSpec.message)
+          case None    => targetSpec.message
+        }
+
+        if (Option(message).isEmpty || message == "") {
+          message = result.message.getOrElse("Constraint violation")
+        }
+
+        val finalId = propertyConstraint match {
+          case Some(p) => p.name
+          case None    => targetSpec.name
+        }
+        val severity = SeverityLevels.VIOLATION
+        Some(AMFValidationResult.withShapeId(finalId, AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
       case _ => None
     }
   }

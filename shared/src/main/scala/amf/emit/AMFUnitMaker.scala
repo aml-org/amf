@@ -18,9 +18,9 @@ class AMFUnitMaker {
 
   def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
     vendor match {
-      case Amf        => makeAmfWebApi(unit, options)
-      case Raml | Oas => makeUnitWithSpec(unit, vendor)
-      case Unknown    => throw new Exception("Cannot make unit for unknown provider")
+      case Amf | Payload => makeAmfWebApi(unit, options)
+      case Raml | Oas    => makeUnitWithSpec(unit, vendor)
+      case Unknown       => throw new Exception("Cannot make unit for unknown provider")
     }
   }
   private def isDialect(unit: BaseUnit) = unit match {

@@ -16,6 +16,10 @@ object OasJsonHint extends Hint(Oas, Json)
 
 object AmfJsonHint extends Hint(Amf, Json)
 
+object PayloadJsonHint extends Hint(Payload, Json)
+
+object PayloadYamlHint extends Hint(Payload, Yaml)
+
 sealed trait Kind
 
 object Library extends Kind

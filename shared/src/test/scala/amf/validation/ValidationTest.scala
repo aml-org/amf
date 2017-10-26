@@ -4,9 +4,12 @@ import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
+import amf.document.{Document, Module}
+import amf.domain.extensions.DataNode
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
-import amf.remote.{Context, Raml, RamlYamlHint}
+import amf.remote.{PayloadJsonHint, PayloadYamlHint, Raml, RamlYamlHint}
+import amf.shape.Shape
 import amf.unsafe.PlatformSecrets
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -22,6 +25,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val basePath         = "file://shared/src/test/resources/vocabularies/"
   val vocabulariesPath = "file://shared/src/test/resources/vocabularies/"
   val examplesPath     = "file://shared/src/test/resources/validations/"
+  val payloadsPath     = "file://shared/src/test/resources/payloads/"
 
   test("Loading and serializing validations") {
     Validation(
@@ -281,6 +285,56 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         }
       }
     )
+  }
+
+  val payloadValidations = Map(
+    ("A", "a_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("A", "a_invalid.json") -> ExpectedReport(conforms = false, 4, "Payload"),
+    ("B", "b_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("B", "b_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("B", "b_valid.yaml")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("B", "b_invalid.yaml") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("C", "c_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("C", "c_invalid.json") -> ExpectedReport(conforms = false, 8, "Payload"),
+    ("D", "d_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("D", "d_invalid.json") -> ExpectedReport(conforms = false, 7, "Payload"),
+    ("E", "e_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("E", "e_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("F", "f_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("F", "f_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("G", "g1_valid.json")  -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("G", "g2_valid.json")  -> ExpectedReport(conforms = true,  0, "Payload"),
+    ("G", "g_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("H", "h_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload")
+  )
+
+  for {
+    ((shapeName, payloadFile), expectedReport) <- payloadValidations
+  } yield {
+    test(s"HERE_HERE SHACL Payload Validator $payloadFile") {
+      val hint = payloadFile.split("\\.").last match {
+        case "json" => PayloadJsonHint
+        case "yaml" => PayloadYamlHint
+      }
+      val pair = for {
+        library  <- AMFCompiler(payloadsPath + "payloads.raml", platform, hint).build()
+        payload  <- AMFCompiler(payloadsPath + payloadFile, platform, hint).build()
+      } yield {
+        val targetType = library.asInstanceOf[Module].declares.find {
+          case s:Shape => s.name == shapeName
+        }.get
+        (PayloadValidation(platform, targetType.asInstanceOf[Shape]), payload)
+      }
+
+      pair flatMap { case (validation, payload) =>
+        validation.validate(payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode])
+      } map { report =>
+        println(report)
+        report.results.foreach { result => assert(result.position.isDefined) }
+        assert(report.conforms == expectedReport.conforms)
+        assert(report.results.length == expectedReport.numErrors)
+      }
+    }
   }
 
   val testValidations = Map(

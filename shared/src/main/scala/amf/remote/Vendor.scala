@@ -8,10 +8,11 @@ import amf.remote.Syntax.{Json, PlainText, Syntax, Yaml}
 object Vendor {
   def unapply(name: String): Option[Vendor] = {
     name match {
-      case "raml" => Some(Raml)
-      case "oas"  => Some(Oas)
-      case "amf"  => Some(Amf)
-      case _      => None
+      case "raml"    => Some(Raml)
+      case "oas"     => Some(Oas)
+      case "amf"     => Some(Amf)
+      case "payload" => Some(Payload)
+      case _         => None
     }
   }
 }
@@ -39,4 +40,9 @@ object Amf extends Vendor {
 object Unknown extends Vendor {
   override val name: String          = "external"
   override val defaultSyntax: Syntax = PlainText
+}
+
+object Payload extends Vendor {
+  override val name: String = "payload"
+  override val defaultSyntax: Syntax = Json
 }

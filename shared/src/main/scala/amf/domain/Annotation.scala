@@ -56,6 +56,8 @@ object Annotation {
     override val value: String = ""
   }
 
+  case class ScalarType(datatype: String) extends  Annotation
+
   case class SourceAST(ast: YPart) extends Annotation
 
   case class InlineDefinition() extends Annotation

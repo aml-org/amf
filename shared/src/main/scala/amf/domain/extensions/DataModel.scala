@@ -1,9 +1,10 @@
 package amf.domain.extensions
 
 import amf.common.core._
+import amf.domain.Annotation.ScalarType
 import amf.domain.{Annotations, DynamicDomainElement, Fields}
 import amf.metadata.Field
-import amf.metadata.Type.{Array, Iri, Str}
+import amf.metadata.Type.{Array, Str}
 import amf.metadata.domain.extensions.DataNodeModel
 import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.model.{AmfArray, AmfElement, AmfScalar}
@@ -52,7 +53,8 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   override def defaultName: String = idCounter.genId("object")
 
-  def addProperty(property: String, objectValue: DataNode, annotations: Annotations = Annotations()): this.type = {
+  def addProperty(propertyOrUri: String, objectValue: DataNode, annotations: Annotations = Annotations()): this.type = {
+    val property = ensurePlainProperty(propertyOrUri)
     objectValue.adopted(this.id)
     val propertyList = properties.getOrElse(property, ListBuffer())
     objectValue match {
@@ -68,10 +70,17 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     this
   }
 
+  protected def ensurePlainProperty(propertyOrUri: String): String =
+    if (propertyOrUri.indexOf(Namespace.Data.base) == 0) {
+      propertyOrUri.replace(Namespace.Data.base, "")
+    } else {
+      propertyOrUri
+    }
+
   override def dynamicFields: List[Field] =
     this.properties.keys
       .map({ p =>
-        Field(DataNodeModel, Namespace.WihtoutNamespace + p)
+        Field(DataNodeModel, Namespace.Data + p)
       })
       .toList ++ DataNodeModel.fields
 
@@ -80,7 +89,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
   override def adopted(parent: String): this.type =
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
 
-  override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.iri()) match {
+  override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.name) match {
     case Some(els) if els.nonEmpty => Some(els.head)
     case _                         => None
   }
@@ -108,10 +117,9 @@ class ScalarNode(var value: String,
 
   override def defaultName: String = idCounter.genId("scalar")
 
-  val Range: Field = Field(Iri, Namespace.Rdfs + "range")
   val Value: Field = Field(Str, Namespace.Data + "value")
 
-  override def dynamicFields: List[Field] = List(Range, Value) ++ DataNodeModel.fields
+  override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
 
   override def dynamicType = List(ScalarNode.builderType)
 
@@ -119,13 +127,12 @@ class ScalarNode(var value: String,
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
-    case Range =>
-      dataType match {
-        case Some(dt) => Some(AmfScalar(dt))
-        case None     => None
-      }
     case Value =>
-      Some(AmfScalar(value))
+      val annotations = dataType match {
+        case Some(dt) => Annotations() += ScalarType(dt)
+        case None     => Annotations()
+      }
+      Some(AmfScalar(value, annotations))
     case _ => None
   }
 }

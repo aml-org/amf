@@ -55,15 +55,39 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       }
 
       for {
+        targetInstance <- validation.targetInstance
+      } yield {
+        b.entry((Namespace.Shacl + "targetNode").iri(), link(_, expandRamlId(targetInstance)))
+      }
+
+      for {
         targetClass <- validation.targetClass
       } yield {
         b.entry((Namespace.Shacl + "targetClass").iri(), link(_, expandRamlId(targetClass)))
       }
 
       for {
-        targetClass <- validation.targetObject
+        closedShape <- validation.closed
       } yield {
-        b.entry((Namespace.Shacl + "targetObjectsOf").iri(), link(_, Namespace.expand(targetClass).iri()))
+        if (closedShape){
+          b.entry((Namespace.Shacl + "closed").iri(), genValue(_, closedShape.toString))
+        }
+      }
+
+      for {
+        targetObject <- validation.targetObject
+      } yield {
+        b.entry((Namespace.Shacl + "targetObjectsOf").iri(), link(_, Namespace.expand(targetObject).iri()))
+      }
+
+      if (validation.unionConstraints.nonEmpty) {
+        b.entry((Namespace.Shacl + "or").iri(), _.obj {
+          _.entry("@list",
+            _.list(l => validation.unionConstraints.foreach { v =>
+              link(l, v)
+            })
+          )}
+        )
       }
 
       validation.functionConstraint match {
@@ -85,7 +109,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
             for {
               constraint <- validation.propertyConstraints
             } yield {
-              if (constraint.name.startsWith("http://") || constraint.name.startsWith("https://")) {
+              if (constraint.name.startsWith("http://") || constraint.name.startsWith("https://") || constraint.name.startsWith("file:")) {
                 // These are the standard constraints for AMF/RAML/OAS they have already being sanitised
                 emitConstraint(b, constraint.name, constraint)
               } else {
@@ -113,13 +137,35 @@ class ValidationJSONLDEmitter(targetProfile: String) {
 
       constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _))
       constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _))
+      constraint.maxLength.foreach(genPropertyConstraintValue(b, "maxLength", _))
+      constraint.minLength.foreach(genPropertyConstraintValue(b, "minLength", _))
       constraint.maxExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _))
       constraint.minExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _))
       constraint.maxInclusive.foreach(genPropertyConstraintValue(b, "maxInclusive", _))
       constraint.minInclusive.foreach(genPropertyConstraintValue(b, "minInclusive", _))
       constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", escapeRegex(v)))
       constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
-      constraint.datatype.foreach(v => b.entry((Namespace.Shacl + "datatype").iri(), link(_, v)))
+      constraint.datatype.foreach { v =>
+        if (v.endsWith("#float")) {
+          // raml/oas 'number' are actually the union of integers and floats
+          b.entry((Namespace.Shacl + "or").iri(), _.obj {
+            _.entry("@list",
+              _.list { l =>
+
+                l.obj {
+                  _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "integer").iri()))
+                }
+
+                l.obj {
+                  _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "float").iri()))
+                }
+              }
+            )}
+          )
+        } else {
+          b.entry((Namespace.Shacl + "datatype").iri(), link(_, v))
+        }
+      }
       if (constraint.`class`.nonEmpty) {
         if (constraint.`class`.length == 1) {
           b.entry((Namespace.Shacl + "class").iri(), link(_, constraint.`class`.head))
@@ -240,7 +286,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value))
 
   private def expandRamlId(s: String): String =
-    if (s.startsWith("http://") || s.startsWith("https://")) {
+    if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
       s.trim
     } else {
       Namespace.expand(s.replace(".", ":")).iri().trim
@@ -274,7 +320,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       b.obj(_.entry("@value", raw(_, s, YType.Bool)))
     } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
       genNonEmptyList(b)
-    } else if (s.startsWith("http://") || s.startsWith("https://")) {
+    } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
       link(b, s)
     } else {
       b.obj(_.entry("@value", s))

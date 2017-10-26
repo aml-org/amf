@@ -14,7 +14,7 @@ import scala.concurrent.ExecutionContext
 class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("HERE_HERE Load Dialect from yaml") {
+  test("Load Dialect from yaml") {
     val l = platform.dialectsRegistry
 
     val expected = platform

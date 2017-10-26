@@ -182,6 +182,8 @@ object DefaultAMFValidations extends ImportUtils {
       case "http://www.w3.org/ns/shacl#maxExclusive" => constraint.copy(maxExclusive = Some(validation.value))
       case "http://www.w3.org/ns/shacl#minInclusive" => constraint.copy(minInclusive = Some(validation.value))
       case "http://www.w3.org/ns/shacl#maxInclusive" => constraint.copy(maxInclusive = Some(validation.value))
+      case "http://www.w3.org/ns/shacl#minLength"    => constraint.copy(minLength = Some(validation.value))
+      case "http://www.w3.org/ns/shacl#maxLength"    => constraint.copy(maxLength = Some(validation.value))
       case "http://www.w3.org/ns/shacl#in"           => constraint.copy(in = validation.value.split("\\s*,\\s*"))
       case "http://www.w3.org/ns/shacl#node"         => constraint.copy(node = Some(validation.value))
       case "http://www.w3.org/ns/shacl#datatype"     => constraint.copy(datatype = Some(validation.value))

@@ -51,10 +51,14 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
         map.entries.foreach { entry =>
           val uri = entry.key.value.toScalar.text
           uri match {
+              /*
             case _ if uri == scalar.Range.value.iri() =>
               scalar.dataType = Some(value(scalar.Range.`type`, entry.value.value).toScalar.text)
+              */
             case _ if uri == scalar.Value.value.iri() =>
-              scalar.value = parseJSONLDScalar(entry.value.value).value
+              val parsedScalar = parseJSONLDScalar(entry.value.value)
+              scalar.value = parsedScalar.value
+              scalar.dataType = parsedScalar.dataType
             case _ => // ignore
           }
         }
