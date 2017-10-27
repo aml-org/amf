@@ -19,11 +19,6 @@
             "@value": "http://raml.org/vocabularies/async#"
           }
         ],
-        "http://raml.org/vocabularies/meta#vocabulary": [
-          {
-            "@value": "RAML Async"
-          }
-        ],
         "http://raml.org/vocabularies/meta#version": [
           {
             "@value": "0.1"
@@ -251,6 +246,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "title"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "A short, plain-text label for the API. Its value is a string."
@@ -267,6 +267,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "version"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -285,6 +290,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "description"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "A substantial, human-friendly description of the API. Its value is a string and MAY be formatted using markdown."
@@ -301,6 +311,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "types"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -329,6 +344,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "transport"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "String containing an identifier for the kind of transport associated to the API, bindings in the spec will target this transport value"
@@ -350,6 +370,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "connection"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -373,6 +398,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "endpoints"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "EndPoints declared in the API"
@@ -394,6 +424,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "host"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -417,6 +452,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "port"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "Network port for the connection in the host machine"
@@ -438,6 +478,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "scheme"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -461,6 +506,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "operation"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "Operation supported by an EndPoint"
@@ -482,6 +532,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "parameter"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -505,6 +560,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "message"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "Message used as argument for an asynchronous operation"
@@ -527,6 +587,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "header"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "Meta-data about a message"
@@ -548,6 +613,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "bindings"
+              }
             ],
             "http://schema.org/description": [
               {
@@ -580,6 +650,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "pattern"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "Messaging pattern implemented by an end point"
@@ -605,6 +680,11 @@
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "serialization"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "Format used to encode some data over network transport"
@@ -629,6 +709,11 @@
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "schema"
+              }
             ],
             "http://schema.org/description": [
               {

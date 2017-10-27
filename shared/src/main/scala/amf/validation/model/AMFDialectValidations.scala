@@ -14,7 +14,7 @@ class AMFDialectValidations(dialect: Dialect) {
       name = dialect.name,
       baseProfileName = None,
       violationLevel = parsedValidations.map(_.name),
-      validations = parsedValidations ++ ParserSideValidations.validations
+      validations = parsedValidations ++ ParserSideValidations.validations,
     )
   }
 

@@ -155,9 +155,15 @@ object Tests {
 
   def checkDiff(a: String, fileA: String, b: String, fileB: String): Assertion = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
-    if (diffs.nonEmpty)
+    if (diffs.nonEmpty) {
+      println(s"A: $fileA")
+      println(a)
+      println("\n\n\n\n\n\n")
+      println(s"B: $fileB")
+      println(b)
       fail(
         "\ndiff -y -W 150 " + trimFileProtocol(fileA) + " " + trimFileProtocol(fileB) + "\n" + Diff.makeString(diffs))
+    }
     Succeeded
   }
 

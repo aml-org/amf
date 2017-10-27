@@ -1,8 +1,5 @@
 package amf.dialects
-import amf.client.GenerationOptions
 import amf.compiler.AMFCompiler
-import amf.dumper.AMFDumper
-import amf.remote.Syntax.Json
 import amf.remote._
 import amf.spec.dialects.Dialect
 import amf.unsafe.PlatformSecrets
@@ -50,6 +47,48 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     })
   }
 
+  test("Vocabulary can be validated") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    validator.loadValidationDialect().flatMap { parsedDialect =>
+      AMFCompiler("file://vocabularies/vocabularies/raml_doc.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.validate(unit, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("Vocabulary can be validated with closed nodes") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    validator.loadValidationDialect().flatMap { parsedDialect =>
+      AMFCompiler("file://shared/src/test/resources/vocabularies/vocabulary_closed_shape_invalid.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.validate(unit, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  /*
+  test("Dialect can be validated") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    validator.loadValidationDialect().flatMap { parsedDialect =>
+      AMFCompiler("file://vocabularies/dialects/validation.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.validate(unit, "RAML 1.0 Dialect")
+    } flatMap { report =>
+      println(report)
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+  */
+
   test("Custom dialect can be validated") {
     val validator = Validation(platform)
     var dialect: Option[Dialect] = None
@@ -65,16 +104,4 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("vocabulary can be validated") {
-    val validator = Validation(platform)
-    var dialect: Option[Dialect] = None
-    validator.loadValidationDialect().flatMap { parsedDialect =>
-      AMFCompiler("file://vocabularies/vocabularies/raml_doc.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
-    } flatMap { unit =>
-      validator.validate(unit, "RAML 1.0 Vocabulary")
-    } flatMap { report =>
-      assert(report.conforms)
-      assert(report.results.length == 0)
-    }
-  }
 }

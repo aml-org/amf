@@ -36,6 +36,9 @@ object ClassTerm extends Declaration("Class", Namespace.Owl) {
 }
 
 object PropertyTerm extends Declaration("Property") {
+  val displayName: DialectPropertyMapping =
+    str("displayName", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("name")))
+
   val description: DialectPropertyMapping = str("description", _.copy(namespace = Some(Namespace.Schema)))
 
   val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
