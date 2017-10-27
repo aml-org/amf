@@ -1,18 +1,16 @@
 package amf.dialects
 import amf.client.GenerationOptions
-import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.document.Document
 import amf.dumper.AMFDumper
+import amf.remote.Syntax.Json
 import amf.remote._
 import amf.spec.dialects.Dialect
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
-import amf.validation.model.AMFDialectValidations
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 /**
   * Created by Pavel Petrochenko on 22/09/17.
@@ -52,7 +50,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     })
   }
 
-  test("validation profile can be computed") {
+  test("Custom dialect can be validated") {
     val validator = Validation(platform)
     var dialect: Option[Dialect] = None
     platform.dialectsRegistry.registerDialect("file://shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml").flatMap { parsedDialect =>
@@ -64,6 +62,19 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     } flatMap { report =>
       assert(!report.conforms)
       assert(report.results.length == 1)
+    }
+  }
+
+  test("vocabulary can be validated") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    validator.loadValidationDialect().flatMap { parsedDialect =>
+      AMFCompiler("file://vocabularies/vocabularies/raml_doc.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.validate(unit, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.length == 0)
     }
   }
 }

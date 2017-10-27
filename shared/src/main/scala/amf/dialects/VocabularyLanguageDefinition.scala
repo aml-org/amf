@@ -11,7 +11,9 @@ import scala.collection.mutable
   * Created by Pavel Petrochenko on 12/09/17.
   */
 class VocabPartDialect(override val shortName: String, namespace: Namespace = Namespace.Meta)
-    extends DialectNode(shortName, namespace) {}
+    extends DialectNode(shortName, namespace) {
+  id = Some((namespace + shortName).iri())
+}
 
 case class Declaration(override val shortName: String, override val namespace: Namespace = Namespace.Meta)
     extends VocabPartDialect(shortName, namespace = namespace) {

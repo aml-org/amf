@@ -311,7 +311,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   for {
     ((shapeName, payloadFile), expectedReport) <- payloadValidations
   } yield {
-    test(s"HERE_HERE SHACL Payload Validator $payloadFile") {
+    test(s"SHACL Payload Validator $payloadFile") {
       val hint = payloadFile.split("\\.").last match {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
@@ -329,7 +329,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       pair flatMap { case (validation, payload) =>
         validation.validate(payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode])
       } map { report =>
-        println(report)
         report.results.foreach { result => assert(result.position.isDefined) }
         assert(report.conforms == expectedReport.conforms)
         assert(report.results.length == expectedReport.numErrors)
