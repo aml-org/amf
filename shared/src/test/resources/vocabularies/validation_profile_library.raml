@@ -1,9 +1,6 @@
 #%RAML Library / Validation Profile 1.0
-external:
-  schema-org: "http://schema.org/"
-  shacl: "http://www.w3.org/ns/shacl#"
 
-validations:
+shapeValidations:
 
   case-insensitive-schema:
     message: This is not a valid scheme
@@ -28,10 +25,14 @@ validations:
       schema-org.name:
         pattern: ([a-z]+[A-Z]+\\w+)+
 
+queryValidations:
+
   get-operations-with-responses-sparql:
     message: GET operations must have a response
     targetQuery: ?request a hydra:Operation ;
 
+
+functionValidations:
 
   get-operations-with-response-js:
     message: GET operations must have a response

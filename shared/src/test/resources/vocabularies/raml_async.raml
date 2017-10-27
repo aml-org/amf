@@ -5,7 +5,6 @@ usage: Vocabulary to define Asynchronous APIs
 base: "http://raml.org/vocabularies/async#"
 
 # Settings for the syntax declaration
-vocabulary: RAML Async
 version: 0.1
 
 # 'Raw' RDF vocabularies used in RAML Async
@@ -34,23 +33,6 @@ classTerms:
       - endpoints
       - bindings
       - serialization
-    syntax:
-      title:
-        term: schema-org.title
-        mandatory: true
-      version:
-        term: schema-org.version
-      description:
-        term: schema-org.description
-      types:
-        term: type-declaration
-        declaration: true
-      connection:
-        term: connection
-        collection: true
-      endpoints:
-        term: endpoints
-        declaration: true
 
   Connection:
     displayName: Connection
@@ -77,14 +59,6 @@ classTerms:
       - bindings
       - parameter
       - operation
-    syntax:
-      description: schema-org.description
-      parameters:
-        term: parameter
-        collection: true
-      operation:
-        term: operation
-        hash: schema-org.name
 
   Parameter:
     displayName: Parameter
@@ -93,10 +67,6 @@ classTerms:
     properties:
       - schema-org.name
       - schema
-    syntax:
-      name:
-        term: schema-org.name
-        mandatory: true
 
   AsyncOperation:
     displayName: Async Operation
@@ -109,8 +79,6 @@ classTerms:
       - bindings
       - pattern
       - serialization
-    syntax:
-      description: schema-org.description
 
   Message:
     displayName: Message
@@ -119,10 +87,6 @@ classTerms:
     properties:
       - header
       - schema
-    syntax:
-      headers:
-        term: header
-        collection: true
 
   Header:
     displayName: Header
@@ -132,10 +96,6 @@ classTerms:
       - schema-org.name
       - mandatory
       - schema
-    syntax:
-      name:
-        term: schema-org.name
-        mandatory: true
 
   Bindings:
     extends: raml-doc.DomainElement

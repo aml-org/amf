@@ -12,6 +12,7 @@ import amf.vocabulary.Namespace
   */
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
+  id = Some((namespace + shortName).iri())
   def refMap(name: String): DialectPropertyMapping = map(name, NodeReference.name, NodeReference).copy(required = true)
 }
 
@@ -33,17 +34,17 @@ object ModuleDeclaration extends DialectLanguageNode("ModuleDeclaration") {
 object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
   val name: DialectPropertyMapping = str("name", _.copy(noRAML = true))
   val propertyTerm: DialectPropertyMapping =
-    str("propertyTerm", _.copy(referenceTarget = Some(PropertyTerm), required = true))
+    iri("propertyTerm", _.copy(referenceTarget = Some(PropertyTerm), required = true))
   val mandatory: DialectPropertyMapping = bool("mandatory")
   val enum: DialectPropertyMapping      = str("enum", _.copy(collection = true))
   val pattern: DialectPropertyMapping   = str("pattern")
   val minimum: DialectPropertyMapping   = str("minimum")
   val maximum: DialectPropertyMapping   = str("maximum")
   val range: DialectPropertyMapping =
-    str("range", _.copy(referenceTarget = Some(NodeDefinition), allowInplace = true, collection = true))
+    iri("range", _.copy(referenceTarget = Some(NodeDefinition), allowInplace = true, collection = true))
   val allowMultiple: DialectPropertyMapping = bool("allowMultiple")
   val asMap: DialectPropertyMapping         = bool("asMap")
-  val hash: DialectPropertyMapping          = str("hash", _.copy(referenceTarget = Some(PropertyTerm), required = true))
+  val hash: DialectPropertyMapping          = iri("hash", _.copy(referenceTarget = Some(PropertyTerm)))
   val defaultValue: DialectPropertyMapping  = str("defaultValue")
 }
 
@@ -96,6 +97,7 @@ object DialectDefinition extends DialectLanguageNode("dialect") {
   var nodeMappings: DialectPropertyMapping =
     map("nodeMappings", NodeDefinition.name, NodeDefinition, _.copy(isDeclaration = true))
   var raml: DialectPropertyMapping = obj("raml", MainNode, _.copy(required = true))
+  var uses: DialectPropertyMapping = str("uses", _.copy(required = false, jsonld = false))
 
   nameProvider = {
     val localNameProvider: LocalNameProviderFactory = new BasicNameProvider(_, List(externals, vocabularies))

@@ -281,7 +281,7 @@ class Validation(platform: Platform) {
     println("===========================")
     println(jsLibrary)
     println("===========================")
-     */
+    */
 
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
@@ -488,6 +488,14 @@ object Validation {
   def restartValidations() = currentValidation match {
     case Some(v) => v.reset()
     case _       => // ignore
+  }
+
+  def disableValidations[T]()(f: () => T): T = {
+    val oldValidations = currentValidation
+    currentValidation = None
+    val result = f()
+    currentValidation = oldValidations
+    result
   }
 
 }

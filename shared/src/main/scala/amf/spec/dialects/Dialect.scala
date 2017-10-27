@@ -437,6 +437,10 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Type 
           adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(adapter(DialectPropertyMapping(propertyMapping, Type.Str)))
 
+  def iri(propertyMapping: String,
+          adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
+    add(adapter(DialectPropertyMapping(propertyMapping, Type.Iri)))
+
   def bool(propertyMapping: String,
            adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
     add(adapter(DialectPropertyMapping(propertyMapping, Type.Bool)))
