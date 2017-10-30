@@ -81,7 +81,7 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
   def entities(m: DialectPropertyMapping): Seq[DomainEntity] =
     fields.get(m.field()) match {
       case entity: DomainEntity => List(entity)
-      case array: AmfArray      => array.values.filter(_.isInstanceOf[DomainEntity]).asInstanceOf[List[DomainEntity]]
+      case array: AmfArray      => array.values.filter(_.isInstanceOf[DomainEntity]).asInstanceOf[Seq[DomainEntity]]
       case _                    => List()
     }
 

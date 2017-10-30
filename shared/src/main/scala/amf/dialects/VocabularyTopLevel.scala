@@ -20,6 +20,8 @@ extends TopLevelObject(entity, parent){
     def withClassTerms(value: ClassObject): VocabularyObject = { entity.add(Vocabulary.classTerms.field() , value.entity); this }
     def propertyTerms(): Seq[PropertyObject] = entity.entities(Vocabulary.propertyTerms).map(PropertyObject(_, Some(this)))
     def withPropertyTerms(value: PropertyObject): VocabularyObject = { entity.add(Vocabulary.propertyTerms.field() , value.entity); this }
+    def externalTerms(): Seq[PropertyObject] = entity.entities(Vocabulary.externalTerms).map(PropertyObject(_, Some(this)))
+    def withExternalTerms(value: PropertyObject): VocabularyObject = { entity.add(Vocabulary.externalTerms.field() , value.entity); this }
   }
 
   case class ExternalObject(entity: DomainEntity = DomainEntity(External), 
@@ -49,9 +51,6 @@ extends TopLevelObject(entity, parent){
       , e => ClassObject(e, Some(this)))
     def properties(): Seq[String] = entity.strings(ClassTerm.properties)
     def withProperties(value: String): ClassObject = { entity.add(ClassTerm.properties.field() , AmfScalar(value)); this }
-    def resolvedProperties(): List[Option[PropertyObject]] = resolveReferences2Options(ClassTerm.properties,
-      (r, s) => { r.asInstanceOf[VocabularyObject].propertyTerms.find(_.entity.id == s) }
-      , e => PropertyObject(e, Some(this)))
   }
 
   case class PropertyObject(entity: DomainEntity = DomainEntity(PropertyTerm), 
@@ -77,9 +76,6 @@ extends TopLevelObject(entity, parent){
       , e => ClassObject(e, Some(this)))
     def `extends`(): Seq[String] = entity.strings(PropertyTerm.`extends`)
     def withExtends(value: String): PropertyObject = { entity.add(PropertyTerm.`extends`.field() , AmfScalar(value)); this }
-    def resolvedExtends(): List[Option[PropertyObject]] = resolveReferences2Options(PropertyTerm.`extends`,
-      (r, s) => { r.asInstanceOf[VocabularyObject].propertyTerms.find(_.entity.id == s) }
-      , e => PropertyObject(e, Some(this)))
   }
 
 }

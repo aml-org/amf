@@ -48,12 +48,16 @@ trait LocalNameProviderFactory {
 }
 
 trait ReferenceResolver {
+  def resolveRef(ref: String): Option[String]
+
   def resolve(root: Root, name: String, t: Type): Option[String]
 
   def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity]
 }
 
 object NullReferenceResolver extends ReferenceResolver {
+  override def resolveRef(ref: String): Option[String] = None
+
   override def resolve(root: Root, name: String, t: Type): Option[String] = None
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
@@ -65,7 +69,7 @@ trait LocalNameProvider {
 }
 
 trait Refiner {
-  def refine(root: DomainEntity)
+  def refine(root: DomainEntity, resolver: ReferenceResolver)
 }
 
 case class DialectPropertyMapping(name: String,
@@ -224,18 +228,24 @@ trait TypeBuiltins extends Builtins {
   add(TypeBuiltins.NUMBER, "number", Type.Int)
   add(TypeBuiltins.FLOAT, "number", Type.Int)
   add(TypeBuiltins.BOOLEAN, "boolean", Type.Bool)
+  add(TypeBuiltins.DATE, "date", Type.Str)
+  add(TypeBuiltins.DATE_TIME, "dateTime", Type.Str)
+  add(TypeBuiltins.TIME, "time", Type.Str)
   add(TypeBuiltins.URI, "uri", Type.Iri)
   add(TypeBuiltins.ANY, "any", Type.Any)
 }
 
 object TypeBuiltins {
-  val STRING: String  = (Namespace.Xsd + "string").iri()
-  val INTEGER: String = (Namespace.Xsd + "integer").iri()
-  val FLOAT: String   = (Namespace.Xsd + "float").iri()
-  val NUMBER: String  = (Namespace.Xsd + "float").iri()
-  val BOOLEAN: String = (Namespace.Xsd + "boolean").iri()
-  val URI: String     = (Namespace.Xsd + "anyURI").iri()
-  val ANY: String     = (Namespace.Xsd + "anyType").iri()
+  val STRING: String    = (Namespace.Xsd + "string").iri()
+  val INTEGER: String   = (Namespace.Xsd + "integer").iri()
+  val FLOAT: String     = (Namespace.Xsd + "float").iri()
+  val NUMBER: String    = (Namespace.Xsd + "float").iri()
+  val BOOLEAN: String   = (Namespace.Xsd + "boolean").iri()
+  val DATE: String      = (Namespace.Xsd + "date").iri()
+  val DATE_TIME: String = (Namespace.Xsd + "dateTime").iri()
+  val TIME: String      = (Namespace.Xsd + "time").iri()
+  val URI: String       = (Namespace.Xsd + "anyURI").iri()
+  val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
 class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit])
@@ -257,10 +267,15 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
     }
   }
 
+
+  // All the external terms will be stored here, so we can generate
+  // transient 'ExternalTerms' in the JSON-LD serialisation
+  val resolvedExternals: mutable.Set[String] = mutable.Set.empty
+
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] =
     declarationsFromLibraries.get(name)
 
-  def resolveBasicRef(name: String, root: Root, t: Type): String =
+  def resolveBasicRef(name: String): String =
     if (Option(name).isEmpty) {
       throw new Exception("Empty name for basic ref")
     } else if (name.indexOf(".") > -1) {
@@ -270,15 +285,19 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
         name.split("\\.") match {
           case Array(alias, suffix) =>
             externalsMap.get(alias) match {
-              case Some(resolved) => s"$resolved$suffix"
+              case Some(resolved) => {
+                val resolvedUri = s"$resolved$suffix"
+                resolvedExternals += resolvedUri
+                resolvedUri
+              }
               case _ =>
                 if (uses.contains(alias)) {
-                  throw new Exception(s"Cannot find entity $suffix in $alias")
+                  throw new Exception(s"Cannot find entity '$suffix' in '$alias'")
                 }
-                throw new Exception(s"Cannot find prefix $name")
+                throw new Exception(s"Cannot find prefix '$name'")
             }
           case _ =>
-            throw new Exception(s"Error in class/property name $name, multiple .")
+            throw new Exception(s"Error in class/property name '$name', multiple .")
         }
     } else {
       if (name.matches(REGEX_URI)) {
@@ -342,13 +361,19 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
           case Some(range) =>
             super.resolve(root, range, t) match {
               case Some(bid) => Some(bid)
-              case _         => Some(resolveBasicRef(name, root, t))
+              case _         => Some(resolveBasicRef(name))
             }
           case None => Some(TypeBuiltins.ANY)
         }
 
-      case _ => Some(resolveBasicRef(name, root, t))
+      case _ => Some(resolveBasicRef(name))
     }
+  }
+
+  override def resolveRef(ref: String) = try {
+    Some(resolveBasicRef(ref))
+  } catch {
+    case _: Exception => None
   }
 }
 
@@ -411,6 +436,8 @@ class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[Diale
         }
     }
   }
+
+  override def resolveRef(ref: String) = None
 }
 
 class DialectNode(val shortName: String, val namespace: Namespace) extends Type with Obj {
