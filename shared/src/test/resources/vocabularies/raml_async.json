@@ -241,7 +241,7 @@
         ],
         "http://raml.org/vocabularies/meta#properties": [
           {
-            "@id": "http://raml.org/vocabularies/async#schema-org.title",
+            "@id": "http://schema.org/title",
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
@@ -256,6 +256,11 @@
                 "@value": "A short, plain-text label for the API. Its value is a string."
               }
             ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              }
+            ],
             "http://www.w3.org/2000/01/rdf-schema#range": [
               {
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
@@ -263,7 +268,7 @@
             ]
           },
           {
-            "@id": "http://raml.org/vocabularies/async#schema-org.version",
+            "@id": "http://schema.org/version",
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
@@ -278,6 +283,11 @@
                 "@value": "String identifying the version of the API."
               }
             ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              }
+            ],
             "http://www.w3.org/2000/01/rdf-schema#range": [
               {
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
@@ -285,7 +295,7 @@
             ]
           },
           {
-            "@id": "http://raml.org/vocabularies/async#schema-org.description",
+            "@id": "http://schema.org/description",
             "@type": [
               "http://raml.org/vocabularies/meta#Property",
               "http://www.w3.org/2002/07/owl#DatatypeProperty"
@@ -298,6 +308,17 @@
             "http://schema.org/description": [
               {
                 "@value": "A substantial, human-friendly description of the API. Its value is a string and MAY be formatted using markdown."
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncAPI"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#EndPoint"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
               }
             ],
             "http://www.w3.org/2000/01/rdf-schema#range": [
@@ -735,6 +756,56 @@
               {
                 "@id": "http://www.w3.org/ns/shacl#Shape"
               }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/meta#externalEntities": [
+          {
+            "@id": "http://raml.org/vocabularies/doc#DomainElement",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/doc#RootDomainElement",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/doc#declarationProperty",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://schema.org/description",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://schema.org/name",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://schema.org/title",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://schema.org/version",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          },
+          {
+            "@id": "http://www.w3.org/ns/shacl#Shape",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
             ]
           }
         ]

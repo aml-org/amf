@@ -32,7 +32,10 @@ object NamespaceMap {
 
 class DialectLoader {
 
-  val builtins: TypeBuiltins = (root: Root, name: String, t: Type) => None
+  val builtins: TypeBuiltins = new TypeBuiltins {
+    override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
+    override def resolveRef(ref: String): Option[String] = None
+  }
 
   private def retrieveDomainEntity(unit: BaseUnit) = unit match {
     case document: Document => document.encodes.asInstanceOf[DomainEntity]
@@ -287,7 +290,7 @@ class DialectLoader {
         builtins.buitInType(rangeString) match {
           case Some(t) => t
           case None =>
-            throw new Exception(s"Cannot find dialect node type for $range")
+            throw new Exception(s"Cannot find dialect node type for $rangeString")
         }
       }
     }

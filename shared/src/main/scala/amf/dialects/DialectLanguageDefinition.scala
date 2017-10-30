@@ -80,9 +80,9 @@ object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") 
 
 object MainNode extends DialectLanguageNode("Document") {
   val document: DialectPropertyMapping = obj("document", DocumentEncode, _.copy(required = true))
-  val module: DialectPropertyMapping   = obj("module", ModuleDeclaration, _.copy(required = true))
+  val module: DialectPropertyMapping   = obj("module", ModuleDeclaration, _.copy(required = false))
   val fragment: DialectPropertyMapping =
-    obj("fragments", FragmentDeclaration, _.copy(required = true, scalaNameOverride = Some("fragment")))
+    obj("fragments", FragmentDeclaration, _.copy(required = false, scalaNameOverride = Some("fragment")))
 }
 
 object DialectDefinition extends DialectLanguageNode("dialect") {
@@ -111,7 +111,7 @@ case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
   override def resolve(root: Root, name: String, t: Type): Option[String] = {
     t match {
       case NodeDefinition if b2id.get(name).isDefined => Some(b2id(name))
-      case _                                          => Some(resolveBasicRef(name, root, t))
+      case _                                          => Some(resolveBasicRef(name))
     }
   }
 }

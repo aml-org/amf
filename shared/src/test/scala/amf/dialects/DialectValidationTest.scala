@@ -104,4 +104,47 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Vocabulary can be validated with closed nodes (k8)") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    validator.loadValidationDialect().flatMap { parsedDialect =>
+      AMFCompiler("file://shared/src/test/resources/vocabularies/k8/vocabulary/core.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.validate(unit, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  /*
+  test("Dialect can be validated (k8)") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    validator.loadValidationDialect().flatMap { parsedDialect =>
+      AMFCompiler("file:///Users/antoniogarrote/Development/vocabularies/k8/dialects/pod.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.validate(unit, "RAML 1.0 Dialect")
+    } flatMap { report =>
+      println(report)
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+  */
+
+  test("Custom dialect can be validated (k8)") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    platform.dialectsRegistry.registerDialect("file://shared/src/test/resources/vocabularies/k8/dialects/pod.raml").flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler("file://shared/src/test/resources/vocabularies/k8/examples/pod.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.loadDialectValidationProfile(dialect.get)
+      validator.validate(unit, dialect.get.name)
+    } flatMap { report =>
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
 }
