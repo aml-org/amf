@@ -3,7 +3,7 @@ package amf.spec.oas
 import amf.compiler.OasFragmentHeader._
 import amf.compiler.{OasFragmentHeader, OasHeader, Root}
 import amf.document.Fragment._
-import amf.domain.Annotations
+import amf.domain.{Annotations, ExternalDomainElement}
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
@@ -35,7 +35,9 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       case Oas20Overlay                   => OverlayFragmentParser(rootMap).parse()
       case Oas20SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
     }).getOrElse {
-      throw new IllegalStateException("Unsuported oas type")
+      val fragment = ExternalFragment().withEncodes(ExternalDomainElement().withRaw(root.raw))
+      parsingErrorReport(fragment.id, "Unsuported oas type", Some(rootMap))
+      fragment
     }
 
     fragment
