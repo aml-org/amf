@@ -36,6 +36,12 @@ object Type {
 
   object Bool extends Scalar("boolean")
 
+  object Date extends Scalar("date")
+
+  object Time extends Scalar("time")
+
+  object DateTime extends Scalar("dateTime")
+
   object RegExp extends Scalar("token")
 
   object ObjType extends Obj {

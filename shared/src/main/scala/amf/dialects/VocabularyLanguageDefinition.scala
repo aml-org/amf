@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.compiler.Root
+import amf.domain.{Annotations, Fields}
 import amf.domain.dialects.DomainEntity
 import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
@@ -44,7 +45,7 @@ object PropertyTerm extends Declaration("Property") {
   val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
 
   val domain: DialectPropertyMapping =
-    ref("domain", ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs)))
+    ref("domain", ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs), noRAML = true))
   val range: DialectPropertyMapping = ref(
     "range",
     ClassTerm,
@@ -80,9 +81,12 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
   var externals: DialectPropertyMapping =
     map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
   var classTerms: DialectPropertyMapping =
-    map("classTerms", ClassTerm.idProperty, ClassTerm, _.copy(rdfName = Some("classes")))
+    map("classTerms", ClassTerm.idProperty, ClassTerm, _.copy(rdfName = Some("classes"), noLastSegmentTrimInMaps = true))
   var propertyTerms: DialectPropertyMapping =
-    map("propertyTerms", PropertyTerm.idProperty, PropertyTerm, _.copy(rdfName = Some("properties")))
+    map("propertyTerms", PropertyTerm.idProperty, PropertyTerm, _.copy(rdfName = Some("properties"), noLastSegmentTrimInMaps = true))
+
+  var externalTerms: DialectPropertyMapping =
+    map("externalTerms", PropertyTerm.idProperty, PropertyTerm, _.copy(rdfName = Some("externalEntities"), noRAML = true))
 
   withGlobalIdField("base")
   withType("http://www.w3.org/2002/07/owl#Ontology")
@@ -93,8 +97,37 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
   }
 }
 
-class VocabularyRefiner extends Refiner {
-  def refine(voc: DomainEntity): Unit = {
+class VocabularyRefiner() extends Refiner {
+  def refine(voc: DomainEntity, resolver: ReferenceResolver): Unit = {
+    // term IDs can be external ones, we avoid using the full external URI as a postfix
+    for {
+      vocabularyTerm <- voc.entities(Vocabulary.classTerms) ++ voc.entities(Vocabulary.propertyTerms)
+    } yield {
+      if (vocabularyTerm.id.indexOf("#") != -1) {
+        val fragment = vocabularyTerm.id.split("#").last
+        if (fragment.indexOf(".") > -1)  {
+          resolver.resolveRef(fragment) match {
+            case Some(resolvedId) => {
+              vocabularyTerm.id = resolvedId
+            }
+            case None => // ignore
+          }
+        }
+      }
+    }
+
+    resolver match {
+      case basicResolver: BasicResolver =>
+        val externalEntities = basicResolver.resolvedExternals.map { resolvedId =>
+          val entity = new DomainEntity(None, new DialectNode("ExternalEntity", Namespace.Meta), Fields(), Annotations())
+          entity.id = resolvedId
+          entity
+        }
+        voc.setArrayWithoutId(Vocabulary.externalTerms.field(), collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
+      case _  => // ignore
+    }
+
+    // Set the domain of properties based on the 'properties' property fo class terms
     for {
       classTerm    <- voc.entities(Vocabulary.classTerms)
       property     <- classTerm.strings(ClassTerm.`properties`)

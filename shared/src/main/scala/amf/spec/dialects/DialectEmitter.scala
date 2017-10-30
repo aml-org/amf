@@ -13,6 +13,7 @@ import amf.spec.{Emitter, EntryEmitter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{BaseBuilder, EntryBuilder, PartBuilder}
 import amf.spec.common.BaseEmitters._
+import amf.vocabulary.Namespace
 
 /**
   * Created by Pavel Petrochenko on 13/09/17.

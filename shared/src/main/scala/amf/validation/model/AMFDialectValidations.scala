@@ -120,7 +120,7 @@ class AMFDialectValidations(dialect: Dialect) {
               ramlPropertyId = prop.iri(),
               name = validationId(node, propName, "objectRange") + "/prop",
               message = Some(message),
-              `class` = types.map(_.`type`.head.iri())
+              `class` = types.map(_.`type`.head.iri()) ++ Seq((Namespace.Meta + "ExternalEntity").iri())
             )))
           types.foreach { case childNode: DialectNode =>
             validations ++= emitEntityValidations(childNode)
@@ -129,7 +129,7 @@ class AMFDialectValidations(dialect: Dialect) {
         // Single object range
         case _ => prop.rangeAsDialect match {
           case Some(childNode) =>
-            val message = s"Property ${prop.name}  value must be of type ${childNode.shortName}"
+            val message = s"Property ${prop.name} value must be of type ${childNode.shortName}"
             validations += new ValidationSpecification(
               name = validationId(node, propName, "objectRange"),
               message = message,
@@ -140,7 +140,7 @@ class AMFDialectValidations(dialect: Dialect) {
                 ramlPropertyId = prop.iri(),
                 name = validationId(node, propName, "objectRange") + "/prop",
                 message = Some(message),
-                `class` = Seq(childNode.`type`.head.iri())
+                `class` = Seq(childNode.`type`.head.iri(), (Namespace.Meta + "ExternalEntity").iri())
               )))
             validations ++= emitEntityValidations(childNode)
 
@@ -149,7 +149,7 @@ class AMFDialectValidations(dialect: Dialect) {
 
             prop.referenceTarget match {
               case Some(target) =>
-                val message = s"Property ${prop.name}  value must be of type ${target.shortName}"
+                val message = s"Property ${prop.name} value must be of type ${target.shortName}"
                 validations += new ValidationSpecification(
                   name = validationId(node, propName, "objectRange"),
                   message = message,
@@ -160,7 +160,7 @@ class AMFDialectValidations(dialect: Dialect) {
                     ramlPropertyId = prop.iri(),
                     name = validationId(node, propName, "objectRange") + "/prop",
                     message = Some(message),
-                    `class` = Seq(target.`type`.head.iri())
+                    `class` = Seq(target.`type`.head.iri(), (Namespace.Meta + "ExternalEntity").iri())
                   )))
               // we don't emit reference target because that will create a loop, IT'S a REFERENCE!
 
