@@ -1,15 +1,36 @@
 package amf.spec.common
 
+import amf.domain.Annotation.LexicalInformation
 import amf.domain._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
 import amf.remote.Vendor
+import amf.validation.{SeverityLevels, Validation}
+import amf.vocabulary.Namespace
 import org.yaml.model._
 
 /**
   * Base spec parser.
   */
-private[spec] trait BaseSpecParser {
+
+trait ErrorReporterParser {
+  def parsingErrorReport(id: String, message: String, ast: Option[YPart], severity: String = SeverityLevels.VIOLATION): Unit = {
+    val pos = ast match {
+      case Some(node) => Some(LexicalInformation(amf.parser.Range(node.range)))
+      case _          => None
+    }
+    Validation.reportConstraintFailure(
+      severity,
+      (Namespace.AmfParser + "parsingError").iri(),
+      id,
+      None,
+      message,
+      pos
+    )
+  }
+}
+
+private[spec] trait BaseSpecParser extends ErrorReporterParser {
 
   implicit val spec: SpecParserContext
 

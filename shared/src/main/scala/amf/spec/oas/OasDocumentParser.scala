@@ -3,14 +3,7 @@ package amf.spec.oas
 import amf.common.Lazy
 import amf.compiler.Root
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.{
-  DeclaredElement,
-  DefaultPayload,
-  EndPointBodyParameter,
-  ExplicitField,
-  SingleValueArray,
-  _
-}
+import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
@@ -23,6 +16,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YMapOps
 import amf.parser.YValueOps
 import amf.remote.{Oas, Vendor}
+import amf.shape.NodeShape
 import amf.spec.Declarations
 import amf.spec.common._
 import amf.vocabulary.VocabularyMappings
@@ -225,7 +219,11 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
         }
 
         scheme
-      case other => throw new Exception(s"Invalid type $other")
+      case other => {
+        val scheme = producer(other.toString)
+        parsingErrorReport(scheme.id, s"Invalid type $other", Some(other))
+        scheme
+      }
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme): SecurityScheme = {
@@ -233,7 +231,11 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
         case Some(declaration) =>
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
           declaration
-        case None => throw new Exception(s"Security scheme '$name' not found in declarations.")
+        case None =>
+          val securityScheme = SecurityScheme()
+          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
+          parsingErrorReport(securityScheme.id, s"Security scheme '$name' not found in declarations.", None)
+          securityScheme
       }
     }
   }
@@ -685,7 +687,8 @@ abstract class OasSpecParser extends BaseSpecParser {
             .parse() match {
             case Some(shape) =>
               declarations += shape.add(DeclaredElement())
-            case None => throw new Exception(s"Error parsing shape at $typeName")
+            case None =>
+              parsingErrorReport(NodeShape().adopted(typesPrefix).id, s"Error parsing shape at $typeName", Some(e))
           }
         })
       }
@@ -724,7 +727,10 @@ abstract class OasSpecParser extends BaseSpecParser {
           val typeName = e.key.value.toScalar.text
           val oasParameter = e.value.value match {
             case m: YMap => ParameterParser(m, parentPath, declarations).parse()
-            case _       => throw new Exception("Map needed to parse a parameter declaration")
+            case _       =>
+              val parameter = ParameterParser(YMap(), parentPath, declarations).parse()
+              parsingErrorReport(parameter.parameter.id, "Map needed to parse a parameter declaration", Some(e))
+              parameter
           }
 
           val parameter = oasParameter.parameter.withName(typeName).add(DeclaredElement())
@@ -749,10 +755,13 @@ abstract class OasSpecParser extends BaseSpecParser {
               adopt: (CustomDomainProperty) => Unit,
               declarations: Declarations): CustomDomainProperty =
       ast.value.value match {
-        case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
-        case scalar: YScalar =>
-          LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
-        case _ => throw new IllegalArgumentException("Invalid value Ypart type for annotation types parser")
+        case map: YMap       => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
+        case scalar: YScalar => LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
+        case _               =>
+          val customDomainProperty = CustomDomainProperty().withName(ast.key.value.toScalar.text)
+          adopt(customDomainProperty)
+          parsingErrorReport(customDomainProperty.id, "Invalid value node type for annotation types parser, expected map or scalar reference", Some(ast.value.value))
+          customDomainProperty
       }
 
   }
@@ -770,7 +779,12 @@ abstract class OasSpecParser extends BaseSpecParser {
           adopt(copied.withName(annotationName))
           copied
         }
-        .getOrElse(throw new UnsupportedOperationException("Could not find declared annotation link in references"))
+        .getOrElse {
+          val customDomainProperty = CustomDomainProperty().withName(annotationName)
+          adopt(customDomainProperty)
+          parsingErrorReport(customDomainProperty.id, "Could not find declared annotation link in references", Some(scalar))
+          customDomainProperty
+        }
     }
   }
 
@@ -844,7 +858,11 @@ abstract class OasSpecParser extends BaseSpecParser {
           case s: YScalar =>
             declarations.findDocumentations(s.text) match {
               case Some(doc) => doc.link(s.text, Annotations(n)).asInstanceOf[CreativeWork]
-              case _         => throw new IllegalArgumentException(s"not supported scalar $s.text for documentation item")
+              case _         => {
+                val documentation = RamlCreativeWorkParser(YMap(), withExtention).parse()
+                parsingErrorReport(documentation.id, s"not supported scalar $s.text for documentation item", Some(n.value))
+                documentation
+              }
             }
       })
   }
@@ -928,7 +946,10 @@ abstract class OasSpecParser extends BaseSpecParser {
           val parameter: Parameter = p.link(refUrl, Annotations(map))
           parameter.withName(refUrl).adopted(parentId)
           OasParameter(parameter, payload)
-        case None => throw new Exception(s"Cannot find parameter reference $refUrl")
+        case None =>
+          val oasParameter = OasParameter(Parameter(YMap()), Payload(YMap()))
+          parsingErrorReport(oasParameter.parameter.id, s"Cannot find parameter reference $refUrl", Some(ref))
+          oasParameter
       }
     }
   }

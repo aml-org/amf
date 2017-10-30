@@ -79,16 +79,23 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax
       "mediaType",
       entry => {
         val annotations = Annotations(entry)
-        val value: AmfElement = entry.value.value match {
+        val value: Option[AmfElement] = entry.value.value match {
           case _: YScalar =>
             annotations += SingleValueArray()
-            AmfArray(Seq(ValueNode(entry.value).string()))
+            Some(AmfArray(Seq(ValueNode(entry.value).string())))
           case _: YSequence =>
-            ArrayNode(entry.value.value.toSequence).strings()
+            Some(ArrayNode(entry.value.value.toSequence).strings())
+          case _ =>
+            parsingErrorReport(api.id, "WebAPI 'mediaType' property must be a scalar or sequence value", Some(entry.value.value))
+            None
         }
 
-        api.set(WebApiModel.ContentType, value, annotations)
-        api.set(WebApiModel.Accepts, value, annotations)
+        value match {
+          case Some(mediaType) =>
+            api.set(WebApiModel.ContentType, mediaType, annotations)
+            api.set(WebApiModel.Accepts, mediaType, annotations)
+          case None => // ignore
+        }
       }
     )
 
@@ -111,6 +118,8 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax
           case _: YSequence =>
             val value = ArrayNode(entry.value.value.toSequence)
             api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
+          case _ =>
+            parsingErrorReport(api.id, "WebAPI 'protocols' property must be a scalar or sequence value", Some(entry.value.value))
         }
       }
     )
@@ -183,7 +192,7 @@ case class RamlDocumentParser(root: Root) extends RamlSpecParser with RamlSyntax
       "documentation",
       entry => {
         api.setArray(WebApiModel.Documentations,
-                     UserDocumentationsParser(entry.value.value.toSequence, declarations).parse(),
+                     UserDocumentationsParser(entry.value.value.toSequence, declarations, api.id).parse(),
                      Annotations(entry))
       }
     )
@@ -203,8 +212,7 @@ abstract class RamlSpecParser() extends BaseSpecParser {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent, declarations)
     parseAnnotationTypeDeclarations(map, parent, declarations)
-    AbstractDeclarationsParser("resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent, declarations)
-      .parse()
+    AbstractDeclarationsParser("resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent, declarations).parse()
     AbstractDeclarationsParser("traits", (entry: YMapEntry) => Trait(entry), map, parent, declarations).parse()
     parseSecuritySchemeDeclarations(map, parent, declarations)
     parseParameterDeclarations("(parameters)", map, root.location + "#/parameters", declarations)
@@ -237,7 +245,7 @@ abstract class RamlSpecParser() extends BaseSpecParser {
         e.value.value.toMap.entries.foreach { entry =>
           RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent), declarations).parse() match {
             case Some(shape) => declarations += shape.add(DeclaredElement())
-            case None        => throw new Exception(s"Error parsing shape '$entry'")
+            case None        => parsingErrorReport(parent, s"Error parsing shape '$entry'", Some(e.value.value))
           }
         }
       }
@@ -266,7 +274,7 @@ abstract class RamlSpecParser() extends BaseSpecParser {
                                           (name) => Parameter().withId(parentPath + "/" + name).withName(name),
                                           declarations).parse()
           if (Option(parameter.binding).isEmpty) {
-            throw new Exception("Missing binding information in declared parameter")
+            parsingErrorReport(parameter.id, "Missing binding information in declared parameter", Some(entry.value.value))
           }
           declarations.registerParameter(parameter.add(DeclaredElement()), Payload().withSchema(parameter.schema))
         })
@@ -304,7 +312,8 @@ abstract class RamlSpecParser() extends BaseSpecParser {
           parameter.withSchema(schema)
 
         case _: YScalar =>
-          throw new Exception("Cannot declare unresolved parameter")
+          parsingErrorReport(parameter.id, "Cannot declare unresolved parameter", Some(entry.value.value))
+          parameter
 
         case _: YMap =>
           val map = entry.value.value.toMap
@@ -355,7 +364,7 @@ abstract class RamlSpecParser() extends BaseSpecParser {
     }
   }
 
-  case class UserDocumentationsParser(seq: YSequence, declarations: Declarations) {
+  case class UserDocumentationsParser(seq: YSequence, declarations: Declarations, parent: String) {
     def parse(): Seq[CreativeWork] = {
       val results = ListBuffer[CreativeWork]()
 
@@ -367,7 +376,8 @@ abstract class RamlSpecParser() extends BaseSpecParser {
               declarations.findDocumentations(scalar.text) match {
                 case Some(doc) =>
                   results += doc.link(scalar.text, Annotations()).asInstanceOf[CreativeWork]
-                case _ => throw new IllegalArgumentException(s"not supported scalar $scalar.text for documentation")
+                case _ =>
+                  parsingErrorReport(parent, s"not supported scalar ${scalar.text} for documentation", Some(n.value))
               }
         })
 
@@ -383,7 +393,11 @@ abstract class RamlSpecParser() extends BaseSpecParser {
         case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
         case scalar: YScalar =>
           LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
-        case _ => throw new IllegalArgumentException("Invalid value Ypart type for annotation types parser")
+        case _ =>
+          val domainProp = CustomDomainProperty()
+          adopt(domainProp)
+          parsingErrorReport(domainProp.id, "Invalid value type for annotation types parser, expected map or scalar reference", Some(ast.value.value))
+          domainProp
       }
   }
 
@@ -400,7 +414,12 @@ abstract class RamlSpecParser() extends BaseSpecParser {
           adopt(copied.withName(annotationName))
           copied
         }
-        .getOrElse(throw new UnsupportedOperationException("Could not find declared annotation link in references"))
+        .getOrElse {
+          val domainProperty = CustomDomainProperty()
+          adopt(domainProperty)
+          parsingErrorReport(domainProperty.id, "Could not find declared annotation link in references", Some(ast))
+          domainProperty
+        }
     }
   }
 
@@ -428,6 +447,9 @@ abstract class RamlSpecParser() extends BaseSpecParser {
               AmfArray(Seq(ValueNode(entry.value).string()))
             case sequence: YSequence =>
               ArrayNode(sequence).strings()
+            case _ =>
+              parsingErrorReport(custom.id, "Property 'allowedTargets' in a RAML annotation can only be a valid scalar or an array of valid scalars", Some(entry.value.value))
+              AmfArray(Seq())
           }
 
           val targetUris = targets.values.map({
