@@ -156,8 +156,8 @@ case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecO
     fs.entry(CustomDomainPropertyModel.Schema)
       .map({ f =>
         result += (spec.vendor match {
-          case Oas   => OasSchemaEmitter(f, ordering)
-          case Raml  => RamlSchemaEmitter(f, ordering)
+          case Oas   => OasSchemaEmitter(f, ordering, Nil)
+          case Raml  => RamlSchemaEmitter(f, ordering, Nil)
           case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
         })
       })

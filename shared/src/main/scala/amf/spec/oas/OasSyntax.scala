@@ -101,7 +101,8 @@ trait OasSyntax {
       "uniqueItems",
       "enum",
       "multipleOf",
-      "items"
+      "items",
+      "example"
     ),
     "bodyParameter" -> Set(
       "name",
@@ -173,7 +174,8 @@ trait OasSyntax {
       "anyOf",
       "dependencies",
       "multipleOf",
-      "default"
+      "default",
+      "example"
     )
   )
 

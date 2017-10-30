@@ -9,6 +9,7 @@ import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.remote.Raml
 import amf.spec.common.BaseEmitters._
 import amf.spec.declaration._
+import amf.spec.domain.NamedExampleEmitter
 import amf.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument
 
@@ -45,9 +46,9 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.annotations)
 
     val typeEmitter: RamlFragmentTypeEmitter = fragment match {
-      case di: DocumentationItem => DocumentationItemFragmentEmitter(di, ordering)
-      case dt: DataType          => DataTypeFragmentEmitter(dt, ordering)
-      //      case _: NamedExample              => Raml10NamedExample
+      case di: DocumentationItem         => DocumentationItemFragmentEmitter(di, ordering)
+      case dt: DataType                  => DataTypeFragmentEmitter(dt, ordering)
+      case ne: NamedExample              => FragmentNamedExampleEmitter(ne, ordering)
       case rt: ResourceTypeFragment      => ResourceTypeFragmentEmitter(rt, ordering)
       case tf: TraitFragment             => TraitFragmentEmitter(tf, ordering)
       case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
@@ -86,7 +87,8 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DataType
 
-    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = RamlTypeEmitter(dataType.encodes, ordering).entries()
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
+      RamlTypeEmitter(dataType.encodes, ordering, references = Nil).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclaration, ordering: SpecOrdering)
@@ -160,5 +162,14 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
         case e: EntryEmitter => e
         case other           => throw new Exception(s"Fragment not encoding DataObjectNode but $other")
       }
+  }
+
+  case class FragmentNamedExampleEmitter(example: NamedExample, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
+
+    override val header: RamlHeader = RamlFragmentHeader.Raml10NamedExample
+
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = Seq(NamedExampleEmitter(example.encodes, ordering))
+
   }
 }

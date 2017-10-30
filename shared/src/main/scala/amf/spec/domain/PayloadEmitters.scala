@@ -1,5 +1,6 @@
 package amf.spec.domain
 
+import amf.document.BaseUnit
 import amf.domain.{FieldEntry, Payload}
 import amf.metadata.domain.PayloadModel
 import amf.parser.Position
@@ -13,7 +14,8 @@ import amf.spec.common.SpecEmitterContext
 /**
   *
   */
-case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val fs = payload.fields
@@ -21,7 +23,10 @@ case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit
       .foreach(mediaType => {
         b.complexEntry(
           ScalarEmitter(mediaType.scalar).emit(_),
-          RamlTypePartEmitter(payload.schema, ordering, Some(AnnotationsEmitter(payload, ordering))).emit(_)
+          RamlTypePartEmitter(payload.schema,
+                              ordering,
+                              Some(AnnotationsEmitter(payload, ordering)),
+                              references = references).emit(_)
         )
       })
   }
@@ -29,12 +34,13 @@ case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit
   override def position(): Position = pos(payload.annotations)
 }
 
-case class RamlPayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+case class RamlPayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       f.value.annotations, {
-        payloads(f, ordering) match {
+        payloads(f, ordering, references) match {
           case Seq(p: PartEmitter) => b.entry(key, b => p.emit(b))
           case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
             b.entry(key, _.obj(traverse(es.collect { case e: EntryEmitter => e }, _)))
@@ -44,19 +50,21 @@ case class RamlPayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrderin
     )
   }
 
-  private def payloads(f: FieldEntry, ordering: SpecOrdering): Seq[Emitter] = {
-    ordering.sorted(f.array.values.flatMap(e => RamlPayloads(e.asInstanceOf[Payload], ordering).emitters()))
+  private def payloads(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[Emitter] = {
+    ordering.sorted(
+      f.array.values.flatMap(e => RamlPayloads(e.asInstanceOf[Payload], ordering, references = references).emitters()))
   }
 
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class RamlPayloads(payload: Payload, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class RamlPayloads(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     if (payload.fields.entry(PayloadModel.MediaType).isDefined) {
-      Seq(RamlPayloadEmitter(payload, ordering))
+      Seq(RamlPayloadEmitter(payload, ordering, references = references))
     } else {
-      RamlTypeEmitter(payload.schema, ordering).emitters()
+      RamlTypeEmitter(payload.schema, ordering, references = references).emitters()
     }
   }
 }

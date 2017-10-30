@@ -9,6 +9,7 @@ import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.domain.RamlExamplesParser
 import amf.spec.oas.{OasSpecParser, OasSpecParserContext, OasSyntax}
 import amf.spec.{Declarations, OasDefinitions}
 import amf.vocabulary.Namespace
@@ -524,6 +525,10 @@ case class OasTypeParser(ast: YPart,
           shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
         }
       )
+
+      val examples = RamlExamplesParser(map, "example", "x-examples", declarations).parse()
+      if (examples.nonEmpty)
+        shape.setArray(ShapeModel.Examples, examples)
 
       shape
     }

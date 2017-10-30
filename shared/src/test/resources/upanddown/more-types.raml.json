@@ -4,24 +4,10 @@
     "E": {
       "allOf": [
         {
-          "properties": {
-            "a": {
-              "$ref": "#/definitions/A"
-            },
-            "b": {
-              "$ref": "#/definitions/B"
-            }
-          }
+          "$ref": "#/definitions/C"
         },
         {
-          "properties": {
-            "a": {
-              "$ref": "#/definitions/A"
-            },
-            "b": {
-              "$ref": "#/definitions/B"
-            }
-          }
+          "$ref": "#/definitions/D"
         }
       ]
     },

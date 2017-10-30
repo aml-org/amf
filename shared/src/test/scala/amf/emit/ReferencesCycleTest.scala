@@ -93,6 +93,14 @@ class ReferencesCycleTest extends BuildCycleTests {
     assertReferences("security-scheme-fragment.json", Seq("fragments/security-scheme.json"), OasJsonHint, Oas)
   }
 
+  test("Named Example fragment raml to raml") {
+    assertReferences("named-example.raml", Seq("fragments/named-example.raml"), RamlYamlHint, Raml)
+  }
+
+  test("Named Example fragment oas to oas") {
+    assertReferences("named-example.json", Seq("fragments/named-example.json"), OasJsonHint, Oas)
+  }
+
   def assertReferences(documentRootPath: String, golden: Seq[String], hint: Hint, target: Vendor): Future[Assertion] = {
 
     val expected: Future[Seq[ModuleContent]] = Future.sequence(golden.map(g => {

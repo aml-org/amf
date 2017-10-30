@@ -47,7 +47,8 @@ case class RamlResponseEmitter(response: Response, ordering: SpecOrdering, refer
 
           fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))
           fs.entry(RequestModel.Headers).map(f => result += RamlParametersEmitter("headers", f, ordering, references))
-          fs.entry(RequestModel.Payloads).map(f => result += RamlPayloadsEmitter("body", f, ordering))
+          fs.entry(RequestModel.Payloads).map(f => result += RamlPayloadsEmitter("body", f, ordering, references))
+          fs.entry(ResponseModel.Examples).map(f => result += OasResponseExamplesEmitter("(examples)", f, ordering))
 
           result ++= AnnotationsEmitter(response, ordering).emitters
 

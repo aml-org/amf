@@ -77,7 +77,7 @@ case class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, re
           .filter(_.value.annotations.contains(classOf[ExplicitField]))
           .map(f => result += ValueEmitter("required", f))
 
-        result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description)).entries()
+        result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description), references).entries()
 
         result ++= AnnotationsEmitter(parameter, ordering).emitters
 

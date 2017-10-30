@@ -9,13 +9,13 @@ import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.model.AmfScalar
-import amf.parser._
-import amf.parser.YValueOps
+import amf.parser.{YValueOps, _}
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.Declarations
 import amf.spec.declaration._
-import org.yaml.model.YMap
+import amf.spec.domain.RamlNamedExampleParser
+import org.yaml.model.{YMap, YType}
 
 /**
   *
@@ -40,6 +40,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
       case Raml10Extension                 => ExtensionFragmentParser(rootMap).parse()
       case Raml10Overlay                   => OverlayFragmentParser(rootMap).parse()
       case Raml10SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
+      case Raml10NamedExample              => NamedExampleFragmentParser(rootMap).parse()
       case _                               =>
         parsingErrorReport(root.location, "Unsupported fragment type", Some(root.document))
         ExternalFragment().withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
@@ -167,6 +168,18 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
                                  (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
                                  Declarations())
           .parse())
+    }
+  }
+
+  case class NamedExampleFragmentParser(map: YMap) {
+    def parse(): NamedExample = {
+      val entries      = map.entries.filter(e => e.value.tagType == YType.Map)
+      val namedExample = NamedExample().adopted(root.location)
+
+      if (entries.size == 1) namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
+      else
+        throw new IllegalStateException(
+          "Could not identified the named example in fragment because it contains more than one named map.")
     }
   }
 

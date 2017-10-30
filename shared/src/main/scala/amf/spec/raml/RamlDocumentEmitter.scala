@@ -280,7 +280,9 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
                 fields
                   .entry(RequestModel.Headers)
                   .map(f => result += RamlParametersEmitter("headers", f, ordering, references))
-                fields.entry(RequestModel.Payloads).map(f => result += RamlPayloadsEmitter("body", f, ordering))
+                fields
+                  .entry(RequestModel.Payloads)
+                  .map(f => result += RamlPayloadsEmitter("body", f, ordering, references))
 
                 fields
                   .entry(RequestModel.QueryString)

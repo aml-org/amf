@@ -104,6 +104,17 @@ package object BaseEmitters {
     }
   }
 
+  case class EntryPartEmitter(key: String,
+                              value: PartEmitter,
+                              tag: YType = YType.Str,
+                              position: Position = Position.ZERO)
+      extends EntryEmitter {
+
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(key, value.emit(_))
+    }
+  }
+
   object MapEntryEmitter {
     def apply(tuple: (String, String)): MapEntryEmitter =
       tuple match {

@@ -1,7 +1,7 @@
 package amf.metadata.domain
-import amf.metadata.{Field, Type}
+import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
-import amf.vocabulary.Namespace.{Http, Hydra, Schema}
+import amf.vocabulary.Namespace._
 import amf.vocabulary.ValueType
 
 /**
@@ -19,8 +19,10 @@ object ResponseModel extends DomainElementModel {
 
   val Payloads = Field(Array(PayloadModel), Http + "payload")
 
+  val Examples = Field(Array(ExampleModel), Document + "examples")
+
   override val `type`: List[ValueType] = Http + "Response" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name, Description, StatusCode, Headers, Payloads) ++ DomainElementModel.fields
+    List(Name, Description, StatusCode, Headers, Payloads, Examples) ++ DomainElementModel.fields
 }

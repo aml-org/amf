@@ -16,6 +16,6 @@ class YamlSpecCycleTest extends BuildCycleTests {
   }
 
   test("Example 8.7 - Literal scalar") {
-    cycle("example-8.7.raml", RamlYamlHint, Raml)
+    cycle("example-8.7.raml", RamlYamlHint)
   }
 }

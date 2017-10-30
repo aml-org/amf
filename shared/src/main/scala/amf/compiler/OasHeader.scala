@@ -66,6 +66,7 @@ object OasFragmentHeader {
       case ExtensionFragment         => Some(Oas20Extension)
       case OverlayFragment           => Some(Oas20Overlay)
       case SecuritySchemeFragment    => Some(Oas20SecurityScheme)
+      case NamedExampleFragment      => Some(Oas20NamedExample)
       case _                         => None // UnknowFragment
     }
 

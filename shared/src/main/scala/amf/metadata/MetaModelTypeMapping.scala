@@ -70,6 +70,7 @@ trait MetaModelTypeMapping {
     case _: Fragment.ExtensionFragment         => FragmentsTypesModels.ExtensionModel
     case _: Fragment.OverlayFragment           => FragmentsTypesModels.OverlayModel
     case _: Fragment.SecurityScheme            => FragmentsTypesModels.SecuritySchemeModel
+    case _: Example                            => ExampleModel
     case _: Fragment.Fragment                  => FragmentModel
     case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
   }

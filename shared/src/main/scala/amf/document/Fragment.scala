@@ -37,7 +37,9 @@ object Fragment {
     override def encodes: Shape = super.encodes.asInstanceOf[Shape]
   }
 
-  case class NamedExample(fields: Fields, annotations: Annotations) extends Fragment
+  case class NamedExample(fields: Fields, annotations: Annotations) extends Fragment {
+    override def encodes: Example = super.encodes.asInstanceOf[Example]
+  }
 
   case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment
 

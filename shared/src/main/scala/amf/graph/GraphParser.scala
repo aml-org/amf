@@ -223,7 +223,8 @@ object GraphParser extends GraphParserHelpers {
     OAuth1SettingsModel                                 -> OAuth1Settings.apply,
     ApiKeySettingsModel                                 -> ApiKeySettings.apply,
     ScopeModel                                          -> Scope.apply,
-    ParametrizedSecuritySchemeModel                     -> ParametrizedSecurityScheme.apply
+    ParametrizedSecuritySchemeModel                     -> ParametrizedSecurityScheme.apply,
+    ExampleModel                                        -> Example.apply
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap
