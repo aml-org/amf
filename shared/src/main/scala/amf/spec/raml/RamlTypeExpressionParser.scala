@@ -5,11 +5,13 @@ import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.shape._
 import amf.spec.Declarations
+import amf.spec.common.ErrorReporterParser
 import amf.vocabulary.Namespace
+import org.yaml.model.YPart
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations, var i: Int = 0) {
+class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations, var i: Int = 0, part: Option[YPart] = None) extends ErrorReporterParser {
   var parsedShape: Option[Shape] = None
   var acc: String                = ""
   var parsingArray               = false
@@ -36,7 +38,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
           ParsingResult(parsedShape, input.tail)
         case '(' =>
           processChars()
-          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1, part).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '|' =>
@@ -45,7 +47,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
           }
           processChars()
           parsedShape = Some(toUnion)
-          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1, part).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '[' =>
@@ -94,7 +96,11 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
 
   private def toUnion: Shape = {
     parsedShape match {
-      case None                => throw new Exception("Syntax error, cannot create empty Union")
+      case None =>
+        val union = UnionShape()
+        adopt(union)
+        parsingErrorReport(union.id, "Syntax error, cannot create empty Union", part)
+        union
       case Some(u: UnionShape) => u
       case Some(shape) =>
         val union = UnionShape()
@@ -136,7 +142,9 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
                 union.fields.remove(UnionShapeModel.AnyOf)
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
-          case _ => throw new Exception(s"Error parsing type expression, cannot accept type $shape")
+          case _ =>
+            parsingErrorReport(shape.id, s"Error parsing type expression, cannot accept type $shape", part)
+            Some(shape)
         }
     }
   }
@@ -174,12 +182,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
       case _              => false
     }
     if (empty) {
-      throw new Exception("Syntax error, generating empty array")
+      parsingErrorReport(t.id, "Syntax error, generating empty array", part)
     }
   }
 
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, declarations: Declarations) = new RamlTypeExpressionParser(adopt, declarations)
+  def apply(adopt: Shape => Shape, declarations: Declarations, part: Option[YPart] = None) = new RamlTypeExpressionParser(adopt, declarations, 0, part)
 }

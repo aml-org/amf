@@ -144,14 +144,21 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       case map: YMap =>
         map.key("type") match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
-            val shape =
-              SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
+            val shape = SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
             shape.withName(entry.key)
             adopt(shape)
             shape
-          case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+          case _ =>
+            val shape = SchemaShape()
+            adopt(shape)
+            parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+            shape
         }
-      case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+      case _ =>
+        val shape = SchemaShape()
+        adopt(shape)
+        parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+        shape
     }
   }
 
@@ -162,9 +169,17 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         map.key("type") match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
             typeEntry.value.value.asInstanceOf[YScalar].text
-          case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+          case _ =>
+            val shape = SchemaShape()
+            adopt(shape)
+            parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+            ""
         }
-      case _ => throw new Exception("Cannot parse XML Schema expression out of a non string value")
+      case _ =>
+        val shape = SchemaShape()
+        adopt(shape)
+        parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+        ""
     }
     val schemaAst   = YamlParser(text).parse(true)
     val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
@@ -172,14 +187,19 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       case Some(shape) =>
         shape.annotations += ParsedJSONSchema(text)
         shape
-      case None => throw new Exception("Cannot parse JSON Schema")
+      case None => {
+        val shape = SchemaShape()
+        adopt(shape)
+        parsingErrorReport(shape.id, "Cannot parse JSON Schema", Some(entry))
+        shape
+      }
     }
   }
 
   private def parseTypeExpression(): Shape = {
     part.value match {
       case expression: YScalar =>
-        RamlTypeExpressionParser(adopt, declarations).parse(expression.text).get
+        RamlTypeExpressionParser(adopt, declarations, Some(part.value)).parse(expression.text).get
 
       case _: YMap => parseObjectType()
     }
@@ -356,7 +376,9 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                 .filter(_.isDefined)
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
-            case _ => throw new Exception("Unions are built from multiple shape nodes")
+
+            case _ =>
+              parsingErrorReport(shape.id, "Unions are built from multiple shape nodes", Some(entry))
           }
         }
       )
@@ -423,7 +445,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
             // this is a sequence, we need to create a tuple
             case _: YSequence => Left(TupleShape(ast).withName(name))
             // not an array regular array parsing
-            case _ => throw new Exception("Tuples must have a list of types")
+            case _ =>
+              val tuple = TupleShape(ast).withName(name)
+              parsingErrorReport(tuple.id, "Tuples must have a list of types", Some(entry.value.value))
+              Left(tuple)
 
           }
         case None => Right(ArrayShape(ast).withName(name))
@@ -472,7 +497,9 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         case Some(parsed: Shape) =>
           validateClosedShape(parsed.id, map, "arrayShape")
           parsed
-        case None => throw new Exception("Cannot parse data arrangement shape")
+        case None =>
+          parsingErrorReport(shape.id, "Cannot parse data arrangement shape", Some(map))
+          shape
       }
     }
   }
@@ -716,7 +743,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           schema
 
         case None =>
-          throw new Exception("Error, cannot parse schema type without schema text")
+          val schema: SchemaShape = SchemaShape()
+          schema.adopted(parent)
+          parsingErrorReport(schema.id, "Error, cannot parse schema type without schema text", None)
+          schema
       }
     }
 
@@ -739,7 +769,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                   shape.set(NodeShapeModel.Inherits,
                             AmfArray(Seq(ancestor), Annotations(entry.value)),
                             Annotations(entry))
-                case _ => throw new Exception("Reference not found")
+                case _ =>
+                  parsingErrorReport(shape.id, "Reference not found", Some(entry.value.value))
               }
 
             case sequence: YSequence =>
@@ -750,7 +781,6 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                   scalar.toString match {
                     case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
                       RamlTypeExpressionParser(adopt, declarations).parse(s).get
-//                      RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations).parse().get
                     case s if declarations.shapes.get(s).isDefined =>
                       declarations.shapes(s)
                     case s if wellKnownType(s) =>

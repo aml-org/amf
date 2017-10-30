@@ -111,6 +111,13 @@ object ParserSideValidations {
       None,
       None,
       Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+    ),
+    ValidationSpecification(
+      (Namespace.AmfParser + "parsingError").iri(),
+      "Parsing error",
+      None,
+      None,
+      Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
     )
   )
 }
