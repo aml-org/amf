@@ -223,7 +223,8 @@ case class OasTypeParser(ast: YPart,
                 .filter(_.isDefined)
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
-            case _ => throw new Exception("Unions are built from multiple shape nodes")
+
+            case _ => parsingErrorReport(shape.id, "Unions are built from multiple shape nodes", Some(entry.value.value))
           }
         }
       )
@@ -254,7 +255,11 @@ case class OasTypeParser(ast: YPart,
 
     def parse(): Shape = {
       lookAhead() match {
-        case None               => throw new Exception("Cannot parse data arrangement shape")
+        case None =>
+          val arrayShape = ArrayShape()
+          adopt(arrayShape)
+          parsingErrorReport(arrayShape.id, "Cannot parse data arrangement shape", Some(ast))
+          arrayShape
         case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt, declarations).parse()
         case Some(Right(array)) => ArrayShapeParser(array, map, adopt, declarations).parse()
       }
@@ -336,7 +341,11 @@ case class OasTypeParser(ast: YPart,
 
       finalShape match {
         case Some(parsed: Shape) => parsed
-        case None                => throw new Exception("Cannot parse data arrangement shape")
+        case None =>
+          val arrayShape = ArrayShape()
+          adopt(arrayShape)
+          parsingErrorReport(arrayShape.id, "Cannot parse data arrangement shape", Some(map))
+          arrayShape
       }
     }
   }
@@ -550,9 +559,10 @@ case class OasTypeParser(ast: YPart,
     override def parse(): Shape = {
       map.key("x-schema", { entry =>
         entry.value.value match {
-          case str: YScalar =>
-            shape.withRaw(str.text)
-          case _ => throw new Exception("Cannot parse non string schema shape")
+          case str: YScalar => shape.withRaw(str.text)
+          case _ =>
+            parsingErrorReport(shape.id, "Cannot parse non string schema shape", Some(map))
+            shape.withRaw("")
         }
       })
 
@@ -561,7 +571,9 @@ case class OasTypeParser(ast: YPart,
           entry.value.value match {
             case str: YScalar =>
               shape.withMediaType(str.text)
-            case _ => throw new Exception("Cannot parse non string schema shape")
+            case _ =>
+              parsingErrorReport(shape.id, "Cannot parse non string schema shape", Some(map))
+              shape.withMediaType("*/*")
           }
         }
       )

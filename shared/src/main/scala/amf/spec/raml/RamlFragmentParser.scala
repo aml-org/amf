@@ -4,7 +4,7 @@ import amf.compiler.RamlFragmentHeader._
 import amf.compiler.{RamlFragment, Root}
 import amf.document.Fragment._
 import amf.domain.Annotation.SourceVendor
-import amf.domain.Annotations
+import amf.domain.{Annotations, ExternalDomainElement}
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
@@ -26,7 +26,10 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
     // first i must identify the type of fragment
 
     val rootMap: YMap =
-      root.document.value.map(_.toMap).getOrElse(throw new RuntimeException("Cannot parse empty map"))
+      root.document.value.map(_.toMap).getOrElse {
+        parsingErrorReport(root.location, "Cannot parse empty map", Some(root.document))
+        YMap()
+      }
 
     val fragment: Fragment = fragmentType match {
       case Raml10DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
@@ -37,7 +40,9 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment) extends Ra
       case Raml10Extension                 => ExtensionFragmentParser(rootMap).parse()
       case Raml10Overlay                   => OverlayFragmentParser(rootMap).parse()
       case Raml10SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
-      case _                               => throw new IllegalStateException("Unsupported fragment type")
+      case _                               =>
+        parsingErrorReport(root.location, "Unsupported fragment type", Some(root.document))
+        ExternalFragment().withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
     }
 
     UsageParser(rootMap, fragment).parse()
