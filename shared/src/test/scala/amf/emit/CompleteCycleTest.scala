@@ -57,15 +57,15 @@ class CompleteCycleTest extends BuildCycleTests {
 //  }
 
   test("Basic cycle for amf") {
-    cycle("basic.jsonld", AmfJsonHint, Amf)
+    cycle("basic.jsonld", AmfJsonHint)
   }
 
   test("Basic cycle for raml") {
-    cycle("basic.raml", RamlYamlHint, Raml)
+    cycle("basic.raml", RamlYamlHint)
   }
 
   test("Basic cycle for oas") {
-    cycle("basic.json", OasJsonHint, Oas)
+    cycle("basic.json", OasJsonHint)
   }
 
   test("Basic raml to amf test") {
@@ -502,7 +502,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types forward references oas to oas test") {
-    cycle("forward-references-types.json", OasJsonHint, Oas)
+    cycle("forward-references-types.json", OasJsonHint)
   }
 
   test("Schema types raml to amf test") {
@@ -597,4 +597,35 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("security-with-query-string.json.jsonld", "security-with-query-string.json", AmfJsonHint, Oas)
   }
 
+  test("Example raml") {
+    cycle("examples.raml", RamlYamlHint)
+  }
+
+  test("Example json") {
+    cycle("examples.json", OasJsonHint)
+  }
+
+  test("Example raml to amf") {
+    cycle("examples.raml", "examples.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Example json to amf") {
+    cycle("examples.json", "examples.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Example amf to raml") {
+    cycle("examples.raml.jsonld", "examples.jsonld.raml", AmfJsonHint, Raml)
+  }
+
+  test("Example amf to json") {
+    cycle("examples.json.jsonld", "examples.jsonld.json", AmfJsonHint, Oas)
+  }
+
+  test("Fragment Named Example raml") {
+    cycle("named-example.raml", "named-example.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
+  test("Fragment Named Example oas") {
+    cycle("named-example.json", "named-example.json", OasJsonHint, Oas, referencesPath)
+  }
 }

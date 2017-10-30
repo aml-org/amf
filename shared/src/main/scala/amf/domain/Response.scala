@@ -13,12 +13,14 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   def statusCode: String      = fields(StatusCode)
   def headers: Seq[Parameter] = fields(Headers)
   def payloads: Seq[Payload]  = fields(Payloads)
+  def examples: Seq[Example]  = fields(Examples)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
   def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
+  def withExamples(examples: Seq[Example]): this.type = setArray(Examples, examples)
 
   def withHeader(name: String): Parameter = {
     val result = Parameter().withName(name)
@@ -31,6 +33,12 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
     mediaType.map(result.withMediaType)
     add(Payloads, result)
     result
+  }
+
+  def withExample(mediaType: String): Example = {
+    val example = Example().withMediaType(mediaType)
+    add(Examples, example)
+    example
   }
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)

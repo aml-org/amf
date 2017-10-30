@@ -70,6 +70,9 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
       }
     )
 
+    val examples = OasResponseExamplesParser("(examples)", map).parse()
+    if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
+
     validateClosedShape(response.id, map, "response")
 
     AnnotationParser(() => response, map).parse()

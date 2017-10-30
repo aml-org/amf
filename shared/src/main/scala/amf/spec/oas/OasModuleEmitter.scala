@@ -10,6 +10,7 @@ import amf.parser.Position
 import amf.remote.Oas
 import amf.spec.common.BaseEmitters._
 import amf.spec.declaration._
+import amf.spec.domain.NamedExampleEmitter
 import amf.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -25,8 +26,8 @@ case class OasModuleEmitter(module: Module) extends OasSpecEmitter {
 
     val ordering = SpecOrdering.ordering(Oas, module.annotations)
 
-    val declares   = DeclarationsEmitter(module.declares, ordering).emitters
     val references = Seq(ReferencesEmitter(module.references, ordering))
+    val declares   = DeclarationsEmitter(module.declares, ordering, module.references).emitters
     val usages     = module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
 
     YDocument {
@@ -53,8 +54,8 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       case ef: ExtensionFragment         => ExtensionFragmentEmitter(ef, ordering)
       case of: OverlayFragment           => OverlayFragmentEmitter(of, ordering)
       case sc: SecurityScheme            => SecuritySchemeFragmentEmitter(sc, ordering)
-      //      case _: NamedExample              => Raml10NamedExample
-      case _ => throw new UnsupportedOperationException("Unsupported fragment type")
+      case ne: NamedExample              => NamedExampleFragmentEmitter(ne, ordering)
+      case _                             => throw new UnsupportedOperationException("Unsupported fragment type")
     }
     val references = ReferencesEmitter(fragment.references, ordering)
     val usage: Option[ValueEmitter] =
@@ -87,7 +88,8 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
 
     override val header = OasHeaderEmitter(OasFragmentHeader.Oas20DataType)
 
-    val emitters: Seq[EntryEmitter] = OasTypeEmitter(dataType.encodes, ordering).entries()
+    val emitters: Seq[EntryEmitter] =
+      OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclaration, ordering: SpecOrdering)
@@ -134,7 +136,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       extension.fields
         .entry(ExtensionModel.Extends)
         .foreach(f => result += NamedRefEmitter("x-extends", f.scalar.toString, pos = pos(f.value.annotations)))
-      result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas)).emitters
+      result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas), extension.references).emitters
       result
     }
   }
@@ -149,7 +151,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       extension.fields
         .entry(OverlayModel.Extends)
         .foreach(f => result += NamedRefEmitter("x-extends", f.scalar.toString, pos = pos(f.value.annotations)))
-      result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas)).emitters
+      result ++= WebApiEmitter(extension.encodes, ordering, Some(Oas), extension.references).emitters
       result
     }
   }
@@ -163,6 +165,14 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       OasSecuritySchemeEmitter(securityScheme.encodes,
                                OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`),
                                ordering).emitters()
+  }
+
+  case class NamedExampleFragmentEmitter(namedExample: NamedExample, ordering: SpecOrdering)
+      extends OasFragmentTypeEmitter {
+
+    override val header = OasHeaderEmitter(OasFragmentHeader.Oas20NamedExample)
+
+    val emitters: Seq[EntryEmitter] = Seq(NamedExampleEmitter(namedExample.encodes, ordering))
   }
 
   case class OasHeaderEmitter(oasHeader: OasHeader) extends EntryEmitter {

@@ -23,7 +23,7 @@ class ShapeNormalizationStage(profile: String)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {
 
-  override def resolve(model:BaseUnit): BaseUnit = {
+  override def resolve(model: BaseUnit): BaseUnit = {
     model.transform(findShapesPredicate, transform)
   }
 
@@ -41,15 +41,16 @@ class ShapeNormalizationStage(profile: String)
 
   def findShapesPredicate(element: DomainElement) = {
     val metaModelFound: Obj = metaModel(element)
-    val targetIri = (Namespace.Shapes + "Shape").iri()
-    metaModelFound.`type`.exists { t: ValueType => t.iri() == targetIri }
+    val targetIri           = (Namespace.Shapes + "Shape").iri()
+    metaModelFound.`type`.exists { t: ValueType =>
+      t.iri() == targetIri
+    }
   }
 
   protected def transform(element: DomainElement): Option[DomainElement] = element match {
     case shape: Shape => Some(canonical(expand(shape.cloneShape())))
     case other        => Some(other)
   }
-
 
   protected def expand(shape: Shape): Shape = {
     ensureCorrect(shape)
@@ -107,8 +108,9 @@ class ShapeNormalizationStage(profile: String)
 
     // We make explicit the implicit fields
     node.fields.entry(NodeShapeModel.Closed) match {
-      case Some(entry) => node.fields.setWithoutId(NodeShapeModel.Closed, entry.value.value, entry.value.annotations += ExplicitField())
-      case None        => node.set(NodeShapeModel.Closed, AmfScalar(false), Annotations() += ExplicitField())
+      case Some(entry) =>
+        node.fields.setWithoutId(NodeShapeModel.Closed, entry.value.value, entry.value.annotations += ExplicitField())
+      case None => node.set(NodeShapeModel.Closed, AmfScalar(false), Annotations() += ExplicitField())
     }
 
     node
@@ -118,10 +120,11 @@ class ShapeNormalizationStage(profile: String)
     // property is mandatory and must be explicit
     var required: Boolean = false
     property.fields.entry(PropertyShapeModel.MinCount) match {
-      case None        => throw new Exception("MinCount field is mandatory in a shape")
-      case Some(entry) => if (entry.value.value.asInstanceOf[AmfScalar].toNumber.intValue() != 0) {
-        required = true
-      }
+      case None => throw new Exception("MinCount field is mandatory in a shape")
+      case Some(entry) =>
+        if (entry.value.value.asInstanceOf[AmfScalar].toNumber.intValue() != 0) {
+          required = true
+        }
     }
 
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
@@ -129,6 +132,12 @@ class ShapeNormalizationStage(profile: String)
       val expandedRange = expand(property.range)
       // Making the required property explicit
       checkRequiredShape(expandedRange, required)
+      expandedRange.fields
+        .entry(ShapeModel.RequiredShape)
+        .foreach(f =>
+          if (f.value.annotations.contains(classOf[ExplicitField]))
+            property.fields.entry(PropertyShapeModel.MinCount).foreach(f => f.value.annotations.+=(ExplicitField())))
+
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
       throw new Exception(s"Resolution error: Property shape with missing range: $property")
@@ -139,7 +148,8 @@ class ShapeNormalizationStage(profile: String)
   protected def checkRequiredShape(shape: Shape, required: Boolean): Unit = {
     Option(shape.fields.getValue(ShapeModel.RequiredShape)) match {
       case Some(v) => v.annotations += ExplicitField()
-      case None    => shape.fields.setWithoutId(ShapeModel.RequiredShape, AmfScalar(required), Annotations() += ExplicitField())
+      case None =>
+        shape.fields.setWithoutId(ShapeModel.RequiredShape, AmfScalar(required), Annotations() += ExplicitField())
     }
   }
 
@@ -178,7 +188,7 @@ class ShapeNormalizationStage(profile: String)
     var accShape: Shape = canonical(shape)
     superTypes.foreach { superNode =>
       val canonicalSuperNode = canonical(superNode)
-      val newMinShape = minShape(accShape, canonicalSuperNode)
+      val newMinShape        = minShape(accShape, canonicalSuperNode)
       accShape = canonical(newMinShape)
     }
     accShape
@@ -243,11 +253,10 @@ class ShapeNormalizationStage(profile: String)
     } else {
       // We start processing the properties by cloning the base node shape
       val properties = node.properties
-      var acc = Seq(node.withProperties(Seq())cloneShape())
+      var acc        = Seq(node.withProperties(Seq()) cloneShape ())
 
       // We expand each property in the node
       properties.foreach { propertyShape =>
-
         canonical(propertyShape) match {
 
           // The output of the canonical property is a Union
@@ -341,7 +350,9 @@ class ShapeNormalizationStage(profile: String)
     } else {
       val tuples = acc.map { items =>
         val newTuple = tuple.cloneShape()
-        newTuple.fields.setWithoutId(TupleShapeModel.Items, AmfArray(items), tuple.fields.getValue(TupleShapeModel.Items).annotations)
+        newTuple.fields.setWithoutId(TupleShapeModel.Items,
+                                     AmfArray(items),
+                                     tuple.fields.getValue(TupleShapeModel.Items).annotations)
       }
       val union = UnionShape()
       union.id = tuple.id + "resolved"

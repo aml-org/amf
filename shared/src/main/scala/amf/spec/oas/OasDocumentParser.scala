@@ -586,6 +586,9 @@ case class OasDocumentParser(root: Root) extends OasSpecParser with OasSyntax {
       if (payloads.nonEmpty)
         response.set(ResponseModel.Payloads, AmfArray(payloads))
 
+      val examples = OasResponseExamplesParser("examples", map).parse()
+      if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
+
       AnnotationParser(() => response, map).parse()
 
       validateClosedShape(response.id, map, "response")

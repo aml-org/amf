@@ -70,6 +70,7 @@ object RamlFragmentHeader {
             case FragmentTypes.ExtensionFragment         => Some(Raml10Extension)
             case FragmentTypes.OverlayFragment           => Some(Raml10Overlay)
             case FragmentTypes.SecuritySchemeFragment    => Some(Raml10SecurityScheme)
+            case FragmentTypes.NamedExampleFragment      => Some(Raml10NamedExample)
             case _                                       => None // UnknowFragment
         })
   }
@@ -90,6 +91,7 @@ object RamlFragmentHeader {
     case t if t.equals(Raml10Overlay.text)                   => Some(Raml10Overlay)
     case t if t.equals(Raml10Extension.text)                 => Some(Raml10Extension)
     case t if t.equals(Raml10SecurityScheme.text)            => Some(Raml10SecurityScheme)
+    case t if t.equals(Raml10NamedExample.text)              => Some(Raml10NamedExample)
     case _                                                   => None
   }
 }

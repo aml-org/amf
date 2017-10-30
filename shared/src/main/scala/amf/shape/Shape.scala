@@ -1,7 +1,7 @@
 package amf.shape
 
 import amf.domain.Annotation.{ExplicitField, ParsedFromTypeExpression}
-import amf.domain.{CreativeWork, DomainElement, Linkable}
+import amf.domain.{CreativeWork, DomainElement, Example, Linkable}
 import amf.metadata.shape.ShapeModel._
 import amf.model.AmfArray
 
@@ -18,6 +18,7 @@ abstract class Shape extends DomainElement with Linkable {
   def documentation: CreativeWork     = fields(Documentation)
   def xmlSerialization: XMLSerializer = fields(XMLSerialization)
   def inherits: Seq[Shape]            = fields(Inherits)
+  def examples: Seq[Example]          = fields(Examples)
 
   def withName(name: String): this.type                                = set(Name, name)
   def withDisplayName(name: String): this.type                         = set(DisplayName, name)
@@ -27,8 +28,9 @@ abstract class Shape extends DomainElement with Linkable {
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
   def withInherits(inherits: Seq[Shape]): this.type                    = setArray(Inherits, inherits)
+  def withExamples(examples: Seq[Example]): this.type                  = setArray(Examples, examples)
 
-  def fromTypeExpression: Boolean =  this.annotations.contains(classOf[ParsedFromTypeExpression])
+  def fromTypeExpression: Boolean = this.annotations.contains(classOf[ParsedFromTypeExpression])
   def typeExpression: String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
     case Some(expr: ParsedFromTypeExpression) => expr.value
     case _                                    => throw new Exception("Trying to extract non existent type expression")
@@ -49,14 +51,15 @@ abstract class Shape extends DomainElement with Linkable {
     }
     cloned.id = this.id
     this.fields.foreach {
-      case (f,v) =>
+      case (f, v) =>
         val clonedValue = v.value match {
-          case s:Shape => s.cloneShape()
-          case a:AmfArray => AmfArray(a.values.map {
-            case e: Shape => e.cloneShape()
-            case o        => o
-          }, a.annotations)
-          case o          => o
+          case s: Shape => s.cloneShape()
+          case a: AmfArray =>
+            AmfArray(a.values.map {
+              case e: Shape => e.cloneShape()
+              case o        => o
+            }, a.annotations)
+          case o => o
         }
 
         cloned.fields.setWithoutId(f, clonedValue, v.annotations)

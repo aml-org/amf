@@ -1,8 +1,8 @@
 package amf.compiler
 
 import amf.compiler.FragmentTypes._
-import amf.parser.YMapOps
-import org.yaml.model.YMap
+import amf.parser.{YMapOps, YValueOps}
+import org.yaml.model.{YMap, YType}
 
 import scala.collection.mutable.ListBuffer
 
@@ -20,6 +20,7 @@ object FragmentTypes {
   object OverlayFragment           extends FragmentType("Overlay")
   object ExtensionFragment         extends FragmentType("Extension")
   object SecuritySchemeFragment    extends FragmentType("SecurityScheme")
+  object NamedExampleFragment      extends FragmentType("NamedExample")
   object UnknownFragment           extends FragmentType("?")
   def apply(map: YMap): FragmentType = FragmentTypeDetection(map).detect()
 }
@@ -48,6 +49,13 @@ case class FragmentTypeDetection(map: YMap) {
 
     map.key("extends").foreach(_ => matchingTypes += ExtensionFragment) // overlay??
 
+    map.entries
+      .filter(e => e.value.tagType == YType.Map)
+      .map(e => e.value.value.toMap)
+      .flatMap(m => m.regex("value|strict"))
+      .headOption
+      .foreach(_ => matchingTypes += NamedExampleFragment)
+
     val entries = map.regex("describedBy|settings|x-describedBy|x-settings")
     if (entries.isEmpty)
       map
@@ -67,7 +75,7 @@ case class FragmentTypeDetection(map: YMap) {
       matchingTypes += SecuritySchemeFragment
 
     /** If none, or more than one know fragment type applies to the given fields, will return unknow for safety.
-      * Only return the finded type if one and only one matches
+      * Only return the found type if one and only one matches
       */
     matchingTypes.size match {
       case s if s == 1 => matchingTypes.head

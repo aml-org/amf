@@ -12,7 +12,8 @@ import amf.parser.{YValueOps, _}
 import amf.shape.Shape
 import amf.spec.Declarations
 import amf.spec.declaration._
-import org.yaml.model.YMap
+import amf.spec.domain.RamlNamedExampleParser
+import org.yaml.model.{YMap, YType}
 
 /**
   *
@@ -34,6 +35,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       case Oas20Extension                 => ExtensionFragmentParser(rootMap).parse()
       case Oas20Overlay                   => OverlayFragmentParser(rootMap).parse()
       case Oas20SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
+      case Oas20NamedExample              => NamedExampleFragmentParser(rootMap).parse()
     }).getOrElse {
       val fragment = ExternalFragment().withEncodes(ExternalDomainElement().withRaw(root.raw))
       parsingErrorReport(fragment.id, "Unsuported oas type", Some(rootMap))
@@ -185,4 +187,15 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
     }
   }
 
+  case class NamedExampleFragmentParser(map: YMap) {
+    def parse(): NamedExample = {
+      val entries      = map.entries.filter(e => e.value.tagType == YType.Map)
+      val namedExample = NamedExample().adopted(root.location)
+
+      if (entries.size == 1) namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
+      else
+        throw new IllegalStateException(
+          "Could not identified the named example in fragment because it contains more than one named map.")
+    }
+  }
 }

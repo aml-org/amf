@@ -10,6 +10,7 @@ import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
 import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.domain.RamlExamplesParser
 import amf.spec.raml._
 import amf.vocabulary.Namespace
 import org.yaml.model._
@@ -721,6 +722,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         }
       )
 
+      val examples = RamlExamplesParser(map, "example", "examples", declarations).parse()
+      if (examples.nonEmpty)
+        shape.setArray(ShapeModel.Examples, examples)
+
       shape
     }
 
@@ -781,6 +786,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                   scalar.toString match {
                     case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
                       RamlTypeExpressionParser(adopt, declarations).parse(s).get
+
                     case s if declarations.shapes.get(s).isDefined =>
                       declarations.shapes(s)
                     case s if wellKnownType(s) =>

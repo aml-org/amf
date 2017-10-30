@@ -2,11 +2,11 @@ package amf.spec
 
 import amf.common.core.QName
 import amf.document.Fragment.Fragment
+import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
-import amf.domain.{CreativeWork, DomainElement, Parameter, Payload}
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}
 
@@ -92,6 +92,8 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   def findSecurityScheme(key: String): Option[SecurityScheme] = findForType(key, _.securitySchemes) collect {
     case ss: SecurityScheme => ss
   }
+
+  def findNamedExample(key: String): Option[Example] = fragments.get(key) collect { case e: Example => e }
 
   /** Resolve all [[UnresolvedShape]] references or fail. */
   def resolve(): Unit = shapes.values.foreach(resolveShape)
