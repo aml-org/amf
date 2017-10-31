@@ -1,4 +1,4 @@
-package amf.spec.pyaload
+package amf.spec.payload
 
 import amf.document.Document
 import amf.spec.common.{AbstractVariables, DataNodeParser}
