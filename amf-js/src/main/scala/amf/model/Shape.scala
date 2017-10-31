@@ -35,6 +35,7 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
   val documentation: CreativeWork     = Option(shape.documentation).map(amf.model.CreativeWork).orNull
   val xmlSerialization: XMLSerializer = Option(shape.xmlSerialization).map(amf.model.XMLSerializer).orNull
   val inherits: js.Iterable[Shape]    = shape.inherits.map(Shape(_)).toJSArray
+  val examples: js.Iterable[Example]  = shape.examples.map(Example).toJSArray
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -71,6 +72,10 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
     this
   }
 
+  def withExamples(examples: js.Iterable[Example]): this.type = {
+    shape.withExamples(examples.toList.map(_.element))
+    this
+  }
 }
 
 object Shape {

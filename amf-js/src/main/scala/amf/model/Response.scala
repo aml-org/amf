@@ -17,6 +17,7 @@ case class Response private[model] (private val response: amf.domain.Response) e
   val statusCode: String              = response.statusCode
   val headers: js.Iterable[Parameter] = response.headers.map(Parameter).toJSArray
   val payloads: js.Iterable[Payload]  = response.payloads.map(Payload).toJSArray
+  val examples: js.Iterable[Example]  = response.examples.map(Example).toJSArray
 
   override private[amf] def element: amf.domain.Response = response
 
@@ -47,6 +48,12 @@ case class Response private[model] (private val response: amf.domain.Response) e
   /** Set payloads property of this [[Response]]. */
   def withPayloads(payloads: js.Iterable[Payload]): this.type = {
     response.withPayloads(payloads.toSeq.map(_.element))
+    this
+  }
+
+  /** Set examples property of this [[Response]]. */
+  def withExamples(examples: js.Iterable[Example]): this.type = {
+    response.withExamples(examples.toSeq.map(_.element))
     this
   }
 
