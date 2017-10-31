@@ -1,0 +1,230 @@
+#%RAML 1.0 Dialect
+
+dialect: Mule Agent Configuration
+version: 0.1
+
+uses:
+  mule-runtime: ./vocabulary.raml
+
+external:
+  schema-org: http://schema.org/
+
+raml:
+  document:
+    encodes: muleAgentConfiguration
+    declares:
+      websockets: websocketsTransportConfiguration
+  module:
+    declares:
+      websockets: websocketsTransportConfiguration
+
+nodeMappings:
+
+  muleAgentConfiguration:
+    classTerm: mule-runtime.Agent
+    mapping:
+      transports:
+        propertyTerm: mule-runtime.transport
+        mandatory: true
+        range:
+          - restTransportConfiguration
+          - websocketsTransportConfiguration
+        asMap: true
+        hash: mule-runtime.componentId
+      services:
+        propertyTerm: mule-runtime.supportsService
+        mandatory: false
+        range:
+          - muleAgentJmxPublisherService
+          - muleAgentApplicationService
+          - muleAgentDomainService
+        asMap: true
+        hash: mule-runtime.componentId
+      internalHandlers:
+        propertyTerm: mule-runtime.internalHandler
+        mandatory: false
+        range:
+          - domainDeploymentNotificationInternalHandler
+          - applicationDeploymentNotificationInternalHandler
+        asMap: true
+        hash: mule-runtime.componentId
+      externalHandlers:
+        propertyTerm: mule-runtime.externalHandler
+        mandatory: false
+        range:
+          - domainRequestExternalHandler
+          - applicationRequestExternalHandler
+        asMap: true
+        hash: mule-runtime.componentId
+
+
+  restTransportConfiguration:
+    classTerm: mule-runtime.RestTransport
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - rest.agent.transport
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+      security:
+        propertyTerm: mule-runtime.keystore
+        mandatory: true
+        range: keystoreConfiguration
+      port:
+        propertyTerm: mule-runtime.tcpPort
+        mandatory: true
+        range: integer
+
+  keystoreConfiguration:
+    classTerm: mule-runtime.KeyStore
+    mapping:
+      keyStorePassword:
+        propertyTerm: mule-runtime.keyStorePassword
+        mandatory: true
+        range: string
+      keyStoreAlias:
+        propertyTerm: mule-runtime.keyAlias
+        mandatory: true
+        range: string
+      keyStoreAliasPassword:
+        propertyTerm: mule-runtime.keyAliasPassword
+        mandatory: true
+        range: string
+
+
+  websocketsTransportConfiguration:
+    classTerm: mule-runtime.WebSocketsTransport
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - websocket.transport
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+      security:
+        propertyTerm: mule-runtime.keystore
+        mandatory: true
+        range: keystoreConfiguration
+
+
+  muleAgentApplicationService:
+    classTerm: mule-runtime.ApplicationService
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - mule.agent.application.service
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+
+
+  muleAgentDomainService:
+    classTerm: mule-runtime.ApplicationService
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - mule.agent.domain.service
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+
+  muleAgentJmxPublisherService:
+    classTerm: mule-runtime.JmxPublisherService
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - mule.agent.jmx.publisher.service
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+
+      frequency:
+        propertyTerm: mule-runtime.frequency
+        mandatory: true
+        range: integer
+
+      frequencyTimeUnit:
+        propertyTerm: mule-runtime.timeUnit
+        mandatory: true
+        range: string
+        enum:
+          - SECONDS
+          - MINUTES
+          - HOURS
+
+  applicationDeploymentNotificationInternalHandler:
+    classTerm: mule-runtime.ApplicationDeploymentNotificationHandler
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - applicationdeploymentnotification.internal.message.handler
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+
+  domainDeploymentNotificationInternalHandler:
+    classTerm: mule-runtime.ApplicationDeploymentNotificationHandler
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - domaindeploymentnotification.internal.message.handler
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+
+  applicationRequestExternalHandler:
+    classTerm: mule-runtime.ApplicationRequestHandler
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - applications.request.handler
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean
+
+  domainRequestExternalHandler:
+    classTerm: mule-runtime.DomainRequestHandler
+    mapping:
+      ref:
+        propertyTerm: mule-runtime.componentId
+        mandatory: true
+        range: string
+        enum:
+          - domains.request.handler
+      enabled:
+        propertyTerm: mule-runtime.enabledComponent
+        mandatory: false
+        range: boolean

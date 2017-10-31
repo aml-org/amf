@@ -147,4 +147,21 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.length == 1)
     }
   }
+
+
+  test("Custom dialect can be validated (amc)") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    platform.dialectsRegistry.registerDialect("file://shared/src/test/resources/vocabularies/amc/dialect.raml").flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler("file://shared/src/test/resources/vocabularies/amc/example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.loadDialectValidationProfile(dialect.get)
+      validator.validate(unit, dialect.get.name)
+    } flatMap { report =>
+      println(report)
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
 }

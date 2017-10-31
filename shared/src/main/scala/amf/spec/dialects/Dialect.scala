@@ -307,7 +307,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
       }
     }
 
-  private def initReferences(root: Root): Unit = {
+  protected def initReferences(root: Root): Unit = {
     // val ast = root.ast.last
     // val entries = Entries(ast)
 
