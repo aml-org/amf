@@ -248,7 +248,7 @@ object TypeBuiltins {
   val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit])
+class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit])
     extends RamlSpecParser
     with TypeBuiltins {
 
@@ -256,6 +256,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
     "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"
   private val externalsMap: mutable.HashMap[String, String] = new mutable.HashMap()
   private val declarationsFromLibraries                     = mutable.Map[String, DomainEntity]()
+  private val declarationsFromFragments                     = mutable.Map[String, DomainEntity]()
   private var base: String                                  = root.location + "#"
 
   initReferences(root)
@@ -273,7 +274,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
   val resolvedExternals: mutable.Set[String] = mutable.Set.empty
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] =
-    declarationsFromLibraries.get(name)
+    declarationsFromLibraries.get(name).orElse(declarationsFromFragments.get(name))
 
   def resolveBasicRef(name: String): String =
     if (Option(name).isEmpty) {
@@ -291,7 +292,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
                 resolvedUri
               }
               case _ =>
-                if (uses.contains(alias)) {
+                if (references.contains(alias)) {
                   throw new Exception(s"Cannot find entity '$suffix' in '$alias'")
                 }
                 throw new Exception(s"Cannot find prefix '$name'")
@@ -311,23 +312,28 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], use
     // val ast = root.ast.last
     // val entries = Entries(ast)
 
-    uses.foreach {
+    references.foreach {
       case (namespace, unit) =>
         val ent = retrieveDomainEntity(unit)
-        ent.definition.props.values.foreach(p => {
-          if (p.isMap)
-            ent
-              .entities(p)
-              .foreach(decl => {
-                p.hash.foreach(h => {
-                  decl
-                    .string(h)
-                    .foreach(localName => {
-                      declarationsFromLibraries.put(namespace + "." + localName, decl)
+        unit match {
+          case fragment: Fragment =>
+            declarationsFromFragments.put(namespace, ent)
+          case _ =>
+            ent.definition.props.values.foreach(p => {
+              if (p.isMap)
+                ent
+                  .entities(p)
+                  .foreach(decl => {
+                    p.hash.foreach(h => {
+                      decl
+                        .string(h)
+                        .foreach(localName => {
+                          declarationsFromLibraries.put(namespace + "." + localName, decl)
+                        })
                     })
-                })
-              })
-        })
+                  })
+            })
+        }
     }
 
     root.document.value.foreach { value: YValue =>

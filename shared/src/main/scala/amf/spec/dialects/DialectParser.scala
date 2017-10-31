@@ -64,6 +64,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
     val result = root.document.value.map(value => {
       val map = value.toMap
 
+      // This are ALL references, libraries and inclusions
       val references = ReferencesParser("uses", map, root.references).parse()
 
       resolver = dialect.resolver.resolver(root, references.references.toMap)
