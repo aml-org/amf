@@ -29,7 +29,7 @@ class DialectRegistry {
     }
     dialect.fragments.foreach {
       case (k, fragment) =>
-        val fragmentHeader = "%RAML " + dialect.header.substring(2) + " / " + k
+        val fragmentHeader = "%RAML " + k + " / " + dialect.header.substring(2)
         map = map + (fragmentHeader -> Dialect(fragmentHeader.substring(1),
                                                "",
                                                fragment,
