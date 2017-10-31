@@ -115,5 +115,8 @@ case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
   }
 }
 
+
 object DialectLanguageDefinition
-    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses) => { DialectLanguageResolver(r, uses) })
+    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses) => { DialectLanguageResolver(r, uses) },fragments = Map().+(("DialectNode",NodeDefinition))){
+
+}
