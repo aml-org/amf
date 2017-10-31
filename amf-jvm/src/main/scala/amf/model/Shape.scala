@@ -21,14 +21,15 @@ case class NilShape(private[amf] val nil: amf.shape.NilShape) extends Shape(nil)
 
 abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement with Linkable {
 
-  val name: String                    = shape.name
-  val displayName: String             = shape.displayName
-  val description: String             = shape.description
-  val default: String                 = shape.default
-  val values: java.util.List[String]  = shape.values.asJava
-  val documentation: CreativeWork     = Option(shape.documentation).map(amf.model.CreativeWork).orNull
-  val xmlSerialization: XMLSerializer = Option(shape.xmlSerialization).map(amf.model.XMLSerializer).orNull
-  val inherits: java.util.List[Shape] = shape.inherits.map(Shape(_)).asJava
+  val name: String                      = shape.name
+  val displayName: String               = shape.displayName
+  val description: String               = shape.description
+  val default: String                   = shape.default
+  val values: java.util.List[String]    = shape.values.asJava
+  val documentation: CreativeWork       = Option(shape.documentation).map(amf.model.CreativeWork).orNull
+  val xmlSerialization: XMLSerializer   = Option(shape.xmlSerialization).map(amf.model.XMLSerializer).orNull
+  val inherits: java.util.List[Shape]   = shape.inherits.map(Shape(_)).asJava
+  val examples: java.util.List[Example] = shape.examples.map(Example).asJava
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -62,6 +63,11 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
 
   def withInherits(inherits: java.util.List[Shape]): this.type = {
     shape.withInherits(inherits.asScala.map(_.shape))
+    this
+  }
+
+  def withExamples(examples: java.util.List[Example]): this.type = {
+    shape.withExamples(examples.asScala.map(_.element))
     this
   }
 

@@ -4,6 +4,7 @@ import amf.ProfileNames
 import amf.common.AmfObjectTestMatcher
 import amf.model.{BaseUnit, Document, Module, WebApi}
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -108,6 +109,7 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
       model  <- new RamlParser().parseFileAsync(examplesPath + "library/nested.raml").toFuture
       report <- model.validate(ProfileNames.RAML).toFuture
     } yield {
+      Validation.currentValidation = None // todo: review with antonio the static validation
       assert(!report.conforms)
       assert(report.results.length == 1)
     }
@@ -115,10 +117,12 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
 
   test("Custom validation model interface") {
     val examplesPath = "file://shared/src/test/resources/validations/"
+
     for {
       model  <- new RamlParser().parseFileAsync(examplesPath + "banking/api.raml").toFuture
       report <- model.customValidation(examplesPath + "banking/profile.raml").toFuture
     } yield {
+      Validation.currentValidation = None // todo: review with antonio the static validation
       assert(!report.conforms)
       assert(report.results.nonEmpty)
     }

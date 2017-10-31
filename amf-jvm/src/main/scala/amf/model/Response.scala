@@ -9,12 +9,12 @@ case class Response private[model] (private val response: amf.domain.Response) e
 
   def this() = this(amf.domain.Response())
 
-  val name: String                       = response.name
-  val description: String                = response.description
-  val statusCode: String                 = response.statusCode
-  val headers: java.util.List[Parameter] = response.headers.map(Parameter).asJava
-  val payloads: java.util.List[Payload]  = response.payloads.map(Payload).asJava
-
+  val name: String                                       = response.name
+  val description: String                                = response.description
+  val statusCode: String                                 = response.statusCode
+  val headers: java.util.List[Parameter]                 = response.headers.map(Parameter).asJava
+  val payloads: java.util.List[Payload]                  = response.payloads.map(Payload).asJava
+  val examples: java.util.List[Example]                  = response.examples.map(Example).asJava
   override private[amf] def element: amf.domain.Response = response
 
   /** Set name property of this [[Response]]. */
@@ -44,6 +44,12 @@ case class Response private[model] (private val response: amf.domain.Response) e
   /** Set payloads property of this [[Response]]. */
   def withPayloads(payloads: java.util.List[Payload]): this.type = {
     response.withPayloads(payloads.asScala.map(_.element))
+    this
+  }
+
+  /** Set examples property of this [[Response]]. */
+  def withExamples(examples: java.util.List[Example]): this.type = {
+    response.withExamples(examples.asScala.map(_.element))
     this
   }
 
