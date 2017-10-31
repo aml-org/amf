@@ -11,7 +11,7 @@ import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
-import amf.spec.pyaload.PayloadParser
+import amf.spec.payload.PayloadParser
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
 import amf.validation.Validation
 import org.yaml.model._
