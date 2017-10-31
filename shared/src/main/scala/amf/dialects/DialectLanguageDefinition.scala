@@ -3,7 +3,6 @@ package amf.dialects
 import amf.compiler.Root
 import amf.document.BaseUnit
 import amf.metadata.Type
-import amf.spec.Declarations
 import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
@@ -13,7 +12,7 @@ import amf.vocabulary.Namespace
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
   id = Some((namespace + shortName).iri())
-  def refMap(name: String): DialectPropertyMapping = map(name, NodeReference.name, NodeReference).copy(required = true)
+  def refMap(name: String, isDeclaration: Boolean): DialectPropertyMapping = map(name, NodeReference.name, NodeReference, _.copy(required = true, isDeclaration = isDeclaration))
 }
 
 object VocabImport extends DialectLanguageNode("VocabImport") {
@@ -28,7 +27,7 @@ object NodeReference extends DialectLanguageNode("Declaration") {
 }
 
 object ModuleDeclaration extends DialectLanguageNode("ModuleDeclaration") {
-  val declares: DialectPropertyMapping = refMap("declares")
+  val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true)
 }
 
 object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
@@ -70,10 +69,10 @@ object NodeDefinition extends DialectLanguageNode("NodeDefinition") {
 }
 
 object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration") {
-  val encodes: DialectPropertyMapping = refMap("encodes")
+  val encodes: DialectPropertyMapping = refMap("encodes", isDeclaration = false)
 }
 object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") {
-  val declares: DialectPropertyMapping = refMap("declares")
+  val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true)
   var encodes: DialectPropertyMapping =
     str("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
 }

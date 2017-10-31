@@ -3,6 +3,7 @@ package amf.spec
 import amf.common.core.QName
 import amf.document.Fragment.Fragment
 import amf.domain.`abstract`.{ResourceType, Trait}
+import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
 import amf.domain.{CreativeWork, DomainElement, Parameter, Payload}

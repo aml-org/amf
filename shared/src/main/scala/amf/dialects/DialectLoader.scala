@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.compiler.Root
-import amf.dialects.RAML_1_0_DialectTopLevel.{NodeDefinitionObject, PropertyMappingObject}
+import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject}
 import amf.document.{BaseUnit, Document}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
@@ -78,7 +78,8 @@ class DialectLoader {
 
           val fragmentList: mutable.Map[String, DialectNode] = processFragments(dialectObject, dialectMap)
 
-          val moduleInfo = processModuleInfo(dialectObject, dialectMap)
+          val moduleInfo   = processModuleInfo(dialectObject, dialectMap)
+          processDeclarationsInfo(dialectNode, dialectObject, dialectMap)
 
           Dialect(dialectName,
                   dialectVersion,
@@ -122,16 +123,27 @@ class DialectLoader {
 
   private def processModuleInfo(dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
                                 dialectMap: mutable.Map[String, DialectNode]) = {
-    val dmap: mutable.Map[String, DialectNode] = fillModule(dialectMap, dialectObject)
-    if (dmap.nonEmpty) {
-      val mn = new DialectNode("module", Namespace.Document)
-      dmap.keys.foreach(k => {
-        mn.map(k, DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)), dmap(k))
-      })
-      // now we have a library node
-      Some(mn)
-    } else {
-      None
+    fillModule(dialectMap, dialectObject) match {
+      case Some(declarationMap:mutable.Map[String, DialectNode]) if declarationMap.nonEmpty =>
+        val moduleNode = new DialectNode("module", Namespace.Document)
+        declarationMap.keys.foreach { key =>
+          moduleNode.map(key, DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)), declarationMap(key), _.copy(isDeclaration = true))
+        }
+        // now we have a library node
+        Some(moduleNode)
+      case _ => None
+    }
+  }
+
+  def processDeclarationsInfo(documentDialectNode: DialectNode,
+                              dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
+                              dialectMap: mutable.Map[String, DialectNode]) = {
+    fillDocument(dialectMap, dialectObject) match {
+      case Some(declarationMap:mutable.Map[String, DialectNode]) if declarationMap.nonEmpty =>
+        declarationMap.keys.foreach { key =>
+          documentDialectNode.map(key, DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)), declarationMap(key), _.copy(isDeclaration = true))
+        }
+      case _ =>
     }
   }
 
@@ -160,23 +172,33 @@ class DialectLoader {
 
   private def fillModule(dialectMap: mutable.Map[String, DialectNode],
                          dialectObject: RAML_1_0_DialectTopLevel.dialectObject) = {
+    for {
+      raml   <- dialectObject.raml()
+      module <- raml.module()
+    } yield {
+      fillDeclarations(module.declares(), dialectMap)
+    }
+  }
+
+  private def fillDocument(dialectMap: mutable.Map[String, DialectNode],
+                           dialectObject: RAML_1_0_DialectTopLevel.dialectObject) = {
+    for {
+      raml     <- dialectObject.raml()
+      document <- raml.document()
+    } yield {
+      fillDeclarations(document.declares(), dialectMap)
+    }
+  }
+
+  private def fillDeclarations(declarations: Seq[DeclarationObject], dialectMap: mutable.Map[String, DialectNode]) = {
     val dmap: mutable.Map[String, DialectNode] = mutable.Map()
-    dialectObject
-      .raml()
-      .foreach(v => {
-        v.module()
-          .foreach(m => {
-            m.declares()
-              .foreach(d => {
-                for {
-                  nodeName     <- d.name()
-                  resolvedNode <- d.resolvedDeclaredNode()
-                } yield {
-                  dialectMap.get(resolvedNode.entity.id).foreach(d => dmap.put(nodeName, d))
-                }
-              })
-          })
-      })
+    for {
+      declaration  <- declarations
+      nodeName     <- declaration.name()
+      resolvedNode <- declaration.resolvedDeclaredNode()
+    } yield {
+      dialectMap.get(resolvedNode.entity.id).foreach(d => dmap.put(nodeName, d))
+    }
     dmap
   }
 
