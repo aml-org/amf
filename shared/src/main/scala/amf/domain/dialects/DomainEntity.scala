@@ -102,4 +102,5 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
 
 object DomainEntity {
   def apply(d: DialectNode): DomainEntity = DomainEntity(None, d, Fields(), Annotations())
+  def apply(d: DialectNode, annotations: Annotations): DomainEntity = DomainEntity(None, d, Fields(), annotations)
 }

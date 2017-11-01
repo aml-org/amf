@@ -117,7 +117,7 @@ class AMFCompiler private (val url: String,
 
   private def makeDialect(root: Root, header: RamlHeader): BaseUnit = DialectParser(root, header, dialects).parseUnit()
 
-  private def makeAmfUnit(root: Root): BaseUnit = GraphParser.parse(root.document, root.location)
+  private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
   private def makePayloadUnit(root: Root): BaseUnit  = PayloadParser(root.document, root.location).parseUnit()
 

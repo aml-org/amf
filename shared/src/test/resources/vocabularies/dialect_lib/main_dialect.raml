@@ -1,0 +1,28 @@
+#%RAML 1.0 Dialect
+
+dialect: Test Dialect
+version: 1.0
+
+uses:
+  lib: ./lib_dialect.raml
+
+external:
+  test: "http://test.com/"
+
+nodeMappings:
+
+  mainNode:
+    classTerm: test.MainNode
+    mapping:
+      prop:
+        propertyTerm: test.prop
+        range: string
+        mandatory: true
+      library:
+        propertyTerm: test.lib
+        range: lib.libraryNode
+        mandatory: true
+
+raml:
+  document:
+    encodes: mainNode

@@ -1,5 +1,8 @@
 package amf.dialects
+import amf.client.GenerationOptions
 import amf.compiler.AMFCompiler
+import amf.dumper.AMFDumper
+import amf.remote.Syntax.Json
 import amf.remote._
 import amf.spec.dialects.Dialect
 import amf.unsafe.PlatformSecrets
@@ -225,11 +228,11 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
           .flatMap { parsedDialect =>
             dialect = Some(parsedDialect)
             AMFCompiler("file://shared/src/test/resources/vocabularies/amc2/example.raml",
-                        platform,
-                        RamlYamlHint,
-                        None,
-                        None,
-                        platform.dialectsRegistry).build()
+              platform,
+              RamlYamlHint,
+              None,
+              None,
+              platform.dialectsRegistry).build()
           } flatMap { unit =>
           validator.loadDialectValidationProfile(dialect.get)
           validator.validate(unit, dialect.get.name)
@@ -241,4 +244,22 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
     )
   }
+
+  /*
+  test("Custom dialect using lib in dialect") {
+    val validator = Validation(platform)
+    var dialect: Option[Dialect] = None
+    platform.dialectsRegistry.registerDialect("file://shared/src/test/resources/vocabularies/dialect_lib/main_dialect.raml").flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler("file://shared/src/test/resources/vocabularies/dialect_lib/example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+    } flatMap { unit =>
+      validator.loadDialectValidationProfile(dialect.get)
+      validator.validate(unit, dialect.get.name)
+    } flatMap { report =>
+      println(report)
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+  */
 }
