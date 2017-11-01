@@ -2,8 +2,10 @@ package amf.compiler
 
 import amf.remote.OasJsonHint
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
+
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
@@ -55,7 +57,7 @@ class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def assertHeader(path: String, expectedOption: Option[OasHeader]): Future[Assertion] = {
-    AMFCompiler(basePath + path, platform, OasJsonHint)
+    AMFCompiler(basePath + path, platform, OasJsonHint, Validation(platform))
       .root()
       .map(OasFragmentHeader(_) shouldBe expectedOption)
   }

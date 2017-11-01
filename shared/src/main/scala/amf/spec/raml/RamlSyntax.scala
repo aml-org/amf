@@ -191,7 +191,7 @@ trait RamlSyntax {
     )
   )
 
-  def validateClosedShape(id: String, ast: YMap, nodeType: String): Unit = {
+  def validateClosedShape(currentValidation: Validation, id: String, ast: YMap, nodeType: String): Unit = {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
@@ -200,7 +200,7 @@ trait RamlSyntax {
             // annotation or path in endpoint/webapi => ignore
           } else {
             if (!properties(key)) {
-              Validation.reportConstraintFailure(
+              currentValidation.reportConstraintFailure(
                 SeverityLevels.VIOLATION,
                 (Namespace.AmfParser + "closed-shape").iri(),
                 id,

@@ -7,11 +7,12 @@ import amf.domain.Annotations
 import amf.metadata.document.BaseUnitModel
 import amf.parser.YValueOps
 import amf.spec.declaration.ReferencesParser
+import amf.validation.Validation
 
 /**
   *
   */
-case class OasModuleParser(root: Root) extends OasSpecParser {
+case class OasModuleParser(root: Root, currentValidation: Validation) extends OasSpecParser(currentValidation) {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))

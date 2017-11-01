@@ -140,6 +140,26 @@ class Validation(platform: Platform) {
   }
   var aggregatedReport: List[AMFValidationResult] = List()
 
+  // disable temporarily the reporting of validations
+  var enabled: Boolean =  true
+  def withEnabledValidation(enabled: Boolean): Validation = {
+    this.enabled = enabled
+    this
+  }
+
+  def disableValidations[T]()(f: () => T): T = {
+    if (enabled) {
+      enabled = false
+      try {
+        f()
+      } finally {
+        enabled = true
+      }
+    } else {
+      f()
+    }
+  }
+
   /**
     * Client code can use this function to register a new validation failure
     */
@@ -149,13 +169,20 @@ class Validation(platform: Platform) {
                               targetProperty: Option[String] = None,
                               message: String = "",
                               position: Option[LexicalInformation] = None): Unit = {
-    aggregatedReport ++= Seq(AMFValidationResult(message, level, targetNode, targetProperty, validationId, position))
+    val validationError = AMFValidationResult(message, level, targetNode, targetProperty, validationId, position)
+
+    if (enabled) {
+      aggregatedReport ++= Seq(validationError)
+    } else {
+      throw new Exception(validationError.toString)
+    }
   }
 
   lazy val defaultProfiles: List[ValidationProfile] = DefaultAMFValidations.profiles()
 
   def loadValidationProfile(validationProfilePath: String): Future[Unit] = {
-    AMFCompiler(validationProfilePath, platform, RamlYamlHint, None, None, platform.dialectsRegistry)
+    val currentValidation = new Validation(platform).withEnabledValidation(false)
+    AMFCompiler(validationProfilePath, platform, RamlYamlHint, currentValidation, None, None, platform.dialectsRegistry)
       .build()
       .map { case parsed: Document => parsed.encodes }
       .map {
@@ -283,26 +310,31 @@ class Validation(platform: Platform) {
     println("===========================")
     */
 
-    jsLibrary match {
-      case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-      case _          => // ignore
-    }
-    for {
-      shaclReport <- platform.validator.report(
-        modelJSON,
-        "application/ld+json",
-        shapesJSON,
-        "application/ld+json"
-      )
-    } yield {
-      val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
-        shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
-      AMFValidationReport(
-        conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-        model = model.id,
-        profile = profileName,
-        results = results
-      )
+    ValidationMutex.lock()
+    try {
+      jsLibrary match {
+        case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+        case _ => // ignore
+      }
+      for {
+        shaclReport <- platform.validator.report(
+          modelJSON,
+          "application/ld+json",
+          shapesJSON,
+          "application/ld+json"
+        )
+      } yield {
+        val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
+          shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
+        AMFValidationReport(
+          conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+          model = model.id,
+          profile = profileName,
+          results = results
+        )
+      }
+    } finally {
+      ValidationMutex.unlock()
     }
   }
 
@@ -450,52 +482,24 @@ class Validation(platform: Platform) {
   }
 }
 
+object ValidationMutex {
+
+  private var count : Int = 1
+
+  def lock() {
+    synchronized {
+      while (count < 1) {}
+      count = count - 1
+    }
+  }
+
+  def unlock() {
+    synchronized {
+      count = 1
+    }
+  }
+}
+
 object Validation {
-  var currentValidation: Option[Validation] = None
-
-  def apply(platform: Platform): Validation = {
-    currentValidation = Some(new Validation(platform))
-    currentValidation.get
-  }
-
-  def apply[T](platform: Platform, current: Validation => Future[T]): Future[T] = {
-    val validation = new Validation(platform)
-    currentValidation = Some(validation)
-    val result = current(validation)
-    result.map(r => {
-      currentValidation = None
-      r
-    })
-  }
-
-  /**
-    * Client code can use this function to register a new validation failure
-    */
-  def reportConstraintFailure(level: String,
-                              validationId: String,
-                              targetNode: String,
-                              targetProperty: Option[String] = None,
-                              message: String = "",
-                              position: Option[LexicalInformation] = None): Unit = currentValidation match {
-    case Some(v) => v.reportConstraintFailure(level, validationId, targetNode, targetProperty, message, position)
-    case None =>
-      if (level == SeverityLevels.VIOLATION) {
-        throw new Exception(
-          s"Violation: $message at node $targetNode, property $targetProperty and position $position")
-      }
-  }
-
-  def restartValidations() = currentValidation match {
-    case Some(v) => v.reset()
-    case _       => // ignore
-  }
-
-  def disableValidations[T]()(f: () => T): T = {
-    val oldValidations = currentValidation
-    currentValidation = None
-    val result = f()
-    currentValidation = oldValidations
-    result
-  }
-
+  def apply(platform: Platform) = new Validation(platform)
 }

@@ -50,7 +50,7 @@ class JsBrowserPlatform extends Platform {
   override val validator = new SHACLValidator()
 
   @JSExport
-  def setupValidation(): js.Promise[Validation] = setupValidationBase().toJSPromise
+  def setupValidation(validation: Validation): js.Promise[Validation] = setupValidationBase(validation).toJSPromise
 }
 
 @JSExportAll

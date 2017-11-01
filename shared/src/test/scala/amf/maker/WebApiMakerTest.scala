@@ -7,8 +7,9 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.shape.{ScalarShape, XMLSerializer, PropertyDependencies}
+import amf.shape.{PropertyDependencies, ScalarShape, XMLSerializer}
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -576,7 +577,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
   private def assertFixture(expected: WebApi, file: String, hint: Hint): Future[Assertion] = {
 
-    AMFCompiler(basePath + file, platform, hint)
+    AMFCompiler(basePath + file, platform, hint, Validation(platform))
       .build()
       .map { unit =>
         val actual = unit.asInstanceOf[Document].encodes

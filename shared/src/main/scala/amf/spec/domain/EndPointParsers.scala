@@ -10,6 +10,7 @@ import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.{YMapEntry, YNode}
 import amf.parser.{YMapOps, YValueOps}
 import amf.spec.raml.RamlSyntax
+import amf.validation.Validation
 
 import scala.collection.mutable
 
@@ -20,7 +21,8 @@ case class RamlEndpointParser(entry: YMapEntry,
                               producer: String => EndPoint,
                               parent: Option[EndPoint],
                               collector: mutable.ListBuffer[EndPoint],
-                              declarations: Declarations)
+                              declarations: Declarations,
+                              currentValidation: Validation)
     extends RamlSyntax {
   def parse(): Unit = {
 
@@ -31,7 +33,7 @@ case class RamlEndpointParser(entry: YMapEntry,
 
     val map = entry.value.value.toMap
 
-    validateClosedShape(endpoint.id, map, "endPoint")
+    validateClosedShape(currentValidation, endpoint.id, map, "endPoint")
 
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
@@ -49,7 +51,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations)
+          RamlParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations, currentValidation)
             .parse()
             .map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -76,7 +78,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += RamlOperationParser(entry, endpoint.withOperation, declarations).parse()
+          operations += RamlOperationParser(entry, endpoint.withOperation, declarations, currentValidation).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -101,7 +103,7 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.regex(
       "^/.*",
       entries => {
-        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
+        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector, declarations, currentValidation).parse())
       }
     )
   }

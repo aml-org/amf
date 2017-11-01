@@ -7,6 +7,7 @@ import amf.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.{Hint, Vendor}
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -24,18 +25,19 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
   def tmp(name: String = ""): String = platform.tmpdir() + System.nanoTime() + "-" + name
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, source, hint, hint.vendor)
+  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, source, hint, hint.vendor, basePath, None)
 
   /** Compile source with specified hint. Dump to target and assert against golden. */
   def cycle(source: String,
             golden: String,
             hint: Hint,
             target: Vendor,
-            directory: String = basePath): Future[Assertion] = {
+            directory: String = basePath,
+            maybeValidation: Option[Validation] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory)
 
-    build(config)
+    build(config, maybeValidation)
       .map(map(_, config))
       .flatMap(render(_, config))
       .flatMap(content => platform.write("file://" + tmp(golden + ".tmp"), content).map((_, content)))
@@ -47,7 +49,10 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
       })
   }
 
-  def build(config: CycleConfig): Future[BaseUnit] = AMFCompiler(config.sourcePath, platform, config.hint).build()
+  def build(config: CycleConfig, maybeValidation: Option[Validation]): Future[BaseUnit] = {
+    val validation = maybeValidation.getOrElse(Validation(platform))
+    AMFCompiler(config.sourcePath, platform, config.hint, validation).build()
+  }
 
   def map(unit: BaseUnit, config: CycleConfig): BaseUnit = unit
 

@@ -15,20 +15,18 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     val res = for {
       _          <- processDialects(config)
       validation <- setupValidation(config)
-      model      <- parseInput(config)
+      model      <- parseInput(config, validation)
       report     <- report(model, validation, config)
     } yield {
       processOutput(report, config)
     }
 
     res.onComplete {
-      case Failure(ex) => {
+      case Failure(ex) =>
         System.err.println(ex)
         platform.exit(ExitCodes.Exception)
-      }
-      case Success(other) => {
+      case Success(other) =>
         other
-      }
     }
     res
   }

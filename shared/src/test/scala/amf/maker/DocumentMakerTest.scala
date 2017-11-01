@@ -5,6 +5,7 @@ import amf.document.Document
 import amf.domain.WebApi
 import amf.remote._
 import amf.shape.NodeShape
+import amf.validation.Validation
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -36,7 +37,7 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
 
-    AMFCompiler(basePath + file, platform, hint)
+    AMFCompiler(basePath + file, platform, hint, Validation(platform))
       .build()
       .map { unit =>
         val actual = unit.asInstanceOf[Document]
