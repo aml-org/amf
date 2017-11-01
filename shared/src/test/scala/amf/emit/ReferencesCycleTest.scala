@@ -6,6 +6,7 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.io.BuildCycleTests
 import amf.remote._
+import amf.validation.Validation
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -109,7 +110,8 @@ class ReferencesCycleTest extends BuildCycleTests {
         .map(c => ModuleContent(c.url, c.stream.toString))
     }))
 
-    val actualModules: Future[Seq[ModuleContent]] = AMFCompiler(basePath + documentRootPath, platform, hint)
+    val validation = Validation(platform)
+    val actualModules: Future[Seq[ModuleContent]] = AMFCompiler(basePath + documentRootPath, platform, hint, validation)
       .build()
       .map(_.references)
       .flatMap(references => {

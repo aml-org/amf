@@ -39,22 +39,6 @@ trait BaseUnit extends PlatformSecrets {
 
   def usage: String = element.usage
 
-  /**
-    * Validates the model
-    * @param profile Name of the standard profile to use in validation: RAML, OpenAPI, AMF
-    * @return The validation report
-    */
-  def validate(profile: String): js.Promise[AMFValidationReport] =
-    validateProfile(platform, Some(profile))
-
-  /**
-    * Validates the model
-    * @param customProfilePath Path to a profile validation file to use in validation
-    * @return The validation report
-    */
-  def customValidation(customProfilePath: String): js.Promise[AMFValidationReport] =
-    validateProfile(platform, None, Some(customProfilePath))
-
   def findById(id: String): DomainElement = {
     element.findById(Namespace.uri(id).iri()) match {
       case Some(e: DomainElement) => DomainElement(e)
@@ -64,29 +48,5 @@ trait BaseUnit extends PlatformSecrets {
 
   def findByType(typeId: String): js.Iterable[DomainElement] =
     element.findByType(Namespace.expand(typeId).iri()).map(e => DomainElement(e)).toJSIterable
-
-  /**
-    * Validates the model
-    * @param p Platform support logic
-    * @param profile Name of the standard profile to use in validation: RAML, OpenAPI, AMF
-    * @param customProfilePath Path to a profile validation file to use in validation
-    * @return The validation report
-    */
-  protected def validateProfile(p: Platform,
-                                profile: Option[String] = Some("RAML"),
-                                customProfilePath: Option[String] = None): js.Promise[AMFValidationReport] = {
-    val config = ParserConfig(customProfile = customProfilePath)
-    val helper = new CommandHelper {
-      override val platform: Platform = p
-    }
-    val f = helper.setupValidation(config) flatMap { validation =>
-      val profileName = validation.profile match {
-        case Some(prof) => prof.name
-        case None       => profile.get
-      }
-      validation.validate(element, profileName)
-    }
-    f.toJSPromise
-  }
 
 }

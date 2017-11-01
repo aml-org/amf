@@ -50,10 +50,8 @@ trait Platform {
 
   val validator: SHACLValidator
 
-  protected def setupValidationBase(): Future[Validation] = {
-    val validation = Validation(this)
+  protected def setupValidationBase(validation: Validation): Future[Validation] =
     validation.loadValidationDialect().map { x => validation }
-  }
 
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 

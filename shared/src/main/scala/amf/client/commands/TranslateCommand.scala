@@ -11,13 +11,13 @@ import scala.util.{Failure, Success}
 class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
   val validationCommand              = new ValidateCommand(platform)
-  var validation: Option[Validation] = None
+  var validation: Validation         = new Validation(platform)
 
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
       _         <- processDialects(config)
       _         <- setupValidationTranslate(config)
-      model     <- parseInput(config)
+      model     <- parseInput(config, validation)
       _         <- checkValidation(config, model)
       generated <- generateOutput(config, model)
     } yield {
@@ -33,23 +33,25 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def setupValidationTranslate(config: ParserConfig): Future[Unit] = {
+  def setupValidationTranslate(config: ParserConfig): Future[Validation] = {
     if (config.validate) {
       setupValidation(config).map { validation =>
-        this.validation = Some(validation)
+        this.validation = validation
+        validation
       }
     } else {
-      Promise().success().future
+      validation.enabled = false
+      Promise().success(validation).future
     }
   }
 
   def checkValidation(config: ParserConfig, model: BaseUnit): Future[Unit] = {
-    if (validation.isDefined) {
+    if (validation.enabled) {
       val profile = config.customProfile match {
-        case Some(_) => validation.get.profile.get.name
+        case Some(_) => validation.profile.get.name
         case None    => config.validationProfile
       }
-      validation.get.validate(model, profile, config.validationProfile) map { report =>
+      validation.validate(model, profile, config.validationProfile) map { report =>
         if (!report.conforms) {
           System.err.println(report)
           platform.exit(ExitCodes.FailingValidation)

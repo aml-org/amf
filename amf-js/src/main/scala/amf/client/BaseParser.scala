@@ -1,9 +1,11 @@
 package amf.client
 
+import amf.ProfileNames
 import amf.model.{BaseUnit, Document, Module}
 import amf.remote.Syntax.Syntax
 import amf.remote._
 import amf.unsafe.TrunkPlatform
+import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -55,6 +57,29 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   @JSExport
   def parseStringAsync(stream: String): js.Promise[BaseUnit] =
     super.parseAsync(null, Some(TrunkPlatform(stream))).map(unitScalaToJVM).toJSPromise
+
+  /**
+    * Generates the validation report for the last parsed model.
+    * @param profileName name of the profile to be parsed
+    * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting styl
+    * @return the AMF validation report
+    */
+  @JSExport
+  def reportValidation(profileName: String, messageStyle: String): js.Promise[AMFValidationReport] =
+    super.reportValidationImplementation(profileName, messageStyle).toJSPromise
+
+  def reportValidation(profileName: String): js.Promise[AMFValidationReport] =
+    super.reportValidationImplementation(profileName, ProfileNames.RAML).toJSPromise
+
+  /**
+    * Generates a custom validaton profile as specified in the input validation profile file
+    * @param profileName name of the profile to be parsed
+    * @param customProfilePath path to the custom profile file
+    * @return the AMF validation report
+    */
+  @JSExport
+  def reportCustomValidation(profileName: String, customProfilePath: String): js.Promise[AMFValidationReport] =
+    super.reportCustomValidationImplementation(profileName, customProfilePath).toJSPromise
 
   private case class BaseUnitHandlerAdapter(handler: JsHandler[BaseUnit]) extends Handler[amf.document.BaseUnit] {
     override def success(document: amf.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))

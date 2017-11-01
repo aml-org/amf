@@ -27,11 +27,11 @@ trait CommandHelper {
     }
 
   def setupValidation(config: ParserConfig): Future[Validation] = {
-    val validation = Validation.currentValidation.getOrElse(Validation(platform))
-    validation.loadValidationDialect() flatMap { loadedDialect =>
+    val currentValidation = new Validation(platform)
+    currentValidation.loadValidationDialect() flatMap { loadedDialect =>
       config.customProfile match {
-        case Some(profileFile) => validation.loadValidationProfile(profileFile).map(_ => validation)
-        case _                 => Promise().success(validation).future
+        case Some(profileFile) => currentValidation.loadValidationProfile(profileFile).map(_ => currentValidation)
+        case _                 => Promise().success(currentValidation).future
       }
     }
   }
@@ -43,7 +43,7 @@ trait CommandHelper {
     Future.sequence(dialectFutures).map[Unit] { _ => }
   }
 
-  protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
+  protected def parseInput(config: ParserConfig, currentValidation: Validation): Future[BaseUnit] = {
     var inputFile = ensureUrl(config.input.get)
     val inputFormat = config.inputFormat.get
 
@@ -52,7 +52,7 @@ trait CommandHelper {
       case ProfileNames.OAS  => OasJsonHint
       case ProfileNames.AMF  => AmfJsonHint
     }
-    AMFCompiler(inputFile, platform, hint, None, None, platform.dialectsRegistry).build()
+    AMFCompiler(inputFile, platform, hint, currentValidation, None, None, platform.dialectsRegistry).build()
   }
 
   protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[String] = {

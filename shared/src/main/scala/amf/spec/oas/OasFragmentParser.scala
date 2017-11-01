@@ -13,12 +13,13 @@ import amf.shape.Shape
 import amf.spec.Declarations
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
+import amf.validation.Validation
 import org.yaml.model.{YMap, YType}
 
 /**
   *
   */
-case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) extends OasSpecParser {
+case class OasFragmentParser(root: Root, currentValidation: Validation, fragment: Option[OasHeader] = None) extends OasSpecParser(currentValidation) {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -38,7 +39,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       case Oas20NamedExample              => NamedExampleFragmentParser(rootMap).parse()
     }).getOrElse {
       val fragment = ExternalFragment().withEncodes(ExternalDomainElement().withRaw(root.raw))
-      parsingErrorReport(fragment.id, "Unsuported oas type", Some(rootMap))
+      parsingErrorReport(currentValidation, fragment.id, "Unsuported oas type", Some(rootMap))
       fragment
     }
 
@@ -76,7 +77,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
       val dataType = DataType().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), "schema")
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), currentValidation, "schema")
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -126,7 +127,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
     def parse(): ExtensionFragment = {
       val extension = ExtensionFragment().adopted(root.location)
 
-      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
+      val api = OasDocumentParser(root, currentValidation).parseWebApi(map, Declarations())
       extension.withEncodes(api)
 
       map
@@ -151,7 +152,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
     def parse(): OverlayFragment = {
       val overlay = OverlayFragment().adopted(root.location)
 
-      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
+      val api = OasDocumentParser(root, currentValidation).parseWebApi(map, Declarations())
       overlay.withEncodes(api)
 
       map
@@ -182,7 +183,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None) ext
                                 "securityDefinitions",
                                 map,
                                 (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                                Declarations())
+                                Declarations(),
+                                currentValidation)
           .parse())
     }
   }

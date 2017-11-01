@@ -9,17 +9,18 @@ import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.parser.{YMapOps, YValueOps}
+import amf.validation.Validation
 
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
+case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations, currentValidation: Validation) {
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => RamlParameterParser(entry, producer, declarations).parse())
+      .map(entry => RamlParameterParser(entry, producer, declarations, currentValidation).parse())
 }
 
-case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations)
+case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations, currentValidation: Validation)
     extends RamlTypeSyntax {
   def parse(): Parameter = {
 
@@ -79,7 +80,7 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
           }
         )
 
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations, currentValidation)
           .parse()
           .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 

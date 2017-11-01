@@ -8,6 +8,7 @@ import amf.domain.WebApi
 import amf.remote._
 import amf.shape.NodeShape
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,7 +35,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
     val rootExpected = UnitsCreator(hint.vendor).usesDataType
 
-    AMFCompiler(rootFile, platform, hint)
+    AMFCompiler(rootFile, platform, hint, Validation(platform))
       .build()
       .map({
         case actual: Document => actual

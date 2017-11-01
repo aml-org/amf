@@ -11,6 +11,7 @@ import amf.parser.YValueOps
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecParser
+import amf.validation.Validation
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YValue
 
@@ -53,11 +54,11 @@ case class Dialect(name: String,
 }
 
 trait ResolverFactory {
-  def resolver(root: Root, references: Map[String, BaseUnit]): ReferenceResolver
+  def resolver(root: Root, references: Map[String, BaseUnit], currentValidation: Validation): ReferenceResolver
 }
 
 object NullReferenceResolverFactory extends ResolverFactory {
-  override def resolver(root: Root, references: Map[String, BaseUnit]): ReferenceResolver =
+  override def resolver(root: Root, references: Map[String, BaseUnit], currentValidation: Validation): ReferenceResolver =
     NullReferenceResolver
 }
 
@@ -267,8 +268,8 @@ object TypeBuiltins {
   val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit])
-    extends RamlSpecParser
+class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit], currentValidation: Validation)
+    extends RamlSpecParser(currentValidation)
     with TypeBuiltins {
 
   val REGEX_URI =
@@ -406,8 +407,8 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
 }
 
 object BasicResolver {
-  def apply(root: Root, externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit]) =
-    new BasicResolver(root, externals, uses)
+  def apply(root: Root, externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit], currentValidation: Validation) =
+    new BasicResolver(root, externals, uses, currentValidation)
 }
 
 class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[DialectPropertyMapping])

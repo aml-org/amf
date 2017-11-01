@@ -104,7 +104,7 @@ class DialectLoader(val document:BaseUnit) {
           Dialect(dialectName,
                   dialectVersion,
                   dialectNode,
-                  resolver = (root, refs) => BasicResolver(root, List(), refs),
+                  resolver = (root, refs, currentValidation) => BasicResolver(root, List(), refs, currentValidation),
                   moduleInfo,
                   fragmentList.toMap)
         }

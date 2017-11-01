@@ -2,11 +2,13 @@ package amf.client
 
 import java.util.concurrent.CompletableFuture
 
+import amf.ProfileNames
 import amf.model.{BaseUnit, Document, Module}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.{Platform, Vendor}
 import amf.unsafe.TrunkPlatform
+import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
@@ -87,6 +89,26 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   def parseStringAsync(stream: String, platform: Platform): CompletableFuture[BaseUnit] =
     super.parseAsync(null, Some(TrunkPlatform(stream, Some(platform)))).map(unitScalaToJVM).asJava
 
+  /**
+    * Generates the validation report for the last parsed model.
+    * @param profileName name of the profile to be parsed
+    * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting styl
+    * @return the AMF validation report
+    */
+  def reportValidation(profileName: String, messageStyle: String): CompletableFuture[AMFValidationReport] =
+    super.reportValidationImplementation(profileName, messageStyle).asJava
+
+  def reportValidation(profileName: String): CompletableFuture[AMFValidationReport] =
+    super.reportValidationImplementation(profileName, ProfileNames.RAML).asJava
+
+  /**
+    * Generates a custom validaton profile as specified in the input validation profile file
+    * @param profileName name of the profile to be parsed
+    * @param customProfilePath path to the custom profile file
+    * @return the AMF validation report
+    */
+  def reportCustomValidation(profileName: String, customProfilePath: String): CompletableFuture[AMFValidationReport] =
+    super.reportCustomValidationImplementation(profileName, customProfilePath).asJava
 
   private case class BaseUnitHandlerAdapter(handler: Handler[BaseUnit]) extends Handler[amf.document.BaseUnit] {
     override def success(document: amf.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
