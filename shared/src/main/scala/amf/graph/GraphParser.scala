@@ -3,6 +3,7 @@ package amf.graph
 import amf.document.{BaseUnit, Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
+import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.domain.security._
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
@@ -15,7 +16,10 @@ import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
+import amf.remote.Platform
 import amf.shape._
+import amf.spec.dialects.DialectNode
+import amf.unsafe.TrunkPlatform
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -23,7 +27,7 @@ import scala.collection.mutable
 /**
   * AMF Graph parser
   */
-object GraphParser extends GraphParserHelpers {
+class GraphParser(platform: Platform) extends GraphParserHelpers {
 
   def parse(document: YDocument, location: String): BaseUnit = {
     val parser = Parser(Map())
@@ -43,8 +47,8 @@ object GraphParser extends GraphParserHelpers {
     }
 
     private def retrieveType(map: YMap): Obj =
-      ts(map).find(types.get(_).isDefined) match {
-        case Some(t) => types(t)
+      ts(map).find(findType(_).isDefined) match {
+        case Some(t) => findType(t).get
         case None    => throw new Exception(s"Error parsing JSON-LD node, unknown @types ${ts(map)}")
       }
 
@@ -69,7 +73,7 @@ object GraphParser extends GraphParserHelpers {
       val sources = retrieveSources(id, map)
       val model   = retrieveType(map)
 
-      val instance = builders(model)(annotations(nodes, sources, id))
+      val instance = buildType(model)(annotations(nodes, sources, id))
       instance.withId(id)
 
       model.fields.foreach(f => {
@@ -211,6 +215,7 @@ object GraphParser extends GraphParserHelpers {
     FragmentsTypesModels.OverlayModel                   -> Fragment.OverlayFragment.apply,
     FragmentsTypesModels.ExternalFragmentModel          -> Fragment.ExternalFragment.apply,
     FragmentsTypesModels.SecuritySchemeModel            -> Fragment.SecurityScheme.apply,
+    FragmentsTypesModels.DialectNodeModel               -> Fragment.DialectFragment.apply,
     TraitModel                                          -> Trait.apply,
     ResourceTypeModel                                   -> ResourceType.apply,
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,
@@ -228,4 +233,20 @@ object GraphParser extends GraphParserHelpers {
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap
+
+  private def findType(typeString: String): Option[Obj] = {
+    types.get(typeString).orElse(platform.dialectsRegistry.knowsType(typeString))
+  }
+
+  private def buildType(modelType: Obj): (Annotations) => AmfObject = {
+    builders.getOrElse(modelType, modelType match {
+      case dialectType: DialectNode => (annotations: Annotations) => DomainEntity(dialectType, annotations)
+      case _ => throw new Exception(s"Cannot find builder for node type $modelType")
+    })
+  }
+}
+
+object GraphParser {
+  def apply: GraphParser = GraphParser(TrunkPlatform(""))
+  def apply(platform: Platform): GraphParser = new GraphParser(platform)
 }

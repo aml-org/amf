@@ -5,7 +5,6 @@ import amf.dialects._
 import amf.document.Fragment.Fragment
 import amf.document.{BaseUnit, EncodesModel, Module}
 import amf.domain.dialects.DomainEntity
-import amf.domain.{Annotations, Fields}
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
@@ -29,6 +28,25 @@ case class Dialect(name: String,
                    kind: DialectKind = DocumentKind) {
 
   root.dialect = Some(this)
+
+  def knows(nodeType: String): Option[DialectNode] = {
+    findNodeType(nodeType, Seq(root), Set(root))
+  }
+
+  private def findNodeType(nodeType: String, nodes: Seq[DialectNode], visited: Set[DialectNode] = Set()): Option[DialectNode] = {
+    if (nodes.isEmpty) {
+      None
+    } else {
+      val node = nodes.head
+      node.`type`.find(_.iri() == nodeType) match {
+        case Some(_) => Some(node)
+        case None    =>
+          val types = node.mappings().flatMap(mapping => Seq(mapping.range) ++ mapping.unionTypes.getOrElse(Seq()))
+          val dialectNodes: Set[DialectNode] = types.filter(_.isInstanceOf[DialectNode]).filter(n => !visited.contains(n.asInstanceOf[DialectNode])).toSet.asInstanceOf[Set[DialectNode]]
+          findNodeType(nodeType, dialectNodes.toSeq ++ nodes.tail, visited + node)
+      }
+    }
+  }
 
   var refiner: Option[Refiner] = None
   def header: String           = ("#%" + name + " " + version).trim
@@ -528,8 +546,6 @@ sealed trait DialectKind
 object DocumentKind extends DialectKind
 object ModuleKind   extends DialectKind
 object FragmentKind extends DialectKind
-
-case class DialectFragment(fields: Fields = Fields(), annotations: Annotations = Annotations()) extends Fragment
 
 object Dialect {
 

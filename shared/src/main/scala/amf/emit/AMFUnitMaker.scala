@@ -1,12 +1,12 @@
 package amf.emit
 
 import amf.client.GenerationOptions
-import amf.document.Fragment.Fragment
+import amf.document.Fragment.{DialectFragment, Fragment}
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.graph.GraphEmitter
 import amf.remote._
-import amf.spec.dialects.{DialectEmitter, DialectFragment}
+import amf.spec.dialects.DialectEmitter
 import amf.spec.oas.{OasDocumentEmitter, OasFragmentEmitter, OasModuleEmitter}
 import amf.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument

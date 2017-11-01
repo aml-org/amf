@@ -2,7 +2,7 @@ package amf.dialects
 
 import amf.compiler.RamlHeader
 import amf.remote.Platform
-import amf.spec.dialects.{Dialect, FragmentKind, ModuleKind}
+import amf.spec.dialects.{Dialect, DialectNode, FragmentKind, ModuleKind}
 
 import scala.concurrent.Future
 
@@ -42,6 +42,18 @@ class DialectRegistry {
   def get(h: String): Option[Dialect] = map.get(h.trim)
 
   def dialects: Seq[Dialect] = map.values.toSeq
+
+  def knowsType(nodeType: String): Option[DialectNode] = knowsTypeInner(nodeType, dialects)
+
+  private def knowsTypeInner(nodeType: String, dialects: Seq[Dialect]): Option[DialectNode] = {
+    if (dialects.isEmpty) None
+    else {
+      dialects.head.knows(nodeType) match {
+        case Some(dialectNode) => Some(dialectNode) // Some(DomainEntity(dialectNode))
+        case None => knowsTypeInner(nodeType, dialects.tail)
+      }
+    }
+  }
 }
 
 abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {
