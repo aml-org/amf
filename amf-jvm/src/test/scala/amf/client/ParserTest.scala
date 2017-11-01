@@ -125,6 +125,35 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
 
   }
 
+  test("Dialects regeneration tests") {
+    platform.dialectsRegistry.registerDialect("file://shared/src/test/resources/vocabularies/amc2/dialect.raml") map { parsedDialect =>
+      new RamlParser().parseFileAsync("file://shared/src/test/resources/vocabularies/amc2/example.raml", platform).get
+    } map { model =>
+      new AmfGenerator().generateString(model, GenerationOptions()).get
+    } map { jsonld =>
+      new AmfParser().parseStringAsync(jsonld, platform).get
+    } map { parsedModel =>
+      new RamlGenerator().generateString(parsedModel).get
+    } map { generatedRaml =>
+      val expected =
+        """#%Mule Agent Configuration 0.1
+          |transports:
+          |  websocket.transport:
+          |    security:
+          |      keyStorePassword: exampleNs/123
+          |      keyStoreAlias: agent
+          |      keyStoreAliasPassword: exampleNs/124
+          |services:
+          |  mule.agent.jmx.publisher.service:
+          |    enabled: true
+          |    frequency: 100
+          |    frequencyTimeUnit: SECONDS
+          |""".stripMargin
+      assert(generatedRaml == expected)
+    }
+
+  }
+
   def assertModule(actual: Module, expected: Module): Assertion = {
     actual should be(expected)
     succeed

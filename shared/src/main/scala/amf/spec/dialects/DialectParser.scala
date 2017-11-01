@@ -2,6 +2,7 @@ package amf.spec.dialects
 
 import amf.compiler.{RamlHeader, Root}
 import amf.dialects.{DialectRegistry, DialectValidator, ValidationIssue}
+import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.Annotation.{DomainElementReference, LexicalInformation, NamespaceImportsDeclaration, SynthesizedField}
 import amf.domain.dialects.DomainEntity
@@ -9,7 +10,6 @@ import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
-import amf.spec.Declarations
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.declaration.ReferencesParser
 import amf.spec.raml.RamlSpecParser
@@ -18,7 +18,6 @@ import amf.vocabulary.Namespace
 import org.yaml.model._
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 /**
   * Created by Pavel Petrochenko on 12/09/17.
@@ -304,7 +303,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
                 element.value match {
                   case v: YMap                    => parseNode(v, domainEntity)
                   case s: YScalar if s.text != "" => parseNode(s, domainEntity)
-                  case _          => // ignore
+                  case _  => // ignore
                 }
               case _ => // ignore
             }

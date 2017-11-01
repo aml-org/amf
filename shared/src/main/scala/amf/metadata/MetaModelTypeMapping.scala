@@ -59,6 +59,7 @@ trait MetaModelTypeMapping {
     case _: Settings                           => SettingsModel
     case _: Scope                              => ScopeModel
     case _: ParametrizedSecurityScheme         => ParametrizedSecuritySchemeModel
+    case _: Example                            => ExampleModel
     case entity: DomainEntity                  => new DialectEntityModel(entity)
     case _: Fragment.ExternalFragment          => FragmentsTypesModels.ExternalFragmentModel
     case _: Fragment.DocumentationItem         => FragmentsTypesModels.DocumentationItemModel
@@ -70,7 +71,7 @@ trait MetaModelTypeMapping {
     case _: Fragment.ExtensionFragment         => FragmentsTypesModels.ExtensionModel
     case _: Fragment.OverlayFragment           => FragmentsTypesModels.OverlayModel
     case _: Fragment.SecurityScheme            => FragmentsTypesModels.SecuritySchemeModel
-    case _: Example                            => ExampleModel
+    case _: Fragment.DialectFragment           => FragmentsTypesModels.DialectNodeModel
     case _: Fragment.Fragment                  => FragmentModel
     case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
   }
