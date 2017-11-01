@@ -27,6 +27,7 @@ trait BaseUnit {
       case t: document.Fragment.TraitFragment             => TraitFragment(t)
       case rt: document.Fragment.ResourceTypeFragment     => ResourceTypeFragment(rt)
       case ne: document.Fragment.NamedExample             => NamedExample(ne)
+      case df: document.Fragment.DialectFragment          => DialectFragment(df)
       case di: document.Fragment.DocumentationItem        => DocumentationItem(di)
     }
     units.asJava

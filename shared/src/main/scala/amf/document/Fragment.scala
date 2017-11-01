@@ -74,7 +74,7 @@ object Fragment {
     override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
   }
 
-  case class DialectFragment(fields: Fields = Fields(), annotations: Annotations = Annotations()) extends Fragment
+  case class DialectFragment(fields: Fields, annotations: Annotations) extends Fragment
 
   object DocumentationItem {
     def apply(): DocumentationItem = apply(Annotations())

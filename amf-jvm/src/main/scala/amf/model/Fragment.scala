@@ -24,6 +24,10 @@ case class NamedExample(private[amf] val namedExample: amf.document.Fragment.Nam
   def this() = this(amf.document.Fragment.NamedExample())
 }
 
+case class DialectFragment(private[amf] val df: amf.document.Fragment.DialectFragment) extends Fragment(df) {
+  def this() = this(amf.document.Fragment.DialectFragment())
+}
+
 case class ResourceTypeFragment(private[amf] val resourceTypeFragment: amf.document.Fragment.ResourceTypeFragment)
     extends Fragment(resourceTypeFragment) {
 
