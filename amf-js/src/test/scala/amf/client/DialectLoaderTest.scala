@@ -16,25 +16,24 @@ class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMF
     scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
   test("Load Dialect from yaml") {
-    println("Load dialect from yaml before validation: " + Validation.currentValidation)
-    val l = platform.dialectsRegistry
+    val dialectsRegistry = platform.dialectsRegistry
     val expected = platform
       .resolve("file://shared/src/test/resources/vocabularies/muleconfig.json", None)
       .map(_.stream.toString)
 
-    val actual = l
+    val actual = dialectsRegistry
       .registerDialect("file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml")
       .flatMap(
         x =>
           AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml",
                       platform,
                       RamlYamlHint,
+                      Validation(platform),
                       None,
                       None,
-                      l).build())
+                      dialectsRegistry).build())
       .flatMap { u =>
         val string = new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
-        println("Load dialect from yaml after validation: " + Validation.currentValidation)
         string
       }
 

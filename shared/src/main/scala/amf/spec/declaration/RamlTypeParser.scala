@@ -12,6 +12,7 @@ import amf.spec.Declarations
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.raml._
+import amf.validation.Validation
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -19,8 +20,8 @@ import org.yaml.parser.YamlParser
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)
+  def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations, currentValidation: Validation): RamlTypeParser =
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations, currentValidation)
 }
 
 trait RamlTypeSyntax {
@@ -65,8 +66,8 @@ trait RamlTypeSyntax {
     }
 }
 
-case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations)
-    extends RamlSpecParser
+case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations, currentValidation: Validation)
+    extends RamlSpecParser(currentValidation)
     with RamlSyntax {
 
   private val value = part.value
@@ -152,13 +153,13 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+            parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
             shape
         }
       case _ =>
         val shape = SchemaShape()
         adopt(shape)
-        parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+        parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
         shape
     }
   }
@@ -173,25 +174,25 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+            parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
             ""
         }
       case _ =>
         val shape = SchemaShape()
         adopt(shape)
-        parsingErrorReport(shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+        parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
         ""
     }
     val schemaAst   = YamlParser(text).parse(true)
     val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
-    OasTypeParser(schemaEntry, (shape) => adopt(shape), declarations).parse() match {
+    OasTypeParser(schemaEntry, (shape) => adopt(shape), declarations, currentValidation).parse() match {
       case Some(shape) =>
         shape.annotations += ParsedJSONSchema(text)
         shape
       case None => {
         val shape = SchemaShape()
         adopt(shape)
-        parsingErrorReport(shape.id, "Cannot parse JSON Schema", Some(entry))
+        parsingErrorReport(currentValidation, shape.id, "Cannot parse JSON Schema", Some(entry))
         shape
       }
     }
@@ -200,7 +201,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
   private def parseTypeExpression(): Shape = {
     part.value match {
       case expression: YScalar =>
-        RamlTypeExpressionParser(adopt, declarations, Some(part.value)).parse(expression.text).get
+        RamlTypeExpressionParser(adopt, declarations, currentValidation, Some(part.value)).parse(expression.text).get
 
       case _: YMap => parseObjectType()
     }
@@ -349,7 +350,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         case "string"            => "stringScalarShape"
         case _                   => "shape"
       }
-      validateClosedShape(shape.id, map, syntaxType)
+      validateClosedShape(currentValidation, shape.id, map, syntaxType)
 
       shape
     }
@@ -369,17 +370,18 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                 .map {
                   case (node, index) =>
                     RamlTypeParser(node,
-                                   s"item$index",
-                                   node,
-                                   item => item.adopted(shape.id + "/items/" + index),
-                                   declarations).parse()
+                      s"item$index",
+                      node,
+                      item => item.adopted(shape.id + "/items/" + index),
+                      declarations,
+                      currentValidation).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
 
             case _ =>
-              parsingErrorReport(shape.id, "Unions are built from multiple shape nodes", Some(entry))
+              parsingErrorReport(currentValidation, shape.id, "Unions are built from multiple shape nodes", Some(entry))
           }
         }
       )
@@ -427,7 +429,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
-      validateClosedShape(shape.id, map, "fileShape")
+      validateClosedShape(currentValidation, shape.id, map, "fileShape")
 
       shape
     }
@@ -448,7 +450,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
             // not an array regular array parsing
             case _ =>
               val tuple = TupleShape(ast).withName(name)
-              parsingErrorReport(tuple.id, "Tuples must have a list of types", Some(entry.value.value))
+              parsingErrorReport(currentValidation, tuple.id, "Tuples must have a list of types", Some(entry.value.value))
               Left(tuple)
 
           }
@@ -485,7 +487,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       val finalShape = for {
         itemsEntry <- map.key("items")
-        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), declarations).parse()
+        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), declarations, currentValidation).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -496,10 +498,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       finalShape match {
         case Some(parsed: Shape) =>
-          validateClosedShape(parsed.id, map, "arrayShape")
+          validateClosedShape(currentValidation, parsed.id, map, "arrayShape")
           parsed
         case None =>
-          parsingErrorReport(shape.id, "Cannot parse data arrangement shape", Some(map))
+          parsingErrorReport(currentValidation, shape.id, "Cannot parse data arrangement shape", Some(map))
           shape
       }
     }
@@ -536,13 +538,13 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           val items = entry.value.value.toMap.entries.zipWithIndex
             .map {
               case (elem, index) =>
-                RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+                RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index), declarations, currentValidation).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
       )
 
-      validateClosedShape(shape.id, map, "arrayShape")
+      validateClosedShape(currentValidation, shape.id, map, "arrayShape")
 
       shape
     }
@@ -608,7 +610,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         }
       )
 
-      validateClosedShape(shape.id, map, "nodeShape")
+      validateClosedShape(currentValidation, shape.id, map, "nodeShape")
 
       shape
     }
@@ -654,7 +656,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.value.toScalar.text).iri())
 
-      RamlTypeParser(entry, shape => shape.adopted(property.id), declarations)
+      RamlTypeParser(entry, shape => shape.adopted(property.id), declarations, currentValidation)
         .parse()
         .foreach { range =>
           if (explicitRequired.isDefined) {
@@ -717,7 +719,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       map.key(
         "xml",
         entry => {
-          val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value.value.toMap).parse()
+          val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value.value.toMap, currentValidation).parse()
           shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
         }
       )
@@ -750,7 +752,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
         case None =>
           val schema: SchemaShape = SchemaShape()
           schema.adopted(parent)
-          parsingErrorReport(schema.id, "Error, cannot parse schema type without schema text", None)
+          parsingErrorReport(currentValidation, schema.id, "Error, cannot parse schema type without schema text", None)
           schema
       }
     }
@@ -762,7 +764,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           entry.value.value match {
 
             case scalar: YScalar if RamlTypeDefMatcher.TypeExpression.unapply(scalar.text).isDefined =>
-              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
+              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations, currentValidation)
                 .parse()
                 .foreach(s =>
                   shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
@@ -775,7 +777,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                             AmfArray(Seq(ancestor), Annotations(entry.value)),
                             Annotations(entry))
                 case _ =>
-                  parsingErrorReport(shape.id, "Reference not found", Some(entry.value.value))
+                  parsingErrorReport(currentValidation, shape.id, "Reference not found", Some(entry.value.value))
               }
 
             case sequence: YSequence =>
@@ -785,7 +787,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                 .map { scalar =>
                   scalar.toString match {
                     case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
-                      RamlTypeExpressionParser(adopt, declarations).parse(s).get
+                      RamlTypeExpressionParser(adopt, declarations, currentValidation).parse(s).get
 
                     case s if declarations.shapes.get(s).isDefined =>
                       declarations.shapes(s)
@@ -797,7 +799,7 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
               shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
 
             case _: YMap =>
-              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations)
+              RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations, currentValidation)
                 .parse()
                 .foreach(s =>
                   shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))

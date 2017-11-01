@@ -7,6 +7,7 @@ import amf.dumper.AMFDumper
 import amf.remote.Syntax.Json
 import amf.remote.{Amf, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -22,7 +23,7 @@ class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMF
       .map(_.stream.toString)
 
     val actual = l.registerDialect("file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml").flatMap( x =>
-      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint, None, None, l).build()
+      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint, Validation(platform), None, None, l).build()
     ).flatMap { u =>
       val encoded = u.asInstanceOf[amf.document.Document].encodes
       assert(encoded.getTypeIds().length == 2)

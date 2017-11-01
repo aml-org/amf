@@ -9,6 +9,7 @@ import amf.spec.Declarations
 import amf.spec.common.{AnnotationParser, ArrayNode, ValueNode}
 import amf.spec.declaration.OasCreativeWorkParser
 import amf.spec.raml.RamlSyntax
+import amf.validation.Validation
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 import scala.collection.mutable
@@ -16,7 +17,7 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, declarations: Declarations)
+case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, declarations: Declarations, currentValidation: Validation)
     extends RamlSyntax {
 
   def parse(): Operation = {
@@ -32,7 +33,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
 
       // Regular operation
       case map: YMap =>
-        validateClosedShape(operation.id, map, "operation")
+        validateClosedShape(currentValidation, operation.id, map, "operation")
 
         map.key("displayName", entry => {
           val value = ValueNode(entry.value)
@@ -90,7 +91,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
           }
         )
 
-        RamlRequestParser(map, () => operation.withRequest(), declarations)
+        RamlRequestParser(map, () => operation.withRequest(), declarations, currentValidation)
           .parse()
           .map(operation.set(OperationModel.Request, _))
 
@@ -102,7 +103,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += RamlResponseParser(entry, operation.withResponse, declarations).parse()
+                  responses += RamlResponseParser(entry, operation.withResponse, declarations, currentValidation).parse()
                 })
                 operation.set(OperationModel.Responses,
                               AmfArray(responses, Annotations(entry.value)),

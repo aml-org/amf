@@ -23,25 +23,25 @@ class TypeResolutionTest extends BuildCycleTests {
 
     val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-    var res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer")
+    var res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("(integer)")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("((integer))")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("((integer))")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[]")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("integer[]")
     assert(res.get.isInstanceOf[ArrayShape])
     assert(
       res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)[]")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("(integer)[]")
     assert(res.get.isInstanceOf[ArrayShape])
     assert(
       res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
@@ -49,13 +49,14 @@ class TypeResolutionTest extends BuildCycleTests {
 
     var error = false
     try {
-      RamlTypeExpressionParser(adopt, Declarations()).parse("[]")
+      val validation = Validation(platform).withEnabledValidation(false)
+      RamlTypeExpressionParser(adopt, Declarations(), validation).parse("[]")
     } catch {
       case e: Exception => error = true
     }
     assert(error)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("integer | string")
     assert(res.get.isInstanceOf[UnionShape])
     var union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 2)
@@ -64,7 +65,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer )| (string)")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("(integer )| (string)")
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 2)
@@ -73,7 +74,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string) | number")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("(integer | string) | number")
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 3)
@@ -82,7 +83,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Xsd + "float").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string)[]")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("(integer | string)[]")
     assert(res.get.isInstanceOf[ArrayShape])
     var array = res.get.asInstanceOf[ArrayShape]
     assert(array.items.isInstanceOf[UnionShape])
@@ -92,7 +93,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string[])")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("(integer | string[])")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
@@ -104,7 +105,7 @@ class TypeResolutionTest extends BuildCycleTests {
       union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
         .iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string[]")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("integer | string[]")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
@@ -116,7 +117,7 @@ class TypeResolutionTest extends BuildCycleTests {
       union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
         .iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[][]")
+    res = RamlTypeExpressionParser(adopt, Declarations(), Validation(platform)).parse("integer[][]")
     assert(res != null)
     assert(res.get.isInstanceOf[MatrixShape])
     var matrix = res.get.asInstanceOf[MatrixShape]
@@ -153,14 +154,10 @@ class TypeResolutionTest extends BuildCycleTests {
 
   examples.foreach { example =>
     test(s"Resolve data types: $example") {
-      Validation(
-        platform,
-        validation => {
-          validation
-            .loadValidationDialect()
-            .flatMap(_ => cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml))
-        }
-      )
+      val validation = Validation(platform)
+      validation.loadValidationDialect() flatMap { _ =>
+        cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
+      }
     }
   }
 
@@ -174,7 +171,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      val res = AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry)
+      val res = AMFCompiler(basePath + s"$example.raml", platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry)
         .build()
         .map { model =>
           model.resolve(ProfileNames.RAML)
@@ -184,7 +181,6 @@ class TypeResolutionTest extends BuildCycleTests {
       res.onComplete { res =>
         if (res.isSuccess) {
           AMFDumper(res.get, Raml, Yaml, GenerationOptions()).dumpToString.map { doc =>
-            println(doc)
             p.success(assert(res.isFailure))
           }
         } else {

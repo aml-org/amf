@@ -28,6 +28,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml",
                     platform,
                     RamlYamlHint,
+                    Validation(platform),
                     None,
                     None,
                     platform.dialectsRegistry).build())
@@ -44,6 +45,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig2.raml",
                     platform,
                     RamlYamlHint,
+                    Validation(platform),
                     None,
                     None,
                     platform.dialectsRegistry).build())
@@ -59,6 +61,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig3.raml",
                     platform,
                     RamlYamlHint,
+                    Validation(platform),
                     None,
                     None,
                     platform.dialectsRegistry).build())
@@ -69,47 +72,40 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Vocabulary can be validated") {
-    Validation(
+    val validation = Validation(platform)
+    AMFCompiler(
+      "file://vocabularies/vocabularies/raml_doc.raml",
       platform,
-      validation => {
-        var dialect: Option[Dialect] = None
-        validation.loadValidationDialect().flatMap { parsedDialect =>
-          AMFCompiler("file://vocabularies/vocabularies/raml_doc.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry).build()
-        } flatMap { unit =>
-          validation.validate(unit, "RAML 1.0 Vocabulary")
-        } flatMap { report =>
-          assert(report.conforms)
-          assert(report.results.isEmpty)
-        }
-      }
-    )
+      RamlYamlHint,
+      validation,
+      None,
+      None,
+      platform.dialectsRegistry
+    ).build() flatMap  { model =>
+      validation.validate(model, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
   }
 
   test("Vocabulary can be validated with closed nodes") {
-    Validation(
+    val validation = Validation(platform)
+
+    AMFCompiler(
+      "file://shared/src/test/resources/vocabularies/vocabulary_closed_shape_invalid.raml",
       platform,
-      validator => {
-        var dialect: Option[Dialect] = None
-        validator.loadValidationDialect().flatMap { parsedDialect =>
-          AMFCompiler("file://shared/src/test/resources/vocabularies/vocabulary_closed_shape_invalid.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry).build()
-        } flatMap { unit =>
-          validator.validate(unit, "RAML 1.0 Vocabulary")
-        } flatMap { report =>
-          assert(!report.conforms)
-          assert(report.results.length == 1)
-        }
-      }
-    )
+      RamlYamlHint,
+      validation,
+      None,
+      None,
+      platform.dialectsRegistry
+    ).build() flatMap  { model =>
+      validation.validate(model, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
   }
 
   /*
@@ -129,51 +125,48 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
    */
 
   test("Custom dialect can be validated") {
-    Validation(
-      platform,
-      validator => {
-        var dialect: Option[Dialect] = None
+    val validation = Validation(platform)
+    var dialect: Option[Dialect] = None
+    val dialectFile = "file://shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml"
+    val dialectExampleFile = "file://shared/src/test/resources/dialects/mule_configuration/example.raml"
+
+    platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler(
+        dialectExampleFile,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None,
         platform.dialectsRegistry
-          .registerDialect("file://shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml")
-          .flatMap { parsedDialect =>
-            dialect = Some(parsedDialect)
-            AMFCompiler("file://shared/src/test/resources/dialects/mule_configuration/example.raml",
-                        platform,
-                        RamlYamlHint,
-                        None,
-                        None,
-                        platform.dialectsRegistry).build()
-          } flatMap { unit =>
-          validator.loadDialectValidationProfile(dialect.get)
-          validator.validate(unit, dialect.get.name)
-        } flatMap { report =>
-          assert(!report.conforms)
-          assert(report.results.length == 1)
-        }
-      }
-    )
+      ).build()
+    } flatMap  { model =>
+      validation.loadDialectValidationProfile(dialect.get)
+      validation.validate(model, dialect.get.name)
+    } flatMap { report =>
+        assert(!report.conforms)
+        assert(report.results.length == 1)
+    }
   }
 
   test("Vocabulary can be validated with closed nodes (k8)") {
-    Validation(
+    val validation = Validation(platform)
+
+    AMFCompiler(
+      "file://shared/src/test/resources/vocabularies/k8/vocabulary/core.raml",
       platform,
-      validator => {
-        var dialect: Option[Dialect] = None
-        validator.loadValidationDialect().flatMap { parsedDialect =>
-          AMFCompiler("file://shared/src/test/resources/vocabularies/k8/vocabulary/core.raml",
-                      platform,
-                      RamlYamlHint,
-                      None,
-                      None,
-                      platform.dialectsRegistry).build()
-        } flatMap { unit =>
-          validator.validate(unit, "RAML 1.0 Vocabulary")
-        } flatMap { report =>
-          assert(report.conforms)
-          assert(report.results.isEmpty)
-        }
-      }
-    )
+      RamlYamlHint,
+      validation,
+      None,
+      None,
+      platform.dialectsRegistry
+    ).build() flatMap  { model =>
+      validation.validate(model, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
   }
 
   /*
@@ -193,56 +186,55 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
    */
 
   test("Custom dialect can be validated (k8)") {
-    Validation(
-      platform,
-      validator => {
-        var dialect: Option[Dialect] = None
+    val validation = Validation(platform)
+    var dialect: Option[Dialect] = None
+    val dialectFile = "file://shared/src/test/resources/vocabularies/k8/dialects/pod.raml"
+    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/k8/examples/pod.raml"
+
+    platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler(
+        dialectExampleFile,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None,
         platform.dialectsRegistry
-          .registerDialect("file://shared/src/test/resources/vocabularies/k8/dialects/pod.raml")
-          .flatMap { parsedDialect =>
-            dialect = Some(parsedDialect)
-            AMFCompiler("file://shared/src/test/resources/vocabularies/k8/examples/pod.raml",
-                        platform,
-                        RamlYamlHint,
-                        None,
-                        None,
-                        platform.dialectsRegistry).build()
-          } flatMap { unit =>
-          validator.loadDialectValidationProfile(dialect.get)
-          validator.validate(unit, dialect.get.name)
-        } flatMap { report =>
-          assert(!report.conforms)
-          assert(report.results.length == 1)
-        }
-      }
-    )
+      ).build()
+    } flatMap  { model =>
+      validation.loadDialectValidationProfile(dialect.get)
+      validation.validate(model, dialect.get.name)
+    } flatMap { report =>
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
   }
 
   test("Custom dialect can be validated (amc2)") {
-    Validation(
-      platform,
-      validator => {
-        var dialect: Option[Dialect] = None
+    val validation = Validation(platform)
+    var dialect: Option[Dialect] = None
+    val dialectFile = "file://shared/src/test/resources/vocabularies/amc2/dialect.raml"
+    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/amc2/example.raml"
+
+    platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler(
+        dialectExampleFile,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None,
         platform.dialectsRegistry
-          .registerDialect("file://shared/src/test/resources/vocabularies/amc2/dialect.raml")
-          .flatMap { parsedDialect =>
-            dialect = Some(parsedDialect)
-            AMFCompiler("file://shared/src/test/resources/vocabularies/amc2/example.raml",
-              platform,
-              RamlYamlHint,
-              None,
-              None,
-              platform.dialectsRegistry).build()
-          } flatMap { unit =>
-          validator.loadDialectValidationProfile(dialect.get)
-          validator.validate(unit, dialect.get.name)
-        } flatMap { report =>
-          println(report)
-          assert(report.conforms)
-          assert(report.results.isEmpty)
-        }
-      }
-    )
+      ).build()
+    } flatMap  { model =>
+      validation.loadDialectValidationProfile(dialect.get)
+      validation.validate(model, dialect.get.name)
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
   }
 
   /*

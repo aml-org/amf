@@ -26,9 +26,9 @@ trait DomainEntityVisitor {
   def visit(entity: DomainEntity, prop: DialectPropertyMapping): Boolean
 }
 
-class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
+class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validation) extends RamlSpecParser(currentValidation) {
 
-  private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty)
+  private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty, currentValidation)
   // map of references declared within this document
   // references introduced trhough libraries will be handled by the resolver
   private var internalRefs: mutable.HashMap[String, DomainEntity] = mutable.HashMap.empty
@@ -66,7 +66,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
       // This are ALL references, libraries and inclusions
       val references = ReferencesParser("uses", map, root.references).parse()
 
-      resolver = dialect.resolver.resolver(root, references.references.toMap)
+      resolver = dialect.resolver.resolver(root, references.references.toMap, currentValidation)
 
       val entity = parse()
 
@@ -137,7 +137,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
     }
     val diff =  entriesLabels.diff(entityLabels)
     if (diff.nonEmpty) {
-      Validation.reportConstraintFailure(
+      currentValidation.reportConstraintFailure(
         SeverityLevels.VIOLATION,
         (Namespace.AmfParser + "closed-shape").iri(),
         domainEntity.id,
@@ -379,7 +379,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
 
       var nodeId: Option[String] = None
 
-      val types = Validation.disableValidations() { () =>
+      val types = currentValidation.disableValidations() { () =>
         mapping.unionTypes.get.map {
           case node: DialectNode =>
             val dialectNode = node
@@ -406,7 +406,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
       }
 
       if (types.count(r => r._2.isEmpty) > 1) {
-        Validation.reportConstraintFailure(
+        currentValidation.reportConstraintFailure(
           SeverityLevels.VIOLATION,
           (Namespace.AmfParser + "dialectAmbiguousRange").iri(),
           nodeId.get,
@@ -426,7 +426,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
               sb.append(s"\n    - ${issue.message}")
             }
         }
-        Validation.reportConstraintFailure(
+        currentValidation.reportConstraintFailure(
           SeverityLevels.VIOLATION,
           (Namespace.AmfParser + "dialectAmbiguousRange").iri(),
           nodeId.get,
@@ -470,9 +470,9 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
 
 object DialectParser {
 
-  def apply(root: Root, header: RamlHeader, dialects: DialectRegistry): DialectParser = {
+  def apply(root: Root, header: RamlHeader, dialects: DialectRegistry, currentValidation: Validation): DialectParser = {
     dialects.get(header.text) match {
-      case Some(dialect) => new DialectParser(dialect, root)
+      case Some(dialect) => new DialectParser(dialect, root, currentValidation)
       case _             => throw new Exception(s"Unknown dialect ${header.text}")
     }
   }
