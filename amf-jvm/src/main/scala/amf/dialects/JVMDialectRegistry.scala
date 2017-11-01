@@ -13,7 +13,7 @@ class JVMDialectRegistry(platform: Platform) extends PlatformDialectRegistry(pla
     AMFCompiler(uri, platform, RamlYamlHint)
       .build()
       .map { compiled =>
-        val dialect = new DialectLoader().loadDialect(compiled)
+        val dialect = new DialectLoader(compiled).loadDialect()
         add(dialect)
         dialect
       }

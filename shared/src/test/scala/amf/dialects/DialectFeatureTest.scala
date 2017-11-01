@@ -193,4 +193,26 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .zip(expected)
       .map(checkDiff)
   }
+  test("Using library in dialect definition") {
+    val validation = platform.dialectsRegistry.registerDialect(basePath + "validation_dialect_uses(dialect_lib).raml")
+    val expected   = platform.resolve(basePath + "validationFragment.raml", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(unit => {
+        val dl = new DialectRegistry();
+        dl.add(unit)
+        AMFCompiler(basePath + "validationFragment.raml", platform, RamlYamlHint, None, None, dl)
+          .build()
+      })
+    actual
+      .flatMap({ unit =>
+        AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+
+      })
+      .map(v => {
+        // platform.write(basePath + "validation_profile_example_uses_gold.raml",v);
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
 }
