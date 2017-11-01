@@ -132,7 +132,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
   def validateClosedNode(domainEntity: DomainEntity, entries: YMap, mappings: List[DialectPropertyMapping], topLevel: Boolean) = {
     val entriesLabels = entries.map.keys.map(_.value.toString).toSet
     val entityLabels = if (topLevel) {
-      (mappings.map(_.name) ++ Seq("uses")).toSet
+      (mappings.map(_.name) ++ Seq("uses","external")).toSet
     } else {
       mappings.map(_.name).toSet
     }
@@ -158,7 +158,15 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
         parseCollection(mapping, entryNode, domainEntity)
       } else if (!mapping.isScalar) {
         parseSingleObject(mapping, entryNode, domainEntity)
-      } else {
+      }
+      else if (entryNode.value.tag.tagType == YType.Unknown && entryNode.value.tag.text == "!include"){
+        resolver.resolveToEntity(root,entryNode.value.value.asInstanceOf[YScalar].text,mapping.referenceTarget.get).foreach(child=>{
+          child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
+          domainEntity.set(mapping.field(), child)
+          //parseNode(entryNode.value.value, child)
+        });
+      }
+      else {
         entryNode.value.value match {
           // in-place definition
           case _: YMap => parseInlineNode(mapping, entryNode, domainEntity)
@@ -168,7 +176,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
       }
     })
     if (entryValue.isEmpty) {
-      mapping.defaultValue.foreach(v => {
+        mapping.defaultValue.foreach(v => {
         domainEntity.set(mapping.field(), v, Annotations() += SynthesizedField())
       })
     }
@@ -443,8 +451,9 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
     }
   }
 
-  private def setScalar(node: DomainEntity, mapping: DialectPropertyMapping, value: YScalar) =
+  private def setScalar(node: DomainEntity, mapping: DialectPropertyMapping, value: YScalar) = {
     node.set(mapping.field(), resolveValue(mapping, AmfScalar(value.text, Annotations(value))), Annotations(value))
+  }
 
 }
 
