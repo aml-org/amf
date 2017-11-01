@@ -47,9 +47,7 @@ object PropertyTerm extends Declaration("Property") {
   val domain: DialectPropertyMapping =
     ref("domain", ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs), noRAML = true))
   val range: DialectPropertyMapping = ref(
-    "range",
-    ClassTerm,
-    _.copy(collection = true, referenceTarget = Some(ClassTerm), namespace = Some(Namespace.Rdfs)))
+    "range", ClassTerm, _.copy(collection = true,  namespace = Some(Namespace.Rdfs)))
   val `extends`: DialectPropertyMapping = ref("extends", PropertyTerm, _.copy(collection = true, rdfName = Some("subPropertyOf"), namespace = Some(Namespace.Rdfs)))
 
   val DATATYPE_PROPERTY = ValueType("http://www.w3.org/2002/07/owl#DatatypeProperty")

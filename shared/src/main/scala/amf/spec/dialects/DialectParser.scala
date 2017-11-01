@@ -4,7 +4,7 @@ import amf.compiler.{RamlHeader, Root}
 import amf.dialects.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
-import amf.domain.Annotation.{DomainElementReference, LexicalInformation, NamespaceImportsDeclaration, SynthesizedField}
+import amf.domain.Annotation._
 import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
@@ -128,7 +128,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
     entity
   }
 
-  def validateClosedNode(domainEntity: DomainEntity, entries: YMap, mappings: List[DialectPropertyMapping], topLevel: Boolean) = {
+  def   validateClosedNode(domainEntity: DomainEntity, entries: YMap, mappings: List[DialectPropertyMapping], topLevel: Boolean) = {
     val entriesLabels = entries.map.keys.map(_.value.toString).toSet
     val entityLabels = if (topLevel) {
       (mappings.map(_.name) ++ Seq("uses","external")).toSet
@@ -341,7 +341,14 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
                              arr: YSequence) = {
     val value   = ArrayNode(arr)
     val array   = value.strings()
-    val scalars = array.values.map(AmfScalar(_))
+    val scalars = array.values.map(s=>{
+      if (s.isInstanceOf[AmfScalar]){
+          s.asInstanceOf[AmfScalar];
+      }
+      else{
+        AmfScalar(s);
+      }
+    })
     parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _))), Annotations(entryNode))
   }
 
@@ -442,7 +449,11 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
     if (mapping.isRef) {
       resolver.resolve(root, value.toString(), mapping.referenceTarget.get) match {
         case Some(finalValue) => AmfScalar(finalValue, value.annotations)
-        case _                => value
+        case _                => {
+          val range=value.annotations.find(classOf[SourceAST]).map(v=>v.ast.range);
+          range.map(r=>throw new ReferenceResolvingException("Can not resolve reference:" + value.toString,r))
+          value
+        }
       }
 
     } else {
@@ -451,6 +462,7 @@ class DialectParser(val dialect: Dialect, root: Root) extends RamlSpecParser {
   }
 
   private def setScalar(node: DomainEntity, mapping: DialectPropertyMapping, value: YScalar) = {
+
     node.set(mapping.field(), resolveValue(mapping, AmfScalar(value.text, Annotations(value))), Annotations(value))
   }
 
