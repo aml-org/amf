@@ -7,6 +7,7 @@ import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.{SourceMapModel, Type}
 import amf.model.AmfElement
 import amf.parser.{YMapOps, YValueOps}
+import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 import org.yaml.model.{YMap, YSequence, YValue}
 
@@ -34,8 +35,18 @@ trait GraphParserHelpers {
   }
 
   protected def ts(map: YMap): Seq[String] = {
+    val documentType = (Namespace.Document + "Document").iri()
+    val fragmentType = (Namespace.Document + "Fragment").iri()
+    val moduleType = (Namespace.Document + "Module").iri()
+    val unitType = (Namespace.Document + "Unit").iri()
+    val documentTypesSet = Set(documentType, fragmentType, moduleType, unitType)
     map.key("@type") match {
-      case Some(entry) => entry.value.value.toSequence.values.map(_.toScalar.text)
+      case Some(entry) => {
+        val allTypes = entry.value.value.toSequence.values.map(_.toScalar.text)
+        val nonDocumentTypes = allTypes.filter(t => !documentTypesSet.contains(t))
+        val documentTypes = allTypes.filter(t => documentTypesSet.contains(t)).sorted // we just use the fact that lexical order is correct
+        nonDocumentTypes ++ documentTypes
+      }
       case _           => throw new Exception(s"No @type declaration on node $map")
     }
   }
