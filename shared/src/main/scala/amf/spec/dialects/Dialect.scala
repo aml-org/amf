@@ -117,6 +117,7 @@ case class DialectPropertyMapping(name: String,
 
   def scalaName: String = scalaNameOverride.getOrElse(name)
 
+
   def isScalar: Boolean = range match {
     case _: Type.Scalar => true
     case _              => false
@@ -378,19 +379,22 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
   }
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = {
+    try {
+      t match {
+        case ClassTerm =>
+          Option(name) match {
+            case Some(range) =>
+              super.resolve(root, range, t) match {
+                case Some(bid) => Some(bid)
+                case _ => Some(resolveBasicRef(name))
+              }
+            case None => Some(TypeBuiltins.ANY)
+          }
 
-    t match {
-      case ClassTerm =>
-        Option(name) match {
-          case Some(range) =>
-            super.resolve(root, range, t) match {
-              case Some(bid) => Some(bid)
-              case _         => Some(resolveBasicRef(name))
-            }
-          case None => Some(TypeBuiltins.ANY)
-        }
-
-      case _ => Some(resolveBasicRef(name))
+        case _ => Some(resolveBasicRef(name))
+      }
+    } catch {
+      case _:Exception=>None
     }
   }
 
