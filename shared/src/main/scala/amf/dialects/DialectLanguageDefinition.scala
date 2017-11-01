@@ -103,6 +103,23 @@ object DialectDefinition extends DialectLanguageNode("dialect") {
     Some(localNameProvider)
   }
 }
+object DialectModuleDefinition extends DialectLanguageNode("module") {
+
+  var usage: DialectPropertyMapping =
+    str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
+  var vocabularies: DialectPropertyMapping = map("vocabularies", External.name, External)
+  var externals: DialectPropertyMapping =
+    map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
+  var nodeMappings: DialectPropertyMapping =
+    map("nodeMappings", NodeDefinition.name, NodeDefinition, _.copy(isDeclaration = true))
+  //var raml: DialectPropertyMapping = obj("raml", MainNode, _.copy(required = true))
+  var uses: DialectPropertyMapping = str("uses", _.copy(required = false, jsonld = false))
+
+  nameProvider = {
+    val localNameProvider: LocalNameProviderFactory = new BasicNameProvider(_, List(externals, vocabularies))
+    Some(localNameProvider)
+  }
+}
 
 case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
     extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses) {
@@ -115,5 +132,8 @@ case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
   }
 }
 
+
 object DialectLanguageDefinition
-    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses) => { DialectLanguageResolver(r, uses) })
+    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses) => { DialectLanguageResolver(r, uses) },module = Some(DialectModuleDefinition), fragments = Map().+(("DialectNode",NodeDefinition))){
+
+}
