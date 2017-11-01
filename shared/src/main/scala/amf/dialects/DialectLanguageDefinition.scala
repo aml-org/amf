@@ -125,9 +125,13 @@ case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
     extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses) {
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = {
-    t match {
-      case NodeDefinition if b2id.get(name).isDefined => Some(b2id(name))
-      case _                                          => Some(resolveBasicRef(name))
+    try {
+      t match {
+        case NodeDefinition if b2id.get(name).isDefined => Some(b2id(name))
+        case _                                          => Some(resolveBasicRef(name))
+      }
+    } catch {
+      case _: Exception => None
     }
   }
 }
