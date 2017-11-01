@@ -198,7 +198,6 @@ class GraphParser(platform: Platform) extends GraphParserHelpers {
     PropertyShapeModel                                  -> PropertyShape.apply,
     XMLSerializerModel                                  -> XMLSerializer.apply,
     PropertyDependenciesModel                           -> PropertyDependencies.apply,
-    ModuleModel                                         -> Module.apply,
     NilShapeModel                                       -> NilShape.apply,
     AnyShapeModel                                       -> AnyShape.apply,
     PropertyShapeModel                                  -> PropertyShape.apply,
