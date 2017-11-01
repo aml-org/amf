@@ -9,6 +9,7 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 import org.yaml.model.YMapEntry
@@ -23,29 +24,29 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Api (raml)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", platform, RamlYamlHint)
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", platform, RamlYamlHint, Validation(platform))
       .build() map assertDocument
   }
 
   test("Vocabulary") {
-    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint)
+    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint, Validation(platform))
       .build() map {
       _ should not be null
     }
   }
 
   test("Api (oas)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", platform, OasJsonHint)
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", platform, OasJsonHint, Validation(platform))
       .build() map assertDocument
   }
 
   test("Api (amf)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonHint)
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonHint, Validation(platform))
       .build() map assertDocument
   }
 
   test("Simple import") {
-    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint)
+    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint, Validation(platform))
       .build() map {
       _ should not be null
     }
@@ -64,6 +65,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     AMFCompiler("file://shared/src/test/resources/input-duplicate-includes.json",
                 platform,
                 OasJsonHint,
+                Validation(platform),
                 cache = Some(cache))
       .build() map { _ =>
       cache.assertCacheSize(2)
@@ -72,14 +74,14 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Cache different imports") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint, cache = Some(cache))
+    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint, Validation(platform), cache = Some(cache))
       .build() map { _ =>
       cache.assertCacheSize(3)
     }
   }
 
   test("Libraries (raml)") {
-    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint)
+    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
       .root() map {
       case Root(root, _, references, _, _) =>
         val body = root.document.value.get.toMap
@@ -89,7 +91,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Libraries (oas)") {
-    AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint)
+    AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
       .root() map {
       case Root(root, _, references, _, _) =>
         val body = root.document.value.get.toMap
@@ -135,7 +137,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[CyclicReferenceException] {
-      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}", platform, hint)
+      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}", platform, hint, Validation(platform))
         .build()
     } map { ex =>
       assert(ex.getMessage ==

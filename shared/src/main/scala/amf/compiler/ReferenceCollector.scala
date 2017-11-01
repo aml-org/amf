@@ -4,6 +4,7 @@ import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.parser.{YMapOps, YValueOps}
 import amf.remote._
+import amf.validation.Validation
 import org.yaml.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -129,8 +130,9 @@ case class Reference(url: String, kind: Kind, ast: YAggregate) {
               context: Context,
               cache: Cache,
               hint: Hint,
+              currentValidation: Validation,
               dialectRegistry: DialectRegistry = DialectRegistry.default): Future[BaseUnit] = {
-    AMFCompiler(url, remote, hint + kind, Some(context), Some(cache), dialectRegistry)
+    AMFCompiler(url, remote, hint + kind, currentValidation, Some(context), Some(cache), dialectRegistry)
       .build()
       .map(root => {
 //        target = root

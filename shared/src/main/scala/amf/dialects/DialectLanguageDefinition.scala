@@ -4,6 +4,7 @@ import amf.compiler.Root
 import amf.document.BaseUnit
 import amf.metadata.Type
 import amf.spec.dialects._
+import amf.validation.Validation
 import amf.vocabulary.Namespace
 
 /**
@@ -121,8 +122,8 @@ object DialectModuleDefinition extends DialectLanguageNode("module") {
   }
 }
 
-case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
-    extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses) {
+case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit], currentValidation: Validation)
+    extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses, currentValidation) {
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = {
     try {
@@ -138,6 +139,6 @@ case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])
 
 
 object DialectLanguageDefinition
-    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses) => { DialectLanguageResolver(r, uses) },module = Some(DialectModuleDefinition), fragments = Map().+(("DialectNode",NodeDefinition))){
+    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses, currentValidation) => { DialectLanguageResolver(r, uses, currentValidation) },module = Some(DialectModuleDefinition), fragments = Map().+(("DialectNode",NodeDefinition))){
 
 }

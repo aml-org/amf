@@ -104,22 +104,18 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
 
   test("Validation model interface") {
     val examplesPath = "file://shared/src/test/resources/validations/"
-    val unit         = new RamlParser().parseFileAsync(examplesPath + "library/nested.raml").get()
-    val report       = unit.validate(ProfileNames.RAML, platform).get()
-    Validation.currentValidation = None
+    val parser       = new RamlParser()
+    val unit         = parser.parseFileAsync(examplesPath + "library/nested.raml").get()
+    val report       = parser.reportValidation(ProfileNames.RAML).get()
     assert(!report.conforms)
     assert(report.results.length == 1)
-
-    // todo: review with antonio the static validation
-
   }
 
   test("Custom validation model interface") {
     val examplesPath = "file://shared/src/test/resources/validations/"
-
-    val unit   = new RamlParser().parseFileAsync(examplesPath + "banking/api.raml").get()
-    val report = unit.customValidation(examplesPath + "banking/profile.raml", platform).get()
-    Validation.currentValidation = None // todo: review with antonio the static validation
+    val parser = new RamlParser()
+    val unit   = parser.parseFileAsync(examplesPath + "banking/api.raml").get()
+    val report = parser.reportCustomValidation("Banking", examplesPath + "banking/profile.raml").get()
     assert(!report.conforms)
     assert(report.results.nonEmpty)
 

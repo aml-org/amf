@@ -78,7 +78,7 @@ class JvmPlatform extends Platform {
   override val dialectsRegistry = JVMDialectRegistry(this)
   override val validator = new SHACLValidator
 
-  def setupValidation(): CompletableFuture[Validation] = setupValidationBase().asJava
+  def setupValidation(validation: Validation): CompletableFuture[Validation] = setupValidationBase(validation).asJava
 }
 
 object JvmPlatform {

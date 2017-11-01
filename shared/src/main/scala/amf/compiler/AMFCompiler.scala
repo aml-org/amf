@@ -26,6 +26,7 @@ class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
                            hint: Hint,
+                           val currentValidation: Validation,
                            private val cache: Cache,
                            private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default) {
 
@@ -36,8 +37,6 @@ class AMFCompiler private (val url: String,
   def build(): Future[BaseUnit] = {
     // Reset the data node counter
     idCounter.reset()
-    // we restart the parser-side validations
-    Validation.restartValidations()
 
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else
@@ -84,9 +83,9 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlUnit(root: Root): BaseUnit = {
     val option = RamlHeader(root).map({
-      case RamlHeader.Raml10        => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Library => RamlModuleParser(root).parseModule()
-      case fragment: RamlFragment   => RamlFragmentParser(root, fragment).parseFragment()
+      case RamlHeader.Raml10        => RamlDocumentParser(root, currentValidation).parseDocument()
+      case RamlHeader.Raml10Library => RamlModuleParser(root, currentValidation).parseModule()
+      case fragment: RamlFragment   => RamlFragmentParser(root, currentValidation, fragment).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => makeDialect(root, header)
@@ -102,20 +101,20 @@ class AMFCompiler private (val url: String,
 
   private def resolveOasUnit(root: Root): BaseUnit = {
     hint.kind match {
-      case Library => OasModuleParser(root).parseModule()
-      case Link    => OasFragmentParser(root).parseFragment()
+      case Library => OasModuleParser(root, currentValidation).parseModule()
+      case Link    => OasFragmentParser(root, currentValidation).parseFragment()
       case _       => detectOasUnit(root)
     }
   }
 
   private def detectOasUnit(root: Root): BaseUnit = {
     OasFragmentHeader(root) match {
-      case f if f.isDefined => OasFragmentParser(root, f).parseFragment()
-      case _                => OasDocumentParser(root).parseDocument()
+      case f if f.isDefined => OasFragmentParser(root, currentValidation, f).parseFragment()
+      case _                => OasDocumentParser(root, currentValidation).parseDocument()
     }
   }
 
-  private def makeDialect(root: Root, header: RamlHeader): BaseUnit = DialectParser(root, header, dialects).parseUnit()
+  private def makeDialect(root: Root, header: RamlHeader): BaseUnit = DialectParser(root, header, dialects, currentValidation).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
@@ -175,7 +174,7 @@ class AMFCompiler private (val url: String,
     refs
       .filter(_.isRemote)
       .foreach(link => {
-        references += link.resolve(remote, context, cache, hint, dialects).map(r => ParsedReference(r, link.url))
+        references += link.resolve(remote, context, cache, hint, currentValidation, dialects).map(r => ParsedReference(r, link.url))
       })
 
     Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor, raw) })
@@ -205,10 +204,11 @@ object AMFCompiler {
   def apply(url: String,
             remote: Platform,
             hint: Hint,
+            currentValidation: Validation,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
             dialects: DialectRegistry = DialectRegistry.default) =
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), dialects)
+    new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

@@ -5,12 +5,13 @@ import amf.metadata.domain.LicenseModel
 import amf.parser.YMapOps
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.oas.OasSyntax
+import amf.validation.Validation
 import org.yaml.model.YMap
 
 /**
   *
   */
-case class LicenseParser(map: YMap) extends OasSyntax {
+case class LicenseParser(map: YMap, currentValidation: Validation) extends OasSyntax {
   def parse(): License = {
     val license = License(map)
 
@@ -26,7 +27,7 @@ case class LicenseParser(map: YMap) extends OasSyntax {
 
     AnnotationParser(() => license, map).parse()
 
-    validateClosedShape(license.id, map, "license")
+    validateClosedShape(currentValidation, license.id, map, "license")
 
     license
   }

@@ -6,11 +6,12 @@ import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.parser.YValueOps
 import amf.spec.declaration.ReferencesParser
+import amf.validation.Validation
 
 /**
   *
   */
-case class RamlModuleParser(root: Root) extends RamlSpecParser {
+case class RamlModuleParser(root: Root, currentValidation: Validation) extends RamlSpecParser(currentValidation) {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))

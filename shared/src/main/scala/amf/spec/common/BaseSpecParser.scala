@@ -14,12 +14,12 @@ import org.yaml.model._
   */
 
 trait ErrorReporterParser {
-  def parsingErrorReport(id: String, message: String, ast: Option[YPart], severity: String = SeverityLevels.VIOLATION): Unit = {
+  def parsingErrorReport(currentValidation: Validation, id: String, message: String, ast: Option[YPart], severity: String = SeverityLevels.VIOLATION): Unit = {
     val pos = ast match {
       case Some(node) => Some(LexicalInformation(amf.parser.Range(node.range)))
       case _          => None
     }
-    Validation.reportConstraintFailure(
+    currentValidation.reportConstraintFailure(
       severity,
       (Namespace.AmfParser + "parsingError").iri(),
       id,

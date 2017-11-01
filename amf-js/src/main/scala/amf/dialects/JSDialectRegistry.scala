@@ -2,6 +2,7 @@ package amf.dialects
 import amf.compiler.AMFCompiler
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
+import amf.validation.Validation
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.scalajs.js
@@ -10,7 +11,8 @@ import scala.scalajs.js.annotation.JSExport
 
 class JSDialectRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
   def registerDialect(uri: String) =  {
-    AMFCompiler(uri, platform, RamlYamlHint)
+    val currentValidation = new Validation(platform)
+    AMFCompiler(uri, platform, RamlYamlHint, currentValidation)
       .build()
       .map { compiled =>
         val dialect = new DialectLoader(compiled).loadDialect()

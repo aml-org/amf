@@ -179,7 +179,7 @@ trait OasSyntax {
     )
   )
 
-  def validateClosedShape(id: String, ast: YMap, nodeType: String) = {
+  def validateClosedShape(currentValidation: Validation, id: String, ast: YMap, nodeType: String) = {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
@@ -190,7 +190,7 @@ trait OasSyntax {
             properties(key) match {
               case true => // ignore
               case false =>
-                Validation.reportConstraintFailure(
+                currentValidation.reportConstraintFailure(
                   SeverityLevels.VIOLATION,
                   (Namespace.AmfParser + "closed-shape").iri(),
                   id,
