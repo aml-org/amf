@@ -8,6 +8,7 @@ class AmfResolutionPipeline extends ResolutionPipeline {
   val references = new ReferenceResolutionStage(ProfileNames.AMF)
   val shapes     = new ShapeNormalizationStage(ProfileNames.AMF)
   val parameters = new ParametersNormalizationStage(ProfileNames.AMF)
+  val `extends`  = new ExtendsResolutionStage(ProfileNames.AMF)
   val security   = new SecurityResolutionStage(ProfileNames.AMF)
   val mediaTypes = new MediaTypeResolutionStage(ProfileNames.AMF)
   val examples   = new ExamplesResolutionStage(ProfileNames.AMF)
@@ -25,5 +26,6 @@ class AmfResolutionPipeline extends ResolutionPipeline {
     step(references)
     step(shapes)
     step(security)
+    step(`extends`)
   }
 }

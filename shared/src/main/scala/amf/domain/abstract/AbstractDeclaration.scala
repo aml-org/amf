@@ -7,19 +7,13 @@ import org.yaml.model.YPart
 
 abstract class AbstractDeclaration(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  def name: String             = fields(Name)
-  def dataNode: DataNode       = fields(DataNode)
-  def variables: Seq[Variable] = fields(Variables)
+  def name: String           = fields(Name)
+  def dataNode: DataNode     = fields(DataNode)
+  def variables: Seq[String] = fields(Variables)
 
-  def withName(name: String): this.type                  = set(Name, name)
-  def withDataNode(dataNode: DataNode): this.type        = set(DataNode, dataNode)
-  def withVariables(variables: Seq[Variable]): this.type = setArray(Variables, variables)
-
-  def withVariable(name: String): Variable = {
-    val result = Variable().withName(name)
-    add(Variables, result)
-    result
-  }
+  def withName(name: String): this.type                = set(Name, name)
+  def withDataNode(dataNode: DataNode): this.type      = set(DataNode, dataNode)
+  def withVariables(variables: Seq[String]): this.type = set(Variables, variables)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
 }

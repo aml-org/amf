@@ -219,7 +219,6 @@ class GraphParser(platform: Platform) extends GraphParserHelpers {
     ResourceTypeModel                                   -> ResourceType.apply,
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,
     ParametrizedTraitModel                              -> ParametrizedTrait.apply,
-    VariableModel                                       -> Variable.apply,
     VariableValueModel                                  -> VariableValue.apply,
     SecuritySchemeModel                                 -> SecurityScheme.apply,
     SettingsModel                                       -> Settings.apply,
@@ -238,14 +237,19 @@ class GraphParser(platform: Platform) extends GraphParserHelpers {
   }
 
   private def buildType(modelType: Obj): (Annotations) => AmfObject = {
-    builders.getOrElse(modelType, modelType match {
-      case dialectType: DialectNode => (annotations: Annotations) => DomainEntity(dialectType, annotations)
-      case _ => throw new Exception(s"Cannot find builder for node type $modelType")
-    })
+    builders.getOrElse(
+      modelType,
+      modelType match {
+        case dialectType: DialectNode =>
+          (annotations: Annotations) =>
+            DomainEntity(dialectType, annotations)
+        case _ => throw new Exception(s"Cannot find builder for node type $modelType")
+      }
+    )
   }
 }
 
 object GraphParser {
-  def apply: GraphParser = GraphParser(TrunkPlatform(""))
+  def apply: GraphParser                     = GraphParser(TrunkPlatform(""))
   def apply(platform: Platform): GraphParser = new GraphParser(platform)
 }

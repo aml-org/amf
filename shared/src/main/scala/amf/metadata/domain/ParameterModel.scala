@@ -8,7 +8,7 @@ import amf.vocabulary.ValueType
 /**
   * Parameter metamodel.
   */
-object ParameterModel extends DomainElementModel with LinkableElementModel {
+object ParameterModel extends DomainElementModel with LinkableElementModel with KeyField {
 
   val Name = Field(Str, SchemaNamespace + "name")
 
@@ -19,6 +19,8 @@ object ParameterModel extends DomainElementModel with LinkableElementModel {
   val Binding = Field(Str, Http + "binding")
 
   val Schema = Field(ShapeModel, Http + "schema")
+
+  override val key: Field = Name
 
   override val `type`: List[ValueType] = Http + "Parameter" :: DomainElementModel.`type`
 

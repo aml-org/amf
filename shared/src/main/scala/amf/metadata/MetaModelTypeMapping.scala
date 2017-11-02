@@ -49,7 +49,6 @@ trait MetaModelTypeMapping {
     case _: Trait                              => TraitModel
     case _: ParametrizedResourceType           => ParametrizedResourceTypeModel
     case _: ParametrizedTrait                  => ParametrizedTraitModel
-    case _: Variable                           => VariableModel
     case _: VariableValue                      => VariableValueModel
     case _: ExternalDomainElement              => ExternalDomainElementModel
     case _: SecurityScheme                     => SecuritySchemeModel

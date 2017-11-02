@@ -12,7 +12,7 @@ import amf.vocabulary.ValueType
   */
 trait DomainElementModel extends Obj {
 
-  lazy val Extends = Field(Array(ParametrizedDeclarationModel), Document + "extends")
+  lazy val Extends = Field(Array(DomainElementModel), Document + "extends")
 
   val Includes = Field(Array(DomainElementModel), Document + "includes")
 

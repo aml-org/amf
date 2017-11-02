@@ -20,26 +20,29 @@ import org.yaml.parser.YamlParser
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations, currentValidation: Validation): RamlTypeParser =
+  def apply(ast: YMapEntry,
+            adopt: Shape => Shape,
+            declarations: Declarations,
+            currentValidation: Validation): RamlTypeParser =
     new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations, currentValidation)
 }
 
 trait RamlTypeSyntax {
   def parseWellKnownTypeRef(ramlType: String): Shape = {
     ramlType match {
-      case "nil" | ""      => NilShape()
-      case "any"           => AnyShape()
-      case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
-      case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
-      case "number"        => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
-      case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
-      case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-      case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-      case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
-      case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
-      case "array"         => ArrayShape()
-      case "object"        => NodeShape()
-      case "union"         => UnionShape()
+      case "nil" | "" | "null" => NilShape()
+      case "any"               => AnyShape()
+      case "string"            => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
+      case "integer"           => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
+      case "number"            => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
+      case "boolean"           => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
+      case "datetime"          => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "datetime-only"     => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "time-only"         => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
+      case "date-only"         => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
+      case "array"             => ArrayShape()
+      case "object"            => NodeShape()
+      case "union"             => UnionShape()
     }
   }
   def wellKnownType(str: String) =
@@ -48,25 +51,30 @@ trait RamlTypeSyntax {
       false
     } else {
       str match {
-        case "nil" | ""      => true
-        case "any"           => true
-        case "string"        => true
-        case "integer"       => true
-        case "number"        => true
-        case "boolean"       => true
-        case "datetime"      => true
-        case "datetime-only" => true
-        case "time-only"     => true
-        case "date-only"     => true
-        case "array"         => true
-        case "object"        => true
-        case "union"         => true
-        case _               => false
+        case "nil" | "" | "null" => true
+        case "any"               => true
+        case "string"            => true
+        case "integer"           => true
+        case "number"            => true
+        case "boolean"           => true
+        case "datetime"          => true
+        case "datetime-only"     => true
+        case "time-only"         => true
+        case "date-only"         => true
+        case "array"             => true
+        case "object"            => true
+        case "union"             => true
+        case _                   => false
       }
     }
 }
 
-case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape => Shape, declarations: Declarations, currentValidation: Validation)
+case class RamlTypeParser(ast: YPart,
+                          name: String,
+                          part: YNode,
+                          adopt: Shape => Shape,
+                          declarations: Declarations,
+                          currentValidation: Validation)
     extends RamlSpecParser(currentValidation)
     with RamlSyntax {
 
@@ -146,20 +154,27 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       case map: YMap =>
         map.key("type") match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.value.isInstanceOf[YScalar] =>
-            val shape = SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
+            val shape =
+              SchemaShape().withRaw(typeEntry.value.value.asInstanceOf[YScalar].text).withMediaType("application/xml")
             shape.withName(entry.key)
             adopt(shape)
             shape
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+            parsingErrorReport(currentValidation,
+                               shape.id,
+                               "Cannot parse XML Schema expression out of a non string value",
+                               Some(entry.value.value))
             shape
         }
       case _ =>
         val shape = SchemaShape()
         adopt(shape)
-        parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+        parsingErrorReport(currentValidation,
+                           shape.id,
+                           "Cannot parse XML Schema expression out of a non string value",
+                           Some(entry.value.value))
         shape
     }
   }
@@ -174,13 +189,19 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+            parsingErrorReport(currentValidation,
+                               shape.id,
+                               "Cannot parse XML Schema expression out of a non string value",
+                               Some(entry.value.value))
             ""
         }
       case _ =>
         val shape = SchemaShape()
         adopt(shape)
-        parsingErrorReport(currentValidation, shape.id, "Cannot parse XML Schema expression out of a non string value", Some(entry.value.value))
+        parsingErrorReport(currentValidation,
+                           shape.id,
+                           "Cannot parse XML Schema expression out of a non string value",
+                           Some(entry.value.value))
         ""
     }
     val schemaAst   = YamlParser(text).parse(true)
@@ -370,18 +391,21 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
                 .map {
                   case (node, index) =>
                     RamlTypeParser(node,
-                      s"item$index",
-                      node,
-                      item => item.adopted(shape.id + "/items/" + index),
-                      declarations,
-                      currentValidation).parse()
+                                   s"item$index",
+                                   node,
+                                   item => item.adopted(shape.id + "/items/" + index),
+                                   declarations,
+                                   currentValidation).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
 
             case _ =>
-              parsingErrorReport(currentValidation, shape.id, "Unions are built from multiple shape nodes", Some(entry))
+              parsingErrorReport(currentValidation,
+                                 shape.id,
+                                 "Unions are built from multiple shape nodes",
+                                 Some(entry))
           }
         }
       )
@@ -450,7 +474,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
             // not an array regular array parsing
             case _ =>
               val tuple = TupleShape(ast).withName(name)
-              parsingErrorReport(currentValidation, tuple.id, "Tuples must have a list of types", Some(entry.value.value))
+              parsingErrorReport(currentValidation,
+                                 tuple.id,
+                                 "Tuples must have a list of types",
+                                 Some(entry.value.value))
               Left(tuple)
 
           }
@@ -487,7 +514,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
 
       val finalShape = for {
         itemsEntry <- map.key("items")
-        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), declarations, currentValidation).parse()
+        item <- RamlTypeParser(itemsEntry,
+                               items => items.adopted(shape.id + "/items"),
+                               declarations,
+                               currentValidation).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -538,7 +568,10 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
           val items = entry.value.value.toMap.entries.zipWithIndex
             .map {
               case (elem, index) =>
-                RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index), declarations, currentValidation).parse()
+                RamlTypeParser(elem,
+                               item => item.adopted(shape.id + "/items/" + index),
+                               declarations,
+                               currentValidation).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
@@ -719,7 +752,8 @@ case class RamlTypeParser(ast: YPart, name: String, part: YNode, adopt: Shape =>
       map.key(
         "xml",
         entry => {
-          val xmlSerializer: XMLSerializer = XMLSerializerParser(shape.name, entry.value.value.toMap, currentValidation).parse()
+          val xmlSerializer: XMLSerializer =
+            XMLSerializerParser(shape.name, entry.value.value.toMap, currentValidation).parse()
           shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
         }
       )

@@ -22,7 +22,8 @@ case class RamlEndpointParser(entry: YMapEntry,
                               parent: Option[EndPoint],
                               collector: mutable.ListBuffer[EndPoint],
                               declarations: Declarations,
-                              currentValidation: Validation)
+                              currentValidation: Validation,
+                              parseOptionalOperations: Boolean = false)
     extends RamlSyntax {
   def parse(): Unit = {
 
@@ -73,12 +74,18 @@ case class RamlEndpointParser(entry: YMapEntry,
       }
     )
 
+    val optionalMethod = if (parseOptionalOperations) "\\??" else ""
+
     map.regex(
-      "get|patch|put|post|delete|options|head",
+      s"(get|patch|put|post|delete|options|head)$optionalMethod",
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += RamlOperationParser(entry, endpoint.withOperation, declarations, currentValidation).parse()
+          operations += RamlOperationParser(entry,
+                                            endpoint.withOperation,
+                                            declarations,
+                                            currentValidation,
+                                            parseOptionalOperations).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -103,7 +110,8 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.regex(
       "^/.*",
       entries => {
-        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector, declarations, currentValidation).parse())
+        entries.foreach(
+          RamlEndpointParser(_, producer, Some(endpoint), collector, declarations, currentValidation).parse())
       }
     )
   }

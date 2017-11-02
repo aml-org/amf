@@ -13,8 +13,11 @@ trait DomainElement {
 
   lazy val customDomainProperties: js.Iterable[DomainExtension] =
     element.customDomainProperties.map(DomainExtension).toJSArray
-  lazy val extend: js.Iterable[ParametrizedDeclaration] =
-    element.extend.map(ParametrizedDeclaration(_)).toJSArray
+  lazy val `extends`: js.Iterable[DomainElement] = element.extend.map {
+    case pd: amf.domain.`abstract`.ParametrizedDeclaration => ParametrizedDeclaration(pd)
+    case op: amf.domain.Operation                          => Operation(op)
+    case e: amf.domain.EndPoint                            => EndPoint(e)
+  }.toJSArray
 
   def withCustomDomainProperties(customProperties: js.Iterable[DomainExtension]): this.type = {
     element.withCustomDomainProperties(customProperties.map(_.domainExtension).toSeq)

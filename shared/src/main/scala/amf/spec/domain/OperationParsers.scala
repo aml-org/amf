@@ -17,19 +17,28 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, declarations: Declarations, currentValidation: Validation)
+case class RamlOperationParser(entry: YMapEntry,
+                               producer: (String) => Operation,
+                               declarations: Declarations,
+                               currentValidation: Validation,
+                               parseOptional: Boolean = false)
     extends RamlSyntax {
 
   def parse(): Operation = {
 
-    val method = entry.key.value.toScalar.text
+    val method: String = entry.key
 
     val operation = producer(method).add(Annotations(entry))
     operation.set(Method, ValueNode(entry.key).string())
 
+    if (parseOptional && method.endsWith("?")) {
+      operation.set(OperationModel.Optional, value = true)
+      operation.set(OperationModel.Method, method.stripSuffix("?"))
+    }
+
     entry.value.value match {
       // Empty operation
-      case s: YScalar if s.text == "" => operation
+      case s: YScalar if s.text == "" || s.text == "null" => operation
 
       // Regular operation
       case map: YMap =>
@@ -103,7 +112,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += RamlResponseParser(entry, operation.withResponse, declarations, currentValidation).parse()
+                  responses += RamlResponseParser(entry, operation.withResponse, declarations, currentValidation)
+                    .parse()
                 })
                 operation.set(OperationModel.Responses,
                               AmfArray(responses, Annotations(entry.value)),
@@ -127,6 +137,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
         AnnotationParser(() => operation, map).parse()
 
         operation
+
+      case n => throw new Exception(s"Invalid node $n for method $method")
     }
   }
 }

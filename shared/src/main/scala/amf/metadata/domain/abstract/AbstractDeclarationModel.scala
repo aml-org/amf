@@ -13,7 +13,7 @@ trait AbstractDeclarationModel extends DomainElementModel {
 
   val DataNode = Field(DataNodeModel, Document + "dataNode")
 
-  val Variables = Field(Array(VariableModel), Document + "variable")
+  val Variables = Field(Array(Str), Document + "variable")
 
   override def fields: List[Field] = List(Name, DataNode, Variables) ++ DomainElementModel.fields
 }

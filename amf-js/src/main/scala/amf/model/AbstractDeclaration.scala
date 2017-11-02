@@ -12,9 +12,9 @@ abstract class AbstractDeclaration private[model] (private val declaration: amf.
     with Linkable {
   override private[amf] def element: amf.domain.`abstract`.AbstractDeclaration
 
-  val name: String                     = declaration.name
-  val dataNode: DataNode               = DataNode(declaration.dataNode)
-  val variables: js.Iterable[Variable] = declaration.variables.map(Variable).toJSArray
+  val name: String                   = declaration.name
+  val dataNode: DataNode             = DataNode(declaration.dataNode)
+  val variables: js.Iterable[String] = declaration.variables.toJSArray
 
   /** Set name property of this [[AbstractDeclaration]]. */
   def withName(name: String): this.type = {
@@ -29,12 +29,10 @@ abstract class AbstractDeclaration private[model] (private val declaration: amf.
   }
 
   /** Set variables property of this [[AbstractDeclaration]]. */
-  def withVariables(variables: js.Iterable[Variable]): this.type = {
-    declaration.withVariables(variables.map(_.element).toSeq)
+  def withVariables(variables: js.Iterable[String]): this.type = {
+    declaration.withVariables(variables.toSeq)
     this
   }
-
-  def withVariable(name: String): Variable = Variable(declaration.withVariable(name))
 }
 
 @JSExportAll

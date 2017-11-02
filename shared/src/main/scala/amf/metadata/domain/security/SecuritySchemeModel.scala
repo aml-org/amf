@@ -2,12 +2,13 @@ package amf.metadata.domain.security
 
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
-import amf.metadata.domain.{DomainElementModel, ParameterModel, ResponseModel}
+import amf.metadata.domain.{DomainElementModel, KeyField, ParameterModel, ResponseModel}
 import amf.metadata.shape.ShapeModel
 import amf.vocabulary.Namespace.Security
 import amf.vocabulary.ValueType
 
-object SecuritySchemeModel extends DomainElementModel {
+object SecuritySchemeModel extends DomainElementModel with KeyField {
+
   val Name = Field(Str, Security + "name")
 
   val Type = Field(Str, Security + "type")
@@ -25,6 +26,8 @@ object SecuritySchemeModel extends DomainElementModel {
   val Settings = Field(SettingsModel, Security + "settings")
 
   val QueryString = Field(ShapeModel, Security + "queryString")
+
+  override val key: Field = Name
 
   override val `type`: List[ValueType] = Security + "SecurityScheme" :: DomainElementModel.`type`
 

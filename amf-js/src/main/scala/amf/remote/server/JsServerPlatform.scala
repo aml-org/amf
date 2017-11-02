@@ -52,15 +52,11 @@ class JsServerPlatform extends Platform {
       (response: ServerResponse) => {
         var str = ""
 
-        //Another chunk of data has been received, append it to `str`
-        response.on("data", (data: Buffer) => {
-          str += data
-        })
+        // Another chunk of data has been received, append it to `str`
+        response.on("data", (s: String) => str += s)
 
-        //The whole response has been received
-        response.on("end", () => {
-          promise.success(Content(new CharSequenceStream(url, str), url))
-        })
+        // The whole response has been received
+        response.on("end", () => promise.success(Content(new CharSequenceStream(url, str), url)))
       }
     )
 
@@ -100,7 +96,7 @@ class JsServerPlatform extends Platform {
 object JsServerPlatform {
   private var singleton: Option[JsServerPlatform] = None
 
-  def instance(): JsServerPlatform = singleton  match {
+  def instance(): JsServerPlatform = singleton match {
     case Some(p) => p
     case None =>
       singleton = Some(new JsServerPlatform())
