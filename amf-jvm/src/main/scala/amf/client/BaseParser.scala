@@ -3,7 +3,7 @@ package amf.client
 import java.util.concurrent.CompletableFuture
 
 import amf.ProfileNames
-import amf.model.{BaseUnit, Document, Module}
+import amf.model.{BaseUnit, DialectFragment, Document, Module}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.{Platform, Vendor}
@@ -21,6 +21,7 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   private def unitScalaToJVM(unit: amf.document.BaseUnit): BaseUnit = unit match {
     case d: amf.document.Document => Document(d)
     case m: amf.document.Module   => Module(m)
+    case f: amf.document.Fragment.DialectFragment => DialectFragment(f)
   }
 
   /**
@@ -71,6 +72,9 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseFileAsync(url: String, platform: Platform): CompletableFuture[BaseUnit] = super.parseAsync(url, Some(platform)).map(unitScalaToJVM).asJava
+
+
+  def parseFileAsync(url: String, platform: Platform,o:ParsingOptions): CompletableFuture[BaseUnit] = super.parseAsync(url, Some(platform),o).map(unitScalaToJVM).asJava
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.

@@ -213,7 +213,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                 }
             }
         }
-      case _ => throw new Exception(s"Error parsing unknown node $node")
+      case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
     }
   }
 
@@ -259,8 +259,8 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
             }
         }
       case _ =>
-        throw new Exception(
-          s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}")
+        throw new MajorParserFailureException(
+          s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}",entryNode.range)
     }
   }
 
@@ -401,7 +401,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                 )))
               }
             }
-          case ext => throw new Exception(s"Only a dialect node can be the range of another dialect node, found $ext")
+          case ext => throw new MajorParserFailureException(s"Only a dialect node can be the range of another dialect node, found $ext",entryNode.range)
         }
       }
 
@@ -451,7 +451,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
         case Some(finalValue) => AmfScalar(finalValue, value.annotations)
         case _                => {
           val range=value.annotations.find(classOf[SourceAST]).map(v=>v.ast.range);
-          range.map(r=>throw new ReferenceResolvingException("Can not resolve reference:" + value.toString,r))
+          range.map(r=>throw new MajorParserFailureException("Can not resolve reference:" + value.toString,r))
           value
         }
       }
