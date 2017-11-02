@@ -374,7 +374,15 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
         node = ValueNode(entry.value).string().value
         if node.isInstanceOf[String]
       } yield {
-        base = node.asInstanceOf[String]
+        base = fixBase(node.asInstanceOf[String])
+      }
+    }
+    def fixBase(str: String): String ={
+      if (!str.endsWith("/")&&(!str.endsWith("#"))){
+        str + "/";
+      }
+      else{
+        str
       }
     }
   }
