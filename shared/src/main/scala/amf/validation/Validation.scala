@@ -310,31 +310,30 @@ class Validation(platform: Platform) {
     println("===========================")
     */
 
-    ValidationMutex.lock()
-    try {
-      jsLibrary match {
-        case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-        case _ => // ignore
+    ValidationMutex.synchronized {
+      try {
+        jsLibrary match {
+          case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+          case _ => // ignore
+        }
+        for {
+          shaclReport <- platform.validator.report(
+            modelJSON,
+            "application/ld+json",
+            shapesJSON,
+            "application/ld+json"
+          )
+        } yield {
+          val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
+            shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
+          AMFValidationReport(
+            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+            model = model.id,
+            profile = profileName,
+            results = results
+          )
+        }
       }
-      for {
-        shaclReport <- platform.validator.report(
-          modelJSON,
-          "application/ld+json",
-          shapesJSON,
-          "application/ld+json"
-        )
-      } yield {
-        val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
-          shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
-        AMFValidationReport(
-          conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-          model = model.id,
-          profile = profileName,
-          results = results
-        )
-      }
-    } finally {
-      ValidationMutex.unlock()
     }
   }
 
@@ -484,20 +483,7 @@ class Validation(platform: Platform) {
 
 object ValidationMutex {
 
-  private var count : Int = 1
 
-  def lock() {
-    synchronized {
-      while (count < 1) {}
-      count = count - 1
-    }
-  }
-
-  def unlock() {
-    synchronized {
-      count = 1
-    }
-  }
 }
 
 object Validation {
