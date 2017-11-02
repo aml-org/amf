@@ -1,6 +1,7 @@
 package amf.spec.domain
 
 import amf.document.BaseUnit
+import amf.domain.Annotation.SynthesizedField
 import amf.domain.{Example, FieldEntry}
 import amf.metadata.domain.ExampleModel._
 import amf.parser.Position
@@ -106,7 +107,14 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
     val results = ListBuffer[Emitter]()
 
     val fs = example.fields
-    val isExpanded = fs.fieldsMeta().exists(List(Strict, Description, DisplayName).contains(_)) || example.value
+    // This should remove Strict if we auto-generated it when parsing the model
+    val explicitFielMeta = List(Strict, Description, DisplayName).filter { f =>
+      fs.entry(f) match {
+        case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
+        case None        => false
+      }
+    }
+    val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.value
       .contains("value")
 
     if (isExpanded) {
@@ -114,7 +122,9 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
       fs.entry(Description).foreach(f => results += ValueEmitter("description", f))
 
-      fs.entry(Strict).foreach(f => results += ValueEmitter("strict", f))
+      if (fs.entry(Strict).isDefined && !fs.entry(Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
+        fs.entry(Strict).foreach(f => results += ValueEmitter("strict", f))
+      }
 
       fs.entry(Value)
         .foreach(f => {

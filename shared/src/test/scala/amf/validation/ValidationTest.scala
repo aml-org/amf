@@ -7,12 +7,14 @@ import amf.compiler.AMFCompiler
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.extensions.DataNode
 import amf.dumper.AMFDumper
+import amf.graph.GraphEmitter
 import amf.remote.Syntax.Yaml
 import amf.remote.{PayloadJsonHint, PayloadYamlHint, Raml, RamlYamlHint}
 import amf.shape.Shape
-import amf.unsafe.PlatformSecrets
+import amf.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
+import org.yaml.render.JsonRender
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -232,7 +234,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("G", "g1_valid.json")  -> ExpectedReport(conforms = true,  0, "Payload"),
     ("G", "g2_valid.json")  -> ExpectedReport(conforms = true,  0, "Payload"),
     ("G", "g_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("H", "h_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload")
+    ("H", "h_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, "Payload")
   )
 
   for {
@@ -261,6 +265,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         assert(report.results.length == expectedReport.numErrors)
       }
     }
+  }
+
+  test("payload parsing test") {
+    for {
+      content      <- platform.resolve(payloadsPath + "b_valid.yaml", None)
+      filePayload  <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, Validation(platform)).build()
+      textPayload  <- AMFCompiler(payloadsPath + "b_valid.yaml", TrunkPlatform(content.stream.toString), PayloadYamlHint, Validation(platform)).build()
+    } yield {
+      val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, GenerationOptions()))
+      val textJson = JsonRender.render(GraphEmitter.emit(textPayload, GenerationOptions()))
+      assert(fileJson == textJson)
+    }
+
   }
 
   val testValidations = Map(
@@ -311,6 +328,28 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       ) flatMap { report =>
         assert(expectedReport == ExpectedReport(report.conforms, report.results.length, expectedReport.profile))
       }
+    }
+  }
+
+  test("Example validations test") {
+    for {
+      library  <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, Validation(platform)).build()
+      results  <- ExamplesValidation(library, platform).validate()
+    } yield {
+      assert(results.length == 4)
+      assert(results.count(_.level == SeverityLevels.WARNING) == 1)
+    }
+  }
+
+  test("Example model validation test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, validation).build()
+      report  <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 4)
+      assert(report.results.count(_.level == SeverityLevels.WARNING) == 1)
     }
   }
 }

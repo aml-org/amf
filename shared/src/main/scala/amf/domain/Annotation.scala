@@ -64,7 +64,10 @@ object Annotation {
 
   case class ExplicitField() extends Annotation
 
-  case class SynthesizedField() extends Annotation
+  case class SynthesizedField() extends SerializableAnnotation {
+    override val name: String = "synthesized-field"
+    override val value: String = "true"
+  }
 
   case class DomainElementReference(name: String, ref: Option[DomainEntity]) extends SerializableAnnotation {
     override val value: String = name
@@ -115,6 +118,7 @@ object Annotation {
       case "parsed-json-schema" => Some(parsedJsonSchema)
       case "declared-element"   => Some(declaredElement)
       case "type-exprssion"     => Some(typeExpression)
+      case "synthesized-field"  => Some(synthesizedField)
       case _                    => None // Unknown annotation
     }
 
@@ -151,5 +155,9 @@ object Annotation {
 
   private def typeExpression(value: String, objects: Map[String, AmfElement]) = {
     ParsedFromTypeExpression(value)
+  }
+
+  private def synthesizedField(value: String, objects: Map[String, AmfElement]) = {
+    SynthesizedField()
   }
 }
