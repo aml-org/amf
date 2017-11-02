@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.domain.`abstract`.ParametrizedTrait
 import amf.domain.security.ParametrizedSecurityScheme
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
@@ -20,6 +21,8 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def request: Request             = fields(OperationRequest)
   def responses: Seq[Response]     = fields(Responses)
   def security: Seq[DomainElement] = fields(Security)
+
+  def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
   def withMethod(method: String): this.type                     = set(Method, method)
   def withName(name: String): this.type                         = set(Name, name)

@@ -5,28 +5,36 @@ import amf.domain.{Annotations, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.shape.Shape
 import amf.spec.Declarations
-import amf.spec.common.{AnnotationParser, ValueNode}
+import amf.spec.common.{AnnotationParser, ErrorReporterParser, ValueNode}
 import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
-import org.yaml.model.{YMap, YMapEntry, YScalar}
-import amf.parser.{YMapOps, YValueOps}
 import amf.validation.Validation
+import org.yaml.model.{YMap, YMapEntry, YScalar}
+import amf.parser.YMapOps
 
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations, currentValidation: Validation) {
+case class RamlParametersParser(map: YMap,
+                                producer: String => Parameter,
+                                declarations: Declarations,
+                                currentValidation: Validation) {
   def parse(): Seq[Parameter] =
     map.entries
       .map(entry => RamlParameterParser(entry, producer, declarations, currentValidation).parse())
 }
 
-case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations, currentValidation: Validation)
-    extends RamlTypeSyntax {
+case class RamlParameterParser(entry: YMapEntry,
+                               producer: String => Parameter,
+                               declarations: Declarations,
+                               currentValidation: Validation)
+    extends RamlTypeSyntax
+    with ErrorReporterParser {
   def parse(): Parameter = {
 
-    val name      = entry.key.value.toScalar.text
-    val parameter = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
-    entry.value.value match {
+    val name: String = entry.key
+    val parameter    = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+
+    val p = entry.value.value match {
       case ref: YScalar if declarations.findParameter(ref.text).isDefined =>
         declarations
           .findParameter(ref.text)
@@ -49,22 +57,17 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
         parameter.withSchema(schema)
 
       case _: YScalar =>
-        throw new Exception("Cannot declare unresolved parameter")
+        parsingErrorReport(currentValidation,
+                           parameter.id,
+                           "Cannot declare unresolved parameter",
+                           Some(entry.value.value))
+        parameter
 
       case map: YMap =>
-        val map = entry.value.value.toMap
-
         map.key("required", entry => {
           val value = ValueNode(entry.value)
           parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
         })
-
-        if (parameter.fields.entry(ParameterModel.Required).isEmpty) {
-          val required = !name.endsWith("?")
-
-          parameter.set(ParameterModel.Required, required)
-          parameter.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
-        }
 
         map.key("description", entry => {
           val value = ValueNode(entry.value)
@@ -88,5 +91,14 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
 
         parameter
     }
+
+    if (p.fields.entry(ParameterModel.Required).isEmpty) {
+      val required = !name.endsWith("?")
+
+      p.set(ParameterModel.Required, required)
+      p.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+    }
+
+    p
   }
 }

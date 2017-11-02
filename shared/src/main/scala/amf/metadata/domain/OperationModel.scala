@@ -2,14 +2,13 @@ package amf.metadata.domain
 
 import amf.metadata.Field
 import amf.metadata.Type._
-import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.vocabulary.{Namespace, ValueType}
 
 /**
-  * Operation metamodel
+  * Operation meta model.
   */
-object OperationModel extends DomainElementModel {
+object OperationModel extends DomainElementModel with KeyField with OptionalField {
 
   val Method = Field(Str, Hydra + "method")
 
@@ -34,6 +33,12 @@ object OperationModel extends DomainElementModel {
   val Responses = Field(Array(ResponseModel), Hydra + "returns")
 
   val Security = Field(Array(DomainElementModel), Namespace.Security + "security")
+
+  val Optional = Field(Bool, Namespace.Http + "optional")
+
+  override val optional: Field = Optional
+
+  override val key: Field = Method
 
   override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`
 

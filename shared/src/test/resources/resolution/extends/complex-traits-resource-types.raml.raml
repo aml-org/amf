@@ -1,0 +1,120 @@
+#%RAML 1.0
+traits:
+  a:
+    description: Trait 'a'
+    queryParameters:
+      <<methodName>>-a-<<posfix>>?: string
+  b:
+    description: Trait 'b'
+    queryParameters:
+      <<methodName>>-b-<<posfix>>:
+        type: string
+        required: false
+  c:
+    description: Trait 'c'
+    queryParameters:
+      <<methodName>>-c-<<posfix>>: string
+  d:
+    description: Trait 'd'
+    queryParameters:
+      <<methodName>>-d: string
+  e:
+    description: Trait 'e'
+    queryParameters:
+      <<methodName>>-e: string
+  f:
+    description: Trait 'f'
+    queryParameters:
+      <<methodName>>-f: string
+  g:
+    description: Trait 'g'
+    queryParameters:
+      <<methodName>>-g-<<posfix>>: string
+resourceTypes:
+  p:
+    is:
+      - e
+      -
+        g:
+          posfix: <<method>>
+    put: null
+    <<method>>: null
+    get:
+      is:
+        - f
+  o:
+    type:
+      p:
+        method: head
+    is:
+      - d
+title: TraitsResolution
+/endpoint:
+  put:
+    queryParameters:
+      put-b-alpha:
+        required: false
+        type: string
+      put-c-alpha:
+        type: string
+      put-d:
+        type: string
+      put-e:
+        type: string
+      put-g-head:
+        type: string
+    description: Trait 'b'
+  head:
+    queryParameters:
+      head-b-alpha:
+        required: false
+        type: string
+      head-c-alpha:
+        type: string
+      head-d:
+        type: string
+      head-e:
+        type: string
+      head-g-head:
+        type: string
+    description: Trait 'b'
+  get:
+    queryParameters:
+      get-a-beta?:
+        type: string
+      get-b-beta:
+        required: false
+        type: string
+      get-b-alpha:
+        required: false
+        type: string
+      get-c-alpha:
+        type: string
+      get-d:
+        type: string
+      get-f:
+        type: string
+      get-e:
+        type: string
+      get-g-head:
+        type: string
+    description: Trait 'a'
+  post:
+    queryParameters:
+      post-a-beta?:
+        type: string
+      post-b-beta:
+        required: false
+        type: string
+      post-b-alpha:
+        required: false
+        type: string
+      post-c-alpha:
+        type: string
+      post-d:
+        type: string
+      post-e:
+        type: string
+      post-g-head:
+        type: string
+    description: Trait 'a'

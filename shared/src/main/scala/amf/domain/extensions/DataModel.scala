@@ -1,6 +1,7 @@
 package amf.domain.extensions
 
 import amf.common.core._
+import amf.domain.`abstract`.Variable
 import amf.domain.Annotation.ScalarType
 import amf.domain.{Annotations, DynamicDomainElement, Fields}
 import amf.metadata.Field
@@ -8,6 +9,7 @@ import amf.metadata.Type.{Array, Str}
 import amf.metadata.domain.extensions.DataNodeModel
 import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.resolution.stages.VariableReplacer
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YPart, YSequence}
 
@@ -35,12 +37,17 @@ object idCounter {
   */
 abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
 
+  /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
+  def replaceVariables(values: Set[Variable]): Unit
+
   def name: String = Option(fields(Name)).getOrElse(defaultName)
 
   protected def defaultName: String     = idCounter.genId("dataNode")
   def withName(name: String): this.type = set(Name, name)
 
   override val fields: Fields = Fields()
+
+  def cloneNode(): this.type
 }
 
 /**
@@ -48,8 +55,8 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   */
 class ObjectNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
 
-  val properties: mutable.HashMap[String, ListBuffer[DataNode]] = mutable.HashMap()
-  val propertyAnnotations: mutable.HashMap[String, Annotations] = mutable.HashMap()
+  val properties: mutable.Map[String, ListBuffer[DataNode]] = mutable.HashMap()
+  val propertyAnnotations: mutable.Map[String, Annotations] = mutable.HashMap()
 
   override def defaultName: String = idCounter.genId("object")
 
@@ -93,6 +100,33 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     case Some(els) if els.nonEmpty => Some(els.head)
     case _                         => None
   }
+
+  override def replaceVariables(values: Set[Variable]): Unit = {
+    properties.keys.foreach { key =>
+      val value = properties.getOrElse(key, ListBuffer())
+      properties.remove(key)
+      value.foreach(_.replaceVariables(values))
+      properties += VariableReplacer.replaceVariables(key, values) -> value
+    }
+
+    propertyAnnotations.keys.foreach { key =>
+      val value = propertyAnnotations(key)
+      propertyAnnotations.remove(key)
+      propertyAnnotations += VariableReplacer.replaceVariables(key, values) -> value
+    }
+  }
+
+  override def cloneNode(): this.type = {
+    val cloned = ObjectNode(annotations)
+
+    properties.foreach {
+      case (property: String, l: ListBuffer[DataNode]) =>
+        cloned.properties += property          -> l.map(_.cloneNode())
+        cloned.propertyAnnotations += property -> propertyAnnotations(property)
+    }
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object ObjectNode {
@@ -135,6 +169,18 @@ class ScalarNode(var value: String,
       Some(AmfScalar(value, annotations))
     case _ => None
   }
+
+  override def replaceVariables(values: Set[Variable]): Unit =
+    value = VariableReplacer.replaceVariables(value, values)
+
+  override def cloneNode(): this.type = {
+    val cloned = ScalarNode(annotations)
+
+    cloned.value = value
+    cloned.dataType = dataType
+
+    cloned.asInstanceOf[this.type]
+  }
 }
 
 object ScalarNode {
@@ -176,6 +222,16 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Member => Some(AmfArray(members))
     case _      => None
+  }
+
+  override def replaceVariables(values: Set[Variable]): Unit = members.foreach(_.replaceVariables(values))
+
+  override def cloneNode(): this.type = {
+    val cloned = ArrayNode(annotations)
+
+    cloned.members = members.map(_.cloneNode())
+
+    cloned.asInstanceOf[this.type]
   }
 }
 

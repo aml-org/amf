@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.common.core.Strings
 import amf.domain.Annotation.ParentEndPoint
+import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.security.ParametrizedSecurityScheme
 import amf.metadata.domain.EndPointModel._
 
@@ -20,6 +21,10 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).map(_.parent)
 
   def relativePath: String = parent.map(p => path.stripPrefix(p.path)).getOrElse(path)
+
+  def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
+
+  def resourceType: Option[ParametrizedResourceType] = extend collectFirst { case r: ParametrizedResourceType => r }
 
   def withName(name: String): this.type                                  = set(Name, name)
   def withDescription(description: String): this.type                    = set(Description, description)

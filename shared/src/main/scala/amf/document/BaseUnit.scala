@@ -27,7 +27,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
 
-  /** Resolves the model **/
+  /** Resolves the model. */
   def resolve(profile: String): BaseUnit = ResolutionPipeline.forProfile(profile).resolve(this)
 
   /**
@@ -43,15 +43,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     )
   }
 
-  /**
-    * Finds in the nested model structure AmfObjects with the requested types
-    * @param shapeType
-    * @return
-    */
+  /** Finds in the nested model structure AmfObjects with the requested types. */
   def findByType(shapeType: String): Seq[DomainElement] = {
     val predicate = { (element: DomainElement) =>
       val types = element match {
-        case e: DynamicDomainElement => e.dynamicType.map(t => t.iri()) ++ element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
+        case e: DynamicDomainElement =>
+          e.dynamicType.map(t => t.iri()) ++ element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
         case _ => element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
       }
       types.contains(shapeType)
@@ -69,13 +66,13 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
         case _                => false
       }
     }
-    val transformationAdatper = (o: AmfObject) => {
+    val transformationAdapter = (o: AmfObject) => {
       o match {
         case e: DomainElement => transformation(e)
         case _                => Some(o)
       }
     }
-    transformByCondition(this, domainElementAdapter, transformationAdatper)
+    transformByCondition(this, domainElementAdapter, transformationAdapter)
     this
   }
 
@@ -123,7 +120,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     } else {
       val elements = element match {
         case dynamicElement: DynamicDomainElement =>
-          val values = dynamicElement.dynamicFields.map(f => dynamicElement.valueForField(f)).filter(_.isDefined).map(_.get)
+          val values =
+            dynamicElement.dynamicFields.map(f => dynamicElement.valueForField(f)).filter(_.isDefined).map(_.get)
           values.filter(v => v.isInstanceOf[DomainElement]).asInstanceOf[Seq[DomainElement]]
         case _ =>
           element.fields.fields().map(_.element).toSeq

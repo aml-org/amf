@@ -23,9 +23,9 @@ abstract class ResolutionPipeline {
 }
 
 object ResolutionPipeline {
-  val raml = new RamlResolutionPipeline()
-  val oas  = new OasResolutionPipeline()
-  val amf  = new AmfResolutionPipeline()
+  def raml = new RamlResolutionPipeline()
+  def oas  = new OasResolutionPipeline()
+  def amf  = new AmfResolutionPipeline()
 
   def forProfile(profile: String): ResolutionPipeline = {
     profile match {

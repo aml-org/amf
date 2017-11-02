@@ -11,8 +11,11 @@ trait DomainElement {
 
   lazy val customDomainProperties: java.util.List[DomainExtension] =
     element.customDomainProperties.map(DomainExtension).asJava
-  lazy val extend: java.util.List[ParametrizedDeclaration] =
-    element.extend.map(ParametrizedDeclaration(_)).asJava
+  lazy val `extends`: java.util.List[DomainElement] = element.extend.map {
+    case pd: amf.domain.`abstract`.ParametrizedDeclaration => ParametrizedDeclaration(pd)
+    case op: amf.domain.Operation                          => Operation(op)
+    case e: amf.domain.EndPoint                            => EndPoint(e)
+  }.asJava
 
   def withCustomDomainProperties(customProperties: java.util.List[DomainExtension]): this.type = {
     element.withCustomDomainProperties(customProperties.asScala.map(_.domainExtension))

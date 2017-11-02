@@ -8,11 +8,13 @@ import amf.vocabulary.ValueType
 /**
   * Payload metamodel.
   */
-object PayloadModel extends DomainElementModel {
+object PayloadModel extends DomainElementModel with KeyField {
 
   val MediaType = Field(Str, Http + "mediaType")
 
   val Schema = Field(ShapeModel, Http + "schema")
+
+  override val key: Field = MediaType
 
   override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
 

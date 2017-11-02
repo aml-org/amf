@@ -1,6 +1,5 @@
 package amf.metadata.domain
 
-import amf.document.Document
 import amf.metadata.Type.{Iri, Str}
 import amf.metadata.{Field, Obj}
 import amf.vocabulary.{Namespace, ValueType}

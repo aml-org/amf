@@ -1,27 +1,8 @@
 package amf.domain.`abstract`
 
 import amf.domain.{Annotations, DomainElement, Fields}
-import amf.metadata.domain.`abstract`.{VariableModel, VariableValueModel}
+import amf.metadata.domain.`abstract`.VariableValueModel
 import org.yaml.model.YPart
-
-case class Variable(fields: Fields, annotations: Annotations) extends DomainElement {
-  def name: String           = fields(VariableModel.Name)
-  def transformation: String = fields(VariableModel.Transformation)
-
-  def withName(name: String): this.type                     = set(VariableModel.Name, name)
-  def withTransformation(transformation: String): this.type = set(VariableModel.Transformation, transformation)
-
-  override def adopted(parent: String): this.type = withId(parent + "/" + name)
-}
-
-object Variable {
-
-  def apply(): Variable = apply(Annotations())
-
-  def apply(ast: YPart): Variable = apply(Annotations(ast))
-
-  def apply(annotations: Annotations): Variable = apply(Fields(), annotations)
-}
 
 case class VariableValue(fields: Fields, annotations: Annotations) extends DomainElement {
   def name: String  = fields(VariableValueModel.Name)
@@ -41,3 +22,5 @@ object VariableValue {
 
   def apply(annotations: Annotations): VariableValue = apply(Fields(), annotations)
 }
+
+case class Variable(name: String, value: String)

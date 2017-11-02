@@ -745,40 +745,13 @@
         ],
         "http://raml.org/vocabularies/document#variable": [
           {
-            "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/fallbackParamName",
-            "@type": [
-              "http://raml.org/vocabularies/document#Variable",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#name": [
-              {
-                "@value": "fallbackParamName"
-              }
-            ]
+            "@value": "queryParamName"
           },
           {
-            "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/resourcePathName",
-            "@type": [
-              "http://raml.org/vocabularies/document#Variable",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#name": [
-              {
-                "@value": "resourcePathName"
-              }
-            ]
+            "@value": "fallbackParamName"
           },
           {
-            "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/searchableCollection/queryParamName",
-            "@type": [
-              "http://raml.org/vocabularies/document#Variable",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#name": [
-              {
-                "@value": "queryParamName"
-              }
-            ]
+            "@value": "resourcePathName"
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -944,16 +917,7 @@
         ],
         "http://raml.org/vocabularies/document#variable": [
           {
-            "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/secured/tokenName",
-            "@type": [
-              "http://raml.org/vocabularies/document#Variable",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#name": [
-              {
-                "@value": "tokenName"
-              }
-            ]
+            "@value": "tokenName"
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -1119,21 +1083,7 @@
         ],
         "http://raml.org/vocabularies/document#variable": [
           {
-            "@id": "file://shared/src/test/resources/upanddown/traits-resource-types.json#/declarations/paged/maxPages",
-            "@type": [
-              "http://raml.org/vocabularies/document#Variable",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#name": [
-              {
-                "@value": "maxPages"
-              }
-            ],
-            "http://raml.org/vocabularies/document#transformation": [
-              {
-                "@value": "singularize"
-              }
-            ]
+            "@value": "maxPages"
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [

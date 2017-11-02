@@ -7,7 +7,7 @@ import amf.vocabulary.ValueType
 /**
   * Response metamodel.
   */
-object ResponseModel extends DomainElementModel {
+object ResponseModel extends DomainElementModel with KeyField {
 
   val Name = Field(Str, Schema + "name")
 
@@ -20,6 +20,8 @@ object ResponseModel extends DomainElementModel {
   val Payloads = Field(Array(PayloadModel), Http + "payload")
 
   val Examples = Field(Array(ExampleModel), Document + "examples")
+
+  override val key: Field = StatusCode
 
   override val `type`: List[ValueType] = Http + "Response" :: DomainElementModel.`type`
 

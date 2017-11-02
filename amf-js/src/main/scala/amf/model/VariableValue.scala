@@ -3,29 +3,6 @@ package amf.model
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * JVM Variable model class.
-  */
-@JSExportAll
-case class Variable private[model] (private val variable: amf.domain.`abstract`.Variable) extends DomainElement {
-  def this() = this(amf.domain.`abstract`.Variable())
-
-  val name: String           = variable.name
-  val transformation: String = variable.transformation
-
-  def withName(name: String): this.type = {
-    variable.withName(name)
-    this
-  }
-
-  def withTransformation(transformation: String): this.type = {
-    variable.withTransformation(transformation)
-    this
-  }
-
-  override private[amf] def element: amf.domain.`abstract`.Variable = variable
-}
-
-/**
   * JVM VariableValue model class.
   */
 @JSExportAll

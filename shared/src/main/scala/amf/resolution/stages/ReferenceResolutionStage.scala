@@ -5,7 +5,6 @@ import amf.domain.{DomainElement, Linkable}
 
 /**
   * Resolves the local and remote references found in the model.
-  * @param profile
   */
 class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile) {
 
@@ -13,10 +12,10 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     model.transform(findLinkPredicates, transform)
   }
 
-  def findLinkPredicates(element: DomainElement) = {
+  def findLinkPredicates(element: DomainElement): Boolean = {
     element match {
       case l: Linkable => l.isLink
-      case _           =>  false
+      case _           => false
     }
   }
 
