@@ -3,7 +3,7 @@ package amf.spec.oas
 import amf.domain.Annotation.LexicalInformation
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.YMap
 
 trait OasSyntax {
 
@@ -183,22 +183,19 @@ trait OasSyntax {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
-          val key = entry.key.value.asInstanceOf[YScalar].text
+          val key: String = entry.key
           if (key.startsWith("x-") || key == "$ref" || (key.startsWith("/") && nodeType == "webApi")) {
-            // annotation or path in endpoint/webapi => ignore
-          } else {
-            properties(key) match {
-              case true => // ignore
-              case false =>
-                currentValidation.reportConstraintFailure(
-                  SeverityLevels.VIOLATION,
-                  (Namespace.AmfParser + "closed-shape").iri(),
-                  id,
-                  None,
-                  s"Property $key not supported in a OpenAPI $nodeType node",
-                  Some(LexicalInformation(amf.parser.Range(ast.range)))
-                )
-            }
+            // annotation or path in webapi => ignore
+          } else if (!properties(key)) {
+            currentValidation.reportConstraintFailure(
+              SeverityLevels.VIOLATION,
+              (Namespace.AmfParser + "closed-shape").iri(),
+              id,
+              None,
+              s"Property $key not supported in a OpenAPI $nodeType node",
+              Some(LexicalInformation(amf.parser.Range(entry.range)))
+            )
+
           }
         }
       case None => throw new Exception(s"Cannot validate unknown node type $nodeType")

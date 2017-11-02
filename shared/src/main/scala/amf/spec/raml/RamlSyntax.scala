@@ -3,7 +3,7 @@ package amf.spec.raml
 import amf.domain.Annotation.LexicalInformation
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.YMap
 
 trait RamlSyntax {
 
@@ -195,20 +195,19 @@ trait RamlSyntax {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
-          val key = entry.key.value.asInstanceOf[YScalar].text
+          val key: String = entry.key
           if ((key.startsWith("(") && key.endsWith(")")) || (key.startsWith("/") && (nodeType == "webApi" || nodeType == "endPoint"))) {
             // annotation or path in endpoint/webapi => ignore
-          } else {
-            if (!properties(key)) {
-              currentValidation.reportConstraintFailure(
-                SeverityLevels.VIOLATION,
-                (Namespace.AmfParser + "closed-shape").iri(),
-                id,
-                None,
-                s"Property $key not supported in a RAML $nodeType node",
-                Some(LexicalInformation(amf.parser.Range(ast.range)))
-              )
-            }
+          } else if (!properties(key)) {
+            currentValidation.reportConstraintFailure(
+              SeverityLevels.VIOLATION,
+              (Namespace.AmfParser + "closed-shape").iri(),
+              id,
+              None,
+              s"Property $key not supported in a RAML $nodeType node",
+              Some(LexicalInformation(amf.parser.Range(entry.range)))
+            )
+
           }
         }
       case None => throw new Exception(s"Cannot validate unknown node type $nodeType")
