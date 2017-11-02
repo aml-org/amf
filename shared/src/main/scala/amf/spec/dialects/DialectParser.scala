@@ -13,6 +13,7 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.declaration.ReferencesParser
 import amf.spec.raml.RamlSpecParser
+import amf.validation.model.ParserSideValidations
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
 import org.yaml.model._
@@ -139,7 +140,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
     if (diff.nonEmpty) {
       currentValidation.reportConstraintFailure(
         SeverityLevels.VIOLATION,
-        (Namespace.AmfParser + "closed-shape").iri(),
+        ParserSideValidations.ClosedShapeSpecification.id(),
         domainEntity.id,
         None,
         s"Properties: ${diff.mkString(",")} not supported in a ${domainEntity.definition.shortName} node",
@@ -408,7 +409,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
       if (types.count(r => r._2.isEmpty) > 1) {
         currentValidation.reportConstraintFailure(
           SeverityLevels.VIOLATION,
-          (Namespace.AmfParser + "dialectAmbiguousRange").iri(),
+          ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
           nodeId.get,
           Some(mapping.iri()),
           s"Ambiguous range for property $key, multiple possible values for range ${types.filter(r => r._2.isEmpty).map(_._1.shortName)}",
@@ -428,7 +429,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
         }
         currentValidation.reportConstraintFailure(
           SeverityLevels.VIOLATION,
-          (Namespace.AmfParser + "dialectAmbiguousRange").iri(),
+          ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
           nodeId.get,
           Some(mapping.iri()),
           sb.mkString,

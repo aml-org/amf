@@ -5,6 +5,7 @@ import amf.domain._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
 import amf.remote.Vendor
+import amf.validation.model.ParserSideValidations
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
 import org.yaml.model._
@@ -21,7 +22,7 @@ trait ErrorReporterParser {
     }
     currentValidation.reportConstraintFailure(
       severity,
-      (Namespace.AmfParser + "parsingError").iri(),
+      ParserSideValidations.ParsingErrorSpecification.id(),
       id,
       None,
       message,

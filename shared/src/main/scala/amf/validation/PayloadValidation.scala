@@ -49,14 +49,14 @@ class PayloadValidation(platform: Platform, shape: Shape) extends Validation(pla
 
       case obj: ObjectNode =>
         obj.properties.foreach { case (propName, nodes) =>
-            validation.propertyConstraints.find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
-              case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
-                validations.find(v => v.id == propertyConstraint.node.get) match {
-                  case Some(targetValidation) => validationsAcc = processTargets(targetValidation, nodes.head, validationsAcc)
-                  case None => // ignore
-                }
-              case None => // ignore
-            }
+          validation.propertyConstraints.find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
+            case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
+              validations.find(v => v.id == propertyConstraint.node.get) match {
+                case Some(targetValidation) => validationsAcc = processTargets(targetValidation, nodes.head, validationsAcc)
+                case _ => // ignore
+              }
+            case None => // ignore
+          }
         }
 
       case array: ArrayNode =>
