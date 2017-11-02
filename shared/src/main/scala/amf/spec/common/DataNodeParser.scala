@@ -19,14 +19,27 @@ case class DataNodeParser(value: YNode,
                           parent: Option[String] = None) {
   def parse(): DataNode = {
     value.tag.tagType match {
-      case YType.Str   => parseScalar(value.value.toScalar, "string")
-      case YType.Int   => parseScalar(value.value.toScalar, "integer")
-      case YType.Float => parseScalar(value.value.toScalar, "float")
-      case YType.Bool  => parseScalar(value.value.toScalar, "boolean")
-      case YType.Null  => parseScalar(value.value.toScalar, "nil")
-      case YType.Seq   => parseArray(value.value.toSequence)
-      case YType.Map   => parseObject(value.value.toMap)
-      case other       => throw new Exception(s"Cannot parse data node from AST structure $other")
+      case YType.Str       =>
+        if (value.value.toScalar.text.matches("^\\d{2}:\\d{2}(:\\d{2})?$")) {
+          parseScalar(value.value.toScalar, "time")
+        } else if (value.value.toScalar.text.matches("^\\d{4}-\\d{1,2}-\\d{1,2}?$")) {
+            parseScalar(value.value.toScalar, "date")
+        } else {
+          parseScalar(value.value.toScalar, "string")
+        }
+      case YType.Int       => parseScalar(value.value.toScalar, "integer")
+      case YType.Float     => parseScalar(value.value.toScalar, "float")
+      case YType.Bool      => parseScalar(value.value.toScalar, "boolean")
+      case YType.Null      => parseScalar(value.value.toScalar, "nil")
+      case YType.Seq       => parseArray(value.value.toSequence)
+      case YType.Map       => parseObject(value.value.toMap)
+      case YType.Timestamp =>
+        if (value.value.toScalar.text.indexOf(":") > -1) {
+          parseScalar(value.value.toScalar, "dateTime")
+        } else {
+          parseScalar(value.value.toScalar, "date")
+        }
+      case other           => throw new Exception(s"Cannot parse data node from AST structure $other")
     }
   }
 

@@ -75,7 +75,7 @@ class AMFShapeValidations(shape: Shape) {
       node = Some(validationId(array.items))
     )
     validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(itemsConstraint))
-    validation = checkArrayType(context, validation)
+    validation = checkArrayType(array, context, validation)
     List(validation) ++ nestedConstraints
   }
 
@@ -102,14 +102,13 @@ class AMFShapeValidations(shape: Shape) {
         message = Some(s"Property ${property.name} at $context must have a valid value"),
         node = Some(propertyValidationId)
       )
-      validation = checkObjectType(context, validation)
       validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(nodeConstraint))
       validation = checkMinCount(context + s"/${property.name}", property, validation, property)
       validation = checkMaxCount(context + s"/${property.name}", property, validation, property)
     }
 
     validation = checkClosed(validation, node)
-    validation = checkObjectType(context, validation)
+    validation = checkObjectType(node, context, validation)
     List(validation) ++ nestedConstraints
   }
 
@@ -135,7 +134,7 @@ class AMFShapeValidations(shape: Shape) {
         datatype = Some(scalar.dataType)
       ))
     )
-    validation = checkScalarType(context, validation)
+    validation = checkScalarType(scalar, context, validation)
     validation = checkPattern(context, validation, scalar)
     validation = checkMinLength(context, validation, scalar)
     validation = checkMaxLength(context, validation, scalar)
@@ -146,7 +145,7 @@ class AMFShapeValidations(shape: Shape) {
     List(validation)
   }
 
-  protected def checkScalarType(context: String, validation: ValidationSpecification): ValidationSpecification = {
+  protected def checkScalarType(shape: Shape, context: String, validation: ValidationSpecification): ValidationSpecification = {
     val msg = s"Data at $context must be a scalar"
     val propertyValidation = new PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "type").iri(),
@@ -157,7 +156,7 @@ class AMFShapeValidations(shape: Shape) {
     validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
   }
 
-  protected def checkObjectType(context: String, validation: ValidationSpecification): ValidationSpecification = {
+  protected def checkObjectType(shape: Shape, context: String, validation: ValidationSpecification): ValidationSpecification = {
     val msg = s"Data at $context must be an object"
     val propertyValidation = new PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "type").iri(),
@@ -168,7 +167,7 @@ class AMFShapeValidations(shape: Shape) {
     validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
   }
 
-  protected def checkArrayType(context: String, validation: ValidationSpecification): ValidationSpecification = {
+  protected def checkArrayType(shape: Shape, context: String, validation: ValidationSpecification): ValidationSpecification = {
     val msg = s"Data at $context must be an array"
     val propertyValidation = new PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "type").iri(),

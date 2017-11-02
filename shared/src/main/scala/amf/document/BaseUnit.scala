@@ -56,9 +56,9 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
       }
       types.contains(shapeType)
     }
-    findInDeclaredModel(predicate, this, first = true, ListBuffer.empty) ++ findInEncodedModel(predicate,
+    findInDeclaredModel(predicate, this, first = false, ListBuffer.empty) ++ findInEncodedModel(predicate,
                                                                                                this,
-                                                                                               first = true)
+                                                                                               first = false)
   }
 
   def transform(selector: (DomainElement) => Boolean,

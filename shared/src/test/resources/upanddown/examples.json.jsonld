@@ -113,22 +113,27 @@
                                     "@value": "SWED-123"
                                   }
                                 ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "null/example/null/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "null/example/null"
+                                            "@value": "http://raml.org/vocabularies/document#strict"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": ""
+                                            "@value": "true"
                                           }
                                         ]
                                       }
@@ -155,6 +160,20 @@
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(50,23)-(50,33)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "null/example/null"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": ""
                                           }
                                         ]
                                       }
@@ -647,22 +666,27 @@
                                         "@value": "{\n        \"name\": \"Bob\",\n        \"lastname\": \"Marley\"\n      }"
                                       }
                                     ],
+                                    "http://raml.org/vocabularies/document#strict": [
+                                      {
+                                        "@value": true
+                                      }
+                                    ],
                                     "http://raml.org/vocabularies/document-source-maps#sources": [
                                       {
                                         "@id": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null/source-map",
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                        "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                                           {
                                             "http://raml.org/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null"
+                                                "@value": "http://raml.org/vocabularies/document#strict"
                                               }
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": ""
+                                                "@value": "true"
                                               }
                                             ]
                                           }
@@ -689,6 +713,20 @@
                                             "http://raml.org/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(34,17)-(37,7)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": ""
                                               }
                                             ]
                                           }
@@ -759,22 +797,27 @@
                                     "@value": "{\n                  \"name\": \"Doe Enterprise\",\n                  \"value\": \"Silver\"\n                }"
                                   }
                                 ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": false
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/default/schema/example/null/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/default/schema/example/null"
+                                            "@value": "http://raml.org/vocabularies/document#strict"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": ""
+                                            "@value": "true"
                                           }
                                         ]
                                       }
@@ -801,6 +844,20 @@
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(59,25)-(64,15)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/default/schema/example/null"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": ""
                                           }
                                         ]
                                       }
@@ -1337,22 +1394,27 @@
                                         "@value": "{\n        \"name\": \"Bob\",\n        \"lastname\": \"Marley\"\n      }"
                                       }
                                     ],
+                                    "http://raml.org/vocabularies/document#strict": [
+                                      {
+                                        "@value": true
+                                      }
+                                    ],
                                     "http://raml.org/vocabularies/document-source-maps#sources": [
                                       {
                                         "@id": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null/source-map",
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                        "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                                           {
                                             "http://raml.org/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null"
+                                                "@value": "http://raml.org/vocabularies/document#strict"
                                               }
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": ""
+                                                "@value": "true"
                                               }
                                             ]
                                           }
@@ -1379,6 +1441,20 @@
                                             "http://raml.org/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(34,17)-(37,7)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": ""
                                               }
                                             ]
                                           }
@@ -1454,11 +1530,30 @@
                                     "@value": "{\n                    \"name\": \"Software Corp\",\n                    \"address\": \"35 Central Street\",\n                    \"value\": \"Gold\"\n                  }"
                                   }
                                 ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": false
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/example/softwareCorp/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://raml.org/vocabularies/document#strict"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                                       {
@@ -1512,22 +1607,27 @@
                                     "@value": "{\n                \"name\": \"Acme\"\n              }"
                                   }
                                 ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/example/null/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/example/null"
+                                            "@value": "http://raml.org/vocabularies/document#strict"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": ""
+                                            "@value": "true"
                                           }
                                         ]
                                       }
@@ -1554,6 +1654,20 @@
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(82,25)-(84,15)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/example/null"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": ""
                                           }
                                         ]
                                       }
@@ -1646,6 +1760,11 @@
                             "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                           }
                         ],
+                        "http://raml.org/vocabularies/document#strict": [
+                          {
+                            "@value": false
+                          }
+                        ],
                         "http://raml.org/vocabularies/http#mediaType": [
                           {
                             "@value": "application/json"
@@ -1695,6 +1814,11 @@
                         "http://raml.org/vocabularies/document#value": [
                           {
                             "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document#strict": [
+                          {
+                            "@value": false
                           }
                         ],
                         "http://raml.org/vocabularies/http#mediaType": [
@@ -2129,22 +2253,27 @@
                 "@value": "{\n        \"name\": \"Bob\",\n        \"lastname\": \"Marley\"\n      }"
               }
             ],
+            "http://raml.org/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://shared/src/test/resources/upanddown/examples.json#/declarations/User/example/null/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/User/example/null"
+                        "@value": "http://raml.org/vocabularies/document#strict"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": ""
+                        "@value": "true"
                       }
                     ]
                   }
@@ -2171,6 +2300,20 @@
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(16,17)-(19,7)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/User/example/null"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
                       }
                     ]
                   }
@@ -2560,22 +2703,27 @@
                 "@value": "{\n        \"name\": \"Bob\",\n        \"lastname\": \"Marley\"\n      }"
               }
             ],
+            "http://raml.org/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null"
+                        "@value": "http://raml.org/vocabularies/document#strict"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": ""
+                        "@value": "true"
                       }
                     ]
                   }
@@ -2602,6 +2750,20 @@
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(34,17)-(37,7)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#single-value-array": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/upanddown/examples.json#/declarations/Org/example/null"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
                       }
                     ]
                   }
