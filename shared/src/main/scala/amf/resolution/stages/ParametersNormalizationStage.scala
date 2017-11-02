@@ -44,16 +44,17 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val endpointParameters = Option(endpoint.parameters).getOrElse(Seq())
           endpoint.fields.remove(EndPointModel.UriParameters)
           // collect operation query parameters
-          endpoint.operations.foreach { op =>
-            Option(op.request) match {
-              case Some(request) =>
-                val queryParameters = request.queryParameters
-                // set the full list of parameters at the operation level
-                request.fields.setWithoutId(RequestModel.QueryParameters,
-                                            AmfArray(baseUriParameters ++ endpointParameters ++ queryParameters))
-              case _ => // ignore
+          if (baseUriParameters.nonEmpty || endpointParameters.nonEmpty)
+            endpoint.operations.foreach { op =>
+              Option(op.request) match {
+                case Some(request) =>
+                  val queryParameters = request.queryParameters
+                  // set the full list of parameters at the operation level
+                  request.fields.setWithoutId(RequestModel.QueryParameters,
+                                              AmfArray(baseUriParameters ++ endpointParameters ++ queryParameters))
+                case _ => // ignore
+              }
             }
-          }
         }
         doc
       case _ => unit
@@ -76,16 +77,17 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val endpointParameters = Option(endpoint.parameters).getOrElse(Seq())
           endpoint.fields.remove(EndPointModel.UriParameters)
           // collect operation query parameters
-          endpoint.operations.foreach { op =>
-            Option(op.request) match {
-              case Some(request) =>
-                val queryParameters = request.queryParameters
-                // set the full list of parameters at the operation level
-                val finalParameters = disambiguateParameters(endpointParameters, queryParameters)
-                request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(finalParameters))
-              case _ => // ignore
+          if (endpointParameters.nonEmpty)
+            endpoint.operations.foreach { op =>
+              Option(op.request) match {
+                case Some(request) =>
+                  val queryParameters = request.queryParameters
+                  // set the full list of parameters at the operation level
+                  val finalParameters = disambiguateParameters(endpointParameters, queryParameters)
+                  request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(finalParameters))
+                case _ => // ignore
+              }
             }
-          }
         }
         doc
       case _ => unit
@@ -114,18 +116,20 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val pathParameters      = endpointParameters.filter(p => p.binding == "path")
           val pathQueryParameters = endpointParameters.filter(p => p.binding != "path")
           // we re-assign path parametes at the endpoint, we push the rest
-          endpoint.fields.setWithoutId(EndPointModel.UriParameters, AmfArray(pathParameters))
+          if (pathParameters.nonEmpty)
+            endpoint.fields.setWithoutId(EndPointModel.UriParameters, AmfArray(pathParameters))
           // collect operation query parameters
-          endpoint.operations.foreach { op =>
-            Option(op.request) match {
-              case Some(request) =>
-                val opParameters = request.queryParameters
-                // set the full list of parameters at the operation level
-                val finalParameters = disambiguateParameters(pathQueryParameters, opParameters)
-                request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(finalParameters))
-              case _ => // ignore
+          if (pathQueryParameters.nonEmpty)
+            endpoint.operations.foreach { op =>
+              Option(op.request) match {
+                case Some(request) =>
+                  val opParameters = request.queryParameters
+                  // set the full list of parameters at the operation level
+                  val finalParameters = disambiguateParameters(pathQueryParameters, opParameters)
+                  request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(finalParameters))
+                case _ => // ignore
+              }
             }
-          }
         }
         doc
       case _ => unit
