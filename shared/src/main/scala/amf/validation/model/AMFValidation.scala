@@ -1,5 +1,6 @@
 package amf.validation.model
 
+import amf.validation.SeverityLevels
 import amf.vocabulary.Namespace
 
 /**
@@ -96,31 +97,7 @@ trait ImportUtils {
 }
 
 
-object ParserSideValidations {
-  def validations: List[ValidationSpecification] = List(
-    ValidationSpecification(
-      (Namespace.AmfParser + "closed-shape").iri(),
-      "invalid property for node",
-      None,
-      None,
-      Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-    ),
-    ValidationSpecification(
-      (Namespace.AmfParser + "dialectAmbiguousRange").iri(),
-      "Ambiguous entity range",
-      None,
-      None,
-      Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-    ),
-    ValidationSpecification(
-      (Namespace.AmfParser + "parsingError").iri(),
-      "Parsing error",
-      None,
-      None,
-      Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-    )
-  )
-}
+
 
 object DefaultAMFValidations extends ImportUtils {
 
@@ -136,11 +113,24 @@ object DefaultAMFValidations extends ImportUtils {
       case (profile, validationsInGroup) =>
         val validations = parseValidation(validationsInGroup)
 
+        // sorting parser side validation for this profile
+        val violationParserSideValidations = ParserSideValidations.validations.filter { v =>
+          ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+        }.map(_.name)
+        val infoParserSideValidations = ParserSideValidations.validations.filter { v =>
+          ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+        }.map(_.name)
+        val warningParserSideValidations = ParserSideValidations.validations.filter { v =>
+          ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+        }.map(_.name)
+
         ValidationProfile(
-          name = profile,
+          name            = profile,
           baseProfileName = if (profile == "AMF") { None } else { Some("AMF") },
-          violationLevel = validations.map(_.name),
-          validations = validations ++ ParserSideValidations.validations
+          infoLevel       = infoParserSideValidations,
+          warningLevel    = warningParserSideValidations,
+          violationLevel  = validations.map(_.name) ++ violationParserSideValidations,
+          validations     = validations ++ ParserSideValidations.validations
         )
 
     }.toList

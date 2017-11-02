@@ -175,8 +175,22 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
           |""".stripMargin
       assert(generatedRaml == expected)
     }
-
   }
+
+  /*
+  test("Command line test") {
+    val args = Array(
+      "validate",
+      "-in",
+      "RAML",
+      "-ds",
+      "file:///Users/antoniogarrote/Development/vocabularies/k8/dialects/pod.raml",
+      "file:///Users/antoniogarrote/Development/vocabularies/k8/examples/pod.raml"
+    )
+    Main.main(args)
+    assert(true)
+  }
+  */
 
   def assertModule(actual: Module, expected: Module): Assertion = {
     actual should be(expected)

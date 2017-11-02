@@ -135,8 +135,12 @@ object GraphEmitter extends MetaModelTypeMapping {
           sources(v)
         case Str | RegExp =>
           v.annotations.find(classOf[ScalarType]) match {
-            case Some(annotation) => typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
-            case None             => scalar(b, v.value.asInstanceOf[AmfScalar].toString)
+            case Some(annotation) => {
+              typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
+            }
+            case None             => {
+              scalar(b, v.value.asInstanceOf[AmfScalar].toString)
+            }
           }
           sources(v)
         case Bool =>

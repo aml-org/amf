@@ -1,6 +1,6 @@
 package amf.spec.domain
 
-import amf.domain.Annotation.SingleValueArray
+import amf.domain.Annotation.{SingleValueArray, SynthesizedField}
 import amf.domain.{Annotations, Example}
 import amf.metadata.domain.ExampleModel
 import amf.model.AmfScalar
@@ -32,8 +32,10 @@ case class OasResponseExamplesParser(key: String, map: YMap) {
 
 case class OasResponseExampleParser(yMapEntry: YMapEntry) {
   def parse(): Example = {
-    val example = Example(yMapEntry).set(ExampleModel.MediaType, yMapEntry.key.value.toScalar.text)
-    RamlExampleValueAsString(yMapEntry.value.value, example).populate()
+    val example = Example(yMapEntry)
+      .set(ExampleModel.MediaType, yMapEntry.key.value.toScalar.text)
+      .withStrict(false)
+    RamlExampleValueAsString(yMapEntry.value.value, example, false).populate()
   }
 }
 
@@ -61,7 +63,7 @@ case class RamlMultipleExampleParser(key: String, map: YMap, declarations: Decla
           node.value match {
             case map: YMap =>
               examples ++= map.entries.map(RamlNamedExampleParser(_).parse())
-            case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar)).populate()
+            case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar), true).populate()
           }
       }
     }
@@ -82,7 +84,7 @@ case class RamlSingleExampleParser(key: String, map: YMap) {
     map.key(key).map { entry =>
       entry.value.value match {
         case map: YMap       => RamlSingleExampleValueParser(map).parse().add(SingleValueArray())
-        case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar)).populate().add(SingleValueArray())
+        case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar), true).populate().add(SingleValueArray())
         case other           => throw new IllegalArgumentException("Not supported part type for example")
       }
 
@@ -112,25 +114,28 @@ case class RamlSingleExampleValueParser(node: YMap) {
         .key("strict")
         .foreach(entry => {
           val value = ValueNode(entry.value)
-          example.set(ExampleModel.Strict, value.string(), Annotations(entry))
+          example.set(ExampleModel.Strict, value.boolean(), Annotations(entry))
         })
 
       node
         .key("value")
         .foreach(entry => {
-          RamlExampleValueAsString(entry.value.value, example).populate()
+          RamlExampleValueAsString(entry.value.value, example, Option(example.strict).getOrElse(true)).populate()
         })
       AnnotationParser(() => example, node).parse()
     } else {
-      RamlExampleValueAsString(node, example).populate()
+      RamlExampleValueAsString(node, example, true).populate()
     }
 
     example
   }
 }
 
-case class RamlExampleValueAsString(value: YValue, example: Example) {
+case class RamlExampleValueAsString(value: YValue, example: Example, strict: Boolean) {
   def populate(): Example = {
+    if (example.fields.entry(ExampleModel.Strict).isEmpty) {
+      example.set(ExampleModel.Strict, AmfScalar(strict), Annotations() += SynthesizedField())
+    }
     value match {
       case map: YMap =>
         example.set(ExampleModel.Value, AmfScalar(YamlRender.render(value), Annotations(value)), Annotations(value))

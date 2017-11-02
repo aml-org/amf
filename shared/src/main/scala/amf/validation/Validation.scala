@@ -68,7 +68,7 @@ object AMFValidationResult {
                         validation.position)
 
   def findPosition(node: DomainElement, validation: ValidationResult): Option[LexicalInformation] = {
-    if (validation.path != null && validation.path != "") {
+    if (Option(validation.path).isDefined && validation.path != "") {
       val foundPosition = node.fields.fields().find(f => f.field.value.iri() == validation.path) match {
         case Some(f) =>
           f.element.annotations.find(classOf[LexicalInformation]).orElse {
@@ -256,12 +256,12 @@ class Validation(platform: Platform) {
                          computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     profileName match {
       case ProfileNames.AMF =>
-        allEffective(defaultProfiles.find(_.name == ProfileNames.AMF).get.validations, computed)
+        someEffective(defaultProfiles.find(_.name == ProfileNames.AMF).get, computed)
       case ProfileNames.RAML =>
-        allEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get.validations,
+        someEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get,
                      computeValidations(ProfileNames.AMF, computed))
       case ProfileNames.OAS =>
-        allEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get.validations,
+        someEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get,
                      computeValidations(ProfileNames.AMF, computed))
       case _ if platform.dialectsRegistry.knowsHeader("%" + profileName) =>
         val dialectValidationProfile =
@@ -310,30 +310,42 @@ class Validation(platform: Platform) {
     println("===========================")
     */
 
-    ValidationMutex.synchronized {
-      try {
-        jsLibrary match {
-          case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-          case _ => // ignore
-        }
-        for {
-          shaclReport <- platform.validator.report(
-            modelJSON,
-            "application/ld+json",
-            shapesJSON,
-            "application/ld+json"
-          )
-        } yield {
-          val results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations)) ++
-            shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
-          AMFValidationReport(
-            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-            model = model.id,
-            profile = profileName,
-            results = results
-          )
-        }
+    jsLibrary match {
+      case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+      case _ => // ignore
+    }
+
+    for {
+
+      examplesReport <- if (profile.getOrElse("") != "Payload") {
+        ExamplesValidation(model, platform).validate()
+      } else {
+        Promise[Seq[AMFValidationResult]]().success(Seq()).future
       }
+
+      shaclReport    <- ValidationMutex.synchronized {
+        platform.validator.report(
+          modelJSON,
+          "application/ld+json",
+          shapesJSON,
+          "application/ld+json"
+        )
+      }
+
+    } yield {
+      // aggregating parser-side validations
+      var results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations))
+      // adding model-side validations
+      results ++= shaclReport.results.map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
+      // adding example validations
+      results ++= examplesReport.map(r => buildExampleValidationForProfile(profileName, model, r, messageStyle, validations)).filter(_.isDefined).map(_.get)
+
+      AMFValidationReport(
+        conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+        model = model.id,
+        profile = profileName,
+        results = results
+      )
     }
   }
 
@@ -341,6 +353,13 @@ class Validation(platform: Platform) {
     profileName match {
       case "Payload" => buildPayloadValidationResult(model, r, validations)
       case _         => buildValidationResult(model, r, messageStyle, validations)
+    }
+  }
+
+  def buildExampleValidationForProfile(profileName: String, model: BaseUnit, result: AMFValidationResult, messageStyle: String, validations: EffectiveValidations): Option[AMFValidationResult] = {
+    profileName match {
+      case "Payload" => None
+      case _         => Some(result.copy(level = findLevel(result.validationId, validations)))
     }
   }
 
@@ -481,11 +500,7 @@ class Validation(platform: Platform) {
   }
 }
 
-object ValidationMutex {
-
-
-}
-
+object ValidationMutex {}
 object Validation {
   def apply(platform: Platform) = new Validation(platform)
 }

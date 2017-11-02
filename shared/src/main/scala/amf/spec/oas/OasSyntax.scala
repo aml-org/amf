@@ -1,6 +1,7 @@
 package amf.spec.oas
 
 import amf.domain.Annotation.LexicalInformation
+import amf.validation.model.ParserSideValidations
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
 import org.yaml.model.YMap
@@ -189,7 +190,7 @@ trait OasSyntax {
           } else if (!properties(key)) {
             currentValidation.reportConstraintFailure(
               SeverityLevels.VIOLATION,
-              (Namespace.AmfParser + "closed-shape").iri(),
+              ParserSideValidations.ClosedShapeSpecification.id(),
               id,
               None,
               s"Property $key not supported in a OpenAPI $nodeType node",
