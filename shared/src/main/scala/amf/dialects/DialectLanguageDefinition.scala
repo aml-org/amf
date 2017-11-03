@@ -13,7 +13,7 @@ import amf.vocabulary.Namespace
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
   id = Some((namespace + shortName).iri())
-  def refMap(name: String, isDeclaration: Boolean): DialectPropertyMapping = map(name, NodeReference.name, NodeReference, _.copy(required = true, isDeclaration = isDeclaration))
+  def refMap(name: String, isDeclaration: Boolean): DialectPropertyMapping = map(name, NodeReference.idProperty, NodeReference, _.copy(required = true, isDeclaration = isDeclaration))
 }
 
 object VocabImport extends DialectLanguageNode("VocabImport") {
@@ -21,7 +21,10 @@ object VocabImport extends DialectLanguageNode("VocabImport") {
   val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
 }
 object NodeReference extends DialectLanguageNode("Declaration") {
-  val name: DialectPropertyMapping = str("name")
+  // val name: DialectPropertyMapping = str("name")
+  val idProperty: DialectPropertyMapping = str(
+    "id",
+    _.copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true, scalaNameOverride = Some("idProperty")))
   val uri: DialectPropertyMapping = str(
     "declaredNode",
     _.copy(referenceTarget = Some(NodeDefinition), fromVal = true, scalaNameOverride = Some("uri")))
