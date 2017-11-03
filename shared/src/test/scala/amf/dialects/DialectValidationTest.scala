@@ -237,7 +237,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Custom dialect can be validated (amf-eng-demos)") {
+  test("HERE Custom dialect can be validated (amf-eng-demos)") {
     val validation = Validation(platform)
     var dialect: Option[Dialect] = None
     val dialectFile = "file://shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
