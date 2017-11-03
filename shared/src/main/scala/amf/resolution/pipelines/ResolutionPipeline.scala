@@ -8,21 +8,22 @@ abstract class ResolutionPipeline {
 
   var model: Option[BaseUnit] = None
 
-  def resolve(model: BaseUnit): BaseUnit
+  def resolve[T <: BaseUnit](model: T): T
 
   protected def step(stage: ResolutionStage): Unit = {
     model = Some(stage.resolve(model.get))
   }
 
-  protected def withModel(unit: BaseUnit)(block: () => Unit): BaseUnit = {
+  protected def withModel[T <: BaseUnit](unit: T)(block: () => Unit): T = {
     model = Some(unit)
     block()
-    model.get
+    model.get.asInstanceOf[T]
   }
 
 }
 
 object ResolutionPipeline {
+
   def raml = new RamlResolutionPipeline()
   def oas  = new OasResolutionPipeline()
   def amf  = new AmfResolutionPipeline()

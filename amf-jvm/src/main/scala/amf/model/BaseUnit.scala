@@ -1,17 +1,9 @@
 package amf.model
 
-import java.util.concurrent.{CompletableFuture, Future}
-
-import amf.client.ParserConfig
-import amf.client.commands.CommandHelper
 import amf.document
-import amf.remote.Platform
-import amf.validation.AMFValidationReport
-import amf.remote.FutureConverter.converters
 import amf.vocabulary.Namespace
 
 import scala.collection.JavaConverters._
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Any parsable unit, backed by a source URI. */
 trait BaseUnit {

@@ -9,7 +9,7 @@ class OasResolutionPipeline extends AmfResolutionPipeline {
   override val mediaTypes = new MediaTypeResolutionStage(ProfileNames.OAS)
   override val examples   = new ExamplesResolutionStage(ProfileNames.OAS)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>
       commonSteps()
       step(parameters)
