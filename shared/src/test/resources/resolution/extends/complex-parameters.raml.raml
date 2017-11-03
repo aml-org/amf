@@ -26,17 +26,15 @@ traits:
       200:
         body:
           application/json:
-            type:
-              type: object
-              additionalProperties: true
-              properties:
-                name:
-                  required: true
-                  type: string
-                lastName:
-                  required: true
-                  type: string
             type: object
+            additionalProperties: true
+            properties:
+              name:
+                required: true
+                type: string
+              lastName:
+                required: true
+                type: string
   get:
     queryParameters:
       get:
@@ -47,18 +45,16 @@ traits:
       200:
         body:
           application/json:
-            type:
-              items:
-                type: object
-                additionalProperties: true
-                properties:
-                  name:
-                    required: true
-                    type: string
-                  lastName:
-                    required: true
-                    type: string
-            type: object
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  required: true
+                  type: string
+                lastName:
+                  required: true
+                  type: string
 types:
   Users:
     type: array

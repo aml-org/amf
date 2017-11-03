@@ -25,8 +25,8 @@ class AmfResolutionPipeline extends ResolutionPipeline {
 
   protected def commonSteps(): Unit = {
     step(references)
+    step(`extends`)
     step(shapes)
     step(security)
-    step(`extends`)
   }
 }
