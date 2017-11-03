@@ -185,6 +185,9 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         }
       }
 
+      // custom builder
+      constraint.custom.foreach { builder => builder(b, constraintId) }
+
       if (constraint.in.nonEmpty) {
         b.entry(
           (Namespace.Shacl + "in").iri(),

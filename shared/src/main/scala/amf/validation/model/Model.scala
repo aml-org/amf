@@ -2,6 +2,7 @@ package amf.validation.model
 
 import amf.domain.dialects.DomainEntity
 import amf.vocabulary.Namespace
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 trait DialectWrapper {
   def extractString(node: DomainEntity, property: String): Option[String] = {
@@ -93,7 +94,8 @@ case class PropertyConstraint(ramlPropertyId: String,
                               node: Option[String] = None,
                               datatype: Option[String] = None,
                              `class`: Seq[String] = Seq(),
-                              in: Seq[String] = Seq.empty
+                              in: Seq[String] = Seq.empty,
+                              custom: Option[(EntryBuilder, String) => Unit] = None
                              ) {}
 
 object PropertyConstraint extends DialectWrapper {
@@ -127,7 +129,8 @@ case class ValidationSpecification(name: String,
                                    propertyConstraints: Seq[PropertyConstraint] = Seq.empty,
                                    nodeConstraints: Seq[NodeConstraint] = Seq.empty,
                                    closed: Option[Boolean] = None,
-                                   functionConstraint: Option[FunctionConstraint] = None
+                                   functionConstraint: Option[FunctionConstraint] = None,
+                                   custom: Option[(EntryBuilder, String) => Unit] = None
                                   ) {
 
   def id(): String = {

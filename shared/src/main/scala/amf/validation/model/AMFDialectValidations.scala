@@ -3,6 +3,7 @@ package amf.validation.model
 import amf.metadata.Type.{Bool, Int, Iri, Str}
 import amf.spec.dialects.{Dialect, DialectNode, DialectPropertyMapping}
 import amf.vocabulary.Namespace
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
 
@@ -97,7 +98,61 @@ class AMFDialectValidations(dialect: Dialect) {
     }
 
     // ranges here
-    if (prop.iri() != "http://www.w3.org/2000/01/rdf-schema#range") {
+    if (prop.iri() == (Namespace.Meta + "range").iri()) {
+      // this is hardcoded just in the case of the dialects 'dialect'
+      // In RAML Dialect 1.0 we define range of a term as being either a link to a nodeMapping
+      // ane external entity or a literalURI
+
+      val message = s"Property $propName range  value must be of type node mapping, a reference or a literal type"
+      validations += new ValidationSpecification(
+        name = validationId(node, propName, "dialectRange"),
+        message = message,
+        ramlMessage = Some(message),
+        oasMessage = Some(message),
+        targetClass = Seq(node.`type`.head.iri()),
+        propertyConstraints = Seq(new PropertyConstraint(
+          ramlPropertyId = prop.iri(),
+          name = validationId(node, propName, "dialectRange") + "/prop",
+          message = Some(message),
+          custom = Some((b: EntryBuilder, parentId: String) => {
+            b.entry(
+              (Namespace.Shacl + "or").iri(),
+              _.obj {
+                _.entry("@list",
+                  _.list { l =>
+                    l.obj {
+                      _.entry(
+                        (Namespace.Shacl + "class").iri(),
+                        _.obj(_.entry("@id", (Namespace.Meta + "NodeDefinition").iri().trim))
+                      )
+                    }
+                    l.obj {
+                      _.entry(
+                        (Namespace.Shacl + "class").iri(),
+                        _.obj(_.entry("@id", (Namespace.Meta + "ExternalEntity").iri().trim))
+                      )
+                    }
+                    l.obj {
+                      _.entry(
+                        (Namespace.Shacl + "in").iri(),
+                        _.obj(_.entry("@list", _.list { l =>
+                          l.obj(_.entry("@id", (Namespace.Xsd + "string").iri().trim))
+                          l.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim))
+                          l.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim))
+                          l.obj(_.entry("@id", (Namespace.Xsd + "boolean").iri().trim))
+                          l.obj(_.entry("@id", (Namespace.Xsd + "anyUri").iri().trim))
+                        }))
+                      )
+                    }
+                  }
+                )
+              }
+            )
+          })
+          // `class` = types.map(_.`type`.head.iri()) ++ Seq((Namespace.Meta + "ExternalEntity").iri())
+        )))
+
+    } else if (prop.iri() != (Namespace.Rdfs + "range").iri()) {
       // this is hardcoded just in the case of the vocabularies 'dialect'
       // In RAML Vocabularies 1.0 we define range of a term as being either a link to a class term
       // or one of the special strings for the data types
