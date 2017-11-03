@@ -1,6 +1,6 @@
 package amf.model
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
 
 /**
   * JS Document model class.
@@ -16,6 +16,9 @@ case class Document(private[amf] val document: amf.document.Document)
 
   @JSExportTopLevel("Document")
   def this(webApi: WebApi) = this(amf.document.Document().withEncodes(webApi.element))
+
+  @JSExport
+  def resolve(profile: String): Document = Document(document.resolve(profile))
 
   override private[amf] val element = document
 }

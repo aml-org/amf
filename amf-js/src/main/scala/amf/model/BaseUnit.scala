@@ -1,17 +1,12 @@
 package amf.model
 
-import amf.client.ParserConfig
-import amf.client.commands.CommandHelper
 import amf.document
-import amf.remote.Platform
 import amf.unsafe.PlatformSecrets
-import amf.validation.AMFValidationReport
 import amf.vocabulary.Namespace
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Any parsable unit, backed by a source URI. */
 @JSExportAll

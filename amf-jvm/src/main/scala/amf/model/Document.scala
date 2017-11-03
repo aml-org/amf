@@ -12,5 +12,7 @@ case class Document(private[amf] val document: amf.document.Document)
 
   def this(webApi: WebApi) = this(amf.document.Document().withEncodes(webApi.element))
 
+  def resolve(profile: String): Document = Document(document.resolve(profile))
+
   override private[amf] val element = document
 }
