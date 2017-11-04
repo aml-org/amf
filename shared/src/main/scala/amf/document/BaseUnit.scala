@@ -28,7 +28,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
   def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
 
   /** Resolves the model. */
-  def resolve(profile: String): BaseUnit = ResolutionPipeline.forProfile(profile).resolve(this)
+  def resolve(profile: String): this.type = ResolutionPipeline.forProfile(profile).resolve(this)
 
   /**
     * finds in the nested model structure an AmfObject with the requested Id
@@ -54,8 +54,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
       types.contains(shapeType)
     }
     findInDeclaredModel(predicate, this, first = false, ListBuffer.empty) ++ findInEncodedModel(predicate,
-                                                                                               this,
-                                                                                               first = false)
+                                                                                                this,
+                                                                                                first = false)
   }
 
   def transform(selector: (DomainElement) => Boolean,

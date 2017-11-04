@@ -7,7 +7,7 @@ import amf.remote._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ExtendsRamlResolutionTest extends ResolutionTest {
+class ExtendsResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -51,6 +51,10 @@ class ExtendsRamlResolutionTest extends ResolutionTest {
 
   test("Complex extends resolution to Amf") {
     cycle("complex-traits-resource-types.raml", "complex-traits-resource-types.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Resolution using libraries to Raml") {
+    cycle("traits-using-library.raml", "traits-using-library.raml.raml", RamlYamlHint, Raml)
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {

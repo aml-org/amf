@@ -62,7 +62,9 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.key(
       "type",
       entry =>
-        ParametrizedDeclarationParser(entry.value.value, endpoint.withResourceType, declarations.resourceTypes)
+        ParametrizedDeclarationParser(entry.value.value,
+                                      endpoint.withResourceType,
+                                      declarations.findResourceTypeOrFail)
           .parse()
     )
 
@@ -70,7 +72,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       "is",
       entry => {
         entry.value.value.toSequence.values.map(value =>
-          ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.traits).parse())
+          ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrFail).parse())
       }
     )
 

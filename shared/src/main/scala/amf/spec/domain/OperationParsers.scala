@@ -94,7 +94,7 @@ case class RamlOperationParser(entry: YMapEntry,
           "is",
           entry => {
             val traits = entry.value.value.toSequence.nodes.map(value => {
-              ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+              ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.findTraitOrFail).parse()
             })
             if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
           }

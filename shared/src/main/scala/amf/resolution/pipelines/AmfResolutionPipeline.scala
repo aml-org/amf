@@ -5,6 +5,7 @@ import amf.document.BaseUnit
 import amf.resolution.stages._
 
 class AmfResolutionPipeline extends ResolutionPipeline {
+
   val references = new ReferenceResolutionStage(ProfileNames.AMF)
   val shapes     = new ShapeNormalizationStage(ProfileNames.AMF)
   val parameters = new ParametersNormalizationStage(ProfileNames.AMF)
@@ -13,7 +14,7 @@ class AmfResolutionPipeline extends ResolutionPipeline {
   val mediaTypes = new MediaTypeResolutionStage(ProfileNames.AMF)
   val examples   = new ExamplesResolutionStage(ProfileNames.AMF)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>
       commonSteps()
       step(parameters)
@@ -24,8 +25,8 @@ class AmfResolutionPipeline extends ResolutionPipeline {
 
   protected def commonSteps(): Unit = {
     step(references)
+    step(`extends`)
     step(shapes)
     step(security)
-    step(`extends`)
   }
 }

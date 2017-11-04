@@ -9,7 +9,7 @@ class RamlResolutionPipeline() extends AmfResolutionPipeline {
   override val mediaTypes = new MediaTypeResolutionStage(ProfileNames.RAML)
   override val examples   = new ExamplesResolutionStage(ProfileNames.RAML)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>
       commonSteps()
       step(parameters)

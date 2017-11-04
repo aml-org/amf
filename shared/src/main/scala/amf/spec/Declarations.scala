@@ -65,33 +65,55 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   def declarables(): Seq[DomainElement] =
     (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toSeq
 
+  def findParameterOrFail(key: String): Parameter =
+    findParameter(key).getOrElse(throw new Exception(s"Parameter '$key' not found"))
+
   def findParameter(key: String): Option[Parameter] = findForType(key, _.parameters) collect {
     case p: Parameter => p
   }
+
+  def findResourceTypeOrFail(key: String): ResourceType =
+    findResourceType(key).getOrElse(throw new Exception(s"ResourceType '$key' not found"))
 
   def findResourceType(key: String): Option[ResourceType] = findForType(key, _.resourceTypes) collect {
     case r: ResourceType => r
   }
 
+  def findDocumentationOrFail(key: String): CreativeWork =
+    findDocumentations(key).getOrElse(throw new Exception(s"Documentation '$key' not found"))
+
   def findDocumentations(key: String): Option[CreativeWork] = findForType(key, _.documentations) collect {
     case u: CreativeWork => u
   }
+
+  def findTraitOrFail(key: String): Trait = findTrait(key).getOrElse(throw new Exception(s"Trait '$key' not found"))
 
   def findTrait(key: String): Option[Trait] = findForType(key, _.traits) collect {
     case t: Trait => t
   }
 
+  def findAnnotationOrFail(key: String): CustomDomainProperty =
+    findAnnotation(key).getOrElse(throw new Exception(s"Annotation '$key' not found"))
+
   def findAnnotation(key: String): Option[CustomDomainProperty] = findForType(key, _.annotations) collect {
     case a: CustomDomainProperty => a
   }
+
+  def findTypeOrFail(key: String): Shape = findType(key).getOrElse(throw new Exception(s"Type '$key' not found"))
 
   def findType(key: String): Option[Shape] = findForType(key, _.shapes) collect {
     case s: Shape => s
   }
 
+  def findSecuritySchemeOrFail(key: String): SecurityScheme =
+    findSecurityScheme(key).getOrElse(throw new Exception(s"SecurityScheme '$key' not found"))
+
   def findSecurityScheme(key: String): Option[SecurityScheme] = findForType(key, _.securitySchemes) collect {
     case ss: SecurityScheme => ss
   }
+
+  def findNamedExampleOrFail(key: String): Example =
+    findNamedExample(key).getOrElse(throw new Exception(s"NamedExample '$key' not found"))
 
   def findNamedExample(key: String): Option[Example] = fragments.get(key) collect { case e: Example => e }
 
