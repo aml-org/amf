@@ -344,13 +344,16 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
                 ent
                   .entities(p)
                   .foreach(decl => {
-                    p.hash.foreach(h => {
-                      decl
-                        .string(h)
-                        .foreach(localName => {
-                          declarationsFromLibraries.put(namespace + "." + localName, decl)
-                        })
-                    })
+                    if (decl.linkValue.isDefined){
+                      declarationsFromLibraries.put(namespace + "." + decl.linkValue.get, decl)
+                    }
+//                    p.hash.foreach(h => {
+//                      decl
+//                        .string(h)
+//                        .foreach(localName => {
+//                          declarationsFromLibraries.put(namespace + "." + localName, decl)
+//                        })
+//                    })
                   })
             })
         }

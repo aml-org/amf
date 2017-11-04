@@ -53,26 +53,32 @@ class DialectLoader(val document:BaseUnit) {
       case _        => // ignore
     }
 
+  /**
+    * This is loading all declared entities in the referenced libraries library
+    * and loading them lazily into imports
+    */
   lazy val imports: List[NodeDefinitionObject] ={
-    var imports=List[NodeDefinitionObject]()
+    var imports = List[NodeDefinitionObject]()
     val dialectObject = RAML_1_0_DialectTopLevel.dialectObject(retrieveDomainEntity(document))
-    document.references.foreach(u=>{
-      if (u.isInstanceOf[Module]){
-        u.asInstanceOf[Module].declares.foreach(d=>{
-          val element = d.fields.get(DialectModuleDefinition.nodeMappings.field())
-          if (element.isInstanceOf[AmfArray]){
-            val values=element.asInstanceOf[AmfArray].values;
-            val localDeclarations:Seq[NodeDefinitionObject]=values.map(v=>new NodeDefinitionObject(v.asInstanceOf[DomainEntity],Some(dialectObject)));
-            imports=imports:::(localDeclarations.toList);
+
+    document.references.foreach {
+      case module: Module =>
+        module.declares.foreach { declarationProperty => // this is not always declares, it can be actually any property parsed from the value of declares in the dialect
+          val element = declarationProperty.fields.get(DialectModuleDefinition.nodeMappings.field())
+          element match {
+            case array: AmfArray =>
+              imports ++= array.values.map { case declaredEntity: DomainEntity => NodeDefinitionObject(declaredEntity, Some(dialectObject)) }
+            case _ => // not possible
           }
-        })
-      }
-    })
+        }
+      case _ => // ignore libraries
+    }
+    // return the accumulated declarations
     imports
   }
 
   def loadDialect(domainEntity: DomainEntity,unit:BaseUnit): Dialect = {
-    val modelDocument=unit.asInstanceOf[Document];
+    val modelDocument = unit.asInstanceOf[Document]
     val dialectObject = RAML_1_0_DialectTopLevel.dialectObject(domainEntity)
 
     val rootEntity = for {
@@ -88,7 +94,7 @@ class DialectLoader(val document:BaseUnit) {
 
       case Some(encodedRootEntity) =>
         val dialectMap = mutable.Map[String, DialectNode]()
-        processMappings(encodedRootEntity, dialectObject, dialectMap,imports)
+        processMappings(encodedRootEntity, dialectObject, dialectMap, imports)
 
         val dialect = for {
           dialectName    <- dialectObject.dialect()
@@ -130,7 +136,7 @@ class DialectLoader(val document:BaseUnit) {
       fragmentDeclarations.encodes() foreach { encodedFragment =>
         for {
           resolvedDeclaredNode <- encodedFragment.resolvedDeclaredNode()
-          fragmentName         <- encodedFragment.name()
+          fragmentName         <- encodedFragment.id()
           fragmentNode         <- dialectMap.get(resolvedDeclaredNode.entity.id)
         } yield {
           fragmentList.put(fragmentName, fragmentNode)
@@ -169,17 +175,17 @@ class DialectLoader(val document:BaseUnit) {
 
   private def processMappings(encodedRootEntity: RAML_1_0_DialectTopLevel.NodeDefinitionObject,
                               dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
-                              dialectMap: mutable.Map[String, DialectNode],imports:List[NodeDefinitionObject]) = {
+                              dialectMap: mutable.Map[String, DialectNode],
+                              imports:List[NodeDefinitionObject]) = {
 
     val propertyMap = mutable.Map[DialectPropertyMapping, PropertyMappingObject]()
 
     // process all the node mappings
     dialectObject.nodeMappings().foreach { registerType(_, dialectMap) }
     imports.foreach(registerType(_,dialectMap));
-    imports.foreach(
-      n =>
-        parseNodeMapping(n, dialectMap, propertyMap)
-    );
+    imports.foreach { n =>
+      parseNodeMapping(n, dialectMap, propertyMap)
+    }
     dialectObject.nodeMappings().foreach { n =>
       parseNodeMapping(n, dialectMap, propertyMap)
     }
@@ -219,7 +225,7 @@ class DialectLoader(val document:BaseUnit) {
     val dmap: mutable.Map[String, DialectNode] = mutable.Map()
     for {
       declaration  <- declarations
-      nodeName     <- declaration.name()
+      nodeName     <- declaration.id()
       resolvedNode <- declaration.resolvedDeclaredNode()
     } yield {
       dialectMap.get(resolvedNode.entity.id).foreach(d => dmap.put(nodeName, d))

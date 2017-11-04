@@ -44,18 +44,21 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
 
   private def parseDocument = {
     val document = Document().adopted(root.location)
+    document.withLocation(root.location)
     document.withEncodes(parseEntity(document))
     document
   }
 
   private def parseFragment = {
     val fragment = DialectFragment().adopted(root.location)
+    fragment.withLocation(root.location)
     fragment.withEncodes(parseEntity(fragment))
     fragment
   }
 
   private def parseModule = {
     val module = Module().adopted(root.location)
+    module.withLocation(root.location)
     module.withDeclares(Seq(parseEntity(module)))
     module
   }
@@ -164,7 +167,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
           child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
           domainEntity.set(mapping.field(), child)
           //parseNode(entryNode.value.value, child)
-        });
+        })
       }
       else {
         entryNode.value.value match {
