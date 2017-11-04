@@ -142,8 +142,8 @@ extends TopLevelObject(entity, parent){
   case class DeclarationObject(entity: DomainEntity = DomainEntity(NodeReference), 
 override val parent:Option[TopLevelObject] = None) 
 extends TopLevelObject(entity, parent){
-    def name(): Option[String] = entity.string(NodeReference.name)
-    def withName(value: String): DeclarationObject = { entity.set(NodeReference.name.field() , AmfScalar(value)); this }
+    def id(): Option[String] = entity.string(NodeReference.idProperty)
+    def withId(value: String): DeclarationObject = { entity.set(NodeReference.idProperty.field() , AmfScalar(value)); this }
     def declaredNode(): Option[String] = entity.string(NodeReference.uri)
     def withDeclaredNode(value: String): DeclarationObject = { entity.set(NodeReference.uri.field() , AmfScalar(value)); this }
     def resolvedDeclaredNode(): Option[NodeDefinitionObject] = resolveReference(NodeReference.uri,

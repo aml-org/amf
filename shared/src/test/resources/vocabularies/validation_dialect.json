@@ -911,7 +911,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#encodes": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode"
+                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode"
                   }
                 ]
               }
@@ -928,14 +928,9 @@
                     "@type": [
                       "http://raml.org/vocabularies/meta#Declaration"
                     ],
-                    "http://raml.org/vocabularies/meta#name": [
-                      {
-                        "@value": "validations"
-                      }
-                    ],
                     "http://raml.org/vocabularies/meta#declaredNode": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
+                        "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
                       }
                     ]
                   }
@@ -954,14 +949,9 @@
                     "@type": [
                       "http://raml.org/vocabularies/meta#Declaration"
                     ],
-                    "http://raml.org/vocabularies/meta#name": [
-                      {
-                        "@value": "Validation"
-                      }
-                    ],
                     "http://raml.org/vocabularies/meta#declaredNode": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
+                        "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
                       }
                     ]
                   }
