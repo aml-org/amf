@@ -3,7 +3,14 @@ package amf.spec.oas
 import amf.common.Lazy
 import amf.compiler.Root
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
+import amf.domain.Annotation.{
+  DeclaredElement,
+  DefaultPayload,
+  EndPointBodyParameter,
+  ExplicitField,
+  SingleValueArray,
+  _
+}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
@@ -32,7 +39,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas 2.0 spec parser
   */
-case class OasDocumentParser(root: Root, currentValidation: Validation) extends OasSpecParser(currentValidation) with OasSyntax {
+case class OasDocumentParser(root: Root, currentValidation: Validation)
+    extends OasSpecParser(currentValidation)
+    with OasSyntax {
 
   def parseDocument(): Document = {
 
@@ -235,7 +244,10 @@ case class OasDocumentParser(root: Root, currentValidation: Validation) extends 
         case None =>
           val securityScheme = SecurityScheme()
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
-          parsingErrorReport(currentValidation, securityScheme.id, s"Security scheme '$name' not found in declarations.", None)
+          parsingErrorReport(currentValidation,
+                             securityScheme.id,
+                             s"Security scheme '$name' not found in declarations.",
+                             None)
           securityScheme
       }
     }
@@ -313,7 +325,9 @@ case class OasDocumentParser(root: Root, currentValidation: Validation) extends 
       map.key(
         "x-type",
         entry =>
-          ParametrizedDeclarationParser(entry.value.value, endpoint.withResourceType, declarations.resourceTypes)
+          ParametrizedDeclarationParser(entry.value.value,
+                                        endpoint.withResourceType,
+                                        declarations.findResourceTypeOrFail)
             .parse()
       )
 
@@ -321,7 +335,7 @@ case class OasDocumentParser(root: Root, currentValidation: Validation) extends 
         "x-is",
         entry => {
           entry.value.value.toSequence.values.map(value =>
-            ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.traits).parse())
+            ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrFail).parse())
         }
       )
 
@@ -502,7 +516,7 @@ case class OasDocumentParser(root: Root, currentValidation: Validation) extends 
         "x-is",
         entry => {
           val traits = entry.value.value.toSequence.nodes.map(value => {
-            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.traits).parse()
+            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.findTraitOrFail).parse()
           })
           if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
         }
@@ -612,7 +626,10 @@ case class OasDocumentParser(root: Root, currentValidation: Validation) extends 
       entries.key(
         "schema",
         entry =>
-          OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id), declarations, currentValidation)
+          OasTypeParser(entry,
+                        (shape) => shape.withName("default").adopted(payload.id),
+                        declarations,
+                        currentValidation)
             .parse()
             .map(payload.set(PayloadModel.Schema, _, Annotations(entry)))
       )
@@ -635,7 +652,10 @@ case class OasDocumentParser(root: Root, currentValidation: Validation) extends 
       map.key(
         "schema",
         entry => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id), declarations, currentValidation)
+          OasTypeParser(entry,
+                        (shape) => shape.withName("schema").adopted(payload.id),
+                        declarations,
+                        currentValidation)
             .parse()
             .map(payload.set(PayloadModel.Schema, _, Annotations(entry)))
         }
@@ -696,7 +716,10 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
             case Some(shape) =>
               declarations += shape.add(DeclaredElement())
             case None =>
-              parsingErrorReport(currentValidation, NodeShape().adopted(typesPrefix).id, s"Error parsing shape at $typeName", Some(e))
+              parsingErrorReport(currentValidation,
+                                 NodeShape().adopted(typesPrefix).id,
+                                 s"Error parsing shape at $typeName",
+                                 Some(e))
           }
         })
       }
@@ -737,9 +760,12 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
           val typeName = e.key.value.toScalar.text
           val oasParameter = e.value.value match {
             case m: YMap => ParameterParser(m, parentPath, declarations).parse()
-            case _       =>
+            case _ =>
               val parameter = ParameterParser(YMap(), parentPath, declarations).parse()
-              parsingErrorReport(currentValidation, parameter.parameter.id, "Map needed to parse a parameter declaration", Some(e))
+              parsingErrorReport(currentValidation,
+                                 parameter.parameter.id,
+                                 "Map needed to parse a parameter declaration",
+                                 Some(e))
               parameter
           }
 
@@ -765,12 +791,18 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
               adopt: (CustomDomainProperty) => Unit,
               declarations: Declarations): CustomDomainProperty =
       ast.value.value match {
-        case map: YMap       => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
-        case scalar: YScalar => LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
-        case _               =>
+        case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
+        case scalar: YScalar =>
+          LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
+        case _ =>
           val customDomainProperty = CustomDomainProperty().withName(ast.key.value.toScalar.text)
           adopt(customDomainProperty)
-          parsingErrorReport(currentValidation, customDomainProperty.id, "Invalid value node type for annotation types parser, expected map or scalar reference", Some(ast.value.value))
+          parsingErrorReport(
+            currentValidation,
+            customDomainProperty.id,
+            "Invalid value node type for annotation types parser, expected map or scalar reference",
+            Some(ast.value.value)
+          )
           customDomainProperty
       }
 
@@ -792,7 +824,10 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
         .getOrElse {
           val customDomainProperty = CustomDomainProperty().withName(annotationName)
           adopt(customDomainProperty)
-          parsingErrorReport(currentValidation, customDomainProperty.id, "Could not find declared annotation link in references", Some(scalar))
+          parsingErrorReport(currentValidation,
+                             customDomainProperty.id,
+                             "Could not find declared annotation link in references",
+                             Some(scalar))
           customDomainProperty
         }
     }
@@ -868,9 +903,12 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
           case s: YScalar =>
             declarations.findDocumentations(s.text) match {
               case Some(doc) => doc.link(s.text, Annotations(n)).asInstanceOf[CreativeWork]
-              case _         => {
+              case _ => {
                 val documentation = RamlCreativeWorkParser(YMap(), withExtention).parse()
-                parsingErrorReport(currentValidation, documentation.id, s"not supported scalar $s.text for documentation item", Some(n.value))
+                parsingErrorReport(currentValidation,
+                                   documentation.id,
+                                   s"not supported scalar $s.text for documentation item",
+                                   Some(n.value))
                 documentation
               }
             }
@@ -915,7 +953,10 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
             map.key(
               "schema",
               entry => {
-                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id), declarations, currentValidation)
+                OasTypeParser(entry,
+                              (shape) => shape.withName("schema").adopted(parameter.payload.id),
+                              declarations,
+                              currentValidation)
                   .parse()
                   .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
               }
@@ -941,7 +982,7 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
               currentValidation,
               "parameter"
             ).parse()
-             .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
+              .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
           }
 
           AnnotationParser(() => parameter.parameter, map).parse()
@@ -960,7 +1001,10 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
           OasParameter(parameter, payload)
         case None =>
           val oasParameter = OasParameter(Parameter(YMap()), Payload(YMap()))
-          parsingErrorReport(currentValidation, oasParameter.parameter.id, s"Cannot find parameter reference $refUrl", Some(ref))
+          parsingErrorReport(currentValidation,
+                             oasParameter.parameter.id,
+                             s"Cannot find parameter reference $refUrl",
+                             Some(ref))
           oasParameter
       }
     }
@@ -1059,7 +1103,10 @@ abstract class OasSpecParser(currentValidation: Validation) extends BaseSpecPars
       map.key(
         "type",
         _ => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id), declarations, currentValidation)
+          OasTypeParser(entry,
+                        (shape) => shape.withName("schema").adopted(parameter.id),
+                        declarations,
+                        currentValidation)
             .parse()
             .map(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
         }

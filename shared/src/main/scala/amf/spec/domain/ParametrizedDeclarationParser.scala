@@ -11,7 +11,7 @@ import org.yaml.model.{YMap, YScalar, YValue}
   */
 case class ParametrizedDeclarationParser(value: YValue,
                                          producer: String => ParametrizedDeclaration,
-                                         declarations: Map[String, AbstractDeclaration]) {
+                                         declarations: (String) => AbstractDeclaration) {
   def parse(): ParametrizedDeclaration = {
     value match {
       case map: YMap =>

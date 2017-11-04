@@ -12,15 +12,13 @@ class CanonicalShapePipeline extends ResolutionPipeline {
   val references = new ReferenceResolutionStage(ProfileNames.AMF)
   val shapes     = new ShapeNormalizationStage(ProfileNames.AMF)
 
-  override def resolve(model: BaseUnit) = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>
       step(references)
       step(shapes)
     }
   }
-
 }
-
 
 object CanonicalShapePipeline {
   def apply(shape: Shape): Shape = {

@@ -174,7 +174,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validator = Validation(platform)
     var dialect: Option[Dialect] = None
     validator.loadValidationDialect().flatMap { parsedDialect =>
-      AMFCompiler("file:///Users/antoniogarrote/Development/vocabularies/k8/dialects/pod.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
+      AMFCompiler("file://shared/src/test/resources/vocabularies/k8/dialects/pod.raml", platform, RamlYamlHint, validator, None, None, platform.dialectsRegistry).build()
     } flatMap { unit =>
       validator.validate(unit, "RAML 1.0 Dialect")
     } flatMap { report =>
@@ -183,8 +183,8 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
-   */
-
+  */
+  
   test("Custom dialect can be validated (k8)") {
     val validation = Validation(platform)
     var dialect: Option[Dialect] = None
