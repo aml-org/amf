@@ -25,7 +25,7 @@ object NodeReference extends DialectLanguageNode("Declaration") {
   val idProperty: DialectPropertyMapping = str(
     "id",
     _.copy(namespace = Some(Namespace.Schema), jsonld = false, noRAML = true, scalaNameOverride = Some("idProperty")))
-  val uri: DialectPropertyMapping = str(
+  val uri: DialectPropertyMapping = iri(
     "declaredNode",
     _.copy(referenceTarget = Some(NodeDefinition), fromVal = true, scalaNameOverride = Some("uri")))
 }
@@ -78,7 +78,7 @@ object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration") {
 object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") {
   val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true)
   var encodes: DialectPropertyMapping =
-    str("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
+    iri("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
 }
 
 object MainNode extends DialectLanguageNode("Document") {
