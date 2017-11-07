@@ -25,6 +25,7 @@ lazy val root = project
   .enablePlugins(ScalaJSPlugin)
 
 lazy val importScalaTask = TaskKey[Unit]("tsvScalaImport", "Import validations from AMF TSV files and generates a Scala object with the information")
+lazy val defaultProfilesGenerationTask = TaskKey[Unit]("defaultValidationProfilesGeneration", "Generates the validation dialect documents for the standard profiles")
 
 lazy val amf = crossProject
   .in(file("."))
@@ -45,6 +46,7 @@ lazy val amf = crossProject
     assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",
     fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
+    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"),
     mainClass in Compile := Some("amf.client.Main")
   )
   .jsSettings(

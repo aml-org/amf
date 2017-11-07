@@ -101,7 +101,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   /*
-  test("HERE_HERE Parse payloads") {
+  test("Parse payloads") {
     val path = "file://shared/src/test/resources/payloads/a_valid.json"
     AMFCompiler(path, platform, PayloadJsonHint)
         .build() map { parsed: BaseUnit =>

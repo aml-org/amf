@@ -1,0 +1,90 @@
+#%Validation Profile 1.0
+
+profile: OpenAPI
+
+extends: AMF
+
+violation:
+  - amf-parser.mandatory-api-version
+  - amf-parser.openapi-schemes
+  - amf-parser.empty-endpoints
+  - amf-parser.mandatory-external-doc-url
+  - amf-parser.mandatory-license-name
+  - amf-parser.host-valid-domain
+  - amf-parser.empty-responses
+  - amf-parser.empty-enum
+  - amf-parser.array-shape-items-mandatory
+
+validations:
+
+  amf-parser.mandatory-api-version:
+    message: API Version is Mandatory
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.version
+    schema.version:
+      minCount: 1
+         
+
+  amf-parser.openapi-schemes:
+    message: Protocols must match a value http, https, ws or wss
+    targetClass: schema.WebAPI
+    propertyConstraint: http.scheme
+    http.scheme:
+      in: [ http,https,ws,wss ]
+         
+
+  amf-parser.empty-endpoints:
+    message: Resources cannot be empty
+    targetClass: schema.WebAPI
+    propertyConstraint: http.endpoint
+    http.endpoint:
+      minCount: 1
+         
+
+  amf-parser.mandatory-external-doc-url:
+    message: Documentation URL is mandatory in API external documentation
+    targetClass: schema.CreativeWork
+    propertyConstraint: schema.url
+    schema.url:
+      minCount: 1
+         
+
+  amf-parser.mandatory-license-name:
+    message: License name is mandatory if license information is included
+    targetClass: http.License
+    propertyConstraint: schema.name
+    schema.name:
+      minCount: 1
+         
+
+  amf-parser.host-valid-domain:
+    message: BaseUris must be valid and not templates
+    targetClass: schema.WebAPI
+    propertyConstraint: http.host
+    http.host:
+      pattern: ^[^{}\/ :\\]+(?::\d+)?$
+         
+
+  amf-parser.empty-responses:
+    message: Responses array cannot be empty
+    targetClass: hydra.Operation
+    propertyConstraint: hydra.returns
+    hydra.returns:
+      minCount: 1
+         
+
+  amf-parser.empty-enum:
+    message: Enum in types cannot be empty
+    targetClass: raml-shapes.Shape
+    functionConstraint:
+      functionName: nonEmptyList_shacl_in
+        
+
+  amf-parser.array-shape-items-mandatory:
+    message: items facet of RAML Array type is required
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: raml-shapes.item
+    raml-shapes.item:
+      minCount: 1
+         
+    

@@ -20,5 +20,5 @@ validations:
     functionConstraint:
       code: |
         function(webapi) {
-          return webapi["raml-http:scheme"].length === 0;
+          return webapi["http:scheme"].length === 0;
         }

@@ -188,6 +188,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(model, "Banking")
     } yield {
       assert(!report.conforms)
+      assert(report.results.length == 10)
       assert(report.results.nonEmpty)
     }
   }
@@ -350,6 +351,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
       assert(report.results.length == 4)
       assert(report.results.count(_.level == SeverityLevels.WARNING) == 1)
+    }
+  }
+
+  ignore("Example JS library validations") {
+    val validation = Validation(platform)
+    for {
+      _       <- validation.loadValidationDialect()
+      library <- AMFCompiler(examplesPath + "libraries/api.raml", platform, RamlYamlHint, validation).build()
+      _       <- validation.loadValidationProfile(examplesPath + "libraries/profile.raml")
+      report  <- validation.validate(library, "Test")
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
     }
   }
 }
