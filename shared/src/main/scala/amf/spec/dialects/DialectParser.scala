@@ -253,12 +253,12 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                   case None               =>
                 }
                 parentDomainEntity.add(targetField, domainEntity)
-                domainEntity.set(mapping.hash.get.field(), mapKey.text)
                 entry match {
                   case v: YMap                    => parseNode(v, domainEntity)
                   case s: YScalar if s.text != "" => parseNode(s, domainEntity)
                   case _          => // ignore
                 }
+                domainEntity.set(mapping.hash.get.field(), mapKey.text)
               case _ => // ignore
             }
         }

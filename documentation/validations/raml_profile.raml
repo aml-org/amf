@@ -1,0 +1,37 @@
+#%Validation Profile 1.0
+
+profile: RAML
+
+extends: AMF
+
+violation:
+  - amf-parser.raml-schemes
+  - amf-parser.raml-status-code
+  - amf-parser.array-shape-items-optional
+
+validations:
+
+  amf-parser.raml-schemes:
+    message: Protocols must have a case insensitive value matching http or https
+    targetClass: schema.WebAPI
+    propertyConstraint: http.scheme
+    http.scheme:
+      in: [ http,https,HTTP,HTTPS ]
+         
+
+  amf-parser.raml-status-code:
+    message: Status code must be numeric
+    targetClass: http.Response
+    propertyConstraint: hydra.statusCode
+    hydra.statusCode:
+      pattern: ^([0-9]{3})$
+         
+
+  amf-parser.array-shape-items-optional:
+    message: items facet of RAML Array type is required
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: raml-shapes.item
+    raml-shapes.item:
+      minCount: 0
+         
+    

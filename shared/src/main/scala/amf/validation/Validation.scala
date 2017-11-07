@@ -273,7 +273,7 @@ class Validation(platform: Platform) {
         if (profile.get.baseProfileName.isDefined) {
           someEffective(profile.get, computeValidations(profile.get.baseProfileName.get, computed))
         } else {
-          someEffective(profile.get, computeValidations(ProfileNames.AMF, computed))
+          someEffective(profile.get, someEffective(DefaultAMFValidations.parserSideValidationsProfile, computed))
         }
       case _ => throw new Exception(s"Validation profile $profileName not defined")
     }
@@ -299,14 +299,16 @@ class Validation(platform: Platform) {
     val shapesJSON = shapesGraph(validations, messageStyle)
     val jsLibrary  = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
 
-//    println("\n\nGRAPH")
-//    println(modelJSON)
-//    println("===========================")
-//    println("\n\nVALIDATION")
-//    println(shapesJSON)
-//    println("===========================")
-//    println(jsLibrary)
-//    println("===========================")
+    /*
+    println("\n\nGRAPH")
+    println(modelJSON)
+    println("===========================")
+    println("\n\nVALIDATION")
+    println(shapesJSON)
+    println("===========================")
+    println(jsLibrary)
+    println("===========================")
+    */
 
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
