@@ -6,8 +6,7 @@ import amf.ProfileNames
 import amf.model.{BaseUnit, DialectFragment, Document, Module}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
-import amf.remote.{Platform, Vendor}
-import amf.unsafe.TrunkPlatform
+import amf.remote.{Platform, StringContentPlatform, Vendor}
 import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -17,6 +16,8 @@ import scala.language.implicitConversions
   * Base class for JVM parsers.
   */
 abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
+
+  private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 
   private def unitScalaToJVM(unit: amf.document.BaseUnit): BaseUnit = unit match {
     case d: amf.document.Document => Document(d)
@@ -47,7 +48,7 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   def parseString(stream: String, handler: Handler[BaseUnit]): Unit =
-    super.parse(null, BaseUnitHandlerAdapter(handler), Some(TrunkPlatform(stream)))
+    super.parse(DEFAULT_DOCUMENT_URL, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   /**
     * Generates the [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -56,7 +57,10 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   def parseString(stream: String, platform: Platform, handler: Handler[BaseUnit]): Unit =
-    super.parse(null, BaseUnitHandlerAdapter(handler), Some(TrunkPlatform(stream, Some(platform))))
+    super.parse(DEFAULT_DOCUMENT_URL, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+
+  def parseString(url: String, stream: String, platform: Platform, handler: Handler[BaseUnit]): Unit =
+    super.parse(url, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(url, stream, platform)))
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from the api located in the given url.
@@ -82,7 +86,7 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseStringAsync(stream: String): CompletableFuture[BaseUnit] =
-    super.parseAsync(null, Some(TrunkPlatform(stream))).map(unitScalaToJVM).asJava
+    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJVM).asJava
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -91,7 +95,10 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseStringAsync(stream: String, platform: Platform): CompletableFuture[BaseUnit] =
-    super.parseAsync(null, Some(TrunkPlatform(stream, Some(platform)))).map(unitScalaToJVM).asJava
+    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJVM).asJava
+
+  def parseStringAsync(textUrl: String, stream: String, platform: Platform): CompletableFuture[BaseUnit] =
+    super.parseAsync(textUrl, Some(StringContentPlatform(textUrl, stream, platform))).map(unitScalaToJVM).asJava
 
   /**
     * Generates the validation report for the last parsed model.
