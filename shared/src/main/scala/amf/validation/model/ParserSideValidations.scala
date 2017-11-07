@@ -30,6 +30,29 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val DialectExpectingMap = ValidationSpecification(
+    (Namespace.AmfParser + "dialect-expecting-map").iri(),
+    "Expecting map node",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val DialectUnresolvableReference = ValidationSpecification(
+    (Namespace.AmfParser + "dialect-unresolvable-reference").iri(),
+    "Unresolvable Reference",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+  val DialectNodeRangeShouldBeDialect = ValidationSpecification(
+    (Namespace.AmfParser + "dialect-node-range-should-be-dialect").iri(),
+    "Dialect Node Range should be dialect",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val ClosedShapeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "closed-shape").iri(),
     "invalid property for node",
