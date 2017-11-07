@@ -1,5 +1,6 @@
 package amf.validation.model
 
+import amf.ProfileNames
 import amf.validation.SeverityLevels
 import amf.vocabulary.Namespace
 
@@ -134,6 +135,28 @@ object DefaultAMFValidations extends ImportUtils {
         )
 
     }.toList
+  }
+
+  val parserSideValidationsProfile: ValidationProfile = {
+    // sorting parser side validation for this profile
+    val violationParserSideValidations = ParserSideValidations.validations.filter { v =>
+      ParserSideValidations.levels(v.id()).getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+    }.map(_.name)
+    val infoParserSideValidations = ParserSideValidations.validations.filter { v =>
+      ParserSideValidations.levels(v.id()).getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+    }.map(_.name)
+    val warningParserSideValidations = ParserSideValidations.validations.filter { v =>
+      ParserSideValidations.levels(v.id()).getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+    }.map(_.name)
+
+    ValidationProfile(
+      name            = "ServerSide",
+      baseProfileName = None,
+      infoLevel       = infoParserSideValidations,
+      warningLevel    = warningParserSideValidations,
+      violationLevel  = violationParserSideValidations,
+      validations     = ParserSideValidations.validations
+    )
   }
 
   private def parseValidation(validations: List[AMFValidation]): List[ValidationSpecification] = {

@@ -250,7 +250,10 @@ class ValidationJSONLDEmitter(targetProfile: String) {
                     b.obj {
                       _.entry(
                         (Namespace.Shacl + "jsLibraryURL").iri(),
-                        _.obj(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
+                        _.obj { o =>
+                          o.entry("@value", library)
+                          o.entry("@type", "http://www.w3.org/2001/XMLSchema#anyUri")
+                        }
                       )
                     }
                   }
@@ -258,6 +261,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
               )
               b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, fnName))
             }
+
 
           case None =>
             f.code match {
@@ -268,11 +272,18 @@ class ValidationJSONLDEmitter(targetProfile: String) {
                   f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
                   b.entry(
                     (Namespace.Shacl + "jsLibrary").iri(),
-                    _.obj {
-                      _.entry(
-                        (Namespace.Shacl + "jsLibraryURL").iri(),
-                        _.obj(_.entry("@value", ValidationJSONLDEmitter.validationLibraryUrl))
-                      )
+                    _.list { b =>
+                      for { library <- Seq(ValidationJSONLDEmitter.validationLibraryUrl) ++ f.libraries } {
+                        b.obj {
+                          _.entry(
+                            (Namespace.Shacl + "jsLibraryURL").iri(),
+                            _.obj { o =>
+                              o.entry("@value", library)
+                              o.entry("@type", "http://www.w3.org/2001/XMLSchema#anyUri")
+                            }
+                          )
+                        }
+                      }
                     }
                   )
                   b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, f.computeFunctionName(validationId)))
