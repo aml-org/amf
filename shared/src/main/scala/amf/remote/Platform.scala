@@ -133,3 +133,40 @@ private object Relative {
     }
   }
 }
+
+/**
+  * Wrapper class for a platform with support to resolve the content of a URL without resolving it.
+  * Used to implement the parseString functions, where the text for the provided URL is known
+  */
+case class StringContentPlatform(contentUrl: String, content: String, wrappedPlatform: Platform) extends Platform {
+
+  override val dialectsRegistry = wrappedPlatform.dialectsRegistry
+
+  override val validator = wrappedPlatform.validator
+
+  override def resolvePath(path: String) = if (path == contentUrl) {
+    contentUrl
+  } else {
+    wrappedPlatform.resolvePath(path)
+  }
+
+  override protected def fetchFile(path: String) = if (path == contentUrl) {
+    Future {
+      Content(new CharSequenceStream(content), path)
+    }
+  } else {
+    wrappedPlatform.resolve(File.FILE_PROTOCOL + path, None)
+  }
+
+  override protected def fetchHttp(url: String) =  if (url == contentUrl) {
+    Future {
+      Content(new CharSequenceStream(content), url)
+    }
+  } else {
+    wrappedPlatform.resolve(url, None)
+  }
+
+  override def tmpdir() = wrappedPlatform.tmpdir()
+
+  override protected def writeFile(path: String, content: String) = wrappedPlatform.write(File.FILE_PROTOCOL + path, content)
+}
