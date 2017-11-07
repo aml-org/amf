@@ -1,0 +1,1151 @@
+#%Validation Profile 1.0
+
+profile: AMF
+
+
+violation:
+  - amf-parser.DomainElement-name-datatype
+  - amf-parser.DomainElement-name-maxCount
+  - amf-parser.DomainElement-description-datatype
+  - amf-parser.DomainElement-description-maxCount
+  - amf-parser.WebAPI-name-minCount
+  - amf-parser.WebAPI-host-datatype
+  - amf-parser.WebAPI-host-maxCount
+  - amf-parser.WebAPI-scheme-datatype
+  - amf-parser.WebAPI-basePath-datatype
+  - amf-parser.WebAPI-basePath-maxCount
+  - amf-parser.WebAPI-basePath-pattern
+  - amf-parser.WebAPI-accepts-datatype
+  - amf-parser.WebAPI-mediaType-datatype
+  - amf-parser.WebAPI-version-datatype
+  - amf-parser.WebAPI-version-maxCount
+  - amf-parser.WebAPI-termsOfService-datatype
+  - amf-parser.WebAPI-termsOfService-maxCount
+  - amf-parser.WebAPI-provider-class
+  - amf-parser.WebAPI-provider-maxCount
+  - amf-parser.WebAPI-endpoint-class
+  - amf-parser.WebAPI-parameter-class
+  - amf-parser.Organization-url-maxCount
+  - amf-parser.Organization-email-datatype
+  - amf-parser.Organization-email-maxCount
+  - amf-parser.EndPoint-path-maxCount
+  - amf-parser.EndPoint-path-datatype
+  - amf-parser.EndPoint-path-pattern
+  - amf-parser.Endpoint-supportedOperation-class
+  - amf-parser.Endpoint-parameter-class
+  - amf-parser.Operation-method-in
+  - amf-parser.Operation-method-maxCount
+  - amf-parser.Operation-returns-class
+  - amf-parser.Operation-guiSummary-datatype
+  - amf-parser.Operation-guiSummary-maxCount
+  - amf-parser.Operation-deprecated-datatype
+  - amf-parser.Operation-deprecated-maxCount
+  - amf-parser.Operation-scheme-datatype
+  - amf-parser.Operation-accepts-datatype
+  - amf-parser.Operation-returns-class
+  - amf-parser.Request-header-class
+  - amf-parser.Request-payload-class
+  - amf-parser.Request-payload-maxCount
+  - amf-parser.Request-parameter-class
+  - amf-parser.Response-statusCode-datatype
+  - amf-parser.Response-statusCode-pattern
+  - amf-parser.Response-header-class
+  - amf-parser.Response-payload-class
+  - amf-parser.Response-payload-maxCount
+  - amf-parser.Parameter-name-minCount
+  - amf-parser.Parameter-required-datatype
+  - amf-parser.Parameter-required-minCount
+  - amf-parser.Parameter-required-maxCount
+  - amf-parser.Parameter-binding-datatype
+  - amf-parser.Parameter-binding-minCount
+  - amf-parser.Parameter-binding-maxCount
+  - amf-parser.Parameter-binding-in
+  - amf-parser.Parameter-schema-class
+  - amf-parser.Parameter-schema-maxCount
+  - amf-parser.Parameter-schema-minCount
+  - amf-parser.Payload-mediaType-datatype
+  - amf-parser.Payload-mediaType-maxCount
+  - amf-parser.Payload-schema-class
+  - amf-parser.Payload-schema-maxCount
+  - amf-parser.Shape-xmlSerialization-class
+  - amf-parser.Shape-xmlSerialization-maxCount
+  - amf-parser.Shape-in-maxCount
+  - amf-parser.Shape-in-node
+  - amf-parser.XMLSerializer-xmlAtribute-datatype
+  - amf-parser.XMLSerializer-xmlAtribute-maxCount
+  - amf-parser.XMLSerializer-xmlWrapped-datatype
+  - amf-parser.XMLSerializer-xmlWrapped-maxCount
+  - amf-parser.XMLSerializer-xmlName-datatype
+  - amf-parser.XMLSerializer-xmlName-maxCount
+  - amf-parser.XMLSerializer-xmlNamespace-datatype
+  - amf-parser.XMLSerializer-xmlNamespace-maxCount
+  - amf-parser.XMLSerializer-xmlPrefix-datatype
+  - amf-parser.XMLSerializer-xmlPrefix-maxCount
+  - amf-parser.Shape-defaultValue-maxCount
+  - amf-parser.ObjectShape-minProperties-minInclusive
+  - amf-parser.ObjectShape-minProperties-datatype
+  - amf-parser.ObjectShape-minProperties-maxCount
+  - amf-parser.ObjectShape-maxProperties-minInclusive
+  - amf-parser.ObjectShape-maxProperties-datatype
+  - amf-parser.ObjectShape-maxProperties-maxCount
+  - amf-parser.ObjectShape-closed-datatype
+  - amf-parser.ObjectShape-closed-maxCount
+  - amf-parser.ObjectShape-discriminator-datatype
+  - amf-parser.ObjectShape-discriminator-maxCount
+  - amf-parser.ObjectShape-discriminatorValue-datatype
+  - amf-parser.ObjectShape-discriminatorValue-maxCount
+  - amf-parser.ObjectShape-readOnly-datatype
+  - amf-parser.ObjectShape-readOnly-maxCount
+  - amf-parser.ArrayShape-item-class
+  - amf-parser.ArrayShape-minCount-datatype
+  - amf-parser.ArrayShape-minCount-maxCount
+  - amf-parser.ArrayShape-minCount-minInclusive
+  - amf-parser.ArrayShape-maxCount-datatype
+  - amf-parser.ArrayShape-maxCount-maxCount
+  - amf-parser.ArrayShape-minCount-minInclusive
+  - amf-parser.ArrayShape-uniqueItems-datatype
+  - amf-parser.ArrayShape-uniqueItems-maxCount
+  - amf-parser.ScalarShape-pattern-datatype
+  - amf-parser.ScalarShape-pattern-maxCount
+  - amf-parser.ScalarShape-minLength-datatype
+  - amf-parser.ScalarShape-minLength-maxCount
+  - amf-parser.ScalarShape-maxLength-datatype
+  - amf-parser.ScalarShape-maxLength-maxCount
+  - amf-parser.ScalarShape-minInclusive-datatype
+  - amf-parser.ScalarShape-minInclusive-maxCount
+  - amf-parser.ScalarShape-maxInclusive-datatype
+  - amf-parser.ScalarShape-maxInclusive-maxCount
+  - amf-parser.ScalarShape-minExclusive-datatype
+  - amf-parser.ScalarShape-minExclusive-maxCount
+  - amf-parser.ScalarShape-maxExclusive-datatype
+  - amf-parser.ScalarShape-maxExclusive-maxCount
+  - amf-parser.ScalarShape-format-datatype
+  - amf-parser.ScalarShape-format-maxCount
+  - amf-parser.ScalarShape-multipleOf-datatype
+  - amf-parser.ScalarShape-multipleOf-maxCount
+  - amf-parser.ScalarShape-multipleOf-minExclusive
+  - amf-parser.ScalarShape-datatype-minCount
+  - amf-parser.strict-url-strings
+  - amf-parser.closed-shape
+  - amf-parser.dialect-ambiguous-range
+  - amf-parser.parsing-error
+  - amf-parser.example-validation-error
+  - amf-parser.unsupported-example-media-type
+
+validations:
+
+  amf-parser.DomainElement-name-datatype:
+    message: Title and names must be string
+    targetClass: doc.DomainElement
+    propertyConstraint: schema.name
+    schema.name:
+      datatype: string
+         
+
+  amf-parser.DomainElement-name-maxCount:
+    message: Titles and names must be single values
+    targetClass: doc.DomainElement
+    propertyConstraint: schema.name
+    schema.name:
+      maxCount: 1
+         
+
+  amf-parser.DomainElement-description-datatype:
+    message: Descriptions must be strings
+    targetClass: doc.DomainElement
+    propertyConstraint: schema.description
+    schema.description:
+      datatype: string
+         
+
+  amf-parser.DomainElement-description-maxCount:
+    message: Descriptions must be single values
+    targetClass: doc.DomainElement
+    propertyConstraint: schema.description
+    schema.description:
+      maxCount: 1
+         
+
+  amf-parser.WebAPI-name-minCount:
+    message: API name must be a single value
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.name
+    schema.name:
+      minCount: 1
+         
+
+  amf-parser.WebAPI-host-datatype:
+    message: API baseUri host information must be a string
+    targetClass: schema.WebAPI
+    propertyConstraint: http.host
+    http.host:
+      datatype: string
+         
+
+  amf-parser.WebAPI-host-maxCount:
+    message: API baseUri host information must be a single value
+    targetClass: schema.WebAPI
+    propertyConstraint: http.host
+    http.host:
+      maxCount: 1
+         
+
+  amf-parser.WebAPI-scheme-datatype:
+    message: API BaseUri scheme information must be a string
+    targetClass: schema.WebAPI
+    propertyConstraint: http.scheme
+    http.scheme:
+      datatype: string
+         
+
+  amf-parser.WebAPI-basePath-datatype:
+    message: API baseUri path must be a string
+    targetClass: schema.WebAPI
+    propertyConstraint: http.basePath
+    http.basePath:
+      datatype: string
+         
+
+  amf-parser.WebAPI-basePath-maxCount:
+    message: API baseUri path must a single value
+    targetClass: schema.WebAPI
+    propertyConstraint: http.basePath
+    http.basePath:
+      maxCount: 1
+         
+
+  amf-parser.WebAPI-basePath-pattern:
+    message: API baseUri path must start with a '/'
+    targetClass: schema.WebAPI
+    propertyConstraint: http.basePath
+    http.basePath:
+      pattern: ^/
+         
+
+  amf-parser.WebAPI-accepts-datatype:
+    message: API default media types consumed must be strings
+    targetClass: schema.WebAPI
+    propertyConstraint: http.accepts
+    http.accepts:
+      datatype: string
+         
+
+  amf-parser.WebAPI-mediaType-datatype:
+    message: API default media types produced must be strings
+    targetClass: schema.WebAPI
+    propertyConstraint: http.mediaType
+    http.mediaType:
+      datatype: string
+         
+
+  amf-parser.WebAPI-version-datatype:
+    message: API version must be a string
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.version
+    schema.version:
+      datatype: string
+         
+
+  amf-parser.WebAPI-version-maxCount:
+    message: API version must be a single value
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.version
+    schema.version:
+      maxCount: 1
+         
+
+  amf-parser.WebAPI-termsOfService-datatype:
+    message: API terms of service must be a string
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.termsOfService
+    schema.termsOfService:
+      datatype: string
+         
+
+  amf-parser.WebAPI-termsOfService-maxCount:
+    message: API terms of service must be a single value
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.termsOfService
+    schema.termsOfService:
+      maxCount: 1
+         
+
+  amf-parser.WebAPI-provider-class:
+    message: API provider must hold Provider information
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.provider
+    schema.provider:
+      range: schema.Organization
+         
+
+  amf-parser.WebAPI-provider-maxCount:
+    message: API provider must be a single value
+    targetClass: schema.WebAPI
+    propertyConstraint: schema.provider
+    schema.provider:
+      maxCount: 1
+         
+
+  amf-parser.WebAPI-endpoint-class:
+    message: API paths must link Resources
+    targetClass: schema.WebAPI
+    propertyConstraint: http.endpoint
+    http.endpoint:
+      range: http.EndPoint
+         
+
+  amf-parser.WebAPI-parameter-class:
+    message: API parameters must be valid parameters
+    targetClass: schema.WebAPI
+    propertyConstraint: http.parameter
+    http.parameter:
+      range: http.Parameter
+         
+
+  amf-parser.Organization-url-maxCount:
+    message: API provider URL must be a single value
+    targetClass: schema.Organization
+    propertyConstraint: schema.url
+    schema.url:
+      maxCount: 1
+         
+
+  amf-parser.Organization-email-datatype:
+    message: API provider email must be a string
+    targetClass: schema.Organization
+    propertyConstraint: schema.email
+    schema.email:
+      datatype: string
+         
+
+  amf-parser.Organization-email-maxCount:
+    message: API provider must be a single value
+    targetClass: schema.Organization
+    propertyConstraint: schema.email
+    schema.email:
+      maxCount: 1
+         
+
+  amf-parser.EndPoint-path-maxCount:
+    message: Resource path must be unique
+    targetClass: http.EndPoint
+    propertyConstraint: http.path
+    http.path:
+      maxCount: 1
+         
+
+  amf-parser.EndPoint-path-datatype:
+    message: Resource path must be a string
+    targetClass: http.EndPoint
+    propertyConstraint: http.path
+    http.path:
+      datatype: string
+         
+
+  amf-parser.EndPoint-path-pattern:
+    message: Resource path must start with a '/'
+    targetClass: http.EndPoint
+    propertyConstraint: http.path
+    http.path:
+      pattern: ^/
+         
+
+  amf-parser.Endpoint-supportedOperation-class:
+    message: Resources must hold Methods operation
+    targetClass: http.Endpoint
+    propertyConstraint: hydra.supportedOperation
+    hydra.supportedOperation:
+      range: hydra.Operation
+         
+
+  amf-parser.Endpoint-parameter-class:
+    message: Resources uriParameters must be valid parameters
+    targetClass: http.Endpoint
+    propertyConstraint: http.parameter
+    http.parameter:
+      range: http.Parameter
+         
+
+  amf-parser.Operation-method-in:
+    message: Uknown method
+    targetClass: hydra.Operation
+    propertyConstraint: hydra.method
+    hydra.method:
+      in: [ get,put,post,delete,options,head,patch ]
+         
+
+  amf-parser.Operation-method-maxCount:
+    message: Methods can only have a single HTTP verbe
+    targetClass: hydra.Operation
+    propertyConstraint: hydra.method
+    hydra.method:
+      maxCount: 1
+         
+
+  amf-parser.Operation-returns-class:
+    message: Methods must hold Responses information
+    targetClass: hydra.Operation
+    propertyConstraint: hydra.returns
+    hydra.returns:
+      range: http.Response
+         
+
+  amf-parser.Operation-guiSummary-datatype:
+    message: Methods' summary information must be a string
+    targetClass: hydra.Operation
+    propertyConstraint: http.guiSummary
+    http.guiSummary:
+      datatype: string
+         
+
+  amf-parser.Operation-guiSummary-maxCount:
+    message: Methods can only have a single value for the summary information
+    targetClass: hydra.Operation
+    propertyConstraint: http.guiSummary
+    http.guiSummary:
+      maxCount: 1
+         
+
+  amf-parser.Operation-deprecated-datatype:
+    message: Methods' deprecated must be a boolean
+    targetClass: hydra.Operation
+    propertyConstraint: doc.deprecated
+    doc.deprecated:
+      datatype: boolean
+         
+
+  amf-parser.Operation-deprecated-maxCount:
+    message: Methods' depcrecated must be a single value
+    targetClass: hydra.Operation
+    propertyConstraint: doc.deprecated
+    doc.deprecated:
+      maxCount: 1
+         
+
+  amf-parser.Operation-scheme-datatype:
+    message: protocols must be strings
+    targetClass: hydra.Operation
+    propertyConstraint: http.scheme
+    http.scheme:
+      datatype: string
+         
+
+  amf-parser.Operation-accepts-datatype:
+    message: Method default media types consumed must be strings
+    targetClass: hydra.Operation
+    propertyConstraint: http.accepts
+    http.accepts:
+      datatype: string
+         
+
+  amf-parser.Operation-returns-class:
+    message: An operation must have valid response information
+    targetClass: hydra.Operation
+    propertyConstraint: hydra.returns
+    hydra.returns:
+      range: http.Response
+         
+
+  amf-parser.Request-header-class:
+    message: Header information must be a valid header
+    targetClass: http.Request
+    propertyConstraint: http.header
+    http.header:
+      range: http.Parameter
+         
+
+  amf-parser.Request-payload-class:
+    message: Payload information for a Method request info must be valid
+    targetClass: http.Request
+    propertyConstraint: http.payload
+    http.payload:
+      range: http.Payload
+         
+
+  amf-parser.Request-payload-maxCount:
+    message: Payload information for a Method request must be a single value
+    targetClass: http.Request
+    propertyConstraint: http.payload
+    http.payload:
+      maxCount: 1
+         
+
+  amf-parser.Request-parameter-class:
+    message: Parameter information for a Method must be valid
+    targetClass: http.Request
+    propertyConstraint: http.parameter
+    http.parameter:
+      range: http.Parameter
+         
+
+  amf-parser.Response-statusCode-datatype:
+    message: Status code for a Response must be a string
+    targetClass: http.Response
+    propertyConstraint: hydra.statusCode
+    hydra.statusCode:
+      datatype: string
+         
+
+  amf-parser.Response-statusCode-pattern:
+    message: Status code for a Response must match '^([0-9]{3})$|^(default)$'
+    targetClass: http.Response
+    propertyConstraint: hydra.statusCode
+    hydra.statusCode:
+      pattern: ^([0-9]{3})$|^(default)$
+         
+
+  amf-parser.Response-header-class:
+    message: Header information must be a valid header
+    targetClass: http.Response
+    propertyConstraint: http.header
+    http.header:
+      range: http.Parameter
+         
+
+  amf-parser.Response-payload-class:
+    message: Payload information for a Response must be valid
+    targetClass: http.Response
+    propertyConstraint: http.payload
+    http.payload:
+      range: http.Payload
+         
+
+  amf-parser.Response-payload-maxCount:
+    message: Payload information for a Response must be a single value
+    targetClass: http.Response
+    propertyConstraint: http.payload
+    http.payload:
+      maxCount: 1
+         
+
+  amf-parser.Parameter-name-minCount:
+    message: Parameter information must have a name
+    targetClass: http.Parameter
+    propertyConstraint: schema.name
+    schema.name:
+      minCount: 1
+         
+
+  amf-parser.Parameter-required-datatype:
+    message: Information about required parameters must be a boolean value
+    targetClass: http.Parameter
+    propertyConstraint: hydra.required
+    hydra.required:
+      datatype: boolean
+         
+
+  amf-parser.Parameter-required-minCount:
+    message: Required information about a parameter is mandatory
+    targetClass: http.Parameter
+    propertyConstraint: hydra.required
+    hydra.required:
+      minCount: 1
+         
+
+  amf-parser.Parameter-required-maxCount:
+    message: Only one value is allowed for required information of a parameter
+    targetClass: http.Parameter
+    propertyConstraint: hydra.required
+    hydra.required:
+      maxCount: 1
+         
+
+  amf-parser.Parameter-binding-datatype:
+    message: Information about the binding of the parameter is mandatory
+    targetClass: http.Parameter
+    propertyConstraint: http.binding
+    http.binding:
+      datatype: string
+         
+
+  amf-parser.Parameter-binding-minCount:
+    message: Binding information for a parameter is mandatory
+    targetClass: http.Parameter
+    propertyConstraint: http.binding
+    http.binding:
+      minCount: 1
+         
+
+  amf-parser.Parameter-binding-maxCount:
+    message: Only one binding is allowed per parameter
+    targetClass: http.Parameter
+    propertyConstraint: http.binding
+    http.binding:
+      maxCount: 1
+         
+
+  amf-parser.Parameter-binding-in:
+    message: Binding information for a parameter with an invalid value
+    targetClass: http.Parameter
+    propertyConstraint: http.binding
+    http.binding:
+      in: [ query,path,header,uri ]
+         
+
+  amf-parser.Parameter-schema-class:
+    message: Expected RAML Type not found
+    targetClass: http.Parameter
+    propertyConstraint: http.schema
+    http.schema:
+      range: shacl.Shape
+         
+
+  amf-parser.Parameter-schema-maxCount:
+    message: Only one RAML type can be specified
+    targetClass: http.Parameter
+    propertyConstraint: http.schema
+    http.schema:
+      maxCount: 1
+         
+
+  amf-parser.Parameter-schema-minCount:
+    message: RAML Type information is mandatory for parameters
+    targetClass: http.Parameter
+    propertyConstraint: http.schema
+    http.schema:
+      minCount: 1
+         
+
+  amf-parser.Payload-mediaType-datatype:
+    message: Method default media types produced must be strings
+    targetClass: http.Payload
+    propertyConstraint: http.mediaType
+    http.mediaType:
+      datatype: string
+         
+
+  amf-parser.Payload-mediaType-maxCount:
+    message: Media type maximum cardinality is 1 per payloa
+    targetClass: http.Payload
+    propertyConstraint: http.mediaType
+    http.mediaType:
+      maxCount: 1
+         
+
+  amf-parser.Payload-schema-class:
+    message: Expected RAML Type not found
+    targetClass: http.Payload
+    propertyConstraint: http.schema
+    http.schema:
+      range: shacl.Shape
+         
+
+  amf-parser.Payload-schema-maxCount:
+    message: Only one RAML type can be specified
+    targetClass: http.Payload
+    propertyConstraint: http.schema
+    http.schema:
+      maxCount: 1
+         
+
+  amf-parser.Shape-xmlSerialization-class:
+    message: Property 'xml' of a RAML type must have as a value a valid XML Serialization
+    targetClass: raml-shapes.Shape
+    propertyConstraint: raml-shapes.xmlSerialization
+    raml-shapes.xmlSerialization:
+      range: raml-shapes.XMLSerializer
+         
+
+  amf-parser.Shape-xmlSerialization-maxCount:
+    message: XML serialisation object must be a single value
+    targetClass: raml-shapes.Shape
+    propertyConstraint: raml-shapes.xmlSerialization
+    raml-shapes.xmlSerialization:
+      maxCount: 1
+         
+
+  amf-parser.Shape-in-maxCount:
+    message: Property 'enum'  must have a single list of values
+    targetClass: raml-shapes.Shape
+    propertyConstraint: shacl.in
+    shacl.in:
+      maxCount: 1
+         
+
+  amf-parser.Shape-in-node:
+    message: 
+    targetClass: raml-shapes.Shape
+    functionConstraint:
+      functionName: nonEmptyList_shacl_in
+        
+
+  amf-parser.XMLSerializer-xmlAtribute-datatype:
+    message: XML attribute serialisation info must be boolean
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlAtribute
+    raml-shapes.xmlAtribute:
+      datatype: boolean
+         
+
+  amf-parser.XMLSerializer-xmlAtribute-maxCount:
+    message: property 'attribute' of the XML serialisation mut be a single vlaue
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlAtribute
+    raml-shapes.xmlAtribute:
+      maxCount: 1
+         
+
+  amf-parser.XMLSerializer-xmlWrapped-datatype:
+    message: XML wraping serialisation info must be boolean
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlWrapped
+    raml-shapes.xmlWrapped:
+      datatype: boolean
+         
+
+  amf-parser.XMLSerializer-xmlWrapped-maxCount:
+    message: property 'wrapped' of the XML serialisation mut be a single vlaue
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlWrapped
+    raml-shapes.xmlWrapped:
+      maxCount: 1
+         
+
+  amf-parser.XMLSerializer-xmlName-datatype:
+    message: XML name serialisation info must be string
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlName
+    raml-shapes.xmlName:
+      datatype: string
+         
+
+  amf-parser.XMLSerializer-xmlName-maxCount:
+    message: property 'name' of the XML serialisation mut be a single vlaue
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlName
+    raml-shapes.xmlName:
+      maxCount: 1
+         
+
+  amf-parser.XMLSerializer-xmlNamespace-datatype:
+    message: XML namespace serialisation info must be string
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlNamespace
+    raml-shapes.xmlNamespace:
+      datatype: string
+         
+
+  amf-parser.XMLSerializer-xmlNamespace-maxCount:
+    message: property 'namespace' of the XML serialisation mut be a single vlaue
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlNamespace
+    raml-shapes.xmlNamespace:
+      maxCount: 1
+         
+
+  amf-parser.XMLSerializer-xmlPrefix-datatype:
+    message: XML prefix serialisation info must be string
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlPrefix
+    raml-shapes.xmlPrefix:
+      datatype: string
+         
+
+  amf-parser.XMLSerializer-xmlPrefix-maxCount:
+    message: Property 'prefix' of the XML serialisation mut be a single vlaue
+    targetClass: raml-shapes.XMLSerializer
+    propertyConstraint: raml-shapes.xmlPrefix
+    raml-shapes.xmlPrefix:
+      maxCount: 1
+         
+
+  amf-parser.Shape-defaultValue-maxCount:
+    message: Default value for a RAML type must be unique
+    targetClass: raml-shapes.Shape
+    propertyConstraint: shacl.defaultValue
+    shacl.defaultValue:
+      maxCount: 1
+         
+
+  amf-parser.ObjectShape-minProperties-minInclusive:
+    message: minProperties for a RAML Object type cannot be negative
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.minProperties
+    raml-shapes.minProperties:
+      minInclusive: 0
+         
+
+  amf-parser.ObjectShape-minProperties-datatype:
+    message: minProperties for a RAML Object type must be an integer
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.minProperties
+    raml-shapes.minProperties:
+      datatype: integer
+         
+
+  amf-parser.ObjectShape-minProperties-maxCount:
+    message: minProperties for a RAML Object type must be unique
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.minProperties
+    raml-shapes.minProperties:
+      maxCount: 1
+         
+
+  amf-parser.ObjectShape-maxProperties-minInclusive:
+    message: maxProperties for a RAML Object type cannot be negative
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.maxProperties
+    raml-shapes.maxProperties:
+      minInclusive: 0
+         
+
+  amf-parser.ObjectShape-maxProperties-datatype:
+    message: maxProperties for a RAML Object type must be an integer
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.maxProperties
+    raml-shapes.maxProperties:
+      datatype: integer
+         
+
+  amf-parser.ObjectShape-maxProperties-maxCount:
+    message: maxProperties for a RAML Object type must be unique
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.maxProperties
+    raml-shapes.maxProperties:
+      maxCount: 1
+         
+
+  amf-parser.ObjectShape-closed-datatype:
+    message: additionalProperties for a RAML Object type must be a boolean
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: shacl.closed
+    shacl.closed:
+      datatype: boolean
+         
+
+  amf-parser.ObjectShape-closed-maxCount:
+    message: additionalProperties for a RAML Object must be unique
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: shacl.closed
+    shacl.closed:
+      maxCount: 1
+         
+
+  amf-parser.ObjectShape-discriminator-datatype:
+    message: discriminator for RAML Object type must be a string value
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.discriminator
+    raml-shapes.discriminator:
+      datatype: string
+         
+
+  amf-parser.ObjectShape-discriminator-maxCount:
+    message: discriminator for RAML Object type must be unique
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.discriminator
+    raml-shapes.discriminator:
+      maxCount: 1
+         
+
+  amf-parser.ObjectShape-discriminatorValue-datatype:
+    message: x-discriminatorValue for RAML Object type must be a string value
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.discriminatorValue
+    raml-shapes.discriminatorValue:
+      datatype: string
+         
+
+  amf-parser.ObjectShape-discriminatorValue-maxCount:
+    message: x-discriminatorValue for RAML Object type must be unique
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.discriminatorValue
+    raml-shapes.discriminatorValue:
+      maxCount: 1
+         
+
+  amf-parser.ObjectShape-readOnly-datatype:
+    message: (readOnly) for a RAML Object type must be a boolean
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.readOnly 
+    raml-shapes.readOnly :
+      datatype: boolean
+         
+
+  amf-parser.ObjectShape-readOnly-maxCount:
+    message: (readOnly) for a RAML Object must be unique
+    targetClass: raml-shapes.ObjectShape
+    propertyConstraint: raml-shapes.readOnly 
+    raml-shapes.readOnly :
+      maxCount: 1
+         
+
+  amf-parser.ArrayShape-item-class:
+    message: value of the items facet must be a RAML Type 
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: raml-shapes.item
+    raml-shapes.item:
+      range: raml-shapes.Shape
+         
+
+  amf-parser.ArrayShape-minCount-datatype:
+    message: minItems for a RAML Array type must be an integer
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: shacl.minCount
+    shacl.minCount:
+      datatype: integer
+         
+
+  amf-parser.ArrayShape-minCount-maxCount:
+    message: minItems for a RAML Array type must be unique
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: shacl.minCount
+    shacl.minCount:
+      maxCount: 1
+         
+
+  amf-parser.ArrayShape-minCount-minInclusive:
+    message: maxItems for a RAML Array type must be greater than 0
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: shacl.minCount
+    shacl.minCount:
+      minInclusive: 0
+         
+
+  amf-parser.ArrayShape-maxCount-datatype:
+    message: maxItems for a RAML Array type must be an integer
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: shacl.maxCount
+    shacl.maxCount:
+      datatype: integer
+         
+
+  amf-parser.ArrayShape-maxCount-maxCount:
+    message: maxItems for a RAML Array type must be unique
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: shacl.maxCount
+    shacl.maxCount:
+      maxCount: 1
+         
+
+  amf-parser.ArrayShape-minCount-minInclusive:
+    message: minItems for a RAML Array type must be greater than 0
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: shacl.minCount
+    shacl.minCount:
+      minInclusive: 0
+         
+
+  amf-parser.ArrayShape-uniqueItems-datatype:
+    message: uniqueItems for a RAML Array type must be a boolean
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: raml-shapes.uniqueItems
+    raml-shapes.uniqueItems:
+      datatype: boolean
+         
+
+  amf-parser.ArrayShape-uniqueItems-maxCount:
+    message: uniqueItems for a RAML Array type must be unique
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraint: raml-shapes.uniqueItems
+    raml-shapes.uniqueItems:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-pattern-datatype:
+    message: pattern facet for a RAML scalar type must be a string
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.pattern
+    shacl.pattern:
+      datatype: string
+         
+
+  amf-parser.ScalarShape-pattern-maxCount:
+    message: pattern facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.pattern
+    shacl.pattern:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-minLength-datatype:
+    message: minLength facet for a RAML scalar type must be a integer
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.minLength
+    shacl.minLength:
+      datatype: integer
+         
+
+  amf-parser.ScalarShape-minLength-maxCount:
+    message: minLength facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.minLength
+    shacl.minLength:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-maxLength-datatype:
+    message: maxLength facet for a RAML scalar type must be a integer
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.maxLength
+    shacl.maxLength:
+      datatype: integer
+         
+
+  amf-parser.ScalarShape-maxLength-maxCount:
+    message: maxLength facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.maxLength
+    shacl.maxLength:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-minInclusive-datatype:
+    message: minimum facet for a RAML scalar type must be a integer
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.minInclusive
+    shacl.minInclusive:
+      datatype: integer
+         
+
+  amf-parser.ScalarShape-minInclusive-maxCount:
+    message: minimum facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.minInclusive
+    shacl.minInclusive:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-maxInclusive-datatype:
+    message: maximum facet for a RAML scalar type must be a integer
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.maxInclusive
+    shacl.maxInclusive:
+      datatype: integer
+         
+
+  amf-parser.ScalarShape-maxInclusive-maxCount:
+    message: maximum facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.maxInclusive
+    shacl.maxInclusive:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-minExclusive-datatype:
+    message: x-exclusiveMinimum facet for a RAML scalar type must be a boolean
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.minExclusive
+    shacl.minExclusive:
+      datatype: boolean
+         
+
+  amf-parser.ScalarShape-minExclusive-maxCount:
+    message: x-exclusiveMinimum facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.minExclusive
+    shacl.minExclusive:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-maxExclusive-datatype:
+    message: x-exclusiveMaximum facet for a RAML scalar type must be a boolean
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.maxExclusive
+    shacl.maxExclusive:
+      datatype: boolean
+         
+
+  amf-parser.ScalarShape-maxExclusive-maxCount:
+    message: x-exclusiveMaximum facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.maxExclusive
+    shacl.maxExclusive:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-format-datatype:
+    message: format facet for a RAML scalar type must be a string
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: raml-shapes.format
+    raml-shapes.format:
+      datatype: string
+         
+
+  amf-parser.ScalarShape-format-maxCount:
+    message: format facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: raml-shapes.format
+    raml-shapes.format:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-multipleOf-datatype:
+    message: multipleOf facet for a RAML scalar type must be a integer
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: raml-shapes.multipleOf
+    raml-shapes.multipleOf:
+      datatype: integer
+         
+
+  amf-parser.ScalarShape-multipleOf-maxCount:
+    message: multipleOf facet for a RAML scalar type must be unique
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: raml-shapes.multipleOf
+    raml-shapes.multipleOf:
+      maxCount: 1
+         
+
+  amf-parser.ScalarShape-multipleOf-minExclusive:
+    message: multipleOf facet for a RAML scalar type must be greater than 0
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: raml-shapes.multipleOf
+    raml-shapes.multipleOf:
+      minExclusive: 0
+         
+
+  amf-parser.ScalarShape-datatype-minCount:
+    message: type information for a RAML scalar is required
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraint: shacl.datatype
+    shacl.datatype:
+      minCount: 1
+         
+
+  amf-parser.strict-url-strings:
+    message: URLs in values mapped to schema-org:url must be valid
+    targetClass: schema-org.WebAPI
+    functionConstraint:
+      functionName: parserSide_strict_url_strings
+      libraries: http://raml.org/amf/validations/parser_side_validations.js
+        
+
+  amf-parser.closed-shape:
+    message: invalid property for node
+    targetClass: schema-org.WebAPI
+    functionConstraint:
+      functionName: parserSide_closed_shape
+      libraries: http://raml.org/amf/validations/parser_side_validations.js
+        
+
+  amf-parser.dialect-ambiguous-range:
+    message: Ambiguous entity range
+    targetClass: schema-org.WebAPI
+    functionConstraint:
+      functionName: parserSide_dialect_ambiguous_range
+      libraries: http://raml.org/amf/validations/parser_side_validations.js
+        
+
+  amf-parser.parsing-error:
+    message: Parsing error
+    targetClass: schema-org.WebAPI
+    functionConstraint:
+      functionName: parserSide_parsing_error
+      libraries: http://raml.org/amf/validations/parser_side_validations.js
+        
+
+  amf-parser.example-validation-error:
+    message: Example does not validate type
+    targetClass: schema-org.WebAPI
+    functionConstraint:
+      functionName: parserSide_example_validation_error
+      libraries: http://raml.org/amf/validations/parser_side_validations.js
+        
+
+  amf-parser.unsupported-example-media-type:
+    message: Cannot validate example with unsupported media type
+    targetClass: schema-org.WebAPI
+    functionConstraint:
+      functionName: parserSide_unsupported_example_media_type
+      libraries: http://raml.org/amf/validations/parser_side_validations.js
+        
+    

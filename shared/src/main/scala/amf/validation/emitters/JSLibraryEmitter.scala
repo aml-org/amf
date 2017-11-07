@@ -57,15 +57,41 @@ object JSLibraryEmitter {
       |    return acc;
       |}
       |
+      |function path(node, path) {
+      |  var acc = [node]
+      |  var paths = path.replace(new RegExp(" ","g"), "").split("/") || [];
+      |  for (var i=0; i<paths.length; i++) {
+      |    var nextPath = paths[i];
+      |    var newAcc = [];
+      |    for (var j=0; j<acc.length; acc++) {
+      |      var nextNode = acc[j];
+      |      newAcc = newAcc.concat(nextNode[nextPath] || [])
+      |    }
+      |    acc = newAcc;
+      |  }
+      |
+      |  return acc;
+      |}
+      |
       |if (typeof(console) === "undefined") {
       |  console = {
       |    log: function(x) { print(x) }
       |  };
       |}
+      |
+      |if (typeof(accumulators) == "undefined") {
+      |  accumulators = {};
+      |}
+      |for (var p in accumulators) {
+      |  delete accumulators[p];
+      |}
     """.stripMargin
 
   def prefixes: String = {
-    "{\n" + Namespace.ns.map { case (prefix, ns) => "  \"" + prefix + "\": \"" + ns.base + "\"" }.mkString(",\n") + "}"
+    val namespaces = Namespace.ns.filter { case (prefix, _) =>
+      prefix != "schema-org" && prefix != "raml-http"
+    }
+    "{\n" + namespaces.map { case (prefix, ns) => "  \"" + prefix + "\": \"" + ns.base + "\"" }.mkString(",\n") + "}"
   }
 }
 

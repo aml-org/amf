@@ -43,15 +43,15 @@ validations:
 
   matching-version-in-urls:
     message: The version of the resource URLs must match the API version
-    targetClass: schema-org.WebAPI
+    targetClass: schema.WebAPI
     functionConstraint:
       code: |
         function(api) {
-          var version = api['schema-org:version'][0];
-          var endpoints = api['raml-http:endpoint'];
+          var version = api['schema:version'][0];
+          var endpoints = api['http:endpoint'];
           for (var i=0; i<endpoints.length; i++) {
             var endpoint = endpoints[i];
-            var path = endpoint['raml-http:path'][0];
+            var path = endpoint['http:path'][0];
             if (path.indexOf('/'+version) !== 0) {
               return false;
             }
@@ -72,12 +72,9 @@ validations:
     functionConstraint:
       code: |
         function(resource) {
-          if(typeof(idacc) == 'undefined') {
-            idacc = {};
-          }
-          var name = (resource['schema-org:name'] || [])[0];
-          if(idacc[name] == null) {
-            idacc[name] = true;
+          var name = (resource['schema:name'] || [])[0];
+          if(accumulators[name] == null) {
+            accumulators[name] = true;
             return true;
           } else {
             return false;
@@ -111,9 +108,9 @@ validations:
     functionConstraint:
       code: |
         function(response) {
-          var headers = response['raml-http:header'] || [];
-          for (var i=0; i<headers.length; i++) {
-            if (headers[i]['schema-org:name'] && headers[i]['schema-org:name'][0] === 'Accept') {
+          var headerNames = path(response, 'http:header / schema:name');
+          for (var i=0; i<headerNames.length; i++) {
+            if (headerNames[i] === "Accept") {
               return true;
             }
           }

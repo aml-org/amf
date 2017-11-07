@@ -95,6 +95,16 @@ object Namespace {
     }
   }
 
+  def compact(uri: String): String = {
+    ns.find { case (_, namespace) =>
+      uri.indexOf(namespace.base) == 0
+    } match {
+      case Some((prefix, namespace)) =>
+        prefix ++ uri.replace(namespace.base, ":")
+      case None => uri
+    }
+  }
+
   private def resolve(prefix: String): Option[Namespace] = ns.get(prefix)
 
 }

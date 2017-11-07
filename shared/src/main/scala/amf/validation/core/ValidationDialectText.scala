@@ -62,6 +62,9 @@ object ValidationDialectText {
       |      maxInclusive:
       |        propertyTerm: shacl.maxInclusive
       |        range: number
+      |      datatype:
+      |         propertyTerm: shacl.datatype
+      |         range: string
       |      in:
       |        propertyTerm: shacl.in
       |        allowMultiple: true
@@ -161,11 +164,13 @@ object ValidationDialectText {
       |raml:
       |  fragments:
       |    encodes:
-      |      Validation: queryValidationNode
+      |      ShapeValidation: queryValidationNode
+      |      FunctionValidation: functionValidationNode
       |
       |  module:
       |    declares:
-      |      validations: queryValidationNode
+      |      shapes: queryValidationNode
+      |      functions: functionValidationNode
       |
       |  document:
       |    encodes: profileNode
