@@ -16,6 +16,7 @@ import amf.spec.raml.RamlSpecParser
 import amf.validation.model.ParserSideValidations
 import amf.validation.{SeverityLevels, Validation}
 import amf.vocabulary.Namespace
+import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -217,7 +218,15 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                 }
             }
         }
-      case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
+      case _ =>   currentValidation.reportConstraintFailure(
+          SeverityLevels.VIOLATION,
+          ParserSideValidations.DialectExpectingMap.id(),
+          domainEntity.id,
+          None,
+          s"Expecting map node or scalar",
+          Some(LexicalInformation(amf.parser.Range(node.range)))
+        )
+      //case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
     }
   }
 
@@ -263,8 +272,15 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
             }
         }
       case _ =>
-        throw new MajorParserFailureException(
-          s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}",entryNode.range)
+        currentValidation.reportConstraintFailure(
+          SeverityLevels.VIOLATION,
+          ParserSideValidations.DialectExpectingMap.id(),
+          parentDomainEntity.id,
+          Some(mapping.iri()),
+          s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}",
+          Some(LexicalInformation(amf.parser.Range(entryNode.range)))
+        )
+
     }
   }
 
@@ -373,6 +389,14 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
     }
   }
 
+  private def shortName(t:Type): String ={
+    if (t.isInstanceOf[DialectNode]){
+        t.asInstanceOf[DialectNode].shortName
+    }
+    else{
+      t.toString
+    }
+  }
   private def getActualRange(key: String,
                              mapping: DialectPropertyMapping,
                              entryNode: YValue,
@@ -383,7 +407,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
 
       var nodeId: Option[String] = None
 
-      val types = currentValidation.disableValidations() { () =>
+      val types= currentValidation.disableValidations() { () =>
         mapping.unionTypes.get.map {
           case node: DialectNode =>
             val dialectNode = node
@@ -405,7 +429,15 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                 )))
               }
             }
-          case ext => throw new MajorParserFailureException(s"Only a dialect node can be the range of another dialect node, found $ext",entryNode.range)
+          case ext:Type => {
+            (ext, Seq(ValidationIssue(
+              message = s"Only a dialect node can be the range of another dialect node, found $ext",
+              entity = parentDomainEntity.get
+            )))
+
+            //throw new Exception("")
+
+          }
         }
       }
 
@@ -415,7 +447,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
           ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
           nodeId.get,
           Some(mapping.iri()),
-          s"Ambiguous range for property $key, multiple possible values for range ${types.filter(r => r._2.isEmpty).map(_._1.shortName)}",
+          s"Ambiguous range for property $key, multiple possible values for range ${types.filter(r => r._2.isEmpty).map(r=>shortName(r._1))}",
           Some(LexicalInformation(amf.parser.Range(entryNode.range)))
         )
       }
@@ -425,7 +457,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
           .map(_.asInstanceOf[DialectNode].shortName)}")
         types.foreach {
           case (m, issues) =>
-            sb.append(s"\n   Error in range for property $key and mapping ${m.shortName}")
+            sb.append(s"\n   Error in range for property $key and mapping ${shortName(m)}")
             issues.foreach { issue =>
               sb.append(s"\n    - ${issue.message}")
             }
@@ -455,11 +487,18 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
         case Some(finalValue) => AmfScalar(finalValue, value.annotations)
         case _                => {
           val range=value.annotations.find(classOf[SourceAST]).map(v=>v.ast.range);
-          range.map(r=>throw new MajorParserFailureException("Can not resolve reference:" + value.toString,r))
+          val ro:amf.parser.Range=amf.parser.Range(range.getOrElse(InputRange(0,0,0,0)));
+          currentValidation.reportConstraintFailure(
+            SeverityLevels.VIOLATION,
+            ParserSideValidations.DialectUnresolvableReference.id(),
+            value.toString,
+            Some(mapping.iri()),
+            "Can not resolve reference:" + value.toString,
+            Some(LexicalInformation(ro))
+          )
           value
         }
       }
-
     } else {
       value
     }
