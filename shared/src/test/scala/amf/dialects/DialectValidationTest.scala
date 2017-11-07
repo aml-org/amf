@@ -258,7 +258,6 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation.loadDialectValidationProfile(dialect.get)
       validation.validate(model, dialect.get.name)
     } flatMap { report =>
-      println(report)
       assert(report.conforms)
       assert(report.results.isEmpty)
     }

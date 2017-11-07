@@ -17,7 +17,9 @@ import scala.scalajs.js.annotation.JSExport
   */
 abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Syntax) extends PlatformParser {
 
-  private def unitScalaToJVM(unit: amf.document.BaseUnit): BaseUnit = unit match {
+  private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
+
+  private def unitScalaToJS(unit: amf.document.BaseUnit): BaseUnit = unit match {
     case d: amf.document.Document => Document(d)
     case m: amf.document.Module   => Module(m)
   }
@@ -38,7 +40,7 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     */
   @JSExport
   def parseString(stream: String, handler: JsHandler[BaseUnit]): Unit =
-    super.parse(null, BaseUnitHandlerAdapter(handler), Some(TrunkPlatform(stream)))
+    super.parse(DEFAULT_DOCUMENT_URL, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from the api located in the given url.
@@ -47,7 +49,7 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     */
   @JSExport
   def parseFileAsync(url: String): js.Promise[BaseUnit] =
-    super.parseAsync(url).map(unitScalaToJVM).toJSPromise
+    super.parseAsync(url).map(unitScalaToJS).toJSPromise
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -56,7 +58,15 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     */
   @JSExport
   def parseStringAsync(stream: String): js.Promise[BaseUnit] =
-    super.parseAsync(null, Some(TrunkPlatform(stream))).map(unitScalaToJVM).toJSPromise
+    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJS).toJSPromise
+
+  @JSExport
+  def parseStringAsync(stream: String, platform: Platform): js.Promise[BaseUnit] =
+    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJS).toJSPromise
+
+  @JSExport
+  def parseStringAsync(textUrl: String, stream: String, platform: Platform): js.Promise[BaseUnit] =
+    super.parseAsync(textUrl, Some(StringContentPlatform(textUrl, stream, platform))).map(unitScalaToJS).toJSPromise
 
   /**
     * Generates the validation report for the last parsed model.
@@ -82,7 +92,7 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     super.reportCustomValidationImplementation(profileName, customProfilePath).toJSPromise
 
   private case class BaseUnitHandlerAdapter(handler: JsHandler[BaseUnit]) extends Handler[amf.document.BaseUnit] {
-    override def success(document: amf.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
+    override def success(document: amf.document.BaseUnit): Unit = handler.success(unitScalaToJS(document))
     override def error(exception: Throwable): Unit              = handler.error(exception)
   }
 }
