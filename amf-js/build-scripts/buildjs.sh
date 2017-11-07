@@ -1,8 +1,8 @@
 #!/bin/bash
 
 sbt clean
-sbt fullOptJS
+sbt generateJSMainModule
 echo '#!/usr/bin/env node' > amf.js
-echo 'require("./amf-js/src/main/resources/shacl.js")' >> amf.js
-cat ./amf-js/target/scala-2.12/amf-opt.js >> amf.js
+echo 'SHACLValidator = require("./amf-js/src/main/resources/shacl_node.js")' >> amf.js
+cat ./amf-js/target/artifact/js-main-module.js >> amf.js
 chmod a+x amf.js
