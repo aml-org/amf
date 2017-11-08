@@ -114,11 +114,12 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeDialect(root: Root, header: RamlHeader): BaseUnit = DialectParser(root, header, dialects, currentValidation).parseUnit()
+  private def makeDialect(root: Root, header: RamlHeader): BaseUnit =
+    DialectParser(root, header, dialects, currentValidation).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
-  private def makePayloadUnit(root: Root): BaseUnit  = PayloadParser(root.document, root.location).parseUnit()
+  private def makePayloadUnit(root: Root): BaseUnit = PayloadParser(root.document, root.location).parseUnit()
 
   // TODO take this away when dialects don't use 'extends' keyword.
   def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
@@ -174,7 +175,9 @@ class AMFCompiler private (val url: String,
     refs
       .filter(_.isRemote)
       .foreach(link => {
-        references += link.resolve(remote, context, cache, hint, currentValidation, dialects).map(r => ParsedReference(r, link.url))
+        references += link
+          .resolve(remote, context, cache, hint, currentValidation, dialects)
+          .map(r => ParsedReference(r, link.url))
       })
 
     Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor, raw) })

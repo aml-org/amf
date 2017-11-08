@@ -221,5 +221,4 @@ trait RamlSyntax {
       case None => throw new Exception(s"Cannot validate unknown node type $nodeType")
     }
   }
-
 }

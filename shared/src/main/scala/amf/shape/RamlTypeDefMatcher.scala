@@ -7,13 +7,13 @@ import amf.shape.TypeDef._
   */
 object RamlTypeDefMatcher {
 
-  def matchType(ramlType: String, format: String = ""): TypeDef =
+  def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef =
     ramlType match {
-      case XMLSchema(_)      => XMLSchemaType
-      case JSONSchema(_)     => JSONSchemaType
-      case TypeExpression(_) => TypeExpressionType
-      case "nil" | ""        => NilType
-      case "any"             => AnyType
+      case XMLSchema(_)        => XMLSchemaType
+      case JSONSchema(_)       => JSONSchemaType
+      case TypeExpression(_)   => TypeExpressionType
+      case "nil" | "" | "null" => NilType
+      case "any"               => AnyType
       case "string" =>
         format match {
           case "byte"     => ByteType
@@ -31,7 +31,8 @@ object RamlTypeDefMatcher {
       case "array"         => ArrayType
       case "object"        => ObjectType
       case "union"         => UnionType
-      case _               => ObjectType
+      case "file"          => FileType
+      case _               => default
     }
 
   object XMLSchema {
