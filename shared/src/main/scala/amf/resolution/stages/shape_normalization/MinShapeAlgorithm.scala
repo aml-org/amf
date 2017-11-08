@@ -8,7 +8,6 @@ import amf.vocabulary.Namespace
 
 import scala.collection.mutable
 
-
 trait MinShapeAlgorithm extends RestrictionComputation {
 
   protected def minShape(baseShapeOrig: Shape, superShape: Shape): Shape = {
@@ -21,10 +20,12 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
         if (baseScalar.dataType == superScalar.dataType) {
           computeMinScalar(baseScalar, superScalar)
-        } else if (baseScalar.dataType == (Namespace.Xsd + "integer").iri() && superScalar.dataType == (Namespace.Xsd + "float").iri()) {
+        } else if (baseScalar.dataType == (Namespace.Xsd + "integer")
+                     .iri() && superScalar.dataType == (Namespace.Xsd + "float").iri()) {
           computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
         } else {
-          throw new Exception(s"Resolution error: Invalid scalar inheritance base type ${baseScalar.dataType} < ${superScalar.dataType} ")
+          throw new Exception(
+            s"Resolution error: Invalid scalar inheritance base type ${baseScalar.dataType} < ${superScalar.dataType} ")
         }
 
       // Arrays
@@ -82,7 +83,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         computeMinGeneric(baseGeneric, superShape)
 
       // fallback error
-      case _ =>  {
+      case _ => {
         throw new Exception(s"incompatible types: [$baseShape, $superShape]")
       }
     }
@@ -100,10 +101,10 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     baseScalar
   }
 
-  val allShapeFields = (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
+  val allShapeFields =
+    (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
 
-  protected def computeMinAny
-  (baseShape: Shape, anyShape: AnyShape): Shape = {
+  protected def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
     computeNarrowRestrictions(allShapeFields, baseShape, anyShape)
     baseShape
   }
@@ -112,20 +113,22 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
     val superItems = baseMatrix.items
-    val baseItems = superMatrix.items
+    val baseItems  = superMatrix.items
 
     val newItems = minShape(baseItems, superItems)
     baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
-    computeNarrowRestrictions(ArrayShapeModel.fields, baseMatrix, superMatrix, filteredFields = Seq(ArrayShapeModel.Items))
+    computeNarrowRestrictions(ArrayShapeModel.fields,
+                              baseMatrix,
+                              superMatrix,
+                              filteredFields = Seq(ArrayShapeModel.Items))
 
     baseMatrix
   }
 
-
   protected def computeMinTuple(baseTuple: TupleShape, superTuple: TupleShape): Shape = {
     val superItems = baseTuple.items
-    val baseItems = superTuple.items
+    val baseItems  = superTuple.items
 
     if (superItems.length != baseItems.length) {
       throw new Exception("Cannot inherit from a tuple shape with different number of elements")
@@ -136,32 +139,39 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         minShape(baseItem, superItems(i))
       }
 
+      baseTuple.fields.setWithoutId(TupleShapeModel.Items,
+                                    AmfArray(newItems),
+                                    baseTuple.fields.get(TupleShapeModel.Items).annotations)
 
-      baseTuple.fields.setWithoutId(TupleShapeModel.Items, AmfArray(newItems), baseTuple.fields.get(TupleShapeModel.Items).annotations)
+      computeNarrowRestrictions(TupleShapeModel.fields,
+                                baseTuple,
+                                superTuple,
+                                filteredFields = Seq(TupleShapeModel.Items))
 
-    computeNarrowRestrictions(TupleShapeModel.fields, baseTuple, superTuple, filteredFields = Seq(TupleShapeModel.Items))
-
-    baseTuple
+      baseTuple
     }
   }
 
   protected def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
-    val superItems = superArray.items
-    val baseItems = baseArray.items
+    val superItems      = superArray.items
+    val baseItemsOption = Option(baseArray.items)
 
-    val newItems = minShape(baseItems, superItems)
+    val newItems = baseItemsOption.fold(superItems)(baseItems => minShape(baseItems, superItems))
     baseArray.withItems(newItems)
 
-    computeNarrowRestrictions(ArrayShapeModel.fields, baseArray, superArray, filteredFields = Seq(ArrayShapeModel.Items))
+    computeNarrowRestrictions(ArrayShapeModel.fields,
+                              baseArray,
+                              superArray,
+                              filteredFields = Seq(ArrayShapeModel.Items))
 
     baseArray
   }
 
   protected def computeMinNode(baseNode: NodeShape, superNode: NodeShape): Shape = {
     val superProperties = superNode.properties
-    val baseProperties = baseNode.properties
+    val baseProperties  = baseNode.properties
 
-    val commonProps: mutable.HashMap[String,Boolean] = mutable.HashMap()
+    val commonProps: mutable.HashMap[String, Boolean] = mutable.HashMap()
 
     superProperties.foreach(p => commonProps.put(p.path, false))
     baseProperties.foreach { p =>
@@ -175,11 +185,11 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val minProps = commonProps.map {
       case (path, true) =>
         val superProp = superProperties.find(_.path == path).get
-        val baseProp = baseProperties.find(_.path == path).get
+        val baseProp  = baseProperties.find(_.path == path).get
         minShape(baseProp, superProp)
       case (path, false) =>
         val superProp = superProperties.find(_.path == path)
-        val baseProp = baseProperties.find(_.path == path)
+        val baseProp  = baseProperties.find(_.path == path)
         superProp.getOrElse(baseProp.get)
     }
 
@@ -190,22 +200,30 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     }
     baseNode.fields.setWithoutId(NodeShapeModel.Properties, AmfArray(minProps.toSeq), annotations)
 
-    computeNarrowRestrictions(NodeShapeModel.fields, baseNode, superNode, filteredFields = Seq(NodeShapeModel.Properties))
+    computeNarrowRestrictions(NodeShapeModel.fields,
+                              baseNode,
+                              superNode,
+                              filteredFields = Seq(NodeShapeModel.Properties))
 
     baseNode
   }
 
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
     val newUnionItems = for {
-      baseUnionElement <- baseUnion.anyOf
+      baseUnionElement  <- baseUnion.anyOf
       superUnionElement <- superUnion.anyOf
     } yield {
       minShape(baseUnionElement, superUnionElement)
     }
 
-    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
+                                  AmfArray(newUnionItems),
+                                  baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields,
+                              baseUnion,
+                              superUnion,
+                              filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
@@ -217,9 +235,14 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       minShape(baseUnionElement, superNode)
     }
 
-    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
+                                  AmfArray(newUnionItems),
+                                  baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields,
+                              baseUnion,
+                              superNode,
+                              filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
@@ -231,11 +254,13 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       minShape(baseShape, superUnionElement)
     }
 
-    superUnion.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newUnionItems), superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
+    superUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
+                                   AmfArray(newUnionItems),
+                                   superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
     computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
     baseShape.fields foreach {
-      case (field, value)  =>
+      case (field, value) =>
         if (field != UnionShapeModel.AnyOf) {
           superUnion.fields.setWithoutId(field, value.value, value.annotations)
         }
@@ -247,15 +272,20 @@ trait MinShapeAlgorithm extends RestrictionComputation {
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
     val newRange = minShape(baseProperty.range, superProperty.range)
 
-    baseProperty.fields.setWithoutId(PropertyShapeModel.Range, newRange, baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
+    baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
+                                     newRange,
+                                     baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
 
-    computeNarrowRestrictions(PropertyShapeModel.fields, baseProperty , superProperty, filteredFields = Seq(PropertyShapeModel.Range))
+    computeNarrowRestrictions(PropertyShapeModel.fields,
+                              baseProperty,
+                              superProperty,
+                              filteredFields = Seq(PropertyShapeModel.Range))
 
     baseProperty
   }
 
   def computeMinFile(baseFile: FileShape, superFile: FileShape): Shape = {
-    computeNarrowRestrictions(FileShapeModel.fields, baseFile , superFile)
+    computeNarrowRestrictions(FileShapeModel.fields, baseFile, superFile)
     baseFile
   }
 
