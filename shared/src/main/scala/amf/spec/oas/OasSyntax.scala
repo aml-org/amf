@@ -2,7 +2,8 @@ package amf.spec.oas
 
 import amf.domain.Annotation.LexicalInformation
 import amf.validation.model.ParserSideValidations
-import amf.validation.{SeverityLevels, Validation}
+import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
+import amf.validation.{SeverityLevels, Validation, ValidationAware}
 import amf.vocabulary.Namespace
 import org.yaml.model.YMap
 
@@ -180,7 +181,7 @@ trait OasSyntax {
     )
   )
 
-  def validateClosedShape(currentValidation: Validation, id: String, ast: YMap, nodeType: String) = {
+  def validateClosedShape(validation: ValidationAware, node: String, ast: YMap, nodeType: String): Unit = {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
@@ -188,15 +189,10 @@ trait OasSyntax {
           if (key.startsWith("x-") || key == "$ref" || (key.startsWith("/") && nodeType == "webApi")) {
             // annotation or path in webapi => ignore
           } else if (!properties(key)) {
-            currentValidation.reportConstraintFailure(
-              SeverityLevels.VIOLATION,
-              ParserSideValidations.ClosedShapeSpecification.id(),
-              id,
-              None,
-              s"Property $key not supported in a OpenAPI $nodeType node",
-              Some(LexicalInformation(amf.parser.Range(entry.range)))
-            )
-
+            validation.violation(ClosedShapeSpecification.id(),
+                                 node,
+                                 s"Property $key not supported in a OpenAPI $nodeType node",
+                                 entry)
           }
         }
       case None => throw new Exception(s"Cannot validate unknown node type $nodeType")

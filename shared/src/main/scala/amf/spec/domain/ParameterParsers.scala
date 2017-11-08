@@ -7,28 +7,22 @@ import amf.shape.Shape
 import amf.spec.Declarations
 import amf.spec.common.{AnnotationParser, ErrorReporterParser, ValueNode}
 import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
-import amf.validation.Validation
+import amf.validation.{Validation, ValidationAware}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.parser.YMapOps
 
 /**
   *
   */
-case class RamlParametersParser(map: YMap,
-                                producer: String => Parameter,
-                                declarations: Declarations,
-                                currentValidation: Validation) {
+case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => RamlParameterParser(entry, producer, declarations, currentValidation).parse())
+      .map(entry => RamlParameterParser(entry, producer, declarations).parse())
 }
 
-case class RamlParameterParser(entry: YMapEntry,
-                               producer: String => Parameter,
-                               declarations: Declarations,
-                               currentValidation: Validation)
+case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations)
     extends RamlTypeSyntax
-    with ErrorReporterParser {
+    with ValidationAware {
   def parse(): Parameter = {
 
     val name: String = entry.key
