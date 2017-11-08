@@ -7,7 +7,7 @@ import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.shape.{PropertyDependencies, ScalarShape, XMLSerializer}
+import amf.shape.{ScalarShape, XMLSerializer}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
@@ -144,7 +144,14 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     val endpoints = List(
       EndPoint()
         .withPath("/levelzero/some{two}")
-        .withParameters(List(Parameter().withName("two").withRequired(false).withBinding("path"))),
+        .withParameters(
+          List(
+            Parameter()
+              .withName("two")
+              .withRequired(false)
+              .withBinding("path")
+              .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+          )),
       EndPoint()
         .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
@@ -155,7 +162,15 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withName("Some title")
             .withRequest(Request()
               .withQueryParameters(List(
-                Parameter().withName("param1").withDescription("Some descr").withRequired(true).withBinding("query"),
+                Parameter()
+                  .withName("param1")
+                  .withDescription("Some descr")
+                  .withRequired(true)
+                  .withBinding("query")
+                  .withSchema(ScalarShape()
+                    .withName("schema")
+                    .withDescription("Some descr")
+                    .withDataType("http://www.w3.org/2001/XMLSchema#string")),
                 Parameter()
                   .withName("param2")
                   .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
@@ -168,7 +183,11 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
             .withDescription("Some description")
             .withRequest(Request()
               .withHeaders(List(
-                Parameter().withName("Header-One").withRequired(false).withBinding("header")
+                Parameter()
+                  .withName("Header-One")
+                  .withRequired(false)
+                  .withBinding("header")
+                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
               )))
         ))
     )
@@ -176,7 +195,16 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withName("API")
       .withBasePath("/some/{one}/uri")
       .withBaseUriParameters(
-        List(Parameter().withName("one").withRequired(true).withDescription("One base uri param").withBinding("path")))
+        List(
+          Parameter()
+            .withName("one")
+            .withRequired(true)
+            .withDescription("One base uri param")
+            .withBinding("path")
+            .withSchema(ScalarShape()
+              .withName("schema")
+              .withDescription("One base uri param")
+              .withDataType("http://www.w3.org/2001/XMLSchema#string"))))
       .withEndPoints(endpoints)
 
     assertFixture(api, "operation-request.raml", RamlYamlHint)
@@ -658,8 +686,15 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
-    //param3 typeless
-    request.withQueryParameter("param3").withRequired(true).withBinding("query").withDescription("typeless")
+    //param3 typeless , default type its string?
+    request
+      .withQueryParameter("param3")
+      .withRequired(true)
+      .withBinding("query")
+      .withDescription("typeless")
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+      .withDescription("typeless")
 
     //headers
     //header type string

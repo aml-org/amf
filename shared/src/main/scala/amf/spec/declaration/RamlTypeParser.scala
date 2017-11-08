@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
+import amf.domain.Annotation.{toString => _, _}
 import amf.domain.{Annotations, CreativeWork, ExternalDomainElement, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -456,7 +456,7 @@ case class RamlTypeParser(ast: YPart,
         shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
       })
 
-      val finalShape = for {
+      val finalShape = (for {
         itemsEntry <- map.key("items")
         item <- RamlTypeParser(itemsEntry,
                                items => items.adopted(shape.id + "/items"),
@@ -468,7 +468,7 @@ case class RamlTypeParser(ast: YPart,
           case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
           case other: Shape        => shape.withItems(other)
         }
-      }
+      }).orElse(arrayShapeTypeFromInherits())
 
       finalShape match {
         case Some(parsed: Shape) =>
@@ -477,6 +477,19 @@ case class RamlTypeParser(ast: YPart,
         case None =>
           parsingErrorReport(currentValidation, shape.id, "Cannot parse data arrangement shape", Some(map))
           shape
+      }
+    }
+
+    private def arrayShapeTypeFromInherits(): Option[Shape] = {
+      val maybeShape = shape.inherits.headOption.map {
+        case matrix: MatrixShape => matrix.items
+        case tuple: TupleShape   => tuple.items.head
+        case array: ArrayShape   => array.items
+      }
+      maybeShape.map {
+        case array: ArrayShape   => shape.toMatrixShape
+        case matrix: MatrixShape => shape.toMatrixShape
+        case other: Shape        => shape
       }
     }
   }
@@ -655,6 +668,8 @@ case class RamlTypeParser(ast: YPart,
 
     def parse(): Shape = {
 
+      parseInheritance(declarations)
+
       map.key("displayName", entry => {
         val value = ValueNode(entry.value)
         shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
@@ -745,15 +760,13 @@ case class RamlTypeParser(ast: YPart,
               RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations, currentValidation)
                 .parse()
                 .foreach(s =>
-                  shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
+                  shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
             case scalar: YScalar if !wellKnownType(scalar.text) =>
               // it might be a named type
               declarations.findType(scalar.text) match {
                 case Some(ancestor) =>
-                  shape.set(NodeShapeModel.Inherits,
-                            AmfArray(Seq(ancestor), Annotations(entry.value)),
-                            Annotations(entry))
+                  shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
                 case _ =>
                   parsingErrorReport(currentValidation, shape.id, "Reference not found", Some(entry.value.value))
               }
@@ -780,7 +793,7 @@ case class RamlTypeParser(ast: YPart,
               RamlTypeParser(entry, shape => shape.adopted(shape.id), declarations, currentValidation)
                 .parse()
                 .foreach(s =>
-                  shape.set(NodeShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
+                  shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
             case _ =>
               shape.add(ExplicitField()) // TODO store annotation in dataType field.
