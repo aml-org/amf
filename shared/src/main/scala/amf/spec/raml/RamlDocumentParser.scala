@@ -106,7 +106,7 @@ case class RamlDocumentParser(root: Root, currentValidation: Validation)
 
     map.key("version", entry => {
       val value = ValueNode(entry.value)
-      api.set(WebApiModel.Version, value.string(), Annotations(entry))
+      api.set(WebApiModel.Version, value.text(), Annotations(entry))
     })
 
     map.key("(termsOfService)", entry => {
@@ -187,11 +187,12 @@ case class RamlDocumentParser(root: Root, currentValidation: Validation)
     map.key(
       "securedBy",
       entry => {
+        val nodes = entry.value.as[Seq[YNode]]
         // TODO check for empty array for resolution ?
         val securedBy =
-          entry.value.value.toSequence.nodes
-            .collect({ case v: YNode => v })
-            .map(s => RamlParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
+          nodes
+            .map(s =>
+              RamlParametrizedSecuritySchemeParser(s, api.withSecurity, declarations, currentValidation).parse())
 
         api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
@@ -216,6 +217,8 @@ case class RamlDocumentParser(root: Root, currentValidation: Validation)
 abstract class RamlSpecParser(currentValidation: Validation) extends BaseSpecParser {
 
   override implicit val spec: SpecParserContext = RamlSpecParserContext
+
+  implicit val handler: IllegalTypeHandler = new ValidationIllegalTypeHandler(currentValidation)
 
   protected def parseDeclarations(root: Root, map: YMap, declarations: Declarations): Unit = {
     val parent = root.location + "#/declarations"

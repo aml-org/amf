@@ -7,24 +7,27 @@ import amf.spec.Declarations
 import org.yaml.model.{YMap, YNode, YType}
 import amf.parser.{YMapOps, YValueOps}
 import amf.spec.common._
+import amf.validation.Validation
 
 /**
   *
   */
 case class RamlParametrizedSecuritySchemeParser(s: YNode,
                                                 producer: String => ParametrizedSecurityScheme,
-                                                declarations: Declarations) {
+                                                declarations: Declarations,
+                                                validation: Validation)
+    extends ErrorReporterParser {
   def parse(): ParametrizedSecurityScheme = s.tagType match {
-    case YType.Null =>
-      val name = s.value.asScalar.map(_.text).getOrElse("null")
-      producer(name).add(Annotations(s))
+    case YType.Null => producer("null").add(Annotations(s))
     case YType.Str =>
-      val name   = s.value.toScalar.text
-      val scheme = producer(name).add(Annotations(s))
+      val name: String = s
+      val scheme       = producer(name).add(Annotations(s))
 
       declarations.findSecurityScheme(name) match {
         case Some(declaration) => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
-        case None              => throw new Exception(s"Security scheme '$name' not found in declarations.")
+        case None =>
+          parsingErrorReport(validation, scheme.id, s"Security scheme '$name' not found in declarations.", Some(s))
+          scheme
       }
 
     case YType.Map =>

@@ -99,10 +99,10 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
           case Some(entry) =>
             val value = entry.value.value
             v match {
-              case x: String => value.toScalar.text should be(x)
+              case x: String =>
+                entry.value.as[String] should be(x)
               case l: Array[String] =>
-                val expected = value.toSequence.values.map(_.toScalar.text).toList
-                assert(l.toList, expected)
+                assert(l.toList, entry.value.as[Seq[String]].toList)
               case l: List[Any] =>
                 val obj = value.toMap
                 l.map(e => assertNode(obj, e.asInstanceOf[(String, Any)]))

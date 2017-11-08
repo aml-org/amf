@@ -8,7 +8,7 @@ import amf.parser.{YMapOps, YValueOps}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
-import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.common.{ArrayNode, ValidationIllegalTypeHandler, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.oas.{OasSpecParser, OasSpecParserContext, OasSyntax}
 import amf.spec.{Declarations, OasDefinitions}
@@ -504,6 +504,8 @@ case class OasTypeParser(ast: YPart,
   }
 
   abstract class ShapeParser() {
+
+    implicit val handler: IllegalTypeHandler = new ValidationIllegalTypeHandler(currentValidation)
 
     val shape: Shape
     val map: YMap

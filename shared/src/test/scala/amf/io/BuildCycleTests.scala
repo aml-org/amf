@@ -49,8 +49,8 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
       })
   }
 
-  def build(config: CycleConfig, maybeValidation: Option[Validation]): Future[BaseUnit] = {
-    val validation = maybeValidation.getOrElse(Validation(platform))
+  def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
+    val validation = given.getOrElse(Validation(platform).withEnabledValidation(false))
     AMFCompiler(config.sourcePath, platform, config.hint, validation).build()
   }
 

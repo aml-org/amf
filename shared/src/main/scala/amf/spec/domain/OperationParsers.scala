@@ -128,7 +128,9 @@ case class RamlOperationParser(entry: YMapEntry,
           entry => {
             // TODO check for empty array for resolution ?
             val securedBy = entry.value.value.toSequence.nodes
-              .map(s => RamlParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
+              .map(s =>
+                RamlParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations, currentValidation)
+                  .parse())
 
             operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
           }

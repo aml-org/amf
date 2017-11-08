@@ -20,12 +20,12 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
     extends RamlSyntax {
   def parse(): Response = {
 
-    val node = ValueNode(entry.key)
+    val node = ValueNode(entry.key).text()
 
-    val response = producer(node.string().value.toString).add(Annotations(entry))
+    val response = producer(node.value.toString).add(Annotations(entry))
     val map      = entry.value.value.toMap
 
-    response.set(ResponseModel.StatusCode, node.string())
+    response.set(ResponseModel.StatusCode, node)
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)

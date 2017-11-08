@@ -9,6 +9,8 @@ import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter
 import amf.spec.domain.{RamlEndpointParser, RamlOperationParser}
 import amf.spec.{Declarations, SpecOrdering}
+import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
 
 import scala.collection.mutable
@@ -21,7 +23,10 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) {
+class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
+
+  val validation: Validation = Validation(platform).withEnabledValidation(false)
+
   override def resolve(model: BaseUnit): BaseUnit = {
     // TODO should we remove traits and resourceTypes from the declarations?
 
@@ -55,7 +60,7 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) {
                            None,
                            collector,
                            declarations(context.model),
-                           null, // TODO null validation?
+                           validation,
                            parseOptionalOperations = true).parse()
 
         collector.toList match {
@@ -240,7 +245,7 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) {
       }
 
       val entry = document.as[YMap].entries.head
-      RamlOperationParser(entry, _ => Operation(), declarations(context.model), null).parse() // TODO null validation?
+      RamlOperationParser(entry, _ => Operation(), declarations(context.model), validation).parse()
     }
   }
 

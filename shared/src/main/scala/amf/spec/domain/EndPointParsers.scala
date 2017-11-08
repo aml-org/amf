@@ -99,7 +99,8 @@ case class RamlEndpointParser(entry: YMapEntry,
         // TODO check for empty array for resolution ?
         val securedBy = entry.value.value.toSequence.nodes
           .collect({ case n: YNode => n })
-          .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+          .map(s =>
+            RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations, currentValidation).parse())
 
         endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }

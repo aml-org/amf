@@ -3,22 +3,25 @@ package amf.spec.common
 import amf.domain.Annotation.LexicalInformation
 import amf.domain._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YValueOps
+import amf.parser.{Range, YValueOps}
 import amf.remote.Vendor
 import amf.validation.model.ParserSideValidations
 import amf.validation.{SeverityLevels, Validation}
-import amf.vocabulary.Namespace
+import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
 /**
   * Base spec parser.
   */
-
 trait ErrorReporterParser {
-  def parsingErrorReport(currentValidation: Validation, id: String, message: String, ast: Option[YPart], severity: String = SeverityLevels.VIOLATION): Unit = {
-    val pos = ast match {
-      case Some(node) => Some(LexicalInformation(amf.parser.Range(node.range)))
-      case _          => None
+  def parsingErrorReport(currentValidation: Validation,
+                         id: String,
+                         message: String,
+                         ast: Option[YPart],
+                         severity: String = SeverityLevels.VIOLATION): Unit = {
+    val pos = ast.map(_.range) flatMap {
+      case InputRange.Zero => None
+      case range           => Some(LexicalInformation(Range(range)))
     }
     currentValidation.reportConstraintFailure(
       severity,
@@ -52,29 +55,61 @@ case class ArrayNode(ast: YSequence) {
   private def annotations() = Annotations(ast)
 }
 
-case class ValueNode(ast: YNode) {
+case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
 
   def string(): AmfScalar = {
-    val content = scalar.text
+    val content = node.as[String]
+    AmfScalar(content, annotations())
+  }
+
+  def text(): AmfScalar = {
+    val content = node.value.toScalar.text
     AmfScalar(content, annotations())
   }
 
   def integer(): AmfScalar = {
-    val content = scalar.text
-    AmfScalar(content.toInt, annotations())
+    val content = node.as[Int]
+    AmfScalar(content, annotations())
   }
 
   def boolean(): AmfScalar = {
-    val content = scalar.text
-    AmfScalar(content.toBoolean, annotations())
+    val content = node.as[Boolean]
+    AmfScalar(content, annotations())
   }
 
   def negated(): AmfScalar = {
-    val content = scalar.text
-    AmfScalar(!content.toBoolean, annotations())
+    val content = node.as[Boolean]
+    AmfScalar(!content, annotations())
   }
 
-  private def scalar = ast.value.toScalar
+  /*implicit val toScalar = new YRead[YScalar] {
+    override def read(node: YNode): Either[YError, YScalar] = {
+      val value = node.value
+      if (!value.isInstanceOf[YScalar]) error(node, s"Expecting scalar and ${node.tagType} provided")
+      else Right(value.asInstanceOf[YScalar])
+    }
 
-  private def annotations() = Annotations(ast)
+    override def defaultValue: YScalar = null
+  }*/
+
+  private def annotations() = Annotations(node)
+}
+
+class ValidationIllegalTypeHandler(private val validation: Validation)
+    extends IllegalTypeHandler
+    with ErrorReporterParser {
+
+  override def handle[T](error: YError, defaultValue: T): T = {
+    parsingErrorReport(validation, "", error.error, retrievePart(error))
+    defaultValue
+  }
+
+  private def retrievePart(error: YError): Option[YPart] = {
+    error.node match {
+      case d: YDocument => Some(d)
+      case n: YNode     => Some(n)
+      case s: YSuccess  => Some(s.node)
+      case _            => None
+    }
+  }
 }
