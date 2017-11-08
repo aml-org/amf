@@ -50,4 +50,5 @@ object TypeDef {
   object TypeExpressionType extends TypeDef
   object XMLSchemaType      extends TypeDef
   object JSONSchemaType     extends TypeDef
+  object MultipleMatch      extends TypeDef
 }

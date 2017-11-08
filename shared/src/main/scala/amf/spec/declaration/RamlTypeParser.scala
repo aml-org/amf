@@ -5,7 +5,6 @@ import amf.domain.{Annotations, CreativeWork, ExternalDomainElement, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
-import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.Declarations
@@ -45,28 +44,11 @@ trait RamlTypeSyntax {
       case "union"             => UnionShape()
     }
   }
-  def wellKnownType(str: String) =
+  def wellKnownType(str: String): Boolean =
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
           .indexOf("}") > -1) {
       false
-    } else {
-      str match {
-        case "nil" | "" | "null" => true
-        case "any"               => true
-        case "string"            => true
-        case "integer"           => true
-        case "number"            => true
-        case "boolean"           => true
-        case "datetime"          => true
-        case "datetime-only"     => true
-        case "time-only"         => true
-        case "date-only"         => true
-        case "array"             => true
-        case "object"            => true
-        case "union"             => true
-        case _                   => false
-      }
-    }
+    } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
 }
 
 case class RamlTypeParser(ast: YPart,
@@ -82,65 +64,30 @@ case class RamlTypeParser(ast: YPart,
 
   def parse(): Option[Shape] = {
 
-    val result = detect() match {
-      case XMLSchemaType               => Some(parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry]))
-      case JSONSchemaType              => Some(parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry]))
-      case TypeExpressionType          => Some(parseTypeExpression())
-      case UnionType                   => Some(parseUnionType())
-      case ObjectType                  => Some(parseObjectType())
-      case ArrayType                   => Some(parseArrayType())
-      case AnyType                     => Some(parseAnyType())
-      case typeDef if typeDef.isScalar => Some(parseScalarType(typeDef))
-      case _                           => None
+    val info: Option[TypeDef] = RamlTypeDetection(value,
+                                                  declarations,
+                                                  "",
+                                                  currentValidation,
+                                                  value.asMap.flatMap(m => m.key("(format)").map(_.value.toString())))
+    val result = info.map {
+      case XMLSchemaType                         => parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry])
+      case JSONSchemaType                        => parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry])
+      case TypeExpressionType                    => parseTypeExpression()
+      case UnionType                             => parseUnionType()
+      case ObjectType | FileType | UndefinedType => parseObjectType()
+      case ArrayType                             => parseArrayType()
+      case AnyType                               => parseAnyType()
+      case typeDef if typeDef.isScalar           => parseScalarType(typeDef)
+      case MultipleMatch                         => parseScalarType(StrType)
     }
 
     // Add 'inline' annotation for shape
     result
       .map(shape =>
         part.value match {
-          case _: YScalar => shape.add(InlineDefinition())
-          case _          => shape
-      })
-  }
-
-  private def detect(): TypeDef = part.value match {
-    case scalar: YScalar => matchType(scalar.text)
-    case _: YSequence    => ObjectType
-    case map: YMap =>
-      detectItems(map)
-        .orElse(detectProperties(map))
-        .orElse(detectTypeOrSchema(map))
-        .orElse(detectAnyOf(map))
-        .getOrElse(UndefinedType)
-  }
-
-  private def detectProperties(map: YMap): Option[TypeDef] = {
-    map.key("properties").map(_ => ObjectType)
-  }
-
-  private def detectItems(map: YMap): Option[TypeDef] = {
-    map.key("items") match {
-      case (Some(_)) => Some(ArrayType)
-      case None      => None
-    }
-  }
-
-  private def detectAnyOf(map: YMap): Option[TypeDef] = {
-    map.key("anyOf").map(_ => UnionType)
-  }
-
-  private def detectTypeOrSchema(map: YMap) = {
-    map
-      .key("type")
-      .orElse(map.key("schema"))
-      .map(e =>
-        e.value.value match {
-          case scalar: YScalar =>
-            val t = scalar.text
-            val f = map.key("(format)").map(_.value.value.toScalar.text).getOrElse("")
-            matchType(t, f)
-          case _: YSequence | _: YMap => ObjectType
-          case _                      => UndefinedType
+          case _: YScalar if !info.contains(MultipleMatch) =>
+            shape.add(InlineDefinition()) // case of only one field (ej required) and multiple shape matches (use default string)
+          case _ => shape
       })
   }
 
@@ -210,12 +157,11 @@ case class RamlTypeParser(ast: YPart,
       case Some(shape) =>
         shape.annotations += ParsedJSONSchema(text)
         shape
-      case None => {
+      case None =>
         val shape = SchemaShape()
         adopt(shape)
         parsingErrorReport(currentValidation, shape.id, "Cannot parse JSON Schema", Some(entry))
         shape
-      }
     }
   }
 
@@ -504,8 +450,6 @@ case class RamlTypeParser(ast: YPart,
       adopt(shape)
 
       super.parse()
-
-      parseInheritance(declarations)
 
       map.key("uniqueItems", entry => {
         val value = ValueNode(entry.value)

@@ -345,15 +345,10 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
     fs.entry(ScalarShapeModel.DataType)
-      .map(
-        f =>
-          result += MapEntryEmitter(
-            "type",
-            typeDef,
-            position =
-              if (f.value.annotations.contains(classOf[Inferred])) ZERO
-              else
-                pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+      .foreach(f =>
+        if (!f.value.annotations.contains(classOf[Inferred])) {
+          result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))
+      }) // TODO check this  - annotations of typeDef in parser
 
     emitOASFields(fs, result)
 
@@ -967,14 +962,9 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
     val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
     fs.entry(ScalarShapeModel.DataType)
-      .map(
-        f =>
-          result += MapEntryEmitter(
-            "type",
-            typeDef,
-            position =
-              if (f.value.annotations.contains(classOf[Inferred])) ZERO
-              else pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+      .foreach(f =>
+        if (!f.value.annotations.contains(classOf[Inferred]))
+          result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
     emitCommonFields(fs, result)
 
