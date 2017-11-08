@@ -32,7 +32,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case obj: ObjectNode =>
         obj.withId(id)
         map.entries.foreach { entry =>
-          val uri = entry.key.value.toScalar.text
+          val uri = entry.key.as[String]
           val v   = entry.value.value
           if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri()) {
             val dataNode = v match {
@@ -49,12 +49,12 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case scalar: ScalarNode =>
         scalar.withId(id)
         map.entries.foreach { entry =>
-          val uri = entry.key.value.toScalar.text
+          val uri = entry.key.as[String]
           uri match {
-              /*
+            /*
             case _ if uri == scalar.Range.value.iri() =>
               scalar.dataType = Some(value(scalar.Range.`type`, entry.value.value).toScalar.text)
-              */
+             */
             case _ if uri == scalar.Value.value.iri() =>
               val parsedScalar = parseJSONLDScalar(entry.value.value)
               scalar.value = parsedScalar.value
@@ -67,7 +67,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
       case array: ArrayNode =>
         array.withId(id)
         map.entries.foreach { entry =>
-          val uri = entry.key.value.toScalar.text
+          val uri = entry.key.as[String]
           uri match {
             case _ if uri == array.Member.value.iri() =>
               array.members =
@@ -98,12 +98,12 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement]) extends GraphParser
     scalar
       .key("@value")
       .foreach(entry => {
-        result.value = entry.value.value.toScalar.text
+        result.value = entry.value
       })
     scalar
       .key("@type")
       .foreach(entry => {
-        result.dataType = Some(entry.value.value.toScalar.text)
+        result.dataType = Some(entry.value)
       })
     result
   }

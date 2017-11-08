@@ -31,7 +31,7 @@ object AbstractDeclarationParser {
 
   def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry, declarations: Declarations)(
       implicit spec: SpecParserContext): AbstractDeclarationParser =
-    new AbstractDeclarationParser(declaration, parent, entry.key.value.toScalar.text, entry.value, declarations)
+    new AbstractDeclarationParser(declaration, parent, entry.key, entry.value, declarations)
 }
 
 case class AbstractDeclarationParser(declaration: AbstractDeclaration,

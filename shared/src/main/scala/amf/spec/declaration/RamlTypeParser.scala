@@ -322,12 +322,12 @@ case class RamlTypeParser(ast: YPart,
 
       map.key("(exclusiveMinimum)", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.ExclusiveMinimum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.ExclusiveMinimum, value.text(), Annotations(entry))
       })
 
       map.key("(exclusiveMaximum)", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.ExclusiveMaximum, value.text(), Annotations(entry))
       })
     }
   }
@@ -346,12 +346,12 @@ case class RamlTypeParser(ast: YPart,
 
       map.key("minimum", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
       map.key("maximum", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
       map.key("format", entry => {
@@ -723,7 +723,7 @@ case class RamlTypeParser(ast: YPart,
 
       map.key("default", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ShapeModel.Default, value.string(), Annotations(entry))
+        shape.set(ShapeModel.Default, value.text(), Annotations(entry))
       })
 
       map.key("enum", entry => {

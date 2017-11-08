@@ -49,7 +49,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
   }
 
   private def extension(entry: YMapEntry) = {
-    references += Reference(entry.value.value.toScalar.text, Extension, entry)
+    references += Reference(entry.value, Extension, entry)
   }
 
   private def links(part: YPart): Unit = {
@@ -82,7 +82,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
   }
 
   private def library(entry: YMapEntry) = {
-    references += Reference(entry.value.value.toScalar.text, Library, entry)
+    references += Reference(entry.value, Library, entry)
   }
 
   def oasLinks(part: YPart): Unit = {
