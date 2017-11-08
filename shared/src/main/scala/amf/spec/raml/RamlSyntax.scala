@@ -2,7 +2,8 @@ package amf.spec.raml
 
 import amf.domain.Annotation.LexicalInformation
 import amf.validation.model.ParserSideValidations
-import amf.validation.{SeverityLevels, Validation}
+import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
+import amf.validation.{SeverityLevels, Validation, ValidationAware}
 import amf.vocabulary.Namespace
 import org.yaml.model.YMap
 
@@ -199,7 +200,7 @@ trait RamlSyntax {
     )
   )
 
-  def validateClosedShape(currentValidation: Validation, id: String, ast: YMap, nodeType: String): Unit = {
+  def validateClosedShape(validation: ValidationAware, node: String, ast: YMap, nodeType: String): Unit = {
     nodes.get(nodeType) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
@@ -207,15 +208,10 @@ trait RamlSyntax {
           if ((key.startsWith("(") && key.endsWith(")")) || (key.startsWith("/") && (nodeType == "webApi" || nodeType == "endPoint"))) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
-            currentValidation.reportConstraintFailure(
-              SeverityLevels.VIOLATION,
-              ParserSideValidations.ClosedShapeSpecification.id(),
-              id,
-              None,
-              s"Property $key not supported in a RAML $nodeType node",
-              Some(LexicalInformation(amf.parser.Range(entry.range)))
-            )
-
+            validation.violation(ClosedShapeSpecification.id(),
+                                 node,
+                                 s"Property $key not supported in a RAML $nodeType node",
+                                 entry)
           }
         }
       case None => throw new Exception(s"Cannot validate unknown node type $nodeType")

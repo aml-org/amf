@@ -9,7 +9,7 @@ import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.raml.RamlSyntax
 import org.yaml.model.{YMap, YMapEntry}
 import amf.parser.{YMapOps, YValueOps}
-import amf.validation.Validation
+import amf.validation.{Validation, ValidationAware}
 
 import scala.collection.mutable
 
@@ -42,7 +42,9 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
   }
 }
 
-case class XMLSerializerParser(defaultName: String, map: YMap, currentValidation: Validation) extends RamlSyntax {
+case class XMLSerializerParser(defaultName: String, map: YMap)(implicit val validation: Validation)
+    extends RamlSyntax
+    with ValidationAware {
   def parse(): XMLSerializer = {
     val serializer = XMLSerializer(map)
       .set(XMLSerializerModel.Attribute, value = false)
@@ -77,7 +79,7 @@ case class XMLSerializerParser(defaultName: String, map: YMap, currentValidation
       serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
     })
 
-    validateClosedShape(currentValidation, serializer.id, map, "xmlSerialization")
+    validateClosedShape(this, serializer.id, map, "xmlSerialization")
 
     serializer
   }

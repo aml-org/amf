@@ -18,11 +18,11 @@ import scala.collection.mutable
   *
   */
 object SecuritySchemeParser {
-  def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme, declarations: Declarations, currentValidation: Validation)(
+  def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme, declarations: Declarations)(
       implicit spec: SpecParserContext): SecuritySchemeParser =
     spec.vendor match {
-      case Raml  => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations, currentValidation)
-      case Oas   => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations, currentValidation)
+      case Raml  => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
+      case Oas   => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
       case other => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
     }
 
@@ -35,8 +35,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
                                     key: String,
                                     node: YNode,
                                     adopt: (SecurityScheme) => SecurityScheme,
-                                    declarations: Declarations,
-                                    currentValidation: Validation)(implicit spec: SpecParserContext)
+                                    declarations: Declarations)(implicit spec: SpecParserContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
     spec.link(node) match {
@@ -61,7 +60,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        DescribedByParser("describedBy", map, scheme, declarations, currentValidation).parse()
+        DescribedByParser("describedBy", map, scheme, declarations).parse()
 
         map.key(
           "settings",
@@ -89,7 +88,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
   }
 }
 
-case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations, currentValidation: Validation) {
+case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations) {
 
   def parse(): Unit = {
     map.key(
@@ -101,7 +100,7 @@ case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, dec
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.value.toMap, scheme.withHeader, declarations, currentValidation)
+              RamlParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
                 .parse()
                 .map(_.withBinding("header"))
             scheme.set(SecuritySchemeModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -156,8 +155,7 @@ case class OasSecuritySchemeParser(ast: YPart,
                                    key: String,
                                    node: YNode,
                                    adopt: (SecurityScheme) => SecurityScheme,
-                                   declarations: Declarations,
-                                   currentValidation: Validation)(implicit spec: SpecParserContext)
+                                   declarations: Declarations)(implicit spec: SpecParserContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     spec.link(node) match {
@@ -191,7 +189,7 @@ case class OasSecuritySchemeParser(ast: YPart,
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        DescribedByParser("x-describedBy", map, scheme, declarations, currentValidation).parse()
+        DescribedByParser("x-describedBy", map, scheme, declarations).parse()
 
         OasSecuritySettingsParser(map, scheme)
           .parse()

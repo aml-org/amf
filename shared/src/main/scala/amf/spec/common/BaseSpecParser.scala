@@ -6,7 +6,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{Range, YValueOps}
 import amf.remote.Vendor
 import amf.validation.model.ParserSideValidations
-import amf.validation.{SeverityLevels, Validation}
+import amf.validation.{SeverityLevels, Validation, ValidationAware}
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
@@ -34,7 +34,7 @@ trait ErrorReporterParser {
   }
 }
 
-private[spec] trait BaseSpecParser extends ErrorReporterParser {
+private[spec] trait BaseSpecParser extends ValidationAware {
 
   implicit val spec: SpecParserContext
 
@@ -55,7 +55,7 @@ case class ArrayNode(ast: YSequence) {
   private def annotations() = Annotations(ast)
 }
 
-case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
+case class ValueNode(node: YNode) {
 
   def string(): AmfScalar = {
     val content = node.as[String]
@@ -93,23 +93,4 @@ case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
   }*/
 
   private def annotations() = Annotations(node)
-}
-
-class ValidationIllegalTypeHandler(private val validation: Validation)
-    extends IllegalTypeHandler
-    with ErrorReporterParser {
-
-  override def handle[T](error: YError, defaultValue: T): T = {
-    parsingErrorReport(validation, "", error.error, retrievePart(error))
-    defaultValue
-  }
-
-  private def retrievePart(error: YError): Option[YPart] = {
-    error.node match {
-      case d: YDocument => Some(d)
-      case n: YNode     => Some(n)
-      case s: YSuccess  => Some(s.node)
-      case _            => None
-    }
-  }
 }
