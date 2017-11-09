@@ -16,6 +16,11 @@ import org.yaml.model._
   */
 case class ParserContext(validation: Validation, vendor: Vendor) extends IllegalTypeHandler {
 
+  def toRaml: ParserContext = vendor match {
+    case Raml => this
+    case _    => copy(vendor = Raml)
+  }
+
   override def handle[T](error: YError, defaultValue: T): T = {
     violation("", error.error, part(error))
     defaultValue
@@ -51,7 +56,7 @@ case class ParserContext(validation: Validation, vendor: Vendor) extends Illegal
       case Some(properties) =>
         ast.entries.foreach { entry =>
           val key: String = entry.key
-          if ((key.startsWith("(") && key.endsWith(")")) || (key.startsWith("/") && (shape == "webApi" || shape == "endPoint"))) {
+          if (spec.ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
             violation(ClosedShapeSpecification.id(),
@@ -60,7 +65,7 @@ case class ParserContext(validation: Validation, vendor: Vendor) extends Illegal
                       entry)
           }
         }
-      case None => throw new Exception(s"Cannot validate unknown node type $shape")
+      case None => throw new Exception(s"Cannot validate unknown node type $shape for $vendor")
     }
   }
 
@@ -97,6 +102,7 @@ case class ParserContext(validation: Validation, vendor: Vendor) extends Illegal
 
 private trait SpecAwareContext {
   def link(node: YNode): Either[String, YNode]
+  def ignore(shape: String, property: String): Boolean
 }
 
 private object RamlSpecAwareContext extends SpecAwareContext {
@@ -107,6 +113,9 @@ private object RamlSpecAwareContext extends SpecAwareContext {
       case _                    => Right(node)
     }
   }
+
+  override def ignore(shape: String, property: String): Boolean =
+    (property.startsWith("(") && property.endsWith(")")) || (property.startsWith("/") && (shape == "webApi" || shape == "endPoint"))
 
   private def isInclude(node: YNode) = {
     node.tagType == YType.Unknown && node.tag.text == "!include"
@@ -126,6 +135,9 @@ private object OasSpecAwareContext extends SpecAwareContext {
       case _ => Right(node)
     }
   }
+
+  override def ignore(shape: String, property: String): Boolean =
+    property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && shape == "webApi")
 
   private def isMap(node: YNode) = node.tag.tagType == YType.Map
 }

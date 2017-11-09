@@ -9,7 +9,6 @@ import amf.remote.{Oas, Raml}
 import amf.spec.common._
 import amf.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
 import amf.spec.{Declarations, ParserContext}
-import amf.validation.Validation
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable
@@ -60,7 +59,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        DescribedByParser("describedBy", map, scheme, declarations).parse()
+        RamlDescribedByParser("describedBy", map, scheme, declarations).parse()
 
         map.key(
           "settings",
@@ -88,9 +87,14 @@ case class RamlSecuritySchemeParser(ast: YPart,
   }
 }
 
-case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations)(
-    implicit ctx: ParserContext) {
+object RamlDescribedByParser {
+  def apply(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations)(
+      implicit ctx: ParserContext): RamlDescribedByParser =
+    new RamlDescribedByParser(key, map, scheme, declarations)(ctx.toRaml)
+}
 
+case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations)(
+    implicit ctx: ParserContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -190,7 +194,7 @@ case class OasSecuritySchemeParser(ast: YPart,
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        DescribedByParser("x-describedBy", map, scheme, declarations).parse()
+        RamlDescribedByParser("x-describedBy", map, scheme, declarations).parse()
 
         OasSecuritySettingsParser(map, scheme)
           .parse()

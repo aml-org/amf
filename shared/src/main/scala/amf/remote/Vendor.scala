@@ -25,11 +25,15 @@ sealed trait Vendor {
 object Raml extends Vendor {
   override val name: String          = "raml"
   override val defaultSyntax: Syntax = Yaml
+
+  override def toString: String = name
 }
 
 object Oas extends Vendor {
   override val name: String          = "oas"
   override val defaultSyntax: Syntax = Json
+
+  override def toString: String = name
 }
 
 object Amf extends Vendor {
@@ -43,6 +47,6 @@ object Unknown extends Vendor {
 }
 
 object Payload extends Vendor {
-  override val name: String = "payload"
+  override val name: String          = "payload"
   override val defaultSyntax: Syntax = Json
 }
