@@ -51,9 +51,8 @@ class TypeResolutionTest extends BuildCycleTests {
 
     var error = false
     try {
-      implicit val fail = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
-      val parser        = RamlTypeExpressionParser(adopt, Declarations())(fail)
-      parser.parse("[]")
+      val fail = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
+      RamlTypeExpressionParser(adopt, Declarations())(fail).parse("[]")
     } catch {
       case e: Exception => error = true
     }

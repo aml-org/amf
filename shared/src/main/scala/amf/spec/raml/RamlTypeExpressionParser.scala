@@ -1,9 +1,10 @@
 package amf.spec.raml
 
-import amf.domain.Annotation.ParsedFromTypeExpression
+import amf.domain.Annotation.{LexicalInformation, ParsedFromTypeExpression}
 import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.shape._
+import amf.parser.Range
 import amf.spec.{Declarations, ParserContext}
 import amf.vocabulary.Namespace
 import org.yaml.model.YPart
@@ -101,7 +102,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
       case None =>
         val union = UnionShape()
         adopt(union)
-        part.foreach(ctx.violation(union.id, "Syntax error, cannot create empty Union", _))
+        ctx.violation(union.id, "", None, "Syntax error, cannot create empty Union", lexical)
         union
       case Some(u: UnionShape) => u
       case Some(shape) =>
@@ -145,7 +146,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
-            part.foreach(ctx.violation(shape.id, s"Error parsing type expression, cannot accept type $shape", _))
+            ctx.violation(shape.id, "", None, s"Error parsing type expression, cannot accept type $shape", lexical)
             Some(shape)
         }
     }
@@ -184,10 +185,11 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
       case _              => false
     }
     if (empty) {
-      part.foreach(ctx.violation(t.id, "Syntax error, generating empty array", _))
+      ctx.violation(t.id, "", None, "Syntax error, generating empty array", lexical)
     }
   }
 
+  private val lexical = part.map(p => Range(p.range)).map(LexicalInformation)
 }
 
 object RamlTypeExpressionParser {

@@ -21,7 +21,7 @@ import scala.collection.mutable
 object RamlTypeParser {
   def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations)(
       implicit ctx: ParserContext): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)(ctx.toRaml)
 }
 
 trait RamlTypeSyntax {
