@@ -1,0 +1,45 @@
+#%RAML Library / EventedAPIDialect 0.1
+
+IoTEventLib:
+
+  temperatureEvent:
+    eventID: temp123
+    eventDomain: IoT
+    eventCategory: device
+    eventType: TemperatureEvent
+    eventPayloadType: json
+
+  humidityEvent:
+    eventID: hum123
+    eventDomain: IoT
+    eventCategory: device
+    eventType: HumidityEvent
+    eventPayloadType: json
+
+  barometricPressureEvent:
+    eventID: pres123
+    eventDomain: IoT
+    eventCategory: ndevice
+    eventType: PressureEvent
+    eventPayloadType: json
+
+  AirQualityEvent:
+    eventID: air123
+    eventDomain: IoT
+    eventCategory: device
+    eventType: AirQualityEvent
+    eventPayloadType: json
+
+ GyroEvent:
+   eventID: gyro123
+   eventDomain: IoT
+   eventCategory: device
+   eventType: GyroEvent
+   eventPayloadType: json
+
+ AccelerationEvent:
+   eventID: acc123
+   eventDomain: IoT
+   eventCategory: device
+   eventType: AccelerationEvent
+   eventPayloadType: json

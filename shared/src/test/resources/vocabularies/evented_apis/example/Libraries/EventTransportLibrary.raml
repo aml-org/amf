@@ -1,0 +1,37 @@
+#%RAML Library / EventedAPIDialect 0.1
+
+transports:
+
+  mqttTransport:
+    transportID: mqttMosquitto123
+    transportType: mqtt
+    transportVendor: Mosquitto
+    transportConnection:
+      connectionID: mqttConn123
+      host: localhost
+      port: 8089
+      userID: me
+      userPassword: password
+
+  natsTransport:
+    transportID: nats123
+    transportType: nats
+    transportVendor: appcera
+    transportConnection:
+       connectionID: natsonn123
+       host: localhost
+       port: 8089
+       userID: me
+       userPassword: password
+
+
+  solaceTransport:
+    transportID: nats123
+    transportType: solacce
+    transportVendor: solace
+    transportConnection:
+       connectionID: solaceConn123
+       host: http://solace.io
+       port: 8089
+       userID: me
+       userPassword: password
