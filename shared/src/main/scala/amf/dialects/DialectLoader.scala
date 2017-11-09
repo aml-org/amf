@@ -30,11 +30,11 @@ object NamespaceMap {
   }
 }
 
-class DialectLoader(val document:BaseUnit) {
+class DialectLoader(val document: BaseUnit) {
 
   val builtins: TypeBuiltins = new TypeBuiltins {
     override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
-    override def resolveRef(ref: String): Option[String] = None
+    override def resolveRef(ref: String): Option[String]                                  = None
   }
 
   private def retrieveDomainEntity(unit: BaseUnit) = unit match {
@@ -42,7 +42,7 @@ class DialectLoader(val document:BaseUnit) {
     case _                  => throw new Exception(s"Cannot load a dialect from a unit that is not a document $unit")
   }
 
-  def loadDialect(): Dialect = loadDialect(retrieveDomainEntity(document),document)
+  def loadDialect(): Dialect = loadDialect(retrieveDomainEntity(document), document)
 
   private def registerType(n: NodeDefinitionObject, dialectMap: mutable.Map[String, DialectNode]) =
     NamespaceMap(n.classTerm().get) match {
@@ -50,15 +50,15 @@ class DialectLoader(val document:BaseUnit) {
         val node = new DialectNode(ns.name, ns.namespace)
         node.id = Some(n.entity.id)
         dialectMap.put(n.entity.id, node)
-      case _        => // ignore
+      case _ => // ignore
     }
 
   /**
     * This is loading all declared entities in the referenced libraries library
     * and loading them lazily into imports
     */
-  lazy val imports: List[NodeDefinitionObject] ={
-    var imports = List[NodeDefinitionObject]()
+  lazy val imports: List[NodeDefinitionObject] = {
+    var imports       = List[NodeDefinitionObject]()
     val dialectObject = RAML_1_0_DialectTopLevel.dialectObject(retrieveDomainEntity(document))
 
     document.references.foreach {
@@ -67,7 +67,9 @@ class DialectLoader(val document:BaseUnit) {
           val element = declarationProperty.fields.get(DialectModuleDefinition.nodeMappings.field())
           element match {
             case array: AmfArray =>
-              imports ++= array.values.map { case declaredEntity: DomainEntity => NodeDefinitionObject(declaredEntity, Some(dialectObject)) }
+              imports ++= array.values.map {
+                case declaredEntity: DomainEntity => NodeDefinitionObject(declaredEntity, Some(dialectObject))
+              }
             case _ => // not possible
           }
         }
@@ -77,7 +79,7 @@ class DialectLoader(val document:BaseUnit) {
     imports
   }
 
-  def loadDialect(domainEntity: DomainEntity,unit:BaseUnit): Dialect = {
+  def loadDialect(domainEntity: DomainEntity, unit: BaseUnit): Dialect = {
     val modelDocument = unit.asInstanceOf[Document]
     val dialectObject = RAML_1_0_DialectTopLevel.dialectObject(domainEntity)
 
@@ -104,13 +106,13 @@ class DialectLoader(val document:BaseUnit) {
 
           val fragmentList: mutable.Map[String, DialectNode] = processFragments(dialectObject, dialectMap)
 
-          val moduleInfo   = processModuleInfo(dialectObject, dialectMap)
+          val moduleInfo = processModuleInfo(dialectObject, dialectMap)
           processDeclarationsInfo(dialectNode, dialectObject, dialectMap)
 
           Dialect(dialectName,
                   dialectVersion,
                   dialectNode,
-                  resolver = (root, refs, currentValidation) => BasicResolver(root, List(), refs, currentValidation),
+                  resolver = (root, refs, ctx) => BasicResolver(root, List(), refs)(ctx),
                   moduleInfo,
                   fragmentList.toMap)
         }
@@ -150,10 +152,13 @@ class DialectLoader(val document:BaseUnit) {
   private def processModuleInfo(dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
                                 dialectMap: mutable.Map[String, DialectNode]) = {
     fillModule(dialectMap, dialectObject) match {
-      case Some(declarationMap:mutable.Map[String, DialectNode]) if declarationMap.nonEmpty =>
+      case Some(declarationMap: mutable.Map[String, DialectNode]) if declarationMap.nonEmpty =>
         val moduleNode = new DialectNode("module", Namespace.Document)
         declarationMap.keys.foreach { key =>
-          moduleNode.map(key, DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)), declarationMap(key), _.copy(isDeclaration = true))
+          moduleNode.map(key,
+                         DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)),
+                         declarationMap(key),
+                         _.copy(isDeclaration = true))
         }
         // now we have a library node
         Some(moduleNode)
@@ -165,9 +170,12 @@ class DialectLoader(val document:BaseUnit) {
                               dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
                               dialectMap: mutable.Map[String, DialectNode]) = {
     fillDocument(dialectMap, dialectObject) match {
-      case Some(declarationMap:mutable.Map[String, DialectNode]) if declarationMap.nonEmpty =>
+      case Some(declarationMap: mutable.Map[String, DialectNode]) if declarationMap.nonEmpty =>
         declarationMap.keys.foreach { key =>
-          documentDialectNode.map(key, DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)), declarationMap(key), _.copy(isDeclaration = true))
+          documentDialectNode.map(key,
+                                  DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)),
+                                  declarationMap(key),
+                                  _.copy(isDeclaration = true))
         }
       case _ =>
     }
@@ -176,13 +184,13 @@ class DialectLoader(val document:BaseUnit) {
   private def processMappings(encodedRootEntity: RAML_1_0_DialectTopLevel.NodeDefinitionObject,
                               dialectObject: RAML_1_0_DialectTopLevel.dialectObject,
                               dialectMap: mutable.Map[String, DialectNode],
-                              imports:List[NodeDefinitionObject]) = {
+                              imports: List[NodeDefinitionObject]) = {
 
     val propertyMap = mutable.Map[DialectPropertyMapping, PropertyMappingObject]()
 
     // process all the node mappings
     dialectObject.nodeMappings().foreach { registerType(_, dialectMap) }
-    imports.foreach(registerType(_,dialectMap));
+    imports.foreach(registerType(_, dialectMap));
     imports.foreach { n =>
       parseNodeMapping(n, dialectMap, propertyMap)
     }
@@ -340,11 +348,10 @@ class DialectLoader(val document:BaseUnit) {
           parseNodeMapping(value, dialects, props)
         }
       } else {
-        val imported=imports.find(e=>e.entity.id==rangeString)
-        if (imported.isDefined){
-            dialects(imported.get.entity.id)
-        }
-        else {
+        val imported = imports.find(e => e.entity.id == rangeString)
+        if (imported.isDefined) {
+          dialects(imported.get.entity.id)
+        } else {
           // this is built in type
           builtins.buitInType(rangeString) match {
             case Some(t) => t

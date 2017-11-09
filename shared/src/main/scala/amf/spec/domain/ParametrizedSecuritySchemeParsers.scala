@@ -3,20 +3,17 @@ package amf.spec.domain
 import amf.domain.Annotations
 import amf.domain.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
 import amf.metadata.domain.security._
-import amf.spec.Declarations
-import org.yaml.model.{YMap, YNode, YType}
 import amf.parser.{YMapOps, YValueOps}
+import amf.spec.{Declarations, ParserContext}
 import amf.spec.common._
-import amf.validation.Validation
+import org.yaml.model.{YMap, YNode, YType}
 
 /**
   *
   */
 case class RamlParametrizedSecuritySchemeParser(s: YNode,
                                                 producer: String => ParametrizedSecurityScheme,
-                                                declarations: Declarations,
-                                                validation: Validation)
-    extends ErrorReporterParser {
+                                                declarations: Declarations)(implicit ctx: ParserContext) {
   def parse(): ParametrizedSecurityScheme = s.tagType match {
     case YType.Null => producer("null").add(Annotations(s))
     case YType.Str =>
@@ -26,7 +23,7 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode,
       declarations.findSecurityScheme(name) match {
         case Some(declaration) => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
         case None =>
-          parsingErrorReport(validation, scheme.id, s"Security scheme '$name' not found in declarations.", Some(s))
+          ctx.violation(scheme.id, s"Security scheme '$name' not found in declarations.", s)
           scheme
       }
 

@@ -3,23 +3,23 @@ package amf.spec.oas
 import amf.compiler.OasFragmentHeader._
 import amf.compiler.{OasFragmentHeader, OasHeader, Root}
 import amf.document.Fragment._
-import amf.domain.{Annotations, ExternalDomainElement}
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.domain.{Annotations, ExternalDomainElement}
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.model.AmfScalar
 import amf.parser.{YValueOps, _}
 import amf.shape.Shape
-import amf.spec.Declarations
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
-import amf.validation.Validation
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YType}
 
 /**
   *
   */
-case class OasFragmentParser(root: Root, currentValidation: Validation, fragment: Option[OasHeader] = None) extends OasSpecParser(currentValidation) {
+case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: ParserContext)
+    extends OasSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -39,7 +39,7 @@ case class OasFragmentParser(root: Root, currentValidation: Validation, fragment
       case Oas20NamedExample              => NamedExampleFragmentParser(rootMap).parse()
     }).getOrElse {
       val fragment = ExternalFragment().withEncodes(ExternalDomainElement().withRaw(root.raw))
-      parsingErrorReport(currentValidation, fragment.id, "Unsuported oas type", Some(rootMap))
+      ctx.violation(fragment.id, "Unsuported oas type", rootMap)
       fragment
     }
 
@@ -77,7 +77,7 @@ case class OasFragmentParser(root: Root, currentValidation: Validation, fragment
       val dataType = DataType().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), currentValidation, "schema")
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), "schema")
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -127,13 +127,13 @@ case class OasFragmentParser(root: Root, currentValidation: Validation, fragment
     def parse(): ExtensionFragment = {
       val extension = ExtensionFragment().adopted(root.location)
 
-      val api = OasDocumentParser(root, currentValidation).parseWebApi(map, Declarations())
+      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
       extension.withEncodes(api)
 
       map
         .key("x-extends")
         .foreach(e => {
-          spec.link(e.value) match {
+          ctx.link(e.value) match {
             case Left(url) =>
               root.references
                 .find(_.parsedUrl == url)
@@ -152,13 +152,13 @@ case class OasFragmentParser(root: Root, currentValidation: Validation, fragment
     def parse(): OverlayFragment = {
       val overlay = OverlayFragment().adopted(root.location)
 
-      val api = OasDocumentParser(root, currentValidation).parseWebApi(map, Declarations())
+      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
       overlay.withEncodes(api)
 
       map
         .key("x-extends")
         .foreach(e => {
-          spec.link(e.value) match {
+          ctx.link(e.value) match {
             case Left(url) =>
               root.references
                 .find(_.parsedUrl == url)
@@ -183,8 +183,7 @@ case class OasFragmentParser(root: Root, currentValidation: Validation, fragment
                                 "securityDefinitions",
                                 map,
                                 (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                                Declarations(),
-                                currentValidation)
+                                Declarations())
           .parse())
     }
   }

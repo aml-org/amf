@@ -5,10 +5,11 @@ import amf.domain.`abstract`._
 import amf.domain.extensions.DataNode
 import amf.domain.{DomainElement, EndPoint, Operation}
 import amf.metadata.domain.DomainElementModel
+import amf.remote.Raml
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter
 import amf.spec.domain.{RamlEndpointParser, RamlOperationParser}
-import amf.spec.{Declarations, SpecOrdering}
+import amf.spec.{Declarations, ParserContext, SpecOrdering}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
@@ -25,7 +26,7 @@ import scala.collection.mutable.ListBuffer
   */
 class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
 
-  val validation: Validation = Validation(platform).withEnabledValidation(false)
+  implicit val ctx: ParserContext = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
 
   override def resolve(model: BaseUnit): BaseUnit = {
     // TODO should we remove traits and resourceTypes from the declarations?
@@ -60,7 +61,6 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
                            None,
                            collector,
                            declarations(context.model),
-                           validation,
                            parseOptionalOperations = true).parse()
 
         collector.toList match {
@@ -245,9 +245,10 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
       }
 
       val entry = document.as[YMap].entries.head
-      RamlOperationParser(entry, _ => Operation(), declarations(context.model), validation).parse()
+      RamlOperationParser(entry, _ => Operation(), declarations(context.model)).parse()
     }
   }
 
   case class TraitBranch(key: Key, operation: Operation, children: Seq[Branch]) extends Branch
+
 }

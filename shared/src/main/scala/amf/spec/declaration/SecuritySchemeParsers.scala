@@ -1,16 +1,16 @@
 package amf.spec.declaration
 
-import amf.domain.{Annotations, Parameter, Response}
 import amf.domain.security.{Scope, SecurityScheme, Settings}
+import amf.domain.{Annotations, Parameter, Response}
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
-import amf.spec.Declarations
-import amf.spec.common._
-import amf.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
-import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 import amf.parser.{YMapOps, YValueOps}
 import amf.remote.{Oas, Raml}
+import amf.spec.common._
+import amf.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
+import amf.spec.{Declarations, ParserContext}
 import amf.validation.Validation
+import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable
 
@@ -19,8 +19,8 @@ import scala.collection.mutable
   */
 object SecuritySchemeParser {
   def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme, declarations: Declarations)(
-      implicit spec: SpecParserContext): SecuritySchemeParser =
-    spec.vendor match {
+      implicit ctx: ParserContext): SecuritySchemeParser =
+    ctx.vendor match {
       case Raml  => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
       case Oas   => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
       case other => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
@@ -35,10 +35,10 @@ case class RamlSecuritySchemeParser(ast: YPart,
                                     key: String,
                                     node: YNode,
                                     adopt: (SecurityScheme) => SecurityScheme,
-                                    declarations: Declarations)(implicit spec: SpecParserContext)
+                                    declarations: Declarations)(implicit ctx: ParserContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
-    spec.link(node) match {
+    ctx.link(node) match {
       case Left(link) => parseReferenced(key, link, Annotations(node))
       case Right(value) =>
         val scheme = adopt(SecurityScheme(ast))
@@ -88,7 +88,8 @@ case class RamlSecuritySchemeParser(ast: YPart,
   }
 }
 
-case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations) {
+case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations)(
+    implicit ctx: ParserContext) {
 
   def parse(): Unit = {
     map.key(
@@ -111,7 +112,7 @@ case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, dec
           "queryParameters",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations, currentValidation)
+              RamlParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
                 .parse()
                 .map(_.withBinding("query"))
             scheme.set(SecuritySchemeModel.QueryParameters,
@@ -123,7 +124,7 @@ case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, dec
         value.key(
           "queryString",
           queryEntry => {
-            RamlTypeParser(queryEntry, (shape) => shape.adopted(scheme.id), declarations, currentValidation)
+            RamlTypeParser(queryEntry, (shape) => shape.adopted(scheme.id), declarations)
               .parse()
               .map(scheme.withQueryString)
           }
@@ -137,7 +138,7 @@ case class DescribedByParser(key: String, map: YMap, scheme: SecurityScheme, dec
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += RamlResponseParser(entry, scheme.withResponse, declarations, currentValidation).parse()
+                  responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
                 })
                 scheme.set(SecuritySchemeModel.Responses,
                            AmfArray(responses, Annotations(entry.value)),
@@ -155,10 +156,10 @@ case class OasSecuritySchemeParser(ast: YPart,
                                    key: String,
                                    node: YNode,
                                    adopt: (SecurityScheme) => SecurityScheme,
-                                   declarations: Declarations)(implicit spec: SpecParserContext)
+                                   declarations: Declarations)(implicit ctx: ParserContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
-    spec.link(node) match {
+    ctx.link(node) match {
       case Left(link) => parseReferenced(key, link, Annotations(node))
       case Right(value) =>
         val scheme = adopt(SecurityScheme(ast))

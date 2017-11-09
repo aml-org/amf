@@ -4,20 +4,18 @@ import amf.common.Lazy
 import amf.domain.{Annotations, Parameter, Payload, Request}
 import amf.metadata.domain.RequestModel
 import amf.model.AmfArray
-import amf.spec.Declarations
+import amf.parser.{YMapOps, YValueOps}
 import amf.spec.common.AnnotationParser
 import amf.spec.declaration.RamlTypeParser
-import amf.spec.raml.RamlSyntax
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.YMap
-import amf.parser.{YMapOps, YValueOps}
-import amf.validation.Validation
 
 import scala.collection.mutable
 
 /**
   *
   */
-case class RamlRequestParser(map: YMap, producer: () => Request, declarations: Declarations, currentValidation: Validation) extends RamlSyntax {
+case class RamlRequestParser(map: YMap, producer: () => Request, declarations: Declarations)(implicit ctx: ParserContext) {
 
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)
@@ -26,7 +24,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       entry => {
 
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withQueryParameter, declarations, currentValidation)
+          RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withQueryParameter, declarations)
             .parse()
             .map(_.withBinding("query"))
         request.getOrCreate.set(RequestModel.QueryParameters,
@@ -39,7 +37,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withHeader, declarations, currentValidation)
+          RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withHeader, declarations)
             .parse()
             .map(_.withBinding("header"))
         request.getOrCreate.set(RequestModel.Headers,
@@ -51,7 +49,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
     map.key(
       "queryString",
       queryEntry => {
-        RamlTypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id), declarations, currentValidation)
+        RamlTypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id), declarations)
           .parse()
           .map(q => request.getOrCreate.withQueryString(q))
       }
@@ -62,7 +60,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations, currentValidation)
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
@@ -71,7 +69,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
             ".*/.*",
             entries => {
               entries.foreach(entry => {
-                payloads += RamlPayloadParser(entry, producer = request.getOrCreate.withPayload, declarations, currentValidation)
+                payloads += RamlPayloadParser(entry, producer = request.getOrCreate.withPayload, declarations)
                   .parse()
               })
             }
