@@ -1,15 +1,10 @@
 package amf.spec.oas
 
-import amf.domain.Annotation.LexicalInformation
-import amf.validation.model.ParserSideValidations
-import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
-import amf.validation.{SeverityLevels, Validation, ValidationAware}
-import amf.vocabulary.Namespace
-import org.yaml.model.YMap
+import amf.spec.SpecSyntax
 
-trait OasSyntax {
+object OasSyntax extends SpecSyntax {
 
-  val nodes: Map[String, Set[String]] = Map(
+  override val nodes: Map[String, Set[String]] = Map(
     "webApi" -> Set(
       "swagger",
       "info",
@@ -180,22 +175,4 @@ trait OasSyntax {
       "example"
     )
   )
-
-  def validateClosedShape(validation: ValidationAware, node: String, ast: YMap, nodeType: String): Unit = {
-    nodes.get(nodeType) match {
-      case Some(properties) =>
-        ast.entries.foreach { entry =>
-          val key: String = entry.key
-          if (key.startsWith("x-") || key == "$ref" || (key.startsWith("/") && nodeType == "webApi")) {
-            // annotation or path in webapi => ignore
-          } else if (!properties(key)) {
-            validation.violation(ClosedShapeSpecification.id(),
-                                 node,
-                                 s"Property $key not supported in a OpenAPI $nodeType node",
-                                 entry)
-          }
-        }
-      case None => throw new Exception(s"Cannot validate unknown node type $nodeType")
-    }
-  }
 }

@@ -3,15 +3,14 @@ package amf.spec.domain
 import amf.domain.{Annotations, Organization}
 import amf.metadata.domain.OrganizationModel
 import amf.parser.YMapOps
+import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import amf.spec.oas.OasSyntax
-import amf.validation.Validation
 import org.yaml.model.YMap
 
 /**
   *
   */
-case class OrganizationParser(map: YMap, currentValidation: Validation) extends OasSyntax {
+case class OrganizationParser(map: YMap)(implicit ctx: ParserContext) {
   def parse(): Organization = {
 
     val organization = Organization(map)
@@ -33,7 +32,7 @@ case class OrganizationParser(map: YMap, currentValidation: Validation) extends 
 
     AnnotationParser(() => organization, map).parse()
 
-    validateClosedShape(currentValidation, organization.id, map, "contact")
+    ctx.closedShape(organization.id, map, "contact")
 
     organization
   }

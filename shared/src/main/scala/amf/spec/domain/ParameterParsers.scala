@@ -3,26 +3,26 @@ package amf.spec.domain
 import amf.domain.Annotation.ExplicitField
 import amf.domain.{Annotations, Parameter}
 import amf.metadata.domain.ParameterModel
-import amf.shape.Shape
-import amf.spec.Declarations
-import amf.spec.common.{AnnotationParser, ErrorReporterParser, ValueNode}
-import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
-import amf.validation.{Validation, ValidationAware}
-import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.parser.YMapOps
+import amf.shape.Shape
+import amf.spec.common.{AnnotationParser, ValueNode}
+import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
+import amf.spec.{Declarations, ParserContext}
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations) {
+case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations)(
+    implicit ctx: ParserContext) {
   def parse(): Seq[Parameter] =
     map.entries
       .map(entry => RamlParameterParser(entry, producer, declarations).parse())
 }
 
-case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations)
-    extends RamlTypeSyntax
-    with ValidationAware {
+case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations)(
+    implicit val ctx: ParserContext)
+    extends RamlTypeSyntax {
   def parse(): Parameter = {
 
     val name: String = entry.key
@@ -50,11 +50,8 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
         val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
         parameter.withSchema(schema)
 
-      case _: YScalar =>
-        parsingErrorReport(currentValidation,
-                           parameter.id,
-                           "Cannot declare unresolved parameter",
-                           Some(entry.value.value))
+      case other: YScalar =>
+        ctx.violation(parameter.id, "Cannot declare unresolved parameter", other)
         parameter
 
       case map: YMap =>
@@ -77,7 +74,7 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
           }
         )
 
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations, currentValidation)
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
           .parse()
           .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 

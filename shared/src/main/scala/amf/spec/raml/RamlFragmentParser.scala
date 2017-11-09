@@ -4,31 +4,31 @@ import amf.compiler.RamlFragmentHeader._
 import amf.compiler.{RamlFragment, Root}
 import amf.document.Fragment._
 import amf.domain.Annotation.SourceVendor
-import amf.domain.{Annotations, ExternalDomainElement}
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.domain.{Annotations, ExternalDomainElement}
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.model.AmfScalar
 import amf.parser.{YValueOps, _}
 import amf.remote.Raml
 import amf.shape.Shape
-import amf.spec.Declarations
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
-import amf.validation.Validation
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YType}
 
 /**
   *
   */
-case class RamlFragmentParser(root: Root, currentValidation: Validation, fragmentType: RamlFragment) extends RamlSpecParser(currentValidation) {
+case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit val ctx: ParserContext)
+    extends RamlSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
 
     val rootMap: YMap =
       root.document.value.map(_.toMap).getOrElse {
-        parsingErrorReport(currentValidation, root.location, "Cannot parse empty map", Some(root.document))
+        ctx.violation(root.location, "Cannot parse empty map", root.document)
         YMap()
       }
 
@@ -42,8 +42,8 @@ case class RamlFragmentParser(root: Root, currentValidation: Validation, fragmen
       case Raml10Overlay                   => OverlayFragmentParser(rootMap).parse()
       case Raml10SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
       case Raml10NamedExample              => NamedExampleFragmentParser(rootMap).parse()
-      case _                               =>
-        parsingErrorReport(currentValidation, root.location, "Unsupported fragment type", Some(root.document))
+      case _ =>
+        ctx.violation(root.location, "Unsupported fragment type", root.document)
         ExternalFragment().withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
     }
 
@@ -72,7 +72,7 @@ case class RamlFragmentParser(root: Root, currentValidation: Validation, fragmen
     def parse(): DataType = {
       val dataType = DataType().adopted(root.location)
 
-      RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), currentValidation)
+      RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations())
         .parse()
         .foreach(dataType.withEncodes(_))
 
@@ -121,7 +121,7 @@ case class RamlFragmentParser(root: Root, currentValidation: Validation, fragmen
     def parse(): ExtensionFragment = {
       val extension = ExtensionFragment().adopted(root.location)
 
-      val api = RamlDocumentParser(root, currentValidation).parseWebApi(map, Declarations())
+      val api = RamlDocumentParser(root).parseWebApi(map, Declarations())
       extension.withEncodes(api)
 
       map
@@ -142,7 +142,7 @@ case class RamlFragmentParser(root: Root, currentValidation: Validation, fragmen
     def parse(): OverlayFragment = {
       val overlay = OverlayFragment().adopted(root.location)
 
-      val api = RamlDocumentParser(root, currentValidation).parseWebApi(map, Declarations())
+      val api = RamlDocumentParser(root).parseWebApi(map, Declarations())
       overlay.withEncodes(api)
 
       map
@@ -167,8 +167,7 @@ case class RamlFragmentParser(root: Root, currentValidation: Validation, fragmen
                                  "securityDefinitions",
                                  map,
                                  (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                                 Declarations(),
-                                 currentValidation)
+                                 Declarations())
           .parse())
     }
   }

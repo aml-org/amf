@@ -1,9 +1,12 @@
 package amf
 
+import org.yaml.model.YPart
+
 /**
   * Oas package object
   */
 package object spec {
+
   object OasDefinitions {
     val definitionsPrefix = "#/definitions/"
 

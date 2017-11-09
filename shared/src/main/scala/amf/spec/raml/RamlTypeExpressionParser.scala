@@ -4,15 +4,16 @@ import amf.domain.Annotation.ParsedFromTypeExpression
 import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.shape._
-import amf.spec.Declarations
-import amf.spec.common.ErrorReporterParser
-import amf.validation.Validation
+import amf.spec.{Declarations, ParserContext}
 import amf.vocabulary.Namespace
 import org.yaml.model.YPart
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations, currentValidation: Validation, var i: Int = 0, part: Option[YPart] = None) extends ErrorReporterParser {
+class RamlTypeExpressionParser(adopt: Shape => Shape,
+                               declarations: Declarations,
+                               var i: Int = 0,
+                               part: Option[YPart] = None)(implicit ctx: ParserContext) {
   var parsedShape: Option[Shape] = None
   var acc: String                = ""
   var parsingArray               = false
@@ -39,7 +40,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
           ParsingResult(parsedShape, input.tail)
         case '(' =>
           processChars()
-          val result = new RamlTypeExpressionParser(adopt, declarations, currentValidation, i + 1, part).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1, part).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '|' =>
@@ -48,7 +49,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
           }
           processChars()
           parsedShape = Some(toUnion)
-          val result = new RamlTypeExpressionParser(adopt, declarations, currentValidation, i + 1, part).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1, part).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '[' =>
@@ -100,7 +101,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
       case None =>
         val union = UnionShape()
         adopt(union)
-        parsingErrorReport(currentValidation, union.id, "Syntax error, cannot create empty Union", part)
+        part.foreach(ctx.violation(union.id, "Syntax error, cannot create empty Union", _))
         union
       case Some(u: UnionShape) => u
       case Some(shape) =>
@@ -144,7 +145,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
-            parsingErrorReport(currentValidation, shape.id, s"Error parsing type expression, cannot accept type $shape", part)
+            part.foreach(ctx.violation(shape.id, s"Error parsing type expression, cannot accept type $shape", _))
             Some(shape)
         }
     }
@@ -183,12 +184,13 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, declarations: Declarations
       case _              => false
     }
     if (empty) {
-      parsingErrorReport(currentValidation, t.id, "Syntax error, generating empty array", part)
+      part.foreach(ctx.violation(t.id, "Syntax error, generating empty array", _))
     }
   }
 
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, declarations: Declarations, currentValidation: Validation, part: Option[YPart] = None) = new RamlTypeExpressionParser(adopt, declarations, currentValidation, 0, part)
+  def apply(adopt: Shape => Shape, declarations: Declarations, part: Option[YPart] = None)(
+      implicit ctx: ParserContext) = new RamlTypeExpressionParser(adopt, declarations, 0, part)
 }

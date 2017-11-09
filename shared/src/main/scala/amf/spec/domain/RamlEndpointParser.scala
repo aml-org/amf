@@ -5,12 +5,10 @@ import amf.domain.{Annotations, EndPoint, Operation, Parameter}
 import amf.metadata.domain.EndPointModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.model.{AmfArray, AmfScalar}
-import amf.spec.Declarations
-import amf.spec.common.{AnnotationParser, ValueNode}
-import org.yaml.model.{YMapEntry, YNode}
 import amf.parser.{YMapOps, YValueOps}
-import amf.spec.raml.RamlSyntax
-import amf.validation.Validation
+import amf.spec.common.{AnnotationParser, ValueNode}
+import amf.spec.{Declarations, ParserContext}
+import org.yaml.model.{YMapEntry, YNode}
 
 import scala.collection.mutable
 
@@ -22,9 +20,7 @@ case class RamlEndpointParser(entry: YMapEntry,
                               parent: Option[EndPoint],
                               collector: mutable.ListBuffer[EndPoint],
                               declarations: Declarations,
-                              currentValidation: Validation,
-                              parseOptionalOperations: Boolean = false)
-    extends RamlSyntax {
+                              parseOptionalOperations: Boolean = false)(implicit ctx: ParserContext) {
   def parse(): Unit = {
 
     val path = parent.map(_.path).getOrElse("") + entry.key.value.toScalar.text
@@ -34,7 +30,7 @@ case class RamlEndpointParser(entry: YMapEntry,
 
     val map = entry.value.value.toMap
 
-    validateClosedShape(currentValidation, endpoint.id, map, "endPoint")
+    ctx.closedShape(endpoint.id, map, "endPoint")
 
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
@@ -52,7 +48,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations, currentValidation)
+          RamlParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations)
             .parse()
             .map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -86,7 +82,6 @@ case class RamlEndpointParser(entry: YMapEntry,
           operations += RamlOperationParser(entry,
                                             endpoint.withOperation,
                                             declarations,
-                                            currentValidation,
                                             parseOptionalOperations).parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
@@ -100,7 +95,7 @@ case class RamlEndpointParser(entry: YMapEntry,
         val securedBy = entry.value.value.toSequence.nodes
           .collect({ case n: YNode => n })
           .map(s =>
-            RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations, currentValidation).parse())
+            RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
 
         endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
@@ -114,7 +109,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       "^/.*",
       entries => {
         entries.foreach(
-          RamlEndpointParser(_, producer, Some(endpoint), collector, declarations, currentValidation).parse())
+          RamlEndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
       }
     )
   }

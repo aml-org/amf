@@ -8,6 +8,7 @@ import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
+import amf.spec.ParserContext
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecParser
@@ -34,16 +35,22 @@ case class Dialect(name: String,
     findNodeType(nodeType, Seq(root), Set(root))
   }
 
-  private def findNodeType(nodeType: String, nodes: Seq[DialectNode], visited: Set[DialectNode] = Set()): Option[DialectNode] = {
+  private def findNodeType(nodeType: String,
+                           nodes: Seq[DialectNode],
+                           visited: Set[DialectNode] = Set()): Option[DialectNode] = {
     if (nodes.isEmpty) {
       None
     } else {
       val node = nodes.head
       node.`type`.find(_.iri() == nodeType) match {
         case Some(_) => Some(node)
-        case None    =>
+        case None =>
           val types = node.mappings().flatMap(mapping => Seq(mapping.range) ++ mapping.unionTypes.getOrElse(Seq()))
-          val dialectNodes: Set[DialectNode] = types.filter(_.isInstanceOf[DialectNode]).filter(n => !visited.contains(n.asInstanceOf[DialectNode])).toSet.asInstanceOf[Set[DialectNode]]
+          val dialectNodes: Set[DialectNode] = types
+            .filter(_.isInstanceOf[DialectNode])
+            .filter(n => !visited.contains(n.asInstanceOf[DialectNode]))
+            .toSet
+            .asInstanceOf[Set[DialectNode]]
           findNodeType(nodeType, dialectNodes.toSeq ++ nodes.tail, visited + node)
       }
     }
@@ -54,11 +61,11 @@ case class Dialect(name: String,
 }
 
 trait ResolverFactory {
-  def resolver(root: Root, references: Map[String, BaseUnit], currentValidation: Validation): ReferenceResolver
+  def resolver(root: Root, references: Map[String, BaseUnit], ctx: ParserContext): ReferenceResolver
 }
 
 object NullReferenceResolverFactory extends ResolverFactory {
-  override def resolver(root: Root, references: Map[String, BaseUnit], currentValidation: Validation): ReferenceResolver =
+  override def resolver(root: Root, references: Map[String, BaseUnit], ctx: ParserContext): ReferenceResolver =
     NullReferenceResolver
 }
 
@@ -117,7 +124,6 @@ case class DialectPropertyMapping(name: String,
   def isRef: Boolean = referenceTarget.isDefined
 
   def scalaName: String = scalaNameOverride.getOrElse(name)
-
 
   def isScalar: Boolean = range match {
     case _: Type.Scalar => true
@@ -268,8 +274,9 @@ object TypeBuiltins {
   val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
-class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit], currentValidation: Validation)
-    extends RamlSpecParser(currentValidation)
+class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit])(
+    implicit val ctx: ParserContext)
+    extends RamlSpecParser
     with TypeBuiltins {
 
   val REGEX_URI =
@@ -287,7 +294,6 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
       case _              => ""
     }
   }
-
 
   // All the external terms will be stored here, so we can generate
   // transient 'ExternalTerms' in the JSON-LD serialisation
@@ -344,7 +350,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
                 ent
                   .entities(p)
                   .foreach(decl => {
-                    if (decl.linkValue.isDefined){
+                    if (decl.linkValue.isDefined) {
                       declarationsFromLibraries.put(namespace + "." + decl.linkValue.get, decl)
                     }
 //                    p.hash.foreach(h => {
@@ -380,11 +386,10 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
         base = fixBase(node.asInstanceOf[String])
       }
     }
-    def fixBase(str: String): String ={
-      if (!str.endsWith("/")&&(!str.endsWith("#"))){
+    def fixBase(str: String): String = {
+      if (!str.endsWith("/") && (!str.endsWith("#"))) {
         str + "/";
-      }
-      else{
+      } else {
         str
       }
     }
@@ -398,7 +403,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
             case Some(range) =>
               super.resolve(root, range, t) match {
                 case Some(bid) => Some(bid)
-                case _ => Some(resolveBasicRef(name))
+                case _         => Some(resolveBasicRef(name))
               }
             case None => Some(TypeBuiltins.ANY)
           }
@@ -406,20 +411,22 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
         case _ => Some(resolveBasicRef(name))
       }
     } catch {
-      case _:Exception=>None
+      case _: Exception => None
     }
   }
 
-  override def resolveRef(ref: String) = try {
-    Some(resolveBasicRef(ref))
-  } catch {
-    case _: Exception => None
-  }
+  override def resolveRef(ref: String) =
+    try {
+      Some(resolveBasicRef(ref))
+    } catch {
+      case _: Exception => None
+    }
 }
 
 object BasicResolver {
-  def apply(root: Root, externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit], currentValidation: Validation) =
-    new BasicResolver(root, externals, uses, currentValidation)
+  def apply(root: Root, externals: List[DialectPropertyMapping], uses: Map[String, BaseUnit])(
+      implicit ctx: ParserContext) =
+    new BasicResolver(root, externals, uses)
 }
 
 class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[DialectPropertyMapping])
