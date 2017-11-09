@@ -80,6 +80,21 @@ object ParserSideValidations {
       ProfileNames.OAS -> SeverityLevels.VIOLATION,
       ProfileNames.AMF -> SeverityLevels.VIOLATION
     ),
+    DialectExpectingMap.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF -> SeverityLevels.VIOLATION
+    ),
+    DialectUnresolvableReference.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF -> SeverityLevels.VIOLATION
+    ),
+    DialectNodeRangeShouldBeDialect.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF -> SeverityLevels.VIOLATION
+    ),
     ParsingErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS -> SeverityLevels.VIOLATION,
@@ -103,6 +118,9 @@ object ParserSideValidations {
     DialectAmbiguousRangeSpecification,
     ParsingErrorSpecification,
     ExampleValidationErrorSpecification,
-    UnsupportedExampleMediaTypeErrorSpecification
+    UnsupportedExampleMediaTypeErrorSpecification,
+    DialectExpectingMap,
+    DialectUnresolvableReference,
+    DialectNodeRangeShouldBeDialect
   )
 }

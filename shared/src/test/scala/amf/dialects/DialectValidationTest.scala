@@ -263,6 +263,39 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Custom dialect can be validated (evented_apis)") {
+    val validation = Validation(platform)
+    var dialect: Option[Dialect] = None
+    val dialectFile = "file://shared/src/test/resources/vocabularies/evented_apis/dialect.raml"
+    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/evented_apis/example/example.raml"
+
+    platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler(
+        dialectExampleFile,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None,
+        platform.dialectsRegistry
+      ).build()
+    } flatMap  { model =>
+      /*
+      AMFDumper(model, Amf, Json, GenerationOptions()).dumpToString map { json =>
+        println("GENERATED")
+        println(json)
+      }
+      */
+      validation.loadDialectValidationProfile(dialect.get)
+      validation.validate(model, dialect.get.name)
+    } flatMap { report =>
+      println(report)
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
   /*
   test("Custom dialect using lib in dialect") {
     val validator = Validation(platform)
