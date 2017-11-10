@@ -388,7 +388,13 @@ abstract class RamlSpecParser(currentValidation: Validation) extends BaseSpecPar
       custom.withName(annotationName)
       adopt(custom)
 
-      validateClosedShape(currentValidation, custom.id, map, "annotation")
+      // We parse the node as if it were a data shape, this will also check the closed node condition including the
+      // annotation type facets
+      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), declarations, currentValidation)
+        .parse()
+        .foreach({ shape =>
+          custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))
+        })
 
       map.key(
         "allowedTargets",
@@ -423,26 +429,11 @@ abstract class RamlSpecParser(currentValidation: Validation) extends BaseSpecPar
         }
       )
 
-      map.key("displayName", entry => {
-        val value = ValueNode(entry.value)
-        custom.set(CustomDomainPropertyModel.DisplayName, value.string(), Annotations(entry))
-      })
-
       map.key("description", entry => {
         val value = ValueNode(entry.value)
         custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
       })
 
-      map.key(
-        "type",
-        entry => {
-          RamlTypeParser(entry, shape => shape.adopted(custom.id), declarations, currentValidation)
-            .parse()
-            .foreach({ shape =>
-              custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(entry))
-            })
-        }
-      )
 
       AnnotationParser(() => custom, map).parse()
 
