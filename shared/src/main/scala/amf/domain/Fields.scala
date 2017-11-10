@@ -24,7 +24,7 @@ class Fields {
     }
   }
 
-  def fieldsMeta():List[Field]= fs.keys.toList
+  def fieldsMeta(): List[Field] = fs.keys.toList
 
   def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
 
@@ -137,12 +137,6 @@ object Fields {
 
 class Value(val value: AmfElement, val annotations: Annotations) {
   override def toString: String = value.toString
-
-  def unapply(value: Value): Option[(AmfElement, Annotations)] =
-    if (Option(value).isDefined)
-      Some((value.value, value.annotations))
-    else
-      None
 }
 
 object Value {
@@ -171,6 +165,8 @@ case class FieldEntry(field: Field, value: Value) {
   def array: AmfArray = element.asInstanceOf[AmfArray]
 
   def obj: AmfObject = element.asInstanceOf[AmfObject]
+
+  def negated: FieldEntry = copy(value = Value(AmfScalar(!scalar.toBool, element.annotations), value.annotations))
 
   def domainElement: DomainElement = element.asInstanceOf[DomainElement]
 

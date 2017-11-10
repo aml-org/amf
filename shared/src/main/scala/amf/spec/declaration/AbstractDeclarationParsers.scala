@@ -2,10 +2,10 @@ package amf.spec.declaration
 
 import amf.domain.Annotations
 import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
-import amf.spec.Declarations
-import amf.spec.common.{AbstractVariables, DataNodeParser, SpecParserContext}
-import org.yaml.model.{YMap, YMapEntry, YNode}
 import amf.parser.{YMapOps, YValueOps}
+import amf.spec.common.{AbstractVariables, DataNodeParser}
+import amf.spec.{Declarations, ParserContext}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 /**
   *
@@ -14,7 +14,7 @@ case class AbstractDeclarationsParser(key: String,
                                       producer: (YMapEntry) => AbstractDeclaration,
                                       map: YMap,
                                       customProperties: String,
-                                      declarations: Declarations)(implicit spec: SpecParserContext) {
+                                      declarations: Declarations)(implicit ctx: ParserContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -30,18 +30,18 @@ case class AbstractDeclarationsParser(key: String,
 object AbstractDeclarationParser {
 
   def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry, declarations: Declarations)(
-      implicit spec: SpecParserContext): AbstractDeclarationParser =
-    new AbstractDeclarationParser(declaration, parent, entry.key.value.toScalar.text, entry.value, declarations)
+      implicit ctx: ParserContext): AbstractDeclarationParser =
+    new AbstractDeclarationParser(declaration, parent, entry.key, entry.value, declarations)
 }
 
 case class AbstractDeclarationParser(declaration: AbstractDeclaration,
                                      parent: String,
                                      key: String,
                                      entryValue: YNode,
-                                     declarations: Declarations)(implicit spec: SpecParserContext) {
+                                     declarations: Declarations)(implicit ctx: ParserContext) {
   def parse(): AbstractDeclaration = {
 
-    spec.link(entryValue) match {
+    ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, Annotations(entryValue))
       case Right(value) =>
         val variables = AbstractVariables()

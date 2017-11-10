@@ -24,24 +24,36 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Api (raml)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", platform, RamlYamlHint, Validation(platform))
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
+                platform,
+                RamlYamlHint,
+                Validation(platform))
       .build() map assertDocument
   }
 
   test("Vocabulary") {
-    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml", platform, RamlYamlHint, Validation(platform))
+    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml",
+                platform,
+                RamlYamlHint,
+                Validation(platform))
       .build() map {
       _ should not be null
     }
   }
 
   test("Api (oas)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", platform, OasJsonHint, Validation(platform))
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi",
+                platform,
+                OasJsonHint,
+                Validation(platform))
       .build() map assertDocument
   }
 
   test("Api (amf)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", platform, AmfJsonHint, Validation(platform))
+    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld",
+                platform,
+                AmfJsonHint,
+                Validation(platform))
       .build() map assertDocument
   }
 
@@ -74,7 +86,11 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Cache different imports") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint, Validation(platform), cache = Some(cache))
+    AMFCompiler("file://shared/src/test/resources/input.json",
+                platform,
+                OasJsonHint,
+                Validation(platform),
+                cache = Some(cache))
       .build() map { _ =>
       cache.assertCacheSize(3)
     }
@@ -114,7 +130,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
       }
     }
   }
-  */
+   */
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {
     case d: Document =>
@@ -123,7 +139,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def assertUses(uses: YMapEntry, references: Seq[BaseUnit]) = {
-    uses.key.value.toScalar.text should include("uses")
+    uses.key.as[String] should include("uses")
 
     val libraries = uses.value.value.toMap
 
@@ -137,7 +153,10 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[CyclicReferenceException] {
-      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}", platform, hint, Validation(platform))
+      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}",
+                  platform,
+                  hint,
+                  Validation(platform))
         .build()
     } map { ex =>
       assert(ex.getMessage ==

@@ -9,14 +9,12 @@ import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.{Range, YMapOps, YValueOps}
+import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.declaration.ReferencesParser
 import amf.spec.raml.RamlSpecParser
 import amf.validation.model.ParserSideValidations
-import amf.validation.{SeverityLevels, Validation}
-import amf.vocabulary.Namespace
-import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -28,9 +26,9 @@ trait DomainEntityVisitor {
   def visit(entity: DomainEntity, prop: DialectPropertyMapping): Boolean
 }
 
-class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validation) extends RamlSpecParser(currentValidation) {
+class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserContext) extends RamlSpecParser {
 
-  private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty, currentValidation)
+  private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty, ctx)
   // map of references declared within this document
   // references introduced trhough libraries will be handled by the resolver
   private var internalRefs: mutable.HashMap[String, DomainEntity] = mutable.HashMap.empty
@@ -71,7 +69,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
       // This are ALL references, libraries and inclusions
       val references = ReferencesParser("uses", map, root.references).parse()
 
-      resolver = dialect.resolver.resolver(root, references.references.toMap, currentValidation)
+      resolver = dialect.resolver.resolver(root, references.references.toMap, ctx)
 
       val entity = parse()
 
@@ -133,27 +131,31 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
     entity
   }
 
-  def   validateClosedNode(domainEntity: DomainEntity, entries: YMap, mappings: List[DialectPropertyMapping], topLevel: Boolean) = {
+  def validateClosedNode(domainEntity: DomainEntity,
+                         entries: YMap,
+                         mappings: List[DialectPropertyMapping],
+                         topLevel: Boolean): Unit = {
     val entriesLabels = entries.map.keys.map(_.value.toString).toSet
     val entityLabels = if (topLevel) {
-      (mappings.map(_.name) ++ Seq("uses","external")).toSet
+      (mappings.map(_.name) ++ Seq("uses", "external")).toSet
     } else {
       mappings.map(_.name).toSet
     }
-    val diff =  entriesLabels.diff(entityLabels)
+    val diff = entriesLabels.diff(entityLabels)
     if (diff.nonEmpty) {
-      currentValidation.reportConstraintFailure(
-        SeverityLevels.VIOLATION,
+      ctx.violation(
         ParserSideValidations.ClosedShapeSpecification.id(),
         domainEntity.id,
-        None,
         s"Properties: ${diff.mkString(",")} not supported in a ${domainEntity.definition.shortName} node",
-        Some(LexicalInformation(amf.parser.Range(entries.range)))
+        entries
       )
     }
   }
 
-  def parseNodeMapping(mapping: DialectPropertyMapping, entries: YMap, domainEntity: DomainEntity, declaration: Boolean = false) = {
+  def parseNodeMapping(mapping: DialectPropertyMapping,
+                       entries: YMap,
+                       domainEntity: DomainEntity,
+                       declaration: Boolean = false): Unit = {
     val entryValue = entries.key(mapping.name)
     entryValue.foreach(entryNode => {
       if (mapping.isMap) {
@@ -162,15 +164,15 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
         parseCollection(mapping, entryNode, domainEntity)
       } else if (!mapping.isScalar) {
         parseSingleObject(mapping, entryNode, domainEntity)
-      }
-      else if (entryNode.value.tag.tagType == YType.Unknown && entryNode.value.tag.text == "!include"){
-        resolver.resolveToEntity(root,entryNode.value.value.asInstanceOf[YScalar].text,mapping.referenceTarget.get).foreach(child=>{
-          child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
-          domainEntity.set(mapping.field(), child)
-          //parseNode(entryNode.value.value, child)
-        })
-      }
-      else {
+      } else if (entryNode.value.tag.tagType == YType.Unknown && entryNode.value.tag.text == "!include") {
+        resolver
+          .resolveToEntity(root, entryNode.value.value.asInstanceOf[YScalar].text, mapping.referenceTarget.get)
+          .foreach(child => {
+            child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
+            domainEntity.set(mapping.field(), child)
+            //parseNode(entryNode.value.value, child)
+          })
+      } else {
         entryNode.value.value match {
           // in-place definition
           case _: YMap => parseInlineNode(mapping, entryNode, domainEntity)
@@ -180,7 +182,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
       }
     })
     if (entryValue.isEmpty) {
-        mapping.defaultValue.foreach(v => {
+      mapping.defaultValue.foreach(v => {
         domainEntity.set(mapping.field(), v, Annotations() += SynthesizedField())
       })
     }
@@ -192,10 +194,14 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
         correctEntityNamespace(node, domainEntity)
         val mappings = domainEntity.definition.mappings()
         validateClosedNode(domainEntity, entries, mappings, topLevel)
-        val declarationMappings = mappings.filter(_.isDeclaration)
+        val declarationMappings  = mappings.filter(_.isDeclaration)
         val encodingDeclarations = mappings.filterNot(_.isDeclaration)
-        declarationMappings.foreach { mapping => parseNodeMapping(mapping, entries, domainEntity, declaration = true) }
-        encodingDeclarations.foreach { mapping => parseNodeMapping(mapping, entries, domainEntity) }
+        declarationMappings.foreach { mapping =>
+          parseNodeMapping(mapping, entries, domainEntity, declaration = true)
+        }
+        encodingDeclarations.foreach { mapping =>
+          parseNodeMapping(mapping, entries, domainEntity)
+        }
 
       case scalar: YScalar if Option(scalar.value).isDefined =>
         domainEntity.definition.mappings().find(_.fromVal) match {
@@ -218,19 +224,20 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                 }
             }
         }
-      case _ =>   currentValidation.reportConstraintFailure(
-          SeverityLevels.VIOLATION,
+      case _ =>
+        ctx.violation(
           ParserSideValidations.DialectExpectingMap.id(),
           domainEntity.id,
-          None,
           s"Expecting map node or scalar",
-          Some(LexicalInformation(amf.parser.Range(node.range)))
+          node
         )
       //case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
     }
   }
 
-  private def parseInlineNode(mapping: DialectPropertyMapping, entryNode: YMapEntry, parentDomaineEntity: DomainEntity) = {
+  private def parseInlineNode(mapping: DialectPropertyMapping,
+                              entryNode: YMapEntry,
+                              parentDomaineEntity: DomainEntity) = {
     mapping.referenceTarget.foreach(trg => {
       val linkValue = entryNode.key.value match {
         case scalar: YScalar => Some(scalar.text)
@@ -244,7 +251,10 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
     })
   }
 
-  private def parseMap(mapping: DialectPropertyMapping, entryNode: YMapEntry, parentDomainEntity: DomainEntity, declaration: Boolean): Unit = {
+  private def parseMap(mapping: DialectPropertyMapping,
+                       entryNode: YMapEntry,
+                       parentDomainEntity: DomainEntity,
+                       declaration: Boolean): Unit = {
     val targetField = mapping.field()
     entryNode.value.value match {
       case entries: YMap =>
@@ -258,27 +268,27 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                 val domainEntity = DomainEntity(Some(mapKey.text), rangeNode, Fields(), Annotations(entry))
                 if (declaration) { internalRefs.put(mapKey.text, domainEntity) }
                 mapping.hash match {
-                  case Some(hashProperty) => domainEntity.set(hashProperty.field(), entryNode.key.value.asInstanceOf[YScalar].text)
-                  case None               =>
+                  case Some(hashProperty) =>
+                    domainEntity.set(hashProperty.field(), entryNode.key.value.asInstanceOf[YScalar].text)
+                  case None =>
                 }
                 parentDomainEntity.add(targetField, domainEntity)
                 entry match {
                   case v: YMap                    => parseNode(v, domainEntity)
                   case s: YScalar if s.text != "" => parseNode(s, domainEntity)
-                  case _          => // ignore
+                  case _                          => // ignore
                 }
                 domainEntity.set(mapping.hash.get.field(), mapKey.text)
               case _ => // ignore
             }
         }
       case _ =>
-        currentValidation.reportConstraintFailure(
-          SeverityLevels.VIOLATION,
+        ctx.violation(
           ParserSideValidations.DialectExpectingMap.id(),
           parentDomainEntity.id,
           Some(mapping.iri()),
           s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}",
-          Some(LexicalInformation(amf.parser.Range(entryNode.range)))
+          entryNode
         )
 
     }
@@ -317,13 +327,17 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
             elementCounter += 1
             actualRange match {
               case Some(rangeNode: DialectNode) =>
-                val domainEntity = DomainEntity(Some(entryNode.key.value.asInstanceOf[YScalar].text + s"/$elementCounter"), rangeNode, Fields(), Annotations(element))
+                val domainEntity =
+                  DomainEntity(Some(entryNode.key.value.asInstanceOf[YScalar].text + s"/$elementCounter"),
+                               rangeNode,
+                               Fields(),
+                               Annotations(element))
                 val field = mapping.field()
                 parentDomainEntity.add(field, domainEntity)
                 element.value match {
                   case v: YMap                    => parseNode(v, domainEntity)
                   case s: YScalar if s.text != "" => parseNode(s, domainEntity)
-                  case _  => // ignore
+                  case _                          => // ignore
                 }
               case _ => // ignore
             }
@@ -359,13 +373,12 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
                              entryNode: YMapEntry,
                              parentDomainEntity: DomainEntity,
                              arr: YSequence) = {
-    val value   = ArrayNode(arr)
-    val array   = value.strings()
-    val scalars = array.values.map(s=>{
-      if (s.isInstanceOf[AmfScalar]){
-          s.asInstanceOf[AmfScalar];
-      }
-      else{
+    val value = ArrayNode(arr)
+    val array = value.strings()
+    val scalars = array.values.map(s => {
+      if (s.isInstanceOf[AmfScalar]) {
+        s.asInstanceOf[AmfScalar];
+      } else {
         AmfScalar(s);
       }
     })
@@ -389,11 +402,10 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
     }
   }
 
-  private def shortName(t:Type): String ={
-    if (t.isInstanceOf[DialectNode]){
-        t.asInstanceOf[DialectNode].shortName
-    }
-    else{
+  private def shortName(t: Type): String = {
+    if (t.isInstanceOf[DialectNode]) {
+      t.asInstanceOf[DialectNode].shortName
+    } else {
       t.toString
     }
   }
@@ -407,10 +419,10 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
 
       var nodeId: Option[String] = None
 
-      val types= currentValidation.disableValidations() { () =>
+      val types = ctx.validation.disableValidations() { () =>
         mapping.unionTypes.get.map {
           case node: DialectNode =>
-            val dialectNode = node
+            val dialectNode  = node
             val domainEntity = DomainEntity(Option(key), dialectNode, Fields(), Annotations(entryNode))
             try {
               domainEntity.adopted(parentDomainEntity.get.id)
@@ -423,17 +435,21 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
               (dialectNode, issues)
             } catch {
               case validationException: Exception => {
-                (dialectNode, Seq(ValidationIssue(
-                  message = validationException.getMessage,
-                  entity = domainEntity
-                )))
+                (dialectNode,
+                 Seq(
+                   ValidationIssue(
+                     message = validationException.getMessage,
+                     entity = domainEntity
+                   )))
               }
             }
-          case ext:Type => {
-            (ext, Seq(ValidationIssue(
-              message = s"Only a dialect node can be the range of another dialect node, found $ext",
-              entity = parentDomainEntity.get
-            )))
+          case ext: Type => {
+            (ext,
+             Seq(
+               ValidationIssue(
+                 message = s"Only a dialect node can be the range of another dialect node, found $ext",
+                 entity = parentDomainEntity.get
+               )))
 
             //throw new Exception("")
 
@@ -442,13 +458,12 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
       }
 
       if (types.count(r => r._2.isEmpty) > 1) {
-        currentValidation.reportConstraintFailure(
-          SeverityLevels.VIOLATION,
+        ctx.violation(
           ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
           nodeId.get,
           Some(mapping.iri()),
-          s"Ambiguous range for property $key, multiple possible values for range ${types.filter(r => r._2.isEmpty).map(r=>shortName(r._1))}",
-          Some(LexicalInformation(amf.parser.Range(entryNode.range)))
+          s"Ambiguous range for property $key, multiple possible values for range ${types.filter(r => r._2.isEmpty).map(r => shortName(r._1))}",
+          entryNode
         )
       }
       if (types.count(r => r._2.isEmpty) == 0) {
@@ -462,13 +477,12 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
               sb.append(s"\n    - ${issue.message}")
             }
         }
-        currentValidation.reportConstraintFailure(
-          SeverityLevels.VIOLATION,
+        ctx.violation(
           ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
           nodeId.get,
           Some(mapping.iri()),
           sb.mkString,
-          Some(LexicalInformation(amf.parser.Range(entryNode.range)))
+          entryNode
         )
       }
 
@@ -485,19 +499,20 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
     if (mapping.isRef) {
       resolver.resolve(root, value.toString(), mapping.referenceTarget.get) match {
         case Some(finalValue) => AmfScalar(finalValue, value.annotations)
-        case _                => {
-          val range=value.annotations.find(classOf[SourceAST]).map(v=>v.ast.range);
-          val ro:amf.parser.Range=amf.parser.Range(range.getOrElse(InputRange(0,0,0,0)));
-          currentValidation.reportConstraintFailure(
-            SeverityLevels.VIOLATION,
+        case _ =>
+          val lexical = value.annotations
+            .find(classOf[SourceAST])
+            .map(_.ast.range)
+            .map(range => Range(range))
+            .map(LexicalInformation)
+          ctx.violation(
             ParserSideValidations.DialectUnresolvableReference.id(),
             value.toString,
             Some(mapping.iri()),
             "Can not resolve reference:" + value.toString,
-            Some(LexicalInformation(ro))
+            lexical
           )
           value
-        }
       }
     } else {
       value
@@ -513,9 +528,9 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
 
 object DialectParser {
 
-  def apply(root: Root, header: RamlHeader, dialects: DialectRegistry, currentValidation: Validation): DialectParser = {
+  def apply(root: Root, header: RamlHeader, dialects: DialectRegistry)(implicit ctx: ParserContext): DialectParser = {
     dialects.get(header.text) match {
-      case Some(dialect) => new DialectParser(dialect, root, currentValidation)
+      case Some(dialect) => new DialectParser(dialect, root)
       case _             => throw new Exception(s"Unknown dialect ${header.text}")
     }
   }

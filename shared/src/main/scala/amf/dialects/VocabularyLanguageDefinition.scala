@@ -26,11 +26,14 @@ case class Declaration(override val shortName: String, override val namespace: N
 object ClassTerm extends Declaration("Class", Namespace.Owl) {
   val displayName: DialectPropertyMapping =
     str("displayName", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("name")))
-  val description: DialectPropertyMapping  = str("description", _.copy(namespace = Some(Namespace.Schema)))
+  val description: DialectPropertyMapping = str("description", _.copy(namespace = Some(Namespace.Schema)))
 
-  val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
+  val example: DialectPropertyMapping = str("example", _.copy(namespace = Some(Namespace.Schema), collection = true))
 
-  val `extends`: DialectPropertyMapping    = ref("extends", ClassTerm, _.copy(collection = true, rdfName = Some("subClassOf"), namespace = Some(Namespace.Rdfs)))
+  val `extends`: DialectPropertyMapping = ref(
+    "extends",
+    ClassTerm,
+    _.copy(collection = true, rdfName = Some("subClassOf"), namespace = Some(Namespace.Rdfs)))
 
   val `properties`: DialectPropertyMapping = ref("properties", PropertyTerm, _.copy(collection = true, jsonld = false))
 
@@ -42,13 +45,16 @@ object PropertyTerm extends Declaration("Property") {
 
   val description: DialectPropertyMapping = str("description", _.copy(namespace = Some(Namespace.Schema)))
 
-  val example: DialectPropertyMapping  = str("example", _.copy(namespace = Some(Namespace.Schema),collection = true))
+  val example: DialectPropertyMapping = str("example", _.copy(namespace = Some(Namespace.Schema), collection = true))
 
   val domain: DialectPropertyMapping =
     ref("domain", ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs), noRAML = true))
-  val range: DialectPropertyMapping = ref(
-    "range", ClassTerm, _.copy(collection = true,  namespace = Some(Namespace.Rdfs)))
-  val `extends`: DialectPropertyMapping = ref("extends", PropertyTerm, _.copy(collection = true, rdfName = Some("subPropertyOf"), namespace = Some(Namespace.Rdfs)))
+  val range: DialectPropertyMapping =
+    ref("range", ClassTerm, _.copy(collection = true, namespace = Some(Namespace.Rdfs)))
+  val `extends`: DialectPropertyMapping = ref(
+    "extends",
+    PropertyTerm,
+    _.copy(collection = true, rdfName = Some("subPropertyOf"), namespace = Some(Namespace.Rdfs)))
 
   val DATATYPE_PROPERTY = ValueType("http://www.w3.org/2002/07/owl#DatatypeProperty")
   val OBJECT_PROPERTY   = ValueType("http://www.w3.org/2002/07/owl#ObjectProperty")
@@ -71,20 +77,30 @@ object External extends VocabPartDialect("External") {
 
 object Vocabulary extends VocabPartDialect("Vocabulary") {
 
-  val base: DialectPropertyMapping            = str("base")
-  val vocabularyProperty: DialectPropertyMapping = str("vocabulary", _.copy(scalaNameOverride = Some("vocabularyProperty")))
-  val version: DialectPropertyMapping         = str("version")
+  val base: DialectPropertyMapping = str("base")
+  val vocabularyProperty: DialectPropertyMapping =
+    str("vocabulary", _.copy(scalaNameOverride = Some("vocabularyProperty")))
+  val version: DialectPropertyMapping = str("version")
   var usage: DialectPropertyMapping =
     str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
   var externals: DialectPropertyMapping =
     map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
   var classTerms: DialectPropertyMapping =
-    map("classTerms", ClassTerm.idProperty, ClassTerm, _.copy(rdfName = Some("classes"), noLastSegmentTrimInMaps = true))
+    map("classTerms",
+        ClassTerm.idProperty,
+        ClassTerm,
+        _.copy(rdfName = Some("classes"), noLastSegmentTrimInMaps = true))
   var propertyTerms: DialectPropertyMapping =
-    map("propertyTerms", PropertyTerm.idProperty, PropertyTerm, _.copy(rdfName = Some("properties"), noLastSegmentTrimInMaps = true))
+    map("propertyTerms",
+        PropertyTerm.idProperty,
+        PropertyTerm,
+        _.copy(rdfName = Some("properties"), noLastSegmentTrimInMaps = true))
 
   var externalTerms: DialectPropertyMapping =
-    map("externalTerms", PropertyTerm.idProperty, PropertyTerm, _.copy(rdfName = Some("externalEntities"), noRAML = true))
+    map("externalTerms",
+        PropertyTerm.idProperty,
+        PropertyTerm,
+        _.copy(rdfName = Some("externalEntities"), noRAML = true))
 
   withGlobalIdField("base")
   withType("http://www.w3.org/2002/07/owl#Ontology")
@@ -103,7 +119,7 @@ class VocabularyRefiner() extends Refiner {
     } yield {
       if (vocabularyTerm.id.indexOf("#") != -1) {
         val fragment = vocabularyTerm.id.split("#").last
-        if (fragment.indexOf(".") > -1)  {
+        if (fragment.indexOf(".") > -1) {
           resolver.resolveRef(fragment) match {
             case Some(resolvedId) => {
               vocabularyTerm.id = resolvedId
@@ -117,12 +133,14 @@ class VocabularyRefiner() extends Refiner {
     resolver match {
       case basicResolver: BasicResolver =>
         val externalEntities = basicResolver.resolvedExternals.map { resolvedId =>
-          val entity = new DomainEntity(None, new DialectNode("ExternalEntity", Namespace.Meta), Fields(), Annotations())
+          val entity =
+            new DomainEntity(None, new DialectNode("ExternalEntity", Namespace.Meta), Fields(), Annotations())
           entity.id = resolvedId
           entity
         }
-        voc.setArrayWithoutId(Vocabulary.externalTerms.field(), collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
-      case _  => // ignore
+        voc.setArrayWithoutId(Vocabulary.externalTerms.field(),
+                              collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
+      case _ => // ignore
     }
 
     // Set the domain of properties based on the 'properties' property fo class terms
@@ -140,7 +158,8 @@ object VocabularyLanguageDefinition
     extends Dialect("RAML 1.0 Vocabulary",
                     "",
                     Vocabulary,
-                    resolver = (root: Root, uses, currentValidation) => new BasicResolver(root, List(Vocabulary.externals), uses, currentValidation)) {
+                    resolver =
+                      (root: Root, uses, ctx) => new BasicResolver(root, List(Vocabulary.externals), uses)(ctx)) {
   refiner = {
     val ref = new VocabularyRefiner()
     Some(ref)

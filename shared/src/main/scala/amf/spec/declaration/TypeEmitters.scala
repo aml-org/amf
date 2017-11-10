@@ -843,11 +843,7 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     fs.entry(NodeShapeModel.Closed)
       .filter(_.value.annotations.contains(classOf[ExplicitField]))
-      .map(
-        f =>
-          result += MapEntryEmitter("additionalProperties",
-                                    (!node.closed).toString,
-                                    position = pos(f.value.annotations)))
+      .map(f => result += ValueEmitter("additionalProperties", f.negated))
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 
