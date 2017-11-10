@@ -1,18 +1,12 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.{
-  CustomDomainProperty,
-  DataNode,
-  DomainExtension,
-  ArrayNode => DataArrayNode,
-  ObjectNode => DataObjectNode,
-  ScalarNode => DataScalarNode
-}
+import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position
 import amf.remote.{Oas, Raml}
+import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
@@ -153,14 +147,27 @@ case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecO
       result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
     }
 
-    fs.entry(CustomDomainPropertyModel.Schema)
+    val shapeEmitters = fs.entry(CustomDomainPropertyModel.Schema)
       .map({ f =>
-        result += (spec.vendor match {
-          case Oas   => OasSchemaEmitter(f, ordering, Nil)
-          case Raml  => RamlSchemaEmitter(f, ordering, Nil)
+        spec.vendor match {
+          case Oas =>
+            // OAS we emit in the 'schema' property
+            Seq(OasSchemaEmitter(f, ordering, Nil))
+          case Raml =>
+            // we merge in the main body
+            val shape = f.value.value.asInstanceOf[Shape]
+            RamlTypeEmitter(shape, ordering, Nil, Nil).emitters() match {
+              case Seq(p: PartEmitter)                           => throw new Exception(s"IllegalTypeDeclarations found: $p")
+              case es if es.forall(_.isInstanceOf[EntryEmitter]) => es.collect { case e: EntryEmitter => e }
+              case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
+            }
           case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
-        })
-      })
+        }
+      }) match {
+      case Some(emitters) => emitters
+      case _              => Nil
+    }
+    result ++= shapeEmitters
 
     result ++= AnnotationsEmitter(property, ordering).emitters
 
