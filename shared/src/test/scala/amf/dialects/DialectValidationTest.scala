@@ -272,7 +272,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)
       AMFCompiler(
-        dialectExampleFile,
+        dialectFile,
         platform,
         RamlYamlHint,
         validation,
@@ -288,7 +288,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
       */
       validation.loadDialectValidationProfile(dialect.get)
-      validation.validate(model, dialect.get.name)
+      validation.validate(model, /*dialect.get.name*/ "RAML 1.0 Dialect")
     } flatMap { report =>
       println(report)
       assert(report.conforms)

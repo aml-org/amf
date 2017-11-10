@@ -127,8 +127,12 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           } else res = Some(ValueEmitter(mapping.name, FieldEntry(field, domainEntity.fields.getValue(field))))
         }
       } else {
-        if (mapping.collection) throw new RuntimeException("Not implemented yet")
-        else if (mapping.isMap) {
+        if (mapping.collection) {
+          value match {
+            case array: AmfArray   => res = Some(ObjectArrayEmitter(mapping, array))
+            case obj: DomainEntity => res = Some(ObjectKVEmitter(mapping, value.asInstanceOf[DomainEntity]))
+          }
+        } else if (mapping.isMap) {
           value match {
             case array: AmfArray =>
               res = Some(ObjectMapEmitter(mapping, array))
@@ -141,6 +145,21 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
     }
 
     res
+  }
+
+  case class ObjectArrayEmitter(mapping: DialectPropertyMapping, values: AmfArray) extends EntryEmitter {
+    override  def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        mapping.name,
+        _.list { l =>
+          values.values.foreach { case v: DomainEntity =>
+            ObjectEmitter(v).emit(l)
+          }
+        }
+      )
+    }
+
+    override def position(): Position = pos(values.annotations)
   }
 
   case class ObjectKVEmitter(mapping: DialectPropertyMapping, domainEntity: DomainEntity) extends EntryEmitter {
