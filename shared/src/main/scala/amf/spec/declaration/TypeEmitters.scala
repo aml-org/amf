@@ -131,6 +131,9 @@ case class RamlTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fi
 
 abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: SpecEmitterContext) {
+
+  val typeName: Option[String]
+
   def emitters(): Seq[EntryEmitter] = {
 
     val result = ListBuffer[EntryEmitter]()
@@ -168,6 +171,11 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
       })
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
+
+    fs.entry(ShapeModel.Inherits)
+      .fold(
+        typeName.foreach(value => result += MapEntryEmitter("type", value))
+      )(f => result += RamlShapeInheritsEmitter(f, ordering, references = references))
 
     result
   }
@@ -237,13 +245,6 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
     val fs                               = node.fields
 
-    // TODO annotation for original position?
-    if (node.annotations.contains(classOf[ExplicitField]))
-      result += MapEntryEmitter("type", "object")
-
-    fs.entry(NodeShapeModel.Inherits)
-      .map(f => result += RamlShapeInheritsEmitter(f, ordering, references = references))
-
     fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
@@ -271,6 +272,8 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     result
   }
+
+  override val typeName: Option[String] = node.annotations.find(classOf[ExplicitField]).map(_ => "object")
 }
 
 case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -312,13 +315,17 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
 case class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: SpecEmitterContext)
     extends RamlShapeEmitter(shape, ordering, references) {
-  override def emitters(): Seq[EntryEmitter] = super.emitters() :+ MapEntryEmitter("type", "any")
+  override def emitters(): Seq[EntryEmitter] = super.emitters() //:+ MapEntryEmitter("type", "any")
+
+  override val typeName: Option[String] = Some("any")
 }
 
 case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: SpecEmitterContext)
     extends RamlShapeEmitter(shape, ordering, references) {
-  override def emitters(): Seq[EntryEmitter] = super.emitters() :+ MapEntryEmitter("type", "nil")
+  override def emitters(): Seq[EntryEmitter] = super.emitters() //:+ MapEntryEmitter("type", "nil")
+
+  override val typeName: Option[String] = Some("nil")
 }
 
 trait RamlCommonOASFieldsEmitter {
@@ -337,23 +344,24 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     implicit spec: SpecEmitterContext)
     extends RamlShapeEmitter(scalar, ordering, references)
     with RamlCommonOASFieldsEmitter {
-  override def emitters(): Seq[EntryEmitter] = {
-    val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
+  override def emitters(): Seq[EntryEmitter] = {
     val fs = scalar.fields
 
     val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
-    fs.entry(ScalarShapeModel.DataType)
-      .map(
-        f =>
-          result += MapEntryEmitter(
-            "type",
-            typeDef,
-            position =
-              if (f.value.annotations.contains(classOf[Inferred])) ZERO
-              else
-                pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+    val typeEmitterOption = fs
+      .entry(ScalarShapeModel.DataType)
+      .flatMap(f =>
+        if (!f.value.annotations.contains(classOf[Inferred])) {
+          scalar.fields
+            .remove(ShapeModel.Inherits) // for scalar dont makes any sense write the inherits, because it always be another scalar with the same t
+          Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))
+        } else None) // TODO check this  - annotations of typeDef in parser
+
+    // use option for not alter the previous default order. (After resolution not any lexical info annotation remains here)
+
+    val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*) ++ typeEmitterOption
 
     emitOASFields(fs, result)
 
@@ -370,6 +378,8 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     result
   }
+
+  override val typeName: Option[String] = None //exceptional case for get the type (scalar) and format
 }
 
 case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -380,8 +390,6 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
     val fs = scalar.fields
-
-    result += MapEntryEmitter("type", "file")
 
     emitOASFields(fs, result)
 
@@ -397,6 +405,8 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
 
     result
   }
+
+  override val typeName: Option[String] = Some("file")
 }
 
 case class RamlShapeDependenciesEmitter(f: FieldEntry, ordering: SpecOrdering, props: ListMap[String, PropertyShape])(
@@ -454,10 +464,10 @@ case class RamlUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
     implicit spec: SpecEmitterContext)
     extends RamlShapeEmitter(shape, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
-    super.emitters() :+ MapEntryEmitter("type", "union") :+ RamlAnyOfShapeEmitter(shape,
-                                                                                  ordering,
-                                                                                  references = references)
+    super.emitters() :+ RamlAnyOfShapeEmitter(shape, ordering, references = references)
   }
+
+  override val typeName: Option[String] = Some("union")
 }
 
 case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -484,10 +494,10 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     val fs = array.fields
 
-    if (array.annotations.contains(classOf[ExplicitField]))
-      result += MapEntryEmitter("type", "array")
-
-    result += RamlItemsShapeEmitter(array, ordering, references)
+    fs.entry(ArrayShapeModel.Items)
+      .foreach(_ => {
+        result += RamlItemsShapeEmitter(array, ordering, references)
+      })
 
     fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
 
@@ -497,6 +507,8 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     result
   }
+
+  override val typeName: Option[String] = array.annotations.find(classOf[ExplicitField]).map(_ => "array")
 }
 
 case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -506,9 +518,6 @@ case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, refe
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
     val fs = tuple.fields
-
-    if (tuple.annotations.contains(classOf[ExplicitField]))
-      result += MapEntryEmitter("type", "array")
 
     result += RamlTupleItemsShapeEmitter(tuple, ordering, references)
     result += MapEntryEmitter("(tuple)", "true")
@@ -521,6 +530,8 @@ case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, refe
 
     result
   }
+
+  override val typeName: Option[String] = tuple.annotations.find(classOf[ExplicitField]).map(_ => "array")
 }
 
 case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -963,14 +974,9 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
     val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
     fs.entry(ScalarShapeModel.DataType)
-      .map(
-        f =>
-          result += MapEntryEmitter(
-            "type",
-            typeDef,
-            position =
-              if (f.value.annotations.contains(classOf[Inferred])) ZERO
-              else pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+      .foreach(f =>
+        if (!f.value.annotations.contains(classOf[Inferred]))
+          result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
     emitCommonFields(fs, result)
 

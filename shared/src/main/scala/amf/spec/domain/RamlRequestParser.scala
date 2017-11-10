@@ -15,7 +15,8 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlRequestParser(map: YMap, producer: () => Request, declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlRequestParser(map: YMap, producer: () => Request, declarations: Declarations)(
+    implicit ctx: ParserContext) {
 
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)
@@ -60,11 +61,12 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
+        val bodyMap = entry.value.value
+          .toMapRamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
-        entry.value.value.toMap
+        bodyMap
           .regex(
             ".*/.*",
             entries => {

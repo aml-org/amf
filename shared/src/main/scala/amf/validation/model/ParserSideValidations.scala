@@ -6,7 +6,7 @@ import amf.vocabulary.Namespace
 
 object ParserSideValidations {
 
-  val ExampleValidationErrorSpecification =  ValidationSpecification(
+  val ExampleValidationErrorSpecification = ValidationSpecification(
     (Namespace.AmfParser + "example-validation-error").iri(),
     "Example does not validate type",
     None,
@@ -14,7 +14,7 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
-  val UnsupportedExampleMediaTypeErrorSpecification =  ValidationSpecification(
+  val UnsupportedExampleMediaTypeErrorSpecification = ValidationSpecification(
     (Namespace.AmfParser + "unsupported-example-media-type").iri(),
     "Cannot validate example with unsupported media type",
     None,
@@ -69,40 +69,57 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
-  val levels: Map[String, Map[String,String]] = Map(
+  val levels: Map[String, Map[String, String]] = Map(
     ClosedShapeSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS -> SeverityLevels.VIOLATION,
-      ProfileNames.AMF -> SeverityLevels.VIOLATION
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     DialectAmbiguousRangeSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS -> SeverityLevels.VIOLATION,
-      ProfileNames.AMF -> SeverityLevels.VIOLATION
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    DialectExpectingMap.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    DialectUnresolvableReference.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    DialectNodeRangeShouldBeDialect.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     ParsingErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS -> SeverityLevels.VIOLATION,
-      ProfileNames.AMF -> SeverityLevels.VIOLATION
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     ExampleValidationErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS -> SeverityLevels.WARNING,
-      ProfileNames.AMF -> SeverityLevels.VIOLATION
+      ProfileNames.OAS  -> SeverityLevels.WARNING,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     UnsupportedExampleMediaTypeErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.WARNING,
-      ProfileNames.OAS -> SeverityLevels.WARNING,
-      ProfileNames.AMF -> SeverityLevels.WARNING
+      ProfileNames.OAS  -> SeverityLevels.WARNING,
+      ProfileNames.AMF  -> SeverityLevels.WARNING
     )
   )
-
 
   def validations: List[ValidationSpecification] = List(
     ClosedShapeSpecification,
     DialectAmbiguousRangeSpecification,
     ParsingErrorSpecification,
     ExampleValidationErrorSpecification,
-    UnsupportedExampleMediaTypeErrorSpecification
+    UnsupportedExampleMediaTypeErrorSpecification,
+    DialectExpectingMap,
+    DialectUnresolvableReference,
+    DialectNodeRangeShouldBeDialect
   )
 }
