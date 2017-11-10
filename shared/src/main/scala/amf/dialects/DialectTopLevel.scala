@@ -3,8 +3,8 @@ import amf.dialects._
 import amf.model.AmfScalar
 import amf.domain.dialects.DomainEntity
 object RAML_1_0_DialectTopLevel {
-  case class dialectObject(entity: DomainEntity = DomainEntity(DialectDefinition), 
-override val parent:Option[TopLevelObject] = None) 
+  case class dialectObject(entity: DomainEntity = DomainEntity(DialectDefinition),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def dialect(): Option[String] = entity.string(DialectDefinition.dialectProperty)
     def withDialect(value: String): dialectObject = { entity.set(DialectDefinition.dialectProperty.field() , AmfScalar(value)); this }
@@ -24,8 +24,8 @@ extends TopLevelObject(entity, parent){
     def withUses(value: String): dialectObject = { entity.set(DialectDefinition.uses.field() , AmfScalar(value)); this }
   }
 
-  case class ExternalObject(entity: DomainEntity = DomainEntity(External), 
-override val parent:Option[TopLevelObject] = None) 
+  case class ExternalObject(entity: DomainEntity = DomainEntity(External),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def name(): Option[String] = entity.string(External.name)
     def withName(value: String): ExternalObject = { entity.set(External.name.field() , AmfScalar(value)); this }
@@ -33,8 +33,8 @@ extends TopLevelObject(entity, parent){
     def withUri(value: String): ExternalObject = { entity.set(External.uri.field() , AmfScalar(value)); this }
   }
 
-  case class NodeDefinitionObject(entity: DomainEntity = DomainEntity(NodeDefinition), 
-override val parent:Option[TopLevelObject] = None) 
+  case class NodeDefinitionObject(entity: DomainEntity = DomainEntity(NodeDefinition),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def name(): Option[String] = entity.string(NodeDefinition.name)
     def withName(value: String): NodeDefinitionObject = { entity.set(NodeDefinition.name.field() , AmfScalar(value)); this }
@@ -48,8 +48,8 @@ extends TopLevelObject(entity, parent){
     def withIs(value: String): NodeDefinitionObject = { entity.set(NodeDefinition.traitProperty.field() , AmfScalar(value)); this }
   }
 
-  case class ClassObject(entity: DomainEntity = DomainEntity(ClassTerm), 
-override val parent:Option[TopLevelObject] = None) 
+  case class ClassObject(entity: DomainEntity = DomainEntity(ClassTerm),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def id(): Option[String] = entity.string(ClassTerm.idProperty)
     def withId(value: String): ClassObject = { entity.set(ClassTerm.idProperty.field() , AmfScalar(value)); this }
@@ -65,8 +65,8 @@ extends TopLevelObject(entity, parent){
     def withProperties(value: String): ClassObject = { entity.add(ClassTerm.properties.field() , AmfScalar(value)); this }
   }
 
-  case class PropertyObject(entity: DomainEntity = DomainEntity(PropertyTerm), 
-override val parent:Option[TopLevelObject] = None) 
+  case class PropertyObject(entity: DomainEntity = DomainEntity(PropertyTerm),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def id(): Option[String] = entity.string(PropertyTerm.idProperty)
     def withId(value: String): PropertyObject = { entity.set(PropertyTerm.idProperty.field() , AmfScalar(value)); this }
@@ -84,8 +84,8 @@ extends TopLevelObject(entity, parent){
     def withExtends(value: String): PropertyObject = { entity.add(PropertyTerm.`extends`.field() , AmfScalar(value)); this }
   }
 
-  case class PropertyMappingObject(entity: DomainEntity = DomainEntity(PropertyMapping), 
-override val parent:Option[TopLevelObject] = None) 
+  case class PropertyMappingObject(entity: DomainEntity = DomainEntity(PropertyMapping),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def name(): Option[String] = entity.string(PropertyMapping.name)
     def withName(value: String): PropertyMappingObject = { entity.set(PropertyMapping.name.field() , AmfScalar(value)); this }
@@ -116,8 +116,8 @@ extends TopLevelObject(entity, parent){
     def withDefaultValue(value: String): PropertyMappingObject = { entity.set(PropertyMapping.defaultValue.field() , AmfScalar(value)); this }
   }
 
-  case class DocumentObject(entity: DomainEntity = DomainEntity(MainNode), 
-override val parent:Option[TopLevelObject] = None) 
+  case class DocumentObject(entity: DomainEntity = DomainEntity(MainNode),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def document(): Option[DocumentContentDeclarationObject] = entity.entity(MainNode.document).map(DocumentContentDeclarationObject(_, Some(this)))
     def withDocument(value: DocumentContentDeclarationObject): DocumentObject = { entity.set(MainNode.document.field() , value.entity); this }
@@ -127,8 +127,8 @@ extends TopLevelObject(entity, parent){
     def withFragments(value: FragmentsDeclarationObject): DocumentObject = { entity.set(MainNode.fragment.field() , value.entity); this }
   }
 
-  case class DocumentContentDeclarationObject(entity: DomainEntity = DomainEntity(DocumentEncode), 
-override val parent:Option[TopLevelObject] = None) 
+  case class DocumentContentDeclarationObject(entity: DomainEntity = DomainEntity(DocumentEncode),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def declares(): Seq[DeclarationObject] = entity.entities(DocumentEncode.declares).map(DeclarationObject(_, Some(this)))
     def withDeclares(value: DeclarationObject): DocumentContentDeclarationObject = { entity.add(DocumentEncode.declares.field() , value.entity); this }
@@ -139,8 +139,8 @@ extends TopLevelObject(entity, parent){
       , e => NodeDefinitionObject(e,Some(this)))
   }
 
-  case class DeclarationObject(entity: DomainEntity = DomainEntity(NodeReference), 
-override val parent:Option[TopLevelObject] = None) 
+  case class DeclarationObject(entity: DomainEntity = DomainEntity(NodeReference),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def id(): Option[String] = entity.string(NodeReference.idProperty)
     def withId(value: String): DeclarationObject = { entity.set(NodeReference.idProperty.field() , AmfScalar(value)); this }
@@ -151,15 +151,15 @@ extends TopLevelObject(entity, parent){
       , e => NodeDefinitionObject(e,Some(this)))
   }
 
-  case class ModuleDeclarationObject(entity: DomainEntity = DomainEntity(ModuleDeclaration), 
-override val parent:Option[TopLevelObject] = None) 
+  case class ModuleDeclarationObject(entity: DomainEntity = DomainEntity(ModuleDeclaration),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def declares(): Seq[DeclarationObject] = entity.entities(ModuleDeclaration.declares).map(DeclarationObject(_, Some(this)))
     def withDeclares(value: DeclarationObject): ModuleDeclarationObject = { entity.add(ModuleDeclaration.declares.field() , value.entity); this }
   }
 
-  case class FragmentsDeclarationObject(entity: DomainEntity = DomainEntity(FragmentDeclaration), 
-override val parent:Option[TopLevelObject] = None) 
+  case class FragmentsDeclarationObject(entity: DomainEntity = DomainEntity(FragmentDeclaration),
+override val parent:Option[TopLevelObject] = None)
 extends TopLevelObject(entity, parent){
     def encodes(): Seq[DeclarationObject] = entity.entities(FragmentDeclaration.encodes).map(DeclarationObject(_, Some(this)))
     def withEncodes(value: DeclarationObject): FragmentsDeclarationObject = { entity.add(FragmentDeclaration.encodes.field() , value.entity); this }

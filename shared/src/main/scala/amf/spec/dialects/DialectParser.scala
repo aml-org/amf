@@ -167,7 +167,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
         resolver.resolveToEntity(root,entryNode.value.value.asInstanceOf[YScalar].text,mapping.referenceTarget.get).foreach(child=>{
           child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
           domainEntity.set(mapping.field(), child)
-          //parseNode(entryNode.value.value, child)
+          // parseNode(entryNode.value.value, child)
         })
       }
       else {
@@ -226,7 +226,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
           s"Expecting map node or scalar",
           Some(LexicalInformation(amf.parser.Range(node.range)))
         )
-      //case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
+      // case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
     }
   }
 
@@ -435,7 +435,7 @@ class DialectParser(val dialect: Dialect, root: Root, currentValidation: Validat
               entity = parentDomainEntity.get
             )))
 
-            //throw new Exception("")
+            // throw new Exception("")
 
           }
         }
