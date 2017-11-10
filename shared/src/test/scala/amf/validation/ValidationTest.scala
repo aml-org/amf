@@ -304,7 +304,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
     "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
     "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 2, ProfileNames.OAS)
+    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 2, ProfileNames.OAS),
+    "annotationTypes/invalid.jsonld"          -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+    "annotationTypes/valid.jsonld"            -> ExpectedReport(conforms = true, 0, ProfileNames.RAML)
   )
 
   for {

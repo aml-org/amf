@@ -338,6 +338,7 @@ abstract class RamlSpecParser(currentValidation: Validation) extends BaseSpecPar
               declarations: Declarations): CustomDomainProperty =
       ast.value.value match {
         case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
+        // @todo: this can be a scalar with a type expression, not a reference
         case scalar: YScalar =>
           LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
         case _ =>
