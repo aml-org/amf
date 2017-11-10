@@ -133,7 +133,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       case None            => guessMediaType(example)
     }
   }
-  
+
   protected def guessMediaType(example: Example): String = {
     Option(example.value) match {
       case Some(value) =>
@@ -143,7 +143,6 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       case None => "*/*"
     }
   }
-  
 
   protected def isXml(value: String) = value.startsWith("<")
 

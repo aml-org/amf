@@ -115,7 +115,7 @@ object DialectModuleDefinition extends DialectLanguageNode("module") {
     map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
   var nodeMappings: DialectPropertyMapping =
     map("nodeMappings", NodeDefinition.name, NodeDefinition, _.copy(isDeclaration = true))
-  //var raml: DialectPropertyMapping = obj("raml", MainNode, _.copy(required = true))
+  // var raml: DialectPropertyMapping = obj("raml", MainNode, _.copy(required = true))
   var uses: DialectPropertyMapping = str("uses", _.copy(required = false, jsonld = false))
 
   nameProvider = {
