@@ -72,9 +72,14 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     def parse(): DataType = {
       val dataType = DataType().adopted(root.location)
 
-      RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), false)
+      RamlTypeParser(map,
+                     "type",
+                     map,
+                     (shape: Shape) => shape.adopted(root.location),
+                     Declarations(),
+                     isAnnotation = false)
         .parse()
-        .foreach(dataType.withEncodes(_))
+        .foreach(dataType.withEncodes)
 
       dataType
     }

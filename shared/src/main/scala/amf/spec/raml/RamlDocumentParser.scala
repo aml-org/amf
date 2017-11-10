@@ -367,7 +367,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
 
       // We parse the node as if it were a data shape, this will also check the closed node condition including the
       // annotation type facets
-      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), declarations)
+      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), declarations, isAnnotation = true)
         .parse()
         .foreach({ shape =>
           custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))

@@ -36,9 +36,10 @@ case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrd
   override def emit(b: EntryBuilder): Unit = {
     b.complexEntry(
       b => {
+        val name = domainExtension.definedBy.name
         spec.vendor match {
-          case Raml  => b.scalar("(" + domainExtension.definedBy.name + ")")
-          case Oas   => raw(b, "x-" + domainExtension.definedBy.name)
+          case Raml  => b += "(" + name + ")"
+          case Oas   => b += "x-" + name
           case other => throw new IllegalArgumentException(s"Unsupported annotation format $other")
         }
       },

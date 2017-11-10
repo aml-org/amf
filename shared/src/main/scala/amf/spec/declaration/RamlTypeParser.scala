@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation.{toString => _, _}
+import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
 import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -460,9 +460,9 @@ case class RamlTypeParser(ast: YPart,
         case array: ArrayShape   => array.items
       }
       maybeShape.map {
-        case array: ArrayShape   => shape.toMatrixShape
-        case matrix: MatrixShape => shape.toMatrixShape
-        case other: Shape        => shape
+        case _: ArrayShape  => shape.toMatrixShape
+        case _: MatrixShape => shape.toMatrixShape
+        case _: Shape       => shape
       }
     }
   }
