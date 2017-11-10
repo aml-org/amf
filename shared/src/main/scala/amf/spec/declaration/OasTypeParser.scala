@@ -23,7 +23,8 @@ import scala.collection.mutable
 object OasTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations, oasNode: String = "schema")(
       implicit ctx: ParserContext): OasTypeParser =
-    OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations, oasNode)
+    OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations, oasNode)(
+      ctx.toOas)
 }
 
 case class OasTypeParser(ast: YPart,

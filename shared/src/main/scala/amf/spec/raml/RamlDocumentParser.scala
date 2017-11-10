@@ -11,7 +11,6 @@ import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YValueOps}
-import amf.remote.{Raml, Vendor}
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
