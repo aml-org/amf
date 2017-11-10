@@ -56,9 +56,15 @@ case class ParserContext(validation: Validation, vendor: Vendor) extends Illegal
   }
 
   /** Validate closed shape. */
-  def closedShape(node: String, ast: YMap, shape: String): Unit = {
+  def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit = {
     syntax.nodes.get(shape) match {
-      case Some(properties) =>
+      case Some(props) =>
+        val properties = if (annotation) {
+          props ++ syntax.nodes("annotation")
+        } else {
+          props
+        }
+
         ast.entries.foreach { entry =>
           val key: String = entry.key
           if (spec.ignore(shape, key)) {
