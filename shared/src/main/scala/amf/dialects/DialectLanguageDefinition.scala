@@ -13,7 +13,7 @@ import amf.vocabulary.Namespace
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
   id = Some((namespace + shortName).iri())
-  def refMap(name: String, isDeclaration: Boolean): DialectPropertyMapping = map(name, NodeReference.idProperty, NodeReference, _.copy(required = true, isDeclaration = isDeclaration))
+  def refMap(name: String, isDeclaration: Boolean, required: Boolean = true): DialectPropertyMapping = map(name, NodeReference.idProperty, NodeReference, _.copy(required = required, isDeclaration = isDeclaration))
 }
 
 object VocabImport extends DialectLanguageNode("VocabImport") {
@@ -76,9 +76,8 @@ object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration") {
   val encodes: DialectPropertyMapping = refMap("encodes", isDeclaration = false)
 }
 object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") {
-  val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true)
-  var encodes: DialectPropertyMapping =
-    iri("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
+  val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true, required = false)
+  var encodes: DialectPropertyMapping = iri("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
 }
 
 object MainNode extends DialectLanguageNode("Document") {
