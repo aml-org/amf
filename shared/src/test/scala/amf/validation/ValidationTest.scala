@@ -30,52 +30,76 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val payloadsPath     = "file://shared/src/test/resources/payloads/"
 
   test("Loading and serializing validations") {
-    val expectedFile = "validation_profile_example_gold.raml"
-    val exampleFile  = "validation_profile_example.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val validation = Validation(platform)
+    val expectedFile             = "validation_profile_example_gold.raml"
+    val exampleFile              = "validation_profile_example.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
+      AMFCompiler(basePath + exampleFile,
+                  platform,
+                  RamlYamlHint,
+                  Validation(platform),
+                  None,
+                  None,
+                  platform.dialectsRegistry).build()
+    } flatMap [String] { unit: BaseUnit =>
       AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of encodes") {
-    val expectedFile = "validation_profile_example_gold.raml"
-    val exampleFile  = "validation_profile_example.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val validation = Validation(platform)
+    val expectedFile             = "validation_profile_example_gold.raml"
+    val exampleFile              = "validation_profile_example.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit: BaseUnit =>
+      AMFCompiler(basePath + exampleFile,
+                  platform,
+                  RamlYamlHint,
+                  Validation(platform),
+                  None,
+                  None,
+                  platform.dialectsRegistry).build()
+    } flatMap [String] { unit: BaseUnit =>
       AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of range") {
-    val expectedFile = "validation_profile_example_gold.raml"
-    val exampleFile  = "validation_profile_example.raml"
-    val validation = Validation(platform)
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val expectedFile             = "validation_profile_example_gold.raml"
+    val exampleFile              = "validation_profile_example.raml"
+    val validation               = Validation(platform)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
+      AMFCompiler(basePath + exampleFile,
+                  platform,
+                  RamlYamlHint,
+                  Validation(platform),
+                  None,
+                  None,
+                  platform.dialectsRegistry).build()
+    } flatMap [String] { unit: BaseUnit =>
       AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with union type") {
-    val expectedFile = "validation_profile_example_gold.raml"
-    val exampleFile  = "validation_profile_example.raml"
-    val validation = Validation(platform)
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val expectedFile             = "validation_profile_example_gold.raml"
+    val exampleFile              = "validation_profile_example.raml"
+    val validation               = Validation(platform)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
+      AMFCompiler(basePath + exampleFile,
+                  platform,
+                  RamlYamlHint,
+                  Validation(platform),
+                  None,
+                  None,
+                  platform.dialectsRegistry).build()
+    } flatMap [String] { unit: BaseUnit =>
       AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)
@@ -116,7 +140,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(model, "RAML 1.0 Vocabulary")
     } yield {
       assert(!report.conforms)
-      assert(report.results.size==3)
+      assert(report.results.size == 3)
     }
   }
 
@@ -218,24 +242,24 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   val payloadValidations = Map(
-    ("A", "a_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("A", "a_invalid.json") -> ExpectedReport(conforms = false, 4, "Payload"),
-    ("B", "b_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("B", "b_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("B", "b_valid.yaml")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("B", "b_invalid.yaml") -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("C", "c_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("C", "c_invalid.json") -> ExpectedReport(conforms = false, 8, "Payload"),
-    ("D", "d_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("D", "d_invalid.json") -> ExpectedReport(conforms = false, 7, "Payload"),
-    ("E", "e_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("E", "e_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("F", "f_valid.json")   -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("F", "f_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("G", "g1_valid.json")  -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("G", "g2_valid.json")  -> ExpectedReport(conforms = true,  0, "Payload"),
-    ("G", "g_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("H", "h_invalid.json") -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("A", "a_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("A", "a_invalid.json")               -> ExpectedReport(conforms = false, 4, "Payload"),
+    ("B", "b_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("B", "b_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("B", "b_invalid.yaml")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, "Payload"),
+    ("D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("D", "d_invalid.json")               -> ExpectedReport(conforms = false, 7, "Payload"),
+    ("E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("F", "f_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("G", "g1_valid.json")                -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("G", "g2_valid.json")                -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("G", "g_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
     ("PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, "Payload"),
     ("PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, "Payload")
   )
@@ -249,19 +273,26 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "yaml" => PayloadYamlHint
       }
       val pair = for {
-        library  <- AMFCompiler(payloadsPath + "payloads.raml", platform, hint, Validation(platform)).build()
-        payload  <- AMFCompiler(payloadsPath + payloadFile, platform, hint, Validation(platform)).build()
+        library <- AMFCompiler(payloadsPath + "payloads.raml", platform, hint, Validation(platform)).build()
+        payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, Validation(platform)).build()
       } yield {
-        val targetType = library.asInstanceOf[Module].declares.find {
-          case s:Shape => s.name == shapeName
-        }.get
+        val targetType = library
+          .asInstanceOf[Module]
+          .declares
+          .find {
+            case s: Shape => s.name == shapeName
+          }
+          .get
         (PayloadValidation(platform, targetType.asInstanceOf[Shape]), payload)
       }
 
-      pair flatMap { case (validation, payload) =>
-        validation.validate(payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode])
+      pair flatMap {
+        case (validation, payload) =>
+          validation.validate(payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode])
       } map { report =>
-        report.results.foreach { result => assert(result.position.isDefined) }
+        report.results.foreach { result =>
+          assert(result.position.isDefined)
+        }
         assert(report.conforms == expectedReport.conforms)
         assert(report.results.length == expectedReport.numErrors)
       }
@@ -270,9 +301,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("payload parsing test") {
     for {
-      content      <- platform.resolve(payloadsPath + "b_valid.yaml", None)
-      filePayload  <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, Validation(platform)).build()
-      textPayload  <- AMFCompiler(payloadsPath + "b_valid.yaml", TrunkPlatform(content.stream.toString), PayloadYamlHint, Validation(platform)).build()
+      content <- platform.resolve(payloadsPath + "b_valid.yaml", None)
+      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, Validation(platform))
+        .build()
+      textPayload <- AMFCompiler(payloadsPath + "b_valid.yaml",
+                                 TrunkPlatform(content.stream.toString),
+                                 PayloadYamlHint,
+                                 Validation(platform)).build()
     } yield {
       val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, GenerationOptions()))
       val textJson = JsonRender.render(GraphEmitter.emit(textPayload, GenerationOptions()))
@@ -304,7 +339,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
     "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
     "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 2, ProfileNames.OAS)
+    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 2, ProfileNames.OAS),
+    "annotationTypes/invalid.jsonld"          -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+    "annotationTypes/valid.jsonld"            -> ExpectedReport(conforms = true, 0, ProfileNames.RAML)
   )
 
   for {
@@ -317,10 +354,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   private def validate(file: String, expectedReport: ExpectedReport) = {
     platform.resolve(examplesPath + file, None).flatMap { data =>
-      val validation = Validation(platform)
-      val model = data.stream.toString
+      val validation           = Validation(platform)
+      val model                = data.stream.toString
       val effectiveValidations = validation.computeValidations(expectedReport.profile)
-      val shapes = validation.shapesGraph(effectiveValidations)
+      val shapes               = validation.shapesGraph(effectiveValidations)
       platform.validator.report(
         model,
         "application/ld+json",
@@ -334,8 +371,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Example validations test") {
     for {
-      library  <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, Validation(platform)).build()
-      results  <- ExamplesValidation(library, platform).validate()
+      library <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, Validation(platform))
+        .build()
+      results <- ExamplesValidation(library, platform).validate()
     } yield {
       assert(results.length == 4)
       assert(results.count(_.level == SeverityLevels.WARNING) == 1)

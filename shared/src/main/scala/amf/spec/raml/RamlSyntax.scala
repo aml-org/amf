@@ -190,8 +190,7 @@ object RamlSyntax extends SpecSyntax {
     "annotation" -> Set(
       "displayName",
       "description",
-      "allowedTargets",
-      "type"
+      "allowedTargets"
     )
   )
 }

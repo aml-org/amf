@@ -170,7 +170,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
           .foreach(child => {
             child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
             domainEntity.set(mapping.field(), child)
-            //parseNode(entryNode.value.value, child)
+            // parseNode(entryNode.value.value, child)
           })
       } else {
         entryNode.value.value match {
@@ -231,7 +231,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
           s"Expecting map node or scalar",
           node
         )
-      //case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
+      // case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
     }
   }
 
@@ -451,7 +451,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
                  entity = parentDomainEntity.get
                )))
 
-            //throw new Exception("")
+            // throw new Exception("")
 
           }
         }

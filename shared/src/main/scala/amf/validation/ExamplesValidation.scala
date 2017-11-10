@@ -23,11 +23,14 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
     val (supportedExamples, unsupportedExamples) = findExamples()
 
     // Unsupported examples are transformed into validation WARNINGS, this can be changed with a profile
-    val unsupportedExamplesValidations = unsupportedExamples.map { case (_, example, mediaType) => unsupportedExampleReport(example, mediaType)}
+    val unsupportedExamplesValidations = unsupportedExamples.map {
+      case (_, example, mediaType) => unsupportedExampleReport(example, mediaType)
+    }
 
     // We run regular payload validation for the supported examples
-    val listSupportedResults = supportedExamples map { case (shape, example, mediaType) =>
-      validateExample(shape, example, mediaType)
+    val listSupportedResults = supportedExamples map {
+      case (shape, example, mediaType) =>
+        validateExample(shape, example, mediaType)
     }
     val futureResult = Future.sequence(listSupportedResults)
 
@@ -37,29 +40,35 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
     }
   }
 
-  protected def findExamples(): (Seq[(Shape, Example, String)],Seq[(Shape, Example, String)]) = {
-    val allExamples: Seq[(Shape, Example, String)] = model.findByType((Namespace.Shapes + "Shape").iri()) flatMap { case shape: Shape =>
-      shape.examples.map { example =>
-        (shape, example, mediaType(example))
-      }
+  protected def findExamples(): (Seq[(Shape, Example, String)], Seq[(Shape, Example, String)]) = {
+    val allExamples: Seq[(Shape, Example, String)] = model.findByType((Namespace.Shapes + "Shape").iri()) flatMap {
+      case shape: Shape =>
+        shape.examples.map { example =>
+          (shape, example, mediaType(example))
+        }
     }
-    val supportedExamples = allExamples.filter { case (_, example, mediaType) =>
-      validExample(example, mediaType)
+    val supportedExamples = allExamples.filter {
+      case (_, example, mediaType) =>
+        validExample(example, mediaType)
     }
-    val unsupportedExamples = allExamples.filter { case (_, example, mediaType) =>
-      unsupportedExample(example, mediaType)
+    val unsupportedExamples = allExamples.filter {
+      case (_, example, mediaType) =>
+        unsupportedExample(example, mediaType)
     }
     (supportedExamples, unsupportedExamples)
   }
 
-  protected def validateExample(shape: Shape, example: Example, mediaType: String): Future[Option[AMFValidationResult]] = {
+  protected def validateExample(shape: Shape,
+                                example: Example,
+                                mediaType: String): Future[Option[AMFValidationResult]] = {
     val exampleValidation = Validation(platform)
-    val hint = if (mediaType.indexOf("json") > -1) PayloadJsonHint
-               else                                PayloadYamlHint
+    val hint =
+      if (mediaType.indexOf("json") > -1) PayloadJsonHint
+      else PayloadYamlHint
     val overridePlatform = TrunkPlatform(example.value)
     try {
       val compiler = AMFCompiler("http://amfparser.org/test_payload", overridePlatform, hint, exampleValidation)
-      compiler.build() flatMap  { payload =>
+      compiler.build() flatMap { payload =>
         // we are parsing using Payload hint, this MUST be a payload fragment encoding a data node
         val payloadDataNode = payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode]
         PayloadValidation(platform, shape).validate(payloadDataNode) map { report =>
@@ -80,7 +89,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
         }
       }
     } catch {
-      case e:Exception => payloadParsingException(e, example)
+      case e: Exception => payloadParsingException(e, example)
     }
   }
 
@@ -133,17 +142,16 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       case None            => guessMediaType(example)
     }
   }
-  
+
   protected def guessMediaType(example: Example): String = {
     Option(example.value) match {
       case Some(value) =>
-        if (isXml(value))       "application/xml"
+        if (isXml(value)) "application/xml"
         else if (isJson(value)) "application/json"
-        else                    "text/vnd.yaml" // by default, we will try to parse it as YAML
+        else "text/vnd.yaml" // by default, we will try to parse it as YAML
       case None => "*/*"
     }
   }
-  
 
   protected def isXml(value: String) = value.startsWith("<")
 
