@@ -81,7 +81,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       None,
       None,
       platform.dialectsRegistry
-    ).build() flatMap  { model =>
+    ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
       assert(report.conforms)
@@ -100,7 +100,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       None,
       None,
       platform.dialectsRegistry
-    ).build() flatMap  { model =>
+    ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
       assert(!report.conforms)
@@ -125,10 +125,10 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
    */
 
   test("Custom dialect can be validated") {
-    val validation = Validation(platform)
+    val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
-    val dialectFile = "file://shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml"
-    val dialectExampleFile = "file://shared/src/test/resources/dialects/mule_configuration/example.raml"
+    val dialectFile              = "file://shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml"
+    val dialectExampleFile       = "file://shared/src/test/resources/dialects/mule_configuration/example.raml"
 
     platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)
@@ -141,12 +141,12 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         None,
         platform.dialectsRegistry
       ).build()
-    } flatMap  { model =>
+    } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
       validation.validate(model, dialect.get.name)
     } flatMap { report =>
-        assert(!report.conforms)
-        assert(report.results.length == 1)
+      assert(!report.conforms)
+      assert(report.results.length == 1)
     }
   }
 
@@ -161,7 +161,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       None,
       None,
       platform.dialectsRegistry
-    ).build() flatMap  { model =>
+    ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
       assert(report.conforms)
@@ -183,13 +183,13 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
-  */
-  
+   */
+
   test("Custom dialect can be validated (k8)") {
-    val validation = Validation(platform)
+    val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
-    val dialectFile = "file://shared/src/test/resources/vocabularies/k8/dialects/pod.raml"
-    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/k8/examples/pod.raml"
+    val dialectFile              = "file://shared/src/test/resources/vocabularies/k8/dialects/pod.raml"
+    val dialectExampleFile       = "file://shared/src/test/resources/vocabularies/k8/examples/pod.raml"
 
     platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)
@@ -202,7 +202,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         None,
         platform.dialectsRegistry
       ).build()
-    } flatMap  { model =>
+    } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
       validation.validate(model, dialect.get.name)
     } flatMap { report =>
@@ -212,10 +212,10 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom dialect can be validated (amc2)") {
-    val validation = Validation(platform)
+    val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
-    val dialectFile = "file://shared/src/test/resources/vocabularies/amc2/dialect.raml"
-    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/amc2/example.raml"
+    val dialectFile              = "file://shared/src/test/resources/vocabularies/amc2/dialect.raml"
+    val dialectExampleFile       = "file://shared/src/test/resources/vocabularies/amc2/example.raml"
 
     platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)
@@ -228,7 +228,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         None,
         platform.dialectsRegistry
       ).build()
-    } flatMap  { model =>
+    } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
       validation.validate(model, dialect.get.name)
     } flatMap { report =>
@@ -238,10 +238,10 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom dialect can be validated (amf-eng-demos)") {
-    val validation = Validation(platform)
+    val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
-    val dialectFile = "file://shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
-    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/eng_demos/demo.raml"
+    val dialectFile              = "file://shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
+    val dialectExampleFile       = "file://shared/src/test/resources/vocabularies/eng_demos/demo.raml"
 
     platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)
@@ -254,10 +254,43 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         None,
         platform.dialectsRegistry
       ).build()
-    } flatMap  { model =>
+    } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
       validation.validate(model, dialect.get.name)
     } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("Custom dialect can be validated (evented_apis)") {
+    val validation               = Validation(platform)
+    var dialect: Option[Dialect] = None
+    val dialectFile              = "file://shared/src/test/resources/vocabularies/evented_apis/dialect.raml"
+    val dialectExampleFile       = "file://shared/src/test/resources/vocabularies/evented_apis/example/example.raml"
+
+    platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler(
+        dialectExampleFile,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None,
+        platform.dialectsRegistry
+      ).build()
+    } flatMap { model =>
+      /*
+      AMFDumper(model, Amf, Json, GenerationOptions()).dumpToString map { json =>
+        println("GENERATED")
+        println(json)
+      }
+       */
+      validation.loadDialectValidationProfile(dialect.get)
+      validation.validate(model, dialect.get.name)
+    } flatMap { report =>
+      println(report)
       assert(report.conforms)
       assert(report.results.isEmpty)
     }
@@ -279,5 +312,5 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
-  */
+ */
 }

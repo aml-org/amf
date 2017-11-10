@@ -414,6 +414,49 @@
                         "@value": "path"
                       }
                     ],
+                    "http://raml.org/vocabularies/http#schema": [
+                      {
+                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#ScalarShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://raml.org/vocabularies/shapes#Shape",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "schema"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(9,6)-(11,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
                         "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/source-map",
@@ -424,12 +467,12 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://www.w3.org/ns/hydra/core#required"
+                                "@value": "http://raml.org/vocabularies/http#schema"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(10,8)-(11,0)]"
+                                "@value": "[(9,6)-(11,0)]"
                               }
                             ]
                           },
@@ -442,6 +485,18 @@
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(9,6)-(11,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/hydra/core#required"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,8)-(11,0)]"
                               }
                             ]
                           }

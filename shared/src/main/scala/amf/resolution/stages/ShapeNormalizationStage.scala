@@ -70,17 +70,18 @@ class ShapeNormalizationStage(profile: String)
   }
 
   protected def expandInherits(shape: Shape): Unit = {
-    val oldInherits = shape.fields.getValue(NodeShapeModel.Inherits)
+    val oldInherits = shape.fields.getValue(ShapeModel.Inherits)
     if (Option(oldInherits).isDefined) {
-      val newInherits = shape.inherits.map(shape => expand(shape))
-      shape.setArrayWithoutId(NodeShapeModel.Inherits, newInherits, oldInherits.annotations)
+      val newInherits = shape.inherits.map(expand)
+      shape.setArrayWithoutId(ShapeModel.Inherits, newInherits, oldInherits.annotations)
     }
   }
 
   protected def expandArray(array: ArrayShape): ArrayShape = {
     expandInherits(array)
     val oldItems = array.fields.getValue(ArrayShapeModel.Items)
-    array.fields.setWithoutId(ArrayShapeModel.Items, expand(array.items), oldItems.annotations)
+    if (Option(oldItems).isDefined || (Option(oldItems).isEmpty && array.inherits.isEmpty)) // we check the items, but if this shape inherits from another array with items, this is not mandatory locally
+      array.fields.setWithoutId(ArrayShapeModel.Items, expand(array.items), oldItems.annotations)
     array
   }
 
@@ -198,32 +199,34 @@ class ShapeNormalizationStage(profile: String)
     if (Option(array.inherits).isDefined && array.inherits.nonEmpty) {
       canonicalInheritance(array)
     } else {
-      val newItems = canonical(array.items)
-      array.annotations += ExplicitField()
-      array.fields.remove(ArrayShapeModel.Items)
-      newItems match {
-        case unionItems: UnionShape =>
-          // The canonical items is a union, we need to push it to the top
-          // array[items: Union(a,b,c)] ==> Union(array[items:a], array[items:b], array[items:c])
-          val newUnionItems = unionItems.anyOf.map { item =>
-            val newArray = array.cloneShape().withItems(item)
-            newArray.annotations += ExplicitField()
-            newArray
-          }
-          unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
-          Option(array.fields.getValue(ShapeModel.Name)) match {
-            case Some(name) => unionItems.withName(name.toString)
-            case _          => unionItems
-          }
-        case arrayItems: ArrayShape =>
-          // Array items -> array must become a Matrix
-          array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
-          array.toMatrixShape
-        case _ =>
-          // No union, we just set the new canonical items
-          array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
-          array
-      }
+      Option(array.items).fold(array.asInstanceOf[Shape])(i => {
+        val newItems = canonical(i)
+        array.annotations += ExplicitField()
+        array.fields.remove(ArrayShapeModel.Items)
+        newItems match {
+          case unionItems: UnionShape =>
+            // The canonical items is a union, we need to push it to the top
+            // array[items: Union(a,b,c)] ==> Union(array[items:a], array[items:b], array[items:c])
+            val newUnionItems = unionItems.anyOf.map { item =>
+              val newArray = array.cloneShape().withItems(item)
+              newArray.annotations += ExplicitField()
+              newArray
+            }
+            unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
+            Option(array.fields.getValue(ShapeModel.Name)) match {
+              case Some(name) => unionItems.withName(name.toString)
+              case _          => unionItems
+            }
+          case arrayItems: ArrayShape =>
+            // Array items -> array must become a Matrix
+            array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
+            array.toMatrixShape
+          case _ =>
+            // No union, we just set the new canonical items
+            array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
+            array
+        }
+      })
     }
   }
 
