@@ -6,13 +6,13 @@ import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.metadata.document.BaseUnitModel
 import amf.parser.YValueOps
+import amf.spec.ParserContext
 import amf.spec.declaration.ReferencesParser
-import amf.validation.Validation
 
 /**
   *
   */
-case class OasModuleParser(root: Root, currentValidation: Validation) extends OasSpecParser(currentValidation) {
+case class OasModuleParser(root: Root)(implicit val ctx: ParserContext) extends OasSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))

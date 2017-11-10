@@ -10,9 +10,8 @@ import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.domain.RamlExamplesParser
-import amf.spec.oas.{OasSpecParser, OasSpecParserContext, OasSyntax}
-import amf.spec.{Declarations, OasDefinitions}
-import amf.validation.Validation
+import amf.spec.oas.OasSpecParser
+import amf.spec.{Declarations, OasDefinitions, ParserContext}
 import amf.vocabulary.Namespace
 import org.yaml.model._
 
@@ -22,18 +21,10 @@ import scala.collection.mutable
   * OpenAPI Type Parser.
   */
 object OasTypeParser {
-  def apply(entry: YMapEntry,
-            adopt: Shape => Unit,
-            declarations: Declarations,
-            currentValidation: Validation,
-            oasNode: String = "schema"): OasTypeParser =
-    OasTypeParser(entry,
-                  entry.key.value.toScalar.text,
-                  entry.value.value.toMap,
-                  adopt,
-                  declarations,
-                  currentValidation,
-                  oasNode)
+  def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations, oasNode: String = "schema")(
+      implicit ctx: ParserContext): OasTypeParser =
+    OasTypeParser(entry, entry.key.value.toScalar.text, entry.value.value.toMap, adopt, declarations, oasNode)(
+      ctx.toOas)
 }
 
 case class OasTypeParser(ast: YPart,
@@ -41,12 +32,8 @@ case class OasTypeParser(ast: YPart,
                          map: YMap,
                          adopt: Shape => Unit,
                          declarations: Declarations,
-                         currentValidation: Validation,
-                         oasNode: String)
-    extends OasSpecParser(currentValidation)
-    with OasSyntax {
-
-  override implicit val spec = OasSpecParserContext
+                         oasNode: String)(implicit val ctx: ParserContext)
+    extends OasSpecParser {
 
   def parse(): Option[Shape] = {
 
@@ -62,7 +49,7 @@ case class OasTypeParser(ast: YPart,
 
     parsedShape match {
       case Some(shape: Shape) =>
-        validateClosedShape(currentValidation, shape.id, map, oasNode)
+        ctx.closedShape(shape.id, map, oasNode)
         Some(shape)
       case None => None
     }
@@ -229,20 +216,14 @@ case class OasTypeParser(ast: YPart,
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(YScalar(s"item$index", true, node.range)), node)
-                    OasTypeParser(entry,
-                                  item => item.adopted(shape.id + "/items/" + index),
-                                  declarations,
-                                  currentValidation).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(seq))
 
-            case _ =>
-              parsingErrorReport(currentValidation,
-                                 shape.id,
-                                 "Unions are built from multiple shape nodes",
-                                 Some(entry.value.value))
+            case other =>
+              ctx.violation(shape.id, "Unions are built from multiple shape nodes", other)
           }
         }
       )
@@ -276,7 +257,7 @@ case class OasTypeParser(ast: YPart,
         case None =>
           val arrayShape = ArrayShape()
           adopt(arrayShape)
-          parsingErrorReport(currentValidation, arrayShape.id, "Cannot parse data arrangement shape", Some(ast))
+          ctx.violation(arrayShape.id, "Cannot parse data arrangement shape", ast)
           arrayShape
         case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt, declarations).parse()
         case Some(Right(array)) => ArrayShapeParser(array, map, adopt, declarations).parse()
@@ -314,7 +295,7 @@ case class OasTypeParser(ast: YPart,
           val items = entry.value.value.toMap.entries.zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, item => item.adopted(item.id + "/items/" + index), declarations, currentValidation)
+                OasTypeParser(elem, item => item.adopted(item.id + "/items/" + index), declarations)
                   .parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
@@ -349,7 +330,7 @@ case class OasTypeParser(ast: YPart,
 
       val finalShape = for {
         entry <- map.key("items")
-        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), declarations, currentValidation)
+        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), declarations)
           .parse()
       } yield {
         item match {
@@ -364,7 +345,7 @@ case class OasTypeParser(ast: YPart,
         case None =>
           val arrayShape = ArrayShape()
           adopt(arrayShape)
-          parsingErrorReport(currentValidation, arrayShape.id, "Cannot parse data arrangement shape", Some(map))
+          ctx.violation(arrayShape.id, "Cannot parse data arrangement shape", map)
           arrayShape
       }
     }
@@ -457,7 +438,7 @@ case class OasTypeParser(ast: YPart,
       array.values.flatMap(
         map =>
           declarationsRef(map.toMap)
-            .orElse(OasTypeParser(map, "", map.toMap, adopt, declarations, currentValidation, "schema").parse()))
+            .orElse(OasTypeParser(map, "", map.toMap, adopt, declarations, "schema").parse()))
 
     private def declarationsRef(entries: YMap): Option[Shape] = {
       entries
@@ -491,7 +472,7 @@ case class OasTypeParser(ast: YPart,
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.value.toScalar.text).iri())
 
-      OasTypeParser(entry, shape => shape.adopted(property.id), declarations, currentValidation)
+      OasTypeParser(entry, shape => shape.adopted(property.id), declarations)
         .parse()
         .foreach(property.set(PropertyShapeModel.Range, _))
 
@@ -503,7 +484,7 @@ case class OasTypeParser(ast: YPart,
     def withTypeDef(value: TypeDef): Unit = typeDef = value
   }
 
-  abstract class ShapeParser() {
+  abstract class ShapeParser(implicit ctx: ParserContext) {
 
     val shape: Shape
     val map: YMap
@@ -542,7 +523,7 @@ case class OasTypeParser(ast: YPart,
         "xml",
         entry => {
           val xmlSerializer: XMLSerializer =
-            XMLSerializerParser(shape.name, entry.value.value.toMap, currentValidation).parse()
+            XMLSerializerParser(shape.name, entry.value.value.toMap).parse()
           shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
         }
       )
@@ -587,8 +568,8 @@ case class OasTypeParser(ast: YPart,
         "x-schema", { entry =>
           entry.value.value match {
             case str: YScalar => shape.withRaw(str.text)
-            case _ =>
-              parsingErrorReport(currentValidation, shape.id, "Cannot parse non string schema shape", Some(map))
+            case other =>
+              ctx.violation(shape.id, "Cannot parse non string schema shape", other)
               shape.withRaw("")
           }
         }
@@ -599,8 +580,8 @@ case class OasTypeParser(ast: YPart,
           entry.value.value match {
             case str: YScalar =>
               shape.withMediaType(str.text)
-            case _ =>
-              parsingErrorReport(currentValidation, shape.id, "Cannot parse non string schema shape", Some(map))
+            case other =>
+              ctx.violation(shape.id, "Cannot parse non string schema shape", other)
               shape.withMediaType("*/*")
           }
         }

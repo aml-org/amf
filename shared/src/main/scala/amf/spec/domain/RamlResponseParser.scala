@@ -3,29 +3,27 @@ package amf.spec.domain
 import amf.domain.{Annotations, Parameter, Payload, Response}
 import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.model.AmfArray
-import amf.spec.Declarations
+import amf.parser.{YMapOps, YValueOps}
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.RamlTypeParser
-import amf.spec.raml.RamlSyntax
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry}
-import amf.parser.{YMapOps, YValueOps}
-import amf.validation.Validation
 
 import scala.collection.mutable
 
 /**
   *
   */
-case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, declarations: Declarations, currentValidation: Validation)
-    extends RamlSyntax {
+case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, declarations: Declarations)(
+    implicit ctx: ParserContext) {
   def parse(): Response = {
 
-    val node = ValueNode(entry.key)
+    val node = ValueNode(entry.key).text()
 
-    val response = producer(node.string().value.toString).add(Annotations(entry))
+    val response = producer(node.value.toString).add(Annotations(entry))
     val map      = entry.value.value.toMap
 
-    response.set(ResponseModel.StatusCode, node.string())
+    response.set(ResponseModel.StatusCode, node)
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)
@@ -36,7 +34,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, response.withHeader, declarations, currentValidation)
+          RamlParametersParser(entry.value.value.toMap, response.withHeader, declarations)
             .parse()
             .map(_.withBinding("header"))
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -51,7 +49,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
         val payload = Payload()
         payload.adopted(response.id) // TODO review
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), declarations, currentValidation)
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), declarations)
           .parse()
           .foreach(payloads += payload.withSchema(_))
 
@@ -61,7 +59,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
               ".*/.*",
               entries => {
                 entries.foreach(entry => {
-                  payloads += RamlPayloadParser(entry, response.withPayload, declarations, currentValidation).parse()
+                  payloads += RamlPayloadParser(entry, response.withPayload, declarations).parse()
                 })
               }
             )
@@ -75,7 +73,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
     val examples = OasResponseExamplesParser("(examples)", map).parse()
     if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
 
-    validateClosedShape(currentValidation, response.id, map, "response")
+    ctx.closedShape(response.id, map, "response")
 
     AnnotationParser(() => response, map).parse()
 

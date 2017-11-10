@@ -3,8 +3,8 @@ package amf.dialects
 import amf.compiler.Root
 import amf.document.BaseUnit
 import amf.metadata.Type
+import amf.spec.ParserContext
 import amf.spec.dialects._
-import amf.validation.Validation
 import amf.vocabulary.Namespace
 
 /**
@@ -13,13 +13,16 @@ import amf.vocabulary.Namespace
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
   id = Some((namespace + shortName).iri())
-  def refMap(name: String, isDeclaration: Boolean, required: Boolean = true): DialectPropertyMapping = map(name, NodeReference.idProperty, NodeReference, _.copy(required = required, isDeclaration = isDeclaration))
+
+  def refMap(name: String, isDeclaration: Boolean, required: Boolean = true): DialectPropertyMapping =
+    map(name, NodeReference.idProperty, NodeReference, _.copy(required = required, isDeclaration = isDeclaration))
 }
 
 object VocabImport extends DialectLanguageNode("VocabImport") {
   val name: DialectPropertyMapping = str("name")
   val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
 }
+
 object NodeReference extends DialectLanguageNode("Declaration") {
   // val name: DialectPropertyMapping = str("name")
   val idProperty: DialectPropertyMapping = str(
@@ -62,6 +65,7 @@ object ClassTermMap extends DialectLanguageNode("ClassTermMap") {
   val default: DialectPropertyMapping = ref("default", ClassTerm)
   var values: DialectPropertyMapping  = map("values", ClassTermRef.name, ClassTermRef, _.copy(required = true))
 }
+
 object NodeDefinition extends DialectLanguageNode("NodeDefinition") {
   val name: DialectPropertyMapping          = str("name", _.copy(noRAML = true))
   val classTerm: DialectPropertyMapping     = ref("classTerm", ClassTerm, _.copy(required = true))
@@ -75,9 +79,11 @@ object NodeDefinition extends DialectLanguageNode("NodeDefinition") {
 object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration") {
   val encodes: DialectPropertyMapping = refMap("encodes", isDeclaration = false)
 }
+
 object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") {
   val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true, required = false)
-  var encodes: DialectPropertyMapping = iri("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
+  var encodes: DialectPropertyMapping =
+    iri("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
 }
 
 object MainNode extends DialectLanguageNode("Document") {
@@ -106,6 +112,7 @@ object DialectDefinition extends DialectLanguageNode("dialect") {
     Some(localNameProvider)
   }
 }
+
 object DialectModuleDefinition extends DialectLanguageNode("module") {
 
   var usage: DialectPropertyMapping =
@@ -124,8 +131,8 @@ object DialectModuleDefinition extends DialectLanguageNode("module") {
   }
 }
 
-case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit], currentValidation: Validation)
-    extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses, currentValidation) {
+case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit])(implicit ctx: ParserContext)
+    extends BasicResolver(root, List(DialectDefinition.externals, DialectDefinition.vocabularies), uses) {
 
   override def resolve(root: Root, name: String, t: Type): Option[String] = {
     try {
@@ -139,8 +146,12 @@ case class DialectLanguageResolver(root: Root, uses: Map[String, BaseUnit], curr
   }
 }
 
-
 object DialectLanguageDefinition
-    extends Dialect("RAML 1.0 Dialect", "", DialectDefinition, (r, uses, currentValidation) => { DialectLanguageResolver(r, uses, currentValidation) },module = Some(DialectModuleDefinition), fragments = Map().+(("DialectNode",NodeDefinition))){
-
-}
+    extends Dialect(
+      "RAML 1.0 Dialect",
+      "",
+      DialectDefinition,
+      (r, uses, ctx) => { DialectLanguageResolver(r, uses)(ctx) },
+      module = Some(DialectModuleDefinition),
+      fragments = Map().+(("DialectNode", NodeDefinition))
+    )

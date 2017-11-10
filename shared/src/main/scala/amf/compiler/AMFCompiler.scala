@@ -9,6 +9,7 @@ import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
 import amf.remote.Mimes._
 import amf.remote._
+import amf.spec.ParserContext
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
 import amf.spec.payload.PayloadParser
@@ -82,10 +83,11 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
+    implicit val ctx = ParserContext(currentValidation, Raml)
     val option = RamlHeader(root).map({
-      case RamlHeader.Raml10        => RamlDocumentParser(root, currentValidation).parseDocument()
-      case RamlHeader.Raml10Library => RamlModuleParser(root, currentValidation).parseModule()
-      case fragment: RamlFragment   => RamlFragmentParser(root, currentValidation, fragment).parseFragment()
+      case RamlHeader.Raml10        => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Library => RamlModuleParser(root).parseModule()
+      case fragment: RamlFragment   => RamlFragmentParser(root, fragment).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => makeDialect(root, header)
@@ -100,22 +102,23 @@ class AMFCompiler private (val url: String,
   private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
 
   private def resolveOasUnit(root: Root): BaseUnit = {
+    implicit val ctx = ParserContext(currentValidation, Oas)
     hint.kind match {
-      case Library => OasModuleParser(root, currentValidation).parseModule()
-      case Link    => OasFragmentParser(root, currentValidation).parseFragment()
+      case Library => OasModuleParser(root).parseModule()
+      case Link    => OasFragmentParser(root).parseFragment()
       case _       => detectOasUnit(root)
     }
   }
 
-  private def detectOasUnit(root: Root): BaseUnit = {
+  private def detectOasUnit(root: Root)(implicit ctx: ParserContext): BaseUnit = {
     OasFragmentHeader(root) match {
-      case f if f.isDefined => OasFragmentParser(root, currentValidation, f).parseFragment()
-      case _                => OasDocumentParser(root, currentValidation).parseDocument()
+      case f if f.isDefined => OasFragmentParser(root, f).parseFragment()
+      case _                => OasDocumentParser(root).parseDocument()
     }
   }
 
-  private def makeDialect(root: Root, header: RamlHeader): BaseUnit =
-    DialectParser(root, header, dialects, currentValidation).parseUnit()
+  private def makeDialect(root: Root, header: RamlHeader)(implicit ctx: ParserContext): BaseUnit =
+    DialectParser(root, header, dialects).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 

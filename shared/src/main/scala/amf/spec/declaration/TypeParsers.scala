@@ -4,12 +4,11 @@ import amf.domain.Annotation.ExplicitField
 import amf.domain.Annotations
 import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
-import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
-import amf.spec.common.{ArrayNode, ValueNode}
-import amf.spec.raml.RamlSyntax
-import org.yaml.model.{YMap, YMapEntry}
 import amf.parser.{YMapOps, YValueOps}
-import amf.validation.Validation
+import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
+import amf.spec.ParserContext
+import amf.spec.common.{ArrayNode, ValueNode}
+import org.yaml.model.{YMap, YMapEntry}
 
 import scala.collection.mutable
 
@@ -42,7 +41,7 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
   }
 }
 
-case class XMLSerializerParser(defaultName: String, map: YMap, currentValidation: Validation) extends RamlSyntax {
+case class XMLSerializerParser(defaultName: String, map: YMap)(implicit ctx: ParserContext) {
   def parse(): XMLSerializer = {
     val serializer = XMLSerializer(map)
       .set(XMLSerializerModel.Attribute, value = false)
@@ -77,7 +76,7 @@ case class XMLSerializerParser(defaultName: String, map: YMap, currentValidation
       serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
     })
 
-    validateClosedShape(currentValidation, serializer.id, map, "xmlSerialization")
+    ctx.closedShape(serializer.id, map, "xmlSerialization")
 
     serializer
   }

@@ -55,12 +55,24 @@ package object BaseEmitters {
   }
 
   def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
-    b.scalar(YNode(YScalar(content), tag))
+    b += YNode(YScalar(content), tag)
 
   case class ScalarEmitter(v: AmfScalar, tag: YType = YType.Str) extends PartEmitter {
-    override def emit(b: PartBuilder): Unit = sourceOr(v.annotations, b.scalar(YNode(YScalar(v.value), tag)))
+    override def emit(b: PartBuilder): Unit =
+      sourceOr(v.annotations, {
+        b += YNode(YScalar(v.value), tag)
+      })
 
     override def position(): Position = pos(v.annotations)
+  }
+
+  case class TextScalarEmitter(value: String, annotations: Annotations, tag: YType = YType.Str) extends PartEmitter {
+    override def emit(b: PartBuilder): Unit =
+      sourceOr(annotations, {
+        b += YNode(new YScalar.Builder(value, tag.tag).scalar, tag)
+      })
+
+    override def position(): Position = pos(annotations)
   }
 
   case class ValueEmitter(key: String, f: FieldEntry) extends EntryEmitter {

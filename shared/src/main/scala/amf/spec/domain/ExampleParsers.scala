@@ -5,8 +5,8 @@ import amf.domain.{Annotations, Example}
 import amf.metadata.domain.ExampleModel
 import amf.model.AmfScalar
 import amf.parser.{YMapOps, YValueOps}
-import amf.spec.Declarations
-import amf.spec.common.{AnnotationParser, SpecParserContext, ValueNode}
+import amf.spec.common.{AnnotationParser, ValueNode}
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model._
 import org.yaml.render.YamlRender
 
@@ -35,14 +35,14 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry) {
     val example = Example(yMapEntry)
       .set(ExampleModel.MediaType, yMapEntry.key.value.toScalar.text)
       .withStrict(false)
-    RamlExampleValueAsString(yMapEntry.value.value, example, false).populate()
+    RamlExampleValueAsString(yMapEntry.value.value, example, strict = false).populate()
   }
 }
 
 case class RamlExamplesParser(map: YMap,
                               singleExampleKey: String,
                               multipleExamplesKey: String,
-                              declarations: Declarations)(implicit spec: SpecParserContext) {
+                              declarations: Declarations)(implicit ctx: ParserContext) {
   def parse(): Seq[Example] = {
     val results = ListBuffer[Example]()
 
@@ -51,19 +51,18 @@ case class RamlExamplesParser(map: YMap,
   }
 }
 
-case class RamlMultipleExampleParser(key: String, map: YMap, declarations: Declarations)(
-    implicit spec: SpecParserContext) {
+case class RamlMultipleExampleParser(key: String, map: YMap, declarations: Declarations)(implicit ctx: ParserContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
 
     map.key(key).foreach { entry =>
-      spec.link(entry.value) match {
+      ctx.link(entry.value) match {
         case Left(s) => examples ++= declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
         case Right(node) =>
           node.value match {
             case map: YMap =>
               examples ++= map.entries.map(RamlNamedExampleParser(_).parse())
-            case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar), true).populate()
+            case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar), strict = true).populate()
           }
       }
     }
@@ -83,9 +82,10 @@ case class RamlSingleExampleParser(key: String, map: YMap) {
   def parse(): Option[Example] = {
     map.key(key).map { entry =>
       entry.value.value match {
-        case map: YMap       => RamlSingleExampleValueParser(map).parse().add(SingleValueArray())
-        case scalar: YScalar => RamlExampleValueAsString(scalar, Example(scalar), true).populate().add(SingleValueArray())
-        case other           => throw new IllegalArgumentException("Not supported part type for example")
+        case map: YMap => RamlSingleExampleValueParser(map).parse().add(SingleValueArray())
+        case scalar: YScalar =>
+          RamlExampleValueAsString(scalar, Example(scalar), strict = true).populate().add(SingleValueArray())
+        case other => throw new IllegalArgumentException("Not supported part type for example")
       }
 
     }
@@ -124,7 +124,7 @@ case class RamlSingleExampleValueParser(node: YMap) {
         })
       AnnotationParser(() => example, node).parse()
     } else {
-      RamlExampleValueAsString(node, example, true).populate()
+      RamlExampleValueAsString(node, example, strict = true).populate()
     }
 
     example

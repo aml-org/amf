@@ -5,11 +5,9 @@ import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain.{DomainElementModel, OperationModel}
 import amf.model.AmfArray
 import amf.parser.{YMapOps, YValueOps}
-import amf.spec.Declarations
 import amf.spec.common.{AnnotationParser, ArrayNode, ValueNode}
 import amf.spec.declaration.OasCreativeWorkParser
-import amf.spec.raml.RamlSyntax
-import amf.validation.Validation
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 import scala.collection.mutable
@@ -20,9 +18,7 @@ import scala.collection.mutable
 case class RamlOperationParser(entry: YMapEntry,
                                producer: (String) => Operation,
                                declarations: Declarations,
-                               currentValidation: Validation,
-                               parseOptional: Boolean = false)
-    extends RamlSyntax {
+                               parseOptional: Boolean = false)(implicit ctx: ParserContext) {
 
   def parse(): Operation = {
 
@@ -42,7 +38,7 @@ case class RamlOperationParser(entry: YMapEntry,
 
       // Regular operation
       case map: YMap =>
-        validateClosedShape(currentValidation, operation.id, map, "operation")
+        ctx.closedShape(operation.id, map, "operation")
 
         map.key("displayName", entry => {
           val value = ValueNode(entry.value)
@@ -100,7 +96,7 @@ case class RamlOperationParser(entry: YMapEntry,
           }
         )
 
-        RamlRequestParser(map, () => operation.withRequest(), declarations, currentValidation)
+        RamlRequestParser(map, () => operation.withRequest(), declarations)
           .parse()
           .map(operation.set(OperationModel.Request, _))
 
@@ -112,7 +108,7 @@ case class RamlOperationParser(entry: YMapEntry,
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += RamlResponseParser(entry, operation.withResponse, declarations, currentValidation)
+                  responses += RamlResponseParser(entry, operation.withResponse, declarations)
                     .parse()
                 })
                 operation.set(OperationModel.Responses,
@@ -128,7 +124,9 @@ case class RamlOperationParser(entry: YMapEntry,
           entry => {
             // TODO check for empty array for resolution ?
             val securedBy = entry.value.value.toSequence.nodes
-              .map(s => RamlParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
+              .map(s =>
+                RamlParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations)
+                  .parse())
 
             operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
           }

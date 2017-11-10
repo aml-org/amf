@@ -5,10 +5,13 @@ import amf.domain.`abstract`._
 import amf.domain.extensions.DataNode
 import amf.domain.{DomainElement, EndPoint, Operation}
 import amf.metadata.domain.DomainElementModel
+import amf.remote.Raml
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter
 import amf.spec.domain.{RamlEndpointParser, RamlOperationParser}
-import amf.spec.{Declarations, SpecOrdering}
+import amf.spec.{Declarations, ParserContext, SpecOrdering}
+import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
 
 import scala.collection.mutable
@@ -21,7 +24,10 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) {
+class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
+
+  implicit val ctx: ParserContext = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
+
   override def resolve(model: BaseUnit): BaseUnit = {
     // TODO should we remove traits and resourceTypes from the declarations?
 
@@ -55,7 +61,6 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) {
                            None,
                            collector,
                            declarations(context.model),
-                           null, // TODO null validation?
                            parseOptionalOperations = true).parse()
 
         collector.toList match {
@@ -240,9 +245,10 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) {
       }
 
       val entry = document.as[YMap].entries.head
-      RamlOperationParser(entry, _ => Operation(), declarations(context.model), null).parse() // TODO null validation?
+      RamlOperationParser(entry, _ => Operation(), declarations(context.model)).parse()
     }
   }
 
   case class TraitBranch(key: Key, operation: Operation, children: Seq[Branch]) extends Branch
+
 }

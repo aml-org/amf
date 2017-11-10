@@ -100,12 +100,12 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
 
   def scalarEmitter(scalar: DataScalarNode): PartEmitter = {
     scalar.dataType match {
-      case Some(t) if t == xsdString  => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Str)
-      case Some(t) if t == xsdInteger => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Int)
-      case Some(t) if t == xsdFloat   => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Float)
-      case Some(t) if t == xsdBoolean => ScalarEmitter(AmfScalar(scalar.value, scalar.annotations), YType.Bool)
-      case Some(t) if t == xsdNil     => ScalarEmitter(AmfScalar("null", Annotations()), YType.Str)
-      case _                          => ScalarEmitter(AmfScalar(scalar.value, Annotations()), YType.Str)
+      case Some(t) if t == xsdString  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
+      case Some(t) if t == xsdInteger => TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
+      case Some(t) if t == xsdFloat   => TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
+      case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value, scalar.annotations, YType.Bool)
+      case Some(t) if t == xsdNil     => TextScalarEmitter("null", Annotations(), YType.Str)
+      case _                          => TextScalarEmitter(scalar.value, Annotations(), YType.Str)
     }
   }
 
