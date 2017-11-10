@@ -22,8 +22,9 @@ object RamlTypeParser {
   def apply(ast: YMapEntry,
             adopt: Shape => Shape,
             declarations: Declarations,
-            currentValidation: Validation): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations, currentValidation)
+            currentValidation: Validation,
+            isAnnotation: Boolean = false): RamlTypeParser =
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations, currentValidation, isAnnotation)
 }
 
 trait RamlTypeSyntax {
@@ -56,7 +57,8 @@ case class RamlTypeParser(ast: YPart,
                           part: YNode,
                           adopt: Shape => Shape,
                           declarations: Declarations,
-                          currentValidation: Validation)
+                          currentValidation: Validation,
+                          isAnnotation: Boolean)
     extends RamlSpecParser(currentValidation)
     with RamlSyntax {
 
@@ -317,7 +319,7 @@ case class RamlTypeParser(ast: YPart,
         case "string"            => "stringScalarShape"
         case _                   => "shape"
       }
-      validateClosedShape(currentValidation, shape.id, map, syntaxType)
+      validateClosedShape(currentValidation, shape.id, map, syntaxType, isAnnotation)
 
       shape
     }
@@ -341,7 +343,8 @@ case class RamlTypeParser(ast: YPart,
                                    node,
                                    item => item.adopted(shape.id + "/items/" + index),
                                    declarations,
-                                   currentValidation).parse()
+                                   currentValidation,
+                                   isAnnotation).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -399,7 +402,7 @@ case class RamlTypeParser(ast: YPart,
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
-      validateClosedShape(currentValidation, shape.id, map, "fileShape")
+      validateClosedShape(currentValidation, shape.id, map, "fileShape", isAnnotation)
 
       shape
     }
@@ -472,7 +475,7 @@ case class RamlTypeParser(ast: YPart,
 
       finalShape match {
         case Some(parsed: Shape) =>
-          validateClosedShape(currentValidation, parsed.id, map, "arrayShape")
+          validateClosedShape(currentValidation, parsed.id, map, "arrayShape", isAnnotation)
           parsed
         case None =>
           parsingErrorReport(currentValidation, shape.id, "Cannot parse data arrangement shape", Some(map))
@@ -534,7 +537,7 @@ case class RamlTypeParser(ast: YPart,
         }
       )
 
-      validateClosedShape(currentValidation, shape.id, map, "arrayShape")
+      validateClosedShape(currentValidation, shape.id, map, "arrayShape", isAnnotation)
 
       shape
     }
@@ -600,7 +603,7 @@ case class RamlTypeParser(ast: YPart,
         }
       )
 
-      validateClosedShape(currentValidation, shape.id, map, "nodeShape")
+      validateClosedShape(currentValidation, shape.id, map, "nodeShape", isAnnotation)
 
       shape
     }

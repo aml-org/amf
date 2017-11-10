@@ -1,18 +1,12 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.{
-  CustomDomainProperty,
-  DataNode,
-  DomainExtension,
-  ArrayNode => DataArrayNode,
-  ObjectNode => DataObjectNode,
-  ScalarNode => DataScalarNode
-}
+import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position
 import amf.remote.{Oas, Raml}
+import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
@@ -153,17 +147,105 @@ case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecO
       result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
     }
 
-    fs.entry(CustomDomainPropertyModel.Schema)
+    val shapeEmitters = fs.entry(CustomDomainPropertyModel.Schema)
       .map({ f =>
-        result += (spec.vendor match {
-          case Oas   => OasSchemaEmitter(f, ordering, Nil)
-          case Raml  => RamlSchemaEmitter(f, ordering, Nil)
+        spec.vendor match {
+          case Oas =>
+            // OAS we emit in the 'schema' property
+            Seq(OasSchemaEmitter(f, ordering, Nil))
+          case Raml =>
+            // we merge in the main body
+            val shape = f.value.value.asInstanceOf[Shape]
+            RamlTypeEmitter(shape, ordering, Nil, Nil).emitters() match {
+              case Seq(p: PartEmitter)                           => throw new Exception(s"IllegalTypeDeclarations found: $p")
+              case es if es.forall(_.isInstanceOf[EntryEmitter]) => es.collect { case e: EntryEmitter => e }
+              case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
+            }
           case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
-        })
-      })
+        }
+      }) match {
+      case Some(emitters) => emitters
+      case _              => Nil
+    }
+    result ++= shapeEmitters
 
     result ++= AnnotationsEmitter(property, ordering).emitters
 
     result
   }
 }
+
+/*
+case class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    sourceOr(
+      parameter.annotations,
+      if (parameter.isLink) emitLink(b) else emitParameter(b)
+    )
+  }
+
+  private def emitLink(b: EntryBuilder) = {
+    val fs = parameter.linkTarget.get.fields
+
+    b.complexEntry(
+      emitParameterKey(fs, _),
+      b => {
+        parameter.linkTarget.foreach(l => spec.tagToReference(l, parameter.linkLabel, references).emit(b))
+      }
+    )
+  }
+
+  private def emitParameter(b: EntryBuilder) = {
+    val fs = parameter.fields
+
+    b.complexEntry(
+      emitParameterKey(fs, _),
+      _.obj { b =>
+        val result = mutable.ListBuffer[EntryEmitter]()
+
+        fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
+
+        fs.entry(ParameterModel.Required)
+          .filter(_.value.annotations.contains(classOf[ExplicitField]))
+          .map(f => result += ValueEmitter("required", f))
+
+        result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description), references).entries()
+
+        result ++= AnnotationsEmitter(parameter, ordering).emitters
+
+        Option(parameter.fields.getValue(ParameterModel.Binding)) match {
+          case Some(v) =>
+            v.annotations.find(classOf[ExplicitField]) match {
+              case Some(_) =>
+                fs.entry(ParameterModel.Binding).map { f =>
+                  result += ValueEmitter("(binding)", f)
+                }
+              case None => // ignore
+            }
+          case _ => // ignore
+        }
+
+        traverse(ordering.sorted(result), b)
+      }
+    )
+
+  }
+
+  private def emitParameterKey(fs: Fields, b: PartBuilder) = {
+    val explicit = fs
+      .entry(ParameterModel.Required)
+      .exists(_.value.annotations.contains(classOf[ExplicitField]))
+
+    if (!explicit && !parameter.required) {
+      ScalarEmitter(AmfScalar(parameter.name + "?")).emit(b)
+    } else {
+      ScalarEmitter(fs.entry(ParameterModel.Name).get.scalar).emit(b)
+    }
+  }
+
+  override def position(): Position = pos(parameter.annotations)
+}
+
+ */
