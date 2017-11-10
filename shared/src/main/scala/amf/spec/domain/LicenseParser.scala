@@ -10,7 +10,11 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class LicenseParser(map: YMap)(implicit ctx: ParserContext) {
+object LicenseParser {
+  def apply(map: YMap)(implicit ctx: ParserContext): LicenseParser = new LicenseParser(map)(ctx.toOas)
+}
+
+class LicenseParser(map: YMap)(implicit ctx: ParserContext) {
   def parse(): License = {
     val license = License(map)
 

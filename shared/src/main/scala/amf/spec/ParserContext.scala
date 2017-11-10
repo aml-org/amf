@@ -16,6 +16,11 @@ import org.yaml.model._
   */
 case class ParserContext(validation: Validation, vendor: Vendor) extends IllegalTypeHandler {
 
+  def toOas: ParserContext = vendor match {
+    case Oas => this
+    case _   => copy(vendor = Oas)
+  }
+
   def toRaml: ParserContext = vendor match {
     case Raml => this
     case _    => copy(vendor = Raml)

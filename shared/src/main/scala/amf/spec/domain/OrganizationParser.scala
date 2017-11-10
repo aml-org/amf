@@ -10,7 +10,11 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class OrganizationParser(map: YMap)(implicit ctx: ParserContext) {
+object OrganizationParser {
+  def apply(map: YMap)(implicit ctx: ParserContext): OrganizationParser = new OrganizationParser(map)(ctx.toOas)
+}
+
+class OrganizationParser(map: YMap)(implicit ctx: ParserContext) {
   def parse(): Organization = {
 
     val organization = Organization(map)
