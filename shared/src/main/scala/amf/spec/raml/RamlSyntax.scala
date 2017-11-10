@@ -194,14 +194,18 @@ trait RamlSyntax {
     "annotation" -> Set(
       "displayName",
       "description",
-      "allowedTargets",
-      "type"
+      "allowedTargets"
     )
   )
 
-  def validateClosedShape(currentValidation: Validation, id: String, ast: YMap, nodeType: String): Unit = {
+  def validateClosedShape(currentValidation: Validation, id: String, ast: YMap, nodeType: String, isAnnotation: Boolean = false): Unit = {
     nodes.get(nodeType) match {
-      case Some(properties) =>
+      case Some(nodeTypeProperties) =>
+        val properties = if (isAnnotation) {
+          nodeTypeProperties ++ nodes.get("annotation")
+        } else {
+          nodeTypeProperties
+        }
         ast.entries.foreach { entry =>
           val key: String = entry.key
           if ((key.startsWith("(") && key.endsWith(")")) || (key.startsWith("/") && (nodeType == "webApi" || nodeType == "endPoint"))) {
