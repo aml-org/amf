@@ -364,6 +364,64 @@ This syntax is used in RAML 1.0 for example to associate responses to operations
 The change is merely syntactical, neither the parsed graph for the dialect instance nor the SHACL semantics for the constraint will be affected by the change.
 
 
+## Key-Value nesting
+
+Sometimes you want to nest maps of key-value pairs where the the value of the key must be mapped to a property in the graph model node, and the value to a different property.
+For exapmle, imagine you want to generate in the graph a list labels, with a `myvocab.labelName` property for the label name and a `myvocab.labelValue` property for the value of the label.
+
+You could declare the syntax in you dialect as a map of key-value pairs in the following way:
+
+
+```yaml
+nodeMappings:
+  
+  LabelNode:
+    classTerm: myvocab.Label
+    mapping:
+      name:
+        propertyTerm: myvocab.labelName
+        range: string
+      value:
+        propertyTerm: myvocab.labelValue
+        range: string
+      
+  TopLevelNode:
+    classTerm: myvocab.TopLevel
+    mapping:
+      labels:
+        propertyTerm: myvocab.labels
+        range: LabelNode
+        asMap: true
+        hash: myvocab.labelName
+        hashValue: myvocab.labelValue
+```
+
+Using this syntax a document for this dialect could declare a list of labls in the following way:
+
+
+```yaml
+labels:
+  label1: a
+  label2: b
+```
+
+The generated RDF graph will look like:
+
+```turtle
+[
+  rdf:type myvocab:TopLevel ;
+  myvocab:labels [
+    rdf:type myvocab.Label
+    myvocab:labelName "label1" ;
+    myvocab:labelValue "a"
+  ] , [
+    rdf:type myvocab.Label
+    myvocab:labelName "label2" ;
+    myvocab:labelValue "b"
+  ]
+]
+```
+
 ## RAML document model mapping
 
 In order to use the node mappings and constraints defined in the dialect to support new types of RAML documents we must map the node mappings to the components of the RAML Document Model:

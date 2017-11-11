@@ -255,11 +255,41 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         platform.dialectsRegistry
       ).build()
     } flatMap  { model =>
-      validation.loadDialectValidationProfile(dialect.get)
-      validation.validate(model, dialect.get.name)
+      // validation.loadDialectValidationProfile(dialect.get)
+      validation.validate(model, dialect.get.name + " " + dialect.get.version)
     } flatMap { report =>
       assert(report.conforms)
       assert(report.results.isEmpty)
+    }
+  }
+
+  test("HERE_HERE Custom dialect with custom validation can be validated (amf-eng-demos)") {
+    val validation = Validation(platform)
+    var dialect: Option[Dialect] = None
+    val dialectFile = "file://shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
+    val dialectExampleFile = "file://shared/src/test/resources/vocabularies/eng_demos/demo.raml"
+    val dialectValidationProfileFile = "file://shared/src/test/resources/vocabularies/eng_demos/validation_profile.raml"
+
+    platform.dialectsRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
+      dialect = Some(parsedDialect)
+      AMFCompiler(
+        dialectExampleFile,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None,
+        platform.dialectsRegistry
+      ).build()
+    } flatMap  { model =>
+      validation.loadValidationDialect() flatMap  { _ =>
+        validation.loadValidationProfile(dialectValidationProfileFile) flatMap { _ =>
+          validation.validate(model, "Custom Eng-Demos Validation")
+        }
+      }
+    } flatMap { report =>
+      assert(!report.conforms)
+      assert(report.results.length == 6)
     }
   }
 
@@ -288,9 +318,8 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
       */
       validation.loadDialectValidationProfile(dialect.get)
-      validation.validate(model, /*dialect.get.name*/ "RAML 1.0 Dialect")
+      validation.validate(model,  "RAML 1.0 Dialect")
     } flatMap { report =>
-      println(report)
       assert(report.conforms)
       assert(report.results.isEmpty)
     }
