@@ -127,9 +127,26 @@ object ValidationDialectText {
       |        mandatory: true
       |        propertyTerm: validation.targetQuery
       |        range: string
+      |
+      |  ramlPrefixNode:
+      |    classTerm: validation.RamlPrefix
+      |    mapping:
+      |      prefix:
+      |        propertyTerm: validation.ramlPrefixName
+      |        range: string
+      |      uri:
+      |        propertyTerm: validation.ramlPrefixUri
+      |        range: string
+      |
       |  profileNode:
       |    classTerm: validation.Profile
       |    mapping:
+      |      prefixes:
+      |        propertyTerm: validation.ramlPrefixes
+      |        asMap: true
+      |        hash: validation.ramlPrefixName
+      |        hashValue: validation.ramlPrefixUri
+      |        range: ramlPrefixNode
       |      profile:
       |        propertyTerm: schema-org.name
       |        mandatory: true

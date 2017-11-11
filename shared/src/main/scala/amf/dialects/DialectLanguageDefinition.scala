@@ -51,6 +51,7 @@ object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
   val allowMultiple: DialectPropertyMapping = bool("allowMultiple")
   val asMap: DialectPropertyMapping         = bool("asMap")
   val hash: DialectPropertyMapping          = iri("hash", _.copy(referenceTarget = Some(PropertyTerm)))
+  val hashValue: DialectPropertyMapping     = iri("hashValue", _.copy(referenceTarget = Some(PropertyTerm)))
   val defaultValue: DialectPropertyMapping  = str("defaultValue")
 }
 
