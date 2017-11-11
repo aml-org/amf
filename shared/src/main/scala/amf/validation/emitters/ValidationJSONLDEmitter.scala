@@ -109,7 +109,9 @@ class ValidationJSONLDEmitter(targetProfile: String) {
             for {
               constraint <- validation.propertyConstraints
             } yield {
-              if (constraint.name.startsWith("http://") || constraint.name.startsWith("https://") || constraint.name.startsWith("file:")) {
+              // processed properties will always include with /prop, this is a CONVENTION
+              // can be tricking to follow when debugging
+              if (isPropertyConstraintUri(constraint.name)) {
                 // These are the standard constraints for AMF/RAML/OAS they have already being sanitised
                 emitConstraint(b, constraint.name, constraint)
               } else {
@@ -122,6 +124,11 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         )
       }
     }
+  }
+
+  private def isPropertyConstraintUri(name: String): Boolean = {
+    (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) &&
+    name.indexOf("/prop") > -1
   }
 
   private def escapeRegex(v: String): _root_.scala.Predef.String = {

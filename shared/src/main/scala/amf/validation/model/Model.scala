@@ -2,9 +2,20 @@ package amf.validation.model
 
 import amf.domain.dialects.DomainEntity
 import amf.vocabulary.Namespace
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.YDocument.EntryBuilder
+
+import scala.collection.mutable
 
 trait DialectWrapper {
+
+  def expand(value: String, prefixes: mutable.Map[String,String]): String = {
+    val valuePrefix = value.split("\\.").head
+    prefixes.get(valuePrefix) match {
+      case Some(uri) => value.replace(valuePrefix + ".", uri)
+      case _         => value
+    }
+  }
+
   def extractString(node: DomainEntity, property: String): Option[String] = {
     node.definition.props.get(property) match {
       case Some(profileProperty) => node.string(profileProperty)
@@ -31,7 +42,19 @@ trait DialectWrapper {
       case Some(profileProperty) => node.entity(profileProperty).map(f)
       case _                     => None
     }
+  }
 
+  def prefixes(node: DomainEntity) = {
+    val prefixMap: mutable.Map[String,String] = mutable.HashMap()
+    node.definition.props.get("prefixes") match {
+      case Some(prefixesProperty) => node.entities(prefixesProperty) foreach  { prefixEntity =>
+        val prefix = extractString(prefixEntity, "prefix").getOrElse("")
+        val prefixUri = extractString(prefixEntity, "uri").getOrElse("")
+        prefixMap.put(prefix, prefixUri)
+      }
+      case _ =>
+    }
+    prefixMap
   }
 
   def mandatory[T](message: String, x: Option[T]): T = x match {
@@ -99,9 +122,9 @@ case class PropertyConstraint(ramlPropertyId: String,
                              ) {}
 
 object PropertyConstraint extends DialectWrapper {
-  def apply(node: DomainEntity): PropertyConstraint = {
+  def apply(node: DomainEntity, prefixes: mutable.Map[String,String]): PropertyConstraint = {
     PropertyConstraint(
-      ramlPropertyId      = mandatory("ramlID in property constraint", node.linkValue),
+      ramlPropertyId      = expand(mandatory("ramlID in property constraint", node.linkValue), prefixes),
       name                = mandatory("name in property constraint", extractString(node, "name")),
       message             = extractString(node, "message"),
       pattern             = extractString(node, "pattern"),
@@ -151,12 +174,12 @@ object ValidationSpecification extends DialectWrapper {
 
   val PARSER_SIDE_VALIDATION = (Namespace.Shapes + "ParserShape").iri()
 
-  def apply(node: DomainEntity): ValidationSpecification = {
+  def apply(node: DomainEntity, prefixes: mutable.Map[String,String]): ValidationSpecification = {
     ValidationSpecification(
       name                = mandatory("name in validation specification", extractString(node, "name")),
       message             = mandatory("message in validation specification", extractString(node, "message")),
-      targetClass         = extractStrings(node, "targetClass"),
-      propertyConstraints = mapEntities(node, "propertyConstraints", PropertyConstraint.apply),
+      targetClass         = extractStrings(node, "targetClass").map(expand(_, prefixes)),
+      propertyConstraints = mapEntities(node, "propertyConstraints", PropertyConstraint(_, prefixes)),
       functionConstraint  = mapEntity(node, "functionConstraint", FunctionConstraint.apply)
     )
   }
@@ -168,10 +191,12 @@ case class ValidationProfile(name: String,
                              infoLevel: Seq[String] = Seq.empty,
                              warningLevel: Seq[String] = Seq.empty,
                              disabled: Seq[String] = Seq.empty,
-                             validations: Seq[ValidationSpecification] = Seq.empty){}
+                             validations: Seq[ValidationSpecification] = Seq.empty,
+                             prefixes: mutable.Map[String,String] = mutable.Map.empty){}
 
 object ValidationProfile extends DialectWrapper {
   def apply(node: DomainEntity): ValidationProfile = {
+    val prfx = prefixes(node)
     ValidationProfile(
       name            = mandatory("profile in validation profile", extractString(node, "profile")),
       baseProfileName = extractString(node, "extends"),
@@ -179,7 +204,8 @@ object ValidationProfile extends DialectWrapper {
       infoLevel       = extractStrings(node, "info"),
       warningLevel    = extractStrings(node, "warning"),
       disabled        = extractStrings(node, "disabled"),
-      validations     = mapEntities(node, "validations", ValidationSpecification.apply)
+      validations     = mapEntities(node, "validations", ValidationSpecification(_, prfx)),
+      prefixes        = prfx
     )
   }
 }
