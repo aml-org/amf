@@ -8,8 +8,8 @@ import amf.document.{BaseUnit, Document, Module}
 import amf.domain.extensions.DataNode
 import amf.dumper.AMFDumper
 import amf.graph.GraphEmitter
-import amf.remote.Syntax.Yaml
-import amf.remote.{PayloadJsonHint, PayloadYamlHint, Raml, RamlYamlHint}
+import amf.remote.Syntax.{Json, Yaml}
+import amf.remote._
 import amf.shape.Shape
 import amf.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.validation.emitters.ValidationReportJSONLDEmitter
@@ -43,6 +43,32 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   platform.dialectsRegistry).build()
     } flatMap [String] { unit: BaseUnit =>
+      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
+    }
+    actual.zip(expected).map(checkDiff)
+  }
+
+  test("prefixes can be loaded") {
+    val expectedFile = "validation_profile_prefixes.raml.jsonld"
+    val exampleFile  = "validation_profile_prefixes.raml"
+    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val validation = Validation(platform)
+    val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
+      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
+    } flatMap[String]  { unit:BaseUnit =>
+      AMFDumper(unit, Amf, Json, GenerationOptions()).dumpToString
+    }
+    actual.zip(expected).map(checkDiff)
+  }
+
+  test("prefixes can be parsed") {
+    val expectedFile = "validation_profile_prefixes.raml"
+    val exampleFile  = "validation_profile_prefixes.raml.jsonld"
+    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val validation = Validation(platform)
+    val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
+      AMFCompiler(basePath + exampleFile, platform, AmfJsonHint, Validation(platform), None, None, platform.dialectsRegistry).build()
+    } flatMap[String]  { unit:BaseUnit =>
       AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)
