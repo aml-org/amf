@@ -103,6 +103,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     }
   }
 
+  def findInReferences(id: String): Option[BaseUnit] = references.find(_.id == id)
+
   private def findInReferencedModels(id: String, units: Seq[BaseUnit]): ListBuffer[DomainElement] = {
     if (units.isEmpty) {
       ListBuffer.empty

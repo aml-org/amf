@@ -1,13 +1,12 @@
 package amf.metadata.document
 
 import amf.metadata.Field
-import amf.metadata.Type.Iri
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType
 
 /**
-  * Fragment metamodel
+  * Fragment meta model.
   */
 trait FragmentModel extends BaseUnitModel {
 
@@ -82,23 +81,5 @@ object FragmentsTypesModels {
     override def fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "SecurityScheme") ++ FragmentModel.`type`
-  }
-
-  object ExtensionModel extends FragmentModel {
-
-    val Extends = Field(Iri, Document + "extends")
-
-    override def fields: List[Field] = Extends :: FragmentModel.fields
-
-    override val `type`: List[ValueType] = List(Document + "Extension") ++ FragmentModel.`type`
-  }
-
-  object OverlayModel extends FragmentModel {
-
-    val Extends = Field(Iri, Document + "extends")
-
-    override def fields: List[Field] = Extends :: FragmentModel.fields
-
-    override val `type`: List[ValueType] = List(Document + "Overlay") ++ FragmentModel.`type`
   }
 }

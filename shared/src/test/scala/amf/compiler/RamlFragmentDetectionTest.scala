@@ -35,10 +35,6 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
     assertHeader("annotation-without-header.raml", Some(RamlFragmentHeader.Raml10AnnotationTypeDeclaration))
   }
 
-  test("Detect Raml Extention") {
-    assertHeader("extension-without-header.raml", Some(RamlFragmentHeader.Raml10Extension))
-  }
-
   test("Detect Raml Any matching fragment") {
     assertHeader("no-match-without-header.raml", None)
   }

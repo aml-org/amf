@@ -49,13 +49,17 @@ object Type {
     override val `type`: List[ValueType] = Nil
   }
 
-  case class Array(element: Type) extends Type {
+  abstract class ArrayLike(val element: Type) extends Type {
     override val `type`: List[ValueType] = element.`type`
   }
 
-  case class SortedArray(element: Type) extends Type {
-    override val `type`: List[ValueType] = element.`type`
+  object ArrayLike {
+    def unapply(arg: ArrayLike): Option[Type] = Some(arg.element)
   }
+
+  case class Array(override val element: Type) extends ArrayLike(element)
+
+  case class SortedArray(override val element: Type) extends ArrayLike(element)
 
   object Any extends Type {
     override val `type`: List[ValueType] = List(Xsd + "anyType")

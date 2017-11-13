@@ -45,6 +45,11 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   protected def defaultName: String     = idCounter.genId("dataNode")
   def withName(name: String): this.type = set(Name, name)
 
+  override def adopted(parent: String): this.type =
+    if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
+
+  def forceAdopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
+
   override val fields: Fields = Fields()
 
   def cloneNode(): this.type
@@ -55,7 +60,7 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   */
 class ObjectNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
 
-  val properties: mutable.Map[String, ListBuffer[DataNode]] = mutable.HashMap()
+  val properties: mutable.Map[String, DataNode]             = mutable.HashMap()
   val propertyAnnotations: mutable.Map[String, Annotations] = mutable.HashMap()
 
   override def defaultName: String = idCounter.genId("object")
@@ -63,16 +68,8 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
   def addProperty(propertyOrUri: String, objectValue: DataNode, annotations: Annotations = Annotations()): this.type = {
     val property = ensurePlainProperty(propertyOrUri)
     objectValue.adopted(this.id)
-    val propertyList = properties.getOrElse(property, ListBuffer())
-    objectValue match {
-      case obj: ObjectNode =>
-        propertyList.find(_.id == objectValue.id) match {
-          case Some(_) => // ignore, duplicated value
-          case None    => propertyList += obj
-        }
-      case _ => propertyList += objectValue // scalar values can be duplicated
-    }
-    properties.update(property, propertyList)
+
+    properties += property -> objectValue
     propertyAnnotations.update(property, annotations)
     this
   }
@@ -93,19 +90,13 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   override def dynamicType = List(ObjectNode.builderType)
 
-  override def adopted(parent: String): this.type =
-    if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
-
-  override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.name) match {
-    case Some(els) if els.nonEmpty => Some(els.head)
-    case _                         => None
-  }
+  override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.name)
 
   override def replaceVariables(values: Set[Variable]): Unit = {
     properties.keys.foreach { key =>
-      val value = properties.getOrElse(key, ListBuffer())
+      val value = properties(key)
       properties.remove(key)
-      value.foreach(_.replaceVariables(values))
+      value.replaceVariables(values)
       properties += VariableReplacer.replaceVariables(key, values) -> value
     }
 
@@ -120,8 +111,8 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     val cloned = ObjectNode(annotations)
 
     properties.foreach {
-      case (property: String, l: ListBuffer[DataNode]) =>
-        cloned.properties += property          -> l.map(_.cloneNode())
+      case (property: String, l: DataNode) =>
+        cloned.properties += property          -> l.cloneNode()
         cloned.propertyAnnotations += property -> propertyAnnotations(property)
     }
 
@@ -156,9 +147,6 @@ class ScalarNode(var value: String,
   override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
 
   override def dynamicType = List(ScalarNode.builderType)
-
-  override def adopted(parent: String): this.type =
-    if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Value =>
@@ -215,9 +203,6 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
   override def dynamicFields: List[Field] = List(Member) ++ DataNodeModel.fields
 
   override def dynamicType = List(ArrayNode.builderType, Namespace.Rdf + "Seq")
-
-  override def adopted(parent: String): this.type =
-    if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Member => Some(AmfArray(members))

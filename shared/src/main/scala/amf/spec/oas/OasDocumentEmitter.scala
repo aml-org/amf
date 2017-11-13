@@ -1,10 +1,11 @@
 package amf.spec.oas
 
-import amf.document.Fragment.{ExtensionFragment, OverlayFragment}
-import amf.document.{BaseUnit, Document, Module}
+import amf.compiler.OasHeader.{Oas20Extension, Oas20Overlay}
+import amf.document._
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.{CustomDomainProperty, idCounter}
+import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain._
 import amf.metadata.shape._
 import amf.parser.Position
@@ -29,10 +30,21 @@ import scala.collection.mutable.ListBuffer
 case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
   private def retrieveWebApi(): WebApi = document match {
-    case document: Document           => document.encodes.asInstanceOf[WebApi]
-    case extension: ExtensionFragment => extension.encodes
-    case overlay: OverlayFragment     => overlay.encodes
-    case _                            => throw new Exception("BaseUnit doesn't encode a WebApi.")
+    case document: Document => document.encodes.asInstanceOf[WebApi]
+    case _                  => throw new Exception("BaseUnit doesn't encode a WebApi.")
+  }
+
+  def extensionEmitter(): Seq[EntryEmitter] =
+    document.fields
+      .entry(ExtensionLikeModel.Extends)
+      .map(f => NamedRefEmitter("x-extends", f.scalar.toString, pos = pos(f.value.annotations)))
+      .toList ++ retrieveHeader()
+
+  private def retrieveHeader() = document match {
+    case _: Extension => Some(MapEntryEmitter(Oas20Extension.tuple))
+    case _: Overlay   => Some(MapEntryEmitter(Oas20Overlay.tuple))
+    case _: Document  => None
+    case _            => throw new Exception("Document has no header.")
   }
 
   def emitDocument(): YDocument = {
@@ -43,11 +55,14 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
     val references = ReferencesEmitter(document.references, ordering)
     val declares   = DeclarationsEmitter(doc.declares, ordering, references.references).emitters
     val api        = emitWebApi(ordering, references.references)
+    val extension  = extensionEmitter()
+    val usage: Option[ValueEmitter] =
+      doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
 
     YDocument {
       _.obj { b =>
         b.swagger = "2.0"
-        traverse(ordering.sorted(api ++ declares :+ references), b)
+        traverse(ordering.sorted(api ++ extension ++ usage ++ declares :+ references), b)
       }
     }
   }
@@ -165,7 +180,8 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
                                            parameters.parameters(),
                                            ordering,
                                            parameters.body,
-                                           references).emitters()
+                                           references)
+                .emitters()
 
             fs.entry(EndPointModel.Operations)
               .map(f => result ++= operations(f, ordering, parameters.body.isDefined, references))
@@ -535,7 +551,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val alias = reference.annotations.find(classOf[Aliases])
 
-      def entry(alias: String) = MapEntryEmitter(alias, reference.id).emit(b)
+      def entry(alias: String): Unit = MapEntryEmitter(alias, reference.id).emit(b)
 
       alias.fold {
         entry(aliasGenerator())

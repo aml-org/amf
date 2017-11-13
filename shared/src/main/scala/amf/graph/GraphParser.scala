@@ -1,6 +1,6 @@
 package amf.graph
 
-import amf.document.{BaseUnit, Document, Fragment, Module}
+import amf.document._
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
@@ -254,8 +254,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     FragmentsTypesModels.DataTypeModel                  -> Fragment.DataType.apply,
     FragmentsTypesModels.NamedExampleModel              -> Fragment.NamedExample.apply,
     FragmentsTypesModels.AnnotationTypeDeclarationModel -> Fragment.AnnotationTypeDeclaration.apply,
-    FragmentsTypesModels.ExtensionModel                 -> Fragment.ExtensionFragment.apply,
-    FragmentsTypesModels.OverlayModel                   -> Fragment.OverlayFragment.apply,
+    ExtensionModel                                      -> Extension.apply,
+    OverlayModel                                        -> Overlay.apply,
     FragmentsTypesModels.ExternalFragmentModel          -> Fragment.ExternalFragment.apply,
     FragmentsTypesModels.SecuritySchemeModel            -> Fragment.SecurityScheme.apply,
     FragmentsTypesModels.DialectNodeModel               -> Fragment.DialectFragment.apply,

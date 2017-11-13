@@ -3,7 +3,9 @@
     "@id": "file://shared/src/test/resources/references/extensions/overlay.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Overlay",
+      "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
       "http://raml.org/vocabularies/document#Unit"
     ],
     "http://raml.org/vocabularies/document#extends": [
@@ -76,6 +78,20 @@
             "@id": "file://shared/src/test/resources/references/extensions/overlay.raml#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/references/extensions/overlay.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "raml"
+                  }
+                ]
+              }
             ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
@@ -1317,20 +1333,6 @@
         "@type": [
           "http://raml.org/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://raml.org/vocabularies/document-source-maps#source-vendor": [
-          {
-            "http://raml.org/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://shared/src/test/resources/references/extensions/overlay.raml"
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#value": [
-              {
-                "@value": "raml"
-              }
-            ]
-          }
-        ],
         "http://raml.org/vocabularies/document-source-maps#lexical": [
           {
             "http://raml.org/vocabularies/document-source-maps#element": [
@@ -1341,18 +1343,6 @@
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(2,0)-(3,0)]"
-              }
-            ]
-          },
-          {
-            "http://raml.org/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://shared/src/test/resources/references/extensions/overlay.raml"
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(2,0)-(5,54)]"
               }
             ]
           },

@@ -90,15 +90,11 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
   }
 
   private def addAlias(module: BaseUnit, alias: String): BaseUnit = {
-    val aliasesOption = module.annotations.find(classOf[Aliases])
-    if (aliasesOption.isDefined)
-      aliasesOption.foreach(a => {
+    module.annotations.find(classOf[Aliases]) match {
+      case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])
-        module.add(a.copy(aliases = a.aliases ++ Seq(alias)))
-      })
-    else
-      module.add(Aliases(Seq(alias)))
-
-    module
+        module.add(aliases.copy(aliases = aliases.aliases + alias))
+      case None => module.add(Aliases(Set(alias)))
+    }
   }
 }

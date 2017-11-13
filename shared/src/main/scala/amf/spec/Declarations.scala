@@ -20,7 +20,6 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         var shapes: Map[String, Shape] = Map(),
                         var annotations: Map[String, CustomDomainProperty] = Map(),
                         var resourceTypes: Map[String, ResourceType] = Map(),
-                        var documentations: Map[String, CreativeWork] = Map(),
                         var parameters: Map[String, Parameter] = Map(),
                         var payloads: Map[String, Payload] = Map(),
                         var traits: Map[String, Trait] = Map(),
@@ -37,7 +36,6 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   def +=(element: DomainElement): Declarations = {
     element match {
       case r: ResourceType         => resourceTypes = resourceTypes + (r.name      -> r)
-      case u: CreativeWork         => documentations = documentations + (u.title   -> u)
       case t: Trait                => traits = traits + (t.name                    -> t)
       case a: CustomDomainProperty => annotations = annotations + (a.name          -> a)
       case s: Shape                => shapes = shapes + (s.name                    -> s)
@@ -45,6 +43,17 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
       case ss: SecurityScheme      => securitySchemes = securitySchemes + (ss.name -> ss)
     }
     this
+  }
+
+  /** Find domain element with the same name. */
+  def findEquivalent(element: DomainElement): Option[DomainElement] = element match {
+    case r: ResourceType         => findResourceType(r.name, SearchScope.All)
+    case t: Trait                => findTrait(t.name, SearchScope.All)
+    case a: CustomDomainProperty => findAnnotation(a.name, SearchScope.All)
+    case s: Shape                => findType(s.name, SearchScope.All)
+    case p: Parameter            => findParameter(p.name, SearchScope.All)
+    case ss: SecurityScheme      => findSecurityScheme(ss.name, SearchScope.All)
+    case _                       => None
   }
 
   def registerParameter(parameter: Parameter, payload: Payload): Unit = {
@@ -73,7 +82,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   private def error(message: String, ast: YPart): Unit = error(message, Option(ast))
 
   def declarables(): Seq[DomainElement] =
-    (shapes.values ++ annotations.values ++ resourceTypes.values ++ documentations.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toSeq
+    (shapes.values ++ annotations.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toSeq
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -101,18 +110,9 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
       case r: ResourceType => r
     }
 
-  def findDocumentationOrError(ast: YPart)(key: String, scope: SearchScope.Scope): CreativeWork =
-    findDocumentations(key, scope) match {
-      case Some(result) => result
-      case _ =>
-        error(s"Documentation '$key' not found", ast)
-        ErrorCreativeWork
-    }
-
-  def findDocumentations(key: String, scope: SearchScope.Scope): Option[CreativeWork] =
-    findForType(key, _.documentations, scope) collect {
-      case u: CreativeWork => u
-    }
+  def findDocumentations(key: String, scope: SearchScope.Scope): Option[CreativeWork] = findForType(key, Map(), scope) collect {
+    case u: CreativeWork => u
+  }
 
   def findTraitOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Trait = findTrait(key, scope) match {
     case Some(result) => result

@@ -26,10 +26,6 @@ case class RamlModuleParser(root: Root)(implicit val ctx: ParserContext) extends
 
       parseDeclarations(root, rootMap)
 
-      // TODO invoke when it's done
-      //    resourceTypes?
-      //      traits?
-      //      securitySchemes?
       UsageParser(rootMap, module).parse()
 
       val declarables = ctx.declarations.declarables()

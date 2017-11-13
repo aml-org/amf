@@ -29,7 +29,7 @@ case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrd
   override def emit(b: EntryBuilder): Unit = {
     b.complexEntry(
       b => {
-        val name = domainExtension.definedBy.name
+        val name = domainExtension.name
         spec.vendor match {
           case Raml  => b += "(" + name + ")"
           case Oas   => b += "x-" + name
@@ -135,15 +135,15 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
 
 case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, ordering: SpecOrdering)
     extends EntryEmitter {
-  val annotations: Annotations     = dataNode.propertyAnnotations(property)
-  val propertyValue: Seq[DataNode] = dataNode.properties(property)
+  val annotations: Annotations = dataNode.propertyAnnotations(property)
+  val propertyValue: DataNode  = dataNode.properties(property)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       property,
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(propertyValue.head, ordering).emit(b)
+        DataNodeEmitter(propertyValue, ordering).emit(b)
       }
     )
   }

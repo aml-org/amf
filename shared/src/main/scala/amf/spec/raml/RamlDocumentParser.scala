@@ -1,12 +1,13 @@
 package amf.spec.raml
 
 import amf.compiler.Root
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.metadata.document.BaseUnitModel
+import amf.metadata.Field
+import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
@@ -26,9 +27,42 @@ import scala.collection.mutable.ListBuffer
   */
 case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) extends RamlSpecParser {
 
-  def parseDocument(): Document = {
+  def parseExtension(): Extension = {
+    val extension = parseDocument(Extension())
 
-    val document = Document().adopted(root.location)
+    parseExtension(extension, ExtensionLikeModel.Extends)
+
+    extension
+  }
+
+  private def parseExtension(document: Document, field: Field): Unit = {
+    val map = root.document.as[YMap]
+
+    UsageParser(map, document).parse()
+
+    map
+      .key("extends")
+      .foreach(e => {
+        root.references
+          .find(_.parsedUrl == e.value.as[String])
+          .foreach(extend =>
+            document
+              .set(field, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
+      })
+  }
+
+  def parseOverlay(): Overlay = {
+    val overlay = parseDocument(Overlay())
+
+    parseExtension(overlay, ExtensionLikeModel.Extends)
+
+    overlay
+  }
+
+  def parseDocument(): Document = parseDocument(Document())
+
+  private def parseDocument[T <: Document](document: T): T = {
+    document.adopted(root.location)
 
     val map = root.document.as[YMap]
 
@@ -223,7 +257,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
         e.value
           .as[YMap]
           .entries
-          .map(entry => {
+          .map { entry =>
             val typeName = entry.key.as[String]
             val customProperty = AnnotationTypesParser(entry,
                                                        customProperty =>
@@ -231,7 +265,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
                                                            .withName(typeName)
                                                            .adopted(customProperties))
             ctx.declarations += customProperty.add(DeclaredElement())
-          })
+          }
       }
     )
   }

@@ -2,7 +2,7 @@ package amf.spec.oas
 
 import amf.common.Lazy
 import amf.compiler.Root
-import amf.document.{BaseUnit, Document}
+import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain.Annotation.{
   DeclaredElement,
   DefaultPayload,
@@ -15,7 +15,8 @@ import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security._
-import amf.metadata.document.BaseUnitModel
+import amf.metadata.Field
+import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.security._
@@ -25,6 +26,7 @@ import amf.shape.NodeShape
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
+import org.yaml.model.YNode
 import amf.spec.{OasDefinitions, ParserContext, SearchScope}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -37,9 +39,46 @@ import scala.collection.mutable.ListBuffer
   */
 case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extends OasSpecParser {
 
-  def parseDocument(): Document = {
+  def parseExtension(): Extension = {
+    val extension = parseDocument(Extension())
 
-    val document = Document().adopted(root.location)
+    parseExtension(extension, ExtensionLikeModel.Extends)
+
+    extension
+  }
+
+  private def parseExtension(document: Document, field: Field): Unit = {
+    val map = root.document.as[YMap]
+
+    UsageParser(map, document).parse()
+
+    map
+      .key("x-extends")
+      .foreach(e => {
+        ctx.link(e.value) match {
+          case Left(url) =>
+            root.references
+              .find(_.parsedUrl == url)
+              .foreach(extend =>
+                document
+                  .set(field, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
+          case _ =>
+        }
+      })
+  }
+
+  def parseOverlay(): Overlay = {
+    val overlay = parseDocument(Overlay())
+
+    parseExtension(overlay, ExtensionLikeModel.Extends)
+
+    overlay
+  }
+
+  def parseDocument(): Document = parseDocument(Document())
+
+  private def parseDocument[T <: Document](document: T): T = {
+    document.adopted(root.location)
 
     val map = root.document.as[YMap]
 
@@ -769,7 +808,8 @@ abstract class OasSpecParser extends BaseSpecParser {
   }
 
   object AnnotationTypesParser {
-    def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
+    def apply(ast: YMapEntry,
+              adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
       ast.value.tagType match {
         case YType.Map =>
           AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()

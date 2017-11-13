@@ -1,0 +1,12 @@
+#%RAML 1.0
+/elements:
+  get:
+    responses:
+      200:
+    description: |
+      describing your method here
+    (decls.important): null
+title: Slave RAML
+uses:
+  dup: file://shared/src/test/resources/resolution/overlay/with-uses-both/lib.raml
+  decls: file://shared/src/test/resources/resolution/overlay/with-uses-both/lib.raml

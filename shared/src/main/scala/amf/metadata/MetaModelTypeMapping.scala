@@ -1,12 +1,12 @@
 package amf.metadata
 
-import amf.document.{Document, Fragment, Module}
+import amf.document._
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension}
 import amf.domain.security._
-import amf.metadata.document.{DocumentModel, FragmentModel, FragmentsTypesModels, ModuleModel}
+import amf.metadata.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
@@ -19,6 +19,8 @@ trait MetaModelTypeMapping {
 
   /** Metadata Type references. */
   protected def metaModel(instance: Any): Obj = instance match {
+    case _: Extension                          => ExtensionModel
+    case _: Overlay                            => OverlayModel
     case _: Document                           => DocumentModel
     case _: WebApi                             => WebApiModel
     case _: Organization                       => OrganizationModel
@@ -68,8 +70,6 @@ trait MetaModelTypeMapping {
     case _: Fragment.TraitFragment             => FragmentsTypesModels.TraitModel
     case _: Fragment.NamedExample              => FragmentsTypesModels.NamedExampleModel
     case _: Fragment.AnnotationTypeDeclaration => FragmentsTypesModels.AnnotationTypeDeclarationModel
-    case _: Fragment.ExtensionFragment         => FragmentsTypesModels.ExtensionModel
-    case _: Fragment.OverlayFragment           => FragmentsTypesModels.OverlayModel
     case _: Fragment.SecurityScheme            => FragmentsTypesModels.SecuritySchemeModel
     case _: Fragment.DialectFragment           => FragmentsTypesModels.DialectNodeModel
     case _: Fragment.Fragment                  => FragmentModel

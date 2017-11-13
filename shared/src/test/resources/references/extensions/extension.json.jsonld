@@ -3,7 +3,9 @@
     "@id": "file://shared/src/test/resources/references/extensions/extension.json",
     "@type": [
       "http://raml.org/vocabularies/document#Extension",
+      "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
       "http://raml.org/vocabularies/document#Unit"
     ],
     "http://raml.org/vocabularies/document#extends": [
@@ -76,6 +78,20 @@
             "@id": "file://shared/src/test/resources/references/extensions/extension.json#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/references/extensions/extension.json#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "oas"
+                  }
+                ]
+              }
             ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
@@ -1339,18 +1355,6 @@
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(12,2)-(12,35)]"
-              }
-            ]
-          },
-          {
-            "http://raml.org/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://shared/src/test/resources/references/extensions/extension.json"
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(1,0)-(13,1)]"
               }
             ]
           },

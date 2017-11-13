@@ -34,7 +34,7 @@ class PayloadValidation(platform: Platform, shape: Shape) extends Validation(pla
     doc
   }
 
-  protected def addProfileTargets(dataNode: DataNode) = {
+  protected def addProfileTargets(dataNode: DataNode): Unit = {
     val entryValidation           = profile.get.validations.head
     val entryValdiationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
     val restValidations           = profile.get.validations.tail
@@ -57,7 +57,7 @@ class PayloadValidation(platform: Platform, shape: Shape) extends Validation(pla
               case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
                 validations.find(v => v.id == propertyConstraint.node.get) match {
                   case Some(targetValidation) =>
-                    validationsAcc = processTargets(targetValidation, nodes.head, validationsAcc)
+                    validationsAcc = processTargets(targetValidation, nodes, validationsAcc)
                   case _ => // ignore
                 }
               case None => // ignore

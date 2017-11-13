@@ -27,53 +27,52 @@ case class RamlEndpointParser(entry: YMapEntry,
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
-    val map = entry.value.as[YMap]
-
-    ctx.closedShape(endpoint.id, map, "endPoint")
-
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
-    map.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
-    })
+    entry.value.to[YMap] match {
+      case Left(_) => collector += endpoint
+      case Right(map) =>
+        ctx.closedShape(endpoint.id, map, "endPoint")
 
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
-    })
+        map.key("displayName", entry => {
+          val value = ValueNode(entry.value)
+          endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
+        })
 
-    map.key(
-      "uriParameters",
-      entry => {
-        val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
-            .parse()
-            .map(_.withBinding("path"))
-        endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+        map.key("description", entry => {
+          val value = ValueNode(entry.value)
+          endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
+        })
+
+        map.key(
+          "uriParameters",
+          entry => {
+            val parameters: Seq[Parameter] =
+              RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
+                .parse()
+                .map(_.withBinding("path"))
+            endpoint.set(EndPointModel.UriParameters,
+                         AmfArray(parameters, Annotations(entry.value)),
+                         Annotations(entry))
+          }
+        )
 
     map.key(
       "type",
       entry =>
-        ParametrizedDeclarationParser(entry.value,
-                                      endpoint.withResourceType,
-                                      ctx.declarations.findResourceTypeOrError(entry.value))
+        ParametrizedDeclarationParser(entry.value, endpoint.withResourceType, ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
     )
 
     map.key(
       "is",
       entry => {
-        entry.value
-          .as[Seq[YNode]]
-          .map(value =>
-            ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value)).parse())
+        entry.value.as[Seq[YNode]].map(value =>
+          ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value)).parse())
       }
     )
 
-    val optionalMethod = if (parseOptionalOperations) "\\??" else ""
+        val optionalMethod = if (parseOptionalOperations) "\\??" else ""
 
     map.regex(
       s"(get|patch|put|post|delete|options|head)$optionalMethod",
@@ -87,27 +86,28 @@ case class RamlEndpointParser(entry: YMapEntry,
       }
     )
 
-    map.key(
-      "securedBy",
-      entry => {
-        // TODO check for empty array for resolution ?
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+        map.key(
+          "securedBy",
+          entry => {
+            // TODO check for empty array for resolution ?
+            val securedBy = entry.value
+              .as[Seq[YNode]]
+              .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
 
-        endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+            endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+          }
+        )
 
-    collector += endpoint
+        collector += endpoint
 
-    AnnotationParser(() => endpoint, map).parse()
+        AnnotationParser(() => endpoint, map).parse()
 
     map.regex(
       "^/.*",
       entries => {
-        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector).parse())
+        entries.foreach(
+          RamlEndpointParser(_, producer, Some(endpoint), collector).parse())
       }
-    )
+    )}
   }
 }
