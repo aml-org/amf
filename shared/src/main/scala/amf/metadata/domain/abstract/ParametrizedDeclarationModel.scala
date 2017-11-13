@@ -2,17 +2,19 @@ package amf.metadata.domain.`abstract`
 
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Iri, Str}
-import amf.metadata.domain.DomainElementModel
+import amf.metadata.domain.{DomainElementModel, KeyField}
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType
 
-trait ParametrizedDeclarationModel extends DomainElementModel {
+trait ParametrizedDeclarationModel extends DomainElementModel with KeyField {
 
   val Name = Field(Str, Document + "name")
 
   val Target = Field(Iri, Document + "target")
 
   val Variables = Field(Array(VariableValueModel), Document + "variable")
+
+  override val key: Field = Name
 
   override def fields: List[Field] = List(Name, Target, Variables) ++ DomainElementModel.fields
 }

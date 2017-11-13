@@ -1,18 +1,22 @@
 package amf.domain.extensions
 
 import amf.domain.{Annotations, DomainElement, Fields}
-import amf.metadata.domain.extensions.DomainExtensionModel.{DefinedBy, Extension}
+import amf.metadata.domain.extensions.DomainExtensionModel._
 import org.yaml.model.YPart
 
 case class DomainExtension(fields: Fields, annotations: Annotations) extends DomainElement {
 
   id = "http://raml.org/vocabularies#document/domain_extension"
 
+  def name: String                    = fields(Name)
   def definedBy: CustomDomainProperty = fields(DefinedBy)
   def extension: DataNode             = fields(Extension)
 
   def withDefinedBy(customProperty: CustomDomainProperty): this.type =
     set(DefinedBy, customProperty)
+
+  def withName(name: String): this.type =
+    set(Name, name)
 
   def withExtension(extension: DataNode): this.type = set(Extension, extension)
 

@@ -2,13 +2,14 @@ package amf.resolution.stages
 import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
 import amf.metadata.domain.ResponseModel
+import amf.validation.Validation
 
 /** Apply response examples to payloads schemas matching by media type
   *
   * MeditaTypeResolution and Shape Normalization stages must already been run
   * for mutate each payload schema
   */
-class ExamplesResolutionStage(profile: String) extends ResolutionStage(profile) {
+class ExamplesResolutionStage(profile: String)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) {
   override def resolve(model: BaseUnit): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[WebApi] =>
       d.withEncodes(resolveWebApi(d.encodes.asInstanceOf[WebApi]))

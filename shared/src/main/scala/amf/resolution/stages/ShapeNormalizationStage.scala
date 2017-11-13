@@ -8,6 +8,7 @@ import amf.metadata.{MetaModelTypeMapping, Obj}
 import amf.model.{AmfArray, AmfScalar}
 import amf.resolution.stages.shape_normalization.MinShapeAlgorithm
 import amf.shape._
+import amf.validation.Validation
 import amf.vocabulary.{Namespace, ValueType}
 
 import scala.collection.mutable.ListBuffer
@@ -18,7 +19,7 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   * @param profile
   */
-class ShapeNormalizationStage(profile: String)
+class ShapeNormalizationStage(profile: String)(override implicit val currentValidation: Validation)
     extends ResolutionStage(profile)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {

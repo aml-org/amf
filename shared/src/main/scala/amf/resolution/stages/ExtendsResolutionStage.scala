@@ -24,15 +24,11 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
+class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) with PlatformSecrets {
 
-  implicit val ctx: ParserContext = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
+  implicit val ctx: ParserContext = ParserContext(currentValidation, Raml)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
-    // TODO should we remove traits and resourceTypes from the declarations?
-
-    model.transform(findExtendsPredicate, transform(model))
-  }
+  override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 
   def declarations(model: BaseUnit): Unit = model match {
     case d: DeclaresModel => d.declares.foreach(declaration => ctx.declarations += declaration)
@@ -140,10 +136,10 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
         case (current, branch) => DomainElementMerging.merge(current, branch.operation)
       }
 
-      operation.fields.remove(DomainElementModel.Extends)
+      if (removeFromModel) operation.fields.remove(DomainElementModel.Extends)
     }
 
-    endpoint.fields.remove(DomainElementModel.Extends)
+    if (removeFromModel) endpoint.fields.remove(DomainElementModel.Extends)
 
     endpoint
   }
@@ -218,7 +214,6 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
           val op = dataNodeToOperation(node, context)
 
           val children = op.traits.map(resolve(_, context))
-          op.fields.remove(DomainElementModel.Extends)
 
           TraitBranch(key, op, children)
         case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")

@@ -2,11 +2,12 @@ package amf.resolution.stages
 
 import amf.document.BaseUnit
 import amf.domain.{DomainElement, Linkable}
+import amf.validation.Validation
 
 /**
   * Resolves the local and remote references found in the model.
   */
-class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile) {
+class ReferenceResolutionStage(profile: String)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) {
 
   override def resolve(model: BaseUnit): BaseUnit = {
     model.transform(findLinkPredicates, transform)

@@ -6,13 +6,14 @@ import amf.domain.{DomainElement, Payload, WebApi}
 import amf.metadata.Field
 import amf.metadata.domain.{OperationModel, PayloadModel, RequestModel, WebApiModel}
 import amf.model.AmfScalar
+import amf.validation.Validation
 
 /** Apply root and operation mime types to payloads.
   *
   * Request payloads will have as default mime type the 'accepts' field.
   * Response payloads will have as default mime type the 'contentType' field.
   */
-class MediaTypeResolutionStage(profile: String) extends ResolutionStage(profile) {
+class MediaTypeResolutionStage(profile: String)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) {
 
   override def resolve(model: BaseUnit): BaseUnit = {
     model match {

@@ -2,12 +2,12 @@ package amf.metadata.shape
 
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Bool, SortedArray, Str}
-import amf.metadata.domain.extensions.{DomainExtensionModel, ShapeExtensionModel}
-import amf.metadata.domain.{CreativeWorkModel, DomainElementModel, ExampleModel, LinkableElementModel}
+import amf.metadata.domain._
+import amf.metadata.domain.extensions.ShapeExtensionModel
 import amf.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
 import amf.vocabulary.ValueType
 
-trait ShapeModel extends DomainElementModel with LinkableElementModel {
+trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyField {
 
   val Name = Field(Str, Shacl + "name")
 
@@ -31,6 +31,8 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel {
   lazy val CustomShapePropertyDefinitions = Field(Array(PropertyShapeModel), Shapes + "customShapePropertyDefinitions")
   lazy val CustomShapeProperties = Field(Array(ShapeExtensionModel), Shapes + "customShapeProperties")
   //
+
+  override val key: Field = Name
 
   // This is just a placeholder for the required shape information that is
   // stored in the model in the MinCount field of the PropertyShape

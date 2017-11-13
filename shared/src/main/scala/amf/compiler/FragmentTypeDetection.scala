@@ -17,8 +17,6 @@ object FragmentTypes {
   object TraitFragment             extends FragmentType("Trait")
   object AnnotationTypeFragment    extends FragmentType("AnnotationTypeDeclaration")
   object DocumentationItemFragment extends FragmentType("DocumentationItem")
-  object OverlayFragment           extends FragmentType("Overlay")
-  object ExtensionFragment         extends FragmentType("Extension")
   object SecuritySchemeFragment    extends FragmentType("SecurityScheme")
   object NamedExampleFragment      extends FragmentType("NamedExample")
   object UnknownFragment           extends FragmentType("?")
@@ -46,8 +44,6 @@ case class FragmentTypeDetection(map: YMap) {
     map.regex("headers|queryParameters").headOption.foreach(_ => matchingTypes += TraitFragment)
 
     map.regex("get|patch|put|post|delete|options|head").headOption.foreach(_ => matchingTypes += ResourceTypeFragment)
-
-    map.key("extends").foreach(_ => matchingTypes += ExtensionFragment) // overlay??
 
     map.entries
       .flatMap(e => e.value.toOption[YMap])

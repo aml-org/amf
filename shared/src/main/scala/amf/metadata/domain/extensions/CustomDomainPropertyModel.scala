@@ -2,8 +2,8 @@ package amf.metadata.domain.extensions
 
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Iri, Str}
-import amf.vocabulary.Namespace.{Rdfs, Rdf, Shapes, Document}
-import amf.metadata.domain.DomainElementModel
+import amf.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
+import amf.metadata.domain.{DomainElementModel, KeyField}
 import amf.metadata.shape.ShapeModel
 import amf.vocabulary.ValueType
 
@@ -20,7 +20,7 @@ import amf.vocabulary.ValueType
   * Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more
   * re-usable and generic way of achieving the same functionality
   */
-object CustomDomainPropertyModel extends DomainElementModel {
+object CustomDomainPropertyModel extends DomainElementModel with KeyField {
 
   /**
     * The name of the extension
@@ -28,6 +28,8 @@ object CustomDomainPropertyModel extends DomainElementModel {
   val Name        = Field(Str, amf.vocabulary.Namespace.Document + "name")
   val DisplayName = Field(Str, amf.vocabulary.Namespace.Schema + "name")
   val Description = Field(Str, amf.vocabulary.Namespace.Schema + "description")
+
+  override val key: Field = Name
 
   /**
     * These Iris are always going to be domain classes URIs.

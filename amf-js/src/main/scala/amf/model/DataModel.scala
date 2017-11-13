@@ -29,12 +29,12 @@ object DataNode {
 @JSExportAll
 case class ObjectNode(private[amf] val objectNode: amf.domain.extensions.ObjectNode) extends DataNode(objectNode) {
 
-  def properties: js.Dictionary[js.Iterable[DataNode]] =
+  def properties: js.Dictionary[DataNode] =
     objectNode.properties
       .map({ (p) =>
-        val key     = p._1
-        val objects = p._2.map(DataNode(_)).toJSIterable
-        key -> objects
+        val key = p._1
+        val obj = DataNode(p._2)
+        key -> obj
       })
       .toJSDictionary
 

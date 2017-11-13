@@ -1,0 +1,12 @@
+#%RAML 1.0
+/servers:
+  (lib2.TestAnnotationType): Some other lib
+  (lib.TestAnnotationType): TestAnnotationType2
+  (lib.AnotherAnnotationType):
+    firstProp: firstProp2
+    secondProp: 101
+title: Overlay 2
+uses:
+  lib: file://shared/src/test/resources/resolution/overlay/annotation-chained/lib.raml
+  lib3: file://shared/src/test/resources/resolution/overlay/annotation-chained/lib.raml
+  lib2: file://shared/src/test/resources/resolution/overlay/annotation-chained/lib.raml

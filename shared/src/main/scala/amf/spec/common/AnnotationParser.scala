@@ -33,5 +33,6 @@ case class ExtensionParser(annotationRamlName: String, parent: String, entry: YM
     domainExtension
       .withExtension(dataNode)
       .withDefinedBy(customDomainProperty)
+      .withName(annotationName)
   }
 }
