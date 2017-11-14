@@ -332,6 +332,8 @@ abstract class RamlSpecParser extends BaseSpecParser {
                         ast.value)
           domainProp
         case _ =>
+          // @todo: this can be a scalar with a type expression, not a reference
+
           LinkedAnnotationTypeParser(ast, ast.key.as[YScalar].text, ast.value.as[YScalar], adopt, declarations).parse()
       }
   }
@@ -369,7 +371,13 @@ abstract class RamlSpecParser extends BaseSpecParser {
       custom.withName(annotationName)
       adopt(custom)
 
-      ctx.closedShape(custom.id, map, "annotation")
+      // We parse the node as if it were a data shape, this will also check the closed node condition including the
+      // annotation type facets
+      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), declarations, isAnnotation = true)
+        .parse()
+        .foreach({ shape =>
+          custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))
+        })
 
       map.key(
         "allowedTargets",
@@ -402,26 +410,10 @@ abstract class RamlSpecParser extends BaseSpecParser {
         }
       )
 
-      map.key("displayName", entry => {
-        val value = ValueNode(entry.value)
-        custom.set(CustomDomainPropertyModel.DisplayName, value.string(), Annotations(entry))
-      })
-
       map.key("description", entry => {
         val value = ValueNode(entry.value)
         custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
       })
-
-      map.key(
-        "type",
-        entry => {
-          RamlTypeParser(entry, shape => shape.adopted(custom.id), declarations)
-            .parse()
-            .foreach({ shape =>
-              custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(entry))
-            })
-        }
-      )
 
       AnnotationParser(() => custom, map).parse()
 

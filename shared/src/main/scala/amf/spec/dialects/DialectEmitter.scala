@@ -127,11 +127,21 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           } else res = Some(ValueEmitter(mapping.name, FieldEntry(field, domainEntity.fields.getValue(field))))
         }
       } else {
-        if (mapping.collection) throw new RuntimeException("Not implemented yet")
-        else if (mapping.isMap) {
+        if (mapping.collection) {
+          value match {
+            case array: AmfArray   => res = Some(ObjectArrayEmitter(mapping, array))
+            case obj: DomainEntity => res = Some(ObjectKVEmitter(mapping, value.asInstanceOf[DomainEntity]))
+          }
+        } else if (mapping.isMap && mapping.hashValue.isEmpty) {
           value match {
             case array: AmfArray =>
               res = Some(ObjectMapEmitter(mapping, array))
+            case _ => // ignore
+          }
+        } else if (mapping.isMap && mapping.hashValue.isDefined) {
+          value match {
+            case array: AmfArray =>
+              res = Some(MapPairEmitter(mapping, array))
             case _ => // ignore
           }
         } else {
@@ -141,6 +151,22 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
     }
 
     res
+  }
+
+  case class ObjectArrayEmitter(mapping: DialectPropertyMapping, values: AmfArray) extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      b.entry(
+        mapping.name,
+        _.list { l =>
+          values.values.foreach {
+            case v: DomainEntity =>
+              ObjectEmitter(v).emit(l)
+          }
+        }
+      )
+    }
+
+    override def position(): Position = pos(values.annotations)
   }
 
   case class ObjectKVEmitter(mapping: DialectPropertyMapping, domainEntity: DomainEntity) extends EntryEmitter {
@@ -170,6 +196,34 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
                     else raw(b, lastSegment(entity))
                   },
                   ObjectEmitter(entity).emit(_)
+                )
+            }
+          }
+        )
+      }
+    }
+
+    override def position(): Position = ZERO
+  }
+
+  case class MapPairEmitter(mapping: DialectPropertyMapping, values: AmfArray) extends EntryEmitter {
+
+    override def emit(b: EntryBuilder): Unit = {
+      if (values.values.nonEmpty) {
+        b.entry(
+          mapping.name,
+          _.obj { b =>
+            values.values.foreach {
+              case entity: DomainEntity =>
+                b.complexEntry(
+                  b => {
+                    if (mapping.noLastSegmentTrimInMaps) raw(b, localId(mapping, entity))
+                    else raw(b, lastSegment(entity))
+                  },
+                  entity.fields.get(mapping.hashValue.get.field()) match {
+                    case hashValueScalar: AmfScalar => raw(_, hashValueScalar.asInstanceOf[AmfScalar].toString)
+                    case _                          => raw(_, "")
+                  }
                 )
             }
           }

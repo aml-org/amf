@@ -281,12 +281,22 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
                     domainEntity.set(hashProperty.field(), entryNode.key.value.asInstanceOf[YScalar].text)
                   case None =>
                 }
+                // order here is important, this will fail, if we do the parseNode before invoking this line
                 parentDomainEntity.add(targetField, domainEntity)
-                entry.tagType match {
-                  case YType.Map => parseNode(entry.as[YMap], domainEntity)
-                  case _ if entry.toOption[YScalar].exists(t => Option(t.text).isDefined && !t.text.equals("")) =>
-                    parseNode(entry, domainEntity)
-                  case _ => // ignore
+                mapping.hashValue match {
+                  case Some(hashValue) =>
+                    entry match {
+                      case _ if entry.toOption[YScalar].isDefined =>
+                        domainEntity.set(hashValue.field(), entry.as[YScalar].text)
+                      case _ =>
+                    }
+                  case None =>
+                    entry.tagType match {
+                      case YType.Map => parseNode(entry.as[YMap], domainEntity)
+                      case _ if entry.toOption[YScalar].exists(t => Option(t.text).isDefined && !t.text.equals("")) =>
+                        parseNode(entry, domainEntity)
+                      case _ => // ignore}
+                    }
                 }
                 domainEntity.set(mapping.hash.get.field(), mapKey.text)
               case _ => // ignore
@@ -426,7 +436,16 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
                              hash: Option[DialectPropertyMapping],
                              hashValue: Option[String],
                              parentDomainEntity: Option[DomainEntity]): Option[Type] = {
-    if (mapping.unionTypes.isDefined) {
+    if (mapping.unionTypes.isDefined && mapping.hashValue.isDefined) {
+      ctx.violation(
+        ParserSideValidations.ParsingErrorSpecification.id(),
+        parentDomainEntity.get.id,
+        None,
+        s"Multiple range types not supported at the same time that 'hashValue' property",
+        parentDomainEntity.get.annotations.find(classOf[LexicalInformation])
+      )
+      None
+    } else if (mapping.unionTypes.isDefined) {
 
       var nodeId: Option[String] = None
 

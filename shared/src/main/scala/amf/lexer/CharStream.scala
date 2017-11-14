@@ -65,7 +65,7 @@ abstract class CharStream extends CharSequence {
     } {
       if (c == current) {
         consume()
-        return true
+        true
       }
     }
     false

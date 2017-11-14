@@ -305,7 +305,7 @@ class Validation(platform: Platform) {
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
     val shapesJSON = shapesGraph(validations, messageStyle)
-    val jsLibrary  = new JSLibraryEmitter().emitJS(validations.effective.values.toSeq)
+    val jsLibrary  = new JSLibraryEmitter(profile).emitJS(validations.effective.values.toSeq)
 
     /*
     println("\n\nGRAPH")
@@ -316,7 +316,7 @@ class Validation(platform: Platform) {
     println("===========================")
     println(jsLibrary)
     println("===========================")
-    */
+     */
 
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)

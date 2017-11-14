@@ -45,6 +45,7 @@ object ValidationsImporter {
        |// auto-generated class from ValidationsImporter.toScala
        |package amf.validation.model
        |
+       |// scalastyle:off line.contains.tab
       |object AMFRawValidations {
        |  val raw = List(
        |  $lines

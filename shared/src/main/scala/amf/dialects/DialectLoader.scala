@@ -250,28 +250,45 @@ class DialectLoader(val document: BaseUnit) {
 
       if (dialectPropertyMapping.unionTypes.isDefined) {
         dialectPropertyMapping.unionTypes.get.foreach { unionOption =>
-          processHashRange(dialectPropertyMapping, hash, unionOption)
+          processHashRange(dialectPropertyMapping, hash, v.hashValue(), unionOption)
         }
       } else {
-        processHashRange(dialectPropertyMapping, hash, range)
+        processHashRange(dialectPropertyMapping, hash, v.hashValue(), range)
       }
     }
   }
 
-  private def processHashRange(dialectPropertyMapping: DialectPropertyMapping, hash: String, r: Type) = {
+  private def processHashRange(dialectPropertyMapping: DialectPropertyMapping,
+                               hash: String,
+                               hashValue: Option[String],
+                               r: Type) = {
     r match {
+      case rangeNode: DialectNode if hashValue.isDefined =>
+        for {
+          property      <- rangeNode.mappings() if property.iri() == hash
+          valueProperty <- rangeNode.mappings() if valueProperty.iri() == hashValue.get
+        } yield {
+          connectHash(dialectPropertyMapping, property, Some(valueProperty), r)
+        }
       case rangeNode: DialectNode =>
         for {
           property <- rangeNode.mappings() if property.iri() == hash
         } yield {
-          connectHash(dialectPropertyMapping, property, r)
+          connectHash(dialectPropertyMapping, property, None, r)
         }
       case _ => // ignore
     }
   }
 
-  private def connectHash(hashedProperty: DialectPropertyMapping, hashProperty: DialectPropertyMapping, r: Type) = {
-    hashedProperty.owningNode.get.add(hashedProperty.copy(hash = Option(hashProperty)))
+  private def connectHash(hashedProperty: DialectPropertyMapping,
+                          hashProperty: DialectPropertyMapping,
+                          hasPropertyValue: Option[DialectPropertyMapping],
+                          r: Type) = {
+    hashedProperty.owningNode.get.add(
+      hashedProperty.copy(
+        hash = Option(hashProperty),
+        hashValue = hasPropertyValue
+      ))
     r.asInstanceOf[DialectNode].add(hashProperty.copy(noRAML = true))
   }
 

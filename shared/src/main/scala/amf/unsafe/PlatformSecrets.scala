@@ -22,9 +22,11 @@ class TrunkDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(
 }
 
 class TrunkValidator extends SHACLValidator {
-  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) = throw new Exception("Error, validation is not supported")
+  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) =
+    throw new Exception("Error, validation is not supported")
 
-  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) = throw new Exception("Error, validation is not supported")
+  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) =
+    throw new Exception("Error, validation is not supported")
 
   /**
     * Registers a library in the validator
@@ -33,7 +35,8 @@ class TrunkValidator extends SHACLValidator {
     * @param code
     * @return
     */
-  override def registerLibrary(url: String, code: String): Unit = throw new Exception("Error, validation is not supported")
+  override def registerLibrary(url: String, code: String): Unit =
+    throw new Exception("Error, validation is not supported")
 }
 
 case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = None) extends Platform {
