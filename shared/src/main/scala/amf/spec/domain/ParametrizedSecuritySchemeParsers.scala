@@ -3,7 +3,7 @@ package amf.spec.domain
 import amf.domain.Annotations
 import amf.domain.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
 import amf.metadata.domain.security._
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.spec.{Declarations, ParserContext}
 import amf.spec.common._
 import org.yaml.model.{YMap, YNode, YType}
@@ -28,7 +28,7 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode,
       }
 
     case YType.Map =>
-      val schemeEntry = s.value.toMap.entries.head
+      val schemeEntry = s.as[YMap].entries.head
       val name        = schemeEntry.key
       val scheme      = producer(name).add(Annotations(s))
 
@@ -36,7 +36,7 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode,
         case Some(declaration) =>
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
 
-          val settings = RamlSecuritySettingsParser(schemeEntry.value.value.toMap, declaration.`type`, scheme).parse()
+          val settings = RamlSecuritySettingsParser(schemeEntry.value.as[YMap], declaration.`type`, scheme).parse()
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
@@ -110,7 +110,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key(
       "authorizationGrants",
       entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
+        val value = ArrayNode(entry.value)
         settings.set(OAuth2SettingsModel.AuthorizationGrants, value.strings(), Annotations(entry))
       }
     )
@@ -118,7 +118,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key(
       "scopes",
       entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
+        val value = ArrayNode(entry.value)
           .strings()
           .values
           .map(v => Scope().set(ScopeModel.Name, v).adopted(scheme.id))
@@ -147,7 +147,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     })
 
     map.key("signatures", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
+      val value = ArrayNode(entry.value)
       settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
     })
 

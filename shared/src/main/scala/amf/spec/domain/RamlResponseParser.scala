@@ -3,7 +3,7 @@ package amf.spec.domain
 import amf.domain.{Annotations, Parameter, Payload, Response}
 import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.model.AmfArray
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.RamlTypeParser
 import amf.spec.{Declarations, ParserContext}
@@ -21,7 +21,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
     val node = ValueNode(entry.key).text()
 
     val response = producer(node.value.toString).add(Annotations(entry))
-    val map      = entry.value.value.toMap
+    val map      = entry.value.as[YMap]
 
     response.set(ResponseModel.StatusCode, node)
 
@@ -34,7 +34,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, response.withHeader, declarations)
+          RamlParametersParser(entry.value.as[YMap], response.withHeader, declarations)
             .parse()
             .map(_.withBinding("header"))
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -53,9 +53,9 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
           .parse()
           .foreach(payloads += payload.withSchema(_))
 
-        entry.value.value match {
-          case map: YMap =>
-            map.regex(
+        entry.value.to[YMap] match {
+          case Right(m) =>
+            m.regex(
               ".*/.*",
               entries => {
                 entries.foreach(entry => {

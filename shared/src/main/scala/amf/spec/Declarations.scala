@@ -4,11 +4,11 @@ import amf.common.core.QName
 import amf.document.Fragment.Fragment
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
-import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
 import amf.model.AmfArray
 import amf.shape.{Shape, UnresolvedShape}
+import org.yaml.model.YPart
 
 /**
   * Declarations object.
@@ -22,7 +22,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         var parameters: Map[String, Parameter] = Map(),
                         var payloads: Map[String, Payload] = Map(),
                         var traits: Map[String, Trait] = Map(),
-                        var securitySchemes: Map[String, SecurityScheme] = Map()) {
+                        var securitySchemes: Map[String, SecurityScheme] = Map())(implicit ctx: ErrorHandler) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
@@ -72,8 +72,16 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
     case p: Parameter => p
   }
 
+  // todo remove
   def findResourceTypeOrFail(key: String): ResourceType =
     findResourceType(key).getOrElse(throw new Exception(s"ResourceType '$key' not found"))
+
+  def findResourceTypeOrError(ast: YPart)(key: String): ResourceType = findResourceType(key) match {
+    case Some(result) => result
+    case _ =>
+      ctx.violation("", s"ResourceType $key not found", ast)
+      ErrorResourceType
+  }
 
   def findResourceType(key: String): Option[ResourceType] = findForType(key, _.resourceTypes) collect {
     case r: ResourceType => r
@@ -86,9 +94,14 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
     case u: CreativeWork => u
   }
 
-  def findTraitOrFail(key: String): Trait = findTrait(key).getOrElse(throw new Exception(s"Trait '$key' not found"))
+  def findTraitOrError(ast: YPart)(key: String): Trait = findTrait(key) match {
+    case Some(result) => result
+    case _ =>
+      ctx.violation("", s"Trait $key not found", ast)
+      ErrorTrait
+  }
 
-  def findTrait(key: String): Option[Trait] = findForType(key, _.traits) collect {
+  private def findTrait(key: String): Option[Trait] = findForType(key, _.traits) collect {
     case t: Trait => t
   }
 
@@ -162,11 +175,16 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
         fragments.get(key)
       }
   }
+
+  trait ErrorDeclaration
+
+  object ErrorTrait        extends Trait(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorResourceType extends ResourceType(Fields(), Annotations()) with ErrorDeclaration
 }
 
 object Declarations {
 
-  def apply(declarations: Seq[DomainElement]): Declarations = {
+  def apply(declarations: Seq[DomainElement])(implicit ctx: ErrorHandler): Declarations = {
     val result = Declarations()
     declarations.foreach(result += _)
     result

@@ -1,7 +1,8 @@
 package amf.compiler
 
-import amf.parser.{YMapOps, YValueOps}
-import FragmentTypes._
+import amf.compiler.FragmentTypes._
+import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import org.yaml.model.{YMap, YScalar}
 
 /**
   *
@@ -31,12 +32,12 @@ object OasFragmentHeader {
   object Oas20SecurityScheme extends OasHeader(extentionName, "2.0 SecurityScheme")
 
   def apply(root: Root): Option[OasHeader] = {
-    root.document.value
-      .flatMap(_.asMap)
+    root.document
+      .toOption[YMap]
       .flatMap(map => {
         val headerOption = for {
-          value        <- map.key(extentionName).map(_.value.value)
-          fragmentType <- value.asScalar.flatMap(s => apply(s.text))
+          node         <- map.key(extentionName).map(_.value)
+          fragmentType <- node.toOption[YScalar].flatMap(s => apply(s.text))
         } yield fragmentType
 
         headerOption.orElse(toOasType(FragmentTypes(map)))

@@ -2,19 +2,22 @@ package amf.compiler
 
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.remote._
+import amf.spec.ParserContext
 import amf.validation.Validation
 import org.yaml.model._
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.collection.mutable.ArrayBuffer
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 /**
   * Reference collector. Ideally references should be collected while parsing to avoid an unnecessary iteration.
   */
-class ReferenceCollector(document: YDocument, vendor: Vendor) {
+class ReferenceCollector(document: YDocument, vendor: Vendor, validation: Validation) {
+
+  implicit val ctx = ParserContext(validation, vendor)
 
   private val references = new ArrayBuffer[Reference]
 
@@ -28,8 +31,8 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
   }
 
   private def overlaysAndExtensions(document: YDocument): Unit = {
-    document.node.value match {
-      case map: YMap =>
+    document.node.to[YMap] match {
+      case Right(map) =>
         val ext = vendor match {
           case Raml => Some("extends")
           case Oas  => Some("x-extends")
@@ -40,11 +43,13 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
           map
             .key(u)
             .foreach(entry =>
-              entry.value.value match {
-                case _: YScalar => extension(entry)
-                case _          => throw new Exception(s"Expected scalar but found: ${entry.value}")
+              entry.value.tagType match {
+                case YType.Map | YType.Seq =>
+                  ctx.violation("", s"Expected scalar but found: ${entry.value}", entry.value)
+                case _ => extension(entry) // assume scalar
             })
         }
+      case _ =>
     }
   }
 
@@ -61,8 +66,8 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
   }
 
   private def libraries(document: YDocument): Unit = {
-    document.value.foreach({
-      case map: YMap =>
+    document.to[YMap] match {
+      case Right(map) =>
         val uses = vendor match {
           case Raml => Some("uses")
           case Oas  => Some("x-uses")
@@ -72,13 +77,14 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
           map
             .key(u)
             .foreach(entry => {
-              entry.value.value match {
-                case libraries: YMap => libraries.entries.foreach(library)
-                case _               => throw new Exception(s"Expected map but found: ${entry.value}")
+              entry.value.to[YMap] match {
+                case Right(m) => m.entries.foreach(library)
+                case _        => ctx.violation("", s"Expected map but found: ${entry.value}", entry.value)
               }
             })
         })
-    })
+      case _ =>
+    }
   }
 
   private def library(entry: YMapEntry) = {
@@ -94,9 +100,10 @@ class ReferenceCollector(document: YDocument, vendor: Vendor) {
 
   private def oasInclude(map: YMap): Unit = {
     val ref = map.entries.head
-    ref.value.value match {
-      case scalar: YScalar => references += Reference(scalar.text, Link, map)
-      case _               => throw new Exception(s"Unexpected $$ref with $ref")
+    ref.value.tagType match {
+      case YType.Str =>
+        references += Reference(ref.value.as[String], Link, map) // this is not for all scalar, link must be a string
+      case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 

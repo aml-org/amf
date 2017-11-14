@@ -4,9 +4,10 @@ import amf.compiler.Root
 import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
-import amf.parser.YValueOps
+import amf.parser.YNodeLikeOps
 import amf.spec.ParserContext
 import amf.spec.declaration.ReferencesParser
+import org.yaml.model._
 
 /**
   *
@@ -20,10 +21,8 @@ case class RamlModuleParser(root: Root)(implicit val ctx: ParserContext) extends
 
     module.withLocation(root.location)
 
-    root.document.value.foreach(document => {
-
-      val rootMap    = document.toMap
-      val references = ReferencesParser("uses", rootMap, root.references).parse()
+    root.document.toOption[YMap].foreach { rootMap =>
+      val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap, references.declarations)
 
@@ -36,7 +35,7 @@ case class RamlModuleParser(root: Root)(implicit val ctx: ParserContext) extends
       val declarables = references.declarations.declarables()
       if (declarables.nonEmpty) module.withDeclares(declarables)
       if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
-    })
+    }
     module
 
   }

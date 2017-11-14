@@ -7,14 +7,14 @@ import amf.document.{BaseUnit, EncodesModel, Module}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YValueOps
+import amf.parser.YNodeLikeOps
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecParser
-import amf.validation.Validation
 import amf.vocabulary.{Namespace, ValueType}
-import org.yaml.model.YValue
+import org.yaml.model._
+import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -312,11 +312,10 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
         name.split("\\.") match {
           case Array(alias, suffix) =>
             externalsMap.get(alias) match {
-              case Some(resolved) => {
+              case Some(resolved) =>
                 val resolvedUri = s"$resolved$suffix"
                 resolvedExternals += resolvedUri
                 resolvedUri
-              }
               case _ =>
                 if (references.contains(alias)) {
                   throw new Exception(s"Cannot find entity '$suffix' in '$alias'")
@@ -342,7 +341,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
       case (namespace, unit) =>
         val ent = retrieveDomainEntity(unit)
         unit match {
-          case fragment: Fragment =>
+          case _: Fragment =>
             declarationsFromFragments.put(namespace, ent)
           case _ =>
             ent.definition.props.values.foreach(p => {
@@ -365,21 +364,21 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
         }
     }
 
-    root.document.value.foreach { value: YValue =>
-      val entries = value.toMap.entries
+    root.document.toOption[YMap].foreach { map =>
+      val entries = map.entries
 
       for {
         mapping <- externals
-        node    <- entries.find(_.key.value.toScalar.text == mapping.name)
+        node    <- entries.find(_.key.as[YScalar].text == mapping.name)
       } yield
         for {
-          (alias, nestedEntry) <- node.value.value.toMap.map
+          (alias, nestedEntry) <- node.value.as[YMap].map
         } yield {
           externalsMap.put(alias, nestedEntry)
         }
 
       for {
-        entry <- entries.find(_.key.value.toScalar.text == "base")
+        entry <- entries.find(_.key.as[YScalar].text == "base")
         node = ValueNode(entry.value).string().value
         if node.isInstanceOf[String]
       } yield {
@@ -388,7 +387,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
     }
     def fixBase(str: String): String = {
       if (!str.endsWith("/") && (!str.endsWith("#"))) {
-        str + "/";
+        str + "/"
       } else {
         str
       }
@@ -415,7 +414,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
     }
   }
 
-  override def resolveRef(ref: String) =
+  override def resolveRef(ref: String): Option[String] =
     try {
       Some(resolveBasicRef(ref))
     } catch {

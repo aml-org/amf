@@ -3,7 +3,7 @@ package amf.emit
 import amf.client.GenerationOptions
 import amf.common.ListAssertions
 import amf.document.Document
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.remote.{Oas, Raml, Vendor}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
@@ -97,14 +97,14 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
       case (k, v) =>
         container.key(k) match {
           case Some(entry) =>
-            val value = entry.value.value
+            val value = entry.value
             v match {
               case x: String =>
                 entry.value.as[String] should be(x)
               case l: Array[String] =>
                 assert(l.toList, entry.value.as[Seq[String]].toList)
               case l: List[Any] =>
-                val obj = value.toMap
+                val obj = value.as[YMap]
                 l.map(e => assertNode(obj, e.asInstanceOf[(String, Any)]))
             }
           case None => notFound(k)
@@ -118,6 +118,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   private def ast(document: Document, vendor: Vendor): YMap = {
-    AMFUnitMaker(document, vendor, GenerationOptions()).value.get.toMap
+    AMFUnitMaker(document, vendor, GenerationOptions()).node.as[YMap]
   }
 }

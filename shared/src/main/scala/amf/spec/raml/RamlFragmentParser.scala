@@ -9,13 +9,13 @@ import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.model.AmfScalar
-import amf.parser.{YValueOps, _}
+import amf.parser._
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
 import amf.spec.{Declarations, ParserContext}
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.{YMap, YScalar, YType}
 
 /**
   *
@@ -26,11 +26,12 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
 
-    val rootMap: YMap =
-      root.document.value.map(_.toMap).getOrElse {
+    val rootMap: YMap = root.document.to[YMap] match {
+      case Right(map) => map
+      case _ =>
         ctx.violation(root.location, "Cannot parse empty map", root.document)
         YMap()
-      }
+    }
 
     val fragment: Fragment = fragmentType match {
       case Raml10DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
@@ -51,7 +52,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
     fragment.add(Annotations(root.document) += SourceVendor(Raml))
 
-    val references = ReferencesParser("uses", rootMap, root.references).parse()
+    val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
 
     if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment
@@ -128,7 +129,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         .key("extends")
         .foreach(e => {
           root.references
-            .find(_.parsedUrl == e.value.value.toScalar.text)
+            .find(_.parsedUrl == e.value.as[YScalar].text)
             .foreach(extend =>
               extension
                 .set(ExtensionModel.Extends, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
@@ -149,7 +150,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         .key("extends")
         .foreach(e => {
           root.references
-            .find(_.parsedUrl == e.value.value.toScalar.text)
+            .find(_.parsedUrl == e.value.as[YScalar].text)
             .foreach(extend =>
               overlay.set(OverlayModel.Extends, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
         })
