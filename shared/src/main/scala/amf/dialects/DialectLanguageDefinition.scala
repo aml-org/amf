@@ -14,8 +14,8 @@ class DialectLanguageNode(override val shortName: String, namespace: Namespace =
     extends DialectNode(shortName, namespace) {
   id = Some((namespace + shortName).iri())
 
-  def refMap(name: String, isDeclaration: Boolean): DialectPropertyMapping =
-    map(name, NodeReference.idProperty, NodeReference, _.copy(required = true, isDeclaration = isDeclaration))
+  def refMap(name: String, isDeclaration: Boolean, required: Boolean = true): DialectPropertyMapping =
+    map(name, NodeReference.idProperty, NodeReference, _.copy(required = required, isDeclaration = isDeclaration))
 }
 
 object VocabImport extends DialectLanguageNode("VocabImport") {
@@ -51,6 +51,7 @@ object PropertyMapping extends DialectLanguageNode("PropertyMapping") {
   val allowMultiple: DialectPropertyMapping = bool("allowMultiple")
   val asMap: DialectPropertyMapping         = bool("asMap")
   val hash: DialectPropertyMapping          = iri("hash", _.copy(referenceTarget = Some(PropertyTerm)))
+  val hashValue: DialectPropertyMapping     = iri("hashValue", _.copy(referenceTarget = Some(PropertyTerm)))
   val defaultValue: DialectPropertyMapping  = str("defaultValue")
 }
 
@@ -81,7 +82,7 @@ object FragmentDeclaration extends DialectLanguageNode("FragmentsDeclaration") {
 }
 
 object DocumentEncode extends DialectLanguageNode("DocumentContentDeclaration") {
-  val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true)
+  val declares: DialectPropertyMapping = refMap("declares", isDeclaration = true, required = false)
   var encodes: DialectPropertyMapping =
     iri("encodes", _.copy(referenceTarget = Some(NodeDefinition), required = true, allowInplace = true))
 }
@@ -122,7 +123,7 @@ object DialectModuleDefinition extends DialectLanguageNode("module") {
     map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
   var nodeMappings: DialectPropertyMapping =
     map("nodeMappings", NodeDefinition.name, NodeDefinition, _.copy(isDeclaration = true))
-  //var raml: DialectPropertyMapping = obj("raml", MainNode, _.copy(required = true))
+  // var raml: DialectPropertyMapping = obj("raml", MainNode, _.copy(required = true))
   var uses: DialectPropertyMapping = str("uses", _.copy(required = false, jsonld = false))
 
   nameProvider = {

@@ -1,5 +1,7 @@
 package amf.spec.declaration
 import amf.domain.Annotation.{toString => _, _}
+
+import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
 import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -17,9 +19,9 @@ import org.yaml.parser.YamlParser
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations)(
+  def apply(ast: YMapEntry, adopt: Shape => Shape, declarations: Declarations, isAnnotation: Boolean = false)(
       implicit ctx: ParserContext): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations)(ctx.toRaml)
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, declarations, isAnnotation)(ctx.toRaml)
 }
 
 trait RamlTypeSyntax {
@@ -47,8 +49,12 @@ trait RamlTypeSyntax {
     } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
 }
 
-case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, declarations: Declarations)(
-    implicit val ctx: ParserContext)
+case class RamlTypeParser(ast: YPart,
+                          name: String,
+                          node: YNode,
+                          adopt: Shape => Shape,
+                          declarations: Declarations,
+                          isAnnotation: Boolean)(implicit val ctx: ParserContext)
     extends RamlSpecParser {
 
   def parse(): Option[Shape] = {
@@ -298,7 +304,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         case _                   => "shape"
       }
 
-      ctx.closedShape(shape.id, map, syntaxType)
+      ctx.closedShape(shape.id, map, syntaxType, isAnnotation)
 
       shape
     }
@@ -321,7 +327,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
                                    s"item$index",
                                    unionNode,
                                    item => item.adopted(shape.id + "/items/" + index),
-                                   declarations).parse()
+                                   declarations,
+                                   isAnnotation).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -377,7 +384,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
-      ctx.closedShape(shape.id, map, "fileShape")
+      ctx.closedShape(shape.id, map, "fileShape", isAnnotation)
 
       shape
     }
@@ -443,7 +450,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
       finalShape match {
         case Some(parsed: Shape) =>
-          ctx.closedShape(parsed.id, map, "arrayShape")
+          ctx.closedShape(parsed.id, map, "arrayShape", isAnnotation)
           parsed
         case None =>
           ctx.violation(shape.id, "Cannot parse data arrangement shape", map)
@@ -505,7 +512,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         }
       )
 
-      ctx.closedShape(shape.id, map, "arrayShape")
+      ctx.closedShape(shape.id, map, "arrayShape", isAnnotation)
 
       shape
     }
@@ -571,7 +578,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         }
       )
 
-      ctx.closedShape(shape.id, map, "nodeShape")
+      ctx.closedShape(shape.id, map, "nodeShape", isAnnotation)
 
       shape
     }

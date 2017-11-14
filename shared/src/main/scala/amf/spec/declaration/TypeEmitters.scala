@@ -540,7 +540,7 @@ case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "items",
-      //todo garrote review ordering
+      // todo garrote review ordering
       _.obj(b => RamlTypeEmitter(array.items, ordering, references = references).entries().foreach(_.emit(b)))
     )
   }
@@ -562,13 +562,13 @@ case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering,
         RamlTypeEmitter(item, ordering, references = references).entries().foreach(result += _)
       })
 
-    //todo garrote review type
-    /*b.entry(
+    // todo garrote review type
+    /* b.entry(
       "items",
       _.list { b =>
         traverse(ordering.sorted(result), b)
       }
-    )*/
+    ) */
   }
 
   override def position(): Position = pos(tuple.fields.getValue(ArrayShapeModel.Items).annotations)

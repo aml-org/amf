@@ -12,7 +12,8 @@ import amf.vocabulary.Namespace
 
 import scala.concurrent.Future
 
-case class PayloadFragment(encoded: DataNode, fields: Fields = Fields(), annotations: Annotations = Annotations()) extends Fragment {
+case class PayloadFragment(encoded: DataNode, fields: Fields = Fields(), annotations: Annotations = Annotations())
+    extends Fragment {
   fields.setWithoutId(FragmentModel.Encodes, encoded)
   override def encodes: DataNode = encoded
 }
@@ -34,29 +35,33 @@ class PayloadValidation(platform: Platform, shape: Shape) extends Validation(pla
   }
 
   protected def addProfileTargets(dataNode: DataNode) = {
-    val entryValidation = profile.get.validations.head
+    val entryValidation           = profile.get.validations.head
     val entryValdiationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
-    val restValidations = profile.get.validations.tail
-    var finalValidations = Seq(entryValdiationWithTarget) ++ restValidations
+    val restValidations           = profile.get.validations.tail
+    var finalValidations          = Seq(entryValdiationWithTarget) ++ restValidations
     finalValidations = processTargets(entryValidation, dataNode, finalValidations)
 
     profile = Some(profile.get.copy(validations = finalValidations))
   }
 
-  protected def processTargets(validation: ValidationSpecification, node: DataNode, validations: Seq[ValidationSpecification]): Seq[ValidationSpecification] = {
+  protected def processTargets(validation: ValidationSpecification,
+                               node: DataNode,
+                               validations: Seq[ValidationSpecification]): Seq[ValidationSpecification] = {
     var validationsAcc = validations
     node match {
 
       case obj: ObjectNode =>
-        obj.properties.foreach { case (propName, nodes) =>
-          validation.propertyConstraints.find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
-            case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
-              validations.find(v => v.id == propertyConstraint.node.get) match {
-                case Some(targetValidation) => validationsAcc = processTargets(targetValidation, nodes.head, validationsAcc)
-                case _ => // ignore
-              }
-            case None => // ignore
-          }
+        obj.properties.foreach {
+          case (propName, nodes) =>
+            validation.propertyConstraints.find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
+              case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
+                validations.find(v => v.id == propertyConstraint.node.get) match {
+                  case Some(targetValidation) =>
+                    validationsAcc = processTargets(targetValidation, nodes.head, validationsAcc)
+                  case _ => // ignore
+                }
+              case None => // ignore
+            }
         }
 
       case array: ArrayNode =>
@@ -64,14 +69,14 @@ class PayloadValidation(platform: Platform, shape: Shape) extends Validation(pla
           case Some(memberPropertyValidation) if memberPropertyValidation.node.isDefined =>
             val itemsValidationId = memberPropertyValidation.node.get
             validationsAcc.find(v => v.id == itemsValidationId) match {
-              case Some(itemsValidation) => array.members.foreach {
-                memberShape => validationsAcc = processTargets(itemsValidation, memberShape, validationsAcc)
-              }
+              case Some(itemsValidation) =>
+                array.members.foreach { memberShape =>
+                  validationsAcc = processTargets(itemsValidation, memberShape, validationsAcc)
+                }
               case _ => // ignore
             }
           case _ => // ignore
         }
-
 
       case _: ScalarNode => // ignore
 

@@ -66,7 +66,8 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
-        bodyMap
+        entry.value
+          .as[YMap]
           .regex(
             ".*/.*",
             entries => {
