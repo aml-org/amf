@@ -23,6 +23,7 @@ import amf.spec.common.BaseEmitters._
 import amf.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.spec.declaration._
 import amf.spec.domain._
+import amf.unsafe.PlatformSecrets
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -397,9 +398,12 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = ZERO
   }
 
-  case class DeclarationsEmitter(declares: Seq[DomainElement], references: Seq[BaseUnit], ordering: SpecOrdering) {
+  case class DeclarationsEmitter(declares: Seq[DomainElement], references: Seq[BaseUnit], ordering: SpecOrdering)
+      extends PlatformSecrets {
     val emitters: Seq[EntryEmitter] = {
-      val declarations = Declarations(declares)
+
+      implicit val errorHanlder = new amf.spec.ErrorHandler(amf.validation.Validation(platform)) // todo remove
+      val declarations          = Declarations(declares)
 
       val result = ListBuffer[EntryEmitter]()
 

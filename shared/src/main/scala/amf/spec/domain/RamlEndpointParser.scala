@@ -5,10 +5,11 @@ import amf.domain.{Annotations, EndPoint, Operation, Parameter}
 import amf.metadata.domain.EndPointModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.{Declarations, ParserContext}
-import org.yaml.model.{YMapEntry, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
+import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -23,12 +24,12 @@ case class RamlEndpointParser(entry: YMapEntry,
                               parseOptionalOperations: Boolean = false)(implicit ctx: ParserContext) {
   def parse(): Unit = {
 
-    val path = parent.map(_.path).getOrElse("") + entry.key.value.toScalar.text
+    val path = parent.map(_.path).getOrElse("") + entry.key.as[YScalar].text
 
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
-    val map = entry.value.value.toMap
+    val map = entry.value.as[YMap]
 
     ctx.closedShape(endpoint.id, map, "endPoint")
 
@@ -48,7 +49,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, endpoint.withParameter, declarations)
+          RamlParametersParser(entry.value.as[YMap], endpoint.withParameter, declarations)
             .parse()
             .map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -58,17 +59,17 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.key(
       "type",
       entry =>
-        ParametrizedDeclarationParser(entry.value.value,
-                                      endpoint.withResourceType,
-                                      declarations.findResourceTypeOrFail)
+        ParametrizedDeclarationParser(entry.value, endpoint.withResourceType, declarations.findResourceTypeOrFail)
           .parse()
     )
 
     map.key(
       "is",
       entry => {
-        entry.value.value.toSequence.values.map(value =>
-          ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrFail).parse())
+        entry.value
+          .as[Seq[YNode]]
+          .map(value =>
+            ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrError(value)).parse())
       }
     )
 
@@ -79,10 +80,8 @@ case class RamlEndpointParser(entry: YMapEntry,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += RamlOperationParser(entry,
-                                            endpoint.withOperation,
-                                            declarations,
-                                            parseOptionalOperations).parse()
+          operations += RamlOperationParser(entry, endpoint.withOperation, declarations, parseOptionalOperations)
+            .parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
       }
@@ -92,10 +91,9 @@ case class RamlEndpointParser(entry: YMapEntry,
       "securedBy",
       entry => {
         // TODO check for empty array for resolution ?
-        val securedBy = entry.value.value.toSequence.nodes
-          .collect({ case n: YNode => n })
-          .map(s =>
-            RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+        val securedBy = entry.value
+          .as[Seq[YNode]]
+          .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
 
         endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
@@ -108,8 +106,7 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.regex(
       "^/.*",
       entries => {
-        entries.foreach(
-          RamlEndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
+        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
       }
     )
   }

@@ -1,6 +1,7 @@
 package amf.compiler
 
-import amf.parser.YValueOps
+import amf.parser.YNodeLikeOps
+import org.yaml.model.YMap
 
 /**
   * Raml header comment
@@ -59,9 +60,10 @@ object RamlFragmentHeader {
   def fromRoot(root: Root): Option[RamlHeader] = root.parsed.comment.flatMap(c => fromText(c.metaText)) match {
     case Some(header) => Option(header)
     case _ =>
-      root.parsed.document.value
+      root.parsed.document
+        .toOption[YMap]
         .flatMap(m =>
-          FragmentTypes(m.toMap) match {
+          FragmentTypes(m) match {
             case FragmentTypes.DataTypeFragment          => Some(Raml10DataType)
             case FragmentTypes.DocumentationItemFragment => Some(Raml10DocumentationItem)
             case FragmentTypes.ResourceTypeFragment      => Some(Raml10ResourceType)

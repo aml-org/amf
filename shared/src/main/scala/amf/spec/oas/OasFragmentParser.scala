@@ -8,7 +8,7 @@ import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
 import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
 import amf.model.AmfScalar
-import amf.parser.{YValueOps, _}
+import amf.parser._
 import amf.shape.Shape
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
@@ -23,9 +23,12 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
-
-    val rootMap: YMap =
-      root.document.value.map(_.toMap).getOrElse(throw new RuntimeException("Cannot parse empty map"))
+    val rootMap: YMap = root.document.to[YMap] match {
+      case Right(map) => map
+      case _ =>
+        ctx.violation(root.location, "Cannot parse empty map", root.document)
+        YMap()
+    }
 
     val fragment = (detectType() map {
       case Oas20DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
@@ -48,7 +51,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
     UsageParser(rootMap, fragment).parse()
 
-    val references = ReferencesParser("x-uses", rootMap, root.references).parse()
+    val references = ReferencesParser("x-uses", rootMap, root.references).parse(root.location)
 
     if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment

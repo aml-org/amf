@@ -4,11 +4,12 @@ import amf.domain.{Annotations, CreativeWork, Operation, Response}
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain.{DomainElementModel, OperationModel}
 import amf.model.AmfArray
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.spec.common.{AnnotationParser, ArrayNode, ValueNode}
 import amf.spec.declaration.OasCreativeWorkParser
 import amf.spec.{Declarations, ParserContext}
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model._
+import amf.parser.{YScalarYRead, YNodeLikeOps}
 
 import scala.collection.mutable
 
@@ -32,12 +33,11 @@ case class RamlOperationParser(entry: YMapEntry,
       operation.set(OperationModel.Method, method.stripSuffix("?"))
     }
 
-    entry.value.value match {
-      // Empty operation
-      case s: YScalar if s.text == "" || s.text == "null" => operation
+    entry.value.tagType match {
 
       // Regular operation
-      case map: YMap =>
+      case YType.Map =>
+        val map = entry.value.as[YMap]
         ctx.closedShape(operation.id, map, "operation")
 
         map.key("displayName", entry => {
@@ -63,7 +63,7 @@ case class RamlOperationParser(entry: YMapEntry,
         map.key(
           "(externalDocs)",
           entry => {
-            val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
+            val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.as[YMap]).parse()
             operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
           }
         )
@@ -71,27 +71,29 @@ case class RamlOperationParser(entry: YMapEntry,
         map.key(
           "protocols",
           entry => {
-            val value = ArrayNode(entry.value.value.toSequence)
+            val value = ArrayNode(entry.value)
             operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
           }
         )
 
         map.key("(consumes)", entry => {
-          val value = ArrayNode(entry.value.value.toSequence)
+          val value = ArrayNode(entry.value)
           operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
         })
 
         map.key("(produces)", entry => {
-          val value = ArrayNode(entry.value.value.toSequence)
+          val value = ArrayNode(entry.value)
           operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
         })
 
         map.key(
           "is",
           entry => {
-            val traits = entry.value.value.toSequence.nodes.map(value => {
-              ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.findTraitOrFail).parse()
-            })
+            val traits = entry.value
+              .as[Seq[YNode]]
+              .map(value => {
+                ParametrizedDeclarationParser(value, operation.withTrait, declarations.findTraitOrError(value)).parse()
+              })
             if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
           }
         )
@@ -103,19 +105,21 @@ case class RamlOperationParser(entry: YMapEntry,
         map.key(
           "responses",
           entry => {
-            entry.value.value.toMap.regex(
-              "\\d{3}",
-              entries => {
-                val responses = mutable.ListBuffer[Response]()
-                entries.foreach(entry => {
-                  responses += RamlResponseParser(entry, operation.withResponse, declarations)
-                    .parse()
-                })
-                operation.set(OperationModel.Responses,
-                              AmfArray(responses, Annotations(entry.value)),
-                              Annotations(entry))
-              }
-            )
+            entry.value
+              .as[YMap]
+              .regex(
+                "\\d{3}",
+                entries => {
+                  val responses = mutable.ListBuffer[Response]()
+                  entries.foreach(entry => {
+                    responses += RamlResponseParser(entry, operation.withResponse, declarations)
+                      .parse()
+                  })
+                  operation.set(OperationModel.Responses,
+                                AmfArray(responses, Annotations(entry.value)),
+                                Annotations(entry))
+                }
+              )
           }
         )
 
@@ -123,7 +127,8 @@ case class RamlOperationParser(entry: YMapEntry,
           "securedBy",
           entry => {
             // TODO check for empty array for resolution ?
-            val securedBy = entry.value.value.toSequence.nodes
+            val securedBy = entry.value
+              .as[Seq[YNode]]
               .map(s =>
                 RamlParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations)
                   .parse())
@@ -136,7 +141,12 @@ case class RamlOperationParser(entry: YMapEntry,
 
         operation
 
-      case n => throw new Exception(s"Invalid node $n for method $method")
+      // Empty operation
+      case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
+
+      case _ =>
+        ctx.violation(operation.id, s"Invalid node ${entry.value} for method $method", entry.value)
+        operation
     }
   }
 }

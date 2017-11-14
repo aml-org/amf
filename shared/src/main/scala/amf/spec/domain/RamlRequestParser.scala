@@ -4,7 +4,7 @@ import amf.common.Lazy
 import amf.domain.{Annotations, Parameter, Payload, Request}
 import amf.metadata.domain.RequestModel
 import amf.model.AmfArray
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.spec.common.AnnotationParser
 import amf.spec.declaration.RamlTypeParser
 import amf.spec.{Declarations, ParserContext}
@@ -25,7 +25,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       entry => {
 
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withQueryParameter, declarations)
+          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter, declarations)
             .parse()
             .map(_.withBinding("query"))
         request.getOrCreate.set(RequestModel.QueryParameters,
@@ -38,7 +38,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.value.toMap, request.getOrCreate.withHeader, declarations)
+          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withHeader, declarations)
             .parse()
             .map(_.withBinding("header"))
         request.getOrCreate.set(RequestModel.Headers,
@@ -61,8 +61,8 @@ case class RamlRequestParser(map: YMap, producer: () => Request, declarations: D
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-        val bodyMap = entry.value.value
-          .toMapRamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
+        val bodyMap = entry.value.as[YMap]
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), declarations)
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 

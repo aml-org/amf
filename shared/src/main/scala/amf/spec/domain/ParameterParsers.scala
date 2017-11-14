@@ -9,6 +9,7 @@ import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
 import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
+import amf.parser.YScalarYRead
 
 /**
   *
@@ -28,33 +29,8 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
     val name: String = entry.key
     val parameter    = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
 
-    val p = entry.value.value match {
-      case ref: YScalar if declarations.findParameter(ref.text).isDefined =>
-        declarations
-          .findParameter(ref.text)
-          .get
-          .link(ref.text, Annotations(entry))
-          .asInstanceOf[Parameter]
-          .withName(name)
-
-      case ref: YScalar if declarations.findType(ref.text).isDefined =>
-        val schema = declarations
-          .findType(ref.text)
-          .get
-          .link[Shape](ref.text, Annotations(entry))
-          .withName("schema")
-          .adopted(parameter.id)
-        parameter.withSchema(schema)
-
-      case ref: YScalar if wellKnownType(ref.text) =>
-        val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
-        parameter.withSchema(schema)
-
-      case other: YScalar =>
-        ctx.violation(parameter.id, "Cannot declare unresolved parameter", other)
-        parameter
-
-      case map: YMap =>
+    val p = entry.value.to[YMap] match {
+      case Right(map) =>
         map.key("required", entry => {
           val value = ValueNode(entry.value)
           parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
@@ -81,6 +57,32 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
         AnnotationParser(() => parameter, map).parse()
 
         parameter
+      case _ =>
+        entry.value.to[YScalar] match {
+          case Right(ref) if declarations.findParameter(ref.text).isDefined =>
+            declarations
+              .findParameter(ref.text)
+              .get
+              .link(ref.text, Annotations(entry))
+              .asInstanceOf[Parameter]
+              .withName(name)
+          case Right(ref) if declarations.findType(ref.text).isDefined =>
+            val schema = declarations
+              .findType(ref.text)
+              .get
+              .link[Shape](ref.text, Annotations(entry))
+              .withName("schema")
+              .adopted(parameter.id)
+            parameter.withSchema(schema)
+          case Right(ref) if wellKnownType(ref.text) =>
+            val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+            parameter.withSchema(schema)
+
+          case _ =>
+            ctx.violation(parameter.id, "Cannot declare unresolved parameter", entry.value)
+            parameter
+
+        }
     }
 
     if (p.fields.entry(ParameterModel.Required).isEmpty) {

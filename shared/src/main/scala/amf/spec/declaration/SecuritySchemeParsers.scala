@@ -4,12 +4,13 @@ import amf.domain.security.{Scope, SecurityScheme, Settings}
 import amf.domain.{Annotations, Parameter, Response}
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.remote.{Oas, Raml}
 import amf.spec.common._
 import amf.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
 import amf.spec.{Declarations, ParserContext}
-import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
+import org.yaml.model._
+import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -42,7 +43,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
       case Right(value) =>
         val scheme = adopt(SecurityScheme(ast))
 
-        val map = value.value.toMap
+        val map = value.as[YMap]
 
         map.key("type", entry => {
           val value = ValueNode(entry.value)
@@ -64,7 +65,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
         map.key(
           "settings",
           entry => {
-            val settings = RamlSecuritySettingsParser(entry.value.value.toMap, scheme.`type`, scheme).parse()
+            val settings = RamlSecuritySettingsParser(entry.value.as[YMap], scheme.`type`, scheme).parse()
 
             scheme.set(SecuritySchemeModel.Settings, settings, Annotations(entry))
           }
@@ -99,13 +100,13 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
     map.key(
       key,
       entry => {
-        val value = entry.value.value.toMap
+        val value = entry.value.as[YMap]
 
         value.key(
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.value.toMap, scheme.withHeader, declarations)
+              RamlParametersParser(entry.value.as[YMap], scheme.withHeader, declarations)
                 .parse()
                 .map(_.withBinding("header"))
             scheme.set(SecuritySchemeModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -116,7 +117,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
           "queryParameters",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.value.toMap, scheme.withQueryParameter, declarations)
+              RamlParametersParser(entry.value.as[YMap], scheme.withQueryParameter, declarations)
                 .parse()
                 .map(_.withBinding("query"))
             scheme.set(SecuritySchemeModel.QueryParameters,
@@ -137,18 +138,20 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
         value.key(
           "responses",
           entry => {
-            entry.value.value.toMap.regex(
-              "\\d{3}",
-              entries => {
-                val responses = mutable.ListBuffer[Response]()
-                entries.foreach(entry => {
-                  responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
-                })
-                scheme.set(SecuritySchemeModel.Responses,
-                           AmfArray(responses, Annotations(entry.value)),
-                           Annotations(entry))
-              }
-            )
+            entry.value
+              .as[YMap]
+              .regex(
+                "\\d{3}",
+                entries => {
+                  val responses = mutable.ListBuffer[Response]()
+                  entries.foreach(entry => {
+                    responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
+                  })
+                  scheme.set(SecuritySchemeModel.Responses,
+                             AmfArray(responses, Annotations(entry.value)),
+                             Annotations(entry))
+                }
+              )
           }
         )
       }
@@ -168,12 +171,12 @@ case class OasSecuritySchemeParser(ast: YPart,
       case Right(value) =>
         val scheme = adopt(SecurityScheme(ast))
 
-        val map = value.value.toMap
+        val map = value.as[YMap]
 
         map.key(
           "type",
           entry => {
-            val t: String = entry.value.value.toScalar.text match {
+            val t: String = entry.value.as[YScalar].text match {
               case "oauth2" => "OAuth 2.0"
               case "basic"  => "Basic Authentication"
               case "apiKey" => "x-apiKey"
@@ -215,7 +218,7 @@ case class OasSecuritySchemeParser(ast: YPart,
         case _ =>
           map
             .key("x-settings")
-            .map(entry => dynamicSettings(entry.value.value.toMap, scheme.withDefaultSettings()))
+            .map(entry => dynamicSettings(entry.value.as[YMap], scheme.withDefaultSettings()))
       }
 
       result.map(ss => {
@@ -255,7 +258,7 @@ case class OasSecuritySchemeParser(ast: YPart,
 
       map.key(
         "x-settings",
-        entry => dynamicSettings(entry.value.value.toMap, settings, "name", "in")
+        entry => dynamicSettings(entry.value.as[YMap], settings, "name", "in")
       )
 
       settings
@@ -286,7 +289,7 @@ case class OasSecuritySchemeParser(ast: YPart,
       map.key(
         "scopes",
         entry => {
-          val scopeMap = entry.value.value.toMap
+          val scopeMap = entry.value.as[YMap]
           val scopes =
             scopeMap.entries.filterNot(entry => WellKnownAnnotation.isOasAnnotation(entry.key)).map(parseScope)
 
@@ -299,12 +302,12 @@ case class OasSecuritySchemeParser(ast: YPart,
       map.key(
         "x-settings",
         entry => {
-          val xSettings = entry.value.value.toMap
+          val xSettings = entry.value.as[YMap]
 
           xSettings.key(
             "authorizationGrants",
             entry => {
-              val value = ArrayNode(entry.value.value.toSequence)
+              val value = ArrayNode(entry.value)
               settings.set(OAuth2SettingsModel.AuthorizationGrants, value.strings(), Annotations(entry))
             }
           )
@@ -331,7 +334,7 @@ case class OasSecuritySchemeParser(ast: YPart,
       map.key(
         "x-settings",
         entry => {
-          val xSettings = entry.value.value.toMap
+          val xSettings = entry.value.as[YMap]
 
           xSettings.key("requestTokenUri", entry => {
             val value = ValueNode(entry.value)
@@ -349,7 +352,7 @@ case class OasSecuritySchemeParser(ast: YPart,
           })
 
           xSettings.key("signatures", entry => {
-            val value = ArrayNode(entry.value.value.toSequence)
+            val value = ArrayNode(entry.value)
             settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
           })
 
