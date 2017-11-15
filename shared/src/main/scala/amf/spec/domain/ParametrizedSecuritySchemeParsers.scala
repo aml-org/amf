@@ -47,7 +47,8 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => Pa
   }
 }
 
-case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings) {
+case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings)(
+  implicit val ctx: ParserContext){
   def parse(): Settings = {
     val result = `type` match {
       case "OAuth 1.0" => oauth1()
