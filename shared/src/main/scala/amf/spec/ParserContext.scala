@@ -116,7 +116,7 @@ case class ParserContext(validation: Validation, vendor: Vendor, private val int
     */
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
     val node = shape.id
-    val facets = shape.collectCustomShapePropertyDefinitions()
+    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited =  true)
 
     syntax.nodes.get(shapeType) match {
       case Some(props) =>

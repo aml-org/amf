@@ -58,6 +58,11 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
                                                                                                 first = false)
   }
 
+  def findBy(predicate: (DomainElement) => Boolean): Seq[DomainElement] = {
+    findInDeclaredModel(predicate, this, first = false, ListBuffer.empty) ++
+      findInEncodedModel(predicate, this,first = false)
+  }
+
   def transform(selector: (DomainElement) => Boolean,
                 transformation: (DomainElement) => Option[DomainElement]): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
