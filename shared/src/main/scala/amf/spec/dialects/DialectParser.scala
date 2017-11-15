@@ -383,7 +383,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
           if (entryNode.value.value.isInstanceOf[YScalar]) {
             val scalar = ValueNode(entryNode.value).string()
             if (Option(scalar.value).isDefined) {
-              val resolvedVal = resolveValue(mapping, scalar)
+              val resolvedVal = resolveValue(mapping, scalar,parentDomainEntity)
               parentDomainEntity.setArray(mapping.field(), Seq(resolvedVal))
             }
           } else {
@@ -413,7 +413,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
       case s =>
         AmfScalar(s)
     }
-    parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _))), Annotations(entryNode))
+    parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _,parentDomainEntity))), Annotations(entryNode))
   }
 
   private def parseSingleObject(mapping: DialectPropertyMapping,
@@ -535,7 +535,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
     }
   }
 
-  private def resolveValue(mapping: DialectPropertyMapping, value: AmfScalar): AmfScalar = {
+  private def resolveValue(mapping: DialectPropertyMapping, value: AmfScalar,parent:DomainEntity): AmfScalar = {
     if (mapping.isRef) {
       resolver.resolve(root, value.toString(), mapping.referenceTarget.get) match {
         case Some(finalValue) => AmfScalar(finalValue, value.annotations)
@@ -547,7 +547,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
             .map(LexicalInformation)
           ctx.violation(
             ParserSideValidations.DialectUnresolvableReference.id(),
-            value.toString,
+            parent.id,
             Some(mapping.iri()),
             "Can not resolve reference:" + value.toString,
             lexical
@@ -561,7 +561,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
 
   private def setScalar(node: DomainEntity, mapping: DialectPropertyMapping, value: YScalar) = {
 
-    node.set(mapping.field(), resolveValue(mapping, AmfScalar(value.text, Annotations(value))), Annotations(value))
+    node.set(mapping.field(), resolveValue(mapping, AmfScalar(value.text, Annotations(value)),node), Annotations(value))
   }
 
 }
