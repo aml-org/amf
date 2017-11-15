@@ -4,6 +4,7 @@ import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, Vocabul
 import amf.lexer.CharSequenceStream
 import amf.remote._
 import amf.validation.core.SHACLValidator
+import org.mulesoft.common.io.FileSystem
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -40,6 +41,9 @@ class TrunkValidator extends SHACLValidator {
 }
 
 case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = None) extends Platform {
+
+  /** Underlying file system for platform. */
+  override val fs: FileSystem = Uns
 
   /** Test path resolution. */
   override def resolvePath(path: String): String = path

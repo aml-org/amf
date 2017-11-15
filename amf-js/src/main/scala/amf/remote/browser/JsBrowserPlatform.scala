@@ -2,8 +2,9 @@ package amf.remote.browser
 
 import amf.dialects.JSDialectRegistry
 import amf.lexer.CharSequenceStream
-import amf.remote.{Content, Platform}
+import amf.remote.{Content, Platform, UnsupportedFileSystem}
 import amf.validation.{SHACLValidator, Validation}
+import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 import org.scalajs.dom.ext.Ajax
 
 import scala.scalajs.js
@@ -16,6 +17,9 @@ import scala.scalajs.js.annotation.{JSExport, JSExportAll}
   *
   */
 class JsBrowserPlatform extends Platform {
+
+  /** Underlying file system for platform. */
+  override val fs: FileSystem = UnsupportedFileSystem
 
   override protected def fetchHttp(url: String): Future[Content] = {
     Ajax
@@ -47,7 +51,7 @@ class JsBrowserPlatform extends Platform {
   override def resolvePath(path: String): String = path
 
   override val dialectsRegistry = JSDialectRegistry(this)
-  override val validator = new SHACLValidator()
+  override val validator        = new SHACLValidator()
 
   @JSExport
   def setupValidation(validation: Validation): js.Promise[Validation] = setupValidationBase(validation).toJSPromise
@@ -57,11 +61,10 @@ class JsBrowserPlatform extends Platform {
 object JsBrowserPlatform {
   private var singleton: Option[JsBrowserPlatform] = None
 
-  def instance(): JsBrowserPlatform = singleton  match {
+  def instance(): JsBrowserPlatform = singleton match {
     case Some(p) => p
     case None =>
       singleton = Some(new JsBrowserPlatform())
       singleton.get
   }
 }
-
