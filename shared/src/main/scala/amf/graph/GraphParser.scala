@@ -11,6 +11,7 @@ import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
+import amf.metadata.domain.extensions.{DataNodeModel, ShapeExtensionModel}
 import amf.metadata.domain.security._
 import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
@@ -93,7 +94,16 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             val instance = buildType(model)(annotations(nodes, sources, id))
             instance.withId(id)
 
-            model.fields.foreach(f => {
+            // workaround for lazy values in shape
+            val modelFields = model match {
+              case shapeModel: ShapeModel => shapeModel.fields ++ Seq(
+                ShapeModel.CustomShapePropertyDefinitions,
+                ShapeModel.CustomShapeProperties
+              )
+              case _                      => model.fields
+            }
+
+            modelFields.foreach(f => {
               val k = f.value.iri()
               map.key(k) match {
                 case Some(entry) => traverse(instance, f, value(f.`type`, entry.value), sources, k)
@@ -176,6 +186,11 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
     private def traverse(instance: AmfObject, f: Field, node: YNode, sources: SourceMap, key: String) = {
       f.`type` match {
+        case DataNodeModel => // dynamic nodes parsed here
+          dynamicGraphParser.parseDynamicType(node.as[YMap]) match {
+            case Some(parsed) => instance.set(f, parsed, annotations(nodes, sources, key))
+            case _ =>
+          }
         case _: Obj =>
           parse(node.as[YMap]).foreach(n => instance.set(f, n, annotations(nodes, sources, key)))
           instance
@@ -217,6 +232,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     PayloadModel                                        -> Payload.apply,
     RequestModel                                        -> Request.apply,
     ResponseModel                                       -> Response.apply,
+    ShapeExtensionModel                                 -> ShapeExtension.apply,
     UnionShapeModel                                     -> UnionShape.apply,
     NodeShapeModel                                      -> NodeShape.apply,
     ArrayShapeModel                                     -> ArrayShape.apply,

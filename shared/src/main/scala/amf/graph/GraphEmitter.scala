@@ -9,7 +9,9 @@ import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
+import amf.metadata.shape.ShapeModel
 import amf.model.{AmfArray, AmfObject, AmfScalar}
+import amf.shape.Shape
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -80,7 +82,15 @@ object GraphEmitter extends MetaModelTypeMapping {
                                 b: EntryBuilder): Unit = {
       createTypeNode(b, obj, Some(element))
 
-      obj.fields.map(element.fields.entryJsonld) foreach {
+      // workaround for lazy values in shape
+      val modelFields = obj match {
+        case shapeModel: ShapeModel => shapeModel.fields ++ Seq(
+          ShapeModel.CustomShapePropertyDefinitions,
+          ShapeModel.CustomShapeProperties
+        )
+        case _                      => obj.fields
+      }
+      modelFields.map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
           val url = f.value.iri()
           b.entry(

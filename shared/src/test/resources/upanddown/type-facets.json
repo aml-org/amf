@@ -1,0 +1,23 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API with Types"
+  },
+  "definitions": {
+    "CustomDate": {
+      "x-facets": {
+        "onlyFutureDates": {
+          "type": "boolean"
+        },
+        "noHolidays": {
+          "type": "boolean"
+        }
+      },
+      "type": "string"
+    },
+    "PossibleMeetingDate": {
+      "x-facet-noHolidays": true,
+      "type": "string"
+    }
+  }
+}
