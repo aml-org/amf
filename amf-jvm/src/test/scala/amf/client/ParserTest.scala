@@ -140,10 +140,7 @@ class ParserTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFix
           |      keyStoreAlias: agent
           |      keyStoreAliasPassword: exampleNs/124
           |services:
-          |  mule.agent.jmx.publisher.service:
-          |    enabled: true
-          |    frequency: 100
-          |    frequencyTimeUnit: SECONDS
+          |  mule.agent.jmx.publisher.service: !include reusable-jmx-publisher.raml
           |""".stripMargin
       assert(generatedRaml == expected)
     }

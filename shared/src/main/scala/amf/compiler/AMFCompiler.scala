@@ -187,9 +187,16 @@ class AMFCompiler private (val url: String,
   }
 
   private def toDocument(parts: Seq[YPart]) = {
-    parts collectFirst { case d: YDocument => d } map { document =>
-      val comment = parts collectFirst { case c: YComment => c }
-      ParsedDocument(comment, document)
+    if (parts.find(v=>v.isInstanceOf[YDocument]).isDefined) {
+      parts collectFirst { case d: YDocument => d } map { document =>
+        val comment = parts collectFirst { case c: YComment => c }
+        ParsedDocument(comment, document)
+      }
+    }
+    else{
+      parts collectFirst { case d: YComment => d } map { comment =>
+        ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap()))))
+      }
     }
   }
 }

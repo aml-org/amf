@@ -36,6 +36,12 @@ class DialectRegistry {
                                                dialect.resolver,
                                                kind = FragmentKind))
     }
+    if (!dialect.root.mappings().find(x=>x.name=="external").isDefined){
+       dialect.root.add(Vocabulary.externals.copy())
+    }
+    if (!dialect.root.mappings().find(x=>x.name=="uses").isDefined){
+      dialect.root.add(Vocabulary.externals.copy())
+    }
     this
   }
 

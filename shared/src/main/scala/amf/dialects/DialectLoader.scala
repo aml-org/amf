@@ -1,7 +1,8 @@
 package amf.dialects
 
 import amf.compiler.Root
-import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject}
+import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject, dialectObject}
+import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
@@ -78,6 +79,36 @@ class DialectLoader(val document: BaseUnit) {
     // return the accumulated declarations
     imports
   }
+   def resolvedEncodes(ramlDocument:RAML_1_0_DialectTopLevel.DocumentContentDeclarationObject,u:BaseUnit): Option[RAML_1_0_DialectTopLevel.NodeDefinitionObject] ={
+     val r=ramlDocument.resolvedEncodes();
+     if (r.isDefined){
+       r
+     }
+     else{
+       val enc=ramlDocument.encodes();
+       enc.flatMap(value=>{
+         var element:Option[DomainEntity]=None;
+         u.references.foreach {
+           case r: DialectFragment => {
+             if (r.encodes.id == value) {
+               element = Some(r.encodes.asInstanceOf[DomainEntity]);
+             }
+           }
+           case m: Module => {
+             m.declares.foreach(v => {
+               if (v.id == value) {
+                 element = Some(v.asInstanceOf[DomainEntity]);
+               }
+             })
+           }
+           case _ => {}
+         }
+
+         element.map(RAML_1_0_DialectTopLevel.NodeDefinitionObject(_,Some(ramlDocument.root)));
+       })
+
+     }
+   }
 
   def loadDialect(domainEntity: DomainEntity, unit: BaseUnit): Dialect = {
     val modelDocument = unit.asInstanceOf[Document]
@@ -86,7 +117,7 @@ class DialectLoader(val document: BaseUnit) {
     val rootEntity = for {
       ramlNode     <- dialectObject.raml()
       ramlDocument <- ramlNode.document()
-      root         <- ramlDocument.resolvedEncodes()
+      root         <-  resolvedEncodes(ramlDocument,unit)
 
     } yield {
       root

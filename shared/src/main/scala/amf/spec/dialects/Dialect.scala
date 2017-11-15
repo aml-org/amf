@@ -2,12 +2,13 @@ package amf.spec.dialects
 
 import amf.compiler.Root
 import amf.dialects._
-import amf.document.Fragment.Fragment
+import amf.document.Fragment.{DialectFragment, Fragment}
 import amf.document.{BaseUnit, EncodesModel, Module}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YValueOps
+import amf.remote.URL
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity
@@ -34,11 +35,14 @@ case class Dialect(name: String,
   def knows(nodeType: String): Option[DialectNode] = {
     findNodeType(nodeType, Seq(root), Set(root))
   }
+  val external = new DialectNode("ExternalEntity", Namespace.Meta)
+  val externalIri = Namespace.Meta.+("ExternalEntity").iri()
 
-  private def findNodeType(nodeType: String,
-                           nodes: Seq[DialectNode],
-                           visited: Set[DialectNode] = Set()): Option[DialectNode] = {
-    if (nodes.isEmpty) {
+  private def findNodeType(nodeType: String, nodes: Seq[DialectNode], visited: Set[DialectNode] = Set()): Option[DialectNode] = {
+    if (nodeType==externalIri){
+      Some(external);
+    }
+    else if (nodes.isEmpty) {
       None
     } else {
       val node = nodes.head
@@ -70,7 +74,7 @@ object NullReferenceResolverFactory extends ResolverFactory {
 }
 
 trait LocalNameProviderFactory {
-  def apply(root: DomainEntity): LocalNameProvider
+  def apply(u:BaseUnit): LocalNameProvider
 }
 
 trait ReferenceResolver {
@@ -126,10 +130,13 @@ case class DialectPropertyMapping(name: String,
 
   def scalaName: String = scalaNameOverride.getOrElse(name)
 
+
   def isScalar: Boolean = range match {
     case _: Type.Scalar => true
     case _              => false
   }
+
+  def enumValues = enum
 
   def isMap: Boolean = hash.isDefined
 
@@ -275,6 +282,7 @@ object TypeBuiltins {
   val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
+
 class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit])(
     implicit val ctx: ParserContext)
     extends RamlSpecParser
@@ -301,7 +309,12 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
   val resolvedExternals: mutable.Set[String] = mutable.Set.empty
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] =
-    declarationsFromLibraries.get(name).orElse(declarationsFromFragments.get(name))
+    declarationsFromLibraries.get(name).orElse(declarationsFromFragments.get(name)).map(
+      x=>{
+        val res:DomainEntity=x.link(name)
+        res
+      }
+    )
 
   def resolveBasicRef(name: String): String =
     if (Option(name).isEmpty) {
@@ -430,11 +443,45 @@ object BasicResolver {
     new BasicResolver(root, externals, uses)
 }
 
-class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[DialectPropertyMapping])
-    extends TypeBuiltins {
+class ParsedPath(val components:Array[String]){
+
+  override def toString():String={
+    components.mkString("/");
+  }
+
+  def dir(): ParsedPath ={
+    new ParsedPath(this.components.toList.dropRight(1).toArray);
+  }
+
+  def resolve(s:ParsedPath):ParsedPath={
+    var i=0;
+    val min=Math.min(s.components.length,this.components.length);
+    while (i<min && s.components(i)==components(i)){
+       i= i + 1;
+    }
+    var tail:List[String]=s.components.takeRight(s.components.length-i).toList;
+    while (i<this.components.length){
+      tail=List("..").:::(tail);
+      i=i + 1;
+    }
+    new ParsedPath(tail.toArray)
+  }
+}
+object ParsedPath{
+  def apply(p:String):ParsedPath={
+    new ParsedPath(p.split('/'))
+  }
+}
+
+class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPropertyMapping]) extends TypeBuiltins{
+
+  val root=Dialect.retrieveDomainEntity(unit)
+
 
   val namespaces: mutable.Map[String, String]         = mutable.Map[String, String]()
   var declarations: mutable.Map[String, DomainEntity] = mutable.Map[String, DomainEntity]()
+  var fragments: mutable.Map[String, String] = mutable.Map[String, String]()
+
 
   {
     for {
@@ -445,7 +492,17 @@ class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[Diale
     } yield {
       namespaces.put(uri, name)
     }
-
+    unit.references.foreach({
+      case m:Module =>{
+        m.declares.foreach(d=>{
+           println(d)
+        })
+      }
+      case f: DialectFragment =>{
+        fragments.put(f.encodes.id,f.id);
+      }
+      case _ =>
+    })
     root.traverse {
       case (domainEntity: DomainEntity, mapping: DialectPropertyMapping) =>
         if (mapping.isDeclaration) declarations.put(domainEntity.id, domainEntity)
@@ -456,32 +513,41 @@ class BasicNameProvider(root: DomainEntity, val namespaceDeclarators: List[Diale
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
   override def localName(uri: String, property: DialectPropertyMapping): String = {
-    val foundLocalName = for {
-      entity      <- declarations.get(uri)
-      keyProperty <- entity.definition.keyProperty
-    } yield {
-      entity.string(keyProperty).getOrElse(uri)
+    if (fragments.contains(uri)){
+       val furi=fragments.get(uri).get;
+       val ruri=unit.location;
+       val relative=ParsedPath(ruri).dir().resolve(ParsedPath(furi));
+       val pp=relative.toString();
+       "!include "+pp
     }
+    else {
+      val foundLocalName = for {
+        entity <- declarations.get(uri)
+        keyProperty <- entity.definition.keyProperty
+      } yield {
+        entity.string(keyProperty).getOrElse(uri)
+      }
 
-    foundLocalName match {
-      case Some(localName) => localName
-      case None =>
-        val localName = super.localName(uri, property)
-        if (localName != uri) {
-          localName
-        } else {
-          if (uri.indexOf(root.id) > -1) {
-            uri.replace(root.id, "")
+      foundLocalName match {
+        case Some(localName) => localName
+        case None =>
+          val localName = super.localName(uri, property)
+          if (localName != uri) {
+            localName
           } else {
-            namespaces.find {
-              case (p, _) =>
-                uri.indexOf(p) > -1
-            } match {
-              case Some((p, v)) => uri.replace(p, s"$v.")
-              case _            => uri
+            if (uri.indexOf(root.id) > -1) {
+              uri.replace(root.id, "")
+            } else {
+              namespaces.find {
+                case (p, _) =>
+                  uri.indexOf(p) > -1
+              } match {
+                case Some((p, v)) => uri.replace(p, s"$v.")
+                case _ => uri
+              }
             }
           }
-        }
+      }
     }
   }
 

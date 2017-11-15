@@ -5,7 +5,7 @@ import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 
 case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations)
-    extends DomainElement {
+    extends DomainElement with Linkable {
 
   override def adopted(parent: String): this.type = {
     if (Option(this.id).isEmpty) {
@@ -21,6 +21,12 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
       }
     }
     this
+  }
+
+  def linkCopy():Linkable= {
+    val f=Fields();
+    fields.into(f)
+    this.copy(None,fields =f)
   }
 
   def traverse(visitor: DomainEntityVisitor): Unit =

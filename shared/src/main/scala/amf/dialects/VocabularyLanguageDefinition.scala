@@ -74,6 +74,11 @@ object External extends VocabPartDialect("External") {
   val name: DialectPropertyMapping = str("name")
   val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
 }
+object NameSpaceImport extends VocabPartDialect("NameSpaceImport") {
+  val name: DialectPropertyMapping = str("name")
+  val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
+}
+
 
 object Vocabulary extends VocabPartDialect("Vocabulary") {
 
@@ -85,6 +90,9 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
     str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
   var externals: DialectPropertyMapping =
     map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
+  var uses: DialectPropertyMapping =
+    map("uses", NameSpaceImport.name, NameSpaceImport, _.copy(scalaNameOverride = Some("externals")))
+
   var classTerms: DialectPropertyMapping =
     map("classTerms",
         ClassTerm.idProperty,
