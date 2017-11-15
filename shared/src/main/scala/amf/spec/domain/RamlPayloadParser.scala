@@ -1,22 +1,22 @@
 package amf.spec.domain
 
 import amf.domain.{Annotations, Payload}
-import amf.spec.{Declarations, ParserContext}
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.RamlTypeParser
-import amf.validation.Validation
+import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 /**
   *
   */
-case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, declarations: Declarations)(
+    implicit ctx: ParserContext) {
   def parse(): Payload = {
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
 
-    entry.value.value match {
-      case map: YMap =>
+    entry.value.to[YMap] match {
+      case Right(map) =>
         // TODO
         // Should we clean the annotations here so they are not parsed again in the shape?
         AnnotationParser(() => payload, map).parse()

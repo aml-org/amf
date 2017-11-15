@@ -5,9 +5,10 @@ import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.metadata.document.BaseUnitModel
-import amf.parser.YValueOps
+import amf.parser.YNodeLikeOps
 import amf.spec.ParserContext
 import amf.spec.declaration.ReferencesParser
+import org.yaml.model._
 
 /**
   *
@@ -20,10 +21,8 @@ case class OasModuleParser(root: Root)(implicit val ctx: ParserContext) extends 
       .add(SourceVendor(root.vendor))
     module.set(BaseUnitModel.Location, root.location)
 
-    root.document.value.foreach(value => {
-      val rootMap = value.toMap
-
-      val references = ReferencesParser("x-uses", rootMap, root.references).parse()
+    root.document.toOption[YMap].foreach { rootMap =>
+      val references = ReferencesParser("x-uses", rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap, references.declarations)
 
@@ -36,7 +35,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: ParserContext) extends 
       val declarable = references.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
       if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
-    })
+    }
 
     module
   }

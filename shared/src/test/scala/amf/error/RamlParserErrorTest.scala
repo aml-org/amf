@@ -32,7 +32,7 @@ class RamlParserErrorTest extends AsyncFunSuite with PlatformSecrets {
       protocols => {
         protocols.level should be("Violation")
         protocols.message should be("WebAPI 'protocols' property must be a scalar or sequence value")
-        protocols.position.map(_.range) should be(Some(Range((6, 0), (7, 0))))
+        protocols.position.map(_.range) should be(Some(Range((5, 10), (7, 0))))
       },
       securedBy => {
         securedBy.level should be("Violation")

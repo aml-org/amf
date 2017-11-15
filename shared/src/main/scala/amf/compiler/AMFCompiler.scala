@@ -22,7 +22,7 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
-
+import amf.parser.{YNodeLikeOps, YScalarYRead}
 class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
@@ -144,25 +144,23 @@ class AMFCompiler private (val url: String,
 
     parsed match {
       case Some(document) =>
-        document.document.value match {
-          case Some(_: YMap) =>
+        document.document.tagType match {
+          case YType.Map =>
+            parseDoc(content, document, raw)
+
+          // Payloads array
+          case YType.Seq if hint == PayloadJsonHint || hint == PayloadYamlHint =>
+            Future(Root(document, content.url, Seq(), Payload, raw))
+
+          // AMF JSON-LD with a single element in array
+          case YType.Seq if hint == AmfJsonHint && document.document.as[Seq[YNode]].length == 1 =>
             parseDoc(content, document, raw)
 
           // Payloads scalar
-          case Some(_: YScalar) if hint == PayloadJsonHint || hint == PayloadYamlHint =>
-            Future(Root(document, content.url, Seq(), Payload, raw))
-
-          // Payloads array
-          case Some(_: YSequence) if hint == PayloadJsonHint || hint == PayloadYamlHint =>
-            Future(Root(document, content.url, Seq(), Payload, raw))
-
-          // Unknown text
-          case Some(_: YScalar) =>
-            Future(Root(document, content.url, Seq(), Unknown, raw))
-
-          // AMF JSON-LD with a single element in array
-          case Some(nodes: YSequence) if hint == AmfJsonHint && nodes.nodes.length == 1 =>
-            parseDoc(content, document, raw)
+          case _ if document.document.toOption[YScalar].isDefined =>
+            if (hint == PayloadJsonHint || hint == PayloadYamlHint)
+              Future(Root(document, content.url, Seq(), Payload, raw))
+            else Future(Root(document, content.url, Seq(), Unknown, raw))
 
           case _ => Future.failed(new Exception("Unable to parse document."))
         }
@@ -172,8 +170,10 @@ class AMFCompiler private (val url: String,
 
   private def parseDoc(content: Content, document: ParsedDocument, raw: String) = {
     val vendor = resolveVendor(content)
+    // construct local parser contxt and pass to referencecollector as explicit because we don't know the vendor yet
     val refs =
-      new ReferenceCollector(document.document, vendor).traverse(isRamlOverlayOrExtension(vendor, document))
+      new ReferenceCollector(document.document, vendor, currentValidation)
+        .traverse(isRamlOverlayOrExtension(vendor, document))
 
     refs
       .filter(_.isRemote)

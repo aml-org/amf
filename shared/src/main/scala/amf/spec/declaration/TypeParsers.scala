@@ -4,11 +4,12 @@ import amf.domain.Annotation.ExplicitField
 import amf.domain.Annotations
 import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
 import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YScalar}
+import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -25,7 +26,7 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
   def parse(): Option[PropertyDependencies] = {
 
     properties
-      .get(entry.key.value.toScalar.text)
+      .get(entry.key.as[YScalar].text)
       .map(p => {
         PropertyDependencies(entry)
           .set(PropertyDependenciesModel.PropertySource, AmfScalar(p.id), Annotations(entry.key))
@@ -34,7 +35,7 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
   }
 
   private def targets(): Seq[AmfScalar] = {
-    ArrayNode(entry.value.value.toSequence)
+    ArrayNode(entry.value)
       .strings()
       .scalars
       .flatMap(v => properties.get(v.value.toString).map(p => AmfScalar(p.id, v.annotations)))

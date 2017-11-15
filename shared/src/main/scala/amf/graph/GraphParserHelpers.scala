@@ -6,10 +6,12 @@ import amf.metadata.Type._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.{SourceMapModel, Type}
 import amf.model.AmfElement
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
-import org.yaml.model.{YMap, YSequence, YValue}
+import org.yaml.convert.YRead.SeqNodeYRead
+import org.yaml.model._
 
 import scala.collection.mutable
 
@@ -18,64 +20,72 @@ trait GraphParserHelpers {
   private def parseSourceNode(map: YMap): SourceMap = {
     val result = SourceMap()
     map.entries.foreach(entry => {
-      entry.key.value.toScalar.text match {
+      entry.key.toOption[YScalar].map(_.text).foreach {
         case AnnotationName(annotation) =>
           val consumer = result.annotation(annotation)
-          entry.value.value.toSequence.values.foreach(e => {
-            val element = e.toMap
-            val k       = element.key(Element.value.iri()).get
-            val v       = element.key(Value.value.iri()).get
-            consumer(value(Element.`type`, k.value.value).toScalar.text,
-                     value(Value.`type`, v.value.value).toScalar.text)
-          })
+          entry.value
+            .as[Seq[YNode]]
+            .foreach(e => {
+              val element = e.as[YMap]
+              val k       = element.key(Element.value.iri()).get
+              val v       = element.key(Value.value.iri()).get
+              consumer(value(Element.`type`, k.value).as[YScalar].text, value(Value.`type`, v.value).as[YScalar].text)
+            })
         case _ => // Unknown annotation identifier
       }
     })
     result
   }
 
-  protected def ts(map: YMap): Seq[String] = {
-    val documentType = (Namespace.Document + "Document").iri()
-    val fragmentType = (Namespace.Document + "Fragment").iri()
-    val moduleType = (Namespace.Document + "Module").iri()
-    val unitType = (Namespace.Document + "Unit").iri()
+  protected def ts(map: YMap, ctx: ParserContext, id: String): Seq[String] = {
+    val documentType     = (Namespace.Document + "Document").iri()
+    val fragmentType     = (Namespace.Document + "Fragment").iri()
+    val moduleType       = (Namespace.Document + "Module").iri()
+    val unitType         = (Namespace.Document + "Unit").iri()
     val documentTypesSet = Set(documentType, fragmentType, moduleType, unitType)
     map.key("@type") match {
-      case Some(entry) => {
-        val allTypes = entry.value.value.toSequence.values.map(_.toScalar.text)
+      case Some(entry) =>
+        val allTypes         = entry.value.toOption[Seq[YNode]].getOrElse(Nil).flatMap(v => v.toOption[YScalar].map(_.text))
         val nonDocumentTypes = allTypes.filter(t => !documentTypesSet.contains(t))
-        val documentTypes = allTypes.filter(t => documentTypesSet.contains(t)).sorted // we just use the fact that lexical order is correct
+        val documentTypes    = allTypes.filter(t => documentTypesSet.contains(t)).sorted // we just use the fact that lexical order is correct
         nonDocumentTypes ++ documentTypes
-      }
-      case _           => throw new Exception(s"No @type declaration on node $map")
+
+      case _ =>
+        ctx.violation(id, s"No @type declaration on node $map", map) // todo : review with pedro
+        Nil
     }
   }
 
-  protected def retrieveId(map: YMap): String = {
+  protected def retrieveId(map: YMap, ctx: ParserContext): Option[String] = {
     map.key("@id") match {
-      case Some(entry) => entry.value.value.toScalar.text
-      case _           => throw new Exception(s"No @id declaration on node $map")
+      case Some(entry) => Some(entry.value.as[YScalar].text)
+      case _ =>
+        ctx.violation("", s"No @id declaration on node $map", map)
+        None
     }
   }
 
   protected def retrieveSources(id: String, map: YMap): SourceMap = {
-    map.key(Sources.value.iri()) match {
-      case Some(entry) => parseSourceNode(value(SourceMapModel, entry.value.value).toMap)
-      case _           => SourceMap.empty
-    }
+    map
+      .key(Sources.value.iri())
+      .flatMap { entry =>
+        value(SourceMapModel, entry.value).toOption[YMap].map(parseSourceNode)
+      }
+      .getOrElse(SourceMap.empty)
   }
 
-  protected def value(t: Type, node: YValue): YValue = {
-    node match {
-      case s: YSequence =>
+  protected def value(t: Type, node: YNode): YNode = {
+    node.tagType match {
+      case YType.Seq =>
         t match {
           case Array(_) => node
-          case _        => value(t, s.values.head)
+          case _        => value(t, node.as[Seq[YNode]].head)
         }
-      case m: YMap =>
+      case YType.Map =>
+        val m: YMap = node.as[YMap]
         t match {
-          case Iri                            => m.key("@id").get.value.value
-          case Str | RegExp | Bool | Type.Int => m.key("@value").get.value.value
+          case Iri                            => m.key("@id").get.value
+          case Str | RegExp | Bool | Type.Int => m.key("@value").get.value
           case _                              => node
         }
       case _ => node

@@ -289,7 +289,10 @@ class DialectLoader(val document: BaseUnit) {
     }
   }
 
-  private def processHashRange(dialectPropertyMapping: DialectPropertyMapping, hash: String, hashValue: Option[String], r: Type) = {
+  private def processHashRange(dialectPropertyMapping: DialectPropertyMapping,
+                               hash: String,
+                               hashValue: Option[String],
+                               r: Type) = {
     r match {
       case rangeNode: DialectNode if hashValue.isDefined =>
         for {
@@ -308,12 +311,15 @@ class DialectLoader(val document: BaseUnit) {
     }
   }
 
-
-  private def connectHash(hashedProperty: DialectPropertyMapping, hashProperty: DialectPropertyMapping, hasPropertyValue: Option[DialectPropertyMapping], r: Type) = {
-    hashedProperty.owningNode.get.add(hashedProperty.copy(
-      hash = Option(hashProperty),
-      hashValue = hasPropertyValue
-    ))
+  private def connectHash(hashedProperty: DialectPropertyMapping,
+                          hashProperty: DialectPropertyMapping,
+                          hasPropertyValue: Option[DialectPropertyMapping],
+                          r: Type) = {
+    hashedProperty.owningNode.get.add(
+      hashedProperty.copy(
+        hash = Option(hashProperty),
+        hashValue = hasPropertyValue
+      ))
     r.asInstanceOf[DialectNode].add(hashProperty.copy(noRAML = true))
   }
 

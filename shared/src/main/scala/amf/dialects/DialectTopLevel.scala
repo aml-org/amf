@@ -174,9 +174,13 @@ object RAML_1_0_DialectTopLevel {
       entity.set(PropertyMapping.asMap.field(), AmfScalar(value)); this
     }
     def hash(): Option[String] = entity.string(PropertyMapping.hash)
-    def withHash(value: String): PropertyMappingObject = { entity.set(PropertyMapping.hash.field() , AmfScalar(value)); this }
+    def withHash(value: String): PropertyMappingObject = {
+      entity.set(PropertyMapping.hash.field(), AmfScalar(value)); this
+    }
     def hashValue(): Option[String] = entity.string(PropertyMapping.hashValue)
-    def withHashValue(value: String): PropertyMappingObject = { entity.set(PropertyMapping.hashValue.field() , AmfScalar(value)); this }
+    def withHashValue(value: String): PropertyMappingObject = {
+      entity.set(PropertyMapping.hashValue.field(), AmfScalar(value)); this
+    }
     def defaultValue(): Option[String] = entity.string(PropertyMapping.defaultValue)
     def withDefaultValue(value: String): PropertyMappingObject = {
       entity.set(PropertyMapping.defaultValue.field(), AmfScalar(value)); this

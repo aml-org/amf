@@ -1,5 +1,7 @@
 package amf
 
+import org.yaml.convert.YRead
+import org.yaml.convert.YRead._
 import org.yaml.model._
 
 import scala.util.matching.Regex
@@ -34,33 +36,16 @@ package object parser {
     }
   }
 
-  implicit class YValueOps(value: YValue) {
-
-    def toScalar: YScalar = value match {
-      case s: YScalar => s
-      case _          => throw new Exception(s"Expected scalar but found: $value")
+  implicit object YScalarYRead extends YRead[YScalar] {
+    def read(node: YNode): Either[YError, YScalar] = node.value match {
+      case s: YScalar => Right(s)
+      case other      => error(node, s"Expected scalar but found: $other")
     }
-
-    def toMap: YMap = value match {
-      case m: YMap => m
-      case _       => throw new Exception(s"Expected map but found: $value")
-    }
-
-    def toSequence: YSequence = value match {
-      case s: YSequence => s
-      case _            => throw new Exception(s"Expected sequence but found: $value")
-    }
-
-    def asMap: Option[YMap] = value match {
-      case m: YMap => Some(m)
-      case _       => None
-    }
-
-    def asScalar: Option[YScalar] = value match {
-      case s: YScalar => Some(s)
-      case _          => None
-    }
+    override def defaultValue: YScalar = YScalar.Null
   }
 
-  implicit class YScalarOps(value: YScalar) {}
+  implicit class YNodeLikeOps(node: YNodeLike) {
+    def toOption[T](implicit conversion: YRead[T]): Option[T] = node.to[T].toOption
+  }
+
 }
