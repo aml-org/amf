@@ -8,6 +8,7 @@ import amf.dumper.AMFDumper
 import amf.remote.{Hint, Vendor}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
+import org.mulesoft.common.io.FileSystem
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -18,6 +19,8 @@ import scala.concurrent.{ExecutionContext, Future}
 trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  private val fs: FileSystem = platform.fs
 
   val basePath: String
 
@@ -40,18 +43,21 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
     build(config, maybeValidation)
       .map(map(_, config))
       .flatMap(render(_, config))
-      .flatMap(content => platform.write("file://" + tmp(golden + ".tmp"), content).map((_, content)))
+      .flatMap(content => {
+        val path = tmp(golden + ".tmp")
+        fs.asyncFile(path).write(content).map(_ => (path, content))
+      })
       .flatMap({
         case (path, actual) =>
-          platform
-            .resolve(config.goldenPath, None)
-            .map(expected => checkDiff(actual, path, expected.stream.toString, expected.url))
+          fs.asyncFile(config.goldenPath)
+            .read()
+            .map(expected => checkDiff(actual, path, expected.toString, config.goldenPath))
       })
   }
 
   def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
     val validation = given.getOrElse(Validation(platform).withEnabledValidation(false))
-    AMFCompiler(config.sourcePath, platform, config.hint, validation).build()
+    AMFCompiler("file://" + config.sourcePath, platform, config.hint, validation).build()
   }
 
   def map(unit: BaseUnit, config: CycleConfig): BaseUnit = unit

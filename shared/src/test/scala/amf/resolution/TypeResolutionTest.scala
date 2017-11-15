@@ -129,7 +129,7 @@ class TypeResolutionTest extends BuildCycleTests {
     assert(array.items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
   }
 
-  override val basePath = "file://shared/src/test/resources/resolution/"
+  override val basePath = "shared/src/test/resources/resolution/"
 
   val examples = Seq(
     "union1",

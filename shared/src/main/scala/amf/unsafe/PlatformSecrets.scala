@@ -43,7 +43,7 @@ class TrunkValidator extends SHACLValidator {
 case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = None) extends Platform {
 
   /** Underlying file system for platform. */
-  override val fs: FileSystem = Uns
+  override val fs: FileSystem = UnsupportedFileSystem
 
   /** Test path resolution. */
   override def resolvePath(path: String): String = path
@@ -59,9 +59,6 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
   override protected def fetchHttp(url: String): Future[Content] = {
     fetchFile(url)
   }
-
-  override protected def writeFile(path: String, content: String): Future[String] =
-    throw new Exception("Unsupported write operation")
 
   override def tmpdir(): String = throw new Exception("Unsupported tmpdir operation")
 

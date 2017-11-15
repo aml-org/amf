@@ -48,19 +48,6 @@ class JvmPlatform extends Platform {
     Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
   }
 
-  /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[String] = {
-    Future {
-      val file = new java.io.File(path)
-      file.getParentFile.mkdirs()
-      val writer: FileWriter = new FileWriter(file)
-      writer.write(content)
-      writer.flush()
-      writer.close()
-      path
-    }
-  }
-
   /** Return temporary directory. */
   override def tmpdir(): String = System.getProperty("java.io.tmpdir")
 

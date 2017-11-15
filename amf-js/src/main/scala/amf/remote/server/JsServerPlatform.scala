@@ -8,11 +8,11 @@ import amf.remote.{Content, File, Http, Platform}
 import amf.validation.{SHACLValidator, Validation}
 import org.mulesoft.common.io.{FileSystem, JsServerFileSystem}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   *
@@ -28,23 +28,13 @@ class JsServerPlatform extends Platform {
 
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = {
-    val promise: Promise[Content] = Promise()
-
-    Fs.readFile(
-      path,
-      (err: Any, content: js.Any) => {
-        if (err != null) {
-          promise.failure(new Exception(s"Could not load file $path from fs"))
-        } else {
-          promise.success(
-            Content(new CharSequenceStream(path, content.toString),
-                    ensureFileAuthority(path),
-                    extension(path).flatMap(mimeFromExtension)))
-        }
-      }
-    )
-
-    promise.future
+    fs.asyncFile(path)
+      .read()
+      .map(content => {
+        Content(new CharSequenceStream(path, content),
+                ensureFileAuthority(path),
+                extension(path).flatMap(mimeFromExtension))
+      })
   }
 
   /** Resolve specified url. */
@@ -63,18 +53,6 @@ class JsServerPlatform extends Platform {
         response.on("end", () => promise.success(Content(new CharSequenceStream(url, str), url)))
       }
     )
-
-    promise.future
-  }
-
-  /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[String] = {
-    val promise: Promise[String] = Promise()
-
-    Fs.writeFile(path, content, (error: Any) => {
-      if (error == null) promise.success(path)
-      else promise.failure(new Exception(s"Write failed on $path: " + error))
-    })
 
     promise.future
   }

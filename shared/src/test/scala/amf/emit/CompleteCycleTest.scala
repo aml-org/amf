@@ -5,8 +5,8 @@ import amf.remote._
 
 class CompleteCycleTest extends BuildCycleTests {
 
-  override val basePath = "file://shared/src/test/resources/upanddown/"
-  val referencesPath    = "file://shared/src/test/resources/references/"
+  override val basePath = "shared/src/test/resources/upanddown/"
+  val referencesPath    = "shared/src/test/resources/references/"
 
   test("Full raml to raml test") {
     cycle("full-example.raml", "full-example.raml.raml", RamlYamlHint, Raml)
