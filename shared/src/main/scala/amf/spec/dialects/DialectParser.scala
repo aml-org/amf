@@ -60,7 +60,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
     val module = Module().adopted(root.location)
     module.withLocation(root.location)
     var v=List(parseEntity(module));
-    //v=this.internalRefs.values.toList;
+    v=this.internalRefs.values.toList;
     module.withDeclares(v)
     module
   }

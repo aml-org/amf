@@ -351,30 +351,35 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
     // val entries = Entries(ast)
 
     references.foreach {
-      case (namespace, unit) =>
-        val ent = retrieveDomainEntity(unit)
-        unit match {
-          case _: Fragment =>
-            declarationsFromFragments.put(namespace, ent)
-          case _ =>
-            ent.definition.props.values.foreach(p => {
-              if (p.isMap)
-                ent
-                  .entities(p)
-                  .foreach(decl => {
-                    if (decl.linkValue.isDefined) {
-                      declarationsFromLibraries.put(namespace + "." + decl.linkValue.get, decl)
-                    }
-//                    p.hash.foreach(h => {
-//                      decl
-//                        .string(h)
-//                        .foreach(localName => {
-//                          declarationsFromLibraries.put(namespace + "." + localName, decl)
-//                        })
-//                    })
-                  })
+      case (namespace:String, unit:BaseUnit) => {
+        if (unit.isInstanceOf[Module]) {
+            unit.asInstanceOf[Module].declares.foreach(r => {
+              val entity = r.asInstanceOf[DomainEntity]
+              if (entity.linkValue.isDefined) {
+                declarationsFromLibraries.put(namespace + "." + entity.linkValue.get, entity)
+              }
             })
         }
+        else {
+          val ent = retrieveDomainEntity(unit)
+          unit match {
+            case _: Fragment =>
+              declarationsFromFragments.put(namespace, ent)
+            case _ =>
+              ent.definition.props.values.foreach(p => {
+                if (p.isMap)
+                  ent
+                    .entities(p)
+                    .foreach(decl => {
+                      if (decl.linkValue.isDefined) {
+                        declarationsFromLibraries.put(namespace + "." + decl.linkValue.get, decl)
+                      }
+
+                  })
+              })
+          }
+        }
+      }
     }
 
     root.document.toOption[YMap].foreach { map =>
@@ -491,11 +496,6 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
       namespaces.put(uri, name)
     }
     unit.references.foreach({
-      case m:Module =>{
-        m.declares.foreach(d=>{
-           println(d)
-        })
-      }
       case f: DialectFragment =>{
         fragments.put(f.encodes.id,f.id);
       }
@@ -643,10 +643,6 @@ object Dialect {
         case unit: DomainEntity => unit
         case other              => throw new Exception(s"Encoded domain element is not a dialect domain entity $other")
       }
-    case module: Module =>
-      (module.declares collect {
-        case unit: DomainEntity => unit
-      }).head
     case _ => throw new Exception(s"Cannot extract domain entity from unit: $unit")
   }
 }
