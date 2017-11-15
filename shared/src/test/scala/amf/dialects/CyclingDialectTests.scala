@@ -32,6 +32,14 @@ class CyclingDialectTests extends BuildCycleTests {
     cycle("validation_dialect_using_fragments4.raml", "validation_dialect_using_fragments4.raml", RamlYamlHint, Raml)
   }
 
+  test("Parse Dialect with library and serialize back") {
+    cycle("validation_dialect_uses(dialect_lib).raml", "validation_dialect_uses(dialect_lib).raml.gold", RamlYamlHint, Raml)
+  }
+  test("Parse Dialect with library and store to json LD") {
+    cycle("validation_dialect_uses(dialect_lib).raml", "validation_dialect_uses(dialect_lib).json", RamlYamlHint, Amf)
+  }
+
+
   /** Compile source with specified hint. Dump to target and assert against golden. */
   override def cycle(source: String,
             golden: String,
