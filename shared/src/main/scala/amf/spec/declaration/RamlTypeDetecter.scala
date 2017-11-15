@@ -4,8 +4,8 @@ import amf.parser.{YMapOps, YScalarYRead}
 import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
+import amf.spec.{ParserContext, SearchScope}
 import amf.spec.raml.RamlTypeExpressionParser
-import amf.spec.{Declarations, ParserContext}
 import amf.unsafe.PlatformSecrets
 import org.yaml.model._
 
@@ -13,15 +13,12 @@ import org.yaml.model._
   *
   */
 object RamlTypeDetection {
-  def apply(node: YNode, declarations: Declarations, parent: String, format: Option[String] = None)(
-      implicit ctx: ParserContext): Option[TypeDef] =
-    RamlTypeDetecter(declarations, parent, format).detect(node)
+  def apply(node: YNode, parent: String, format: Option[String] = None)(implicit ctx: ParserContext): Option[TypeDef] =
+    RamlTypeDetecter(parent, format).detect(node)
 }
 
-case class RamlTypeDetecter(declarations: Declarations,
-                            parent: String,
-                            format: Option[String] = None,
-                            recursive: Boolean = false)(implicit ctx: ParserContext)
+case class RamlTypeDetecter(parent: String, format: Option[String] = None, recursive: Boolean = false)(
+    implicit ctx: ParserContext)
     extends RamlTypeSyntax
     with PlatformSecrets {
   def detect(node: YNode): Option[TypeDef] = node.tagType match {
@@ -40,7 +37,7 @@ case class RamlTypeDetecter(declarations: Declarations,
       val scalar = node.as[YScalar]
       scalar.text match {
         case RamlTypeDefMatcher.TypeExpression(text) =>
-          RamlTypeExpressionParser(shape => shape, declarations, Some(node.as[YScalar]))
+          RamlTypeExpressionParser(shape => shape, Some(node.as[YScalar]))
             .parse(text)
             .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
             .map {
@@ -49,8 +46,9 @@ case class RamlTypeDetecter(declarations: Declarations,
             } // exceptionc ase when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
         case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
           // it might be a named type
-          declarations
-            .findType(scalar.text) match {
+          // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
+          ctx.declarations
+            .findType(scalar.text, SearchScope.All) match {
             case Some(ancestor) if recursive => ShapeClassTypeDefMatcher(ancestor, node, recursive)
             case Some(_) if !recursive       => Some(ObjectType)
             case None                        => Some(UndefinedType)
@@ -84,7 +82,7 @@ case class RamlTypeDetecter(declarations: Declarations,
         .key("type")
         .orElse(map.key("schema"))
         .flatMap(e =>
-          RamlTypeDetecter(declarations, parent, map.key("(format)").map(_.value.toString()), recursive = true)
+          RamlTypeDetecter(parent, map.key("(format)").map(_.value.toString()), recursive = true)
             .detect(e.value)) match {
         case Some(t) if t == UndefinedType => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
         case Some(other)                   => Some(other)
@@ -95,7 +93,7 @@ case class RamlTypeDetecter(declarations: Declarations,
 
   private def collectTypeDefs(sequence: Seq[YNode]): Seq[TypeDef] =
     sequence
-      .map(node => RamlTypeDetecter(declarations, parent, recursive = true).detect(node))
+      .map(node => RamlTypeDetecter(parent, recursive = true).detect(node))
       .collect({ case Some(typeDef) => typeDef })
 
   object InheritsTypeDetecter {

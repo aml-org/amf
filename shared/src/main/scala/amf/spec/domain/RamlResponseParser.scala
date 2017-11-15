@@ -4,9 +4,9 @@ import amf.domain.{Annotations, Parameter, Payload, Response}
 import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.model.AmfArray
 import amf.parser.YMapOps
+import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.RamlTypeParser
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry}
 
 import scala.collection.mutable
@@ -14,8 +14,7 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, declarations: Declarations)(
-    implicit ctx: ParserContext) {
+case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: ParserContext) {
   def parse(): Response = {
 
     val node = ValueNode(entry.key).text()
@@ -34,7 +33,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], response.withHeader, declarations)
+          RamlParametersParser(entry.value.as[YMap], response.withHeader)
             .parse()
             .map(_.withBinding("header"))
         response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -49,7 +48,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
         val payload = Payload()
         payload.adopted(response.id) // TODO review
 
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), declarations)
+        RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id))
           .parse()
           .foreach(payloads += payload.withSchema(_))
 
@@ -59,7 +58,7 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, 
               ".*/.*",
               entries => {
                 entries.foreach(entry => {
-                  payloads += RamlPayloadParser(entry, response.withPayload, declarations).parse()
+                  payloads += RamlPayloadParser(entry, response.withPayload).parse()
                 })
               }
             )

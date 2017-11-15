@@ -402,8 +402,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
       extends PlatformSecrets {
     val emitters: Seq[EntryEmitter] = {
 
-      implicit val errorHanlder = new amf.spec.ErrorHandler(amf.validation.Validation(platform)) // todo remove
-      val declarations          = Declarations(declares)
+      val declarations = Declarations(declares, None)
 
       val result = ListBuffer[EntryEmitter]()
 

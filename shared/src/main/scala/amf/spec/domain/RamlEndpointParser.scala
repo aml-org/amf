@@ -5,11 +5,10 @@ import amf.domain.{Annotations, EndPoint, Operation, Parameter}
 import amf.metadata.domain.EndPointModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YScalarYRead}
+import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
-import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -20,7 +19,6 @@ case class RamlEndpointParser(entry: YMapEntry,
                               producer: String => EndPoint,
                               parent: Option[EndPoint],
                               collector: mutable.ListBuffer[EndPoint],
-                              declarations: Declarations,
                               parseOptionalOperations: Boolean = false)(implicit ctx: ParserContext) {
   def parse(): Unit = {
 
@@ -49,7 +47,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       "uriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], endpoint.withParameter, declarations)
+          RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
             .parse()
             .map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -59,7 +57,9 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.key(
       "type",
       entry =>
-        ParametrizedDeclarationParser(entry.value, endpoint.withResourceType, declarations.findResourceTypeOrFail)
+        ParametrizedDeclarationParser(entry.value,
+                                      endpoint.withResourceType,
+                                      ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
     )
 
@@ -69,7 +69,7 @@ case class RamlEndpointParser(entry: YMapEntry,
         entry.value
           .as[Seq[YNode]]
           .map(value =>
-            ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrError(value)).parse())
+            ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value)).parse())
       }
     )
 
@@ -80,7 +80,7 @@ case class RamlEndpointParser(entry: YMapEntry,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += RamlOperationParser(entry, endpoint.withOperation, declarations, parseOptionalOperations)
+          operations += RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)
             .parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
@@ -93,7 +93,7 @@ case class RamlEndpointParser(entry: YMapEntry,
         // TODO check for empty array for resolution ?
         val securedBy = entry.value
           .as[Seq[YNode]]
-          .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
+          .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
 
         endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
@@ -106,7 +106,7 @@ case class RamlEndpointParser(entry: YMapEntry,
     map.regex(
       "^/.*",
       entries => {
-        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector, declarations).parse())
+        entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector).parse())
       }
     )
   }

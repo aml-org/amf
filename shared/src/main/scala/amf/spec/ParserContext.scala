@@ -30,6 +30,10 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
     validation.reportConstraintFailure(VIOLATION, id, node, property, message, lexical)
   }
 
+  def violation(message: String, ast: Option[YPart]): Unit = {
+    violation("", "", None, message, ast.flatMap(lexical))
+  }
+
   /** Report constraint failure of severity violation. */
   def violation(id: String, node: String, property: Option[String], message: String, ast: YPart): Unit = {
     violation(id, node, property, message, lexical(ast))
@@ -62,16 +66,19 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
   }
 }
 
-case class ParserContext(validation: Validation, vendor: Vendor) extends ErrorHandler(validation) {
+case class ParserContext(validation: Validation, vendor: Vendor, private val internalDec: Option[Declarations] = None)
+    extends ErrorHandler(validation) {
+
+  val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))
 
   def toOas: ParserContext = vendor match {
     case Oas => this
-    case _   => copy(vendor = Oas)
+    case _   => copy(vendor = Oas, internalDec = Some(declarations))
   }
 
   def toRaml: ParserContext = vendor match {
     case Raml => this
-    case _    => copy(vendor = Raml)
+    case _    => copy(vendor = Raml, internalDec = Some(declarations))
   }
 
   /** Validate closed shape. */
