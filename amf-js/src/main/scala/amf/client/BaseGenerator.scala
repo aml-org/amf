@@ -33,7 +33,7 @@ abstract class BaseGenerator(protected val target: Vendor, protected val syntax:
     * (like the browser) or if a remote URL is provided.
     */
   @JSExport
-  def generateFile(unit: BaseUnit, url: String): js.Promise[String] =
+  def generateFile(unit: BaseUnit, url: String): js.Promise[Unit] =
     generate(unit.element, url, GenerationOptions()).toJSPromise
 
   /** Generates the syntax text and returns it asynchronously. */

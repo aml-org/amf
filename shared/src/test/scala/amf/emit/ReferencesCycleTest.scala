@@ -60,9 +60,10 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions {
   }
 
   private def renderReference(reference: String, vendor: Vendor, unit: BaseUnit) = {
-    val ref = unit.references.head
+    val ref  = unit.references.head
+    val path = tmp(reference.replace("/", "--"))
     AMFDumper(ref, vendor, vendor.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
-      .flatMap(platform.write("file://" + tmp(reference.replace("/", "--")), _))
+      .flatMap(platform.write("file://" + path, _).map(_ => path))
   }
 
   case class ModuleContent(url: String, content: String)
