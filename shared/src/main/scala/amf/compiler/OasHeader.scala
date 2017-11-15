@@ -17,6 +17,10 @@ object OasHeader {
 
   val extensionType = "x-extension-type"
 
+  val swagger = "swagger"
+
+  object Oas20Header extends OasHeader("swagger", "2.0")
+
   object Oas20DocumentationItem extends OasHeader(extensionName, "2.0 DocumentationItem")
 
   object Oas20DataType extends OasHeader(extensionName, "2.0 DataType")
@@ -41,11 +45,13 @@ object OasHeader {
     map
       .key(extensionName)
       .orElse(map.key(extensionType))
+      .orElse(map.key(swagger))
       .flatMap(extension => OasHeader(extension.value))
       .orElse(toOasType(FragmentTypes(map)))
   }
 
   def apply(text: String): Option[OasHeader] = text match {
+    case Oas20Header.value                    => Some(Oas20Header)
     case Oas20DocumentationItem.value         => Some(Oas20DocumentationItem)
     case Oas20DataType.value                  => Some(Oas20DataType)
     case Oas20NamedExample.value              => Some(Oas20NamedExample)
