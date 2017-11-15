@@ -6,6 +6,7 @@ import amf.lexer.CharSequenceStream
 import amf.remote.File.FILE_PROTOCOL
 import amf.remote.{Content, File, Http, Platform}
 import amf.validation.{SHACLValidator, Validation}
+import org.mulesoft.common.io.{FileSystem, JsServerFileSystem}
 
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
@@ -17,6 +18,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
   *
   */
 class JsServerPlatform extends Platform {
+
+  /** Underlying file system for platform. */
+  override val fs: FileSystem = JsServerFileSystem
 
   override def exit(code: Int) = {
     js.Dynamic.global.process.exit(code)

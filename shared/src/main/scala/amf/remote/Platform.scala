@@ -5,6 +5,7 @@ import amf.lexer.CharSequenceStream
 import amf.validation.Validation
 import amf.validation.core.SHACLValidator
 import amf.vocabulary.Namespace
+import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 
 import scala.collection.mutable
 import scala.concurrent.{Future, Promise}
@@ -15,7 +16,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
   */
 trait Platform {
 
-  def exit(code: Int) = System.exit(code)
+  /** Underlying file system for platform. */
+  val fs: FileSystem
+
+  def exit(code: Int): Unit = System.exit(code)
 
   /** Resolve remote url. */
   def resolve(url: String, context: Option[Context]): Future[Content] = {
@@ -51,7 +55,9 @@ trait Platform {
   val validator: SHACLValidator
 
   protected def setupValidationBase(validation: Validation): Future[Validation] =
-    validation.loadValidationDialect().map { x => validation }
+    validation.loadValidationDialect().map { x =>
+      validation
+    }
 
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 
@@ -140,33 +146,50 @@ private object Relative {
   */
 case class StringContentPlatform(contentUrl: String, content: String, wrappedPlatform: Platform) extends Platform {
 
+  /** Underlying file system for platform. */
+  override val fs: FileSystem = wrappedPlatform.fs
+
   override val dialectsRegistry = wrappedPlatform.dialectsRegistry
 
   override val validator = wrappedPlatform.validator
 
-  override def resolvePath(path: String) = if (path == contentUrl) {
-    contentUrl
-  } else {
-    wrappedPlatform.resolvePath(path)
-  }
-
-  override protected def fetchFile(path: String) = if (path == contentUrl) {
-    Future {
-      Content(new CharSequenceStream(content), path)
+  override def resolvePath(path: String) =
+    if (path == contentUrl) {
+      contentUrl
+    } else {
+      wrappedPlatform.resolvePath(path)
     }
-  } else {
-    wrappedPlatform.resolve(File.FILE_PROTOCOL + path, None)
-  }
 
-  override protected def fetchHttp(url: String) =  if (url == contentUrl) {
-    Future {
-      Content(new CharSequenceStream(content), url)
+  override protected def fetchFile(path: String) =
+    if (path == contentUrl) {
+      Future {
+        Content(new CharSequenceStream(content), path)
+      }
+    } else {
+      wrappedPlatform.resolve(File.FILE_PROTOCOL + path, None)
     }
-  } else {
-    wrappedPlatform.resolve(url, None)
-  }
+
+  override protected def fetchHttp(url: String) =
+    if (url == contentUrl) {
+      Future {
+        Content(new CharSequenceStream(content), url)
+      }
+    } else {
+      wrappedPlatform.resolve(url, None)
+    }
 
   override def tmpdir() = wrappedPlatform.tmpdir()
 
-  override protected def writeFile(path: String, content: String) = wrappedPlatform.write(File.FILE_PROTOCOL + path, content)
+  override protected def writeFile(path: String, content: String) =
+    wrappedPlatform.write(File.FILE_PROTOCOL + path, content)
+}
+
+/** Unsupported file system. */
+object UnsupportedFileSystem extends FileSystem {
+
+  override def syncFile(path: String): SyncFile   = unsupported
+  override def asyncFile(path: String): AsyncFile = unsupported
+  override def separatorChar: Char                = unsupported
+
+  private def unsupported = throw new Exception(s"Unsupported operation")
 }

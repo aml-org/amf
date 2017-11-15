@@ -11,7 +11,7 @@ val settings = Common.settings ++ Seq(
   name := "amf",
   version := "0.0.1-SNAPSHOT",
   libraryDependencies ++= Seq(
-    "org.mulesoft"     %%% "syaml"     % "0.0.5",
+    "org.mulesoft"     %%% "syaml"     % "0.0.6",
     "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
   ),
