@@ -3,13 +3,15 @@ package amf.spec.declaration
 import amf.domain.{Annotations, CreativeWork}
 import amf.metadata.domain.CreativeWorkModel
 import amf.parser.YMapOps
+import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.YMap
 
 /**
   *
   */
-case class OasCreativeWorkParser(map: YMap) {
+case class OasCreativeWorkParser(map: YMap)(
+  implicit val ctx: ParserContext) {
   def parse(): CreativeWork = {
 
     val creativeWork = CreativeWork(map)
@@ -35,7 +37,8 @@ case class OasCreativeWorkParser(map: YMap) {
   }
 }
 
-case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean) {
+case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(
+  implicit val ctx: ParserContext) {
   def parse(): CreativeWork = {
 
     val documentation = CreativeWork(Annotations(map))

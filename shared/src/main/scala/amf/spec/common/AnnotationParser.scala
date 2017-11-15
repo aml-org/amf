@@ -4,10 +4,11 @@ import amf.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.domain.{Annotations, DomainElement}
 import org.yaml.model._
 import amf.parser.YScalarYRead
+import amf.spec.ParserContext
 
 import scala.collection.mutable.ListBuffer
 
-case class AnnotationParser(lazyElement: () => DomainElement, map: YMap) {
+case class AnnotationParser(lazyElement: () => DomainElement, map: YMap)(implicit val ctx: ParserContext) {
   def parse(): Unit = {
     val domainExtensions: ListBuffer[DomainExtension] = ListBuffer()
     map.entries.foreach { entry =>
@@ -21,14 +22,14 @@ case class AnnotationParser(lazyElement: () => DomainElement, map: YMap) {
   }
 }
 
-case class ExtensionParser(annotationRamlName: String, parent: String, entry: YMapEntry) {
+case class ExtensionParser(annotationRamlName: String, parent: String, entry: YMapEntry)(implicit val ctx: ParserContext) {
   def parse(): DomainExtension = {
     val domainExtension = DomainExtension()
     val annotationName  = WellKnownAnnotation.parseName(annotationRamlName)
     val dataNode        = DataNodeParser(entry.value, parent = Some(parent + s"/$annotationName")).parse()
     // TODO
-    // this is temporary, we should look for the annotation in the annotationTypes declared in the schema
-    val customDomainProperty = CustomDomainProperty(Annotations(entry)).withName(annotationName)
+    // throw a parser-side warning validation error if no annotation can be found
+    val customDomainProperty = ctx.declarations.annotations.getOrElse(annotationName, CustomDomainProperty(Annotations(entry)).withName(annotationName))
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)
