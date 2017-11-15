@@ -2,11 +2,10 @@ package amf.spec.declaration
 
 import amf.domain.Annotations
 import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YNodeLikeOps}
+import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common.{AbstractVariables, DataNodeParser}
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
-import amf.parser.YNodeLikeOps
 
 /**
   *
@@ -14,8 +13,7 @@ import amf.parser.YNodeLikeOps
 case class AbstractDeclarationsParser(key: String,
                                       producer: (YMapEntry) => AbstractDeclaration,
                                       map: YMap,
-                                      customProperties: String,
-                                      declarations: Declarations)(implicit ctx: ParserContext) {
+                                      customProperties: String)(implicit ctx: ParserContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -25,7 +23,7 @@ case class AbstractDeclarationsParser(key: String,
           .map(_.entries)
           .getOrElse(Nil)
           .map(traitEntry =>
-            declarations += AbstractDeclarationParser(producer(traitEntry), customProperties, traitEntry, declarations)
+            ctx.declarations += AbstractDeclarationParser(producer(traitEntry), customProperties, traitEntry)
               .parse())
       }
     )
@@ -34,16 +32,13 @@ case class AbstractDeclarationsParser(key: String,
 
 object AbstractDeclarationParser {
 
-  def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry, declarations: Declarations)(
+  def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry)(
       implicit ctx: ParserContext): AbstractDeclarationParser =
-    new AbstractDeclarationParser(declaration, parent, entry.key, entry.value, declarations)
+    new AbstractDeclarationParser(declaration, parent, entry.key, entry.value)
 }
 
-case class AbstractDeclarationParser(declaration: AbstractDeclaration,
-                                     parent: String,
-                                     key: String,
-                                     entryValue: YNode,
-                                     declarations: Declarations)(implicit ctx: ParserContext) {
+case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, key: String, entryValue: YNode)(
+    implicit ctx: ParserContext) {
   def parse(): AbstractDeclaration = {
 
     ctx.link(entryValue) match {
@@ -62,8 +57,8 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration,
 
   def parseReferenced(declared: AbstractDeclaration, parsedUrl: String, ast: YPart): AbstractDeclaration = {
     val d: AbstractDeclaration = declared match {
-      case _: Trait        => declarations.findTraitOrError(ast)(parsedUrl)
-      case _: ResourceType => declarations.findResourceTypeOrError(ast)(parsedUrl)
+      case _: Trait        => ctx.declarations.findTraitOrError(ast)(parsedUrl, SearchScope.Fragments)
+      case _: ResourceType => ctx.declarations.findResourceTypeOrError(ast)(parsedUrl, SearchScope.Fragments)
     }
     val copied: AbstractDeclaration = d.link(parsedUrl, Annotations(ast))
     copied.withName(key)

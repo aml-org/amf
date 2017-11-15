@@ -14,7 +14,7 @@ import amf.parser.{YMapOps, YScalarYRead}
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
-import amf.spec.{BaseUriSplitter, Declarations, ParserContext}
+import amf.spec.{BaseUriSplitter, Declarations, ParserContext, SearchScope}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
 
@@ -33,19 +33,19 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
     val map = root.document.as[YMap]
 
     val references = ReferencesParser("uses", map, root.references).parse(root.location)
-    parseDeclarations(root, map, references.declarations)
+    parseDeclarations(root, map)
 
-    val api = parseWebApi(map, references.declarations).add(SourceVendor(root.vendor))
+    val api = parseWebApi(map).add(SourceVendor(root.vendor))
     document.withEncodes(api)
 
-    val declarables = references.declarations.declarables()
+    val declarables = ctx.declarations.declarables()
     if (declarables.nonEmpty) document.withDeclares(declarables)
     if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
 
     document
   }
 
-  def parseWebApi(map: YMap, declarations: Declarations): WebApi = {
+  def parseWebApi(map: YMap): WebApi = {
 
     val api = WebApi(map).adopted(root.location)
 
@@ -60,7 +60,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
       "baseUriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter, declarations)
+          RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
             .parse()
             .map(_.withBinding("path"))
         api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -141,7 +141,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
       "^/.*",
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(entry => RamlEndpointParser(entry, api.withEndPoint, None, endpoints, declarations).parse())
+        entries.foreach(entry => RamlEndpointParser(entry, api.withEndPoint, None, endpoints).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints))
       }
     )
@@ -179,7 +179,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
         // TODO check for empty array for resolution ?
         val securedBy =
           nodes
-            .map(s => RamlParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
+            .map(s => RamlParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
 
         api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
@@ -189,7 +189,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
       "documentation",
       entry => {
         api.setArray(WebApiModel.Documentations,
-                     UserDocumentationsParser(entry.value.as[Seq[YNode]], declarations, api.id).parse(),
+                     UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse(),
                      Annotations(entry))
       }
     )
@@ -203,19 +203,19 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
 
 abstract class RamlSpecParser extends BaseSpecParser {
 
-  protected def parseDeclarations(root: Root, map: YMap, declarations: Declarations): Unit = {
+  protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent, declarations)
-    parseAnnotationTypeDeclarations(map, parent, declarations)
-    AbstractDeclarationsParser("resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent, declarations)
+    parseTypeDeclarations(map, parent)
+    parseAnnotationTypeDeclarations(map, parent)
+    AbstractDeclarationsParser("resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent)
       .parse()
-    AbstractDeclarationsParser("traits", (entry: YMapEntry) => Trait(entry), map, parent, declarations).parse()
-    parseSecuritySchemeDeclarations(map, parent, declarations)
-    parseParameterDeclarations("(parameters)", map, root.location + "#/parameters", declarations)
-    declarations.resolve()
+    AbstractDeclarationsParser("traits", (entry: YMapEntry) => Trait(entry), map, parent).parse()
+    parseSecuritySchemeDeclarations(map, parent)
+    parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")
+    ctx.declarations.resolve()
   }
 
-  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String, declarations: Declarations): Unit = {
+  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
 
     map.key(
       "annotationTypes",
@@ -229,22 +229,21 @@ abstract class RamlSpecParser extends BaseSpecParser {
                                                        customProperty =>
                                                          customProperty
                                                            .withName(typeName)
-                                                           .adopted(customProperties),
-                                                       declarations)
-            declarations += customProperty.add(DeclaredElement())
+                                                           .adopted(customProperties))
+            ctx.declarations += customProperty.add(DeclaredElement())
           })
       }
     )
   }
 
-  private def parseTypeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
+  private def parseTypeDeclarations(map: YMap, parent: String): Unit = {
     map.key(
       "types",
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent), declarations)
+          RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
             .parse() match {
-            case Some(shape) => declarations += shape.add(DeclaredElement())
+            case Some(shape) => ctx.declarations += shape.add(DeclaredElement())
             case None        => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
           }
         }
@@ -252,20 +251,20 @@ abstract class RamlSpecParser extends BaseSpecParser {
     )
   }
 
-  private def parseSecuritySchemeDeclarations(map: YMap, parent: String, declarations: Declarations): Unit = {
+  private def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
     map.key(
       "securitySchemes",
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          declarations += SecuritySchemeParser(entry,
-                                               scheme => scheme.withName(entry.key).adopted(parent),
-                                               declarations).parse().add(DeclaredElement())
+          ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
+            .parse()
+            .add(DeclaredElement())
         }
       }
     )
   }
 
-  def parseParameterDeclarations(key: String, map: YMap, parentPath: String, declarations: Declarations): Unit = {
+  def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
     map.key(
       key,
       entry => {
@@ -273,13 +272,13 @@ abstract class RamlSpecParser extends BaseSpecParser {
           .as[YMap]
           .entries
           .foreach(e => {
-            val parameter = RamlParameterParser(e,
-                                                (name) => Parameter().withId(parentPath + "/" + name).withName(name),
-                                                declarations).parse()
+            val parameter =
+              RamlParameterParser(e, (name) => Parameter().withId(parentPath + "/" + name).withName(name)).parse()
             if (Option(parameter.binding).isEmpty) {
               ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
             }
-            declarations.registerParameter(parameter.add(DeclaredElement()), Payload().withSchema(parameter.schema))
+            ctx.declarations.registerParameter(parameter.add(DeclaredElement()),
+                                               Payload().withSchema(parameter.schema))
           })
       }
     )
@@ -304,7 +303,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
           case YType.Seq =>
           case _ =>
             val scalar = n.as[YScalar]
-            declarations.findDocumentations(scalar.text) match {
+            declarations.findDocumentations(scalar.text, SearchScope.Fragments) match {
               case Some(doc) =>
                 results += doc.link(scalar.text, Annotations()).asInstanceOf[CreativeWork]
               case _ =>
@@ -317,12 +316,10 @@ abstract class RamlSpecParser extends BaseSpecParser {
   }
 
   object AnnotationTypesParser {
-    def apply(ast: YMapEntry,
-              adopt: (CustomDomainProperty) => Unit,
-              declarations: Declarations): CustomDomainProperty =
+    def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
       ast.value.tagType match {
         case YType.Map =>
-          AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt, declarations).parse()
+          AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
 
         case YType.Seq =>
           val domainProp = CustomDomainProperty()
@@ -334,18 +331,17 @@ abstract class RamlSpecParser extends BaseSpecParser {
         case _ =>
           // @todo: this can be a scalar with a type expression, not a reference
 
-          LinkedAnnotationTypeParser(ast, ast.key.as[YScalar].text, ast.value.as[YScalar], adopt, declarations).parse()
+          LinkedAnnotationTypeParser(ast, ast.key.as[YScalar].text, ast.value.as[YScalar], adopt).parse()
       }
   }
 
   case class LinkedAnnotationTypeParser(ast: YPart,
                                         annotationName: String,
                                         scalar: YScalar,
-                                        adopt: (CustomDomainProperty) => Unit,
-                                        declarations: Declarations) {
+                                        adopt: (CustomDomainProperty) => Unit) {
     def parse(): CustomDomainProperty = {
-      declarations
-        .findAnnotation(scalar.text)
+      ctx.declarations
+        .findAnnotation(scalar.text, SearchScope.Named) // this can be a scalar with a type expression, not a reference
         .map { a =>
           val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
           adopt(copied.withName(annotationName))
@@ -363,8 +359,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
   case class AnnotationTypesParser(ast: YPart,
                                    annotationName: String,
                                    map: YMap,
-                                   adopt: (CustomDomainProperty) => Unit,
-                                   declarations: Declarations) {
+                                   adopt: (CustomDomainProperty) => Unit) {
     def parse(): CustomDomainProperty = {
 
       val custom = CustomDomainProperty(ast)
@@ -373,7 +368,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
 
       // We parse the node as if it were a data shape, this will also check the closed node condition including the
       // annotation type facets
-      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), declarations, isAnnotation = true)
+      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), isAnnotation = true)
         .parse()
         .foreach({ shape =>
           custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))

@@ -4,12 +4,11 @@ import amf.domain.Annotation.{SingleValueArray, SynthesizedField}
 import amf.domain.{Annotations, Example}
 import amf.metadata.domain.ExampleModel
 import amf.model.AmfScalar
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YScalarYRead}
+import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model._
 import org.yaml.render.YamlRender
-import amf.parser.YScalarYRead
 
 import scala.collection.mutable.ListBuffer
 
@@ -41,23 +40,21 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: ParserCo
   }
 }
 
-case class RamlExamplesParser(map: YMap,
-                              singleExampleKey: String,
-                              multipleExamplesKey: String,
-                              declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlExamplesParser(map: YMap, singleExampleKey: String, multipleExamplesKey: String)(
+    implicit ctx: ParserContext) {
   def parse(): Seq[Example] =
-    RamlMultipleExampleParser(multipleExamplesKey, map, declarations).parse() ++
+    RamlMultipleExampleParser(multipleExamplesKey, map).parse() ++
       RamlSingleExampleParser(singleExampleKey, map).parse()
 
 }
 
-case class RamlMultipleExampleParser(key: String, map: YMap, declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: ParserContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
 
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
-        case Left(s) => examples ++= declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
+        case Left(s) => examples ++= ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
             case YType.Map =>

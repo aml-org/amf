@@ -3,18 +3,16 @@ package amf.spec.raml
 import amf.domain.Annotation.{LexicalInformation, ParsedFromTypeExpression}
 import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
-import amf.shape._
 import amf.parser.Range
-import amf.spec.{Declarations, ParserContext}
+import amf.shape._
+import amf.spec.{ParserContext, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model.YPart
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(adopt: Shape => Shape,
-                               declarations: Declarations,
-                               var i: Int = 0,
-                               part: Option[YPart] = None)(implicit ctx: ParserContext) {
+class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Option[YPart] = None)(
+    implicit ctx: ParserContext) {
   var parsedShape: Option[Shape] = None
   var acc: String                = ""
   var parsingArray               = false
@@ -41,7 +39,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
           ParsingResult(parsedShape, input.tail)
         case '(' =>
           processChars()
-          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1, part).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, i + 1, part).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '|' =>
@@ -50,7 +48,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
           }
           processChars()
           parsedShape = Some(toUnion)
-          val result = new RamlTypeExpressionParser(adopt, declarations, i + 1, part).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, i + 1, part).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '[' =>
@@ -84,7 +82,8 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
         case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
         case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
         case other =>
-          declarations.findType(other) match {
+          ctx.declarations
+            .findType(other, SearchScope.Named) match { //i should not have a reference to fragment in a type expression.
             case Some(s) => s.link(other).asInstanceOf[Shape]
             case _       => UnresolvedShape(other).withName(other)
           }
@@ -193,6 +192,6 @@ class RamlTypeExpressionParser(adopt: Shape => Shape,
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, declarations: Declarations, part: Option[YPart] = None)(
-      implicit ctx: ParserContext) = new RamlTypeExpressionParser(adopt, declarations, 0, part)
+  def apply(adopt: Shape => Shape, part: Option[YPart] = None)(implicit ctx: ParserContext) =
+    new RamlTypeExpressionParser(adopt, 0, part)
 }

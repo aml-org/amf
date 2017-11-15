@@ -9,7 +9,7 @@ import amf.io.BuildCycleTests
 import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
 import amf.shape._
-import amf.spec.{Declarations, ParserContext}
+import amf.spec.ParserContext
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.validation.Validation
 import amf.vocabulary.Namespace
@@ -25,25 +25,25 @@ class TypeResolutionTest extends BuildCycleTests {
 
     implicit val ctx = ParserContext(Validation(platform), Raml)
 
-    var res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer")
+    var res = RamlTypeExpressionParser(adopt).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)")
+    res = RamlTypeExpressionParser(adopt).parse("(integer)")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("((integer))")
+    res = RamlTypeExpressionParser(adopt).parse("((integer))")
     assert(res.get.isInstanceOf[ScalarShape])
     assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[]")
+    res = RamlTypeExpressionParser(adopt).parse("integer[]")
     assert(res.get.isInstanceOf[ArrayShape])
     assert(
       res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer)[]")
+    res = RamlTypeExpressionParser(adopt).parse("(integer)[]")
     assert(res.get.isInstanceOf[ArrayShape])
     assert(
       res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
@@ -52,13 +52,13 @@ class TypeResolutionTest extends BuildCycleTests {
     var error = false
     try {
       val fail = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
-      RamlTypeExpressionParser(adopt, Declarations())(fail).parse("[]")
+      RamlTypeExpressionParser(adopt)(fail).parse("[]")
     } catch {
       case e: Exception => error = true
     }
     assert(error)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string")
+    res = RamlTypeExpressionParser(adopt).parse("integer | string")
     assert(res.get.isInstanceOf[UnionShape])
     var union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 2)
@@ -67,7 +67,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer )| (string)")
+    res = RamlTypeExpressionParser(adopt).parse("(integer )| (string)")
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 2)
@@ -76,7 +76,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string) | number")
+    res = RamlTypeExpressionParser(adopt).parse("(integer | string) | number")
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
     assert(union.anyOf.length == 3)
@@ -85,7 +85,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Xsd + "float").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string)[]")
+    res = RamlTypeExpressionParser(adopt).parse("(integer | string)[]")
     assert(res.get.isInstanceOf[ArrayShape])
     var array = res.get.asInstanceOf[ArrayShape]
     assert(array.items.isInstanceOf[UnionShape])
@@ -95,7 +95,7 @@ class TypeResolutionTest extends BuildCycleTests {
     } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
     assert(res != null)
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("(integer | string[])")
+    res = RamlTypeExpressionParser(adopt).parse("(integer | string[])")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
@@ -107,7 +107,7 @@ class TypeResolutionTest extends BuildCycleTests {
       union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
         .iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer | string[]")
+    res = RamlTypeExpressionParser(adopt).parse("integer | string[]")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
     union = res.get.asInstanceOf[UnionShape]
@@ -119,7 +119,7 @@ class TypeResolutionTest extends BuildCycleTests {
       union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
         .iri())
 
-    res = RamlTypeExpressionParser(adopt, Declarations()).parse("integer[][]")
+    res = RamlTypeExpressionParser(adopt).parse("integer[][]")
     assert(res != null)
     assert(res.get.isInstanceOf[MatrixShape])
     var matrix = res.get.asInstanceOf[MatrixShape]

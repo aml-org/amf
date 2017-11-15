@@ -12,9 +12,9 @@ import amf.model.AmfScalar
 import amf.parser._
 import amf.remote.Raml
 import amf.shape.Shape
+import amf.spec.ParserContext
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YScalar, YType}
 
 /**
@@ -73,12 +73,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     def parse(): DataType = {
       val dataType = DataType().adopted(root.location)
 
-      RamlTypeParser(map,
-                     "type",
-                     map,
-                     (shape: Shape) => shape.adopted(root.location),
-                     Declarations(),
-                     isAnnotation = false)
+      RamlTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), isAnnotation = false)
         .parse()
         .foreach(dataType.withEncodes)
 
@@ -91,7 +86,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val resourceType = ResourceTypeFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(ResourceType(map), resourceType.id, "resourceType", map, Declarations()).parse()
+        new AbstractDeclarationParser(ResourceType(map), resourceType.id, "resourceType", map).parse()
 
       resourceType.withEncodes(abstractDeclaration)
 
@@ -103,7 +98,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val traitFragment = TraitFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(Trait(map), traitFragment.id, "trait", map, Declarations()).parse()
+        new AbstractDeclarationParser(Trait(map), traitFragment.id, "trait", map).parse()
 
       traitFragment.withEncodes(abstractDeclaration)
     }
@@ -113,11 +108,11 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     def parse(): AnnotationTypeDeclaration = {
       val annotation = AnnotationTypeDeclaration().adopted(root.location)
 
-      val property = AnnotationTypesParser(map,
-                                           "annotation",
-                                           map,
-                                           (annotation: CustomDomainProperty) => annotation.adopted(root.location),
-                                           Declarations()).parse()
+      val property =
+        AnnotationTypesParser(map,
+                              "annotation",
+                              map,
+                              (annotation: CustomDomainProperty) => annotation.adopted(root.location)).parse()
 
       annotation.withEncodes(property)
     }
@@ -127,7 +122,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     def parse(): ExtensionFragment = {
       val extension = ExtensionFragment().adopted(root.location)
 
-      val api = RamlDocumentParser(root).parseWebApi(map, Declarations())
+      val api = RamlDocumentParser(root).parseWebApi(map)
       extension.withEncodes(api)
 
       map
@@ -148,7 +143,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     def parse(): OverlayFragment = {
       val overlay = OverlayFragment().adopted(root.location)
 
-      val api = RamlDocumentParser(root).parseWebApi(map, Declarations())
+      val api = RamlDocumentParser(root).parseWebApi(map)
       overlay.withEncodes(api)
 
       map
@@ -172,8 +167,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         RamlSecuritySchemeParser(map,
                                  "securityDefinitions",
                                  map,
-                                 (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                                 Declarations())
+                                 (security: amf.domain.security.SecurityScheme) => security.adopted(root.location))
           .parse())
     }
   }

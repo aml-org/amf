@@ -9,7 +9,7 @@ import amf.remote.Raml
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter
 import amf.spec.domain.{RamlEndpointParser, RamlOperationParser}
-import amf.spec.{Declarations, ParserContext, SpecOrdering}
+import amf.spec.{ParserContext, SpecOrdering}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
@@ -34,9 +34,9 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
     model.transform(findExtendsPredicate, transform(model))
   }
 
-  def declarations(model: BaseUnit): Declarations = model match {
-    case d: DeclaresModel => Declarations(d.declares)
-    case _                => Declarations()
+  def declarations(model: BaseUnit): Unit = model match {
+    case d: DeclaresModel => d.declares.foreach(declaration => ctx.declarations += declaration)
+    case _                =>
   }
 
   def asEndPoint(r: ParametrizedResourceType, context: Context): EndPoint = {
@@ -56,12 +56,8 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
         val endPointEntry = document.as[YMap].entries.head
         val collector     = ListBuffer[EndPoint]()
 
-        RamlEndpointParser(endPointEntry,
-                           _ => EndPoint(),
-                           None,
-                           collector,
-                           declarations(context.model),
-                           parseOptionalOperations = true).parse()
+        declarations(context.model)
+        RamlEndpointParser(endPointEntry, _ => EndPoint(), None, collector, parseOptionalOperations = true).parse()
 
         collector.toList match {
           case e :: Nil => e
@@ -245,7 +241,8 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
       }
 
       val entry = document.as[YMap].entries.head
-      RamlOperationParser(entry, _ => Operation(), declarations(context.model)).parse()
+      declarations(context.model)
+      RamlOperationParser(entry, _ => Operation()).parse()
     }
   }
 
