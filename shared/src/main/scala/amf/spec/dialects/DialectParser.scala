@@ -58,7 +58,9 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
   private def parseModule = {
     val module = Module().adopted(root.location)
     module.withLocation(root.location)
-    module.withDeclares(Seq(parseEntity(module)))
+    var v=List(parseEntity(module));
+    //v=this.internalRefs.values.toList;
+    module.withDeclares(v)
     module
   }
 
@@ -168,9 +170,18 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
         resolver
           .resolveToEntity(root, entryNode.value.value.asInstanceOf[YScalar].text, mapping.referenceTarget.get)
           .foreach(child => {
-            child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
-            domainEntity.set(mapping.field(), child)
-            // parseNode(entryNode.value.value, child)
+            if (mapping.isRef){
+              if (child.isLink){
+                domainEntity.set(mapping.field(),child.linkTarget.get.id);
+              }
+              else domainEntity.set(mapping.field(),child.id);
+            }
+            else{
+              val lnk= child.link[DomainEntity](entryNode.value.value.asInstanceOf[YScalar].text)
+              //child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
+              domainEntity.set(mapping.field(), lnk)
+              //parseNode(entryNode.value.value, child)
+            }
           })
       } else {
         entryNode.value.value match {

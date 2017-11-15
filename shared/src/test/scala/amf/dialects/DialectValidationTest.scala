@@ -89,6 +89,24 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Empty Vocabulary") {
+    val validation = Validation(platform)
+    AMFCompiler(
+      "file://shared/src/test/resources/vocabularies/empty.raml",
+      platform,
+      RamlYamlHint,
+      validation,
+      None,
+      None,
+      platform.dialectsRegistry
+    ).build() flatMap  { model =>
+      validation.validate(model, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
   test("Vocabulary can be validated with closed nodes") {
     val validation = Validation(platform)
 

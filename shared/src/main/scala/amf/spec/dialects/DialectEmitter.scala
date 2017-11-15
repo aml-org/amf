@@ -1,9 +1,10 @@
 package amf.spec.dialects
 
-import amf.document.BaseUnit
+import amf.document.{BaseUnit, Module}
 import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration}
-import amf.domain.FieldEntry
+import amf.domain.{FieldEntry, Link}
 import amf.domain.dialects.DomainEntity
+import amf.metadata.domain.LinkableElementModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.Position
 import amf.parser.Position.ZERO
@@ -22,7 +23,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
   val root: DomainEntity = retrieveDomainEntity(unit)
   var nameProvider: Option[LocalNameProvider] = root.definition.nameProvider match {
-    case Some(np) => Some(np(root))
+    case Some(np) => Some(np(unit))
     case None     => None
   }
 
@@ -109,7 +110,8 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
     val field = mapping.field()
     val value = domainEntity.fields.get(field)
-    if (!mapping.noRAML && Option(value).isDefined) {
+
+    if (!mapping.noRAML && Option(value).isDefined&&(!(value.isInstanceOf[AmfArray]&&value.asInstanceOf[AmfArray].values.isEmpty))) {
       if (mapping.isScalar) {
         if (mapping.collection) {
           if (value.isInstanceOf[AmfArray]) {
@@ -127,6 +129,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           } else res = Some(ValueEmitter(mapping.name, FieldEntry(field, domainEntity.fields.getValue(field))))
         }
       } else {
+
         if (mapping.collection) {
           value match {
             case array: AmfArray   => res = Some(ObjectArrayEmitter(mapping, array))
@@ -252,7 +255,6 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
     def emit(b: BaseBuilder): Unit = {
 
       obj.definition.mappings().find(_.fromVal) match {
-
         case Some(scalarProp) =>
           val em = obj.string(scalarProp)
           if (scalarProp.isRef) {
@@ -263,15 +265,46 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
           } else raw(b, em.getOrElse("null"))
 
         case None =>
-          obj.annotations.find(classOf[DomainElementReference]) match {
-            case Some(ref) => raw(b, ref.name)
-            case _ =>
-              comment.foreach(b.comment)
-              b.obj { b =>
-                emitUsesMap(b)
-                emitObject(b)
+          obj.fields.get(LinkableElementModel.Label) match {
+            case scalar: AmfScalar => {
+              val tid=obj.fields.getValue(LinkableElementModel.TargetId).value.toString
+              var libEntity:Option[DomainEntity]=None;
+              unit.references.foreach({
+                case m:Module=>{
+                  m.declares.foreach(v=>{
+                      if (tid.startsWith(v.id)){
+                        val de=v.asInstanceOf[DomainEntity];
+                        de.definition.mappings().foreach(m=>{
+                           if (!libEntity.isDefined) {
+                             libEntity=de.entities(m).find(x => x.id == tid);
+                           }
+                        })
+                      }
+                  })
+
+                }
+                case _ =>
+              })
+              if (libEntity.isDefined){
+                raw(b, scalar.toString)
               }
+              else raw(b, "!include " + scalar.toString)
+            }
+            case _                 => {
+              obj.annotations.find(classOf[DomainElementReference]) match {
+                case Some(ref) => {
+                  raw(b, ref.name)
+                }
+                case _ =>
+                  comment.foreach(b.comment)
+                  b.obj { b =>
+                    emitUsesMap(b)
+                    emitObject(b)
+                  }
+              }
+            }
           }
+
       }
     }
 
@@ -287,12 +320,14 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
     private def emitUsesMap(b: EntryBuilder) = {
       obj.annotations.find(classOf[NamespaceImportsDeclaration]) foreach { ref =>
-        b.entry(
-          "uses",
-          _.obj { b =>
-            ref.uses.foreach(MapEntryEmitter(_).emit(b))
-          }
-        )
+        if (!ref.uses.isEmpty) {
+          b.entry(
+            "uses",
+            _.obj { b =>
+              ref.uses.foreach(MapEntryEmitter(_).emit(b))
+            }
+          )
+        }
       }
     }
 
