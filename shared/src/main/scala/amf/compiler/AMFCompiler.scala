@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.compiler.OasHeader.{Oas20Extension, Oas20Overlay}
+import amf.compiler.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.compiler.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
@@ -119,8 +119,9 @@ class AMFCompiler private (val url: String,
     OasHeader(root) match {
       case Some(Oas20Overlay)   => OasDocumentParser(root).parseOverlay()
       case Some(Oas20Extension) => OasDocumentParser(root).parseExtension()
+      case Some(Oas20Header)    => OasDocumentParser(root).parseDocument()
       case f if f.isDefined     => OasFragmentParser(root, f).parseFragment()
-      case _                    => OasDocumentParser(root).parseDocument()
+      case _                    => throw new UnableToResolveUnitException
     }
   }
 
@@ -194,13 +195,12 @@ class AMFCompiler private (val url: String,
   }
 
   private def toDocument(parts: Seq[YPart]) = {
-    if (parts.find(v=>v.isInstanceOf[YDocument]).isDefined) {
+    if (parts.find(v => v.isInstanceOf[YDocument]).isDefined) {
       parts collectFirst { case d: YDocument => d } map { document =>
         val comment = parts collectFirst { case c: YComment => c }
         ParsedDocument(comment, document)
       }
-    }
-    else{
+    } else {
       parts collectFirst { case d: YComment => d } map { comment =>
         ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap()))))
       }
