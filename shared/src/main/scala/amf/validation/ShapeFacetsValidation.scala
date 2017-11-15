@@ -1,11 +1,9 @@
 package amf.validation
 
 import amf.document.{BaseUnit, DeclaresModel}
-import amf.domain.Annotation.DeclaredElement
-import amf.domain.{DomainElement, Parameter, Payload, Request}
 import amf.domain.extensions.{CustomDomainProperty, DataNode, ObjectNode}
 import amf.domain.security.SecurityScheme
-import amf.metadata.domain.extensions.CustomDomainPropertyModel
+import amf.domain.{Parameter, Payload, Request}
 import amf.metadata.domain.security.SecuritySchemeModel
 import amf.metadata.domain.{ParameterModel, PayloadModel, RequestModel}
 import amf.metadata.shape.ShapeModel

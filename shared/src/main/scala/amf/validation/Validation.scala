@@ -337,6 +337,12 @@ class Validation(platform: Platform) {
         Promise[Seq[AMFValidationResult]]().success(Seq()).future
       }
 
+      annotationsReport <- if (profile.getOrElse("") != "Payload") {
+        AnnotationsValidation(model, platform).validate()
+      } else {
+        Promise[Seq[AMFValidationResult]]().success(Seq()).future
+      }
+
       shaclReport <- ValidationMutex.synchronized {
         platform.validator.report(
           modelJSON,
@@ -364,6 +370,12 @@ class Validation(platform: Platform) {
 
       // adding shape facets validations
       results ++= shapeFacetsReport
+        .map(r => buildValidationWithCustomLevelForProfile(profileName, model, r, messageStyle, validations))
+        .filter(_.isDefined)
+        .map(_.get)
+
+      // adding annotations validations
+      results ++= annotationsReport
         .map(r => buildValidationWithCustomLevelForProfile(profileName, model, r, messageStyle, validations))
         .filter(_.isDefined)
         .map(_.get)

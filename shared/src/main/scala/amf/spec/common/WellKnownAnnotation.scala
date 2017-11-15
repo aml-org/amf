@@ -59,7 +59,7 @@ object WellKnownAnnotation {
 
   def normalAnnotation(field: String): Boolean =
     if (isRamlAnnotation(field) || isOasAnnotation(field)) {
-      !annotations.getOrElse(field, false)
+      !field.startsWith("x-facets") && !annotations.getOrElse(field, false)
     } else {
       false
     }
