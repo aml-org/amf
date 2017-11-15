@@ -7,8 +7,6 @@ import amf.document.{BaseUnit, EncodesModel, Module}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YValueOps
-import amf.remote.URL
 import amf.parser.YNodeLikeOps
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
