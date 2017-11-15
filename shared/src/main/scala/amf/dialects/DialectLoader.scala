@@ -64,16 +64,12 @@ class DialectLoader(val document: BaseUnit) {
 
     document.references.foreach {
       case module: Module =>
-        module.declares.foreach { declarationProperty => // this is not always declares, it can be actually any property parsed from the value of declares in the dialect
-          val element = declarationProperty.fields.get(DialectModuleDefinition.nodeMappings.field())
-          element match {
-            case array: AmfArray =>
-              imports ++= array.values.map {
-                case declaredEntity: DomainEntity => NodeDefinitionObject(declaredEntity, Some(dialectObject))
-              }
+        module.declares.foreach {
+            case declaredEntity: DomainEntity => imports=imports. ::(NodeDefinitionObject(declaredEntity, Some(dialectObject)))
+
             case _ => // not possible
           }
-        }
+
       case _ => // ignore libraries
     }
     // return the accumulated declarations

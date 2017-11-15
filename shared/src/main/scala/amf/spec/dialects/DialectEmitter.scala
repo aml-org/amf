@@ -273,16 +273,12 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
               unit.references.foreach({
                 case m:Module=>{
                   m.declares.foreach(v=>{
-                      if (tid.startsWith(v.id)){
-                        val de=v.asInstanceOf[DomainEntity];
-                        de.definition.mappings().foreach(m=>{
-                           if (!libEntity.isDefined) {
-                             libEntity=de.entities(m).find(x => x.id == tid);
-                           }
-                        })
+                    if (v.id==tid){
+                      if (!libEntity.isDefined) {
+                        libEntity=Some(v.asInstanceOf[DomainEntity]);
                       }
+                    }
                   })
-
                 }
                 case _ =>
               })
