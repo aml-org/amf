@@ -85,16 +85,21 @@ abstract class Shape extends DomainElement with Linkable {
   type FacetsMap = Map[String, PropertyShape]
 
   // @todo should be memoize this?
-  def collectCustomShapePropertyDefinitions(): Seq[FacetsMap] = {
+  def collectCustomShapePropertyDefinitions(onlyInherited: Boolean = false): Seq[FacetsMap] = {
     // Facet properties for the current shape
     val accInit: FacetsMap = Map.empty
-    val initialSequence = Seq(customShapePropertyDefinitions.foldLeft(accInit) { (acc: FacetsMap, propertyShape: PropertyShape) =>
-      acc.updated(propertyShape.name, propertyShape)
-    })
+    val initialSequence =  if (onlyInherited) {
+      Seq(accInit)
+    } else {
+      Seq(customShapePropertyDefinitions.foldLeft(accInit) { (acc: FacetsMap, propertyShape: PropertyShape) =>
+        acc.updated(propertyShape.name, propertyShape)
+      })
+    }
+
 
     // Check in the inheritance chain to add properties comming from super shapes and merging them with the facet
     // properties or properties for the current shape.
-    // Notice that the proeprties map for this shape or from the inheritance can be sequences with more than one
+    // Notice that the properties map for this shape or from the inheritance can be sequences with more than one
     // element if unions are involved
     Option(inherits) match {
       // inheritance well get the map of facet properties for each element in the union

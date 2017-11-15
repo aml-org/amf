@@ -753,6 +753,11 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
 
     result ++= FacetsEmitter(shape, ordering).emitters
 
+    fs.entry(ShapeModel.CustomShapePropertyDefinitions)
+      .map(f => {
+        result += CustomFacetsEmitter(f, ordering, references)
+      })
+
     result
   }
 
@@ -769,7 +774,6 @@ case class OasUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refer
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-
     b.entry(
       "anyOf",
       _.list { b =>
@@ -994,6 +998,7 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
       .foreach(f =>
         if (!f.value.annotations.contains(classOf[Inferred]))
           result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+
 
     emitCommonFields(fs, result)
 

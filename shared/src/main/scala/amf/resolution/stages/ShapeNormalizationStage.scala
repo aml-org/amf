@@ -24,8 +24,7 @@ class ShapeNormalizationStage(profile: String)
     with MinShapeAlgorithm {
 
   override def resolve(model: BaseUnit): BaseUnit = {
-    val res = model.transform(findShapesPredicate, transform)
-    res
+    model.transform(findShapesPredicate, transform)
   }
 
   protected def ensureCorrect(shape: Shape): Unit = {

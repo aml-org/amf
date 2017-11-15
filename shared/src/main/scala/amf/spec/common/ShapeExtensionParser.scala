@@ -10,7 +10,7 @@ import amf.spec.ParserContext
 
 case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: ParserContext) {
   def parse(): Unit = {
-    val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions()
+    val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
     shapeExtensionDefinitions.flatMap(_.values).distinct.foreach { shapeExensionDefinition =>
       val extensionKey = ctx.vendor match {
         case Raml => shapeExensionDefinition.name

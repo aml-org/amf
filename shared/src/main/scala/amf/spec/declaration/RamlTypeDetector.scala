@@ -142,25 +142,13 @@ case class RamlTypeDetector(parent: String,
 
     case class InheritsUnionMatcher(union: UnionShape)(implicit ctx: ParserContext) extends PlatformSecrets {
       def matchUnionFather(part: YPart): Option[TypeDef] = {
-        //Some(UnionType)
         val typeSet = union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
         if (typeSet.size == 1) {
           Some(typeSet.head)
         } else {
           Some(UnionType)
         }
-/*
-        InheritsTypeDetecter.shapeToType(union.anyOf, part) match {
-          case Some(UndefinedType) =>
-            part.to[YMap] match {
-              case Right(map) => fetchByRamlSyntax(map)
-              case _          => None
-            }
-          case other => other
-        }
-*/
       }
-
     }
 
     private def findEventualShapes(map: YMap): Seq[String] = {

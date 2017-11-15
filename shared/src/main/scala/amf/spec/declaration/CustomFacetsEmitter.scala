@@ -30,6 +30,7 @@ case class CustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references
           spec vendor match {
             case Raml => RamlPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references)
             case Oas  => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references)
+            case _    => throw new Exception(s"Unsupported vendor for shape facets ${spec.vendor}")
           }
 
         }
