@@ -628,4 +628,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Fragment Named Example oas") {
     cycle("named-example.json", "named-example.json", OasJsonHint, Oas, referencesPath)
   }
+
+  test("Facets raml to amf") {
+    cycle("type-facets.raml", "type-facets.raml", RamlYamlHint, Raml)
+  }
 }

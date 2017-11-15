@@ -6,7 +6,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.shape.TypeDef._
 import amf.shape._
-import amf.spec.common.{ArrayNode, ValueNode}
+import amf.spec.common.{ArrayNode, ShapeExtensionParser, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.raml._
 import amf.spec.{ParserContext, SearchScope}
@@ -75,6 +75,22 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
             shape.add(InlineDefinition()) // case of only one field (ej required) and multiple shape matches (use default string)
           case _ => shape
       })
+
+    // custom facet properties
+    parseCustomShapeFacetInstances(result)
+
+    result
+  }
+
+  // These are the actual custom facets, just regular properties in the AST map that have been
+  // defined through the 'facets' properties in this shape or in base shape.
+  // The shape definitions are parsed in the common parser of all shapes, not here.
+  private def parseCustomShapeFacetInstances(shapeResult: Option[Shape]) = {
+    node.value match {
+      case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx).parse()
+      case _         => // ignore if it is not a map or we haven't been able to parse a shape
+    }
+
   }
 
   private def parseXMLSchemaExpression(entry: YMapEntry): Shape = {
@@ -181,9 +197,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
   }
 
   private def parseUnionType(): UnionShape = {
-    val shape = UnionShapeParser(node.as[YMap]).parse()
-    adopt(shape)
-    shape
+    UnionShapeParser(node.as[YMap], adopt).parse()
   }
 
   private def parseObjectType(): Shape = {
@@ -267,7 +281,9 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
     override def parse(): ScalarShape = {
       super.parse()
+
       parseOASFields(map, shape)
+
       map
         .key("type")
         .fold(shape
@@ -302,16 +318,17 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         case _                   => "shape"
       }
 
-      ctx.closedShape(shape.id, map, syntaxType, isAnnotation)
+      ctx.closedRamlTypeShape(shape, map, syntaxType, isAnnotation)
 
       shape
     }
   }
 
-  case class UnionShapeParser(override val map: YMap) extends ShapeParser {
+  case class UnionShapeParser(override val map: YMap, adopt: (Shape) => Shape) extends ShapeParser {
     override val shape = UnionShape(Annotations(map))
 
     override def parse(): UnionShape = {
+      adopt(shape)
       super.parse()
 
       map.key(
@@ -336,6 +353,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
           }
         }
       )
+
+      ctx.closedRamlTypeShape(shape, map, "unionShape", isAnnotation)
 
       shape
     }
@@ -381,7 +400,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
-      ctx.closedShape(shape.id, map, "fileShape", isAnnotation)
+      ctx.closedRamlTypeShape(shape, map, "fileShape", isAnnotation)
 
       shape
     }
@@ -439,7 +458,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
       finalShape match {
         case Some(parsed: Shape) =>
-          ctx.closedShape(parsed.id, map, "arrayShape", isAnnotation)
+          ctx.closedRamlTypeShape(parsed, map, "arrayShape", isAnnotation)
           parsed
         case None =>
           ctx.violation(shape.id, "Cannot parse data arrangement shape", map)
@@ -500,7 +519,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         }
       )
 
-      ctx.closedShape(shape.id, map, "arrayShape", isAnnotation)
+      ctx.closedRamlTypeShape(shape, map, "arrayShape", isAnnotation)
 
       shape
     }
@@ -566,7 +585,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         }
       )
 
-      ctx.closedShape(shape.id, map, "nodeShape", isAnnotation)
+      ctx.closedRamlTypeShape(shape, map, "nodeShape", isAnnotation)
 
       shape
     }
@@ -680,6 +699,15 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
           val xmlSerializer: XMLSerializer =
             XMLSerializerParser(shape.name, entry.value.as[YMap]).parse()
           shape.set(ShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
+        }
+      )
+
+      // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
+      map.key(
+        "facets",
+        entry => {
+          val properties: Seq[PropertyShape] =
+            PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition).parse()
         }
       )
 
