@@ -4,13 +4,13 @@ import amf.document.{Document, Fragment, Module}
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension}
+import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension}
 import amf.domain.security._
 import amf.metadata.document.{DocumentModel, FragmentModel, FragmentsTypesModels, ModuleModel}
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
-import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel}
+import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel, ShapeExtensionModel}
 import amf.metadata.domain.security._
 import amf.metadata.shape._
 import amf.shape._
@@ -42,6 +42,7 @@ trait MetaModelTypeMapping {
     case _: XMLSerializer                      => XMLSerializerModel
     case _: PropertyDependencies               => PropertyDependenciesModel
     case _: DomainExtension                    => DomainExtensionModel
+    case _: ShapeExtension                     => ShapeExtensionModel
     case _: CustomDomainProperty               => CustomDomainPropertyModel
     case _: DataNode                           => DataNodeModel
     case _: Module                             => ModuleModel

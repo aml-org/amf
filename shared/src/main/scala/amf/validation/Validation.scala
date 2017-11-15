@@ -316,7 +316,7 @@ class Validation(platform: Platform) {
     println("===========================")
     println(jsLibrary)
     println("===========================")
-     */
+    */
 
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
@@ -327,6 +327,12 @@ class Validation(platform: Platform) {
 
       examplesReport <- if (profile.getOrElse("") != "Payload") {
         ExamplesValidation(model, platform).validate()
+      } else {
+        Promise[Seq[AMFValidationResult]]().success(Seq()).future
+      }
+
+      shapeFacetsReport <- if (profile.getOrElse("") != "Payload") {
+        ShapeFacetsValidation(model, platform).validate()
       } else {
         Promise[Seq[AMFValidationResult]]().success(Seq()).future
       }
@@ -343,14 +349,22 @@ class Validation(platform: Platform) {
     } yield {
       // aggregating parser-side validations
       var results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations))
+
       // adding model-side validations
       results ++= shaclReport.results
         .map(r => buildValidationForProfile(profileName, model, r, messageStyle, validations))
         .filter(_.isDefined)
         .map(_.get)
+
       // adding example validations
       results ++= examplesReport
-        .map(r => buildExampleValidationForProfile(profileName, model, r, messageStyle, validations))
+        .map(r => buildValidationWithCustomLevelForProfile(profileName, model, r, messageStyle, validations))
+        .filter(_.isDefined)
+        .map(_.get)
+
+      // adding shape facets validations
+      results ++= shapeFacetsReport
+        .map(r => buildValidationWithCustomLevelForProfile(profileName, model, r, messageStyle, validations))
         .filter(_.isDefined)
         .map(_.get)
 
@@ -374,11 +388,11 @@ class Validation(platform: Platform) {
     }
   }
 
-  def buildExampleValidationForProfile(profileName: String,
-                                       model: BaseUnit,
-                                       result: AMFValidationResult,
-                                       messageStyle: String,
-                                       validations: EffectiveValidations): Option[AMFValidationResult] = {
+  def buildValidationWithCustomLevelForProfile(profileName: String,
+                                               model: BaseUnit,
+                                               result: AMFValidationResult,
+                                               messageStyle: String,
+                                               validations: EffectiveValidations): Option[AMFValidationResult] = {
     profileName match {
       case "Payload" => None
       case _         => Some(result.copy(level = findLevel(result.validationId, validations)))

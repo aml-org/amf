@@ -33,7 +33,6 @@ object OasTypeDefMatcher {
 object OasTypeDefStringValueMatcher {
 
   def matchType(typeDef: TypeDef): String = typeDef match {
-
     case ByteType         => "byte"
     case BinaryType       => "binary"
     case PasswordType     => "string"

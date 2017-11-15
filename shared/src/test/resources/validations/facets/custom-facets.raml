@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: API with Types
+types:
+  CustomDate:
+    type: date-only
+    facets:
+      onlyFutureDates?: boolean # optional  in `PossibleMeetingDate`
+      noHolidays: boolean # required in `PossibleMeetingDate`
+  PossibleMeetingDate:
+    type: CustomDate
+    noHolidays: true
+  ErroneousType:
+    type: CustomDate
+    thisIsWrong: true
+  OtherThing:
+    type: string
+    facets:
+      f: string
+  Intermediate: OtherThing | CustomDate
+  Incorrect1:
+    type: Intermediate
+    noHolidays: true
+  Incorrect2:
+    type: Intermediate
+    f: test
+  Incorrect3:
+    type: Intermediate
+    error: true

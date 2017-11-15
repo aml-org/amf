@@ -1,13 +1,6 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.{
-  CustomDomainProperty,
-  DataNode,
-  DomainExtension,
-  ArrayNode => DataArrayNode,
-  ObjectNode => DataObjectNode,
-  ScalarNode => DataScalarNode
-}
+import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
@@ -50,6 +43,32 @@ case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrd
   }
 
   override def position(): Position = pos(domainExtension.annotations)
+}
+
+case class FacetsEmitter(element: Shape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+  def emitters: Seq[EntryEmitter] = element.customShapeProperties.map { extension: ShapeExtension => FacetsInstanceEmitter(extension, ordering) }
+}
+
+case class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
+  implicit spec: SpecEmitterContext)
+  extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.complexEntry(
+      b => {
+        val name = shapeExtension.definedBy.name
+        spec.vendor match {
+          case Raml  => b += name
+          case Oas   => b += "x-facet-" + name
+          case other => throw new IllegalArgumentException(s"Unsupported facet format $other")
+        }
+      },
+      b => {
+        Option(shapeExtension.extension).foreach { DataNodeEmitter(_, ordering).emit(b) }
+      }
+    )
+  }
+
+  override def position(): Position = pos(shapeExtension.annotations)
 }
 
 case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends PartEmitter {
