@@ -153,6 +153,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     actual.zip(expected).map(checkDiff)
   }
 
+
   test("Using library in dialect definition") {
     val expectedFile = "validationFragment.raml"
     val dialectFile  = "validation_dialect_uses(dialect_lib).raml"

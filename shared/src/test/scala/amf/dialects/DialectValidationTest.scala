@@ -38,6 +38,8 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       })
   }
 
+
+
   test("another validation test") {
     val dl = platform.dialectsRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
     val cm = dl.flatMap(
@@ -82,6 +84,24 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       None,
       platform.dialectsRegistry
     ).build() flatMap { model =>
+      validation.validate(model, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("Empty Vocabulary") {
+    val validation = Validation(platform)
+    AMFCompiler(
+      "file://shared/src/test/resources/vocabularies/empty.raml",
+      platform,
+      RamlYamlHint,
+      validation,
+      None,
+      None,
+      platform.dialectsRegistry
+    ).build() flatMap  { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
       assert(report.conforms)
@@ -150,6 +170,8 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+
+
   test("Vocabulary can be validated with closed nodes (k8)") {
     val validation = Validation(platform)
 
@@ -166,6 +188,25 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     } flatMap { report =>
       assert(report.conforms)
       assert(report.results.isEmpty)
+    }
+  }
+
+  test("Vocabulary can be validated with references") {
+    val validation = Validation(platform)
+
+    AMFCompiler(
+      "file://shared/src/test/resources/vocabularies/broken_core.raml",
+      platform,
+      RamlYamlHint,
+      validation,
+      None,
+      None,
+      platform.dialectsRegistry
+    ).build() flatMap { model =>
+      validation.validate(model, "RAML 1.0 Vocabulary")
+    } flatMap { report =>
+      assert(!report.conforms)
+      assert(report.results.head.targetNode=="http://mulesoft.com/vocabularies/k8-core#priority")
     }
   }
 
