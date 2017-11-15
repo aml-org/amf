@@ -157,12 +157,13 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
   }
 
   case class ObjectArrayEmitter(mapping: DialectPropertyMapping, values: AmfArray) extends EntryEmitter {
-    override  def emit(b: EntryBuilder): Unit = {
+    override def emit(b: EntryBuilder): Unit = {
       b.entry(
         mapping.name,
         _.list { l =>
-          values.values.foreach { case v: DomainEntity =>
-            ObjectEmitter(v).emit(l)
+          values.values.foreach {
+            case v: DomainEntity =>
+              ObjectEmitter(v).emit(l)
           }
         }
       )
@@ -224,7 +225,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
                   },
                   entity.fields.get(mapping.hashValue.get.field()) match {
                     case hashValueScalar: AmfScalar => raw(_, hashValueScalar.asInstanceOf[AmfScalar].toString)
-                    case _ => raw(_, "")
+                    case _                          => raw(_, "")
                   }
                 )
             }

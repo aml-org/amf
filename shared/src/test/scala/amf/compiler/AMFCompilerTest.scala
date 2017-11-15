@@ -1,18 +1,16 @@
 package amf.compiler
 
-import amf.client.GenerationOptions
 import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
-import amf.dumper.AMFDumper
 import amf.exception.CyclicReferenceException
-import amf.parser.{YMapOps, YValueOps}
+import amf.parser.YMapOps
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.Matchers._
-import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
-import org.yaml.model.YMapEntry
+import org.scalatest.{Assertion, AsyncFunSuite}
+import org.yaml.model.{YMap, YMapEntry}
 
 import scala.concurrent.ExecutionContext
 
@@ -100,7 +98,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
       .root() map {
       case Root(root, _, references, _, _) =>
-        val body = root.document.value.get.toMap
+        val body = root.document.as[YMap]
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references.map(_.baseUnit))
     }
@@ -110,7 +108,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
     AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
       .root() map {
       case Root(root, _, references, _, _) =>
-        val body = root.document.value.get.toMap
+        val body = root.document.as[YMap]
         body.entries.size should be(3)
         assertUses(body.key("x-uses").get, references.map(_.baseUnit))
     }
@@ -141,7 +139,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   private def assertUses(uses: YMapEntry, references: Seq[BaseUnit]) = {
     uses.key.as[String] should include("uses")
 
-    val libraries = uses.value.value.toMap
+    val libraries = uses.value.as[YMap]
 
     libraries.map.values.foreach(value => {
       val s: String = value

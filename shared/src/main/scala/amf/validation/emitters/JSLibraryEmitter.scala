@@ -139,15 +139,18 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
     """.stripMargin
 
   def prefixes: String = {
-    val namespaces = Namespace.ns.filter { case (prefix, _) =>
-      prefix != "schema-org" && prefix != "raml-http"
+    val namespaces = Namespace.ns.filter {
+      case (prefix, _) =>
+        prefix != "schema-org" && prefix != "raml-http"
     }
     val customNamespaces = profile match {
       case Some(prof) => prof.prefixes
       case _          => Map()
     }
 
-    val allNamespaces = namespaces.map { case (prefix, ns) => (prefix, ns.base) } ++ customNamespaces.map { case (prefix, ns) => (prefix, ns) }
+    val allNamespaces = namespaces.map { case (prefix, ns) => (prefix, ns.base) } ++ customNamespaces.map {
+      case (prefix, ns) => (prefix, ns)
+    }
     "{\n" + allNamespaces.map { case (prefix, ns) => "  \"" + prefix + "\": \"" + ns + "\"" }.mkString(",\n") + "}"
   }
 

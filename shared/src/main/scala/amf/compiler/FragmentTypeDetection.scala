@@ -1,8 +1,8 @@
 package amf.compiler
 
 import amf.compiler.FragmentTypes._
-import amf.parser.{YMapOps, YValueOps}
-import org.yaml.model.{YMap, YType}
+import amf.parser.{YMapOps, YNodeLikeOps}
+import org.yaml.model.YMap
 
 import scala.collection.mutable.ListBuffer
 
@@ -50,8 +50,7 @@ case class FragmentTypeDetection(map: YMap) {
     map.key("extends").foreach(_ => matchingTypes += ExtensionFragment) // overlay??
 
     map.entries
-      .filter(e => e.value.tagType == YType.Map)
-      .map(e => e.value.value.toMap)
+      .flatMap(e => e.value.toOption[YMap])
       .flatMap(m => m.regex("value|strict"))
       .headOption
       .foreach(_ => matchingTypes += NamedExampleFragment)

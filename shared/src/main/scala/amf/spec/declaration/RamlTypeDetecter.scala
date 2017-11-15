@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YScalarYRead}
 import amf.shape.RamlTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
@@ -13,49 +13,54 @@ import org.yaml.model._
   *
   */
 object RamlTypeDetection {
-  def apply(part: YPart, declarations: Declarations, parent: String, format: Option[String] = None)(
+  def apply(node: YNode, declarations: Declarations, parent: String, format: Option[String] = None)(
       implicit ctx: ParserContext): Option[TypeDef] =
-    RamlTypeDetecter(declarations, parent, format).detect(part)
+    RamlTypeDetecter(declarations, parent, format).detect(node)
 }
 
 case class RamlTypeDetecter(declarations: Declarations,
                             parent: String,
                             format: Option[String] = None,
-                            recursive: Boolean = false)(implicit val ctx: ParserContext)
-    extends RamlTypeSyntax {
-  def detect(part: YPart): Option[TypeDef] = part match {
-
-    case scalar: YScalar if RamlTypeDefMatcher.TypeExpression.unapply(scalar.text).isDefined =>
-      RamlTypeExpressionParser(shape => shape, declarations, Some(scalar))
-        .parse(scalar.text)
-        .flatMap(s => ShapeClassTypeDefMatcher(s, scalar, recursive))
-        .map {
-          case (TypeDef.UnionType | TypeDef.ArrayType) if !recursive => TypeExpressionType
-          case other                                                 => other
-        } // exceptionc ase when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
-
-    case scalar: YScalar if matchType(scalar.text, default = UndefinedType) == UndefinedType =>
-      // it might be a named type
-      declarations
-        .findType(scalar.text) match {
-        case Some(ancestor) if recursive => ShapeClassTypeDefMatcher(ancestor, scalar, recursive)
-        case Some(_) if !recursive       => Some(ObjectType)
-        case None                        => Some(UndefinedType)
-      }
-    case scalar: YScalar => // todo add if wellknowtype?
-      val t = scalar.text
-      if (format.isDefined) format.map(f => matchType(t, f))
-      else Some(matchType(t))
-    case sequence: YSequence =>
-      InheritsTypeDetecter(collectTypeDefs(sequence), sequence)
+                            recursive: Boolean = false)(implicit ctx: ParserContext)
+    extends RamlTypeSyntax
+    with PlatformSecrets {
+  def detect(node: YNode): Option[TypeDef] = node.tagType match {
+    case YType.Seq =>
+      val sequence = node.as[Seq[YNode]]
+      InheritsTypeDetecter(collectTypeDefs(sequence), node) // todo review with pedro
         .orElse(Some(ObjectType)) // type expression type?
-    case map: YMap =>
+    case YType.Map =>
+      val map       = node.as[YMap]
       val filterMap = YMap(map.entries.filter(e => !e.key.toString().matches(".*/.*")))
       detectItems(filterMap)
         .orElse(detectProperties(filterMap))
         .orElse(detectAnyOf(filterMap))
         .orElse(detectTypeOrSchema(filterMap))
-
+    case _ =>
+      val scalar = node.as[YScalar]
+      scalar.text match {
+        case RamlTypeDefMatcher.TypeExpression(text) =>
+          RamlTypeExpressionParser(shape => shape, declarations, Some(node.as[YScalar]))
+            .parse(text)
+            .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
+            .map {
+              case (TypeDef.UnionType | TypeDef.ArrayType) if !recursive => TypeExpressionType
+              case other                                                 => other
+            } // exceptionc ase when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
+        case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
+          // it might be a named type
+          declarations
+            .findType(scalar.text) match {
+            case Some(ancestor) if recursive => ShapeClassTypeDefMatcher(ancestor, node, recursive)
+            case Some(_) if !recursive       => Some(ObjectType)
+            case None                        => Some(UndefinedType)
+          }
+        case _ => // todo add if wellknowtype?
+          val t = scalar.text
+          //      val f = map.key("(format)").map(_.value.value.toScalar.text).getOrElse("")
+          if (format.isDefined) format.map(f => matchType(t, f))
+          else Some(matchType(t))
+      }
   }
 
   private def detectProperties(map: YMap): Option[TypeDef] = {
@@ -80,7 +85,7 @@ case class RamlTypeDetecter(declarations: Declarations,
         .orElse(map.key("schema"))
         .flatMap(e =>
           RamlTypeDetecter(declarations, parent, map.key("(format)").map(_.value.toString()), recursive = true)
-            .detect(e.value.value)) match {
+            .detect(e.value)) match {
         case Some(t) if t == UndefinedType => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
         case Some(other)                   => Some(other)
         case None                          => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
@@ -88,9 +93,9 @@ case class RamlTypeDetecter(declarations: Declarations,
     else None
   }
 
-  private def collectTypeDefs(sequence: YSequence): Seq[TypeDef] =
-    sequence.nodes
-      .map(node => RamlTypeDetecter(declarations, parent, recursive = true).detect(node.value))
+  private def collectTypeDefs(sequence: Seq[YNode]): Seq[TypeDef] =
+    sequence
+      .map(node => RamlTypeDetecter(declarations, parent, recursive = true).detect(node))
       .collect({ case Some(typeDef) => typeDef })
 
   object InheritsTypeDetecter {
@@ -103,12 +108,12 @@ case class RamlTypeDetecter(declarations: Declarations,
         head
     }
 
-    def shapeToType(inherits: Seq[Shape], part: YPart): Option[TypeDef] =
+    def shapeToType(inherits: Seq[Shape], part: YNode)(implicit ctx: ParserContext): Option[TypeDef] =
       apply(inherits.flatMap(s => ShapeClassTypeDefMatcher(s, part, plainUnion = true)), part)
   }
 
   object ShapeClassTypeDefMatcher {
-    def apply(shape: Shape, part: YPart, plainUnion: Boolean): Option[TypeDef] =
+    def apply(shape: Shape, part: YNode, plainUnion: Boolean)(implicit ctx: ParserContext): Option[TypeDef] =
       shape match {
         case _: NilShape => Some(NilType)
         case _: AnyShape => Some(AnyType)
@@ -122,18 +127,18 @@ case class RamlTypeDetecter(declarations: Declarations,
       }
 
     object InheritsUnionMatcher {
-      def apply(union: UnionShape, part: YPart): Option[TypeDef] =
+      def apply(union: UnionShape, part: YNode)(implicit ctx: ParserContext): Option[TypeDef] =
         new InheritsUnionMatcher(union).matchUnionFather(part)
     }
 
-    case class InheritsUnionMatcher(union: UnionShape) extends PlatformSecrets {
-      def matchUnionFather(part: YPart): Option[TypeDef] = {
+    case class InheritsUnionMatcher(union: UnionShape)(implicit ctx: ParserContext) extends PlatformSecrets {
+      def matchUnionFather(part: YNode): Option[TypeDef] = {
 
         InheritsTypeDetecter.shapeToType(union.anyOf, part) match {
           case Some(UndefinedType) =>
-            part match {
-              case map: YMap => fetchByRamlSyntax(map)
-              case _         => None
+            part.to[YMap] match {
+              case Right(map) => fetchByRamlSyntax(map)
+              case _          => None
             }
           case other => other
         }
@@ -172,4 +177,5 @@ case class RamlTypeDetecter(declarations: Declarations,
     }
 
   }
+
 }

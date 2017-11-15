@@ -16,6 +16,8 @@ import amf.spec.common.BaseEmitters._
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
+import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -546,9 +548,11 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = ZERO
   }
 
-  case class DeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering, references: Seq[BaseUnit]) {
+  case class DeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering, references: Seq[BaseUnit])
+      extends PlatformSecrets {
     val emitters: Seq[EntryEmitter] = {
-      val declarations = Declarations(declares)
+      implicit val errorHanlder = new ErrorHandler(Validation(platform)) // todo remove
+      val declarations          = Declarations(declares)
 
       val result = ListBuffer[EntryEmitter]()
 

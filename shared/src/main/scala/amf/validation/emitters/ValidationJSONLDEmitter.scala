@@ -69,7 +69,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       for {
         closedShape <- validation.closed
       } yield {
-        if (closedShape){
+        if (closedShape) {
           b.entry((Namespace.Shacl + "closed").iri(), genValue(_, closedShape.toString))
         }
       }
@@ -83,11 +83,11 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       if (validation.unionConstraints.nonEmpty) {
         b.entry((Namespace.Shacl + "or").iri(), _.obj {
           _.entry("@list",
-            _.list(l => validation.unionConstraints.foreach { v =>
-              link(l, v)
-            })
-          )}
-        )
+                  _.list(l =>
+                    validation.unionConstraints.foreach { v =>
+                      link(l, v)
+                  }))
+        })
       }
 
       validation.functionConstraint match {
@@ -155,19 +155,22 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       constraint.datatype.foreach { v =>
         if (v.endsWith("#float")) {
           // raml/oas 'number' are actually the union of integers and floats
-          b.entry((Namespace.Shacl + "or").iri(), _.obj {
-            _.entry("@list",
-              _.list { l =>
+          b.entry(
+            (Namespace.Shacl + "or").iri(),
+            _.obj {
+              _.entry(
+                "@list",
+                _.list { l =>
+                  l.obj {
+                    _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "integer").iri()))
+                  }
 
-                l.obj {
-                  _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "integer").iri()))
+                  l.obj {
+                    _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "float").iri()))
+                  }
                 }
-
-                l.obj {
-                  _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "float").iri()))
-                }
-              }
-            )}
+              )
+            }
           )
         } else {
           b.entry((Namespace.Shacl + "datatype").iri(), link(_, v))
@@ -193,7 +196,9 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       }
 
       // custom builder
-      constraint.custom.foreach { builder => builder(b, constraintId) }
+      constraint.custom.foreach { builder =>
+        builder(b, constraintId)
+      }
 
       if (constraint.in.nonEmpty) {
         b.entry(
@@ -268,7 +273,6 @@ class ValidationJSONLDEmitter(targetProfile: String) {
               )
               b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, fnName))
             }
-
 
           case None =>
             f.code match {

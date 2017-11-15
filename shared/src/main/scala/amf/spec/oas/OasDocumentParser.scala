@@ -20,15 +20,14 @@ import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YValueOps}
-import amf.remote.{Oas, Vendor}
+import amf.parser.{YMapOps, YScalarYRead}
 import amf.shape.NodeShape
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
 import amf.spec.{Declarations, OasDefinitions, ParserContext}
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model.{YNode, _}
+import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -42,21 +41,20 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
 
     val document = Document().adopted(root.location)
 
-    root.document.value.foreach(value => {
-      val map = value.toMap
+    val map = root.document.as[YMap]
 
-      val references = ReferencesParser("x-uses", map, root.references).parse()
-      parseDeclarations(root: Root, map, references.declarations)
+    val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
+    parseDeclarations(root: Root, map, references.declarations)
 
-      val api = parseWebApi(map, references.declarations).add(SourceVendor(root.vendor))
-      document
-        .withEncodes(api)
-        .adopted(root.location)
+    val api = parseWebApi(map, references.declarations).add(SourceVendor(root.vendor))
+    document
+      .withEncodes(api)
+      .adopted(root.location)
 
-      val declarable = references.declarations.declarables()
-      if (declarable.nonEmpty) document.withDeclares(declarable)
-      if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
-    })
+    val declarable = references.declarations.declarables()
+    if (declarable.nonEmpty) document.withDeclares(declarable)
+    if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
+
     document
   }
 
@@ -67,7 +65,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     map.key(
       "info",
       entry => {
-        val info = entry.value.value.toMap
+        val info = entry.value.as[YMap]
 
         ctx.closedShape(api.id, info, "info")
 
@@ -94,7 +92,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
         info.key(
           "contact",
           entry => {
-            val organization: Organization = OrganizationParser(entry.value.value.toMap).parse()
+            val organization: Organization = OrganizationParser(entry.value.as[YMap]).parse()
             api.set(WebApiModel.Provider, organization, Annotations(entry))
           }
         )
@@ -102,7 +100,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
         info.key(
           "license",
           entry => {
-            val license: License = LicenseParser(entry.value.value.toMap).parse()
+            val license: License = LicenseParser(entry.value.as[YMap]).parse()
             api.set(WebApiModel.License, license, Annotations(entry))
           }
         )
@@ -118,7 +116,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       "x-base-uri-parameters",
       entry => {
         val uriParameters =
-          HeaderParametersParser(entry.value.value.toMap, api.withBaseUriParameter, declarations).parse()
+          HeaderParametersParser(entry.value.as[YMap], api.withBaseUriParameter, declarations).parse()
         api.set(WebApiModel.BaseUriParameters, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
       }
     )
@@ -132,17 +130,17 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     )
 
     map.key("consumes", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
+      val value = ArrayNode(entry.value)
       api.set(WebApiModel.Accepts, value.strings(), Annotations(entry))
     })
 
     map.key("produces", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
+      val value = ArrayNode(entry.value)
       api.set(WebApiModel.ContentType, value.strings(), Annotations(entry))
     })
 
     map.key("schemes", entry => {
-      val value = ArrayNode(entry.value.value.toSequence)
+      val value = ArrayNode(entry.value)
       api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
     })
 
@@ -150,7 +148,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasCreativeWorkParser(entry.value.value.toMap).parse()
+        documentations += OasCreativeWorkParser(entry.value.as[YMap]).parse()
       }
     )
 
@@ -159,7 +157,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       entry => {
         // TODO check for empty array for resolution ?
         val securedBy =
-          entry.value.value.toSequence.values
+          entry.value
+            .as[Seq[YNode]]
             .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity, declarations).parse())
 
         api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -169,7 +168,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     map.key(
       "x-user-documentation",
       entry => {
-        documentations ++= UserDocumentationParser(entry.value.value.toSequence, declarations, withExtention = false)
+        documentations ++= UserDocumentationParser(entry.value.as[Seq[YNode]], declarations, withExtention = false)
           .parse()
       }
     )
@@ -180,7 +179,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     map.key(
       "paths",
       entry => {
-        val paths = entry.value.value.toMap
+        val paths = entry.value.as[YMap]
         paths.regex(
           "^/.*",
           entries => {
@@ -199,11 +198,11 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     api
   }
 
-  case class ParametrizedSecuritySchemeParser(value: YValue,
+  case class ParametrizedSecuritySchemeParser(node: YNode,
                                               producer: String => ParametrizedSecurityScheme,
                                               declarations: Declarations) {
-    def parse(): ParametrizedSecurityScheme = value match {
-      case map: YMap =>
+    def parse(): ParametrizedSecurityScheme = node.to[YMap] match {
+      case Right(map) =>
         val schemeEntry = map.entries.head
         val name        = schemeEntry.key
         val scheme      = producer(name).add(Annotations(map))
@@ -216,17 +215,18 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
 
         if (declaration.`type` == "OAuth 2.0") {
           val settings = OAuth2Settings().adopted(scheme.id)
-          val scopes = schemeEntry.value.value.toSequence.nodes.map(n =>
-            Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+          val scopes = schemeEntry.value
+            .as[Seq[YNode]]
+            .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                     settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value.value)))
+                     settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
         }
 
         scheme
-      case other =>
-        val scheme = producer(other.toString)
-        ctx.violation(scheme.id, s"Invalid type $other", other)
+      case _ =>
+        val scheme = producer(node.toString)
+        ctx.violation(scheme.id, s"Invalid type $node", node)
         scheme
     }
 
@@ -252,7 +252,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     def parse(): Unit = {
 
       val endpoint = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry))
-      val map      = entry.value.value.toMap
+      val map      = entry.value.as[YMap]
 
       ctx.closedShape(endpoint.id, map, "pathItem")
 
@@ -274,7 +274,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
           entry => {
             entries += entry
             parameters = parameters.addFromOperation(
-              ParametersParser(entry.value.value.toSequence, endpoint.id, declarations).parse())
+              ParametersParser(entry.value.as[Seq[YMap]], endpoint.id, declarations).parse())
             parameters.body.foreach(_.add(EndPointBodyParameter()))
           }
         )
@@ -285,7 +285,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
           entry => {
             entries += entry
             val queryParameters =
-              RamlParametersParser(entry.value.value.toMap,
+              RamlParametersParser(entry.value.as[YMap],
                                    (name: String) => Parameter().withName(name).adopted(endpoint.id),
                                    declarations).parse().map(_.withBinding("query"))
             parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
@@ -314,17 +314,17 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       map.key(
         "x-type",
         entry =>
-          ParametrizedDeclarationParser(entry.value.value,
-                                        endpoint.withResourceType,
-                                        declarations.findResourceTypeOrFail)
+          ParametrizedDeclarationParser(entry.value, endpoint.withResourceType, declarations.findResourceTypeOrFail)
             .parse()
       )
 
       map.key(
         "x-is",
         entry => {
-          entry.value.value.toSequence.values.map(value =>
-            ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrFail).parse())
+          entry.value
+            .as[Seq[YNode]]
+            .map(value =>
+              ParametrizedDeclarationParser(value, endpoint.withTrait, declarations.findTraitOrError(value)).parse())
         }
       )
 
@@ -336,7 +336,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
         "x-security",
         entry => {
           // TODO check for empty array for resolution ?
-          val securedBy = entry.value.value.toSequence.values
+          val securedBy = entry.value
+            .as[Seq[YNode]]
             .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity, declarations).parse())
 
           endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -364,17 +365,15 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       // can overwrite the path parameters and this would be lost if were not
       // adding them here
       var parameters = globalOrig.copy(path = Seq())
-      val global     = globalOrig.copy(path = Seq())
       var entries    = ListBuffer[YMapEntry]()
 
-      val parsedParameters = ListBuffer[Parameter]()
       map
         .key("parameters")
         .foreach(
           entry => {
             entries += entry
             parameters = parameters.merge(
-              ParametersParser(entry.value.value.toSequence, request.getOrCreate.id, declarations).parse())
+              ParametersParser(entry.value.as[Seq[YMap]], request.getOrCreate.id, declarations).parse())
           }
         )
 
@@ -384,7 +383,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
           entry => {
             entries += entry
             val queryParameters =
-              RamlParametersParser(entry.value.value.toMap,
+              RamlParametersParser(entry.value.as[YMap],
                                    (name: String) => Parameter().withName(name).adopted(request.getOrCreate.id),
                                    declarations).parse().map(_.withBinding("query"))
             parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
@@ -397,7 +396,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
           entry => {
             entries += entry
             val headers =
-              RamlParametersParser(entry.value.value.toMap,
+              RamlParametersParser(entry.value.as[YMap],
                                    (name: String) => Parameter().withName(name).adopted(request.getOrCreate.id),
                                    declarations).parse().map(_.withBinding("header"))
             parameters = parameters.addFromOperation(OasParameters(header = headers))
@@ -423,8 +422,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       map.key(
         "x-request-payloads",
         entry =>
-          entry.value.value.toSequence.values.map(value =>
-            payloads += PayloadParser(value.toMap, request.getOrCreate.withPayload, declarations).parse())
+          entry.value
+            .as[Seq[YMap]]
+            .map(value => payloads += PayloadParser(value, request.getOrCreate.withPayload, declarations).parse())
       )
 
       if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
@@ -451,7 +451,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
     def parse(): Operation = {
 
       val operation = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry))
-      val map       = entry.value.value.toMap
+      val map       = entry.value.as[YMap]
 
       map.key("operationId", entry => {
         val value = ValueNode(entry.value)
@@ -476,7 +476,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       map.key(
         "externalDocs",
         entry => {
-          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.value.toMap).parse()
+          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.as[YMap]).parse()
           operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
         }
       )
@@ -484,27 +484,29 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       map.key(
         "schemes",
         entry => {
-          val value = ArrayNode(entry.value.value.toSequence)
+          val value = ArrayNode(entry.value)
           operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
         }
       )
 
       map.key("consumes", entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
+        val value = ArrayNode(entry.value)
         operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
       })
 
       map.key("produces", entry => {
-        val value = ArrayNode(entry.value.value.toSequence)
+        val value = ArrayNode(entry.value)
         operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
       })
 
       map.key(
         "x-is",
         entry => {
-          val traits = entry.value.value.toSequence.nodes.map(value => {
-            ParametrizedDeclarationParser(value.value, operation.withTrait, declarations.findTraitOrFail).parse()
-          })
+          val traits = entry.value
+            .as[Seq[YNode]]
+            .map(value => {
+              ParametrizedDeclarationParser(value, operation.withTrait, declarations.findTraitOrError(value)).parse()
+            })
           if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
         }
       )
@@ -513,7 +515,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
         "security",
         entry => {
           // TODO check for empty array for resolution ?
-          val securedBy = entry.value.value.toSequence.values
+          val securedBy = entry.value
+            .as[Seq[YNode]]
             .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity, declarations).parse())
 
           operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -527,18 +530,20 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       map.key(
         "responses",
         entry => {
-          entry.value.value.toMap.regex(
-            "default|\\d{3}",
-            entries => {
-              val responses = mutable.ListBuffer[Response]()
-              entries.foreach(entry => {
-                responses += ResponseParser(entry, operation.withResponse, declarations).parse()
-              })
-              operation.set(OperationModel.Responses,
-                            AmfArray(responses, Annotations(entry.value)),
-                            Annotations(entry))
-            }
-          )
+          entry.value
+            .as[YMap]
+            .regex(
+              "default|\\d{3}",
+              entries => {
+                val responses = mutable.ListBuffer[Response]()
+                entries.foreach(entry => {
+                  responses += ResponseParser(entry, operation.withResponse, declarations).parse()
+                })
+                operation.set(OperationModel.Responses,
+                              AmfArray(responses, Annotations(entry.value)),
+                              Annotations(entry))
+              }
+            )
         }
       )
 
@@ -553,7 +558,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
   case class ResponseParser(entry: YMapEntry, producer: String => Response, declarations: Declarations) {
     def parse(): Response = {
 
-      val map = entry.value.value.toMap
+      val map = entry.value.as[YMap]
 
       val node     = ValueNode(entry.key)
       val response = producer(node.string().value.toString).add(Annotations(entry))
@@ -573,7 +578,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
         "headers",
         entry => {
           val parameters: Seq[Parameter] =
-            HeaderParametersParser(entry.value.value.toMap, response.withHeader, declarations).parse()
+            HeaderParametersParser(entry.value.as[YMap], response.withHeader, declarations).parse()
           response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
         }
       )
@@ -585,8 +590,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       map.key(
         "x-response-payloads",
         entry =>
-          entry.value.value.toSequence.values.map(value =>
-            payloads += PayloadParser(value.toMap, response.withPayload, declarations).parse())
+          entry.value
+            .as[Seq[YMap]]
+            .map(value => payloads += PayloadParser(value, response.withPayload, declarations).parse())
       )
 
       if (payloads.nonEmpty)
@@ -668,16 +674,19 @@ abstract class OasSpecParser extends BaseSpecParser {
     map.key(
       "x-annotationTypes",
       e => {
-        e.value.value.toMap.entries.map(entry => {
-          val typeName = entry.key.value.toScalar.text
-          val customProperty = AnnotationTypesParser(entry,
-                                                     customProperty =>
-                                                       customProperty
-                                                         .withName(typeName)
-                                                         .adopted(customProperties),
-                                                     declarations)
-          declarations += customProperty.add(DeclaredElement())
-        })
+        e.value
+          .as[YMap]
+          .entries
+          .map(entry => {
+            val typeName = entry.key.as[YScalar].text
+            val customProperty = AnnotationTypesParser(entry,
+                                                       customProperty =>
+                                                         customProperty
+                                                           .withName(typeName)
+                                                           .adopted(customProperties),
+                                                       declarations)
+            declarations += customProperty.add(DeclaredElement())
+          })
       }
     )
   }
@@ -687,17 +696,19 @@ abstract class OasSpecParser extends BaseSpecParser {
     map.key(
       "definitions",
       entry => {
-
-        entry.value.value.toMap.entries.foreach(e => {
-          val typeName = e.key.value.toScalar.text
-          OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), declarations)
-            .parse() match {
-            case Some(shape) =>
-              declarations += shape.add(DeclaredElement())
-            case None =>
-              ctx.violation(NodeShape().adopted(typesPrefix).id, s"Error parsing shape at $typeName", e)
-          }
-        })
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val typeName = e.key.as[YScalar].text
+            OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix), declarations)
+              .parse() match {
+              case Some(shape) =>
+                declarations += shape.add(DeclaredElement())
+              case None =>
+                ctx.violation(NodeShape().adopted(typesPrefix).id, s"Error parsing shape at $typeName", e)
+            }
+          })
       }
     )
   }
@@ -706,7 +717,7 @@ abstract class OasSpecParser extends BaseSpecParser {
     map.key(
       "securityDefinitions",
       e => {
-        e.value.value.toMap.entries.foreach { entry =>
+        e.value.as[YMap].entries.foreach { entry =>
           declarations += SecuritySchemeParser(entry,
                                                scheme => scheme.withName(entry.key).adopted(parent),
                                                declarations).parse().add(DeclaredElement())
@@ -717,7 +728,7 @@ abstract class OasSpecParser extends BaseSpecParser {
     map.key(
       "x-securitySchemes",
       e => {
-        e.value.value.toMap.entries.foreach { entry =>
+        e.value.as[YMap].entries.foreach { entry =>
           declarations += SecuritySchemeParser(entry,
                                                scheme => scheme.withName(entry.key).adopted(parent),
                                                declarations).parse().add(DeclaredElement())
@@ -730,20 +741,23 @@ abstract class OasSpecParser extends BaseSpecParser {
     map.key(
       "parameters",
       entry => {
-        entry.value.value.toMap.entries.foreach(e => {
-          val typeName = e.key.value.toScalar.text
-          val oasParameter = e.value.value match {
-            case m: YMap => ParameterParser(m, parentPath, declarations).parse()
-            case _ =>
-              val parameter = ParameterParser(YMap(), parentPath, declarations).parse()
-              ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
-              parameter
-          }
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val typeName = e.key.as[YScalar].text
+            val oasParameter = e.value.to[YMap] match {
+              case Right(m) => ParameterParser(m, parentPath, declarations).parse()
+              case _ =>
+                val parameter = ParameterParser(YMap(), parentPath, declarations).parse()
+                ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
+                parameter
+            }
 
-          val parameter = oasParameter.parameter.withName(typeName).add(DeclaredElement())
-          parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
-          declarations.registerParameter(parameter, oasParameter.payload)
-        })
+            val parameter = oasParameter.parameter.withName(typeName).add(DeclaredElement())
+            parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
+            declarations.registerParameter(parameter, oasParameter.payload)
+          })
       }
     )
   }
@@ -761,19 +775,20 @@ abstract class OasSpecParser extends BaseSpecParser {
     def apply(ast: YMapEntry,
               adopt: (CustomDomainProperty) => Unit,
               declarations: Declarations): CustomDomainProperty =
-      ast.value.value match {
-        case map: YMap => AnnotationTypesParser(ast, ast.key.value.toScalar.text, map, adopt, declarations).parse()
-        case scalar: YScalar =>
-          LinkedAnnotationTypeParser(ast, ast.key.value.toScalar.text, scalar, adopt, declarations).parse()
-        case other =>
-          val customDomainProperty = CustomDomainProperty().withName(ast.key.value.toScalar.text)
+      ast.value.tagType match {
+        case YType.Map =>
+          AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt, declarations).parse()
+        case YType.Seq =>
+          val customDomainProperty = CustomDomainProperty().withName(ast.key.as[YScalar].text)
           adopt(customDomainProperty)
           ctx.violation(
             customDomainProperty.id,
             "Invalid value node type for annotation types parser, expected map or scalar reference",
-            other
+            ast.value
           )
           customDomainProperty
+        case _ =>
+          LinkedAnnotationTypeParser(ast, ast.key.as[YScalar].text, ast.value.as[YScalar], adopt, declarations).parse()
       }
 
   }
@@ -862,17 +877,18 @@ abstract class OasSpecParser extends BaseSpecParser {
     }
   }
 
-  case class UserDocumentationParser(seq: YSequence, declarations: Declarations, withExtention: Boolean) {
+  case class UserDocumentationParser(seq: Seq[YNode], declarations: Declarations, withExtention: Boolean) {
     def parse(): Seq[CreativeWork] =
-      seq.nodes.map(n =>
-        n.value match {
-          case m: YMap => RamlCreativeWorkParser(m, withExtention).parse()
-          case s: YScalar =>
-            declarations.findDocumentations(s.text) match {
-              case Some(doc) => doc.link(s.text, Annotations(n)).asInstanceOf[CreativeWork]
+      seq.map(n =>
+        n.tagType match {
+          case YType.Map => RamlCreativeWorkParser(n.as[YMap], withExtention).parse()
+          case YType.Str =>
+            val text = n.as[YScalar].text
+            declarations.findDocumentations(text) match {
+              case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
               case _ =>
                 val documentation = RamlCreativeWorkParser(YMap(), withExtention).parse()
-                ctx.violation(documentation.id, s"not supported scalar $s.text for documentation item", n.value)
+                ctx.violation(documentation.id, s"not supported scalar $n.text for documentation item", n)
                 documentation
             }
       })
@@ -966,10 +982,10 @@ abstract class OasSpecParser extends BaseSpecParser {
     }
   }
 
-  case class ParametersParser(ast: YSequence, parentId: String, declarations: Declarations) {
+  case class ParametersParser(values: Seq[YMap], parentId: String, declarations: Declarations) {
     def parse(): OasParameters = {
-      val parameters = ast.values
-        .map(value => ParameterParser(value.toMap, parentId, declarations).parse())
+      val parameters = values
+        .map(value => ParameterParser(value, parentId, declarations).parse())
 
       OasParameters(
         parameters.filter(_.isQuery).map(_.parameter),
@@ -1037,14 +1053,14 @@ abstract class OasSpecParser extends BaseSpecParser {
   case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations) {
     def parse(): Parameter = {
 
-      val name      = entry.key.value.toScalar.text
+      val name      = entry.key.as[YScalar].text
       val parameter = producer(name).add(Annotations(entry))
 
       parameter
         .set(ParameterModel.Required, !name.endsWith("?"))
         .set(ParameterModel.Name, ValueNode(entry.key).string())
 
-      val map = entry.value.value.toMap
+      val map = entry.value.as[YMap]
 
       map.key("description", entry => {
         val value = ValueNode(entry.value)

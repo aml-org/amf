@@ -49,26 +49,38 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("prefixes can be loaded") {
-    val expectedFile = "validation_profile_prefixes.raml.jsonld"
-    val exampleFile  = "validation_profile_prefixes.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val validation = Validation(platform)
+    val expectedFile             = "validation_profile_prefixes.raml.jsonld"
+    val exampleFile              = "validation_profile_prefixes.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String]  { unit:BaseUnit =>
+      AMFCompiler(basePath + exampleFile,
+                  platform,
+                  RamlYamlHint,
+                  Validation(platform),
+                  None,
+                  None,
+                  platform.dialectsRegistry).build()
+    } flatMap [String] { unit: BaseUnit =>
       AMFDumper(unit, Amf, Json, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)
   }
 
   test("prefixes can be parsed") {
-    val expectedFile = "validation_profile_prefixes.raml"
-    val exampleFile  = "validation_profile_prefixes.raml.jsonld"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val validation = Validation(platform)
+    val expectedFile             = "validation_profile_prefixes.raml"
+    val exampleFile              = "validation_profile_prefixes.raml.jsonld"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile, platform, AmfJsonHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String]  { unit:BaseUnit =>
+      AMFCompiler(basePath + exampleFile,
+                  platform,
+                  AmfJsonHint,
+                  Validation(platform),
+                  None,
+                  None,
+                  platform.dialectsRegistry).build()
+    } flatMap [String] { unit: BaseUnit =>
       AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
     }
     actual.zip(expected).map(checkDiff)

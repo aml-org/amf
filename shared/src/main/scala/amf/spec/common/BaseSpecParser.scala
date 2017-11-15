@@ -2,9 +2,9 @@ package amf.spec.common
 
 import amf.domain._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YValueOps
 import amf.spec.ParserContext
 import org.yaml.model._
+import amf.parser.YScalarYRead
 
 /**
   * Base spec parser.
@@ -15,14 +15,16 @@ private[spec] trait BaseSpecParser {
 
 }
 
-case class ArrayNode(ast: YSequence)(implicit iv: IllegalTypeHandler) {
+case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
 
   def strings(): AmfArray = {
-    val elements = ast.nodes.map(child => ValueNode(child).string())
+    val nodes    = ast.as[Seq[String]]
+    val elements = nodes.map(child => AmfScalar(child, annotations()))
+
     AmfArray(elements, annotations())
   }
 
-  private def annotations() = Annotations(ast)
+  private def annotations() = Annotations(ast.value)
 }
 
 case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
@@ -33,7 +35,7 @@ case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
   }
 
   def text(): AmfScalar = {
-    val content = node.value.toScalar.text
+    val content = node.as[YScalar].text
     AmfScalar(content, annotations())
   }
 
@@ -52,5 +54,5 @@ case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
     AmfScalar(!content, annotations())
   }
 
-  private def annotations() = Annotations(node)
+  private def annotations() = Annotations(node.value)
 }
