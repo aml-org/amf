@@ -510,6 +510,14 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         }
       )
 
+      map.key(
+        "x-facets",
+        entry => {
+          val properties: Seq[PropertyShape] =
+            PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Seq()).parse()
+        }
+      )
+
       val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples").parse()
       if (examples.nonEmpty)
         shape.setArray(ShapeModel.Examples, examples)

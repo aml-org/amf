@@ -42,6 +42,22 @@ object RamlSyntax extends SpecSyntax {
       "enum",
       "required"
     ),
+
+    "unionShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "required",
+      "anyOf"
+    ),
+
     "nodeShape" -> Set(
       "type",
       "default",

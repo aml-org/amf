@@ -4,6 +4,7 @@ import amf.compiler.AMFCompiler
 import amf.parser.Range
 import amf.remote._
 import amf.unsafe.PlatformSecrets
+import amf.validation.model.ParserSideValidations
 import amf.validation.{AMFValidationResult, Validation}
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
@@ -38,6 +39,32 @@ class RamlParserErrorTest extends AsyncFunSuite with PlatformSecrets {
         securedBy.level should be("Violation")
         securedBy.message should be("Not a YSequence")
         securedBy.position.map(_.range) should be(Some(Range((7, 11), (7, 16))))
+      }
+    )
+  }
+
+  test("Custom facets work correctly with the closed node detection mechanism") {
+    validate(
+      "custom-facets.raml",
+      erroneousTypeShape => {
+        erroneousTypeShape.level should be ("Violation")
+        erroneousTypeShape.targetNode should be ("file://shared/src/test/resources/error/custom-facets.raml#/declarations/scalar/ErroneousType")
+        erroneousTypeShape.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+      },
+      incorrect1 => {
+        incorrect1.level should be ("Violation")
+        incorrect1.targetNode should be ("file://shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect1")
+        incorrect1.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+      },
+      incorrect2 => {
+        incorrect2.level should be ("Violation")
+        incorrect2.targetNode should be ("file://shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect2")
+        incorrect2.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+      },
+      incorrect3 => {
+        incorrect3.level should be ("Violation")
+        incorrect3.targetNode should be ("file://shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect3")
+        incorrect3.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
       }
     )
   }

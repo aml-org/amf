@@ -24,7 +24,8 @@ class ShapeNormalizationStage(profile: String)
     with MinShapeAlgorithm {
 
   override def resolve(model: BaseUnit): BaseUnit = {
-    model.transform(findShapesPredicate, transform)
+    val res = model.transform(findShapesPredicate, transform)
+    res
   }
 
   protected def ensureCorrect(shape: Shape): Unit = {
@@ -169,7 +170,7 @@ class ShapeNormalizationStage(profile: String)
   protected def canonical(shape: Shape): Shape = {
     shape match {
       case union: UnionShape       => canonicalUnion(union)
-      case scalar: ScalarShape     => canonicalShape(scalar)
+      case scalar: ScalarShape     => canonicalScalar(scalar)
       case array: ArrayShape       => canonicalArray(array)
       case matrix: MatrixShape     => canonicalMatrix(matrix)
       case tuple: TupleShape       => canonicalTuple(tuple)
@@ -182,6 +183,14 @@ class ShapeNormalizationStage(profile: String)
   }
 
   private def canonicalShape(shape: Shape) = shape
+
+  protected def canonicalScalar(scalar: ScalarShape): Shape = {
+    if (Option(scalar.inherits).isDefined && scalar.inherits.nonEmpty) {
+      canonicalInheritance(scalar)
+    } else {
+      scalar
+    }
+  }
 
   protected def canonicalInheritance(shape: Shape): Shape = {
     val superTypes = shape.inherits
@@ -286,7 +295,7 @@ class ShapeNormalizationStage(profile: String)
               accNode.cloneShape().withProperties(accNode.properties ++ Seq(newProperty))
             }
 
-          // The canonical property is still a property shape, we just add the property to
+          // The canonical property is still a property shape, we just add the property
           // to each of the new shapes in the accumulator
           case canonicalProperty: PropertyShape =>
             acc = for {
@@ -299,7 +308,7 @@ class ShapeNormalizationStage(profile: String)
           case other => throw new Exception(s"Resolution error: Expecting property shape or union, found $other")
         }
       }
-      if (acc.length == 1) {
+      if (acc.toSet.size == 1) {
         acc.head
       } else {
         UnionShape().withId(node.id + "/resolved").setArrayWithoutId(UnionShapeModel.AnyOf, acc).withName(node.name)
