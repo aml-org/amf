@@ -7,7 +7,7 @@ import amf.shape.TypeDef._
   */
 object OasTypeDefMatcher {
 
-  val knownFormats: Set[String] = Set("time-only", "date-only", "date-time", "date-time-only", "password", "byte", "binary", "int32", "float")
+  val knownFormats: Set[String] = Set("time-only", "date-only", "date-time", "date-time-only", "password", "byte", "binary", "int32", "int64", "long", "float")
 
   def matchType(ramlType: String, format: String = ""): TypeDef = ramlType match {
     case "string" =>
@@ -23,12 +23,14 @@ object OasTypeDefMatcher {
       }
     case "null"          => NilType
     case "integer"       => format match {
+      case "int64" => LongType
       case _       => IntType
     }
     case "number" =>
       format match {
-        case "float" => FloatType
-        case _       => FloatType
+        case "float"  => FloatType
+        case "double" => DoubleType
+        case _        => FloatType
       }
     case "boolean"       => BoolType
     case "object"        => ObjectType
@@ -46,7 +48,9 @@ object OasTypeDefStringValueMatcher {
     case PasswordType     => "string"
     case StrType          => "string"
     case IntType          => "integer"
+    case LongType         => "integer"
     case FloatType        => "number"
+    case DoubleType       => "number"
     case BoolType         => "boolean"
     case DateTimeType     => "string"
     case DateTimeOnlyType => "string"
@@ -67,6 +71,8 @@ object OasTypeDefStringValueMatcher {
     case DateTimeOnlyType => Some("date-time-only")
     case TimeOnlyType     => Some("time-only")
     case DateOnlyType     => Some("date-only")
+    case LongType         => Some("int64")
+    case DoubleType       => Some("double")
     case _                => None
   }
 }

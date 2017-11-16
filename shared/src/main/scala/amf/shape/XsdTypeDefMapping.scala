@@ -13,7 +13,9 @@ object XsdTypeDefMapping {
     (typeDef match {
       case StrType          => Xsd + "string"
       case IntType          => Xsd + "integer"
+      case LongType         => Xsd + "long"
       case FloatType        => Xsd + "float"
+      case DoubleType       => Xsd + "double"
       case BoolType         => Xsd + "boolean"
       case DateTimeType     => Xsd + "dateTime"
       case DateTimeOnlyType => Shapes + "dateTimeOnly" // custom scalar type
@@ -33,7 +35,9 @@ object TypeDefXsdMapping {
     iri match {
       case s if s == (Xsd + "string").iri()          => StrType
       case s if s == (Xsd + "integer").iri()         => IntType
+      case s if s == (Xsd + "long").iri()            => LongType
       case s if s == (Xsd + "float").iri()           => FloatType
+      case s if s == (Xsd + "double").iri()          => DoubleType
       case s if s == (Xsd + "boolean").iri()         => BoolType
       case s if s == (Xsd + "dateTime").iri()        => DateTimeType
       case s if s == (Shapes + "dateTimeOnly").iri() => DateTimeOnlyType
