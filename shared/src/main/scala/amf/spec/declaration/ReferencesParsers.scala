@@ -22,7 +22,7 @@ object ReferenceDeclarations {
 }
 
 case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mutable.Map())(
-    implicit ctx: ParserContext) {
+  implicit ctx: ParserContext) {
 
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)

@@ -91,7 +91,16 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
                   usesMap.put(e.key.as[YScalar].text, e.value.as[YScalar].text)
                 })
           )
-          entity.annotations += NamespaceImportsDeclaration(usesMap.toMap)
+          //record information about namespaces into references
+          references.references.keys.foreach(namespace=>{
+            val unit = references.references.get(namespace).get
+            val nms = usesMap.get(namespace)
+            if (nms.isDefined) {
+              unit.fields.setWithoutId(NamespaceExtraFields.NAMESPACE, AmfScalar(namespace), Annotations());
+              unit.fields.setWithoutId(NamespaceExtraFields.PATH, AmfScalar(nms.get), Annotations());
+            }
+          })
+
         }
         entity
       })

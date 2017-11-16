@@ -30,6 +30,10 @@ class CyclingDialectTests extends BuildCycleTests {
     cycle("validation_dialect_using_fragments4.raml", "validation_dialect_using_fragments4.raml", RamlYamlHint, Raml)
   }
 
+  /** Return random temporary file name for testing. */
+  //override def tmp(name: String = ""): String = basePath +  name +".tmp"
+
+
   test("Parse Dialect with library and serialize back") {
     cycle("validation_dialect_uses(dialect_lib).raml",
           "validation_dialect_uses(dialect_lib).raml.gold",
@@ -37,13 +41,19 @@ class CyclingDialectTests extends BuildCycleTests {
           Raml)
   }
 
+  test("Parse Dialect with library and serialize back (references)") {
+    cycle("validation_dialect_uses(dialect_lib2).raml", "validation_dialect_uses(dialect_lib2).raml", RamlYamlHint, Raml)
+  }
+
+//  test("Parse Dialect with library and serialize back (references,cycles in libraries)") {
+//    cycle("validation_dialect_uses(dialect_lib3).raml", "validation_dialect_uses(dialect_lib3).raml", RamlYamlHint, Raml)
+//  }
+
   test("Parse Dialect with library and store to json LD") {
     cycle("validation_dialect_uses(dialect_lib).raml", "validation_dialect_uses(dialect_lib).json", RamlYamlHint, Amf)
   }
-
-  /** Do not render with source maps. */
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
-    val target = config.target
-    new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString
+  test("Parse Dialect with vocabulary and serialize back") {
+    cycle("dialect_using_vocab.raml", "dialect_using_vocab.raml", RamlYamlHint, Raml)
   }
+
 }

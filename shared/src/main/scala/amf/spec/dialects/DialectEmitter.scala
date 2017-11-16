@@ -1,7 +1,7 @@
 package amf.spec.dialects
 
 import amf.document.{BaseUnit, Module}
-import amf.domain.Annotation.{DomainElementReference, NamespaceImportsDeclaration}
+import amf.domain.Annotation.{DomainElementReference}
 import amf.domain.{FieldEntry, Link}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.domain.LinkableElementModel
@@ -101,7 +101,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
 
   def emit(): YDocument = {
     YDocument {
-      ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1))).emit(_)
+      ObjectEmitter(root, Some(root.definition.dialect.get.header.substring(1)),true).emit(_)
     }
   }
 
@@ -251,7 +251,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
     }
   }
 
-  case class ObjectEmitter(obj: DomainEntity, comment: Option[String] = None) extends Emitter {
+  case class ObjectEmitter(obj: DomainEntity, comment: Option[String] = None,root:Boolean=false) extends Emitter {
 
     def emit(b: BaseBuilder): Unit = {
 
@@ -295,7 +295,9 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
                 case _ =>
                   comment.foreach(b.comment)
                   b.obj { b =>
-                    emitUsesMap(b)
+                    if (root) {
+                      emitUsesMap(b)
+                    }
                     emitObject(b)
                   }
               }
@@ -316,15 +318,22 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
     }
 
     private def emitUsesMap(b: EntryBuilder) = {
-      obj.annotations.find(classOf[NamespaceImportsDeclaration]) foreach { ref =>
-        if (!ref.uses.isEmpty) {
-          b.entry(
-            "uses",
-            _.obj { b =>
-              ref.uses.foreach(MapEntryEmitter(_).emit(b))
-            }
-          )
-        }
+      if (unit.references.find(r=>r.fields.raw(NamespaceExtraFields.NAMESPACE).isDefined).isDefined){
+        b.entry(
+          "uses",
+          _.obj { b =>
+            unit.references.foreach(r=>{
+              r.fields.get(NamespaceExtraFields.NAMESPACE) match {
+                case n:AmfScalar=>{
+                  val namespace=n.toString;
+                  val path=r.fields.get(NamespaceExtraFields.PATH).toString
+                  MapEntryEmitter((namespace,path)).emit(b);
+                }
+                case _ =>
+              }
+            })
+          }
+        )
       }
     }
 
