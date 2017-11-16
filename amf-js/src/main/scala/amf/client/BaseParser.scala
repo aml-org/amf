@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.ProfileNames
-import amf.model.{BaseUnit, Document, Module}
+import amf.model.{BaseUnit, Fragment, Document, Module, Overlay, Extension}
 import amf.remote.Syntax.Syntax
 import amf.remote._
 import amf.validation.AMFValidationReport
@@ -19,8 +19,11 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 
   private def unitScalaToJS(unit: amf.document.BaseUnit): BaseUnit = unit match {
-    case d: amf.document.Document => Document(d)
-    case m: amf.document.Module   => Module(m)
+    case o: amf.document.Overlay           => new Overlay(o)
+    case e: amf.document.Extension         => new Extension(e)
+    case d: amf.document.Document          => Document(d)
+    case m: amf.document.Module            => Module(m)
+    case f: amf.document.Fragment.Fragment => Fragment(f)
   }
 
   /**
