@@ -35,8 +35,21 @@ class CyclingDialectTests extends BuildCycleTests {
   test("Parse Dialect with library and serialize back") {
     cycle("validation_dialect_uses(dialect_lib).raml", "validation_dialect_uses(dialect_lib).raml.gold", RamlYamlHint, Raml)
   }
+
+  test("Parse Dialect with library and serialize back (references)") {
+    cycle("validation_dialect_uses(dialect_lib2).raml", "validation_dialect_uses(dialect_lib2).raml", RamlYamlHint, Raml)
+  }
+
+//  test("Parse Dialect with library and serialize back (references,cycles in libraries)") {
+//    cycle("validation_dialect_uses(dialect_lib3).raml", "validation_dialect_uses(dialect_lib3).raml", RamlYamlHint, Raml)
+//  }
+
   test("Parse Dialect with library and store to json LD") {
     cycle("validation_dialect_uses(dialect_lib).raml", "validation_dialect_uses(dialect_lib).json", RamlYamlHint, Amf)
+  }
+
+  test("Parse Dialect with vocabulary and serialize back") {
+    cycle("dialect_using_vocab.raml", "dialect_using_vocab.raml", RamlYamlHint, Raml)
   }
 
 
