@@ -9,7 +9,7 @@ import amf.remote.Raml
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter
 import amf.spec.domain.{RamlEndpointParser, RamlOperationParser}
-import amf.spec.{Declarations, ParserContext, SpecOrdering}
+import amf.spec.{ParserContext, SpecOrdering}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
@@ -24,19 +24,15 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
+class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) with PlatformSecrets {
 
-  implicit val ctx: ParserContext = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
+  implicit val ctx: ParserContext = ParserContext(currentValidation, Raml)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
-    // TODO should we remove traits and resourceTypes from the declarations?
+  override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 
-    model.transform(findExtendsPredicate, transform(model))
-  }
-
-  def declarations(model: BaseUnit): Declarations = model match {
-    case d: DeclaresModel => Declarations(d.declares)
-    case _                => Declarations()
+  def declarations(model: BaseUnit): Unit = model match {
+    case d: DeclaresModel => d.declares.foreach(declaration => ctx.declarations += declaration)
+    case _                =>
   }
 
   def asEndPoint(r: ParametrizedResourceType, context: Context): EndPoint = {
@@ -56,12 +52,8 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
         val endPointEntry = document.as[YMap].entries.head
         val collector     = ListBuffer[EndPoint]()
 
-        RamlEndpointParser(endPointEntry,
-                           _ => EndPoint(),
-                           None,
-                           collector,
-                           declarations(context.model),
-                           parseOptionalOperations = true).parse()
+        declarations(context.model)
+        RamlEndpointParser(endPointEntry, _ => EndPoint(), None, collector, parseOptionalOperations = true).parse()
 
         collector.toList match {
           case e :: Nil => e
@@ -144,10 +136,10 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
         case (current, branch) => DomainElementMerging.merge(current, branch.operation)
       }
 
-      operation.fields.remove(DomainElementModel.Extends)
+      if (removeFromModel) operation.fields.remove(DomainElementModel.Extends)
     }
 
-    endpoint.fields.remove(DomainElementModel.Extends)
+    if (removeFromModel) endpoint.fields.remove(DomainElementModel.Extends)
 
     endpoint
   }
@@ -222,7 +214,6 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
           val op = dataNodeToOperation(node, context)
 
           val children = op.traits.map(resolve(_, context))
-          op.fields.remove(DomainElementModel.Extends)
 
           TraitBranch(key, op, children)
         case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")
@@ -245,7 +236,8 @@ class ExtendsResolutionStage(profile: String) extends ResolutionStage(profile) w
       }
 
       val entry = document.as[YMap].entries.head
-      RamlOperationParser(entry, _ => Operation(), declarations(context.model)).parse()
+      declarations(context.model)
+      RamlOperationParser(entry, _ => Operation()).parse()
     }
   }
 

@@ -3,6 +3,7 @@ package amf.spec
 import amf.domain.Annotation.LexicalInformation
 import amf.parser.{Range, YMapOps, YScalarYRead}
 import amf.remote.{Oas, Raml, Vendor}
+import amf.shape.{PropertyShape, Shape}
 import amf.spec.oas.OasSyntax
 import amf.spec.raml.RamlSyntax
 import amf.validation.SeverityLevels.VIOLATION
@@ -28,6 +29,10 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
                 message: String,
                 lexical: Option[LexicalInformation]): Unit = {
     validation.reportConstraintFailure(VIOLATION, id, node, property, message, lexical)
+  }
+
+  def violation(message: String, ast: Option[YPart]): Unit = {
+    violation("", "", None, message, ast.flatMap(lexical))
   }
 
   /** Report constraint failure of severity violation. */
@@ -62,16 +67,19 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
   }
 }
 
-case class ParserContext(validation: Validation, vendor: Vendor) extends ErrorHandler(validation) {
+case class ParserContext(validation: Validation, vendor: Vendor, private val internalDec: Option[Declarations] = None)
+    extends ErrorHandler(validation) {
+
+  val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))
 
   def toOas: ParserContext = vendor match {
     case Oas => this
-    case _   => copy(vendor = Oas)
+    case _   => copy(vendor = Oas, internalDec = Some(declarations))
   }
 
   def toRaml: ParserContext = vendor match {
     case Raml => this
-    case _    => copy(vendor = Raml)
+    case _    => copy(vendor = Raml, internalDec = Some(declarations))
   }
 
   /** Validate closed shape. */
@@ -96,6 +104,52 @@ case class ParserContext(validation: Validation, vendor: Vendor) extends ErrorHa
           }
         }
       case None => throw new Exception(s"Cannot validate unknown node type $shape for $vendor")
+    }
+  }
+
+  /**
+    * raml types nodes are different from other shapes because they can have 'custom facets' essentially, client
+    * defined constraints expressed as additional properties syntactically in the type definition.
+    * The problem is that they cannot be recognised just looking into the AST as we do with annotations, so we
+    * need to first, compute them, and then, add them as additional valid properties to the set of properties that
+    * can be defined in the AST node
+    */
+  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
+    val node = shape.id
+    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited =  true)
+
+    syntax.nodes.get(shapeType) match {
+      case Some(props) =>
+        val initialProperties = if (annotation) {
+          props ++ syntax.nodes("annotation")
+        } else {
+          props
+        }
+        val allResults: Seq[Seq[YMapEntry]] = facets.map { propertiesMap =>
+          val totalProperties = initialProperties ++ propertiesMap.keys.toSet
+          val acc: Seq[YMapEntry] = Seq.empty
+          ast.entries.foldLeft(acc) { (results: Seq[YMapEntry], entry) =>
+            val key: String = entry.key
+            if (spec.ignore(shapeType, key)) {
+              results
+            } else if (!totalProperties(key)) {
+              results ++ Seq(entry)
+            } else {
+              results
+            }
+          }
+        }
+        allResults.find(_.nonEmpty) match {
+          case None => // at least we found a solution, this is a valid shape
+          case Some(errors: Seq[YMapEntry]) =>
+            violation(ClosedShapeSpecification.id(),
+                      node,
+                      s"Properties ${errors.map(_.key).mkString(",")} not supported in a $vendor $shapeType node",
+                      errors.head) // pointing only to the first failed error
+        }
+
+
+      case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
     }
   }
 

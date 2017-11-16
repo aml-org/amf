@@ -430,6 +430,48 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Shape facets validations test") {
+    for {
+      library <- AMFCompiler(examplesPath + "facets/custom-facets.raml", platform, RamlYamlHint, Validation(platform))
+        .build()
+      results <- ShapeFacetsValidation(library, platform).validate()
+    } yield {
+      assert(results.length == 1)
+    }
+  }
+
+  test("Shape facets model validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "facets/custom-facets.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      assert(report.results.length == 5)
+    }
+  }
+
+  test("Annotations validations test") {
+    for {
+      library <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, Validation(platform))
+        .build()
+      results <- AnnotationsValidation(library, platform).validate()
+    } yield {
+      assert(results.length == 1)
+    }
+  }
+
+  test("Annotations model validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      assert(report.results.length == 1)
+    }
+  }
+
   ignore("Example JS library validations") {
     val validation = Validation(platform)
     for {

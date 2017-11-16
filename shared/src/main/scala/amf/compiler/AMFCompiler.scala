@@ -1,5 +1,7 @@
 package amf.compiler
 
+import amf.compiler.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
+import amf.compiler.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.document.Fragment.ExternalFragment
@@ -23,6 +25,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
 import amf.parser.{YNodeLikeOps, YScalarYRead}
+
 class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
@@ -83,16 +86,18 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
-    implicit val ctx = ParserContext(currentValidation, Raml)
-    val option = RamlHeader(root).map({
-      case RamlHeader.Raml10        => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Library => RamlModuleParser(root).parseModule()
-      case fragment: RamlFragment   => RamlFragmentParser(root, fragment).parseFragment()
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Raml)
+    val option = RamlHeader(root).map {
+      case RamlHeader.Raml10          => RamlDocumentParser(root).parseDocument()
+      case RamlHeader.Raml10Overlay   => RamlDocumentParser(root).parseOverlay()
+      case RamlHeader.Raml10Extension => RamlDocumentParser(root).parseExtension()
+      case RamlHeader.Raml10Library   => RamlModuleParser(root).parseModule()
+      case fragment: RamlFragment     => RamlFragmentParser(root, fragment).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => makeDialect(root, header)
       case _                                      => throw new UnableToResolveUnitException
-    })
+    }
     option match {
       case Some(unit) => unit
       case None       => throw new UnableToResolveUnitException
@@ -102,7 +107,7 @@ class AMFCompiler private (val url: String,
   private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
 
   private def resolveOasUnit(root: Root): BaseUnit = {
-    implicit val ctx = ParserContext(currentValidation, Oas)
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Oas)
     hint.kind match {
       case Library => OasModuleParser(root).parseModule()
       case Link    => OasFragmentParser(root).parseFragment()
@@ -111,9 +116,12 @@ class AMFCompiler private (val url: String,
   }
 
   private def detectOasUnit(root: Root)(implicit ctx: ParserContext): BaseUnit = {
-    OasFragmentHeader(root) match {
-      case f if f.isDefined => OasFragmentParser(root, f).parseFragment()
-      case _                => OasDocumentParser(root).parseDocument()
+    OasHeader(root) match {
+      case Some(Oas20Overlay)   => OasDocumentParser(root).parseOverlay()
+      case Some(Oas20Extension) => OasDocumentParser(root).parseExtension()
+      case Some(Oas20Header)    => OasDocumentParser(root).parseDocument()
+      case f if f.isDefined     => OasFragmentParser(root, f).parseFragment()
+      case _                    => throw new UnableToResolveUnitException
     }
   }
 
@@ -129,8 +137,8 @@ class AMFCompiler private (val url: String,
     document.comment match {
       case Some(c) =>
         RamlHeader.fromText(c.metaText) match {
-          case Some(RamlFragmentHeader.Raml10Overlay | RamlFragmentHeader.Raml10Extension) if vendor == Raml => true
-          case _                                                                                             => false
+          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml => true
+          case _                                                       => false
         }
       case None => false
     }
@@ -187,13 +195,12 @@ class AMFCompiler private (val url: String,
   }
 
   private def toDocument(parts: Seq[YPart]) = {
-    if (parts.find(v=>v.isInstanceOf[YDocument]).isDefined) {
+    if (parts.find(v => v.isInstanceOf[YDocument]).isDefined) {
       parts collectFirst { case d: YDocument => d } map { document =>
         val comment = parts collectFirst { case c: YComment => c }
         ParsedDocument(comment, document)
       }
-    }
-    else{
+    } else {
       parts collectFirst { case d: YComment => d } map { comment =>
         ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap()))))
       }

@@ -1,11 +1,11 @@
 package amf.parser
 
 import amf.compiler.AMFCompiler
-import amf.io.BuildCycleTests
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import amf.validation.Validation
+import amf.validation.{SeverityLevels, Validation}
 import org.scalatest.AsyncFunSuite
+import org.scalatest.Matchers._
 
 import scala.concurrent.ExecutionContext
 
@@ -19,16 +19,24 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test reference not found exception on property shape") {
-    recoverToSucceededIf[Exception] {
-      AMFCompiler(basePath + "forward-references-types-error.raml", platform, RamlYamlHint, Validation(platform))
-        .build()
-    }
+    val validation = Validation(platform)
+    AMFCompiler(basePath + "forward-references-types-error.raml", platform, RamlYamlHint, validation)
+      .build()
+      .map { _ =>
+        validation.aggregatedReport should not be empty
+        validation.aggregatedReport.head.level should be(SeverityLevels.VIOLATION)
+        validation.aggregatedReport.head.message should be("Could not resolve shape: UndefinedType")
+      }
   }
 
   test("Test reference not found exception on expression") {
-    recoverToSucceededIf[Exception] {
-      AMFCompiler(basePath + "forward-references-types-error-expression.raml", platform, RamlYamlHint, Validation(platform))
-        .build()
-    }
+    val validation = Validation(platform)
+    AMFCompiler(basePath + "forward-references-types-error-expression.raml", platform, RamlYamlHint, validation)
+      .build()
+      .map { _ =>
+        validation.aggregatedReport should not be empty
+        validation.aggregatedReport.head.level should be(SeverityLevels.VIOLATION)
+        validation.aggregatedReport.head.message should be("Could not resolve shape: UndefinedType")
+      }
   }
 }

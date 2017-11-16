@@ -3,8 +3,12 @@ package amf.resolution.pipelines
 import amf.ProfileNames
 import amf.document.BaseUnit
 import amf.resolution.stages.ResolutionStage
+import amf.unsafe.PlatformSecrets
+import amf.validation.Validation
 
-abstract class ResolutionPipeline {
+abstract class ResolutionPipeline extends PlatformSecrets {
+
+  implicit val currentValidation: Validation = Validation(platform)
 
   var model: Option[BaseUnit] = None
 
@@ -19,7 +23,6 @@ abstract class ResolutionPipeline {
     block()
     model.get.asInstanceOf[T]
   }
-
 }
 
 object ResolutionPipeline {

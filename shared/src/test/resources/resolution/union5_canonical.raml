@@ -1,7 +1,17 @@
 #%RAML 1.0 DataType
-type: object
-additionalProperties: true
-properties:
-  name:
-    type: string
-    required: false
+type: union
+anyOf:
+  -
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        type: string
+        required: false
+  -
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        type: string
+        required: false

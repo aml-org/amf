@@ -56,7 +56,7 @@ object Annotation {
     override val value: String = ""
   }
 
-  case class ScalarType(datatype: String) extends  Annotation
+  case class ScalarType(datatype: String) extends Annotation
 
   case class SourceAST(ast: YPart) extends Annotation
 
@@ -65,7 +65,7 @@ object Annotation {
   case class ExplicitField() extends Annotation
 
   case class SynthesizedField() extends SerializableAnnotation {
-    override val name: String = "synthesized-field"
+    override val name: String  = "synthesized-field"
     override val value: String = "true"
   }
 
@@ -93,7 +93,7 @@ object Annotation {
 
   case class Inferred() extends Annotation
 
-  case class Aliases(aliases: Seq[String]) extends SerializableAnnotation {
+  case class Aliases(aliases: Set[String]) extends SerializableAnnotation {
 
     /** Extension name. */
     override val name: String = "aliases-array"
@@ -136,7 +136,7 @@ object Annotation {
   }
 
   private def aliases(value: String, objects: Map[String, AmfElement]) = {
-    Aliases(value.split(",").toSeq)
+    Aliases(value.split(",").toSet)
   }
 
   private def parsedJsonSchema(value: String, objects: Map[String, AmfElement]) = {

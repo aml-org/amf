@@ -24,15 +24,11 @@ case class OasModuleParser(root: Root)(implicit val ctx: ParserContext) extends 
     root.document.toOption[YMap].foreach { rootMap =>
       val references = ReferencesParser("x-uses", rootMap, root.references).parse(root.location)
 
-      parseDeclarations(root, rootMap, references.declarations)
+      parseDeclarations(root, rootMap)
 
-      // TODO invoke when it's done
-      //    resourceTypes?
-      //      traits?
-      //      securitySchemes?
       UsageParser(rootMap, module).parse()
 
-      val declarable = references.declarations.declarables()
+      val declarable = ctx.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
       if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
     }

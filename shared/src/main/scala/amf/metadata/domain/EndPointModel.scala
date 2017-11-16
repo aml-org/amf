@@ -9,7 +9,7 @@ import amf.vocabulary.{Namespace, ValueType}
 /**
   * EndPoint metamodel
   */
-object EndPointModel extends DomainElementModel {
+object EndPointModel extends DomainElementModel with KeyField {
 
   val Path = Field(RegExp, Http + "path")
 
@@ -22,6 +22,8 @@ object EndPointModel extends DomainElementModel {
   val UriParameters = Field(Array(ParameterModel), Http + "parameter")
 
   val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
+
+  override val key: Field = Path
 
   override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
 

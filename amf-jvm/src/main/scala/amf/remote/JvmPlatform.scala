@@ -8,11 +8,15 @@ import amf.dialects.JVMDialectRegistry
 import amf.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 import amf.remote.FutureConverter.converters
 import amf.validation.{SHACLValidator, Validation}
+import org.mulesoft.common.io.{FileSystem, JvmFileSystem}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class JvmPlatform extends Platform {
+
+  /** Underlying file system for platform. */
+  override val fs: FileSystem = JvmFileSystem
 
   /** Resolve specified url. */
   override protected def fetchHttp(url: String): Future[Content] = {
@@ -44,25 +48,11 @@ class JvmPlatform extends Platform {
     Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
   }
 
-  /** Write specified content on specified file path. */
-  override protected def writeFile(path: String, content: String): Future[String] = {
-    Future {
-      val file = new java.io.File(path)
-      file.getParentFile.mkdirs()
-      val writer: FileWriter = new FileWriter(file)
-      writer.write(content)
-      writer.flush()
-      writer.close()
-      path
-    }
-  }
-
   /** Return temporary directory. */
   override def tmpdir(): String = System.getProperty("java.io.tmpdir")
 
   /** Location where the helper functions for custom validations must be retrieved */
   override def customValidationLibraryHelperLocation: String = "classpath:validations/amf_validation.js"
-
 
   override def resolvePath(path: String): String = {
     val res = new URI(path).normalize.toString
@@ -76,7 +66,7 @@ class JvmPlatform extends Platform {
   }
 
   override val dialectsRegistry = JVMDialectRegistry(this)
-  override val validator = new SHACLValidator
+  override val validator        = new SHACLValidator
 
   def setupValidation(validation: Validation): CompletableFuture[Validation] = setupValidationBase(validation).asJava
 }
@@ -84,7 +74,7 @@ class JvmPlatform extends Platform {
 object JvmPlatform {
   private var singleton: Option[JvmPlatform] = None
 
-  def instance(): JvmPlatform = singleton  match {
+  def instance(): JvmPlatform = singleton match {
     case Some(p) => p
     case None =>
       singleton = Some(PlatformBuilder())

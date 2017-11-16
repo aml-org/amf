@@ -13,6 +13,7 @@ class AmfResolutionPipeline extends ResolutionPipeline {
   val security   = new SecurityResolutionStage(ProfileNames.AMF)
   val mediaTypes = new MediaTypeResolutionStage(ProfileNames.AMF)
   val examples   = new ExamplesResolutionStage(ProfileNames.AMF)
+  val extensions = new ExtensionsResolutionStage(ProfileNames.AMF)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>
@@ -25,7 +26,7 @@ class AmfResolutionPipeline extends ResolutionPipeline {
 
   protected def commonSteps(): Unit = {
     step(references)
-    step(`extends`)
+    step(extensions)
     step(shapes)
     step(security)
   }

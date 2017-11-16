@@ -4,6 +4,7 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.{Parameter, WebApi}
 import amf.metadata.domain.{EndPointModel, RequestModel, WebApiModel}
 import amf.model.AmfArray
+import amf.validation.Validation
 
 import scala.collection.mutable
 
@@ -12,7 +13,7 @@ import scala.collection.mutable
   * criterium for AMF
   * @param profile target profile
   */
-class ParametersNormalizationStage(profile: String) extends ResolutionStage(profile) {
+class ParametersNormalizationStage(profile: String)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) {
 
   val paramsAcc: mutable.HashMap[String, Seq[Parameter]] = mutable.HashMap()
 

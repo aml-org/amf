@@ -1,59 +1,66 @@
 package amf.compiler
 
 import amf.compiler.FragmentTypes._
-import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
-import org.yaml.model.{YMap, YScalar}
+import amf.parser.{YMapOps, YScalarYRead}
+import org.yaml.model.YMap
 
 /**
   *
   */
-class OasHeader private[compiler] (val key: String, val value: String) {}
+class OasHeader private[compiler] (val key: String, val value: String) {
+  def tuple: (String, String) = (key, value)
+}
 
-object OasFragmentHeader {
+object OasHeader {
 
-  val extentionName = "x-fragment-type"
+  val extensionName = "x-fragment-type"
 
-  object Oas20DocumentationItem extends OasHeader(extentionName, "2.0 DocumentationItem")
+  val extensionType = "x-extension-type"
 
-  object Oas20DataType extends OasHeader(extentionName, "2.0 DataType")
+  val swagger = "swagger"
 
-  object Oas20NamedExample extends OasHeader(extentionName, "2.0 NamedExample")
+  object Oas20Header extends OasHeader("swagger", "2.0")
 
-  object Oas20ResourceType extends OasHeader(extentionName, "2.0 ResourceType")
+  object Oas20DocumentationItem extends OasHeader(extensionName, "2.0 DocumentationItem")
 
-  object Oas20Trait extends OasHeader(extentionName, "2.0 Trait")
+  object Oas20DataType extends OasHeader(extensionName, "2.0 DataType")
 
-  object Oas20AnnotationTypeDeclaration extends OasHeader(extentionName, "2.0 AnnotationTypeDeclaration")
+  object Oas20NamedExample extends OasHeader(extensionName, "2.0 NamedExample")
 
-  object Oas20Extension extends OasHeader(extentionName, "2.0 Extension")
+  object Oas20ResourceType extends OasHeader(extensionName, "2.0 ResourceType")
 
-  object Oas20Overlay extends OasHeader(extentionName, "2.0 Overlay")
+  object Oas20Trait extends OasHeader(extensionName, "2.0 Trait")
 
-  object Oas20SecurityScheme extends OasHeader(extentionName, "2.0 SecurityScheme")
+  object Oas20AnnotationTypeDeclaration extends OasHeader(extensionName, "2.0 AnnotationTypeDeclaration")
+
+  object Oas20SecurityScheme extends OasHeader(extensionName, "2.0 SecurityScheme")
+
+  object Oas20Extension extends OasHeader(extensionType, "2.0 Extension")
+
+  object Oas20Overlay extends OasHeader(extensionType, "2.0 Overlay")
 
   def apply(root: Root): Option[OasHeader] = {
-    root.document
-      .toOption[YMap]
-      .flatMap(map => {
-        val headerOption = for {
-          node         <- map.key(extentionName).map(_.value)
-          fragmentType <- node.toOption[YScalar].flatMap(s => apply(s.text))
-        } yield fragmentType
+    val map = root.document.as[YMap]
 
-        headerOption.orElse(toOasType(FragmentTypes(map)))
-      })
+    map
+      .key(extensionName)
+      .orElse(map.key(extensionType))
+      .orElse(map.key(swagger))
+      .flatMap(extension => OasHeader(extension.value))
+      .orElse(toOasType(FragmentTypes(map)))
   }
 
   def apply(text: String): Option[OasHeader] = text match {
+    case Oas20Header.value                    => Some(Oas20Header)
     case Oas20DocumentationItem.value         => Some(Oas20DocumentationItem)
     case Oas20DataType.value                  => Some(Oas20DataType)
     case Oas20NamedExample.value              => Some(Oas20NamedExample)
     case Oas20ResourceType.value              => Some(Oas20ResourceType)
     case Oas20Trait.value                     => Some(Oas20Trait)
     case Oas20AnnotationTypeDeclaration.value => Some(Oas20AnnotationTypeDeclaration)
+    case Oas20SecurityScheme.value            => Some(Oas20SecurityScheme)
     case Oas20Extension.value                 => Some(Oas20Extension)
     case Oas20Overlay.value                   => Some(Oas20Overlay)
-    case Oas20SecurityScheme.value            => Some(Oas20SecurityScheme)
     case _                                    => None
   }
 
@@ -64,11 +71,9 @@ object OasFragmentHeader {
       case TraitFragment             => Some(Oas20Trait)
       case AnnotationTypeFragment    => Some(Oas20AnnotationTypeDeclaration)
       case DocumentationItemFragment => Some(Oas20DocumentationItem)
-      case ExtensionFragment         => Some(Oas20Extension)
-      case OverlayFragment           => Some(Oas20Overlay)
       case SecuritySchemeFragment    => Some(Oas20SecurityScheme)
       case NamedExampleFragment      => Some(Oas20NamedExample)
-      case _                         => None // UnknowFragment
+      case _                         => None // UnknownFragment
     }
 
 }

@@ -4,13 +4,12 @@ import amf.domain.security.{Scope, SecurityScheme, Settings}
 import amf.domain.{Annotations, Parameter, Response}
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YScalarYRead}
 import amf.remote.{Oas, Raml}
+import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common._
 import amf.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model._
-import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -18,11 +17,11 @@ import scala.collection.mutable
   *
   */
 object SecuritySchemeParser {
-  def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme, declarations: Declarations)(
+  def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme)(
       implicit ctx: ParserContext): SecuritySchemeParser =
     ctx.vendor match {
-      case Raml  => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
-      case Oas   => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt, declarations)
+      case Raml  => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)
+      case Oas   => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case other => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
     }
 
@@ -31,11 +30,8 @@ object SecuritySchemeParser {
 trait SecuritySchemeParser {
   def parse(): SecurityScheme
 }
-case class RamlSecuritySchemeParser(ast: YPart,
-                                    key: String,
-                                    node: YNode,
-                                    adopt: (SecurityScheme) => SecurityScheme,
-                                    declarations: Declarations)(implicit ctx: ParserContext)
+case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
+    implicit ctx: ParserContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
     ctx.link(node) match {
@@ -60,7 +56,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        RamlDescribedByParser("describedBy", map, scheme, declarations).parse()
+        RamlDescribedByParser("describedBy", map, scheme).parse()
 
         map.key(
           "settings",
@@ -78,24 +74,20 @@ case class RamlSecuritySchemeParser(ast: YPart,
   }
 
   def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
-    val declared = declarations.findSecurityScheme(parsedUrl)
-    declared
-      .map { ss =>
-        val copied: SecurityScheme = ss.link(parsedUrl, annotations)
-        copied.withName(name)
-      }
-      .getOrElse(throw new IllegalStateException(s"Could not find security scheme in references map to link $name"))
+    val scheme = ctx.declarations
+      .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
+
+    val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
+    copied.withName(name)
   }
 }
 
 object RamlDescribedByParser {
-  def apply(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations)(
-      implicit ctx: ParserContext): RamlDescribedByParser =
-    new RamlDescribedByParser(key, map, scheme, declarations)(ctx.toRaml)
+  def apply(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: ParserContext): RamlDescribedByParser =
+    new RamlDescribedByParser(key, map, scheme)(ctx.toRaml)
 }
 
-case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme, declarations: Declarations)(
-    implicit ctx: ParserContext) {
+case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: ParserContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -106,7 +98,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.as[YMap], scheme.withHeader, declarations)
+              RamlParametersParser(entry.value.as[YMap], scheme.withHeader)
                 .parse()
                 .map(_.withBinding("header"))
             scheme.set(SecuritySchemeModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -117,7 +109,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
           "queryParameters",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.as[YMap], scheme.withQueryParameter, declarations)
+              RamlParametersParser(entry.value.as[YMap], scheme.withQueryParameter)
                 .parse()
                 .map(_.withBinding("query"))
             scheme.set(SecuritySchemeModel.QueryParameters,
@@ -129,7 +121,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
         value.key(
           "queryString",
           queryEntry => {
-            RamlTypeParser(queryEntry, (shape) => shape.adopted(scheme.id), declarations)
+            RamlTypeParser(queryEntry, (shape) => shape.adopted(scheme.id))
               .parse()
               .map(scheme.withQueryString)
           }
@@ -145,7 +137,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
                 entries => {
                   val responses = mutable.ListBuffer[Response]()
                   entries.foreach(entry => {
-                    responses += RamlResponseParser(entry, scheme.withResponse, declarations).parse()
+                    responses += RamlResponseParser(entry, scheme.withResponse).parse()
                   })
                   scheme.set(SecuritySchemeModel.Responses,
                              AmfArray(responses, Annotations(entry.value)),
@@ -159,11 +151,8 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme,
   }
 }
 
-case class OasSecuritySchemeParser(ast: YPart,
-                                   key: String,
-                                   node: YNode,
-                                   adopt: (SecurityScheme) => SecurityScheme,
-                                   declarations: Declarations)(implicit ctx: ParserContext)
+case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
+    implicit ctx: ParserContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {
@@ -197,7 +186,7 @@ case class OasSecuritySchemeParser(ast: YPart,
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        RamlDescribedByParser("x-describedBy", map, scheme, declarations).parse()
+        RamlDescribedByParser("x-describedBy", map, scheme).parse()
 
         OasSecuritySettingsParser(map, scheme)
           .parse()
@@ -370,12 +359,10 @@ case class OasSecuritySchemeParser(ast: YPart,
   }
 
   def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
-    val declared = declarations.findSecurityScheme(parsedUrl)
-    declared
-      .map { ss =>
-        val copied: SecurityScheme = ss.link(parsedUrl, annotations)
-        copied.withName(name)
-      }
-      .getOrElse(throw new IllegalStateException(s"Could not find security scheme in references map to link $name"))
+    val scheme = ctx.declarations
+      .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
+
+    val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
+    copied.withName(name)
   }
 }

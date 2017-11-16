@@ -40,11 +40,12 @@ trait CommandHelper {
     val dialectFutures = config.dialects.map { dialect =>
       platform.dialectsRegistry.registerDialect(ensureUrl(dialect))
     }
-    Future.sequence(dialectFutures).map[Unit] { _ => }
+    Future.sequence(dialectFutures).map[Unit] { _ =>
+      }
   }
 
   protected def parseInput(config: ParserConfig, currentValidation: Validation): Future[BaseUnit] = {
-    var inputFile = ensureUrl(config.input.get)
+    var inputFile   = ensureUrl(config.input.get)
     val inputFormat = config.inputFormat.get
 
     val hint = inputFormat match {
@@ -55,7 +56,7 @@ trait CommandHelper {
     AMFCompiler(inputFile, platform, hint, currentValidation, None, None, platform.dialectsRegistry).build()
   }
 
-  protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[String] = {
+  protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[Unit] = {
     val outputFormat = config.outputFormat.get match {
       case ProfileNames.RAML => Raml
       case ProfileNames.OAS  => Oas
@@ -76,11 +77,7 @@ trait CommandHelper {
     val dumper = AMFDumper(unit, outputFormat, hint, generateOptions)
     config.output match {
       case Some(f) => dumper.dumpToFile(platform, f)
-      case None =>
-        dumper.dumpToString.map { generated =>
-          println(generated)
-          generated
-        }
+      case None    => dumper.dumpToString.map(println(_))
     }
   }
 

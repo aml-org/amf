@@ -4,23 +4,22 @@ import amf.domain.Annotations
 import amf.domain.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
 import amf.metadata.domain.security._
 import amf.parser.YMapOps
-import amf.spec.{Declarations, ParserContext}
+import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common._
 import org.yaml.model.{YMap, YNode, YType}
 
 /**
   *
   */
-case class RamlParametrizedSecuritySchemeParser(s: YNode,
-                                                producer: String => ParametrizedSecurityScheme,
-                                                declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => ParametrizedSecurityScheme)(
+    implicit ctx: ParserContext) {
   def parse(): ParametrizedSecurityScheme = s.tagType match {
     case YType.Null => producer("null").add(Annotations(s))
     case YType.Str =>
       val name: String = s
       val scheme       = producer(name).add(Annotations(s))
 
-      declarations.findSecurityScheme(name) match {
+      ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
         case Some(declaration) => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
         case None =>
           ctx.violation(scheme.id, s"Security scheme '$name' not found in declarations.", s)
@@ -32,7 +31,7 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode,
       val name        = schemeEntry.key
       val scheme      = producer(name).add(Annotations(s))
 
-      declarations.findSecurityScheme(name) match {
+      ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
         case Some(declaration) =>
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
 
@@ -40,7 +39,7 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode,
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
-          throw new Exception(s"Security scheme '$name' not found in declarations (and name cannot be 'null').")
+          ctx.violation("", s"Security scheme '$name' not found in declarations (and name cannot be 'null').", s)
       }
 
       scheme
@@ -48,7 +47,8 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode,
   }
 }
 
-case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings) {
+case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings)(
+  implicit val ctx: ParserContext){
   def parse(): Settings = {
     val result = `type` match {
       case "OAuth 1.0" => oauth1()

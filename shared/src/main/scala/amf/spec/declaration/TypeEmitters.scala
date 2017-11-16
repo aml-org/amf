@@ -170,7 +170,14 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
           result += MultipleExampleEmitter("examples", examples, ordering, references)
       })
 
+    fs.entry(ShapeModel.CustomShapePropertyDefinitions)
+      .map(f => {
+        result += CustomFacetsEmitter(f, ordering, references)
+      })
+
     result ++= AnnotationsEmitter(shape, ordering).emitters
+
+    result ++= FacetsEmitter(shape, ordering).emitters
 
     fs.entry(ShapeModel.Inherits)
       .fold(
@@ -350,14 +357,18 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
 
-    val typeEmitterOption = fs
-      .entry(ScalarShapeModel.DataType)
-      .flatMap(f =>
-        if (!f.value.annotations.contains(classOf[Inferred])) {
-          scalar.fields
-            .remove(ShapeModel.Inherits) // for scalar dont makes any sense write the inherits, because it always be another scalar with the same t
-          Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))
-        } else None) // TODO check this  - annotations of typeDef in parser
+    val typeEmitterOption = if (scalar.inherits.isEmpty) {
+      fs
+        .entry(ScalarShapeModel.DataType)
+        .flatMap(f =>
+          if (!f.value.annotations.contains(classOf[Inferred])) {
+            scalar.fields
+              .remove(ShapeModel.Inherits) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
+            Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))
+          } else None) // TODO check this  - annotations of typeDef in parser
+    } else {
+      None
+    }
 
     // use option for not alter the previous default order. (After resolution not any lexical info annotation remains here)
 
@@ -740,6 +751,13 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
 
+    result ++= FacetsEmitter(shape, ordering).emitters
+
+    fs.entry(ShapeModel.CustomShapePropertyDefinitions)
+      .map(f => {
+        result += CustomFacetsEmitter(f, ordering, references)
+      })
+
     result
   }
 
@@ -756,7 +774,6 @@ case class OasUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refer
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-
     b.entry(
       "anyOf",
       _.list { b =>
@@ -795,6 +812,8 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
 
+    result ++= FacetsEmitter(shape, ordering).emitters
+
     result
   }
 }
@@ -811,6 +830,8 @@ case class OasSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering)(imp
     fs.entry(SchemaShapeModel.Raw).map(f => result += ValueEmitter("x-schema", f))
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
+
+    result ++= FacetsEmitter(shape, ordering).emitters
 
     result
   }
@@ -977,6 +998,7 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
       .foreach(f =>
         if (!f.value.annotations.contains(classOf[Inferred]))
           result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+
 
     emitCommonFields(fs, result)
 

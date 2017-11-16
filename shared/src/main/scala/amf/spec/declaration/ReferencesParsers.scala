@@ -1,13 +1,13 @@
 package amf.spec.declaration
 
 import amf.compiler.ParsedReference
-import amf.document.{BaseUnit, DeclaresModel, Document}
 import amf.document.Fragment.Fragment
+import amf.document.{BaseUnit, DeclaresModel, Document}
 import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
-import amf.spec.{Declarations, ParserContext}
-import org.yaml.model.YMap
 import amf.parser.YMapOps
+import amf.spec.ParserContext
+import org.yaml.model.YMap
 
 import scala.collection.mutable
 
@@ -16,7 +16,7 @@ import scala.collection.mutable
   */
 object ReferenceDeclarations {
   def apply(references: mutable.Map[String, BaseUnit])(implicit ctx: ParserContext) =
-    new ReferenceDeclarations(references, Declarations())
+    new ReferenceDeclarations(references)
 
   def apply()(implicit ctx: ParserContext): ReferenceDeclarations = apply(mutable.Map[String, BaseUnit]())
 }
@@ -24,9 +24,10 @@ object ReferenceDeclarations {
 case class ReferenceDeclarations(val references: mutable.Map[String, BaseUnit] = mutable.Map(),
                                  declarations: Declarations)(implicit ctx: ParserContext) {
 
+
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
-    val library = declarations.getOrCreateLibrary(alias)
+    val library = ctx.declarations.getOrCreateLibrary(alias)
     // todo : ignore domain entities of vocabularies?
     unit match {
       case d: DeclaresModel =>
@@ -40,8 +41,8 @@ case class ReferenceDeclarations(val references: mutable.Map[String, BaseUnit] =
   }
 
   def +=(url: String, fragment: Fragment): Unit = {
-    references += (url   -> fragment)
-    declarations += (url -> fragment)
+    references += (url       -> fragment)
+    ctx.declarations += (url -> fragment)
   }
 
   def +=(url: String, fragment: Document): Unit = references += (url -> fragment)
@@ -90,15 +91,11 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
   }
 
   private def addAlias(module: BaseUnit, alias: String): BaseUnit = {
-    val aliasesOption = module.annotations.find(classOf[Aliases])
-    if (aliasesOption.isDefined)
-      aliasesOption.foreach(a => {
+    module.annotations.find(classOf[Aliases]) match {
+      case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])
-        module.add(a.copy(aliases = a.aliases ++ Seq(alias)))
-      })
-    else
-      module.add(Aliases(Seq(alias)))
-
-    module
+        module.add(aliases.copy(aliases = aliases.aliases + alias))
+      case None => module.add(Aliases(Set(alias)))
+    }
   }
 }

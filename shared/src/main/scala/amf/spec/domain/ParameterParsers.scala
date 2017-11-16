@@ -3,26 +3,23 @@ package amf.spec.domain
 import amf.domain.Annotation.ExplicitField
 import amf.domain.{Annotations, Parameter}
 import amf.metadata.domain.ParameterModel
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YScalarYRead}
 import amf.shape.Shape
+import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
-import amf.parser.YScalarYRead
 
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter, declarations: Declarations)(
-    implicit ctx: ParserContext) {
+case class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: ParserContext) {
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => RamlParameterParser(entry, producer, declarations).parse())
+      .map(entry => RamlParameterParser(entry, producer).parse())
 }
 
-case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, declarations: Declarations)(
-    implicit val ctx: ParserContext)
+case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit val ctx: ParserContext)
     extends RamlTypeSyntax {
   def parse(): Parameter = {
 
@@ -50,7 +47,7 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
           }
         )
 
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id), declarations)
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
           .parse()
           .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 
@@ -58,17 +55,21 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter, 
 
         parameter
       case _ =>
+        val scope = ctx.link(entry.value) match {
+          case Left(_) => SearchScope.Fragments
+          case _       => SearchScope.Named
+        }
         entry.value.to[YScalar] match {
-          case Right(ref) if declarations.findParameter(ref.text).isDefined =>
-            declarations
-              .findParameter(ref.text)
+          case Right(ref) if ctx.declarations.findParameter(ref.text, scope).isDefined =>
+            ctx.declarations
+              .findParameter(ref.text, scope)
               .get
               .link(ref.text, Annotations(entry))
               .asInstanceOf[Parameter]
               .withName(name)
-          case Right(ref) if declarations.findType(ref.text).isDefined =>
-            val schema = declarations
-              .findType(ref.text)
+          case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
+            val schema = ctx.declarations
+              .findType(ref.text, scope)
               .get
               .link[Shape](ref.text, Annotations(entry))
               .withName("schema")

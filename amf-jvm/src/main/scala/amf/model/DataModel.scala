@@ -25,12 +25,12 @@ object DataNode {
 
 case class ObjectNode(private[amf] val objectNode: amf.domain.extensions.ObjectNode) extends DataNode(objectNode) {
 
-  def properties: java.util.Map[String, java.util.List[DataNode]] =
+  def properties: java.util.Map[String, DataNode] =
     objectNode.properties
       .map({ (p) =>
-        val key     = p._1
-        val objects = p._2.map(DataNode(_)).asJava
-        key -> objects
+        val key = p._1
+        val obj = DataNode(p._2)
+        key -> obj
       })
       .asJava
 

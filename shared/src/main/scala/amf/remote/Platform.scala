@@ -5,17 +5,21 @@ import amf.lexer.CharSequenceStream
 import amf.validation.Validation
 import amf.validation.core.SHACLValidator
 import amf.vocabulary.Namespace
+import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 
 import scala.collection.mutable
-import scala.concurrent.{Future, Promise}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{Future, Promise}
 
 /**
   *
   */
 trait Platform {
 
-  def exit(code: Int) = System.exit(code)
+  /** Underlying file system for platform. */
+  val fs: FileSystem
+
+  def exit(code: Int): Unit = System.exit(code)
 
   /** Resolve remote url. */
   def resolve(url: String, context: Option[Context]): Future[Content] = {
@@ -51,7 +55,7 @@ trait Platform {
   val validator: SHACLValidator
 
   protected def setupValidationBase(validation: Validation): Future[Validation] =
-    validation.loadValidationDialect().map { x => validation }
+    validation.loadValidationDialect().map(_ => validation)
 
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 
@@ -59,7 +63,7 @@ trait Platform {
   def resolvePath(path: String): String
 
   /** Register an alias for a namespace */
-  def registerNamespace(alias: String, prefix: String) = Namespace.registerNamespace(alias, prefix)
+  def registerNamespace(alias: String, prefix: String): Option[Namespace] = Namespace.registerNamespace(alias, prefix)
 
   /** Resolve file on specified path. */
   protected def fetchFile(path: String): Future[Content]
@@ -71,7 +75,7 @@ trait Platform {
   protected def customValidationLibraryHelperLocation: String = "http://raml.org/amf/validation.js"
 
   /** Write specified content on given url. */
-  def write(url: String, content: String): Future[String] = {
+  def write(url: String, content: String): Future[Unit] = {
     url match {
       case File(path) => writeFile(path, content)
       case _          => Future.failed(new Exception(s"Unsupported write operation: $url"))
@@ -82,7 +86,7 @@ trait Platform {
   def tmpdir(): String
 
   /** Write specified content on specified file path. */
-  protected def writeFile(path: String, content: String): Future[String]
+  protected def writeFile(path: String, content: String): Future[Unit] = fs.asyncFile(path).write(content)
 
   protected def mimeFromExtension(extension: String): Option[String] =
     extension match {
@@ -140,33 +144,50 @@ private object Relative {
   */
 case class StringContentPlatform(contentUrl: String, content: String, wrappedPlatform: Platform) extends Platform {
 
-  override val dialectsRegistry = wrappedPlatform.dialectsRegistry
+  /** Underlying file system for platform. */
+  override val fs: FileSystem = wrappedPlatform.fs
 
-  override val validator = wrappedPlatform.validator
+  override val dialectsRegistry: PlatformDialectRegistry = wrappedPlatform.dialectsRegistry
 
-  override def resolvePath(path: String) = if (path == contentUrl) {
-    contentUrl
-  } else {
-    wrappedPlatform.resolvePath(path)
-  }
+  override val validator: SHACLValidator = wrappedPlatform.validator
 
-  override protected def fetchFile(path: String) = if (path == contentUrl) {
-    Future {
-      Content(new CharSequenceStream(content), path)
+  override def resolvePath(path: String): String =
+    if (path == contentUrl) {
+      contentUrl
+    } else {
+      wrappedPlatform.resolvePath(path)
     }
-  } else {
-    wrappedPlatform.resolve(File.FILE_PROTOCOL + path, None)
-  }
 
-  override protected def fetchHttp(url: String) =  if (url == contentUrl) {
-    Future {
-      Content(new CharSequenceStream(content), url)
+  override protected def fetchFile(path: String): Future[Content] =
+    if (path == contentUrl) {
+      Future {
+        Content(new CharSequenceStream(content), path)
+      }
+    } else {
+      wrappedPlatform.resolve(File.FILE_PROTOCOL + path, None)
     }
-  } else {
-    wrappedPlatform.resolve(url, None)
-  }
 
-  override def tmpdir() = wrappedPlatform.tmpdir()
+  override protected def fetchHttp(url: String): Future[Content] =
+    if (url == contentUrl) {
+      Future {
+        Content(new CharSequenceStream(content), url)
+      }
+    } else {
+      wrappedPlatform.resolve(url, None)
+    }
 
-  override protected def writeFile(path: String, content: String) = wrappedPlatform.write(File.FILE_PROTOCOL + path, content)
+  override def tmpdir(): String = wrappedPlatform.tmpdir()
+
+  override protected def writeFile(path: String, content: String): Future[Unit] =
+    wrappedPlatform.write(File.FILE_PROTOCOL + path, content)
+}
+
+/** Unsupported file system. */
+object UnsupportedFileSystem extends FileSystem {
+
+  override def syncFile(path: String): SyncFile   = unsupported
+  override def asyncFile(path: String): AsyncFile = unsupported
+  override def separatorChar: Char                = unsupported
+
+  private def unsupported = throw new Exception(s"Unsupported operation")
 }

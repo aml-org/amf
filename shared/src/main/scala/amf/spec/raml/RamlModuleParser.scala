@@ -24,15 +24,11 @@ case class RamlModuleParser(root: Root)(implicit val ctx: ParserContext) extends
     root.document.toOption[YMap].foreach { rootMap =>
       val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
 
-      parseDeclarations(root, rootMap, references.declarations)
+      parseDeclarations(root, rootMap)
 
-      // TODO invoke when it's done
-      //    resourceTypes?
-      //      traits?
-      //      securitySchemes?
       UsageParser(rootMap, module).parse()
 
-      val declarables = references.declarations.declarables()
+      val declarables = ctx.declarations.declarables()
       if (declarables.nonEmpty) module.withDeclares(declarables)
       if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
     }

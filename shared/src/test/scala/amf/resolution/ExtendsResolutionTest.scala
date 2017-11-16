@@ -11,7 +11,7 @@ class ExtendsResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://shared/src/test/resources/resolution/extends/"
+  val basePath = "shared/src/test/resources/resolution/extends/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.raml.raml", RamlYamlHint, Raml)

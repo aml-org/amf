@@ -3,7 +3,7 @@ package amf.resolution
 import amf.remote._
 
 class MediaTypeResolutionTest extends ResolutionTest {
-  override val basePath = "file://shared/src/test/resources/resolution/media-type/"
+  override val basePath = "shared/src/test/resources/resolution/media-type/"
 
   test("One mediaType raml to AMF") {
     cycle("media-type.raml", "media-type.raml.jsonld", RamlYamlHint, Amf)

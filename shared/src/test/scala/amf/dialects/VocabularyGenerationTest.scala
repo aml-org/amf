@@ -13,7 +13,7 @@ class VocabularyGenerationTest extends BuildCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://shared/src/test/resources/vocabularies/"
+  val basePath = "shared/src/test/resources/vocabularies/"
 
   test("Parse Vocabulary") {
     cycle("raml_async.raml", "raml_async.json", RamlYamlHint, Amf)

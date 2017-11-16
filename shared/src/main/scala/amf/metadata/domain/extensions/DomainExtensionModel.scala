@@ -1,7 +1,8 @@
 package amf.metadata.domain.extensions
 
 import amf.metadata.Field
-import amf.metadata.domain.DomainElementModel
+import amf.metadata.Type.Str
+import amf.metadata.domain.{DomainElementModel, KeyField}
 import amf.vocabulary.Namespace.{Document, Http}
 import amf.vocabulary.ValueType
 
@@ -14,12 +15,15 @@ import amf.vocabulary.ValueType
   * They are parsed as RDF graphs using a default transformation from a set of nested
   * records into RDF
   */
-object DomainExtensionModel extends DomainElementModel {
+object DomainExtensionModel extends DomainElementModel with KeyField {
 
+  val Name      = Field(Str, Document + "name")
   val DefinedBy = Field(CustomDomainPropertyModel, Document + "definedBy")
   val Extension = Field(DataNodeModel, Document + "extension")
 
-  override def fields: List[Field] = List(DefinedBy, Extension) ++ DomainElementModel.fields
+  override val key: Field = Name
+
+  override def fields: List[Field] = List(Name, DefinedBy, Extension) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Http + "DomainExtension" :: DomainElementModel.`type`
 }

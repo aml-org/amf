@@ -6,8 +6,9 @@ import amf.domain.{DomainElement, WebApi}
 import amf.metadata.Field
 import amf.metadata.domain.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
 import amf.metadata.domain.{EndPointModel, OperationModel, WebApiModel}
+import amf.validation.Validation
 
-class SecurityResolutionStage(profile: String) extends ResolutionStage(profile) {
+class SecurityResolutionStage(profile: String)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) {
 
   private def asSecurityScheme(finder: String => Option[DomainElement],
                                scheme: ParametrizedSecurityScheme,

@@ -22,3 +22,15 @@ case class Document(private[amf] val document: amf.document.Document)
 
   override private[amf] val element = document
 }
+
+@JSExportAll
+class Overlay(private[amf] val overlay: amf.document.Overlay) extends Document(overlay) {
+
+  def this() = this(amf.document.Overlay())
+}
+
+@JSExportAll
+class Extension(private[amf] val extensionFragment: amf.document.Extension) extends Document(extensionFragment) {
+
+  def this() = this(amf.document.Extension())
+}
