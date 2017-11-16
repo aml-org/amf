@@ -505,8 +505,13 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     }
 
     private def emitInline(b: PartBuilder): Unit = {
-      b.obj { b =>
-        traverse(ordering.sorted(AnnotationTypeEmitter(annotation, ordering).emitters()), b)
+      AnnotationTypeEmitter(annotation, ordering).emitters() match {
+        case Left(emitters) =>
+          b.obj { e =>
+            traverse(ordering.sorted(emitters), e)
+          }
+        case Right(part) =>
+          part.emit(b)
       }
     }
 

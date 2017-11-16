@@ -664,10 +664,14 @@ class OasSpecEmitter extends BaseSpecEmitter {
         b => {
           if (annotationType.isLink) OasTagToReferenceEmitter(annotationType, annotationType.linkLabel).emit(b)
           else
-            b.obj { b =>
-              val emitters = AnnotationTypeEmitter(annotationType, ordering).emitters()
-              traverse(ordering.sorted(emitters), b)
+            AnnotationTypeEmitter(annotationType, ordering).emitters() match {
+              case Left(emitters) =>
+                b.obj { b =>
+                  traverse(ordering.sorted(emitters), b)
+                }
+              case Right(part) => part.emit(b)
             }
+
         }
       )
     }
