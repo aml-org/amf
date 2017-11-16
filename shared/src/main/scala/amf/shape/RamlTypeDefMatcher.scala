@@ -7,7 +7,7 @@ import amf.shape.TypeDef._
   */
 object RamlTypeDefMatcher {
 
-  val knownFormats: Set[String] = Set("byte", "binary", "password", "int32", "float")
+  val knownFormats: Set[String] = Set("byte", "binary", "password", "int32", "int64", "double", "float")
 
   def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef =
     ramlType match {
@@ -26,7 +26,9 @@ object RamlTypeDefMatcher {
       case "number"        =>
         format match {
           case "int32"    => IntType
+          case "int64"    => LongType
           case "float"    => FloatType
+          case "double"   => DoubleType
           case _          => FloatType
         }
       case "integer"       => IntType
