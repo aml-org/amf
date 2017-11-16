@@ -73,12 +73,6 @@ object Annotation {
     override val value: String = name
   }
 
-  case class NamespaceImportsDeclaration(uses: Map[String, String]) extends SerializableAnnotation {
-    override val name: String = "uses"
-
-    override val value: String = uses.toString()
-  }
-
   case class EndPointBodyParameter() extends Annotation
 
   case class DefaultPayload() extends Annotation
