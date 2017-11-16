@@ -333,7 +333,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types all types raml to raml test") {
-    cycle("all-type-types.raml", "all-type-types.raml.raml", RamlYamlHint, Raml)
+    cycle("all-type-types.raml", "all-type-types.raml", RamlYamlHint, Raml)
   }
 
   test("Annotations raml to raml test") {
@@ -357,7 +357,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types all types oas to oas test") {
-    cycle("all-type-types.json", "all-type-types.json.json", OasJsonHint, Oas)
+    cycle("all-type-types.json", "all-type-types.json", OasJsonHint, Oas)
   }
 
   test("Types all types raml to oas test") {

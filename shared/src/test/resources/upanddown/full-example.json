@@ -92,13 +92,15 @@
           {
             "mediaType": "application/xml",
             "schema": {
-              "type": "number"
+              "type": "number",
+              "format": "float"
             }
           },
           {
             "mediaType": "application/pdf",
             "schema": {
-              "type": "byte"
+              "type": "string",
+              "format": "byte"
             }
           }
         ],

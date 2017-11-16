@@ -7,13 +7,11 @@ types:
     type: any
   IntegerType:
     type: integer
+    format: int32
   DateTimeOnlyType:
-    type: datetime
+    type: datetime-only
   TimeOnlyType:
     type: time-only
-    format: time-only
-  Nulltype:
-    type: nil
   UnionType:
     type: union
     anyOf:
@@ -21,6 +19,7 @@ types:
         type: string
       -
         type: integer
+        format: int32
   FileType:
     type: file
     maxLength: 307200
@@ -34,7 +33,6 @@ types:
     type: datetime
   DateOnlyType:
     type: date-only
-    format: date-only
   BooleanType:
     type: boolean
   ObjectType:
@@ -44,6 +42,9 @@ types:
     (format): byte
   NumberType:
     type: number
+    format: float
+  NilType:
+    type: nil
   PasswordType:
     type: string
-    format: password
+    (format): password
