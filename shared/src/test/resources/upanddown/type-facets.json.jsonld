@@ -60,7 +60,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(23,1)]"
+                    "@value": "[(1,0)-(25,1)]"
                   }
                 ]
               }
@@ -80,7 +80,12 @@
         ],
         "http://www.w3.org/ns/shacl#datatype": [
           {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
+            "@id": "http://www.w3.org/2001/XMLSchema#date"
+          }
+        ],
+        "http://raml.org/vocabularies/shapes#format": [
+          {
+            "@value": "date-only"
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
@@ -314,12 +319,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                    "@value": "http://raml.org/vocabularies/shapes#format"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(16,6)-(16,22)]"
+                    "@value": "[(17,6)-(17,27)]"
                   }
                 ]
               },
@@ -331,7 +336,19 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,4)-(17,5)]"
+                    "@value": "[(7,4)-(18,5)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(16,6)-(16,22)]"
                   }
                 ]
               }
@@ -349,7 +366,12 @@
         ],
         "http://www.w3.org/ns/shacl#datatype": [
           {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
+            "@id": "http://www.w3.org/2001/XMLSchema#date"
+          }
+        ],
+        "http://raml.org/vocabularies/shapes#format": [
+          {
+            "@value": "date-only"
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
@@ -381,12 +403,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                    "@value": "http://raml.org/vocabularies/shapes#format"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(20,6)-(20,22)]"
+                    "@value": "[(22,6)-(22,27)]"
                   }
                 ]
               },
@@ -398,7 +420,19 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(18,4)-(21,5)]"
+                    "@value": "[(19,4)-(23,5)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(21,6)-(21,22)]"
                   }
                 ]
               }
