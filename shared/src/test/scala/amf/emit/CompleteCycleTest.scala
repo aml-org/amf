@@ -336,6 +336,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("all-type-types.raml", "all-type-types.raml", RamlYamlHint, Raml)
   }
 
+  test("Multiple inheritance raml to raml") {
+    cycle("multiple-inheritance.raml", "multiple-inheritance.raml.raml", RamlYamlHint, Raml)
+  }
+
   test("Annotations raml to raml test") {
     cycle("annotations.raml", "annotations.raml", RamlYamlHint, Raml)
   }

@@ -1,5 +1,6 @@
 package amf.spec.declaration
-import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema, toString => _}
+
+import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
 import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -85,10 +86,10 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
   // These are the actual custom facets, just regular properties in the AST map that have been
   // defined through the 'facets' properties in this shape or in base shape.
   // The shape definitions are parsed in the common parser of all shapes, not here.
-  private def parseCustomShapeFacetInstances(shapeResult: Option[Shape]) = {
+  private def parseCustomShapeFacetInstances(shapeResult: Option[Shape]): Unit = {
     node.value match {
       case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx).parse()
-      case _         => // ignore if it is not a map or we haven't been able to parse a shape
+      case _                                  => // ignore if it is not a map or we haven't been able to parse a shape
     }
 
   }
@@ -213,6 +214,9 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
         case YType.Map =>
           NodeShapeParser(shape, node.as[YMap])
             .parse() // I have to do the adopt before parser children shapes. Other way the children will not have the father id
+        case YType.Seq =>
+          InheritanceParser(ast.asInstanceOf[YMapEntry], shape).parse()
+          shape
         case _ if node.toOption[YScalar].isDefined =>
           val refTuple = ctx.link(node) match {
             case Left(key) =>
@@ -525,6 +529,56 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
     }
   }
 
+  case class InheritanceParser(entry: YMapEntry, shape: Shape) extends RamlTypeSyntax {
+    def parse(): Unit = {
+      entry.value.tagType match {
+
+        case YType.Seq =>
+          val inherits = ArrayNode(entry.value)
+            .strings()
+            .scalars
+            .map { scalar =>
+              scalar.toString match {
+                case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
+                  RamlTypeExpressionParser(adopt).parse(s).get
+
+                case s if ctx.declarations.shapes.get(s).isDefined =>
+                  ctx.declarations.shapes(s)
+                case s if wellKnownType(s) =>
+                  parseWellKnownTypeRef(s)
+              }
+            }
+
+          shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
+
+        case YType.Map =>
+          RamlTypeParser(entry, shape => shape.adopted(shape.id))
+            .parse()
+            .foreach(s =>
+              shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
+
+        case _ if RamlTypeDefMatcher.TypeExpression.unapply(entry.value.as[YScalar].text).isDefined =>
+          RamlTypeParser(entry, shape => shape.adopted(shape.id))
+            .parse()
+            .foreach(s =>
+              shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
+
+        case _ if !wellKnownType(entry.value.as[YScalar].text) =>
+          // it might be a named type
+          // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
+          ctx.declarations.findType(entry.value.as[YScalar].text, SearchScope.Named) match {
+            case Some(ancestor) =>
+              shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
+            case _ =>
+              ctx.violation(shape.id, "Reference not found", entry.value)
+          }
+
+        case _ =>
+          shape.add(ExplicitField()) // TODO store annotation in dataType field.
+      }
+    }
+  }
+
   case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser {
     override def parse(): NodeShape = {
 
@@ -721,53 +775,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
     protected def parseInheritance(): Unit = {
       map.key(
         "type",
-        entry => {
-          entry.value.tagType match {
-
-            case YType.Seq =>
-              val inherits = ArrayNode(entry.value)
-                .strings()
-                .scalars
-                .map { scalar =>
-                  scalar.toString match {
-                    case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
-                      RamlTypeExpressionParser(adopt).parse(s).get
-
-                    case s if ctx.declarations.shapes.get(s).isDefined =>
-                      ctx.declarations.shapes(s)
-                    case s if wellKnownType(s) =>
-                      parseWellKnownTypeRef(s)
-                  }
-                }
-
-              shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
-
-            case YType.Map =>
-              RamlTypeParser(entry, shape => shape.adopted(shape.id))
-                .parse()
-                .foreach(s =>
-                  shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
-
-            case _ if RamlTypeDefMatcher.TypeExpression.unapply(entry.value.as[YScalar].text).isDefined =>
-              RamlTypeParser(entry, shape => shape.adopted(shape.id))
-                .parse()
-                .foreach(s =>
-                  shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
-
-            case _ if !wellKnownType(entry.value.as[YScalar].text) =>
-              // it might be a named type
-              // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
-              ctx.declarations.findType(entry.value.as[YScalar].text, SearchScope.Named) match {
-                case Some(ancestor) =>
-                  shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
-                case _ =>
-                  ctx.violation(shape.id, "Reference not found", entry.value)
-              }
-
-            case _ =>
-              shape.add(ExplicitField()) // TODO store annotation in dataType field.
-          }
-        }
+        entry => InheritanceParser(entry, shape).parse()
       )
     }
   }
