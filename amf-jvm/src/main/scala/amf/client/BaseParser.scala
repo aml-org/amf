@@ -3,7 +3,7 @@ package amf.client
 import java.util.concurrent.CompletableFuture
 
 import amf.ProfileNames
-import amf.model.{BaseUnit, DialectFragment, Document, Module}
+import amf.model.{Fragment, _}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.{Platform, StringContentPlatform, Vendor}
@@ -20,9 +20,11 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 
   private def unitScalaToJVM(unit: amf.document.BaseUnit): BaseUnit = unit match {
-    case d: amf.document.Document => Document(d)
-    case m: amf.document.Module   => Module(m)
-    case f: amf.document.Fragment.DialectFragment => DialectFragment(f)
+    case o: amf.document.Overlay           => new Overlay(o)
+    case e: amf.document.Extension         => new Extension(e)
+    case d: amf.document.Document          => Document(d)
+    case m: amf.document.Module            => Module(m)
+    case f: amf.document.Fragment.Fragment => Fragment(f)
   }
 
   /**
@@ -48,7 +50,9 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   def parseString(stream: String, handler: Handler[BaseUnit]): Unit =
-    super.parse(DEFAULT_DOCUMENT_URL, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+    super.parse(DEFAULT_DOCUMENT_URL,
+                BaseUnitHandlerAdapter(handler),
+                Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   /**
     * Generates the [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -57,7 +61,9 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   def parseString(stream: String, platform: Platform, handler: Handler[BaseUnit]): Unit =
-    super.parse(DEFAULT_DOCUMENT_URL, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+    super.parse(DEFAULT_DOCUMENT_URL,
+                BaseUnitHandlerAdapter(handler),
+                Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   def parseString(url: String, stream: String, platform: Platform, handler: Handler[BaseUnit]): Unit =
     super.parse(url, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(url, stream, platform)))
@@ -75,10 +81,11 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @param platform: Platform to wrap
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
-  def parseFileAsync(url: String, platform: Platform): CompletableFuture[BaseUnit] = super.parseAsync(url, Some(platform)).map(unitScalaToJVM).asJava
+  def parseFileAsync(url: String, platform: Platform): CompletableFuture[BaseUnit] =
+    super.parseAsync(url, Some(platform)).map(unitScalaToJVM).asJava
 
-
-  def parseFileAsync(url: String, platform: Platform,o:ParsingOptions): CompletableFuture[BaseUnit] = super.parseAsync(url, Some(platform),o).map(unitScalaToJVM).asJava
+  def parseFileAsync(url: String, platform: Platform, o: ParsingOptions): CompletableFuture[BaseUnit] =
+    super.parseAsync(url, Some(platform), o).map(unitScalaToJVM).asJava
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -86,7 +93,10 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseStringAsync(stream: String): CompletableFuture[BaseUnit] =
-    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJVM).asJava
+    super
+      .parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+      .map(unitScalaToJVM)
+      .asJava
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from a given string, which should be a valid api.
@@ -95,7 +105,10 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     * @return A java future that will have a [[amf.model.BaseUnit]] or an error to handle the result of such invocation.
     */
   def parseStringAsync(stream: String, platform: Platform): CompletableFuture[BaseUnit] =
-    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJVM).asJava
+    super
+      .parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+      .map(unitScalaToJVM)
+      .asJava
 
   def parseStringAsync(textUrl: String, stream: String, platform: Platform): CompletableFuture[BaseUnit] =
     super.parseAsync(textUrl, Some(StringContentPlatform(textUrl, stream, platform))).map(unitScalaToJVM).asJava

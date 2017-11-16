@@ -53,8 +53,6 @@ object Fragment {
       super.encodes.asInstanceOf[amf.domain.security.SecurityScheme]
   }
 
-  case class Default(fields: Fields, annotations: Annotations) extends Fragment
-
   case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
   }
