@@ -349,7 +349,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
     }
   }
 
-  object AnnotationTypesParser {
+  object AnnotationTypesParser extends RamlTypeSyntax {
     def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
       ast.value.tagType match {
         case YType.Map =>
@@ -363,31 +363,25 @@ abstract class RamlSpecParser extends BaseSpecParser {
                         ast.value)
           domainProp
         case _ =>
-          // @todo: this can be a scalar with a type expression, not a reference
+          val key             = ast.key.as[YScalar].text
+          val scalar: YScalar = ast.value.as[YScalar]
+          val domainProp      = CustomDomainProperty()
+          adopt(domainProp)
 
-          LinkedAnnotationTypeParser(ast, ast.key.as[YScalar].text, ast.value.as[YScalar], adopt).parse()
+          ctx.declarations.findAnnotation(scalar.text, SearchScope.Named) match {
+            case Some(a) =>
+              val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
+              adopt(copied.withName(key))
+              copied
+            case _ =>
+              RamlTypeParser(ast, (shape) => shape.adopted(domainProp.id), isAnnotation = true).parse() match {
+                case Some(schema) => domainProp.withSchema(schema)
+                case _ =>
+                  ctx.violation(domainProp.id, "Could not find declared annotation link in references", scalar)
+                  domainProp
+              }
+          }
       }
-  }
-
-  case class LinkedAnnotationTypeParser(ast: YPart,
-                                        annotationName: String,
-                                        scalar: YScalar,
-                                        adopt: (CustomDomainProperty) => Unit) {
-    def parse(): CustomDomainProperty = {
-      ctx.declarations
-        .findAnnotation(scalar.text, SearchScope.Named) // this can be a scalar with a type expression, not a reference
-        .map { a =>
-          val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
-          adopt(copied.withName(annotationName))
-          copied
-        }
-        .getOrElse {
-          val domainProperty = CustomDomainProperty()
-          adopt(domainProperty)
-          ctx.violation(domainProperty.id, "Could not find declared annotation link in references", scalar)
-          domainProperty
-        }
-    }
   }
 
   case class AnnotationTypesParser(ast: YPart,

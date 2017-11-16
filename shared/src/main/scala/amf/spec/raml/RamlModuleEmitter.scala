@@ -92,7 +92,10 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     override val header: RamlHeader = RamlFragmentHeader.Raml10AnnotationTypeDeclaration
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
-      AnnotationTypeEmitter(annotation.encodes, ordering).emitters()
+      AnnotationTypeEmitter(annotation.encodes, ordering).emitters() match {
+        case Left(emitters) => emitters
+        case Right(part)    => Seq(EntryPartEmitter("type", part))
+      }
   }
 
   case class SecuritySchemeFragmentEmitter(securityScheme: SecurityScheme, ordering: SpecOrdering)

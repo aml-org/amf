@@ -92,7 +92,10 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     override val header = OasHeaderEmitter(OasHeader.Oas20AnnotationTypeDeclaration)
 
     val emitters: Seq[EntryEmitter] =
-      AnnotationTypeEmitter(annotation.encodes, ordering).emitters()
+      AnnotationTypeEmitter(annotation.encodes, ordering).emitters() match {
+        case Left(list)  => list
+        case Right(part) => Seq(EntryPartEmitter("type", part))
+      }
   }
 
   case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)

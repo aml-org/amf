@@ -1,6 +1,14 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
+import amf.domain.extensions.{
+  CustomDomainProperty,
+  DataNode,
+  DomainExtension,
+  ShapeExtension,
+  ArrayNode => DataArrayNode,
+  ObjectNode => DataObjectNode,
+  ScalarNode => DataScalarNode
+}
 import amf.domain.{Annotations, DomainElement, FieldEntry, Value}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
@@ -9,7 +17,7 @@ import amf.remote.{Oas, Raml}
 import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
-import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.vocabulary.{Namespace, VocabularyMappings}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
@@ -46,12 +54,14 @@ case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrd
 }
 
 case class FacetsEmitter(element: Shape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
-  def emitters: Seq[EntryEmitter] = element.customShapeProperties.map { extension: ShapeExtension => FacetsInstanceEmitter(extension, ordering) }
+  def emitters: Seq[EntryEmitter] = element.customShapeProperties.map { extension: ShapeExtension =>
+    FacetsInstanceEmitter(extension, ordering)
+  }
 }
 
 case class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
-  implicit spec: SpecEmitterContext)
-  extends EntryEmitter {
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.complexEntry(
       b => {
@@ -153,52 +163,60 @@ case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, order
 
 case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext) {
-  def emitters(): Seq[EntryEmitter] = {
-    val result = ListBuffer[EntryEmitter]()
-    val fs     = property.fields
 
-    fs.entry(CustomDomainPropertyModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
+  private val fs = property.fields
+  private val shapeEmitters: Seq[Emitter] = fs
+    .entry(CustomDomainPropertyModel.Schema)
+    .map({ f =>
+      spec.vendor match {
+        case Oas =>
+          // OAS we emit in the 'schema' property
+          Seq(OasSchemaEmitter(f, ordering, Nil))
+        case Raml =>
+          // we merge in the main body
+          val shape = f.value.value.asInstanceOf[Shape]
 
-    fs.entry(CustomDomainPropertyModel.Description).map(f => result += ValueEmitter("description", f))
-
-    fs.entry(CustomDomainPropertyModel.Domain).map { f =>
-      val scalars = f.array.scalars.map { s =>
-        VocabularyMappings.uriToRaml.get(s.toString) match {
-          case Some(identifier) => AmfScalar(identifier, s.annotations)
-          case None             => s
-        }
+          RamlTypeEmitter(shape, ordering, Nil, Nil).emitters() match {
+            case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
+            case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
+            case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
+          }
+        case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
       }
-      val finalArray      = AmfArray(scalars, f.array.annotations)
-      val finalFieldEntry = FieldEntry(f.field, Value(finalArray, f.value.annotations))
+    }) match {
+    case Some(emitters) => emitters
+    case _              => Nil
+  }
 
-      result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
-    }
+  def emitters(): Either[Seq[EntryEmitter], PartEmitter] = {
 
-    val shapeEmitters = fs
-      .entry(CustomDomainPropertyModel.Schema)
-      .map({ f =>
-        spec.vendor match {
-          case Oas =>
-            // OAS we emit in the 'schema' property
-            Seq(OasSchemaEmitter(f, ordering, Nil))
-          case Raml =>
-            // we merge in the main body
-            val shape = f.value.value.asInstanceOf[Shape]
-            RamlTypeEmitter(shape, ordering, Nil, Nil).emitters() match {
-              case Seq(p: PartEmitter)                           => throw new Exception(s"IllegalTypeDeclarations found: $p")
-              case es if es.forall(_.isInstanceOf[EntryEmitter]) => es.collect { case e: EntryEmitter => e }
-              case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
+    shapeEmitters.toList match {
+      case (head: EntryEmitter) :: tail =>
+        val result = ListBuffer[EntryEmitter]()
+        fs.entry(CustomDomainPropertyModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
+
+        fs.entry(CustomDomainPropertyModel.Description).map(f => result += ValueEmitter("description", f))
+
+        fs.entry(CustomDomainPropertyModel.Domain).map { f =>
+          val scalars = f.array.scalars.map { s =>
+            VocabularyMappings.uriToRaml.get(s.toString) match {
+              case Some(identifier) => AmfScalar(identifier, s.annotations)
+              case None             => s
             }
-          case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
+          }
+          val finalArray      = AmfArray(scalars, f.array.annotations)
+          val finalFieldEntry = FieldEntry(f.field, Value(finalArray, f.value.annotations))
+
+          result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
         }
-      }) match {
-      case Some(emitters) => emitters
-      case _              => Nil
+
+        result ++= shapeEmitters.map(_.asInstanceOf[EntryEmitter])
+
+        result ++= AnnotationsEmitter(property, ordering).emitters
+        Left(result)
+      case (head: PartEmitter) :: Nil => Right(head)
+      case other =>
+        throw new Exception(s"IllegalTypeDeclarations found: $other") // todo handle
     }
-    result ++= shapeEmitters
-
-    result ++= AnnotationsEmitter(property, ordering).emitters
-
-    result
   }
 }

@@ -648,4 +648,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Facets oas to amf") {
     cycle("type-facets.json", "type-facets.json.jsonld", OasJsonHint, Amf)
   }
+
+  test("Annotations with type expressions raml to raml") {
+    cycle("annotations-type-expressions.raml", "annotations-type-expressions.raml.raml", RamlYamlHint, Raml)
+  }
 }
