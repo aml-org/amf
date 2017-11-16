@@ -457,6 +457,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("lib-alias-reference.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
   }
 
+  test("Test libraries references in delares raml to raml back") {
+    cycle("lib-alias-reference.raml.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
   test("Overlay fragment oas to amf") {
     cycle("overlay.json", "overlay.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
   }
