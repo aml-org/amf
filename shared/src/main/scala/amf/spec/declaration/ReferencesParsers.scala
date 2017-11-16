@@ -21,9 +21,8 @@ object ReferenceDeclarations {
   def apply()(implicit ctx: ParserContext): ReferenceDeclarations = apply(mutable.Map[String, BaseUnit]())
 }
 
-case class ReferenceDeclarations(val references: mutable.Map[String, BaseUnit] = mutable.Map(),
-                                 declarations: Declarations)(implicit ctx: ParserContext) {
-
+case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mutable.Map())(
+  implicit ctx: ParserContext) {
 
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
