@@ -224,7 +224,11 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
           refTuple match {
             case (text: String, Some(s)) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
-            case (text: String, _)       => UnresolvedShape(text, node).withName(name)
+            case (text: String, _)       => {
+              val shape = UnresolvedShape(text, node).withName(name)
+              adopt(shape)
+              shape
+            }
           }
       }
     }
