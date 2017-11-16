@@ -3,8 +3,9 @@ package amf.spec.dialects
 import amf.compiler.Root
 import amf.dialects._
 import amf.document.Fragment.{DialectFragment, Fragment}
-import amf.document.{BaseUnit, EncodesModel, Module}
+import amf.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.domain.dialects.DomainEntity
+import amf.metadata.Type.{Iri, Str}
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YNodeLikeOps
@@ -82,6 +83,8 @@ trait ReferenceResolver {
   def resolve(root: Root, name: String, t: Type): Option[String]
 
   def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity]
+
+  val referencedDocuments: Map[String, BaseUnit]
 }
 
 object NullReferenceResolver extends ReferenceResolver {
@@ -91,6 +94,7 @@ object NullReferenceResolver extends ReferenceResolver {
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
+  val referencedDocuments: Map[String, BaseUnit]=Map();
 }
 
 trait LocalNameProvider {
@@ -253,6 +257,8 @@ trait Builtins extends LocalNameProvider with ReferenceResolver {
     id2b.put(id, builtin)
     this
   }
+
+  val referencedDocuments: Map[String, BaseUnit]=Map()
 }
 
 trait TypeBuiltins extends Builtins {
@@ -281,8 +287,12 @@ object TypeBuiltins {
   val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
+object NamespaceExtraFields{
+  val PATH = Field(Str, Namespace.Document + "uses-path")
+  val NAMESPACE    = Field(Str, Namespace.Document + "uses-namespace")
 
-class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], references: Map[String, BaseUnit])(
+}
+class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], override  val referencedDocuments: Map[String, BaseUnit])(
     implicit val ctx: ParserContext)
     extends RamlSpecParser
     with TypeBuiltins {
@@ -330,7 +340,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
                 resolvedExternals += resolvedUri
                 resolvedUri
               case _ =>
-                if (references.contains(alias)) {
+                if (referencedDocuments.contains(alias)) {
                   throw new Exception(s"Cannot find entity '$suffix' in '$alias'")
                 }
                 throw new Exception(s"Cannot find prefix '$name'")
@@ -350,7 +360,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ref
     // val ast = root.ast.last
     // val entries = Entries(ast)
 
-    references.foreach {
+    referencedDocuments.foreach {
       case (namespace:String, unit:BaseUnit) => {
         if (unit.isInstanceOf[Module]) {
             unit.asInstanceOf[Module].declares.foreach(r => {
@@ -484,6 +494,8 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
   val namespaces: mutable.Map[String, String]         = mutable.Map[String, String]()
   var declarations: mutable.Map[String, DomainEntity] = mutable.Map[String, DomainEntity]()
   var fragments: mutable.Map[String, String] = mutable.Map[String, String]()
+  var documenEntities: mutable.Map[String, String] = mutable.Map[String, String]()
+
 
 
   {
@@ -499,6 +511,28 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
       case f: DialectFragment =>{
         fragments.put(f.encodes.id,f.id);
       }
+      case d: Document=>{
+         val de=d.encodes.asInstanceOf[DomainEntity];
+         val nm=d.fields.get(NamespaceExtraFields.NAMESPACE).toString;
+         de.definition.mappings().filter(x=>x.isMap).foreach(m=>{
+           de.entities(m).foreach(vocEntity=>{
+               if (vocEntity.linkValue.isDefined) {
+                 documenEntities.put(vocEntity.id, nm + "." + vocEntity.linkValue.get)
+               }
+           })
+         })
+      }
+      case m: Module=>{
+        val nm=m.fields.get(NamespaceExtraFields.NAMESPACE).toString;
+          m.declares.foreach(declEntity=>{
+            val linkValue = declEntity.asInstanceOf[DomainEntity].linkValue
+            if (linkValue.isDefined) {
+              documenEntities.put(declEntity.id, nm + "." + linkValue.get)
+            }
+          })
+
+      }
+
       case _ =>
     })
     root.traverse {
@@ -516,7 +550,12 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
        val ruri=unit.location;
        val relative=ParsedPath(ruri).dir().resolve(ParsedPath(furi));
        val pp=relative.toString();
-       "!include "+pp
+       "!include " + pp
+    }
+    // this is reference to entity in the document (vocabulary)
+    else if (documenEntities.contains(uri)){
+      val furi=documenEntities.get(uri).get;
+      furi
     }
     else {
       val foundLocalName = for {
