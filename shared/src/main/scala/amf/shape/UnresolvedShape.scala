@@ -10,7 +10,8 @@ case class UnresolvedShape(fields: Fields, annotations: Annotations, reference: 
 
   override def linkCopy(): Linkable = this
 
-  override def adopted(parent: String): this.type = this
+  override def adopted(parent: String): this.type = withId(parent + "/unresolved")
+
 
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name)

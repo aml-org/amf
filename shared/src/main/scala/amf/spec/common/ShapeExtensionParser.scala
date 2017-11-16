@@ -22,7 +22,7 @@ case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: ParserContext) {
       map.key(
         extensionKey,
         entry => {
-          val dataNode  = DataNodeParser(entry.value, parent = Some(shape.id + s"/extension/$extensionKey")).parse()
+          val dataNode  = DataNodeParser(entry.value, parent = Some(shape.id + s"/extension/$extensionKey"))(ctx).parse()
           val extension = ShapeExtension(entry)
             .withDefinedBy(shapeExensionDefinition)
             .withExtension(dataNode)
