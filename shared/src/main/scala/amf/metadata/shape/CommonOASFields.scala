@@ -12,9 +12,9 @@ trait CommonOASFields {
 
   val MaxLength = Field(Int, Shacl + "maxLength")
 
-  val Minimum = Field(Str, Shacl + "minInclusive")
+  val Minimum = Field(Int, Shacl + "minInclusive")
 
-  val Maximum = Field(Str, Shacl + "maxInclusive")
+  val Maximum = Field(Int, Shacl + "maxInclusive")
 
   val ExclusiveMinimum = Field(Str, Shacl + "minExclusive")
 
