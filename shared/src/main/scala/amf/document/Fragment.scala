@@ -1,10 +1,9 @@
 package amf.document
 
-import amf.domain.extensions.CustomDomainProperty
 import amf.domain._
-import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
+import amf.domain.extensions.CustomDomainProperty
 import amf.metadata.document.{BaseUnitModel, DocumentModel, FragmentModel}
-import amf.model.{AmfElement, AmfObject}
+import amf.model.AmfObject
 import amf.shape.Shape
 
 /**
@@ -44,20 +43,6 @@ object Fragment {
   case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment
 
   case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment
-
-  case class ExtensionFragment(fields: Fields, annotations: Annotations) extends Fragment {
-    override def encodes: WebApi = super.encodes.asInstanceOf[WebApi]
-    def extend: String           = fields(ExtensionModel.Extends)
-
-    def withExtend(extend: BaseUnit): this.type = set(ExtensionModel.Extends, extend)
-  }
-
-  case class OverlayFragment(fields: Fields, annotations: Annotations) extends Fragment {
-    override def encodes: WebApi = super.encodes.asInstanceOf[WebApi]
-    def extend: String           = fields(OverlayModel.Extends)
-
-    def withExtend(extend: BaseUnit): this.type = set(OverlayModel.Extends, extend)
-  }
 
   case class AnnotationTypeDeclaration(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
@@ -112,22 +97,10 @@ object Fragment {
     def apply(annotations: Annotations): AnnotationTypeDeclaration = apply(Fields(), annotations)
   }
 
-  object ExtensionFragment {
-    def apply(): ExtensionFragment = apply(Annotations())
-
-    def apply(annotations: Annotations): ExtensionFragment = apply(Fields(), annotations)
-  }
-
   object DialectFragment {
     def apply(): DialectFragment = apply(Annotations())
 
     def apply(annotations: Annotations): DialectFragment = apply(Fields(), annotations)
-  }
-
-  object OverlayFragment {
-    def apply(): OverlayFragment = apply(Annotations())
-
-    def apply(annotations: Annotations): OverlayFragment = apply(Fields(), annotations)
   }
 
   object ExternalFragment {

@@ -2,8 +2,7 @@ package amf.spec.raml
 
 import amf.common.TSort.tsort
 import amf.compiler.RamlHeader
-import amf.document.Fragment.{ExtensionFragment, OverlayFragment}
-import amf.document.{BaseUnit, Document, Module}
+import amf.document._
 import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.{
@@ -12,6 +11,7 @@ import amf.domain.extensions.{
   ScalarNode => DataScalarNode,
   _
 }
+import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain._
 import amf.model.AmfScalar
 import amf.parser.Position
@@ -33,10 +33,8 @@ import scala.collection.mutable.ListBuffer
 case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
 
   private def retrieveWebApi(): WebApi = document match {
-    case document: Document           => document.encodes.asInstanceOf[WebApi]
-    case extension: ExtensionFragment => extension.encodes
-    case overlay: OverlayFragment     => overlay.encodes
-    case _                            => throw new Exception("BaseUnit doesn't encode a WebApi.")
+    case document: Document => document.encodes.asInstanceOf[WebApi]
+    case _                  => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
 
   def emitDocument(): YDocument = {
@@ -46,13 +44,28 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
     val api        = apiEmitters(ordering, doc.references)
     val declares   = DeclarationsEmitter(doc.declares, doc.references, ordering).emitters
     val references = ReferencesEmitter(doc.references, ordering)
+    val extension  = extensionEmitter()
+    val usage: Option[ValueEmitter] =
+      doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
 
     YDocument(b => {
-      b.comment(RamlHeader.Raml10.text)
+      b.comment(retrieveHeader())
       b.obj { b =>
-        traverse(ordering.sorted(api ++ declares :+ references), b)
+        traverse(ordering.sorted(api ++ extension ++ usage ++ declares :+ references), b)
       }
     })
+  }
+
+  def extensionEmitter(): Option[EntryEmitter] =
+    document.fields
+      .entry(ExtensionLikeModel.Extends)
+      .map(f => MapEntryEmitter("extends", f.scalar.toString, position = pos(f.value.annotations)))
+
+  private def retrieveHeader() = document match {
+    case _: Extension => RamlHeader.Raml10Extension.text
+    case _: Overlay   => RamlHeader.Raml10Overlay.text
+    case _: Document  => RamlHeader.Raml10.text
+    case _            => throw new Exception("Document has no header.")
   }
 
   def apiEmitters(ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
@@ -402,8 +415,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
       extends PlatformSecrets {
     val emitters: Seq[EntryEmitter] = {
 
-      implicit val errorHanlder = new amf.spec.ErrorHandler(amf.validation.Validation(platform)) // todo remove
-      val declarations          = Declarations(declares)
+      val declarations = Declarations(declares, None)
 
       val result = ListBuffer[EntryEmitter]()
 

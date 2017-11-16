@@ -4,7 +4,7 @@ import amf.remote._
 
 class ParameterResolutionTest extends ResolutionTest {
 
-  override val basePath = "file://shared/src/test/resources/resolution/"
+  override val basePath = "shared/src/test/resources/resolution/"
 
   test("resolution AMF") {
     cycle("parameters.raml", "parameters.raml.jsonld", RamlYamlHint, Amf)

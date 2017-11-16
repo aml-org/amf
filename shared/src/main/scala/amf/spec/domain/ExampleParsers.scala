@@ -4,12 +4,11 @@ import amf.domain.Annotation.{SingleValueArray, SynthesizedField}
 import amf.domain.{Annotations, Example}
 import amf.metadata.domain.ExampleModel
 import amf.model.AmfScalar
-import amf.parser.YMapOps
+import amf.parser.{YMapOps, YScalarYRead}
+import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model._
 import org.yaml.render.YamlRender
-import amf.parser.YScalarYRead
 
 import scala.collection.mutable.ListBuffer
 
@@ -41,23 +40,21 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: ParserCo
   }
 }
 
-case class RamlExamplesParser(map: YMap,
-                              singleExampleKey: String,
-                              multipleExamplesKey: String,
-                              declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlExamplesParser(map: YMap, singleExampleKey: String, multipleExamplesKey: String)(
+    implicit ctx: ParserContext) {
   def parse(): Seq[Example] =
-    RamlMultipleExampleParser(multipleExamplesKey, map, declarations).parse() ++
+    RamlMultipleExampleParser(multipleExamplesKey, map).parse() ++
       RamlSingleExampleParser(singleExampleKey, map).parse()
 
 }
 
-case class RamlMultipleExampleParser(key: String, map: YMap, declarations: Declarations)(implicit ctx: ParserContext) {
+case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: ParserContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
 
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
-        case Left(s) => examples ++= declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
+        case Left(s) => examples ++= ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
@@ -74,7 +71,7 @@ case class RamlMultipleExampleParser(key: String, map: YMap, declarations: Decla
 case class RamlNamedExampleParser(entry: YMapEntry)(implicit ctx: ParserContext) {
   def parse(): Example = {
     val name             = ValueNode(entry.key)
-    val example: Example = RamlSingleExampleValueParser(entry.value.as[YMap]).parse()
+    val example: Example = RamlSingleExampleValueParser(entry.value).parse()
     example.set(ExampleModel.Name, name.string(), Annotations(entry))
   }
 }
@@ -96,39 +93,43 @@ case class RamlSingleExampleParser(key: String, map: YMap)(implicit ctx: ParserC
   }
 }
 
-case class RamlSingleExampleValueParser(node: YMap)(implicit ctx: ParserContext) {
+case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: ParserContext) {
   def parse(): Example = {
-    val isExpanded = node.regex("""displayName|description|strict|value|\(.+\)""").nonEmpty
-
     val example = Example(node)
-    if (isExpanded) {
-      node
-        .key("displayName")
-        .foreach(entry => {
-          val value = ValueNode(entry.value)
-          example.set(ExampleModel.DisplayName, value.string(), Annotations(entry))
-        })
-      node
-        .key("description")
-        .foreach(entry => {
-          val value = ValueNode(entry.value)
-          example.set(ExampleModel.Description, value.string(), Annotations(entry))
-        })
-      node
-        .key("strict")
-        .foreach(entry => {
-          val value = ValueNode(entry.value)
-          example.set(ExampleModel.Strict, value.boolean(), Annotations(entry))
-        })
 
-      node
-        .key("value")
-        .foreach(entry => {
-          RamlExampleValueAsString(entry.value, example, Option(example.strict).getOrElse(true)).populate()
-        })
-      AnnotationParser(() => example, node).parse()
-    } else {
-      RamlExampleValueAsString(node, example, strict = true).populate()
+    node.to[YMap] match {
+      case Right(map) if map.regex("""displayName|description|strict|value|\(.+\)""").nonEmpty =>
+        map
+          .key("displayName")
+          .foreach { entry =>
+            val value = ValueNode(entry.value)
+            example.set(ExampleModel.DisplayName, value.string(), Annotations(entry))
+          }
+
+        map
+          .key("description")
+          .foreach { entry =>
+            val value = ValueNode(entry.value)
+            example.set(ExampleModel.Description, value.string(), Annotations(entry))
+          }
+
+        map
+          .key("strict")
+          .foreach { entry =>
+            val value = ValueNode(entry.value)
+            example.set(ExampleModel.Strict, value.boolean(), Annotations(entry))
+          }
+
+        map
+          .key("value")
+          .foreach { entry =>
+            RamlExampleValueAsString(entry.value, example, Option(example.strict).getOrElse(true)).populate()
+          }
+
+        AnnotationParser(() => example, map).parse()
+
+      case _ =>
+        RamlExampleValueAsString(node, example, strict = true).populate()
     }
 
     example

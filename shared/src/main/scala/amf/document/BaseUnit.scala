@@ -58,6 +58,11 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
                                                                                                 first = false)
   }
 
+  def findBy(predicate: (DomainElement) => Boolean): Seq[DomainElement] = {
+    findInDeclaredModel(predicate, this, first = false, ListBuffer.empty) ++
+      findInEncodedModel(predicate, this,first = false)
+  }
+
   def transform(selector: (DomainElement) => Boolean,
                 transformation: (DomainElement) => Option[DomainElement]): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
@@ -97,6 +102,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
       case _                      => ListBuffer.empty
     }
   }
+
+  def findInReferences(id: String): Option[BaseUnit] = references.find(_.id == id)
 
   private def findInReferencedModels(id: String, units: Seq[BaseUnit]): ListBuffer[DomainElement] = {
     if (units.isEmpty) {

@@ -4,7 +4,6 @@ import amf.ProfileNames
 import amf.model.{BaseUnit, Document, Module}
 import amf.remote.Syntax.Syntax
 import amf.remote._
-import amf.unsafe.TrunkPlatform
 import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -40,7 +39,9 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     */
   @JSExport
   def parseString(stream: String, handler: JsHandler[BaseUnit]): Unit =
-    super.parse(DEFAULT_DOCUMENT_URL, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+    super.parse(DEFAULT_DOCUMENT_URL,
+                BaseUnitHandlerAdapter(handler),
+                Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   /**
     * Asynchronously generate a [[amf.model.BaseUnit]] from the api located in the given url.
@@ -58,11 +59,17 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
     */
   @JSExport
   def parseStringAsync(stream: String): js.Promise[BaseUnit] =
-    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJS).toJSPromise
+    super
+      .parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+      .map(unitScalaToJS)
+      .toJSPromise
 
   @JSExport
   def parseStringAsync(stream: String, platform: Platform): js.Promise[BaseUnit] =
-    super.parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))).map(unitScalaToJS).toJSPromise
+    super
+      .parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+      .map(unitScalaToJS)
+      .toJSPromise
 
   @JSExport
   def parseStringAsync(textUrl: String, stream: String, platform: Platform): js.Promise[BaseUnit] =

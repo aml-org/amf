@@ -17,27 +17,23 @@ class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   private val basePath = "file://shared/src/test/resources/references/fragments/"
 
   test("Detect Oas Data Type Fragment") {
-    assertHeader("data-type-without-header.json", Some(OasFragmentHeader.Oas20DataType))
+    assertHeader("data-type-without-header.json", Some(OasHeader.Oas20DataType))
   }
 
   test("Detect Oas ResourceType") {
-    assertHeader("resource-type-without-header.json", Some(OasFragmentHeader.Oas20ResourceType))
+    assertHeader("resource-type-without-header.json", Some(OasHeader.Oas20ResourceType))
   }
 
   test("Detect Oas Trait") {
-    assertHeader("trait-without-header.json", Some(OasFragmentHeader.Oas20Trait))
+    assertHeader("trait-without-header.json", Some(OasHeader.Oas20Trait))
   }
 
   test("Detect Oas DocumentationItem") {
-    assertHeader("documentation-item-without-header.json", Some(OasFragmentHeader.Oas20DocumentationItem))
+    assertHeader("documentation-item-without-header.json", Some(OasHeader.Oas20DocumentationItem))
   }
 
   test("Detect Oas Annotation Type Declaration") {
-    assertHeader("annotation-without-header.json", Some(OasFragmentHeader.Oas20AnnotationTypeDeclaration))
-  }
-
-  test("Detect Oas Extention") {
-    assertHeader("extension-without-header.json", Some(OasFragmentHeader.Oas20Extension))
+    assertHeader("annotation-without-header.json", Some(OasHeader.Oas20AnnotationTypeDeclaration))
   }
 
   test("Detect Oas Any matching fragment") {
@@ -49,17 +45,17 @@ class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Detect Oas SecurityScheme") {
-    assertHeader("security-scheme.json", Some(OasFragmentHeader.Oas20SecurityScheme))
+    assertHeader("security-scheme.json", Some(OasHeader.Oas20SecurityScheme))
   }
 
   test("Detect Oas SecurityScheme without header") {
-    assertHeader("security-scheme-without-header.json", Some(OasFragmentHeader.Oas20SecurityScheme))
+    assertHeader("security-scheme-without-header.json", Some(OasHeader.Oas20SecurityScheme))
   }
 
   private def assertHeader(path: String, expectedOption: Option[OasHeader]): Future[Assertion] = {
     AMFCompiler(basePath + path, platform, OasJsonHint, Validation(platform))
       .root()
-      .map(OasFragmentHeader(_) shouldBe expectedOption)
+      .map(OasHeader(_) shouldBe expectedOption)
   }
 
 }

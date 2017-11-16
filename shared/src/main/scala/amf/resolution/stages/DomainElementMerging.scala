@@ -1,5 +1,6 @@
 package amf.resolution.stages
 
+import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.domain.{DomainElement, FieldEntry, Value}
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.{DomainElementModel, KeyField, OptionalField}
@@ -24,17 +25,15 @@ object DomainElementMerging {
           case None => // Case (2)
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
-              case Type.Array(element)                                                        => setNonOptional(main, field, element, value)
-              case Type.SortedArray(element)                                                  => setNonOptional(main, field, element, value)
+              case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
               case _                                                                          => main.set(field, adoptInner(main.id, value.value))
             }
           case Some(existing) => // Case (3)
             field.`type` match {
-              case _: Type.Scalar            => // Do nothing (3.a)
-              case Type.Array(element)       => mergeByValue(main, field, element, existing.value, value)
-              case Type.SortedArray(element) => mergeByValue(main, field, element, existing.value, value)
-              case _: DomainElementModel     => merge(existing.domainElement, entry.domainElement)
-              case _                         => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+              case _: Type.Scalar          => // Do nothing (3.a)
+              case Type.ArrayLike(element) => mergeByValue(main, field, element, existing.value, value)
+              case _: DomainElementModel   => merge(existing.domainElement, entry.domainElement)
+              case _                       => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
         }
     }
@@ -96,7 +95,7 @@ object DomainElementMerging {
     val existing = main.values.flatMap { m =>
       val obj = m.asInstanceOf[DomainElement]
       obj.fields.entry(key.key).map(_.scalar.value -> obj)
-    }.toMap
+    }.toMap // TODO value without key?
 
     other.values.foreach { o =>
       val obj = o.asInstanceOf[DomainElement]
@@ -120,5 +119,55 @@ object DomainElementMerging {
   private def ignored(entry: FieldEntry) = entry.field match {
     case Extends | Includes | Sources => false
     case _                            => true
+  }
+}
+
+/** Merge two data nodes of the same type. This merging applies the 'other' side as an overlay to the 'main' side. */
+object DataNodeMerging {
+
+  def merge(existing: DataNode, overlay: DataNode): Unit = {
+    (existing, overlay) match {
+      case (left: ScalarNode, right: ScalarNode) =>
+        left.value = right.value
+        left.dataType = right.dataType
+      case (left: ObjectNode, right: ObjectNode) =>
+        mergeObjectNode(left, right)
+      case (left: ArrayNode, right: ArrayNode) =>
+        // Add members that are not in the left array.
+        mergeArrayNode(left, right)
+      case _ =>
+    }
+  }
+
+  def mergeObjectNode(left: ObjectNode, right: ObjectNode): Unit =
+    for { (key, value) <- right.properties } {
+      left.properties.get(key) match {
+        case Some(property) => merge(property, value)
+        case None           => left.addProperty(key, adoptInner(left.id, value), right.propertyAnnotations(key))
+      }
+    }
+
+  /** Merge array data nodes by value: If scalar, check it's not there and add. If object or array, just add but adoptInner ids. */
+  private def mergeArrayNode(main: ArrayNode, other: ArrayNode): Unit = {
+    val existing = main.members.collect { case s: ScalarNode => s.value }
+
+    other.members.foreach {
+      case scalar: ScalarNode =>
+        if (!existing.contains(scalar.value)) main.addMember(scalar)
+      case node =>
+        main.addMember(adoptInner(main.id, node))
+    }
+  }
+
+  def adoptInner(id: String, target: DataNode): DataNode = {
+    target.forceAdopted(id)
+    target match {
+      case array: ArrayNode =>
+        array.members.foreach(adoptInner(array.id, _))
+      case obj: ObjectNode =>
+        obj.properties.values.foreach(adoptInner(obj.id, _))
+      case _ =>
+    }
+    target
   }
 }

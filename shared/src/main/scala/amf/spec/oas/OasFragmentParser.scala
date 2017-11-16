@@ -1,25 +1,22 @@
 package amf.spec.oas
 
-import amf.compiler.OasFragmentHeader._
-import amf.compiler.{OasFragmentHeader, OasHeader, Root}
+import amf.compiler.OasHeader._
+import amf.compiler.{OasHeader, Root}
 import amf.document.Fragment._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
-import amf.metadata.document.FragmentsTypesModels.{ExtensionModel, OverlayModel}
-import amf.model.AmfScalar
 import amf.parser._
 import amf.shape.Shape
+import amf.spec.ParserContext
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
-import amf.spec.{Declarations, ParserContext}
 import org.yaml.model.{YMap, YType}
 
 /**
   *
   */
-case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: ParserContext)
-    extends OasSpecParser {
+case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(implicit val ctx: ParserContext) extends OasSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -36,13 +33,11 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20ResourceType              => ResourceTypeFragmentParser(rootMap).parse()
       case Oas20Trait                     => TraitFragmentParser(rootMap).parse()
       case Oas20AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
-      case Oas20Extension                 => ExtensionFragmentParser(rootMap).parse()
-      case Oas20Overlay                   => OverlayFragmentParser(rootMap).parse()
       case Oas20SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
       case Oas20NamedExample              => NamedExampleFragmentParser(rootMap).parse()
     }).getOrElse {
       val fragment = ExternalFragment().withEncodes(ExternalDomainElement().withRaw(root.raw))
-      ctx.violation(fragment.id, "Unsuported oas type", rootMap)
+      ctx.violation(fragment.id, "Unsupported oas type", rootMap)
       fragment
     }
 
@@ -60,7 +55,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
   def detectType(): Option[OasHeader] = {
     fragment match {
       case t if t.isDefined => t
-      case _                => OasFragmentHeader(root)
+      case _                => OasHeader(root)
     }
   }
 
@@ -80,7 +75,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val dataType = DataType().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), Declarations(), "schema")
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location),  "schema")
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -93,11 +88,11 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
     def parse(): AnnotationTypeDeclaration = {
       val annotation = AnnotationTypeDeclaration().adopted(root.location)
 
-      val property = AnnotationTypesParser(map,
-                                           "annotation",
-                                           map,
-                                           (annotation: CustomDomainProperty) => annotation.adopted(root.location),
-                                           Declarations()).parse()
+      val property =
+        AnnotationTypesParser(map,
+                              "annotation",
+                              map,
+                              (annotation: CustomDomainProperty) => annotation.adopted(root.location)).parse()
 
       annotation.withEncodes(property)
     }
@@ -108,7 +103,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val resourceType = ResourceTypeFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(ResourceType(map), resourceType.id, "resourceType", map, Declarations()).parse()
+        new AbstractDeclarationParser(ResourceType(map), resourceType.id, "resourceType", map).parse()
 
       resourceType.withEncodes(abstractDeclaration)
 
@@ -120,61 +115,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val traitFragment = TraitFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(Trait(map), traitFragment.id, "trait", map, Declarations()).parse()
+        new AbstractDeclarationParser(Trait(map), traitFragment.id, "trait", map).parse()
 
       traitFragment.withEncodes(abstractDeclaration)
     }
-  }
-
-  case class ExtensionFragmentParser(map: YMap) {
-    def parse(): ExtensionFragment = {
-      val extension = ExtensionFragment().adopted(root.location)
-
-      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
-      extension.withEncodes(api)
-
-      map
-        .key("x-extends")
-        .foreach(e => {
-          ctx.link(e.value) match {
-            case Left(url) =>
-              root.references
-                .find(_.parsedUrl == url)
-                .foreach(extend =>
-                  extension
-                    .set(ExtensionModel.Extends, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
-            case _ =>
-          }
-        })
-
-      extension
-    }
-  }
-
-  case class OverlayFragmentParser(map: YMap) {
-    def parse(): OverlayFragment = {
-      val overlay = OverlayFragment().adopted(root.location)
-
-      val api = OasDocumentParser(root).parseWebApi(map, Declarations())
-      overlay.withEncodes(api)
-
-      map
-        .key("x-extends")
-        .foreach(e => {
-          ctx.link(e.value) match {
-            case Left(url) =>
-              root.references
-                .find(_.parsedUrl == url)
-                .foreach(extend =>
-                  overlay
-                    .set(OverlayModel.Extends, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
-            case _ =>
-          }
-        })
-
-      overlay
-    }
-
   }
 
   case class SecuritySchemeFragmentParser(map: YMap) {
@@ -185,8 +129,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         OasSecuritySchemeParser(map,
                                 "securityDefinitions",
                                 map,
-                                (security: amf.domain.security.SecurityScheme) => security.adopted(root.location),
-                                Declarations())
+                                (security: amf.domain.security.SecurityScheme) => security.adopted(root.location))
           .parse())
     }
   }

@@ -8,6 +8,7 @@ import amf.metadata.{MetaModelTypeMapping, Obj}
 import amf.model.{AmfArray, AmfScalar}
 import amf.resolution.stages.shape_normalization.MinShapeAlgorithm
 import amf.shape._
+import amf.validation.Validation
 import amf.vocabulary.{Namespace, ValueType}
 
 import scala.collection.mutable.ListBuffer
@@ -18,7 +19,7 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   * @param profile
   */
-class ShapeNormalizationStage(profile: String)
+class ShapeNormalizationStage(profile: String)(override implicit val currentValidation: Validation)
     extends ResolutionStage(profile)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {
@@ -169,7 +170,7 @@ class ShapeNormalizationStage(profile: String)
   protected def canonical(shape: Shape): Shape = {
     shape match {
       case union: UnionShape       => canonicalUnion(union)
-      case scalar: ScalarShape     => canonicalShape(scalar)
+      case scalar: ScalarShape     => canonicalScalar(scalar)
       case array: ArrayShape       => canonicalArray(array)
       case matrix: MatrixShape     => canonicalMatrix(matrix)
       case tuple: TupleShape       => canonicalTuple(tuple)
@@ -182,6 +183,14 @@ class ShapeNormalizationStage(profile: String)
   }
 
   private def canonicalShape(shape: Shape) = shape
+
+  protected def canonicalScalar(scalar: ScalarShape): Shape = {
+    if (Option(scalar.inherits).isDefined && scalar.inherits.nonEmpty) {
+      canonicalInheritance(scalar)
+    } else {
+      scalar
+    }
+  }
 
   protected def canonicalInheritance(shape: Shape): Shape = {
     val superTypes = shape.inherits
@@ -286,7 +295,7 @@ class ShapeNormalizationStage(profile: String)
               accNode.cloneShape().withProperties(accNode.properties ++ Seq(newProperty))
             }
 
-          // The canonical property is still a property shape, we just add the property to
+          // The canonical property is still a property shape, we just add the property
           // to each of the new shapes in the accumulator
           case canonicalProperty: PropertyShape =>
             acc = for {
@@ -299,7 +308,7 @@ class ShapeNormalizationStage(profile: String)
           case other => throw new Exception(s"Resolution error: Expecting property shape or union, found $other")
         }
       }
-      if (acc.length == 1) {
+      if (acc.toSet.size == 1) {
         acc.head
       } else {
         UnionShape().withId(node.id + "/resolved").setArrayWithoutId(UnionShapeModel.AnyOf, acc).withName(node.name)

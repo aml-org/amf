@@ -23,7 +23,7 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  protected def generate(unit: BaseUnit, url: String, options: GenerationOptions): Future[String] =
+  protected def generate(unit: BaseUnit, url: String, options: GenerationOptions): Future[Unit] =
     AMFDumper(unit, target, syntax, options).dumpToFile(platform, url)
 
   protected def generate(unit: BaseUnit, options: GenerationOptions): Future[String] =
@@ -43,8 +43,8 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
     case Failure(exception) => handler.error(exception)
   }
 
-  private def unitSyncAdapter(handler: Handler[Unit])(t: Try[String]): Unit = t match {
-    case Success(_)         => handler.success(Unit)
+  private def unitSyncAdapter(handler: Handler[Unit])(t: Try[Unit]): Unit = t match {
+    case Success(unit)      => handler.success(unit)
     case Failure(exception) => handler.error(exception)
   }
 }

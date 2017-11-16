@@ -34,6 +34,7 @@ object WellKnownAnnotation {
     "x-type"                -> true,
     "(consumes)"            -> true,
     "(produces)"            -> true,
+    "x-extension-type"      -> true,
     "x-fragment-type"       -> true,
     "x-usage"               -> true,
     "x-title"               -> true,
@@ -59,7 +60,7 @@ object WellKnownAnnotation {
 
   def normalAnnotation(field: String): Boolean =
     if (isRamlAnnotation(field) || isOasAnnotation(field)) {
-      !annotations.getOrElse(field, false)
+      !field.startsWith("x-facets") && !annotations.getOrElse(field, false)
     } else {
       false
     }

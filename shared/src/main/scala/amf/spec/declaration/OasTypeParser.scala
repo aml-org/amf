@@ -11,7 +11,7 @@ import amf.shape._
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.oas.OasSpecParser
-import amf.spec.{Declarations, OasDefinitions, ParserContext}
+import amf.spec.{OasDefinitions, ParserContext, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model._
 
@@ -21,17 +21,13 @@ import scala.collection.mutable
   * OpenAPI Type Parser.
   */
 object OasTypeParser {
-  def apply(entry: YMapEntry, adopt: Shape => Unit, declarations: Declarations, oasNode: String = "schema")(
+  def apply(entry: YMapEntry, adopt: Shape => Unit, oasNode: String = "schema")(
       implicit ctx: ParserContext): OasTypeParser =
-    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, declarations, oasNode)(ctx.toOas)
+    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(ctx.toOas)
 }
 
-case class OasTypeParser(ast: YPart,
-                         name: String,
-                         map: YMap,
-                         adopt: Shape => Unit,
-                         declarations: Declarations,
-                         oasNode: String)(implicit val ctx: ParserContext)
+case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(
+    implicit val ctx: ParserContext)
     extends OasSpecParser {
 
   def parse(): Option[Shape] = {
@@ -101,7 +97,7 @@ case class OasTypeParser(ast: YPart,
   }
 
   private def parseArrayType(): Shape = {
-    DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape), declarations).parse()
+    DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape)).parse()
   }
 
   private def parseLinkType(): Option[Shape] = {
@@ -109,7 +105,7 @@ case class OasTypeParser(ast: YPart,
       .key("$ref")
       .map(e => OasDefinitions.stripDefinitionsPrefix(e.value))
       .map(text =>
-        declarations.findType(text) match {
+        ctx.declarations.findType(text, SearchScope.All) match {
           case Some(s) =>
             val copied = s.link(text, Annotations(ast)).asInstanceOf[Shape].withName(name)
             adopt(copied)
@@ -122,16 +118,16 @@ case class OasTypeParser(ast: YPart,
     if (map.key("x-schema").isDefined) {
       val shape = SchemaShape(ast).withName(name)
       adopt(shape)
-      SchemaShapeParser(shape, map, declarations).parse()
+      SchemaShapeParser(shape, map).parse()
     } else {
       val shape = NodeShape(ast).withName(name)
       adopt(shape)
-      NodeShapeParser(shape, map, declarations).parse()
+      NodeShapeParser(shape, map).parse()
     }
   }
 
   private def parseUnionType(): Shape = {
-    UnionShapeParser(map, name, declarations).parse()
+    UnionShapeParser(map, name).parse()
   }
 
   trait CommonScalarParsingLogic {
@@ -200,7 +196,7 @@ case class OasTypeParser(ast: YPart,
     }
   }
 
-  case class UnionShapeParser(override val map: YMap, name: String, declarations: Declarations) extends ShapeParser() {
+  case class UnionShapeParser(override val map: YMap, name: String) extends ShapeParser() {
 
     override val shape: UnionShape = UnionShape(Annotations(map)).withName(name)
 
@@ -215,7 +211,7 @@ case class OasTypeParser(ast: YPart,
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(YScalar(s"item$index", true, node.range)), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), declarations).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index)).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -231,11 +227,7 @@ case class OasTypeParser(ast: YPart,
     }
   }
 
-  case class DataArrangementParser(name: String,
-                                   ast: YPart,
-                                   map: YMap,
-                                   adopt: Shape => Unit,
-                                   declarations: Declarations) {
+  case class DataArrangementParser(name: String, ast: YPart, map: YMap, adopt: Shape => Unit) {
 
     def lookAhead(): Option[Either[TupleShape, ArrayShape]] = {
       map.key("items") match {
@@ -258,15 +250,14 @@ case class OasTypeParser(ast: YPart,
           adopt(arrayShape)
           ctx.violation(arrayShape.id, "Cannot parse data arrangement shape", ast)
           arrayShape
-        case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt, declarations).parse()
-        case Some(Right(array)) => ArrayShapeParser(array, map, adopt, declarations).parse()
+        case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt).parse()
+        case Some(Right(array)) => ArrayShapeParser(array, map, adopt).parse()
       }
     }
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit, declarations: Declarations)
-      extends ShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends ShapeParser() {
 
     override def parse(): Shape = {
       adopt(shape)
@@ -297,7 +288,7 @@ case class OasTypeParser(ast: YPart,
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, item => item.adopted(item.id + "/items/" + index), declarations)
+                OasTypeParser(elem, item => item.adopted(item.id + "/items/" + index))
                   .parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
@@ -308,8 +299,7 @@ case class OasTypeParser(ast: YPart,
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit, declarations: Declarations)
-      extends ShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends ShapeParser() {
     override def parse(): Shape = {
       adopt(shape)
 
@@ -332,7 +322,7 @@ case class OasTypeParser(ast: YPart,
 
       val finalShape = for {
         entry <- map.key("items")
-        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), declarations)
+        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"))
           .parse()
       } yield {
         item match {
@@ -353,7 +343,7 @@ case class OasTypeParser(ast: YPart,
     }
   }
 
-  case class NodeShapeParser(shape: NodeShape, map: YMap, declarations: Declarations) extends ShapeParser() {
+  case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
     override def parse(): NodeShape = {
 
       super.parse()
@@ -401,7 +391,7 @@ case class OasTypeParser(ast: YPart,
         "properties",
         entry => {
           val properties: Seq[PropertyShape] =
-            PropertiesParser(entry.value.as[YMap], shape.withProperty, requiredFields, declarations).parse()
+            PropertiesParser(entry.value.as[YMap], shape.withProperty, requiredFields).parse()
           shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
         }
       )
@@ -421,7 +411,7 @@ case class OasTypeParser(ast: YPart,
       map.key(
         "allOf",
         entry => {
-          val inherits = AllOfParser(entry.value.as[Seq[YNode]], declarations, s => s.adopted(shape.id)).parse()
+          val inherits = AllOfParser(entry.value.as[Seq[YNode]], s => s.adopted(shape.id)).parse()
           shape.set(NodeShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
         }
       )
@@ -430,34 +420,28 @@ case class OasTypeParser(ast: YPart,
     }
   }
 
-  case class AllOfParser(array: Seq[YNode], declarations: Declarations, adopt: Shape => Unit) {
+  case class AllOfParser(array: Seq[YNode], adopt: Shape => Unit) {
     def parse(): Seq[Shape] =
       array
         .flatMap(n => n.toOption[YMap])
         .flatMap(map =>
           declarationsRef(map)
-            .orElse(OasTypeParser(map, "", map, adopt, declarations, "schema").parse()))
+            .orElse(OasTypeParser(map, "", map, adopt, "schema").parse()))
 
     private def declarationsRef(entries: YMap): Option[Shape] = {
       entries
         .key("$ref")
-        .map(entry => declarations.shapes(entry.value.as[String].stripPrefix("#/definitions/")))
+        .map(entry => ctx.declarations.shapes(entry.value.as[String].stripPrefix("#/definitions/")))
     }
   }
 
-  case class PropertiesParser(map: YMap,
-                              producer: String => PropertyShape,
-                              requiredFields: Seq[String],
-                              declarations: Declarations) {
+  case class PropertiesParser(map: YMap, producer: String => PropertyShape, requiredFields: Seq[String]) {
     def parse(): Seq[PropertyShape] = {
-      map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields, declarations).parse())
+      map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields).parse())
     }
   }
 
-  case class PropertyShapeParser(entry: YMapEntry,
-                                 producer: String => PropertyShape,
-                                 requiredFields: Seq[String],
-                                 declarations: Declarations) {
+  case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape, requiredFields: Seq[String]) {
 
     def parse(): PropertyShape = {
 
@@ -470,7 +454,7 @@ case class OasTypeParser(ast: YPart,
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
 
-      OasTypeParser(entry, shape => shape.adopted(property.id), declarations)
+      OasTypeParser(entry, shape => shape.adopted(property.id))
         .parse()
         .foreach(property.set(PropertyShapeModel.Range, _))
 
@@ -526,7 +510,15 @@ case class OasTypeParser(ast: YPart,
         }
       )
 
-      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples", declarations).parse()
+      map.key(
+        "x-facets",
+        entry => {
+          val properties: Seq[PropertyShape] =
+            PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Seq()).parse()
+        }
+      )
+
+      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples").parse()
       if (examples.nonEmpty)
         shape.setArray(ShapeModel.Examples, examples)
 
@@ -557,9 +549,7 @@ case class OasTypeParser(ast: YPart,
     }
   }
 
-  case class SchemaShapeParser(shape: SchemaShape, map: YMap, declarations: Declarations)
-      extends ShapeParser()
-      with CommonScalarParsingLogic {
+  case class SchemaShapeParser(shape: SchemaShape, map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
     super.parse()
 
     override def parse(): Shape = {

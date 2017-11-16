@@ -1,0 +1,6 @@
+#%RAML 1.0 Dialect
+dialect: Validation Profile
+version: 1.0
+usage: Dialect to describe validations over RAML documents
+nodeMappings:
+  profileNode: !include profileNode.raml

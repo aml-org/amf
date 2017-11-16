@@ -19,7 +19,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
   def dumpToString: Future[String] = Future { dump() }
 
   /** Print ast to file. */
-  def dumpToFile(remote: Platform, path: String): Future[String] = remote.write(path, dump()).map(p => p)
+  def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())
 
   private def dump(): String = {
     // reset data node counter
