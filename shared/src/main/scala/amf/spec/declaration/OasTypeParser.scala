@@ -149,12 +149,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       map.key("minimum", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Minimum, value.integer(), Annotations(entry))
       })
 
       map.key("maximum", entry => {
         val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Maximum, value.integer(), Annotations(entry))
       })
 
       map.key("exclusiveMinimum", entry => {
