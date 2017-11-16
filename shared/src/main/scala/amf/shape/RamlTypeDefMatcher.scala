@@ -7,6 +7,8 @@ import amf.shape.TypeDef._
   */
 object RamlTypeDefMatcher {
 
+  val knownFormats: Set[String] = Set("byte", "binary", "password", "int32", "float")
+
   def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef =
     ramlType match {
       case XMLSchema(_)        => XMLSchemaType
@@ -21,8 +23,13 @@ object RamlTypeDefMatcher {
           case "password" => PasswordType
           case _          => StrType
         }
+      case "number"        =>
+        format match {
+          case "int32"    => IntType
+          case "float"    => FloatType
+          case _          => FloatType
+        }
       case "integer"       => IntType
-      case "number"        => FloatType
       case "boolean"       => BoolType
       case "datetime"      => DateTimeType
       case "datetime-only" => DateTimeOnlyType
@@ -65,7 +72,7 @@ object RamlTypeDefStringValueMatcher {
     case PasswordType     => ("string", "password")
     case StrType          => ("string", "")
     case IntType          => ("integer", "")
-    case FloatType        => ("number", "")
+    case FloatType        => ("number", "float")
     case BoolType         => ("boolean", "")
     case DateTimeType     => ("datetime", "")
     case DateTimeOnlyType => ("datetime-only", "")

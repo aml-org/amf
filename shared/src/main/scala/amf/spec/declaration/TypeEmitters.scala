@@ -355,7 +355,8 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
   override def emitters(): Seq[EntryEmitter] = {
     val fs = scalar.fields
 
-    val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
+    val rawTypeDef = TypeDefXsdMapping.typeDef(scalar.dataType)
+    val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef)
 
     val typeEmitterOption = if (scalar.inherits.isEmpty) {
       fs
@@ -384,10 +385,52 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("multipleOf", f))
 
-    if (format.nonEmpty) result += MapEntryEmitter("(format)", format)
-    else fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f)) // todo mutually exclusive?
+    result ++= emitFormat(rawTypeDef, fs, format)
 
     result
+  }
+
+  def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: String): Seq[EntryEmitter] = {
+    val formatKey = if (rawTypeDef.isNumber) "format"
+                    else "(format)"
+
+    val translationFormats: Set[String] = OasTypeDefMatcher.knownFormats.diff(RamlTypeDefMatcher.knownFormats)
+    var explictFormatFound = false
+    val explicitFormat = fs.entry(ScalarShapeModel.Format) match {
+      case Some(entry) if entry.value.value.isInstanceOf[AmfScalar] =>
+        val entryFormat = entry.value.value.asInstanceOf[AmfScalar].value.toString
+        if (translationFormats(entryFormat)) {
+          // this formats are here just because we parsed from OAS, the type in RAML has enough
+          // information, we don't need the annotation with this format.
+          // They will be re-generated correctly when translating into OAS
+          format
+        } else {
+          explictFormatFound = true
+          entryFormat
+        }
+      case _ => format
+    }
+    val finalFormat = if (explicitFormat != format) {
+      explicitFormat
+    } else {
+      format
+    }
+
+    val annotations = fs.entry(ScalarShapeModel.Format) match {
+      case Some(entry) if entry.value.value.isInstanceOf[AmfScalar] => entry.value.annotations
+      case _                                                        => Annotations()
+    }
+
+    if (finalFormat.nonEmpty && finalFormat != "float" && finalFormat != "int32") {
+      Seq(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
+    } else if (finalFormat.nonEmpty && (finalFormat == "float" || finalFormat == "int32") && explictFormatFound) {
+      // we always mapping 'number' in RAML to xsd:float, if we are to emit 'float'
+      // as the format must be because it has been explicitly set in this way, not because
+      // we are adding that through the number -> xsd:float mapping
+      Seq(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
+    } else {
+      Seq()
+    }
   }
 
   override val typeName: Option[String] = None //exceptional case for get the type (scalar) and format
@@ -992,7 +1035,7 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
 
     val fs = scalar.fields
 
-    val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType)) // TODO Check this
+    val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType))
 
     fs.entry(ScalarShapeModel.DataType)
       .foreach(f =>
@@ -1000,6 +1043,13 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
           result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
 
+    fs.entry(ScalarShapeModel.Format) match {
+      case Some(_) => // ignore, this will be set with the explicit information
+      case None    => OasTypeDefStringValueMatcher.matchFormat(TypeDefXsdMapping.typeDef(scalar.dataType)) match {
+        case Some(format) => result += RawValueEmitter("format", ScalarShapeModel.Format, format)
+        case None         => // ignore
+      }
+    }
     emitCommonFields(fs, result)
 
     result

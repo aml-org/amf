@@ -13,11 +13,13 @@
           "type": "boolean"
         }
       },
-      "type": "string"
+      "type": "string",
+      "format": "date-only"
     },
     "PossibleMeetingDate": {
       "x-facet-noHolidays": true,
-      "type": "string"
+      "type": "string",
+      "format": "date-only"
     }
   }
 }

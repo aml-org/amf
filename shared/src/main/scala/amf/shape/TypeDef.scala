@@ -23,6 +23,11 @@ trait TypeDef {
     case AnyType => true
     case _       => false
   }
+
+  def isNumber: Boolean = this match {
+    case IntType | FloatType => true
+    case _                   => false
+  }
 }
 
 trait ScalarType
