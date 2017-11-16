@@ -4,7 +4,7 @@ import amf.document.BaseUnit
 import amf.domain.Annotation.{LexicalInformation, SingleValueArray}
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
-import amf.metadata.Type
+import amf.metadata.{Field, Type}
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
@@ -94,6 +94,13 @@ package object BaseEmitters {
     }
 
     override def position(): Position = pos(f.value.annotations)
+  }
+
+  object RawValueEmitter {
+    def apply(key: String, f: Field, value: Any, annotations: Annotations = Annotations()) = ValueEmitter(
+      key,
+      FieldEntry(f, Value(AmfScalar(value, Annotations()), annotations))
+    )
   }
 
   protected[spec] def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)

@@ -23,6 +23,11 @@ trait TypeDef {
     case AnyType => true
     case _       => false
   }
+
+  def isNumber: Boolean = this match {
+    case IntType | FloatType | LongType | DoubleType => true
+    case _                                           => false
+  }
 }
 
 trait ScalarType
@@ -33,7 +38,9 @@ object TypeDef {
   object NilType            extends TypeDef with ScalarType
   object StrType            extends TypeDef with ScalarType
   object IntType            extends TypeDef with ScalarType
+  object LongType           extends TypeDef with ScalarType
   object FloatType          extends TypeDef with ScalarType
+  object DoubleType         extends TypeDef with ScalarType
   object BoolType           extends TypeDef with ScalarType
   object DateTimeType       extends TypeDef with ScalarType
   object DateTimeOnlyType   extends TypeDef with ScalarType

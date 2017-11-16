@@ -12,10 +12,12 @@
       "type": "integer"
     },
     "DateTimeOnlyType": {
-      "type": "datetime"
+      "type": "string",
+      "format": "date-time-only"
     },
     "TimeOnlyType": {
-      "type": "string"
+      "type": "string",
+      "format": "time-only"
     },
     "UnionType": {
       "anyOf": [
@@ -36,13 +38,16 @@
       ]
     },
     "BinaryType": {
-      "type": "binary"
+      "type": "string",
+      "format": "binary"
     },
     "DateTimeType": {
-      "type": "datetime"
+      "type": "string",
+      "format": "date-time"
     },
     "DateOnlyType": {
-      "type": "string"
+      "type": "string",
+      "format": "date-only"
     },
     "BooleanType": {
       "type": "boolean"
@@ -51,7 +56,8 @@
       "type": "object"
     },
     "ByteType": {
-      "type": "byte"
+      "type": "string",
+      "format": "byte"
     },
     "NumberType": {
       "type": "number"
@@ -60,7 +66,8 @@
       "type": "null"
     },
     "PasswordType": {
-      "type": "string"
+      "type": "string",
+      "format": "password"
     }
   }
 }
