@@ -156,9 +156,6 @@ class AMFCompiler private (val url: String,
     parsed match {
       case Some(document) =>
         document.document.tagType match {
-          case YType.Map =>
-            parseDoc(content, document, raw)
-
           // Payloads array
           case YType.Seq if hint == PayloadJsonHint || hint == PayloadYamlHint =>
             Future(Root(document, content.url, Seq(), Payload, raw))
@@ -167,12 +164,14 @@ class AMFCompiler private (val url: String,
           case YType.Seq if hint == AmfJsonHint && document.document.as[Seq[YNode]].length == 1 =>
             parseDoc(content, document, raw)
 
+          case YType.Map | YType.Seq =>
+            parseDoc(content, document, raw)
+
           // Payloads scalar
           case _ if document.document.toOption[YScalar].isDefined =>
             if (hint == PayloadJsonHint || hint == PayloadYamlHint)
               Future(Root(document, content.url, Seq(), Payload, raw))
             else Future(Root(document, content.url, Seq(), Unknown, raw))
-
           case _ => Future.failed(new Exception("Unable to parse document."))
         }
       case None => Future.failed(new Exception("Unable to parse document."))
@@ -198,7 +197,7 @@ class AMFCompiler private (val url: String,
   }
 
   private def toDocument(parts: Seq[YPart]) = {
-    if (parts.find(v => v.isInstanceOf[YDocument]).isDefined) {
+    if (parts.exists(v => v.isInstanceOf[YDocument])) {
       parts collectFirst { case d: YDocument => d } map { document =>
         val comment = parts collectFirst { case c: YComment => c }
         ParsedDocument(comment, document)
