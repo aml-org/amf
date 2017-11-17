@@ -1368,6 +1368,57 @@
                             "@value": "application/x-www-form-urlencoded; charset=UTF-8"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file://shared/src/test/resources/upanddown/full-example.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/200/application/x-www-form-urlencoded; charset=UTF-8/any/schema",
+                            "@type": [
+                              "http://raml.org/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://shared/src/test/resources/upanddown/full-example.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/200/application/x-www-form-urlencoded; charset=UTF-8/any/schema/source-map",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://shared/src/test/resources/upanddown/full-example.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/200/application/x-www-form-urlencoded; charset=UTF-8/any/schema"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://shared/src/test/resources/upanddown/full-example.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/200/application/x-www-form-urlencoded; charset=UTF-8/any/schema"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(68,12)-(69,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
                             "@id": "file://shared/src/test/resources/upanddown/full-example.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/200/application/x-www-form-urlencoded; charset=UTF-8/source-map",

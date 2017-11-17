@@ -1,13 +1,14 @@
 package amf.spec.domain
 
+import amf.domain.Annotation.SynthesizedField
 import amf.domain.{Annotations, Parameter, Payload, Response}
 import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.model.AmfArray
 import amf.parser.YMapOps
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import amf.spec.declaration.RamlTypeParser
-import org.yaml.model.{YMap, YMapEntry}
+import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable
 
@@ -46,26 +47,38 @@ case class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(
             val payloads = mutable.ListBuffer[Payload]()
 
             val payload = Payload()
-            payload.adopted(response.id) // TODO review
+            payload.adopted(response.id)
 
-            RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id))
-              .parse()
-              .foreach(payloads += payload.withSchema(_))
-
-            entry.value.to[YMap] match {
-              case Right(m) =>
-                m.regex(
-                  ".*/.*",
-                  entries => {
-                    entries.foreach(entry => {
-                      payloads += RamlPayloadParser(entry, response.withPayload).parse()
-                    })
+            entry.value.tagType match {
+              case YType.Null =>
+                RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), isAnnotation = false, AnyDefaultType)
+                  .parse()
+                  .foreach { schema =>
+                    schema.annotations += SynthesizedField()
+                    payloads += payload.withSchema(schema)
                   }
-                )
+                response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+
               case _ =>
+                RamlTypeParser(entry, shape => shape.withName("default").adopted(payload.id), isAnnotation = false, AnyDefaultType)
+                  .parse()
+                  .foreach(payloads += payload.withSchema(_))
+
+                entry.value.to[YMap] match {
+                  case Right(m) =>
+                    m.regex(
+                      ".*/.*",
+                      entries => {
+                        entries.foreach(entry => {
+                          payloads += RamlPayloadParser(entry, response.withPayload).parse()
+                        })
+                      }
+                    )
+                  case _ =>
+                }
+                if (payloads.nonEmpty)
+                  response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
             }
-            if (payloads.nonEmpty)
-              response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
           }
         )
 

@@ -1,6 +1,6 @@
 package amf.spec.domain
 
-import amf.domain.Annotation.ExplicitField
+import amf.domain.Annotation.{ExplicitField, SynthesizedField}
 import amf.domain.{Annotations, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.parser.{YMapOps, YScalarYRead}
@@ -8,7 +8,7 @@ import amf.shape.Shape
 import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 /**
   *
@@ -59,30 +59,42 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
           case Left(_) => SearchScope.Fragments
           case _       => SearchScope.Named
         }
-        entry.value.to[YScalar] match {
-          case Right(ref) if ctx.declarations.findParameter(ref.text, scope).isDefined =>
-            ctx.declarations
-              .findParameter(ref.text, scope)
-              .get
-              .link(ref.text, Annotations(entry))
-              .asInstanceOf[Parameter]
-              .withName(name)
-          case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
-            val schema = ctx.declarations
-              .findType(ref.text, scope)
-              .get
-              .link[Shape](ref.text, Annotations(entry))
-              .withName("schema")
-              .adopted(parameter.id)
-            parameter.withSchema(schema)
-          case Right(ref) if wellKnownType(ref.text) =>
-            val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
-            parameter.withSchema(schema)
-
-          case _ =>
-            ctx.violation(parameter.id, "Cannot declare unresolved parameter", entry.value)
+        entry.value.tagType match {
+          case YType.Null =>
+            RamlTypeParser(
+              entry,
+              shape => shape.withName("schema").adopted(parameter.id)
+            ).parse().foreach { schema =>
+              schema.annotations += SynthesizedField()
+              parameter.set(ParameterModel.Schema, schema, Annotations(entry))
+            }
             parameter
+          case _ => // we have a property type
+            entry.value.to[YScalar] match {
+            case Right(ref) if ctx.declarations.findParameter(ref.text, scope).isDefined =>
+              ctx.declarations
+                .findParameter(ref.text, scope)
+                .get
+                .link(ref.text, Annotations(entry))
+                .asInstanceOf[Parameter]
+                .withName(name)
+            case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
+              val schema = ctx.declarations
+                .findType(ref.text, scope)
+                .get
+                .link[Shape](ref.text, Annotations(entry))
+                .withName("schema")
+                .adopted(parameter.id)
+              parameter.withSchema(schema)
+            case Right(ref) if wellKnownType(ref.text) =>
+              val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+              parameter.withSchema(schema)
 
+            case _ =>
+              ctx.violation(parameter.id, "Cannot declare unresolved parameter", entry.value)
+              parameter
+
+          }
         }
     }
 

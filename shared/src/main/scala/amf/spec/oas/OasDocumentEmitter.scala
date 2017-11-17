@@ -333,7 +333,11 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
               payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
               payload.fields
                 .entry(PayloadModel.Schema)
-                .map(f => result += OasSchemaEmitter(f, ordering, Nil))
+                .map { f =>
+                  if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
+                    result += OasSchemaEmitter(f, ordering, references)
+                  }
+                }
             })
 
             if (payloads.other.nonEmpty)
@@ -384,7 +388,11 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
           val result = mutable.ListBuffer[EntryEmitter]()
 
           fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
-          fs.entry(PayloadModel.Schema).map(f => result += OasSchemaEmitter(f, ordering, references))
+          fs.entry(PayloadModel.Schema).map { f =>
+            if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
+              result += OasSchemaEmitter(f, ordering, references)
+            }
+          }
 
           result ++= AnnotationsEmitter(payload, ordering).emitters
 
