@@ -41,10 +41,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
                       platform.dialectsRegistry)
             .build())
     actual
-      .flatMap({ unit =>
-        AMFDumper(unit, Amf, Json, GenerationOptions()).dumpToString
-
-      })
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
         // platform.write(basePath + "validation_profile_with_default_example.json",v);
         v
@@ -69,12 +66,9 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
                       platform.dialectsRegistry)
             .build())
     actual
-      .flatMap({ unit =>
-        AMFDumper(unit, Amf, Json, GenerationOptions()).dumpToString
-
-      })
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
-        platform.write(basePath + "validation_profile_with_uses_example.json", v);
+        platform.write(basePath + "validation_profile_with_uses_example.json", v)
         v
       })
       .zip(expected)
@@ -106,64 +100,90 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
 //  }
 
   test("Uses (in dialect (real library))") {
-    val expected:Future[String] = platform.resolve(basePath + "validation_profile_example_uses_gold2.raml", None).map(_.stream.toString)
-    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + "validation_dialect_unions.raml") flatMap[BaseUnit]  { _ =>
-        AMFCompiler(basePath + "validation_profile_example_uses2.raml", platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    val expected: Future[String] =
+      platform.resolve(basePath + "validation_profile_example_uses_gold2.raml", None).map(_.stream.toString)
+    val actual
+      : Future[String] = platform.dialectsRegistry.registerDialect(basePath + "validation_dialect_unions.raml") flatMap [BaseUnit] {
+      _ =>
+        AMFCompiler(basePath + "validation_profile_example_uses2.raml",
+                    platform,
+                    RamlYamlHint,
+                    Validation(platform),
+                    None,
+                    None,
+                    platform.dialectsRegistry).build()
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
   test("Fragments ") {
-    val expectedFile = "validationFragment.raml"
-    val dialectFile  = "validation_dialect_with_fragments.raml"
-    val exampleFile  = "validationFragment.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap[BaseUnit]  { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    val expectedFile             = "validationFragment.raml"
+    val dialectFile              = "validation_dialect_with_fragments.raml"
+    val exampleFile              = "validationFragment.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
+      _ =>
+        AMFCompiler(basePath + exampleFile,
+                    platform,
+                    RamlYamlHint,
+                    Validation(platform),
+                    None,
+                    None,
+                    platform.dialectsRegistry).build()
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
   test("Fragments in Dialects ") {
-    val expectedFile = "validationFragment_simple.raml"
-    val dialectFile  = "validation_dialect_using_fragments.raml"
-    val exampleFile  = "validationFragment_simple.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap[BaseUnit]  { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    val expectedFile             = "validationFragment_simple.raml"
+    val dialectFile              = "validation_dialect_using_fragments.raml"
+    val exampleFile              = "validationFragment_simple.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
+      _ =>
+        AMFCompiler(basePath + exampleFile,
+                    platform,
+                    RamlYamlHint,
+                    Validation(platform),
+                    None,
+                    None,
+                    platform.dialectsRegistry).build()
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
   test("Fragments in Dialects + inplace") {
-    val expectedFile = "validationFragment_simple.raml"
-    val dialectFile  = "validation_dialect_using_fragments2.raml"
-    val exampleFile  = "validationFragment_simple.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap[BaseUnit]  { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    val expectedFile             = "validationFragment_simple.raml"
+    val dialectFile              = "validation_dialect_using_fragments2.raml"
+    val exampleFile              = "validationFragment_simple.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
+      _ =>
+        AMFCompiler(basePath + exampleFile,
+                    platform,
+                    RamlYamlHint,
+                    Validation(platform),
+                    None,
+                    None,
+                    platform.dialectsRegistry).build()
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
-
   test("Using library in dialect definition") {
-    val expectedFile = "validationFragment.raml"
-    val dialectFile  = "validation_dialect_uses(dialect_lib).raml"
-    val exampleFile  = "validationFragment.raml"
-    val expected:Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
-    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap[BaseUnit]  { _ =>
-      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None, platform.dialectsRegistry).build()
-    } flatMap[String] { unit:BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    val expectedFile             = "validationFragment.raml"
+    val dialectFile              = "validation_dialect_uses(dialect_lib).raml"
+    val exampleFile              = "validationFragment.raml"
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
+    val actual: Future[String] = platform.dialectsRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
+      _ =>
+        AMFCompiler(basePath + exampleFile,
+                    platform,
+                    RamlYamlHint,
+                    Validation(platform),
+                    None,
+                    None,
+                    platform.dialectsRegistry).build()
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 }

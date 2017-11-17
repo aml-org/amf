@@ -1,21 +1,18 @@
 package amf.resolution
 
 import amf.ProfileNames
-import amf.client.GenerationOptions
 import amf.compiler.AMFCompiler
 import amf.document.BaseUnit
-import amf.dumper.AMFDumper
 import amf.io.BuildCycleTests
-import amf.remote.Syntax.Yaml
 import amf.remote.{Raml, RamlYamlHint}
 import amf.shape._
 import amf.spec.ParserContext
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.validation.Validation
 import amf.vocabulary.Namespace
-import org.scalatest.Assertion
+import org.scalatest.Matchers._
 
-import scala.concurrent.Promise
+import scala.util.{Failure, Success}
 
 class TypeResolutionTest extends BuildCycleTests {
 
@@ -163,7 +160,7 @@ class TypeResolutionTest extends BuildCycleTests {
     }
   }
 
-  override def map(unit: BaseUnit, config: CycleConfig): BaseUnit = unit.resolve(ProfileNames.RAML)
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = unit.resolve(ProfileNames.RAML)
 
   val errorExamples = Seq(
     "inheritance_error1",
@@ -173,29 +170,24 @@ class TypeResolutionTest extends BuildCycleTests {
 
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      val res = AMFCompiler(basePath + s"$example.raml",
+      val res = AMFCompiler(s"file://$basePath$example.raml",
                             platform,
                             RamlYamlHint,
                             Validation(platform),
                             None,
                             None,
                             platform.dialectsRegistry)
+      res
         .build()
-        .map { model =>
-          model.resolve(ProfileNames.RAML)
+        .map(_.resolve(ProfileNames.RAML))
+        .transformWith {
+          case Success(_) =>
+            fail("Expected resolution error")
+            succeed
+          case Failure(exception) =>
+            exception.getMessage should startWith("Resolution error:")
+            succeed
         }
-
-      val p = Promise[Assertion]()
-      res.onComplete { res =>
-        if (res.isSuccess) {
-          AMFDumper(res.get, Raml, Yaml, GenerationOptions()).dumpToString.map { doc =>
-            p.success(assert(res.isFailure))
-          }
-        } else {
-          p.success(assert(res.isFailure))
-        }
-      }
-      p.future
     }
   }
 }

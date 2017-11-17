@@ -124,56 +124,64 @@ trait RestrictionComputation {
         if (computeNumericComparison("<=", superValue, baseValue)) {
           computeNumericRestriction("max", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for minProperties")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties")
         }
 
       case NodeShapeModel.MaxProperties =>
         if (computeNumericComparison(">=", superValue, baseValue)) {
           computeNumericRestriction("min", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxProperties")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxProperties")
         }
 
       case ScalarShapeModel.MinLength =>
         if (computeNumericComparison("<=", superValue, baseValue)) {
           computeNumericRestriction("max", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxProperties")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxProperties")
         }
 
       case ScalarShapeModel.MaxLength =>
         if (computeNumericComparison(">=", superValue, baseValue)) {
           computeNumericRestriction("min", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxProperties")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxProperties")
         }
 
       case ScalarShapeModel.Minimum =>
         if (computeNumericComparison("<=", superValue, baseValue)) {
           computeNumericRestriction("max", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxProperties")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxProperties")
         }
 
       case ScalarShapeModel.Maximum =>
         if (computeNumericComparison(">=", superValue, baseValue)) {
           computeNumericRestriction("min", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxProperties")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxProperties")
         }
 
       case ArrayShapeModel.MinItems =>
         if (computeNumericComparison("<=", superValue, baseValue)) {
           computeNumericRestriction("max", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for minItems")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for minItems")
         }
 
       case ArrayShapeModel.MaxItems =>
         if (computeNumericComparison(">=", superValue, baseValue)) {
           computeNumericRestriction("min", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxItems")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxItems")
         }
 
       case ScalarShapeModel.Format =>
@@ -226,14 +234,16 @@ trait RestrictionComputation {
         if (computeNumericComparison("<=", superValue, baseValue)) {
           computeNumericRestriction("max", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for minCount")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for minCount")
         }
 
       case PropertyShapeModel.MaxCount =>
         if (computeNumericComparison(">=", superValue, baseValue)) {
           computeNumericRestriction("min", superValue, baseValue)
         } else {
-          throw new Exception("sub type has a weaker constraint for min-properties than base type for maxCount")
+          throw new Exception(
+            "Resolution error: sub type has a weaker constraint for min-properties than base type for maxCount")
         }
 
       case PropertyShapeModel.Path =>

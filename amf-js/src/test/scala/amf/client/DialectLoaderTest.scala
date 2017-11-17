@@ -32,10 +32,7 @@ class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMF
                       None,
                       None,
                       dialectsRegistry).build())
-      .flatMap { u =>
-        val string = new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
-        string
-      }
+      .map(new AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
 
     actual.zip(expected).map(checkDiff)
 

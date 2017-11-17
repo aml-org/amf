@@ -12,7 +12,11 @@ import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnitFixtureTest with AmfObjectTestMatcher {
+class DialectLoaderTest
+    extends AsyncFunSuite
+    with PlatformSecrets
+    with PairsAMFUnitFixtureTest
+    with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Load Dialect from yaml") {
@@ -22,13 +26,22 @@ class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMF
       .resolve("file://shared/src/test/resources/vocabularies/muleconfig.json", None)
       .map(_.stream.toString)
 
-    val actual = l.registerDialect("file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml").flatMap( x =>
-      AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml", platform, RamlYamlHint, Validation(platform), None, None, l).build()
-    ).flatMap { u =>
-      val encoded = u.asInstanceOf[amf.document.Document].encodes
-      assert(encoded.getTypeIds().length == 2)
-      new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
-    }
+    val actual = l
+      .registerDialect("file://shared/src/test/resources/vocabularies/mule_config_dialect2.raml")
+      .flatMap(
+        x =>
+          AMFCompiler("file://shared/src/test/resources/vocabularies/muleconfig.raml",
+                      platform,
+                      RamlYamlHint,
+                      Validation(platform),
+                      None,
+                      None,
+                      l).build())
+      .map { u =>
+        val encoded = u.asInstanceOf[amf.document.Document].encodes
+        assert(encoded.getTypeIds().length == 2)
+        new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
+      }
 
     actual.zip(expected).map(checkDiff)
   }

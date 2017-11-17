@@ -42,9 +42,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   None,
                   platform.dialectsRegistry).build()
-    } flatMap [String] { unit: BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
@@ -61,9 +59,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   None,
                   platform.dialectsRegistry).build()
-    } flatMap [String] { unit: BaseUnit =>
-      AMFDumper(unit, Amf, Json, GenerationOptions()).dumpToString
-    }
+    } map { AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
@@ -80,9 +76,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   None,
                   platform.dialectsRegistry).build()
-    } flatMap [String] { unit: BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
@@ -99,9 +93,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   None,
                   platform.dialectsRegistry).build()
-    } flatMap [String] { unit: BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
@@ -118,9 +110,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   None,
                   platform.dialectsRegistry).build()
-    } flatMap [String] { unit: BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
@@ -137,9 +127,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   None,
                   None,
                   platform.dialectsRegistry).build()
-    } flatMap [String] { unit: BaseUnit =>
-      AMFDumper(unit, Raml, Yaml, GenerationOptions()).dumpToString
-    }
+    } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
 
@@ -444,7 +432,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation = Validation(platform)
     for {
       library <- AMFCompiler(examplesPath + "facets/custom-facets.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      report  <- validation.validate(library, ProfileNames.RAML)
     } yield {
       report.results.foreach(result => assert(result.position.isDefined))
       assert(report.results.length == 5)
@@ -453,7 +441,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Annotations validations test") {
     for {
-      library <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, Validation(platform))
+      library <- AMFCompiler(examplesPath + "annotations/annotations.raml",
+                             platform,
+                             RamlYamlHint,
+                             Validation(platform))
         .build()
       results <- AnnotationsValidation(library, platform).validate()
     } yield {
@@ -465,7 +456,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation = Validation(platform)
     for {
       library <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      report  <- validation.validate(library, ProfileNames.RAML)
     } yield {
       report.results.foreach(result => assert(result.position.isDefined))
       assert(report.results.length == 1)

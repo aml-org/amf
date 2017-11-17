@@ -9,13 +9,16 @@ import amf.dumper.AMFDumper
 import amf.io.BuildCycleTests
 import amf.remote._
 import amf.validation.Validation
+import org.mulesoft.common.io.AsyncFile
+
+import scala.concurrent.Future
 
 /**
   * Created by hernan.najles on 9/19/17.
   */
 class ReferencesCycleTest extends BuildCycleTests with ListAssertions {
 
-  override val basePath = "file://shared/src/test/resources/references/"
+  override val basePath = "shared/src/test/resources/references/"
 
   private val fixture = Seq(
     "Simple library raml"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml", Raml),
@@ -45,25 +48,19 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions {
     case ((title, (document, hint)), (reference, vendor)) =>
       test(title) {
         val validation = Validation(platform)
-        AMFCompiler(basePath + document, platform, hint, validation)
+        AMFCompiler(s"file://$basePath$document", platform, hint, validation)
           .build()
           .flatMap(renderReference(reference, vendor, _))
-          .flatMap { a =>
-            val file = basePath + reference
-            platform.resolve(file, None).flatMap { expected =>
-              platform.resolve("file://" + a, None).map { actual =>
-                checkDiff(actual.stream.toString, actual.url, expected.stream.toString, expected.url)
-              }
-            }
-          }
+          .flatMap(checkDiff(_, fs.asyncFile(basePath + reference)))
       }
   }
 
-  private def renderReference(reference: String, vendor: Vendor, unit: BaseUnit) = {
-    val ref  = unit.references.head
-    val path = tmp(reference.replace("/", "--"))
-    AMFDumper(ref, vendor, vendor.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
-      .flatMap(platform.write("file://" + path, _).map(_ => path))
+  private def renderReference(reference: String, vendor: Vendor, unit: BaseUnit): Future[AsyncFile] = {
+    val ref    = unit.references.head
+    val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
+    actual
+      .write(AMFDumper(ref, vendor, vendor.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)
+      .map(_ => actual)
   }
 
   case class ModuleContent(url: String, content: String)

@@ -57,7 +57,7 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("traits-using-library.raml", "traits-using-library.raml.raml", RamlYamlHint, Raml)
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
   }

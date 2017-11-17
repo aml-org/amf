@@ -83,9 +83,8 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         computeMinGeneric(baseGeneric, superShape)
 
       // fallback error
-      case _ => {
-        throw new Exception(s"incompatible types: [$baseShape, $superShape]")
-      }
+      case _ =>
+        throw new Exception(s"Resolution error: Incompatible types [$baseShape, $superShape]")
     }
   }
 

@@ -36,10 +36,9 @@ abstract class BaseGenerator(protected val target: Vendor, protected val syntax:
   def generateFile(unit: BaseUnit, url: String): js.Promise[Unit] =
     generate(unit.element, url, GenerationOptions()).toJSPromise
 
-  /** Generates the syntax text and returns it asynchronously. */
+  /** Generates the syntax text and returns it. */
   @JSExport
-  def generateString(unit: BaseUnit): js.Promise[String] =
-    generate(unit.element, GenerationOptions()).toJSPromise
+  def generateString(unit: BaseUnit): String = generate(unit.element, GenerationOptions())
 
   protected case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
     override def success(unit: Unit): Unit         = handler.success()

@@ -16,7 +16,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
   private val ast = AMFUnitMaker(unit, vendor, options)
 
   /** Print ast to string. */
-  def dumpToString: Future[String] = Future { dump() }
+  def dumpToString: String = dump()
 
   /** Print ast to file. */
   def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())

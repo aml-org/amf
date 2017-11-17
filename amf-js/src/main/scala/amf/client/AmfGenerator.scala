@@ -28,6 +28,6 @@ class AmfGenerator extends BaseGenerator(Amf, Json) {
     generate(unit.element, url, options).toJSPromise
 
   @JSExport
-  def generateString(unit: BaseUnit, options: GenerationOptions): js.Promise[String] =
-    generate(unit.element, options).toJSPromise
+  def generateString(unit: BaseUnit, options: GenerationOptions): String =
+    generate(unit.element, options)
 }

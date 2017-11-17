@@ -6,16 +6,12 @@ import amf.emit.AMFUnitFixtureTest
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite}
-
-import scala.concurrent.{ExecutionContext, Future}
+import org.scalatest.{Assertion, FunSuite}
 
 /**
   * AMF Unit DumperTest
   */
-class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTest {
 
   test("Test simple oas/json") {
     val expected =
@@ -42,7 +38,6 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
         |}""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Oas, Json, GenerationOptions()).dumpToString
-
     assert(actual, expected)
   }
 
@@ -409,9 +404,8 @@ class AMFDumperTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtu
     assert(actual, expected)
   }
 
-  private def assert(actual: Future[String], expected: String): Future[Assertion] =
-    actual.map(a => {
-      Tests.checkDiff(a, expected)
-      succeed
-    })
+  private def assert(actual: String, expected: String): Assertion = {
+    Tests.checkDiff(actual, expected)
+    succeed
+  }
 }

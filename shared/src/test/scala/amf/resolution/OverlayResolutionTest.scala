@@ -57,7 +57,7 @@ class OverlayResolutionTest extends ResolutionTest {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "with-uses-both/")
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
   }
