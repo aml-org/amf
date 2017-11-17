@@ -2,6 +2,7 @@ package amf.resolution.stages
 
 import amf.ProfileNames
 import amf.document._
+import amf.domain.Annotation.SynthesizedField
 import amf.domain._
 import amf.domain.extensions.DataNode
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
@@ -10,9 +11,11 @@ import amf.metadata.domain.`abstract`.ParametrizedTraitModel
 import amf.metadata.domain.extensions.{DataNodeModel, DomainExtensionModel}
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
+import amf.metadata.shape.ShapeModel
 import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.remote.Raml
+import amf.shape.{AnyShape, Shape}
 import amf.spec.{Declarations, ParserContext}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
@@ -97,26 +100,47 @@ class ExtensionsResolutionStage(profile: String)(override implicit val currentVa
   }
 
   def merge(master: DomainElement, overlay: DomainElement): DomainElement = {
+    cleanSynthesizedFacets(master)
     overlay.fields.fields().filter(ignored).foreach {
-      case entry @ FieldEntry(field, value) =>
+      case entry@FieldEntry(field, value) =>
+
         master.fields.entry(field) match {
           case None =>
             master.set(field, adoptInner(master.id, value.value)) // Set field if it doesn't exist.
           case Some(existing) =>
             field.`type` match {
-              case _: Type.Scalar          => master.set(field, value.value)
+              case _: Type.Scalar => master.set(field, value.value)
               case Type.ArrayLike(element) => mergeByValue(master, field, element, existing.value, value)
               case DataNodeModel =>
                 mergeDataNode(master,
-                              field,
-                              existing.value.value.asInstanceOf[DomainElement],
-                              value.value.asInstanceOf[DomainElement])
+                  field,
+                  existing.value.value.asInstanceOf[DomainElement],
+                  value.value.asInstanceOf[DomainElement])
+              case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
+                master.set(field, entry.domainElement)
               case _: DomainElementModel => merge(existing.domainElement, entry.domainElement)
-              case _                     => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+              case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
         }
     }
     master
+  }
+
+  def cleanSynthesizedFacets(domain: DomainElement): Unit = {
+    domain match {
+      case shape: Shape =>
+        shape.annotations.reject(_.isInstanceOf[SynthesizedField])
+      case _            => //
+    }
+  }
+
+
+  private def incompatibleType(master: DomainElement, overlay: DomainElement): Boolean = {
+    if (master.isInstanceOf[Shape] && overlay.isInstanceOf[Shape]) {
+      master.getClass != overlay.getClass
+    } else {
+      false
+    }
   }
 
   def mergeDataNode(master: DomainElement, field: Field, existing: DomainElement, overlay: DomainElement): Unit =

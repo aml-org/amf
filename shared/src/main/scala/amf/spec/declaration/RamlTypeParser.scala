@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation.{ExplicitField, Inferred, InlineDefinition, ParsedJSONSchema}
+import amf.domain.Annotation.{toString => _, _}
 import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
@@ -18,9 +18,9 @@ import org.yaml.parser.YamlParser
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean = false)(
+  def apply(ast: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
       implicit ctx: ParserContext): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation)(ctx.toRaml)
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(ctx.toRaml)
 }
 
 trait RamlTypeSyntax {
@@ -48,14 +48,27 @@ trait RamlTypeSyntax {
     } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
 }
 
-case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation: Boolean)(
+// Default RAML types
+abstract class DefaultType {
+  val typeDef: TypeDef
+}
+// By default, string si the default type
+object StringDefaultType extends DefaultType {
+  override val typeDef = TypeDef.StrType
+}
+// In a body or body / application/json context it its any
+object AnyDefaultType extends  DefaultType {
+  override val typeDef = TypeDef.AnyType
+}
+
+case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
     implicit val ctx: ParserContext)
     extends RamlSpecParser {
 
   def parse(): Option[Shape] = {
 
     val info: Option[TypeDef] =
-      RamlTypeDetection(node, "", node.toOption[YMap].flatMap(m => m.key("(format)").map(_.value.toString())))
+      RamlTypeDetection(node, "", node.toOption[YMap].flatMap(m => m.key("(format)").map(_.value.toString())), defaultType)
     val result = info.map {
       case XMLSchemaType                         => parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry])
       case JSONSchemaType                        => parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry])
@@ -350,7 +363,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
                                    s"item$index",
                                    unionNode,
                                    item => item.adopted(shape.id + "/items/" + index),
-                                   isAnnotation).parse()
+                                   isAnnotation,
+                                   StringDefaultType).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -697,6 +711,11 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
                                       explicitRequired.get.value,
                                       explicitRequired.get.annotations)
           }
+
+          if (entry.value.tagType == YType.Null) {
+            range.annotations += SynthesizedField()
+          }
+
           property.set(PropertyShapeModel.Range, range)
         }
 

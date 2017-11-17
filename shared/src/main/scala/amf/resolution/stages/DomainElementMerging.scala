@@ -1,11 +1,13 @@
 package amf.resolution.stages
 
+import amf.domain.Annotation.SynthesizedField
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.domain.{DomainElement, FieldEntry, Value}
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.{DomainElementModel, KeyField, OptionalField}
 import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.shape.Shape
 
 /**
   * Merge 'other' element into 'main' element:
@@ -20,20 +22,20 @@ object DomainElementMerging {
 
   def merge[T <: DomainElement](main: T, other: T): T = {
     other.fields.fields().filter(ignored).foreach {
-      case entry @ FieldEntry(field, value) =>
+      case entry@FieldEntry(field, value) =>
         main.fields.entry(field) match {
           case None => // Case (2)
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
-              case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
-              case _                                                                          => main.set(field, adoptInner(main.id, value.value))
+              case Type.ArrayLike(element) => setNonOptional(main, field, element, value)
+              case _ => main.set(field, adoptInner(main.id, value.value))
             }
           case Some(existing) => // Case (3)
             field.`type` match {
-              case _: Type.Scalar          => // Do nothing (3.a)
+              case _: Type.Scalar => // Do nothing (3.a)
               case Type.ArrayLike(element) => mergeByValue(main, field, element, existing.value, value)
-              case _: DomainElementModel   => merge(existing.domainElement, entry.domainElement)
-              case _                       => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+              case _: DomainElementModel => merge(existing.domainElement, entry.domainElement)
+              case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
         }
     }

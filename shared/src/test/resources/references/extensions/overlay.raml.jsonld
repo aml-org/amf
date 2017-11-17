@@ -249,6 +249,57 @@
                                 "@value": "application/json"
                               }
                             ],
+                            "http://raml.org/vocabularies/http#schema": [
+                              {
+                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema",
+                                "@type": [
+                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema/source-map",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(16,12)-(17,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
                                 "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/source-map",
@@ -627,6 +678,57 @@
                                 "@value": "application/json"
                               }
                             ],
+                            "http://raml.org/vocabularies/http#schema": [
+                              {
+                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema",
+                                "@type": [
+                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema/source-map",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(25,14)-(26,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
                                 "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/source-map",
@@ -875,6 +977,57 @@
                             "http://raml.org/vocabularies/http#mediaType": [
                               {
                                 "@value": "application/json"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/http#schema": [
+                              {
+                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema",
+                                "@type": [
+                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema/source-map",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(33,16)-(34,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [

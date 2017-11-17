@@ -277,9 +277,12 @@ abstract class RamlSpecParser extends BaseSpecParser {
         e.value.as[YMap].entries.foreach { entry =>
           RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
             .parse() match {
-            case Some(shape) => ctx.declarations += shape.add(DeclaredElement())
+            case Some(shape) =>
+              if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
+              ctx.declarations += shape.add(DeclaredElement())
             case None        => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
           }
+
         }
       }
     )
