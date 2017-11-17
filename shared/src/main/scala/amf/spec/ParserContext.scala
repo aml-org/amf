@@ -1,5 +1,6 @@
 package amf.spec
 
+import amf.compiler.{ParsedReference, Root}
 import amf.domain.Annotation.LexicalInformation
 import amf.parser.{Range, YMapOps, YScalarYRead}
 import amf.remote.{Oas, Raml, Vendor}
@@ -67,7 +68,7 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
   }
 }
 
-case class ParserContext(validation: Validation, vendor: Vendor, private val internalDec: Option[Declarations] = None)
+case class ParserContext(validation: Validation, vendor: Vendor, refs: Seq[ParsedReference] = Seq.empty, private val internalDec: Option[Declarations] = None)
     extends ErrorHandler(validation) {
 
   val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))

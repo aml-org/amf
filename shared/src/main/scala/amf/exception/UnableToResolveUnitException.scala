@@ -1,3 +1,3 @@
 package amf.exception
 
-class UnableToResolveUnitException extends RuntimeException("Unable to resolve unit")
+case class UnableToResolveUnitException(location: String) extends RuntimeException(s"Unable to resolve unit: $location")
