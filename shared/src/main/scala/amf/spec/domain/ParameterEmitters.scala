@@ -1,8 +1,8 @@
 package amf.spec.domain
 
 import amf.document.BaseUnit
-import amf.domain.Annotation.ExplicitField
-import amf.domain.{FieldEntry, Fields, Parameter}
+import amf.domain.Annotation.{ExplicitField, SynthesizedField}
+import amf.domain.{Annotations, FieldEntry, Fields, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.metadata.shape.ShapeModel
 import amf.model.AmfScalar
@@ -12,6 +12,7 @@ import amf.spec.common.SpecEmitterContext
 import amf.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter}
 import amf.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.YType
 
 import scala.collection.mutable
 
@@ -65,38 +66,43 @@ case class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, re
 
   private def emitParameter(b: EntryBuilder) = {
     val fs = parameter.fields
+    if (Option(parameter.schema).isDefined && parameter.schema.annotations.contains(classOf[SynthesizedField])) {
+      b.complexEntry(
+        emitParameterKey(fs, _),
+        raw(_, "", YType.Null)
+      )
+    } else {
+      b.complexEntry(
+        emitParameterKey(fs, _),
+        _.obj { b =>
+          val result = mutable.ListBuffer[EntryEmitter]()
 
-    b.complexEntry(
-      emitParameterKey(fs, _),
-      _.obj { b =>
-        val result = mutable.ListBuffer[EntryEmitter]()
+          fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
-        fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
+          fs.entry(ParameterModel.Required)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f => result += ValueEmitter("required", f))
 
-        fs.entry(ParameterModel.Required)
-          .filter(_.value.annotations.contains(classOf[ExplicitField]))
-          .map(f => result += ValueEmitter("required", f))
+          result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description), references).entries()
 
-        result ++= RamlTypeEmitter(parameter.schema, ordering, Seq(ShapeModel.Description), references).entries()
+          result ++= AnnotationsEmitter(parameter, ordering).emitters
 
-        result ++= AnnotationsEmitter(parameter, ordering).emitters
+          Option(parameter.fields.getValue(ParameterModel.Binding)) match {
+            case Some(v) =>
+              v.annotations.find(classOf[ExplicitField]) match {
+                case Some(_) =>
+                  fs.entry(ParameterModel.Binding).map { f =>
+                    result += ValueEmitter("(binding)", f)
+                  }
+                case None => // ignore
+              }
+            case _ => // ignore
+          }
 
-        Option(parameter.fields.getValue(ParameterModel.Binding)) match {
-          case Some(v) =>
-            v.annotations.find(classOf[ExplicitField]) match {
-              case Some(_) =>
-                fs.entry(ParameterModel.Binding).map { f =>
-                  result += ValueEmitter("(binding)", f)
-                }
-              case None => // ignore
-            }
-          case _ => // ignore
+          traverse(ordering.sorted(result), b)
         }
-
-        traverse(ordering.sorted(result), b)
-      }
-    )
-
+      )
+    }
   }
 
   private def emitParameterKey(fs: Fields, b: PartBuilder) = {

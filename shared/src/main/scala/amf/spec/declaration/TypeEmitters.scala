@@ -15,6 +15,7 @@ import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -61,11 +62,16 @@ case class RamlTypePartEmitter(shape: Shape,
                                references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(b: PartBuilder): Unit =
-    emitter match {
-      case Left(p)        => p.emit(b)
-      case Right(entries) => b.obj(traverse(entries, _))
+  override def emit(b: PartBuilder): Unit = {
+    if (Option(shape).isDefined && shape.annotations.contains(classOf[SynthesizedField])) {
+      raw(b, "", YType.Null)
+    } else {
+      emitter match {
+        case Left(p) => p.emit(b)
+        case Right(entries) => b.obj(traverse(entries, _))
+      }
     }
+  }
 
   override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)
 
@@ -661,10 +667,17 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       })
       .getOrElse(property.name)
 
-    b.entry(
-      name,
-      RamlTypePartEmitter(property.range, ordering, None, references = references).emit(_)
-    )
+    if (property.range.annotations.contains(classOf[SynthesizedField])) {
+      b.entry(
+        name,
+        raw(_, "", YType.Null)
+      )
+    } else {
+      b.entry(
+        name,
+        RamlTypePartEmitter(property.range, ordering, None, references = references).emit(_)
+      )
+    }
   }
 
   override def position(): Position = pos(property.annotations) // TODO check this
