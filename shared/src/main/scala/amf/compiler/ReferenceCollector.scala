@@ -138,8 +138,8 @@ case class Reference(url: String, kind: Kind, ast: YAggregate) {
               cache: Cache,
               hint: Hint,
               currentValidation: Validation,
-              dialectRegistry: DialectRegistry = DialectRegistry.default): Future[BaseUnit] = {
-    AMFCompiler(url, remote, hint + kind, currentValidation, Some(context), Some(cache), dialectRegistry)
+              dialectRegistry: DialectRegistry = DialectRegistry.default)(implicit ctx: ParserContext): Future[BaseUnit] = {
+    AMFCompiler(url, remote, hint + kind, currentValidation, Some(context), Some(cache), dialectRegistry)(ctx)
       .build()
       .map(root => {
 //        target = root

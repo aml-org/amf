@@ -7,7 +7,9 @@ import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.LinkableElementModel
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.spec.{DeclarationPromise, Declarations, ParserContext}
 import amf.vocabulary.{Namespace, ValueType}
+import org.yaml.model.YPart
 
 trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   var linkTarget: Option[DomainElement]    = None
@@ -31,6 +33,31 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
       .withLinkLabel(label)
       .add(annotations)
       .asInstanceOf[T]
+  }
+
+  // Unresolved references to things that can be linked
+  // TODO: another trait?
+  var isUnresolved: Boolean = false
+  var refName = ""
+  var refAst: Option[YPart] = None
+  var refCtx: Option[ParserContext] = None
+
+  def unresolved(refName: String, refAst: YPart)(implicit ctx: ParserContext) = {
+    isUnresolved = true
+    this.refName = refName
+    this.refAst = Some(refAst)
+    refCtx = Some(ctx)
+    this
+  }
+
+  def toFutureRef(resolve:(Linkable) => Unit) = {
+    refCtx match {
+      case Some(ctx) => ctx.declarations.futureRef(refName, DeclarationPromise(
+        resolve,
+        () => ctx.violation(id, s"Unresolved reference $refName from root context ${ctx.rootContextDocument}", refAst.get)
+      ))
+      case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
+    }
   }
 }
 

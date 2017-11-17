@@ -307,19 +307,20 @@ class Validation(platform: Platform) {
     val shapesJSON = shapesGraph(validations, messageStyle)
     val jsLibrary  = new JSLibraryEmitter(profile).emitJS(validations.effective.values.toSeq)
 
+
     /*
     if (profileName == ProfileNames.RAML) {
       println("\n\nGRAPH")
-      println(modelJSON.length)
+      println(modelJSON)
       println("===========================")
       println("\n\nVALIDATION")
-      println(shapesJSON.length)
+      println(shapesJSON)
       println("===========================")
       println(jsLibrary)
       println("===========================")
     }
     */
-    
+
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore

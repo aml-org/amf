@@ -147,9 +147,37 @@ object Fields {
   def apply(): Fields = new Fields()
 }
 
-class Value(val value: AmfElement, val annotations: Annotations) {
+
+class Value(var value: AmfElement, val annotations: Annotations) {
+
+  // Values are going to *mutate* automatically
+  // when references to unresolved values are resolved
+  // in declarations
+  checkUnresolved()
+
   override def toString: String = value.toString
+
+  def checkUnresolved() = value match {
+    case linkable: Linkable if linkable.isUnresolved =>
+      // this is a callback that will be registered
+      // in the declarations of the parser context
+      // to be executed when a reference is resolved
+      linkable.toFutureRef((resolved) => {
+        value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+      })
+
+    case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
+      array.values.foreach {
+        case linkable: Linkable if linkable.isUnresolved =>
+          linkable.toFutureRef((resolved) => {
+            value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+          })
+        case _ => // ignore
+      }
+    case _ => // ignore
+  }
 }
+
 
 object Value {
   def apply(value: AmfElement, annotations: Annotations) = new Value(value, annotations)
@@ -161,7 +189,7 @@ object Value {
       None
 }
 
-class Link(override val value: AmfObject, annotations: Annotations) extends Value(value, annotations) {
+class Link(value: AmfObject, annotations: Annotations) extends Value(value, annotations) {
   override def toString: String = value.id
 }
 

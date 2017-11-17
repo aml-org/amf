@@ -80,7 +80,7 @@ trait MetaModelTypeMapping {
     case _: Fragment.DialectFragment           => FragmentsTypesModels.DialectNodeModel
     case _: Fragment.Fragment                  => FragmentModel
     case unresolved: UnresolvedShape           => ShapeModel
-    case _                                     => throw new Exception(s"Missing metadata mapping for ${instance}")
+    case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
   }
 
 }

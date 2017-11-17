@@ -32,7 +32,8 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            val currentValidation: Validation,
                            private val cache: Cache,
-                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default) {
+                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default)(
+  implicit ctx: ParserContext = ParserContext(currentValidation, Raml, url, Seq.empty)) {
 
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                                   = context.current
@@ -86,13 +87,17 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Raml, root.references)
+    // share references between docs and fragments
+    val updatedCtx = ctx.toRaml
+    // modules open a new context, clean declarations with an empty context
+    val cleanCxt: ParserContext = ParserContext(currentValidation, Raml, root.location, root.references)
+    // parse the unit and pass the right ctx
     val option = RamlHeader(root).map {
-      case RamlHeader.Raml10          => RamlDocumentParser(root).parseDocument()
-      case RamlHeader.Raml10Overlay   => RamlDocumentParser(root).parseOverlay()
-      case RamlHeader.Raml10Extension => RamlDocumentParser(root).parseExtension()
-      case RamlHeader.Raml10Library   => RamlModuleParser(root).parseModule()
-      case fragment: RamlFragment     => RamlFragmentParser(root, fragment).parseFragment()
+      case RamlHeader.Raml10          => RamlDocumentParser(root)(updatedCtx).parseDocument()
+      case RamlHeader.Raml10Overlay   => RamlDocumentParser(root)(updatedCtx).parseOverlay()
+      case RamlHeader.Raml10Extension => RamlDocumentParser(root)(updatedCtx).parseExtension()
+      case RamlHeader.Raml10Library   => RamlModuleParser(root)(cleanCxt).parseModule()
+      case fragment: RamlFragment     => RamlFragmentParser(root, fragment)(updatedCtx).parseFragment()
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => makeDialect(root, header)
@@ -107,7 +112,7 @@ class AMFCompiler private (val url: String,
   private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
 
   private def resolveOasUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Oas, root.references)
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Oas, root.location, root.references)
     hint.kind match {
       case Library => OasModuleParser(root).parseModule()
       case Link    => OasFragmentParser(root).parseFragment()
@@ -131,7 +136,7 @@ class AMFCompiler private (val url: String,
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
   private def makePayloadUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Payload, root.references)
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Payload, root.location, root.references)
     PayloadParser(root.document, root.location).parseUnit()
   }
 
@@ -189,7 +194,7 @@ class AMFCompiler private (val url: String,
       .filter(_.isRemote)
       .foreach(link => {
         references += link
-          .resolve(remote, context, cache, hint, currentValidation, dialects)
+          .resolve(remote, context, cache, hint, currentValidation, dialects)(ctx)
           .map(r => ParsedReference(r, link.url))
       })
 
@@ -229,8 +234,9 @@ object AMFCompiler {
             currentValidation: Validation,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
-            dialects: DialectRegistry = DialectRegistry.default) =
-    new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects)
+            dialects: DialectRegistry = DialectRegistry.default)(
+    implicit ctx: ParserContext = ParserContext(currentValidation, Raml, url, Seq.empty)
+  ) = new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects)(ctx)
 
   val RAML_10 = "#%RAML 1.0\n"
 }
