@@ -308,16 +308,18 @@ class Validation(platform: Platform) {
     val jsLibrary  = new JSLibraryEmitter(profile).emitJS(validations.effective.values.toSeq)
 
     /*
-    println("\n\nGRAPH")
-    println(modelJSON)
-    println("===========================")
-    println("\n\nVALIDATION")
-    println(shapesJSON)
-    println("===========================")
-    println(jsLibrary)
-    println("===========================")
+    if (profileName == ProfileNames.RAML) {
+      println("\n\nGRAPH")
+      println(modelJSON.length)
+      println("===========================")
+      println("\n\nVALIDATION")
+      println(shapesJSON.length)
+      println("===========================")
+      println(jsLibrary)
+      println("===========================")
+    }
     */
-
+    
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore

@@ -86,7 +86,7 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Raml)
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Raml, root.references)
     val option = RamlHeader(root).map {
       case RamlHeader.Raml10          => RamlDocumentParser(root).parseDocument()
       case RamlHeader.Raml10Overlay   => RamlDocumentParser(root).parseOverlay()
@@ -96,18 +96,18 @@ class AMFCompiler private (val url: String,
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => makeDialect(root, header)
-      case _                                      => throw new UnableToResolveUnitException
+      case _                                      => throw UnableToResolveUnitException(root.location)
     }
     option match {
       case Some(unit) => unit
-      case None       => throw new UnableToResolveUnitException
+      case None       => makeExternalUnit(root)
     }
   }
 
   private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
 
   private def resolveOasUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Oas)
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Oas, root.references)
     hint.kind match {
       case Library => OasModuleParser(root).parseModule()
       case Link    => OasFragmentParser(root).parseFragment()
@@ -121,7 +121,7 @@ class AMFCompiler private (val url: String,
       case Some(Oas20Extension) => OasDocumentParser(root).parseExtension()
       case Some(Oas20Header)    => OasDocumentParser(root).parseDocument()
       case f if f.isDefined     => OasFragmentParser(root, f).parseFragment()
-      case _                    => throw new UnableToResolveUnitException
+      case _                    => throw UnableToResolveUnitException(root.location)
     }
   }
 
@@ -130,7 +130,10 @@ class AMFCompiler private (val url: String,
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
-  private def makePayloadUnit(root: Root): BaseUnit = PayloadParser(root.document, root.location).parseUnit()
+  private def makePayloadUnit(root: Root): BaseUnit = {
+    implicit val ctx: ParserContext = ParserContext(currentValidation, Payload, root.references)
+    PayloadParser(root.document, root.location).parseUnit()
+  }
 
   // TODO take this away when dialects don't use 'extends' keyword.
   def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
