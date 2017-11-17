@@ -22,6 +22,6 @@ class AmfGenerator extends BaseGenerator(Amf, Json) {
   def generateFile(unit: BaseUnit, url: String, options: GenerationOptions): CompletableFuture[String] =
     generate(unit.element, url, options).asJava
 
-  def generateString(unit: BaseUnit, options: GenerationOptions): CompletableFuture[String] =
-    generate(unit.element, options).asJava
+  def generateString(unit: BaseUnit, options: GenerationOptions): String =
+    generate(unit.element, options)
 }

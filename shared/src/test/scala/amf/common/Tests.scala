@@ -1,17 +1,23 @@
 package amf.common
 
 import java.io.{File, FileNotFoundException, FileReader, Reader}
+import java.lang.System.getProperty
 import java.net.{InetAddress, UnknownHostException}
 
-import org.scalatest.{Assertion, Succeeded}
+import amf.common.Diff.makeString
+import org.mulesoft.common.io.{AsyncFile, SyncFile, Utf8}
 import org.scalatest.Matchers._
+import org.scalatest.{Assertion, Succeeded}
 
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 /**
   *
   */
 object Tests {
+
+  private implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   /** Assert against a specified golden File. */
   def assertEquals(outFile: File, goldenFile: File): Boolean = {
@@ -38,15 +44,6 @@ object Tests {
     difference.map(s => fail(s))
   }
 
-  /** Check against a specified golden File. */
-  def checkDiff(a: File, b: Reader): Unit = {
-    try {
-      checkDiff(new FileReader(a), a.toString, b, "")
-    } catch {
-      case _: FileNotFoundException => fail("Cannot Open File: " + a)
-    }
-  }
-
   def checkDiff(tuple: (String, String)): Assertion = tuple match {
     case (actual, expected) =>
       checkDiff(actual, expected)
@@ -68,7 +65,7 @@ object Tests {
       println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
       println(actual)
       println("==============================================")
-      fail("\n" + Diff.makeString(diffs))
+      fail("\n" + makeString(diffs))
     }
   }
 
@@ -80,14 +77,14 @@ object Tests {
       println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
       println(actual)
       println("==============================================")
-      fail("\n" + Diff.makeString(diffs))
+      fail("\n" + makeString(diffs))
     }
   }
 
   /** Check against a specified golden File. */
   def checkDiff(outFile: File, goldenFile: File, comparator: Diff.Equals[String]): Unit = {
     val diffs: List[Diff.Delta[String]] = Diff.stringDiffer(comparator).ignoreEmptyLines.diff(outFile, goldenFile)
-    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + outFile + " " + goldenFile + "\n" + Diff.makeString(diffs))
+    if (diffs.nonEmpty) fail("\ndiff -y -W 150 " + outFile + " " + goldenFile + "\n" + makeString(diffs))
   }
 
   /** Return optional diff with specified golden file. */
@@ -146,12 +143,23 @@ object Tests {
     }
   }
 
-  def checkDiff(a: Reader, fileA: String, b: Reader, fileB: String): Unit = {
-    val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
-    if (diffs.nonEmpty)
-      fail(
-        "\ndiff -y -W 150 " + trimFileProtocol(fileA) + " " + trimFileProtocol(fileB) + "\n" + Diff.makeString(diffs))
+  def checkDiff(a: AsyncFile, e: AsyncFile, encoding: String = Utf8): Future[Assertion] = {
+    a.read(encoding).zip(e.read(encoding)).map {
+      case (actual, expected) =>
+        val diffs = Diff.ignoreAllSpace.diff(actual.toString, expected.toString)
+        if (diffs.nonEmpty) {
+          if (goldenOverride) {
+            a.read(encoding).map(content => e.write(content.toString, encoding))
+          } else {
+            fail(s"\ndiff -y -W 150 $a $e \n\n${makeString(diffs)}")
+          }
+        }
+        succeed
+    }
   }
+
+  /** Force golden override. */
+  private def goldenOverride: Boolean = Option(getProperty("golden.override")).isDefined
 
   def checkDiff(a: String, fileA: String, b: String, fileB: String): Assertion = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
@@ -161,8 +169,7 @@ object Tests {
       println("\n\n\n\n\n\n")
       println(s"B: $fileB")
       println(b)
-      fail(
-        "\ndiff -y -W 150 " + trimFileProtocol(fileA) + " " + trimFileProtocol(fileB) + "\n" + Diff.makeString(diffs))
+      fail("\ndiff -y -W 150 " + trimFileProtocol(fileA) + " " + trimFileProtocol(fileB) + "\n" + makeString(diffs))
     }
     Succeeded
   }
@@ -170,7 +177,7 @@ object Tests {
   def diff(a: Reader, aName: String, b: Reader, bName: String): Option[String] = {
     val diffs: List[Diff.Delta[String]] = Diff.ignoreAllSpace.diff(a, b)
     if (diffs.isEmpty) Option.empty
-    else Option("\ndiff -y -W 150 " + aName + " " + bName + "\n" + Diff.makeString(diffs))
+    else Option("\ndiff -y -W 150 " + aName + " " + bName + "\n" + makeString(diffs))
   }
 
   private def index(s: String, chr: Char): Int = {

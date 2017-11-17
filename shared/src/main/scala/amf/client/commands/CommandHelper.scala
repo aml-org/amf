@@ -77,7 +77,7 @@ trait CommandHelper {
     val dumper = AMFDumper(unit, outputFormat, hint, generateOptions)
     config.output match {
       case Some(f) => dumper.dumpToFile(platform, f)
-      case None    => dumper.dumpToString.map(println(_))
+      case None    => Future { println(dumper.dumpToString) }
     }
   }
 

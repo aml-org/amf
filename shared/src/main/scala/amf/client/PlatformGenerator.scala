@@ -26,7 +26,7 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
   protected def generate(unit: BaseUnit, url: String, options: GenerationOptions): Future[Unit] =
     AMFDumper(unit, target, syntax, options).dumpToFile(platform, url)
 
-  protected def generate(unit: BaseUnit, options: GenerationOptions): Future[String] =
+  protected def generate(unit: BaseUnit, options: GenerationOptions): String =
     AMFDumper(unit, target, syntax, options).dumpToString
 
   protected def generate(unit: BaseUnit, url: String, options: GenerationOptions, handler: Handler[Unit]): Unit = {
@@ -35,7 +35,7 @@ protected abstract class PlatformGenerator extends PlatformSecrets {
 
   /** Generates the syntax text and returns it to the provided callback. */
   protected def generate(unit: BaseUnit, options: GenerationOptions, handler: Handler[String]): Unit = {
-    generate(unit, options).onComplete(stringSyncAdapter(handler))
+    stringSyncAdapter(handler)(Try(generate(unit, options)))
   }
 
   private def stringSyncAdapter(handler: Handler[String])(t: Try[String]): Unit = t match {

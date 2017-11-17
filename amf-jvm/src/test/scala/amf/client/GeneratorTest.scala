@@ -18,10 +18,7 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .resolve("file://shared/src/test/resources/clients/bare.json", None)
       .map(content => content.stream.toString)
 
-    FutureConverters
-      .toScala(new OasGenerator().generateString(unitBare))
-      .zip(expected)
-      .map(checkDiff)
+    expected.map(e => checkDiff(new OasGenerator().generateString(unitBare) -> e))
   }
 
   test("Test raml generator string-async") {
@@ -29,10 +26,7 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .resolve("file://shared/src/test/resources/clients/bare.raml", None)
       .map(content => content.stream.toString)
 
-    FutureConverters
-      .toScala(new RamlGenerator().generateString(unitBare))
-      .zip(expected)
-      .map(checkDiff)
+    expected.map(e => checkDiff(new RamlGenerator().generateString(unitBare) -> e))
   }
 
   test("Test amf generator string-async") {
@@ -40,10 +34,7 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .resolve("file://shared/src/test/resources/clients/bare.jsonld", None)
       .map(content => content.stream.toString)
 
-    FutureConverters
-      .toScala(new AmfGenerator().generateString(unitBare))
-      .zip(expected)
-      .map(checkDiff)
+    expected.map(e => checkDiff(new AmfGenerator().generateString(unitBare) -> e))
   }
 
   test("Test oas generator string-async (complete spec)") {
@@ -51,9 +42,6 @@ class GeneratorTest extends AsyncFunSuite with PlatformSecrets with PairsAMFUnit
       .resolve("file://shared/src/test/resources/clients/advanced.json", None)
       .map(content => content.stream.toString)
 
-    FutureConverters
-      .toScala(new OasGenerator().generateString(unitAdvanced))
-      .zip(expected)
-      .map(checkDiff)
+    expected.map(e => checkDiff(new OasGenerator().generateString(unitAdvanced) -> e))
   }
 }

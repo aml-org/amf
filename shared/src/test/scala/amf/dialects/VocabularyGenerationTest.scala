@@ -39,7 +39,7 @@ class VocabularyGenerationTest extends BuildCycleTests {
   }
 
   /** Do not render with source maps. */
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString
   }

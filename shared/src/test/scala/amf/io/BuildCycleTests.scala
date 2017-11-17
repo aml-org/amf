@@ -8,7 +8,7 @@ import amf.dumper.AMFDumper
 import amf.remote.{Hint, Vendor}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
-import org.mulesoft.common.io.FileSystem
+import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,7 +20,7 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val fs: FileSystem = platform.fs
+  protected val fs: FileSystem = platform.fs
 
   val basePath: String
 
@@ -41,35 +41,35 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
     val config = CycleConfig(source, golden, hint, target, directory)
 
     build(config, validation)
-      .map(map(_, config))
-      .flatMap(render(_, config))
+      .map(transform(_, config))
+      .map(render(_, config))
       .flatMap(writeTemporaryFile(golden))
-      .flatMap(assertDifferences(config))
+      .flatMap(assertDifferences(_, config.goldenPath))
   }
 
+  /** Method to parse unit. Override if necessary. */
   def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
     val validation = given.getOrElse(Validation(platform).withEnabledValidation(false))
-    AMFCompiler("file://" + config.sourcePath, platform, config.hint, validation).build()
+    AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, validation).build()
   }
 
-  def map(unit: BaseUnit, config: CycleConfig): BaseUnit = unit
+  /** Method for transforming parsed unit. Override if necessary. */
+  def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = unit
 
-  def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  /** Method to render parsed unit. Override if necessary. */
+  def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
   }
 
-  private def writeTemporaryFile(golden: String)(content: String): Future[(String, String)] = {
-    val path = tmp(golden + ".tmp")
-    fs.asyncFile(path).write(content).map(_ => (path, content))
+  private def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {
+    val actual = fs.asyncFile(tmp(s"$golden.tmp"))
+    actual.write(content).map(_ => actual)
   }
 
-  private def assertDifferences(config: CycleConfig)(tmp: (String, String)) = tmp match {
-    case (path, actual) =>
-      fs.asyncFile(config.goldenPath)
-        .read()
-        .map(expected => checkDiff(actual, path, expected.toString, config.goldenPath))
-
+  private def assertDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
+    val expected = fs.asyncFile(golden)
+    expected.read().flatMap(_ => checkDiff(actual, expected))
   }
 
   case class CycleConfig(source: String, golden: String, hint: Hint, target: Vendor, directory: String) {

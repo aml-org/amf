@@ -3,8 +3,8 @@ package amf.client
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
-import amf.remote.FutureConverter.converters
 import amf.model.BaseUnit
+import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.Vendor
 
@@ -35,9 +35,8 @@ abstract class BaseGenerator(protected val target: Vendor, protected val syntax:
   def generateFile(unit: BaseUnit, url: File): CompletableFuture[String] =
     generate(unit.element, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
 
-  /** Generates the syntax text and returns it asynchronously. */
-  def generateString(unit: BaseUnit): CompletableFuture[String] =
-    generate(unit.element, GenerationOptions()).asJava
+  /** Generates the syntax text and returns it. */
+  def generateString(unit: BaseUnit): String = generate(unit.element, GenerationOptions())
 
   protected case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
     override def success(unit: Unit): Unit         = handler.success()
