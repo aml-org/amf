@@ -67,7 +67,7 @@ case class RamlTypePartEmitter(shape: Shape,
       raw(b, "", YType.Null)
     } else {
       emitter match {
-        case Left(p)        => p.emit(b)
+        case Left(p) => p.emit(b)
         case Right(entries) => b.obj(traverse(entries, _))
       }
     }

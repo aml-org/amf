@@ -1,0 +1,10 @@
+#%RAML 1.0
+
+uses:
+  lib: library.raml
+
+types:
+  A: number
+  B: !include nested.raml
+  P: lib.D
+title: hey

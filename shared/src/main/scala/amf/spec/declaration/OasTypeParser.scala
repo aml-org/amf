@@ -112,10 +112,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             adopt(copied)
             copied
           case None =>
-            val shape = UnresolvedShape(text, map).withName(name)
+            val shape = UnresolvedShape(text, map).withName(text)
             adopt(shape)
+            shape.unresolved(text, map)
             shape
-      })
+          }
+      )
   }
 
   private def parseObjectType(): Shape = {

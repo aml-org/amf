@@ -10,7 +10,7 @@ import amf.shape._
 import amf.spec.common.{ArrayNode, ShapeExtensionParser, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.raml._
-import amf.spec.{ParserContext, SearchScope}
+import amf.spec.{DeclarationPromise, ParserContext, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -252,8 +252,9 @@ case class RamlTypeParser(ast: YPart,
           refTuple match {
             case (text: String, Some(s)) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
             case (text: String, _) =>
-              val shape = UnresolvedShape(text, node).withName(name)
+              val shape = UnresolvedShape(text, node).withName(text)
               adopt(shape)
+              shape.unresolved(text, node)
               shape
           }
       }
@@ -606,6 +607,7 @@ case class RamlTypeParser(ast: YPart,
               shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
             case _ =>
               val unresolvedShape: UnresolvedShape = UnresolvedShape(text, entry.value).withName(text)
+              adopt(unresolvedShape)
               ctx.declarations += unresolvedShape
               shape.set(ShapeModel.Inherits,
                         AmfArray(Seq(unresolvedShape), Annotations(entry.value)),

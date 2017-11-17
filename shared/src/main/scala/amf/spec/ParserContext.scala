@@ -68,7 +68,7 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
   }
 }
 
-case class ParserContext(validation: Validation, vendor: Vendor, refs: Seq[ParsedReference] = Seq.empty, private val internalDec: Option[Declarations] = None)
+case class ParserContext(validation: Validation, vendor: Vendor, rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, private val internalDec: Option[Declarations] = None)
     extends ErrorHandler(validation) {
 
   val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))
@@ -82,6 +82,8 @@ case class ParserContext(validation: Validation, vendor: Vendor, refs: Seq[Parse
     case Raml => this
     case _    => copy(vendor = Raml, internalDec = Some(declarations))
   }
+
+  def withRootContextDocument(location: String) = copy(rootContextDocument = location)
 
   /** Validate closed shape. */
   def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit = {

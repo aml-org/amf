@@ -7,7 +7,7 @@ import amf.parser.Range
 import amf.shape._
 import amf.spec.{ParserContext, SearchScope}
 import amf.vocabulary.Namespace
-import org.yaml.model.YPart
+import org.yaml.model.{YNode, YPart}
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
@@ -87,6 +87,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
             case Some(s) => s.link(other).asInstanceOf[Shape]
             case _       => {
               val shape = UnresolvedShape(other).withName(other)
+              shape.unresolved(other, part.getOrElse(YNode.Null))
               adopt(shape)
               shape
             }
