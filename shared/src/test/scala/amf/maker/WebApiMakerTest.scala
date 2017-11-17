@@ -280,7 +280,8 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
               .withMethod("get")
               .withName("Some title")
               .withRequest(Request()
-                .withPayloads(List(Payload().withMediaType("application/json"))))
+                .withPayloads(List(Payload().withMediaType("application/json")
+                  .withSchema(ScalarShape().withName("schema")))))
               .withResponses(List(
                 Response()
                   .withDescription("200 descr")

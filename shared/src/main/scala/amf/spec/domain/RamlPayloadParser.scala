@@ -1,9 +1,10 @@
 package amf.spec.domain
 
+import amf.domain.Annotation.SynthesizedField
 import amf.domain.{Annotations, Payload}
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import amf.spec.declaration.RamlTypeParser
+import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 /**
@@ -22,10 +23,16 @@ case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Pay
       case _ =>
     }
 
-    entry.value.tag.tagType match {
+    entry.value.tagType match {
       case YType.Null =>
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), isAnnotation = false, AnyDefaultType)
+          .parse()
+          .foreach { schema =>
+            schema.annotations += SynthesizedField()
+            payload.withSchema(schema)
+          }
       case _ =>
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
+        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), isAnnotation = false, AnyDefaultType)
           .parse()
           .foreach(payload.withSchema)
 

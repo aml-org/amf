@@ -14,21 +14,24 @@ import org.yaml.model._
   *
   */
 object RamlTypeDetection {
-  def apply(node: YNode, parent: String, format: Option[String] = None)(
+  def apply(node: YNode, parent: String, format: Option[String] = None, defaultType: DefaultType = StringDefaultType)(
       implicit ctx: ParserContext): Option[TypeDef] =
-    RamlTypeDetector(parent, format).detect(node)
+    RamlTypeDetector(parent, format, defaultType).detect(node)
 }
 
 case class RamlTypeDetector(parent: String,
                             format: Option[String] = None,
+                            defaultType: DefaultType = StringDefaultType,
                             recursive: Boolean = false)(implicit ctx: ParserContext)
     extends RamlTypeSyntax
     with PlatformSecrets {
   def detect(node: YNode): Option[TypeDef] = node.tagType match {
+
     case YType.Seq =>
       val sequence = node.as[Seq[YNode]]
       InheritsTypeDetecter(collectTypeDefs(sequence), node) // todo review with pedro
         .orElse(Some(ObjectType)) // type expression type?
+
     case YType.Map =>
       val map       = node.as[YMap]
       val filterMap = YMap(map.entries.filter(e => !e.key.toString().matches(".*/.*")))
@@ -36,6 +39,10 @@ case class RamlTypeDetector(parent: String,
         .orElse(detectProperties(filterMap))
         .orElse(detectAnyOf(filterMap))
         .orElse(detectTypeOrSchema(filterMap))
+
+      // Default type as received from the parsing process
+    case YType.Null => Some(defaultType.typeDef)
+
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {

@@ -660,4 +660,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Annotations with type expressions raml to raml") {
     cycle("annotations-type-expressions.raml", "annotations-type-expressions.raml.raml", RamlYamlHint, Raml)
   }
+
+  test("Parsing default types raml to amf") {
+    cycle("default-types.raml", "default-types.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Parsing default types amf to raml") {
+    cycle("default-types.jsonld", "default-types.raml", AmfJsonHint, Raml)
+  }
 }
