@@ -1,13 +1,14 @@
-package amf.compiler
+package amf.plugins.domain.webapi.parser
 
 import amf.compiler.FragmentTypes._
+import amf.compiler.{FragmentType, FragmentTypes, Root}
 import amf.parser.{YMapOps, YScalarYRead}
 import org.yaml.model.YMap
 
 /**
   *
   */
-class OasHeader private[compiler] (val key: String, val value: String) {
+class OasHeader(val key: String, val value: String) {
   def tuple: (String, String) = (key, value)
 }
 

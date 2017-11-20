@@ -1,4 +1,4 @@
-package amf.graph
+package amf.plugins.domain.graph.parser
 
 import amf.domain.Value
 import amf.model.AmfElement

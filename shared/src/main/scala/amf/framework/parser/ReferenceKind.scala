@@ -1,4 +1,4 @@
-package amf.plugins.domain.framework.parser
+package amf.framework.parser
 
 sealed trait ReferenceKind
 

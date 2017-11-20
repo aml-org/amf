@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.plugins.domain.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.remote.RamlYamlHint
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation

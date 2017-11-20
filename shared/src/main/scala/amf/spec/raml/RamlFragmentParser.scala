@@ -1,17 +1,17 @@
 package amf.spec.raml
 
-import amf.compiler.RamlFragmentHeader._
-import amf.compiler.{RamlFragment, Root}
+import amf.compiler.Root
 import amf.document.Fragment._
 import amf.domain.Annotation.SourceVendor
+import amf.domain.Annotations
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
-import amf.domain.{Annotations, ExternalDomainElement}
 import amf.parser._
 import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.parser.RamlFragment
+import amf.plugins.domain.webapi.parser.RamlFragmentHeader._
 import amf.remote.Raml
 import amf.shape.Shape
-import amf.spec.ParserContext
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
 import org.yaml.model.{YMap, YType}

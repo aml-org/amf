@@ -1,15 +1,15 @@
 package amf.spec.oas
 
-import amf.compiler.OasHeader._
-import amf.compiler.{OasHeader, Root}
+import amf.compiler.Root
 import amf.document.Fragment._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
 import amf.parser._
 import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.parser.OasHeader
+import amf.plugins.domain.webapi.parser.OasHeader._
 import amf.shape.Shape
-import amf.spec.ParserContext
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
 import org.yaml.model.{YMap, YType}

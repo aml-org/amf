@@ -7,8 +7,8 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.LexicalInformation
 import amf.domain.DomainElement
 import amf.domain.dialects.DomainEntity
-import amf.graph.GraphEmitter
 import amf.model.AmfArray
+import amf.plugins.domain.graph.parser.GraphEmitter
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.validation.core.{ValidationDialectText, ValidationResult}

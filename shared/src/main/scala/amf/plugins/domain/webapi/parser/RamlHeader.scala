@@ -1,13 +1,14 @@
-package amf.compiler
+package amf.plugins.domain.webapi.parser
 
-import amf.compiler.RamlHeader.{Raml10Extension, Raml10Overlay}
+import amf.compiler.{FragmentTypes, Root}
 import amf.parser.YNodeLikeOps
+import amf.plugins.domain.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import org.yaml.model.YMap
 
 /**
   * Raml header comment
   */
-case class RamlHeader private[compiler] (text: String)
+case class RamlHeader(text: String)
 
 trait RamlFragment
 

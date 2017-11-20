@@ -1,6 +1,6 @@
 package amf.spec.dialects
 
-import amf.compiler.{RamlHeader, Root}
+import amf.compiler.Root
 import amf.dialects.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
@@ -17,6 +17,7 @@ import amf.spec.raml.RamlSpecParser
 import amf.validation.model.ParserSideValidations
 import org.yaml.model._
 import amf.parser.YScalarYRead
+import amf.plugins.domain.webapi.parser.RamlHeader
 
 import scala.collection.{immutable, mutable}
 
@@ -572,10 +573,10 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
 
 object DialectParser {
 
-  def apply(root: Root, header: RamlHeader, dialects: DialectRegistry)(implicit ctx: ParserContext): DialectParser = {
-    dialects.get(header.text) match {
+  def apply(root: Root, header: String, dialects: DialectRegistry)(implicit ctx: ParserContext): DialectParser = {
+    dialects.get(header) match {
       case Some(dialect) => new DialectParser(dialect, root)
-      case _             => throw new Exception(s"Unknown dialect ${header.text}")
+      case _             => throw new Exception(s"Unknown dialect ${header}")
     }
   }
 

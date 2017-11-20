@@ -2,8 +2,10 @@ package amf.compiler
 
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
+import amf.framework.parser.{Extension, Library, Link, ReferenceKind}
 import amf.parser.YMapOps
-import amf.plugins.domain.framework.parser.{Extension, Library, Link, ReferenceKind}
+import amf.plugins.domain.webapi.parser.RamlHeader
+import amf.plugins.domain.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.remote._
 import amf.spec.ParserContext
 import amf.validation.Validation
@@ -16,20 +18,33 @@ import scala.concurrent.Future
 /**
   * Reference collector. Ideally references should be collected while parsing to avoid an unnecessary iteration.
   */
-class ReferenceCollector(document: YDocument, vendor: Vendor, validation: Validation) {
+class ReferenceCollector(document: ParsedDocument, vendor: Vendor, validation: Validation) {
 
   implicit val ctx: ParserContext = ParserContext(validation)
 
   private val references = new ArrayBuffer[Reference]
 
-  def traverse(isRamlOverlayOrExtension: Boolean): Seq[Reference] = {
+  def traverse(): Seq[Reference] = {
     if (vendor != Amf) {
-      libraries(document)
-      links(document)
-      if (isRamlOverlayOrExtension) overlaysAndExtensions(document)
+      libraries(document.document)
+      links(document.document)
+      if (isRamlOverlayOrExtension(vendor, document)) overlaysAndExtensions(document.document)
     }
     references
   }
+
+  // TODO take this away when dialects don't use 'extends' keyword.
+  def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
+    document.comment match {
+      case Some(c) =>
+        RamlHeader.fromText(c.metaText) match {
+          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml => true
+          case _                                                       => false
+        }
+      case None => false
+    }
+  }
+
 
   private def overlaysAndExtensions(document: YDocument): Unit = {
     document.node.to[YMap] match {

@@ -1,11 +1,12 @@
 package amf.plugins.domain.webapi
 
-import amf.compiler.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
-import amf.compiler.{OasHeader, Root}
+import amf.compiler.Root
 import amf.document.BaseUnit
+import amf.framework.parser.{Library, Link}
 import amf.framework.plugins.AMFDomainPlugin
-import amf.plugins.domain.framework.parser.{Library, Link}
 import amf.plugins.domain.webapi.contexts.{OasSpecAwareContext, WebApiContext}
+import amf.plugins.domain.webapi.parser.OasHeader
+import amf.plugins.domain.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.remote.Oas
 import amf.spec.ParserContext
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser, OasSyntax}
@@ -30,4 +31,35 @@ class OAS20Plugin extends AMFDomainPlugin {
     }
   }
 
+  /**
+    * Decides if this plugin can parse the provided document instance.
+    * this can be used by multiple plugins supporting the same media-type
+    * to decide which one will parse the document base on information fromt
+    * the document structure
+    */
+  override def accept(root: Root): Boolean = OasHeader(root) match {
+    case Some(Oas20Overlay)   => true
+    case Some(Oas20Extension) => true
+    case Some(Oas20Header)    => true
+    case f if f.isDefined     => true
+    case _                    => false
+  }
+
+  /**
+    * List of media types used to encode serialisations of
+    * this domain
+    */
+  override def domainSyntaxes = Seq(
+    "application/json",
+    "application/yaml",
+    "application/x-yaml",
+    "text/yaml",
+    "text/x-yaml",
+    "application/openapi+json",
+    "application/swagger+json",
+    "application/openapi+yaml",
+    "application/swagger+yaml",
+    "application/openapi",
+    "application/swagger"
+  )
 }

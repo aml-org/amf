@@ -1,4 +1,4 @@
-package amf.graph
+package amf.plugins.domain.graph.parser
 
 import amf.document._
 import amf.domain._
@@ -17,7 +17,7 @@ import amf.metadata.shape._
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
-import amf.remote.{Amf, Platform}
+import amf.remote.Platform
 import amf.shape._
 import amf.spec.ParserContext
 import amf.spec.dialects.DialectNode
