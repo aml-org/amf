@@ -21,7 +21,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("Api (raml)") {
+  test("HERE_HERE Api (raml)") {
     AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
                 platform,
                 RamlYamlHint,
