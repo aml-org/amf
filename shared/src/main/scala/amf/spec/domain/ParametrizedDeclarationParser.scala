@@ -5,6 +5,7 @@ import amf.domain.`abstract`.{AbstractDeclaration, ParametrizedDeclaration, Vari
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import org.yaml.model._
 import amf.parser.YScalarYRead
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.{ParserContext, SearchScope}
 
 /**
@@ -13,7 +14,7 @@ import amf.spec.{ParserContext, SearchScope}
 case class ParametrizedDeclarationParser(
     node: YNode,
     producer: String => ParametrizedDeclaration,
-    declarations: (String, SearchScope.Scope) => AbstractDeclaration)(implicit ctx: ParserContext) {
+    declarations: (String, SearchScope.Scope) => AbstractDeclaration)(implicit ctx: WebApiContext) {
   def parse(): ParametrizedDeclaration = {
     node.tagType match {
       case YType.Map =>

@@ -2,6 +2,7 @@ package amf.spec.domain
 
 import amf.domain.Annotation.SynthesizedField
 import amf.domain.{Annotations, Payload}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}
@@ -10,7 +11,7 @@ import org.yaml.model.{YMap, YMapEntry, YType}
 /**
   *
   */
-case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload)(implicit ctx: ParserContext) {
+case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload)(implicit ctx: WebApiContext) {
   def parse(): Payload = {
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))

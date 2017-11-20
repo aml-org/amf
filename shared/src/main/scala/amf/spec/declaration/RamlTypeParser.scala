@@ -5,6 +5,7 @@ import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.SearchScope.Named
@@ -20,10 +21,8 @@ import org.yaml.render.YamlRender
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry,
-            adopt: Shape => Shape,
-            isAnnotation: Boolean = false,
-            defaultType: DefaultType = StringDefaultType)(implicit ctx: ParserContext): RamlTypeParser =
+  def apply(ast: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
+      implicit ctx: WebApiContext): RamlTypeParser =
     new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(ctx.toRaml)
 }
 
@@ -68,12 +67,8 @@ object AnyDefaultType extends DefaultType {
   override val typeDef: TypeDef = TypeDef.AnyType
 }
 
-case class RamlTypeParser(ast: YPart,
-                          name: String,
-                          node: YNode,
-                          adopt: Shape => Shape,
-                          isAnnotation: Boolean,
-                          defaultType: DefaultType)(implicit val ctx: ParserContext)
+case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
+    implicit val ctx: WebApiContext)
     extends RamlSpecParser {
 
   def parse(): Option[Shape] = {

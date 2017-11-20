@@ -5,6 +5,7 @@ import amf.domain.`abstract`._
 import amf.domain.extensions.DataNode
 import amf.domain.{DomainElement, EndPoint, Operation}
 import amf.metadata.domain.DomainElementModel
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.remote.Raml
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter
@@ -26,7 +27,7 @@ import scala.collection.mutable.ListBuffer
   */
 class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) with PlatformSecrets {
 
-  implicit val ctx: ParserContext = ParserContext(currentValidation, Raml)
+  implicit val ctx: WebApiContext = ParserContext(currentValidation).toRaml
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 

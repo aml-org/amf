@@ -4,6 +4,7 @@ import amf.domain.Annotation.{ExplicitField, SynthesizedField}
 import amf.domain.{Annotations, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.shape.Shape
 import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common.{AnnotationParser, ValueNode}
@@ -13,13 +14,13 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: ParserContext) {
+case class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext) {
   def parse(): Seq[Parameter] =
     map.entries
       .map(entry => RamlParameterParser(entry, producer).parse())
 }
 
-case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit val ctx: ParserContext)
+case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit val ctx: WebApiContext)
     extends RamlTypeSyntax {
   def parse(): Parameter = {
 

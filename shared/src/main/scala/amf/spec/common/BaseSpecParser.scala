@@ -5,6 +5,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.spec.ParserContext
 import org.yaml.model._
 import amf.parser.YScalarYRead
+import amf.plugins.domain.webapi.contexts.WebApiContext
 
 /**
   * Base spec parser.

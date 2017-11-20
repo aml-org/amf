@@ -8,6 +8,7 @@ import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
 import amf.parser._
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.ParserContext
@@ -18,7 +19,7 @@ import org.yaml.model.{YMap, YType}
 /**
   *
   */
-case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit val ctx: ParserContext) extends RamlSpecParser {
+case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit val ctx: WebApiContext) extends RamlSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment

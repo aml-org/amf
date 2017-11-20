@@ -5,6 +5,7 @@ import amf.domain.{Annotations, Example}
 import amf.metadata.domain.ExampleModel
 import amf.model.AmfScalar
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model._
@@ -15,7 +16,7 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class OasResponseExamplesParser(key: String, map: YMap)(implicit ctx: ParserContext) {
+case class OasResponseExamplesParser(key: String, map: YMap)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     val results = ListBuffer[Example]()
     map
@@ -31,7 +32,7 @@ case class OasResponseExamplesParser(key: String, map: YMap)(implicit ctx: Parse
   }
 }
 
-case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: ParserContext) {
+case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     val example = Example(yMapEntry)
       .set(ExampleModel.MediaType, yMapEntry.key.as[YScalar].text)
@@ -41,14 +42,14 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: ParserCo
 }
 
 case class RamlExamplesParser(map: YMap, singleExampleKey: String, multipleExamplesKey: String)(
-    implicit ctx: ParserContext) {
+    implicit ctx: WebApiContext) {
   def parse(): Seq[Example] =
     RamlMultipleExampleParser(multipleExamplesKey, map).parse() ++
       RamlSingleExampleParser(singleExampleKey, map).parse()
 
 }
 
-case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: ParserContext) {
+case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
 
@@ -69,7 +70,7 @@ case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: Parse
   }
 }
 
-case class RamlNamedExampleParser(entry: YMapEntry)(implicit ctx: ParserContext) {
+case class RamlNamedExampleParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     val name             = ValueNode(entry.key)
     val example: Example = RamlSingleExampleValueParser(entry.value).parse()
@@ -77,7 +78,7 @@ case class RamlNamedExampleParser(entry: YMapEntry)(implicit ctx: ParserContext)
   }
 }
 
-case class RamlSingleExampleParser(key: String, map: YMap)(implicit ctx: ParserContext) {
+case class RamlSingleExampleParser(key: String, map: YMap)(implicit ctx: WebApiContext) {
   def parse(): Option[Example] = {
     map.key(key).flatMap { entry =>
       entry.value.tagType match {
@@ -92,7 +93,7 @@ case class RamlSingleExampleParser(key: String, map: YMap)(implicit ctx: ParserC
   }
 }
 
-case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: ParserContext) {
+case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     val example = Example(node)
 
@@ -135,7 +136,7 @@ case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: ParserContext
   }
 }
 
-case class RamlExampleValueAsString(node: YNode, example: Example, strict: Boolean)(implicit ctx: ParserContext) {
+case class RamlExampleValueAsString(node: YNode, example: Example, strict: Boolean)(implicit ctx: WebApiContext) {
   def populate(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
       example.set(ExampleModel.Strict, AmfScalar(strict), Annotations() += SynthesizedField())

@@ -4,14 +4,7 @@ import amf.common.Lazy
 import amf.common.core.TemplateUri
 import amf.compiler.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
-import amf.domain.Annotation.{
-  DeclaredElement,
-  DefaultPayload,
-  EndPointBodyParameter,
-  ExplicitField,
-  SingleValueArray,
-  _
-}
+import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
@@ -24,6 +17,7 @@ import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.shape.NodeShape
 import amf.spec.common._
 import amf.spec.declaration._
@@ -39,7 +33,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas 2.0 spec parser
   */
-case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extends OasSpecParser {
+case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extends OasSpecParser {
 
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
@@ -708,7 +702,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
   }
 }
 
-abstract class OasSpecParser extends BaseSpecParser {
+abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser {
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"

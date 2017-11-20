@@ -5,6 +5,7 @@ import amf.domain.{Annotations, Parameter, Response}
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.remote.{Oas, Raml}
 import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common._
@@ -18,7 +19,7 @@ import scala.collection.mutable
   */
 object SecuritySchemeParser {
   def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme)(
-      implicit ctx: ParserContext): SecuritySchemeParser =
+      implicit ctx: WebApiContext): SecuritySchemeParser =
     ctx.vendor match {
       case Raml  => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case Oas   => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
@@ -31,7 +32,7 @@ trait SecuritySchemeParser {
   def parse(): SecurityScheme
 }
 case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
-    implicit ctx: ParserContext)
+    implicit ctx: WebApiContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
     ctx.link(node) match {
@@ -83,11 +84,11 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
 }
 
 object RamlDescribedByParser {
-  def apply(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: ParserContext): RamlDescribedByParser =
+  def apply(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext): RamlDescribedByParser =
     new RamlDescribedByParser(key, map, scheme)(ctx.toRaml)
 }
 
-case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: ParserContext) {
+case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -152,7 +153,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
 }
 
 case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
-    implicit ctx: ParserContext)
+    implicit ctx: WebApiContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {

@@ -5,6 +5,7 @@ import amf.domain.{Annotations, Parameter, Payload, Request}
 import amf.metadata.domain.RequestModel
 import amf.model.AmfArray
 import amf.parser.YMapOps
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.AnnotationParser
 import amf.spec.declaration.RamlTypeParser
@@ -15,7 +16,7 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: ParserContext) {
+case class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext) {
 
   def parse(): Option[Request] = {
     val request = new Lazy[Request](producer)

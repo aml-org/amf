@@ -17,7 +17,7 @@ import scala.concurrent.Future
   */
 class ReferenceCollector(document: YDocument, vendor: Vendor, validation: Validation) {
 
-  implicit val ctx: ParserContext = ParserContext(validation, vendor)
+  implicit val ctx: ParserContext = ParserContext(validation)
 
   private val references = new ArrayBuffer[Reference]
 

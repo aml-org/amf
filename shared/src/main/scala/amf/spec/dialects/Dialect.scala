@@ -6,17 +6,15 @@ import amf.document.Fragment.{DialectFragment, Fragment}
 import amf.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
-import amf.metadata.Type.{Iri, Str}
+import amf.metadata.Type.Str
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.YNodeLikeOps
+import amf.parser.{YNodeLikeOps, YScalarYRead}
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity
-import amf.spec.raml.RamlSpecParser
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model._
-import amf.parser.YScalarYRead
 
 import scala.collection.mutable
 
@@ -299,8 +297,8 @@ object TypeBuiltins {
 
 class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], override  val referencedDocuments: Map[String, BaseUnit])(
     implicit val ctx: ParserContext)
-    extends RamlSpecParser
-    with TypeBuiltins {
+    // extends RamlSpecParser
+    extends TypeBuiltins {
 
   val REGEX_URI =
     "^([a-z][a-z0-9+.-]*):(?://((?:(?=((?:[a-z0-9-._~!$&'()*+,;=:]|%[0-9A-F]{2})*))(\\3)@)?(?=([[0-9A-F:.]{2,}]|(?:[a-z0-9-._~!$&'()*+,;=]|%[0-9A-F]{2})*))\\5(?::(?=(\\d*))\\6)?)(\\/(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\8)?|(\\/?(?!\\/)(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/]|%[0-9A-F]{2})*))\\10)?)(?:\\?(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\11)?(?:#(?=((?:[a-z0-9-._~!$&'()*+,;=:@\\/?]|%[0-9A-F]{2})*))\\12)?$"

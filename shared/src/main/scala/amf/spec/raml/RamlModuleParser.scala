@@ -5,14 +5,14 @@ import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.parser.YNodeLikeOps
-import amf.spec.ParserContext
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.declaration.ReferencesParser
 import org.yaml.model._
 
 /**
   *
   */
-case class RamlModuleParser(root: Root)(implicit val ctx: ParserContext) extends RamlSpecParser {
+case class RamlModuleParser(root: Root)(implicit val ctx: WebApiContext) extends RamlSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))

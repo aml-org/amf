@@ -155,7 +155,7 @@ class ExtensionsResolutionStage(profile: String)(override implicit val currentVa
   /** Merge annotation types, types, security schemes, resource types,  */
   def mergeDeclarations(master: Document, extension: ExtensionLike, iriMerger: IriMerger): Unit = {
 
-    val declarations = Declarations(master.declares, Some(ParserContext(currentValidation, Raml)))
+    val declarations = Declarations(master.declares, Some(ParserContext(currentValidation).toRaml))
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
     extension.declares.foreach { declaration =>
