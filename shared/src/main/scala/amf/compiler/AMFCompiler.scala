@@ -9,13 +9,16 @@ import amf.domain.ExternalDomainElement
 import amf.domain.extensions.idCounter
 import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
 import amf.graph.GraphParser
+import amf.parser.{YNodeLikeOps, YScalarYRead}
+import amf.plugins.domain.webapi.Raml10Plugin
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.ParserContext
 import amf.spec.dialects.DialectParser
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
 import amf.spec.payload.PayloadParser
-import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser}
+import amf.spec.raml.RamlModuleParser
 import amf.validation.Validation
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -24,8 +27,6 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
-import amf.parser.{YNodeLikeOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
 
 class AMFCompiler private (val url: String,
                            val remote: Platform,
@@ -88,24 +89,17 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
-    // Share references between docs and fragments
-    val updated = ctx.toRaml
-
-    // Parse the unit and pass the right ctx
-    val option = RamlHeader(root).map {
-      case RamlHeader.Raml10          => RamlDocumentParser(root)(updated).parseDocument()
-      case RamlHeader.Raml10Overlay   => RamlDocumentParser(root)(updated).parseOverlay()
-      case RamlHeader.Raml10Extension => RamlDocumentParser(root)(updated).parseExtension()
-      case RamlHeader.Raml10Library   => makeRamlModule(root)
-      case fragment: RamlFragment     => RamlFragmentParser(root, fragment)(updated).parseFragment()
-      // This includes vocabularies and dialect definitions and dialect documents
+    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references).toRaml
+    val option: Option[BaseUnit] = RamlHeader(root).flatMap {
+      // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
-      case header if dialects.knowsHeader(header) => makeDialect(root, header)
-      case _                                      => throw UnableToResolveUnitException(root.location)
+      case header if dialects.knowsHeader(header) => Some(makeDialect(root, header))
+      case _                                      => new Raml10Plugin().parse(root, ctx)
     }
+
     option match {
-      case Some(unit) => unit
-      case None       => makeExternalUnit(root)
+      case Some(unit:BaseUnit) => unit
+      case None                => makeExternalUnit(root)
     }
   }
 

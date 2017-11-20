@@ -21,7 +21,7 @@ import org.yaml.model.{YMap, YType}
   */
 case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit val ctx: WebApiContext) extends RamlSpecParser {
 
-  def parseFragment(): Fragment = {
+  def parseFragment(): Option[Fragment] = {
     // first i must identify the type of fragment
 
     val rootMap: YMap = root.document.to[YMap] match {
@@ -31,27 +31,27 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
         YMap()
     }
 
-    val fragment: Fragment = fragmentType match {
-      case Raml10DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
-      case Raml10DataType                  => DataTypeFragmentParser(rootMap).parse()
-      case Raml10ResourceType              => ResourceTypeFragmentParser(rootMap).parse()
-      case Raml10Trait                     => TraitFragmentParser(rootMap).parse()
-      case Raml10AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
-      case Raml10SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
-      case Raml10NamedExample              => NamedExampleFragmentParser(rootMap).parse()
-      case _ =>
-        ctx.violation(root.location, "Unsupported fragment type", root.document)
-        ExternalFragment().withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
+    val optionFragment = fragmentType match {
+      case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(rootMap).parse())
+      case Raml10DataType                  => Some(DataTypeFragmentParser(rootMap).parse())
+      case Raml10ResourceType              => Some(ResourceTypeFragmentParser(rootMap).parse())
+      case Raml10Trait                     => Some(TraitFragmentParser(rootMap).parse())
+      case Raml10AnnotationTypeDeclaration => Some(AnnotationFragmentParser(rootMap).parse())
+      case Raml10SecurityScheme            => Some(SecuritySchemeFragmentParser(rootMap).parse())
+      case Raml10NamedExample              => Some(NamedExampleFragmentParser(rootMap).parse())
+      case _                               => None
     }
 
-    UsageParser(rootMap, fragment).parse()
-
-    fragment.add(Annotations(root.document) += SourceVendor(Raml))
-
-    val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
-
-    if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
-    fragment
+    optionFragment match {
+      case Some(fragment) =>
+        UsageParser(rootMap, fragment).parse()
+        fragment.add(Annotations(root.document) += SourceVendor(Raml))
+        val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
+        if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
+        Some(fragment)
+      case _ =>
+        None
+    }
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
