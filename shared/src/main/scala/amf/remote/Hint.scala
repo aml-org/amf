@@ -1,6 +1,6 @@
 package amf.remote
 
-import amf.plugins.domain.framework.parser.{ReferenceKind, Unspecified}
+import amf.framework.parser.{ReferenceKind, Unspecified}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 
 case class Hint(vendor: Vendor, syntax: Syntax, kind: ReferenceKind = Unspecified) {

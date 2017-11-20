@@ -1,4 +1,4 @@
-package amf.graph
+package amf.plugins.domain.graph.parser
 
 import amf.domain.{Annotation, Annotations}
 import amf.metadata.SourceMapModel.{Element, Value}

@@ -7,7 +7,7 @@ import amf.compiler.AMFCompiler
 import amf.document.{Document, Module}
 import amf.domain.extensions.DataNode
 import amf.dumper.AMFDumper
-import amf.graph.GraphEmitter
+import amf.plugins.domain.graph.parser.GraphEmitter
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.shape.Shape

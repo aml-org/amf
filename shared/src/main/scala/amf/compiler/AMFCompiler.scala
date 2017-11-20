@@ -1,21 +1,20 @@
 package amf.compiler
 
-import amf.compiler.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.document.Fragment.ExternalFragment
 import amf.domain.ExternalDomainElement
 import amf.domain.extensions.idCounter
 import amf.exception.CyclicReferenceException
-import amf.graph.GraphParser
+import amf.framework.parser.ReferenceKind
 import amf.parser.{YNodeLikeOps, YScalarYRead}
-import amf.plugins.domain.framework.parser.ReferenceKind
+import amf.plugins.domain.graph.AMFGraphPlugin
+import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
 import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.ParserContext
-import amf.spec.dialects.DialectParser
 import amf.spec.payload.PayloadParser
 import amf.validation.Validation
 import org.yaml.model._
@@ -88,18 +87,23 @@ class AMFCompiler private (val url: String,
     ExternalFragment().withLocation(root.location).withEncodes(external)
   }
 
+  val raml10plugin = new RAML10Plugin()
+  val dialectsplugin = new RAMLExtensionsPlugin(dialects)
+
   private def makeRamlUnit(root: Root): BaseUnit = {
     implicit val ctx: ParserContext = ParserContext(currentValidation, root.location, root.references, Some(ctx.declarations)).toRaml
-    val option: Option[BaseUnit] = RamlHeader(root).flatMap {
-      // this includes vocabularies and dialect definitions and dialect documents
-      // They are all defined internally in terms of dialects definitions
-      case header if dialects.knowsHeader(header) => Some(makeDialect(root, header))
-      case _                                      => new RAML10Plugin().parse(root, ctx)
+
+    val parsed: Option[BaseUnit] = if (raml10plugin.accept(root)) {
+      raml10plugin.parse(root, ctx)
+    } else if (dialectsplugin.accept(root)) {
+      dialectsplugin.parse(root, ctx)
+    } else {
+      None
     }
 
-    option match {
-      case Some(unit:BaseUnit) => unit
-      case None                => makeExternalUnit(root)
+    parsed match {
+      case Some(baseUnit) => baseUnit
+      case None           => makeExternalUnit(root)
     }
   }
 
@@ -111,26 +115,21 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeDialect(root: Root, header: RamlHeader)(implicit ctx: ParserContext): BaseUnit =
-    DialectParser(root, header, dialects).parseUnit()
-
-  private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
+  private def makeAmfUnit(root: Root): BaseUnit = {
+    val graphPlugin = new AMFGraphPlugin(remote)
+    if (graphPlugin.accept(root)) {
+      graphPlugin.parse(root, ctx) match {
+        case Some(baseUnit) => baseUnit
+        case _ => throw new Exception("Cannot parse AMF JSON-LD graph")
+      }
+    } else {
+      throw new Exception("Cannot parse AMF JSON-LD graph")
+    }
+  }
 
   private def makePayloadUnit(root: Root): BaseUnit = {
     implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references, Some(ctx.declarations)).toRaml
     PayloadParser(root.document, root.location).parseUnit()
-  }
-
-  // TODO take this away when dialects don't use 'extends' keyword.
-  def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
-    document.comment match {
-      case Some(c) =>
-        RamlHeader.fromText(c.metaText) match {
-          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml => true
-          case _                                                       => false
-        }
-      case None => false
-    }
   }
 
   private def parse(content: Content): Future[Root] = {
@@ -168,8 +167,7 @@ class AMFCompiler private (val url: String,
     val vendor = resolveVendor(content)
     // construct local parser contxt and pass to referencecollector as explicit because we don't know the vendor yet
     val refs =
-      new ReferenceCollector(document.document, vendor, currentValidation)
-        .traverse(isRamlOverlayOrExtension(vendor, document))
+      new ReferenceCollector(document, vendor, currentValidation).traverse()
 
     refs
       .filter(_.isRemote)

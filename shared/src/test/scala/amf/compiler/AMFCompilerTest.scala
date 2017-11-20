@@ -3,8 +3,8 @@ package amf.compiler
 import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
 import amf.exception.CyclicReferenceException
+import amf.framework.parser.Unspecified
 import amf.parser.YMapOps
-import amf.plugins.domain.framework.parser.{Library, Unspecified}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
@@ -22,7 +22,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("HERE_HERE Api (raml)") {
+  test("Api (raml)") {
     AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
                 platform,
                 RamlYamlHint,

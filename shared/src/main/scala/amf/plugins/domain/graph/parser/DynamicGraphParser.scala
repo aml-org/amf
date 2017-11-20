@@ -1,4 +1,4 @@
-package amf.graph
+package amf.plugins.domain.graph.parser
 
 import amf.domain.Annotations
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}

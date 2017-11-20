@@ -1,21 +1,16 @@
 package amf.spec.raml
 
 import amf.common.TSort.tsort
-import amf.compiler.RamlHeader
 import amf.document._
 import amf.domain.Annotation._
 import amf.domain._
-import amf.domain.extensions.{
-  ArrayNode => DataArrayNode,
-  ObjectNode => DataObjectNode,
-  ScalarNode => DataScalarNode,
-  _
-}
+import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain._
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
+import amf.plugins.domain.webapi.parser.RamlHeader
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
 import amf.spec._

@@ -1,11 +1,11 @@
 package amf.spec.oas
 
-import amf.compiler.OasHeader
 import amf.document.Fragment._
 import amf.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
 import amf.parser.Position
+import amf.plugins.domain.webapi.parser.OasHeader
 import amf.remote.Oas
 import amf.spec.common.BaseEmitters._
 import amf.spec.declaration._
