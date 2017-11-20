@@ -5,6 +5,7 @@ import amf.domain.{Annotations, CreativeWork, Example}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._
 import amf.shape._
@@ -23,12 +24,12 @@ import scala.collection.mutable
   */
 object OasTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, oasNode: String = "schema")(
-      implicit ctx: ParserContext): OasTypeParser =
+      implicit ctx: WebApiContext): OasTypeParser =
     OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(ctx.toOas)
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(
-    implicit val ctx: ParserContext)
+    implicit val ctx: WebApiContext)
     extends OasSpecParser {
 
   def parse(): Option[Shape] = {
@@ -474,7 +475,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     def withTypeDef(value: TypeDef): Unit = typeDef = value
   }
 
-  abstract class ShapeParser(implicit ctx: ParserContext) {
+  abstract class ShapeParser(implicit ctx: WebApiContext) {
 
     val shape: Shape
     val map: YMap

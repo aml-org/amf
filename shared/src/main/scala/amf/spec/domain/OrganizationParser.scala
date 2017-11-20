@@ -3,6 +3,7 @@ package amf.spec.domain
 import amf.domain.{Annotations, Organization}
 import amf.metadata.domain.OrganizationModel
 import amf.parser.YMapOps
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.YMap
@@ -14,7 +15,7 @@ object OrganizationParser {
   def apply(map: YMap)(implicit ctx: ParserContext): OrganizationParser = new OrganizationParser(map)(ctx.toOas)
 }
 
-class OrganizationParser(map: YMap)(implicit ctx: ParserContext) {
+class OrganizationParser(map: YMap)(implicit ctx: WebApiContext) {
   def parse(): Organization = {
 
     val organization = Organization(map)

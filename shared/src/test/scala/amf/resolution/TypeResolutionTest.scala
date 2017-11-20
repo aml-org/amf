@@ -4,6 +4,7 @@ import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.document.BaseUnit
 import amf.io.BuildCycleTests
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.remote.{Raml, RamlYamlHint}
 import amf.shape._
 import amf.spec.ParserContext
@@ -20,7 +21,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
     val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-    implicit val ctx: ParserContext = ParserContext(Validation(platform), Raml)
+    implicit val ctx: WebApiContext = ParserContext(Validation(platform)).toRaml
 
     var res = RamlTypeExpressionParser(adopt).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
@@ -48,7 +49,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
     var error = false
     try {
-      val fail = ParserContext(Validation(platform).withEnabledValidation(false), Raml)
+      val fail = ParserContext(Validation(platform).withEnabledValidation(false)).toRaml
       RamlTypeExpressionParser(adopt)(fail).parse("[]")
     } catch {
       case e: Exception => error = true

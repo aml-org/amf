@@ -7,6 +7,7 @@ import amf.metadata.domain.EndPointModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YNode}
@@ -20,7 +21,7 @@ case class RamlEndpointParser(entry: YMapEntry,
                               producer: String => EndPoint,
                               parent: Option[EndPoint],
                               collector: mutable.ListBuffer[EndPoint],
-                              parseOptionalOperations: Boolean = false)(implicit ctx: ParserContext) {
+                              parseOptionalOperations: Boolean = false)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
 
     val path = parent.map(_.path).getOrElse("") + entry.key.as[String]

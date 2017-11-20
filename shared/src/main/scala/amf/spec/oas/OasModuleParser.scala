@@ -6,6 +6,7 @@ import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
 import amf.metadata.document.BaseUnitModel
 import amf.parser.YNodeLikeOps
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.declaration.ReferencesParser
 import org.yaml.model._
@@ -13,7 +14,7 @@ import org.yaml.model._
 /**
   *
   */
-case class OasModuleParser(root: Root)(implicit val ctx: ParserContext) extends OasSpecParser {
+case class OasModuleParser(root: Root)(implicit val ctx: WebApiContext) extends OasSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.document))

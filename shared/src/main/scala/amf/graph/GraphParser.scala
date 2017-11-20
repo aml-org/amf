@@ -297,5 +297,5 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
 object GraphParser {
   def apply: GraphParser                     = GraphParser(TrunkPlatform(""))
-  def apply(platform: Platform): GraphParser = new GraphParser(platform)(ParserContext(Validation(platform), Amf))
+  def apply(platform: Platform): GraphParser = new GraphParser(platform)(ParserContext(Validation(platform)))
 }

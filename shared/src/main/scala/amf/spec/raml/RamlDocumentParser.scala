@@ -13,6 +13,7 @@ import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
@@ -26,7 +27,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Raml 1.0 spec parser
   */
-case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) extends RamlSpecParser {
+case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) extends RamlSpecParser {
 
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
@@ -240,7 +241,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
 
 }
 
-abstract class RamlSpecParser extends BaseSpecParser {
+abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser {
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"

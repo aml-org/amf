@@ -10,6 +10,7 @@ import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.parser.YScalarYRead
+import amf.plugins.domain.webapi.contexts.WebApiContext
 
 import scala.collection.mutable
 
@@ -42,7 +43,7 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
   }
 }
 
-case class XMLSerializerParser(defaultName: String, map: YMap)(implicit ctx: ParserContext) {
+case class XMLSerializerParser(defaultName: String, map: YMap)(implicit ctx: WebApiContext) {
   def parse(): XMLSerializer = {
     val serializer = XMLSerializer(map)
       .set(XMLSerializerModel.Attribute, value = false)

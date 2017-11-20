@@ -25,6 +25,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
 import amf.parser.{YNodeLikeOps, YScalarYRead}
+import amf.plugins.domain.webapi.contexts.WebApiContext
 
 class AMFCompiler private (val url: String,
                            val remote: Platform,
@@ -33,7 +34,7 @@ class AMFCompiler private (val url: String,
                            val currentValidation: Validation,
                            private val cache: Cache,
                            private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default)(
-  implicit ctx: ParserContext = ParserContext(currentValidation, Raml, url, Seq.empty)) {
+  implicit ctx: ParserContext = ParserContext(currentValidation, url, Seq.empty)) {
 
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                                   = context.current
@@ -110,14 +111,14 @@ class AMFCompiler private (val url: String,
 
   private def makeRamlModule(root: Root) = {
     // modules open a new context, clean declarations with an empty context
-    val clean: ParserContext = ParserContext(currentValidation, Raml, root.location, root.references)
-    RamlModuleParser(root)(clean).parseModule()
+    val clean: ParserContext = ParserContext(currentValidation, root.location, root.references)
+    RamlModuleParser(root)(clean.toRaml).parseModule()
   }
 
   private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
 
   private def resolveOasUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Oas, root.location, root.references)
+    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references).toOas
     hint.kind match {
       case Library => OasModuleParser(root).parseModule()
       case Link    => OasFragmentParser(root).parseFragment()
@@ -125,7 +126,7 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def detectOasUnit(root: Root)(implicit ctx: ParserContext): BaseUnit = {
+  private def detectOasUnit(root: Root)(implicit ctx: WebApiContext): BaseUnit = {
     OasHeader(root) match {
       case Some(Oas20Overlay)   => OasDocumentParser(root).parseOverlay()
       case Some(Oas20Extension) => OasDocumentParser(root).parseExtension()
@@ -135,13 +136,13 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeDialect(root: Root, header: RamlHeader)(implicit ctx: ParserContext): BaseUnit =
+  private def makeDialect(root: Root, header: RamlHeader)(implicit ctx: WebApiContext): BaseUnit =
     DialectParser(root, header, dialects).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
   private def makePayloadUnit(root: Root): BaseUnit = {
-    implicit val ctx: ParserContext = ParserContext(currentValidation, Payload, root.location, root.references)
+    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references).toRaml
     PayloadParser(root.document, root.location).parseUnit()
   }
 
@@ -240,7 +241,7 @@ object AMFCompiler {
             context: Option[Context] = None,
             cache: Option[Cache] = None,
             dialects: DialectRegistry = DialectRegistry.default)(
-    implicit ctx: ParserContext = ParserContext(currentValidation, Raml, url, Seq.empty)
+    implicit ctx: ParserContext = ParserContext(currentValidation, url, Seq.empty)
   ) = new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects)(ctx)
 
   val RAML_10 = "#%RAML 1.0\n"

@@ -7,6 +7,7 @@ import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
 import amf.parser._
+import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.shape.Shape
 import amf.spec.ParserContext
 import amf.spec.declaration._
@@ -16,7 +17,7 @@ import org.yaml.model.{YMap, YType}
 /**
   *
   */
-case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(implicit val ctx: ParserContext) extends OasSpecParser {
+case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(implicit val ctx: WebApiContext) extends OasSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment

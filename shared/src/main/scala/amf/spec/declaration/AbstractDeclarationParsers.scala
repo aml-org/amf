@@ -3,6 +3,9 @@ package amf.spec.declaration
 import amf.domain.Annotations
 import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
 import amf.parser.YMapOps
+import amf.parser.{YMapOps, YNodeLikeOps}
+import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common.{AbstractVariables, DataNodeParser}
 import amf.spec.{ParserContext, SearchScope}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
@@ -13,7 +16,7 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 case class AbstractDeclarationsParser(key: String,
                                       producer: (YMapEntry) => AbstractDeclaration,
                                       map: YMap,
-                                      customProperties: String)(implicit ctx: ParserContext) {
+                                      customProperties: String)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -35,12 +38,12 @@ case class AbstractDeclarationsParser(key: String,
 object AbstractDeclarationParser {
 
   def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry)(
-      implicit ctx: ParserContext): AbstractDeclarationParser =
+      implicit ctx: WebApiContext): AbstractDeclarationParser =
     new AbstractDeclarationParser(declaration, parent, entry.key, entry.value)
 }
 
 case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, key: String, entryValue: YNode)(
-    implicit ctx: ParserContext) {
+    implicit ctx: WebApiContext) {
   def parse(): AbstractDeclaration = {
 
     ctx.link(entryValue) match {
