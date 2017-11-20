@@ -1,9 +1,10 @@
 package amf.remote
 
+import amf.plugins.domain.framework.parser.{ReferenceKind, Unspecified}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 
-case class Hint(vendor: Vendor, syntax: Syntax, kind: Kind = Unspecified) {
-  def +(k: Kind): Hint = copy(kind = k)
+case class Hint(vendor: Vendor, syntax: Syntax, kind: ReferenceKind = Unspecified) {
+  def +(k: ReferenceKind): Hint = copy(kind = k)
 }
 
 object RamlYamlHint extends Hint(Raml, Yaml)
@@ -19,13 +20,3 @@ object AmfJsonHint extends Hint(Amf, Json)
 object PayloadJsonHint extends Hint(Payload, Json)
 
 object PayloadYamlHint extends Hint(Payload, Yaml)
-
-sealed trait Kind
-
-object Library extends Kind
-
-object Extension extends Kind
-
-object Link extends Kind
-
-object Unspecified extends Kind

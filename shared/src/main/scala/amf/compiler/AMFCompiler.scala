@@ -1,24 +1,22 @@
 package amf.compiler
 
-import amf.compiler.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.compiler.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.document.Fragment.ExternalFragment
 import amf.domain.ExternalDomainElement
 import amf.domain.extensions.idCounter
-import amf.exception.{CyclicReferenceException, UnableToResolveUnitException}
+import amf.exception.CyclicReferenceException
 import amf.graph.GraphParser
 import amf.parser.{YNodeLikeOps, YScalarYRead}
-import amf.plugins.domain.webapi.Raml10Plugin
+import amf.plugins.domain.framework.parser.ReferenceKind
 import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
 import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.ParserContext
 import amf.spec.dialects.DialectParser
-import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser}
 import amf.spec.payload.PayloadParser
-import amf.spec.raml.RamlModuleParser
 import amf.validation.Validation
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -34,8 +32,10 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            val currentValidation: Validation,
                            private val cache: Cache,
-                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default)(
-  implicit ctx: ParserContext = ParserContext(currentValidation, url, Seq.empty)) {
+                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default,
+                           private val baseContext: Option[ParserContext] = None) {
+
+  implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
 
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                                   = context.current
@@ -74,11 +74,11 @@ class AMFCompiler private (val url: String,
 
   private def make(root: Root): BaseUnit = {
     root match {
-      case Root(_, _, _, Amf, _)     => makeAmfUnit(root)
-      case Root(_, _, _, Raml, _)    => makeRamlUnit(root)
-      case Root(_, _, _, Oas, _)     => makeOasUnit(root)
-      case Root(_, _, _, Payload, _) => makePayloadUnit(root)
-      case Root(_, _, _, Unknown, _) => makeExternalUnit(root)
+      case Root(_, _, _, hint.kind, Amf, _)     => makeAmfUnit(root)
+      case Root(_, _, _, hint.kind, Raml, _)    => makeRamlUnit(root)
+      case Root(_, _, _, hint.kind, Oas, _)     => makeOasUnit(root)
+      case Root(_, _, _, hint.kind, Payload, _) => makePayloadUnit(root)
+      case Root(_, _, _, hint.kind, Unknown, _) => makeExternalUnit(root)
     }
   }
 
@@ -89,12 +89,12 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
-    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references).toRaml
+    implicit val ctx: ParserContext = ParserContext(currentValidation, root.location, root.references, Some(ctx.declarations)).toRaml
     val option: Option[BaseUnit] = RamlHeader(root).flatMap {
       // this includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => Some(makeDialect(root, header))
-      case _                                      => new Raml10Plugin().parse(root, ctx)
+      case _                                      => new RAML10Plugin().parse(root, ctx)
     }
 
     option match {
@@ -103,40 +103,21 @@ class AMFCompiler private (val url: String,
     }
   }
 
-  private def makeRamlModule(root: Root) = {
-    // modules open a new context, clean declarations with an empty context
-    val clean: ParserContext = ParserContext(currentValidation, root.location, root.references)
-    RamlModuleParser(root)(clean.toRaml).parseModule()
-  }
-
-  private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
-
-  private def resolveOasUnit(root: Root): BaseUnit = {
-    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references).toOas
-    hint.kind match {
-      case Library => OasModuleParser(root).parseModule()
-      case Link    => OasFragmentParser(root).parseFragment()
-      case _       => detectOasUnit(root)
+  private def makeOasUnit(root: Root): BaseUnit = {
+    val ctx: ParserContext = ParserContext(currentValidation, root.location, root.references, Some(ctx.declarations))
+    new OAS20Plugin().parse(root, ctx) match {
+      case Some(unit) => unit
+      case None       => makeExternalUnit(root)
     }
   }
 
-  private def detectOasUnit(root: Root)(implicit ctx: WebApiContext): BaseUnit = {
-    OasHeader(root) match {
-      case Some(Oas20Overlay)   => OasDocumentParser(root).parseOverlay()
-      case Some(Oas20Extension) => OasDocumentParser(root).parseExtension()
-      case Some(Oas20Header)    => OasDocumentParser(root).parseDocument()
-      case f if f.isDefined     => OasFragmentParser(root, f).parseFragment()
-      case _                    => throw UnableToResolveUnitException(root.location)
-    }
-  }
-
-  private def makeDialect(root: Root, header: RamlHeader)(implicit ctx: WebApiContext): BaseUnit =
+  private def makeDialect(root: Root, header: RamlHeader)(implicit ctx: ParserContext): BaseUnit =
     DialectParser(root, header, dialects).parseUnit()
 
   private def makeAmfUnit(root: Root): BaseUnit = GraphParser(remote).parse(root.document, root.location)
 
   private def makePayloadUnit(root: Root): BaseUnit = {
-    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references).toRaml
+    implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references, Some(ctx.declarations)).toRaml
     PayloadParser(root.document, root.location).parseUnit()
   }
 
@@ -163,7 +144,7 @@ class AMFCompiler private (val url: String,
         document.document.tagType match {
           // Payloads array
           case YType.Seq if hint == PayloadJsonHint || hint == PayloadYamlHint =>
-            Future(Root(document, content.url, Seq(), Payload, raw))
+            Future(Root(document, content.url, Seq(), hint.kind, Payload, raw))
 
           // AMF JSON-LD with a single element in array
           case YType.Seq if hint == AmfJsonHint && document.document.as[Seq[YNode]].length == 1 =>
@@ -175,8 +156,8 @@ class AMFCompiler private (val url: String,
           // Payloads scalar
           case _ if document.document.toOption[YScalar].isDefined =>
             if (hint == PayloadJsonHint || hint == PayloadYamlHint)
-              Future(Root(document, content.url, Seq(), Payload, raw))
-            else Future(Root(document, content.url, Seq(), Unknown, raw))
+              Future(Root(document, content.url, Seq(), hint.kind, Payload, raw))
+            else Future(Root(document, content.url, Seq(), hint.kind, Unknown, raw))
           case _ => Future.failed(new Exception("Unable to parse document."))
         }
       case None => Future.failed(new Exception("Unable to parse document."))
@@ -194,11 +175,11 @@ class AMFCompiler private (val url: String,
       .filter(_.isRemote)
       .foreach(link => {
         references += link
-          .resolve(remote, context, cache, hint, currentValidation, dialects)(ctx)
-          .map(r => ParsedReference(r, link.url))
+          .resolve(remote, context, cache, hint, currentValidation, dialects, ctx)
+          .map(r => ParsedReference(r, link.url, hint.kind))
       })
 
-    Future.sequence(references).map(rs => { Root(document, content.url, rs, vendor, raw) })
+    Future.sequence(references).map(rs => { Root(document, content.url, rs, hint.kind, vendor, raw) })
   }
 
   private def toDocument(parts: Seq[YPart]) = {
@@ -218,6 +199,7 @@ class AMFCompiler private (val url: String,
 case class Root(parsed: ParsedDocument,
                 location: String,
                 references: Seq[ParsedReference],
+                referenceKind: ReferenceKind,
                 vendor: Vendor,
                 raw: String) {
   val document: YDocument = parsed.document
@@ -225,7 +207,7 @@ case class Root(parsed: ParsedDocument,
 
 case class ParsedDocument(comment: Option[YComment], document: YDocument)
 
-case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String)
+case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String, referenceKind: ReferenceKind)
 
 object AMFCompiler {
   def apply(url: String,
@@ -234,9 +216,9 @@ object AMFCompiler {
             currentValidation: Validation,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
-            dialects: DialectRegistry = DialectRegistry.default)(
-    implicit ctx: ParserContext = ParserContext(currentValidation, url, Seq.empty)
-  ) = new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects)(ctx)
+            dialects: DialectRegistry = DialectRegistry.default,
+            ctx: Option[ParserContext] = None
+  ) = new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects, ctx)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

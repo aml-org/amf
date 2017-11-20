@@ -6,7 +6,7 @@ import amf.spec.{ParserContext, SpecSyntax}
 import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.validation, wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
+class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.validation, wrapped.rootContextDocument, wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
 
   override def ignore(shape: String, property: String) = spec.ignore(shape, property)
 
@@ -44,7 +44,7 @@ class WebApiContext(override val vendor: Vendor, private val wrapped: ParserCont
     * need to first, compute them, and then, add them as additional valid properties to the set of properties that
     * can be defined in the AST node
     */
-  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
+  override def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
     val node = shape.id
     val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited =  true)
 

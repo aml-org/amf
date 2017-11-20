@@ -3,6 +3,7 @@ package amf.compiler
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.parser.YMapOps
+import amf.plugins.domain.framework.parser.{Extension, Library, Link, ReferenceKind}
 import amf.remote._
 import amf.spec.ParserContext
 import amf.validation.Validation
@@ -129,7 +130,7 @@ class ReferenceCollector(document: YDocument, vendor: Vendor, validation: Valida
   }
 }
 
-case class Reference(url: String, kind: Kind, ast: YAggregate) {
+case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
 
   def isRemote: Boolean = !url.startsWith("#")
 
@@ -138,8 +139,9 @@ case class Reference(url: String, kind: Kind, ast: YAggregate) {
               cache: Cache,
               hint: Hint,
               currentValidation: Validation,
-              dialectRegistry: DialectRegistry = DialectRegistry.default)(implicit ctx: ParserContext): Future[BaseUnit] = {
-    AMFCompiler(url, remote, hint + kind, currentValidation, Some(context), Some(cache), dialectRegistry)(ctx)
+              dialectRegistry: DialectRegistry = DialectRegistry.default,
+              ctx: ParserContext): Future[BaseUnit] = {
+    AMFCompiler(url, remote, hint + kind, currentValidation, Some(context), Some(cache), dialectRegistry, Some(ctx))
       .build()
       .map(root => {
 //        target = root
