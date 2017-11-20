@@ -1,4 +1,4 @@
-package amf.spec.payload
+package amf.plugins.domain.payload.parser
 
 import amf.document.Document
 import amf.spec.ParserContext

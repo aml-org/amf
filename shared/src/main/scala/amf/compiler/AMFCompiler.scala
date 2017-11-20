@@ -9,13 +9,15 @@ import amf.exception.CyclicReferenceException
 import amf.framework.parser.ReferenceKind
 import amf.parser.{YNodeLikeOps, YScalarYRead}
 import amf.plugins.domain.graph.AMFGraphPlugin
+import amf.plugins.domain.graph.parser.GraphParser
+import amf.plugins.domain.payload.PayloadPlugin
+import amf.plugins.domain.payload.parser.PayloadParser
 import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
 import amf.remote.Mimes._
 import amf.remote._
 import amf.spec.ParserContext
-import amf.spec.payload.PayloadParser
 import amf.validation.Validation
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -129,7 +131,10 @@ class AMFCompiler private (val url: String,
 
   private def makePayloadUnit(root: Root): BaseUnit = {
     implicit val ctx: WebApiContext = ParserContext(currentValidation, root.location, root.references, Some(ctx.declarations)).toRaml
-    PayloadParser(root.document, root.location).parseUnit()
+    new PayloadPlugin().parse(root, ctx) match {
+      case Some(baseUnit) => baseUnit
+      case _ => throw new Exception("Cannot parse AMF Payload document")
+    }
   }
 
   private def parse(content: Content): Future[Root] = {
