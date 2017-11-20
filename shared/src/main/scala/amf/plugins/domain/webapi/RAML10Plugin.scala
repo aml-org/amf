@@ -8,7 +8,7 @@ import amf.remote.Raml
 import amf.spec.ParserContext
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser, RamlSyntax}
 
-class Raml10Plugin extends AMFDomainPlugin {
+class RAML10Plugin extends AMFDomainPlugin {
   override def parse(root: Root, parentContext: ParserContext): Option[BaseUnit] = {
     val updated: WebApiContext = new WebApiContext(Raml, parentContext, RamlSpecAwareContext, RamlSyntax)
     val clean: ParserContext = ParserContext(parentContext.validation, root.location, root.references)

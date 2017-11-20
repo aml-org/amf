@@ -4,6 +4,7 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.WebApi
 import amf.exception.CyclicReferenceException
 import amf.parser.YMapOps
+import amf.plugins.domain.framework.parser.{Library, Unspecified}
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
@@ -97,20 +98,22 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Libraries (raml)") {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
       .root() map {
-      case Root(root, _, references, _, _) =>
+      case Root(root, _, references, Unspecified, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references.map(_.baseUnit))
+      case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")
     }
   }
 
   test("Libraries (oas)") {
     AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
       .root() map {
-      case Root(root, _, references, _, _) =>
+      case Root(root, _, references, Unspecified, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(3)
         assertUses(body.key("x-uses").get, references.map(_.baseUnit))
+      case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")
     }
   }
 
