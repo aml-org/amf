@@ -68,11 +68,11 @@ class AMFCompiler(val url: String,
   private def parseSyntax(content: Content) = {
     var effectiveMediaType = content.mime.getOrElse(mediaType)
     val parsed: Option[ParsedDocument] = AMFPluginsRegistry.syntaxPluginForMediaType(effectiveMediaType) match {
-      case Some(syntaxPlugin) => syntaxPlugin.parse(content.stream)
+      case Some(syntaxPlugin) => syntaxPlugin.parse(effectiveMediaType, content.stream)
       case None if effectiveMediaType != mediaType =>
         effectiveMediaType = mediaType
         AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
-          case Some(syntaxPlugin) => syntaxPlugin.parse(content.stream)
+          case Some(syntaxPlugin) => syntaxPlugin.parse(effectiveMediaType, content.stream)
           case None               => None
         }
       case _ => None

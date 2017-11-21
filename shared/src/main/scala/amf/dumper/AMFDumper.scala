@@ -4,6 +4,7 @@ import amf.client.GenerationOptions
 import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.emit.AMFUnitMaker
+import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import org.yaml.render.{JsonRender, YamlRender}
@@ -25,18 +26,26 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
     // reset data node counter
     idCounter.reset()
 
-    vendor match {
+
+    val mediaType = vendor match {
       case Raml =>
         syntax match {
-          case Yaml => YamlRender.render(ast)
+          case Yaml => "application/yaml"
           case _    => unsupported
         }
       case Oas | Amf | Payload =>
         syntax match {
-          case Json => JsonRender.render(ast)
+          case Json => "application/json"
           case _    => unsupported
         }
       case Unknown => unsupported
+    }
+
+    val plugin = new SYamlSyntaxPlugin()
+    if (plugin.supportedMediaTypes().contains(mediaType)) {
+      plugin.unparse(mediaType, ast).get.toString
+    } else {
+      unsupported
     }
   }
 
