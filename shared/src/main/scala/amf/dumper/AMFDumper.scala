@@ -1,20 +1,15 @@
 package amf.dumper
 
 import amf.client.GenerationOptions
+import amf.core.AMFSerializer
 import amf.document.BaseUnit
-import amf.domain.extensions.idCounter
-import amf.emit.AMFUnitMaker
-import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.remote.Syntax.{Json, Syntax, Yaml}
+import amf.remote.Syntax.Syntax
 import amf.remote._
-import org.yaml.render.{JsonRender, YamlRender}
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
+// TODO: this is only here for compatibility with the test suite
 class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: GenerationOptions) {
-
-  private val ast = AMFUnitMaker(unit, vendor, options)
 
   /** Print ast to string. */
   def dumpToString: String = dump()
@@ -23,30 +18,25 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
   def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())
 
   private def dump(): String = {
-    // reset data node counter
-    idCounter.reset()
-
+    val vendorString = vendor match {
+      case Amf           => "AMF Graph"
+      case Payload       => "AMF Payload"
+      case Raml          => "RAML 1.0"
+      case Oas           => "OAS 2.0"
+      case Extension     => "RAML Extension"
+      case Unknown       => "Uknown Vendor"
+    }
 
     val mediaType = vendor match {
-      case Raml =>
-        syntax match {
-          case Yaml => "application/yaml"
-          case _    => unsupported
-        }
-      case Oas | Amf | Payload =>
-        syntax match {
-          case Json => "application/json"
-          case _    => unsupported
-        }
-      case Unknown => unsupported
+      case Amf           => "application/ld+json"
+      case Payload       => "application/amf+json"
+      case Raml          => "application/yaml"
+      case Oas           => "application/json"
+      case Extension     => "application/yaml"
+      case Unknown       => "text/plain"
     }
 
-    val plugin = new SYamlSyntaxPlugin()
-    if (plugin.supportedMediaTypes().contains(mediaType)) {
-      plugin.unparse(mediaType, ast).get.toString
-    } else {
-      unsupported
-    }
+    new AMFSerializer(unit, mediaType, vendorString, options).dumpToString
   }
 
   private def unsupported = {
