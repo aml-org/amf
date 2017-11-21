@@ -28,6 +28,11 @@ trait TypeDef {
     case IntType | FloatType | LongType | DoubleType => true
     case _                                           => false
   }
+
+  def isDate: Boolean = this match {
+    case DateTimeType | DateTimeOnlyType | TimeOnlyType | DateOnlyType => true
+    case _                                                             => false
+  }
 }
 
 trait ScalarType
