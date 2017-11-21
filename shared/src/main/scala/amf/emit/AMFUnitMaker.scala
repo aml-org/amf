@@ -1,10 +1,8 @@
 package amf.emit
 
 import amf.client.GenerationOptions
+import amf.core.AMFSerializer
 import amf.document.BaseUnit
-import amf.plugins.domain.graph.AMFGraphPlugin
-import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
-import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
 import amf.remote._
 import org.yaml.model.YDocument
 
@@ -13,6 +11,28 @@ import org.yaml.model.YDocument
   */
 class AMFUnitMaker {
 
+  def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
+    val vendorString = vendor match {
+      case Amf           => "AMF Graph"
+      case Payload       => "AMF Payload"
+      case Raml          => "RAML 1.0"
+      case Oas           => "OAS 2.0"
+      case Extension     => "RAML Extension"
+      case Unknown       => "Uknown Vendor"
+    }
+
+    val mediaType = vendor match {
+      case Amf           => "application/ld+json"
+      case Payload       => "application/amf+json"
+      case Raml          => "application/yaml"
+      case Oas           => "application/json"
+      case Extension     => "application/yaml"
+      case Unknown       => "text/plain"
+    }
+
+    new AMFSerializer().make(unit, mediaType, vendorString, options)
+  }
+  /*
   def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
     vendor match {
       case Amf | Payload => makeAmfWebApi(unit, options)
@@ -53,6 +73,7 @@ class AMFUnitMaker {
 
   private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): YDocument =
     new AMFGraphPlugin().unparse(unit, options).get
+  */
 }
 
 object AMFUnitMaker {
