@@ -22,7 +22,7 @@ private[client] abstract class PlatformParser extends PlatformSecrets {
   protected def parseAsync(url: String, overridePlatForm: Option[Platform] = None, parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
     val effectivePlatform = overridePlatForm.getOrElse(platform)
     currentValidation = Some(new Validation(effectivePlatform))
-    AMFCompiler(url, effectivePlatform, hint(), currentValidation.get, None, None, effectivePlatform.dialectsRegistry).build() map { model =>
+    AMFCompiler(url, effectivePlatform, hint(), currentValidation.get, None, None).build() map { model =>
       parsedModel = Some(model)
       model
     }

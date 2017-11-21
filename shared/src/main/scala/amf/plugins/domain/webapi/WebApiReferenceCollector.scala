@@ -1,9 +1,8 @@
 package amf.plugins.domain.webapi
 
-import amf.compiler.{AbstractReferenceCollector, Reference}
+import amf.compiler.{AbstractReferenceCollector, ParsedDocument, Reference}
 import amf.framework.parser.{Extension, Library, Link}
 import amf.parser.YMapOps
-import amf.plugins.domain.vocabularies.RamlHeaderExtractor
 import amf.plugins.domain.webapi.parser.RamlHeader
 import amf.plugins.domain.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.spec.ParserContext
@@ -12,20 +11,20 @@ import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer
 
-class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollector with RamlHeaderExtractor {
+class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollector {
 
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(document: YDocument, validation: Validation, ctx: ParserContext) = {
-    libraries(document, ctx)
-    links(document, ctx)
-    if (isRamlOverlayOrExtension(vendor, document)) overlaysAndExtensions(document, ctx)
+  override def traverse(parsed: ParsedDocument, validation: Validation, ctx: ParserContext) = {
+    libraries(parsed.document, ctx)
+    links(parsed.document, ctx)
+    if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(parsed.document, ctx)
     references
   }
 
   // TODO take this away when dialects don't use 'extends' keyword.
-  def isRamlOverlayOrExtension(vendor: String, document: YDocument): Boolean = {
-    comment(document) match {
+  def isRamlOverlayOrExtension(vendor: String, parsed: ParsedDocument): Boolean = {
+    parsed.comment match {
       case Some(c) =>
         RamlHeader.fromText(c.metaText) match {
           case Some(Raml10Overlay | Raml10Extension) if vendor == "RAML 1.0" => true

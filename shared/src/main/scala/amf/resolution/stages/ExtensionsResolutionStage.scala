@@ -14,8 +14,7 @@ import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
 import amf.metadata.shape.ShapeModel
 import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.remote.Raml
-import amf.shape.{AnyShape, Shape}
+import amf.shape.Shape
 import amf.spec.{Declarations, ParserContext}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation

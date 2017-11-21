@@ -30,8 +30,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
                     RamlYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build())
+                    None).build())
     cm.map(u => DialectValidator.validate(u).size)
       .map(s => {
         s should be(0)
@@ -49,8 +48,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
                     RamlYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build())
+                    None).build())
     cm.map(u => DialectValidator.validate(u).size)
       .map(s => {
         s should be(1)
@@ -65,8 +63,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
                     RamlYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build())
+                    None).build())
     cm.map(u => DialectValidator.validate(u).size)
       .map(s => {
         s should be(1)
@@ -81,8 +78,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       RamlYamlHint,
       validation,
       None,
-      None,
-      platform.dialectsRegistry
+      None
     ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
@@ -99,8 +95,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       RamlYamlHint,
       validation,
       None,
-      None,
-      platform.dialectsRegistry
+      None
     ).build() flatMap  { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
@@ -118,8 +113,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       RamlYamlHint,
       validation,
       None,
-      None,
-      platform.dialectsRegistry
+      None
     ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
@@ -158,8 +152,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         RamlYamlHint,
         validation,
         None,
-        None,
-        platform.dialectsRegistry
+        None
       ).build()
     } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
@@ -181,8 +174,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       RamlYamlHint,
       validation,
       None,
-      None,
-      platform.dialectsRegistry
+      None
     ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
@@ -200,8 +192,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       RamlYamlHint,
       validation,
       None,
-      None,
-      platform.dialectsRegistry
+      None
     ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
@@ -240,8 +231,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         RamlYamlHint,
         validation,
         None,
-        None,
-        platform.dialectsRegistry
+        None
       ).build()
     } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
@@ -266,8 +256,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         RamlYamlHint,
         validation,
         None,
-        None,
-        platform.dialectsRegistry
+        None
       ).build()
     } flatMap { model =>
       validation.loadDialectValidationProfile(dialect.get)
@@ -292,8 +281,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         RamlYamlHint,
         validation,
         None,
-        None,
-        platform.dialectsRegistry
+        None
       ).build()
     } flatMap { model =>
       // validation.loadDialectValidationProfile(dialect.get)
@@ -320,8 +308,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         RamlYamlHint,
         validation,
         None,
-        None,
-        platform.dialectsRegistry
+        None
       ).build()
     } flatMap { model =>
       validation.loadValidationDialect() flatMap { _ =>
@@ -349,8 +336,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         RamlYamlHint,
         validation,
         None,
-        None,
-        platform.dialectsRegistry
+        None
       ).build()
     } flatMap { model =>
       /*

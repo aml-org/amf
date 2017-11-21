@@ -189,8 +189,7 @@ class Validation(platform: Platform) {
                 RamlYamlHint,
                 currentValidation,
                 None,
-                None,
-                platform.dialectsRegistry)
+                None)
       .build()
       .map { case parsed: Document => parsed.encodes }
       .map {

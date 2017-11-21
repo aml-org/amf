@@ -40,8 +40,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   RamlYamlHint,
                   Validation(platform),
                   None,
-                  None,
-                  platform.dialectsRegistry).build()
+                  None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -57,8 +56,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   RamlYamlHint,
                   Validation(platform),
                   None,
-                  None,
-                  platform.dialectsRegistry).build()
+                  None).build()
     } map { AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -74,8 +72,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   AmfJsonHint,
                   Validation(platform),
                   None,
-                  None,
-                  platform.dialectsRegistry).build()
+                  None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -91,8 +88,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   RamlYamlHint,
                   Validation(platform),
                   None,
-                  None,
-                  platform.dialectsRegistry).build()
+                  None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -108,8 +104,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   RamlYamlHint,
                   Validation(platform),
                   None,
-                  None,
-                  platform.dialectsRegistry).build()
+                  None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -125,8 +120,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                   RamlYamlHint,
                   Validation(platform),
                   None,
-                  None,
-                  platform.dialectsRegistry).build()
+                  None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -299,7 +293,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "yaml" => PayloadYamlHint
       }
       val pair = for {
-        library <- AMFCompiler(payloadsPath + "payloads.raml", platform, hint, Validation(platform)).build()
+        library <- AMFCompiler(payloadsPath + "payloads.raml", platform, RamlYamlHint, Validation(platform)).build()
         payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, Validation(platform)).build()
       } yield {
         val targetType = library

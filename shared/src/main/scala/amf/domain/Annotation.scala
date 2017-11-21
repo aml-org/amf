@@ -54,6 +54,9 @@ object Annotation {
       case Raml.name => SourceVendor(Raml)
       case Oas.name  => SourceVendor(Oas)
       case Amf.name  => SourceVendor(Amf)
+      case "RAML 1.0" => SourceVendor(Raml)
+      case "OAS 2.0" => SourceVendor(Oas)
+      case "AMF Graph" => SourceVendor(Amf)
       case _         => SourceVendor(Unknown)
     }
   }

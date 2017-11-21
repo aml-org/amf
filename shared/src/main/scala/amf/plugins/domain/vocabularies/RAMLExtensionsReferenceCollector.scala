@@ -1,6 +1,6 @@
 package amf.plugins.domain.vocabularies
 
-import amf.compiler.{AbstractReferenceCollector, Reference}
+import amf.compiler.{AbstractReferenceCollector, ParsedDocument, Reference}
 import amf.framework.parser.{Library, Link}
 import amf.parser.YMapOps
 import amf.spec.ParserContext
@@ -12,9 +12,9 @@ import scala.collection.mutable.ArrayBuffer
 class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(document: YDocument, validation: Validation, ctx: ParserContext) = {
-    libraries(document, ctx)
-    links(document)
+  override def traverse(parsed: ParsedDocument, validation: Validation, ctx: ParserContext) = {
+    libraries(parsed.document, ctx)
+    links(parsed.document)
 
     references
   }

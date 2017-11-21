@@ -35,8 +35,7 @@ class DialectLoaderTest
                       RamlYamlHint,
                       Validation(platform),
                       None,
-                      None,
-                      l).build())
+                      None).build())
       .map { u =>
         val encoded = u.asInstanceOf[amf.document.Document].encodes
         assert(encoded.getTypeIds().length == 2)

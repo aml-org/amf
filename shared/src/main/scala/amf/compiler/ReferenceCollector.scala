@@ -16,7 +16,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 abstract class AbstractReferenceCollector {
-  def traverse(document: YDocument, validation: Validation, ctx: ParserContext): Seq[Reference]
+  def traverse(document: ParsedDocument, validation: Validation, ctx: ParserContext): Seq[Reference]
 }
 
 /**
@@ -161,7 +161,7 @@ case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
               cache: Cache,
               dialects: amf.dialects.DialectRegistry,
               ctx: ParserContext): Future[BaseUnit] = {
-    new ReferenceCompiler(url, remote, base, mediaType, vendor, kind, currentValidation, cache, dialects, Some(ctx))
+    new ReferenceCompiler(url, remote, base, mediaType, vendor, kind, currentValidation, cache, Some(ctx))
       .build()
       .map(root => {
 //        target = root

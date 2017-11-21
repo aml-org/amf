@@ -50,3 +50,8 @@ object Payload extends Vendor {
   override val name: String          = "payload"
   override val defaultSyntax: Syntax = Json
 }
+
+object Extension extends Vendor {
+  override val name: String          = "extension"
+  override val defaultSyntax: Syntax = Yaml
+}

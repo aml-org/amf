@@ -20,3 +20,5 @@ object AmfJsonHint extends Hint(Amf, Json)
 object PayloadJsonHint extends Hint(Payload, Json)
 
 object PayloadYamlHint extends Hint(Payload, Yaml)
+
+object ExtensionYamlHint extends Hint(Extension, Yaml)

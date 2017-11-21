@@ -1,6 +1,6 @@
 package amf.dialects
 import amf.compiler.AMFCompiler
-import amf.remote.{Platform, RamlYamlHint}
+import amf.remote.{ExtensionYamlHint, Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.validation.Validation
 
@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.JSExport
 class JSDialectRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
   def registerDialect(uri: String): Future[Dialect] = {
     val currentValidation = new Validation(platform)
-    AMFCompiler(uri, platform, RamlYamlHint, currentValidation)
+    AMFCompiler(uri, platform, ExtensionYamlHint, currentValidation)
       .build()
       .map { compiled =>
         val dialect = new DialectLoader(compiled).loadDialect()

@@ -1,7 +1,6 @@
 package amf.compiler
 
 import amf.core.{AMFCompiler => ModularCompiler}
-import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
 import amf.framework.parser.ReferenceKind
 import amf.plugins.domain.vocabularies.RamlHeaderExtractor
@@ -11,7 +10,6 @@ import amf.validation.Validation
 import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class AMFCompiler private (val url: String,
@@ -20,7 +18,6 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            val currentValidation: Validation,
                            private val cache: Cache,
-                           private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default,
                            private val baseContext: Option[ParserContext] = None) extends RamlHeaderExtractor {
 
   implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
@@ -31,11 +28,12 @@ class AMFCompiler private (val url: String,
   def build(): Future[BaseUnit] = {
 
     val actualVendor = hint.vendor match {
-      case Raml    => "RAML 1.0"
-      case Oas     => "OAS 2.0"
-      case Payload => "AMF Payload"
-      case Amf     => "AMF Graph"
-      case Unknown => "Unknown Vendor"
+      case Raml      => "RAML 1.0"
+      case Oas       => "OAS 2.0"
+      case Payload   => "AMF Payload"
+      case Amf       => "AMF Graph"
+      case Extension => "RAML Extension"
+      case Unknown   => "Unknown Vendor"
     }
 
     val mediaType = hint match {
@@ -44,6 +42,9 @@ class AMFCompiler private (val url: String,
       case OasJsonHint  => "application/json"
       case OasYamlHint  => "application/yaml"
       case AmfJsonHint  => "application/ld+json"
+      case PayloadJsonHint => "application/amf+json"
+      case PayloadYamlHint => "application/amf+yaml"
+      case ExtensionYamlHint => "application/yaml"
       case _            => "text/plain"
     }
 
@@ -56,7 +57,7 @@ class AMFCompiler private (val url: String,
       hint.kind,
       currentValidation,
       cache,
-      dialects
+      baseContext
     ).build()
 
     /*
@@ -77,6 +78,7 @@ class AMFCompiler private (val url: String,
       case Oas     => "OAS 2.0"
       case Payload => "AMF Payload"
       case Amf     => "AMF Graph"
+      case Extension => "AMF Extension"
       case Unknown => "Unknown Vendor"
     }
 
@@ -86,6 +88,7 @@ class AMFCompiler private (val url: String,
       case OasJsonHint  => "application/json"
       case OasYamlHint  => "application/yaml"
       case AmfJsonHint  => "application/ld+json"
+      case ExtensionYamlHint => "application/raml"
       case _            => "text/plain"
     }
 
@@ -98,7 +101,6 @@ class AMFCompiler private (val url: String,
       hint.kind,
       currentValidation,
       cache,
-      dialects,
       Some(ctx)
     ).root() map { case root => root.oldFormat() }
   }
@@ -265,12 +267,14 @@ case class Root(parsed: ParsedDocument,
       case Oas     => "OAS 2.0"
       case Payload => "AMF Payload"
       case Amf     => "AMF Graph"
+      case Extension => "AMF Extension"
       case Unknown => "Unknown Vendor"
     }
     val mediatype = vendor match {
+      case Extension => "application/yaml"
       case Raml    => "application/yaml"
       case Oas     => "application/json"
-      case Payload => "application/json"
+      case Payload => "application/amf+json"
       case Amf     => "application/ld+json"
       case Unknown => "text/plain"
     }
@@ -298,9 +302,8 @@ object AMFCompiler {
             currentValidation: Validation,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
-            dialects: DialectRegistry = DialectRegistry.default,
-            ctx: Option[ParserContext] = None
-  ) = new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), dialects, ctx)
+            ctx: Option[ParserContext] = None) =
+    new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()))
 
   val RAML_10 = "#%RAML 1.0\n"
 }

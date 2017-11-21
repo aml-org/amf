@@ -7,7 +7,7 @@ import amf.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.Syntax.Json
-import amf.remote.{Amf, Raml, RamlYamlHint}
+import amf.remote.{Amf, ExtensionYamlHint, Raml, RamlYamlHint}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import amf.validation.emitters.ValidationReportJSONLDEmitter
@@ -30,16 +30,16 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected =
       platform.resolve(basePath + "validation_profile_with_default_example.json", None).map(_.stream.toString)
     val actual = validation
-      .flatMap(
+      .flatMap {
         unit =>
           AMFCompiler(basePath + "validation_profile_example.raml",
-                      platform,
-                      RamlYamlHint,
-                      Validation(platform),
-                      None,
-                      None,
-                      platform.dialectsRegistry)
-            .build())
+            platform,
+            ExtensionYamlHint,
+            Validation(platform),
+            None,
+            None)
+            .build()
+      }
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
@@ -59,11 +59,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
         unit =>
           AMFCompiler(basePath + "validation_profile_example.raml",
                       platform,
-                      RamlYamlHint,
+                      ExtensionYamlHint,
                       Validation(platform),
                       None,
-                      None,
-                      platform.dialectsRegistry)
+                      None)
             .build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
@@ -83,7 +82,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
 //      .flatMap(unit => {
 //        val dl = new DialectRegistry();
 //        dl.add(unit)
-//        AMFCompiler(basePath + "validation_profile_example_uses.raml", platform, RamlYamlHint, None, None, dl)
+//        AMFCompiler(basePath + "validation_profile_example_uses.raml", platform, ExtensionYamlHint, None, None, dl)
 //          .build()
 //      })
 //    actual
@@ -107,11 +106,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       _ =>
         AMFCompiler(basePath + "validation_profile_example_uses2.raml",
                     platform,
-                    RamlYamlHint,
+                    ExtensionYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build()
+                    None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -125,11 +123,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       _ =>
         AMFCompiler(basePath + exampleFile,
                     platform,
-                    RamlYamlHint,
+                    ExtensionYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build()
+                    None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -143,11 +140,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       _ =>
         AMFCompiler(basePath + exampleFile,
                     platform,
-                    RamlYamlHint,
+                    ExtensionYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build()
+                    None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -160,11 +156,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       _ =>
         AMFCompiler(basePath + exampleFile,
                     platform,
-                    RamlYamlHint,
+                    ExtensionYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build()
+                    None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -178,11 +173,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       _ =>
         AMFCompiler(basePath + exampleFile,
                     platform,
-                    RamlYamlHint,
+                    ExtensionYamlHint,
                     Validation(platform),
                     None,
-                    None,
-                    platform.dialectsRegistry).build()
+                    None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
