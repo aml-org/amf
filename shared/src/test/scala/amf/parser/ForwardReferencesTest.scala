@@ -1,12 +1,11 @@
 package amf.parser
 
-import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import amf.validation.{SeverityLevels, Validation}
-import org.scalatest.AsyncFunSuite
+import amf.validation.{AMFValidationResult, Validation}
 import org.scalatest.Matchers._
+import org.scalatest.{AsyncFunSuite, Succeeded}
 
 import scala.concurrent.ExecutionContext
 
@@ -15,44 +14,68 @@ import scala.concurrent.ExecutionContext
   */
 class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
 
-  private val basePath = "file://shared/src/test/resources/upanddown/"
+  private val basePath       = "file://shared/src/test/resources/upanddown/"
   private val referencesPath = "file://shared/src/test/resources/references/"
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test reference not found exception on property shape") {
-    val validation = Validation(platform)
-    AMFCompiler(basePath + "forward-references-types-error.raml", platform, RamlYamlHint, validation)
-      .build()
-      .map { _ =>
-        validation.aggregatedReport should not be empty
-        validation.aggregatedReport.head.level should be(SeverityLevels.VIOLATION)
-        validation.aggregatedReport.head.message should be("Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error.raml")
+    validate(
+      basePath + "forward-references-types-error.raml",
+      undefined => {
+        undefined.level should be("Violation")
+        undefined.message should be(
+          "Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error.raml")
+        undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
       }
+    )
   }
 
   test("Test reference not found exception on expression") {
-    val validation = Validation(platform)
-    AMFCompiler(basePath + "forward-references-types-error-expression.raml", platform, RamlYamlHint, validation)
-      .build()
-      .map { _ =>
-        validation.aggregatedReport should not be empty
-        validation.aggregatedReport.head.level should be(SeverityLevels.VIOLATION)
-        validation.aggregatedReport.head.message should be("Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error-expression.raml")
+    validate(
+      basePath + "forward-references-types-error-expression.raml",
+      undefined => {
+        undefined.level should be("Violation")
+        undefined.message should be(
+          "Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error-expression.raml")
+        undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 40))))
+      },
+      _ => {
+        // todo duplicate error?
       }
+    )
   }
 
   test("Test complex contexts") {
-    val validation = Validation(platform)
-    AMFCompiler(referencesPath + "contexts/api.raml", platform, RamlYamlHint, validation)
-      .build()
-      .flatMap { model =>
-        validation.validate(model, ProfileNames.RAML)
-      }.map { report =>
-      assert(!report.conforms)
-      assert(report.results.length == 2)
-      assert(report.results.head.message == "Unresolved reference A from root context file://shared/src/test/resources/references/contexts/library.raml")
-      assert(report.results.last.message == "Unresolved reference C from root context file://shared/src/test/resources/references/contexts/api.raml")
-    }
+    validate(
+      referencesPath + "contexts/api.raml",
+      a => {
+        a.level should be("Violation")
+        a.message should be(
+          "Unresolved reference A from root context file://shared/src/test/resources/references/contexts/library.raml")
+        a.position.map(_.range) should be(Some(Range((4, 5), (4, 6))))
+      },
+      c => {
+        c.level should be("Violation")
+        c.message should be(
+          "Unresolved reference C from root context file://shared/src/test/resources/references/contexts/api.raml")
+        c.position.map(_.range) should be(Some(Range((6, 5), (6, 6))))
+      }
+    )
   }
+
+  private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
+    val validation = Validation(platform)
+    AMFCompiler(file, platform, RamlYamlHint, validation)
+      .build()
+      .map { _ =>
+        val report = validation.aggregatedReport
+        report.size should be(fixture.size)
+        fixture.zip(report).foreach {
+          case (fn, result) => fn(result)
+        }
+        Succeeded
+      }
+  }
+
 }

@@ -87,18 +87,17 @@ class AMFCompiler private (val url: String,
   }
 
   private def makeRamlUnit(root: Root): BaseUnit = {
-    // share references between docs and fragments
-    val updatedCtx = ctx.toRaml
-    // modules open a new context, clean declarations with an empty context
-    val cleanCxt: ParserContext = ParserContext(currentValidation, Raml, root.location, root.references)
-    // parse the unit and pass the right ctx
+    // Share references between docs and fragments
+    val updated = ctx.toRaml
+
+    // Parse the unit and pass the right ctx
     val option = RamlHeader(root).map {
-      case RamlHeader.Raml10          => RamlDocumentParser(root)(updatedCtx).parseDocument()
-      case RamlHeader.Raml10Overlay   => RamlDocumentParser(root)(updatedCtx).parseOverlay()
-      case RamlHeader.Raml10Extension => RamlDocumentParser(root)(updatedCtx).parseExtension()
-      case RamlHeader.Raml10Library   => RamlModuleParser(root)(cleanCxt).parseModule()
-      case fragment: RamlFragment     => RamlFragmentParser(root, fragment)(updatedCtx).parseFragment()
-      // this includes vocabularies and dialect definitions and dialect documents
+      case RamlHeader.Raml10          => RamlDocumentParser(root)(updated).parseDocument()
+      case RamlHeader.Raml10Overlay   => RamlDocumentParser(root)(updated).parseOverlay()
+      case RamlHeader.Raml10Extension => RamlDocumentParser(root)(updated).parseExtension()
+      case RamlHeader.Raml10Library   => makeRamlModule(root)
+      case fragment: RamlFragment     => RamlFragmentParser(root, fragment)(updated).parseFragment()
+      // This includes vocabularies and dialect definitions and dialect documents
       // They are all defined internally in terms of dialects definitions
       case header if dialects.knowsHeader(header) => makeDialect(root, header)
       case _                                      => throw UnableToResolveUnitException(root.location)
@@ -107,6 +106,12 @@ class AMFCompiler private (val url: String,
       case Some(unit) => unit
       case None       => makeExternalUnit(root)
     }
+  }
+
+  private def makeRamlModule(root: Root) = {
+    // modules open a new context, clean declarations with an empty context
+    val clean: ParserContext = ParserContext(currentValidation, Raml, root.location, root.references)
+    RamlModuleParser(root)(clean).parseModule()
   }
 
   private def makeOasUnit(root: Root): BaseUnit = resolveOasUnit(root)
