@@ -2,7 +2,7 @@ package amf.spec.oas
 
 import amf.common.Lazy
 import amf.common.core.TemplateUri
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
 import amf.domain._
@@ -22,10 +22,9 @@ import amf.shape.NodeShape
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
-import org.yaml.model.YNode
-import amf.spec.{OasDefinitions, ParserContext, SearchScope}
+import amf.spec.{OasDefinitions, SearchScope}
 import amf.vocabulary.VocabularyMappings
-import org.yaml.model._
+import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -44,7 +43,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
   }
 
   private def parseExtension(document: Document, field: Field): Unit = {
-    val map = root.document.as[YMap]
+    val map = root.parsed.document.as[YMap]
 
     UsageParser(map, document).parse()
 
@@ -76,7 +75,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
   private def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location)
 
-    val map = root.document.as[YMap]
+    val map = root.parsed.document.as[YMap]
 
     val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)

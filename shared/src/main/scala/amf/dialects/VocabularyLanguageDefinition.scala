@@ -1,7 +1,9 @@
 package amf.dialects
 
+
 import amf.compiler.Root
 import amf.domain.Annotation.SynthesizedField
+import amf.core.Root
 import amf.domain.{Annotations, Fields}
 import amf.domain.dialects.DomainEntity
 import amf.model.AmfScalar

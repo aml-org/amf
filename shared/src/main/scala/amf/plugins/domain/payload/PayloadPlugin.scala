@@ -1,11 +1,13 @@
 package amf.plugins.domain.payload
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.framework.plugins.AMFDomainPlugin
 import amf.plugins.domain.payload.parser.PayloadParser
 import amf.spec.ParserContext
 
 class PayloadPlugin extends AMFDomainPlugin {
+
+  override val ID = "AMF Payload"
 
   // we are looking for documents with a very specific payload
   // otherwise, this plugin can become the fallback option.
@@ -17,8 +19,9 @@ class PayloadPlugin extends AMFDomainPlugin {
 
   override def parse(root: Root, parentContext: ParserContext) = {
     implicit val ctx = parentContext
-    Some(PayloadParser(root.document, root.location).parseUnit())
+    Some(PayloadParser(root.parsed.document, root.location).parseUnit())
   }
 
   override def accept(root: Root) = true // any document can be parsed as a Payload
+  override def referenceCollector() = new PayloadReferenceCollector
 }

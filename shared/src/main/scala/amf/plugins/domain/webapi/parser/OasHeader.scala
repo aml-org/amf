@@ -1,7 +1,8 @@
 package amf.plugins.domain.webapi.parser
 
 import amf.compiler.FragmentTypes._
-import amf.compiler.{FragmentType, FragmentTypes, Root}
+import amf.compiler.{FragmentType, FragmentTypes}
+import amf.core.Root
 import amf.parser.{YMapOps, YScalarYRead}
 import org.yaml.model.YMap
 
@@ -41,7 +42,7 @@ object OasHeader {
   object Oas20Overlay extends OasHeader(extensionType, "2.0 Overlay")
 
   def apply(root: Root): Option[OasHeader] = {
-    val map = root.document.as[YMap]
+    val map = root.parsed.document.as[YMap]
 
     map
       .key(extensionName)

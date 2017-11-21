@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.BaseUnit
 import amf.framework.parser.{Library, Link}
 import amf.framework.plugins.AMFDomainPlugin
@@ -12,6 +12,9 @@ import amf.spec.ParserContext
 import amf.spec.oas.{OasDocumentParser, OasFragmentParser, OasModuleParser, OasSyntax}
 
 class OAS20Plugin extends AMFDomainPlugin {
+
+  val ID: String = "OAS 2.0"
+
   override def parse(document: Root, parentContext: ParserContext) = {
     implicit val ctx: WebApiContext = new WebApiContext(Oas, parentContext, OasSpecAwareContext, OasSyntax)
     document.referenceKind match {
@@ -45,6 +48,8 @@ class OAS20Plugin extends AMFDomainPlugin {
     case _                    => false
   }
 
+  override def referenceCollector() = new WebApiReferenceCollector(ID)
+
   /**
     * List of media types used to encode serialisations of
     * this domain
@@ -62,4 +67,5 @@ class OAS20Plugin extends AMFDomainPlugin {
     "application/openapi",
     "application/swagger"
   )
+
 }

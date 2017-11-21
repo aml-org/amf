@@ -1,10 +1,13 @@
 package amf.framework.plugins
 
-import amf.compiler.Root
+import amf.compiler.AbstractReferenceCollector
+import amf.core.Root
 import amf.document.BaseUnit
 import amf.spec.ParserContext
 
 abstract class AMFDomainPlugin {
+
+  val ID: String
 
   /**
     * List of media types used to encode serialisations of
@@ -24,4 +27,6 @@ abstract class AMFDomainPlugin {
     * the document structure
     */
   def accept(document: Root): Boolean
+
+  def referenceCollector(): AbstractReferenceCollector
 }

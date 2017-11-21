@@ -1,6 +1,6 @@
 package amf.spec.oas
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.Fragment._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
@@ -21,10 +21,10 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
-    val rootMap: YMap = root.document.to[YMap] match {
+    val rootMap: YMap = root.parsed.document.to[YMap] match {
       case Right(map) => map
       case _ =>
-        ctx.violation(root.location, "Cannot parse empty map", root.document)
+        ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
         YMap()
     }
 
@@ -43,7 +43,7 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
     }
 
     fragment
-      .add(Annotations(root.document))
+      .add(Annotations(root.parsed.document))
 
     UsageParser(rootMap, fragment).parse()
 

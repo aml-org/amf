@@ -2,7 +2,7 @@ package amf.domain
 
 import amf.model.AmfElement
 import amf.parser.Range
-import amf.remote.Vendor
+import amf.remote._
 import org.yaml.model.YPart
 
 /**
@@ -47,6 +47,15 @@ object Annotation {
     override val name: String = "source-vendor"
 
     override val value: String = vendor.name
+  }
+
+  object SourceVendor {
+    def apply(vendor: String): SourceVendor = vendor match {
+      case Raml.name => SourceVendor(Raml)
+      case Oas.name  => SourceVendor(Oas)
+      case Amf.name  => SourceVendor(Amf)
+      case _         => SourceVendor(Unknown)
+    }
   }
 
   case class DeclaredElement() extends SerializableAnnotation {

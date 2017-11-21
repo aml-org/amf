@@ -1,6 +1,6 @@
 package amf.spec.dialects
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.dialects.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
@@ -9,15 +9,12 @@ import amf.domain.dialects.DomainEntity
 import amf.domain.{Annotations, Fields}
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{Range, YMapOps, YNodeLikeOps}
+import amf.parser.{Range, YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.declaration.ReferencesParser
-import amf.spec.raml.RamlSpecParser
 import amf.validation.model.ParserSideValidations
 import org.yaml.model._
-import amf.parser.YScalarYRead
-import amf.plugins.domain.webapi.parser.RamlHeader
 
 import scala.collection.{immutable, mutable}
 
@@ -68,7 +65,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
   }
 
   private def parseEntity(unit: BaseUnit): DomainEntity = {
-    val result = root.document
+    val result = root.parsed.document
       .toOption[YMap]
       .map(map => {
 
@@ -108,7 +105,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
     }
   }
 
-  def parse(): DomainEntity = parse(root.document.as[YMap])
+  def parse(): DomainEntity = parse(root.parsed.document.as[YMap])
 
   def parse(entries: YMap): DomainEntity = {
 

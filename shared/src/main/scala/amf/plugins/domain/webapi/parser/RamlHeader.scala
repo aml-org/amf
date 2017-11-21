@@ -1,9 +1,10 @@
 package amf.plugins.domain.webapi.parser
 
-import amf.compiler.{FragmentTypes, Root}
+import amf.compiler.FragmentTypes
+import amf.core.Root
 import amf.parser.YNodeLikeOps
 import amf.plugins.domain.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
-import org.yaml.model.YMap
+import org.yaml.model.{YComment, YMap}
 
 /**
   * Raml header comment
@@ -12,7 +13,7 @@ case class RamlHeader(text: String)
 
 trait RamlFragment
 
-object RamlHeader {
+object RamlHeader  {
 
   object Raml10          extends RamlHeader("%RAML 1.0")
   object Raml10Library   extends RamlHeader("%RAML 1.0 Library")

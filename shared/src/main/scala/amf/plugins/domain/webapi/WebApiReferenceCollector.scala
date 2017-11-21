@@ -1,62 +1,47 @@
-package amf.compiler
+package amf.plugins.domain.webapi
 
-import amf.core.{AMFCompiler => ReferenceCompiler}
-import amf.document.BaseUnit
-import amf.framework.parser.{Extension, Library, Link, ReferenceKind}
+import amf.compiler.{AbstractReferenceCollector, Reference}
+import amf.framework.parser.{Extension, Library, Link}
 import amf.parser.YMapOps
+import amf.plugins.domain.vocabularies.RamlHeaderExtractor
 import amf.plugins.domain.webapi.parser.RamlHeader
 import amf.plugins.domain.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
-import amf.remote._
 import amf.spec.ParserContext
 import amf.validation.Validation
 import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 
-abstract class AbstractReferenceCollector {
-  def traverse(document: YDocument, validation: Validation, ctx: ParserContext): Seq[Reference]
-}
-
-/**
-  * Reference collector. Ideally references should be collected while parsing to avoid an unnecessary iteration.
-  */
-class ReferenceCollector(document: ParsedDocument, vendor: Vendor, validation: Validation) {
-
-  implicit val ctx: ParserContext = ParserContext(validation)
+class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollector with RamlHeaderExtractor {
 
   private val references = new ArrayBuffer[Reference]
 
-  def traverse(): Seq[Reference] = {
-    if (vendor != Amf) {
-      libraries(document.document)
-      links(document.document)
-      if (isRamlOverlayOrExtension(vendor, document)) overlaysAndExtensions(document.document)
-    }
+  override def traverse(document: YDocument, validation: Validation, ctx: ParserContext) = {
+    libraries(document, ctx)
+    links(document, ctx)
+    if (isRamlOverlayOrExtension(vendor, document)) overlaysAndExtensions(document, ctx)
     references
   }
 
   // TODO take this away when dialects don't use 'extends' keyword.
-  def isRamlOverlayOrExtension(vendor: Vendor, document: ParsedDocument): Boolean = {
-    document.comment match {
+  def isRamlOverlayOrExtension(vendor: String, document: YDocument): Boolean = {
+    comment(document) match {
       case Some(c) =>
         RamlHeader.fromText(c.metaText) match {
-          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml => true
-          case _                                                       => false
+          case Some(Raml10Overlay | Raml10Extension) if vendor == "RAML 1.0" => true
+          case _                                                             => false
         }
       case None => false
     }
   }
 
-
-  private def overlaysAndExtensions(document: YDocument): Unit = {
+  private def overlaysAndExtensions(document: YDocument, ctx: ParserContext): Unit = {
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = vendor match {
-          case Raml => Some("extends")
-          case Oas  => Some("x-extends")
-          case _    => None
+          case "RAML 1.0" => Some("extends")
+          case "OAS 2.0"  => Some("x-extends")
+          case _          => None
         }
 
         ext.foreach { u =>
@@ -67,7 +52,7 @@ class ReferenceCollector(document: ParsedDocument, vendor: Vendor, validation: V
                 case YType.Map | YType.Seq =>
                   ctx.violation("", s"Expected scalar but found: ${entry.value}", entry.value)
                 case _ => extension(entry) // assume scalar
-            })
+              })
         }
       case _ =>
     }
@@ -77,21 +62,21 @@ class ReferenceCollector(document: ParsedDocument, vendor: Vendor, validation: V
     references += Reference(entry.value, Extension, entry)
   }
 
-  private def links(part: YPart): Unit = {
+  private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case Raml => ramlLinks(part)
-      case Oas  => oasLinks(part)
-      case _    => // Ignore
+      case "RAML 1.0" => ramlLinks(part)
+      case "OAS 2.0"  => oasLinks(part, ctx)
+      case _          => // Ignore
     }
   }
 
-  private def libraries(document: YDocument): Unit = {
+  private def libraries(document: YDocument, ctx: ParserContext): Unit = {
     document.to[YMap] match {
       case Right(map) =>
         val uses = vendor match {
-          case Raml => Some("uses")
-          case Oas  => Some("x-uses")
-          case _    => None
+          case "RAML 1.0" => Some("uses")
+          case "OAS 2.0"  => Some("x-uses")
+          case _          => None
         }
         uses.foreach(u => {
           map
@@ -111,14 +96,14 @@ class ReferenceCollector(document: ParsedDocument, vendor: Vendor, validation: V
     references += Reference(entry.value, Library, entry)
   }
 
-  def oasLinks(part: YPart): Unit = {
+  def oasLinks(part: YPart, ctx: ParserContext): Unit = {
     part match {
-      case map: YMap if map.entries.size == 1 && isRef(map.entries.head) => oasInclude(map)
-      case _                                                             => part.children.foreach(oasLinks)
+      case map: YMap if map.entries.size == 1 && isRef(map.entries.head) => oasInclude(map, ctx)
+      case _                                                             => part.children.foreach(c => oasLinks(c, ctx))
     }
   }
 
-  private def oasInclude(map: YMap): Unit = {
+  private def oasInclude(map: YMap, ctx: ParserContext): Unit = {
     val ref = map.entries.head
     ref.value.tagType match {
       case YType.Str =>
@@ -146,26 +131,5 @@ class ReferenceCollector(document: ParsedDocument, vendor: Vendor, validation: V
       case scalar: YScalar => references += Reference(scalar.text, Link, node)
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
-  }
-}
-
-case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
-
-  def isRemote: Boolean = !url.startsWith("#")
-
-  def resolve(remote: Platform,
-              base: Option[Context],
-              mediaType: String,
-              vendor: String,
-              currentValidation: Validation,
-              cache: Cache,
-              dialects: amf.dialects.DialectRegistry,
-              ctx: ParserContext): Future[BaseUnit] = {
-    new ReferenceCompiler(url, remote, base, mediaType, vendor, kind, currentValidation, cache, dialects, Some(ctx))
-      .build()
-      .map(root => {
-//        target = root
-        root
-      })
   }
 }

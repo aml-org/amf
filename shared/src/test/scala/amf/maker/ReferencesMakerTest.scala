@@ -19,7 +19,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("Data type fragment test raml") {
+  test("HERE_HERE Data type fragment test raml") {
     val file         = "data-type-fragment.raml"
     val rootDocument = "file://shared/src/test/resources/references/data-type-fragment.raml"
     assertFixture(rootDocument, RamlYamlHint)

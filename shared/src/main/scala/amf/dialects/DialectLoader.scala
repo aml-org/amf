@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject, dialectObject}
 import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}

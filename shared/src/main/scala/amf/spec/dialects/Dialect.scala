@@ -1,6 +1,6 @@
 package amf.spec.dialects
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.dialects._
 import amf.document.Fragment.{DialectFragment, Fragment}
 import amf.document.{BaseUnit, Document, EncodesModel, Module}
@@ -395,7 +395,7 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ove
       }
     }
 
-    root.document.toOption[YMap].foreach { map =>
+    root.parsed.document.toOption[YMap].foreach { map =>
       val entries = map.entries
 
       for {
