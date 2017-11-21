@@ -4,13 +4,13 @@ import amf.document.BaseUnit
 import amf.domain.Annotation.SynthesizedField
 import amf.domain.{Example, FieldEntry}
 import amf.metadata.domain.ExampleModel._
-import amf.parser.Position
+import amf.parser.{Position, YScalarYRead}
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.declaration.AnnotationsEmitter
-import amf.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
+import amf.spec._
 import org.yaml.model.YDocument._
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model._
 import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
@@ -155,14 +155,23 @@ case class StringToAstEmitter(value: String) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     val parts = YamlParser(value).parse()
     parts.collect({ case d: YDocument => d }).headOption.map(_.node) match {
-      case Some(node) =>
-        node.value match {
-          case m: YMap => b.obj(e => m.entries.foreach(m => e.entry(m.key, m.value)))
-          case _       => b += node
-        }
-      case _ => throw new IllegalStateException(s"Could not parse string example $value")
+      case Some(node) => emitNode(node, b)
+      case _          => throw new IllegalStateException(s"Could not parse string example $value")
     }
+  }
+  private def emitNode(node: YNode, b: PartBuilder): Unit = {
 
+    node.tagType match {
+      case YType.Map =>
+        val map = node.as[YMap]
+        b.obj(e => map.entries.foreach(entry => e.entry(entry.key.as[String], p => emitNode(entry.value, p))))
+      case YType.Seq =>
+        val seq = node.as[Seq[YNode]]
+        b.list(p => seq.foreach(emitNode(_, p)))
+      case _ =>
+        val scalar = node.as[YScalar]
+        b += scalar.text
+    }
   }
 
   override def position(): Position = Position.ZERO

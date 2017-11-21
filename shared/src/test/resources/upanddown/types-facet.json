@@ -9,6 +9,7 @@
       ],
       "pattern": "blabla.+",
       "minLength": 1,
+      "default": "defaultValue",
       "maxLength": 20
     },
     "IntegerTest": {
@@ -23,7 +24,9 @@
     "ObjectTest": {
       "title": "that person",
       "description": "ooo person",
-      "default": "defaultValue",
+      "default": {
+        "name": "john doe"
+      },
       "externalDocs": {
         "url": "externalDocsUrl",
         "description": "externalDocsDescription"

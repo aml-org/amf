@@ -14,6 +14,7 @@ import amf.spec.oas.OasSpecParser
 import amf.spec.{OasDefinitions, ParserContext, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model._
+import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
@@ -394,9 +395,14 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key(
         "properties",
         entry => {
-          val properties: Seq[PropertyShape] =
-            PropertiesParser(entry.value.as[YMap], shape.withProperty, requiredFields).parse()
-          shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+          entry.value.toOption[YMap] match {
+            case Some(m) =>
+              val properties: Seq[PropertyShape] =
+                PropertiesParser(m, shape.withProperty, requiredFields).parse()
+              shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+            case _ =>
+              ctx.violation(shape.id, "Value of properties entry must be a valid and non map", entry.value)
+          }
         }
       )
 
@@ -487,10 +493,20 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         shape.set(ShapeModel.Description, value.string(), Annotations(entry))
       })
 
-      map.key("default", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ShapeModel.Default, value.string(), Annotations(entry))
-      })
+      map.key(
+        "default",
+        entry => {
+          entry.value.tagType match {
+            case YType.Map | YType.Seq =>
+              shape.set(ShapeModel.Default,
+                        AmfScalar(YamlRender.render(entry.value), Annotations(entry.value)),
+                        Annotations(entry))
+            case _ =>
+              val value = ValueNode(entry.value)
+              shape.set(ShapeModel.Default, value.string(), Annotations(entry))
+          }
+        }
+      )
 
       map.key("enum", entry => {
         val value = ArrayNode(entry.value)
