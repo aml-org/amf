@@ -1,13 +1,11 @@
 package amf.resolution.stages
 
-import amf.domain.Annotation.SynthesizedField
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.domain.{DomainElement, FieldEntry, Value}
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.{DomainElementModel, KeyField, OptionalField}
 import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.shape.Shape
 
 /**
   * Merge 'other' element into 'main' element:

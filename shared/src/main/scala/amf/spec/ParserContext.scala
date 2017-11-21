@@ -1,10 +1,10 @@
 package amf.spec
 
-import amf.compiler.{ParsedReference, Root}
+import amf.compiler.ParsedReference
 import amf.domain.Annotation.LexicalInformation
 import amf.parser.{Range, YMapOps, YScalarYRead}
 import amf.remote.{Oas, Raml, Vendor}
-import amf.shape.{PropertyShape, Shape}
+import amf.shape.Shape
 import amf.spec.oas.OasSyntax
 import amf.spec.raml.RamlSyntax
 import amf.validation.SeverityLevels.VIOLATION
@@ -68,7 +68,11 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
   }
 }
 
-case class ParserContext(validation: Validation, vendor: Vendor, rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, private val internalDec: Option[Declarations] = None)
+case class ParserContext(validation: Validation,
+                         vendor: Vendor,
+                         rootContextDocument: String = "",
+                         refs: Seq[ParsedReference] = Seq.empty,
+                         private val internalDec: Option[Declarations] = None)
     extends ErrorHandler(validation) {
 
   val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))
@@ -82,8 +86,6 @@ case class ParserContext(validation: Validation, vendor: Vendor, rootContextDocu
     case Raml => this
     case _    => copy(vendor = Raml, internalDec = Some(declarations))
   }
-
-  def withRootContextDocument(location: String) = copy(rootContextDocument = location)
 
   /** Validate closed shape. */
   def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit = {
@@ -118,8 +120,8 @@ case class ParserContext(validation: Validation, vendor: Vendor, rootContextDocu
     * can be defined in the AST node
     */
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
-    val node = shape.id
-    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited =  true)
+    val node   = shape.id
+    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
 
     syntax.nodes.get(shapeType) match {
       case Some(props) =>
@@ -129,7 +131,7 @@ case class ParserContext(validation: Validation, vendor: Vendor, rootContextDocu
           props
         }
         val allResults: Seq[Seq[YMapEntry]] = facets.map { propertiesMap =>
-          val totalProperties = initialProperties ++ propertiesMap.keys.toSet
+          val totalProperties     = initialProperties ++ propertiesMap.keys.toSet
           val acc: Seq[YMapEntry] = Seq.empty
           ast.entries.foldLeft(acc) { (results: Seq[YMapEntry], entry) =>
             val key: String = entry.key
@@ -150,7 +152,6 @@ case class ParserContext(validation: Validation, vendor: Vendor, rootContextDocu
                       s"Properties ${errors.map(_.key).mkString(",")} not supported in a $vendor $shapeType node",
                       errors.head) // pointing only to the first failed error
         }
-
 
       case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
     }

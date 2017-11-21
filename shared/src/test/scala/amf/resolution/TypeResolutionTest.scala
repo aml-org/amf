@@ -20,7 +20,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
     val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-    implicit val ctx = ParserContext(Validation(platform), Raml)
+    implicit val ctx: ParserContext = ParserContext(Validation(platform), Raml)
 
     var res = RamlTypeExpressionParser(adopt).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])

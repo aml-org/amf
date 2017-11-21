@@ -3,6 +3,7 @@ package amf.domain
 import amf.metadata.Field
 import amf.metadata.Type._
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.shape.UnresolvedShape
 
 import scala.collection.immutable.ListMap
 
@@ -147,37 +148,33 @@ object Fields {
   def apply(): Fields = new Fields()
 }
 
-
 class Value(var value: AmfElement, val annotations: Annotations) {
 
-  // Values are going to *mutate* automatically
-  // when references to unresolved values are resolved
-  // in declarations
+  // Values are going to *mutate* automatically when references to unresolved values are resolved in declarations
   checkUnresolved()
 
   override def toString: String = value.toString
 
-  def checkUnresolved() = value match {
-    case linkable: Linkable if linkable.isUnresolved =>
+  def checkUnresolved(): Unit = value match {
+    case unresolved: UnresolvedShape =>
       // this is a callback that will be registered
       // in the declarations of the parser context
       // to be executed when a reference is resolved
-      linkable.toFutureRef((resolved) => {
-        value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+      unresolved.toFutureRef((resolved) => {
+        value = resolved.link(unresolved.reference, unresolved.annotations) // mutation of the field value
       })
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
       array.values.foreach {
-        case linkable: Linkable if linkable.isUnresolved =>
-          linkable.toFutureRef((resolved) => {
-            value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+        case unresolved: UnresolvedShape =>
+          unresolved.toFutureRef((resolved) => {
+            value = resolved.link(unresolved.reference, unresolved.annotations) // mutation of the field value
           })
         case _ => // ignore
       }
     case _ => // ignore
   }
 }
-
 
 object Value {
   def apply(value: AmfElement, annotations: Annotations) = new Value(value, annotations)
@@ -210,5 +207,5 @@ case class FieldEntry(field: Field, value: Value) {
 
   def domainElement: DomainElement = element.asInstanceOf[DomainElement]
 
-  def isLink = value.isInstanceOf[Link]
+  def isLink: Boolean = value.isInstanceOf[Link]
 }

@@ -85,12 +85,10 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
           ctx.declarations
             .findType(other, SearchScope.Named) match { //i should not have a reference to fragment in a type expression.
             case Some(s) => s.link(other).asInstanceOf[Shape]
-            case _       => {
-              val shape = UnresolvedShape(other).withName(other)
-              shape.unresolved(other, part.getOrElse(YNode.Null))
+            case _ =>
+              val shape = UnresolvedShape(other, part).withName(other).withContext(ctx)
               adopt(shape)
               shape
-            }
           }
       }
       if (Option(shape.id).isEmpty) {
