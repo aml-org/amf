@@ -4,6 +4,7 @@ import amf.compiler.ParsedDocument
 import amf.framework.plugins.AMFSyntaxPlugin
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
+import org.yaml.render.{JsonRender, YamlRender}
 
 class SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
@@ -19,7 +20,7 @@ class SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     "application/raml"
   )
 
-  override def parse(text: CharSequence) = {
+  override def parse(mediaType: String, text: CharSequence) = {
     val parser = YamlParser(text)
     val parts = parser.parse(true)
 
@@ -35,4 +36,21 @@ class SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     }
   }
 
+  override def unparse(mediaType: String, ast: YDocument) = {
+    val format = mediaType match {
+      case "application/yaml"   => "yaml"
+      case "application/x-yaml" => "yaml"
+      case "text/yaml"          => "yaml"
+      case "text/x-yaml"        => "yaml"
+      case "application/json"   => "json"
+      case "text/json"          => "json"
+      case _                    => "yaml"
+    }
+
+    if (format == "yaml") {
+      Some(YamlRender.render(ast))
+    } else {
+      Some(JsonRender.render(ast))
+    }
+  }
 }
