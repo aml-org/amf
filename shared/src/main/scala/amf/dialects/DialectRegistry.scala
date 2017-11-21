@@ -71,8 +71,10 @@ abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {
   def registerDialect(uri: String, dialect: String): Future[Dialect]
 }
 
+/*
 object DialectRegistry {
   val default: DialectRegistry = new DialectRegistry()
     .add(VocabularyLanguageDefinition)
     .add(DialectLanguageDefinition)
 }
+*/

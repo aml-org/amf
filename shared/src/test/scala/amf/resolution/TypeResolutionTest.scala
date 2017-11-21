@@ -176,8 +176,7 @@ class TypeResolutionTest extends BuildCycleTests {
                             RamlYamlHint,
                             Validation(platform),
                             None,
-                            None,
-                            platform.dialectsRegistry)
+                            None)
       res
         .build()
         .map(_.resolve(ProfileNames.RAML))

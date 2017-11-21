@@ -1,19 +1,33 @@
 package amf.plugins.domain.webapi
 
+import amf.client.GenerationOptions
 import amf.core.Root
-import amf.document.BaseUnit
+import amf.document.Fragment.Fragment
+import amf.document._
+import amf.domain.{DomainElement, WebApi}
 import amf.framework.plugins.AMFDomainPlugin
 import amf.plugins.domain.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.domain.webapi.parser.{RamlFragment, RamlHeader}
-import amf.remote.Raml
+import amf.remote.{Platform, Raml}
 import amf.spec.ParserContext
-import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser, RamlSyntax}
+import amf.spec.raml._
 
 class RAML10Plugin extends AMFDomainPlugin {
 
   val ID: String = "RAML 1.0"
 
-  override def parse(root: Root, parentContext: ParserContext): Option[BaseUnit] = {
+  val vendors = Seq("RAML 1.0", "RAML")
+
+  def canParse(root: Root): Boolean = RamlHeader(root) match {
+    case Some(RamlHeader.Raml10)          => true
+    case Some(RamlHeader.Raml10Overlay)   => true
+    case Some(RamlHeader.Raml10Extension) => true
+    case Some(RamlHeader.Raml10Library)   => true
+    case Some(fragment: RamlFragment)     => true
+    case _                                => false
+  }
+
+  override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     val updated: WebApiContext = new WebApiContext(Raml, parentContext, RamlSpecAwareContext, RamlSyntax)
     val clean: ParserContext = ParserContext(parentContext.validation, root.location, root.references)
     RamlHeader(root) match {
@@ -26,13 +40,24 @@ class RAML10Plugin extends AMFDomainPlugin {
     }
   }
 
-  def accept(root: Root): Boolean = RamlHeader(root) match {
-    case Some(RamlHeader.Raml10)          => true
-    case Some(RamlHeader.Raml10Overlay)   => true
-    case Some(RamlHeader.Raml10Extension) => true
-    case Some(RamlHeader.Raml10Library)   => true
-    case Some(fragment: RamlFragment)     => true
-    case _                                => false
+  override def canUnparse(unit: BaseUnit) = unit match {
+    case _: Overlay   => true
+    case _: Extension => true
+    case document: Document => document.encodes.isInstanceOf[WebApi]
+    case module: Module =>
+      module.declares exists {
+        case _:DomainElement  => true
+        case _                => false
+      }
+    case _: Fragment  => true
+    case _            => false
+  }
+
+  override def unparse(unit: BaseUnit, options: GenerationOptions) = unit match {
+    case module: Module     => Some(RamlModuleEmitter(module).emitModule())
+    case document: Document => Some(RamlDocumentEmitter(document).emitDocument())
+    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment).emitFragment())
+    case _                  => None
   }
 
   override def referenceCollector() = new WebApiReferenceCollector(ID)
@@ -50,4 +75,5 @@ class RAML10Plugin extends AMFDomainPlugin {
     "application/yaml",
     "application/x-yaml"
   )
+
 }

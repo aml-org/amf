@@ -33,7 +33,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Vocabulary") {
     AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml",
                 platform,
-                RamlYamlHint,
+                ExtensionYamlHint,
                 Validation(platform))
       .build() map {
       _ should not be null

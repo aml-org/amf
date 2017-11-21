@@ -3,7 +3,7 @@ package amf.dialects
 import java.util.concurrent.CompletableFuture
 
 import amf.compiler.AMFCompiler
-import amf.remote.{Platform, RamlYamlHint}
+import amf.remote.{ExtensionYamlHint, Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.remote.FutureConverter.converters
 import amf.validation.Validation
@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class JVMDialectRegistry(platform: Platform) extends PlatformDialectRegistry(platform) {
   override def registerDialect(uri: String) =  {
     val currentValidaton = new Validation(platform).withEnabledValidation(false)
-    AMFCompiler(uri, platform, RamlYamlHint, currentValidaton)
+    AMFCompiler(uri, platform, ExtensionYamlHint, currentValidaton)
       .build()
       .map { compiled =>
         val dialect = new DialectLoader(compiled).loadDialect()

@@ -1,10 +1,14 @@
 package amf.plugins.domain.vocabularies
 
+import amf.client.GenerationOptions
 import amf.core.Root
-import amf.document.BaseUnit
+import amf.document.Fragment.DialectFragment
+import amf.document._
+import amf.domain.dialects.DomainEntity
 import amf.framework.plugins.AMFDomainPlugin
+import amf.remote.Platform
 import amf.spec.ParserContext
-import amf.spec.dialects.DialectParser
+import amf.spec.dialects.{DialectEmitter, DialectParser}
 import org.yaml.model.{YComment, YDocument}
 
 trait RamlHeaderExtractor {
@@ -27,17 +31,19 @@ object DialectHeader extends RamlHeaderExtractor {
     case _                                           => false
   }
 }
-class RAMLExtensionsPlugin(dialectsRegistry: amf.dialects.DialectRegistry) extends AMFDomainPlugin with RamlHeaderExtractor {
+class RAMLExtensionsPlugin extends AMFDomainPlugin with RamlHeaderExtractor {
 
-  override val ID = "RAML 1.0"
+  override val ID = "RAML Extension"
 
-  override def parse(root: Root, parentContext: ParserContext): Option[BaseUnit] = {
+  val vendors = Seq("RAML Extension", "RAML 1.0")
+
+  override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     implicit val ctx: ParserContext = ParserContext(parentContext.validation, parentContext.refs)
     comment(root) match {
       case Some(comment: YComment) =>
         val header = comment.metaText
-        if (dialectsRegistry.knowsHeader(header)) {
-          Some(DialectParser(root, header, dialectsRegistry).parseUnit())
+        if (platform.dialectsRegistry.knowsHeader(header)) {
+          Some(DialectParser(root, header, platform.dialectsRegistry).parseUnit())
         } else {
           None
         }
@@ -45,9 +51,20 @@ class RAMLExtensionsPlugin(dialectsRegistry: amf.dialects.DialectRegistry) exten
     }
   }
 
+  override def canUnparse(unit: BaseUnit) = unit match {
+    case document: Document => document.encodes.isInstanceOf[DomainEntity]
+    case module: Module =>
+      module.declares exists {
+        case _: DomainEntity => true
+        case _               => false
+      }
+    case _: DialectFragment => true
+    case _                  => false
+  }
 
+  def canParse(root: Root): Boolean = DialectHeader(root)
 
-  def accept(root: Root): Boolean = DialectHeader(root)
+  override def unparse(unit: BaseUnit, options: GenerationOptions) = Some(DialectEmitter(unit).emit())
 
   override def domainSyntaxes = Seq(
     "application/raml",
@@ -60,4 +77,5 @@ class RAMLExtensionsPlugin(dialectsRegistry: amf.dialects.DialectRegistry) exten
   )
 
   override def referenceCollector() = new RAMLExtensionsReferenceCollector()
+
 }

@@ -8,6 +8,8 @@ object AMFPluginsRegistry {
 
   private val syntaxPluginRegistry: mutable.HashMap[String, AMFSyntaxPlugin] = mutable.HashMap()
   private val domainPluginRegistry: mutable.HashMap[String, Seq[AMFDomainPlugin]] = mutable.HashMap()
+  private val domainPluginIDRegistry: mutable.HashMap[String, AMFDomainPlugin] = mutable.HashMap()
+  private val domainPluginVendorsRegistry: mutable.HashMap[String, Seq[AMFDomainPlugin]] = mutable.HashMap()
 
   def registerSyntaxPlugin(syntaxPlugin: AMFSyntaxPlugin) = {
     syntaxPlugin.supportedMediaTypes().foreach { mediaType =>
@@ -27,14 +29,35 @@ object AMFPluginsRegistry {
   }
 
   def registerDomainPlugin(domainPlugin: AMFDomainPlugin) = {
-    domainPlugin.domainSyntaxes.foreach { mediaType =>
-      val plugins = domainPluginRegistry.getOrElse(mediaType, Seq())
-      domainPluginRegistry.put(mediaType, plugins ++ Seq(domainPlugin))
+    domainPluginIDRegistry.get(domainPlugin.ID) match {
+      case None         => {
+        domainPluginIDRegistry.put(domainPlugin.ID, domainPlugin)
+
+        domainPlugin.domainSyntaxes.foreach { mediaType =>
+          val plugins = domainPluginRegistry.getOrElse(mediaType, Seq())
+          domainPluginRegistry.put(mediaType, plugins ++ Seq(domainPlugin))
+        }
+
+        domainPlugin.vendors.foreach { vendor =>
+          val plugins = domainPluginVendorsRegistry.getOrElse(vendor, Seq())
+          domainPluginVendorsRegistry.put(vendor, plugins ++ Seq(domainPlugin))
+        }
+      }
+
+      case Some(plugin) => // ignore
     }
   }
 
   def domainPluginForMediaType(mediaType: String): Seq[AMFDomainPlugin] = {
     domainPluginRegistry.getOrElse(mediaType, Seq())
+  }
+
+  def domainPluginForID(ID: String): Option[AMFDomainPlugin] = {
+    domainPluginIDRegistry.get(ID)
+  }
+
+  def domainPluginForVendor(vendor: String): Seq[AMFDomainPlugin] = {
+    domainPluginVendorsRegistry.getOrElse(vendor, Seq())
   }
 
   protected def simpleMediaType(mediaType: String): String = {

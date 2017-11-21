@@ -16,6 +16,7 @@ class SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     "text/x-yaml",
     "application/json",
     "text/json",
+    "application/raml"
   )
 
   override def parse(text: CharSequence) = {

@@ -6,5 +6,5 @@ import amf.validation.Validation
 import org.yaml.model.YDocument
 
 class PayloadReferenceCollector extends AbstractReferenceCollector {
-  override def traverse(document: YDocument, validation: Validation, ctx: ParserContext) = Nil
+  override def traverse(document: ParsedDocument, validation: Validation, ctx: ParserContext) = Nil
 }

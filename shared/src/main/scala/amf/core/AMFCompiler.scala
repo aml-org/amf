@@ -30,7 +30,6 @@ class AMFCompiler(val url: String,
                   val referenceKind: ReferenceKind,
                   val currentValidation: Validation,
                   private val cache: Cache,
-                  private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default,
                   private val baseContext: Option[ParserContext] = None) {
 
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
@@ -40,9 +39,9 @@ class AMFCompiler(val url: String,
 
   // temporary
   AMFPluginsRegistry.registerSyntaxPlugin(new SYamlSyntaxPlugin())
-  AMFPluginsRegistry.registerDomainPlugin(new AMFGraphPlugin(remote))
+  AMFPluginsRegistry.registerDomainPlugin(new AMFGraphPlugin())
   AMFPluginsRegistry.registerDomainPlugin(new PayloadPlugin())
-  AMFPluginsRegistry.registerDomainPlugin(new RAMLExtensionsPlugin(dialects))
+  AMFPluginsRegistry.registerDomainPlugin(new RAMLExtensionsPlugin())
   AMFPluginsRegistry.registerDomainPlugin(new OAS20Plugin())
   AMFPluginsRegistry.registerDomainPlugin(new RAML10Plugin())
   //
@@ -85,12 +84,19 @@ class AMFCompiler(val url: String,
   }
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
-    AMFPluginsRegistry.domainPluginForMediaType(document.mediatype).find(_.accept(document)) match {
+    val domainPluginOption = AMFPluginsRegistry.domainPluginForVendor(vendor).find { plugin =>
+      plugin.canParse(document) && plugin.domainSyntaxes.contains(document.mediatype)
+    } match {
+      case Some(domainPlugin) => Some(domainPlugin)
+      case None => AMFPluginsRegistry.domainPluginForMediaType(document.mediatype).find(_.canParse(document))
+    }
+
+    domainPluginOption match {
       case Some(domainPlugin) =>
         parseReferences(document, domainPlugin) map { documentWithReferences =>
-          domainPlugin.parse(documentWithReferences, ctx) match {
+          domainPlugin.parse(documentWithReferences, ctx, remote) match {
             case Some(baseUnit) => baseUnit
-            case None           => throw new Exception(s"Cannot parse domain model for media type ${document.mediatype} with plugin ${domainPlugin.ID}")
+            case None           => throw new Exception(s"Cannot parse domain model for media type ${document.mediatype} with plugin ${domainPlugin.ID} ${domainPlugin}")
           }
         }
       case None => throw new Exception(s"Cannot parse domain model for media type ${document.mediatype}")
@@ -99,25 +105,28 @@ class AMFCompiler(val url: String,
 
   private def parseReferences(root: Root, domainPlugin: AMFDomainPlugin): Future[Root] = {
     val referenceCollector = domainPlugin.referenceCollector()
-    val refs = referenceCollector.traverse(root.parsed.document, currentValidation, ctx)
+    val refs = referenceCollector.traverse(root.parsed, currentValidation, ctx)
 
     refs
       .filter(_.isRemote)
       .foreach(link => {
         references += link
-          .resolve(remote, base, root.mediatype, domainPlugin.ID, ctx.validation, cache, dialects, ctx)
+          .resolve(remote, Some(context), root.mediatype, domainPlugin.ID, ctx.validation, cache, remote.dialectsRegistry, ctx)
           .map(r => ParsedReference(r, link.url, link.kind))
       })
 
-    Future.sequence(references).map(rs => { root.copy(references = rs) })
+    Future.sequence(references).map(rs => { root.copy(references = rs, vendor = domainPlugin.ID) })
   }
 
-  private def resolve(): Future[Content] = {
-    println(s"LOCATION ${location}")
-    remote.resolve(location, base)
-  }
+  private def resolve(): Future[Content] = remote.resolve(location, base)
 
-  def root(): Future[Root] = resolve().map(parseSyntax)
+  def root(): Future[Root] = resolve().map(parseSyntax).flatMap { document: Root =>
+    AMFPluginsRegistry.domainPluginForMediaType(document.mediatype).find(_.canParse(document)) match {
+      case Some(domainPlugin) =>
+        parseReferences(document, domainPlugin)
+      case None => Future { document }
+    }
+  }
 
 }
 
@@ -146,6 +155,7 @@ case class Root(parsed: ParsedDocument,
       case "OAS 2.0" if mediaType == Yaml     => OasYamlHint
       case "AMF Payload" if mediaType == Yaml => PayloadYamlHint
       case "AMF Payload" if mediaType == Json => PayloadJsonHint
+      case "AMF Extension"                    => ExtensionYamlHint
       case _                                  => AmfJsonHint
     }
 

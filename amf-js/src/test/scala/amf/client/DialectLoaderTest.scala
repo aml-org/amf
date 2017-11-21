@@ -30,8 +30,7 @@ class DialectLoaderTest extends AsyncFunSuite with PlatformSecrets with PairsAMF
                       RamlYamlHint,
                       Validation(platform),
                       None,
-                      None,
-                      dialectsRegistry).build())
+                      None).build())
       .map(new AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
 
     actual.zip(expected).map(checkDiff)

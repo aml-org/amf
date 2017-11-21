@@ -67,7 +67,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       else PayloadYamlHint
     val overridePlatform = TrunkPlatform(example.value)
     try {
-      val compiler = AMFCompiler("http://amfparser.org/test_payload", overridePlatform, hint, exampleValidation)
+      val compiler = AMFCompiler("http://amfparser.org/test_payload", overridePlatform, hint, exampleValidation, None, None)
       compiler.build() flatMap { payload =>
         // we are parsing using Payload hint, this MUST be a payload fragment encoding a data node
         val payloadDataNode = payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode]

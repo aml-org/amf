@@ -1,14 +1,11 @@
 package amf.emit
 
 import amf.client.GenerationOptions
-import amf.document.Fragment.{DialectFragment, Fragment}
-import amf.document.{BaseUnit, Document, Module}
-import amf.domain.dialects.DomainEntity
-import amf.plugins.domain.graph.parser.GraphEmitter
+import amf.document.BaseUnit
+import amf.plugins.domain.graph.AMFGraphPlugin
+import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
+import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
 import amf.remote._
-import amf.spec.dialects.DialectEmitter
-import amf.spec.oas.{OasDocumentEmitter, OasFragmentEmitter, OasModuleEmitter}
-import amf.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import org.yaml.model.YDocument
 
 /**
@@ -23,16 +20,7 @@ class AMFUnitMaker {
       case Unknown       => throw new Exception("Cannot make unit for unknown provider")
     }
   }
-  private def isDialect(unit: BaseUnit) = unit match {
-    case document: Document => document.encodes.isInstanceOf[DomainEntity]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainEntity => true
-        case _               => false
-      }
-    case _: DialectFragment => true
-    case _                  => false
-  }
+  private def isDialect(unit: BaseUnit) = new RAMLExtensionsPlugin().canUnparse(unit)
 
   private def makeUnitWithSpec(unit: BaseUnit, vendor: Vendor): YDocument = {
     vendor match {
@@ -43,23 +31,28 @@ class AMFUnitMaker {
     }
   }
 
-  private def makeRamlDialect(unit: BaseUnit): YDocument = DialectEmitter(unit).emit()
+  private def makeRamlDialect(unit: BaseUnit): YDocument = new RAMLExtensionsPlugin().unparse(unit, GenerationOptions()).get
 
-  private def makeRamlUnit(unit: BaseUnit): YDocument = unit match {
-    case module: Module     => RamlModuleEmitter(module).emitModule()
-    case document: Document => RamlDocumentEmitter(document).emitDocument()
-    case fragment: Fragment => new RamlFragmentEmitter(fragment).emitFragment()
-    case _                  => throw new IllegalStateException("Invalid base unit form maker")
+  private def makeRamlUnit(unit: BaseUnit): YDocument = {
+    val plugin = new RAML10Plugin()
+    if (plugin.canUnparse(unit)) {
+      plugin.unparse(unit, GenerationOptions()).get
+    } else {
+      throw new Exception("Cannot accept supposed to be RAML 1.0 unit")
+    }
   }
 
-  private def makeOasUnit(unit: BaseUnit): YDocument = unit match {
-    case module: Module     => OasModuleEmitter(module).emitModule()
-    case document: Document => OasDocumentEmitter(document).emitDocument()
-    case fragment: Fragment => new OasFragmentEmitter(fragment).emitFragment()
-    case _                  => throw new IllegalStateException("Invalid base unit form maker")
+  private def makeOasUnit(unit: BaseUnit): YDocument = {
+    val plugin = new OAS20Plugin()
+    if (plugin.canUnparse(unit)) {
+      plugin.unparse(unit, GenerationOptions()).get
+    } else {
+      throw new Exception("Cannot accept supposed to be OAS 2.0 unit")
+    }
   }
 
-  private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): YDocument = GraphEmitter.emit(unit, options)
+  private def makeAmfWebApi(unit: BaseUnit, options: GenerationOptions): YDocument =
+    new AMFGraphPlugin().unparse(unit, options).get
 }
 
 object AMFUnitMaker {

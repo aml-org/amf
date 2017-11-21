@@ -53,7 +53,7 @@ trait CommandHelper {
       case ProfileNames.OAS  => OasJsonHint
       case ProfileNames.AMF  => AmfJsonHint
     }
-    AMFCompiler(inputFile, platform, hint, currentValidation, None, None, platform.dialectsRegistry).build()
+    AMFCompiler(inputFile, platform, hint, currentValidation, None, None).build()
   }
 
   protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[Unit] = {
