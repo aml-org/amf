@@ -18,12 +18,12 @@ import scala.concurrent.Future
 class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions) {
 
   // temporary
-  AMFPluginsRegistry.registerSyntaxPlugin(new SYamlSyntaxPlugin())
-  AMFPluginsRegistry.registerDomainPlugin(new AMFGraphPlugin())
-  AMFPluginsRegistry.registerDomainPlugin(new PayloadPlugin())
-  AMFPluginsRegistry.registerDomainPlugin(new RAMLExtensionsPlugin())
-  AMFPluginsRegistry.registerDomainPlugin(new OAS20Plugin())
-  AMFPluginsRegistry.registerDomainPlugin(new RAML10Plugin())
+  AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+  AMFPluginsRegistry.registerDomainPlugin(AMFGraphPlugin)
+  AMFPluginsRegistry.registerDomainPlugin(PayloadPlugin)
+  AMFPluginsRegistry.registerDomainPlugin(RAMLExtensionsPlugin)
+  AMFPluginsRegistry.registerDomainPlugin(OAS20Plugin)
+  AMFPluginsRegistry.registerDomainPlugin(RAML10Plugin)
   //
 
   def make(): YDocument = {

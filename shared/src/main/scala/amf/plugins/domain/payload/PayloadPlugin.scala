@@ -9,7 +9,7 @@ import amf.remote.Platform
 import amf.spec.ParserContext
 import org.yaml.model.{YMap, YScalar}
 
-class PayloadPlugin extends AMFDomainPlugin {
+object PayloadPlugin extends AMFDomainPlugin {
 
   override val ID = "AMF Payload"
 

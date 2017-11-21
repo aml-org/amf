@@ -6,7 +6,7 @@ import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.{JsonRender, YamlRender}
 
-class SYamlSyntaxPlugin extends AMFSyntaxPlugin {
+object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
   override val ID = "SYaml"
 
