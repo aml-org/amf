@@ -26,7 +26,7 @@ case class UnresolvedShape(fields: Fields, annotations: Annotations, reference: 
     this
   }
 
-  def toFutureRef(resolve: (Linkable) => Unit): Unit = ctx match {
+  def futureRef(resolve: (Linkable) => Unit): Unit = ctx match {
     case Some(c) =>
       c.declarations.futureRef(
         reference,
@@ -42,7 +42,7 @@ case class UnresolvedShape(fields: Fields, annotations: Annotations, reference: 
           )
         )
       )
-    case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
+    case _ => throw new Exception("Cannot create unresolved reference with missing parsing context")
   }
 }
 

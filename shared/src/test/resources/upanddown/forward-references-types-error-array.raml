@@ -1,0 +1,22 @@
+#%RAML 1.0
+types:
+  Some: [Person, Address, UndefinedType]
+  Person:
+    properties:
+      name: string
+      age: integer
+      address: Address
+  Address:
+        properties:
+          street: string
+          number: integer
+/person-response:
+  get:
+    responses:
+      200:
+        body: Person
+/address-response:
+  get:
+    responses:
+      200:
+        body: Address

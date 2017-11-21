@@ -10,7 +10,9 @@ import amf.shape.{Shape, UnresolvedShape}
 import amf.spec.SearchScope.{All, Fragments, Named}
 import org.yaml.model.YPart
 
-case class DeclarationPromise(private val success: (Linkable) => Unit, private val failure: () => Unit, var resolved: Boolean = false) {
+case class DeclarationPromise(private val success: (Linkable) => Unit,
+                              private val failure: () => Unit,
+                              var resolved: Boolean = false) {
 
   def resolve(element: Linkable): Unit = {
     resolved = true
@@ -39,14 +41,12 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
                         errorHandler: Option[ErrorHandler]) {
 
   def futureRef(name: String, promise: DeclarationPromise): Unit = {
-    //println(s"FUTURE REF $name")
     val otherPromises = promises.getOrElse(name, Seq())
     promises = promises.updated(name, otherPromises ++ Seq(promise))
   }
 
-  def resolveRef(name: String, value: Linkable) = {
-    //println(s"RESOLVING REF $name")
-    promises.getOrElse(name, Seq()).foreach { p => p.resolve(value) }
+  def resolveRef(name: String, value: Linkable): Unit = {
+    promises.getOrElse(name, Seq()).foreach { _.resolve(value) }
     promises = promises.updated(name, Seq())
   }
 
@@ -59,22 +59,22 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def +=(element: DomainElement): Declarations = {
     element match {
-      case r: ResourceType         =>
+      case r: ResourceType =>
         resolveRef(r.name, r)
-        resourceTypes = resourceTypes + (r.name      -> r)
-      case t: Trait                =>
+        resourceTypes = resourceTypes + (r.name -> r)
+      case t: Trait =>
         resolveRef(t.name, t)
-        traits = traits + (t.name                    -> t)
+        traits = traits + (t.name -> t)
       case a: CustomDomainProperty =>
         resolveRef(a.name, a)
-        annotations = annotations + (a.name          -> a)
-      case s: Shape                =>
+        annotations = annotations + (a.name -> a)
+      case s: Shape =>
         resolveRef(s.name, s)
-        shapes = shapes + (s.name                    -> s)
-      case p: Parameter            =>
+        shapes = shapes + (s.name -> s)
+      case p: Parameter =>
         resolveRef(p.name, p)
-        parameters = parameters + (p.name            -> p)
-      case ss: SecurityScheme      =>
+        parameters = parameters + (p.name -> p)
+      case ss: SecurityScheme =>
         resolveRef(ss.name, ss)
         securitySchemes = securitySchemes + (ss.name -> ss)
     }

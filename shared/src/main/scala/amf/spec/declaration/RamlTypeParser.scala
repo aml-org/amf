@@ -3,10 +3,11 @@ package amf.spec.declaration
 import amf.domain.Annotation.{toString => _, _}
 import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
-import amf.model.{AmfArray, AmfScalar}
+import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.shape.TypeDef._
 import amf.shape._
+import amf.spec.SearchScope.Named
 import amf.spec.common.{ArrayNode, ShapeExtensionParser, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.raml._
@@ -44,6 +45,7 @@ trait RamlTypeSyntax {
       case "union"             => UnionShape()
     }
   }
+
   def wellKnownType(str: String): Boolean =
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
           .indexOf("}") > -1) {
@@ -55,10 +57,12 @@ trait RamlTypeSyntax {
 abstract class DefaultType {
   val typeDef: TypeDef
 }
+
 // By default, string si the default type
 object StringDefaultType extends DefaultType {
   override val typeDef = TypeDef.StrType
 }
+
 // In a body or body / application/json context it its any
 object AnyDefaultType extends DefaultType {
   override val typeDef = TypeDef.AnyType
@@ -562,27 +566,18 @@ case class RamlTypeParser(ast: YPart,
       entry.value.tagType match {
 
         case YType.Seq =>
-          val inherits = ArrayNode(entry.value)
-            .strings()
-            .scalars
-            .map { scalar =>
-              scalar.toString match {
-                case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
-                  RamlTypeExpressionParser(adopt).parse(s).get
-                case s if wellKnownType(s) =>
-                  parseWellKnownTypeRef(s)
-                case s =>
-                  ctx.declarations.findType(s, SearchScope.Named) match {
-                    case Some(ancestor) =>
-                      ancestor
-                    case _ =>
-                      val unresolvedShape: UnresolvedShape = UnresolvedShape(s, entry.value).withName(s)
-                      ctx.declarations += unresolvedShape
-                      unresolvedShape
-                  }
-              }
+          val inherits: Seq[AmfElement] = entry.value.as[Seq[YNode]].map { node =>
+            node.as[String] match {
+              case RamlTypeDefMatcher.TypeExpression(s) =>
+                RamlTypeExpressionParser(adopt, Some(node)).parse(s).get
+              case s if wellKnownType(s) => parseWellKnownTypeRef(s)
+              case s =>
+                ctx.declarations.findType(s, Named) match {
+                  case Some(ancestor) => ancestor
+                  case _              => unresolved(node)
+                }
             }
-
+          }
           shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
 
         case YType.Map =>
@@ -605,14 +600,20 @@ case class RamlTypeParser(ast: YPart,
             case Some(ancestor) =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
             case _ =>
-              val unresolved = UnresolvedShape(text, entry.value).withContext(ctx)
-              adopt(unresolved)
-              shape.set(ShapeModel.Inherits, AmfArray(Seq(unresolved), Annotations(entry.value)), Annotations(entry))
+              val u: UnresolvedShape = unresolved(entry.value)
+              shape.set(ShapeModel.Inherits, AmfArray(Seq(u), Annotations(entry.value)), Annotations(entry))
           }
 
         case _ =>
           shape.add(ExplicitField()) // TODO store annotation in dataType field.
       }
+    }
+
+    private def unresolved(node: YNode): UnresolvedShape = {
+      val reference = node.as[YScalar].text
+      val shape     = UnresolvedShape(reference, node).withContext(ctx)
+      adopt(shape)
+      shape
     }
   }
 

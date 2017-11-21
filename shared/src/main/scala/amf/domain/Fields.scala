@@ -160,14 +160,14 @@ class Value(var value: AmfElement, val annotations: Annotations) {
       // this is a callback that will be registered
       // in the declarations of the parser context
       // to be executed when a reference is resolved
-      unresolved.toFutureRef((resolved) => {
+      unresolved.futureRef((resolved) => {
         value = resolved.link(unresolved.reference, unresolved.annotations) // mutation of the field value
       })
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
       array.values.foreach {
         case unresolved: UnresolvedShape =>
-          unresolved.toFutureRef((resolved) => {
+          unresolved.futureRef((resolved) => {
             value = resolved.link(unresolved.reference, unresolved.annotations) // mutation of the field value
           })
         case _ => // ignore
