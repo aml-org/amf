@@ -389,7 +389,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Example validations test") {
+  test("HERE_HERE Example validations test") {
     for {
       library <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, Validation(platform))
         .build()
