@@ -31,7 +31,7 @@ object DialectHeader extends RamlHeaderExtractor {
     case _                                           => false
   }
 }
-class RAMLExtensionsPlugin extends AMFDomainPlugin with RamlHeaderExtractor {
+object RAMLExtensionsPlugin extends AMFDomainPlugin with RamlHeaderExtractor {
 
   override val ID = "RAML Extension"
 

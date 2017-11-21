@@ -14,7 +14,7 @@ import amf.remote.{Oas, Platform}
 import amf.spec.ParserContext
 import amf.spec.oas._
 
-class OAS20Plugin extends AMFDomainPlugin {
+object OAS20Plugin extends AMFDomainPlugin {
 
   val ID: String = "OAS 2.0"
 

@@ -12,7 +12,7 @@ import amf.remote.{Platform, Raml}
 import amf.spec.ParserContext
 import amf.spec.raml._
 
-class RAML10Plugin extends AMFDomainPlugin {
+object RAML10Plugin extends AMFDomainPlugin {
 
   val ID: String = "RAML 1.0"
 

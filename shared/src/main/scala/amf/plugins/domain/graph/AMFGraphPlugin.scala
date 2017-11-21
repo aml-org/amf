@@ -11,7 +11,7 @@ import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 import org.yaml.model.YMap
 
-class AMFGraphPlugin() extends AMFDomainPlugin {
+object AMFGraphPlugin extends AMFDomainPlugin {
 
   override val ID = "AMF Graph"
 
