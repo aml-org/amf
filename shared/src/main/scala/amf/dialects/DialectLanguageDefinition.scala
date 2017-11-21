@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.BaseUnit
 import amf.metadata.Type
 import amf.spec.ParserContext

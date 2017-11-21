@@ -55,7 +55,9 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   private def assertHeader(path: String, expectedOption: Option[RamlHeader]): Future[Assertion] = {
     AMFCompiler(basePath + path, platform, RamlYamlHint, Validation(platform))
       .root()
-      .map(RamlHeader(_) shouldBe expectedOption)
+      .map { root =>
+        RamlHeader(root.newFormat()) shouldBe expectedOption
+      }
   }
 
 }

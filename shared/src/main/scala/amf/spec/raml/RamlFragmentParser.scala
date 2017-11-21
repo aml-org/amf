@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.Fragment._
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
@@ -24,10 +24,10 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
   def parseFragment(): Option[Fragment] = {
     // first i must identify the type of fragment
 
-    val rootMap: YMap = root.document.to[YMap] match {
+    val rootMap: YMap = root.parsed.document.to[YMap] match {
       case Right(map) => map
       case _ =>
-        ctx.violation(root.location, "Cannot parse empty map", root.document)
+        ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
         YMap()
     }
 
@@ -45,7 +45,7 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
     optionFragment match {
       case Some(fragment) =>
         UsageParser(rootMap, fragment).parse()
-        fragment.add(Annotations(root.document) += SourceVendor(Raml))
+        fragment.add(Annotations(root.parsed.document) += SourceVendor(Raml))
         val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
         if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
         Some(fragment)

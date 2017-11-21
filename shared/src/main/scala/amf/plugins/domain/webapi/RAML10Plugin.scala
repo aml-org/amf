@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.BaseUnit
 import amf.framework.plugins.AMFDomainPlugin
 import amf.plugins.domain.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
@@ -10,6 +10,8 @@ import amf.spec.ParserContext
 import amf.spec.raml.{RamlDocumentParser, RamlFragmentParser, RamlModuleParser, RamlSyntax}
 
 class RAML10Plugin extends AMFDomainPlugin {
+
+  val ID: String = "RAML 1.0"
 
   override def parse(root: Root, parentContext: ParserContext): Option[BaseUnit] = {
     val updated: WebApiContext = new WebApiContext(Raml, parentContext, RamlSpecAwareContext, RamlSyntax)
@@ -32,6 +34,8 @@ class RAML10Plugin extends AMFDomainPlugin {
     case Some(fragment: RamlFragment)     => true
     case _                                => false
   }
+
+  override def referenceCollector() = new WebApiReferenceCollector(ID)
 
   /**
     * List of media types used to encode serialisations of

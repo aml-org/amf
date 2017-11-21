@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.Module
 import amf.domain.Annotation.SourceVendor
 import amf.domain.Annotations
@@ -15,13 +15,13 @@ import org.yaml.model._
 case class RamlModuleParser(root: Root)(implicit val ctx: WebApiContext) extends RamlSpecParser {
 
   def parseModule(): Module = {
-    val module = Module(Annotations(root.document))
+    val module = Module(Annotations(root.parsed.document))
       .adopted(root.location)
       .add(SourceVendor(root.vendor))
 
     module.withLocation(root.location)
 
-    root.document.toOption[YMap].foreach { rootMap =>
+    root.parsed.document.toOption[YMap].foreach { rootMap =>
       val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap)

@@ -1,31 +1,18 @@
 package amf.compiler
 
+import amf.core.{AMFCompiler => ModularCompiler}
 import amf.dialects.DialectRegistry
 import amf.document.BaseUnit
-import amf.document.Fragment.ExternalFragment
-import amf.domain.ExternalDomainElement
-import amf.domain.extensions.idCounter
-import amf.exception.CyclicReferenceException
 import amf.framework.parser.ReferenceKind
-import amf.parser.{YNodeLikeOps, YScalarYRead}
-import amf.plugins.domain.graph.AMFGraphPlugin
-import amf.plugins.domain.graph.parser.GraphParser
-import amf.plugins.domain.payload.PayloadPlugin
-import amf.plugins.domain.payload.parser.PayloadParser
-import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
-import amf.plugins.domain.webapi.contexts.WebApiContext
-import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
-import amf.remote.Mimes._
+import amf.plugins.domain.vocabularies.RamlHeaderExtractor
 import amf.remote._
 import amf.spec.ParserContext
 import amf.validation.Validation
 import org.yaml.model._
-import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.concurrent.Future.failed
 
 class AMFCompiler private (val url: String,
                            val remote: Platform,
@@ -34,15 +21,45 @@ class AMFCompiler private (val url: String,
                            val currentValidation: Validation,
                            private val cache: Cache,
                            private val dialects: amf.dialects.DialectRegistry = amf.dialects.DialectRegistry.default,
-                           private val baseContext: Option[ParserContext] = None) {
+                           private val baseContext: Option[ParserContext] = None) extends RamlHeaderExtractor {
 
   implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
-
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
 
   def build(): Future[BaseUnit] = {
+
+    val actualVendor = hint.vendor match {
+      case Raml    => "RAML 1.0"
+      case Oas     => "OAS 2.0"
+      case Payload => "AMF Payload"
+      case Amf     => "AMF Graph"
+      case Unknown => "Unknown Vendor"
+    }
+
+    val mediaType = hint match {
+      case RamlYamlHint => "application/yaml"
+      case RamlJsonHint => "application/json"
+      case OasJsonHint  => "application/json"
+      case OasYamlHint  => "application/yaml"
+      case AmfJsonHint  => "application/ld+json"
+      case _            => "text/plain"
+    }
+
+    new ModularCompiler(
+      url,
+      remote,
+      base,
+      mediaType,
+      actualVendor,
+      hint.kind,
+      currentValidation,
+      cache,
+      dialects
+    ).build()
+
+    /*
     // Reset the data node counter
     idCounter.reset()
 
@@ -51,8 +68,41 @@ class AMFCompiler private (val url: String,
       cache.getOrUpdate(location) { () =>
         compile()
       }
+      */
   }
 
+  def root(): Future[Root] = {
+    val actualVendor = hint.vendor match {
+      case Raml    => "RAML 1.0"
+      case Oas     => "OAS 2.0"
+      case Payload => "AMF Payload"
+      case Amf     => "AMF Graph"
+      case Unknown => "Unknown Vendor"
+    }
+
+    val mediaType = hint match {
+      case RamlYamlHint => "application/yaml"
+      case RamlJsonHint => "application/json"
+      case OasJsonHint  => "application/json"
+      case OasYamlHint  => "application/yaml"
+      case AmfJsonHint  => "application/ld+json"
+      case _            => "text/plain"
+    }
+
+    new ModularCompiler(
+      url,
+      remote,
+      base,
+      mediaType,
+      actualVendor,
+      hint.kind,
+      currentValidation,
+      cache,
+      dialects,
+      Some(ctx)
+    ).root() map { case root => root.oldFormat() }
+  }
+/*
   private def compile() = root().map(make)
 
   /** Usage at tests. */
@@ -197,6 +247,7 @@ class AMFCompiler private (val url: String,
       }
     }
   }
+  */
 }
 
 case class Root(parsed: ParsedDocument,
@@ -206,6 +257,34 @@ case class Root(parsed: ParsedDocument,
                 vendor: Vendor,
                 raw: String) {
   val document: YDocument = parsed.document
+
+  // TODO: remove me, only for compatibility while refactoring
+  def newFormat(): amf.core.Root = {
+    val actualVendor = vendor match {
+      case Raml    => "RAML 1.0"
+      case Oas     => "OAS 2.0"
+      case Payload => "AMF Payload"
+      case Amf     => "AMF Graph"
+      case Unknown => "Unknown Vendor"
+    }
+    val mediatype = vendor match {
+      case Raml    => "application/yaml"
+      case Oas     => "application/json"
+      case Payload => "application/json"
+      case Amf     => "application/ld+json"
+      case Unknown => "text/plain"
+    }
+
+    amf.core.Root(
+      parsed,
+      location,
+      mediatype,
+      references,
+      referenceKind,
+      actualVendor,
+      raw
+    )
+  }
 }
 
 case class ParsedDocument(comment: Option[YComment], document: YDocument)

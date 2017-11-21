@@ -56,7 +56,9 @@ class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   private def assertHeader(path: String, expectedOption: Option[OasHeader]): Future[Assertion] = {
     AMFCompiler(basePath + path, platform, OasJsonHint, Validation(platform))
       .root()
-      .map(OasHeader(_) shouldBe expectedOption)
+      .map { root: Root =>
+        OasHeader.apply(root.newFormat()) shouldBe expectedOption
+      }
   }
 
 }

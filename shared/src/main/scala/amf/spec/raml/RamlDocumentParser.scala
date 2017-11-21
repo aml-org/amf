@@ -1,7 +1,7 @@
 package amf.spec.raml
 
 import amf.common.core.TemplateUri
-import amf.compiler.Root
+import amf.core.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain.Annotation._
 import amf.domain._
@@ -17,7 +17,7 @@ import amf.plugins.domain.webapi.contexts.WebApiContext
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
-import amf.spec.{BaseUriSplitter, Declarations, ParserContext, SearchScope}
+import amf.spec.{BaseUriSplitter, Declarations, SearchScope}
 import amf.vocabulary.VocabularyMappings
 import org.yaml.model._
 
@@ -38,7 +38,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
   }
 
   private def parseExtension(document: Document, field: Field): Unit = {
-    val map = root.document.as[YMap]
+    val map = root.parsed.document.as[YMap]
 
     UsageParser(map, document).parse()
 
@@ -66,7 +66,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
   private def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location)
 
-    val map = root.document.as[YMap]
+    val map = root.parsed.document.as[YMap]
 
     val references = ReferencesParser("uses", map, root.references).parse(root.location)
     parseDeclarations(root, map)
