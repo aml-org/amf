@@ -2,6 +2,7 @@
 title: test title
 types:
   ScalarTest:
+    default: defaultValue
     enum:
       - a1
       - a2
@@ -20,7 +21,8 @@ types:
   ObjectTest:
     displayName: that person
     description: ooo person
-    default: defaultValue
+    default:
+      name: john doe
     (externalDocs):
       url: externalDocsUrl
       description: externalDocsDescription

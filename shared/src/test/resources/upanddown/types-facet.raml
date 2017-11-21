@@ -7,6 +7,7 @@ types:
       - a2
     pattern: blabla.+
     minLength: 1
+    default: defaultValue
     maxLength: 20
   IntegerTest:
     type: integer
@@ -19,7 +20,8 @@ types:
   ObjectTest:
     displayName: that person
     description: ooo person
-    default: defaultValue
+    default:
+      name: john doe
     (externalDocs):
       url: externalDocsUrl
       description: externalDocsDescription

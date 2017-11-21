@@ -13,7 +13,7 @@ import amf.shape._
 import amf.spec._
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
-import amf.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
+import amf.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter, StringToAstEmitter}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
 
@@ -157,7 +157,12 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
 
     fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ShapeModel.Default).map(f => result += ValueEmitter("default", f))
+    fs.entry(ShapeModel.Default)
+      .map(f => {
+        result += EntryPartEmitter("default",
+                                   StringToAstEmitter(f.value.toString),
+                                   position = pos(f.value.annotations))
+      })
 
     fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
@@ -361,12 +366,11 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
   override def emitters(): Seq[EntryEmitter] = {
     val fs = scalar.fields
 
-    val rawTypeDef = TypeDefXsdMapping.typeDef(scalar.dataType)
+    val rawTypeDef        = TypeDefXsdMapping.typeDef(scalar.dataType)
     val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef)
 
     val typeEmitterOption = if (scalar.inherits.isEmpty) {
-      fs
-        .entry(ScalarShapeModel.DataType)
+      fs.entry(ScalarShapeModel.DataType)
         .flatMap(f =>
           if (!f.value.annotations.contains(classOf[Inferred])) {
             scalar.fields
@@ -397,11 +401,12 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
   }
 
   def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: String): Seq[EntryEmitter] = {
-    val formatKey = if (rawTypeDef.isNumber) "format"
-                    else "(format)"
+    val formatKey =
+      if (rawTypeDef.isNumber) "format"
+      else "(format)"
 
     val translationFormats: Set[String] = OasTypeDefMatcher.knownFormats.diff(RamlTypeDefMatcher.knownFormats)
-    var explictFormatFound = false
+    var explictFormatFound              = false
     val explicitFormat = fs.entry(ScalarShapeModel.Format) match {
       case Some(entry) if entry.value.value.isInstanceOf[AmfScalar] =>
         val entryFormat = entry.value.value.asInstanceOf[AmfScalar].value.toString
@@ -782,7 +787,12 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
 
     fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ShapeModel.Default).map(f => result += ValueEmitter("default", f))
+    fs.entry(ShapeModel.Default)
+      .map(f => {
+        result += EntryPartEmitter("default",
+                                   StringToAstEmitter(f.value.toString),
+                                   position = pos(f.value.annotations))
+      })
 
     fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
@@ -1055,13 +1065,13 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
         if (!f.value.annotations.contains(classOf[Inferred]))
           result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
 
-
     fs.entry(ScalarShapeModel.Format) match {
       case Some(_) => // ignore, this will be set with the explicit information
-      case None    => OasTypeDefStringValueMatcher.matchFormat(TypeDefXsdMapping.typeDef(scalar.dataType)) match {
-        case Some(format) => result += RawValueEmitter("format", ScalarShapeModel.Format, format)
-        case None         => // ignore
-      }
+      case None =>
+        OasTypeDefStringValueMatcher.matchFormat(TypeDefXsdMapping.typeDef(scalar.dataType)) match {
+          case Some(format) => result += RawValueEmitter("format", ScalarShapeModel.Format, format)
+          case None         => // ignore
+        }
     }
     emitCommonFields(fs, result)
 

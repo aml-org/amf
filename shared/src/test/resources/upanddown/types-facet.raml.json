@@ -5,6 +5,7 @@
   },
   "definitions": {
     "ScalarTest": {
+      "default": "defaultValue",
       "enum": [
         "a1",
         "a2"
@@ -26,7 +27,9 @@
     "ObjectTest": {
       "title": "that person",
       "description": "ooo person",
-      "default": "defaultValue",
+      "default": {
+        "name": "john doe"
+      },
       "externalDocs": {
         "url": "externalDocsUrl",
         "description": "externalDocsDescription"
