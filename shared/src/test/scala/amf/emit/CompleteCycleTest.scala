@@ -376,8 +376,16 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml, referencesPath)
   }
 
-  test("Test libraries raml to raml with 3 uses of alias") {
+  test("Test multiple aliases libraries raml to raml") {
     cycle("libraries-3-alias.raml", "libraries-3-alias.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
+  test("Test multiple aliases libraries raml to amf") {
+    cycle("libraries-3-alias.raml", "libraries-3-alias.raml.jsonld", RamlYamlHint, Amf, referencesPath)
+  }
+
+  test("Test multiple aliases libraries amf to raml") {
+    cycle("libraries-3-alias.raml.jsonld", "libraries-3-alias.raml.raml", AmfJsonHint, Raml, referencesPath)
   }
 
   test("Test libraries oas to oas") {
