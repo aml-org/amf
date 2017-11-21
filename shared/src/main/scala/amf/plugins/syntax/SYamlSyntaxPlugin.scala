@@ -44,7 +44,11 @@ class SYamlSyntaxPlugin extends AMFSyntaxPlugin {
       case "text/x-yaml"        => "yaml"
       case "application/json"   => "json"
       case "text/json"          => "json"
-      case _                    => "yaml"
+      case _                    => if (mediaType.indexOf("json") > -1) {
+        "json"
+      } else {
+        "yaml"
+      }
     }
 
     if (format == "yaml") {
