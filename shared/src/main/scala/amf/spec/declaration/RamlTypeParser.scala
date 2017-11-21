@@ -19,8 +19,10 @@ import org.yaml.render.YamlRender
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
-      implicit ctx: ParserContext): RamlTypeParser =
+  def apply(ast: YMapEntry,
+            adopt: Shape => Shape,
+            isAnnotation: Boolean = false,
+            defaultType: DefaultType = StringDefaultType)(implicit ctx: ParserContext): RamlTypeParser =
     new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(ctx.toRaml)
 }
 
@@ -58,18 +60,25 @@ object StringDefaultType extends DefaultType {
   override val typeDef = TypeDef.StrType
 }
 // In a body or body / application/json context it its any
-object AnyDefaultType extends  DefaultType {
+object AnyDefaultType extends DefaultType {
   override val typeDef = TypeDef.AnyType
 }
 
-case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
-    implicit val ctx: ParserContext)
+case class RamlTypeParser(ast: YPart,
+                          name: String,
+                          node: YNode,
+                          adopt: Shape => Shape,
+                          isAnnotation: Boolean,
+                          defaultType: DefaultType)(implicit val ctx: ParserContext)
     extends RamlSpecParser {
 
   def parse(): Option[Shape] = {
 
     val info: Option[TypeDef] =
-      RamlTypeDetection(node, "", node.toOption[YMap].flatMap(m => m.key("(format)").map(_.value.toString())), defaultType)
+      RamlTypeDetection(node,
+                        "",
+                        node.toOption[YMap].flatMap(m => m.key("(format)").map(_.value.toString())),
+                        defaultType)
     val result = info.map {
       case XMLSchemaType                         => parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry])
       case JSONSchemaType                        => parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry])
@@ -242,7 +251,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
           refTuple match {
             case (text: String, Some(s)) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
-            case (text: String, _)       => {
+            case (text: String, _) => {
               val shape = UnresolvedShape(text, node).withName(name)
               adopt(shape)
               shape
@@ -337,6 +346,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
         case "integer" | "float" => "numberScalarShape"
         case "string"            => "stringScalarShape"
+        case "dateTime"          => "dateScalarShape"
         case _                   => "shape"
       }
 

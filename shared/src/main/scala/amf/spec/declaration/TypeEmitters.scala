@@ -15,7 +15,7 @@ import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter, StringToAstEmitter}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.YType
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -67,7 +67,7 @@ case class RamlTypePartEmitter(shape: Shape,
       raw(b, "", YType.Null)
     } else {
       emitter match {
-        case Left(p) => p.emit(b)
+        case Left(p)        => p.emit(b)
         case Right(entries) => b.obj(traverse(entries, _))
       }
     }
@@ -402,7 +402,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
   def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: String): Seq[EntryEmitter] = {
     val formatKey =
-      if (rawTypeDef.isNumber) "format"
+      if (rawTypeDef.isNumber | rawTypeDef.isDate) "format"
       else "(format)"
 
     val translationFormats: Set[String] = OasTypeDefMatcher.knownFormats.diff(RamlTypeDefMatcher.knownFormats)
