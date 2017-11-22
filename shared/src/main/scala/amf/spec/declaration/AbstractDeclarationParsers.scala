@@ -19,11 +19,10 @@ case class AbstractDeclarationsParser(key: String,
       key,
       e => {
         e.value
-          .toOption[YMap]
-          .map(_.entries)
-          .getOrElse(Nil)
-          .map(traitEntry =>
-            ctx.declarations += AbstractDeclarationParser(producer(traitEntry), customProperties, traitEntry)
+          .as[YMap]
+          .entries
+          .map(entry =>
+            ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
               .parse())
       }
     )
