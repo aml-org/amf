@@ -655,8 +655,7 @@ case class RamlTypeParser(ast: YPart,
               val properties: Seq[PropertyShape] =
                 PropertiesParser(m, shape.withProperty).parse()
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-            case _ =>
-              ctx.violation(shape.id, "Value of properties entry must be a valid and non map", entry.value)
+            case _ => // Empty properties node.
           }
         }
       )
