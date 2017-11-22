@@ -251,11 +251,10 @@ case class RamlTypeParser(ast: YPart,
 
           refTuple match {
             case (text: String, Some(s)) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
-            case (text: String, _) => {
+            case (text: String, _) =>
               val shape = UnresolvedShape(text, node).withName(name)
               adopt(shape)
               shape
-            }
           }
       }
     }
@@ -593,13 +592,18 @@ case class RamlTypeParser(ast: YPart,
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
+          val text = entry.value.as[YScalar].text
           // it might be a named type
           // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
-          ctx.declarations.findType(entry.value.as[YScalar].text, SearchScope.Named) match {
+          ctx.declarations.findType(text, SearchScope.Named) match {
             case Some(ancestor) =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
             case _ =>
-              ctx.violation(shape.id, "Reference not found", entry.value)
+              val unresolvedShape: UnresolvedShape = UnresolvedShape(text, entry.value).withName(text)
+              ctx.declarations += unresolvedShape
+              shape.set(ShapeModel.Inherits,
+                        AmfArray(Seq(unresolvedShape), Annotations(entry.value)),
+                        Annotations(entry))
           }
 
         case _ =>
@@ -612,8 +616,6 @@ case class RamlTypeParser(ast: YPart,
     override def parse(): NodeShape = {
 
       super.parse()
-
-      parseInheritance()
 
       map.key("minProperties", entry => {
         val value = ValueNode(entry.value)
