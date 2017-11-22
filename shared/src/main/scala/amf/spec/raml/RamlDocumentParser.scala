@@ -149,8 +149,9 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
             api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
           case YType.Map =>
             ctx.violation(api.id, "WebAPI 'protocols' property must be a scalar or sequence value", entry.value)
-          case _ =>
+          case YType.Str =>
             api.set(WebApiModel.Schemes, AmfArray(Seq(ValueNode(entry.value).string())), Annotations(entry))
+          case _ => // Empty protocols node.
         }
       }
     )
@@ -280,7 +281,7 @@ abstract class RamlSpecParser extends BaseSpecParser {
             case Some(shape) =>
               if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
               ctx.declarations += shape.add(DeclaredElement())
-            case None        => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
+            case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
           }
 
         }
