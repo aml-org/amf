@@ -93,13 +93,13 @@ object Annotation {
 
   case class Inferred() extends Annotation
 
-  case class Aliases(aliases: Set[String]) extends SerializableAnnotation {
+  case class Aliases(aliases: Set[(String, String)]) extends SerializableAnnotation {
 
     /** Extension name. */
     override val name: String = "aliases-array"
 
     /** Value as string. */
-    override val value: String = aliases.mkString(",")
+    override val value: String = aliases.map { case (alias, path) => s"$alias->$path" }.mkString(",")
   }
 
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
@@ -136,7 +136,13 @@ object Annotation {
   }
 
   private def aliases(value: String, objects: Map[String, AmfElement]) = {
-    Aliases(value.split(",").toSet)
+    Aliases(
+      value
+        .split(",")
+        .map(_.split("->") match {
+          case Array(alias, url) => alias -> url
+        })
+        .toSet)
   }
 
   private def parsedJsonSchema(value: String, objects: Map[String, AmfElement]) = {

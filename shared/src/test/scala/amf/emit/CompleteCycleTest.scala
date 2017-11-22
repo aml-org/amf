@@ -13,7 +13,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Full oas to oas test") {
-    cycle("full-example.json", "full-example.json", OasJsonHint, Oas)
+    cycle("full-example.json", OasJsonHint)
   }
 
   test("Full raml to oas test") {
@@ -37,7 +37,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Traits and resourceTypes raml to raml test") {
-    cycle("traits-resource-types.raml", "traits-resource-types.raml", RamlYamlHint, Raml)
+    cycle("traits-resource-types.raml", RamlYamlHint)
   }
 
   test("Traits and resourceTypes oas to amf test") {
@@ -45,7 +45,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Traits and resourceTypes oas to oas test") {
-    cycle("traits-resource-types.json", "traits-resource-types.json", OasJsonHint, Oas)
+    cycle("traits-resource-types.json", OasJsonHint)
   }
 
   test("Traits and resourceTypes raml to oas test") {
@@ -93,7 +93,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete amf to amf test") {
-    cycle("complete.jsonld", "complete.jsonld", AmfJsonHint, Amf)
+    cycle("complete.jsonld", AmfJsonHint)
   }
 
   test("Complete raml to amf test") {
@@ -113,11 +113,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete raml to raml test") {
-    cycle("complete.raml", "complete.raml", RamlYamlHint, Raml)
+    cycle("complete.raml", RamlYamlHint)
   }
 
   test("Complete oas to oas test") {
-    cycle("complete.json", "complete.json", OasJsonHint, Oas)
+    cycle("complete.json", OasJsonHint)
   }
 
   test("Complete amf(raml) to raml test") {
@@ -129,7 +129,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Endpoints amf to amf test") {
-    cycle("endpoints.jsonld", "endpoints.jsonld", AmfJsonHint, Amf)
+    cycle("endpoints.jsonld", AmfJsonHint)
   }
 
   test("Endpoints raml to amf test") {
@@ -141,7 +141,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Endpoints raml to raml test") {
-    cycle("endpoints.raml", "endpoints.raml", RamlYamlHint, Raml)
+    cycle("endpoints.raml", RamlYamlHint)
   }
 
   test("Endpoints oas to raml test") {
@@ -153,7 +153,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Endpoints oas to oas test") {
-    cycle("endpoints.json", "endpoints.json", OasJsonHint, Oas)
+    cycle("endpoints.json", OasJsonHint)
   }
 
   test("Endpoints amf(raml) to raml test") {
@@ -169,7 +169,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete with operations raml to raml test") {
-    cycle("complete-with-operations.raml", "complete-with-operations.raml", RamlYamlHint, Raml)
+    cycle("complete-with-operations.raml", RamlYamlHint)
   }
 
   test("Complete with operations oas to raml test") {
@@ -177,7 +177,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete with operations oas to oas test") {
-    cycle("complete-with-operations.json", "complete-with-operations.json", OasJsonHint, Oas)
+    cycle("complete-with-operations.json", OasJsonHint)
   }
 
   test("Complete with request raml to raml test") {
@@ -197,11 +197,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete with response oas to oas test") {
-    cycle("operation-response.json", "operation-response.json", OasJsonHint, Oas)
+    cycle("operation-response.json", OasJsonHint)
   }
 
   test("Complete with response raml to raml test") {
-    cycle("operation-response.raml", "operation-response.raml", RamlYamlHint, Raml)
+    cycle("operation-response.raml", RamlYamlHint)
   }
 
   test("Complete with response raml to oas test") {
@@ -209,7 +209,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete with parameter references oas to oas test") {
-    cycle("parameters.json", "parameters.json", OasJsonHint, Oas)
+    cycle("parameters.json", OasJsonHint)
   }
 
   test("Complete with parameter references oas to amf test") {
@@ -233,7 +233,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Complete with payloads oas to oas test") {
-    cycle("payloads.json", "payloads.json", OasJsonHint, Oas)
+    cycle("payloads.json", OasJsonHint)
   }
 
   test("Complete with payloads oas to raml test") {
@@ -248,7 +248,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("banking-api.raml", "banking-api.raml.raml", RamlYamlHint, Raml)
   }
 
-  test("Children endpoints amf to amf test") {
+  test("Children endpoints raml to amf test") {
     cycle("banking-api.raml", "banking-api.raml.jsonld", RamlYamlHint, Amf)
   }
 
@@ -261,11 +261,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types implicit & explicit raml to raml test") {
-    cycle("explicit-&-implicit-type-object.raml", "explicit-&-implicit-type-object.raml", RamlYamlHint, Raml)
+    cycle("explicit-&-implicit-type-object.raml", RamlYamlHint)
   }
 
   test("Types implicit & explicit oas to oas test") {
-    cycle("explicit-&-implicit-type-object.json", "explicit-&-implicit-type-object.json", OasJsonHint, Oas)
+    cycle("explicit-&-implicit-type-object.json", OasJsonHint)
   }
 
   test("Types implicit & explicit raml to oas test") {
@@ -277,11 +277,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types dependency raml to raml test") {
-    cycle("types-dependency.raml", "types-dependency.raml", RamlYamlHint, Raml)
+    cycle("types-dependency.raml", RamlYamlHint)
   }
 
   test("Types dependency oas to oas test") {
-    cycle("types-dependency.json", "types-dependency.json", OasJsonHint, Oas)
+    cycle("types-dependency.json", OasJsonHint)
   }
 
   test("Types dependency raml to oas test") {
@@ -309,19 +309,19 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types declarations oas to oas test") {
-    cycle("declarations-small.json", "declarations-small.json", OasJsonHint, Oas)
+    cycle("declarations-small.json", OasJsonHint)
   }
 
   test("Types declarations raml to raml test") {
-    cycle("declarations-small.raml", "declarations-small.raml", RamlYamlHint, Raml)
+    cycle("declarations-small.raml", RamlYamlHint)
   }
 
   test("Types all facets raml to raml test") {
-    cycle("types-facet.raml", "types-facet.raml", RamlYamlHint, Raml)
+    cycle("types-facet.raml", RamlYamlHint)
   }
 
   test("Types all facets oas to oas test") {
-    cycle("types-facet.json", "types-facet.json", OasJsonHint, Oas)
+    cycle("types-facet.json", OasJsonHint)
   }
 
   test("Types all facets oas to raml test") {
@@ -333,7 +333,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Types all types raml to raml test") {
-    cycle("all-type-types.raml", "all-type-types.raml", RamlYamlHint, Raml)
+    cycle("all-type-types.raml", RamlYamlHint)
   }
 
   test("Multiple inheritance raml to raml") {
@@ -341,7 +341,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Annotations raml to raml test") {
-    cycle("annotations.raml", "annotations.raml", RamlYamlHint, Raml)
+    cycle("annotations.raml", RamlYamlHint)
   }
 
   test("Annotations raml to jsonld test") {
@@ -357,11 +357,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Annotations oas to oas test") {
-    cycle("annotations.json", "annotations.json", OasJsonHint, Oas)
+    cycle("annotations.json", OasJsonHint)
   }
 
   test("Types all types oas to oas test") {
-    cycle("all-type-types.json", "all-type-types.json", OasJsonHint, Oas)
+    cycle("all-type-types.json", OasJsonHint)
   }
 
   test("Types all types raml to oas test") {
@@ -373,11 +373,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test libraries raml to raml") {
-    cycle("libraries.raml", "libraries.raml.raml", RamlYamlHint, Raml, referencesPath)
+    cycle("libraries.raml", RamlYamlHint, referencesPath)
   }
 
   test("Test multiple aliases libraries raml to raml") {
-    cycle("libraries-3-alias.raml", "libraries-3-alias.raml.raml", RamlYamlHint, Raml, referencesPath)
+    cycle("libraries-3-alias.raml", RamlYamlHint, referencesPath)
   }
 
   test("Test multiple aliases libraries raml to amf") {
@@ -385,11 +385,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test multiple aliases libraries amf to raml") {
-    cycle("libraries-3-alias.raml.jsonld", "libraries-3-alias.raml.raml", AmfJsonHint, Raml, referencesPath)
+    cycle("libraries-3-alias.raml.jsonld", "libraries-3-alias.raml", AmfJsonHint, Raml, referencesPath)
   }
 
   test("Test libraries oas to oas") {
-    cycle("libraries.json", "libraries.json.json", OasJsonHint, Oas, referencesPath)
+    cycle("libraries.json", OasJsonHint, referencesPath)
   }
 
   test("Test libraries raml to amf") {
@@ -397,7 +397,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test libraries amf to raml") {
-    cycle("libraries.raml.jsonld", "libraries.raml.raml", AmfJsonHint, Raml, referencesPath)
+    cycle("libraries.raml.jsonld", "libraries.raml", AmfJsonHint, Raml, referencesPath)
   }
 
   test("Test libraries oas to amf") {
@@ -405,11 +405,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test libraries amf to oas") {
-    cycle("libraries.json.jsonld", "libraries.json.json", AmfJsonHint, Oas, referencesPath)
+    cycle("libraries.json.jsonld", "libraries.json", AmfJsonHint, Oas, referencesPath)
   }
 
   test("Test data type fragment raml to raml") {
-    cycle("data-type-fragment.raml", "data-type-fragment.raml", AmfJsonHint, Raml, referencesPath)
+    cycle("data-type-fragment.raml", RamlYamlHint, referencesPath)
   }
 
   test("Test data type fragment amf to raml") {
@@ -417,11 +417,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test data type fragment amf to amf") {
-    cycle("data-type-fragment.raml.jsonld", "data-type-fragment.raml.jsonld", AmfJsonHint, Amf, referencesPath)
+    cycle("data-type-fragment.raml.jsonld", AmfJsonHint, referencesPath)
   }
 
   test("Test data type fragment oas to oas") {
-    cycle("data-type-fragment.json", "data-type-fragment.json", OasJsonHint, Oas, referencesPath)
+    cycle("data-type-fragment.json", OasJsonHint, referencesPath)
   }
 
   test("Test data type fragment oas to amf") {
@@ -433,11 +433,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("resource type fragment raml to raml") {
-    cycle("resource-type-fragment.raml", "resource-type-fragment.raml", RamlYamlHint, Raml, referencesPath)
+    cycle("resource-type-fragment.raml", RamlYamlHint, referencesPath)
   }
 
   test("trait fragment raml to raml") {
-    cycle("trait-fragment.raml", "trait-fragment.raml", RamlYamlHint, Raml, referencesPath)
+    cycle("trait-fragment.raml", RamlYamlHint, referencesPath)
   }
 
   // todo what we do when library file name changes changes on dump
@@ -466,11 +466,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test libraries references in delares raml to raml") {
-    cycle("lib-alias-reference.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
-  }
-
-  test("Test libraries references in delares raml to raml back") {
-    cycle("lib-alias-reference.raml.raml", "lib-alias-reference.raml.raml", RamlYamlHint, Raml, referencesPath)
+    cycle("lib-alias-reference.raml", RamlYamlHint, referencesPath)
   }
 
   test("Overlay fragment oas to amf") {
@@ -546,7 +542,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Security schemes raml to raml") {
-    cycle("declared-security-schemes.raml", "declared-security-schemes.raml", RamlYamlHint, Raml)
+    cycle("declared-security-schemes.raml", RamlYamlHint)
   }
 
   test("Security schemes oas to amf") {
@@ -554,15 +550,15 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Security schemes oas to oas") {
-    cycle("security.json", "security.json", OasJsonHint, Oas)
+    cycle("security.json", OasJsonHint)
   }
 
   test("SecuredBy raml to raml") {
-    cycle("secured-by.raml", "secured-by.raml", RamlYamlHint, Raml)
+    cycle("secured-by.raml", RamlYamlHint)
   }
 
   test("SecuredBy oas to oas") {
-    cycle("secured-by.json", "secured-by.json", OasJsonHint, Oas)
+    cycle("secured-by.json", OasJsonHint)
   }
 
   test("QueryString raml to raml") {
@@ -570,7 +566,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("QueryString oas to oas") {
-    cycle("query-string.json", "query-string.json", OasJsonHint, Oas)
+    cycle("query-string.json", OasJsonHint)
   }
 
   test("QueryString oas to amf") {
@@ -590,7 +586,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Security with QueryString raml to raml") {
-    cycle("security-with-query-string.raml", "security-with-query-string.raml", RamlYamlHint, Raml)
+    cycle("security-with-query-string.raml", RamlYamlHint)
   }
 
   test("Security with QueryString raml to amf") {
@@ -602,7 +598,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Security with QueryString oas to oas") {
-    cycle("security-with-query-string.json", "security-with-query-string.json", OasJsonHint, Oas)
+    cycle("security-with-query-string.json", OasJsonHint)
   }
 
   test("Security with QueryString oas to amf") {
@@ -646,7 +642,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Facets raml to raml") {
-    cycle("type-facets.raml", "type-facets.raml", RamlYamlHint, Raml)
+    cycle("type-facets.raml", RamlYamlHint)
   }
 
   test("Facets raml to amf") {

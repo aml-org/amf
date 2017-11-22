@@ -557,14 +557,21 @@ class OasSpecEmitter extends BaseSpecEmitter {
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
-      val alias = reference.annotations.find(classOf[Aliases])
+      val aliases = reference.annotations.find(classOf[Aliases])
 
-      def entry(alias: String): Unit = MapEntryEmitter(alias, reference.id).emit(b)
+      def entry(tuple: (String, String)): Unit = tuple match {
+        case (alias, path) =>
+          val ref = path match {
+            case "" => reference.id
+            case _  => path
+          }
+          MapEntryEmitter(alias, ref).emit(b)
+      }
 
-      alias.fold {
-        entry(aliasGenerator())
+      aliases.fold {
+        entry(aliasGenerator() -> "")
       } { _ =>
-        alias.foreach(_.aliases.foreach(entry))
+        aliases.foreach(_.aliases.foreach(entry))
       }
     }
 

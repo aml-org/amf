@@ -388,16 +388,22 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
   case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)
       extends EntryEmitter {
 
-    // todo review with PEdro. We dont serialize location, so when parse amf to dump spec, we lose de location (we only have the id)
     override def emit(b: EntryBuilder): Unit = {
-      val alias = reference.annotations.find(classOf[Aliases])
+      val aliases = reference.annotations.find(classOf[Aliases])
 
-      def entry(alias: String) = MapEntryEmitter(alias, name).emit(b)
+      def entry(tuple: (String, String)): Unit = tuple match {
+        case (alias, path) =>
+          val ref = path match {
+            case "" => name
+            case _  => path
+          }
+          MapEntryEmitter(alias, ref).emit(b)
+      }
 
-      alias.fold {
-        entry(aliasGenerator())
+      aliases.fold {
+        entry(aliasGenerator() -> "")
       } { _ =>
-        alias.foreach(_.aliases.foreach(entry))
+        aliases.foreach(_.aliases.foreach(entry))
       }
     }
 
