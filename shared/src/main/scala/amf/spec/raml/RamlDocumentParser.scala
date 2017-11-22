@@ -242,9 +242,9 @@ abstract class RamlSpecParser extends BaseSpecParser {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent)
     parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent)
+    AbstractDeclarationsParser("resourceTypes", entry => ResourceType(entry), map, parent)
       .parse()
-    AbstractDeclarationsParser("traits", (entry: YMapEntry) => Trait(entry), map, parent).parse()
+    AbstractDeclarationsParser("traits", entry => Trait(entry), map, parent).parse()
     parseSecuritySchemeDeclarations(map, parent)
     parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")
     ctx.declarations.resolve()
