@@ -5,7 +5,7 @@ import amf.domain.{Annotations, Parameter, Payload, Response}
 import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.model.AmfArray
 import amf.parser.YMapOps
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}

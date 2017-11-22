@@ -11,6 +11,8 @@ object AMFPluginsRegistry {
   private val domainPluginIDRegistry: mutable.HashMap[String, AMFDomainPlugin] = mutable.HashMap()
   private val domainPluginVendorsRegistry: mutable.HashMap[String, Seq[AMFDomainPlugin]] = mutable.HashMap()
 
+  def domainPlugins = domainPluginIDRegistry.values
+
   def registerSyntaxPlugin(syntaxPlugin: AMFSyntaxPlugin) = {
     syntaxPlugin.supportedMediaTypes().foreach { mediaType =>
       syntaxPluginRegistry.get(mediaType) match {
@@ -62,8 +64,10 @@ object AMFPluginsRegistry {
 
   protected def simpleMediaType(mediaType: String): String = {
     mediaType.split("/") match {
-      case Array(main, sub) if sub.indexOf("+") > -1 =>
+      case Array(main, sub) if sub.indexOf("+") > -1 => // application/raml+yaml
         main + "/" + sub.split("\\+").last
+      case Array(main, sub) if sub.indexOf(".") > -1 => // text/vnd.yaml
+        main + "/" + sub.split("\\.").last
       case _ => mediaType
     }
   }

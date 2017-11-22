@@ -7,7 +7,9 @@ import amf.compiler.AMFCompiler
 import amf.document.{Document, Module}
 import amf.domain.extensions.DataNode
 import amf.dumper.AMFDumper
-import amf.plugins.domain.graph.parser.GraphEmitter
+import amf.framework.validation.SeverityLevels
+import amf.plugins.document.graph.parser.GraphEmitter
+import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation}
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.shape.Shape
@@ -389,7 +391,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("HERE_HERE Example validations test") {
+  test("Example validations test") {
     for {
       library <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, Validation(platform))
         .build()

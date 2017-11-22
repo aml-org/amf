@@ -5,7 +5,7 @@ import amf.domain.`abstract`._
 import amf.domain.extensions.DataNode
 import amf.domain.{DomainElement, EndPoint, Operation}
 import amf.metadata.domain.DomainElementModel
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.remote.Raml
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter

@@ -10,7 +10,7 @@ import amf.metadata.domain._
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
-import amf.plugins.domain.webapi.parser.RamlHeader
+import amf.plugins.document.webapi.parser.RamlHeader
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape._
 import amf.spec._

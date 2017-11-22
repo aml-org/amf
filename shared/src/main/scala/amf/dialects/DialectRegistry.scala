@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.plugins.domain.webapi.parser.RamlHeader
+import amf.plugins.document.webapi.parser.RamlHeader
 import amf.remote.Platform
 import amf.spec.dialects.{Dialect, DialectNode, FragmentKind, ModuleKind}
 

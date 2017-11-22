@@ -3,7 +3,7 @@ package amf.remote
 import amf.dialects.PlatformDialectRegistry
 import amf.lexer.CharSequenceStream
 import amf.validation.Validation
-import amf.validation.core.SHACLValidator
+import amf.framework.validation.core.SHACLValidator
 import amf.vocabulary.Namespace
 import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 

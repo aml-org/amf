@@ -644,7 +644,7 @@ The following Java snippet shows how to invoke programmatically the validation o
 package mulesfot.amf;
 
 import amf.client.RamlParser;
-import amf.validation.AMFValidationReport;
+import amf.framework.validation.AMFValidationReport;
 
 import java.util.concurrent.ExecutionException;
 

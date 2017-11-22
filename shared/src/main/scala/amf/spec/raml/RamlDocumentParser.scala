@@ -13,7 +13,7 @@ import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._

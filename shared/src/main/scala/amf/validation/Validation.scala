@@ -7,11 +7,14 @@ import amf.document.{BaseUnit, Document}
 import amf.domain.Annotation.LexicalInformation
 import amf.domain.DomainElement
 import amf.domain.dialects.DomainEntity
+import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
 import amf.model.AmfArray
-import amf.plugins.domain.graph.parser.GraphEmitter
+import amf.plugins.document.graph.parser.GraphEmitter
+import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, ShapeFacetsValidation}
 import amf.remote.{Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
-import amf.validation.core.{ValidationDialectText, ValidationResult}
+import amf.framework.validation.core.{ValidationDialectText, ValidationResult}
+import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.validation.model._
 import amf.vocabulary.Namespace
@@ -21,103 +24,9 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
 
-case class AMFValidationResult(message: String,
-                               level: String,
-                               targetNode: String,
-                               targetProperty: Option[String],
-                               validationId: String,
-                               position: Option[LexicalInformation]) {
-  override def toString: String = {
-    var str = s"\n- Source: $validationId\n"
-    str += s"  Message: $message\n"
-    str += s"  Level: $level\n"
-    str += s"  Target: $targetNode\n"
-    str += s"  Property: ${targetProperty.getOrElse("")}\n"
-    str += s"  Position: $position\n"
-    str
-  }
-}
 
-object AMFValidationResult {
 
-  def fromSHACLValidation(model: BaseUnit,
-                          message: String,
-                          level: String,
-                          validation: ValidationResult): AMFValidationResult = {
-    model.findById(validation.focusNode) match {
-      case None => throw new Exception(s"Cannot find node with validation error ${validation.focusNode}")
-      case Some(node) =>
-        val position = findPosition(node, validation)
-        AMFValidationResult(
-          message = message,
-          level = level,
-          targetNode = node.id,
-          targetProperty = Option(validation.path),
-          validation.sourceShape,
-          position = position
-        )
-    }
-  }
 
-  def withShapeId(shapeId: String, validation: AMFValidationResult): AMFValidationResult =
-    AMFValidationResult(validation.message,
-                        validation.level,
-                        validation.targetNode,
-                        validation.targetProperty,
-                        shapeId,
-                        validation.position)
-
-  def findPosition(node: DomainElement, validation: ValidationResult): Option[LexicalInformation] = {
-    if (Option(validation.path).isDefined && validation.path != "") {
-      val foundPosition = node.fields.fields().find(f => f.field.value.iri() == validation.path) match {
-        case Some(f) =>
-          f.element.annotations.find(classOf[LexicalInformation]).orElse {
-            f.value.annotations.find(classOf[LexicalInformation]).orElse {
-              f.element match {
-                case arr: AmfArray if arr.values.nonEmpty =>
-                  arr.values.head.annotations.find(classOf[LexicalInformation])
-                case _ => node.annotations.find(classOf[LexicalInformation])
-              }
-            }
-          }
-        case _ => node.annotations.find(classOf[LexicalInformation])
-      }
-      foundPosition
-    } else {
-      node.annotations.find(classOf[LexicalInformation])
-    }
-  }
-
-}
-
-case class AMFValidationReport(conforms: Boolean, model: String, profile: String, results: Seq[AMFValidationResult]) {
-  override def toString: String = {
-    var str = s"Model: $model\n"
-    str += s"Profile: $profile\n"
-    str += s"Conforms? $conforms\n"
-    str += s"Number of results: ${results.length}\n"
-    results.groupBy(_.level) foreach {
-      case (level, results) =>
-        str += s"\nLevel: $level\n"
-        for { result <- results } {
-          str += result
-        }
-    }
-    str
-  }
-}
-
-class EffectiveValidations(val effective: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
-                           val info: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
-                           val warning: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
-                           val violation: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
-                           val all: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap())
-
-object SeverityLevels {
-  val WARNING   = "Warning"
-  val INFO      = "Info"
-  val VIOLATION = "Violation"
-}
 
 class Validation(platform: Platform) {
 
@@ -205,55 +114,6 @@ class Validation(platform: Platform) {
   def loadDialectValidationProfile(dialect: Dialect): Unit =
     profile = Some(new AMFDialectValidations(dialect).profile())
 
-  private def setLevel(id: String, validations: EffectiveValidations, targetLevel: String) = {
-    val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) {
-      Namespace.expand(id.replace(".", ":")).iri()
-    } else { id }
-    validations.all.get(validationName) match {
-      case None => throw new Exception(s"Cannot enable with $targetLevel level unknown validation $validationName")
-      case Some(validation) =>
-        validations.info.remove(validationName)
-        validations.warning.remove(validationName)
-        validations.violation.remove(validationName)
-        targetLevel match {
-          case SeverityLevels.INFO      => validations.info += (validationName      -> validation)
-          case SeverityLevels.WARNING   => validations.warning += (validationName   -> validation)
-          case SeverityLevels.VIOLATION => validations.violation += (validationName -> validation)
-        }
-        validations.effective += (validationName -> validation)
-    }
-  }
-
-  private def someEffective(profile: ValidationProfile,
-                            computed: EffectiveValidations): _root_.amf.validation.EffectiveValidations = {
-    // we aggregate all of the validations to the total validations map
-    profile.validations.foreach { spec =>
-      computed.all += spec.name -> spec
-    }
-
-    profile.infoLevel.foreach(id => setLevel(id, computed, SeverityLevels.INFO))
-    profile.warningLevel.foreach(id => setLevel(id, computed, SeverityLevels.WARNING))
-    profile.violationLevel.foreach(id => setLevel(id, computed, SeverityLevels.VIOLATION))
-
-    profile.disabled foreach { id =>
-      val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) {
-        Namespace.expand(id.replace(".", ":")).iri()
-      } else { id }
-      computed.effective.remove(validationName)
-    }
-
-    computed
-  }
-
-  private def allEffective(specifications: Seq[ValidationSpecification], validations: EffectiveValidations) = {
-    specifications foreach { spec =>
-      validations.all += (spec.name       -> spec)
-      validations.effective += (spec.name -> spec)
-      validations.violation += (spec.name -> spec)
-    }
-    validations
-  }
-
   /**
     * Returns the lsit of effective validations for the requested profile
     * @param profileName Name of the profile
@@ -263,24 +123,24 @@ class Validation(platform: Platform) {
                          computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     profileName match {
       case ProfileNames.AMF =>
-        someEffective(defaultProfiles.find(_.name == ProfileNames.AMF).get, computed)
+        computed.someEffective(defaultProfiles.find(_.name == ProfileNames.AMF).get)
       case ProfileNames.RAML =>
-        someEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get,
-                      computeValidations(ProfileNames.AMF, computed))
+        computeValidations(ProfileNames.AMF, computed).someEffective(defaultProfiles.find(_.name == ProfileNames.RAML).get)
       case ProfileNames.OAS =>
-        someEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get,
-                      computeValidations(ProfileNames.AMF, computed))
+        computeValidations(ProfileNames.AMF, computed).someEffective(defaultProfiles.find(_.name == ProfileNames.OAS).get)
       case _ if platform.dialectsRegistry.knowsHeader("%" + profileName) =>
         val dialectValidationProfile =
           new AMFDialectValidations(platform.dialectsRegistry.get("%" + profileName).get).profile()
-        someEffective(dialectValidationProfile, computed)
+        computed.someEffective(dialectValidationProfile)
       case _ if profile.isDefined && profile.get.name == "Payload" =>
-        allEffective(profile.get.validations, computed)
+        computed.allEffective(profile.get.validations)
       case _ if profile.isDefined && profile.get.name == profileName =>
         if (profile.get.baseProfileName.isDefined) {
-          someEffective(profile.get, computeValidations(profile.get.baseProfileName.get, computed))
+          computeValidations(profile.get.baseProfileName.get, computed).someEffective(profile.get)
         } else {
-          someEffective(profile.get, someEffective(DefaultAMFValidations.parserSideValidationsProfile, computed))
+          computed
+            .someEffective(DefaultAMFValidations.parserSideValidationsProfile)
+            .someEffective(profile.get)
         }
       case _ => throw new Exception(s"Validation profile $profileName not defined")
     }
@@ -306,6 +166,7 @@ class Validation(platform: Platform) {
     val shapesJSON = shapesGraph(validations, messageStyle)
     val jsLibrary  = new JSLibraryEmitter(profile).emitJS(validations.effective.values.toSeq)
 
+    val test = new AMFValidatorPlugin(platform)
 
     /*
     if (profileName == ProfileNames.RAML) {

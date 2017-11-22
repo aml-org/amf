@@ -3,10 +3,11 @@ package amf.client
 import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.document.BaseUnit
+import amf.framework.validation.AMFValidationReport
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets
-import amf.validation.{AMFValidationReport, Validation}
+import amf.validation.Validation
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}

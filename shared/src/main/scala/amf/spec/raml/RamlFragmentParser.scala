@@ -7,9 +7,9 @@ import amf.domain.Annotations
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.parser._
-import amf.plugins.domain.webapi.contexts.WebApiContext
-import amf.plugins.domain.webapi.parser.RamlFragment
-import amf.plugins.domain.webapi.parser.RamlFragmentHeader._
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.RamlFragment
+import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.declaration._

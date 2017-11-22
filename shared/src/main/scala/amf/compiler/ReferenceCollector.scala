@@ -4,8 +4,8 @@ import amf.core.{AMFCompiler => ReferenceCompiler}
 import amf.document.BaseUnit
 import amf.framework.parser.{Extension, Library, Link, ReferenceKind}
 import amf.parser.YMapOps
-import amf.plugins.domain.webapi.parser.RamlHeader
-import amf.plugins.domain.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
+import amf.plugins.document.webapi.parser.RamlHeader
+import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.remote._
 import amf.spec.ParserContext
 import amf.validation.Validation

@@ -5,7 +5,7 @@ import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.shape.TypeDef._
 import amf.shape._
 import amf.spec.SearchScope.Named

@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.validation.core.{SHACLValidator, ValidationReport}
+import amf.framework.validation.core.{SHACLValidator, ValidationReport}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import org.yaml.model._

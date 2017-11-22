@@ -5,7 +5,7 @@ import amf.domain.`abstract`.{AbstractDeclaration, ParametrizedDeclaration, Vari
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import org.yaml.model._
 import amf.parser.YScalarYRead
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.{ParserContext, SearchScope}
 
 /**

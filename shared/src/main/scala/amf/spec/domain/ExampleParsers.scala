@@ -5,7 +5,7 @@ import amf.domain.{Annotations, Example}
 import amf.metadata.domain.ExampleModel
 import amf.model.AmfScalar
 import amf.parser.{YMapOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model._

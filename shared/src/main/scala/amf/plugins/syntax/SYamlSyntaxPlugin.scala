@@ -17,7 +17,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     "text/x-yaml",
     "application/json",
     "text/json",
-    "application/raml"
+    "application/raml",
+    "text/vnd.yaml"
   )
 
   override def parse(mediaType: String, text: CharSequence) = {

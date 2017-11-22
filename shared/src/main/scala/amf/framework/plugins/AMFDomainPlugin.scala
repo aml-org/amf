@@ -47,4 +47,5 @@ abstract class AMFDomainPlugin {
   def canUnparse(unit: BaseUnit): Boolean
 
   def referenceCollector(): AbstractReferenceCollector
+
 }
