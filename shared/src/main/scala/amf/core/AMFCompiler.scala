@@ -4,12 +4,12 @@ import amf.compiler.{ParsedDocument, ParsedReference}
 import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.exception.CyclicReferenceException
-import amf.framework.parser.ReferenceKind
+import amf.framework.parser.{ReferenceKind, Unspecified}
 import amf.framework.plugins.AMFDomainPlugin
-import amf.plugins.domain.graph.AMFGraphPlugin
-import amf.plugins.domain.payload.PayloadPlugin
-import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
-import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
+import amf.framework.services.RuntimeCompiler
+import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
@@ -45,6 +45,15 @@ class AMFCompiler(val url: String,
   AMFPluginsRegistry.registerDomainPlugin(OAS20Plugin)
   AMFPluginsRegistry.registerDomainPlugin(RAML10Plugin)
   //
+
+  // We register ourselves as the Runtime compiler
+  if (RuntimeCompiler.compiler.isEmpty) {
+    RuntimeCompiler.register(new RuntimeCompiler {
+      override def build(url: String, remote: Platform, mediaType: String, vendor: String, currentValidation: Validation): Future[BaseUnit] = {
+        new AMFCompiler(url, remote, None, mediaType, vendor, Unspecified, currentValidation, Cache()).build()
+      }
+    })
+  }
 
   def build(): Future[BaseUnit] = {
     // Reset the data node counter
@@ -85,7 +94,7 @@ class AMFCompiler(val url: String,
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
     val domainPluginOption = AMFPluginsRegistry.domainPluginForVendor(vendor).find { plugin =>
-      plugin.canParse(document) && plugin.domainSyntaxes.contains(document.mediatype)
+      plugin.canParse(document) // && plugin.domainSyntaxes.contains(document.mediatype)
     } match {
       case Some(domainPlugin) => Some(domainPlugin)
       case None => AMFPluginsRegistry.domainPluginForMediaType(document.mediatype).find(_.canParse(document))

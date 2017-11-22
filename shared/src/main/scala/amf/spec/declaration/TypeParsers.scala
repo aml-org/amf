@@ -10,7 +10,7 @@ import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.parser.YScalarYRead
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 
 import scala.collection.mutable
 

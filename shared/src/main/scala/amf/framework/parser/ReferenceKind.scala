@@ -1,5 +1,9 @@
 package amf.framework.parser
 
+/**
+  * Reference kinds to be collected by the Reference Collector
+  */
+
 sealed trait ReferenceKind
 
 object Library extends ReferenceKind

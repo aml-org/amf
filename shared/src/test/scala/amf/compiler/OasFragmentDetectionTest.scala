@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.plugins.domain.webapi.parser.OasHeader
+import amf.plugins.document.webapi.parser.OasHeader
 import amf.remote.OasJsonHint
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation

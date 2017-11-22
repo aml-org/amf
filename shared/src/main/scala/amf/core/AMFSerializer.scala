@@ -4,10 +4,10 @@ import amf.client.GenerationOptions
 import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.framework.plugins.AMFSyntaxPlugin
-import amf.plugins.domain.graph.AMFGraphPlugin
-import amf.plugins.domain.payload.PayloadPlugin
-import amf.plugins.domain.vocabularies.RAMLExtensionsPlugin
-import amf.plugins.domain.webapi.{OAS20Plugin, RAML10Plugin}
+import amf.framework.services.RuntimeSerializer
+import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.remote.Platform
 import org.yaml.model.YDocument
@@ -25,6 +25,10 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   AMFPluginsRegistry.registerDomainPlugin(OAS20Plugin)
   AMFPluginsRegistry.registerDomainPlugin(RAML10Plugin)
   //
+
+  RuntimeSerializer.register(new RuntimeSerializer {
+    override def dump(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): String = new AMFSerializer(unit, mediaType, vendor, options).dump()
+  })
 
   def make(): YDocument = {
     findDomainPlugin() match {

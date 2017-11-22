@@ -7,7 +7,7 @@ import amf.metadata.domain.EndPointModel
 import amf.metadata.domain.EndPointModel.Path
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YNode}

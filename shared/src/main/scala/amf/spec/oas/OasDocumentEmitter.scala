@@ -9,7 +9,7 @@ import amf.metadata.domain._
 import amf.metadata.shape._
 import amf.parser.Position
 import amf.parser.Position.ZERO
-import amf.plugins.domain.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
+import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.remote.{Oas, Vendor}
 import amf.shape._
 import amf.spec._

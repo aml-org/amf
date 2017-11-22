@@ -5,7 +5,7 @@ import amf.domain.{Annotations, Parameter, Response}
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.remote.{Oas, Raml}
 import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common._

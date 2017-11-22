@@ -4,7 +4,7 @@ import amf.domain.Annotation.{ExplicitField, SynthesizedField}
 import amf.domain.{Annotations, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.parser.{YMapOps, YScalarYRead}
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.shape.Shape
 import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common.{AnnotationParser, ValueNode}

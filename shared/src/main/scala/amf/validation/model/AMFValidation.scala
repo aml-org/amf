@@ -1,7 +1,7 @@
 package amf.validation.model
 
 import amf.ProfileNames
-import amf.validation.SeverityLevels
+import amf.framework.validation.SeverityLevels
 import amf.vocabulary.Namespace
 
 /**
@@ -96,9 +96,6 @@ trait ImportUtils {
   }
 
 }
-
-
-
 
 object DefaultAMFValidations extends ImportUtils {
 

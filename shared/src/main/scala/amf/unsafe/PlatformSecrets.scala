@@ -3,7 +3,7 @@ package amf.unsafe
 import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
 import amf.lexer.CharSequenceStream
 import amf.remote._
-import amf.validation.core.SHACLValidator
+import amf.framework.validation.core.SHACLValidator
 import org.mulesoft.common.io.FileSystem
 
 import scala.concurrent.ExecutionContext.Implicits.global

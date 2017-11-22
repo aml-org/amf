@@ -5,7 +5,7 @@ import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.DialectPropertyMapping
-import amf.validation.core.ValidationReport
+import amf.framework.validation.core.ValidationReport
 import amf.validation.model.AMFDialectValidations
 
 import scala.collection.mutable

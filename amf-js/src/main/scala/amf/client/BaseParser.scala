@@ -1,10 +1,10 @@
 package amf.client
 
 import amf.ProfileNames
-import amf.model.{BaseUnit, Fragment, Document, Module, Overlay, Extension}
+import amf.framework.validation.AMFValidationReport
+import amf.model.{BaseUnit, Document, Extension, Fragment, Module, Overlay}
 import amf.remote.Syntax.Syntax
 import amf.remote._
-import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js

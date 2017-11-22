@@ -6,9 +6,9 @@ import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.{Annotations, ExternalDomainElement}
 import amf.parser._
-import amf.plugins.domain.webapi.contexts.WebApiContext
-import amf.plugins.domain.webapi.parser.OasHeader
-import amf.plugins.domain.webapi.parser.OasHeader._
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.OasHeader
+import amf.plugins.document.webapi.parser.OasHeader._
 import amf.shape.Shape
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser

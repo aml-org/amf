@@ -610,6 +610,8 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Type 
   val props: mutable.Map[String, DialectPropertyMapping]  = new mutable.LinkedHashMap()
   private[dialects] var dialect: Option[Dialect]          = None
 
+  def fromDialect: Option[Dialect] = dialect
+
   var id: Option[String] = None
 
   def mappings(): List[DialectPropertyMapping] = props.values.toList

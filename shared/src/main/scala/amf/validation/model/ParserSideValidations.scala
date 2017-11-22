@@ -1,7 +1,7 @@
 package amf.validation.model
 
+import amf.framework.validation.SeverityLevels
 import amf.{ProfileNames, validation}
-import amf.validation.SeverityLevels
 import amf.vocabulary.Namespace
 
 object ParserSideValidations {

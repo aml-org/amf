@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.validation.core.ValidationReport
+import amf.framework.validation.core.ValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -9,7 +9,7 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 @JSExportTopLevel("SHACLValidator")
-class SHACLValidator extends amf.validation.core.SHACLValidator {
+class SHACLValidator extends amf.framework.validation.core.SHACLValidator {
 
   var functionUrl: Option[String] = None
   var functionCode: Option[String] = None

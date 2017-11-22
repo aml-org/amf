@@ -3,11 +3,11 @@ package amf.client
 import java.util.concurrent.CompletableFuture
 
 import amf.ProfileNames
+import amf.framework.validation.AMFValidationReport
 import amf.model.{Fragment, _}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.{Platform, StringContentPlatform, Vendor}
-import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions

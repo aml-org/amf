@@ -37,7 +37,13 @@ case class FragmentTypeDetection(map: YMap) {
       .headOption
       .foreach(_ => matchingTypes += DataTypeFragment)
 
-    map.regex("title|content").headOption.foreach(_ => matchingTypes += DocumentationItemFragment)
+    // This can conflict with a web api linked through a overlay/extension and having
+    // also title.
+    // Both properties must appear and be the only properties in a
+    // documentation item
+    if (map.key("title").isDefined && map.key("content").isDefined) {
+      matchingTypes += DocumentationItemFragment
+    }
 
     map.key("allowedTargets").foreach(_ => matchingTypes += AnnotationTypeFragment)
 

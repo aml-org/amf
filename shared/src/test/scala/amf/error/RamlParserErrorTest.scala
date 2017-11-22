@@ -1,11 +1,12 @@
 package amf.error
 
 import amf.compiler.AMFCompiler
+import amf.framework.validation.AMFValidationResult
 import amf.parser.Range
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import amf.validation.model.ParserSideValidations
-import amf.validation.{AMFValidationResult, Validation}
+import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
 

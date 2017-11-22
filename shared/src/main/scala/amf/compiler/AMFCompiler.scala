@@ -3,7 +3,7 @@ package amf.compiler
 import amf.core.{AMFCompiler => ModularCompiler}
 import amf.document.BaseUnit
 import amf.framework.parser.ReferenceKind
-import amf.plugins.domain.vocabularies.RamlHeaderExtractor
+import amf.plugins.document.vocabularies.RamlHeaderExtractor
 import amf.remote._
 import amf.spec.ParserContext
 import amf.validation.Validation
