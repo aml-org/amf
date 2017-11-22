@@ -517,6 +517,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("forward-references-types.json", OasJsonHint)
   }
 
+  test("Types forward inherits references raml to raml test") {
+    cycle("forward-inherits-reference.raml", "forward-inherits-reference.raml", RamlYamlHint, Raml)
+  }
+
   test("Schema types raml to amf test") {
     cycle("externals.raml", "externals.raml.jsonld", RamlYamlHint, Amf)
   }

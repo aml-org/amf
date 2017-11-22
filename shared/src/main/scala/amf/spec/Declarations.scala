@@ -2,7 +2,7 @@ package amf.spec
 
 import amf.common.core.QName
 import amf.document.Fragment.Fragment
-import amf.domain.Annotation.SourceAST
+import amf.domain.Annotation.{DeclaredElement, SourceAST}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
@@ -110,9 +110,10 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
       case r: ResourceType => r
     }
 
-  def findDocumentations(key: String, scope: SearchScope.Scope): Option[CreativeWork] = findForType(key, Map(), scope) collect {
-    case u: CreativeWork => u
-  }
+  def findDocumentations(key: String, scope: SearchScope.Scope): Option[CreativeWork] =
+    findForType(key, Map(), scope) collect {
+      case u: CreativeWork => u
+    }
 
   def findTraitOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Trait = findTrait(key, scope) match {
     case Some(result) => result
@@ -189,7 +190,7 @@ case class Declarations(var libraries: Map[String, Declarations] = Map(),
   }
 
   private def resolveOrError(unresolved: UnresolvedShape): Shape = shapes.get(unresolved.reference) match {
-    case Some(target) => unresolved.resolve(target)
+    case Some(target) => unresolved.resolve(target).add(DeclaredElement())
     case _ =>
       error(s"Could not resolve shape: ${unresolved.reference}",
             unresolved.annotations.find(classOf[SourceAST]).map(_.ast))

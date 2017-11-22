@@ -111,11 +111,10 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             val copied = s.link(text, Annotations(ast)).asInstanceOf[Shape].withName(name)
             adopt(copied)
             copied
-          case None => {
+          case None =>
             val shape = UnresolvedShape(text, map).withName(name)
             adopt(shape)
             shape
-          }
       })
   }
 

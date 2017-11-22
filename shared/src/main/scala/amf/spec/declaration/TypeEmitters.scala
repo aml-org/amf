@@ -304,7 +304,7 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
         .map(_.asInstanceOf[Shape])
         .partition(s =>
           s.annotations.contains(classOf[DeclaredElement]) ||
-            s.annotations.contains(classOf[ParsedFromTypeExpression]))
+            s.annotations.contains(classOf[ParsedFromTypeExpression]) || s.isLink)
 
     b.entry(
       "type",
@@ -315,16 +315,26 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
               ordering.sorted(inlineShapes.flatMap(RamlTypeEmitter(_, ordering, references = references).entries())),
               _))
         } else {
-          b.list { b =>
-            declaredShapes.foreach {
-              case shape: Shape if shape.annotations.contains(classOf[ParsedFromTypeExpression]) =>
-                RamlTypeExpressionEmitter(shape).emit(b)
-              case s => raw(b, s.name)
-            }
+          declaredShapes match {
+            case head :: Nil =>
+              emitDeclared(head, b)
+            case _ =>
+              b.list { b =>
+                declaredShapes.foreach(emitDeclared(_, b))
+              }
+
           }
         }
       }
     )
+  }
+
+  private def emitDeclared(shape: Shape, b: PartBuilder): Unit = shape match {
+    case shape: Shape if shape.annotations.contains(classOf[ParsedFromTypeExpression]) =>
+      RamlTypeExpressionEmitter(shape).emit(b)
+    case s: Shape =>
+      if (s.isLink) spec.localReference(s).emit(b)
+      else raw(b, s.name)
   }
 
   override def position(): Position = pos(f.value.annotations)
