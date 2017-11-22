@@ -90,7 +90,10 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   override def dynamicType = List(ObjectNode.builderType)
 
-  override def valueForField(f: Field): Option[AmfElement] = properties.get(f.value.name)
+  override def valueForField(f: Field): Option[AmfElement] = f.value.ns match {
+    case Namespace.Data => properties.get(f.value.name)
+    case _              => None //this or fields.get(f)
+  }
 
   override def replaceVariables(values: Set[Variable]): Unit = {
     properties.keys.foreach { key =>
