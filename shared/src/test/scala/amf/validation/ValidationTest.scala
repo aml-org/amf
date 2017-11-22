@@ -4,7 +4,7 @@ import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.document.{BaseUnit, Document, Module}
+import amf.document.{Document, Module}
 import amf.domain.extensions.DataNode
 import amf.dumper.AMFDumper
 import amf.graph.GraphEmitter
@@ -460,6 +460,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       report.results.foreach(result => assert(result.position.isDefined))
       assert(report.results.length == 1)
+    }
+  }
+
+  test("Example of object validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "examples/object-name-example.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
     }
   }
 
