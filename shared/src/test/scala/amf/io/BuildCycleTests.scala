@@ -28,7 +28,11 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
   def tmp(name: String = ""): String = platform.tmpdir() + System.nanoTime() + "-" + name
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, source, hint, hint.vendor, basePath, None)
+  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, hint, basePath)
+
+  /** Compile source with specified hint. Dump to target and assert against same source file. */
+  def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
+    cycle(source, source, hint, hint.vendor, directory, None)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,

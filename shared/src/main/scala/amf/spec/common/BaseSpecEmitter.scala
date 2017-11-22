@@ -130,7 +130,7 @@ package object BaseEmitters {
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
-      b.entry(key, value.emit(_))
+      b.entry(key, value.emit _)
     }
   }
 
@@ -154,12 +154,12 @@ package object BaseEmitters {
       )
     }
 
-    private def emitSingle(b: EntryBuilder) = {
+    private def emitSingle(b: EntryBuilder): Unit = {
       val value = f.array.scalars.headOption.map(_.toString).getOrElse("")
       b.entry(key, value)
     }
 
-    private def emitValues(b: EntryBuilder) = {
+    private def emitValues(b: EntryBuilder): Unit = {
       b.entry(
         key,
         b => {

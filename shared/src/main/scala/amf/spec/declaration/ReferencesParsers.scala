@@ -22,7 +22,7 @@ object ReferenceDeclarations {
 }
 
 case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mutable.Map())(
-  implicit ctx: ParserContext) {
+    implicit ctx: ParserContext) {
 
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
@@ -78,7 +78,7 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
             val alias: String = e.key
             val url: String   = e.value
             target(url).foreach {
-              case module: DeclaresModel => result += (alias, addAlias(module, alias)) // this is
+              case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
               case other =>
                 ctx
                   .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
@@ -89,7 +89,7 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
     result
   }
 
-  private def addAlias(module: BaseUnit, alias: String): BaseUnit = {
+  private def collectAlias(module: BaseUnit, alias: (String, String)): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])
@@ -97,4 +97,5 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
       case None => module.add(Aliases(Set(alias)))
     }
   }
+
 }
