@@ -1,6 +1,6 @@
 package amf.domain.extensions
 
-import amf.common.core._
+import amf.framework.utils._
 import amf.domain.{DomainElement, Fields, Linkable}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.extensions.CustomDomainPropertyModel._

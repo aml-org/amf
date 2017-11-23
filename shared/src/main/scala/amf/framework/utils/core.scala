@@ -1,8 +1,8 @@
-package amf.common
+package amf.framework
 
 import scala.annotation.tailrec
 
-package object core {
+package object utils {
 
   /**
     * Common utility methods to deal with Strings.

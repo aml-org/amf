@@ -1,4 +1,4 @@
-package amf.common
+package amf.framework.utils
 
 /**
   * Lazy instance

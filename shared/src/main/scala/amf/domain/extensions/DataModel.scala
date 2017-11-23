@@ -1,6 +1,6 @@
 package amf.domain.extensions
 
-import amf.common.core._
+import amf.framework.utils._
 import amf.domain.`abstract`.Variable
 import amf.domain.{DynamicDomainElement, Fields}
 import amf.framework.domain.ScalarType

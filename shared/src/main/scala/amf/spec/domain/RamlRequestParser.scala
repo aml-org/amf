@@ -1,8 +1,8 @@
 package amf.spec.domain
 
-import amf.common.Lazy
 import amf.domain.{Parameter, Payload, Request}
 import amf.framework.parser.Annotations
+import amf.framework.utils.Lazy
 import amf.metadata.domain.RequestModel
 import amf.model.AmfArray
 import amf.parser.YMapOps

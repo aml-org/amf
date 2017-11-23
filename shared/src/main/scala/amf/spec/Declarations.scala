@@ -1,6 +1,6 @@
 package amf.spec
 
-import amf.common.core.QName
+import amf.framework.utils.QName
 import amf.document.Fragment.Fragment
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
