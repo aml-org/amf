@@ -69,10 +69,6 @@ object Annotation {
     override val value: String = "true"
   }
 
-  case class DomainElementReference(name: String, ref: Option[DomainEntity]) extends SerializableAnnotation {
-    override val value: String = name
-  }
-
   case class EndPointBodyParameter() extends Annotation
 
   case class DefaultPayload() extends Annotation
@@ -93,7 +89,7 @@ object Annotation {
 
   case class Inferred() extends Annotation
 
-  case class Aliases(aliases: Set[(String, String)]) extends SerializableAnnotation {
+  case class Aliases(val aliases: Set[(String, String)]) extends SerializableAnnotation {
 
     /** Extension name. */
     override val name: String = "aliases-array"
