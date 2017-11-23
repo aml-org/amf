@@ -1,7 +1,7 @@
 package amf.resolution.stages
 
 import amf.ProfileNames
-import amf.document.{BaseUnit, Document}
+import amf.framework.document.{BaseUnit, Document}
 import amf.domain.{DomainElement, Payload, WebApi}
 import amf.metadata.Field
 import amf.metadata.domain.{OperationModel, PayloadModel, RequestModel, WebApiModel}

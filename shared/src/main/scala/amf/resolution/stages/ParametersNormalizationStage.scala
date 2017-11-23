@@ -1,6 +1,6 @@
 package amf.resolution.stages
 import amf.ProfileNames
-import amf.document.{BaseUnit, Document}
+import amf.framework.document.{BaseUnit, Document}
 import amf.domain.{Parameter, WebApi}
 import amf.metadata.domain.{EndPointModel, RequestModel, WebApiModel}
 import amf.model.AmfArray

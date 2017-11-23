@@ -1,6 +1,6 @@
 package amf.framework.validation
 
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain.DomainElement
 import amf.framework.domain.LexicalInformation
 import amf.framework.validation.core.ValidationResult

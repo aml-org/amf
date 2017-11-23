@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain._
 import amf.framework.domain._
 import amf.framework.parser.Annotations

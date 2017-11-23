@@ -1,7 +1,7 @@
 package amf.spec.raml
 
 import amf.framework.utils.TSort.tsort
-import amf.document._
+import amf.framework.document._
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
 import amf.framework.domain.LexicalInformation

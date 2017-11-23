@@ -2,7 +2,7 @@ package amf.maker
 
 import amf.common.{AmfObjectTestMatcher, ListAssertions}
 import amf.compiler.AMFCompiler
-import amf.document.Document
+import amf.framework.document.Document
 import amf.domain.{License, _}
 import amf.metadata.Field
 import amf.model.AmfObject

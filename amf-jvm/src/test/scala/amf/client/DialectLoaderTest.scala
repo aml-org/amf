@@ -37,7 +37,7 @@ class DialectLoaderTest
                       None,
                       None).build())
       .map { u =>
-        val encoded = u.asInstanceOf[amf.document.Document].encodes
+        val encoded = u.asInstanceOf[amf.framework.document.Document].encodes
         assert(encoded.getTypeIds().length == 2)
         new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
       }

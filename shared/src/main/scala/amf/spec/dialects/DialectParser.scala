@@ -1,8 +1,8 @@
 package amf.spec.dialects
 
 import amf.core.Root
-import amf.document.Fragment.DialectFragment
-import amf.document.{BaseUnit, Document, Module}
+import amf.framework.document.Fragment.DialectFragment
+import amf.framework.document.{BaseUnit, Document, Module}
 import amf.domain.Fields
 import amf.domain.dialects.DomainEntity
 import amf.framework.domain.LexicalInformation

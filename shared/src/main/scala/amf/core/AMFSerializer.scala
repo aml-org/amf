@@ -1,7 +1,7 @@
 package amf.core
 
 import amf.client.GenerationOptions
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.framework.plugins.AMFSyntaxPlugin
 import amf.framework.registries.AMFPluginsRegistry

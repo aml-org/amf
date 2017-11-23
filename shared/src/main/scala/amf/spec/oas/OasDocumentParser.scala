@@ -1,7 +1,7 @@
 package amf.spec.oas
 
 import amf.core.Root
-import amf.document.{BaseUnit, Document, Extension, Overlay}
+import amf.framework.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty

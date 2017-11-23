@@ -1,7 +1,7 @@
 package amf.spec.raml
 
 import amf.core.Root
-import amf.document.Fragment._
+import amf.framework.document.Fragment._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.framework.parser.Annotations

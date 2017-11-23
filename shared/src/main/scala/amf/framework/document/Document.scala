@@ -1,4 +1,4 @@
-package amf.document
+package amf.framework.document
 
 import amf.domain._
 import amf.framework.parser.Annotations

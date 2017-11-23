@@ -1,6 +1,6 @@
 package amf.resolution.stages
 
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain.`abstract`.{Variable, VariableValue}
 
 import scala.collection.mutable

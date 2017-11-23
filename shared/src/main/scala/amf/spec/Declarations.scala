@@ -1,12 +1,12 @@
 package amf.spec
 
-import amf.framework.utils.QName
-import amf.document.Fragment.Fragment
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
+import amf.framework.document.Fragment.Fragment
 import amf.framework.parser.Annotations
+import amf.framework.utils.QName
 import amf.shape.{Shape, UnresolvedShape}
 import amf.spec.SearchScope.{All, Fragments, Named}
 import org.yaml.model.YPart

@@ -1,12 +1,10 @@
 package amf.spec.dialects
 
 import amf.core.Root
-import amf.dialects._
-import amf.document.Fragment.{DialectFragment, Fragment}
-import amf.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
-import amf.metadata.Type.Str
+import amf.framework.document.Fragment.{DialectFragment, Fragment}
+import amf.framework.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YNodeLikeOps, YScalarYRead}

@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.document.{BaseUnit, Document}
+import amf.framework.document.{BaseUnit, Document}
 import amf.domain.WebApi
 import amf.exception.CyclicReferenceException
 import amf.framework.parser.Unspecified

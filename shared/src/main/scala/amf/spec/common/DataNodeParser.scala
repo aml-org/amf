@@ -1,6 +1,6 @@
 package amf.spec.common
 
-import amf.document.Fragment.ExternalFragment
+import amf.framework.document.Fragment.ExternalFragment
 import amf.domain.extensions.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.framework.parser.Annotations
 import amf.vocabulary.Namespace

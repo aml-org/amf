@@ -1,7 +1,7 @@
 package amf.spec.oas
 
 import amf.core.Root
-import amf.document.Module
+import amf.framework.document.Module
 import amf.framework.parser.Annotations
 import amf.metadata.document.BaseUnitModel
 import amf.parser.YNodeLikeOps

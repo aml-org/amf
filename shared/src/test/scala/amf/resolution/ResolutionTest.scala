@@ -2,7 +2,7 @@ package amf.resolution
 
 import amf.ProfileNames
 import amf.client.GenerationOptions
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.io.BuildCycleTests
 import amf.remote._

@@ -1,6 +1,6 @@
 package amf.spec.common
 
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.framework.domain.LexicalInformation

@@ -11,7 +11,7 @@ import amf.domain.security
 
 trait DeclaresModel {
 
-  private[amf] def element: amf.document.DeclaresModel
+  private[amf] def element: amf.framework.document.DeclaresModel
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   lazy val declares: js.Iterable[DomainElement] = {

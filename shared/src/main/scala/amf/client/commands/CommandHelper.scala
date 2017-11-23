@@ -3,7 +3,7 @@ package amf.client.commands
 import amf.ProfileNames
 import amf.client.{GenerationOptions, ParserConfig}
 import amf.compiler.AMFCompiler
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._

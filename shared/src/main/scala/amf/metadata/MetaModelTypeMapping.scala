@@ -1,6 +1,6 @@
 package amf.metadata
 
-import amf.document._
+import amf.framework.document._
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity

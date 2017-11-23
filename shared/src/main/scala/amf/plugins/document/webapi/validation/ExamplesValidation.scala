@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.document.{BaseUnit, Document}
+import amf.framework.document.{BaseUnit, Document}
 import amf.domain.Example
 import amf.domain.extensions.DataNode
 import amf.framework.domain.LexicalInformation
