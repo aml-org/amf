@@ -1,9 +1,9 @@
-package amf.framework.document
+package amf.framework.model.document
 
 import amf.domain._
 import amf.framework.parser.Annotations
-import amf.metadata.document.DocumentModel._
-import amf.metadata.document.{ExtensionLikeModel, OverlayModel}
+import amf.framework.metamodel.document.DocumentModel._
+import amf.plugins.document.webapi.metamodel.model.ExtensionLikeModel
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[amf.domain.DomainElement]] and can include references to other

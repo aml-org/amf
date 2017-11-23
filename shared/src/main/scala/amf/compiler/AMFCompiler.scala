@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.core.{AMFCompiler => ModularCompiler}
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ReferenceKind
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
 import amf.remote._

@@ -2,8 +2,8 @@ package amf.validation
 
 import amf.ProfileNames
 import amf.core.AMF
-import amf.framework.document.BaseUnit
-import amf.framework.domain.LexicalInformation
+import amf.framework.model.document.BaseUnit
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.validation.core.{ValidationDialectText, ValidationResult}
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
 import amf.plugins.features.validation.AMFValidatorPlugin

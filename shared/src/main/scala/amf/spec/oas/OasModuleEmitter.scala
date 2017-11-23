@@ -1,9 +1,9 @@
 package amf.spec.oas
 
-import amf.framework.document.Fragment._
-import amf.framework.document.Module
+import amf.framework.model.document.Fragment._
+import amf.framework.model.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
-import amf.metadata.document.BaseUnitModel
+import amf.framework.metamodel.document.BaseUnitModel
 import amf.parser.Position
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.remote.Oas

@@ -1,7 +1,7 @@
 package amf.framework.services
 
 import amf.client.GenerationOptions
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 
 trait RuntimeSerializer {
   def dump(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): String

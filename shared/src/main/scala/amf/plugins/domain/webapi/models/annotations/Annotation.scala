@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.models.annotations
 
 import amf.domain._
 import amf.domain.dialects.DomainEntity
-import amf.framework.domain.{Annotation, AnnotationGraphLoader, LexicalInformation, SerializableAnnotation}
+import amf.framework.model.domain.{Annotation, AnnotationGraphLoader, LexicalInformation, SerializableAnnotation}
 import amf.model.AmfElement
 import amf.parser.Range
 import amf.remote._

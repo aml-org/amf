@@ -1,4 +1,4 @@
-package amf.metadata
+package amf.framework.metamodel
 
 import amf.vocabulary.Namespace.Xsd
 import amf.vocabulary.ValueType

@@ -1,9 +1,9 @@
 package amf.spec.oas
 
 import amf.core.Root
-import amf.framework.document.Module
+import amf.framework.model.document.Module
 import amf.framework.parser.Annotations
-import amf.metadata.document.BaseUnitModel
+import amf.framework.metamodel.document.BaseUnitModel
 import amf.parser.YNodeLikeOps
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.models.annotations.SourceVendor

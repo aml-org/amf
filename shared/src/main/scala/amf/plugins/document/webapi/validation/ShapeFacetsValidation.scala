@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.document.{BaseUnit, DeclaresModel}
+import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.domain.extensions.{CustomDomainProperty, DataNode, ObjectNode}
 import amf.domain.security.SecurityScheme
 import amf.domain.{Parameter, Payload, Request}

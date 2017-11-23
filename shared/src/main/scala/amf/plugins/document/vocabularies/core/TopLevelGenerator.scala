@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.core
 
-import amf.metadata.Type
+import amf.framework.metamodel.Type
 import amf.spec.dialects.{Dialect, DialectNode, DialectPropertyMapping}
 
 import scala.collection.mutable

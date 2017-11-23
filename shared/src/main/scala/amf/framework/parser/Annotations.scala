@@ -1,6 +1,6 @@
 package amf.framework.parser
 
-import amf.framework.domain.{Annotation, LexicalInformation, SerializableAnnotation}
+import amf.framework.model.domain.{Annotation, LexicalInformation, SerializableAnnotation}
 import amf.parser.Range
 import amf.plugins.domain.webapi.models.annotations.SourceAST
 import org.yaml.model.YPart

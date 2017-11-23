@@ -1,7 +1,7 @@
 package amf.metadata.shape
 
-import amf.metadata.Field
-import amf.metadata.Type.Iri
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.Iri
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.Shacl
 import amf.vocabulary.ValueType

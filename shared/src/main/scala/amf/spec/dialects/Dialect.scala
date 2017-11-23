@@ -3,9 +3,9 @@ package amf.spec.dialects
 import amf.core.Root
 import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
-import amf.framework.document.Fragment.{DialectFragment, Fragment}
-import amf.framework.document.{BaseUnit, Document, EncodesModel, Module}
-import amf.metadata.{Field, Obj, Type}
+import amf.framework.metamodel.{Field, Obj, Type}
+import amf.framework.model.document.Fragment.{DialectFragment, Fragment}
+import amf.framework.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.vocabularies.core.{ClassTerm, External}
@@ -165,7 +165,7 @@ case class DialectPropertyMapping(name: String,
     case _                 => None
   }
 
-  def field(): amf.metadata.Field = {
+  def field(): Field = {
     val `type` =
       if (collection || isMap) Type.Array(range)
       else range

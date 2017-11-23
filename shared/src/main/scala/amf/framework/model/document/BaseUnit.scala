@@ -1,9 +1,9 @@
-package amf.framework.document
+package amf.framework.model.document
 
 import amf.domain.{DomainElement, DynamicDomainElement, Value}
 import amf.metadata.MetaModelTypeMapping
-import amf.metadata.document.BaseUnitModel
-import amf.metadata.document.DocumentModel.References
+import amf.framework.metamodel.document.BaseUnitModel
+import amf.framework.metamodel.document.DocumentModel.References
 import amf.model.{AmfArray, AmfElement, AmfObject}
 import amf.resolution.pipelines.ResolutionPipeline
 

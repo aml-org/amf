@@ -1,14 +1,15 @@
 package amf.spec.oas
 
-import amf.framework.document._
+import amf.framework.model.document._
 import amf.domain._
 import amf.domain.extensions.{CustomDomainProperty, idCounter}
-import amf.framework.domain._
-import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.framework.model.domain._
+import amf.framework.metamodel.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.shape._
 import amf.parser.Position
 import amf.parser.Position.ZERO
+import amf.plugins.document.webapi.metamodel.model.ExtensionLikeModel
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.domain.webapi.models.annotations._
 import amf.remote.{Oas, Vendor}

@@ -1,7 +1,7 @@
 package amf.spec.raml
 
 import amf.core.Root
-import amf.framework.document.Module
+import amf.framework.model.document.Module
 import amf.framework.parser.Annotations
 import amf.parser.YNodeLikeOps
 import amf.plugins.document.webapi.contexts.WebApiContext

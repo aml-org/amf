@@ -1,7 +1,7 @@
 package amf.metadata.domain
 
-import amf.metadata.Field
-import amf.metadata.Type.{Array, Str}
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.vocabulary.Namespace._
 import amf.vocabulary.{Namespace, ValueType}

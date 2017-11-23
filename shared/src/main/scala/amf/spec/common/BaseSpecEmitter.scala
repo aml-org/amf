@@ -1,11 +1,11 @@
 package amf.spec.common
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
-import amf.framework.domain.LexicalInformation
+import amf.framework.metamodel.{Field, Type}
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.parser.Annotations
-import amf.metadata.{Field, Type}
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO

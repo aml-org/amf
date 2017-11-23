@@ -1,13 +1,13 @@
 package amf.spec.dialects
 
 import amf.core.Root
-import amf.framework.document.Fragment.DialectFragment
-import amf.framework.document.{BaseUnit, Document, Module}
+import amf.framework.model.document.Fragment.DialectFragment
+import amf.framework.model.document.{BaseUnit, Document, Module}
 import amf.domain.Fields
 import amf.domain.dialects.DomainEntity
-import amf.framework.domain.LexicalInformation
+import amf.framework.metamodel.Type
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.parser.Annotations
-import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{Range, YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}

@@ -19,12 +19,12 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
 
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 
-  private def unitScalaToJVM(unit: amf.framework.document.BaseUnit): BaseUnit = unit match {
-    case o: amf.framework.document.Overlay           => new Overlay(o)
-    case e: amf.framework.document.Extension         => new Extension(e)
-    case d: amf.framework.document.Document          => Document(d)
-    case m: amf.framework.document.Module            => Module(m)
-    case f: amf.framework.document.Fragment.Fragment => Fragment(f)
+  private def unitScalaToJVM(unit: amf.framework.model.document.BaseUnit): BaseUnit = unit match {
+    case o: amf.framework.model.document.Overlay           => new Overlay(o)
+    case e: amf.framework.model.document.Extension         => new Extension(e)
+    case d: amf.framework.model.document.Document          => Document(d)
+    case m: amf.framework.model.document.Module            => Module(m)
+    case f: amf.framework.model.document.Fragment.Fragment => Fragment(f)
   }
 
   /**
@@ -134,8 +134,8 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   def reportCustomValidation(profileName: String, customProfilePath: String): CompletableFuture[AMFValidationReport] =
     super.reportCustomValidationImplementation(profileName, customProfilePath).asJava
 
-  private case class BaseUnitHandlerAdapter(handler: Handler[BaseUnit]) extends Handler[amf.framework.document.BaseUnit] {
-    override def success(document: amf.framework.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
+  private case class BaseUnitHandlerAdapter(handler: Handler[BaseUnit]) extends Handler[amf.framework.model.document.BaseUnit] {
+    override def success(document: amf.framework.model.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
 
     override def error(exception: Throwable): Unit = handler.error(exception)
   }

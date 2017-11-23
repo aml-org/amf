@@ -1,12 +1,13 @@
 package amf.metadata
 
-import amf.framework.document._
+import amf.framework.model.document._
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension}
 import amf.domain.security._
-import amf.metadata.document._
+import amf.framework.metamodel.Obj
+import amf.framework.metamodel.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
@@ -18,6 +19,7 @@ import amf.metadata.domain.extensions.{
 }
 import amf.metadata.domain.security._
 import amf.metadata.shape._
+import amf.plugins.document.webapi.metamodel.model.{ExtensionModel, OverlayModel}
 import amf.shape._
 
 trait MetaModelTypeMapping {

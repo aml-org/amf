@@ -2,7 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.client.GenerationOptions
 import amf.core.Root
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser

@@ -3,7 +3,7 @@ package amf.dialects
 import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.Syntax.Json

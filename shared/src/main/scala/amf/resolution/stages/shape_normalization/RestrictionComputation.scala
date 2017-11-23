@@ -1,6 +1,6 @@
 package amf.resolution.stages.shape_normalization
 
-import amf.metadata.Field
+import amf.framework.metamodel.Field
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.shape._

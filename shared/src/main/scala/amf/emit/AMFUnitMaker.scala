@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.client.GenerationOptions
 import amf.core.AMFSerializer
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.remote._
 import org.yaml.model.YDocument
 

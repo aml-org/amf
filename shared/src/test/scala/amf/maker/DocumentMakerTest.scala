@@ -1,7 +1,7 @@
 package amf.maker
 
 import amf.compiler.AMFCompiler
-import amf.framework.document.Document
+import amf.framework.model.document.Document
 import amf.domain.WebApi
 import amf.remote._
 import amf.shape.NodeShape

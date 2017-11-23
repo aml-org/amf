@@ -1,6 +1,6 @@
 package amf.framework.registries
 
-import amf.framework.domain.{AnnotationGraphLoader, LexicalInformation}
+import amf.framework.model.domain.{AnnotationGraphLoader, LexicalInformation}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin, AMFSyntaxPlugin}
 
 import scala.collection.mutable

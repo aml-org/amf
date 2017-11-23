@@ -1,6 +1,6 @@
-package amf.metadata.document
+package amf.framework.metamodel.document
 
-import amf.metadata.Field
+import amf.framework.metamodel.Field
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType

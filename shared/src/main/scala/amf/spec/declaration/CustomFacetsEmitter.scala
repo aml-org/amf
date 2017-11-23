@@ -1,7 +1,7 @@
 package amf.spec.declaration
 
 import amf.spec.common.BaseEmitters._
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain.FieldEntry
 import amf.parser.Position
 import amf.remote.{Oas, Raml}

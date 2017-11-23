@@ -1,6 +1,6 @@
 package amf.validation.model
 
-import amf.metadata.Type.{Bool, Int, Iri, Str}
+import amf.framework.metamodel.Type.{Bool, Int, Iri, Str}
 import amf.spec.dialects.{Dialect, DialectNode, DialectPropertyMapping}
 import amf.vocabulary.Namespace
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

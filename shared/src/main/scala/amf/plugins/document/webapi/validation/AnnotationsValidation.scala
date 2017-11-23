@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain.extensions.DomainExtension
 import amf.framework.validation.AMFValidationResult
 import amf.remote.Platform

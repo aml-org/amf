@@ -1,6 +1,6 @@
 package amf.resolution.stages
 
-import amf.framework.document.{BaseUnit, DeclaresModel}
+import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.domain.`abstract`._
 import amf.domain.extensions.DataNode
 import amf.domain.{DomainElement, EndPoint, Operation}

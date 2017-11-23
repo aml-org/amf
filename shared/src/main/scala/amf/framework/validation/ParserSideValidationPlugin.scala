@@ -1,7 +1,7 @@
 package amf.framework.validation
 
-import amf.framework.document.BaseUnit
-import amf.framework.domain.LexicalInformation
+import amf.framework.model.document.BaseUnit
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.plugins.AMFPlugin
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.core.{ValidationReport, ValidationResult}

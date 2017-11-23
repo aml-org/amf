@@ -2,9 +2,9 @@ package amf.domain
 
 import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.extensions.DomainExtension
-import amf.framework.domain.LexicalInformation
+import amf.framework.metamodel.Field
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.parser.Annotations
-import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.LinkableElementModel
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}

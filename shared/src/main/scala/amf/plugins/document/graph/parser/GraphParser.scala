@@ -1,23 +1,24 @@
 package amf.plugins.document.graph.parser
 
-import amf.framework.document._
 import amf.domain._
 import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.domain.security._
+import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.framework.metamodel.document.BaseUnitModel.Location
+import amf.framework.metamodel.document._
+import amf.framework.metamodel.{Field, Obj, Type}
+import amf.framework.model.document._
 import amf.framework.parser.Annotations
-import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.metadata.document.BaseUnitModel.Location
-import amf.metadata.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.extensions.{DataNodeModel, ShapeExtensionModel}
 import amf.metadata.domain.security._
 import amf.metadata.shape._
-import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.plugins.document.webapi.metamodel.model.{ExtensionModel, OverlayModel}
 import amf.remote.Platform
 import amf.shape._
 import amf.spec.ParserContext

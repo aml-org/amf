@@ -1,7 +1,7 @@
 package amf.metadata.domain.`abstract`
 
-import amf.metadata.Field
-import amf.metadata.Type.{Array, Str}
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.{DomainElementModel, KeyField}
 import amf.metadata.domain.extensions.DataNodeModel
 import amf.vocabulary.Namespace.Document

@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.document.BaseUnit
-import amf.framework.document.Fragment.Fragment
+import amf.framework.model.document.BaseUnit
+import amf.framework.model.document.Fragment.Fragment
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.domain.Fields
 import amf.framework.parser.Annotations
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
-import amf.metadata.document.FragmentModel
+import amf.framework.metamodel.document.FragmentModel
 import amf.remote.Platform
 import amf.shape.Shape
 import amf.validation.model.{AMFShapeValidations, ValidationSpecification}

@@ -1,7 +1,7 @@
 package amf.spec.declaration
 
-import amf.framework.document.{BaseUnit, Module}
-import amf.framework.document.Fragment.Fragment
+import amf.framework.model.document.{BaseUnit, Module}
+import amf.framework.model.document.Fragment.Fragment
 import amf.domain.{DomainElement, Linkable, Parameter}
 import amf.parser.Position
 import amf.plugins.domain.webapi.models.annotations.DeclaredElement

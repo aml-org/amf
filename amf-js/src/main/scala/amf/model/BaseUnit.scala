@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.framework.document
+import amf.framework.model.document
 import amf.unsafe.PlatformSecrets
 import amf.vocabulary.Namespace
 
@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 trait BaseUnit extends PlatformSecrets {
 
-  private[amf] val element: amf.framework.document.BaseUnit
+  private[amf] val element: amf.framework.model.document.BaseUnit
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   lazy val references: js.Iterable[BaseUnit] = {

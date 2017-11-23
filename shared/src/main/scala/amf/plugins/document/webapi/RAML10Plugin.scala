@@ -3,8 +3,8 @@ package amf.plugins.document.webapi
 import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.core.Root
-import amf.framework.document.Fragment.Fragment
-import amf.framework.document._
+import amf.framework.model.document.Fragment.Fragment
+import amf.framework.model.document._
 import amf.domain.{DomainElement, WebApi}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}

@@ -2,7 +2,7 @@ package amf.client
 
 import amf.ProfileNames
 import amf.compiler.AMFCompiler
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.validation.AMFValidationReport
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._

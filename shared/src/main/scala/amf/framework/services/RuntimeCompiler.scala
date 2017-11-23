@@ -1,6 +1,6 @@
 package amf.framework.services
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.parser.{ReferenceKind, Unspecified}
 import amf.remote.{Cache, Context, Platform}
 import amf.spec.ParserContext

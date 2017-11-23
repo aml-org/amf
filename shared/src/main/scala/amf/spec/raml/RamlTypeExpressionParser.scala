@@ -1,6 +1,6 @@
 package amf.spec.raml
 
-import amf.framework.domain.LexicalInformation
+import amf.framework.model.domain.LexicalInformation
 import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.parser.Range

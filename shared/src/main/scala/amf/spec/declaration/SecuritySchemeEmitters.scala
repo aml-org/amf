@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain.FieldEntry
 import amf.domain.extensions.DataNode
 import amf.domain.security._

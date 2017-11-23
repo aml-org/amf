@@ -2,9 +2,9 @@ package amf.maker
 
 import amf.common.{AmfObjectTestMatcher, ListAssertions}
 import amf.compiler.AMFCompiler
-import amf.framework.document.Document
+import amf.framework.model.document.Document
 import amf.domain.{License, _}
-import amf.metadata.Field
+import amf.framework.metamodel.Field
 import amf.model.AmfObject
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.shape.{ScalarShape, XMLSerializer}

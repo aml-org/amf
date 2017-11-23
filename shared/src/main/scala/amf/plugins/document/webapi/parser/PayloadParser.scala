@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser
 
-import amf.framework.document.Document
+import amf.framework.model.document.Document
 import amf.spec.ParserContext
 import amf.spec.common.DataNodeParser
 import org.yaml.model.{YDocument, YNode}

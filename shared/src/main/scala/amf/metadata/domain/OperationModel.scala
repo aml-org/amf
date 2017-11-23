@@ -1,7 +1,7 @@
 package amf.metadata.domain
 
-import amf.metadata.Field
-import amf.metadata.Type._
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type._
 import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.vocabulary.{Namespace, ValueType}
 

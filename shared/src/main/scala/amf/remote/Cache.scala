@@ -1,6 +1,6 @@
 package amf.remote
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 
 import scala.concurrent.Future
 
