@@ -31,7 +31,7 @@ class CyclingDialectTests extends BuildCycleTests {
   }
 
   /** Return random temporary file name for testing. */
-  //override def tmp(name: String = ""): String = basePath +  name +".tmp"
+  override def tmp(name: String = ""): String = basePath +  name +".tmp"
 
 
   test("Parse Dialect with library and serialize back") {

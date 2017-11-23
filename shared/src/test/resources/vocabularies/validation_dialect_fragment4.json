@@ -532,7 +532,7 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#profileNode.raml": [
+                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
@@ -541,7 +541,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "profileNode.raml"
+                        "@value": "true"
                       }
                     ]
                   }
@@ -568,20 +568,6 @@
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(7,15)-(7,40)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/vocabularies/validation_dialect_using_fragments4.raml#profileNode"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
                       }
                     ]
                   }

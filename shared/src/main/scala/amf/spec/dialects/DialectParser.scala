@@ -80,26 +80,6 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
         if (references.references.nonEmpty) {
           unit.withReferences(references.solvedReferences())
 
-          val usesMap: mutable.Map[String, String] = mutable.Map()
-          map.key(
-            "uses",
-            entry =>
-              entry.value
-                .as[YMap]
-                .entries
-                .foreach(e => {
-                  usesMap.put(e.key.as[YScalar].text, e.value.as[YScalar].text)
-                })
-          )
-          //record information about namespaces into references
-          references.references.keys.foreach(namespace=>{
-            val unit = references.references.get(namespace).get
-            val nms = usesMap.get(namespace)
-            if (nms.isDefined) {
-              unit.fields.setWithoutId(NamespaceExtraFields.NAMESPACE, AmfScalar(namespace), Annotations());
-              unit.fields.setWithoutId(NamespaceExtraFields.PATH, AmfScalar(nms.get), Annotations());
-            }
-          })
 
         }
         entity
@@ -236,15 +216,15 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
               case Some(internalRef) if internalRef.definition.id == domainEntity.definition.id =>
                 internalRef.fields.into(domainEntity.fields)
                 domainEntity.annotations += SynthesizedField()
-                domainEntity.annotations += DomainElementReference(name, Some(internalRef))
+                //domainEntity.annotations += DomainElementReference(name, Some(internalRef))
               case _ =>
                 resolver.resolveToEntity(root, name, domainEntity.definition) match {
                   case Some(entity) =>
                     entity.fields.into(domainEntity.fields)
                     domainEntity.annotations += SynthesizedField()
-                    domainEntity.annotations += DomainElementReference(name, Some(entity))
+                    //domainEntity.annotations += DomainElementReference(name, Some(entity))
                   case None =>
-                    Some(domainEntity.annotations += DomainElementReference(name, None))
+                    //Some(domainEntity.annotations += DomainElementReference(name, None))
                 }
             }
         }
