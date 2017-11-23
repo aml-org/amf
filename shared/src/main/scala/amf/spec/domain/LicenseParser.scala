@@ -1,10 +1,10 @@
 package amf.spec.domain
 
-import amf.domain.License
 import amf.framework.parser.Annotations
-import amf.metadata.domain.LicenseModel
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.metamodel.LicenseModel
+import amf.plugins.domain.webapi.models.License
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.YMap

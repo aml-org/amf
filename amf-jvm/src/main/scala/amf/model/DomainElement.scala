@@ -59,7 +59,7 @@ object DomainElement {
   def apply(domainElement: domain.DomainElement): DomainElement = domainElement match {
     case o: models.WebApi                                  => WebApi(o)
     case o: amf.domain.Operation                           => Operation(o)
-    case o: amf.domain.Organization                        => Organization(o)
+    case o: models.Organization                            => Organization(o)
     case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")
     case o: amf.domain.Parameter                           => Parameter(o)
     case o: amf.domain.Payload                             => Payload(o)

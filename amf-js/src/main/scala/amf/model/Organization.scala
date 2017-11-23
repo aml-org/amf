@@ -1,20 +1,22 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
   * JS Organization model class.
   */
 @JSExportAll
-case class Organization private[model] (private val organization: amf.domain.Organization) extends DomainElement {
+case class Organization private[model] (private val organization: models.Organization) extends DomainElement {
 
-  def this() = this(amf.domain.Organization())
+  def this() = this(models.Organization())
 
   val url: String   = organization.url
   val name: String  = organization.name
   val email: String = organization.email
 
-  override private[amf] def element: amf.domain.Organization = organization
+  override private[amf] def element: models.Organization = organization
 
   /** Set url property of this [[Organization]]. */
   def withUrl(url: String): this.type = {

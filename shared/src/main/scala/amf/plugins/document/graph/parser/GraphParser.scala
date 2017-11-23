@@ -22,7 +22,7 @@ import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, FragmentsTypesModels, OverlayModel}
 import amf.plugins.document.webapi.model._
-import amf.plugins.domain.webapi.metamodel.{CreativeWorkModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.{CreativeWorkModel, OrganizationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.Platform
 import amf.shape._
@@ -233,9 +233,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     DocumentModel                                       -> Document.apply,
     WebApiModel                                         -> WebApi.apply,
     CreativeWorkModel                                   -> CreativeWork.apply,
-*/
     OrganizationModel                                   -> Organization.apply,
     LicenseModel                                        -> License.apply,
+*/
     EndPointModel                                       -> EndPoint.apply,
     OperationModel                                      -> Operation.apply,
     ParameterModel                                      -> Parameter.apply,

@@ -1,10 +1,10 @@
 package amf.spec.domain
 
-import amf.domain.Organization
 import amf.framework.parser.Annotations
-import amf.metadata.domain.OrganizationModel
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.metamodel.OrganizationModel
+import amf.plugins.domain.webapi.models.Organization
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.YMap
