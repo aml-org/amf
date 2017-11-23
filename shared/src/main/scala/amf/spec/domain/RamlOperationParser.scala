@@ -1,12 +1,13 @@
 package amf.spec.domain
 
-import amf.domain.{CreativeWork, Operation, Response}
+import amf.domain.{Operation, Response}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain.{DomainElementModel, OperationModel}
 import amf.model.AmfArray
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ArrayNode, ValueNode}
 import amf.spec.declaration.OasCreativeWorkParser

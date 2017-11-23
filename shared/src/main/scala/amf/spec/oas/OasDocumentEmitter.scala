@@ -12,7 +12,7 @@ import amf.parser.Position.ZERO
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.{CreativeWork, WebApi}
 import amf.plugins.domain.webapi.models.annotations._
 import amf.remote.{Oas, Vendor}
 import amf.shape._

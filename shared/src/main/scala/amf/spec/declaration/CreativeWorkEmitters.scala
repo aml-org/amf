@@ -1,8 +1,8 @@
 package amf.spec.declaration
 
-import amf.domain.CreativeWork
-import amf.metadata.domain.CreativeWorkModel
 import amf.parser.Position
+import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 
 import scala.collection.mutable.ListBuffer

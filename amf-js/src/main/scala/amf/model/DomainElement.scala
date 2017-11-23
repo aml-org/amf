@@ -57,6 +57,7 @@ trait DomainElement {
     element.getObjectByPropertyId(propertyId).map(d => DomainElement(d)).toJSArray
 }
 
+// TODO: Make this modular
 object DomainElement {
   def apply(domainElement: domain.DomainElement): DomainElement = domainElement match {
     case o: models.WebApi                              => WebApi(o)
@@ -65,7 +66,7 @@ object DomainElement {
     case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")
     case o: amf.domain.Parameter                           => Parameter(o)
     case o: amf.domain.Payload                             => Payload(o)
-    case o: amf.domain.CreativeWork                        => CreativeWork(o)
+    case o: models.CreativeWork                            => CreativeWork(o)
     case o: amf.domain.EndPoint                            => EndPoint(o)
     case o: amf.domain.Request                             => Request(o)
     case o: amf.domain.Response                            => Response(o)

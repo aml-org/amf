@@ -6,7 +6,7 @@ import amf.framework.model.document.Document
 import amf.domain.{License, _}
 import amf.framework.metamodel.Field
 import amf.model.AmfObject
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.{CreativeWork, WebApi}
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.shape.{ScalarShape, XMLSerializer}
 import amf.unsafe.PlatformSecrets

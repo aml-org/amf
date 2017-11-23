@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi
 
 import amf.framework.plugins.AMFDomainPlugin
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.{CreativeWorkModel, WebApiModel}
 import amf.plugins.domain.webapi.models.annotations._
 
 object WebAPIDomainPlugin extends AMFDomainPlugin {
@@ -22,6 +22,7 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
   )
 
   override def modelEntities = Seq(
-    WebApiModel
+    WebApiModel,
+    CreativeWorkModel
   )
 }

@@ -4,6 +4,7 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Bool, SortedArray, Str}
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.ShapeExtensionModel
+import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
 import amf.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
 import amf.vocabulary.ValueType
 

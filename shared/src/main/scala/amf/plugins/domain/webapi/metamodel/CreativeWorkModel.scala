@@ -1,8 +1,9 @@
-package amf.metadata.domain
+package amf.plugins.domain.webapi.metamodel
 
-import amf.domain.CreativeWork
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
+import amf.metadata.domain.DomainElementModel
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.vocabulary.Namespace.Schema
 import amf.vocabulary.ValueType
 
