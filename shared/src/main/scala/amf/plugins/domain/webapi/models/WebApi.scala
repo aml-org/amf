@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models
 
 import amf.domain.security.ParametrizedSecurityScheme
-import amf.domain.{License, _}
+import amf.domain.{_}
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.plugins.domain.webapi.metamodel.WebApiModel.{License => WebApiLicense, _}

@@ -1,16 +1,18 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 /**
   * JVM License model class.
   */
-case class License private[model] (private val license: amf.domain.License) extends DomainElement {
+case class License private[model] (private val license: models.License) extends DomainElement {
 
-  def this() = this(amf.domain.License())
+  def this() = this(models.License())
 
   val url: String  = license.url
   val name: String = license.name
 
-  override private[amf] def element: amf.domain.License = license
+  override private[amf] def element: models.License = license
 
   /** Set url property of this [[License]]. */
   def withUrl(url: String): this.type = {

@@ -1,9 +1,10 @@
-package amf.domain
+package amf.plugins.domain.webapi.models
 
+import amf.domain.Fields
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
-import amf.metadata.domain.OrganizationModel
-import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
+import amf.plugins.domain.webapi.metamodel.OrganizationModel
+import amf.plugins.domain.webapi.metamodel.OrganizationModel._
 import org.yaml.model.YMap
 
 /**
