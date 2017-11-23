@@ -1,7 +1,7 @@
 package amf.domain.security
 
 import amf.domain._
-import amf.framework.metamodel.document.FragmentsTypesModels.SecuritySchemeFragmentModel
+import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.SecuritySchemeFragmentModel
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.security.SecuritySchemeModel

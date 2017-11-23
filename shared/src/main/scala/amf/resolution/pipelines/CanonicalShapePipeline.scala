@@ -1,10 +1,10 @@
 package amf.resolution.pipelines
 import amf.ProfileNames
 import amf.framework.model.document.BaseUnit
-import amf.framework.model.document.Fragment.DataType
 import amf.domain.Fields
 import amf.framework.parser.Annotations
 import amf.framework.metamodel.document.FragmentModel
+import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.resolution.stages.{ReferenceResolutionStage, ShapeNormalizationStage}
 import amf.shape.Shape
 
@@ -26,7 +26,7 @@ object CanonicalShapePipeline {
     // create the pipeline
     val pipeline = new CanonicalShapePipeline()
     // encode the shape in a doc to apply the pipeline
-    val doc = new DataType(Fields(), Annotations())
+    val doc = new DataTypeFragment(Fields(), Annotations())
     doc.fields.setWithoutId(FragmentModel.Encodes, shape)
     // get the canonical document with the canonical encoded shape
     val canonicalDoc = pipeline.resolve(doc)

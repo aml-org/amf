@@ -1,7 +1,7 @@
-package amf.plugins.document.webapi.metamodel.model
+package amf.plugins.document.webapi.metamodel
 
-import amf.framework.metamodel.document.DocumentModel
-import amf.framework.model.document.Extension
+import amf.framework.metamodel.document.{DocumentModel, ExtensionLikeModel}
+import amf.plugins.document.webapi.model.Extension
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType
 

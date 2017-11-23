@@ -1,9 +1,12 @@
 package amf.model
 
+import amf.framework.model.document.{Document => CoreDocument}
+import amf.plugins.document.webapi.model.{Overlay => CoreOverlay, Extension => CoreExtension}
+
 /**
   * JVM Document model class.
   */
-case class Document(private[amf] val document: amf.framework.model.document.Document)
+case class Document(private[amf] val document: CoreDocument)
     extends BaseUnit
     with DeclaresModel
     with EncodesModel {
@@ -17,12 +20,12 @@ case class Document(private[amf] val document: amf.framework.model.document.Docu
   override private[amf] val element = document
 }
 
-class Overlay(private[amf] val overlay: amf.framework.model.document.Overlay) extends Document(overlay) {
+class Overlay(private[amf] val overlay: CoreOverlay) extends Document(overlay) {
 
-  def this() = this(amf.framework.model.document.Overlay())
+  def this() = this(CoreOverlay())
 }
 
-class Extension(private[amf] val extensionFragment: amf.framework.model.document.Extension) extends Document(extensionFragment) {
+class Extension(private[amf] val extensionFragment: CoreExtension) extends Document(extensionFragment) {
 
-  def this() = this(amf.framework.model.document.Extension())
+  def this() = this(CoreExtension())
 }

@@ -12,9 +12,6 @@ object AMFPluginsRegistry {
   private val documentPluginRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]] = mutable.HashMap()
   private val documentPluginIDRegistry: mutable.HashMap[String, AMFDocumentPlugin] = mutable.HashMap()
   private val documentPluginVendorsRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]] = mutable.HashMap()
-  val annotationsRegistry: mutable.HashMap[String,AnnotationGraphLoader] = mutable.HashMap(
-    "lexical" -> LexicalInformation
-  )
   private val domainPluginRegistry: mutable.HashMap[String, AMFDomainPlugin] = mutable.HashMap()
 
 
@@ -75,16 +72,12 @@ object AMFPluginsRegistry {
     documentPluginVendorsRegistry.getOrElse(vendor, Seq())
   }
 
-  def registerAnnotation(annotation: String, annotationGraphLoader: AnnotationGraphLoader) = {
-    annotationsRegistry.put(annotation, annotationGraphLoader)
-  }
-
   def registerDomainPlugin(domainPlugin: AMFDomainPlugin) = {
     domainPluginRegistry.get(domainPlugin.ID) match {
       case Some(_) => // ignore
       case None =>
         domainPlugin.serializableAnnotations().foreach { case (name, unloader) =>
-          annotationsRegistry.put(name, unloader)
+          AMFDomainRegistry.registerAnnotation(name, unloader)
         }
         domainPluginRegistry.put(domainPlugin.ID, domainPlugin)
         registerDependencies(domainPlugin)

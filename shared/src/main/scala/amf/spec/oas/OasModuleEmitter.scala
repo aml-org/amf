@@ -1,10 +1,11 @@
 package amf.spec.oas
 
-import amf.framework.model.document.Fragment._
+import amf.framework.model.document._
 import amf.framework.model.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.framework.metamodel.document.BaseUnitModel
 import amf.parser.Position
+import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.remote.Oas
 import amf.spec.common.BaseEmitters._
@@ -42,14 +43,14 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
 
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
-      case di: DocumentationItem         => DocumentationItemFragmentEmitter(di, ordering)
-      case dt: DataType                  => DataTypeFragmentEmitter(dt, ordering)
-      case rt: ResourceTypeFragment      => ResourceTypeFragmentEmitter(rt, ordering)
-      case tf: TraitFragment             => TraitFragmentEmitter(tf, ordering)
-      case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
-      case sc: SecurityScheme            => SecuritySchemeFragmentEmitter(sc, ordering)
-      case ne: NamedExample              => NamedExampleFragmentEmitter(ne, ordering)
-      case _                             => throw new UnsupportedOperationException("Unsupported fragment type")
+      case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
+      case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
+      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)
+      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)
+      case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
+      case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
+      case ne: NamedExampleFragment              => NamedExampleFragmentEmitter(ne, ordering)
+      case _                                     => throw new UnsupportedOperationException("Unsupported fragment type")
     }
     val references = ReferencesEmitter(fragment.references, ordering)
     val usage: Option[ValueEmitter] =
@@ -70,7 +71,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     val emitters: Seq[EntryEmitter]
   }
 
-  case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItem, ordering: SpecOrdering)
+  case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItemFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20DocumentationItem)
@@ -78,7 +79,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
   }
 
-  case class DataTypeFragmentEmitter(dataType: DataType, ordering: SpecOrdering) extends OasFragmentTypeEmitter {
+  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering) extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20DataType)
 
@@ -86,7 +87,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
   }
 
-  case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclaration, ordering: SpecOrdering)
+  case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclarationFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20AnnotationTypeDeclaration)
@@ -123,7 +124,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
       }
   }
 
-  case class SecuritySchemeFragmentEmitter(securityScheme: SecurityScheme, ordering: SpecOrdering)
+  case class SecuritySchemeFragmentEmitter(securityScheme: SecuritySchemeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20SecurityScheme)
@@ -134,7 +135,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
                                ordering).emitters()
   }
 
-  case class NamedExampleFragmentEmitter(namedExample: NamedExample, ordering: SpecOrdering)
+  case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20NamedExample)

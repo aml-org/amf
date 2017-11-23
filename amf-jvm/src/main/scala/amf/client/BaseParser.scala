@@ -8,6 +8,8 @@ import amf.model.{Fragment, _}
 import amf.remote.FutureConverter.converters
 import amf.remote.Syntax.Syntax
 import amf.remote.{Platform, StringContentPlatform, Vendor}
+import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
+import amf.framework.model.document.{Document => CoreDocument, BaseUnit => CoreBaseUnit, Fragment => CoreFragment, Module => CoreModule}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
@@ -19,12 +21,12 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
 
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 
-  private def unitScalaToJVM(unit: amf.framework.model.document.BaseUnit): BaseUnit = unit match {
-    case o: amf.framework.model.document.Overlay           => new Overlay(o)
-    case e: amf.framework.model.document.Extension         => new Extension(e)
-    case d: amf.framework.model.document.Document          => Document(d)
-    case m: amf.framework.model.document.Module            => Module(m)
-    case f: amf.framework.model.document.Fragment.Fragment => Fragment(f)
+  private def unitScalaToJVM(unit: CoreBaseUnit): BaseUnit = unit match {
+    case o: CoreOverlay           => new Overlay(o)
+    case e: CoreExtension         => new Extension(e)
+    case d: CoreDocument          => Document(d)
+    case m: CoreModule            => Module(m)
+    case f: CoreFragment          => Fragment(f)
   }
 
   /**

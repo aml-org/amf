@@ -3,7 +3,6 @@ package amf.plugins.document.webapi
 import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.core.Root
-import amf.framework.model.document.Fragment.Fragment
 import amf.framework.model.document._
 import amf.domain.WebApi
 import amf.framework.model.domain.DomainElement
@@ -12,6 +11,7 @@ import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
+import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector

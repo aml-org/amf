@@ -1,6 +1,7 @@
 package amf.spec.raml
 
-import amf.framework.model.document.Fragment._
+import amf.framework.model.document._
+import amf.plugins.document.webapi.model._
 import amf.framework.model.document.{BaseUnit, Module}
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.framework.metamodel.document.BaseUnitModel
@@ -43,14 +44,14 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.annotations)
 
     val typeEmitter: RamlFragmentTypeEmitter = fragment match {
-      case di: DocumentationItem         => DocumentationItemFragmentEmitter(di, ordering)
-      case dt: DataType                  => DataTypeFragmentEmitter(dt, ordering)
-      case ne: NamedExample              => FragmentNamedExampleEmitter(ne, ordering)
-      case rt: ResourceTypeFragment      => ResourceTypeFragmentEmitter(rt, ordering)
-      case tf: TraitFragment             => TraitFragmentEmitter(tf, ordering)
-      case at: AnnotationTypeDeclaration => AnnotationFragmentEmitter(at, ordering)
-      case sc: SecurityScheme            => SecuritySchemeFragmentEmitter(sc, ordering)
-      case _                             => throw new UnsupportedOperationException("Unsupported fragment type")
+      case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
+      case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
+      case ne: NamedExampleFragment              => FragmentNamedExampleEmitter(ne, ordering)
+      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)
+      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)
+      case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
+      case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
+      case _                                     => throw new UnsupportedOperationException("Unsupported fragment type")
     }
 
     val usage = fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
@@ -69,7 +70,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter]
   }
 
-  case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItem, ordering: SpecOrdering)
+  case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItemFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DocumentationItem
@@ -78,7 +79,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       RamlCreativeWorkItemsEmitter(documentationItem.encodes, ordering, withExtention = true).emitters()
   }
 
-  case class DataTypeFragmentEmitter(dataType: DataType, ordering: SpecOrdering) extends RamlFragmentTypeEmitter {
+  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering) extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DataType
 
@@ -86,7 +87,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       RamlTypeEmitter(dataType.encodes, ordering, references = Nil).entries()
   }
 
-  case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclaration, ordering: SpecOrdering)
+  case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclarationFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10AnnotationTypeDeclaration
@@ -98,7 +99,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       }
   }
 
-  case class SecuritySchemeFragmentEmitter(securityScheme: SecurityScheme, ordering: SpecOrdering)
+  case class SecuritySchemeFragmentEmitter(securityScheme: SecuritySchemeFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10SecurityScheme
@@ -132,7 +133,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       }
   }
 
-  case class FragmentNamedExampleEmitter(example: NamedExample, ordering: SpecOrdering)
+  case class FragmentNamedExampleEmitter(example: NamedExampleFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10NamedExample

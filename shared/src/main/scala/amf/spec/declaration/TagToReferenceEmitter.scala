@@ -1,17 +1,16 @@
 package amf.spec.declaration
 
-import amf.framework.model.document.{BaseUnit, Module}
-import amf.framework.model.document.Fragment.Fragment
 import amf.domain.{Linkable, Parameter}
+import amf.framework.model.document.{BaseUnit, Fragment, Module}
 import amf.framework.model.domain.DomainElement
 import amf.parser.Position
 import amf.plugins.domain.webapi.models.annotations.DeclaredElement
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
-import amf.spec.{OasDefinitions, PartEmitter}
 import amf.spec.oas.OasSpecEmitter
 import amf.spec.raml.RamlSpecEmitter
+import amf.spec.{OasDefinitions, PartEmitter}
 import org.yaml.model.YDocument.PartBuilder
 
 /**

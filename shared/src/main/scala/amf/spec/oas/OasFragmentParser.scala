@@ -1,13 +1,14 @@
 package amf.spec.oas
 
 import amf.core.Root
-import amf.framework.model.document.Fragment._
+import amf.framework.model.document._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.ExternalDomainElement
 import amf.framework.parser.Annotations
 import amf.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.shape.Shape
@@ -62,9 +63,9 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
-    def parse(): DocumentationItem = {
+    def parse(): DocumentationItemFragment = {
 
-      val item = DocumentationItem().adopted(root.location)
+      val item = DocumentationItemFragment().adopted(root.location)
 
       item.withEncodes(OasCreativeWorkParser(map).parse())
 
@@ -73,8 +74,8 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
   }
 
   case class DataTypeFragmentParser(map: YMap) {
-    def parse(): DataType = {
-      val dataType = DataType().adopted(root.location)
+    def parse(): DataTypeFragment = {
+      val dataType = DataTypeFragment().adopted(root.location)
 
       val shapeOption =
         OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location),  "schema")
@@ -87,8 +88,8 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
   }
 
   case class AnnotationFragmentParser(map: YMap) {
-    def parse(): AnnotationTypeDeclaration = {
-      val annotation = AnnotationTypeDeclaration().adopted(root.location)
+    def parse(): AnnotationTypeDeclarationFragment = {
+      val annotation = AnnotationTypeDeclarationFragment().adopted(root.location)
 
       val property =
         AnnotationTypesParser(map,
@@ -124,8 +125,8 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
   }
 
   case class SecuritySchemeFragmentParser(map: YMap) {
-    def parse(): SecurityScheme = {
-      val security = SecurityScheme().adopted(root.location)
+    def parse(): SecuritySchemeFragment = {
+      val security = SecuritySchemeFragment().adopted(root.location)
 
       security.withEncodes(
         OasSecuritySchemeParser(map,
@@ -137,9 +138,9 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
   }
 
   case class NamedExampleFragmentParser(map: YMap) {
-    def parse(): NamedExample = {
+    def parse(): NamedExampleFragment = {
       val entries      = map.entries.filter(e => e.value.tagType == YType.Map)
-      val namedExample = NamedExample().adopted(root.location)
+      val namedExample = NamedExampleFragment().adopted(root.location)
 
       if (entries.size == 1) namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
       else

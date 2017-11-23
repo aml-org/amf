@@ -1,6 +1,6 @@
 package amf.framework.model.domain
 
-import amf.framework.registries.AMFPluginsRegistry
+import amf.framework.registries.{AMFDomainRegistry, AMFPluginsRegistry}
 import amf.model.AmfElement
 import amf.parser.Range
 
@@ -35,7 +35,7 @@ object LexicalInformation extends AnnotationGraphLoader  {
 
 object Annotation {
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
-    AMFPluginsRegistry.annotationsRegistry.get(annotation) match {
+    AMFDomainRegistry.annotationsRegistry.get(annotation) match {
       case Some(annotationLoader) => Some(annotationLoader.unparse)
       case _                     => None
     }
