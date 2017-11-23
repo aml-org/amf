@@ -6,6 +6,7 @@ import amf.framework.metamodel.document.{DocumentModel, ExtensionLikeModel}
 import amf.framework.metamodel.document.DocumentModel._
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.plugins.domain.webapi.models.WebApi
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other

@@ -2,6 +2,7 @@ package amf.framework.plugins
 
 import amf.client.GenerationOptions
 import amf.core.Root
+import amf.framework.metamodel.Obj
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.AbstractReferenceCollector
 import amf.remote.Platform
@@ -11,6 +12,8 @@ import org.yaml.model.YDocument
 abstract class AMFDocumentPlugin extends AMFPlugin {
 
   val vendors: Seq[String]
+
+  def modelEntities: Seq[Obj]
 
   /**
     * List of media types used to encode serialisations of

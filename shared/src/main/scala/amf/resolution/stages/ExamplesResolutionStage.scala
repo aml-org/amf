@@ -1,7 +1,7 @@
 package amf.resolution.stages
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.WebApi
 import amf.metadata.domain.ResponseModel
+import amf.plugins.domain.webapi.models.WebApi
 import amf.validation.Validation
 
 /** Apply response examples to payloads schemas matching by media type

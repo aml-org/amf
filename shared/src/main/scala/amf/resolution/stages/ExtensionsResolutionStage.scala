@@ -14,6 +14,7 @@ import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
 import amf.metadata.shape.ShapeModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.models.annotations.SynthesizedField
 import amf.shape.Shape
 import amf.spec.{Declarations, ParserContext}

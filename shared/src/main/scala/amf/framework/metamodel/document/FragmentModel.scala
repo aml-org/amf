@@ -13,7 +13,7 @@ trait FragmentModel extends BaseUnitModel {
 
   val Encodes = Field(DomainElementModel, Document + "encodes")
 
-  override def modelInstance: AmfObject = throw new Exception("Fragment is an abstract cannot create model instance")
+  override def modelInstance: AmfObject = throw new Exception("Fragment is abstract instances cannot be created directly")
 
 }
 

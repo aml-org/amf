@@ -1,9 +1,10 @@
-package amf.metadata.domain
+package amf.plugins.domain.webapi.metamodel
 
-import amf.domain.WebApi
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
+import amf.metadata.domain._
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.models.WebApi
 import amf.vocabulary.Namespace._
 import amf.vocabulary.{Namespace, ValueType}
 

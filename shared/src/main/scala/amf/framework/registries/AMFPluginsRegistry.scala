@@ -56,6 +56,9 @@ object AMFPluginsRegistry {
           val plugins = documentPluginVendorsRegistry.getOrElse(vendor, Seq())
           documentPluginVendorsRegistry.put(vendor, plugins ++ Seq(documentPlugin))
         }
+
+        documentPlugin.modelEntities.foreach{ entity => AMFDomainRegistry.registerModelEntity(entity) }
+
         registerDependencies(documentPlugin)
     }
   }
@@ -80,6 +83,9 @@ object AMFPluginsRegistry {
           AMFDomainRegistry.registerAnnotation(name, unloader)
         }
         domainPluginRegistry.put(domainPlugin.ID, domainPlugin)
+
+        domainPlugin.modelEntities.foreach{ entity => AMFDomainRegistry.registerModelEntity(entity) }
+
         registerDependencies(domainPlugin)
     }
   }

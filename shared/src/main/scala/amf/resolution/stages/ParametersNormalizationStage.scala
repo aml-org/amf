@@ -1,9 +1,11 @@
 package amf.resolution.stages
 import amf.ProfileNames
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.{Parameter, WebApi}
-import amf.metadata.domain.{EndPointModel, RequestModel, WebApiModel}
+import amf.domain.Parameter
+import amf.metadata.domain.{EndPointModel, RequestModel}
 import amf.model.AmfArray
+import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.models.WebApi
 import amf.validation.Validation
 
 import scala.collection.mutable

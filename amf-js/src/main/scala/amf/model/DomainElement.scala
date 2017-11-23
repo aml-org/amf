@@ -3,6 +3,7 @@ package amf.model
 // import amf.model.DomainExtension
 
 import amf.framework.model.domain
+import amf.plugins.domain.webapi.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -58,7 +59,7 @@ trait DomainElement {
 
 object DomainElement {
   def apply(domainElement: domain.DomainElement): DomainElement = domainElement match {
-    case o: amf.domain.WebApi                              => WebApi(o)
+    case o: models.WebApi                              => WebApi(o)
     case o: amf.domain.Operation                           => Operation(o)
     case o: amf.domain.Organization                        => Organization(o)
     case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")

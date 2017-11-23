@@ -1,13 +1,16 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models.annotations
+import amf.plugins.domain.webapi.models
+
 import scala.collection.JavaConverters._
 
 /**
   * WebApi java class
   */
-case class WebApi private (private val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi private (private val webApi: models.WebApi) extends DomainElement {
 
-  def this() = this(amf.domain.WebApi())
+  def this() = this(models.WebApi())
 
   val name: String                                         = webApi.name
   val description: String                                  = webApi.description
@@ -25,7 +28,7 @@ case class WebApi private (private val webApi: amf.domain.WebApi) extends Domain
   val baseUriParameters: java.util.List[Parameter]         = webApi.baseUriParameters.map(Parameter).asJava
   def security: java.util.List[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).asJava
 
-  override private[amf] def element: amf.domain.WebApi = webApi
+  override private[amf] def element: models.WebApi = webApi
 
   /** Set name property of this [[WebApi]]. */
   def withName(name: String): this.type = {

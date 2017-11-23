@@ -8,10 +8,11 @@ import amf.domain.security._
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.framework.metamodel.document.BaseUnitModel.Location
 import amf.framework.metamodel.document._
-import amf.framework.metamodel.{Field, Obj, Type}
+import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.framework.registries.AMFDomainRegistry
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.extensions.{DataNodeModel, ShapeExtensionModel}
@@ -21,6 +22,8 @@ import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, FragmentsTypesModels, OverlayModel}
 import amf.plugins.document.webapi.model._
+import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.Platform
 import amf.shape._
 import amf.spec.ParserContext
@@ -226,8 +229,10 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
   /** Object Type builders. */
   private val builders: Map[Obj, (Annotations) => AmfObject] = Map(
+/*
     DocumentModel                                       -> Document.apply,
     WebApiModel                                         -> WebApi.apply,
+*/
     OrganizationModel                                   -> Organization.apply,
     LicenseModel                                        -> License.apply,
     CreativeWorkModel                                   -> CreativeWork.apply,
@@ -253,11 +258,12 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     PropertyShapeModel                                  -> PropertyShape.apply,
     XMLSerializerModel                                  -> XMLSerializer.apply,
     PropertyDependenciesModel                           -> PropertyDependencies.apply,
+/*
     ModuleModel                                         -> Module.apply,
     FragmentsTypesModels.ResourceTypeFragmentModel      -> ResourceTypeFragment.apply,
     FragmentsTypesModels.TraitFragmentModel             -> TraitFragment.apply,
     FragmentsTypesModels.DocumentationItemFragmentModel         -> DocumentationItemFragment.apply,
-    FragmentsTypesModels.DataTypeFragmentModel                  -> DataTypeFragment.apply,
+   FragmentsTypesModels.DataTypeFragmentModel                  -> DataTypeFragment.apply,
     FragmentsTypesModels.NamedExampleFragmentModel              -> NamedExampleFragment.apply,
     FragmentsTypesModels.AnnotationTypeDeclarationFragmentModel -> AnnotationTypeDeclarationFragment.apply,
     ExtensionModel                                      -> Extension.apply,
@@ -265,6 +271,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     FragmentsTypesModels.ExternalFragmentModel          -> ExternalFragment.apply,
     FragmentsTypesModels.SecuritySchemeFragmentModel            -> SecuritySchemeFragment.apply,
     FragmentsTypesModels.DialectNodeFragmentModel               -> DialectFragment.apply,
+*/
     TraitModel                                          -> Trait.apply,
     ResourceTypeModel                                   -> ResourceType.apply,
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,
@@ -280,7 +287,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     ExampleModel                                        -> Example.apply
   )
 
-  private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap
+  private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap ++ AMFDomainRegistry.metadataRegistry
 
   private def findType(typeString: String): Option[Obj] = {
     types.get(typeString).orElse(platform.dialectsRegistry.knowsType(typeString))
@@ -289,11 +296,19 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
   private def buildType(modelType: Obj): (Annotations) => AmfObject = {
     builders.getOrElse(
       modelType,
-      modelType match {
+      default = modelType match {
         case dialectType: DialectNode =>
           (annotations: Annotations) =>
             DomainEntity(dialectType, annotations)
-        case _ => throw new Exception(s"Cannot find builder for node type $modelType")
+        case _ =>
+          AMFDomainRegistry.metadataRegistry.get(modelType.`type`.head.iri()) match {
+            case Some(modelType: ModelDefaultBuilder) =>
+              (annotations: Annotations) =>
+                val instance = modelType.modelInstance
+                instance.annotations ++= annotations
+                instance
+            case _ => throw new Exception(s"Cannot find builder for node type $modelType")
+          }
       }
     )
   }
