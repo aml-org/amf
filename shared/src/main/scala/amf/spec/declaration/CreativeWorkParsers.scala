@@ -1,9 +1,9 @@
 package amf.spec.declaration
 
-import amf.domain.CreativeWork
 import amf.framework.parser.Annotations
-import amf.metadata.domain.CreativeWorkModel
 import amf.parser.YMapOps
+import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.YMap

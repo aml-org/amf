@@ -1,11 +1,12 @@
 package amf.spec.declaration
 
-import amf.domain.{CreativeWork, Example}
+import amf.domain.Example
 import amf.framework.parser.Annotations
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.plugins.domain.webapi.models.annotations.{ExplicitField, Inferred}
 import amf.shape.OasTypeDefMatcher.matchType
 import amf.shape.TypeDef._

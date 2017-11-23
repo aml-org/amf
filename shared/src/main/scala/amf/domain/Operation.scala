@@ -6,6 +6,7 @@ import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.OperationModel
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
+import amf.plugins.domain.webapi.models.CreativeWork
 
 /**
   * Operation internal model.

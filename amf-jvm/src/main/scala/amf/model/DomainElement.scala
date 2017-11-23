@@ -63,7 +63,7 @@ object DomainElement {
     case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")
     case o: amf.domain.Parameter                           => Parameter(o)
     case o: amf.domain.Payload                             => Payload(o)
-    case o: amf.domain.CreativeWork                        => CreativeWork(o)
+    case o: models.CreativeWork                        => CreativeWork(o)
     case o: amf.domain.EndPoint                            => EndPoint(o)
     case o: amf.domain.Request                             => Request(o)
     case o: amf.domain.Response                            => Response(o)

@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.framework.model.document.{Document, Module}
 import amf.domain._
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.{CreativeWork, WebApi}
 import amf.unsafe.PlatformSecrets
 
 /**

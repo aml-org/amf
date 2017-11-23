@@ -1,10 +1,11 @@
 package amf.shape
 
 import amf.domain.extensions.ShapeExtension
-import amf.domain.{CreativeWork, Example, Linkable}
+import amf.domain.{Example, Linkable}
 import amf.framework.model.domain.DomainElement
 import amf.metadata.shape.ShapeModel._
 import amf.model.AmfArray
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.plugins.domain.webapi.models.annotations.{ExplicitField, ParsedFromTypeExpression}
 
 /**

@@ -1,11 +1,12 @@
 package amf.spec.declaration
 
-import amf.domain.{CreativeWork, Value}
+import amf.domain.Value
 import amf.framework.parser.Annotations
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.CreativeWork
 import amf.plugins.domain.webapi.models.annotations._
 import amf.shape.TypeDef._
 import amf.shape._

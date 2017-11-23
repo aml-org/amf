@@ -3,6 +3,7 @@ package amf.metadata.domain
 import amf.domain.Operation
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
+import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
 import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.vocabulary.{Namespace, ValueType}
 
