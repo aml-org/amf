@@ -1,6 +1,6 @@
-package amf.model
+package amf.framework.model.domain
 
-import amf.domain._
+import amf.domain.{Fields, Linkable}
 import amf.framework.metamodel.Field
 import amf.framework.parser.Annotations
 
@@ -76,11 +76,7 @@ trait AmfObject extends AmfElement {
 
   /** Set field value. */
   def set(field: Field, value: AmfElement, annotations: Annotations): this.type = {
-    value match {
-      case link: Linkable if link.isLink =>
-        fields.link(field, link.linkTarget.get.asInstanceOf[AmfObject], annotations)
-      case _ => fields.set(id, field, value, annotations)
-    }
+    fields.set(id, field, value, annotations)
     this
   }
 

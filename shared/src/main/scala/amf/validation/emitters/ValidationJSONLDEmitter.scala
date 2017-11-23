@@ -1,6 +1,6 @@
 package amf.validation.emitters
 
-import amf.parser.Position
+import amf.framework.parser.Position
 import amf.spec.PartEmitter
 import amf.spec.common.BaseEmitters._
 import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}

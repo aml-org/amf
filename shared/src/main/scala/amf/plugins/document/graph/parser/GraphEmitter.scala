@@ -1,16 +1,15 @@
 package amf.plugins.document.graph.parser
 
 import amf.client.GenerationOptions
-import amf.framework.model.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions._
-import amf.framework.metamodel.{Field, Obj, Type}
-import amf.framework.model.domain.{DomainElement, ScalarType}
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.framework.metamodel.{Field, Obj, Type}
+import amf.framework.model.document.BaseUnit
+import amf.framework.model.domain._
 import amf.metadata._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}

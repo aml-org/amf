@@ -2,7 +2,7 @@ package amf.spec.declaration
 
 import amf.domain.FieldEntry
 import amf.framework.model.document.BaseUnit
-import amf.parser.Position
+import amf.framework.parser.Position
 import amf.plugins.domain.shapes.models.PropertyShape
 import amf.remote.{Oas, Raml}
 import amf.spec.common.BaseEmitters._

@@ -4,12 +4,11 @@ import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.framework.model.document._
-import amf.framework.model.domain.{DomainElement, LexicalInformation}
+import amf.framework.model.domain.{AmfScalar, DomainElement, LexicalInformation}
+import amf.framework.parser.Position
 import amf.framework.utils.TSort.tsort
+import amf.framework.parser.Position.ZERO
 import amf.metadata.domain._
-import amf.model.AmfScalar
-import amf.parser.Position
-import amf.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations.{Aliases, ExplicitField, SourceVendor, SynthesizedField}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader

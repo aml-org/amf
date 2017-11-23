@@ -2,8 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.domain.extensions.ShapeExtension
 import amf.domain.{Example, Linkable}
-import amf.framework.model.domain.DomainElement
-import amf.model.AmfArray
+import amf.framework.model.domain.{AmfArray, DomainElement}
 import amf.plugins.document.webapi.annotations.{ExplicitField, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel.ShapeModel._
 import amf.plugins.domain.webapi.models.CreativeWork

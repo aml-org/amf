@@ -4,7 +4,7 @@ import amf.framework.model.document._
 import amf.framework.model.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.framework.metamodel.document.BaseUnitModel
-import amf.parser.Position
+import amf.framework.parser.Position
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.remote.Oas

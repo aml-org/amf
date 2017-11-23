@@ -3,11 +3,10 @@ package amf.spec.declaration
 import amf.domain._
 import amf.framework.metamodel.Field
 import amf.framework.model.document.BaseUnit
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.AmfScalar
+import amf.framework.parser.{Annotations, Position}
+import amf.framework.parser.Position.ZERO
 import amf.metadata.domain.ExampleModel
-import amf.model.AmfScalar
-import amf.parser.Position
-import amf.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.metamodel._

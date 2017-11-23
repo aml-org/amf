@@ -1,8 +1,7 @@
 package amf.spec.raml
 
-import amf.framework.model.domain.LexicalInformation
-import amf.model.AmfArray
-import amf.parser.Range
+import amf.framework.model.domain.{AmfArray, LexicalInformation}
+import amf.framework.parser.Range
 import amf.plugins.document.webapi.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._

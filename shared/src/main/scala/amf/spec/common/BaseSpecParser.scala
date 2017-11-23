@@ -1,12 +1,10 @@
 package amf.spec.common
 
-import amf.domain._
+import amf.framework.model.domain.{AmfArray, AmfScalar}
 import amf.framework.parser.Annotations
-import amf.model.{AmfArray, AmfScalar}
+import amf.framework.parser._
 import amf.spec.ParserContext
 import org.yaml.model._
-import amf.parser.YScalarYRead
-import amf.plugins.document.webapi.contexts.WebApiContext
 
 /**
   * Base spec parser.

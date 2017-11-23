@@ -1,7 +1,7 @@
 package amf.spec.domain
 
 import amf.framework.parser.Annotations
-import amf.parser.YMapOps
+import amf.framework.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.metamodel.OrganizationModel
 import amf.plugins.domain.webapi.models.Organization

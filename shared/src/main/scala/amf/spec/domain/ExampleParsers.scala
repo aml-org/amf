@@ -1,10 +1,10 @@
 package amf.spec.domain
 
 import amf.domain.Example
+import amf.framework.model.domain.AmfScalar
 import amf.framework.parser.Annotations
+import amf.framework.parser._
 import amf.metadata.domain.ExampleModel
-import amf.model.AmfScalar
-import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.annotations.{SingleValueArray, SynthesizedField}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.common.{AnnotationParser, ValueNode}

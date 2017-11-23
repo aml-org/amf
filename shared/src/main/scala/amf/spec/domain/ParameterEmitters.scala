@@ -2,8 +2,8 @@ package amf.spec.domain
 
 import amf.domain.{FieldEntry, Fields}
 import amf.framework.model.document.BaseUnit
-import amf.model.AmfScalar
-import amf.parser.Position
+import amf.framework.model.domain.AmfScalar
+import amf.framework.parser.Position
 import amf.plugins.document.webapi.annotations.{ExplicitField, SynthesizedField}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel

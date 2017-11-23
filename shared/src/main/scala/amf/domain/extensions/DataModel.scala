@@ -1,15 +1,14 @@
 package amf.domain.extensions
 
-import amf.framework.utils._
 import amf.domain.`abstract`.Variable
 import amf.domain.{DynamicDomainElement, Fields}
 import amf.framework.metamodel.Field
-import amf.framework.model.domain.ScalarType
-import amf.framework.parser.Annotations
 import amf.framework.metamodel.Type.{Array, Str}
+import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar, ScalarType}
+import amf.framework.parser.Annotations
+import amf.framework.utils._
 import amf.metadata.domain.extensions.DataNodeModel
 import amf.metadata.domain.extensions.DataNodeModel.Name
-import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.resolution.stages.VariableReplacer
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YPart, YSequence}

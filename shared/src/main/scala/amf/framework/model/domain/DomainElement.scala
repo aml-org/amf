@@ -4,8 +4,8 @@ import amf.domain.FieldEntry
 import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.extensions.DomainExtension
 import amf.framework.metamodel.Obj
+import amf.framework.parser.Range
 import amf.metadata.domain.DomainElementModel.{CustomDomainProperties, Extends, `type`}
-import amf.model.{AmfArray, AmfObject, AmfScalar}
 import amf.vocabulary.Namespace
 
 /**
@@ -68,7 +68,7 @@ trait DomainElement extends AmfObject {
     }
   }
 
-  def position(): Option[amf.parser.Range] = annotations.find(classOf[LexicalInformation]) match {
+  def position(): Option[Range] = annotations.find(classOf[LexicalInformation]) match {
     case Some(info) => Some(info.range)
     case _          => None
   }

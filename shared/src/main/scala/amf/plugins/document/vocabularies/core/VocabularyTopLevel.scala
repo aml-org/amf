@@ -1,7 +1,7 @@
 package amf.dialects
 import amf.dialects._
 import amf.plugins.document.vocabularies.core._
-import amf.model.AmfScalar
+import amf.framework.model.domain.AmfScalar
 import amf.domain.dialects.DomainEntity
 object RAML_1_0_VocabularyTopLevel {
   case class VocabularyObject(entity: DomainEntity = DomainEntity(Vocabulary), 

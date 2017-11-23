@@ -2,7 +2,7 @@ package amf.spec.domain
 
 import amf.domain.FieldEntry
 import amf.framework.model.document.BaseUnit
-import amf.parser.Position
+import amf.framework.parser.Position
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.Response
 import amf.spec.common.BaseEmitters._

@@ -1,9 +1,9 @@
 package amf.spec.declaration
 
 import amf.domain.Example
+import amf.framework.model.domain.{AmfArray, AmfScalar}
 import amf.framework.parser.Annotations
-import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.framework.parser._
 import amf.plugins.document.webapi.annotations.{ExplicitField, Inferred}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType

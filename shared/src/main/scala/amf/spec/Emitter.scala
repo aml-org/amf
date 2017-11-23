@@ -1,6 +1,6 @@
 package amf.spec
 
-import amf.parser.Position
+import amf.framework.parser.Position
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 /**

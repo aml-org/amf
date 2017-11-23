@@ -1,6 +1,6 @@
 package amf.framework.metamodel
 
-import amf.model.AmfObject
+import amf.framework.model.domain.AmfObject
 
 trait ModelDefaultBuilder {
 

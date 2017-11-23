@@ -2,7 +2,7 @@ package amf.spec.declaration
 
 import amf.domain.FieldEntry
 import amf.domain.`abstract`.{ParametrizedDeclaration, ParametrizedResourceType, ParametrizedTrait}
-import amf.parser.Position
+import amf.framework.parser.Position
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.spec.common.BaseEmitters._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

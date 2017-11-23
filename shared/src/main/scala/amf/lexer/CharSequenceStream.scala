@@ -1,6 +1,6 @@
 package amf.lexer
 
-import amf.parser.Position
+import amf.framework.parser.Position
 
 /**
   * A CharStream backed by a CharSequence

@@ -2,8 +2,8 @@ package amf.spec
 
 import amf.compiler.ParsedReference
 import amf.framework.model.domain.LexicalInformation
+import amf.framework.parser.Range
 import amf.framework.validation.SeverityLevels.VIOLATION
-import amf.parser.Range
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, RamlSpecAwareContext, SpecAwareContext, WebApiContext}
 import amf.remote.{Oas, Raml, Unknown, Vendor}
 import amf.shape.Shape

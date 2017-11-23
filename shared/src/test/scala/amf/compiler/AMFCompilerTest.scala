@@ -1,9 +1,9 @@
 package amf.compiler
 
-import amf.framework.model.document.{BaseUnit, Document}
 import amf.exception.CyclicReferenceException
+import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.parser.Unspecified
-import amf.parser.YMapOps
+import amf.framework.parser._
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._

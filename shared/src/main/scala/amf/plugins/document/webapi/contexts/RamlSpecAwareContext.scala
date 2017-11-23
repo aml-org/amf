@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.parser._
 import org.yaml.model.{YNode, YScalar, YType}
+import amf.framework.parser._
 
 object RamlSpecAwareContext extends SpecAwareContext {
 

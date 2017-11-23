@@ -1,6 +1,7 @@
 package amf.spec.declaration
 
-import amf.parser.{YMapOps, YScalarYRead}
+
+import amf.framework.parser._
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.models.TypeDef._

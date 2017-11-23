@@ -1,8 +1,7 @@
 package amf.common
 
 import amf.framework.metamodel.Field
-import amf.framework.model.domain.Annotation
-import amf.model.AmfObject
+import amf.framework.model.domain.{AmfObject, Annotation}
 import org.scalatest._
 
 /**

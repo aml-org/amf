@@ -1,8 +1,7 @@
 package amf.spec.declaration
 
 import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
-import amf.framework.parser.Annotations
-import amf.parser.YMapOps
+import amf.framework.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.SearchScope
 import amf.spec.common.{AbstractVariables, DataNodeParser}

@@ -1,6 +1,5 @@
-package amf.model
+package amf.framework.model.domain
 
-import amf.framework.model.domain.Annotation
 import amf.framework.parser.Annotations
 
 /**

@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.annotations
 
-import amf.framework.model.domain.{AnnotationGraphLoader, SerializableAnnotation}
-import amf.model.AmfElement
+import amf.framework.model.domain.{AmfElement, AnnotationGraphLoader, SerializableAnnotation}
 
 object ParsedFromTypeExpression extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
