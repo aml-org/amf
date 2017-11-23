@@ -1,8 +1,9 @@
-package amf.dialects
+package amf.plugins.document.vocabularies.core
 
-import scala.collection.mutable
 import amf.metadata.Type
 import amf.spec.dialects.{Dialect, DialectNode, DialectPropertyMapping}
+
+import scala.collection.mutable
 
 /**
   * Created by Pavel Petrochenko on 18/09/17.
@@ -151,7 +152,7 @@ class TopLevelGenerator(d: Dialect) {
   def generate(): String = {
     val bld = new mutable.StringBuilder()
     bld.append(
-      "package amf.dialects\nimport amf.dialects._\nimport amf.model.AmfScalar\nimport amf.domain.dialects.DomainEntity\n")
+      "package amf.dialects\nimport amf.dialects._\nimport amf.plugins.document.vocabularies.core._\nimport amf.model.AmfScalar\nimport amf.domain.dialects.DomainEntity\n")
     bld.append(s"object ${d.name.replace(' ', '_').replace('.', '_')}TopLevel {\n")
     generateNode(this.d.root)
     map.values.foreach { v =>

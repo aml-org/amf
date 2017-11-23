@@ -1,9 +1,10 @@
 package amf.unsafe
 
-import amf.dialects.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
+
 import amf.lexer.CharSequenceStream
 import amf.remote._
 import amf.framework.validation.core.SHACLValidator
+import amf.plugins.document.vocabularies.core.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}
 import org.mulesoft.common.io.FileSystem
 
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -3,6 +3,7 @@ package amf.dialects
 import java.util.concurrent.CompletableFuture
 
 import amf.compiler.AMFCompiler
+import amf.plugins.document.vocabularies.core.{DialectLoader, PlatformDialectRegistry}
 import amf.remote.{ExtensionYamlHint, Platform, RamlYamlHint}
 import amf.spec.dialects.Dialect
 import amf.remote.FutureConverter.converters

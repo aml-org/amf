@@ -1,7 +1,7 @@
-package amf.dialects
+package amf.plugins.document.vocabularies.core
 
 import amf.domain.dialects.DomainEntity
-import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.model.{AmfArray, AmfScalar}
 import amf.spec.dialects.DialectPropertyMapping
 
 

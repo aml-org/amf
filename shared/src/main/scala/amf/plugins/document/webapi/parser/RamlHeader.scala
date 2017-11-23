@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi.parser
 
-import amf.compiler.FragmentTypes
 import amf.core.Root
 import amf.parser.YNodeLikeOps
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
-import org.yaml.model.{YComment, YMap}
+import org.yaml.model.YMap
 
 /**
   * Raml header comment

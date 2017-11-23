@@ -2,6 +2,7 @@ package amf.dialects
 import amf.client.GenerationOptions
 import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
+import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.remote.Syntax.Json
 import amf.remote._
 import amf.spec.dialects.Dialect
