@@ -1,10 +1,10 @@
 package amf.compiler
 
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.WebApi
 import amf.exception.CyclicReferenceException
 import amf.framework.parser.Unspecified
 import amf.parser.YMapOps
+import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.unsafe.PlatformSecrets

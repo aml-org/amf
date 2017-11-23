@@ -2,7 +2,7 @@ package amf.maker
 
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.Document
-import amf.domain.WebApi
+import amf.plugins.domain.webapi.models.WebApi
 import amf.remote._
 import amf.shape.NodeShape
 import amf.validation.Validation

@@ -22,6 +22,8 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
 
   val vendors = Seq("AMF JSON-LD")
 
+  override def modelEntities = Nil
+  
   override def documentSyntaxes = Seq(
     "application/ld+json",
     "application/json",

@@ -2,6 +2,7 @@ package amf.client
 
 import amf.emit.AMFUnitFixtureTest
 import amf.model.{Document, Module, WebApi}
+import amf.plugins.domain.webapi.models
 
 /**
   *
@@ -9,11 +10,11 @@ import amf.model.{Document, Module, WebApi}
 trait PairsAMFUnitFixtureTest extends AMFUnitFixtureTest {
 
   def webApiBare: WebApi = {
-    WebApi(`document/api/bare`.encodes.asInstanceOf[amf.domain.WebApi])
+    WebApi(`document/api/bare`.encodes.asInstanceOf[models.WebApi])
   }
 
   def webApiAdvanced: WebApi = {
-    WebApi(`document/api/advanced`.encodes.asInstanceOf[amf.domain.WebApi])
+    WebApi(`document/api/advanced`.encodes.asInstanceOf[models.WebApi])
   }
   def unitBare: Document = {
     Document(super.`document/api/bare`)

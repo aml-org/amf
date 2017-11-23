@@ -4,7 +4,6 @@ import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.model.document._
-import amf.domain.WebApi
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.{Library, Link}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
@@ -17,17 +16,20 @@ import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.{Oas, Platform}
 import amf.spec.ParserContext
 import amf.spec.oas._
 
 import scala.concurrent.Future
 
-object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations {
+object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with WebApiDocuments {
 
   val ID: String = "OAS 2.0"
 
   val vendors = Seq("OAS 2.0", "OAS")
+
+  override def modelEntities = webApiDocuments
 
   override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
@@ -112,4 +114,5 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     "application/openapi",
     "application/swagger"
   )
+
 }

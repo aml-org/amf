@@ -1,12 +1,14 @@
 package amf.resolution.stages
 
 import amf.ProfileNames
-import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.{Payload, WebApi}
+import amf.domain.Payload
 import amf.framework.metamodel.Field
+import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.DomainElement
-import amf.metadata.domain.{OperationModel, PayloadModel, RequestModel, WebApiModel}
+import amf.metadata.domain.{OperationModel, PayloadModel, RequestModel}
 import amf.model.AmfScalar
+import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.models.WebApi
 import amf.validation.Validation
 
 /** Apply root and operation mime types to payloads.

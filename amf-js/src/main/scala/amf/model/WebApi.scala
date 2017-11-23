@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -8,10 +10,10 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * JS WebApi model class.
   */
 @JSExportAll
-case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
+case class WebApi(private val webApi: models.WebApi) extends DomainElement {
 
   @JSExportTopLevel("WebApi")
-  def this() = this(amf.domain.WebApi())
+  def this() = this(models.WebApi())
 
   val name: String                                      = webApi.name
   val description: String                               = webApi.description
@@ -29,7 +31,7 @@ case class WebApi(private val webApi: amf.domain.WebApi) extends DomainElement {
   val baseUriParameters: js.Iterable[Parameter]         = webApi.baseUriParameters.map(amf.model.Parameter).toJSArray
   def security: js.Iterable[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).toJSArray
 
-  override private[amf] def element: amf.domain.WebApi = webApi
+  override private[amf] def element: models.WebApi = webApi
 
   /** Set name property of this [[WebApi]]. */
   def withName(name: String): this.type = {

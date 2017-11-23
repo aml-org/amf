@@ -20,6 +20,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   val vendors = Seq("AMF Payload")
 
+  override def modelEntities = Nil
+
   override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
   // we are looking for documents with a very specific payload
@@ -55,5 +57,4 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions) = None
 
   override def canUnparse(unit: BaseUnit) = false
-
 }

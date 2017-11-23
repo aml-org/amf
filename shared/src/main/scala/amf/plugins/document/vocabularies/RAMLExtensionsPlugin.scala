@@ -73,6 +73,8 @@ object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin w
 
   override def unparse(unit: BaseUnit, options: GenerationOptions) = Some(DialectEmitter(unit).emit())
 
+  override def modelEntities = Nil
+
   override def documentSyntaxes = Seq(
     "application/raml",
     "application/raml+json",

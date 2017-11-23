@@ -3,8 +3,8 @@ package amf.maker
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.{Document, Fragment}
-import amf.domain.WebApi
 import amf.plugins.document.webapi.model.DataTypeFragment
+import amf.plugins.domain.webapi.models.WebApi
 import amf.remote._
 import amf.shape.NodeShape
 import amf.unsafe.PlatformSecrets

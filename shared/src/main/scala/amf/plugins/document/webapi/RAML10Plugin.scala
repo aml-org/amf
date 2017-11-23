@@ -4,7 +4,6 @@ import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.model.document._
-import amf.domain.WebApi
 import amf.framework.model.domain.DomainElement
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
@@ -15,17 +14,20 @@ import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.{Platform, Raml}
 import amf.spec.ParserContext
 import amf.spec.raml._
 
 import scala.concurrent.Future
 
-object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations {
+object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with WebApiDocuments {
 
   val ID: String = "RAML 1.0"
 
   val vendors = Seq("RAML 1.0", "RAML")
+
+  override def modelEntities = webApiDocuments
 
   override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
@@ -95,5 +97,4 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
 
   def validationRequest(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, platform: Platform): Future[AMFValidationReport] =
     validationRequestsForBaseUnit(baseUnit, profile, validations, ProfileNames.RAML, platform)
-
 }
