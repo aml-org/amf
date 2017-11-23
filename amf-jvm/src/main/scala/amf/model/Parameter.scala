@@ -1,11 +1,13 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 /**
   * JVM Parameter model class.
   */
-case class Parameter private[model] (private val parameter: amf.domain.Parameter) extends DomainElement {
+case class Parameter private[model] (private val parameter: models.Parameter) extends DomainElement {
 
-  def this() = this(amf.domain.Parameter())
+  def this() = this(models.Parameter())
 
   val name: String        = parameter.name
   val description: String = parameter.description
@@ -13,7 +15,7 @@ case class Parameter private[model] (private val parameter: amf.domain.Parameter
   val binding: String     = parameter.binding
   val schema: Shape       = Shape(parameter.schema)
 
-  override private[amf] def element: amf.domain.Parameter = parameter
+  override private[amf] def element: models.Parameter = parameter
 
   /** Set name property of this [[Parameter]]. */
   def withName(name: String): this.type = {

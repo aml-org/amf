@@ -1,10 +1,11 @@
-package amf.domain
+package amf.plugins.domain.webapi.models
 
+import amf.domain._
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
-import amf.metadata.domain.ResponseModel
-import amf.metadata.domain.ResponseModel._
 import amf.model.AmfArray
+import amf.plugins.domain.webapi.metamodel.ResponseModel
+import amf.plugins.domain.webapi.metamodel.ResponseModel._
 
 /**
   * Response internal model.

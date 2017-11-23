@@ -1,16 +1,18 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 /**
   * JVM Payload model class.
   */
-case class Payload private[model] (private val payload: amf.domain.Payload) extends DomainElement {
+case class Payload private[model] (private val payload: models.Payload) extends DomainElement {
 
-  def this() = this(amf.domain.Payload())
+  def this() = this(models.Payload())
 
   val mediaType: String = payload.mediaType
   val schema: Shape     = Shape(payload.schema)
 
-  override private[amf] def element: amf.domain.Payload = payload
+  override private[amf] def element: models.Payload = payload
 
   /** Set mediaType property of this [[Payload]]. */
   def withMediaType(mediaType: String): this.type = {

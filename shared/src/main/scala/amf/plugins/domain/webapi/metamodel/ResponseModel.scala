@@ -1,7 +1,9 @@
-package amf.metadata.domain
-import amf.domain.Response
+package amf.plugins.domain.webapi.metamodel
+
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
+import amf.metadata.domain._
+import amf.plugins.domain.webapi.models.Response
 import amf.vocabulary.Namespace._
 import amf.vocabulary.ValueType
 

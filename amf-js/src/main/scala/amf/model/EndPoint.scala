@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
@@ -8,9 +10,9 @@ import scala.scalajs.js.annotation.JSExportAll
   * JS EndPoint model class.
   */
 @JSExportAll
-case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) extends DomainElement {
+case class EndPoint private[model] (private val endPoint: models.EndPoint) extends DomainElement {
 
-  def this() = this(amf.domain.EndPoint())
+  def this() = this(models.EndPoint())
 
   val name: String                                      = endPoint.name
   val description: String                               = endPoint.description
@@ -19,7 +21,7 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
   val parameters: js.Iterable[Parameter]                = endPoint.parameters.map(Parameter).toJSArray
   def security: js.Iterable[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).toJSArray
 
-  override private[amf] def element: amf.domain.EndPoint = endPoint
+  override private[amf] def element: models.EndPoint = endPoint
 
   /** Get the part of the path property that was defined by this [[EndPoint]]. */
   def relativePath: String = endPoint.relativePath

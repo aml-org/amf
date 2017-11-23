@@ -1,12 +1,13 @@
-package amf.domain
+package amf.plugins.domain.webapi.models
 
-import amf.framework.utils.Strings
+import amf.domain.Fields
 import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.security.ParametrizedSecurityScheme
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
-import amf.metadata.domain.EndPointModel
-import amf.metadata.domain.EndPointModel._
+import amf.framework.utils.Strings
+import amf.plugins.domain.webapi.metamodel.EndPointModel
+import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.annotations.ParentEndPoint
 
 

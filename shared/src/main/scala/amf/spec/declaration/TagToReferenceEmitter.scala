@@ -1,9 +1,10 @@
 package amf.spec.declaration
 
-import amf.domain.{Linkable, Parameter}
+import amf.domain.Linkable
 import amf.framework.model.document.{BaseUnit, Fragment, Module}
 import amf.framework.model.domain.DomainElement
 import amf.parser.Position
+import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.annotations.DeclaredElement
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape.Shape

@@ -235,13 +235,14 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     CreativeWorkModel                                   -> CreativeWork.apply,
     OrganizationModel                                   -> Organization.apply,
     LicenseModel                                        -> License.apply,
-*/
+
     EndPointModel                                       -> EndPoint.apply,
     OperationModel                                      -> Operation.apply,
     ParameterModel                                      -> Parameter.apply,
     PayloadModel                                        -> Payload.apply,
     RequestModel                                        -> Request.apply,
     ResponseModel                                       -> Response.apply,
+*/
     ShapeExtensionModel                                 -> ShapeExtension.apply,
     UnionShapeModel                                     -> UnionShape.apply,
     NodeShapeModel                                      -> NodeShape.apply,

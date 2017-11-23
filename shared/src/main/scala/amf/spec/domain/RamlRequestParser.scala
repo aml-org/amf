@@ -1,12 +1,12 @@
 package amf.spec.domain
 
-import amf.domain.{Parameter, Payload, Request}
 import amf.framework.parser.Annotations
 import amf.framework.utils.Lazy
-import amf.metadata.domain.RequestModel
 import amf.model.AmfArray
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.metamodel.RequestModel
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.spec.common.AnnotationParser
 import amf.spec.declaration.RamlTypeParser
 import org.yaml.model.YMap

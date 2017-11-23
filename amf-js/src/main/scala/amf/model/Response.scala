@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
@@ -8,9 +10,9 @@ import scala.scalajs.js.annotation.JSExportAll
   * JS Response model class.
   */
 @JSExportAll
-case class Response private[model] (private val response: amf.domain.Response) extends DomainElement {
+case class Response private[model] (private val response: models.Response) extends DomainElement {
 
-  def this() = this(amf.domain.Response())
+  def this() = this(models.Response())
 
   val name: String                    = response.name
   val description: String             = response.description
@@ -19,7 +21,7 @@ case class Response private[model] (private val response: amf.domain.Response) e
   val payloads: js.Iterable[Payload]  = response.payloads.map(Payload).toJSArray
   val examples: js.Iterable[Example]  = response.examples.map(Example).toJSArray
 
-  override private[amf] def element: amf.domain.Response = response
+  override private[amf] def element: models.Response = response
 
   /** Set name property of this [[Response]]. */
   def withName(name: String): this.type = {

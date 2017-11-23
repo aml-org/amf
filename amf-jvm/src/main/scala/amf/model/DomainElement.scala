@@ -16,8 +16,8 @@ trait DomainElement {
     element.customDomainProperties.map(DomainExtension).asJava
   lazy val `extends`: java.util.List[DomainElement] = element.extend.map {
     case pd: amf.domain.`abstract`.ParametrizedDeclaration => ParametrizedDeclaration(pd)
-    case op: amf.domain.Operation                          => Operation(op)
-    case e: amf.domain.EndPoint                            => EndPoint(e)
+    case op: models.Operation                          => Operation(op)
+    case e: models.EndPoint                            => EndPoint(e)
   }.asJava
 
   def withCustomDomainProperties(customProperties: java.util.List[DomainExtension]): this.type = {
@@ -58,15 +58,15 @@ trait DomainElement {
 object DomainElement {
   def apply(domainElement: domain.DomainElement): DomainElement = domainElement match {
     case o: models.WebApi                                  => WebApi(o)
-    case o: amf.domain.Operation                           => Operation(o)
+    case o: models.Operation                           => Operation(o)
     case o: models.Organization                            => Organization(o)
     case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")
-    case o: amf.domain.Parameter                           => Parameter(o)
-    case o: amf.domain.Payload                             => Payload(o)
+    case o: models.Parameter                           => Parameter(o)
+    case o: models.Payload                             => Payload(o)
     case o: models.CreativeWork                        => CreativeWork(o)
-    case o: amf.domain.EndPoint                            => EndPoint(o)
-    case o: amf.domain.Request                             => Request(o)
-    case o: amf.domain.Response                            => Response(o)
+    case o: models.EndPoint                            => EndPoint(o)
+    case o: models.Request                             => Request(o)
+    case o: models.Response                            => Response(o)
     case o: amf.domain.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(o)
     case o: amf.domain.security.SecurityScheme             => SecurityScheme(o)
     case o: amf.domain.extensions.ObjectNode               => ObjectNode(o)

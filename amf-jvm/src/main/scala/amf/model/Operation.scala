@@ -1,13 +1,15 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.collection.JavaConverters._
 
 /**
   * JVM Operation model class.
   */
-case class Operation private[model] (private val operation: amf.domain.Operation) extends DomainElement {
+case class Operation private[model] (private val operation: models.Operation) extends DomainElement {
 
-  def this() = this(amf.domain.Operation())
+  def this() = this(models.Operation())
 
   val method: String                          = operation.method
   val name: String                            = operation.name
@@ -22,7 +24,7 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   val responses: java.util.List[Response]     = operation.responses.map(Response).asJava
   def security: java.util.List[DomainElement] = operation.security.map(DomainElement(_)).asJava
 
-  override private[amf] def element: amf.domain.Operation = operation
+  override private[amf] def element: models.Operation = operation
 
   /** Set method property of this [[Operation]]. */
   def withMethod(method: String): this.type = {

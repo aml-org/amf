@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
@@ -8,9 +10,9 @@ import scala.scalajs.js.annotation.JSExportAll
   * JS Operation model class.
   */
 @JSExportAll
-case class Operation private[model] (private val operation: amf.domain.Operation) extends DomainElement {
+case class Operation private[model] (private val operation: models.Operation) extends DomainElement {
 
-  def this() = this(amf.domain.Operation())
+  def this() = this(models.Operation())
 
   val method: String                       = operation.method
   val name: String                         = operation.name
@@ -25,7 +27,7 @@ case class Operation private[model] (private val operation: amf.domain.Operation
   val responses: js.Iterable[Response]     = operation.responses.map(Response).toJSArray
   def security: js.Iterable[DomainElement] = operation.security.map(DomainElement(_)).toJSArray
 
-  override private[amf] def element: amf.domain.Operation = operation
+  override private[amf] def element: models.Operation = operation
 
   /** Set method property of this [[Operation]]. */
   def withMethod(method: String): this.type = {

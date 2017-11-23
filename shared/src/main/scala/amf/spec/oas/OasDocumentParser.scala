@@ -19,8 +19,8 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models.{CreativeWork, License, Organization, WebApi}
+import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.annotations._
 import amf.shape.NodeShape
 import amf.spec.common._

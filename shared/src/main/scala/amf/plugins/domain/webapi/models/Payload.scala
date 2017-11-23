@@ -1,9 +1,10 @@
-package amf.domain
+package amf.plugins.domain.webapi.models
 
+import amf.domain.{Fields, Linkable}
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
-import amf.metadata.domain.PayloadModel
-import amf.metadata.domain.PayloadModel._
+import amf.plugins.domain.webapi.metamodel.PayloadModel
+import amf.plugins.domain.webapi.metamodel.PayloadModel._
 import amf.shape.{ArrayShape, NodeShape, ScalarShape, Shape}
 import org.yaml.model.YMap
 

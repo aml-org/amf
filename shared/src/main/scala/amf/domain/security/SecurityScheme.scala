@@ -7,6 +7,7 @@ import amf.framework.parser.Annotations
 import amf.metadata.domain.security.SecuritySchemeModel
 import amf.metadata.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import amf.model.AmfArray
+import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.shape.Shape
 import org.yaml.model.YPart
 

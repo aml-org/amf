@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.domain.extensions.{CustomDomainProperty, DataNode, ObjectNode}
 import amf.domain.security.SecurityScheme
-import amf.domain.{Parameter, Payload, Request}
+import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.framework.validation.AMFValidationResult
 import amf.metadata.domain.security.SecuritySchemeModel
-import amf.metadata.domain.{ParameterModel, PayloadModel, RequestModel}
 import amf.metadata.shape.ShapeModel
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, RequestModel}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.remote.Platform
 import amf.shape.{NodeShape, Shape, UnionShape}
 import amf.vocabulary.Namespace

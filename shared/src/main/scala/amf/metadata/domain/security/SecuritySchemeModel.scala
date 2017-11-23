@@ -3,8 +3,9 @@ package amf.metadata.domain.security
 import amf.domain.security.SecurityScheme
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
-import amf.metadata.domain.{DomainElementModel, KeyField, ParameterModel, ResponseModel}
+import amf.metadata.domain.{DomainElementModel, KeyField}
 import amf.metadata.shape.ShapeModel
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel}
 import amf.vocabulary.Namespace.Security
 import amf.vocabulary.ValueType
 

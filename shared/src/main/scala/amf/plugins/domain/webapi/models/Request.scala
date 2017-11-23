@@ -1,9 +1,10 @@
-package amf.domain
+package amf.plugins.domain.webapi.models
 
+import amf.domain.Fields
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
-import amf.metadata.domain.RequestModel
-import amf.metadata.domain.RequestModel._
+import amf.plugins.domain.webapi.metamodel.RequestModel
+import amf.plugins.domain.webapi.metamodel.RequestModel._
 import amf.shape.Shape
 
 /**

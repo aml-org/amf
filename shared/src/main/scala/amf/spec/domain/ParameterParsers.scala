@@ -1,10 +1,10 @@
 package amf.spec.domain
 
-import amf.domain.Parameter
 import amf.framework.parser.Annotations
-import amf.metadata.domain.ParameterModel
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.metamodel.ParameterModel
+import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.annotations.{ExplicitField, SynthesizedField}
 import amf.shape.Shape
 import amf.spec.SearchScope

@@ -1,14 +1,15 @@
 package amf.spec.domain
 
+import amf.domain.FieldEntry
 import amf.framework.model.document.BaseUnit
-import amf.domain.{FieldEntry, Response}
-import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.parser.Position
-import amf.spec.{EntryEmitter, SpecOrdering}
-import org.yaml.model.YDocument.EntryBuilder
+import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
+import amf.plugins.domain.webapi.models.Response
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.declaration.AnnotationsEmitter
+import amf.spec.{EntryEmitter, SpecOrdering}
+import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 

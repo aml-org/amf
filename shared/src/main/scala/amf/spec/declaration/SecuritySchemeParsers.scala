@@ -1,14 +1,14 @@
 package amf.spec.declaration
 
 import amf.domain.security.{Scope, SecurityScheme, Settings}
-import amf.domain.{Parameter, Response}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.remote.{Oas, Raml}
-import amf.spec.{ParserContext, SearchScope}
+import amf.spec.SearchScope
 import amf.spec.common._
 import amf.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
 import org.yaml.model._
