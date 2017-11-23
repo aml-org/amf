@@ -4,6 +4,7 @@ import amf.compiler.Root
 import amf.dialects._
 import amf.document.Fragment.{DialectFragment, Fragment}
 import amf.document.{BaseUnit, Document, EncodesModel, Module}
+import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type.{Iri, Str}
 import amf.metadata.{Field, Obj, Type}
@@ -287,11 +288,9 @@ object TypeBuiltins {
   val ANY: String       = (Namespace.Xsd + "anyType").iri()
 
 }
-object NamespaceExtraFields{
-  val PATH = Field(Str, Namespace.Document + "uses-path")
-  val NAMESPACE    = Field(Str, Namespace.Document + "uses-namespace")
 
-}
+
+
 class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], override  val referencedDocuments: Map[String, BaseUnit])(
     implicit val ctx: ParserContext)
     extends RamlSpecParser
@@ -513,23 +512,28 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
       }
       case d: Document=>{
          val de=d.encodes.asInstanceOf[DomainEntity];
-         val nm=d.fields.get(NamespaceExtraFields.NAMESPACE).toString;
-         de.definition.mappings().filter(x=>x.isMap).foreach(m=>{
-           de.entities(m).foreach(vocEntity=>{
-               if (vocEntity.linkValue.isDefined) {
-                 documenEntities.put(vocEntity.id, nm + "." + vocEntity.linkValue.get)
-               }
+         d.annotations.find(classOf[Aliases]).foreach(aliases=>{
+           aliases.aliases.foreach(a=>{
+             de.definition.mappings().filter(x=>x.isMap).foreach(m=>{
+                          de.entities(m).foreach(vocEntity=>{
+                              if (vocEntity.linkValue.isDefined) {
+                                documenEntities.put(vocEntity.id, a._1 + "." + vocEntity.linkValue.get)
+                              }
+                          })})
            })
          })
       }
       case m: Module=>{
-        val nm=m.fields.get(NamespaceExtraFields.NAMESPACE).toString;
-          m.declares.foreach(declEntity=>{
-            val linkValue = declEntity.asInstanceOf[DomainEntity].linkValue
-            if (linkValue.isDefined) {
-              documenEntities.put(declEntity.id, nm + "." + linkValue.get)
-            }
+        m.annotations.find(classOf[Aliases]).foreach(aliases=>{
+          aliases.aliases.foreach(a=>{
+            m.declares.foreach(declEntity=>{
+                          val linkValue = declEntity.asInstanceOf[DomainEntity].linkValue
+                          if (linkValue.isDefined) {
+                            documenEntities.put(declEntity.id, a._1 + "." + linkValue.get)
+                          }
+                        })
           })
+        })
 
       }
 
