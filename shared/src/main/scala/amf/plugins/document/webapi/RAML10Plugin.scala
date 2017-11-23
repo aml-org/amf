@@ -6,23 +6,27 @@ import amf.core.Root
 import amf.document.Fragment.Fragment
 import amf.document._
 import amf.domain.{DomainElement, WebApi}
-import amf.framework.plugins.{AMFDomainPlugin, AMFValidationPlugin}
+import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
+import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.remote.{Platform, Raml}
 import amf.spec.ParserContext
 import amf.spec.raml._
 
 import scala.concurrent.Future
 
-object RAML10Plugin extends AMFDomainPlugin with AMFValidationPlugin with WebApiValidations {
+object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations {
 
   val ID: String = "RAML 1.0"
 
   val vendors = Seq("RAML 1.0", "RAML")
+
+  override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
   def canParse(root: Root): Boolean = RamlHeader(root) match {
     case Some(RamlHeader.Raml10)          => true
@@ -72,7 +76,7 @@ object RAML10Plugin extends AMFDomainPlugin with AMFValidationPlugin with WebApi
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def domainSyntaxes = Seq(
+  override def documentSyntaxes = Seq(
     "application/raml",
     "application/raml+json",
     "application/raml+yaml",

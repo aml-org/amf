@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.parser.Annotations
 import amf.metadata.domain.ExampleModel
 import amf.metadata.domain.ExampleModel._
 import org.yaml.model.YPart

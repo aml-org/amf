@@ -1,16 +1,15 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation.ExplicitField
-import amf.domain.Annotations
+import amf.framework.parser.Annotations
 import amf.metadata.shape.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.YMapOps
 import amf.shape.{PropertyDependencies, PropertyShape, XMLSerializer}
-import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.parser.YScalarYRead
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.annotations.ExplicitField
 
 import scala.collection.mutable
 

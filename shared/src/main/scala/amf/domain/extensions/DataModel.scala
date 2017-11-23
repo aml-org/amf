@@ -2,8 +2,9 @@ package amf.domain.extensions
 
 import amf.common.core._
 import amf.domain.`abstract`.Variable
-import amf.domain.Annotation.ScalarType
-import amf.domain.{Annotations, DynamicDomainElement, Fields}
+import amf.domain.{DynamicDomainElement, Fields}
+import amf.framework.domain.ScalarType
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 import amf.metadata.Type.{Array, Str}
 import amf.metadata.domain.extensions.DataNodeModel

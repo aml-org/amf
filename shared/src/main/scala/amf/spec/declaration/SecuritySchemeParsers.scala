@@ -1,7 +1,8 @@
 package amf.spec.declaration
 
 import amf.domain.security.{Scope, SecurityScheme, Settings}
-import amf.domain.{Annotations, Parameter, Response}
+import amf.domain.{Parameter, Response}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}

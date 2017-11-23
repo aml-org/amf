@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.validation
 
 import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.LexicalInformation
 import amf.domain.Example
 import amf.domain.extensions.DataNode
+import amf.framework.domain.LexicalInformation
 import amf.framework.services.RuntimeCompiler
 import amf.framework.validation.{AMFValidationResult, SeverityLevels}
 import amf.plugins.document.webapi.PayloadPlugin

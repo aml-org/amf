@@ -1,6 +1,7 @@
 package amf.shape
 
-import amf.domain.{Annotations, Fields, Linkable}
+import amf.domain.{Fields, Linkable}
+import amf.framework.parser.Annotations
 import amf.metadata.shape.UnionShapeModel._
 import org.yaml.model.YPart
 

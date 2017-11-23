@@ -1,18 +1,19 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation._
-import amf.domain.{Annotations, CreativeWork, Value}
+import amf.domain.{CreativeWork, Value}
+import amf.framework.parser.Annotations
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.annotations._
 import amf.shape.TypeDef._
 import amf.shape._
+import amf.spec.SearchScope
 import amf.spec.SearchScope.Named
 import amf.spec.common.{ArrayNode, ShapeExtensionParser, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.raml._
-import amf.spec.{ParserContext, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser

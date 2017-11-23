@@ -1,6 +1,7 @@
 package amf.shape
 
-import amf.domain.{Annotations, Fields}
+import amf.domain.Fields
+import amf.framework.parser.Annotations
 import amf.metadata.shape.PropertyShapeModel
 import amf.metadata.shape.PropertyShapeModel._
 

@@ -3,7 +3,8 @@ package amf.plugins.document.webapi.validation
 import amf.document.BaseUnit
 import amf.document.Fragment.Fragment
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
-import amf.domain.{Annotations, Fields}
+import amf.domain.Fields
+import amf.framework.parser.Annotations
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
 import amf.metadata.document.FragmentModel

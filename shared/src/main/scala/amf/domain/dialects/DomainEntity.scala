@@ -1,6 +1,7 @@
 package amf.domain.dialects
 
-import amf.domain.{Annotations, DomainElement, Fields, Linkable}
+import amf.domain.{DomainElement, Fields, Linkable}
+import amf.framework.parser.Annotations
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 

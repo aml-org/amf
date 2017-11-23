@@ -6,12 +6,13 @@ import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
+import amf.framework.parser.Annotations
 import amf.shape.{Shape, UnresolvedShape}
 import amf.spec.SearchScope.{All, Fragments, Named}
 import org.yaml.model.YPart
 
-case class DeclarationPromise(private val success: (Linkable) => Unit,
-                              private val failure: () => Unit,
+case class DeclarationPromise(private val success: (Linkable) => Any,
+                              private val failure: () => Any,
                               var resolved: Boolean = false) {
 
   def resolve(element: Linkable): Unit = {

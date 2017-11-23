@@ -2,9 +2,9 @@ package amf.plugins.document.graph.parser
 
 import amf.client.GenerationOptions
 import amf.document.BaseUnit
-import amf.domain.Annotation.ScalarType
 import amf.domain._
 import amf.domain.extensions._
+import amf.framework.domain.ScalarType
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata._
 import amf.metadata.domain.DomainElementModel.Sources

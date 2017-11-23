@@ -1,7 +1,8 @@
 package amf.shape
 
-import amf.domain.Annotation.LexicalInformation
-import amf.domain.{Annotations, Fields, Linkable}
+import amf.domain.{Fields, Linkable}
+import amf.framework.domain.LexicalInformation
+import amf.framework.parser.Annotations
 import amf.spec.{DeclarationPromise, ParserContext}
 import amf.validation.model.ParserSideValidations.ParsingErrorSpecification
 import org.yaml.model.{YNode, YPart}

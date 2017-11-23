@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.domain.{Annotations, Fields}
+import amf.domain.Fields
 
 import scala.collection.JavaConverters._
 

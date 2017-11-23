@@ -1,10 +1,12 @@
 package amf.domain
 
 import amf.common.core.Strings
-import amf.domain.Annotation.ParentEndPoint
 import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.security.ParametrizedSecurityScheme
+import amf.framework.parser.Annotations
 import amf.metadata.domain.EndPointModel._
+import amf.plugins.domain.webapi.models.annotations.ParentEndPoint
+
 
 /**
   * EndPoint internal model

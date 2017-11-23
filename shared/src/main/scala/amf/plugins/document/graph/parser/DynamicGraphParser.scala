@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
-import amf.domain.Annotations
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
+import amf.framework.parser.Annotations
 import amf.metadata.Type.ObjType
 import amf.metadata.domain.DomainElementModel
 import amf.model.{AmfElement, AmfObject}

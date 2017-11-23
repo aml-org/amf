@@ -1,6 +1,7 @@
 package amf.spec.domain
 
-import amf.domain.{Annotations, CreativeWork, Operation, Response}
+import amf.domain.{CreativeWork, Operation, Response}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.OperationModel.Method
 import amf.metadata.domain.{DomainElementModel, OperationModel}
 import amf.model.AmfArray

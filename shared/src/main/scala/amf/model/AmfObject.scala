@@ -1,6 +1,7 @@
 package amf.model
 
 import amf.domain._
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 
 /**

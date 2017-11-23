@@ -1,6 +1,7 @@
 package amf.domain
 
-import amf.metadata.domain.CreativeWorkModel.{Description, Url, Title}
+import amf.framework.parser.Annotations
+import amf.metadata.domain.CreativeWorkModel.{Description, Title, Url}
 import org.yaml.model.YMap
 
 /**

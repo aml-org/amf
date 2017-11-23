@@ -1,6 +1,7 @@
 package amf.shape
 
-import amf.domain.{Annotations, DomainElement, Fields, Linkable}
+import amf.domain.{DomainElement, Fields, Linkable}
+import amf.framework.parser.Annotations
 import org.yaml.model.YPart
 
 case class NilShape(fields: Fields, annotations: Annotations) extends Shape {

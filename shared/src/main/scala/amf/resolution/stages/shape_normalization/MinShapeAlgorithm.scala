@@ -1,6 +1,6 @@
 package amf.resolution.stages.shape_normalization
 
-import amf.domain.Annotations
+import amf.framework.parser.Annotations
 import amf.metadata.shape._
 import amf.model.AmfArray
 import amf.shape._

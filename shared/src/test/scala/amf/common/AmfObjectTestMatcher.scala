@@ -1,6 +1,6 @@
 package amf.common
 
-import amf.domain.Annotation
+import amf.framework.domain.Annotation
 import amf.metadata.Field
 import amf.model.AmfObject
 import org.scalatest._

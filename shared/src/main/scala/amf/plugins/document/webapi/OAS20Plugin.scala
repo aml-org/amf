@@ -7,24 +7,28 @@ import amf.document.Fragment.Fragment
 import amf.document._
 import amf.domain.{DomainElement, WebApi}
 import amf.framework.parser.{Library, Link}
-import amf.framework.plugins.{AMFDomainPlugin, AMFValidationPlugin}
+import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
+import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.remote.{Oas, Platform}
 import amf.spec.ParserContext
 import amf.spec.oas._
 
 import scala.concurrent.Future
 
-object OAS20Plugin extends AMFDomainPlugin with AMFValidationPlugin with WebApiValidations {
+object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations {
 
   val ID: String = "OAS 2.0"
 
   val vendors = Seq("OAS 2.0", "OAS")
+
+  override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
   private def detectOasUnit(root: Root)(implicit ctx: WebApiContext): Option[BaseUnit] = {
     OasHeader(root) match {
@@ -93,7 +97,7 @@ object OAS20Plugin extends AMFDomainPlugin with AMFValidationPlugin with WebApiV
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def domainSyntaxes = Seq(
+  override def documentSyntaxes = Seq(
     "application/json",
     "application/yaml",
     "application/x-yaml",
@@ -107,5 +111,4 @@ object OAS20Plugin extends AMFDomainPlugin with AMFValidationPlugin with WebApiV
     "application/openapi",
     "application/swagger"
   )
-
 }

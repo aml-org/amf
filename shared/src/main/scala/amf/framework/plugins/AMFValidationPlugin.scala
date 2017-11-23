@@ -7,7 +7,7 @@ import amf.validation.model.ValidationProfile
 
 import scala.concurrent.Future
 
-trait AMFValidationPlugin {
+trait AMFValidationPlugin extends AMFPlugin {
   /**
     * Validation profiles supported by this plugin by default
     */

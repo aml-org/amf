@@ -4,9 +4,10 @@ package amf.dialects
 import amf.compiler.Root
 import amf.domain.Annotation.SynthesizedField
 import amf.core.Root
-import amf.domain.{Annotations, Fields}
+import amf.domain.Fields
 import amf.domain.dialects.DomainEntity
 import amf.model.AmfScalar
+import amf.framework.parser.Annotations
 import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
 

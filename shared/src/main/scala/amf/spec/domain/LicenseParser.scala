@@ -1,6 +1,7 @@
 package amf.spec.domain
 
-import amf.domain.{Annotations, License}
+import amf.domain.License
+import amf.framework.parser.Annotations
 import amf.metadata.domain.LicenseModel
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.contexts.WebApiContext

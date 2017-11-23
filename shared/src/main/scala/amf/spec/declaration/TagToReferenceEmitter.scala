@@ -2,9 +2,9 @@ package amf.spec.declaration
 
 import amf.document.{BaseUnit, Module}
 import amf.document.Fragment.Fragment
-import amf.domain.Annotation.DeclaredElement
 import amf.domain.{DomainElement, Linkable, Parameter}
 import amf.parser.Position
+import amf.plugins.domain.webapi.models.annotations.DeclaredElement
 import amf.remote.{Oas, Raml, Vendor}
 import amf.shape.Shape
 import amf.spec.common.BaseEmitters._

@@ -4,6 +4,7 @@ import amf.client.GenerationOptions
 import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.framework.plugins.AMFSyntaxPlugin
+import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.services.RuntimeSerializer
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
@@ -19,16 +20,12 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
 
   // temporary
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(AMFGraphPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(PayloadPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(RAMLExtensionsPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(OAS20Plugin)
-  AMFPluginsRegistry.registerDomainPlugin(RAML10Plugin)
+  AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+  AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+  AMFPluginsRegistry.registerDocumentPlugin(RAMLExtensionsPlugin)
+  AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+  AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
   //
-
-  RuntimeSerializer.register(new RuntimeSerializer {
-    override def dump(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): String = new AMFSerializer(unit, mediaType, vendor, options).dump()
-  })
 
   def make(): YDocument = {
     findDomainPlugin() match {
@@ -59,7 +56,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
       case None =>
         // media type not directly supported, maybe it is supported by the media types of the accepted domain plugin
         findDomainPlugin() match {
-          case Some(domainPlugin) => domainPlugin.domainSyntaxes.collectFirst[(String,Option[AMFSyntaxPlugin])] { case mediaType: String =>
+          case Some(domainPlugin) => domainPlugin.documentSyntaxes.collectFirst[(String,Option[AMFSyntaxPlugin])] { case mediaType: String =>
             (mediaType, AMFPluginsRegistry.syntaxPluginForMediaType(mediaType))
           } flatMap  {
             case (effectiveMediaType, Some(syntaxPlugin)) => syntaxPlugin.unparse(effectiveMediaType, ast)
@@ -76,11 +73,21 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   }
 
   protected def findDomainPlugin() = {
-    AMFPluginsRegistry.domainPluginForVendor(vendor).find { plugin =>
-      plugin.domainSyntaxes.contains(mediaType) && plugin.canUnparse(unit)
+    AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
+      plugin.documentSyntaxes.contains(mediaType) && plugin.canUnparse(unit)
     } match {
       case Some(domainPlugin) => Some(domainPlugin)
-      case None => AMFPluginsRegistry.domainPluginForMediaType(mediaType).find(_.canUnparse(unit))
+      case None => AMFPluginsRegistry.documentPluginForMediaType(mediaType).find(_.canUnparse(unit))
+    }
+  }
+}
+
+object AMFSerializer {
+  def init() = {
+    if (RuntimeSerializer.serializer.isEmpty) {
+      RuntimeSerializer.register(new RuntimeSerializer {
+        override def dump(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): String = new AMFSerializer(unit, mediaType, vendor, options).dump()
+      })
     }
   }
 }

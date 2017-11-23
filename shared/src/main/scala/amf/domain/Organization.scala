@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.parser.Annotations
 import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 import org.yaml.model.YMap
 

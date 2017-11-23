@@ -1,6 +1,7 @@
 package amf.domain.`abstract`
 
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.{DomainElement, Fields}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel._
 import org.yaml.model.YPart
 

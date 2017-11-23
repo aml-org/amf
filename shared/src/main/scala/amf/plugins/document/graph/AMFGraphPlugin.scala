@@ -3,10 +3,11 @@ package amf.plugins.document.graph
 import amf.client.GenerationOptions
 import amf.core.Root
 import amf.document.BaseUnit
-import amf.framework.plugins.AMFDomainPlugin
+import amf.framework.plugins.AMFDocumentPlugin
 import amf.parser._
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import amf.plugins.document.graph.references.AMFGraphReferenceCollector
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.remote.Platform
 import amf.spec.ParserContext
 import amf.vocabulary.Namespace
@@ -14,13 +15,14 @@ import org.yaml.model.YMap
 
 import scala.concurrent.Future
 
-object AMFGraphPlugin extends AMFDomainPlugin {
+object AMFGraphPlugin extends AMFDocumentPlugin {
 
   override val ID = "AMF Graph"
+  override def dependencies() = Seq(WebAPIDomainPlugin)
 
   val vendors = Seq("AMF JSON-LD")
 
-  override def domainSyntaxes = Seq(
+  override def documentSyntaxes = Seq(
     "application/ld+json",
     "application/json",
     "application/amf+json"
