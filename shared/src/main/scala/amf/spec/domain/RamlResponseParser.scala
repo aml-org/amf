@@ -1,12 +1,12 @@
 package amf.spec.domain
 
-import amf.domain.Annotation.SynthesizedField
-import amf.domain.{Annotations, Parameter, Payload, Response}
+import amf.domain.{Parameter, Payload, Response}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.{RequestModel, ResponseModel}
 import amf.model.AmfArray
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.spec.ParserContext
+import amf.plugins.domain.webapi.models.annotations.SynthesizedField
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}
 import org.yaml.model.{YMap, YMapEntry, YType}

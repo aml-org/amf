@@ -3,25 +3,29 @@ package amf.plugins.document.webapi
 import amf.client.GenerationOptions
 import amf.core.Root
 import amf.document.BaseUnit
-import amf.framework.plugins.{AMFDomainPlugin, AMFValidationPlugin}
+import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.references.PayloadReferenceCollector
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.remote.Platform
 import amf.spec.ParserContext
 import org.yaml.model.{YMap, YScalar}
 
 import scala.concurrent.Future
 
-object PayloadPlugin extends AMFDomainPlugin {
+object PayloadPlugin extends AMFDocumentPlugin {
 
   override val ID = "AMF Payload"
 
   val vendors = Seq("AMF Payload")
 
+  override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
+
   // we are looking for documents with a very specific payload
   // otherwise, this plugin can become the fallback option.
   // Fallback option should be an external fragment.
-  override def domainSyntaxes = Seq(
+  override def documentSyntaxes = Seq(
     "application/amf+json",
     "application/amf+yaml",
     "application/json",

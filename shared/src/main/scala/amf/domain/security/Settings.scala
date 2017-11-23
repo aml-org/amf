@@ -1,7 +1,8 @@
 package amf.domain.security
 
 import amf.domain.extensions.DataNode
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.{DomainElement, Fields}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.security.ApiKeySettingsModel._
 import amf.metadata.domain.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.metadata.domain.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}

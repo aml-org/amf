@@ -1,6 +1,7 @@
 package amf.domain.security
 
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.{DomainElement, Fields}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.security.ScopeModel._
 import org.yaml.model.YPart
 

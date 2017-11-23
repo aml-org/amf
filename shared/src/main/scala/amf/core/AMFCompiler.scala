@@ -5,7 +5,8 @@ import amf.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.exception.CyclicReferenceException
 import amf.framework.parser.{ReferenceKind, Unspecified}
-import amf.framework.plugins.AMFDomainPlugin
+import amf.framework.plugins.AMFDocumentPlugin
+import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.services.RuntimeCompiler
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
@@ -39,21 +40,12 @@ class AMFCompiler(val url: String,
 
   // temporary
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(AMFGraphPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(PayloadPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(RAMLExtensionsPlugin)
-  AMFPluginsRegistry.registerDomainPlugin(OAS20Plugin)
-  AMFPluginsRegistry.registerDomainPlugin(RAML10Plugin)
+  AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+  AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+  AMFPluginsRegistry.registerDocumentPlugin(RAMLExtensionsPlugin)
+  AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+  AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
   //
-
-  // We register ourselves as the Runtime compiler
-  if (RuntimeCompiler.compiler.isEmpty) {
-    RuntimeCompiler.register(new RuntimeCompiler {
-      override def build(url: String, remote: Platform, mediaType: String, vendor: String, currentValidation: Validation): Future[BaseUnit] = {
-        new AMFCompiler(url, remote, None, mediaType, vendor, Unspecified, currentValidation, Cache()).build()
-      }
-    })
-  }
 
   def build(): Future[BaseUnit] = {
     // Reset the data node counter
@@ -93,11 +85,11 @@ class AMFCompiler(val url: String,
   }
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
-    val domainPluginOption = AMFPluginsRegistry.domainPluginForVendor(vendor).find { plugin =>
+    val domainPluginOption = AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
       plugin.canParse(document) // && plugin.domainSyntaxes.contains(document.mediatype)
     } match {
       case Some(domainPlugin) => Some(domainPlugin)
-      case None => AMFPluginsRegistry.domainPluginForMediaType(document.mediatype).find(_.canParse(document))
+      case None => AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document))
     }
 
     domainPluginOption match {
@@ -112,7 +104,7 @@ class AMFCompiler(val url: String,
     }
   }
 
-  private def parseReferences(root: Root, domainPlugin: AMFDomainPlugin): Future[Root] = {
+  private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
     val referenceCollector = domainPlugin.referenceCollector()
     val refs = referenceCollector.traverse(root.parsed, currentValidation, ctx)
 
@@ -130,13 +122,25 @@ class AMFCompiler(val url: String,
   private def resolve(): Future[Content] = remote.resolve(location, base)
 
   def root(): Future[Root] = resolve().map(parseSyntax).flatMap { document: Root =>
-    AMFPluginsRegistry.domainPluginForMediaType(document.mediatype).find(_.canParse(document)) match {
+    AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document)) match {
       case Some(domainPlugin) =>
         parseReferences(document, domainPlugin)
       case None => Future { document }
     }
   }
+}
 
+object AMFCompiler {
+  def init() {
+    // We register ourselves as the Runtime compiler
+    if (RuntimeCompiler.compiler.isEmpty) {
+      RuntimeCompiler.register(new RuntimeCompiler {
+        override def build(url: String, remote: Platform, mediaType: String, vendor: String, currentValidation: Validation): Future[BaseUnit] = {
+          new AMFCompiler(url, remote, None, mediaType, vendor, Unspecified, currentValidation, Cache()).build()
+        }
+      })
+    }
+  }
 }
 
 case class Root(parsed: ParsedDocument,

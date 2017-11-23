@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.parser.Annotations
 import amf.metadata.domain.LicenseModel.{Name, Url}
 import org.yaml.model.YMap
 

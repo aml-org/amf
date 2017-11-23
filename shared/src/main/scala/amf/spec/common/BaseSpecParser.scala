@@ -1,6 +1,7 @@
 package amf.spec.common
 
 import amf.domain._
+import amf.framework.parser.Annotations
 import amf.model.{AmfArray, AmfScalar}
 import amf.spec.ParserContext
 import org.yaml.model._

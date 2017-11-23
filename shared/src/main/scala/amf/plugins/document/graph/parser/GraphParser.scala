@@ -6,6 +6,7 @@ import amf.domain.`abstract`._
 import amf.domain.dialects.DomainEntity
 import amf.domain.extensions._
 import amf.domain.security._
+import amf.framework.parser.Annotations
 import amf.metadata.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata.document.BaseUnitModel.Location
 import amf.metadata.document._

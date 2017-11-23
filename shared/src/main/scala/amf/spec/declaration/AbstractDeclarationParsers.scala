@@ -1,13 +1,11 @@
 package amf.spec.declaration
 
-import amf.domain.Annotations
 import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
+import amf.framework.parser.Annotations
 import amf.parser.YMapOps
-import amf.parser.{YMapOps, YNodeLikeOps}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.spec.{ParserContext, SearchScope}
+import amf.spec.SearchScope
 import amf.spec.common.{AbstractVariables, DataNodeParser}
-import amf.spec.{ParserContext, SearchScope}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 /**

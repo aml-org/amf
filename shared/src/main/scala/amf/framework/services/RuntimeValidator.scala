@@ -1,11 +1,11 @@
 package amf.framework.services
 
 import amf.document.BaseUnit
-import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
+import amf.framework.domain.LexicalInformation
 import amf.framework.validation.core.ValidationReport
+import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
 
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Validation of AMF models
@@ -27,6 +27,16 @@ trait RuntimeValidator {
     * for validations in the profile to domain elements in the model
     */
   def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport]
+
+  /**
+    * Client code can use this function to register a new validation failure
+    */
+  def reportConstraintFailure(level: String,
+                              validationId: String,
+                              targetNode: String,
+                              targetProperty: Option[String] = None,
+                              message: String = "",
+                              position: Option[LexicalInformation] = None)
 }
 
 object RuntimeValidator {
@@ -56,4 +66,22 @@ object RuntimeValidator {
     }
   }
 
+  def reportConstraintFailure(level: String,
+                              validationId: String,
+                              targetNode: String,
+                              targetProperty: Option[String] = None,
+                              message: String = "",
+                              position: Option[LexicalInformation] = None) = {
+    validator match {
+      case Some(runtimeValidator) => runtimeValidator.reportConstraintFailure(
+        level,
+        validationId,
+        targetNode,
+        targetProperty,
+        message,
+        position
+      )
+      case None => throw new Exception("No registered runtime validator")
+    }
+  }
 }

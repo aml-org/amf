@@ -1,7 +1,8 @@
 package amf.domain.extensions
 
 import amf.common.core._
-import amf.domain.{Annotations, DomainElement, Fields, Linkable}
+import amf.domain.{DomainElement, Fields, Linkable}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.extensions.CustomDomainPropertyModel._
 import amf.shape.Shape
 import org.yaml.model.YPart

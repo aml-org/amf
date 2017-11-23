@@ -1,7 +1,7 @@
 package amf.spec.domain
 
-import amf.domain.Annotations
 import amf.domain.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.security._
 import amf.parser.YMapOps
 import amf.spec.{ParserContext, SearchScope}

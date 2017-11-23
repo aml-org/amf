@@ -2,7 +2,6 @@ package amf.resolution.stages
 
 import amf.ProfileNames
 import amf.document._
-import amf.domain.Annotation.SynthesizedField
 import amf.domain._
 import amf.domain.extensions.DataNode
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
@@ -14,6 +13,7 @@ import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
 import amf.metadata.shape.ShapeModel
 import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.plugins.domain.webapi.models.annotations.SynthesizedField
 import amf.shape.Shape
 import amf.spec.{Declarations, ParserContext}
 import amf.unsafe.PlatformSecrets

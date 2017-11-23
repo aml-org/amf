@@ -1,15 +1,16 @@
 package amf.spec.oas
 
 import amf.document._
-import amf.domain.Annotation._
 import amf.domain._
 import amf.domain.extensions.{CustomDomainProperty, idCounter}
+import amf.framework.domain._
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain._
 import amf.metadata.shape._
 import amf.parser.Position
 import amf.parser.Position.ZERO
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
+import amf.plugins.domain.webapi.models.annotations._
 import amf.remote.{Oas, Vendor}
 import amf.shape._
 import amf.spec._
@@ -290,7 +291,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
     }
 
     private def operationOnly(parameters: Seq[Parameter]) =
-      parameters.filter(!_.annotations.contains(classOf[Annotation.EndPointParameter]))
+      parameters.filter(!_.annotations.contains(classOf[EndPointParameter]))
 
   }
 

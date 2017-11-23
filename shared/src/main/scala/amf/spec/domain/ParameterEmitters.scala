@@ -1,12 +1,12 @@
 package amf.spec.domain
 
 import amf.document.BaseUnit
-import amf.domain.Annotation.{ExplicitField, SynthesizedField}
-import amf.domain.{Annotations, FieldEntry, Fields, Parameter}
+import amf.domain.{FieldEntry, Fields, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.metadata.shape.ShapeModel
 import amf.model.AmfScalar
 import amf.parser.Position
+import amf.plugins.domain.webapi.models.annotations.{ExplicitField, SynthesizedField}
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter}

@@ -1,6 +1,7 @@
 package amf.domain
 
 import amf.domain.security.ParametrizedSecurityScheme
+import amf.framework.parser.Annotations
 import amf.metadata.domain.WebApiModel.{License => WebApiLicense, _}
 import org.yaml.model.YMap
 

@@ -1,7 +1,7 @@
 package amf.metadata.domain.dialects
 
-import amf.domain.Annotations
 import amf.domain.dialects.DomainEntity
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.ValueType

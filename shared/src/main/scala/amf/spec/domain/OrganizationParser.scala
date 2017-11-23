@@ -1,6 +1,7 @@
 package amf.spec.domain
 
-import amf.domain.{Annotations, Organization}
+import amf.domain.Organization
+import amf.framework.parser.Annotations
 import amf.metadata.domain.OrganizationModel
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.contexts.WebApiContext

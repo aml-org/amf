@@ -1,6 +1,7 @@
 package amf.spec.declaration
 
-import amf.domain.{Annotations, CreativeWork}
+import amf.domain.CreativeWork
+import amf.framework.parser.Annotations
 import amf.metadata.domain.CreativeWorkModel
 import amf.parser.YMapOps
 import amf.spec.ParserContext

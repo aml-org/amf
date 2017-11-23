@@ -2,10 +2,10 @@ package amf.spec.raml
 
 import amf.core.Root
 import amf.document.Module
-import amf.domain.Annotation.SourceVendor
-import amf.domain.Annotations
+import amf.framework.parser.Annotations
 import amf.parser.YNodeLikeOps
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.annotations.SourceVendor
 import amf.spec.declaration.ReferencesParser
 import org.yaml.model._
 

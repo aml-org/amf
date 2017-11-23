@@ -15,7 +15,6 @@ import amf.spec.raml.RamlSpecEmitter
 import amf.spec.{Emitter, EntryEmitter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{BaseBuilder, EntryBuilder, PartBuilder}
-
 import scala.collection.mutable
 
 /**

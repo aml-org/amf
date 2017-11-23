@@ -1,9 +1,10 @@
 package amf.spec.raml
 
-import amf.domain.Annotation.{LexicalInformation, ParsedFromTypeExpression}
+import amf.framework.domain.LexicalInformation
 import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.parser.Range
+import amf.plugins.domain.webapi.models.annotations.ParsedFromTypeExpression
 import amf.shape._
 import amf.spec.{ParserContext, SearchScope}
 import amf.vocabulary.Namespace
@@ -191,7 +192,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
     }
   }
 
-  private val lexical = part.map(p => Range(p.range)).map(LexicalInformation)
+  private val lexical = part.map(p => Range(p.range)).map(range => LexicalInformation(range))
 }
 
 object RamlTypeExpressionParser {

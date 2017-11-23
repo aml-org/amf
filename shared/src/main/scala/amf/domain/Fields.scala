@@ -1,5 +1,7 @@
 package amf.domain
 
+import amf.framework.domain.Annotation
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 import amf.metadata.Type._
 import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}

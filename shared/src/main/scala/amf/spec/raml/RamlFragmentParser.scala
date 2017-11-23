@@ -2,14 +2,14 @@ package amf.spec.raml
 
 import amf.core.Root
 import amf.document.Fragment._
-import amf.domain.Annotation.SourceVendor
-import amf.domain.Annotations
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.framework.parser.Annotations
 import amf.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
+import amf.plugins.domain.webapi.models.annotations.SourceVendor
 import amf.remote.Raml
 import amf.shape.Shape
 import amf.spec.declaration._

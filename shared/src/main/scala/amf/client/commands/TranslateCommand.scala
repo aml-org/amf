@@ -40,7 +40,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
         validation
       }
     } else {
-      validation.enabled = false
+      validation.validator.enabled = false
       Promise().success(validation).future
     }
   }

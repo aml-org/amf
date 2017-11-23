@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.parser.Annotations
 import amf.metadata.domain.ExternalDomainElementModel.Raw
 import org.yaml.model.YMap
 

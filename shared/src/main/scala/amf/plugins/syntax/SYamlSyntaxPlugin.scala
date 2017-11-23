@@ -10,6 +10,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
   override val ID = "SYaml"
 
+  override def dependencies() = Nil
+
   override def supportedMediaTypes() = Seq(
     "application/yaml",
     "application/x-yaml",
@@ -58,4 +60,5 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
       Some(JsonRender.render(ast))
     }
   }
+
 }

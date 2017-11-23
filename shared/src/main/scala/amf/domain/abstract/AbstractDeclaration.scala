@@ -2,7 +2,8 @@ package amf.domain.`abstract`
 
 import amf.domain.extensions.DataNode
 import amf.metadata.domain.`abstract`.AbstractDeclarationModel._
-import amf.domain.{Annotations, DomainElement, Fields, Linkable}
+import amf.domain.{DomainElement, Fields, Linkable}
+import amf.framework.parser.Annotations
 import org.yaml.model.YPart
 
 abstract class AbstractDeclaration(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {

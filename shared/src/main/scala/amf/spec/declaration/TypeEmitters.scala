@@ -1,14 +1,17 @@
 package amf.spec.declaration
 
 import amf.document.BaseUnit
-import amf.domain.Annotation._
 import amf.domain._
+import amf.framework.domain._
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 import amf.metadata.domain.ExampleModel
 import amf.metadata.shape._
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
+import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.annotations._
 import amf.shape._
 import amf.spec._
 import amf.spec.common.BaseEmitters._

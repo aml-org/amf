@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.parser.Annotations
 import amf.metadata.domain.ResponseModel._
 import amf.model.AmfArray
 

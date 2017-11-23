@@ -1,6 +1,6 @@
 package amf.validation.emitters
 
-import amf.domain.Annotation
+import amf.framework.domain.{Annotation, LexicalInformation}
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.spec.common.BaseEmitters._
 import amf.vocabulary.Namespace
@@ -72,7 +72,7 @@ object ValidationReportJSONLDEmitter {
       ))
   }
 
-  def emitPosition(b: PartBuilder, pos: Annotation.LexicalInformation): Unit = {
+  def emitPosition(b: PartBuilder, pos: LexicalInformation): Unit = {
     b.obj { b =>
       b.entry("@type", amfParser("Position"))
       b.entry(

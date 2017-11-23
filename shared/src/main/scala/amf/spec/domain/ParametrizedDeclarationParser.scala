@@ -1,7 +1,7 @@
 package amf.spec.domain
 
-import amf.domain.Annotations
 import amf.domain.`abstract`.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.framework.parser.Annotations
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import org.yaml.model._
 import amf.parser.YScalarYRead

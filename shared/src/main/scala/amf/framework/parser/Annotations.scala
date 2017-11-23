@@ -1,7 +1,8 @@
-package amf.domain
+package amf.framework.parser
 
+import amf.framework.domain.{Annotation, LexicalInformation, SerializableAnnotation}
 import amf.parser.Range
-import amf.domain.Annotation.{LexicalInformation, SourceAST}
+import amf.plugins.domain.webapi.models.annotations.SourceAST
 import org.yaml.model.YPart
 
 import scala.collection.mutable

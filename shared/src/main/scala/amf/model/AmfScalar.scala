@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.domain.Annotations
+import amf.framework.parser.Annotations
 
 /**
   * Amf Scalar

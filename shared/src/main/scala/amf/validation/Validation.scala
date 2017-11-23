@@ -1,27 +1,19 @@
 package amf.validation
 
 import amf.ProfileNames
-import amf.client.GenerationOptions
-import amf.compiler.AMFCompiler
-import amf.document.{BaseUnit, Document}
-import amf.domain.Annotation.LexicalInformation
-import amf.domain.DomainElement
-import amf.domain.dialects.DomainEntity
-import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
-import amf.model.AmfArray
-import amf.plugins.document.graph.parser.GraphEmitter
-import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, ShapeFacetsValidation}
-import amf.remote.{Platform, RamlYamlHint}
-import amf.spec.dialects.Dialect
+import amf.core.AMF
+import amf.document.BaseUnit
+import amf.framework.domain.LexicalInformation
 import amf.framework.validation.core.{ValidationDialectText, ValidationResult}
+import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
 import amf.plugins.features.validation.AMFValidatorPlugin
-import amf.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
+import amf.remote.Platform
+import amf.spec.dialects.Dialect
+import amf.validation.emitters.ValidationJSONLDEmitter
 import amf.validation.model._
 import amf.vocabulary.Namespace
-import org.yaml.render.JsonRender
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
 
 
@@ -29,6 +21,13 @@ import scala.concurrent.{Future, Promise}
 
 
 class Validation(platform: Platform) {
+
+  // Temporary
+  AMF.init()
+  AMFValidatorPlugin.init(platform)
+  //
+
+  val validator = new AMFValidatorPlugin(platform)
 
   val url = "http://raml.org/dialects/profile.raml"
 
@@ -45,31 +44,19 @@ class Validation(platform: Platform) {
   var profile: Option[ValidationProfile] = None
 
   // The aggregated report
-  def reset(): Unit = {
-    aggregatedReport = List()
-  }
-  var aggregatedReport: List[AMFValidationResult] = List()
+  def reset(): Unit = validator.reset()
+
+  def aggregatedReport: List[AMFValidationResult] = validator.aggregatedReport
 
   // disable temporarily the reporting of validations
-  var enabled: Boolean = true
+  def enabled: Boolean = validator.enabled
 
   def withEnabledValidation(enabled: Boolean): Validation = {
-    this.enabled = enabled
+    validator.withEnabledValidation(enabled)
     this
   }
 
-  def disableValidations[T]()(f: () => T): T = {
-    if (enabled) {
-      enabled = false
-      try {
-        f()
-      } finally {
-        enabled = true
-      }
-    } else {
-      f()
-    }
-  }
+  def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
 
   /**
     * Client code can use this function to register a new validation failure
@@ -80,31 +67,13 @@ class Validation(platform: Platform) {
                               targetProperty: Option[String] = None,
                               message: String = "",
                               position: Option[LexicalInformation] = None): Unit = {
-    val validationError = AMFValidationResult(message, level, targetNode, targetProperty, validationId, position)
-
-    if (enabled) {
-      aggregatedReport ++= Seq(validationError)
-    } else {
-      throw new Exception(validationError.toString)
-    }
+    validator.reportConstraintFailure(level, validationId, targetNode, targetProperty, message, position)
   }
 
   lazy val defaultProfiles: List[ValidationProfile] = DefaultAMFValidations.profiles()
 
   def loadValidationProfile(validationProfilePath: String): Future[Unit] = {
-    val currentValidation = new Validation(platform).withEnabledValidation(false)
-    AMFCompiler(validationProfilePath,
-                platform,
-                RamlYamlHint,
-                currentValidation,
-                None,
-                None)
-      .build()
-      .map { case parsed: Document => parsed.encodes }
-      .map {
-        case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
-          profile = Some(ValidationProfile(encoded))
-      }
+    validator.loadValidationProfile(validationProfilePath)
   }
 
   /**
@@ -158,6 +127,10 @@ class Validation(platform: Platform) {
   def validate(model: BaseUnit,
                profileName: String,
                messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
+
+    validator.validate(model, profileName, messageStyle)
+
+    /*
     val graphAST    = GraphEmitter.emit(model, GenerationOptions())
     val modelJSON   = JsonRender.render(graphAST)
     val validations = computeValidations(profileName)
@@ -166,8 +139,8 @@ class Validation(platform: Platform) {
     val shapesJSON = shapesGraph(validations, messageStyle)
     val jsLibrary  = new JSLibraryEmitter(profile).emitJS(validations.effective.values.toSeq)
 
-    val test = new AMFValidatorPlugin(platform)
 
+<<<<<<< HEAD
     /*
     if (profileName == ProfileNames.RAML) {
       println("\n\nGRAPH")
@@ -181,6 +154,22 @@ class Validation(platform: Platform) {
     }
     */
 
+=======
+
+
+    //if (profileName == ProfileNames.RAML) {
+    //  println("\n\nGRAPH")
+    //  println(modelJSON.length)
+    //  println("===========================")
+    //  println("\n\nVALIDATION")
+    //  println(shapesJSON.length)
+    //  println("===========================")
+    //  println(jsLibrary)
+    //  println("===========================")
+    //}
+
+    
+>>>>>>> APIMF-161 Adding split for annotations, renaming domain plugins to document plugins and re-introducing domain plugins for the shared model
     jsLibrary match {
       case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore
@@ -250,6 +239,7 @@ class Validation(platform: Platform) {
         results = results
       )
     }
+    */
   }
 
   protected def buildValidationForProfile(profileName: String,

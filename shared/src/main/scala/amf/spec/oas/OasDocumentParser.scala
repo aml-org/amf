@@ -4,11 +4,11 @@ import amf.common.Lazy
 import amf.common.core.TemplateUri
 import amf.core.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
-import amf.domain.Annotation.{DeclaredElement, DefaultPayload, EndPointBodyParameter, ExplicitField, SingleValueArray, _}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security._
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain.EndPointModel.Path
@@ -18,6 +18,7 @@ import amf.metadata.domain.security._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.annotations._
 import amf.shape.NodeShape
 import amf.spec.common._
 import amf.spec.declaration._
@@ -1060,7 +1061,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
       inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
 
     private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
-      val globalMap = global.map(p => p.name -> p.copy().add(Annotation.EndPointParameter())).toMap
+      val globalMap = global.map(p => p.name -> p.copy().add(EndPointParameter())).toMap
       val innerMap  = inner.map(p => p.name  -> p.copy()).toMap
 
       (globalMap ++ innerMap).values.toSeq

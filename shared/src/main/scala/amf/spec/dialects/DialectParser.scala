@@ -4,12 +4,14 @@ import amf.core.Root
 import amf.dialects.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
-import amf.domain.Annotation._
 import amf.domain.dialects.DomainEntity
-import amf.domain.{Annotations, Fields}
+import amf.domain.Fields
+import amf.framework.domain.LexicalInformation
+import amf.framework.parser.Annotations
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{Range, YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.plugins.domain.webapi.models.annotations.{DomainElementReference, SourceAST, SynthesizedField}
 import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.declaration.ReferencesParser
@@ -546,7 +548,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
             .find(classOf[SourceAST])
             .map(_.ast.range)
             .map(range => Range(range))
-            .map(LexicalInformation)
+            .map(range => LexicalInformation(range))
           ctx.violation(
             ParserSideValidations.DialectUnresolvableReference.id(),
             parent.id,

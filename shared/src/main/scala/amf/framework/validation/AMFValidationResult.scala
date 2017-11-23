@@ -1,10 +1,10 @@
 package amf.framework.validation
 
 import amf.document.BaseUnit
-import amf.domain.Annotation.LexicalInformation
 import amf.domain.DomainElement
-import amf.model.AmfArray
+import amf.framework.domain.LexicalInformation
 import amf.framework.validation.core.ValidationResult
+import amf.model.AmfArray
 
 case class AMFValidationResult(message: String,
                                level: String,

@@ -1,6 +1,7 @@
 package amf.plugins.document.graph.parser
 
-import amf.domain.{Annotation, Annotations}
+import amf.framework.domain.Annotation
+import amf.framework.parser.Annotations
 import amf.metadata.SourceMapModel.{Element, Value}
 import amf.metadata.Type._
 import amf.metadata.domain.DomainElementModel.Sources

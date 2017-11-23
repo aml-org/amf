@@ -1,6 +1,7 @@
 package amf.domain.security
 
 import amf.domain._
+import amf.framework.parser.Annotations
 import amf.metadata.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import amf.model.AmfArray
 import amf.shape.Shape

@@ -5,9 +5,10 @@ import amf.core.Root
 import amf.document.Fragment.DialectFragment
 import amf.document._
 import amf.domain.dialects.DomainEntity
-import amf.framework.plugins.{AMFDomainPlugin, AMFValidationPlugin}
+import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation._
+import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.remote.Platform
 import amf.spec.ParserContext
@@ -37,7 +38,7 @@ object DialectHeader extends RamlHeaderExtractor {
     case _                                           => false
   }
 }
-object RAMLExtensionsPlugin extends AMFDomainPlugin with AMFValidationPlugin with ValidationResultProcessor with RamlHeaderExtractor {
+object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin with ValidationResultProcessor with RamlHeaderExtractor {
 
   override val ID = "RAML Extension"
 
@@ -72,7 +73,7 @@ object RAMLExtensionsPlugin extends AMFDomainPlugin with AMFValidationPlugin wit
 
   override def unparse(unit: BaseUnit, options: GenerationOptions) = Some(DialectEmitter(unit).emit())
 
-  override def domainSyntaxes = Seq(
+  override def documentSyntaxes = Seq(
     "application/raml",
     "application/raml+json",
     "application/raml+yaml",
@@ -120,4 +121,6 @@ object RAMLExtensionsPlugin extends AMFDomainPlugin with AMFValidationPlugin wit
       )
     }
   }
+
+  override def dependencies() = Seq(AMFGraphPlugin)
 }

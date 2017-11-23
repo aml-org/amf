@@ -1,6 +1,7 @@
 package amf.document
 
-import amf.domain.{Annotations, DomainElement, Fields}
+import amf.domain.{DomainElement, Fields}
+import amf.framework.parser.Annotations
 import amf.metadata.document.DocumentModel.{Declares => _, Location => _, References => _, Usage => _}
 import amf.metadata.document.FragmentModel
 import amf.metadata.document.ModuleModel._

@@ -1,8 +1,9 @@
 package amf.domain
 
-import amf.domain.Annotation.LexicalInformation
-import amf.domain.`abstract`.{ParametrizedDeclaration, ParametrizedResourceType, ParametrizedTrait}
+import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.extensions.DomainExtension
+import amf.framework.domain.LexicalInformation
+import amf.framework.parser.Annotations
 import amf.metadata.Field
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.LinkableElementModel

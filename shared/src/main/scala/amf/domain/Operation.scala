@@ -2,6 +2,7 @@ package amf.domain
 
 import amf.domain.`abstract`.ParametrizedTrait
 import amf.domain.security.ParametrizedSecurityScheme
+import amf.framework.parser.Annotations
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**

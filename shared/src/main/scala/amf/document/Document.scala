@@ -1,6 +1,7 @@
 package amf.document
 
 import amf.domain._
+import amf.framework.parser.Annotations
 import amf.metadata.document.DocumentModel._
 import amf.metadata.document.{ExtensionLikeModel, OverlayModel}
 
