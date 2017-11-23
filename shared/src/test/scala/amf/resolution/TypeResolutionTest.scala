@@ -4,9 +4,9 @@ import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
 import amf.io.BuildCycleTests
-import amf.plugins.domain.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.shapes.models._
 import amf.remote.{Raml, RamlYamlHint}
-import amf.shape._
 import amf.spec.ParserContext
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.validation.Validation

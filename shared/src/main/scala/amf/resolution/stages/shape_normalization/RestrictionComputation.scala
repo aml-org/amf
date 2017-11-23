@@ -1,9 +1,9 @@
 package amf.resolution.stages.shape_normalization
 
 import amf.framework.metamodel.Field
-import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
-import amf.shape._
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models.Shape
 
 trait RestrictionComputation {
 

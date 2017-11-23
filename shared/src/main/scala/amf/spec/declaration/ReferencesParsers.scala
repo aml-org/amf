@@ -4,7 +4,7 @@ import amf.compiler.ParsedReference
 import amf.domain.dialects.DomainEntity
 import amf.framework.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.parser.YMapOps
-import amf.plugins.domain.webapi.models.annotations.Aliases
+import amf.plugins.document.webapi.annotations.Aliases
 import amf.spec.ParserContext
 import org.yaml.model.YMap
 

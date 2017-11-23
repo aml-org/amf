@@ -1,15 +1,15 @@
 package amf.resolution.stages
 
-import amf.framework.model.document.BaseUnit
 import amf.framework.metamodel.Obj
+import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.{DomainElement, LexicalInformation}
 import amf.framework.parser.Annotations
-import amf.metadata.shape._
 import amf.metadata.MetaModelTypeMapping
 import amf.model.{AmfArray, AmfScalar}
-import amf.plugins.domain.webapi.models.annotations.{ExplicitField, ParsedFromTypeExpression}
+import amf.plugins.document.webapi.annotations.{ExplicitField, ParsedFromTypeExpression}
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models._
 import amf.resolution.stages.shape_normalization.MinShapeAlgorithm
-import amf.shape._
 import amf.validation.Validation
 import amf.vocabulary.{Namespace, ValueType}
 

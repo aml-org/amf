@@ -1,9 +1,11 @@
 package amf.spec.declaration
 
 import amf.parser.{YMapOps, YScalarYRead}
-import amf.shape.RamlTypeDefMatcher.matchType
-import amf.shape.TypeDef._
-import amf.shape._
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.matchType
+import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.domain.shapes.models.TypeDef._
+import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.spec.raml.RamlTypeExpressionParser
 import amf.spec.{ParserContext, SearchScope}
 import amf.unsafe.PlatformSecrets

@@ -4,6 +4,7 @@ import amf.framework.parser.Annotations
 import amf.framework.utils.TemplateUri
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.document.webapi.annotations.ParentEndPoint
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}

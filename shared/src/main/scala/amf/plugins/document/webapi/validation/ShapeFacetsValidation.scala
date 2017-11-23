@@ -5,11 +5,11 @@ import amf.domain.security.SecurityScheme
 import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.framework.validation.AMFValidationResult
 import amf.metadata.domain.security.SecuritySchemeModel
-import amf.metadata.shape.ShapeModel
+import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.shapes.models.{NodeShape, Shape, UnionShape}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, RequestModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.remote.Platform
-import amf.shape.{NodeShape, Shape, UnionShape}
 import amf.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global

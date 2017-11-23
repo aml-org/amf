@@ -1,9 +1,11 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class SchemaShape(private[amf] val schema: amf.shape.SchemaShape) extends Shape(schema) {
+case class SchemaShape(private[amf] val schema: models.SchemaShape) extends Shape(schema) {
 
   val mediaType: String = schema.mediaType
   val raw: String       = schema.raw
@@ -21,7 +23,7 @@ case class SchemaShape(private[amf] val schema: amf.shape.SchemaShape) extends S
   override private[amf] def element = schema
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.ScalarShape => ScalarShape(l) })
+    element.linkTarget.map({ case l: models.ScalarShape => ScalarShape(l) })
 
   override def linkCopy() = SchemaShape(element.linkCopy())
 }

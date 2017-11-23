@@ -4,6 +4,7 @@ import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.metamodel.Obj
 import amf.framework.model.document.BaseUnit
+import amf.framework.model.domain.AnnotationGraphLoader
 import amf.framework.parser.AbstractReferenceCollector
 import amf.remote.Platform
 import amf.spec.ParserContext
@@ -14,6 +15,8 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   val vendors: Seq[String]
 
   def modelEntities: Seq[Obj]
+
+  def serializableAnnotations(): Map[String, AnnotationGraphLoader]
 
   /**
     * List of media types used to encode serialisations of

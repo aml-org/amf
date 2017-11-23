@@ -10,8 +10,8 @@ import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata._
 import amf.metadata.domain.DomainElementModel.Sources
 import amf.metadata.domain._
-import amf.metadata.shape.ShapeModel
 import amf.model.{AmfArray, AmfObject, AmfScalar}
+import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

@@ -10,8 +10,8 @@ import amf.framework.parser.Annotations
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{Range, YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
+import amf.plugins.document.webapi.annotations.{DomainElementReference, SourceAST, SynthesizedField}
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.plugins.domain.webapi.models.annotations.{DomainElementReference, SourceAST, SynthesizedField}
 import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.declaration.ReferencesParser

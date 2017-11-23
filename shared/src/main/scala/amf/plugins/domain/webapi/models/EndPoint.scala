@@ -6,9 +6,9 @@ import amf.domain.security.ParametrizedSecurityScheme
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.framework.utils.Strings
+import amf.plugins.document.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.models.annotations.ParentEndPoint
 
 
 /**

@@ -1,10 +1,10 @@
 package amf.model
 
-import amf.domain.Fields
+import amf.plugins.domain.shapes.models
 
 import scala.collection.JavaConverters._
 
-case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) {
+case class NodeShape(private val node: models.NodeShape) extends Shape(node) {
 
   val minProperties: Int                                 = node.minProperties
   val maxProperties: Int                                 = node.maxProperties
@@ -60,7 +60,7 @@ case class NodeShape(private val node: amf.shape.NodeShape) extends Shape(node) 
   override private[amf] def element = node
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.NodeShape => NodeShape(l) })
+    element.linkTarget.map({ case l: models.NodeShape => NodeShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = NodeShape(element.linkCopy())
 }

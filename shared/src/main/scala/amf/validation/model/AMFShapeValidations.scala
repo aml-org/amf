@@ -1,9 +1,9 @@
 package amf.validation.model
 
-import amf.metadata.shape.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
 import amf.model.AmfScalar
+import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
+import amf.plugins.domain.shapes.models._
 import amf.resolution.pipelines.CanonicalShapePipeline
-import amf.shape._
 import amf.vocabulary.Namespace
 
 class AMFShapeValidations(shape: Shape) {
@@ -208,7 +208,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkPattern(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkPattern(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     Option(shape.pattern) match {
       case Some(pattern) =>
         val msg = s"Data at $context must match pattern $pattern"
@@ -223,7 +223,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkMinLength(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkMinLength(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.MinLength) match {
       case Some(length) =>
         val msg = s"Data at $context must have length greater than $length"
@@ -238,7 +238,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkMaxLength(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkMaxLength(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.MaxLength) match {
       case Some(length) =>
         val msg = s"Data at $context must have length smaller than $length"
@@ -253,7 +253,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkMinimum(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkMinimum(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.Minimum) match {
       case Some(minimum) =>
         val msg = s"Data at $context must be greater than or equal to $minimum"
@@ -268,7 +268,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkMaximum(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkMaximum(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.Maximum) match {
       case Some(maximum) =>
         val msg = s"Data at $context must be smaller than or equal to $maximum"
@@ -283,7 +283,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkMinimumExclusive(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkMinimumExclusive(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMinimum) match {
       case Some(exclusiveMinimum) =>
         val msg = s"Data at $context must be greater than $exclusiveMinimum"
@@ -298,7 +298,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def checkMaximumExclusive(context: String, validation: ValidationSpecification, shape: Shape with CommonOASFields): ValidationSpecification = {
+  protected def checkMaximumExclusive(context: String, validation: ValidationSpecification, shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMaximum) match {
       case Some(exclusiveMaximum) =>
         val msg = s"Data at $context must be smaller than $exclusiveMaximum"

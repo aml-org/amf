@@ -4,6 +4,7 @@ import amf.framework.registries.AMFPluginsRegistry
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
@@ -20,6 +21,7 @@ object AMF {
     AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
     AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
     AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+    AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
     //
 
   }

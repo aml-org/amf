@@ -7,8 +7,8 @@ import amf.framework.parser.Annotations
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.Position
+import amf.plugins.domain.shapes.models.Shape
 import amf.remote.{Oas, Raml}
-import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}

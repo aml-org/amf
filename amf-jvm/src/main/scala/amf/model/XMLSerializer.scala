@@ -1,12 +1,14 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 /**
   * JVM XMLSerializer model class.
   */
-case class XMLSerializer private[model] (private[amf] val xmlSerializer: amf.shape.XMLSerializer)
+case class XMLSerializer private[model] (private[amf] val xmlSerializer: models.XMLSerializer)
     extends DomainElement {
 
-  def this() = this(amf.shape.XMLSerializer())
+  def this() = this(models.XMLSerializer())
 
   val attribute: Boolean = xmlSerializer.attribute
   val wrapped: Boolean   = xmlSerializer.wrapped
@@ -14,7 +16,7 @@ case class XMLSerializer private[model] (private[amf] val xmlSerializer: amf.sha
   val namespace: String  = xmlSerializer.namespace
   val prefix: String     = xmlSerializer.prefix
 
-  override private[amf] def element: amf.shape.XMLSerializer = xmlSerializer
+  override private[amf] def element: models.XMLSerializer = xmlSerializer
 
   def withAttribute(attribute: Boolean): this.type = {
     xmlSerializer.withAttribute(attribute)

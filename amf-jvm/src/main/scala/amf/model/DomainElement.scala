@@ -1,6 +1,7 @@
 package amf.model
 
 import amf.framework.model.domain
+import amf.plugins.domain.shapes
 import amf.plugins.domain.webapi.models
 
 import scala.collection.JavaConverters._
@@ -74,7 +75,7 @@ object DomainElement {
     case o: amf.domain.extensions.CustomDomainProperty     => CustomDomainProperty(o)
     case o: amf.domain.extensions.ArrayNode                => ArrayNode(o)
     case o: amf.domain.extensions.DomainExtension          => DomainExtension(o)
-    case o: amf.shape.Shape                                => Shape(o)
+    case o: shapes.models.Shape                                => Shape(o)
     case o: amf.domain.dialects.DomainEntity               => DomainEntity(o)
     case o =>
       new DomainElement {

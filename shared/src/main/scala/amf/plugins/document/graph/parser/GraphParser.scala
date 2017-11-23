@@ -17,15 +17,11 @@ import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.extensions.{DataNodeModel, ShapeExtensionModel}
 import amf.metadata.domain.security._
-import amf.metadata.shape._
 import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
-import amf.plugins.document.webapi.metamodel.{ExtensionModel, FragmentsTypesModels, OverlayModel}
-import amf.plugins.document.webapi.model._
-import amf.plugins.domain.webapi.metamodel.{CreativeWorkModel, OrganizationModel, WebApiModel}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models.ArrayShape
 import amf.remote.Platform
-import amf.shape._
 import amf.spec.ParserContext
 import amf.spec.dialects.DialectNode
 import amf.unsafe.TrunkPlatform
@@ -242,12 +238,14 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     PayloadModel                                        -> Payload.apply,
     RequestModel                                        -> Request.apply,
     ResponseModel                                       -> Response.apply,
-*/
-    ShapeExtensionModel                                 -> ShapeExtension.apply,
     UnionShapeModel                                     -> UnionShape.apply,
     NodeShapeModel                                      -> NodeShape.apply,
+
+*/
+    ShapeExtensionModel                                 -> ShapeExtension.apply,
     ArrayShapeModel                                     -> ArrayShape.apply,
     MatrixShapeModel                                    -> MatrixShape.apply,
+/*
     FileShapeModel                                      -> FileShape.apply,
     ScalarShapeModel                                    -> ScalarShape.apply,
     SchemaShapeModel                                    -> SchemaShape.apply,
@@ -259,7 +257,6 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     PropertyShapeModel                                  -> PropertyShape.apply,
     XMLSerializerModel                                  -> XMLSerializer.apply,
     PropertyDependenciesModel                           -> PropertyDependencies.apply,
-/*
     ModuleModel                                         -> Module.apply,
     FragmentsTypesModels.ResourceTypeFragmentModel      -> ResourceTypeFragment.apply,
     FragmentsTypesModels.TraitFragmentModel             -> TraitFragment.apply,

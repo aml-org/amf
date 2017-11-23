@@ -7,8 +7,8 @@ import amf.framework.model.document.{BaseUnit, Fragment}
 import amf.framework.parser.Annotations
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
+import amf.plugins.domain.shapes.models.Shape
 import amf.remote.Platform
-import amf.shape.Shape
 import amf.validation.model.{AMFShapeValidations, ValidationSpecification}
 import amf.vocabulary.Namespace
 

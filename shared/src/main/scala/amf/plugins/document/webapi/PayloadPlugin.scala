@@ -22,6 +22,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override def modelEntities = Nil
 
+  override def serializableAnnotations() = Map.empty
+
   override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
   // we are looking for documents with a very specific payload

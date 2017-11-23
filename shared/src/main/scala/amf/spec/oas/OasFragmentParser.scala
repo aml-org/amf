@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
-import amf.shape.Shape
+import amf.plugins.domain.shapes.models.Shape
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
 import org.yaml.model.{YMap, YType}

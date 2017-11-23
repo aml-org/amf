@@ -2,14 +2,16 @@ package amf.spec.declaration
 
 import amf.domain.Value
 import amf.framework.parser.Annotations
-import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models.TypeDef._
+import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.plugins.domain.webapi.models.annotations._
-import amf.shape.TypeDef._
-import amf.shape._
 import amf.spec.SearchScope
 import amf.spec.SearchScope.Named
 import amf.spec.common.{ArrayNode, ShapeExtensionParser, ValueNode}

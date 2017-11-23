@@ -6,7 +6,7 @@ import amf.domain.extensions.DataNode
 import amf.domain.security._
 import amf.metadata.domain.security._
 import amf.parser.Position
-import amf.shape.Shape
+import amf.plugins.domain.shapes.models.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.domain.{RamlParametersEmitter, RamlResponsesEmitter}

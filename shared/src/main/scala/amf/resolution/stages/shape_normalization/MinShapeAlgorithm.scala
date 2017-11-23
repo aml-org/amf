@@ -1,9 +1,9 @@
 package amf.resolution.stages.shape_normalization
 
 import amf.framework.parser.Annotations
-import amf.metadata.shape._
 import amf.model.AmfArray
-import amf.shape._
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models._
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable

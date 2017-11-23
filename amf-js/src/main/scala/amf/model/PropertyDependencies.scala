@@ -1,14 +1,16 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportAll
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.JSExportAll
 
 /**
   *
   */
 @JSExportAll
-case class PropertyDependencies(private[amf] val property: amf.shape.PropertyDependencies) extends DomainElement {
+case class PropertyDependencies(private[amf] val property: models.PropertyDependencies) extends DomainElement {
 
   def propertySource: String              = property.propertySource
   def propertyTarget: js.Iterable[String] = property.propertyTarget.toJSArray
@@ -23,5 +25,5 @@ case class PropertyDependencies(private[amf] val property: amf.shape.PropertyDep
     this
   }
 
-  override private[amf] def element: amf.shape.PropertyDependencies = property
+  override private[amf] def element: models.PropertyDependencies = property
 }

@@ -1,18 +1,19 @@
 package amf.spec.declaration
 
-import amf.framework.model.document.BaseUnit
 import amf.domain._
 import amf.framework.metamodel.Field
-import amf.framework.model.domain._
+import amf.framework.model.document.BaseUnit
 import amf.framework.parser.Annotations
 import amf.metadata.domain.ExampleModel
-import amf.metadata.shape._
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
+import amf.plugins.document.webapi.annotations._
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.annotations._
-import amf.shape._
 import amf.spec._
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext

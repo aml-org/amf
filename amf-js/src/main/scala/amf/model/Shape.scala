@@ -1,31 +1,33 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class AnyShape(private[amf] val any: amf.shape.AnyShape) extends Shape(any) {
+case class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
   override private[amf] def element = any
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.AnyShape => AnyShape(l) })
+    element.linkTarget.map({ case l: models.AnyShape => AnyShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = AnyShape(element.linkCopy())
 }
 
 @JSExportAll
-case class NilShape(private[amf] val nil: amf.shape.NilShape) extends Shape(nil) {
+case class NilShape(private[amf] val nil: models.NilShape) extends Shape(nil) {
   override private[amf] def element = nil
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.NilShape => NilShape(l) })
+    element.linkTarget.map({ case l: models.NilShape => NilShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = NilShape(element.linkCopy())
 }
 
 @JSExportAll
-abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElement with Linkable {
+abstract class Shape(private[amf] val shape: models.Shape) extends DomainElement with Linkable {
 
   val name: String                    = shape.name
   val displayName: String             = shape.displayName
@@ -79,16 +81,16 @@ abstract class Shape(private[amf] val shape: amf.shape.Shape) extends DomainElem
 }
 
 object Shape {
-  def apply(shape: amf.shape.Shape): Shape =
+  def apply(shape: models.Shape): Shape =
     (shape match {
-      case file: amf.shape.FileShape     => Some(FileShape(file))
-      case any: amf.shape.AnyShape       => Some(AnyShape(any))
-      case nil: amf.shape.NilShape       => Some(NilShape(nil))
-      case node: amf.shape.NodeShape     => Some(NodeShape(node))
-      case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
-      case array: amf.shape.ArrayShape   => Some(new ArrayShape(array))
-      case matrix: amf.shape.MatrixShape => Some(new MatrixShape(matrix.toArrayShape))
-      case tuple: amf.shape.TupleShape   => Some(TupleShape(tuple))
+      case file: models.FileShape     => Some(FileShape(file))
+      case any: models.AnyShape       => Some(AnyShape(any))
+      case nil: models.NilShape       => Some(NilShape(nil))
+      case node: models.NodeShape     => Some(NodeShape(node))
+      case scalar: models.ScalarShape => Some(ScalarShape(scalar))
+      case array: models.ArrayShape   => Some(new ArrayShape(array))
+      case matrix: models.MatrixShape => Some(new MatrixShape(matrix.toArrayShape))
+      case tuple: models.TupleShape   => Some(TupleShape(tuple))
       case _                             => None
     }).orNull
 }
