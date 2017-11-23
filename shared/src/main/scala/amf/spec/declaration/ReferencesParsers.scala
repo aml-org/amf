@@ -1,8 +1,8 @@
 package amf.spec.declaration
 
 import amf.compiler.ParsedReference
-import amf.framework.document.Fragment.Fragment
-import amf.framework.document.{BaseUnit, DeclaresModel, Document}
+import amf.framework.model.document.Fragment.Fragment
+import amf.framework.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.domain.dialects.DomainEntity
 import amf.parser.YMapOps
 import amf.plugins.domain.webapi.models.annotations.Aliases

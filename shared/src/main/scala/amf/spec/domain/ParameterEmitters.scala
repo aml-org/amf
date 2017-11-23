@@ -1,6 +1,6 @@
 package amf.spec.domain
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain.{FieldEntry, Fields, Parameter}
 import amf.metadata.domain.ParameterModel
 import amf.metadata.shape.ShapeModel

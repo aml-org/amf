@@ -2,18 +2,19 @@ package amf.spec.raml
 
 import amf.common.core.TemplateUri
 import amf.core.Root
-import amf.framework.document.{BaseUnit, Document, Extension, Overlay}
+import amf.framework.model.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.framework.metamodel.Field
 import amf.framework.parser.Annotations
-import amf.metadata.Field
-import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.framework.metamodel.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.metamodel.model.ExtensionLikeModel
 import amf.plugins.domain.webapi.models.annotations.{DeclaredElement, SingleValueArray, SourceVendor, SynthesizedField}
 import amf.spec.common._
 import amf.spec.declaration._

@@ -1,4 +1,4 @@
-package amf.framework.domain
+package amf.framework.model.domain
 
 import amf.framework.registries.AMFPluginsRegistry
 import amf.model.AmfElement

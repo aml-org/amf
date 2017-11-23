@@ -3,10 +3,10 @@ package amf.domain.extensions
 import amf.framework.utils._
 import amf.domain.`abstract`.Variable
 import amf.domain.{DynamicDomainElement, Fields}
-import amf.framework.domain.ScalarType
+import amf.framework.metamodel.Field
+import amf.framework.model.domain.ScalarType
 import amf.framework.parser.Annotations
-import amf.metadata.Field
-import amf.metadata.Type.{Array, Str}
+import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.extensions.DataNodeModel
 import amf.metadata.domain.extensions.DataNodeModel.Name
 import amf.model.{AmfArray, AmfElement, AmfScalar}

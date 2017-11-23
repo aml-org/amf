@@ -1,8 +1,8 @@
 package amf.metadata.domain.security
 
-import amf.metadata.Type.{Iri, Str}
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.{Iri, Str}
 import amf.metadata.domain.{DomainElementModel, KeyField}
-import amf.metadata.{Field, Type}
 import amf.vocabulary.Namespace.Security
 import amf.vocabulary.ValueType
 

@@ -1,9 +1,11 @@
 package amf.spec.dialects
 
+<<<<<<< HEAD
 import amf.dialects.Vocabulary
 import amf.document.{BaseUnit, Module}
 import amf.domain.Annotation.Aliases
 import amf.framework.document.{BaseUnit, Module}
+import amf.framework.model.document.{BaseUnit, Module}
 import amf.domain.FieldEntry
 import amf.domain.dialects.DomainEntity
 import amf.metadata.domain.LinkableElementModel

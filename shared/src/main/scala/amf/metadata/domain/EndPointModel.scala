@@ -1,7 +1,7 @@
 package amf.metadata.domain
 
-import amf.metadata.Field
-import amf.metadata.Type._
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type._
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.vocabulary.Namespace.{Http, Hydra, Schema}
 import amf.vocabulary.{Namespace, ValueType}

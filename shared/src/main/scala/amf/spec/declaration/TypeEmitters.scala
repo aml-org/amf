@@ -1,10 +1,10 @@
 package amf.spec.declaration
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain._
-import amf.framework.domain._
+import amf.framework.metamodel.Field
+import amf.framework.model.domain._
 import amf.framework.parser.Annotations
-import amf.metadata.Field
 import amf.metadata.domain.ExampleModel
 import amf.metadata.shape._
 import amf.model.AmfScalar

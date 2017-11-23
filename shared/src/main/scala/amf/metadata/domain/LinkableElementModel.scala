@@ -1,7 +1,7 @@
 package amf.metadata.domain
 
-import amf.metadata.Type.{Iri, Str}
-import amf.metadata.{Field, Obj}
+import amf.framework.metamodel.Type.{Iri, Str}
+import amf.framework.metamodel.{Field, Obj}
 import amf.vocabulary.{Namespace, ValueType}
 
 /**

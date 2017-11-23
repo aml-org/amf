@@ -1,5 +1,5 @@
 package amf.resolution.stages
-import amf.framework.document.{BaseUnit, Document}
+import amf.framework.model.document.{BaseUnit, Document}
 import amf.domain.WebApi
 import amf.metadata.domain.ResponseModel
 import amf.validation.Validation

@@ -1,6 +1,6 @@
 package amf.framework.parser
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.services.RuntimeCompiler
 import amf.plugins.document.vocabularies.core.DialectRegistry
 import amf.remote.{Cache, Context, Platform}

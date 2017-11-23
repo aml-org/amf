@@ -1,9 +1,9 @@
 package amf.spec.raml
 
-import amf.framework.document.Fragment._
-import amf.framework.document.{BaseUnit, Module}
+import amf.framework.model.document.Fragment._
+import amf.framework.model.document.{BaseUnit, Module}
 import amf.domain.`abstract`.AbstractDeclaration
-import amf.metadata.document.BaseUnitModel
+import amf.framework.metamodel.document.BaseUnitModel
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.remote.Raml
 import amf.spec.common.BaseEmitters._

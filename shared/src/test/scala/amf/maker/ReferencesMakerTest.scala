@@ -2,8 +2,8 @@ package amf.maker
 
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.AMFCompiler
-import amf.framework.document.Document
-import amf.framework.document.Fragment.{DataType, Fragment}
+import amf.framework.model.document.Document
+import amf.framework.model.document.Fragment.{DataType, Fragment}
 import amf.domain.WebApi
 import amf.remote._
 import amf.shape.NodeShape

@@ -1,6 +1,6 @@
 package amf.spec.domain
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.domain.{Example, FieldEntry}
 import amf.metadata.domain.ExampleModel._
 import amf.parser.Position

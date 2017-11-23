@@ -1,7 +1,7 @@
 package amf.metadata.shape
 
-import amf.metadata.Field
-import amf.metadata.Type._
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type._
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.Shapes
 import amf.vocabulary.ValueType

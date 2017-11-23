@@ -1,5 +1,6 @@
 package amf.metadata
-import amf.metadata.Type.Str
+import amf.framework.metamodel.{Field, Obj}
+import amf.framework.metamodel.Type.Str
 import amf.vocabulary.Namespace.{Document, SourceMaps}
 import amf.vocabulary.{Namespace, ValueType}
 

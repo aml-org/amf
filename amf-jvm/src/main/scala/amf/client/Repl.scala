@@ -52,7 +52,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
       new Handler[BaseUnit] {
         override def success(unit: BaseUnit): Unit = {
           out.println("Successfully parsed. Type `:generate raml` or `:generate oas` or `:generate amf`")
-          callback(Some(Document(unit.asInstanceOf[amf.framework.document.Document])))
+          callback(Some(Document(unit.asInstanceOf[amf.framework.model.document.Document])))
         }
 
         override def error(exception: Throwable): Unit = {

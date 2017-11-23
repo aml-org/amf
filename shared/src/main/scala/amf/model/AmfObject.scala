@@ -1,8 +1,8 @@
 package amf.model
 
 import amf.domain._
+import amf.framework.metamodel.Field
 import amf.framework.parser.Annotations
-import amf.metadata.Field
 
 /**
   * Created by pedro.colunga on 8/15/17.

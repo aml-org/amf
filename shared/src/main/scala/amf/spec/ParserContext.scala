@@ -1,7 +1,7 @@
 package amf.spec
 
 import amf.compiler.ParsedReference
-import amf.framework.domain.LexicalInformation
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.validation.SeverityLevels.VIOLATION
 import amf.parser.Range
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, RamlSpecAwareContext, SpecAwareContext, WebApiContext}

@@ -1,7 +1,7 @@
 package amf.metadata.domain.extensions
 
-import amf.metadata.Field
-import amf.metadata.Type.{Array, Iri, Str}
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.{Array, Iri, Str}
 import amf.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
 import amf.metadata.domain.{DomainElementModel, KeyField}
 import amf.metadata.shape.ShapeModel

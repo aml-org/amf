@@ -1,6 +1,6 @@
 package amf.metadata.domain
 
-import amf.metadata.{Field, Obj}
+import amf.framework.metamodel.{Field, Obj}
 
 /**
   * Determines if the field is optional for merging.

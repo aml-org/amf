@@ -1,9 +1,10 @@
 package amf.metadata.domain
 
-import amf.metadata.Type.Array
+import amf.framework.metamodel.{Field, Obj}
+import amf.framework.metamodel.Type.Array
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
 import amf.metadata.domain.extensions.DomainExtensionModel
-import amf.metadata.{Field, Obj, SourceMapModel}
+import amf.metadata.SourceMapModel
 import amf.vocabulary.Namespace.{Document, SourceMaps}
 import amf.vocabulary.ValueType
 

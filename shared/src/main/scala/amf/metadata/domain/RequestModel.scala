@@ -1,6 +1,6 @@
 package amf.metadata.domain
-import amf.metadata.Field
-import amf.metadata.Type.Array
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.Array
 import amf.metadata.shape.ShapeModel
 import amf.vocabulary.Namespace.Http
 import amf.vocabulary.ValueType

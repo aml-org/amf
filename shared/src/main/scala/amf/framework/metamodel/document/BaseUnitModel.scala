@@ -1,7 +1,7 @@
-package amf.metadata.document
+package amf.framework.metamodel.document
 
-import amf.metadata.Type.{Array, Str}
-import amf.metadata.{Field, Obj}
+import amf.framework.metamodel.Type.{Str,Array}
+import amf.framework.metamodel.{Field, Obj}
 import amf.vocabulary.Namespace.Document
 import amf.vocabulary.ValueType
 

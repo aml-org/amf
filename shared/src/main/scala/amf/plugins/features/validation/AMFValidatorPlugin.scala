@@ -2,7 +2,7 @@ package amf.plugins.features.validation
 
 import amf.ProfileNames
 import amf.client.GenerationOptions
-import amf.framework.document.{BaseUnit, Document}
+import amf.framework.model.document.{BaseUnit, Document}
 import amf.domain.dialects.DomainEntity
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.registries.AMFPluginsRegistry

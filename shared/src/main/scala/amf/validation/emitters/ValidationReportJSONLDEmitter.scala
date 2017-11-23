@@ -1,6 +1,6 @@
 package amf.validation.emitters
 
-import amf.framework.domain.{Annotation, LexicalInformation}
+import amf.framework.model.domain.{Annotation, LexicalInformation}
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.spec.common.BaseEmitters._
 import amf.vocabulary.Namespace

@@ -1,7 +1,7 @@
 package amf.metadata.domain.extensions
 
-import amf.metadata.Field
-import amf.metadata.Type.Str
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.Str
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.{Data, Schema}
 import amf.vocabulary.ValueType

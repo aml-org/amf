@@ -1,7 +1,7 @@
 package amf.metadata.shape
 
-import amf.metadata.Field
-import amf.metadata.Type.{Str, Int}
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.{Int, Str}
 import amf.vocabulary.Namespace.{Shacl, Shapes}
 
 trait CommonOASFields {

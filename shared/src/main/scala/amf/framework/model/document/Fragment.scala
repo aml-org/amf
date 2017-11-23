@@ -1,9 +1,9 @@
-package amf.framework.document
+package amf.framework.model.document
 
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
 import amf.framework.parser.Annotations
-import amf.metadata.document.{BaseUnitModel, DocumentModel, FragmentModel}
+import amf.framework.metamodel.document.{BaseUnitModel, DocumentModel, FragmentModel}
 import amf.model.AmfObject
 import amf.shape.Shape
 

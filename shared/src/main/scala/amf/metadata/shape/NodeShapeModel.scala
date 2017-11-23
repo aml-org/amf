@@ -1,7 +1,7 @@
 package amf.metadata.shape
 
-import amf.metadata.Field
-import amf.metadata.Type.{Array, Bool, Int, Str}
+import amf.framework.metamodel.Field
+import amf.framework.metamodel.Type.{Array, Bool, Int, Str}
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.vocabulary.ValueType

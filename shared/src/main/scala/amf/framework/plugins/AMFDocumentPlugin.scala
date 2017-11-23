@@ -2,7 +2,7 @@ package amf.framework.plugins
 
 import amf.client.GenerationOptions
 import amf.core.Root
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.parser.AbstractReferenceCollector
 import amf.remote.Platform
 import amf.spec.ParserContext

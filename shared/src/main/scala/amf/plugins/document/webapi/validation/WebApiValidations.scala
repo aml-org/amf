@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation._
 import amf.framework.validation.core.ValidationResult

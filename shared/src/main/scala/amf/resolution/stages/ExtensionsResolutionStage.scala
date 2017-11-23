@@ -1,18 +1,19 @@
 package amf.resolution.stages
 
 import amf.ProfileNames
-import amf.framework.document._
+import amf.framework.model.document._
 import amf.domain._
 import amf.domain.extensions.DataNode
-import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.framework.metamodel.{Field, Type}
+import amf.framework.metamodel.document.BaseUnitModel
 import amf.metadata.domain.DomainElementModel.{Includes, Sources}
 import amf.metadata.domain.`abstract`.ParametrizedTraitModel
 import amf.metadata.domain.extensions.{DataNodeModel, DomainExtensionModel}
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
 import amf.metadata.shape.ShapeModel
-import amf.metadata.{Field, Type}
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.plugins.document.webapi.metamodel.model.ExtensionLikeModel
 import amf.plugins.domain.webapi.models.annotations.SynthesizedField
 import amf.shape.Shape
 import amf.spec.{Declarations, ParserContext}

@@ -1,10 +1,9 @@
-package amf.framework.document
+package amf.framework.model.document
 
 import amf.domain.{DomainElement, Fields}
+import amf.framework.metamodel.document.DocumentModel.{Declares => _, Location => _, References => _, Usage => _}
+import amf.framework.metamodel.document.ModuleModel._
 import amf.framework.parser.Annotations
-import amf.metadata.document.DocumentModel.{Declares => _, Location => _, References => _, Usage => _}
-import amf.metadata.document.FragmentModel
-import amf.metadata.document.ModuleModel._
 import amf.model.AmfObject
 import org.yaml.model.YDocument
 

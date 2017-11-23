@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.client.GenerationOptions
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.io.BuildCycleTests
 import amf.remote._

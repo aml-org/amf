@@ -1,9 +1,9 @@
 package amf.resolution.stages
 
-import amf.framework.document.{BaseUnit, Document}
+import amf.framework.model.document.{BaseUnit, Document}
 import amf.domain.security.{ParametrizedSecurityScheme, SecurityScheme, Settings}
 import amf.domain.{DomainElement, WebApi}
-import amf.metadata.Field
+import amf.framework.metamodel.Field
 import amf.metadata.domain.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
 import amf.metadata.domain.{EndPointModel, OperationModel, WebApiModel}
 import amf.validation.Validation

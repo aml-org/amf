@@ -1,6 +1,6 @@
 package amf.client
 
-import amf.framework.document.BaseUnit
+import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Syntax
 import amf.remote.Vendor
