@@ -1,6 +1,8 @@
 package amf.model
 
-case class PropertyShape(private[amf] val propertyShape: amf.shape.PropertyShape) {
+import amf.plugins.domain.shapes.models
+
+case class PropertyShape(private[amf] val propertyShape: models.PropertyShape) {
 
   val path: String = propertyShape.path
   val range: Shape = wrapShape(propertyShape.range)
@@ -35,10 +37,10 @@ case class PropertyShape(private[amf] val propertyShape: amf.shape.PropertyShape
     ScalarShape(propertyShape.withScalarSchema(name))
   }
 
-  private def wrapShape(shape: amf.shape.Shape): Shape =
+  private def wrapShape(shape: models.Shape): Shape =
     (shape match {
-      case node: amf.shape.NodeShape     => Some(NodeShape(node))
-      case scalar: amf.shape.ScalarShape => Some(ScalarShape(scalar))
+      case node: models.NodeShape     => Some(NodeShape(node))
+      case scalar: models.ScalarShape => Some(ScalarShape(scalar))
       case a                             => None
     }).orNull
 

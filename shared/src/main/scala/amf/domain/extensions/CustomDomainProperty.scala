@@ -6,7 +6,7 @@ import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.extensions.CustomDomainPropertyModel._
-import amf.shape.Shape
+import amf.plugins.domain.shapes.models.Shape
 import org.yaml.model.YPart
 
 case class CustomDomainProperty(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {

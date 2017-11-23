@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.metamodel
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.metadata.domain.{DomainElementModel, KeyField}
-import amf.metadata.shape.ShapeModel
+import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.Payload
 import amf.vocabulary.Namespace.Http
 import amf.vocabulary.ValueType

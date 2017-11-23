@@ -9,7 +9,7 @@ import amf.framework.parser.Annotations
 import amf.model.AmfScalar
 import amf.parser.Position
 import amf.parser.Position.ZERO
-import amf.plugins.domain.webapi.models.annotations.SingleValueArray
+import amf.plugins.document.webapi.annotations.SingleValueArray
 import amf.remote.Vendor
 import amf.spec.declaration.TagToReferenceEmitter
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}

@@ -27,6 +27,8 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
 
   val vendors = Seq("RAML 1.0", "RAML")
 
+  override def serializableAnnotations() = webApiAnnotations
+
   override def modelEntities = webApiDocuments
 
   override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)

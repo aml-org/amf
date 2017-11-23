@@ -4,10 +4,10 @@ import amf.domain.Linkable
 import amf.framework.model.document.{BaseUnit, Fragment, Module}
 import amf.framework.model.domain.DomainElement
 import amf.parser.Position
+import amf.plugins.document.webapi.annotations.DeclaredElement
+import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.models.Parameter
-import amf.plugins.domain.webapi.models.annotations.DeclaredElement
 import amf.remote.{Oas, Raml, Vendor}
-import amf.shape.Shape
 import amf.spec.common.BaseEmitters._
 import amf.spec.oas.OasSpecEmitter
 import amf.spec.raml.RamlSpecEmitter

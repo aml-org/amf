@@ -6,8 +6,8 @@ import amf.framework.metamodel.Obj
 import amf.framework.model.document.Fragment
 import amf.framework.parser.Annotations
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
+import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.shape.Shape
 
 // todo review
 

@@ -1,13 +1,13 @@
 package amf.spec.domain
 
-import amf.framework.model.document.BaseUnit
 import amf.domain.{FieldEntry, Fields}
-import amf.metadata.shape.ShapeModel
+import amf.framework.model.document.BaseUnit
 import amf.model.AmfScalar
 import amf.parser.Position
+import amf.plugins.document.webapi.annotations.{ExplicitField, SynthesizedField}
+import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
-import amf.plugins.domain.webapi.models.annotations.{ExplicitField, SynthesizedField}
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter}

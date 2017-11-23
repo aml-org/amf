@@ -3,9 +3,9 @@ package amf.spec.domain
 import amf.framework.parser.Annotations
 import amf.model.AmfArray
 import amf.parser.YMapOps
+import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
-import amf.plugins.domain.webapi.models.annotations.SynthesizedField
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}

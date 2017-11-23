@@ -1,8 +1,11 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+import amf.plugins.domain.shapes.models.DataArrangementShape
+
 import scala.collection.JavaConverters._
 
-abstract class DataArrangeShape(private[amf] val array: amf.shape.DataArrangementShape) extends Shape(array) {
+abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) extends Shape(array) {
 
   val minItems: Int        = array.minItems
   val maxItems: Int        = array.maxItems
@@ -24,7 +27,7 @@ abstract class DataArrangeShape(private[amf] val array: amf.shape.DataArrangemen
   }
 }
 
-class ArrayShape(private[amf] override val array: amf.shape.ArrayShape) extends DataArrangeShape(array) {
+class ArrayShape(private[amf] override val array: models.ArrayShape) extends DataArrangeShape(array) {
   val items: Shape = Shape(array.items)
 
   def withItems(items: Shape): this.type = {
@@ -35,16 +38,16 @@ class ArrayShape(private[amf] override val array: amf.shape.ArrayShape) extends 
   override private[amf] def element = array
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.ArrayShape => ArrayShape(l) })
+    element.linkTarget.map({ case l: models.ArrayShape => ArrayShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = ArrayShape(element.linkCopy())
 }
 
 object ArrayShape {
-  def apply(array: amf.shape.ArrayShape): ArrayShape = { new ArrayShape(array) }
+  def apply(array: models.ArrayShape): ArrayShape = { new ArrayShape(array) }
 }
 
-class MatrixShape(private[amf] override val array: amf.shape.ArrayShape) extends ArrayShape(array) {
+class MatrixShape(private[amf] override val array: models.ArrayShape) extends ArrayShape(array) {
 
   override def withItems(items: Shape): this.type = {
     items match {
@@ -58,10 +61,10 @@ class MatrixShape(private[amf] override val array: amf.shape.ArrayShape) extends
 }
 
 object MatrixShape {
-  def apply(array: amf.shape.MatrixShape): MatrixShape = { new MatrixShape(array.toArrayShape) }
+  def apply(array: models.MatrixShape): MatrixShape = { new MatrixShape(array.toArrayShape) }
 }
 
-case class TupleShape(private[amf] override val array: amf.shape.TupleShape) extends DataArrangeShape(array) {
+case class TupleShape(private[amf] override val array: models.TupleShape) extends DataArrangeShape(array) {
   val items: java.util.List[Shape] = array.items.map(Shape(_)).asJava
 
   def withItems(items: java.util.List[Shape]): this.type = {
@@ -72,7 +75,7 @@ case class TupleShape(private[amf] override val array: amf.shape.TupleShape) ext
   override private[amf] def element = array
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.TupleShape => TupleShape(l) })
+    element.linkTarget.map({ case l: models.TupleShape => TupleShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = TupleShape(element.linkCopy())
 }

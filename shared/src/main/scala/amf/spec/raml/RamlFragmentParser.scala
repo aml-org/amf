@@ -6,13 +6,13 @@ import amf.domain.extensions.CustomDomainProperty
 import amf.framework.model.document.Fragment
 import amf.framework.parser.Annotations
 import amf.parser._
+import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
-import amf.plugins.domain.webapi.models.annotations.SourceVendor
+import amf.plugins.domain.shapes.models.Shape
 import amf.remote.Raml
-import amf.shape.Shape
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
 import org.yaml.model.{YMap, YType}

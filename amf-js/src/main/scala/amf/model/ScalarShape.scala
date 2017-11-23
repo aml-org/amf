@@ -1,9 +1,11 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class ScalarShape(private[amf] val scalar: amf.shape.ScalarShape) extends Shape(scalar) {
+case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends Shape(scalar) {
 
   val dataType: String         = scalar.dataType
   val pattern: String          = scalar.pattern
@@ -60,7 +62,7 @@ case class ScalarShape(private[amf] val scalar: amf.shape.ScalarShape) extends S
   override private[amf] def element = scalar
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.shape.ScalarShape => ScalarShape(l) })
+    element.linkTarget.map({ case l: models.ScalarShape => ScalarShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = ScalarShape(element.linkCopy())
 }

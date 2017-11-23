@@ -1,13 +1,11 @@
 package amf.model
 
-import amf.domain.extensions
-import amf.shape
+import amf.domain.{`abstract`, extensions, security}
+import amf.plugins.domain.shapes.models
 
 import scala.language.postfixOps
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import amf.domain.`abstract`
-import amf.domain.security
 
 trait DeclaresModel {
 
@@ -17,10 +15,10 @@ trait DeclaresModel {
   lazy val declares: js.Iterable[DomainElement] = {
     val declarations = element.declares
       .map {
-        case node: shape.NodeShape                     => NodeShape(node)
-        case scalar: shape.ScalarShape                 => ScalarShape(scalar)
-        case tuple: shape.TupleShape                   => TupleShape(tuple)
-        case matrix: shape.MatrixShape                 => MatrixShape(matrix)
+        case node: models.NodeShape                     => NodeShape(node)
+        case scalar: models.ScalarShape                 => ScalarShape(scalar)
+        case tuple: models.TupleShape                   => TupleShape(tuple)
+        case matrix: models.MatrixShape                 => MatrixShape(matrix)
         case property: extensions.CustomDomainProperty => CustomDomainProperty(property)
         case tr: `abstract`.Trait                      => Trait(tr)
         case resourceType: `abstract`.ResourceType     => ResourceType(resourceType)

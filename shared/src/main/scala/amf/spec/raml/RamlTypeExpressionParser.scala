@@ -1,11 +1,11 @@
 package amf.spec.raml
 
 import amf.framework.model.domain.LexicalInformation
-import amf.metadata.shape.UnionShapeModel
 import amf.model.AmfArray
 import amf.parser.Range
-import amf.plugins.domain.webapi.models.annotations.ParsedFromTypeExpression
-import amf.shape._
+import amf.plugins.document.webapi.annotations.ParsedFromTypeExpression
+import amf.plugins.domain.shapes.metamodel.UnionShapeModel
+import amf.plugins.domain.shapes.models._
 import amf.spec.{ParserContext, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model.{YNode, YPart}

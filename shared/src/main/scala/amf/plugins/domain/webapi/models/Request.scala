@@ -3,9 +3,9 @@ package amf.plugins.domain.webapi.models
 import amf.domain.Fields
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.metamodel.RequestModel._
-import amf.shape.Shape
 
 /**
   * Request internal model.

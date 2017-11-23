@@ -1,13 +1,13 @@
 package amf.spec.declaration
 
-import amf.spec.common.BaseEmitters._
-import amf.framework.model.document.BaseUnit
 import amf.domain.FieldEntry
+import amf.framework.model.document.BaseUnit
 import amf.parser.Position
+import amf.plugins.domain.shapes.models.PropertyShape
 import amf.remote.{Oas, Raml}
-import amf.shape.{PropertyShape, Shape}
-import amf.spec.{EntryEmitter, SpecOrdering}
+import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
+import amf.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument.EntryBuilder
 
 

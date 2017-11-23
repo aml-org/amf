@@ -4,8 +4,8 @@ import amf.core.Root
 import amf.framework.model.document.Module
 import amf.framework.parser.Annotations
 import amf.parser.YNodeLikeOps
+import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.domain.webapi.models.annotations.SourceVendor
 import amf.spec.declaration.ReferencesParser
 import org.yaml.model._
 

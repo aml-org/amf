@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts
 
+import amf.plugins.domain.shapes.models.Shape
 import amf.remote.Vendor
-import amf.shape.Shape
 import amf.spec.{ParserContext, SpecSyntax}
 import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}

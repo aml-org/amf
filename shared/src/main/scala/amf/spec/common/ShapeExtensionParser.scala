@@ -1,10 +1,10 @@
 package amf.spec.common
 
 import amf.domain.extensions.ShapeExtension
-import amf.metadata.shape.ShapeModel
-import amf.shape.Shape
 import org.yaml.model.YMap
 import amf.parser._
+import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.shapes.models.Shape
 import amf.remote.{Oas, Raml, Vendor}
 import amf.spec.ParserContext
 

@@ -12,11 +12,11 @@ import amf.metadata.domain.`abstract`.ParametrizedTraitModel
 import amf.metadata.domain.extensions.{DataNodeModel, DomainExtensionModel}
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
-import amf.metadata.shape.ShapeModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
+import amf.plugins.document.webapi.annotations.SynthesizedField
+import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.domain.webapi.models.annotations.SynthesizedField
-import amf.shape.Shape
 import amf.spec.{Declarations, ParserContext}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation

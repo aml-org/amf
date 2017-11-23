@@ -5,8 +5,8 @@ import amf.domain.Fields
 import amf.framework.parser.Annotations
 import amf.framework.metamodel.document.FragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
+import amf.plugins.domain.shapes.models.Shape
 import amf.resolution.stages.{ReferenceResolutionStage, ShapeNormalizationStage}
-import amf.shape.Shape
 
 class CanonicalShapePipeline extends ResolutionPipeline {
 

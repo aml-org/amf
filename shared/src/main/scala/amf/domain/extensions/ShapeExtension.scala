@@ -5,7 +5,7 @@ import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.extensions.ShapeExtensionModel
 import amf.metadata.domain.extensions.ShapeExtensionModel._
-import amf.shape.PropertyShape
+import amf.plugins.domain.shapes.models.PropertyShape
 import org.yaml.model.YPart
 
 case class ShapeExtension (fields: Fields, annotations: Annotations) extends DomainElement {

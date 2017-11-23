@@ -44,6 +44,8 @@ object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin w
 
   val vendors = Seq("RAML Extension", "RAML 1.0")
 
+  override def serializableAnnotations() = Map.empty
+
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     implicit val ctx: ParserContext = ParserContext(parentContext.validation, parentContext.refs)
     comment(root) match {
@@ -125,4 +127,5 @@ object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin w
   }
 
   override def dependencies() = Seq(AMFGraphPlugin)
+
 }

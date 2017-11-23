@@ -1,11 +1,13 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 import scala.collection.JavaConverters._
 
 /**
   *
   */
-case class PropertyDependencies(private[amf] val property: amf.shape.PropertyDependencies) extends DomainElement {
+case class PropertyDependencies(private[amf] val property: models.PropertyDependencies) extends DomainElement {
 
   def propertySource: String                 = property.propertySource
   def propertyTarget: java.util.List[String] = property.propertyTarget.asJava
@@ -20,5 +22,5 @@ case class PropertyDependencies(private[amf] val property: amf.shape.PropertyDep
     this
   }
 
-  override private[amf] def element: amf.shape.PropertyDependencies = property
+  override private[amf] def element: models.PropertyDependencies = property
 }

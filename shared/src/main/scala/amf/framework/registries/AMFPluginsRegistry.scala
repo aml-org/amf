@@ -47,6 +47,10 @@ object AMFPluginsRegistry {
       case None     =>
         documentPluginIDRegistry.put(documentPlugin.ID, documentPlugin)
 
+        documentPlugin.serializableAnnotations().foreach { case (name, unloader) =>
+          AMFDomainRegistry.registerAnnotation(name, unloader)
+        }
+
         documentPlugin.documentSyntaxes.foreach { mediaType =>
           val plugins = documentPluginRegistry.getOrElse(mediaType, Seq())
           documentPluginRegistry.put(mediaType, plugins ++ Seq(documentPlugin))

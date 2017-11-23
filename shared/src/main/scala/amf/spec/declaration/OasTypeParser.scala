@@ -2,19 +2,20 @@ package amf.spec.declaration
 
 import amf.domain.Example
 import amf.framework.parser.Annotations
-import amf.metadata.shape._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.plugins.document.webapi.annotations.{ExplicitField, Inferred}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models.TypeDef._
+import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.plugins.domain.webapi.models.annotations.{ExplicitField, Inferred}
-import amf.shape.OasTypeDefMatcher.matchType
-import amf.shape.TypeDef._
-import amf.shape._
 import amf.spec.common.{ArrayNode, ValueNode}
 import amf.spec.domain.RamlExamplesParser
 import amf.spec.oas.OasSpecParser
-import amf.spec.{OasDefinitions, ParserContext, SearchScope}
+import amf.spec.{OasDefinitions, SearchScope}
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.render.YamlRender

@@ -33,6 +33,8 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
 
   override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
 
+  override def serializableAnnotations() = webApiAnnotations
+
   private def detectOasUnit(root: Root)(implicit ctx: WebApiContext): Option[BaseUnit] = {
     OasHeader(root) match {
       case Some(Oas20Overlay)   => Some(OasDocumentParser(root).parseOverlay())
@@ -114,5 +116,4 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     "application/openapi",
     "application/swagger"
   )
-
 }
