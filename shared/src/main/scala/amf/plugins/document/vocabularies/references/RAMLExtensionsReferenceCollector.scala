@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.references
 
-import amf.compiler.{AbstractReferenceCollector, ParsedDocument, Reference}
-import amf.framework.parser.{Library, Link}
+import amf.compiler.ParsedDocument
+import amf.framework.parser.{AbstractReferenceCollector, Library, Link, Reference}
 import amf.parser.YMapOps
 import amf.spec.ParserContext
 import amf.validation.Validation

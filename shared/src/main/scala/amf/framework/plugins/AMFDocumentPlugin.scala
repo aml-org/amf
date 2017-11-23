@@ -1,9 +1,9 @@
 package amf.framework.plugins
 
 import amf.client.GenerationOptions
-import amf.compiler.AbstractReferenceCollector
 import amf.core.Root
 import amf.document.BaseUnit
+import amf.framework.parser.AbstractReferenceCollector
 import amf.remote.Platform
 import amf.spec.ParserContext
 import org.yaml.model.YDocument

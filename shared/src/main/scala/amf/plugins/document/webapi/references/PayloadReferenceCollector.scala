@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.references
 
-import amf.compiler.{AbstractReferenceCollector, ParsedDocument}
+import amf.compiler.ParsedDocument
+import amf.framework.parser.AbstractReferenceCollector
 import amf.spec.ParserContext
 import amf.validation.Validation
 

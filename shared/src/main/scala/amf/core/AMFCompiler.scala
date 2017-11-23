@@ -135,8 +135,8 @@ object AMFCompiler {
     // We register ourselves as the Runtime compiler
     if (RuntimeCompiler.compiler.isEmpty) {
       RuntimeCompiler.register(new RuntimeCompiler {
-        override def build(url: String, remote: Platform, mediaType: String, vendor: String, currentValidation: Validation): Future[BaseUnit] = {
-          new AMFCompiler(url, remote, None, mediaType, vendor, Unspecified, currentValidation, Cache()).build()
+        override def build(url: String, remote: Platform, base: Option[Context], mediaType: String, vendor: String, currentValidation: Validation, referenceKind: ReferenceKind, cache: Cache): Future[BaseUnit] = {
+          new AMFCompiler(url, remote, base, mediaType, vendor, referenceKind, currentValidation, cache).build()
         }
       })
     }
