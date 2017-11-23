@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Array
 import amf.metadata.domain.DomainElementModel
+import amf.shape.UnionShape
 import amf.vocabulary.{Namespace, ValueType}
 
 object UnionShapeModel extends ShapeModel with DomainElementModel {
@@ -14,4 +15,5 @@ object UnionShapeModel extends ShapeModel with DomainElementModel {
   override val `type`: List[ValueType] =
     List(Namespace.Shapes + "UnionShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
 
+  override def modelInstance = UnionShape()
 }

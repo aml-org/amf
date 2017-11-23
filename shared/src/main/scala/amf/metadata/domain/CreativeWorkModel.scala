@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.CreativeWork
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.vocabulary.Namespace.Schema
@@ -19,4 +20,6 @@ object CreativeWorkModel extends DomainElementModel {
   override val `type`: List[ValueType] = Schema + "CreativeWork" :: DomainElementModel.`type`
 
   override def fields: List[Field] = Url :: Title :: Description :: DomainElementModel.fields
+
+  override def modelInstance = CreativeWork()
 }

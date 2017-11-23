@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.Operation
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
 import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
@@ -54,4 +55,6 @@ object OperationModel extends DomainElementModel with KeyField with OptionalFiel
                                           Request,
                                           Responses,
                                           Security) ++ DomainElementModel.fields
+
+  override def modelInstance = Operation()
 }

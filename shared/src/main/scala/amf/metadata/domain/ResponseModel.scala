@@ -1,4 +1,5 @@
 package amf.metadata.domain
+import amf.domain.Response
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.vocabulary.Namespace._
@@ -27,4 +28,6 @@ object ResponseModel extends DomainElementModel with KeyField {
 
   override def fields: List[Field] =
     List(Name, Description, StatusCode, Headers, Payloads, Examples) ++ DomainElementModel.fields
+
+  override def modelInstance = Response()
 }

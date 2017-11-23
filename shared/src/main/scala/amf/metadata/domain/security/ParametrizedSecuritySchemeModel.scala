@@ -1,5 +1,6 @@
 package amf.metadata.domain.security
 
+import amf.domain.security.ParametrizedSecurityScheme
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.metadata.domain.{DomainElementModel, KeyField}
@@ -19,4 +20,6 @@ object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField 
   override def fields: List[Field] = List(Name, Scheme, Settings) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Security + "ParametrizedSecurityScheme") ++ DomainElementModel.`type`
+
+  override def modelInstance = ParametrizedSecurityScheme()
 }

@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.Organization
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.vocabulary.Namespace.Schema
@@ -19,4 +20,6 @@ object OrganizationModel extends DomainElementModel {
   override val `type`: List[ValueType] = Schema + "Organization" :: DomainElementModel.`type`
 
   override def fields: List[Field] = List(Url, Name, Email) ++ DomainElementModel.fields
+
+  override def modelInstance = Organization()
 }

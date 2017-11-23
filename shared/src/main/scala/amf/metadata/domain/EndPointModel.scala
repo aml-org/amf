@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.EndPoint
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
@@ -29,4 +30,6 @@ object EndPointModel extends DomainElementModel with KeyField {
 
   override def fields: List[Field] =
     List(Path, Name, Description, Operations, UriParameters, Security) ++ DomainElementModel.fields
+
+  override def modelInstance = EndPoint()
 }

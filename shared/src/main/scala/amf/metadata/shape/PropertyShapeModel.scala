@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Int, Iri}
 import amf.metadata.domain.DomainElementModel
+import amf.shape.PropertyShape
 import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.vocabulary.ValueType
 
@@ -23,4 +24,6 @@ object PropertyShapeModel extends ShapeModel {
 
   override def fields: List[Field] =
     List(Path, Range, MinCount, MaxCount) ++ ShapeModel.fields ++ DomainElementModel.fields
+
+  override def modelInstance = PropertyShape()
 }

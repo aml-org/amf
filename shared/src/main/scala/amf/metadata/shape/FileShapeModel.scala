@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.DomainElementModel
+import amf.shape.FileShape
 import amf.vocabulary.{Namespace, ValueType}
 
 object FileShapeModel extends ShapeModel with DomainElementModel with CommonOASFields {
@@ -14,4 +15,6 @@ object FileShapeModel extends ShapeModel with DomainElementModel with CommonOASF
 
   override val `type`: List[ValueType] =
     List(Namespace.Shapes + "FileShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
+
+  override def modelInstance = FileShape()
 }

@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.License
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.vocabulary.Namespace.{Http, Schema}
@@ -17,4 +18,6 @@ object LicenseModel extends DomainElementModel {
   override val `type`: List[ValueType] = Http + "License" :: DomainElementModel.`type`
 
   override def fields: List[Field] = Url :: Name :: DomainElementModel.fields
+
+  override def modelInstance = License()
 }

@@ -35,4 +35,6 @@ class DialectEntityModel (domainEntity: DomainEntity) extends DomainElementModel
 
   val annotations: Annotations = domainEntity.annotations
 
+  // TODO: Look at this to try to completely split dialects
+  override def modelInstance = throw new Exception("Dialect entities cannot be instantiated directly")
 }

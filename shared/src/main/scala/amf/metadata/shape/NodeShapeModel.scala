@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Bool, Int, Str}
 import amf.metadata.domain.DomainElementModel
+import amf.shape.NodeShape
 import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.vocabulary.ValueType
 
@@ -38,4 +39,6 @@ object NodeShapeModel extends ShapeModel with DomainElementModel {
          Dependencies) ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+
+  override def modelInstance = NodeShape()
 }

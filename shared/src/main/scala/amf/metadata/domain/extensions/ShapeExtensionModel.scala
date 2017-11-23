@@ -1,5 +1,6 @@
 package amf.metadata.domain.extensions
 
+import amf.domain.extensions.ShapeExtension
 import amf.framework.metamodel.Field
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.{Document, Http}
@@ -12,4 +13,6 @@ object ShapeExtensionModel extends DomainElementModel {
   override def fields: List[Field] = List(DefinedBy, Extension) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Http + "ShapeExtension" :: DomainElementModel.`type`
+
+  override def modelInstance = ShapeExtension()
 }

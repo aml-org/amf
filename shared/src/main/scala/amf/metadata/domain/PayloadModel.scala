@@ -1,4 +1,5 @@
 package amf.metadata.domain
+import amf.domain.Payload
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.metadata.shape.ShapeModel
@@ -19,4 +20,6 @@ object PayloadModel extends DomainElementModel with KeyField {
   override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
 
   override def fields: List[Field] = MediaType :: Schema :: DomainElementModel.fields
+
+  override def modelInstance = Payload()
 }

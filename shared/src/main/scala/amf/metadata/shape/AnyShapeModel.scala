@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.metadata.domain.DomainElementModel
+import amf.shape.AnyShape
 import amf.vocabulary.{Namespace, ValueType}
 
 object AnyShapeModel extends DomainElementModel {
@@ -12,4 +13,6 @@ object AnyShapeModel extends DomainElementModel {
 
   override val `type`: List[ValueType] =
     List(Namespace.Shapes + "AnyShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
+
+  override def modelInstance = AnyShape()
 }

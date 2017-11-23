@@ -24,4 +24,6 @@ object DataNodeModel extends DomainElementModel {
 
   // This is a dynamic class, the structure is not known before parsing
   override val dynamic = true
+
+  override def modelInstance = throw new Exception("DataNode is an abstract class and it cannot be instantiated directly")
 }

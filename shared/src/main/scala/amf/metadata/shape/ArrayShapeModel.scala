@@ -4,6 +4,7 @@ import amf.framework.metamodel.Field
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.framework.metamodel.Type.{Bool, Int, SortedArray}
+import amf.shape.{ArrayShape, MatrixShape, TupleShape}
 import amf.vocabulary.ValueType
 
 /**
@@ -32,14 +33,17 @@ object ArrayShapeModel extends DataArrangementShape with  ShapeModel with Domain
 
   override val `type`: List[ValueType] = List(Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 
+  override def modelInstance = ArrayShape()
 }
 
 object MatrixShapeModel extends DataArrangementShape with  ShapeModel with DomainElementModel {
   override val `type`: List[ValueType] = List(Shapes + "MatrixShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+  override def modelInstance = MatrixShape()
 }
 
 object TupleShapeModel extends DataArrangementShape with  ShapeModel with DomainElementModel {
   override val Items = Field(SortedArray(ShapeModel), Shapes + "items")
   override val `type`: List[ValueType] = List(Shapes + "TupleShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+  override def modelInstance = TupleShape()
 }
 

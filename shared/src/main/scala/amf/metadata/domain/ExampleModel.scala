@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.Example
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Bool, Str}
 import amf.vocabulary.Namespace._
@@ -23,4 +24,6 @@ object ExampleModel extends DomainElementModel with LinkableElementModel with Ke
     List(Name, DisplayName, Description, Value, Strict, MediaType) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Document + "Example" :: DomainElementModel.`type`
+
+  override def modelInstance = Example()
 }
