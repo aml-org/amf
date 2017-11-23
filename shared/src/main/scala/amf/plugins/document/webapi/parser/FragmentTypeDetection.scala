@@ -1,7 +1,7 @@
-package amf.compiler
+package amf.plugins.document.webapi.parser
 
-import amf.compiler.FragmentTypes._
 import amf.parser.{YMapOps, YNodeLikeOps}
+import amf.plugins.document.webapi.parser.FragmentTypes._
 import org.yaml.model.YMap
 
 import scala.collection.mutable.ListBuffer

@@ -1,9 +1,9 @@
 package amf.remote
 
-import amf.dialects.PlatformDialectRegistry
 import amf.lexer.CharSequenceStream
 import amf.validation.Validation
 import amf.framework.validation.core.SHACLValidator
+import amf.plugins.document.vocabularies.core.PlatformDialectRegistry
 import amf.vocabulary.Namespace
 import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 

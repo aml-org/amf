@@ -1,12 +1,10 @@
-package amf.dialects
+package amf.plugins.document.vocabularies.core
 
 import amf.document.{BaseUnit, Document}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.DialectPropertyMapping
-import amf.framework.validation.core.ValidationReport
-import amf.validation.model.AMFDialectValidations
 
 import scala.collection.mutable
 

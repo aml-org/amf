@@ -10,6 +10,7 @@ import amf.metadata.Type.Str
 import amf.metadata.{Field, Obj, Type}
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YNodeLikeOps, YScalarYRead}
+import amf.plugins.document.vocabularies.core.{ClassTerm, External}
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity

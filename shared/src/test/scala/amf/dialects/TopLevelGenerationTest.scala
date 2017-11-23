@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.common.Tests.checkDiffIgnoreAllSpaces
+import amf.plugins.document.vocabularies.core.{DialectLanguageDefinition, TopLevelGenerator, VocabularyLanguageDefinition}
 import amf.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -15,9 +16,9 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
   test("Generate Vocabulary Domain Objects") {
 
     val code = new TopLevelGenerator(VocabularyLanguageDefinition).generate()
-    // platform.write("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala",code)
+    // platform.write("file://shared/src/main/scala/amf/plugins/document/vocabularies/core/VocabularyTopLevel.scala",code)
     val expected = platform
-      .resolve("file://shared/src/main/scala/amf/dialects/VocabularyTopLevel.scala", None)
+      .resolve("file://shared/src/main/scala/amf/plugins/document/vocabularies/core/VocabularyTopLevel.scala", None)
       .map(_.stream.toString)
     expected
       .zip(Future(code))
@@ -28,10 +29,10 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
   test("Generate Class Domain Objects") {
 
     val code = new TopLevelGenerator(DialectLanguageDefinition).generate()
-    // platform.write("file://shared/src/main/scala/amf/dialects/DialectTopLevel.scala",code)
+    // platform.write("file://shared/src/main/scala/amf/plugins/document/vocabularies/core/DialectTopLevel.scala",code)
 
     val expected = platform
-      .resolve("file://shared/src/main/scala/amf/dialects/DialectTopLevel.scala", None)
+      .resolve("file://shared/src/main/scala/amf/plugins/document/vocabularies/core/DialectTopLevel.scala", None)
       .map(_.stream.toString)
     expected
       .zip(Future(code))

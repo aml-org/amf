@@ -1,5 +1,6 @@
 package amf.dialects
 import amf.dialects._
+import amf.plugins.document.vocabularies.core._
 import amf.model.AmfScalar
 import amf.domain.dialects.DomainEntity
 object RAML_1_0_VocabularyTopLevel {
@@ -35,8 +36,8 @@ extends TopLevelObject(entity, parent){
     def withUri(value: String): ExternalObject = { entity.set(External.uri.field() , AmfScalar(value)); this }
   }
 
-  case class NameSpaceImportObject(entity: DomainEntity = DomainEntity(NameSpaceImport),
-override val parent:Option[TopLevelObject] = None)
+  case class NameSpaceImportObject(entity: DomainEntity = DomainEntity(NameSpaceImport), 
+override val parent:Option[TopLevelObject] = None) 
 extends TopLevelObject(entity, parent){
     def name(): Option[String] = entity.string(NameSpaceImport.name)
     def withName(value: String): NameSpaceImportObject = { entity.set(NameSpaceImport.name.field() , AmfScalar(value)); this }
@@ -44,7 +45,7 @@ extends TopLevelObject(entity, parent){
     def withUri(value: String): NameSpaceImportObject = { entity.set(NameSpaceImport.uri.field() , AmfScalar(value)); this }
   }
 
-  case class ClassObject(entity: DomainEntity = DomainEntity(ClassTerm),
+  case class ClassObject(entity: DomainEntity = DomainEntity(ClassTerm), 
 override val parent:Option[TopLevelObject] = None) 
 extends TopLevelObject(entity, parent){
     def id(): Option[String] = entity.string(ClassTerm.idProperty)

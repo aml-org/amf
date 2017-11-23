@@ -1,4 +1,4 @@
-package amf.dialects
+package amf.plugins.document.vocabularies.core
 
 import amf.core.Root
 import amf.document.BaseUnit

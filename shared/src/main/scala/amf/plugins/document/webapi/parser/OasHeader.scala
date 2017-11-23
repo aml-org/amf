@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi.parser
 
-import amf.compiler.FragmentTypes._
-import amf.compiler.{FragmentType, FragmentTypes}
 import amf.core.Root
 import amf.parser.{YMapOps, YScalarYRead}
+import amf.plugins.document.webapi.parser.FragmentTypes._
 import org.yaml.model.YMap
 
 /**

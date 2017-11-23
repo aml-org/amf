@@ -1,4 +1,4 @@
-package amf.dialects
+package amf.plugins.document.vocabularies.core
 
 
 import amf.compiler.Root
@@ -10,8 +10,6 @@ import amf.model.AmfScalar
 import amf.framework.parser.Annotations
 import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
-
-import scala.collection.mutable
 
 /**
   * Created by Pavel Petrochenko on 12/09/17.

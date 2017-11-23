@@ -1,12 +1,13 @@
-package amf.dialects
+package amf.plugins.document.vocabularies.core
 
 import amf.core.Root
-import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject, dialectObject}
+import amf.dialects.RAML_1_0_DialectTopLevel
+import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject}
 import amf.document.Fragment.DialectFragment
 import amf.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.Type
-import amf.model.{AmfArray, AmfScalar}
+import amf.model.AmfScalar
 import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
