@@ -1,0 +1,62 @@
+#%RAML 1.0 Vocabulary
+
+usage: Vocabulary to describe the Transports for  the Evented API Structure
+version: 0.1
+base: http://raml.org/vocabularies/transports#
+vocabulary: EventTransports
+
+external:
+  schema-org: "http://schema.org/"
+  hydra: "http://www.w3.org/ns/hydra/core#"
+  shacl: "http://www.w3.org/ns/shacl#"
+
+propertyTerms:
+  transportID:
+    description: Trnasport Unique Identifier
+    range: string
+  transportType:
+    description: Transport Type (jms,mqtt,amqp,kafka,solace, nats,amqp, wmq etc.)
+    range: string
+  transportVendor:
+    description: Messaging Provider (ActiveMQ,Hornet,TIBCO,Sonic,Fiorano, IBM etc.)
+    range:  string
+  host:
+    description: URL for he Messaging Server
+    range: string
+  port:
+    description: Port for the Remote Messaging service conection
+    range:  integer
+  username:
+    description: User Name
+    range: string
+  password:
+    description: Password
+    range: string
+  transportConection:
+    description:  Tranport Connection
+    range:  EventTransportConnection
+  eventTransport:
+    description:  Event Transport (JMS, AMQP etc.)
+    range: EventTransport
+  connectionID:
+    range:  string
+
+classTerms:
+  EventTransport:
+    displayName: Messaging transport
+    description: Type of Messaging transport to be associated with a given channel
+    properties:
+      - transportID
+      - transportType
+      - transportVendor
+      - transportConection
+
+  EventTransportConnection:
+    displayName: Transport Connection
+    description: transport Connection Parameters
+    properties:
+        - connectionID
+        - host
+        - port
+        - username
+        - password

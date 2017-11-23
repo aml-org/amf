@@ -1,0 +1,64 @@
+#%RAML 1.0 Vocabulary
+
+usage: Vocabulary to describe Security Policies for the Evented API Structure
+version: 0.1
+base: http://raml.org/vocabularies/policies#
+
+vocabulary: EventPolicies
+
+uses:
+  events: Event.raml
+  transports: EventTransport.raml
+
+external:
+  schema-org: "http://schema.org/"
+  hydra: "http://www.w3.org/ns/hydra/core#"
+  shacl: "http://www.w3.org/ns/shacl#"
+
+propertyTerms:
+  policyID:
+    range: string
+  policyType:
+    description: Volumetric, Security
+    range: string
+  event:
+    range: events.BaseEvent
+  eventVolume:
+    range:  integer
+  eventVolumeMetric:
+    range: string
+  volumeConstraint:
+    range:  VolumeConstraint
+  volumeConstraintPolicy:
+    range: EventVolumeConstraintPolicy
+  basePolicy:
+    range: BasePolicy
+
+
+classTerms:
+  BasePolicy:
+    displayName: Base Policy
+    description: Base Policy
+    properties:
+      - policyID
+      - policyType
+
+  VolumeConstraint:
+    properties:
+      - events.eventClass
+      - eventVolume
+
+  EventConstraintPolicy:
+    extends: BasePolicy
+    description: A list of events that one is allowed to use
+
+
+  EventVolumeConstraintPolicy:
+    extends: BasePolicy
+    description: A list of Volume Constraints (i.e. Evetnt x has a limit of 1000)
+
+
+  ACLFilterPolicy:
+    extends: BasePolicy
+    properties:
+      - events.userID

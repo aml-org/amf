@@ -1,0 +1,53 @@
+#%RAML Library / EventedAPIDialect 0.1
+
+#
+events:
+
+  tradeEvent:
+    eventID: trade123
+    eventDomain: Banking_CapitalMarkets
+    eventCategory: business
+    eventType: stockTradeEvent
+    eventPayloadType: json
+
+  paymentEvent:
+    eventID: pay123
+    eventDomain: Banking_Core
+    eventCategory: business
+    eventType: paymentEvent
+    eventPayloadType: json
+
+  accountDebitEvent:
+    eventID: deb123
+    eventDomain: Banking_Core
+    eventCategory: business
+    eventType: debitEvent
+    eventPayloadType: json
+
+  accountCreditEvent:
+    eventID: cre123
+    eventDomain: Banking_Core
+    eventCategory: business
+    eventType: creditEvent
+    eventPayloadType: json
+
+  accountTransferEvent:
+    eventID: trans123
+    eventDomain: Banking_Core
+    eventCategory: business
+    eventType: transferEvent
+    eventPayloadType: json
+
+  loanOriginationEvent:
+    eventID: loanStart123
+    eventDomain: Banking_Core
+    eventCategory: business
+    eventType: loanStartEvent
+    eventPayloadType: json
+
+  loanProcessedEvent:
+    eventID: loanProc123
+    eventDomain: Banking_Core
+    eventCategory: business
+    eventType: loanProcEvent
+    eventPayloadType: json

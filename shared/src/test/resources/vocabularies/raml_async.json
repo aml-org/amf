@@ -757,6 +757,36 @@
                 "@id": "http://www.w3.org/ns/shacl#Shape"
               }
             ]
+          },
+          {
+            "@id": "http://schema.org/name",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Parameter"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#AsyncOperation"
+              },
+              {
+                "@id": "http://raml.org/vocabularies/async#Header"
+              }
+            ]
+          },
+          {
+            "@id": "http://raml.org/vocabularies/async#mandatory",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org/vocabularies/async#Header"
+              }
+            ]
           }
         ],
         "http://raml.org/vocabularies/meta#externalEntities": [

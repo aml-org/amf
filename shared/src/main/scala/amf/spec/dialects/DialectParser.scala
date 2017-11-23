@@ -115,7 +115,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
 
     parseNode(entries, entity, topLevel = true)
 
-    dialect.refiner match {
+    dialect.jsonLDrefiner match {
       case Some(dialectRefiner) => dialectRefiner.refine(entity, resolver)
       case None                 => // ignore
     }
@@ -360,13 +360,18 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
                     parseNode(element, domainEntity)
                   case _ => // ignore
                 }
-              case _ => // ignore
+              case _ => {
+                ctx.violation(
+                  ParserSideValidations.ParsingErrorSpecification.id(),
+                  parentDomainEntity.id,
+                  Some(mapping.iri()),
+                  s"Can not determine actual range of the node",
+                  parentDomainEntity.annotations.find(classOf[LexicalInformation])
+                )
+              }
             }
           }
-        } else {
-          throw new IllegalStateException("Does not know how to parse sequences of instances yet")
         }
-
       case _ =>
         if (mapping.isScalar) {
           if (entryNode.value.value.isInstanceOf[YScalar]) {
@@ -385,7 +390,16 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
               })
             }
           }
-        } else throw new IllegalStateException("Does not know how to parse sequences of instances yet")
+        }
+        else {
+          ctx.violation(
+            ParserSideValidations.ParsingErrorSpecification.id(),
+            parentDomainEntity.id,
+            Some(mapping.iri()),
+            s"Expecting sequence of nodes",
+            parentDomainEntity.annotations.find(classOf[LexicalInformation])
+          )
+        }
 
     }
   }

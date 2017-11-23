@@ -186,4 +186,79 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
+
+  test("Bruno problems in sequences") {
+    val validation = platform.dialectsRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
+    val expected =
+      platform.resolve(basePath + "bruno/EventedAPI_Banking.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking.raml",
+            platform,
+            RamlYamlHint,
+            Validation(platform),
+            None,
+            None,
+            platform.dialectsRegistry)
+            .build())
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "bruno/EventedAPI_Banking.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+
+  test("Bruno problems in sequences 2") {
+    val validation = platform.dialectsRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
+    val expected =
+      platform.resolve(basePath + "bruno/EventedAPI_Banking1.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking1.raml",
+            platform,
+            RamlYamlHint,
+            Validation(platform),
+            None,
+            None,
+            platform.dialectsRegistry)
+            .build())
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "bruno/EventedAPI_Banking1.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+
+  test("Bruno problems in sequences 3") {
+    val validation = platform.dialectsRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
+    val expected =
+      platform.resolve(basePath + "bruno/EventedAPI_Banking2.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking1.raml",
+            platform,
+            RamlYamlHint,
+            Validation(platform),
+            None,
+            None,
+            platform.dialectsRegistry)
+            .build())
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "bruno/EventedAPI_Banking2.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
 }

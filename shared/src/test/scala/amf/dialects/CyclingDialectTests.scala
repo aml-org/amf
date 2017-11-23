@@ -56,4 +56,14 @@ class CyclingDialectTests extends BuildCycleTests {
     cycle("dialect_using_vocab.raml", "dialect_using_vocab.raml", RamlYamlHint, Raml)
   }
 
+  test("Vocabulary with domain") {
+    cycle("withDomain.json", "withDomain.raml", AmfJsonHint, Raml)
+  }
+  test("Vocabulary with domain external") {
+    cycle("withDomain2.raml", "withDomain2.json", RamlYamlHint, Amf)
+  }
+
+  test("Vocabulary with domain external2") {
+    cycle("withDomain2.json", "withDomain2.raml", AmfJsonHint, Raml)
+  }
 }
