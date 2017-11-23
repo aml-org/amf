@@ -1,7 +1,9 @@
 package amf.domain.dialects
 
-import amf.domain.{DomainElement, Fields, Linkable}
+import amf.domain.{Fields, Linkable}
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.dialects.DialectEntityModel
 import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 
@@ -105,6 +107,8 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
 
   val dynamicType: Boolean = true
   override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
+
+  override def meta = new DialectEntityModel(this)
 }
 
 object DomainEntity {

@@ -5,7 +5,8 @@ import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.model.document.Fragment.Fragment
 import amf.framework.model.document._
-import amf.domain.{DomainElement, WebApi}
+import amf.domain.WebApi
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.{Library, Link}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}

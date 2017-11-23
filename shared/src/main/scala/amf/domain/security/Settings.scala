@@ -1,11 +1,14 @@
 package amf.domain.security
 
 import amf.domain.extensions.DataNode
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.metamodel.Obj
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.security.ApiKeySettingsModel._
 import amf.metadata.domain.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.metadata.domain.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
+import amf.metadata.domain.security.{ApiKeySettingsModel, OAuth1SettingsModel, OAuth2SettingsModel, SettingsModel}
 import amf.metadata.domain.security.SettingsModel._
 import amf.model.AmfArray
 
@@ -42,6 +45,8 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
 
     cloned.asInstanceOf[this.type]
   }
+
+  override def meta: Obj = SettingsModel
 }
 
 object Settings {
@@ -67,6 +72,8 @@ case class OAuth1Settings(override val fields: Fields, override val annotations:
   def withSignatures(signatures: Seq[String]): this.type = set(Signatures, signatures)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
+
+  override def meta = OAuth1SettingsModel
 }
 
 object OAuth1Settings {
@@ -93,6 +100,8 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   def withScopes(scopes: Seq[Scope]): this.type = setArray(Scopes, scopes)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth2")
+
+  override def meta = OAuth2SettingsModel
 }
 
 object OAuth2Settings {
@@ -111,6 +120,8 @@ case class ApiKeySettings(override val fields: Fields, override val annotations:
   def withIn(in: String): this.type     = set(In, in)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/api-key")
+
+  override def meta = ApiKeySettingsModel
 }
 
 object ApiKeySettings {

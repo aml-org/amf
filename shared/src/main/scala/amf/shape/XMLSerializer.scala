@@ -1,7 +1,9 @@
 package amf.shape
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.shape.XMLSerializerModel
 import amf.metadata.shape.XMLSerializerModel._
 import org.yaml.model.YMap
 
@@ -20,6 +22,8 @@ case class XMLSerializer(fields: Fields, annotations: Annotations) extends Domai
 
   /** Call after object has been adopted by specified parent. */
   override def adopted(parent: String): this.type = withId(parent + "/xml")
+
+  override def meta = XMLSerializerModel
 }
 
 object XMLSerializer {

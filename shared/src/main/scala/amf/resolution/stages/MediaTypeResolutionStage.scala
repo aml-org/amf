@@ -2,8 +2,9 @@ package amf.resolution.stages
 
 import amf.ProfileNames
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.{DomainElement, Payload, WebApi}
+import amf.domain.{Payload, WebApi}
 import amf.framework.metamodel.Field
+import amf.framework.model.domain.DomainElement
 import amf.metadata.domain.{OperationModel, PayloadModel, RequestModel, WebApiModel}
 import amf.model.AmfScalar
 import amf.validation.Validation

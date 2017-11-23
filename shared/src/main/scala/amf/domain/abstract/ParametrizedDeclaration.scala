@@ -1,8 +1,10 @@
 package amf.domain.`abstract`
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel._
+import amf.metadata.domain.`abstract`.{ParametrizedResourceTypeModel, ParametrizedTraitModel}
 import org.yaml.model.YPart
 
 abstract class ParametrizedDeclaration(fields: Fields, annotations: Annotations) extends DomainElement {
@@ -18,7 +20,9 @@ abstract class ParametrizedDeclaration(fields: Fields, annotations: Annotations)
 }
 
 case class ParametrizedResourceType(fields: Fields, annotations: Annotations)
-    extends ParametrizedDeclaration(fields, annotations)
+    extends ParametrizedDeclaration(fields, annotations) {
+  override def meta = ParametrizedResourceTypeModel
+}
 
 object ParametrizedResourceType {
   def apply(): ParametrizedResourceType = apply(Annotations())
@@ -29,7 +33,9 @@ object ParametrizedResourceType {
 }
 
 case class ParametrizedTrait(fields: Fields, annotations: Annotations)
-    extends ParametrizedDeclaration(fields, annotations)
+    extends ParametrizedDeclaration(fields, annotations) {
+  override def meta = ParametrizedTraitModel
+}
 
 object ParametrizedTrait {
   def apply(): ParametrizedTrait = apply(Annotations())

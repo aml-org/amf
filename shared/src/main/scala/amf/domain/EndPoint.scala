@@ -3,7 +3,9 @@ package amf.domain
 import amf.framework.utils.Strings
 import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.security.ParametrizedSecurityScheme
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.EndPointModel
 import amf.metadata.domain.EndPointModel._
 import amf.plugins.domain.webapi.models.annotations.ParentEndPoint
 
@@ -54,6 +56,8 @@ case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElem
   }
 
   override def adopted(parent: String): this.type = withId(parent + "/end-points/" + path.urlEncoded)
+
+  override def meta = EndPointModel
 }
 
 object EndPoint {

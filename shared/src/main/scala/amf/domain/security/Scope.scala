@@ -1,7 +1,9 @@
 package amf.domain.security
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.security.ScopeModel
 import amf.metadata.domain.security.ScopeModel._
 import org.yaml.model.YPart
 
@@ -23,6 +25,8 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
 
     cloned.asInstanceOf[this.type]
   }
+
+  override def meta = ScopeModel
 }
 
 object Scope {

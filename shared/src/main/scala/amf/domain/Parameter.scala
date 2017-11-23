@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.ParameterModel
 import amf.metadata.domain.ParameterModel._
@@ -59,6 +60,8 @@ case class Parameter(fields: Fields, annotations: Annotations) extends DomainEle
 
     cloned.asInstanceOf[this.type]
   }
+
+  override def meta = ParameterModel
 }
 
 object Parameter {

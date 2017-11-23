@@ -1,31 +1,16 @@
 package amf.metadata
 
-import amf.framework.model.document._
-import amf.domain._
-import amf.domain.`abstract`._
-import amf.domain.dialects.DomainEntity
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension}
-import amf.domain.security._
 import amf.framework.metamodel.Obj
-import amf.framework.metamodel.document._
-import amf.metadata.domain._
-import amf.metadata.domain.`abstract`._
-import amf.metadata.domain.dialects.DialectEntityModel
-import amf.metadata.domain.extensions.{
-  CustomDomainPropertyModel,
-  DataNodeModel,
-  DomainExtensionModel,
-  ShapeExtensionModel
-}
-import amf.metadata.domain.security._
-import amf.metadata.shape._
-import amf.plugins.document.webapi.metamodel.model.{ExtensionModel, OverlayModel}
-import amf.shape._
+import amf.framework.model.document.BaseUnit
+import amf.framework.model.domain.DomainElement
 
 trait MetaModelTypeMapping {
 
   /** Metadata Type references. */
   protected def metaModel(instance: Any): Obj = instance match {
+    case baseUnit: BaseUnit           => baseUnit.meta
+    case domainElement: DomainElement => domainElement.meta
+      /*
     case _: Extension                          => ExtensionModel
     case _: Overlay                            => OverlayModel
     case _: Document                           => DocumentModel
@@ -82,7 +67,8 @@ trait MetaModelTypeMapping {
     case _: Fragment.DialectFragment           => FragmentsTypesModels.DialectNodeModel
     case _: Fragment.Fragment                  => FragmentModel
     case unresolved: UnresolvedShape           => ShapeModel
-    case _                                     => throw new Exception(s"Missing metadata mapping for $instance")
+    */
+    case _                                     => throw new Exception(s"Missing metadata mapping for ${instance}")
   }
 
 }

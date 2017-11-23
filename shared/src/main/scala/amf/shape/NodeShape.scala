@@ -2,6 +2,7 @@ package amf.shape
 
 import amf.domain.Fields
 import amf.framework.parser.Annotations
+import amf.metadata.shape.NodeShapeModel
 import amf.metadata.shape.NodeShapeModel._
 import org.yaml.model.YPart
 
@@ -59,6 +60,8 @@ case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
   }
 
   override def linkCopy(): NodeShape = NodeShape().withId(id)
+
+  override def meta = NodeShapeModel
 }
 
 object NodeShape {

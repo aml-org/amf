@@ -1,6 +1,7 @@
 package amf.domain.`abstract`
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.`abstract`.VariableValueModel
 import org.yaml.model.YPart
@@ -13,6 +14,8 @@ case class VariableValue(fields: Fields, annotations: Annotations) extends Domai
   def withValue(value: String): this.type = set(VariableValueModel.Value, value)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
+
+  override def meta = VariableValueModel
 }
 
 object VariableValue {

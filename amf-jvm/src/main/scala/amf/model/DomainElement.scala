@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.framework.model.domain
+
 import scala.collection.JavaConverters._
 
 /**
@@ -7,7 +9,7 @@ import scala.collection.JavaConverters._
   */
 trait DomainElement {
 
-  private[amf] def element: amf.domain.DomainElement
+  private[amf] def element: domain.DomainElement
 
   lazy val customDomainProperties: java.util.List[DomainExtension] =
     element.customDomainProperties.map(DomainExtension).asJava
@@ -53,7 +55,7 @@ trait DomainElement {
 }
 
 object DomainElement {
-  def apply(domainElement: amf.domain.DomainElement): DomainElement = domainElement match {
+  def apply(domainElement: domain.DomainElement): DomainElement = domainElement match {
     case o: amf.domain.WebApi                              => WebApi(o)
     case o: amf.domain.Operation                           => Operation(o)
     case o: amf.domain.Organization                        => Organization(o)
@@ -82,7 +84,7 @@ object DomainElement {
 
 trait Linkable { this: DomainElement with Linkable =>
 
-  private[amf] def element: amf.domain.DomainElement with amf.domain.Linkable
+  private[amf] def element: domain.DomainElement with amf.domain.Linkable
 
   def linkTarget: Option[DomainElement with Linkable]
 

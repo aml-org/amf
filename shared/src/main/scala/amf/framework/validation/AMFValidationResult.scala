@@ -1,8 +1,7 @@
 package amf.framework.validation
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.DomainElement
-import amf.framework.model.domain.LexicalInformation
+import amf.framework.model.domain.{DomainElement, LexicalInformation}
 import amf.framework.validation.core.ValidationResult
 import amf.model.AmfArray
 

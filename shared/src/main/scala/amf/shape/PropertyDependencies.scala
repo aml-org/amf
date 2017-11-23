@@ -1,7 +1,9 @@
 package amf.shape
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.shape.PropertyDependenciesModel
 import amf.metadata.shape.PropertyDependenciesModel._
 import org.yaml.model.YMapEntry
 
@@ -19,6 +21,7 @@ case class PropertyDependencies(fields: Fields, annotations: Annotations) extend
   /** Call after object has been adopted by specified parent. */
   override def adopted(parent: String): PropertyDependencies.this.type =
     withId(parent + "/dependency") // TODO check id for each dependency
+  override def meta = PropertyDependenciesModel
 }
 
 object PropertyDependencies {

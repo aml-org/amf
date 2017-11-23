@@ -1,6 +1,8 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.RequestModel
 import amf.metadata.domain.RequestModel._
 import amf.shape.Shape
 
@@ -40,6 +42,7 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
     result
   }
 
+  override def meta = RequestModel
 }
 
 object Request {

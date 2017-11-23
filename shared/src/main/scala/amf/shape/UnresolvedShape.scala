@@ -1,8 +1,9 @@
 package amf.shape
 
 import amf.domain.{Fields, Linkable}
-import amf.framework.domain.LexicalInformation
+import amf.framework.model.domain.LexicalInformation
 import amf.framework.parser.Annotations
+import amf.metadata.shape.ShapeModel
 import amf.spec.{DeclarationPromise, ParserContext}
 import amf.validation.model.ParserSideValidations.ParsingErrorSpecification
 import org.yaml.model.{YNode, YPart}
@@ -45,6 +46,8 @@ case class UnresolvedShape(fields: Fields, annotations: Annotations, reference: 
       )
     case _ => throw new Exception("Cannot create unresolved reference with missing parsing context")
   }
+
+  override def meta = ShapeModel
 }
 
 object UnresolvedShape {

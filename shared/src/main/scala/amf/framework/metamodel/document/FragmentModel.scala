@@ -44,14 +44,14 @@ object FragmentsTypesModels {
     override val `type`: List[ValueType] = List(Document + "NamedExample") ++ FragmentModel.`type`
   }
 
-  object ResourceTypeModel extends FragmentModel {
+  object ResourceTypeFragmentModel extends FragmentModel {
 
     override def fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "ResourceType") ++ FragmentModel.`type`
   }
 
-  object TraitModel extends FragmentModel {
+  object TraitFragmentModel extends FragmentModel {
 
     override def fields: List[Field] = FragmentModel.fields
 
@@ -77,7 +77,7 @@ object FragmentsTypesModels {
     override val `type`: List[ValueType] = List(Document + "ExternalModel") ++ FragmentModel.`type`
   }
 
-  object SecuritySchemeModel extends FragmentModel {
+  object SecuritySchemeFragmentModel extends FragmentModel {
     override def fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "SecurityScheme") ++ FragmentModel.`type`

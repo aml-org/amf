@@ -2,6 +2,7 @@ package amf.metadata.domain.dialects
 
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Field
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.DomainElementModel
 import amf.vocabulary.ValueType
@@ -23,7 +24,7 @@ class DialectEntityModel (domainEntity: DomainEntity) extends DomainElementModel
 
   override val `type`: List[ValueType] = domainEntity.definition.`type`
 
-  def element: amf.domain.DomainElement = domainEntity
+  def element: DomainElement = domainEntity
 
   override val dynamicType: Boolean = true
 

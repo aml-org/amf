@@ -1,6 +1,8 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.CreativeWorkModel
 import amf.metadata.domain.CreativeWorkModel.{Description, Title, Url}
 import org.yaml.model.YMap
 
@@ -21,6 +23,8 @@ case class CreativeWork(fields: Fields, annotations: Annotations) extends Domain
     withId(parent + "/creative-work/" + Option(url).fold(title)(u => u))
 
   override def linkCopy(): Linkable = CreativeWork().withId(id)
+
+  override def meta = CreativeWorkModel
 }
 
 object CreativeWork {

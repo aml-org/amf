@@ -4,7 +4,7 @@ import amf.framework.model.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.framework.metamodel.{Field, Type}
-import amf.framework.model.domain.LexicalInformation
+import amf.framework.model.domain.{DomainElement, LexicalInformation}
 import amf.framework.parser.Annotations
 import amf.model.AmfScalar
 import amf.parser.Position

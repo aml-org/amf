@@ -1,9 +1,8 @@
 package amf.resolution.stages
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.DomainElement
 import amf.framework.metamodel.Obj
-import amf.framework.model.domain.LexicalInformation
+import amf.framework.model.domain.{DomainElement, LexicalInformation}
 import amf.framework.parser.Annotations
 import amf.metadata.shape._
 import amf.metadata.MetaModelTypeMapping

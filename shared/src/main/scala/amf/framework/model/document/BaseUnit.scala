@@ -1,9 +1,11 @@
 package amf.framework.model.document
 
-import amf.domain.{DomainElement, DynamicDomainElement, Value}
+import amf.domain.{DynamicDomainElement, Value}
+import amf.framework.metamodel.Obj
 import amf.metadata.MetaModelTypeMapping
 import amf.framework.metamodel.document.BaseUnitModel
 import amf.framework.metamodel.document.DocumentModel.References
+import amf.framework.model.domain.DomainElement
 import amf.model.{AmfArray, AmfElement, AmfObject}
 import amf.resolution.pipelines.ResolutionPipeline
 
@@ -11,6 +13,9 @@ import scala.collection.mutable.ListBuffer
 
 /** Any parseable unit, backed by a source URI. */
 trait BaseUnit extends AmfObject with MetaModelTypeMapping {
+
+  /** Meta data for the document */
+  def meta: Obj
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   def references: Seq[BaseUnit]

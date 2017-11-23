@@ -1,7 +1,9 @@
 package amf.domain
 
 import amf.domain.security.ParametrizedSecurityScheme
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.WebApiModel
 import amf.metadata.domain.WebApiModel.{License => WebApiLicense, _}
 import org.yaml.model.YMap
 
@@ -73,6 +75,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   }
 
   override def adopted(parent: String): this.type = withId(parent + "#/web-api")
+
+  override def meta = WebApiModel
 }
 
 object WebApi {

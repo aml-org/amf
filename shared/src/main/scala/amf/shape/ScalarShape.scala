@@ -2,6 +2,7 @@ package amf.shape
 
 import amf.domain.Fields
 import amf.framework.parser.Annotations
+import amf.metadata.shape.ScalarShapeModel
 import amf.metadata.shape.ScalarShapeModel._
 import org.yaml.model.YPart
 
@@ -17,6 +18,8 @@ case class ScalarShape(fields: Fields, annotations: Annotations) extends Shape w
   override def adopted(parent: String): this.type = withId(parent + "/scalar/" + name)
 
   override def linkCopy(): ScalarShape = ScalarShape().withId(id)
+
+  override def meta = ScalarShapeModel
 }
 
 object ScalarShape {

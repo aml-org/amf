@@ -1,6 +1,8 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.ResponseModel
 import amf.metadata.domain.ResponseModel._
 import amf.model.AmfArray
 
@@ -64,6 +66,8 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
 
     cloned.asInstanceOf[this.type]
   }
+
+  override def meta = ResponseModel
 }
 
 object Response {

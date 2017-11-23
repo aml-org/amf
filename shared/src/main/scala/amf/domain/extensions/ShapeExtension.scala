@@ -1,7 +1,9 @@
 package amf.domain.extensions
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.extensions.ShapeExtensionModel
 import amf.metadata.domain.extensions.ShapeExtensionModel._
 import amf.shape.PropertyShape
 import org.yaml.model.YPart
@@ -21,6 +23,8 @@ case class ShapeExtension (fields: Fields, annotations: Annotations) extends Dom
   // This element will never be serialised in the JSON-LD graph, it is just a placeholder
   // for the extension point. ID is not required for serialisation
   override def adopted(parent: String): this.type = withId(parent + "/shapeExtension")
+
+  override def meta = ShapeExtensionModel
 }
 
 object ShapeExtension {

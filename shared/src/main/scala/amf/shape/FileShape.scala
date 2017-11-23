@@ -2,6 +2,7 @@ package amf.shape
 
 import amf.domain.Fields
 import amf.framework.parser.Annotations
+import amf.metadata.shape.FileShapeModel
 import amf.metadata.shape.FileShapeModel.FileTypes
 import org.yaml.model.YPart
 
@@ -14,6 +15,8 @@ case class FileShape(fields: Fields, annotations: Annotations) extends Shape wit
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
 
   override def linkCopy(): FileShape = FileShape().withId(id)
+
+  override def meta = FileShapeModel
 }
 
 object FileShape {

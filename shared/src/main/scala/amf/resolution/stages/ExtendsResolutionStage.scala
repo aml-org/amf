@@ -3,7 +3,8 @@ package amf.resolution.stages
 import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.domain.`abstract`._
 import amf.domain.extensions.DataNode
-import amf.domain.{DomainElement, EndPoint, Operation}
+import amf.domain.{EndPoint, Operation}
+import amf.framework.model.domain.DomainElement
 import amf.metadata.domain.DomainElementModel
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.remote.Raml

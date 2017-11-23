@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.ExampleModel
 import amf.metadata.domain.ExampleModel._
@@ -28,6 +29,8 @@ case class Example(fields: Fields, annotations: Annotations) extends DomainEleme
   override def adopted(parent: String): Example.this.type = withId(parent + "/example/" + name)
 
   override def linkCopy(): Example = Example().withId(id)
+
+  override def meta = ExampleModel
 }
 
 object Example {

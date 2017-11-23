@@ -42,6 +42,8 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   }
 
   override def linkCopy() = PropertyShape().withId(id)
+
+  override def meta = PropertyShapeModel
 }
 
 object PropertyShape {
