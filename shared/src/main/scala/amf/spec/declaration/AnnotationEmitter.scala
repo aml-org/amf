@@ -2,11 +2,9 @@ package amf.spec.declaration
 
 import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.domain.{FieldEntry, Value}
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.framework.parser.{Annotations, Position}
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
-import amf.model.{AmfArray, AmfScalar}
-import amf.parser.Position
 import amf.plugins.domain.shapes.models.Shape
 import amf.remote.{Oas, Raml}
 import amf.spec.common.BaseEmitters._

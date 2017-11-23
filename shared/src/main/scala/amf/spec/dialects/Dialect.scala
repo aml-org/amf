@@ -5,8 +5,8 @@ import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.{Field, Obj, Type}
 import amf.framework.model.document._
-import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YNodeLikeOps, YScalarYRead}
+import amf.framework.model.domain.{AmfArray, AmfScalar}
+import amf.framework.parser._
 import amf.plugins.document.vocabularies.core.{ClassTerm, External}
 import amf.plugins.document.webapi.model.DialectFragment
 import amf.spec.ParserContext

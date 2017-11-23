@@ -2,8 +2,7 @@ package amf.framework.model.document
 
 import amf.framework.metamodel.Obj
 import amf.framework.metamodel.document.{BaseUnitModel, DocumentModel, FragmentModel}
-import amf.framework.model.domain.DomainElement
-import amf.model.AmfObject
+import amf.framework.model.domain.{AmfObject, DomainElement}
 
 /**
   * RAML Fragments

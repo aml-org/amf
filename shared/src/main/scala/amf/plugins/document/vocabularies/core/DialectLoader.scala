@@ -6,7 +6,7 @@ import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionO
 import amf.framework.model.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type
-import amf.model.AmfScalar
+import amf.framework.model.domain.AmfScalar
 import amf.plugins.document.webapi.model.DialectFragment
 import amf.spec.dialects._
 import amf.vocabulary.Namespace

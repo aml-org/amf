@@ -10,15 +10,14 @@ import amf.framework.metamodel.document.BaseUnitModel.Location
 import amf.framework.metamodel.document._
 import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.framework.model.document._
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement}
 import amf.framework.parser.Annotations
 import amf.framework.registries.AMFDomainRegistry
+import amf.framework.parser._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.extensions.{DataNodeModel, ShapeExtensionModel}
 import amf.metadata.domain.security._
-import amf.model.{AmfElement, AmfObject, AmfScalar}
-import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.remote.Platform

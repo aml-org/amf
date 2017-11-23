@@ -1,7 +1,7 @@
 package amf.spec.declaration
 
 import amf.framework.parser.Annotations
-import amf.parser.YMapOps
+import amf.framework.parser._
 import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.models.CreativeWork
 import amf.spec.ParserContext

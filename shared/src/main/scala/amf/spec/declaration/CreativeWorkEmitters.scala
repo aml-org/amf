@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.parser.Position
+import amf.framework.parser.Position
 import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.models.CreativeWork
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}

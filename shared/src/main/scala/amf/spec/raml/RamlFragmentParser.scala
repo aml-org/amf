@@ -5,7 +5,6 @@ import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.framework.model.document.Fragment
 import amf.framework.parser.Annotations
-import amf.parser._
 import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._

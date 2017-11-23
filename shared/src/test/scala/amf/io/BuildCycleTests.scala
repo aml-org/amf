@@ -58,7 +58,9 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = unit
+  def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    unit
+  }
 
   /** Method to render parsed unit. Override if necessary. */
   def render(unit: BaseUnit, config: CycleConfig): String = {

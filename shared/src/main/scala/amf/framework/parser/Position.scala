@@ -1,6 +1,6 @@
-package amf.parser
+package amf.framework.parser
 
-import amf.parser.Position.ZERO
+import amf.framework.parser.Position.ZERO
 import org.mulesoft.lexer.InputRange
 
 /** Defines a position on an input */

@@ -1,8 +1,8 @@
 package amf.error
 
 import amf.compiler.AMFCompiler
+import amf.framework.parser.Range
 import amf.framework.validation.AMFValidationResult
-import amf.parser.Range
 import amf.remote._
 import amf.unsafe.PlatformSecrets
 import amf.validation.model.ParserSideValidations

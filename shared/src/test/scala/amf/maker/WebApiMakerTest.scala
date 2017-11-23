@@ -4,7 +4,7 @@ import amf.common.{AmfObjectTestMatcher, ListAssertions}
 import amf.compiler.AMFCompiler
 import amf.framework.metamodel.Field
 import amf.framework.model.document.Document
-import amf.model.AmfObject
+import amf.framework.model.domain.AmfObject
 import amf.plugins.domain.shapes.models.{ScalarShape, XMLSerializer}
 import amf.plugins.domain.webapi.models._
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}

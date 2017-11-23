@@ -1,4 +1,4 @@
-package amf
+package amf.framework
 
 import org.yaml.convert.YRead
 import org.yaml.convert.YRead._

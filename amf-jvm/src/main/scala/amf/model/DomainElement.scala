@@ -1,6 +1,7 @@
 package amf.model
 
 import amf.framework.model.domain
+import amf.framework.parser.Range
 import amf.plugins.domain.shapes
 import amf.plugins.domain.webapi.models
 
@@ -36,7 +37,7 @@ trait DomainElement {
 
   def withTrait(name: String): ParametrizedTrait = ParametrizedTrait(element.withTrait(name))
 
-  def position(): amf.parser.Range = element.position() match {
+  def position(): Range = element.position() match {
     case Some(pos) => pos
     case _         => null
   }

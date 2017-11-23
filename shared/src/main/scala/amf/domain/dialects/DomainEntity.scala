@@ -1,10 +1,9 @@
 package amf.domain.dialects
 
 import amf.domain.{Fields, Linkable}
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.dialects.DialectEntityModel
-import amf.model.{AmfArray, AmfElement, AmfScalar}
 import amf.spec.dialects.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 
 case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations)

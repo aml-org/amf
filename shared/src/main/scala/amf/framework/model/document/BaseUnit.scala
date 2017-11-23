@@ -2,11 +2,10 @@ package amf.framework.model.document
 
 import amf.domain.{DynamicDomainElement, Value}
 import amf.framework.metamodel.Obj
-import amf.metadata.MetaModelTypeMapping
 import amf.framework.metamodel.document.BaseUnitModel
 import amf.framework.metamodel.document.DocumentModel.References
-import amf.framework.model.domain.DomainElement
-import amf.model.{AmfArray, AmfElement, AmfObject}
+import amf.framework.model.domain.{AmfArray, AmfElement, AmfObject, DomainElement}
+import amf.metadata.MetaModelTypeMapping
 import amf.resolution.pipelines.ResolutionPipeline
 
 import scala.collection.mutable.ListBuffer

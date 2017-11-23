@@ -1,6 +1,5 @@
 package amf.model
 
-import amf.plugins.domain.webapi.models.annotations
 import amf.plugins.domain.webapi.models
 
 import scala.collection.JavaConverters._

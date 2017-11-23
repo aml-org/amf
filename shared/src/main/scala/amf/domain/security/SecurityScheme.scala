@@ -1,12 +1,13 @@
 package amf.domain.security
 
 import amf.domain._
+import amf.framework.model
+import amf.framework.model.domain
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.SecuritySchemeFragmentModel
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{AmfArray, DomainElement}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.security.SecuritySchemeModel
 import amf.metadata.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
-import amf.model.AmfArray
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YPart
@@ -93,7 +94,7 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
         val clonedValue = v.value match {
           case s: Settings => s.cloneSettings(cloned.id)
           case a: AmfArray =>
-            AmfArray(a.values.map {
+            domain.AmfArray(a.values.map {
               case p: Parameter => p.cloneParameter(cloned.id)
               case r: Response  => r.cloneResponse(cloned.id)
               case o            => o

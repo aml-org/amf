@@ -1,7 +1,7 @@
 package amf.spec.domain
 
 import amf.framework.parser.Annotations
-import amf.parser.{YMapOps, YScalarYRead}
+import amf.framework.parser._
 import amf.plugins.document.webapi.annotations.{ExplicitField, SynthesizedField}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.models.Shape

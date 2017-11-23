@@ -1,10 +1,9 @@
 package amf.domain
 
 import amf.framework.metamodel.Field
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{AmfElement, AmfObject, DomainElement}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.LinkableElementModel
-import amf.model.{AmfElement, AmfObject}
 import amf.vocabulary.ValueType
 
 trait Linkable extends AmfObject { this: DomainElement with Linkable =>

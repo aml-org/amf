@@ -1,8 +1,7 @@
 package amf.framework.model.domain
 
+import amf.framework.parser.Range
 import amf.framework.registries.{AMFDomainRegistry, AMFPluginsRegistry}
-import amf.model.AmfElement
-import amf.parser.Range
 
 trait Annotation
 

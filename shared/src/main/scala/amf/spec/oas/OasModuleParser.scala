@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.framework.model.document.Module
 import amf.framework.parser.Annotations
 import amf.framework.metamodel.document.BaseUnitModel
-import amf.parser.YNodeLikeOps
+import amf.framework.parser._
 import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.spec.declaration.ReferencesParser

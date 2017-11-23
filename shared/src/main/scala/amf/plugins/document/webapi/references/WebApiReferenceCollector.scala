@@ -2,7 +2,6 @@ package amf.plugins.document.webapi.references
 
 import amf.compiler.ParsedDocument
 import amf.framework.parser._
-import amf.parser.YMapOps
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.spec.ParserContext

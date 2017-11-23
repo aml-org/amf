@@ -2,8 +2,8 @@ package amf.spec.domain
 
 import amf.domain.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
 import amf.framework.parser.Annotations
+import amf.framework.parser._
 import amf.metadata.domain.security._
-import amf.parser.YMapOps
 import amf.spec.{ParserContext, SearchScope}
 import amf.spec.common._
 import org.yaml.model.{YMap, YNode, YType}

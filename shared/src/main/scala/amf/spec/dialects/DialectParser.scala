@@ -5,10 +5,9 @@ import amf.framework.model.document.{BaseUnit, Document, Module}
 import amf.domain.Fields
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type
-import amf.framework.model.domain.LexicalInformation
+import amf.framework.model.domain.{AmfArray, AmfScalar, LexicalInformation}
 import amf.framework.parser.Annotations
-import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{Range, YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.framework.parser._
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.plugins.document.webapi.annotations.{DomainElementReference, SourceAST, SynthesizedField}
 import amf.plugins.document.webapi.model.DialectFragment

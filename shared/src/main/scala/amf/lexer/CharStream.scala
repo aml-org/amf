@@ -1,6 +1,6 @@
 package amf.lexer
 
-import amf.parser.Position
+import amf.framework.parser.Position
 
 /**
   * A source of characters for a Lexer.

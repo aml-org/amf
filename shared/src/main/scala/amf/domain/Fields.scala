@@ -1,11 +1,10 @@
 package amf.domain
 
 import amf.framework.metamodel.Field
-import amf.framework.model.domain.{Annotation, DomainElement}
-import amf.framework.parser.Annotations
 import amf.framework.metamodel.Type._
-import amf.model.{AmfArray, AmfElement, AmfObject, AmfScalar}
-import amf.shape.UnresolvedShape
+import amf.framework.model.domain._
+import amf.framework.parser.Annotations
+import amf.plugins.domain.shapes.models.UnresolvedShape
 
 import scala.collection.immutable.ListMap
 

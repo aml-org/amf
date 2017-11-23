@@ -3,14 +3,15 @@ package amf.domain.security
 import amf.domain.extensions.DataNode
 import amf.domain.Fields
 import amf.framework.metamodel.Obj
-import amf.framework.model.domain.DomainElement
+import amf.framework.model
+import amf.framework.model.domain
+import amf.framework.model.domain.{AmfArray, DomainElement}
 import amf.framework.parser.Annotations
 import amf.metadata.domain.security.ApiKeySettingsModel._
 import amf.metadata.domain.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.metadata.domain.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
 import amf.metadata.domain.security.{ApiKeySettingsModel, OAuth1SettingsModel, OAuth2SettingsModel, SettingsModel}
 import amf.metadata.domain.security.SettingsModel._
-import amf.model.AmfArray
 
 class Settings(val fields: Fields, val annotations: Annotations) extends DomainElement {
   def additionalProperties: DataNode = fields(AdditionalProperties)
@@ -33,7 +34,7 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
       case (f, v) =>
         val clonedValue = v.value match {
           case a: AmfArray =>
-            AmfArray(a.values.map {
+            domain.AmfArray(a.values.map {
               case s: Scope => s.cloneScope()
               case o        => o
             }, a.annotations)

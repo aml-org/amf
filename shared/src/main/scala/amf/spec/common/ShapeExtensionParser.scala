@@ -1,12 +1,12 @@
 package amf.spec.common
 
 import amf.domain.extensions.ShapeExtension
-import org.yaml.model.YMap
-import amf.parser._
+import amf.framework.parser._
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.shapes.models.Shape
-import amf.remote.{Oas, Raml, Vendor}
+import amf.remote.{Oas, Raml}
 import amf.spec.ParserContext
+import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: ParserContext) {
   def parse(): Unit = {

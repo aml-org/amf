@@ -1,10 +1,10 @@
 package amf.spec.declaration
 
 import amf.domain.security.{Scope, SecurityScheme, Settings}
+import amf.framework.model.domain.{AmfArray, AmfScalar}
 import amf.framework.parser.Annotations
+import amf.framework.parser._
 import amf.metadata.domain.security._
-import amf.model.{AmfArray, AmfScalar}
-import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.remote.{Oas, Raml}

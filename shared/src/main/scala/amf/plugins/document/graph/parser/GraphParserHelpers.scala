@@ -1,14 +1,13 @@
 package amf.plugins.document.graph.parser
 
 import amf.framework.metamodel.Type
-import amf.framework.model.domain.Annotation
-import amf.framework.parser.Annotations
-import amf.metadata.SourceMapModel.{Element, Value}
 import amf.framework.metamodel.Type._
-import amf.metadata.domain.DomainElementModel.Sources
+import amf.framework.model.domain.{AmfElement, Annotation}
+import amf.framework.parser.Annotations
+import amf.framework.parser._
 import amf.metadata.SourceMapModel
-import amf.model.AmfElement
-import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
+import amf.metadata.SourceMapModel.{Element, Value}
+import amf.metadata.domain.DomainElementModel.Sources
 import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps

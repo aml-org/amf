@@ -1,14 +1,12 @@
 package amf.spec.common
 
-import amf.framework.model.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
+import amf.framework.parser.Position._
 import amf.framework.metamodel.{Field, Type}
-import amf.framework.model.domain.{DomainElement, LexicalInformation}
-import amf.framework.parser.Annotations
-import amf.model.AmfScalar
-import amf.parser.Position
-import amf.parser.Position.ZERO
+import amf.framework.model.document.BaseUnit
+import amf.framework.model.domain.{AmfScalar, DomainElement, LexicalInformation}
+import amf.framework.parser.{Annotations, Position}
 import amf.plugins.document.webapi.annotations.SingleValueArray
 import amf.remote.Vendor
 import amf.spec.declaration.TagToReferenceEmitter

@@ -5,9 +5,9 @@ import amf.domain.extensions.{CustomDomainProperty, idCounter}
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.framework.model.document._
 import amf.framework.model.domain._
+import amf.framework.parser.Position
+import amf.framework.parser.Position.ZERO
 import amf.metadata.domain._
-import amf.parser.Position
-import amf.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}

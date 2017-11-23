@@ -4,9 +4,8 @@ import amf.domain.Fields
 import amf.framework.metamodel.document.DocumentModel.{Declares => _, Location => _, References => _, Usage => _}
 import amf.framework.metamodel.document.ModuleModel
 import amf.framework.metamodel.document.ModuleModel._
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{AmfObject, DomainElement}
 import amf.framework.parser.Annotations
-import amf.model.AmfObject
 import org.yaml.model.YDocument
 
 /** Units containing abstract fragments that can be referenced from other fragments */
