@@ -1,7 +1,7 @@
 package amf.spec.dialects
 
 import amf.document.{BaseUnit, Module}
-import amf.domain.Annotation.{DomainElementReference}
+import amf.domain.Annotation.{Aliases}
 import amf.domain.{FieldEntry, Link}
 import amf.domain.dialects.DomainEntity
 import amf.metadata.domain.LinkableElementModel
@@ -288,11 +288,6 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
               else raw(b, "!include " + scalar.toString)
             }
             case _                 => {
-              obj.annotations.find(classOf[DomainElementReference]) match {
-                case Some(ref) => {
-                  raw(b, ref.name)
-                }
-                case _ =>
                   comment.foreach(b.comment)
                   b.obj { b =>
                     if (root) {
@@ -300,7 +295,7 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
                     }
                     emitObject(b)
                   }
-              }
+
             }
           }
 
@@ -318,23 +313,25 @@ class DialectEmitter(val unit: BaseUnit) extends RamlSpecEmitter {
     }
 
     private def emitUsesMap(b: EntryBuilder) = {
-      if (unit.references.find(r=>r.fields.raw(NamespaceExtraFields.NAMESPACE).isDefined).isDefined){
+      var umap=Map[String,String]();
+      unit.references.foreach(v=>{
+        v.annotations.find(classOf[Aliases]).foreach(aliases=>{
+          aliases.aliases.foreach(e=>{
+               umap=umap + e;
+          } )
+        })
+      })
+      if (!umap.isEmpty){
         b.entry(
-          "uses",
-          _.obj { b =>
-            unit.references.foreach(r=>{
-              r.fields.get(NamespaceExtraFields.NAMESPACE) match {
-                case n:AmfScalar=>{
-                  val namespace=n.toString;
-                  val path=r.fields.get(NamespaceExtraFields.PATH).toString
-                  MapEntryEmitter((namespace,path)).emit(b);
-                }
-                case _ =>
-              }
-            })
-          }
-        )
+                  "uses",
+                  _.obj { b =>
+                    umap.foreach(r=>{
+                      MapEntryEmitter((r._1,r._2)).emit(b);
+                    })
+                  }
+                )
       }
+
     }
 
     private def emitObject(b: EntryBuilder) = {
