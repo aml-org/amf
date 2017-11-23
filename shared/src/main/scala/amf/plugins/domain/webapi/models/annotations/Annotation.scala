@@ -1,10 +1,10 @@
 package amf.plugins.domain.webapi.models.annotations
 
-import amf.domain._
 import amf.domain.dialects.DomainEntity
-import amf.framework.model.domain._
+import amf.framework.model.domain.{Annotation, SerializableAnnotation, _}
 import amf.model.AmfElement
 import amf.parser.Range
+import amf.plugins.domain.webapi.models.EndPoint
 import amf.remote._
 import org.yaml.model.YPart
 

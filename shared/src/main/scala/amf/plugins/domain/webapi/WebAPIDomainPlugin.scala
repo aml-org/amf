@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi
 
 import amf.framework.plugins.AMFDomainPlugin
-import amf.plugins.domain.webapi.metamodel.{CreativeWorkModel, LicenseModel, OrganizationModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.annotations._
 
 object WebAPIDomainPlugin extends AMFDomainPlugin {
@@ -25,6 +25,12 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     WebApiModel,
     CreativeWorkModel,
     OrganizationModel,
-    LicenseModel
+    LicenseModel,
+    EndPointModel,
+    OperationModel,
+    ParameterModel,
+    PayloadModel,
+    RequestModel,
+    ResponseModel
   )
 }

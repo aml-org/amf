@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -8,17 +10,17 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * JS Request model class.
   */
 @JSExportAll
-case class Request private[model] (private val request: amf.domain.Request) extends DomainElement {
+case class Request private[model] (private val request: models.Request) extends DomainElement {
 
   @JSExportTopLevel("Request")
-  def this() = this(amf.domain.Request())
+  def this() = this(models.Request())
 
   val queryParameters: js.Iterable[Parameter] = request.queryParameters.map(Parameter).toJSArray
   val headers: js.Iterable[Parameter]         = request.headers.map(Parameter).toJSArray
   val payloads: js.Iterable[Payload]          = request.payloads.map(Payload).toJSArray
   val queryString: Shape                      = Option(request.queryString).map(Shape(_)).orNull
 
-  override private[amf] def element: amf.domain.Request = request
+  override private[amf] def element: models.Request = request
 
   /** Set queryParameters property of this [[Request]]. */
   def withQueryParameters(parameters: js.Iterable[Parameter]): this.type = {

@@ -1,13 +1,15 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.collection.JavaConverters._
 
 /**
   * JVM EndPoint model class.
   */
-case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) extends DomainElement {
+case class EndPoint private[model] (private val endPoint: models.EndPoint) extends DomainElement {
 
-  def this() = this(amf.domain.EndPoint())
+  def this() = this(models.EndPoint())
 
   val name: String                                         = endPoint.name
   val description: String                                  = endPoint.description
@@ -16,7 +18,7 @@ case class EndPoint private[model] (private val endPoint: amf.domain.EndPoint) e
   val parameters: java.util.List[Parameter]                = endPoint.parameters.map(Parameter).asJava
   def security: java.util.List[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).asJava
 
-  override private[amf] def element: amf.domain.EndPoint = endPoint
+  override private[amf] def element: models.EndPoint = endPoint
 
   /** Get the part of the path property that was defined by this [[EndPoint]]. */
   def relativePath: String = endPoint.relativePath

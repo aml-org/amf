@@ -1,7 +1,7 @@
 package amf.resolution.stages
 
-import amf.domain.EndPoint
 import amf.domain.`abstract`.ParametrizedTrait
+import amf.plugins.domain.webapi.models.EndPoint
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.shape.ScalarShape
 import org.scalatest.FunSuite

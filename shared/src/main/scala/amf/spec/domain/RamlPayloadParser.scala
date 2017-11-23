@@ -1,8 +1,8 @@
 package amf.spec.domain
 
-import amf.domain.Payload
 import amf.framework.parser.Annotations
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.Payload
 import amf.plugins.domain.webapi.models.annotations.SynthesizedField
 import amf.spec.common.{AnnotationParser, ValueNode}
 import amf.spec.declaration.{AnyDefaultType, RamlTypeParser}

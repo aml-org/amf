@@ -1,13 +1,15 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models
+
 import scala.collection.JavaConverters._
 
 /**
   * JVM Response model class.
   */
-case class Response private[model] (private val response: amf.domain.Response) extends DomainElement {
+case class Response private[model] (private val response: models.Response) extends DomainElement {
 
-  def this() = this(amf.domain.Response())
+  def this() = this(models.Response())
 
   val name: String                                       = response.name
   val description: String                                = response.description
@@ -15,7 +17,7 @@ case class Response private[model] (private val response: amf.domain.Response) e
   val headers: java.util.List[Parameter]                 = response.headers.map(Parameter).asJava
   val payloads: java.util.List[Payload]                  = response.payloads.map(Payload).asJava
   val examples: java.util.List[Example]                  = response.examples.map(Example).asJava
-  override private[amf] def element: amf.domain.Response = response
+  override private[amf] def element: models.Response = response
 
   /** Set name property of this [[Response]]. */
   def withName(name: String): this.type = {

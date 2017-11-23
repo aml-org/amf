@@ -1,13 +1,13 @@
 package amf.spec.domain
 
-import amf.common.core.TemplateUri
-import amf.domain.{EndPoint, Operation, Parameter}
 import amf.framework.parser.Annotations
-import amf.metadata.domain.EndPointModel
-import amf.metadata.domain.EndPointModel.Path
+import amf.framework.utils.TemplateUri
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.metamodel.EndPointModel
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.annotations.ParentEndPoint
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YNode}

@@ -1,9 +1,10 @@
-package amf.metadata.domain
+package amf.plugins.domain.webapi.metamodel
 
-import amf.domain.EndPoint
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
+import amf.metadata.domain.{DomainElementModel, KeyField}
+import amf.plugins.domain.webapi.models.EndPoint
 import amf.vocabulary.Namespace.{Http, Hydra, Schema}
 import amf.vocabulary.{Namespace, ValueType}
 

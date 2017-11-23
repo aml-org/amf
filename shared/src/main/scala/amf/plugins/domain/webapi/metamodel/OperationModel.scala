@@ -1,9 +1,9 @@
-package amf.metadata.domain
+package amf.plugins.domain.webapi.metamodel
 
-import amf.domain.Operation
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
-import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
+import amf.metadata.domain._
+import amf.plugins.domain.webapi.models.Operation
 import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.vocabulary.{Namespace, ValueType}
 

@@ -1,9 +1,10 @@
 package amf.spec.domain
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.{FieldEntry, Payload}
-import amf.metadata.domain.PayloadModel
+import amf.domain.FieldEntry
 import amf.parser.Position
+import amf.plugins.domain.webapi.metamodel.PayloadModel
+import amf.plugins.domain.webapi.models.Payload
 import amf.spec.common.BaseEmitters.ScalarEmitter
 import amf.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter, RamlTypePartEmitter}
 import amf.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}

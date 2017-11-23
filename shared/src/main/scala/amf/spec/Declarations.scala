@@ -8,7 +8,7 @@ import amf.framework.model.document.Fragment
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.framework.utils.QName
-import amf.plugins.domain.webapi.models.CreativeWork
+import amf.plugins.domain.webapi.models.{CreativeWork, Parameter, Payload}
 import amf.shape.{Shape, UnresolvedShape}
 import amf.spec.SearchScope.{All, Fragments, Named}
 import org.yaml.model.YPart
