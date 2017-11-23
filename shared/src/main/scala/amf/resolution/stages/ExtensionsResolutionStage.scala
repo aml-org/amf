@@ -6,6 +6,7 @@ import amf.domain._
 import amf.domain.extensions.DataNode
 import amf.framework.metamodel.{Field, Type}
 import amf.framework.metamodel.document.BaseUnitModel
+import amf.framework.model.domain.DomainElement
 import amf.metadata.domain.DomainElementModel.{Includes, Sources}
 import amf.metadata.domain.`abstract`.ParametrizedTraitModel
 import amf.metadata.domain.extensions.{DataNodeModel, DomainExtensionModel}

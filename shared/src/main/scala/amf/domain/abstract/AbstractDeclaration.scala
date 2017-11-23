@@ -2,8 +2,11 @@ package amf.domain.`abstract`
 
 import amf.domain.extensions.DataNode
 import amf.metadata.domain.`abstract`.AbstractDeclarationModel._
-import amf.domain.{DomainElement, Fields, Linkable}
+import amf.domain.{Fields, Linkable}
+import amf.framework.metamodel.document.FragmentsTypesModels.{ResourceTypeFragmentModel, TraitFragmentModel}
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.`abstract`.{ResourceTypeModel, TraitModel}
 import org.yaml.model.YPart
 
 abstract class AbstractDeclaration(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
@@ -21,6 +24,8 @@ abstract class AbstractDeclaration(fields: Fields, annotations: Annotations) ext
 
 case class ResourceType(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
   override def linkCopy(): ResourceType = ResourceType().withId(id)
+
+  override def meta = ResourceTypeModel
 }
 
 object ResourceType {
@@ -33,6 +38,8 @@ object ResourceType {
 
 case class Trait(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
   override def linkCopy(): Trait = Trait().withId(id)
+
+  override def meta = TraitModel
 }
 
 object Trait {

@@ -1,7 +1,9 @@
 package amf.domain.security
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
 import org.yaml.model.YPart
 
@@ -41,6 +43,8 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
   }
 
   override def adopted(parent: String): this.type = withId(parent + "/" + name)
+
+  override def meta = ParametrizedSecuritySchemeModel
 }
 
 object ParametrizedSecurityScheme {

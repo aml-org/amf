@@ -5,7 +5,7 @@ import amf.framework.model.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions._
 import amf.framework.metamodel.{Field, Obj, Type}
-import amf.framework.model.domain.ScalarType
+import amf.framework.model.domain.{DomainElement, ScalarType}
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.metadata._
 import amf.metadata.domain.DomainElementModel.Sources

@@ -54,6 +54,8 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   override val fields: Fields = Fields()
 
   def cloneNode(): this.type
+
+  override def meta = DataNodeModel
 }
 
 /**
@@ -122,6 +124,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
     cloned.asInstanceOf[this.type]
   }
+
 }
 
 object ObjectNode {
@@ -133,6 +136,7 @@ object ObjectNode {
   def apply(ast: YPart): ObjectNode = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ObjectNode = new ObjectNode(Fields(), annotations)
+
 }
 
 /**

@@ -2,7 +2,9 @@ package amf.domain
 
 import amf.domain.`abstract`.ParametrizedTrait
 import amf.domain.security.ParametrizedSecurityScheme
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.OperationModel
 import amf.metadata.domain.OperationModel.{Request => OperationRequest, _}
 
 /**
@@ -57,6 +59,8 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
     add(Security, result)
     result
   }
+
+  override def meta = OperationModel
 }
 
 object Operation {

@@ -1,8 +1,9 @@
 package amf.resolution.stages
 
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
-import amf.domain.{DomainElement, FieldEntry, Value}
+import amf.domain.{FieldEntry, Value}
 import amf.framework.metamodel.{Field, Type}
+import amf.framework.model.domain.DomainElement
 import amf.metadata.domain.DomainElementModel._
 import amf.metadata.domain.{DomainElementModel, KeyField, OptionalField}
 import amf.model.{AmfArray, AmfElement, AmfScalar}

@@ -2,8 +2,11 @@ package amf.framework.model.document
 
 import amf.domain._
 import amf.domain.extensions.CustomDomainProperty
+import amf.framework.metamodel.Obj
+import amf.framework.metamodel.document.FragmentsTypesModels._
 import amf.framework.parser.Annotations
 import amf.framework.metamodel.document.{BaseUnitModel, DocumentModel, FragmentModel}
+import amf.framework.model.domain.DomainElement
 import amf.model.AmfObject
 import amf.shape.Shape
 
@@ -25,40 +28,69 @@ object Fragment {
     override def encodes: DomainElement = fields(FragmentModel.Encodes)
 
     override def location: String = fields(BaseUnitModel.Location)
+
+    override def meta: Obj = FragmentModel
   }
 
   // todo review
 
   case class DocumentationItem(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: CreativeWork = super.encodes.asInstanceOf[CreativeWork]
+
+    /** Meta data for the document */
+    override def meta: Obj = DocumentationItemModel
   }
 
   case class DataType(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: Shape = super.encodes.asInstanceOf[Shape]
+
+    /** Meta data for the document */
+    override def meta: Obj = DataTypeModel
   }
 
   case class NamedExample(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: Example = super.encodes.asInstanceOf[Example]
+
+    /** Meta data for the document */
+    override def meta: Obj = NamedExampleModel
   }
 
-  case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment
+  case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    /** Meta data for the document */
+    override def meta: Obj = ResourceTypeFragmentModel
+  }
 
-  case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment
+  case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    /** Meta data for the document */
+    override def meta: Obj = TraitFragmentModel
+  }
 
   case class AnnotationTypeDeclaration(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: CustomDomainProperty = super.encodes.asInstanceOf[CustomDomainProperty]
+
+    /** Meta data for the document */
+    override def meta: Obj = AnnotationTypeDeclarationModel
   }
 
   case class SecurityScheme(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: amf.domain.security.SecurityScheme =
       super.encodes.asInstanceOf[amf.domain.security.SecurityScheme]
+
+    /** Meta data for the document */
+    override def meta: Obj = SecuritySchemeFragmentModel
   }
 
   case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
     override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
+
+    /** Meta data for the document */
+    override def meta: Obj = ExternalFragmentModel
   }
 
-  case class DialectFragment(fields: Fields, annotations: Annotations) extends Fragment
+  case class DialectFragment(fields: Fields, annotations: Annotations) extends Fragment {
+    /** Meta data for the document */
+    override def meta: Obj = DialectNodeModel
+  }
 
   object DocumentationItem {
     def apply(): DocumentationItem = apply(Annotations())
@@ -116,7 +148,7 @@ object Fragment {
 
 trait EncodesModel extends AmfObject {
 
-  /** Encoded [[amf.domain.DomainElement]] described in the document element. */
+  /** Encoded [[DomainElement]] described in the document element. */
   def encodes: DomainElement
 
   def withEncodes(encoded: DomainElement): this.type = set(FragmentModel.Encodes, encoded)

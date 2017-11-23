@@ -1,7 +1,10 @@
 package amf.domain.security
 
 import amf.domain._
+import amf.framework.metamodel.document.FragmentsTypesModels.SecuritySchemeFragmentModel
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.security.SecuritySchemeModel
 import amf.metadata.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import amf.model.AmfArray
 import amf.shape.Shape
@@ -104,6 +107,8 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   }
 
   override def linkCopy(): SecurityScheme = SecurityScheme().withId(id)
+
+  override def meta = SecuritySchemeModel
 }
 
 object SecurityScheme {

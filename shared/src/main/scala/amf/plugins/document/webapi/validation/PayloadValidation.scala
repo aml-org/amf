@@ -24,6 +24,9 @@ case class PayloadFragment(encoded: DataNode, fields: Fields = Fields(), annotat
   extends Fragment {
   fields.setWithoutId(FragmentModel.Encodes, encoded)
   override def encodes: DataNode = encoded
+
+  /** Meta data for the document */
+  override def meta = FragmentModel
 }
 
 class PayloadValidation(platform: Platform, shape: Shape) extends WebApiValidations {

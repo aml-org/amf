@@ -1,8 +1,10 @@
 package amf.framework.model.document
 
-import amf.domain.{DomainElement, Fields}
+import amf.domain.Fields
 import amf.framework.metamodel.document.DocumentModel.{Declares => _, Location => _, References => _, Usage => _}
+import amf.framework.metamodel.document.ModuleModel
 import amf.framework.metamodel.document.ModuleModel._
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.model.AmfObject
 import org.yaml.model.YDocument
@@ -15,7 +17,7 @@ case class Module(fields: Fields, annotations: Annotations) extends BaseUnit wit
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   override def references: Seq[BaseUnit] = fields(References)
 
-  /** Declared [[amf.domain.DomainElement]]s that can be re-used from other documents. */
+  /** Declared [[DomainElement]]s that can be re-used from other documents. */
   override def declares: Seq[DomainElement] = fields(Declares)
 
   /** Returns the usage comment for de element */
@@ -23,11 +25,14 @@ case class Module(fields: Fields, annotations: Annotations) extends BaseUnit wit
 
   /** Returns the file location for the document that has been parsed to generate this model */
   override def location: String = fields(Location)
+
+  /** Meta data for the document */
+  override def meta = ModuleModel
 }
 
 trait DeclaresModel extends AmfObject {
 
-  /** Declared [[amf.domain.DomainElement]]s that can be re-used from other documents. */
+  /** Declared [[DomainElement]]s that can be re-used from other documents. */
   def declares: Seq[DomainElement]
 
   def withDeclares(declarations: Seq[DomainElement]): this.type = setArrayWithoutId(Declares, declarations)

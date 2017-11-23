@@ -1,5 +1,6 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.PayloadModel
 import amf.metadata.domain.PayloadModel._
@@ -57,6 +58,8 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
 
     cloned.asInstanceOf[this.type]
   }
+
+  override def meta = PayloadModel
 }
 
 object Payload {

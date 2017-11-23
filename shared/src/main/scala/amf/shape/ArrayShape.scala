@@ -2,6 +2,7 @@ package amf.shape
 
 import amf.domain.Fields
 import amf.framework.parser.Annotations
+import amf.metadata.shape.{ArrayShapeModel, MatrixShapeModel, TupleShapeModel}
 import amf.metadata.shape.ArrayShapeModel._
 import org.yaml.model.YPart
 
@@ -55,6 +56,8 @@ case class ArrayShape(fields: Fields, annotations: Annotations) extends DataArra
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations)
 
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
+
+  override def meta = ArrayShapeModel
 }
 
 object ArrayShape {
@@ -75,6 +78,8 @@ case class MatrixShape(fields: Fields, annotations: Annotations) extends DataArr
   def toMatrixShape: MatrixShape = this
 
   override def linkCopy() = MatrixShape().withId(id)
+
+  override def meta = MatrixShapeModel
 }
 
 object MatrixShape {
@@ -100,6 +105,8 @@ case class TupleShape(fields: Fields, annotations: Annotations) extends DataArra
     }
     this
   }
+
+  override def meta = TupleShapeModel
 }
 
 object TupleShape {

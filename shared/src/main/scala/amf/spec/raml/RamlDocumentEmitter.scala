@@ -4,7 +4,7 @@ import amf.framework.utils.TSort.tsort
 import amf.framework.model.document._
 import amf.domain._
 import amf.domain.extensions.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode, _}
-import amf.framework.model.domain.LexicalInformation
+import amf.framework.model.domain.{DomainElement, LexicalInformation}
 import amf.framework.metamodel.document.BaseUnitModel
 import amf.metadata.domain._
 import amf.model.AmfScalar

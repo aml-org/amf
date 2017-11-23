@@ -1,15 +1,11 @@
 package amf.spec
 
-<<<<<<< HEAD
-=======
-import amf.framework.utils.QName
-import amf.framework.model.document.Fragment.Fragment
->>>>>>> APIMF-161 Initial work in the meta-model/model split
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
-import amf.framework.document.Fragment.Fragment
+import amf.framework.model.document.Fragment.Fragment
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.framework.utils.QName
 import amf.shape.{Shape, UnresolvedShape}

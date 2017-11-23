@@ -2,6 +2,7 @@ package amf.shape
 
 import amf.domain.Fields
 import amf.framework.parser.Annotations
+import amf.metadata.shape.SchemaShapeModel
 import org.yaml.model.YPart
 import amf.metadata.shape.SchemaShapeModel._
 
@@ -15,6 +16,8 @@ case class SchemaShape(fields: Fields, annotations: Annotations) extends Shape {
 
   override def linkCopy(): SchemaShape = SchemaShape().withId(id)
   override def adopted(parent: String) = withId(parent + "/schema/" + name)
+
+  override def meta = SchemaShapeModel
 }
 
 object SchemaShape {

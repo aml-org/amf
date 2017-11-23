@@ -1,13 +1,16 @@
 package amf.framework.model.document
 
 import amf.domain._
+import amf.framework.metamodel.Obj
+import amf.framework.metamodel.document.DocumentModel
 import amf.framework.parser.Annotations
 import amf.framework.metamodel.document.DocumentModel._
-import amf.plugins.document.webapi.metamodel.model.ExtensionLikeModel
+import amf.framework.model.domain.DomainElement
+import amf.plugins.document.webapi.metamodel.model.{ExtensionLikeModel, ExtensionModel, OverlayModel}
 
 /**
-  * A [[Document]] is a parsing Unit that encodes a stand-alone [[amf.domain.DomainElement]] and can include references to other
-  * [[amf.domain.DomainElement]]s that reference from the encoded [[amf.domain.DomainElement]]
+  * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
+  * [[DomainElement]]s that reference from the encoded [[DomainElement]]
   */
 case class Document(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel with DeclaresModel {
 
@@ -23,6 +26,9 @@ case class Document(fields: Fields, annotations: Annotations) extends BaseUnit w
   override def usage: String = fields(Usage)
 
   override def adopted(parent: String): this.type = withId(parent)
+
+  /** Meta data for the document */
+  override def meta: Obj = DocumentModel
 }
 
 object Document {
@@ -40,19 +46,25 @@ abstract class ExtensionLike(override val fields: Fields, override val annotatio
 }
 
 class Overlay(override val fields: Fields, override val annotations: Annotations)
-    extends ExtensionLike(fields, annotations)
+    extends ExtensionLike(fields, annotations) {
+  override def meta = OverlayModel
+}
 
 object Overlay {
   def apply(): Overlay = apply(Annotations())
 
   def apply(annotations: Annotations): Overlay = new Overlay(Fields(), annotations)
+
 }
 
 class Extension(override val fields: Fields, override val annotations: Annotations)
-    extends ExtensionLike(fields, annotations)
+    extends ExtensionLike(fields, annotations) {
+  override def meta = ExtensionModel
+}
 
 object Extension {
   def apply(): Extension = apply(Annotations())
 
   def apply(annotations: Annotations): Extension = new Extension(Fields(), annotations)
+
 }

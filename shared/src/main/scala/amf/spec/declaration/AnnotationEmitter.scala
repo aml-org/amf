@@ -1,7 +1,8 @@
 package amf.spec.declaration
 
 import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
-import amf.domain.{DomainElement, FieldEntry, Value}
+import amf.domain.{FieldEntry, Value}
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.model.{AmfArray, AmfScalar}

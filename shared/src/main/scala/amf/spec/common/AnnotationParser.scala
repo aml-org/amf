@@ -1,7 +1,7 @@
 package amf.spec.common
 
 import amf.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.domain.DomainElement
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import org.yaml.model._
 import amf.parser.YScalarYRead

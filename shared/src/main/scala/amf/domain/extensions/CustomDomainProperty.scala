@@ -1,8 +1,10 @@
 package amf.domain.extensions
 
 import amf.framework.utils._
-import amf.domain.{DomainElement, Fields, Linkable}
+import amf.domain.{Fields, Linkable}
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.extensions.CustomDomainPropertyModel._
 import amf.shape.Shape
 import org.yaml.model.YPart
@@ -25,6 +27,8 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations) extend
     if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
 
   override def linkCopy(): CustomDomainProperty = CustomDomainProperty().withId(id)
+
+  override def meta = CustomDomainPropertyModel
 }
 
 object CustomDomainProperty {

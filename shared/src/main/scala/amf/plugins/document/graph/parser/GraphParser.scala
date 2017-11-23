@@ -10,6 +10,7 @@ import amf.framework.metamodel.document.BaseUnitModel.Location
 import amf.framework.metamodel.document._
 import amf.framework.metamodel.{Field, Obj, Type}
 import amf.framework.model.document._
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
@@ -252,8 +253,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     XMLSerializerModel                                  -> XMLSerializer.apply,
     PropertyDependenciesModel                           -> PropertyDependencies.apply,
     ModuleModel                                         -> Module.apply,
-    FragmentsTypesModels.ResourceTypeModel              -> Fragment.ResourceTypeFragment.apply,
-    FragmentsTypesModels.TraitModel                     -> Fragment.TraitFragment.apply,
+    FragmentsTypesModels.ResourceTypeFragmentModel              -> Fragment.ResourceTypeFragment.apply,
+    FragmentsTypesModels.TraitFragmentModel                     -> Fragment.TraitFragment.apply,
     FragmentsTypesModels.DocumentationItemModel         -> Fragment.DocumentationItem.apply,
     FragmentsTypesModels.DataTypeModel                  -> Fragment.DataType.apply,
     FragmentsTypesModels.NamedExampleModel              -> Fragment.NamedExample.apply,
@@ -261,7 +262,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     ExtensionModel                                      -> Extension.apply,
     OverlayModel                                        -> Overlay.apply,
     FragmentsTypesModels.ExternalFragmentModel          -> Fragment.ExternalFragment.apply,
-    FragmentsTypesModels.SecuritySchemeModel            -> Fragment.SecurityScheme.apply,
+    FragmentsTypesModels.SecuritySchemeFragmentModel            -> Fragment.SecurityScheme.apply,
     FragmentsTypesModels.DialectNodeModel               -> Fragment.DialectFragment.apply,
     TraitModel                                          -> Trait.apply,
     ResourceTypeModel                                   -> ResourceType.apply,

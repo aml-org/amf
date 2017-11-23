@@ -1,6 +1,8 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.LicenseModel
 import amf.metadata.domain.LicenseModel.{Name, Url}
 import org.yaml.model.YMap
 
@@ -16,6 +18,8 @@ case class License(fields: Fields, annotations: Annotations) extends DomainEleme
   def withName(name: String): this.type = set(Name, name)
 
   override def adopted(parent: String): this.type = withId(parent + "/license")
+
+  override def meta = LicenseModel
 }
 
 object License {

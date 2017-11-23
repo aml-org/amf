@@ -1,6 +1,8 @@
 package amf.domain
 
+import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.metadata.domain.OrganizationModel
 import amf.metadata.domain.OrganizationModel.{Email, Name, Url}
 import org.yaml.model.YMap
 
@@ -18,6 +20,8 @@ case class Organization(fields: Fields, annotations: Annotations) extends Domain
   def withEmail(email: String): this.type = set(Email, email)
 
   override def adopted(parent: String): this.type = withId(parent + "/organization")
+
+  override def meta = OrganizationModel
 }
 
 object Organization {
