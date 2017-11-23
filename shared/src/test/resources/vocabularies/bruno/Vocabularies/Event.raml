@@ -1,0 +1,132 @@
+#%RAML 1.0 Vocabulary
+usage: Vocabulary to describe the Evented API Structure
+version: 0.1
+base: http://raml.org/vocabularies/events#
+vocabulary: Events
+
+external:
+  schema-org: "http://schema.org/"
+  hydra: "http://www.w3.org/ns/hydra/core#"
+  shacl: "http://www.w3.org/ns/shacl#"
+
+propertyTerms:
+  applicationID:
+    range: string
+  userID:
+    description: User Name
+    range: string
+  apiPersona:
+    range: string
+  domainID:
+    description: Event Domain Name
+    range: string
+  producerID:
+      description: Event Producer ID
+      range: string
+  consumerID:
+      description: Event Consumer ID
+      range:  string
+  channelID:
+    description:  Name of Event Channel
+    range:  string
+  subjectPattern:
+    description: Type of pattern supported by channel (i.e. pub-sub, p2p)
+    range:  string
+  channelOperation:
+    description: Type of operation suportted by the channel (GET/POST)
+    range: string
+  eventID:
+    description: Unique Event Identifier
+    range: string
+  eventDomain:
+    description: Type of Event (related to the domain - i.e. IoT, Banking, Retail etc.)
+    range: string
+  eventCategory:
+    description: class of event (i.e. alert,notification,business,device,status etc)
+    range: string
+  eventChannel:
+    range:  EventChannel
+  eventChannelDescription:
+    range: string
+  eventSubjectDescription:
+      range: string
+  eventSubjectID:
+    range:  string
+  eventSubject:
+    range:  EventSubject
+  baseEvent:
+    range:  BaseEvent
+  eventClass:
+    range:  string
+  eventPayload:
+    range:  string
+  eventPayloadType:
+    range: string
+  eventType:
+    description: Field that add an additional level of info on Events:(i.e. Temperature Event vs. Bank TransactionEvent)
+    range: string
+  eventProducerID:
+    range: string
+  eventConsumerID:
+    range: string
+  eventProducer:
+    range: EventProducer
+  eventConsumer:
+    range:  EventConsumer
+
+
+classTerms:
+
+  EventedAPI:
+    displayName: EventedAPI Root
+    description: EventedAPI Root Node
+    properties:
+      - eventProducer
+      - eventConsumer
+
+
+  EventDomain:
+    displayName: Event Domain
+    description: Base class for any element describing an Event Domain model.
+    properties:
+      - domainID
+
+  EventProducer:
+    description: Event Producer
+    displayName: Event Producer
+    properties:
+      - producerID
+
+  EventConsumer:
+    description: Event Consumer
+    displayName: Event Consumer
+    properties:
+      - consumerID
+
+  EventChannel:
+    displayName: Event Channel
+    description: Channel that support a set of Subjects
+    properties:
+      - channelID
+
+  EventSubject:
+    displayName: Event Subject
+    description: A subject supports the publication of and subscription to of Events
+    properties:
+      - eventSubjectID
+      - subjectPattern
+
+  BaseEvent:
+    displayName: Base Event
+    description: Base Event Class that all other events inherit from
+    properties:
+      - eventID
+      - eventDomain
+      - eventCategory
+      - eventType
+      - eventPayload
+      - eventPayloadType
+
+  EventPolicy:
+    displayName: Event Policy
+    description: The base Event Security Policy to be associated with a given channel

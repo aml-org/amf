@@ -1,0 +1,47 @@
+#%EventedAPIDialect 0.1
+
+uses:
+  transports: ../Libraries/EventTransportLibrary.raml
+  bankingEvents: ../Libraries/BankingEventLibrary.raml
+
+subjects:
+  subject1:
+    subjectID: subject123
+    eventPattern: pub-sub
+    eventTransports:
+      -transports.mqttTransport
+      -transports.natsTransport
+    supportedEvents:
+      -bankingEvents.paymentEvent
+      -bankingEvents.accountCreditEvent
+      -bankingEvents.accountDebitEvent
+      -bankingEvents.accountTransferEvent
+
+channels:
+  channel1:
+    channelID: ch123
+    #subjects:
+    #   -subject1
+
+
+producers:
+  producer1:
+     producerID: prod123
+     applicationID: app123
+     userID: me
+     producerChannel: channel1
+     producerSubject: subject1
+
+consumers:
+  consumer1:
+   consumerID: cons123
+   applicationID: app123
+   userID: me
+   consumerChannel: channel1
+   consumerSubject: subject1
+
+  #the main encoded element
+
+  apiPersona: All
+  eventProducer: consumer1
+  eventConsumer:producer1

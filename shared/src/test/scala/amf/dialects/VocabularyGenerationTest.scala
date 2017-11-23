@@ -30,6 +30,10 @@ class VocabularyGenerationTest extends BuildCycleTests {
     cycle("validation_dialect.raml", "validation_dialect-gold.raml", RamlYamlHint, Raml)
   }
 
+  /** Return random temporary file name for testing. */
+  // override def tmp(name: String = ""): String = basePath +  name +".tmp"
+
+
   test("Store Dialect 2") {
     cycle("mule_config_dialect.raml", "mule_config_dialect_gold.raml", RamlYamlHint, Raml)
   }

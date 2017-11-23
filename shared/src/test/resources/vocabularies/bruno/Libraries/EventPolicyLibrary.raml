@@ -1,0 +1,62 @@
+#%RAML Library / RAML 1.0 Dialect
+
+usage: Dialect to describe validations over RAML documents
+uses:
+  policies: ../Vocabularies/EventPolicy.raml
+  events: ../Vocabularies/Event.raml
+
+#
+external:
+  schema-org: "http://schema.org/"
+  shacl: "http://www.w3.org/ns/shacl#"
+nodeMappings:
+
+
+  BasePolicyNode:
+    classTerm: policies.BasePolicy
+    mapping:
+      policyID:
+        propertyTerm: policies.policyID
+        range: string
+      policyType:
+        propertyTerm: policies.policyType
+        range: string
+
+  VolumeConstraintNode:
+     classTerm: policies.VolumeConstraint
+     mapping:
+       eventClass:
+         propertyTerm: events.eventClass
+         range: string
+       volume:
+         propertyTerm: policies.eventVolume
+         range:  integer
+
+
+   EventConstraintPolicyNode:
+     classTerm: policies.EventConstraintPolicy
+     mapping:
+       eventList:
+         propertyTerm: events.baseEvent
+         allowMultiple: true
+
+
+   EventVolumePolicyNode:
+    classTerm: policies.EventVolumeConstraintPolicy
+    mapping:
+      metric:
+        propertyTerm: policies.eventVolumeMetric
+        range:  string
+        enum:
+          -minute
+          -second
+          -hour
+      volumeConstraintList:
+        propertyTerm: policies.volumeConstraintPolicy
+        range: VolumeConstraintNode
+        allowMultiple: true
+
+
+  #EventACLPolicyNode:
+    #classTerm: policies.ACLFilterPolicy
+    #mapping:

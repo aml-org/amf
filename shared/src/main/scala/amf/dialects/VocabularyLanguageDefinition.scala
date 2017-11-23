@@ -1,8 +1,10 @@
 package amf.dialects
 
 import amf.compiler.Root
+import amf.domain.Annotation.SynthesizedField
 import amf.domain.{Annotations, Fields}
 import amf.domain.dialects.DomainEntity
+import amf.model.AmfScalar
 import amf.spec.dialects._
 import amf.vocabulary.{Namespace, ValueType}
 
@@ -118,7 +120,24 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
     Some(provider)
   }
 }
-
+class VocabularyRAMLRefiner extends RamlRefiner {
+  def refine(voc: DomainEntity): Unit = {
+    val vtop=new RAML_1_0_VocabularyTopLevel.VocabularyObject(voc,None);
+    vtop.classTerms().foreach(c=>{
+      var props=List[String]();
+      vtop.propertyTerms().foreach(p=>{
+          p.domain().foreach(d=>{
+            if (d.equals(c.domainEntity.id)){
+              props=props.::(p.entity.id);
+            }
+          })
+      if (!c.domainEntity.fields.raw(ClassTerm.`properties`.field()).isDefined) {
+        c.domainEntity.set(ClassTerm.`properties`.field(), props);
+      }
+    })
+    })
+  }
+}
 class VocabularyRefiner() extends Refiner {
   def refine(voc: DomainEntity, resolver: ReferenceResolver): Unit = {
     // term IDs can be external ones, we avoid using the full external URI as a postfix
@@ -147,29 +166,44 @@ class VocabularyRefiner() extends Refiner {
           entity
         }
         voc.setArrayWithoutId(Vocabulary.externalTerms.field(),
-                              collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
+          collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
       case _ => // ignore
     }
 
     // Set the domain of properties based on the 'properties' property fo class terms
     for {
-      classTerm    <- voc.entities(Vocabulary.classTerms)
-      property     <- classTerm.strings(ClassTerm.`properties`)
-      propertyTerm <- voc.mapElementWithId(Vocabulary.propertyTerms, property)
+      classTerm <- voc.entities(Vocabulary.classTerms)
+      property <- classTerm.strings(ClassTerm.`properties`)
+      propertyTerm <- getOrCreateProperty(voc, property)
     } yield {
       propertyTerm.addValue(PropertyTerm.domain, classTerm.id)
     }
   }
-}
 
-object VocabularyLanguageDefinition
-    extends Dialect("RAML 1.0 Vocabulary",
-                    "",
-                    Vocabulary,
-                    resolver =
-                      (root: Root, uses, ctx) => new BasicResolver(root, List(Vocabulary.externals), uses)(ctx)) {
-  refiner = {
-    val ref = new VocabularyRefiner()
-    Some(ref)
+  private def getOrCreateProperty(voc: DomainEntity, property: String) = {
+    voc.mapElementWithId(Vocabulary.propertyTerms, property).orElse({
+      val prop=new DomainEntity(None,PropertyTerm,Fields(),Annotations());
+      prop.annotations.+=(SynthesizedField())
+      prop.withId(property)
+
+      voc.fields.addWithoutId(Vocabulary.propertyTerms.field(),prop);
+      Some(prop)
+    })
   }
 }
+
+
+  object VocabularyLanguageDefinition
+    extends Dialect("RAML 1.0 Vocabulary",
+      "",
+      Vocabulary,
+      resolver =
+        (root: Root, uses, ctx) => new BasicResolver(root, List(Vocabulary.externals), uses)(ctx)) {
+    jsonLDrefiner = {
+      val ref = new VocabularyRefiner()
+      Some(ref)
+    }
+    ramlRefiner=Some(new VocabularyRAMLRefiner())
+  }
+
+

@@ -61,7 +61,9 @@ case class Dialect(name: String,
     }
   }
 
-  var refiner: Option[Refiner] = None
+  var jsonLDrefiner: Option[Refiner] = None
+  var ramlRefiner: Option[RamlRefiner] = None
+
   def header: String           = ("#%" + name + " " + version).trim
 }
 
@@ -101,10 +103,14 @@ object NullReferenceResolver extends ReferenceResolver {
 trait LocalNameProvider {
   def localName(refValue: String, property: DialectPropertyMapping): String
 }
-
+trait RamlRefiner {
+  def refine(root: DomainEntity)
+}
 trait Refiner {
   def refine(root: DomainEntity, resolver: ReferenceResolver)
 }
+
+
 
 case class DialectPropertyMapping(name: String,
                                   range: Type,

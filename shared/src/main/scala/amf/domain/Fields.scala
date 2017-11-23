@@ -45,6 +45,18 @@ class Fields {
     }
   }
 
+  /** Add field array - value. */
+  def addWithoutId(field: Field, value: AmfElement): this.type = {
+    //adopt(id, value)
+    ?[AmfArray](field) match {
+      case Some(array) =>
+        array += value
+        this
+      case None => setWithoutId(field, AmfArray(Seq(value)))
+    }
+  }
+
+
   /** Set field value entry-point. */
   def set(id: String, field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     if (field.value.iri() == "http://raml.org/vocabularies/document#declares") {
