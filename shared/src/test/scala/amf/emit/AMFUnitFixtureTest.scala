@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.document.{Document, Module}
+import amf.framework.document.{Document, Module}
 import amf.domain._
 import amf.unsafe.PlatformSecrets
 

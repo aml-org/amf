@@ -1,7 +1,7 @@
 package amf.client.commands
 
 import amf.client.{ExitCodes, ParserConfig}
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.remote._
 import amf.validation.Validation
 

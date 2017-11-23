@@ -1,6 +1,6 @@
 package amf.resolution.stages
 
-import amf.document.{BaseUnit, Document}
+import amf.framework.document.{BaseUnit, Document}
 import amf.domain.security.{ParametrizedSecurityScheme, SecurityScheme, Settings}
 import amf.domain.{DomainElement, WebApi}
 import amf.metadata.Field

@@ -1,6 +1,6 @@
 package amf.spec.oas
 
-import amf.document._
+import amf.framework.document._
 import amf.domain._
 import amf.domain.extensions.{CustomDomainProperty, idCounter}
 import amf.framework.domain._

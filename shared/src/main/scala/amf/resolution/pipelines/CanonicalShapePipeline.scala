@@ -1,7 +1,7 @@
 package amf.resolution.pipelines
 import amf.ProfileNames
-import amf.document.BaseUnit
-import amf.document.Fragment.DataType
+import amf.framework.document.BaseUnit
+import amf.framework.document.Fragment.DataType
 import amf.domain.Fields
 import amf.framework.parser.Annotations
 import amf.metadata.document.FragmentModel

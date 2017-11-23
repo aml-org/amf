@@ -1,7 +1,7 @@
 package amf.framework.validation
 
 import amf.ProfileNames
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.framework.validation.core.ValidationResult
 import amf.validation.model.ValidationSpecification
 import amf.vocabulary.Namespace

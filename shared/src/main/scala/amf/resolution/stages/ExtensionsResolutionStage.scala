@@ -1,7 +1,7 @@
 package amf.resolution.stages
 
 import amf.ProfileNames
-import amf.document._
+import amf.framework.document._
 import amf.domain._
 import amf.domain.extensions.DataNode
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}

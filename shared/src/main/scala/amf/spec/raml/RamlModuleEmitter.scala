@@ -1,7 +1,7 @@
 package amf.spec.raml
 
-import amf.document.Fragment._
-import amf.document.{BaseUnit, Module}
+import amf.framework.document.Fragment._
+import amf.framework.document.{BaseUnit, Module}
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}

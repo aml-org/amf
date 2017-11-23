@@ -1,6 +1,6 @@
 package amf.resolution.stages
 
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain.DomainElement
 import amf.framework.domain.LexicalInformation
 import amf.framework.parser.Annotations

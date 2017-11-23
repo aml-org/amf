@@ -2,8 +2,8 @@ package amf.plugins.document.vocabularies
 
 import amf.client.GenerationOptions
 import amf.core.Root
-import amf.document.Fragment.DialectFragment
-import amf.document._
+import amf.framework.document.Fragment.DialectFragment
+import amf.framework.document._
 import amf.domain.dialects.DomainEntity
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.services.RuntimeValidator

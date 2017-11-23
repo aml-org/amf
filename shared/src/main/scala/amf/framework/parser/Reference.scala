@@ -1,9 +1,10 @@
 package amf.framework.parser
 
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.framework.services.RuntimeCompiler
 import amf.plugins.document.vocabularies.core.DialectRegistry
 import amf.remote.{Cache, Context, Platform}
+import amf.spec.ParserContext
 import amf.validation.Validation
 import org.yaml.model.YAggregate
 
@@ -20,8 +21,9 @@ case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
               vendor: String,
               currentValidation: Validation,
               cache: Cache,
-              dialects: DialectRegistry): Future[BaseUnit] = {
-    RuntimeCompiler(url, remote, mediaType, vendor, currentValidation, base, kind, cache)
+              dialects: DialectRegistry,
+              ctx: ParserContext): Future[BaseUnit] = {
+    RuntimeCompiler(url, remote, mediaType, vendor, currentValidation, base, kind, cache, Some(ctx))
       .map(root => {
 //        target = root
         root

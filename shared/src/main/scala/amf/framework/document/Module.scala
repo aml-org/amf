@@ -1,4 +1,4 @@
-package amf.document
+package amf.framework.document
 
 import amf.domain.{DomainElement, Fields}
 import amf.framework.parser.Annotations

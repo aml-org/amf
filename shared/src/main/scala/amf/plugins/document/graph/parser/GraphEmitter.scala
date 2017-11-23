@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.client.GenerationOptions
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain._
 import amf.domain.extensions._
 import amf.framework.domain.ScalarType

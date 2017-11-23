@@ -1,6 +1,6 @@
 package amf.resolution.pipelines
 import amf.ProfileNames
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.resolution.stages.{ExamplesResolutionStage, MediaTypeResolutionStage, ParametersNormalizationStage}
 
 class OasResolutionPipeline extends AmfResolutionPipeline {

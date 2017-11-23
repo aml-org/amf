@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.client.GenerationOptions
 import amf.common.ListAssertions
-import amf.document.Document
+import amf.framework.document.Document
 import amf.parser.YMapOps
 import amf.remote.{Oas, Raml, Vendor}
 import org.scalatest.Matchers._

@@ -2,7 +2,7 @@ package amf.plugins.document.graph
 
 import amf.client.GenerationOptions
 import amf.core.Root
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.framework.plugins.AMFDocumentPlugin
 import amf.parser._
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}

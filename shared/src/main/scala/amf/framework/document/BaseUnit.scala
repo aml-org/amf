@@ -1,4 +1,4 @@
-package amf.document
+package amf.framework.document
 
 import amf.domain.{DomainElement, DynamicDomainElement, Value}
 import amf.metadata.MetaModelTypeMapping

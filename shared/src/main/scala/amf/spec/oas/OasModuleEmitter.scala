@@ -1,7 +1,7 @@
 package amf.spec.oas
 
-import amf.document.Fragment._
-import amf.document.Module
+import amf.framework.document.Fragment._
+import amf.framework.document.Module
 import amf.domain.`abstract`.AbstractDeclaration
 import amf.metadata.document.BaseUnitModel
 import amf.parser.Position

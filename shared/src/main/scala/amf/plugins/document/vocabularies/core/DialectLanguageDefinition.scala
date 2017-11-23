@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.core
 
 import amf.core.Root
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.metadata.Type
 import amf.spec.ParserContext
 import amf.spec.dialects._

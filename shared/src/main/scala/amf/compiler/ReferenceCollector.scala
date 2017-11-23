@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.core.{AMFCompiler => ReferenceCompiler}
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.framework.parser.{Extension, Library, Link, ReferenceKind}
 import amf.parser.YMapOps
 import amf.plugins.document.webapi.parser.RamlHeader
@@ -159,7 +159,6 @@ case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
               vendor: String,
               currentValidation: Validation,
               cache: Cache,
-              dialects: amf.dialects.DialectRegistry,
               ctx: ParserContext): Future[BaseUnit] = {
     new ReferenceCompiler(url, remote, base, mediaType, vendor, kind, currentValidation, cache, Some(ctx))
       .build()

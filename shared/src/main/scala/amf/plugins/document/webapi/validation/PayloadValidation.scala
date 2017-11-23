@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation
 
-import amf.document.BaseUnit
-import amf.document.Fragment.Fragment
+import amf.framework.document.BaseUnit
+import amf.framework.document.Fragment.Fragment
 import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.domain.Fields
 import amf.framework.parser.Annotations

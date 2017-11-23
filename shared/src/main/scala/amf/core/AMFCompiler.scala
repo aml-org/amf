@@ -1,7 +1,7 @@
 package amf.core
 
 import amf.compiler.{ParsedDocument, ParsedReference}
-import amf.document.BaseUnit
+import amf.framework.document.BaseUnit
 import amf.domain.extensions.idCounter
 import amf.exception.CyclicReferenceException
 import amf.framework.parser.{ReferenceKind, Unspecified}
