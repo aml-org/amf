@@ -1,14 +1,14 @@
 package amf.spec.oas
 
-import amf.common.Lazy
-import amf.common.core.TemplateUri
 import amf.core.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security._
+import amf.framework.core.utils.TemplateUri
 import amf.framework.parser.Annotations
+import amf.framework.utils.Lazy
 import amf.metadata.Field
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.metadata.domain.EndPointModel.Path

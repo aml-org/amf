@@ -1,6 +1,6 @@
 package amf.domain
 
-import amf.common.core.Strings
+import amf.framework.utils.Strings
 import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
 import amf.domain.security.ParametrizedSecurityScheme
 import amf.framework.parser.Annotations
