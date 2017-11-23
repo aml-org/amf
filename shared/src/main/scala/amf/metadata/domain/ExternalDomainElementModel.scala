@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.ExternalDomainElement
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.vocabulary.Namespace._
@@ -12,4 +13,6 @@ object ExternalDomainElementModel extends DomainElementModel {
   override def fields: List[Field] = List(Raw)
 
   override val `type`: List[ValueType] = Document + "ExternalDomainElement" :: DomainElementModel.`type`
+
+  override def modelInstance = ExternalDomainElement()
 }

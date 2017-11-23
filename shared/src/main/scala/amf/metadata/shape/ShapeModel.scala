@@ -54,4 +54,6 @@ object ShapeModel extends ShapeModel {
                                                                          Examples)
 
   override val `type`: List[ValueType] = List(Shacl + "Shape", Shapes + "Shape")
+
+  override def modelInstance = throw new Exception("Shape is abstract and it cannot be instantiated by default")
 }

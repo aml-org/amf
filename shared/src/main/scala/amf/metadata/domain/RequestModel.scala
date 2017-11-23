@@ -1,4 +1,5 @@
 package amf.metadata.domain
+import amf.domain.Request
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Array
 import amf.metadata.shape.ShapeModel
@@ -21,4 +22,6 @@ object RequestModel extends DomainElementModel {
   override val `type`: List[ValueType] = Http + "Request" :: DomainElementModel.`type`
 
   override def fields: List[Field] = List(QueryParameters, Headers, Payloads, QueryString) ++ DomainElementModel.fields
+
+  override def modelInstance = Request()
 }

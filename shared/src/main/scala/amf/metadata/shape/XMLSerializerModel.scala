@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Bool, Str}
 import amf.metadata.domain.DomainElementModel
+import amf.shape.XMLSerializer
 import amf.vocabulary.Namespace.Shapes
 import amf.vocabulary.ValueType
 
@@ -24,4 +25,6 @@ object XMLSerializerModel extends DomainElementModel {
   override def fields: List[Field] = List(Attribute, Wrapped, Name, Namespace, Prefix) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shapes + "XMLSerializer") ++ DomainElementModel.`type`
+
+  override def modelInstance = XMLSerializer()
 }

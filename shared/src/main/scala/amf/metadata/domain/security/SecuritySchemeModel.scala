@@ -1,5 +1,6 @@
 package amf.metadata.domain.security
 
+import amf.domain.security.SecurityScheme
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.{DomainElementModel, KeyField, ParameterModel, ResponseModel}
@@ -33,4 +34,6 @@ object SecuritySchemeModel extends DomainElementModel with KeyField {
 
   override def fields: List[Field] =
     List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ DomainElementModel.fields
+
+  override def modelInstance = SecurityScheme()
 }

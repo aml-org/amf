@@ -11,4 +11,5 @@ trait ExtensionLikeModel extends DocumentModel {
   val Extends = Field(Iri, Document + "extends")
 
   override def fields: List[Field] = Extends :: DocumentModel.fields
+
 }

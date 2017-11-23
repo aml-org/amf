@@ -1,4 +1,5 @@
 package amf.metadata.domain
+import amf.domain.Parameter
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Bool, Str}
 import amf.metadata.shape.ShapeModel
@@ -26,4 +27,6 @@ object ParameterModel extends DomainElementModel with LinkableElementModel with 
 
   override def fields: List[Field] =
     List(Name, Description, Required, Binding, Schema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+
+  override def modelInstance = Parameter()
 }

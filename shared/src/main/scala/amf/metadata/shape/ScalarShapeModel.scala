@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Iri
 import amf.metadata.domain.DomainElementModel
+import amf.shape.ScalarShape
 import amf.vocabulary.Namespace.Shacl
 import amf.vocabulary.ValueType
 
@@ -17,4 +18,6 @@ object ScalarShapeModel extends ShapeModel with DomainElementModel with CommonOA
     : List[Field] = List(DataType) ++ commonOASFields ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+
+  override def modelInstance = ScalarShape()
 }

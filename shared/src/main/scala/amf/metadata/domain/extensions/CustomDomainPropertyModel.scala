@@ -1,5 +1,6 @@
 package amf.metadata.domain.extensions
 
+import amf.domain.extensions.CustomDomainProperty
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Iri, Str}
 import amf.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
@@ -48,4 +49,6 @@ object CustomDomainPropertyModel extends DomainElementModel with KeyField {
   override def fields: List[Field] = List(Domain, Schema, Name) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Rdf + "Property" :: Document + "DomainProperty" :: DomainElementModel.`type`
+
+  override def modelInstance = CustomDomainProperty()
 }

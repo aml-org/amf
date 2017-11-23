@@ -1,5 +1,6 @@
 package amf.metadata.domain
 
+import amf.domain.WebApi
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
@@ -61,4 +62,6 @@ object WebApiModel extends DomainElementModel {
       BaseUriParameters,
       Security
     ) ++ DomainElementModel.fields
+
+  override def modelInstance = WebApi()
 }

@@ -1,5 +1,6 @@
 package amf.metadata.domain.extensions
 
+import amf.domain.extensions.DomainExtension
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.metadata.domain.{DomainElementModel, KeyField}
@@ -26,4 +27,6 @@ object DomainExtensionModel extends DomainElementModel with KeyField {
   override def fields: List[Field] = List(Name, DefinedBy, Extension) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Http + "DomainExtension" :: DomainElementModel.`type`
+
+  override def modelInstance = DomainExtension()
 }

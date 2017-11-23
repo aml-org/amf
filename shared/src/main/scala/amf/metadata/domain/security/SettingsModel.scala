@@ -1,5 +1,6 @@
 package amf.metadata.domain.security
 
+import amf.domain.security.{ApiKeySettings, OAuth1Settings, OAuth2Settings, Settings}
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.metadata.domain.DomainElementModel
@@ -15,6 +16,8 @@ object SettingsModel extends SettingsModel {
   override val `type`: List[ValueType] = List(Security + "Settings") ++ DomainElementModel.`type`
 
   override def fields: List[Field] = List(AdditionalProperties) ++ DomainElementModel.fields
+
+  override def modelInstance = Settings()
 }
 
 object OAuth1SettingsModel extends SettingsModel {
@@ -31,6 +34,8 @@ object OAuth1SettingsModel extends SettingsModel {
 
   override def fields: List[Field] =
     List(RequestTokenUri, AuthorizationUri, TokenCredentialsUri, Signatures) ++ SettingsModel.fields
+
+  override def modelInstance = OAuth1Settings()
 }
 
 object OAuth2SettingsModel extends SettingsModel {
@@ -49,6 +54,8 @@ object OAuth2SettingsModel extends SettingsModel {
 
   override def fields: List[Field] =
     List(AuthorizationUri, AccessTokenUri, AuthorizationGrants, Flow, Scopes) ++ SettingsModel.fields
+
+  override def modelInstance = OAuth2Settings()
 }
 
 object ApiKeySettingsModel extends SettingsModel {
@@ -60,4 +67,6 @@ object ApiKeySettingsModel extends SettingsModel {
   override val `type`: List[ValueType] = List(Security + "ApiKeySettings") ++ SettingsModel.`type`
 
   override def fields: List[Field] = List(Name, In) ++ SettingsModel.fields
+
+  override def modelInstance = ApiKeySettings()
 }

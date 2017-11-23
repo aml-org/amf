@@ -1,17 +1,16 @@
 package amf.metadata.domain
 
-import amf.framework.metamodel.{Field, Obj}
 import amf.framework.metamodel.Type.Array
-import amf.metadata.domain.`abstract`.ParametrizedDeclarationModel
-import amf.metadata.domain.extensions.DomainExtensionModel
+import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj}
 import amf.metadata.SourceMapModel
+import amf.metadata.domain.extensions.DomainExtensionModel
 import amf.vocabulary.Namespace.{Document, SourceMaps}
 import amf.vocabulary.ValueType
 
 /**
   * Domain element meta-model
   */
-trait DomainElementModel extends Obj {
+trait DomainElementModel extends Obj with ModelDefaultBuilder {
 
   lazy val Extends = Field(Array(DomainElementModel), Document + "extends")
 
@@ -23,6 +22,7 @@ trait DomainElementModel extends Obj {
   // I need lazy evaluation here.
   // It cannot even be defined in the list of fields below
   lazy val CustomDomainProperties = Field(Array(DomainExtensionModel), Document + "customDomainProperties")
+
 }
 
 object DomainElementModel extends DomainElementModel {
@@ -34,4 +34,6 @@ object DomainElementModel extends DomainElementModel {
   override val `type`: List[ValueType] = List(Document + "DomainElement")
 
   override def fields: List[Field] = List(Extends, Includes)
+
+  override def modelInstance =  throw new Exception("DomainElement is an abstract class")
 }

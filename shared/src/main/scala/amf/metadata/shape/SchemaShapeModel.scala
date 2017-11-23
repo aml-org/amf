@@ -3,6 +3,7 @@ package amf.metadata.shape
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.metadata.domain.DomainElementModel
+import amf.shape.SchemaShape
 import amf.vocabulary.Namespace.Shacl
 import amf.vocabulary.ValueType
 
@@ -13,4 +14,6 @@ object SchemaShapeModel extends ShapeModel with DomainElementModel {
   override val fields = List(MediaType, Raw) ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "SchemaShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+
+  override def modelInstance = SchemaShape()
 }
