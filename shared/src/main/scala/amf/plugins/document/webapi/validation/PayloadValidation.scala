@@ -1,20 +1,19 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.document.Fragment.Fragment
-import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.domain.Fields
+import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
+import amf.framework.metamodel.document.FragmentModel
+import amf.framework.model.document.{BaseUnit, Fragment}
 import amf.framework.parser.Annotations
 import amf.framework.services.RuntimeValidator
-import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
-import amf.framework.metamodel.document.FragmentModel
+import amf.framework.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.remote.Platform
 import amf.shape.Shape
 import amf.validation.model.{AMFShapeValidations, ValidationSpecification}
 import amf.vocabulary.Namespace
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object PayloadValidation {
   def apply(platform: Platform, shape: Shape): PayloadValidation = new PayloadValidation(platform, shape)

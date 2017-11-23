@@ -4,7 +4,7 @@ import amf.domain._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security.SecurityScheme
-import amf.framework.model.document.Fragment.Fragment
+import amf.framework.model.document.Fragment
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.framework.utils.QName

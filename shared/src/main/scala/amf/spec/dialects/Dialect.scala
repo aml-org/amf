@@ -4,11 +4,11 @@ import amf.core.Root
 import amf.domain.Annotation.Aliases
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.{Field, Obj, Type}
-import amf.framework.model.document.Fragment.{DialectFragment, Fragment}
-import amf.framework.model.document.{BaseUnit, Document, EncodesModel, Module}
+import amf.framework.model.document._
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.vocabularies.core.{ClassTerm, External}
+import amf.plugins.document.webapi.model.DialectFragment
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
 import amf.spec.dialects.Dialect.retrieveDomainEntity

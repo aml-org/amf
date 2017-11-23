@@ -1,12 +1,13 @@
 package amf.spec.raml
 
 import amf.core.Root
-import amf.framework.model.document.Fragment._
 import amf.domain.`abstract`.{ResourceType, Trait}
 import amf.domain.extensions.CustomDomainProperty
+import amf.framework.model.document.Fragment
 import amf.framework.parser.Annotations
 import amf.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.domain.webapi.models.annotations.SourceVendor
@@ -55,9 +56,9 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
-    def parse(): DocumentationItem = {
+    def parse(): DocumentationItemFragment = {
 
-      val item = DocumentationItem().adopted(root.location)
+      val item = DocumentationItemFragment().adopted(root.location)
 
       item.withEncodes(RamlCreativeWorkParser(map, withExtention = true).parse())
 
@@ -66,8 +67,8 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
   }
 
   case class DataTypeFragmentParser(map: YMap) {
-    def parse(): DataType = {
-      val dataType = DataType().adopted(root.location)
+    def parse(): DataTypeFragment = {
+      val dataType = DataTypeFragment().adopted(root.location)
 
       RamlTypeParser(
         map,
@@ -107,8 +108,8 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
   }
 
   case class AnnotationFragmentParser(map: YMap) {
-    def parse(): AnnotationTypeDeclaration = {
-      val annotation = AnnotationTypeDeclaration().adopted(root.location)
+    def parse(): AnnotationTypeDeclarationFragment = {
+      val annotation = AnnotationTypeDeclarationFragment().adopted(root.location)
 
       val property =
         AnnotationTypesParser(map,
@@ -121,8 +122,8 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
   }
 
   case class SecuritySchemeFragmentParser(map: YMap) {
-    def parse(): SecurityScheme = {
-      val security = SecurityScheme().adopted(root.location)
+    def parse(): SecuritySchemeFragment = {
+      val security = SecuritySchemeFragment().adopted(root.location)
 
       security.withEncodes(
         RamlSecuritySchemeParser(map,
@@ -134,9 +135,9 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
   }
 
   case class NamedExampleFragmentParser(map: YMap) {
-    def parse(): NamedExample = {
+    def parse(): NamedExampleFragment = {
       val entries      = map.entries.filter(e => e.value.tagType == YType.Map)
-      val namedExample = NamedExample().adopted(root.location)
+      val namedExample = NamedExampleFragment().adopted(root.location)
 
       if (entries.size == 1) namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
       else

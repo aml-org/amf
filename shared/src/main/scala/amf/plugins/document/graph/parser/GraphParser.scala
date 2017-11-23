@@ -19,7 +19,8 @@ import amf.metadata.domain.security._
 import amf.metadata.shape._
 import amf.model.{AmfElement, AmfObject, AmfScalar}
 import amf.parser.{YMapOps, YNodeLikeOps, YScalarYRead}
-import amf.plugins.document.webapi.metamodel.model.{ExtensionModel, OverlayModel}
+import amf.plugins.document.webapi.metamodel.{ExtensionModel, FragmentsTypesModels, OverlayModel}
+import amf.plugins.document.webapi.model._
 import amf.remote.Platform
 import amf.shape._
 import amf.spec.ParserContext
@@ -253,17 +254,17 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     XMLSerializerModel                                  -> XMLSerializer.apply,
     PropertyDependenciesModel                           -> PropertyDependencies.apply,
     ModuleModel                                         -> Module.apply,
-    FragmentsTypesModels.ResourceTypeFragmentModel              -> Fragment.ResourceTypeFragment.apply,
-    FragmentsTypesModels.TraitFragmentModel                     -> Fragment.TraitFragment.apply,
-    FragmentsTypesModels.DocumentationItemModel         -> Fragment.DocumentationItem.apply,
-    FragmentsTypesModels.DataTypeModel                  -> Fragment.DataType.apply,
-    FragmentsTypesModels.NamedExampleModel              -> Fragment.NamedExample.apply,
-    FragmentsTypesModels.AnnotationTypeDeclarationModel -> Fragment.AnnotationTypeDeclaration.apply,
+    FragmentsTypesModels.ResourceTypeFragmentModel      -> ResourceTypeFragment.apply,
+    FragmentsTypesModels.TraitFragmentModel             -> TraitFragment.apply,
+    FragmentsTypesModels.DocumentationItemFragmentModel         -> DocumentationItemFragment.apply,
+    FragmentsTypesModels.DataTypeFragmentModel                  -> DataTypeFragment.apply,
+    FragmentsTypesModels.NamedExampleFragmentModel              -> NamedExampleFragment.apply,
+    FragmentsTypesModels.AnnotationTypeDeclarationFragmentModel -> AnnotationTypeDeclarationFragment.apply,
     ExtensionModel                                      -> Extension.apply,
     OverlayModel                                        -> Overlay.apply,
-    FragmentsTypesModels.ExternalFragmentModel          -> Fragment.ExternalFragment.apply,
-    FragmentsTypesModels.SecuritySchemeFragmentModel            -> Fragment.SecurityScheme.apply,
-    FragmentsTypesModels.DialectNodeModel               -> Fragment.DialectFragment.apply,
+    FragmentsTypesModels.ExternalFragmentModel          -> ExternalFragment.apply,
+    FragmentsTypesModels.SecuritySchemeFragmentModel            -> SecuritySchemeFragment.apply,
+    FragmentsTypesModels.DialectNodeFragmentModel               -> DialectFragment.apply,
     TraitModel                                          -> Trait.apply,
     ResourceTypeModel                                   -> ResourceType.apply,
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,

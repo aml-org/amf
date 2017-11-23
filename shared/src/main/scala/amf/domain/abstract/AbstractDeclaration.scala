@@ -3,7 +3,7 @@ package amf.domain.`abstract`
 import amf.domain.extensions.DataNode
 import amf.metadata.domain.`abstract`.AbstractDeclarationModel._
 import amf.domain.{Fields, Linkable}
-import amf.framework.metamodel.document.FragmentsTypesModels.{ResourceTypeFragmentModel, TraitFragmentModel}
+import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.{ResourceTypeFragmentModel, TraitFragmentModel}
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.metadata.domain.`abstract`.{ResourceTypeModel, TraitModel}

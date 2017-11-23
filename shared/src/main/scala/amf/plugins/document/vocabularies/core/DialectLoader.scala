@@ -3,11 +3,11 @@ package amf.plugins.document.vocabularies.core
 import amf.core.Root
 import amf.dialects.RAML_1_0_DialectTopLevel
 import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject}
-import amf.framework.model.document.Fragment.DialectFragment
 import amf.framework.model.document.{BaseUnit, Document, Module}
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type
 import amf.model.AmfScalar
+import amf.plugins.document.webapi.model.DialectFragment
 import amf.spec.dialects._
 import amf.vocabulary.Namespace
 

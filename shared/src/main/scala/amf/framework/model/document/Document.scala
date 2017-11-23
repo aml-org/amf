@@ -2,11 +2,10 @@ package amf.framework.model.document
 
 import amf.domain._
 import amf.framework.metamodel.Obj
-import amf.framework.metamodel.document.DocumentModel
-import amf.framework.parser.Annotations
+import amf.framework.metamodel.document.{DocumentModel, ExtensionLikeModel}
 import amf.framework.metamodel.document.DocumentModel._
 import amf.framework.model.domain.DomainElement
-import amf.plugins.document.webapi.metamodel.model.{ExtensionLikeModel, ExtensionModel, OverlayModel}
+import amf.framework.parser.Annotations
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other
@@ -45,26 +44,10 @@ abstract class ExtensionLike(override val fields: Fields, override val annotatio
   def withExtend(extend: BaseUnit): this.type = set(ExtensionLikeModel.Extends, extend)
 }
 
-class Overlay(override val fields: Fields, override val annotations: Annotations)
-    extends ExtensionLike(fields, annotations) {
-  override def meta = OverlayModel
-}
 
-object Overlay {
-  def apply(): Overlay = apply(Annotations())
 
-  def apply(annotations: Annotations): Overlay = new Overlay(Fields(), annotations)
 
-}
 
-class Extension(override val fields: Fields, override val annotations: Annotations)
-    extends ExtensionLike(fields, annotations) {
-  override def meta = ExtensionModel
-}
 
-object Extension {
-  def apply(): Extension = apply(Annotations())
 
-  def apply(annotations: Annotations): Extension = new Extension(Fields(), annotations)
 
-}

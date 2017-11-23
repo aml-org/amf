@@ -1,7 +1,6 @@
 package amf.spec.dialects
 
 import amf.core.Root
-import amf.framework.model.document.Fragment.DialectFragment
 import amf.framework.model.document.{BaseUnit, Document, Module}
 import amf.domain.Fields
 import amf.domain.dialects.DomainEntity
@@ -11,6 +10,7 @@ import amf.framework.parser.Annotations
 import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{Range, YMapOps, YNodeLikeOps, YScalarYRead}
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
+import amf.plugins.document.webapi.model.DialectFragment
 import amf.plugins.domain.webapi.models.annotations.{DomainElementReference, SourceAST, SynthesizedField}
 import amf.spec.ParserContext
 import amf.spec.common.{ArrayNode, ValueNode}

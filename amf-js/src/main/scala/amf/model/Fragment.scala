@@ -1,74 +1,86 @@
 package amf.model
 
 import scala.scalajs.js.annotation.JSExportAll
+import amf.framework.model.document.{Fragment => CoreFragment}
+import amf.plugins.document.webapi.model.{
+  AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment,
+  DataTypeFragment => CoreDataTypeFragment,
+  DialectFragment => CoreDialectFragment,
+  DocumentationItemFragment => CoreDocumentationItemFragment,
+  ExternalFragment => CoreExternalFragment,
+  NamedExampleFragment => CoreNamedExampleFragment,
+  ResourceTypeFragment => CoreResourceTypeFragment,
+  SecuritySchemeFragment => CoreSecuritySchemeFragment,
+  TraitFragment => CoreTraitFragment
+}
 
 /**
   * JS Fragment model class
   */
 @JSExportAll
-abstract class Fragment(private[amf] val fragment: amf.framework.model.document.Fragment.Fragment) extends BaseUnit with EncodesModel {
+abstract class Fragment(private[amf] val fragment: CoreFragment) extends BaseUnit with EncodesModel {
 
   override private[amf] val element = fragment
 
 }
 
 object Fragment {
-  def apply(fragment: amf.framework.model.document.Fragment.Fragment): Fragment = fragment match {
-    case a: amf.framework.model.document.Fragment.AnnotationTypeDeclaration => AnnotationTypeDeclaration(a)
-    case d: amf.framework.model.document.Fragment.DataType                  => DataType(d)
-    case d: amf.framework.model.document.Fragment.DialectFragment           => DialectFragment(d)
-    case d: amf.framework.model.document.Fragment.DocumentationItem         => DocumentationItem(d)
-    case e: amf.framework.model.document.Fragment.ExternalFragment          => ExternalFragment(e)
-    case n: amf.framework.model.document.Fragment.NamedExample              => NamedExample(n)
-    case r: amf.framework.model.document.Fragment.ResourceTypeFragment      => ResourceTypeFragment(r)
-    case s: amf.framework.model.document.Fragment.SecurityScheme            => SecuritySchemeFragment(s)
-    case t: amf.framework.model.document.Fragment.TraitFragment             => TraitFragment(t)
+  def apply(fragment: CoreFragment): Fragment = fragment match {
+    case a: CoreAnnotationTypeDeclarationFragment => AnnotationTypeDeclaration(a)
+    case d: CoreDataTypeFragment                  => DataType(d)
+    case d: CoreDialectFragment                   => DialectFragment(d)
+    case d: CoreDocumentationItemFragment         => DocumentationItem(d)
+    case e: CoreExternalFragment                  => ExternalFragment(e)
+    case n: CoreNamedExampleFragment              => NamedExample(n)
+    case r: CoreResourceTypeFragment              => ResourceTypeFragment(r)
+    case s: CoreSecuritySchemeFragment            => SecuritySchemeFragment(s)
+    case t: CoreTraitFragment                     => TraitFragment(t)
   }
 }
 
-case class DocumentationItem(private[amf] val documentationItem: amf.framework.model.document.Fragment.DocumentationItem)
-    extends Fragment(documentationItem) {
-  def this() = this(amf.framework.model.document.Fragment.DocumentationItem())
+case class DocumentationItem(private[amf] val documentationItem: CoreDocumentationItemFragment)
+  extends Fragment(documentationItem) {
+  def this() = this(CoreDocumentationItemFragment())
 
 }
 
-case class DataType(private[amf] val dataType: amf.framework.model.document.Fragment.DataType) extends Fragment(dataType) {
-  def this() = this(amf.framework.model.document.Fragment.DataType())
+case class DataType(private[amf] val dataType: CoreDataTypeFragment) extends Fragment(dataType) {
+  def this() = this(CoreDataTypeFragment())
 }
 
-case class NamedExample(private[amf] val namedExample: amf.framework.model.document.Fragment.NamedExample)
-    extends Fragment(namedExample) {
-  def this() = this(amf.framework.model.document.Fragment.NamedExample())
+case class NamedExample(private[amf] val namedExample: CoreNamedExampleFragment)
+  extends Fragment(namedExample) {
+  def this() = this(CoreNamedExampleFragment())
 }
 
-case class DialectFragment(private[amf] val df: amf.framework.model.document.Fragment.DialectFragment) extends Fragment(df) {
-  def this() = this(amf.framework.model.document.Fragment.DialectFragment())
+case class DialectFragment(private[amf] val df: CoreDialectFragment) extends Fragment(df) {
+  def this() = this(CoreDialectFragment())
 }
 
-case class ExternalFragment(private[amf] val ef: amf.framework.model.document.Fragment.ExternalFragment) extends Fragment(ef) {
-  def this() = this(amf.framework.model.document.Fragment.ExternalFragment())
+case class ExternalFragment(private[amf] val ef: CoreExternalFragment) extends Fragment(ef) {
+  def this() = this(CoreExternalFragment())
 }
 
-case class ResourceTypeFragment(private[amf] val resourceTypeFragment: amf.framework.model.document.Fragment.ResourceTypeFragment)
-    extends Fragment(resourceTypeFragment) {
+case class ResourceTypeFragment(private[amf] val resourceTypeFragment: CoreResourceTypeFragment)
+  extends Fragment(resourceTypeFragment) {
 
-  def this() = this(amf.framework.model.document.Fragment.ResourceTypeFragment())
+  def this() = this(CoreResourceTypeFragment())
 }
 
-case class TraitFragment(private[amf] val traitFragment: amf.framework.model.document.Fragment.TraitFragment)
-    extends Fragment(traitFragment) {
+case class TraitFragment(private[amf] val traitFragment: CoreTraitFragment)
+  extends Fragment(traitFragment) {
 
-  def this() = this(amf.framework.model.document.Fragment.TraitFragment())
+  def this() = this(CoreTraitFragment())
 }
 
 case class AnnotationTypeDeclaration(
-    private[amf] val annotationTypeDeclaration: amf.framework.model.document.Fragment.AnnotationTypeDeclaration)
-    extends Fragment(annotationTypeDeclaration) {
-  def this() = this(amf.framework.model.document.Fragment.AnnotationTypeDeclaration())
+                                      private[amf] val annotationTypeDeclaration: CoreAnnotationTypeDeclarationFragment)
+  extends Fragment(annotationTypeDeclaration) {
+  def this() = this(CoreAnnotationTypeDeclarationFragment())
 }
 
-case class SecuritySchemeFragment(private[amf] val extensionFragment: amf.framework.model.document.Fragment.SecurityScheme)
-    extends Fragment(extensionFragment) {
+case class SecuritySchemeFragment(private[amf] val extensionFragment: CoreSecuritySchemeFragment)
+  extends Fragment(extensionFragment) {
 
-  def this() = this(amf.framework.model.document.Fragment.SecurityScheme())
+  def this() = this(CoreSecuritySchemeFragment())
 }

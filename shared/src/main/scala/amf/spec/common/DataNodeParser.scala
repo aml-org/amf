@@ -1,11 +1,11 @@
 package amf.spec.common
 
-import amf.framework.model.document.Fragment.ExternalFragment
 import amf.domain.extensions.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.framework.parser.Annotations
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import amf.parser.YScalarYRead
+import amf.plugins.document.webapi.model.ExternalFragment
 import amf.spec.ParserContext
 import org.yaml.parser.YamlParser
 
