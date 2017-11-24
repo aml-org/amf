@@ -2,7 +2,7 @@ package amf.core
 
 import amf.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
-import amf.domain.extensions.idCounter
+import amf.framework.model.domain.idCounter
 import amf.framework.plugins.AMFSyntaxPlugin
 import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.services.RuntimeSerializer

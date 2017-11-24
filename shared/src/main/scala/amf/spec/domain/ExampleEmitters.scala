@@ -1,8 +1,8 @@
 package amf.spec.domain
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.{Example, FieldEntry}
-import amf.framework.parser.Position
+import amf.domain.Example
+import amf.framework.parser.{FieldEntry, Position}
 import amf.metadata.domain.ExampleModel._
 import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.spec.common.BaseEmitters._

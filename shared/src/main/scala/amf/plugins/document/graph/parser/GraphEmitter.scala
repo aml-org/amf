@@ -1,16 +1,15 @@
 package amf.plugins.document.graph.parser
 
 import amf.client.GenerationOptions
-import amf.domain._
-import amf.domain.extensions._
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.{Field, Obj, Type}
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain._
+import amf.framework.parser.{FieldEntry, Value}
 import amf.metadata._
-import amf.metadata.domain.DomainElementModel.Sources
-import amf.metadata.domain._
 import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.vocabulary.Namespace.SourceMaps
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -299,7 +298,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def createSourcesNode(id: String, sources: SourceMap, b: EntryBuilder): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {
         b.entry(
-          Sources.value.iri(),
+          DomainElementModel.Sources.value.iri(),
           _.list {
             _.obj { b =>
               createIdNode(b, id)

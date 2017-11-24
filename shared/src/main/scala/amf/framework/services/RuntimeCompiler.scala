@@ -1,7 +1,7 @@
 package amf.framework.services
 
 import amf.framework.model.document.BaseUnit
-import amf.framework.parser.{ReferenceKind, Unspecified}
+import amf.framework.parser.{ReferenceKind, UnspecifiedReference}
 import amf.remote.{Cache, Context, Platform}
 import amf.spec.ParserContext
 import amf.validation.Validation
@@ -32,7 +32,7 @@ object RuntimeCompiler {
             vendor: String,
             currentValidation: Validation,
             base: Option[Context] = None,
-            referenceKind: ReferenceKind = Unspecified,
+            referenceKind: ReferenceKind = UnspecifiedReference,
             cache: Cache = Cache(),
             ctx: Option[ParserContext] = None) = {
     compiler match {

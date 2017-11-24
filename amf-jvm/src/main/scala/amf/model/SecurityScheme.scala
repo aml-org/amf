@@ -1,14 +1,15 @@
 package amf.model
 
 import scala.collection.JavaConverters._
+import amf.plugins.domain.webapi.models.security
 
 /**
   * JVM SecurityScheme model class.
   */
-case class SecurityScheme private[model] (private val scheme: amf.domain.security.SecurityScheme)
+case class SecurityScheme private[model] (private val scheme: security.SecurityScheme)
     extends DomainElement
     with Linkable {
-  def this() = this(amf.domain.security.SecurityScheme())
+  def this() = this(security.SecurityScheme())
 
   val name: String                               = scheme.name
   val `type`: String                             = scheme.`type`
@@ -65,7 +66,7 @@ case class SecurityScheme private[model] (private val scheme: amf.domain.securit
     this
   }
 
-  override private[amf] def element: amf.domain.security.SecurityScheme = scheme
+  override private[amf] def element: amf.plugins.domain.webapi.models.security.SecurityScheme = scheme
 
   def withHeader(name: String): Parameter = Parameter(scheme.withHeader(name))
 
@@ -84,5 +85,5 @@ case class SecurityScheme private[model] (private val scheme: amf.domain.securit
   override def linkCopy(): SecurityScheme = SecurityScheme(scheme.linkCopy())
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map { case ss: amf.domain.security.SecurityScheme => SecurityScheme(ss) }
+    element.linkTarget.map { case ss: amf.plugins.domain.webapi.models.security.SecurityScheme => SecurityScheme(ss) }
 }

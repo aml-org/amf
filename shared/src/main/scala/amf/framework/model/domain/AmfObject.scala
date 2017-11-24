@@ -1,8 +1,7 @@
 package amf.framework.model.domain
 
-import amf.domain.{Fields, Linkable}
 import amf.framework.metamodel.Field
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 
 /**
   * Created by pedro.colunga on 8/15/17.

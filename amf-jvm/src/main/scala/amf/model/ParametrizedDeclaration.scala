@@ -1,15 +1,16 @@
 package amf.model
 
 import scala.collection.JavaConverters._
-import amf.domain.`abstract`
+import amf.framework.model.domain.templates
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType => CoreParametrizedResourcetype, ParametrizedTrait => CoreParametrizedTrait}
 
 /**
   * JVM AbstractDeclaration model class.
   */
 abstract class ParametrizedDeclaration private[model] (
-    private val declaration: amf.domain.`abstract`.ParametrizedDeclaration)
+    private val declaration: templates.ParametrizedDeclaration)
     extends DomainElement {
-  override private[amf] def element: amf.domain.`abstract`.ParametrizedDeclaration
+  override private[amf] def element: templates.ParametrizedDeclaration
 
   val name: String                             = declaration.name
   val target: String                           = declaration.target
@@ -35,24 +36,9 @@ abstract class ParametrizedDeclaration private[model] (
 }
 
 object ParametrizedDeclaration {
-  def apply(declaration: amf.domain.`abstract`.ParametrizedDeclaration): ParametrizedDeclaration = declaration match {
-    case resourceType: `abstract`.ParametrizedResourceType => ParametrizedResourceType(resourceType)
-    case tr: `abstract`.ParametrizedTrait                  => ParametrizedTrait(tr)
+  def apply(declaration: templates.ParametrizedDeclaration): ParametrizedDeclaration = declaration match {
+    case resourceType: CoreParametrizedResourcetype => ParametrizedResourceType(resourceType)
+    case tr: CoreParametrizedTrait                  => ParametrizedTrait(tr)
     case _                                                 => throw new Exception("No wrapper for instance of ParametrizedDeclaration.")
   }
-}
-
-case class ParametrizedResourceType private[model] (
-    private val resourceType: amf.domain.`abstract`.ParametrizedResourceType)
-    extends ParametrizedDeclaration(resourceType) {
-  def this() = this(amf.domain.`abstract`.ParametrizedResourceType())
-
-  override private[amf] def element: amf.domain.`abstract`.ParametrizedResourceType = resourceType
-}
-
-case class ParametrizedTrait private[model] (private val tr: amf.domain.`abstract`.ParametrizedTrait)
-    extends ParametrizedDeclaration(tr) {
-  def this() = this(amf.domain.`abstract`.ParametrizedTrait())
-
-  override private[amf] def element: amf.domain.`abstract`.ParametrizedTrait = tr
 }

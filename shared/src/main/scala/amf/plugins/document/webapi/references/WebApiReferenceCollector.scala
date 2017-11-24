@@ -57,7 +57,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
   }
 
   private def extension(entry: YMapEntry) = {
-    references += Reference(entry.value, Extension, entry)
+    references += Reference(entry.value, ExtensionReference, entry)
   }
 
   private def links(part: YPart, ctx: ParserContext): Unit = {
@@ -91,7 +91,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
   }
 
   private def library(entry: YMapEntry) = {
-    references += Reference(entry.value, Library, entry)
+    references += Reference(entry.value, LibraryReference, entry)
   }
 
   def oasLinks(part: YPart, ctx: ParserContext): Unit = {
@@ -105,7 +105,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
     val ref = map.entries.head
     ref.value.tagType match {
       case YType.Str =>
-        references += Reference(ref.value.as[String], Link, map) // this is not for all scalar, link must be a string
+        references += Reference(ref.value.as[String], LinkReference, map) // this is not for all scalar, link must be a string
       case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
     }
   }
@@ -126,7 +126,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
 
   private def ramlInclude(node: YNode) = {
     node.value match {
-      case scalar: YScalar => references += Reference(scalar.text, Link, node)
+      case scalar: YScalar => references += Reference(scalar.text, LinkReference, node)
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
   }

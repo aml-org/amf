@@ -1,16 +1,19 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models.templates
+
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
+import amf.framework.model.domain.templates.{AbstractDeclaration => CoreAbstractDeclaration}
 
 /**
   * JVM AbstractDeclaration model class.
   */
-abstract class AbstractDeclaration private[model] (private val declaration: amf.domain.`abstract`.AbstractDeclaration)
+abstract class AbstractDeclaration private[model] (private val declaration: CoreAbstractDeclaration)
     extends DomainElement
     with Linkable {
-  override private[amf] def element: amf.domain.`abstract`.AbstractDeclaration
+  override private[amf] def element: CoreAbstractDeclaration
 
   val name: String                   = declaration.name
   val dataNode: DataNode             = DataNode(declaration.dataNode)
@@ -36,26 +39,26 @@ abstract class AbstractDeclaration private[model] (private val declaration: amf.
 }
 
 @JSExportAll
-case class ResourceType private[model] (private val resourceType: amf.domain.`abstract`.ResourceType)
+case class ResourceType private[model] (private val resourceType: templates.ResourceType)
     extends AbstractDeclaration(resourceType) {
-  def this() = this(amf.domain.`abstract`.ResourceType())
+  def this() = this(amf.plugins.domain.webapi.models.templates.ResourceType())
 
-  override private[amf] def element: amf.domain.`abstract`.ResourceType = resourceType
+  override private[amf] def element: templates.ResourceType = resourceType
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.domain.`abstract`.ResourceType => ResourceType(l) })
+    element.linkTarget.map({ case l: templates.ResourceType => ResourceType(l) })
 
   override def linkCopy(): DomainElement with Linkable = ResourceType(element.linkCopy())
 }
 
 @JSExportAll
-case class Trait private[model] (private val tr: amf.domain.`abstract`.Trait) extends AbstractDeclaration(tr) {
-  def this() = this(amf.domain.`abstract`.Trait())
+case class Trait private[model] (private val tr: templates.Trait) extends AbstractDeclaration(tr) {
+  def this() = this(amf.plugins.domain.webapi.models.templates.Trait())
 
-  override private[amf] def element: amf.domain.`abstract`.Trait = tr
+  override private[amf] def element: templates.Trait = tr
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.domain.`abstract`.Trait => Trait(l) })
+    element.linkTarget.map({ case l: templates.Trait => Trait(l) })
 
   override def linkCopy(): DomainElement with Linkable = Trait(element.linkCopy())
 }

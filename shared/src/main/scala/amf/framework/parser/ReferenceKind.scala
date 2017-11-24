@@ -6,10 +6,10 @@ package amf.framework.parser
 
 sealed trait ReferenceKind
 
-object Library extends ReferenceKind
+object LibraryReference extends ReferenceKind
 
-object Extension extends ReferenceKind
+object ExtensionReference extends ReferenceKind
 
-object Link extends ReferenceKind
+object LinkReference extends ReferenceKind
 
-object Unspecified extends ReferenceKind
+object UnspecifiedReference extends ReferenceKind

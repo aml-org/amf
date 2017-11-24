@@ -1,8 +1,7 @@
 package amf.plugins.domain.webapi.models
 
-import amf.domain.Fields
 import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.LicenseModel._
 import amf.plugins.domain.webapi.metamodel.LicenseModel
 import org.yaml.model.YMap

@@ -2,9 +2,9 @@ package amf.core
 
 import amf.compiler.{ParsedDocument, ParsedReference}
 import amf.framework.model.document.BaseUnit
-import amf.domain.extensions.idCounter
 import amf.exception.CyclicReferenceException
-import amf.framework.parser.{ReferenceKind, Unspecified}
+import amf.framework.model.domain.idCounter
+import amf.framework.parser.{ReferenceKind, UnspecifiedReference}
 import amf.framework.plugins.AMFDocumentPlugin
 import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.services.RuntimeCompiler

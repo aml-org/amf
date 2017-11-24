@@ -1,6 +1,6 @@
 package amf.resolution.stages.`extends`
 
-import amf.domain.`abstract`.Variable
+import amf.framework.model.domain.templates.Variable
 import amf.resolution.stages._
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._

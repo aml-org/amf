@@ -1,17 +1,17 @@
 package amf.model
 
-import scala.scalajs.js.annotation.JSExportAll
+import amf.plugins.domain.webapi.models.security
 
 /**
   * JVM Scope model class.
   */
-case class Scope private[model] (private val scope: amf.domain.security.Scope) extends DomainElement {
-  def this() = this(amf.domain.security.Scope())
+case class Scope private[model] (private val scope: security.Scope) extends DomainElement {
+  def this() = this(security.Scope())
 
   val name: String        = scope.name
   val description: String = scope.description
 
-  override private[amf] def element: amf.domain.security.Scope = scope
+  override private[amf] def element: amf.plugins.domain.webapi.models.security.Scope = scope
 
   /** Set name property of this [[Scope]]. */
   def withName(name: String): this.type = {

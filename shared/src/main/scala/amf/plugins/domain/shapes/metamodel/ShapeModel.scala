@@ -2,6 +2,8 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Bool, SortedArray, Str}
+import amf.framework.metamodel.domain.templates.KeyField
+import amf.framework.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.ShapeExtensionModel
 import amf.plugins.domain.webapi.metamodel.CreativeWorkModel

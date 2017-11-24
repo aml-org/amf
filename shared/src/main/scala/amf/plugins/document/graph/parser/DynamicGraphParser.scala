@@ -1,11 +1,11 @@
 package amf.plugins.document.graph.parser
 
-import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.framework.metamodel.Type.ObjType
-import amf.framework.model.domain.{AmfElement, AmfObject}
+import amf.framework.metamodel.domain.DomainElementModel
+import amf.framework.model.domain
+import amf.framework.model.domain._
 import amf.framework.parser.Annotations
 import amf.framework.parser._
-import amf.metadata.domain.DomainElementModel
 import amf.spec.ParserContext
 import org.yaml.model.{YMap, YNode}
 
@@ -138,8 +138,8 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
   // TODO
   // use ObjectNode as the default value for the map
   private val dynamicBuilders: mutable.Map[String, (Annotations) => AmfObject] = mutable.Map(
-    amf.domain.extensions.ArrayNode.builderType.iri()  -> amf.domain.extensions.ArrayNode.apply,
-    amf.domain.extensions.ScalarNode.builderType.iri() -> amf.domain.extensions.ScalarNode.apply,
-    amf.domain.extensions.ObjectNode.builderType.iri() -> amf.domain.extensions.ObjectNode.apply
+    ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
+    ScalarNode.builderType.iri() -> domain.ScalarNode.apply,
+    ObjectNode.builderType.iri() -> domain.ObjectNode.apply
   )
 }

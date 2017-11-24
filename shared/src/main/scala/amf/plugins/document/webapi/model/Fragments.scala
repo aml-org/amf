@@ -1,13 +1,12 @@
 package amf.plugins.document.webapi.model
 
-import amf.domain.extensions.CustomDomainProperty
-import amf.domain.{Example, ExternalDomainElement, Fields}
+import amf.domain.Example
 import amf.framework.metamodel.Obj
 import amf.framework.model.document.Fragment
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.domain.shapes.models.Shape
-import amf.plugins.domain.webapi.models.CreativeWork
+import amf.plugins.domain.webapi.models.{CreativeWork, CustomDomainProperty, ExternalDomainElement}
 
 // todo review
 
@@ -50,8 +49,8 @@ case class AnnotationTypeDeclarationFragment(fields: Fields, annotations: Annota
 }
 
 case class SecuritySchemeFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  override def encodes: amf.domain.security.SecurityScheme =
-    super.encodes.asInstanceOf[amf.domain.security.SecurityScheme]
+  override def encodes: amf.plugins.domain.webapi.models.security.SecurityScheme =
+    super.encodes.asInstanceOf[amf.plugins.domain.webapi.models.security.SecurityScheme]
 
   /** Meta data for the document */
   override def meta: Obj = SecuritySchemeFragmentModel

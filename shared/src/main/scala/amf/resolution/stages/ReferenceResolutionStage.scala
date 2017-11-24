@@ -1,8 +1,7 @@
 package amf.resolution.stages
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.Linkable
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{DomainElement, Linkable}
 import amf.validation.Validation
 
 /**

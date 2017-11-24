@@ -3,8 +3,8 @@ package amf.spec.declaration
 import amf.domain._
 import amf.framework.metamodel.Field
 import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.AmfScalar
-import amf.framework.parser.{Annotations, Position}
+import amf.framework.model.domain.{AmfScalar, Linkable}
+import amf.framework.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.framework.parser.Position.ZERO
 import amf.metadata.domain.ExampleModel
 import amf.plugins.document.webapi.annotations._

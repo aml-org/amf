@@ -1,11 +1,10 @@
 package amf.resolution.stages
 
-import amf.domain.`abstract`._
-import amf.domain.extensions.DataNode
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document.{BaseUnit, DeclaresModel}
-import amf.framework.model.domain.DomainElement
-import amf.metadata.domain.DomainElementModel
+import amf.framework.model.domain.{DataNode, DomainElement}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.resolution.stages.DomainElementMerging.merge
 import amf.spec.declaration.DataNodeEmitter

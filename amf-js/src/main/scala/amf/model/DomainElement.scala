@@ -2,10 +2,13 @@ package amf.model
 
 // import amf.model.DomainExtension
 
+import amf.framework.metamodel
 import amf.framework.model.domain
+import amf.framework.model.domain.templates
 import amf.framework.parser.Range
 import amf.plugins.domain.shapes
 import amf.plugins.domain.webapi.models
+import amf.plugins.domain.webapi.models.{ExternalDomainElement, extensions}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -19,7 +22,7 @@ trait DomainElement {
   lazy val customDomainProperties: js.Iterable[DomainExtension] =
     element.customDomainProperties.map(DomainExtension).toJSArray
   lazy val `extends`: js.Iterable[DomainElement] = element.extend.map {
-    case pd: amf.domain.`abstract`.ParametrizedDeclaration => ParametrizedDeclaration(pd)
+    case pd: templates.ParametrizedDeclaration => ParametrizedDeclaration(pd)
     case op: models.Operation                          => Operation(op)
     case e: models.EndPoint                            => EndPoint(e)
   }.toJSArray
@@ -65,20 +68,20 @@ object DomainElement {
     case o: models.WebApi                              => WebApi(o)
     case o: models.Operation                           => Operation(o)
     case o: models.Organization                        => Organization(o)
-    case o: amf.domain.ExternalDomainElement               => throw new Exception("Not supported yet")
+    case o: ExternalDomainElement               => throw new Exception("Not supported yet")
     case o: models.Parameter                           => Parameter(o)
     case o: models.Payload                             => Payload(o)
     case o: models.CreativeWork                            => CreativeWork(o)
     case o: models.EndPoint                            => EndPoint(o)
     case o: models.Request                             => Request(o)
     case o: models.Response                            => Response(o)
-    case o: amf.domain.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(o)
-    case o: amf.domain.security.SecurityScheme             => SecurityScheme(o)
-    case o: amf.domain.extensions.ObjectNode               => ObjectNode(o)
-    case o: amf.domain.extensions.ScalarNode               => ScalarNode(o)
-    case o: amf.domain.extensions.CustomDomainProperty     => CustomDomainProperty(o)
-    case o: amf.domain.extensions.ArrayNode                => ArrayNode(o)
-    case o: amf.domain.extensions.DomainExtension          => DomainExtension(o)
+    case o: amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(o)
+    case o: amf.plugins.domain.webapi.models.security.SecurityScheme             => SecurityScheme(o)
+    case o: domain.ObjectNode               => ObjectNode(o)
+    case o: domain.ScalarNode               => ScalarNode(o)
+    case o: models.CustomDomainProperty     => CustomDomainProperty(o)
+    case o: domain.ArrayNode                => ArrayNode(o)
+    case o: extensions.DomainExtension          => DomainExtension(o)
     case o: shapes.models.Shape                                => Shape(o)
     case o: amf.domain.dialects.DomainEntity               => DomainEntity(o)
     case o =>
@@ -90,7 +93,7 @@ object DomainElement {
 
 trait Linkable { this: DomainElement with Linkable =>
 
-  private[amf] def element: domain.DomainElement with amf.domain.Linkable
+  private[amf] def element: domain.DomainElement with domain.Linkable
 
   def linkTarget: Option[DomainElement with Linkable]
 

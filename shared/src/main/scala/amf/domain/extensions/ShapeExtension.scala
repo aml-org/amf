@@ -1,8 +1,7 @@
 package amf.domain.extensions
 
-import amf.domain.Fields
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{DataNode, DomainElement}
+import amf.framework.parser.{Annotations, Fields}
 import amf.metadata.domain.extensions.ShapeExtensionModel
 import amf.metadata.domain.extensions.ShapeExtensionModel._
 import amf.plugins.domain.shapes.models.PropertyShape

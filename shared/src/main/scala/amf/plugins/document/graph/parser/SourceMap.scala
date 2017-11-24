@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
-import amf.domain.Value
 import amf.framework.model.domain.AmfElement
+import amf.framework.parser.Value
 
 import scala.collection.mutable
 

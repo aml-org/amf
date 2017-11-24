@@ -1,8 +1,7 @@
 package amf.plugins.domain.webapi.models
 
-import amf.domain.{Fields, Linkable}
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{DomainElement, Linkable}
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape, Shape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel._

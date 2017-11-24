@@ -1,11 +1,11 @@
 package amf.resolution.stages
 
-import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
-import amf.domain.{FieldEntry, Value}
+import amf.framework.metamodel.domain.DomainElementModel._
+import amf.framework.metamodel.domain.DomainElementModel
+import amf.framework.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.framework.metamodel.{Field, Type}
-import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
-import amf.metadata.domain.DomainElementModel._
-import amf.metadata.domain.{DomainElementModel, KeyField, OptionalField}
+import amf.framework.model.domain._
+import amf.framework.parser.{FieldEntry, Value}
 
 /**
   * Merge 'other' element into 'main' element:

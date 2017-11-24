@@ -1,10 +1,9 @@
 package amf.spec.domain
 
-import amf.domain.FieldEntry
-import amf.domain.security.{OAuth2Settings, ParametrizedSecurityScheme}
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme}
 import amf.framework.model.domain.AmfScalar
-import amf.framework.parser.Position
-import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
+import amf.framework.parser.{FieldEntry, Position}
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.remote.{Oas, Raml}
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

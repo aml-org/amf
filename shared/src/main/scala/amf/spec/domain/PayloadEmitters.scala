@@ -1,8 +1,7 @@
 package amf.spec.domain
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.FieldEntry
-import amf.framework.parser.Position
+import amf.framework.parser.{FieldEntry, Position}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import amf.spec.common.BaseEmitters.ScalarEmitter

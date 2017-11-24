@@ -1,7 +1,7 @@
 package amf.resolution.stages
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.`abstract`.{Variable, VariableValue}
+import amf.framework.model.domain.templates.{Variable, VariableValue}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

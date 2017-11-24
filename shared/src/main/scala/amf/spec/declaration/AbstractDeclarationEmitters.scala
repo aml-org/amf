@@ -1,7 +1,7 @@
 package amf.spec.declaration
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.`abstract`.AbstractDeclaration
+import amf.framework.model.domain.templates.AbstractDeclaration
 import amf.framework.parser.Position
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext

@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Array
-import amf.metadata.domain.DomainElementModel
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.UnionShape
 import amf.vocabulary.{Namespace, ValueType}
 

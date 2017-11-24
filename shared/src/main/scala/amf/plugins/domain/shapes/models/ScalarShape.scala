@@ -1,7 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.domain.Fields
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
 import org.yaml.model.YPart

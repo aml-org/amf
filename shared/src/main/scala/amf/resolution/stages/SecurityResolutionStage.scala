@@ -1,12 +1,12 @@
 package amf.resolution.stages
 
-import amf.domain.security.{ParametrizedSecurityScheme, SecurityScheme, Settings}
 import amf.framework.metamodel.Field
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.DomainElement
-import amf.metadata.domain.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
+import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme, Settings}
 import amf.validation.Validation
 
 class SecurityResolutionStage(profile: String)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) {

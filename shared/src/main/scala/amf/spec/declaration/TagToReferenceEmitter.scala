@@ -1,8 +1,7 @@
 package amf.spec.declaration
 
-import amf.domain.Linkable
 import amf.framework.model.document.{BaseUnit, Fragment, Module}
-import amf.framework.model.domain.DomainElement
+import amf.framework.model.domain.{DomainElement, Linkable}
 import amf.framework.parser.Position
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.domain.shapes.models.Shape

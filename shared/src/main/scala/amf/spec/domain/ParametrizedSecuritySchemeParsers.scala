@@ -1,11 +1,10 @@
 package amf.spec.domain
 
-import amf.domain.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
-import amf.framework.parser.Annotations
-import amf.framework.parser._
-import amf.metadata.domain.security._
-import amf.spec.{ParserContext, SearchScope}
+import amf.framework.parser.{Annotations, _}
+import amf.plugins.domain.webapi.metamodel.security._
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
 import amf.spec.common._
+import amf.spec.{ParserContext, SearchScope}
 import org.yaml.model.{YMap, YNode, YType}
 
 /**

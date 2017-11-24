@@ -1,7 +1,7 @@
 package amf.domain
 
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{DomainElement, Linkable}
+import amf.framework.parser.{Annotations, Fields}
 import amf.metadata.domain.ExampleModel
 import amf.metadata.domain.ExampleModel._
 import org.yaml.model.YPart

@@ -5,13 +5,12 @@ import amf.document.{BaseUnit, Module}
 import amf.domain.Annotation.Aliases
 import amf.framework.document.{BaseUnit, Module}
 import amf.domain.Annotation.Aliases
-import amf.domain.FieldEntry
 import amf.domain.dialects.DomainEntity
+import amf.framework.metamodel.domain.LinkableElementModel
 import amf.framework.model.document.{BaseUnit, Module}
 import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.framework.parser.Position
 import amf.framework.parser.Position.ZERO
-import amf.metadata.domain.LinkableElementModel
+import amf.framework.parser.{FieldEntry, Position}
 import amf.spec.common.BaseEmitters._
 import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecEmitter

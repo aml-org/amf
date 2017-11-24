@@ -1,16 +1,17 @@
 package amf.model
 
 import scala.collection.JavaConverters._
+import amf.plugins.domain.webapi.models.security
 
 /**
   * JS Settings model class.
   */
-class Settings private[model] (private val settings: amf.domain.security.Settings) extends DomainElement {
-  def this() = this(amf.domain.security.Settings())
+class Settings private[model] (private val settings: security.Settings) extends DomainElement {
+  def this() = this(security.Settings())
 
   val additionalProperties: DataNode = DataNode(settings.additionalProperties)
 
-  override private[amf] def element: amf.domain.security.Settings = settings
+  override private[amf] def element: amf.plugins.domain.webapi.models.security.Settings = settings
 
   /** Set additionalProperties property of this [[Settings]]. */
   def withAdditionalProperties(additionalProperties: DataNode): this.type = {
@@ -19,9 +20,9 @@ class Settings private[model] (private val settings: amf.domain.security.Setting
   }
 }
 
-case class OAuth1Settings private[model] (private val settings: amf.domain.security.OAuth1Settings)
+case class OAuth1Settings private[model] (private val settings: amf.plugins.domain.webapi.models.security.OAuth1Settings)
     extends Settings(settings) {
-  def this() = this(amf.domain.security.OAuth1Settings())
+  def this() = this(security.OAuth1Settings())
 
   val requestTokenUri: String            = settings.requestTokenUri
   val authorizationUri: String           = settings.authorizationUri
@@ -53,12 +54,12 @@ case class OAuth1Settings private[model] (private val settings: amf.domain.secur
     this
   }
 
-  override private[amf] def element: amf.domain.security.OAuth1Settings = settings
+  override private[amf] def element: amf.plugins.domain.webapi.models.security.OAuth1Settings = settings
 }
 
-case class OAuth2Settings private[model] (private val settings: amf.domain.security.OAuth2Settings)
+case class OAuth2Settings private[model] (private val settings: amf.plugins.domain.webapi.models.security.OAuth2Settings)
     extends Settings(settings) {
-  def this() = this(amf.domain.security.OAuth2Settings())
+  def this() = this(security.OAuth2Settings())
 
   val authorizationUri: String                    = settings.authorizationUri
   val accessTokenUri: String                      = settings.accessTokenUri
@@ -96,12 +97,12 @@ case class OAuth2Settings private[model] (private val settings: amf.domain.secur
     this
   }
 
-  override private[amf] def element: amf.domain.security.OAuth2Settings = settings
+  override private[amf] def element: amf.plugins.domain.webapi.models.security.OAuth2Settings = settings
 }
 
-case class ApiKeySettings private[model] (private val settings: amf.domain.security.ApiKeySettings)
+case class ApiKeySettings private[model] (private val settings: amf.plugins.domain.webapi.models.security.ApiKeySettings)
     extends Settings(settings) {
-  def this() = this(amf.domain.security.ApiKeySettings())
+  def this() = this(security.ApiKeySettings())
 
   val name: String = settings.name
   val in: String   = settings.in
@@ -118,16 +119,16 @@ case class ApiKeySettings private[model] (private val settings: amf.domain.secur
     this
   }
 
-  override private[amf] def element: amf.domain.security.ApiKeySettings = settings
+  override private[amf] def element: amf.plugins.domain.webapi.models.security.ApiKeySettings = settings
 }
 
 object Settings {
-  def apply(settings: amf.domain.security.Settings): Settings =
+  def apply(settings: amf.plugins.domain.webapi.models.security.Settings): Settings =
     (settings match {
-      case oauth1: amf.domain.security.OAuth1Settings => Some(OAuth1Settings(oauth1))
-      case oauth2: amf.domain.security.OAuth2Settings => Some(OAuth2Settings(oauth2))
-      case apiKey: amf.domain.security.ApiKeySettings => Some(ApiKeySettings(apiKey))
-      case s: amf.domain.security.Settings            => Some(Settings(s))
+      case oauth1: amf.plugins.domain.webapi.models.security.OAuth1Settings => Some(OAuth1Settings(oauth1))
+      case oauth2: amf.plugins.domain.webapi.models.security.OAuth2Settings => Some(OAuth2Settings(oauth2))
+      case apiKey: amf.plugins.domain.webapi.models.security.ApiKeySettings => Some(ApiKeySettings(apiKey))
+      case s: amf.plugins.domain.webapi.models.security.Settings            => Some(Settings(s))
       case _                                          => None
     }).orNull
 }
