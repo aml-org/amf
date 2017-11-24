@@ -3,8 +3,8 @@ package amf.plugins.document.vocabularies.core
 import amf.core.Root
 import amf.framework.metamodel.Type
 import amf.framework.model.document.BaseUnit
+import amf.framework.parser.ParserContext
 import amf.plugins.document.vocabularies.spec._
-import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 
 /**

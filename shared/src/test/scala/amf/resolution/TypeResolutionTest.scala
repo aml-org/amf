@@ -3,12 +3,12 @@ package amf.resolution
 import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
+import amf.framework.parser.ParserContext
 import amf.io.BuildCycleTests
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
 import amf.remote.{Raml, RamlYamlHint}
-import amf.spec.ParserContext
-import amf.spec.raml.RamlTypeExpressionParser
 import amf.validation.Validation
 import amf.vocabulary.Namespace
 import org.scalatest.Matchers._
@@ -21,7 +21,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
     val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-    implicit val ctx: WebApiContext = ParserContext(Validation(platform)).toRaml
+    implicit val ctx = toRaml(ParserContext(Validation(platform)))
 
     var res = RamlTypeExpressionParser(adopt).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
@@ -49,7 +49,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
     var error = false
     try {
-      val fail = ParserContext(Validation(platform).withEnabledValidation(false)).toRaml
+      val fail = toRaml(ParserContext(Validation(platform).withEnabledValidation(false)))
       RamlTypeExpressionParser(adopt)(fail).parse("[]")
     } catch {
       case e: Exception => error = true

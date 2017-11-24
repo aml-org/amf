@@ -8,7 +8,8 @@ import amf.framework.metamodel.domain.DomainElementModel._
 import amf.framework.metamodel.{Field, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain._
-import amf.framework.parser.{FieldEntry, Value}
+import amf.framework.parser.{FieldEntry, ParserContext, Value}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ShapeModel}
 import amf.plugins.domain.shapes.models.Shape
@@ -16,7 +17,7 @@ import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
-import amf.spec.{Declarations, ParserContext}
+import amf.plugins.document.webapi.parser.spec.Declarations
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 
@@ -155,7 +156,7 @@ class ExtensionsResolutionStage(profile: String)(override implicit val currentVa
   /** Merge annotation types, types, security schemes, resource types,  */
   def mergeDeclarations(master: Document, extension: ExtensionLike, iriMerger: IriMerger): Unit = {
 
-    val declarations = Declarations(master.declares, Some(ParserContext(currentValidation).toRaml))
+    val declarations = Declarations(master.declares, Some(toRaml(ParserContext(currentValidation))))
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
     extension.declares.foreach { declaration =>

@@ -7,11 +7,10 @@ import amf.framework.model.domain.{AmfArray, AmfScalar, LexicalInformation}
 import amf.framework.parser.{Annotations, Fields, _}
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
-import amf.plugins.document.webapi.annotations.{DomainElementReference, SourceAST, SynthesizedField}
+import amf.plugins.document.webapi.annotations.{SourceAST, SynthesizedField}
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.spec.ParserContext
-import amf.spec.common.{ArrayNode, ValueNode}
-import amf.spec.declaration.ReferencesParser
+import amf.plugins.document.webapi.parser.spec.common.{ArrayNode, ValueNode}
+import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import amf.validation.model.ParserSideValidations
 import org.yaml.model._
 

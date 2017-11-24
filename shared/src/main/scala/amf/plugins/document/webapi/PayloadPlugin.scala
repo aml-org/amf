@@ -3,16 +3,14 @@ package amf.plugins.document.webapi
 import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.model.document.BaseUnit
-import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.framework.parser.ParserContext
+import amf.framework.plugins.AMFDocumentPlugin
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.references.PayloadReferenceCollector
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.remote.Platform
-import amf.spec.ParserContext
 import org.yaml.model.{YMap, YScalar}
-
-import scala.concurrent.Future
 
 object PayloadPlugin extends AMFDocumentPlugin {
 

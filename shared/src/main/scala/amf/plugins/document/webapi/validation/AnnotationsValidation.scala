@@ -4,7 +4,7 @@ import amf.framework.model.document.BaseUnit
 import amf.framework.validation.AMFValidationResult
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.remote.Platform
-import amf.spec.common.WellKnownAnnotation
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

@@ -1,8 +1,8 @@
 package amf.validation.emitters
 
 import amf.framework.parser.Position
-import amf.spec.PartEmitter
-import amf.spec.common.BaseEmitters._
+import amf.plugins.document.webapi.parser.spec.PartEmitter
+import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.vocabulary.Namespace
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

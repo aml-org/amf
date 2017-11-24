@@ -4,7 +4,7 @@ import amf.compiler.{ParsedDocument, ParsedReference}
 import amf.framework.model.document.BaseUnit
 import amf.exception.CyclicReferenceException
 import amf.framework.model.domain.idCounter
-import amf.framework.parser.{ReferenceKind, UnspecifiedReference}
+import amf.framework.parser.{ParserContext, ReferenceKind, UnspecifiedReference}
 import amf.framework.plugins.AMFDocumentPlugin
 import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.services.RuntimeCompiler
@@ -14,7 +14,6 @@ import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
-import amf.spec.ParserContext
 import amf.validation.Validation
 
 import scala.collection.mutable.ListBuffer

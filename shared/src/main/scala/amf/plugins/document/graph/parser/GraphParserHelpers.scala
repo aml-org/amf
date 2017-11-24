@@ -7,7 +7,6 @@ import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document.SourceMap
 import amf.framework.model.domain.{AmfElement, Annotation}
 import amf.framework.parser.{Annotations, _}
-import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
 import org.yaml.convert.YRead.SeqNodeYRead
