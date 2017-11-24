@@ -1,8 +1,8 @@
-package amf.metadata.domain.extensions
+package amf.plugins.domain.shapes.metamodel
 
-import amf.domain.extensions.ShapeExtension
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.plugins.domain.shapes.models.ShapeExtension
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
 import amf.vocabulary.Namespace.{Document, Http}
 import amf.vocabulary.ValueType

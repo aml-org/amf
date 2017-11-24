@@ -6,10 +6,9 @@ import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.{AmfScalar, Linkable}
 import amf.framework.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.framework.parser.Position.ZERO
-import amf.metadata.domain.ExampleModel
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
-import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.domain.webapi.models._

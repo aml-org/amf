@@ -24,7 +24,9 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
     ScalarShapeModel,
     SchemaShapeModel,
     UnionShapeModel,
-    XMLSerializerModel
+    XMLSerializerModel,
+    ShapeExtensionModel,
+    ExampleModel
   )
 
 }

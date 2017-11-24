@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.validation
 
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.Example
 import amf.framework.model.domain.{DataNode, LexicalInformation}
 import amf.framework.services.RuntimeCompiler
 import amf.framework.validation.{AMFValidationResult, SeverityLevels}
 import amf.plugins.document.webapi.PayloadPlugin
-import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.shapes.models.{Example, Shape}
 import amf.remote.Platform
 import amf.unsafe.TrunkPlatform
 import amf.validation._

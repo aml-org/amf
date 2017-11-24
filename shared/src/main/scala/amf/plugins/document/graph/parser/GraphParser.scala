@@ -2,7 +2,6 @@ package amf.plugins.document.graph.parser
 
 import amf.domain._
 import amf.domain.dialects.DomainEntity
-import amf.domain.extensions._
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.framework.metamodel.document.BaseUnitModel.Location
 import amf.framework.metamodel.document._
@@ -15,8 +14,7 @@ import amf.framework.model.domain.templates.VariableValue
 import amf.framework.parser.{Annotations, _}
 import amf.framework.registries.AMFDomainRegistry
 import amf.metadata.domain._
-import amf.metadata.domain.extensions.ShapeExtensionModel
-import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.metamodel.{ShapeExtensionModel, _}
 import amf.plugins.domain.webapi.metamodel.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
@@ -239,10 +237,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     ResponseModel                                       -> Response.apply,
     UnionShapeModel                                     -> UnionShape.apply,
     NodeShapeModel                                      -> NodeShape.apply,
-
-*/
     ShapeExtensionModel                                 -> ShapeExtension.apply,
-    /*
         ArrayShapeModel                                     -> ArrayShape.apply,
         FileShapeModel                                      -> FileShape.apply,
         ScalarShapeModel                                    -> ScalarShape.apply,
@@ -280,9 +275,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     ParametrizedResourceTypeModel                       -> ParametrizedResourceType.apply,
     ParametrizedTraitModel                              -> ParametrizedTrait.apply,
     VariableValueModel                                  -> VariableValue.apply,
-        */
-
     ExampleModel                                        -> Example.apply
+            */
   )
 
   private val types: Map[String, Obj] = builders.keys.map(t => t.`type`.head.iri() -> t).toMap ++ AMFDomainRegistry.metadataRegistry

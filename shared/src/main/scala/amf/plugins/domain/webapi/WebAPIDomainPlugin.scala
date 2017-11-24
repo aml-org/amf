@@ -36,7 +36,8 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     TraitModel,
     ResourceTypeModel,
     ParametrizedResourceTypeModel,
-    ParametrizedTraitModel
+    ParametrizedTraitModel,
+    ExternalDomainElementModel
   )
 
   override def serializableAnnotations() = Map.empty

@@ -1,10 +1,10 @@
 package amf.spec.domain
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.Example
 import amf.framework.parser.{FieldEntry, Position}
-import amf.metadata.domain.ExampleModel._
+import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.document.webapi.annotations.SynthesizedField
+import amf.plugins.domain.shapes.models.Example
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.declaration.AnnotationsEmitter

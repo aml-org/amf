@@ -1,4 +1,4 @@
-package amf.metadata.domain
+package amf.plugins.domain.webapi.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str

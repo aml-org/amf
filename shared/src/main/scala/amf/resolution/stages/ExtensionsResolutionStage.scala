@@ -9,9 +9,8 @@ import amf.framework.metamodel.{Field, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain._
 import amf.framework.parser.{FieldEntry, Value}
-import amf.metadata.domain.ExampleModel
 import amf.plugins.document.webapi.annotations.SynthesizedField
-import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, ShapeModel}
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
