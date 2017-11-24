@@ -1,18 +1,18 @@
 package amf.resolution.stages
 
+import amf.core.unsafe.PlatformSecrets
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.framework.model.domain.{DataNode, DomainElement}
 import amf.framework.parser.ParserContext
-import amf.plugins.document.webapi.parser.spec._
+import amf.framework.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.SpecOrdering
+import amf.plugins.document.webapi.parser.spec.{SpecOrdering, _}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{RamlEndpointParser, RamlOperationParser}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.resolution.stages.DomainElementMerging.merge
-import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
 

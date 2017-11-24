@@ -3,6 +3,7 @@ package amf.resolution.stages
 import amf.framework.metamodel.Field
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.DomainElement
+import amf.framework.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi

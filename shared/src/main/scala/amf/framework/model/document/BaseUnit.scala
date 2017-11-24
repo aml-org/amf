@@ -5,8 +5,8 @@ import amf.framework.metamodel.document.BaseUnitModel
 import amf.framework.metamodel.document.DocumentModel.References
 import amf.framework.model.domain._
 import amf.framework.parser.Value
+import amf.framework.resolution.pipelines.ResolutionPipeline
 import amf.metadata.MetaModelTypeMapping
-import amf.resolution.pipelines.ResolutionPipeline
 
 import scala.collection.mutable.ListBuffer
 

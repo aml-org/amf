@@ -4,6 +4,7 @@ import amf.ProfileNames
 import amf.framework.metamodel.Field
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.{AmfScalar, DomainElement}
+import amf.framework.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.{OperationModel, PayloadModel, RequestModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
 import amf.validation.Validation

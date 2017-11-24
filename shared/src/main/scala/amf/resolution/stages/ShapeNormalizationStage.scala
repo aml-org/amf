@@ -4,13 +4,14 @@ import amf.framework.metamodel.Obj
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.{AmfArray, AmfScalar, DomainElement, LexicalInformation}
 import amf.framework.parser.Annotations
+import amf.framework.resolution.stages.ResolutionStage
+import amf.framework.vocabulary.{Namespace, ValueType}
 import amf.metadata.MetaModelTypeMapping
 import amf.plugins.document.webapi.annotations.{ExplicitField, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.resolution.stages.shape_normalization.MinShapeAlgorithm
 import amf.validation.Validation
-import amf.framework.vocabulary.{Namespace, ValueType}
 
 import scala.collection.mutable.ListBuffer
 
