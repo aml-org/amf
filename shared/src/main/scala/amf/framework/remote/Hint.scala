@@ -1,7 +1,7 @@
-package amf.remote
+package amf.framework.remote
 
 import amf.framework.parser.{ReferenceKind, UnspecifiedReference}
-import amf.remote.Syntax.{Json, Syntax, Yaml}
+import amf.framework.remote.Syntax.{Json, Syntax, Yaml}
 
 case class Hint(vendor: Vendor, syntax: Syntax, kind: ReferenceKind = UnspecifiedReference) {
   def +(k: ReferenceKind): Hint = copy(kind = k)

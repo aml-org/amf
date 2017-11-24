@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.core
 
+import amf.framework.remote.Platform
 import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, FragmentKind, ModuleKind}
 import amf.plugins.document.webapi.parser.RamlHeader
-import amf.remote.Platform
 
 import scala.concurrent.Future
 

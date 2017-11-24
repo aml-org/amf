@@ -6,7 +6,7 @@ import amf.framework.metamodel.Obj
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.AnnotationGraphLoader
 import amf.framework.parser.{AbstractReferenceCollector, ParserContext}
-import amf.remote.Platform
+import amf.framework.remote.Platform
 import org.yaml.model.YDocument
 
 abstract class AMFDocumentPlugin extends AMFPlugin {

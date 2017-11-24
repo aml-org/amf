@@ -1,12 +1,12 @@
 package amf.client
 
-import amf.remote.Raml
-import amf.remote.Syntax.Yaml
+import amf.framework.remote.Raml
+import amf.framework.remote.Syntax.Yaml
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * [[amf.remote.Raml]] parser.
+  * [[Raml]] parser.
   */
 @JSExportTopLevel("RamlParser")
 class RamlParser extends BaseParser(Raml, Yaml)

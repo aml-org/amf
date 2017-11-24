@@ -5,7 +5,8 @@ import amf.client.{GenerationOptions, ParserConfig}
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
-import amf.remote.Syntax.{Json, Yaml}
+import amf.framework.remote._
+import amf.framework.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.validation.Validation
 

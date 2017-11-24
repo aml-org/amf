@@ -4,6 +4,7 @@ import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
+import amf.framework.remote.{Amf, Oas, Raml}
 import amf.io.BuildCycleTests
 import amf.remote._
 

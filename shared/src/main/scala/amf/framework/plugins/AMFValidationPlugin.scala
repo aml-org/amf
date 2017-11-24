@@ -1,8 +1,8 @@
 package amf.framework.plugins
 
 import amf.framework.model.document.BaseUnit
+import amf.framework.remote.Platform
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
-import amf.remote.Platform
 import amf.validation.model.ValidationProfile
 
 import scala.concurrent.Future

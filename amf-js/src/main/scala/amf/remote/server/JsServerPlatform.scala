@@ -1,10 +1,10 @@
 package amf.remote.server
 
-import amf.dialects.JSDialectRegistry
-import amf.interop.{Path, _}
 import amf.core.lexer.CharSequenceStream
-import amf.remote.File.FILE_PROTOCOL
-import amf.remote.{Content, File, Http, Platform}
+import amf.dialects.JSDialectRegistry
+import amf.framework.remote.File.FILE_PROTOCOL
+import amf.framework.remote.{Content, File, Http, Platform}
+import amf.interop.{Path, _}
 import amf.validation.{SHACLValidator, Validation}
 import org.mulesoft.common.io.{FileSystem, JsServerFileSystem}
 

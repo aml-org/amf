@@ -1,16 +1,16 @@
 package amf.remote.browser
 
-import amf.dialects.JSDialectRegistry
 import amf.core.lexer.CharSequenceStream
-import amf.remote.{Content, Platform, UnsupportedFileSystem}
+import amf.dialects.JSDialectRegistry
+import amf.framework.remote.{Content, Platform, UnsupportedFileSystem}
 import amf.validation.{SHACLValidator, Validation}
-import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
+import org.mulesoft.common.io.FileSystem
 import org.scalajs.dom.ext.Ajax
 
-import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 
 /**

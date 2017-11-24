@@ -5,6 +5,7 @@ import amf.core.Root
 import amf.framework.model.document._
 import amf.framework.parser.ParserContext
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.framework.remote.Platform
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation._
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -12,7 +13,6 @@ import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.spec.{DialectEmitter, DialectParser}
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.remote.Platform
 import amf.validation.model.{AMFDialectValidations, ValidationProfile}
 import org.yaml.model.{YComment, YDocument}
 

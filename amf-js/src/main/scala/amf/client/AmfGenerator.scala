@@ -1,8 +1,8 @@
 package amf.client
 
+import amf.framework.remote.Amf
 import amf.model.BaseUnit
-import amf.remote.Amf
-import amf.remote.Syntax.Json
+import amf.framework.remote.Syntax.Json
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -10,7 +10,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 /**
-  * [[amf.remote.Amf]] generator.
+  * [[Amf]] generator.
   */
 @JSExportTopLevel("AmfGenerator")
 class AmfGenerator extends BaseGenerator(Amf, Json) {

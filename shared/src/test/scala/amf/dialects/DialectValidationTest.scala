@@ -4,9 +4,10 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.remote.Syntax.Json
+import amf.framework.remote.Syntax.Json
 import amf.remote._
 import amf.core.unsafe.PlatformSecrets
+import amf.framework.remote.RamlYamlHint
 import amf.validation.Validation
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._

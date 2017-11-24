@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture
 
 import amf.dialects.JVMDialectRegistry
 import amf.core.lexer.{CharArraySequence, CharSequenceStream, FileStream}
+import amf.framework.remote.{Content, Platform}
 import amf.remote.FutureConverter.converters
 import amf.validation.{SHACLValidator, Validation}
 import org.mulesoft.common.io.{FileSystem, JvmFileSystem}

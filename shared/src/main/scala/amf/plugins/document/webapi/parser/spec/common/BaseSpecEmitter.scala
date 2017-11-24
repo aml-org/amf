@@ -5,10 +5,10 @@ import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.{AmfScalar, DomainElement, LexicalInformation, Linkable}
 import amf.framework.parser.Position._
 import amf.framework.parser.{Annotations, FieldEntry, Position, Value}
+import amf.framework.remote.Vendor
 import amf.plugins.document.webapi.annotations.SingleValueArray
 import amf.plugins.document.webapi.parser.spec.declaration.TagToReferenceEmitter
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.remote.Vendor
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 

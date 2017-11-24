@@ -1,6 +1,7 @@
 package amf.remote
 
 import amf.core.unsafe.PlatformSecrets
+import amf.framework.remote.Context
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

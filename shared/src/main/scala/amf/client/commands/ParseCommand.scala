@@ -2,7 +2,7 @@ package amf.client.commands
 
 import amf.ProfileNames
 import amf.client.{ExitCodes, ParserConfig}
-import amf.remote.Platform
+import amf.framework.remote.Platform
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}

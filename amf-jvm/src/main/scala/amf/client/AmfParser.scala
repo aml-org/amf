@@ -1,9 +1,9 @@
 package amf.client
 
-import amf.remote.Amf
-import amf.remote.Syntax.Json
+import amf.framework.remote.Amf
+import amf.framework.remote.Syntax.Json
 
 /**
-  * [[amf.remote.Amf]] parser.
+  * [[Amf]] parser.
   */
 class AmfParser extends BaseParser(Amf, Json)

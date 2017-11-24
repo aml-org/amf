@@ -11,9 +11,10 @@ import amf.framework.validation.SeverityLevels
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation}
 import amf.plugins.domain.shapes.models.Shape
-import amf.remote.Syntax.{Json, Yaml}
+import amf.framework.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
+import amf.framework.remote._
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender

@@ -2,15 +2,14 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.framework.model.domain.{AmfArray, AmfScalar}
 import amf.framework.parser.{Annotations, _}
-import amf.plugins.document.webapi.parser.spec._
+import amf.framework.remote.{Oas, Raml}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.SearchScope
+import amf.plugins.document.webapi.parser.spec.{SearchScope, _}
+import amf.plugins.document.webapi.parser.spec.common._
+import amf.plugins.document.webapi.parser.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
-import amf.remote.{Oas, Raml}
-import amf.plugins.document.webapi.parser.spec.common._
-import amf.plugins.document.webapi.parser.spec.domain.{RamlParametersParser, RamlResponseParser, RamlSecuritySettingsParser}
 import org.yaml.model._
 
 import scala.collection.mutable

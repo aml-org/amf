@@ -1,27 +1,25 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
+import amf.core.unsafe.PlatformSecrets
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document._
 import amf.framework.model.domain._
 import amf.framework.parser.Position.ZERO
 import amf.framework.parser.{FieldEntry, Fields, Position}
+import amf.framework.remote.{Oas, Raml, Vendor}
 import amf.framework.utils.TSort.tsort
 import amf.plugins.document.webapi.annotations.{Aliases, ExplicitField, SourceVendor, SynthesizedField}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ValueEmitter
-import amf.plugins.domain.shapes.models.Shape
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
+import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ValueEmitter, _}
 import amf.plugins.document.webapi.parser.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
-import amf.remote.{Oas, Raml, Vendor}
-import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.core.unsafe.PlatformSecrets
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

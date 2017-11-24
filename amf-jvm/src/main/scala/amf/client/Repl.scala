@@ -3,6 +3,7 @@ package amf.client
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
+import amf.framework.remote._
 import amf.model.{BaseUnit, Document}
 import amf.remote._
 

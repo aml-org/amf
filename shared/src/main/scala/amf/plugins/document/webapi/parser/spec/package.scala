@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser
 
 import amf.framework.parser.ParserContext
+import amf.framework.remote.{Oas, Raml}
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.oas.OasSyntax
 import amf.plugins.document.webapi.parser.spec.raml.RamlSyntax
-import amf.remote.{Oas, Raml}
 
 /**
   * Oas package object

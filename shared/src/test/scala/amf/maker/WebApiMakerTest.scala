@@ -2,13 +2,13 @@ package amf.maker
 
 import amf.common.{AmfObjectTestMatcher, ListAssertions}
 import amf.compiler.AMFCompiler
+import amf.core.unsafe.PlatformSecrets
 import amf.framework.metamodel.Field
 import amf.framework.model.document.Document
 import amf.framework.model.domain.AmfObject
+import amf.framework.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
 import amf.plugins.domain.shapes.models.{ScalarShape, XMLSerializer}
 import amf.plugins.domain.webapi.models._
-import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

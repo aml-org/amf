@@ -2,10 +2,11 @@ package amf.client
 
 import amf.ProfileNames
 import amf.framework.validation.AMFValidationReport
-import amf.remote.Syntax.Syntax
+import amf.framework.remote.Syntax.Syntax
 import amf.remote._
 import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
 import amf.framework.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
+import amf.framework.remote.{Platform, StringContentPlatform, Vendor}
 import amf.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global

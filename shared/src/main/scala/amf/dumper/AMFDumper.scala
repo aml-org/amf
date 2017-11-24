@@ -3,7 +3,8 @@ package amf.dumper
 import amf.client.GenerationOptions
 import amf.core.AMFSerializer
 import amf.framework.model.document.BaseUnit
-import amf.remote.Syntax.Syntax
+import amf.framework.remote._
+import amf.framework.remote.Syntax.Syntax
 import amf.remote._
 
 import scala.concurrent.Future

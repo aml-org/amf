@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.remote.{Amf, OasJsonHint, RamlYamlHint}
+import amf.framework.remote.{Amf, OasJsonHint, RamlYamlHint}
 
 /**
   *

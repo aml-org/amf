@@ -4,9 +4,10 @@ import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
 import amf.framework.validation.AMFValidationReport
-import amf.remote.Syntax.{Json, Syntax, Yaml}
+import amf.framework.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.core.unsafe.PlatformSecrets
+import amf.framework.remote._
 import amf.validation.Validation
 
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -4,11 +4,11 @@ import amf.ProfileNames
 import amf.core.AMF
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.LexicalInformation
+import amf.framework.remote.Platform
 import amf.framework.validation.core.{ValidationDialectText, ValidationResult}
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, SeverityLevels}
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
-import amf.remote.Platform
 import amf.validation.emitters.ValidationJSONLDEmitter
 import amf.validation.model._
 import amf.vocabulary.Namespace

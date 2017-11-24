@@ -1,10 +1,9 @@
 package amf.framework.parser
 
 import amf.framework.model.document.BaseUnit
+import amf.framework.remote.{Cache, Context, Platform}
 import amf.framework.services.RuntimeCompiler
 import amf.plugins.document.vocabularies.core.DialectRegistry
-import amf.remote.{Cache, Context, Platform}
-import amf.spec.ParserContext
 import amf.validation.Validation
 import org.yaml.model.YAggregate
 

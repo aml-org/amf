@@ -1,9 +1,9 @@
-package amf.remote
+package amf.framework.remote
 
 import amf.core.lexer.CharSequenceStream
-import amf.validation.Validation
 import amf.framework.validation.core.SHACLValidator
 import amf.plugins.document.vocabularies.core.PlatformDialectRegistry
+import amf.validation.Validation
 import amf.vocabulary.Namespace
 import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 
@@ -40,7 +40,7 @@ trait Platform {
   def removeCacheResourceText(url: String): Option[Content] = resourceCache.remove(url)
   def resetResourceCache(): Unit                            = resourceCache.clear()
 
-  def checkCache(url: String, eventualContent: () => Future[Content]): Future[_root_.amf.remote.Content] = {
+  def checkCache(url: String, eventualContent: () => Future[Content]): Future[Content] = {
     resourceCache.get(url) match {
       case Some(content) =>
         val p: Promise[Content] = Promise()
@@ -106,7 +106,7 @@ object Platform {
   def base(url: String): Option[String] = Some(url.substring(0, url.lastIndexOf('/')))
 }
 
-protected object Http {
+object Http {
   def unapply(uri: String): Option[(String, String, String)] = uri match {
     case url if url.startsWith("http://") || url.startsWith("https://") =>
       val protocol        = url.substring(0, url.indexOf("://") + 3)
@@ -118,7 +118,7 @@ protected object Http {
   }
 }
 
-protected object File {
+object File {
   val FILE_PROTOCOL = "file://"
 
   def unapply(url: String): Option[String] = url match {
@@ -129,7 +129,7 @@ protected object File {
   }
 }
 
-private object Relative {
+object Relative {
   def unapply(url: String): Option[String] = {
     url match {
       case s if !s.contains(":") => Some(s)

@@ -4,7 +4,7 @@ import amf.client.GenerationOptions
 import amf.common.ListAssertions
 import amf.framework.model.document.Document
 import amf.framework.parser._
-import amf.remote.{Oas, Raml, Vendor}
+import amf.framework.remote.{Oas, Raml, Vendor}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap

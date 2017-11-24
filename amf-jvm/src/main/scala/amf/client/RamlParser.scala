@@ -1,9 +1,9 @@
 package amf.client
 
-import amf.remote.Raml
-import amf.remote.Syntax.Yaml
+import amf.framework.remote.Raml
+import amf.framework.remote.Syntax.Yaml
 
 /**
-  * [[amf.remote.Raml]] parser.
+  * [[Raml]] parser.
   */
 class RamlParser extends BaseParser(Raml, Yaml)

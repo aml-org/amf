@@ -2,11 +2,11 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
-import amf.plugins.domain.shapes.models.PropertyShape
+import amf.framework.remote.{Oas, Raml}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.remote.{Oas, Raml}
+import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
+import amf.plugins.domain.shapes.models.PropertyShape
 import org.yaml.model.YDocument.EntryBuilder
 
 
