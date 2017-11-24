@@ -1,18 +1,18 @@
-package amf.spec.dialects
+package amf.plugins.document.vocabularies.spec
 
 import amf.dialects.Vocabulary
 import amf.document.{BaseUnit, Module}
 import amf.domain.Annotation.Aliases
 import amf.framework.document.{BaseUnit, Module}
 import amf.domain.Annotation.Aliases
-import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.domain.LinkableElementModel
 import amf.framework.model.document.{BaseUnit, Module}
 import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.framework.parser.Position.ZERO
 import amf.framework.parser.{FieldEntry, Position}
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
 import amf.spec.common.BaseEmitters._
-import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.spec.raml.RamlSpecEmitter
 import amf.spec.{Emitter, EntryEmitter}
 import org.yaml.model.YDocument

@@ -1,4 +1,4 @@
-package amf.plugins.document.graph.parser
+package amf.framework.model.document
 
 import amf.framework.model.domain.AmfElement
 import amf.framework.parser.Value
@@ -8,7 +8,7 @@ import scala.collection.mutable
 /**
   * Source maps for graph: Map(annotation -> Map(element -> value))
   */
-protected class SourceMap(val annotations: mutable.ListMap[String, mutable.ListMap[String, String]]) {
+class SourceMap(val annotations: mutable.ListMap[String, mutable.ListMap[String, String]]) {
 
   def annotation(annotation: String): (String, String) => Unit = {
     val map = annotations.get(annotation) match {
@@ -36,7 +36,7 @@ protected class SourceMap(val annotations: mutable.ListMap[String, mutable.ListM
   def nonEmpty: Boolean = annotations.nonEmpty
 }
 
-private object SourceMap {
+object SourceMap {
   def apply(): SourceMap = new SourceMap(mutable.ListMap())
 
   def apply(id: String, element: AmfElement): SourceMap = {

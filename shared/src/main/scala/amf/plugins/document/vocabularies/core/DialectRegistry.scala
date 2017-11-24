@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.core
 
+import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, FragmentKind, ModuleKind}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.remote.Platform
-import amf.spec.dialects.{Dialect, DialectNode, FragmentKind, ModuleKind}
 
 import scala.concurrent.Future
 
@@ -36,10 +36,10 @@ class DialectRegistry {
                                                dialect.resolver,
                                                kind = FragmentKind))
     }
-    if (!dialect.root.mappings().find(x=>x.name=="external").isDefined){
+    if (!dialect.root.mappings().exists(x => x.name == "external")){
        dialect.root.add(Vocabulary.externals.copy())
     }
-    if (!dialect.root.mappings().find(x=>x.name=="uses").isDefined){
+    if (!dialect.root.mappings().exists(x => x.name == "uses")){
       dialect.root.add(Vocabulary.externals.copy())
     }
     this
@@ -70,11 +70,3 @@ abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {
   def registerDialect(uri: String): Future[Dialect]
   def registerDialect(uri: String, dialect: String): Future[Dialect]
 }
-
-/*
-object DialectRegistry {
-  val default: DialectRegistry = new DialectRegistry()
-    .add(VocabularyLanguageDefinition)
-    .add(DialectLanguageDefinition)
-}
-*/

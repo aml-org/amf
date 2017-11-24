@@ -1,10 +1,10 @@
-package amf.metadata.domain.dialects
+package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.vocabulary.ValueType
 
 /**

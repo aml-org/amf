@@ -1,18 +1,16 @@
 package amf.spec.oas
 
-import amf.domain._
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document._
 import amf.framework.model.domain._
-import amf.framework.parser.{FieldEntry, Fields, Position}
 import amf.framework.parser.Position.ZERO
-import amf.metadata.domain._
+import amf.framework.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
-import amf.plugins.domain.shapes.models.{ScalarShape, Shape}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.shapes.models.{ScalarShape, Shape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import amf.remote.{Oas, Vendor}

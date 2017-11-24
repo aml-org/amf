@@ -1,6 +1,5 @@
 package amf.spec.declaration
 
-import amf.domain._
 import amf.framework.metamodel.Field
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.{AmfScalar, Linkable}

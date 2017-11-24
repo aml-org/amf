@@ -2,9 +2,10 @@ package amf.plugins.document.graph.parser
 
 import amf.client.GenerationOptions
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.framework.metamodel.document.SourceMapModel
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.{Field, Obj, Type}
-import amf.framework.model.document.BaseUnit
+import amf.framework.model.document.{BaseUnit, SourceMap}
 import amf.framework.model.domain._
 import amf.framework.parser.{FieldEntry, Value}
 import amf.metadata._

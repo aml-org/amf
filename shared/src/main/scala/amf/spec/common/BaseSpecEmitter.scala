@@ -1,10 +1,9 @@
 package amf.spec.common
 
-import amf.domain._
-import amf.framework.parser.Position._
 import amf.framework.metamodel.{Field, Type}
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.{AmfScalar, DomainElement, LexicalInformation, Linkable}
+import amf.framework.parser.Position._
 import amf.framework.parser.{Annotations, FieldEntry, Position, Value}
 import amf.plugins.document.webapi.annotations.SingleValueArray
 import amf.remote.Vendor
@@ -31,16 +30,16 @@ trait BaseSpecEmitter {
 
 package object BaseEmitters {
 
-  protected[spec] def pos(annotations: Annotations): Position =
+  protected[amf] def pos(annotations: Annotations): Position =
     annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
-  protected[spec] def traverse(emitters: Seq[EntryEmitter], b: EntryBuilder): Unit = {
+  protected[amf] def traverse(emitters: Seq[EntryEmitter], b: EntryBuilder): Unit = {
     emitters.foreach(e => {
       e.emit(b)
     })
   }
 
-  protected[spec] def traverse(emitters: Seq[PartEmitter], b: PartBuilder): Unit = {
+  protected[amf] def traverse(emitters: Seq[PartEmitter], b: PartBuilder): Unit = {
     emitters.foreach(e => {
       e.emit(b)
     })
@@ -102,9 +101,9 @@ package object BaseEmitters {
     )
   }
 
-  protected[spec] def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
+  protected[amf] def sourceOr(value: Value, inner: => Unit): Unit = sourceOr(value.annotations, inner)
 
-  protected[spec] def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
+  protected[amf] def sourceOr(annotations: Annotations, inner: => Unit): Unit = {
     //    annotations
     //      .find(classOf[SourceAST])
     //      .fold(inner)(a => emitter.addChild(a.ast))

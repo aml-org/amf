@@ -1,6 +1,6 @@
 package amf.validation.model
 
-import amf.domain.dialects.DomainEntity
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
 

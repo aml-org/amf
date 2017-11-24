@@ -1,26 +1,21 @@
 package amf.plugins.document.graph.parser
 
-import amf.domain._
-import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.framework.metamodel.document.BaseUnitModel.Location
 import amf.framework.metamodel.document._
-import amf.framework.metamodel.domain.templates.VariableValueModel
 import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain._
-import amf.framework.model.domain.templates.VariableValue
 import amf.framework.parser.{Annotations, _}
 import amf.framework.registries.AMFDomainRegistry
-import amf.metadata.domain._
-import amf.plugins.domain.shapes.metamodel.{ShapeExtensionModel, _}
-import amf.plugins.domain.webapi.metamodel.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies.spec.DialectNode
+import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.remote.Platform
 import amf.spec.ParserContext
-import amf.spec.dialects.DialectNode
 import amf.unsafe.TrunkPlatform
 import amf.validation.Validation
 import org.yaml.convert.YRead.SeqNodeYRead

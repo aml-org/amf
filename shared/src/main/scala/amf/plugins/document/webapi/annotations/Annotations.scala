@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.annotations
 
-import amf.domain.dialects.DomainEntity
 import amf.framework.model.domain.{AmfElement, Annotation, SerializableAnnotation, _}
 import amf.framework.parser.Range
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.remote._
 import org.yaml.model.YPart

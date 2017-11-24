@@ -4,11 +4,12 @@ import amf.core.Root
 import amf.dialects.RAML_1_0_DialectTopLevel
 import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject}
 import amf.framework.model.document.{BaseUnit, Document, Module}
-import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type
 import amf.framework.model.domain.AmfScalar
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies.spec
+import amf.plugins.document.vocabularies.spec._
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.spec.dialects._
 import amf.vocabulary.Namespace
 
 import scala.collection.mutable
@@ -137,7 +138,7 @@ class DialectLoader(val document: BaseUnit) {
           val moduleInfo = processModuleInfo(dialectObject, dialectMap)
           processDeclarationsInfo(dialectNode, dialectObject, dialectMap)
 
-          Dialect(dialectName,
+          spec.Dialect(dialectName,
                   dialectVersion,
                   dialectNode,
                   resolver = (root, refs, ctx) => BasicResolver(root, List(), refs)(ctx),
