@@ -1,7 +1,7 @@
 package amf.dumper
 
-import amf.client.GenerationOptions
 import amf.core.AMFSerializer
+import amf.core.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote._
 import amf.framework.remote.Syntax.Syntax

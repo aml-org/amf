@@ -3,6 +3,7 @@ package amf.client
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
+import amf.core.client.GenerationOptions
 import amf.framework.remote.Amf
 import amf.model.BaseUnit
 import amf.remote.FutureConverter.converters

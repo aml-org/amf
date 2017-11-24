@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.GenerationOptions
 import amf.core.Root
+import amf.core.client.GenerationOptions
 import amf.framework.model.document._
 import amf.framework.parser.ParserContext
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}

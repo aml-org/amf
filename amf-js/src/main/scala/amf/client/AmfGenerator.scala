@@ -1,5 +1,6 @@
 package amf.client
 
+import amf.core.client.GenerationOptions
 import amf.framework.remote.Amf
 import amf.model.BaseUnit
 import amf.framework.remote.Syntax.Json

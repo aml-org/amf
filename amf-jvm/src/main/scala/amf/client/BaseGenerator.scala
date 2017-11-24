@@ -3,10 +3,11 @@ package amf.client
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
-import amf.model.BaseUnit
-import amf.remote.FutureConverter.converters
+import amf.core.client.{GenerationOptions, Handler, PlatformGenerator}
 import amf.framework.remote.Syntax.Syntax
 import amf.framework.remote.Vendor
+import amf.model.BaseUnit
+import amf.remote.FutureConverter.converters
 
 import scala.language.implicitConversions
 
