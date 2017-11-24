@@ -28,6 +28,8 @@ trait RuntimeValidator {
     */
   def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport]
 
+  def reset()
+
   /**
     * Client code can use this function to register a new validation failure
     */
@@ -37,6 +39,16 @@ trait RuntimeValidator {
                               targetProperty: Option[String] = None,
                               message: String = "",
                               position: Option[LexicalInformation] = None)
+
+  /**
+    * Temporary disable checking of runtime validations for the duration of the passed block
+    */
+  def disableValidations[T]()(f: () => T): T
+
+  /**
+    * Async version of disable valdiations
+    */
+  def disableValidationsAsync[T]()(f: (() => Unit) => T): T
 }
 
 object RuntimeValidator {
@@ -64,6 +76,22 @@ object RuntimeValidator {
       case Some(runtimeValidator) => runtimeValidator.validate(model, profileName, messageStyle)
       case None                   => throw new Exception("No registered runtime validator")
     }
+  }
+
+  def reset() = {
+    validator match {
+      case Some(runtimeValidator) => runtimeValidator.reset()
+      case None                   => throw new Exception("No registered runtime validator")
+    }
+  }
+
+  def disableValidations[T]()(f: () => T): T = validator match {
+    case Some(runtimeValidator) => runtimeValidator.disableValidations()(f)
+    case None                   => throw new Exception("No registered runtime validator")
+  }
+  def disableValidationsAsync[T]()(f: (() => Unit) => T): T = validator match {
+    case Some(runtimeValidator) => runtimeValidator.disableValidationsAsync()(f)
+    case None                   => throw new Exception("No registered runtime validator")
   }
 
   def reportConstraintFailure(level: String,

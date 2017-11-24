@@ -3,18 +3,18 @@ package amf.framework.parser
 import amf.compiler.ParsedReference
 import amf.framework.model.domain.LexicalInformation
 import amf.framework.remote.{Unknown, Vendor}
+import amf.framework.services.RuntimeValidator
+import amf.framework.validation.ParserSideValidations.ParsingErrorSpecification
 import amf.framework.validation.SeverityLevels.VIOLATION
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.parser.spec.{Declarations, SpecSyntax}
-import amf.validation.Validation
-import amf.framework.validation.ParserSideValidations.ParsingErrorSpecification
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
 /**
   * Parser context
   */
-class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
+class ErrorHandler extends IllegalTypeHandler {
 
   override def handle[T](error: YError, defaultValue: T): T = {
     violation("", error.error, part(error))
@@ -27,7 +27,7 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
                 property: Option[String],
                 message: String,
                 lexical: Option[LexicalInformation]): Unit = {
-    validation.reportConstraintFailure(VIOLATION, id, node, property, message, lexical)
+    RuntimeValidator.reportConstraintFailure(VIOLATION, id, node, property, message, lexical)
   }
 
   def violation(message: String, ast: Option[YPart]): Unit = {
@@ -66,8 +66,8 @@ class ErrorHandler(validation: Validation) extends IllegalTypeHandler {
   }
 }
 
-case class ParserContext(validation: Validation, rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, private val internalDec: Option[Declarations] = None)
-    extends ErrorHandler(validation) {
+case class ParserContext(rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, private val internalDec: Option[Declarations] = None)
+    extends ErrorHandler {
 
   val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))
 

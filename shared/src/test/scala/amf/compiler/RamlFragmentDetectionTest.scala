@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.remote.RamlYamlHint
 import amf.validation.Validation
 import org.scalatest.Matchers._

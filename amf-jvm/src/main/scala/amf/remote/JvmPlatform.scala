@@ -1,12 +1,12 @@
 package amf.remote
 
-import java.io.FileWriter
 import java.net.{HttpURLConnection, URI}
 import java.util.concurrent.CompletableFuture
 
 import amf.dialects.JVMDialectRegistry
-import amf.core.lexer.{CharArraySequence, CharSequenceStream, FileStream}
+import amf.framework.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 import amf.framework.remote.{Content, Platform}
+import amf.framework.unsafe.PlatformBuilder
 import amf.remote.FutureConverter.converters
 import amf.validation.{SHACLValidator, Validation}
 import org.mulesoft.common.io.{FileSystem, JvmFileSystem}
@@ -30,7 +30,7 @@ class JvmPlatform extends Platform {
       connection.getResponseCode match {
         case 200 =>
           createContent(connection, url)
-        case s => throw new Exception(s"Unhandled status code $s")
+        case s => throw new Exception(s"Unhandled status code $s => $url")
       }
     }
   }
@@ -81,8 +81,4 @@ object JvmPlatform {
       singleton = Some(PlatformBuilder())
       singleton.get
   }
-}
-
-object PlatformBuilder {
-  def apply(): JvmPlatform = new JvmPlatform()
 }

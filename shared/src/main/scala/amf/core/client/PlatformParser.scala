@@ -1,13 +1,12 @@
 package amf.core.client
 
 import amf.ProfileNames
-import amf.compiler.AMFCompiler
-import amf.core.unsafe.PlatformSecrets
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.Syntax.{Json, Syntax, Yaml}
 import amf.framework.remote._
+import amf.framework.services.{RuntimeCompiler, RuntimeValidator}
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.validation.AMFValidationReport
-import amf.validation.Validation
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -17,13 +16,11 @@ abstract class PlatformParser extends PlatformSecrets {
 
   protected val vendor: Vendor
   protected val syntax: Syntax
-  var currentValidation: Option[Validation] = None
   var parsedModel: Option[BaseUnit] = None
 
   protected def parseAsync(url: String, overridePlatForm: Option[Platform] = None, parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
-    val effectivePlatform = overridePlatForm.getOrElse(platform)
-    currentValidation = Some(new Validation(effectivePlatform))
-    AMFCompiler(url, effectivePlatform, hint(), currentValidation.get, None, None).build() map { model =>
+    RuntimeValidator.reset()
+    RuntimeCompiler(url, overridePlatForm.getOrElse(platform), effectiveMediaType(), effectiveVendor()) map { model =>
       parsedModel = Some(model)
       model
     }
@@ -37,10 +34,9 @@ abstract class PlatformParser extends PlatformSecrets {
     */
   protected def reportValidationImplementation(profileName: String, messageStyle:String = ProfileNames.RAML): Future[AMFValidationReport] = {
     val maybeValidationReport = for {
-      model      <- parsedModel
-      validation <- currentValidation
+      model <- parsedModel
     } yield {
-      validation.validate(model, profileName, messageStyle)
+      RuntimeValidator(model, profileName, messageStyle)
     }
 
     maybeValidationReport match {
@@ -59,23 +55,15 @@ abstract class PlatformParser extends PlatformSecrets {
     * @return the AMF validation report
     */
   protected def reportCustomValidationImplementation(profileName: String, customProfilePath: String): Future[AMFValidationReport] = {
-    val maybeValidationReport = for {
-      model      <- parsedModel
-      validation <- currentValidation
-    } yield {
-      validation.loadValidationDialect() flatMap   { _ =>
-        validation.loadValidationProfile(customProfilePath)
-      } flatMap { res =>
-        validation.validate(model,profileName)
-      }
-    }
-
-    maybeValidationReport match {
-      case Some(validation) => validation
-      case None =>
-        val promise = Promise[AMFValidationReport]()
-        promise.failure(new Exception("No parsed model or current validation found, cannot validate"))
-        promise.future
+    parsedModel match {
+      case Some(model) =>
+        for {
+          _      <- RuntimeValidator.loadValidationProfile(customProfilePath)
+          report <- RuntimeValidator(model, profileName)
+        } yield {
+          report
+        }
+      case _ => throw new Exception("Cannot validate without parsed model")
     }
   }
 
@@ -83,13 +71,16 @@ abstract class PlatformParser extends PlatformSecrets {
     parseAsync(url, overridePlatForm)
       .onComplete(callback(handler, url))
 
-  private def hint(): Hint = {
-    (vendor, syntax) match {
-      case (Raml, Yaml) => RamlYamlHint
-      case (Oas, Json)  => OasJsonHint
-      case (Amf, Json)  => AmfJsonHint
-      case _            => throw new RuntimeException(s"Unable conbination of vendor '$vendor' and syntax '$syntax'")
-    }
+  private def effectiveVendor(): String = vendor match {
+    case Raml => "RAML 1.0"
+    case Oas  => "OAS 2.0"
+    case Amf  => "AMF Graph"
+    case _    =>  vendor.name
+  }
+  private def effectiveMediaType(): String = syntax match {
+    case Yaml  => "application/yaml"
+    case Json  => "application/json"
+    case _     => s"application/${syntax.extension}"
   }
 
   private def callback(handler: Handler[BaseUnit], url: String)(t: Try[BaseUnit]) = t match {

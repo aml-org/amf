@@ -19,6 +19,7 @@ class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with Va
 
   // The aggregated report
   def reset(): Unit = {
+    enabled = true
     aggregatedReport = List()
   }
 
@@ -40,6 +41,22 @@ class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with Va
       }
     } else {
       f()
+    }
+  }
+
+
+  def disableValidationsAsync[T]()(f: (() => Unit) => T): T = {
+    if (enabled) {
+      enabled = false
+      try {
+        f(() => enabled = true)
+      } catch {
+        case e: Exception =>
+          enabled = true
+          throw e
+      }
+    } else {
+      f(() => {})
     }
   }
 

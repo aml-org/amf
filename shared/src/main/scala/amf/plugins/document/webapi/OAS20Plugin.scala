@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
+import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
@@ -115,4 +116,9 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     "application/openapi",
     "application/swagger"
   )
+
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit) = new OasResolutionPipeline().resolve(unit)
 }

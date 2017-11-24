@@ -18,6 +18,7 @@ import amf.plugins.features.validation.model.ValidationProfile
 import org.yaml.model.{YComment, YDocument}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 trait RamlHeaderExtractor {
   def comment(root: Root): Option[YComment] = root.parsed.comment
@@ -48,7 +49,7 @@ object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin w
   override def serializableAnnotations() = Map.empty
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
-    implicit val ctx: ParserContext = ParserContext(parentContext.validation, parentContext.refs)
+    implicit val ctx: ParserContext = ParserContext(parentContext.refs)
     comment(root) match {
       case Some(comment: YComment) =>
         val header = comment.metaText
@@ -102,7 +103,7 @@ object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin w
   /**
     * Request for validation of a particular model, profile and list of effective validations form that profile
     */
-  override def validationRequest(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, platform: Platform) = {
+  override def validationRequest(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, platform: Platform): Future[AMFValidationReport] = {
     var aggregatedReport: List[AMFValidationResult] = List()
 
     for {
@@ -129,4 +130,8 @@ object RAMLExtensionsPlugin extends AMFDocumentPlugin with AMFValidationPlugin w
 
   override def dependencies() = Seq(AMFGraphPlugin)
 
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit) = unit // we don't support resolutino in vocabularies yet
 }

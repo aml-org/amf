@@ -69,4 +69,5 @@ abstract class PlatformDialectRegistry(p: Platform) extends DialectRegistry {
 
   def registerDialect(uri: String): Future[Dialect]
   def registerDialect(uri: String, dialect: String): Future[Dialect]
+
 }

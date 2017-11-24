@@ -5,6 +5,7 @@ import amf.core.AMF
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.LexicalInformation
 import amf.framework.remote.Platform
+import amf.framework.services.RuntimeValidator
 import amf.framework.validation.core.ValidationDialectText
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.vocabularies.spec.Dialect
@@ -12,17 +13,22 @@ import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.model._
 
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.Future
 
 
 class Validation(platform: Platform) {
 
   // Temporary
-  AMF.init()
-  AMFValidatorPlugin.init(platform)
+  RuntimeValidator.validator match {
+    case None =>
+      AMF.init()
+      AMFValidatorPlugin.init(platform)
+    case Some(runtimeValidator) =>
+      runtimeValidator.asInstanceOf[AMFValidatorPlugin].enabled = true
+      runtimeValidator.reset()
+  }
+  val validator = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin]
   //
-
-  val validator = new AMFValidatorPlugin(platform)
 
   val url = "http://raml.org/dialects/profile.raml"
 
@@ -30,10 +36,13 @@ class Validation(platform: Platform) {
     * Loads the validation dialect from the provided URL
     */
   def loadValidationDialect(): Future[Dialect] = {
+    platform.dialectsRegistry.registerDialect(url, ValidationDialectText.text)
+    /*
     platform.dialectsRegistry.get("%Validation Profile 1.0") match {
       case Some(dialect) => Promise().success(dialect).future
       case None          => platform.dialectsRegistry.registerDialect(url, ValidationDialectText.text)
     }
+    */
   }
 
   var profile: Option[ValidationProfile] = None

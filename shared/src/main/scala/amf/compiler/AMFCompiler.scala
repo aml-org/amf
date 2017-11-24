@@ -20,7 +20,7 @@ class AMFCompiler private (val url: String,
                            private val cache: Cache,
                            private val baseContext: Option[ParserContext] = None) extends RamlHeaderExtractor {
 
-  implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
+  implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(url, Seq.empty))
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(framework.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
@@ -55,7 +55,6 @@ class AMFCompiler private (val url: String,
       mediaType,
       actualVendor,
       hint.kind,
-      currentValidation,
       cache,
       baseContext
     ).build()
@@ -99,7 +98,6 @@ class AMFCompiler private (val url: String,
       mediaType,
       actualVendor,
       hint.kind,
-      currentValidation,
       cache,
       Some(ctx)
     ).root() map { case root => root.oldFormat() }

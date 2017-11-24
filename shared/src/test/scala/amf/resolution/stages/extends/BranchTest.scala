@@ -1,7 +1,7 @@
 package amf.resolution.stages.`extends`
 
 import amf.framework.model.domain.templates.Variable
-import amf.resolution.stages._
+import amf.plugins.document.webapi.resolution.stages.{Branch, BranchContainer, Key}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

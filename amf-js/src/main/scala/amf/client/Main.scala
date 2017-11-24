@@ -2,7 +2,7 @@ package amf.client
 
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 
 import scala.concurrent.Future
 import scalajs.js

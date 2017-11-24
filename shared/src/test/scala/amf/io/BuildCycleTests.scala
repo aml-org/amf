@@ -3,7 +3,7 @@ package amf.io
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.core.client.GenerationOptions
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.dumper.AMFDumper
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.{Hint, Vendor}

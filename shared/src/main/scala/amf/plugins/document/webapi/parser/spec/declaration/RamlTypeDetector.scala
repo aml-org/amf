@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefString
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.validation.ParserSideValidations
 import org.yaml.model._
 

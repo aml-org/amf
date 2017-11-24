@@ -18,6 +18,11 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   def serializableAnnotations(): Map[String, AnnotationGraphLoader]
 
   /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  def resolve(unit: BaseUnit): BaseUnit
+
+  /**
     * List of media types used to encode serialisations of
     * this domain
     */

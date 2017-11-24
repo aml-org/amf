@@ -1,5 +1,6 @@
 package amf.resolution.stages
 
+import amf.plugins.domain.webapi.resolution.stages.VariableReplacer
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

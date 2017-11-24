@@ -15,7 +15,6 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.validation.Validation
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -29,14 +28,13 @@ class AMFCompiler(val url: String,
                   val mediaType: String,
                   val vendor: String,
                   val referenceKind: ReferenceKind,
-                  val currentValidation: Validation,
                   private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None) {
 
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(framework.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
-  private val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
+  private val ctx: ParserContext = baseContext.getOrElse(ParserContext(url, Seq.empty))
 
   // temporary
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
@@ -97,7 +95,7 @@ class AMFCompiler(val url: String,
         parseReferences(document, domainPlugin) map { documentWithReferences =>
           domainPlugin.parse(documentWithReferences, ctx, remote) match {
             case Some(baseUnit) => baseUnit
-            case None           => throw new Exception(s"Cannot parse domain model for media type ${document.mediatype} with plugin ${domainPlugin.ID} ${domainPlugin}")
+            case None           => throw new Exception(s"Cannot parse domain model for media type ${document.mediatype} with plugin ${domainPlugin.ID} $domainPlugin")
           }
         }
       case None => throw new Exception(s"Cannot parse domain model for media type ${document.mediatype}")
@@ -106,13 +104,13 @@ class AMFCompiler(val url: String,
 
   private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
     val referenceCollector = domainPlugin.referenceCollector()
-    val refs = referenceCollector.traverse(root.parsed, currentValidation, ctx)
+    val refs = referenceCollector.traverse(root.parsed, ctx)
 
     refs
       .filter(_.isRemote)
       .foreach(link => {
         references += link
-          .resolve(remote, Some(context), root.mediatype, domainPlugin.ID, ctx.validation, cache, remote.dialectsRegistry, ctx)
+          .resolve(remote, Some(context), root.mediatype, domainPlugin.ID, cache, remote.dialectsRegistry, ctx)
           .map(r => ParsedReference(r, link.url, link.kind))
       })
 
@@ -135,8 +133,8 @@ object AMFCompiler {
     // We register ourselves as the Runtime compiler
     if (RuntimeCompiler.compiler.isEmpty) {
       RuntimeCompiler.register(new RuntimeCompiler {
-        override def build(url: String, remote: Platform, base: Option[Context], mediaType: String, vendor: String, currentValidation: Validation, referenceKind: ReferenceKind, cache: Cache, ctx: Option[ParserContext]): Future[BaseUnit] = {
-          new AMFCompiler(url, remote, base, mediaType, vendor, referenceKind, currentValidation, cache, ctx).build()
+        override def build(url: String, remote: Platform, base: Option[Context], mediaType: String, vendor: String, referenceKind: ReferenceKind, cache: Cache, ctx: Option[ParserContext]): Future[BaseUnit] = {
+          new AMFCompiler(url, remote, base, mediaType, vendor, referenceKind, cache, ctx).build()
         }
       })
     }

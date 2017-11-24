@@ -7,7 +7,11 @@ import amf.plugins.domain.shapes.models.Shape
 import amf.framework.validation.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
+<<<<<<< HEAD
 class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.validation, wrapped.rootContextDocument, wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
+=======
+class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
+>>>>>>> APIMF-161 splitting resolution among plugins
 
   override def ignore(shape: String, property: String) = spec.ignore(shape, property)
 

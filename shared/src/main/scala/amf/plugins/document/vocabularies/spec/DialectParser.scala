@@ -5,6 +5,7 @@ import amf.framework.metamodel.Type
 import amf.framework.model.document.{BaseUnit, Document, Module}
 import amf.framework.model.domain.{AmfArray, AmfScalar, LexicalInformation}
 import amf.framework.parser.{Annotations, Fields, _}
+import amf.framework.services.RuntimeValidator
 import amf.framework.validation.ParserSideValidations
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
@@ -460,7 +461,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: ParserCo
 
       var nodeId: Option[String] = None
 
-      val types: immutable.Seq[(Type, Seq[ValidationIssue])] = ctx.validation.disableValidations() { () =>
+      val types: immutable.Seq[(Type, Seq[ValidationIssue])] = RuntimeValidator.disableValidations() { () =>
         mapping.unionTypes.get.map {
           case node: DialectNode =>
             val dialectNode  = node

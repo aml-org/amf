@@ -2,7 +2,7 @@ package amf.maker
 
 import amf.common.{AmfObjectTestMatcher, ListAssertions}
 import amf.compiler.AMFCompiler
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.metamodel.Field
 import amf.framework.model.document.Document
 import amf.framework.model.domain.AmfObject

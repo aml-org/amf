@@ -1,6 +1,6 @@
 package amf.remote.server
 
-import amf.core.lexer.CharSequenceStream
+import amf.framework.lexer.CharSequenceStream
 import amf.dialects.JSDialectRegistry
 import amf.framework.remote.File.FILE_PROTOCOL
 import amf.framework.remote.{Content, File, Http, Platform}

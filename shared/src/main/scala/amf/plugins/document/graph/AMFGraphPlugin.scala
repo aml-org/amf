@@ -10,6 +10,7 @@ import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import amf.plugins.document.graph.references.AMFGraphReferenceCollector
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.framework.vocabulary.Namespace
+import amf.plugins.document.graph.resolution.pipelines.AmfResolutionPipeline
 import org.yaml.model.YMap
 
 object AMFGraphPlugin extends AMFDocumentPlugin {
@@ -48,6 +49,10 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
 
   override def referenceCollector() = new AMFGraphReferenceCollector()
 
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit) = new AmfResolutionPipeline().resolve(unit)
 }
 
 
