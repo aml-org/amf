@@ -10,7 +10,12 @@ import amf.metadata.document._
 import amf.metadata.domain._
 import amf.metadata.domain.`abstract`._
 import amf.metadata.domain.dialects.DialectEntityModel
-import amf.metadata.domain.extensions.{CustomDomainPropertyModel, DataNodeModel, DomainExtensionModel, ShapeExtensionModel}
+import amf.metadata.domain.extensions.{
+  CustomDomainPropertyModel,
+  DataNodeModel,
+  DomainExtensionModel,
+  ShapeExtensionModel
+}
 import amf.metadata.domain.security._
 import amf.metadata.shape._
 import amf.shape._
@@ -35,6 +40,7 @@ trait MetaModelTypeMapping {
     case _: UnionShape                         => UnionShapeModel
     case _: NodeShape                          => NodeShapeModel
     case _: ArrayShape                         => ArrayShapeModel
+    case _: MatrixShape                        => MatrixShapeModel
     case _: FileShape                          => FileShapeModel
     case _: ScalarShape                        => ScalarShapeModel
     case _: AnyShape                           => AnyShapeModel
