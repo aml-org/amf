@@ -2,8 +2,8 @@ package amf.plugins.domain.webapi.models
 
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.{Annotations, Fields}
-import amf.metadata.domain.ExternalDomainElementModel
-import amf.metadata.domain.ExternalDomainElementModel.Raw
+import amf.plugins.domain.webapi.metamodel.ExternalDomainElementModel
+import amf.plugins.domain.webapi.metamodel.ExternalDomainElementModel._
 import org.yaml.model.YMap
 
 case class ExternalDomainElement(fields: Fields, annotations: Annotations) extends DomainElement {

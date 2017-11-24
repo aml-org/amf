@@ -1,10 +1,9 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.ShapeExtension
 import amf.framework.model.domain.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
 import amf.framework.model.domain._
 import amf.framework.parser.{Annotations, FieldEntry, Position, Value}
-import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.shapes.models.{Shape, ShapeExtension}
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension

@@ -1,10 +1,10 @@
-package amf.metadata.domain
+package amf.plugins.domain.shapes.metamodel
 
-import amf.domain.Example
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Bool, Str}
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.framework.metamodel.domain.{DomainElementModel, LinkableElementModel}
+import amf.plugins.domain.shapes.models.Example
 import amf.vocabulary.Namespace._
 import amf.vocabulary.ValueType
 

@@ -1,11 +1,10 @@
 package amf.spec
 
-import amf.domain._
 import amf.framework.model.document.Fragment
 import amf.framework.model.domain.{DomainElement, Linkable}
 import amf.framework.parser.{Annotations, Fields}
 import amf.framework.utils.QName
-import amf.plugins.domain.shapes.models.{Shape, UnresolvedShape}
+import amf.plugins.domain.shapes.models.{Example, Shape, UnresolvedShape}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{CreativeWork, CustomDomainProperty, Parameter, Payload}

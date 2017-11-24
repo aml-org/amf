@@ -1,10 +1,9 @@
-package amf.domain.extensions
+package amf.plugins.domain.shapes.models
 
 import amf.framework.model.domain.{DataNode, DomainElement}
 import amf.framework.parser.{Annotations, Fields}
-import amf.metadata.domain.extensions.ShapeExtensionModel
-import amf.metadata.domain.extensions.ShapeExtensionModel._
-import amf.plugins.domain.shapes.models.PropertyShape
+import amf.plugins.domain.shapes.metamodel.ShapeExtensionModel
+import amf.plugins.domain.shapes.metamodel.ShapeExtensionModel._
 import org.yaml.model.YPart
 
 case class ShapeExtension (fields: Fields, annotations: Annotations) extends DomainElement {

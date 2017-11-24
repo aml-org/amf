@@ -1,12 +1,12 @@
 package amf.spec.domain
 
-import amf.domain.Example
 import amf.framework.model.domain.AmfScalar
 import amf.framework.parser.Annotations
 import amf.framework.parser._
-import amf.metadata.domain.ExampleModel
 import amf.plugins.document.webapi.annotations.{SingleValueArray, SynthesizedField}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.models.Example
 import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model._
 import org.yaml.render.YamlRender

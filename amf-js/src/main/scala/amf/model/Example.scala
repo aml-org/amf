@@ -1,14 +1,16 @@
 package amf.model
 
+import amf.plugins.domain.shapes.models
+
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
   * Js example model class
   */
 @JSExportAll
-case class Example private[model] (private val example: amf.domain.Example) extends DomainElement with Linkable {
+case class Example private[model] (private val example: models.Example) extends DomainElement with Linkable {
 
-  def this() = this(amf.domain.Example())
+  def this() = this(models.Example())
 
   val name: String        = element.name
   val displayName: String = element.displayName
@@ -45,7 +47,7 @@ case class Example private[model] (private val example: amf.domain.Example) exte
   override private[amf] def element = example
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: amf.domain.Example => Example(l) })
+    element.linkTarget.map({ case l: models.Example => Example(l) })
 
   override def linkCopy(): DomainElement with Linkable = Example(element.linkCopy())
 }
