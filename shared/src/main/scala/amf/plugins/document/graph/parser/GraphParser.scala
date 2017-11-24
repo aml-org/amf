@@ -9,14 +9,13 @@ import amf.framework.model.document._
 import amf.framework.model.domain._
 import amf.framework.parser.{Annotations, _}
 import amf.framework.registries.AMFDomainRegistry
+import amf.framework.remote.Platform
+import amf.framework.unsafe.TrunkPlatform
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.DialectNode
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
-import amf.core.unsafe.TrunkPlatform
-import amf.framework.remote.Platform
-import amf.validation.Validation
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
 
@@ -302,5 +301,5 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
 object GraphParser {
   def apply: GraphParser                     = GraphParser(TrunkPlatform(""))
-  def apply(platform: Platform): GraphParser = new GraphParser(platform)(ParserContext(Validation(platform)))
+  def apply(platform: Platform): GraphParser = new GraphParser(platform)(ParserContext())
 }

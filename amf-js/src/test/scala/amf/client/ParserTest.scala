@@ -3,7 +3,7 @@ package amf.client
 import amf.ProfileNames
 import amf.common.AmfObjectTestMatcher
 import amf.model.{BaseUnit, Document, Module, WebApi}
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}

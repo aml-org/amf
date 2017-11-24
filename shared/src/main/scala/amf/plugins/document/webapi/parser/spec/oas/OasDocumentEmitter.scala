@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document._

@@ -3,7 +3,7 @@ package amf.parser
 import amf.compiler.AMFCompiler
 import amf.framework.validation.AMFValidationResult
 import amf.remote._
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.remote.RamlYamlHint
 import amf.validation.Validation
 import org.scalatest.Matchers._

@@ -1,15 +1,12 @@
 package amf.framework.resolution.pipelines
 
 import amf.ProfileNames
-import amf.core.unsafe.PlatformSecrets
 import amf.framework.model.document.BaseUnit
 import amf.framework.resolution.stages.ResolutionStage
-import amf.resolution.pipelines.{AmfResolutionPipeline, OasResolutionPipeline, RamlResolutionPipeline}
-import amf.validation.Validation
+import amf.plugins.document.graph.resolution.pipelines.AmfResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{OasResolutionPipeline, RamlResolutionPipeline}
 
-abstract class ResolutionPipeline extends PlatformSecrets {
-
-  implicit val currentValidation: Validation = Validation(platform)
+abstract class ResolutionPipeline {
 
   var model: Option[BaseUnit] = None
 

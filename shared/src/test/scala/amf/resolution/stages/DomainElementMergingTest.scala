@@ -3,7 +3,7 @@ package amf.resolution.stages
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
-import amf.resolution.stages.DomainElementMerging.merge
+import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging.merge
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

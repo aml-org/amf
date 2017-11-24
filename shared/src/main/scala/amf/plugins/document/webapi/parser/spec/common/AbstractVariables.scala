@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.resolution.stages.VariableReplacer.VariableRegex
+import amf.plugins.domain.webapi.resolution.stages.VariableReplacer.VariableRegex
 import org.yaml.model.YScalar
 
 import scala.collection.mutable

@@ -9,6 +9,7 @@ import amf.framework.remote.Platform
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.references.PayloadReferenceCollector
+import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import org.yaml.model.{YMap, YScalar}
 
@@ -57,4 +58,9 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions) = None
 
   override def canUnparse(unit: BaseUnit) = false
+
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit) = new CanonicalShapePipeline().resolve(unit)
 }

@@ -1,8 +1,7 @@
 package amf.framework.resolution.stages
 
 import amf.framework.model.document.BaseUnit
-import amf.validation.Validation
 
-abstract class ResolutionStage(profile: String)(implicit val currentValidation: Validation) {
+abstract class ResolutionStage(profile: String) {
     def resolve(model: BaseUnit): BaseUnit
 }

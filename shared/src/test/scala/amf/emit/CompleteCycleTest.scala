@@ -518,7 +518,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("forward-references-types.raml", "forward-references-types.raml.raml", RamlYamlHint, Raml)
   }
 
-  test("HERE_HERE Types forward references oas to oas test") {
+  test("Types forward references oas to oas test") {
     cycle("forward-references-types.json", OasJsonHint)
   }
 

@@ -2,14 +2,13 @@ package amf.plugins.document.webapi.validation
 
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.{DataNode, LexicalInformation}
-import amf.framework.services.RuntimeCompiler
+import amf.framework.remote.Platform
+import amf.framework.services.{RuntimeCompiler, RuntimeValidator}
+import amf.framework.unsafe.TrunkPlatform
 import amf.framework.validation.{AMFValidationResult, ParserSideValidations, SeverityLevels}
+import amf.framework.vocabulary.Namespace
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.domain.shapes.models.{Example, Shape}
-import amf.core.unsafe.TrunkPlatform
-import amf.framework.remote.Platform
-import amf.validation._
-import amf.framework.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -61,10 +60,10 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
   protected def validateExample(shape: Shape,
                                 example: Example,
                                 mediaType: String): Future[Option[AMFValidationResult]] = {
-    val exampleValidation = Validation(platform)
+    RuntimeValidator.reset()
     val overridePlatform = TrunkPlatform(example.value)
     try {
-      RuntimeCompiler("http://amfparser.org/test_payload", overridePlatform, mediaType, PayloadPlugin.ID, exampleValidation) flatMap { payload =>
+      RuntimeCompiler("http://amfparser.org/test_payload", overridePlatform, mediaType, PayloadPlugin.ID) flatMap { payload =>
         // we are parsing using Payload hint, this MUST be a payload fragment encoding a data node
         val payloadDataNode = payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode]
         PayloadValidation(platform, shape).validate(payloadDataNode) map { report =>

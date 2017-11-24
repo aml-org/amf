@@ -13,7 +13,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
 
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(parsed: ParsedDocument, validation: Validation, ctx: ParserContext) = {
+  override def traverse(parsed: ParsedDocument, ctx: ParserContext) = {
     libraries(parsed.document, ctx)
     links(parsed.document, ctx)
     if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(parsed.document, ctx)

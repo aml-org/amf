@@ -1,6 +1,6 @@
 package amf.remote.browser
 
-import amf.core.lexer.CharSequenceStream
+import amf.framework.lexer.CharSequenceStream
 import amf.dialects.JSDialectRegistry
 import amf.framework.remote.{Content, Platform, UnsupportedFileSystem}
 import amf.validation.{SHACLValidator, Validation}

@@ -21,7 +21,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin {
-
   override val ID = "AMF Validation"
 
   override def dependencies() = Seq(AMFGraphPlugin, PayloadPlugin)
@@ -46,13 +45,11 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
   var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin]= Map.empty
 
   override def loadValidationProfile(validationProfilePath: String): Future[Unit] = {
-    val currentValidation = new Validation(platform).withEnabledValidation(false)
     RuntimeCompiler(
       validationProfilePath,
       platform,
       "application/yaml",
       RAMLExtensionsPlugin.ID,
-      currentValidation
     ).map { case parsed: Document => parsed.encodes }
       .map {
         case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
@@ -114,10 +111,10 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
 
     /*
     println("\n\nGRAPH")
-    println(modelJSON.length)
+    println(modelJSON)
     println("===========================")
     println("\n\nVALIDATION")
-    println(shapesJSON.length)
+    println(shapesJSON)
     println("===========================")
     println(jsLibrary)
     println("===========================")

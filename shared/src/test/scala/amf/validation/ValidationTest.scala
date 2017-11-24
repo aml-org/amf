@@ -7,14 +7,13 @@ import amf.core.client.GenerationOptions
 import amf.dumper.AMFDumper
 import amf.framework.model.document.{Document, Module}
 import amf.framework.model.domain.DataNode
+import amf.framework.remote.Syntax.{Json, Yaml}
+import amf.framework.remote._
+import amf.framework.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.framework.validation.SeverityLevels
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation}
 import amf.plugins.domain.shapes.models.Shape
-import amf.framework.remote.Syntax.{Json, Yaml}
-import amf.remote._
-import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.framework.remote._
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender

@@ -5,7 +5,7 @@ import amf.core.client.GenerationOptions
 import amf.emit.AMFUnitFixtureTest
 import amf.framework.remote.Syntax.{Json, Yaml}
 import amf.remote._
-import amf.core.unsafe.PlatformSecrets
+import amf.framework.unsafe.PlatformSecrets
 import amf.framework.remote.{Amf, Oas, Raml}
 import org.scalatest.{Assertion, FunSuite}
 

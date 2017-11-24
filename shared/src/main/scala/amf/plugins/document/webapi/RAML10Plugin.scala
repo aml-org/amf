@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
+import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
@@ -44,12 +45,13 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     val updated: WebApiContext = new WebApiContext(Raml, parentContext, RamlSpecAwareContext, RamlSyntax)
-    val clean: ParserContext = ParserContext(parentContext.validation, root.location, root.references)
+    val cleanNested = ParserContext(root.location, root.references)
+    val clean: WebApiContext = new WebApiContext(Raml, cleanNested, RamlSpecAwareContext, RamlSyntax)
     RamlHeader(root) match {
       case Some(RamlHeader.Raml10)          => Some(RamlDocumentParser(root)(updated).parseDocument())
       case Some(RamlHeader.Raml10Overlay)   => Some(RamlDocumentParser(root)(updated).parseOverlay())
       case Some(RamlHeader.Raml10Extension) => Some(RamlDocumentParser(root)(updated).parseExtension())
-      case Some(RamlHeader.Raml10Library)   => Some(RamlModuleParser(root)(clean.toRaml).parseModule())
+      case Some(RamlHeader.Raml10Library)   => Some(RamlModuleParser(root)(clean).parseModule())
       case Some(fragment: RamlFragment)     => RamlFragmentParser(root, fragment)(updated).parseFragment()
       case _                                => None
     }
@@ -99,4 +101,10 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
 
   def validationRequest(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, platform: Platform): Future[AMFValidationReport] =
     validationRequestsForBaseUnit(baseUnit, profile, validations, ProfileNames.RAML, platform)
+
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit) = new RamlResolutionPipeline().resolve(unit)
+
 }
