@@ -96,11 +96,12 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
             // workaround for lazy values in shape
             val modelFields = model match {
-              case shapeModel: ShapeModel => shapeModel.fields ++ Seq(
-                ShapeModel.CustomShapePropertyDefinitions,
-                ShapeModel.CustomShapeProperties
-              )
-              case _                      => model.fields
+              case shapeModel: ShapeModel =>
+                shapeModel.fields ++ Seq(
+                  ShapeModel.CustomShapePropertyDefinitions,
+                  ShapeModel.CustomShapeProperties
+                )
+              case _ => model.fields
             }
 
             modelFields.foreach(f => {
@@ -189,7 +190,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case DataNodeModel => // dynamic nodes parsed here
           dynamicGraphParser.parseDynamicType(node.as[YMap]) match {
             case Some(parsed) => instance.set(f, parsed, annotations(nodes, sources, key))
-            case _ =>
+            case _            =>
           }
         case _: Obj =>
           parse(node.as[YMap]).foreach(n => instance.set(f, n, annotations(nodes, sources, key)))
@@ -236,6 +237,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     UnionShapeModel                                     -> UnionShape.apply,
     NodeShapeModel                                      -> NodeShape.apply,
     ArrayShapeModel                                     -> ArrayShape.apply,
+    MatrixShapeModel                                    -> MatrixShape.apply,
     FileShapeModel                                      -> FileShape.apply,
     ScalarShapeModel                                    -> ScalarShape.apply,
     SchemaShapeModel                                    -> SchemaShape.apply,

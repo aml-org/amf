@@ -676,4 +676,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Parsing default types amf to raml") {
     cycle("default-types.jsonld", "default-types.raml", AmfJsonHint, Raml)
   }
+
+  test("Parsing example of matrixShape raml to amf") {
+    cycle("matrix.raml", "matrix.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Parsing example of matrixShape amf to raml") {
+    cycle("matrix.jsonld", "matrix.raml.raml", AmfJsonHint, Raml)
+  }
 }
