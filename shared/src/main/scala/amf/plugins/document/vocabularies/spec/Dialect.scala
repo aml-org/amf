@@ -1,17 +1,17 @@
-package amf.spec.dialects
+package amf.plugins.document.vocabularies.spec
 
 import amf.core.Root
 import amf.domain.Annotation.Aliases
-import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.{Field, Obj, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain.{AmfArray, AmfScalar}
 import amf.framework.parser._
 import amf.plugins.document.vocabularies.core.{ClassTerm, External}
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
 import amf.plugins.document.webapi.model.DialectFragment
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode
-import amf.spec.dialects.Dialect.retrieveDomainEntity
 import amf.vocabulary.{Namespace, ValueType}
 import org.yaml.model._
 
@@ -607,7 +607,7 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Type 
   val keyProperty: Option[DialectPropertyMapping]         = None
   var nameProvider: Option[LocalNameProviderFactory]      = None
   val props: mutable.Map[String, DialectPropertyMapping]  = new mutable.LinkedHashMap()
-  private[dialects] var dialect: Option[Dialect]          = None
+  var dialect: Option[Dialect]                    = None
 
   def fromDialect: Option[Dialect] = dialect
 

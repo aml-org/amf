@@ -1,8 +1,9 @@
-package amf.metadata
-import amf.framework.metamodel.{Field, Obj}
+package amf.framework.metamodel.document
+
 import amf.framework.metamodel.Type.Str
-import amf.vocabulary.Namespace.{Document, SourceMaps}
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.metamodel.{Field, Obj}
+import amf.vocabulary.Namespace.SourceMaps
+import amf.vocabulary.ValueType
 
 /**
   * Source Map Metadata

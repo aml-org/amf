@@ -1,9 +1,9 @@
-package amf.domain.dialects
+package amf.plugins.document.vocabularies.model.domain
 
 import amf.framework.model.domain._
 import amf.framework.parser.{Annotations, Fields}
-import amf.metadata.domain.dialects.DialectEntityModel
-import amf.spec.dialects.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
+import amf.plugins.document.vocabularies.metamodel.domain.DialectEntityModel
+import amf.plugins.document.vocabularies.spec.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 
 case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations)
     extends DomainElement with Linkable {

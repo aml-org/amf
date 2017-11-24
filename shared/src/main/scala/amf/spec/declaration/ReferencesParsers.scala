@@ -1,9 +1,9 @@
 package amf.spec.declaration
 
 import amf.compiler.ParsedReference
-import amf.domain.dialects.DomainEntity
 import amf.framework.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.framework.parser._
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.webapi.annotations.Aliases
 import amf.spec.ParserContext
 import org.yaml.model.YMap

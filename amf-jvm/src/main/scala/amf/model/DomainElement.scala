@@ -3,6 +3,7 @@ package amf.model
 import amf.framework.model.domain
 import amf.framework.model.domain.templates
 import amf.framework.parser.Range
+import amf.plugins.document.vocabularies.model
 import amf.plugins.domain.shapes
 import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.extensions
@@ -79,7 +80,7 @@ object DomainElement {
     case o: domain.ArrayNode                => ArrayNode(o)
     case o: extensions.DomainExtension          => DomainExtension(o)
     case o: shapes.models.Shape                                => Shape(o)
-    case o: amf.domain.dialects.DomainEntity               => DomainEntity(o)
+    case o: model.domain.DomainEntity               => DomainEntity(o)
     case o =>
       new DomainElement {
         override private[amf] def element = o

@@ -1,9 +1,9 @@
 package amf.validation.model
 
 import amf.framework.metamodel.Type.{Bool, Int, Iri, Str}
-import amf.spec.dialects.{Dialect, DialectNode, DialectPropertyMapping}
+import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, DialectPropertyMapping}
 import amf.vocabulary.Namespace
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
 

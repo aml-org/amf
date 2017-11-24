@@ -2,11 +2,11 @@ package amf.plugins.document.graph.parser
 
 import amf.framework.metamodel.Type
 import amf.framework.metamodel.Type._
+import amf.framework.metamodel.document.SourceMapModel
 import amf.framework.metamodel.domain.DomainElementModel
+import amf.framework.model.document.SourceMap
 import amf.framework.model.domain.{AmfElement, Annotation}
 import amf.framework.parser.{Annotations, _}
-import amf.metadata.SourceMapModel
-import amf.metadata.SourceMapModel.{Element, Value}
 import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
@@ -27,9 +27,9 @@ trait GraphParserHelpers {
             .as[Seq[YNode]]
             .foreach(e => {
               val element = e.as[YMap]
-              val k       = element.key(Element.value.iri()).get
-              val v       = element.key(Value.value.iri()).get
-              consumer(value(Element.`type`, k.value).as[YScalar].text, value(Value.`type`, v.value).as[YScalar].text)
+              val k       = element.key(SourceMapModel.Element.value.iri()).get
+              val v       = element.key(SourceMapModel.Value.value.iri()).get
+              consumer(value(SourceMapModel.Element.`type`, k.value).as[YScalar].text, value(SourceMapModel.Value.`type`, v.value).as[YScalar].text)
             })
         case _ => // Unknown annotation identifier
       }

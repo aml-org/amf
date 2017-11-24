@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.core
 
-import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.spec.dialects.DialectPropertyMapping
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies.spec.DialectPropertyMapping
 
 import scala.collection.mutable
 

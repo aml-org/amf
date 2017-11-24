@@ -3,7 +3,6 @@ package amf.plugins.features.validation
 import amf.ProfileNames
 import amf.client.GenerationOptions
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.domain.dialects.DomainEntity
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
@@ -11,6 +10,7 @@ import amf.framework.validation.core.ValidationReport
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations, ParserSideValidationPlugin}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.remote.Platform
 import amf.validation._
