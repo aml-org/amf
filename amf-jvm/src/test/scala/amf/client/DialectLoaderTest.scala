@@ -6,7 +6,7 @@ import amf.compiler.AMFCompiler
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Json
 import amf.remote.{Amf, RamlYamlHint}
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.AsyncFunSuite
 

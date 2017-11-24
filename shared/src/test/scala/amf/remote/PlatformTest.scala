@@ -4,7 +4,7 @@ import java.util.Date
 
 import amf.common.ListAssertions
 import amf.remote.Mimes.`APPLICATION/YAML`
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
 

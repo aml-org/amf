@@ -3,7 +3,7 @@ package amf.resolution.pipelines
 import amf.ProfileNames
 import amf.framework.model.document.BaseUnit
 import amf.resolution.stages.ResolutionStage
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 
 abstract class ResolutionPipeline extends PlatformSecrets {

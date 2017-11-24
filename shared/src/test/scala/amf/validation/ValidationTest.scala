@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesVa
 import amf.plugins.domain.shapes.models.Shape
 import amf.remote.Syntax.{Json, Yaml}
 import amf.remote._
-import amf.unsafe.{PlatformSecrets, TrunkPlatform}
+import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender

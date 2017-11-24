@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

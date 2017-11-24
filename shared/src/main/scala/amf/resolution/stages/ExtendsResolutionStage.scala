@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{RamlEndpointParser, RamlO
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.resolution.stages.DomainElementMerging.merge
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
 

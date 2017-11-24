@@ -8,7 +8,7 @@ import amf.framework.model.domain.AmfObject
 import amf.plugins.domain.shapes.models.{ScalarShape, XMLSerializer}
 import amf.plugins.domain.webapi.models._
 import amf.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

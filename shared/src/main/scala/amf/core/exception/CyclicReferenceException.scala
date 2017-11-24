@@ -1,4 +1,4 @@
-package amf.exception
+package amf.core.exception
 
 /**
   * Exception describing cyclic references

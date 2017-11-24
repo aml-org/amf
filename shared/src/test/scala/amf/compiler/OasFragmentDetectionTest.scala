@@ -2,7 +2,7 @@ package amf.compiler
 
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.remote.OasJsonHint
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._

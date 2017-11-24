@@ -1,6 +1,6 @@
 package amf.remote
 
-import amf.lexer.CharSequenceStream
+import amf.core.lexer.CharSequenceStream
 import amf.validation.Validation
 import amf.framework.validation.core.SHACLValidator
 import amf.plugins.document.vocabularies.core.PlatformDialectRegistry

@@ -6,7 +6,7 @@ import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.{Hint, Vendor}
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.scalatest.{Assertion, AsyncFunSuite}

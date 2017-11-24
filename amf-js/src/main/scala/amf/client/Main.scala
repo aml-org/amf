@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.Future
 import scalajs.js

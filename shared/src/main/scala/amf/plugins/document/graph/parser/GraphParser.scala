@@ -15,7 +15,7 @@ import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.remote.Platform
-import amf.unsafe.TrunkPlatform
+import amf.core.unsafe.TrunkPlatform
 import amf.validation.Validation
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
