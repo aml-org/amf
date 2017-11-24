@@ -2,7 +2,7 @@ package amf.validation.tsvimport
 
 import java.io.{BufferedReader, File, FileReader}
 
-import amf.validation.model.AMFValidation
+import amf.plugins.features.validation.model.AMFValidation
 import amf.framework.vocabulary.Namespace
 
 import scala.collection.JavaConverters._

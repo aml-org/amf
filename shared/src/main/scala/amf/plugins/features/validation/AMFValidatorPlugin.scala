@@ -14,8 +14,8 @@ import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.validation._
-import amf.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
-import amf.validation.model.ValidationProfile
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
+import amf.plugins.features.validation.model.ValidationProfile
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -78,7 +78,7 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
   }
 
   def computeValidations(profileName: String,
-                                  computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
+                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     val maybeProfile = profiles.get(profileName) match {
       case Some(profileGenerator) => Some(profileGenerator())
       case _                      => None

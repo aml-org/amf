@@ -2,7 +2,7 @@ package amf.tasks.validations
 
 import java.io.{BufferedWriter, FileWriter}
 
-import amf.validation.model.DefaultAMFValidations
+import amf.plugins.features.validation.model.DefaultAMFValidations
 
 object ValidationProfileExporter {
 

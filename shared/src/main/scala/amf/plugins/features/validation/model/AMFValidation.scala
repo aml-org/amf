@@ -1,7 +1,7 @@
-package amf.validation.model
+package amf.plugins.features.validation.model
 
 import amf.ProfileNames
-import amf.framework.validation.SeverityLevels
+import amf.framework.validation.{ParserSideValidations, SeverityLevels}
 import amf.framework.vocabulary.Namespace
 
 /**

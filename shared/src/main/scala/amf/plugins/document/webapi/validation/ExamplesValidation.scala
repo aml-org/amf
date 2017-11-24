@@ -3,13 +3,12 @@ package amf.plugins.document.webapi.validation
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.{DataNode, LexicalInformation}
 import amf.framework.services.RuntimeCompiler
-import amf.framework.validation.{AMFValidationResult, SeverityLevels}
+import amf.framework.validation.{AMFValidationResult, ParserSideValidations, SeverityLevels}
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.domain.shapes.models.{Example, Shape}
 import amf.core.unsafe.TrunkPlatform
 import amf.framework.remote.Platform
 import amf.validation._
-import amf.validation.model.ParserSideValidations
 import amf.framework.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global

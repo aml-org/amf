@@ -1,10 +1,12 @@
-package amf.validation.model
+package amf.plugins.document.webapi.validation
 
 import amf.framework.model.domain.AmfScalar
+import amf.framework.validation.ParserSideValidations
+import amf.framework.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models._
 import amf.resolution.pipelines.CanonicalShapePipeline
-import amf.framework.vocabulary.Namespace
+import amf.plugins.features.validation.model.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 
 class AMFShapeValidations(shape: Shape) {
 

@@ -15,7 +15,7 @@ import amf.framework.remote.Syntax.{Json, Yaml}
 import amf.remote._
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.framework.remote._
-import amf.validation.emitters.ValidationReportJSONLDEmitter
+import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
 
