@@ -1,7 +1,6 @@
 package amf.plugins.document.vocabularies.spec
 
 import amf.core.Root
-import amf.domain.Annotation.Aliases
 import amf.framework.metamodel.{Field, Obj, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain.{AmfArray, AmfScalar}
@@ -9,6 +8,7 @@ import amf.framework.parser._
 import amf.plugins.document.vocabularies.core.{ClassTerm, External}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
+import amf.plugins.document.webapi.annotations.Aliases
 import amf.plugins.document.webapi.model.DialectFragment
 import amf.spec.ParserContext
 import amf.spec.common.ValueNode

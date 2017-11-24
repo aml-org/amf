@@ -12,6 +12,7 @@ import amf.framework.parser.Position.ZERO
 import amf.framework.parser.{FieldEntry, Position}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
+import amf.plugins.document.webapi.annotations.Aliases
 import amf.spec.common.BaseEmitters._
 import amf.spec.raml.RamlSpecEmitter
 import amf.spec.{Emitter, EntryEmitter}
