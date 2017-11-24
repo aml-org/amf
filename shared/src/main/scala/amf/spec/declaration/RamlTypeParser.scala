@@ -569,11 +569,17 @@ case class RamlTypeParser(ast: YPart,
               scalar.toString match {
                 case s if RamlTypeDefMatcher.TypeExpression.unapply(s).isDefined =>
                   RamlTypeExpressionParser(adopt).parse(s).get
-
-                case s if ctx.declarations.shapes.get(s).isDefined =>
-                  ctx.declarations.shapes(s)
                 case s if wellKnownType(s) =>
                   parseWellKnownTypeRef(s)
+                case s =>
+                  ctx.declarations.findType(s, SearchScope.Named) match {
+                    case Some(ancestor) =>
+                      ancestor
+                    case _ =>
+                      val unresolvedShape: UnresolvedShape = UnresolvedShape(s, entry.value).withName(s)
+                      ctx.declarations += unresolvedShape
+                      unresolvedShape
+                  }
               }
             }
 

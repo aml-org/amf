@@ -684,4 +684,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Parsing example of matrixShape amf to raml") {
     cycle("matrix.jsonld", "matrix.raml.raml", AmfJsonHint, Raml)
   }
+
+  test("Parsing example of multiple inheritance raml to amf") {
+    cycle("multiple-inheritance-2.raml", "multiple-inheritance-2.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Parsing example of multiple inheritance amf to raml") {
+    cycle("multiple-inheritance-2.jsonld", "multiple-inheritance-2.raml.raml", AmfJsonHint, Raml)
+  }
 }
