@@ -1,7 +1,7 @@
-package amf.client.commands
+package amf.core.client.commands
 
 import amf.ProfileNames
-import amf.client.ParserConfig
+import amf.core.client.ParserConfig
 import scopt.OptionParser
 
 object CmdLineParser {

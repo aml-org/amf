@@ -1,7 +1,7 @@
 package amf.framework.plugins
 
-import amf.client.GenerationOptions
 import amf.core.Root
+import amf.core.client.GenerationOptions
 import amf.framework.metamodel.Obj
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.AnnotationGraphLoader

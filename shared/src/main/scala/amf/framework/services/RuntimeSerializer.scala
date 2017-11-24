@@ -1,6 +1,6 @@
 package amf.framework.services
 
-import amf.client.GenerationOptions
+import amf.core.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 
 trait RuntimeSerializer {

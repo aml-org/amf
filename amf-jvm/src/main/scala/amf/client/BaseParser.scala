@@ -3,6 +3,7 @@ package amf.client
 import java.util.concurrent.CompletableFuture
 
 import amf.ProfileNames
+import amf.core.client.{Handler, ParsingOptions, PlatformParser}
 import amf.framework.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
 import amf.framework.remote.Syntax.Syntax
 import amf.framework.remote.{Platform, StringContentPlatform, Vendor}

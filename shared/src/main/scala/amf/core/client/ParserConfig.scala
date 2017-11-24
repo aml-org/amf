@@ -1,4 +1,4 @@
-package amf.client
+package amf.core.client
 
 import amf.ProfileNames
 

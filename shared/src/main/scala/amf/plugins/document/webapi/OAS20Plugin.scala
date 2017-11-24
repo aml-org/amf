@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi
 
 import amf.ProfileNames
-import amf.client.GenerationOptions
 import amf.core.Root
+import amf.core.client.GenerationOptions
 import amf.framework.model.document._
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.{LibraryReference, LinkReference, ParserContext}

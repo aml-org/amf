@@ -1,6 +1,7 @@
 package amf.client
 
-import amf.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
+import amf.core.client.{ExitCodes, ParserConfig}
+import amf.core.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
 import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.Future

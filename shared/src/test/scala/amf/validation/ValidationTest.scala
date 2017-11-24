@@ -1,9 +1,9 @@
 package amf.validation
 
 import amf.ProfileNames
-import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
+import amf.core.client.GenerationOptions
 import amf.dumper.AMFDumper
 import amf.framework.model.document.{Document, Module}
 import amf.framework.model.domain.DataNode

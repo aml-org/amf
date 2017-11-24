@@ -1,7 +1,7 @@
 package amf.emit
 
-import amf.client.GenerationOptions
 import amf.common.ListAssertions
+import amf.core.client.GenerationOptions
 import amf.framework.model.document.Document
 import amf.framework.parser._
 import amf.framework.remote.{Oas, Raml, Vendor}

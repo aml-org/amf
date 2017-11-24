@@ -1,6 +1,6 @@
 package amf.dialects
-import amf.client.GenerationOptions
 import amf.compiler.AMFCompiler
+import amf.core.client.GenerationOptions
 import amf.dumper.AMFDumper
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.spec.Dialect

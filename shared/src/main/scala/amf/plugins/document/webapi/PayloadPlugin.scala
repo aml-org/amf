@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi
 
-import amf.client.GenerationOptions
 import amf.core.Root
+import amf.core.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ParserContext
 import amf.framework.plugins.AMFDocumentPlugin

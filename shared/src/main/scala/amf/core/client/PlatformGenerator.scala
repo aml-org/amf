@@ -1,9 +1,9 @@
-package amf.client
+package amf.core.client
 
-import amf.framework.model.document.BaseUnit
-import amf.dumper.AMFDumper
-import amf.framework.remote.Syntax.Syntax
 import amf.core.unsafe.PlatformSecrets
+import amf.dumper.AMFDumper
+import amf.framework.model.document.BaseUnit
+import amf.framework.remote.Syntax.Syntax
 import amf.framework.remote.Vendor
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -13,7 +13,7 @@ import scala.util.{Failure, Success, Try}
 /**
   * Common class for all platform generators
   */
-protected abstract class PlatformGenerator extends PlatformSecrets {
+abstract class PlatformGenerator extends PlatformSecrets {
 
   protected val target: Vendor
   protected val syntax: Syntax

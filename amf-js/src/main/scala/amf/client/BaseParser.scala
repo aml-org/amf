@@ -1,6 +1,7 @@
 package amf.client
 
 import amf.ProfileNames
+import amf.core.client.{Handler, PlatformParser}
 import amf.framework.validation.AMFValidationReport
 import amf.framework.remote.Syntax.Syntax
 import amf.remote._

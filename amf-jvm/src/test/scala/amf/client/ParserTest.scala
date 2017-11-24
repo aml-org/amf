@@ -2,6 +2,7 @@ package amf.client
 
 import amf.ProfileNames
 import amf.common.AmfObjectTestMatcher
+import amf.core.client.GenerationOptions
 import amf.model.{Document, Module, WebApi}
 import amf.core.unsafe.PlatformSecrets
 import org.scalatest.Matchers._

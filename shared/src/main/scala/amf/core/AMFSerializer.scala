@@ -1,6 +1,6 @@
 package amf.core
 
-import amf.client.GenerationOptions
+import amf.core.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.idCounter
 import amf.framework.plugins.AMFSyntaxPlugin
