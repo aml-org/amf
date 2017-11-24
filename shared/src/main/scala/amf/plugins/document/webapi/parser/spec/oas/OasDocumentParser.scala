@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ArrayNo
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, SearchScope}
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
@@ -22,7 +23,6 @@ import amf.plugins.domain.webapi.metamodel.{CustomDomainPropertyModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.vocabulary.VocabularyMappings
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable

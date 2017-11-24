@@ -10,7 +10,7 @@ import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec
 import amf.plugins.document.vocabularies.spec._
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.collection.mutable
 

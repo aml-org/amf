@@ -2,7 +2,7 @@ package amf.framework.metamodel.domain
 
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.framework.metamodel.{Field, Obj}
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 /**
   *

@@ -1,7 +1,7 @@
 package amf.framework.metamodel
 
-import amf.vocabulary.Namespace.Xsd
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Xsd
+import amf.framework.vocabulary.ValueType
 
 /**
   *

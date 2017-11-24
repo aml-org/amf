@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.domain.templates.VariableValue
-import amf.vocabulary.Namespace.Document
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Document
+import amf.framework.vocabulary.ValueType
 
 object VariableValueModel extends DomainElementModel {
 

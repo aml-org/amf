@@ -4,7 +4,7 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Array
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.UnionShape
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 object UnionShapeModel extends ShapeModel with DomainElementModel {
 

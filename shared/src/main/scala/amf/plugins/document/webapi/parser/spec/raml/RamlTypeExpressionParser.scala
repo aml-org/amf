@@ -2,12 +2,12 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.framework.model.domain.{AmfArray, LexicalInformation}
 import amf.framework.parser.{ParserContext, Range}
+import amf.framework.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedFromTypeExpression
+import amf.plugins.document.webapi.parser.spec.SearchScope
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._
-import amf.plugins.document.webapi.parser.spec.SearchScope
-import amf.vocabulary.Namespace
-import org.yaml.model.{YNode, YPart}
+import org.yaml.model.YPart
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 

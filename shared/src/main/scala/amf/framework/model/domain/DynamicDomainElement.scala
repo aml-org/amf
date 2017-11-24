@@ -1,7 +1,7 @@
 package amf.framework.model.domain
 
 import amf.framework.metamodel.Field
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.ValueType
 
 trait DynamicDomainElement extends DomainElement {
   def dynamicFields: List[Field]

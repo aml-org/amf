@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.webapi.models.License
-import amf.vocabulary.Namespace.{Http, Schema}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Http, Schema}
+import amf.framework.vocabulary.ValueType
 
 /**
   * License metamodel

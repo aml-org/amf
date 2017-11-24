@@ -4,7 +4,7 @@ import amf.framework.parser.Position
 import amf.plugins.document.webapi.parser.spec.PartEmitter
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender

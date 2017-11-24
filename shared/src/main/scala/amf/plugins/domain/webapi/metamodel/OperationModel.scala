@@ -4,10 +4,9 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.metadata.domain._
+import amf.framework.vocabulary.Namespace.{Document, Http, Hydra, Schema}
+import amf.framework.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.webapi.models.Operation
-import amf.vocabulary.Namespace.{Document, Http, Hydra, Schema}
-import amf.vocabulary.{Namespace, ValueType}
 
 /**
   * Operation meta model.

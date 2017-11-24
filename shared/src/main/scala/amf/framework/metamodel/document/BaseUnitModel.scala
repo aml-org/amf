@@ -2,8 +2,8 @@ package amf.framework.metamodel.document
 
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj}
-import amf.vocabulary.Namespace.Document
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Document
+import amf.framework.vocabulary.ValueType
 
 /**
   * Unit metamodel

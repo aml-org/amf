@@ -1,4 +1,4 @@
-package amf.vocabulary
+package amf.framework.vocabulary
 
 import scala.collection.mutable
 

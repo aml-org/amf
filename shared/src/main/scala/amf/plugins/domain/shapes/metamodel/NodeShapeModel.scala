@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Bool, Int, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.NodeShape
-import amf.vocabulary.Namespace.{Shacl, Shapes}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Shacl, Shapes}
+import amf.framework.vocabulary.ValueType
 
 /**
   * Node shape metamodel.

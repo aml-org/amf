@@ -1,9 +1,8 @@
 package amf.framework.model.document
 
-import amf.domain._
 import amf.framework.metamodel.Obj
-import amf.framework.metamodel.document.{DocumentModel, ExtensionLikeModel}
 import amf.framework.metamodel.document.DocumentModel._
+import amf.framework.metamodel.document.{DocumentModel, ExtensionLikeModel}
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.models.WebApi

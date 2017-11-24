@@ -5,8 +5,8 @@ import amf.framework.metamodel.Type.{Array, Bool, SortedArray, Str}
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.framework.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
-import amf.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
+import amf.framework.vocabulary.ValueType
 
 trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyField {
 

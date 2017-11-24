@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Iri, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.vocabulary.Namespace.Schema
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Schema
+import amf.framework.vocabulary.ValueType
 
 /**
   * Creative work metamodel

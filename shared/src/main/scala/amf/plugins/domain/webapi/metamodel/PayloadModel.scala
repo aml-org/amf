@@ -6,8 +6,8 @@ import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.Payload
-import amf.vocabulary.Namespace.Http
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Http
+import amf.framework.vocabulary.ValueType
 
 /**
   * Payload metamodel.

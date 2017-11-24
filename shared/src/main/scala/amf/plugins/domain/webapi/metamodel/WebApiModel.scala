@@ -3,11 +3,10 @@ package amf.plugins.domain.webapi.metamodel
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.framework.metamodel.domain.DomainElementModel
-import amf.metadata.domain._
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.WebApi
-import amf.vocabulary.Namespace._
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.Namespace._
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 /**
   * Web Api metamodel

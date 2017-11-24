@@ -7,8 +7,8 @@ import amf.framework.metamodel.domain.templates.KeyField
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.vocabulary.Namespace.Security
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Security
+import amf.framework.vocabulary.ValueType
 
 object SecuritySchemeModel extends DomainElementModel with KeyField {
 

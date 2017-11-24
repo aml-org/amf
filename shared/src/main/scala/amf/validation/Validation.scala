@@ -11,7 +11,7 @@ import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.validation.emitters.ValidationJSONLDEmitter
 import amf.validation.model._
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.collection.mutable
 import scala.concurrent.{Future, Promise}

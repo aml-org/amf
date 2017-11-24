@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Int, Iri}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.PropertyShape
-import amf.vocabulary.Namespace.{Shacl, Shapes}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Shacl, Shapes}
+import amf.framework.vocabulary.ValueType
 
 /**
   * Property shape metamodel

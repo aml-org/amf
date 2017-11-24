@@ -10,7 +10,7 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, RequestModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{CustomDomainProperty, Parameter, Payload, Request}
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

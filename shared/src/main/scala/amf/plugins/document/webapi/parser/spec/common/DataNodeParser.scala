@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.framework.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.framework.parser.{Annotations, _}
 import amf.plugins.document.webapi.model.ExternalFragment
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 

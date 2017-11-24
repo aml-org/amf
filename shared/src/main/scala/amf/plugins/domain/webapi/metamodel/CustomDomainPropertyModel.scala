@@ -6,8 +6,8 @@ import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.CustomDomainProperty
-import amf.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 /**
   * Custom Domain Property
@@ -27,9 +27,9 @@ object CustomDomainPropertyModel extends DomainElementModel with KeyField {
   /**
     * The name of the extension
     */
-  val Name        = Field(Str, amf.vocabulary.Namespace.Document + "name")
-  val DisplayName = Field(Str, amf.vocabulary.Namespace.Schema + "name")
-  val Description = Field(Str, amf.vocabulary.Namespace.Schema + "description")
+  val Name        = Field(Str, Namespace.Document + "name")
+  val DisplayName = Field(Str, Namespace.Schema + "name")
+  val Description = Field(Str, Namespace.Schema + "description")
 
   override val key: Field = Name
 

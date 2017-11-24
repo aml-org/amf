@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Bool, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.XMLSerializer
-import amf.vocabulary.Namespace.Shapes
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Shapes
+import amf.framework.vocabulary.ValueType
 
 /**
   * Scalar shape metamodel

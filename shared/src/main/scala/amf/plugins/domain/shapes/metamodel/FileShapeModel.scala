@@ -4,7 +4,7 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.FileShape
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 object FileShapeModel extends ShapeModel with DomainElementModel with CommonShapeFields {
 

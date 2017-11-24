@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.framework.model.document
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import amf.plugins.document.webapi.model.{
   AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment,
   DataTypeFragment => CoreDataTypeFragment,

@@ -2,7 +2,7 @@ package amf.validation.model
 
 import amf.framework.metamodel.Type.{Bool, Int, Iri, Str}
 import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, DialectPropertyMapping}
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer

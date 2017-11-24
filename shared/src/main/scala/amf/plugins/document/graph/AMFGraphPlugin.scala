@@ -9,7 +9,7 @@ import amf.framework.remote.Platform
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import amf.plugins.document.graph.references.AMFGraphReferenceCollector
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.yaml.model.YMap
 
 object AMFGraphPlugin extends AMFDocumentPlugin {
