@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser
 
 import amf.framework.model.document.Document
-import amf.spec.ParserContext
-import amf.spec.common.DataNodeParser
+import amf.framework.parser.ParserContext
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import org.yaml.model.{YDocument, YNode}
 
 class PayloadParser(document: YDocument, location: String)(implicit ctx: ParserContext) {

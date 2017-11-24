@@ -5,7 +5,7 @@ import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.model.document._
 import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{LibraryReference, LinkReference}
+import amf.framework.parser.{LibraryReference, LinkReference, ParserContext}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -13,13 +13,12 @@ import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
+import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.{Oas, Platform}
-import amf.spec.ParserContext
-import amf.spec.oas._
 
 import scala.concurrent.Future
 

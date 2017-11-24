@@ -4,7 +4,6 @@ import amf.compiler.ParsedDocument
 import amf.framework.parser._
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
-import amf.spec.ParserContext
 import amf.validation.Validation
 import org.yaml.model._
 

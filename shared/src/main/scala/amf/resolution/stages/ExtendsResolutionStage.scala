@@ -3,13 +3,15 @@ package amf.resolution.stages
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document.{BaseUnit, DeclaresModel}
 import amf.framework.model.domain.{DataNode, DomainElement}
+import amf.framework.parser.ParserContext
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.SpecOrdering
+import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
+import amf.plugins.document.webapi.parser.spec.domain.{RamlEndpointParser, RamlOperationParser}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.resolution.stages.DomainElementMerging.merge
-import amf.spec.declaration.DataNodeEmitter
-import amf.spec.domain.{RamlEndpointParser, RamlOperationParser}
-import amf.spec.{ParserContext, SpecOrdering}
 import amf.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.yaml.model.{YDocument, YMap}
@@ -26,7 +28,7 @@ import scala.collection.mutable.ListBuffer
   */
 class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true)(override implicit val currentValidation: Validation) extends ResolutionStage(profile) with PlatformSecrets {
 
-  implicit val ctx: WebApiContext = ParserContext(currentValidation).toRaml
+  implicit val ctx: WebApiContext = toRaml(ParserContext(currentValidation))
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 

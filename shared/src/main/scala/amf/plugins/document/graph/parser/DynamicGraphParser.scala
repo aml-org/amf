@@ -4,9 +4,7 @@ import amf.framework.metamodel.Type.ObjType
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.domain
 import amf.framework.model.domain._
-import amf.framework.parser.Annotations
-import amf.framework.parser._
-import amf.spec.ParserContext
+import amf.framework.parser.{Annotations, _}
 import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable

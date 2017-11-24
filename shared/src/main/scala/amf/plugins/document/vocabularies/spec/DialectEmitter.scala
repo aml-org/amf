@@ -13,9 +13,9 @@ import amf.framework.parser.{FieldEntry, Position}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
 import amf.plugins.document.webapi.annotations.Aliases
-import amf.spec.common.BaseEmitters._
-import amf.spec.raml.RamlSpecEmitter
-import amf.spec.{Emitter, EntryEmitter}
+import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
+import amf.plugins.document.webapi.parser.spec.raml.RamlSpecEmitter
+import amf.plugins.document.webapi.parser.spec.{Emitter, EntryEmitter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{BaseBuilder, EntryBuilder, PartBuilder}
 import scala.collection.mutable
