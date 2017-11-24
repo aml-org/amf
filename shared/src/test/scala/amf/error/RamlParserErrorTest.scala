@@ -4,7 +4,7 @@ import amf.compiler.AMFCompiler
 import amf.framework.parser.Range
 import amf.framework.validation.AMFValidationResult
 import amf.remote._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.model.ParserSideValidations
 import amf.validation.Validation
 import org.scalatest.Matchers._

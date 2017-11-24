@@ -1,4 +1,4 @@
-package amf.lexer
+package amf.core.lexer
 
 import amf.framework.parser.Position
 

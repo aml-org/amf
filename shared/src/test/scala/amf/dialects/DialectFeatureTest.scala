@@ -8,7 +8,7 @@ import amf.dumper.AMFDumper
 import amf.remote.Syntax.Yaml
 import amf.remote.Syntax.Json
 import amf.remote.{Amf, ExtensionYamlHint, Raml, RamlYamlHint}
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite

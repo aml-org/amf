@@ -1,13 +1,13 @@
 package amf.compiler
 
-import amf.exception.CyclicReferenceException
+import amf.core.exception.CyclicReferenceException
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.parser.UnspecifiedReference
 import amf.framework.parser._
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}

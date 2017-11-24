@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
+import amf.core.unsafe.PlatformSecrets
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document._
@@ -9,20 +10,17 @@ import amf.framework.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.MapEntryEmitter
-import amf.plugins.document.webapi.parser.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
+import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{MapEntryEmitter, _}
+import amf.plugins.document.webapi.parser.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.shapes.models.{ScalarShape, Shape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import amf.remote.{Oas, Vendor}
-import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain._
-import amf.unsafe.PlatformSecrets
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable

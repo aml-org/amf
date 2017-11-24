@@ -21,7 +21,7 @@ import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import amf.remote.{Oas, Raml, Vendor}
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

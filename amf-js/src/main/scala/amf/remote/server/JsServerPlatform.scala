@@ -2,7 +2,7 @@ package amf.remote.server
 
 import amf.dialects.JSDialectRegistry
 import amf.interop.{Path, _}
-import amf.lexer.CharSequenceStream
+import amf.core.lexer.CharSequenceStream
 import amf.remote.File.FILE_PROTOCOL
 import amf.remote.{Content, File, Http, Platform}
 import amf.validation.{SHACLValidator, Validation}

@@ -18,7 +18,7 @@ import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeMo
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.document.webapi.parser.spec.Declarations
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 
 import scala.collection.mutable

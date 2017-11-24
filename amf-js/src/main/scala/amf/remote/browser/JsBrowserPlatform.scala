@@ -1,7 +1,7 @@
 package amf.remote.browser
 
 import amf.dialects.JSDialectRegistry
-import amf.lexer.CharSequenceStream
+import amf.core.lexer.CharSequenceStream
 import amf.remote.{Content, Platform, UnsupportedFileSystem}
 import amf.validation.{SHACLValidator, Validation}
 import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}

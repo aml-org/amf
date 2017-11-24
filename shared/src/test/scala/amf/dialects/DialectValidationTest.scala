@@ -6,7 +6,7 @@ import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.remote.Syntax.Json
 import amf.remote._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._

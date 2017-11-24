@@ -4,7 +4,7 @@ import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
 import amf.remote.Syntax.Syntax
 import amf.remote.Vendor
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

@@ -3,7 +3,7 @@ package amf.parser
 import amf.compiler.AMFCompiler
 import amf.framework.validation.AMFValidationResult
 import amf.remote._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}

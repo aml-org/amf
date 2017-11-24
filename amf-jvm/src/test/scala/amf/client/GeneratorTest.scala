@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.common.Tests._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
 import scala.compat.java8.FutureConverters

@@ -6,7 +6,7 @@ import amf.framework.model.document.BaseUnit
 import amf.framework.validation.AMFValidationReport
 import amf.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
-import amf.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 
 import scala.concurrent.ExecutionContext.Implicits.global
