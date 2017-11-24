@@ -1,9 +1,10 @@
-package amf.resolution.pipelines
+package amf.framework.resolution.pipelines
 
 import amf.ProfileNames
-import amf.framework.model.document.BaseUnit
-import amf.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
+import amf.framework.model.document.BaseUnit
+import amf.framework.resolution.stages.ResolutionStage
+import amf.resolution.pipelines.{AmfResolutionPipeline, OasResolutionPipeline, RamlResolutionPipeline}
 import amf.validation.Validation
 
 abstract class ResolutionPipeline extends PlatformSecrets {

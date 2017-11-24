@@ -2,6 +2,7 @@ package amf.resolution.stages
 import amf.ProfileNames
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.AmfArray
+import amf.framework.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, WebApi}
 import amf.validation.Validation

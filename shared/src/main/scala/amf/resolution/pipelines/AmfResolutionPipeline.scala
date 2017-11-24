@@ -2,6 +2,7 @@ package amf.resolution.pipelines
 
 import amf.ProfileNames
 import amf.framework.model.document.BaseUnit
+import amf.framework.resolution.pipelines.ResolutionPipeline
 import amf.resolution.stages._
 
 class AmfResolutionPipeline extends ResolutionPipeline {

@@ -1,24 +1,24 @@
 package amf.resolution.stages
 
 import amf.ProfileNames
+import amf.core.unsafe.PlatformSecrets
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.framework.metamodel.domain.DomainElementModel._
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
-import amf.framework.metamodel.domain.DomainElementModel._
 import amf.framework.metamodel.{Field, Type}
 import amf.framework.model.document._
 import amf.framework.model.domain._
 import amf.framework.parser.{FieldEntry, ParserContext, Value}
-import amf.plugins.document.webapi.parser.spec._
+import amf.framework.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.annotations.SynthesizedField
+import amf.plugins.document.webapi.parser.spec.{Declarations, _}
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ShapeModel}
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.document.webapi.parser.spec.Declarations
-import amf.core.unsafe.PlatformSecrets
 import amf.validation.Validation
 
 import scala.collection.mutable

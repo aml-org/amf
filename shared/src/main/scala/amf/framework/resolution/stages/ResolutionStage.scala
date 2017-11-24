@@ -1,4 +1,4 @@
-package amf.resolution.stages
+package amf.framework.resolution.stages
 
 import amf.framework.model.document.BaseUnit
 import amf.validation.Validation
