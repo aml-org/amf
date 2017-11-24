@@ -2,15 +2,14 @@ package amf.spec.oas
 
 import amf.core.Root
 import amf.framework.model.document._
-import amf.domain.`abstract`.{ResourceType, Trait}
-import amf.domain.extensions.CustomDomainProperty
-import amf.domain.ExternalDomainElement
 import amf.framework.parser.Annotations
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.webapi.models.{CustomDomainProperty, ExternalDomainElement}
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
 import org.yaml.model.{YMap, YType}
@@ -131,7 +130,7 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
         OasSecuritySchemeParser(map,
                                 "securityDefinitions",
                                 map,
-                                (security: amf.domain.security.SecurityScheme) => security.adopted(root.location))
+                                (security: amf.plugins.domain.webapi.models.security.SecurityScheme) => security.adopted(root.location))
           .parse())
     }
   }

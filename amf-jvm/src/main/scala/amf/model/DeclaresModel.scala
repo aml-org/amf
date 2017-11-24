@@ -2,8 +2,9 @@ package amf.model
 
 import java.util
 
-import amf.domain.{`abstract`, extensions, security}
 import amf.plugins.domain.shapes.models
+import amf.plugins.domain.webapi
+import amf.plugins.domain.webapi.models.templates
 
 import scala.collection.JavaConverters._
 import scala.language.postfixOps
@@ -20,10 +21,10 @@ trait DeclaresModel {
         case scalar: models.ScalarShape                 => ScalarShape(scalar)
         case tuple: models.TupleShape                   => TupleShape(tuple)
         case matrix: models.MatrixShape                 => MatrixShape(matrix)
-        case property: extensions.CustomDomainProperty => CustomDomainProperty(property)
-        case tr: `abstract`.Trait                      => Trait(tr)
-        case resourceType: `abstract`.ResourceType     => ResourceType(resourceType)
-        case security: security.SecurityScheme         => SecurityScheme(security)
+        case property: webapi.models.CustomDomainProperty => CustomDomainProperty(property)
+        case tr: templates.Trait                      => Trait(tr)
+        case resourceType: templates.ResourceType     => ResourceType(resourceType)
+        case security: amf.plugins.domain.webapi.models.security.SecurityScheme         => SecurityScheme(security)
         case _                                         => throw new RuntimeException("Unsupported domain element type in module declaration")
       }
     declarations.asJava

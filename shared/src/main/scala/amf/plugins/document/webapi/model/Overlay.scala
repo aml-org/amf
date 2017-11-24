@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.model
 
-import amf.domain.Fields
 import amf.framework.model.document.ExtensionLike
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.OverlayModel
 
 class Overlay(override val fields: Fields, override val annotations: Annotations)

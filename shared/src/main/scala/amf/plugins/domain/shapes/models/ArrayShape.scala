@@ -1,7 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.domain.Fields
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel._
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, MatrixShapeModel, TupleShapeModel}
 import org.yaml.model.YPart

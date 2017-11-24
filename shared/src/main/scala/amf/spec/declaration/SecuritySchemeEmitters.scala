@@ -1,12 +1,11 @@
 package amf.spec.declaration
 
 import amf.framework.model.document.BaseUnit
-import amf.domain.FieldEntry
-import amf.domain.extensions.DataNode
-import amf.domain.security._
-import amf.framework.parser.Position
-import amf.metadata.domain.security._
+import amf.framework.model.domain.DataNode
+import amf.framework.parser.{FieldEntry, Position}
 import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.webapi.metamodel.security._
+import amf.plugins.domain.webapi.models.security._
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
 import amf.spec.domain.{RamlParametersEmitter, RamlResponsesEmitter}

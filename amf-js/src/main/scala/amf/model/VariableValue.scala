@@ -1,14 +1,16 @@
 package amf.model
 
+import amf.framework.model.domain.templates
+
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
   * JVM VariableValue model class.
   */
 @JSExportAll
-case class VariableValue private[model] (private val variable: amf.domain.`abstract`.VariableValue)
+case class VariableValue private[model] (private val variable: templates.VariableValue)
     extends DomainElement {
-  def this() = this(amf.domain.`abstract`.VariableValue())
+  def this() = this(templates.VariableValue())
 
   val name: String  = variable.name
   val value: String = variable.value
@@ -23,5 +25,5 @@ case class VariableValue private[model] (private val variable: amf.domain.`abstr
     this
   }
 
-  override private[amf] def element: amf.domain.`abstract`.VariableValue = variable
+  override private[amf] def element: templates.VariableValue = variable
 }

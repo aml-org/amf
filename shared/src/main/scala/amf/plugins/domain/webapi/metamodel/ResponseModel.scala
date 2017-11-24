@@ -2,6 +2,8 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
+import amf.framework.metamodel.domain.DomainElementModel
+import amf.framework.metamodel.domain.templates.KeyField
 import amf.metadata.domain._
 import amf.plugins.domain.webapi.models.Response
 import amf.vocabulary.Namespace._

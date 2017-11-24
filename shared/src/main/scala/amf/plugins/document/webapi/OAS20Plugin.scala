@@ -5,7 +5,7 @@ import amf.client.GenerationOptions
 import amf.core.Root
 import amf.framework.model.document._
 import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{Library, Link}
+import amf.framework.parser.{LibraryReference, LinkReference}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -62,8 +62,8 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
   override def parse(document: Root, parentContext: ParserContext, platform: Platform) = {
     implicit val ctx: WebApiContext = new WebApiContext(Oas, parentContext, OasSpecAwareContext, OasSyntax)
     document.referenceKind match {
-      case Library => Some(OasModuleParser(document).parseModule())
-      case Link    => Some(OasFragmentParser(document).parseFragment())
+      case LibraryReference => Some(OasModuleParser(document).parseModule())
+      case LinkReference    => Some(OasFragmentParser(document).parseFragment())
       case _       => detectOasUnit(document)
     }
   }

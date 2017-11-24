@@ -1,14 +1,13 @@
 package amf.plugins.domain.webapi.models
 
-import amf.domain.Fields
-import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
-import amf.domain.security.ParametrizedSecurityScheme
+import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.framework.utils.Strings
 import amf.plugins.document.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 
 
 /**

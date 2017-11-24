@@ -1,8 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.domain.{Fields, Linkable}
-import amf.framework.model.domain.LexicalInformation
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{LexicalInformation, Linkable}
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.spec.{DeclarationPromise, ParserContext}
 import amf.validation.model.ParserSideValidations.ParsingErrorSpecification

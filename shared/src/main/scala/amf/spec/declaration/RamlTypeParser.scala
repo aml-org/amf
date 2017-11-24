@@ -1,8 +1,7 @@
 package amf.spec.declaration
 
-import amf.domain.Value
 import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.framework.parser.{Annotations, _}
+import amf.framework.parser.{Annotations, Value, _}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher

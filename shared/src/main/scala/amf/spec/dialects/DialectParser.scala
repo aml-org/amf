@@ -2,12 +2,10 @@ package amf.spec.dialects
 
 import amf.core.Root
 import amf.framework.model.document.{BaseUnit, Document, Module}
-import amf.domain.Fields
 import amf.domain.dialects.DomainEntity
 import amf.framework.metamodel.Type
 import amf.framework.model.domain.{AmfArray, AmfScalar, LexicalInformation}
-import amf.framework.parser.Annotations
-import amf.framework.parser._
+import amf.framework.parser.{Annotations, Fields, _}
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.plugins.document.webapi.annotations.{DomainElementReference, SourceAST, SynthesizedField}
 import amf.plugins.document.webapi.model.DialectFragment

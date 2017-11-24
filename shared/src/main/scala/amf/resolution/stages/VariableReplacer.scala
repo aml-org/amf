@@ -2,7 +2,7 @@ package amf.resolution.stages
 
 import java.util.regex.{Matcher, Pattern}
 
-import amf.domain.`abstract`.Variable
+import amf.framework.model.domain.templates.Variable
 import amf.resolution.stages.InflectorBase.Inflector
 
 import scala.collection.mutable.ListBuffer

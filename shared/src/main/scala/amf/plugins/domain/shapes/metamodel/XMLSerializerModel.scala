@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Bool, Str}
-import amf.metadata.domain.DomainElementModel
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.XMLSerializer
 import amf.vocabulary.Namespace.Shapes
 import amf.vocabulary.ValueType

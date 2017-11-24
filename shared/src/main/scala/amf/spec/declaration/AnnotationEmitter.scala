@@ -1,11 +1,13 @@
 package amf.spec.declaration
 
-import amf.domain.extensions.{CustomDomainProperty, DataNode, DomainExtension, ShapeExtension, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
-import amf.domain.{FieldEntry, Value}
-import amf.framework.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.framework.parser.{Annotations, Position}
-import amf.metadata.domain.extensions.CustomDomainPropertyModel
+import amf.domain.extensions.ShapeExtension
+import amf.framework.model.domain.{ArrayNode => DataArrayNode, ObjectNode => DataObjectNode, ScalarNode => DataScalarNode}
+import amf.framework.model.domain._
+import amf.framework.parser.{Annotations, FieldEntry, Position, Value}
 import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
+import amf.plugins.domain.webapi.models.CustomDomainProperty
+import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.remote.{Oas, Raml}
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
@@ -82,46 +84,46 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
 
   override def emit(b: PartBuilder): Unit = {
     dataNode match {
-      case scalar: DataScalarNode => emitScalar(scalar, b)
-      case array: DataArrayNode   => emitArray(array, b)
-      case obj: DataObjectNode    => emitObject(obj, b)
+      case scalar: ScalarNode => emitScalar(scalar, b)
+      case array: ArrayNode   => emitArray(array, b)
+      case obj: ObjectNode    => emitObject(obj, b)
     }
   }
 
   def emitters(): Seq[EntryEmitter] = {
     (dataNode match {
-      case scalar: DataScalarNode => Seq(scalarEmitter(scalar))
-      case array: DataArrayNode   => arrayEmitters(array)
-      case obj: DataObjectNode    => objectEmitters(obj)
+      case scalar: ScalarNode => Seq(scalarEmitter(scalar))
+      case array: ArrayNode   => arrayEmitters(array)
+      case obj: ObjectNode    => objectEmitters(obj)
     }) collect {
       case e: EntryEmitter => e
       case other           => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
     }
   }
 
-  def objectEmitters(objectNode: DataObjectNode): Seq[EntryEmitter] = {
+  def objectEmitters(objectNode: ObjectNode): Seq[EntryEmitter] = {
     objectNode.properties.keys.map { property =>
       DataPropertyEmitter(property, objectNode, ordering)
     }.toSeq
   }
 
-  def emitObject(objectNode: DataObjectNode, b: PartBuilder): Unit = {
+  def emitObject(objectNode: ObjectNode, b: PartBuilder): Unit = {
     b.obj(b => ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b)))
   }
 
-  def arrayEmitters(arrayNode: DataArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering))
+  def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering))
 
-  def emitArray(arrayNode: DataArrayNode, b: PartBuilder): Unit = {
+  def emitArray(arrayNode: ArrayNode, b: PartBuilder): Unit = {
     b.list(b => {
       ordering.sorted(arrayEmitters(arrayNode)).foreach(_.emit(b))
     })
   }
 
-  def emitScalar(scalar: DataScalarNode, b: PartBuilder): Unit = {
+  def emitScalar(scalar: ScalarNode, b: PartBuilder): Unit = {
     scalarEmitter(scalar).emit(b)
   }
 
-  def scalarEmitter(scalar: DataScalarNode): PartEmitter = {
+  def scalarEmitter(scalar: ScalarNode): PartEmitter = {
     scalar.dataType match {
       case Some(t) if t == xsdString  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
       case Some(t) if t == xsdInteger => TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
@@ -135,7 +137,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
   override def position(): Position = pos(dataNode.annotations)
 }
 
-case class DataPropertyEmitter(property: String, dataNode: DataObjectNode, ordering: SpecOrdering)
+case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering: SpecOrdering)
     extends EntryEmitter {
   val annotations: Annotations = dataNode.propertyAnnotations(property)
   val propertyValue: DataNode  = dataNode.properties(property)

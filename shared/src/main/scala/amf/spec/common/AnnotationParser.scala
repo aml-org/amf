@@ -1,9 +1,10 @@
 package amf.spec.common
 
-import amf.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.Annotations
 import amf.framework.parser._
+import amf.plugins.domain.webapi.models.CustomDomainProperty
+import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.spec.ParserContext
 import org.yaml.model._
 

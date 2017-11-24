@@ -1,25 +1,23 @@
 package amf.spec.oas
 
 import amf.core.Root
-import amf.domain.`abstract`.{ResourceType, Trait}
-import amf.domain.extensions.CustomDomainProperty
-import amf.domain.security._
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.model.domain.{AmfArray, AmfScalar}
 import amf.framework.parser.{Annotations, _}
 import amf.framework.utils.{Lazy, TemplateUri}
-import amf.metadata.domain._
-import amf.metadata.domain.extensions.CustomDomainPropertyModel
-import amf.metadata.domain.security._
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.domain.shapes.models.NodeShape
-import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
+import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
+import amf.plugins.domain.webapi.metamodel.{CustomDomainPropertyModel, _}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.security._
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._

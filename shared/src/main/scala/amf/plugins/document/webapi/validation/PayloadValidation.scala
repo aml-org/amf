@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi.validation
 
-import amf.domain.Fields
-import amf.domain.extensions.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.framework.metamodel.document.FragmentModel
 import amf.framework.model.document.{BaseUnit, Fragment}
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
+import amf.framework.parser.{Annotations, Fields}
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.plugins.domain.shapes.models.Shape

@@ -1,8 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.domain.Fields
 import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.PropertyDependenciesModel
 import amf.plugins.domain.shapes.metamodel.PropertyDependenciesModel._
 import org.yaml.model.YMapEntry

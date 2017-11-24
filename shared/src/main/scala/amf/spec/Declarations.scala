@@ -1,15 +1,14 @@
 package amf.spec
 
 import amf.domain._
-import amf.domain.`abstract`.{ResourceType, Trait}
-import amf.domain.extensions.CustomDomainProperty
-import amf.domain.security.SecurityScheme
 import amf.framework.model.document.Fragment
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.model.domain.{DomainElement, Linkable}
+import amf.framework.parser.{Annotations, Fields}
 import amf.framework.utils.QName
 import amf.plugins.domain.shapes.models.{Shape, UnresolvedShape}
-import amf.plugins.domain.webapi.models.{CreativeWork, Parameter, Payload}
+import amf.plugins.domain.webapi.models.security.SecurityScheme
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.webapi.models.{CreativeWork, CustomDomainProperty, Parameter, Payload}
 import amf.spec.SearchScope.{All, Fragments, Named}
 import org.yaml.model.YPart
 

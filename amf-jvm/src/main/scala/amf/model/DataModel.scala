@@ -1,8 +1,10 @@
 package amf.model
 
+import amf.framework.model.domain
+
 import scala.collection.JavaConverters._
 
-abstract class DataNode(private[amf] val dataNode: amf.domain.extensions.DataNode) extends DomainElement {
+abstract class DataNode(private[amf] val dataNode: domain.DataNode) extends DomainElement {
 
   def name: String = dataNode.name
 
@@ -15,15 +17,15 @@ abstract class DataNode(private[amf] val dataNode: amf.domain.extensions.DataNod
 }
 
 object DataNode {
-  def apply(x: amf.domain.extensions.DataNode): DataNode = x match {
-    case o: amf.domain.extensions.ObjectNode => ObjectNode(o)
-    case s: amf.domain.extensions.ScalarNode => ScalarNode(s)
-    case a: amf.domain.extensions.ArrayNode  => ArrayNode(a)
+  def apply(x: domain.DataNode): DataNode = x match {
+    case o: domain.ObjectNode => ObjectNode(o)
+    case s: domain.ScalarNode => ScalarNode(s)
+    case a: domain.ArrayNode  => ArrayNode(a)
     case _                                   => throw new Exception(s"Unknown data node type $x")
   }
 }
 
-case class ObjectNode(private[amf] val objectNode: amf.domain.extensions.ObjectNode) extends DataNode(objectNode) {
+case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends DataNode(objectNode) {
 
   def properties: java.util.Map[String, DataNode] =
     objectNode.properties
@@ -41,26 +43,26 @@ case class ObjectNode(private[amf] val objectNode: amf.domain.extensions.ObjectN
 
   override private[amf] def element = objectNode
 
-  def this() = this(amf.domain.extensions.ObjectNode())
+  def this() = this(domain.ObjectNode())
 
 }
 
-case class ScalarNode(private[amf] val scalarNode: amf.domain.extensions.ScalarNode) extends DataNode(scalarNode) {
+case class ScalarNode(private[amf] val scalarNode: domain.ScalarNode) extends DataNode(scalarNode) {
 
   val value: String    = scalarNode.value
   val dataType: String = scalarNode.dataType.orNull
 
   override private[amf] def element = scalarNode
 
-  def this() = this(amf.domain.extensions.ScalarNode())
+  def this() = this(domain.ScalarNode())
 
 }
 
 object ScalarNode {
-  def build(value: String, dataType: String) = ScalarNode(amf.domain.extensions.ScalarNode(value, Option(dataType)))
+  def build(value: String, dataType: String) = ScalarNode(domain.ScalarNode(value, Option(dataType)))
 }
 
-case class ArrayNode(private[amf] val arrayNode: amf.domain.extensions.ArrayNode) extends DataNode(arrayNode) {
+case class ArrayNode(private[amf] val arrayNode: domain.ArrayNode) extends DataNode(arrayNode) {
 
   def members: java.util.List[DataNode] = arrayNode.members.map(DataNode(_)).asJava
 
@@ -71,6 +73,6 @@ case class ArrayNode(private[amf] val arrayNode: amf.domain.extensions.ArrayNode
 
   override private[amf] def element = arrayNode
 
-  def this() = this(amf.domain.extensions.ArrayNode())
+  def this() = this(domain.ArrayNode())
 
 }

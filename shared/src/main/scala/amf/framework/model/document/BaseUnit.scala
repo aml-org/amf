@@ -1,10 +1,10 @@
 package amf.framework.model.document
 
-import amf.domain.{DynamicDomainElement, Value}
 import amf.framework.metamodel.Obj
 import amf.framework.metamodel.document.BaseUnitModel
 import amf.framework.metamodel.document.DocumentModel.References
-import amf.framework.model.domain.{AmfArray, AmfElement, AmfObject, DomainElement}
+import amf.framework.model.domain._
+import amf.framework.parser.Value
 import amf.metadata.MetaModelTypeMapping
 import amf.resolution.pipelines.ResolutionPipeline
 

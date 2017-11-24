@@ -1,9 +1,11 @@
 package amf.model
 
+import amf.plugins.domain.webapi.models.extensions
+
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class DomainExtension(private[amf] val domainExtension: amf.domain.extensions.DomainExtension)
+case class DomainExtension(private[amf] val domainExtension: extensions.DomainExtension)
     extends DomainElement {
 
   def name: String                    = domainExtension.name
@@ -27,5 +29,5 @@ case class DomainExtension(private[amf] val domainExtension: amf.domain.extensio
 
   override private[amf] def element = domainExtension
 
-  def this() = this(amf.domain.extensions.DomainExtension())
+  def this() = this(extensions.DomainExtension())
 }

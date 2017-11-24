@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
-import amf.metadata.domain.DomainElementModel
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.SchemaShape
 import amf.vocabulary.Namespace.Shacl
 import amf.vocabulary.ValueType

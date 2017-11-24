@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Int, Iri}
-import amf.metadata.domain.DomainElementModel
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.PropertyShape
 import amf.vocabulary.Namespace.{Shacl, Shapes}
 import amf.vocabulary.ValueType

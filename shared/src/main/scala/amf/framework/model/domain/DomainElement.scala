@@ -1,11 +1,10 @@
 package amf.framework.model.domain
 
-import amf.domain.FieldEntry
-import amf.domain.`abstract`.{ParametrizedResourceType, ParametrizedTrait}
-import amf.domain.extensions.DomainExtension
 import amf.framework.metamodel.Obj
-import amf.framework.parser.Range
-import amf.metadata.domain.DomainElementModel.{CustomDomainProperties, Extends, `type`}
+import amf.framework.parser.{FieldEntry, Range}
+import amf.plugins.domain.webapi.models.extensions.DomainExtension
+import amf.framework.metamodel.domain.DomainElementModel._
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.vocabulary.Namespace
 
 /**

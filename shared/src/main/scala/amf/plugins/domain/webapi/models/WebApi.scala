@@ -1,9 +1,9 @@
 package amf.plugins.domain.webapi.models
 
-import amf.domain.security.ParametrizedSecurityScheme
-import amf.domain.{_}
+import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
+import amf.domain._
 import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.WebApiModel.{License => WebApiLicense, _}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.yaml.model.YMap

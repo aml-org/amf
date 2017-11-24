@@ -2,12 +2,11 @@ package amf.plugins.document.graph.parser
 
 import amf.framework.metamodel.Type
 import amf.framework.metamodel.Type._
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.domain.{AmfElement, Annotation}
-import amf.framework.parser.Annotations
-import amf.framework.parser._
+import amf.framework.parser.{Annotations, _}
 import amf.metadata.SourceMapModel
 import amf.metadata.SourceMapModel.{Element, Value}
-import amf.metadata.domain.DomainElementModel.Sources
 import amf.spec.ParserContext
 import amf.vocabulary.Namespace
 import amf.vocabulary.Namespace.SourceMaps
@@ -68,7 +67,7 @@ trait GraphParserHelpers {
 
   protected def retrieveSources(id: String, map: YMap): SourceMap = {
     map
-      .key(Sources.value.iri())
+      .key(DomainElementModel.Sources.value.iri())
       .flatMap { entry =>
         value(SourceMapModel, entry.value).toOption[YMap].map(parseSourceNode)
       }

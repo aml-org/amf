@@ -1,20 +1,21 @@
 package amf.resolution.stages
 
 import amf.ProfileNames
-import amf.domain._
-import amf.domain.extensions.DataNode
 import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.framework.metamodel.domain.templates.KeyField
+import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.framework.metamodel.domain.DomainElementModel._
 import amf.framework.metamodel.{Field, Type}
 import amf.framework.model.document._
-import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
-import amf.metadata.domain.DomainElementModel.{Includes, Sources}
-import amf.metadata.domain.`abstract`.ParametrizedTraitModel
-import amf.metadata.domain.extensions.{DataNodeModel, DomainExtensionModel}
-import amf.metadata.domain.security.ParametrizedSecuritySchemeModel
-import amf.metadata.domain.{DomainElementModel, ExampleModel, KeyField}
+import amf.framework.model.domain._
+import amf.framework.parser.{FieldEntry, Value}
+import amf.metadata.domain.ExampleModel
 import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.spec.{Declarations, ParserContext}
 import amf.unsafe.PlatformSecrets

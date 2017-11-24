@@ -1,6 +1,8 @@
 package amf.model
 
-case class DomainExtension(private[amf] val domainExtension: amf.domain.extensions.DomainExtension)
+import amf.plugins.domain.webapi.models.extensions
+
+case class DomainExtension(private[amf] val domainExtension: extensions.DomainExtension)
     extends DomainElement {
 
   def name: String                    = domainExtension.name
@@ -24,5 +26,5 @@ case class DomainExtension(private[amf] val domainExtension: amf.domain.extensio
 
   override private[amf] def element = domainExtension
 
-  def this() = this(amf.domain.extensions.DomainExtension())
+  def this() = this(extensions.DomainExtension())
 }

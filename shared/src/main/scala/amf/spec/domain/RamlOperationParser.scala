@@ -1,9 +1,9 @@
 package amf.spec.domain
 
+import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.model.domain.AmfArray
 import amf.framework.parser.Annotations
 import amf.framework.parser._
-import amf.metadata.domain.DomainElementModel
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method

@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.references
 
 import amf.compiler.ParsedDocument
-import amf.framework.parser.{AbstractReferenceCollector, Library, Link, Reference}
+import amf.framework.parser.{AbstractReferenceCollector, LibraryReference, LinkReference, Reference}
 import amf.framework.parser._
 import amf.spec.ParserContext
 import amf.validation.Validation
@@ -35,7 +35,7 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
   }
 
   private def library(entry: YMapEntry) = {
-    references += Reference(entry.value, Library, entry)
+    references += Reference(entry.value, LibraryReference, entry)
   }
 
   private def links(part: YPart): Unit = {
@@ -47,7 +47,7 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
 
   private def ramlInclude(node: YNode) = {
     node.value match {
-      case scalar: YScalar => references += Reference(scalar.text, Link, node)
+      case scalar: YScalar => references += Reference(scalar.text, LinkReference, node)
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
   }

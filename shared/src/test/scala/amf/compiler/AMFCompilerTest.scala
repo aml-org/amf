@@ -2,7 +2,7 @@ package amf.compiler
 
 import amf.exception.CyclicReferenceException
 import amf.framework.model.document.{BaseUnit, Document}
-import amf.framework.parser.Unspecified
+import amf.framework.parser.UnspecifiedReference
 import amf.framework.parser._
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote.Syntax.{Json, Syntax, Yaml}
@@ -98,7 +98,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Libraries (raml)") {
     AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
       .root() map {
-      case Root(root, _, references, Unspecified, _, _) =>
+      case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references.map(_.baseUnit))
@@ -109,7 +109,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   test("Libraries (oas)") {
     AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
       .root() map {
-      case Root(root, _, references, Unspecified, _, _) =>
+      case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(3)
         assertUses(body.key("x-uses").get, references.map(_.baseUnit))

@@ -1,8 +1,6 @@
 package amf.spec.raml
 
 import amf.core.Root
-import amf.domain.`abstract`.{ResourceType, Trait}
-import amf.domain.extensions.CustomDomainProperty
 import amf.framework.model.document.Fragment
 import amf.framework.parser.Annotations
 import amf.plugins.document.webapi.annotations.SourceVendor
@@ -11,6 +9,8 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.domain.shapes.models.Shape
+import amf.plugins.domain.webapi.models.CustomDomainProperty
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.remote.Raml
 import amf.spec.declaration._
 import amf.spec.domain.RamlNamedExampleParser
@@ -128,7 +128,7 @@ case class RamlFragmentParser(root: Root,  fragmentType: RamlFragment)(implicit 
         RamlSecuritySchemeParser(map,
                                  "securityDefinitions",
                                  map,
-                                 (security: amf.domain.security.SecurityScheme) => security.adopted(root.location))
+                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) => security.adopted(root.location))
           .parse())
     }
   }

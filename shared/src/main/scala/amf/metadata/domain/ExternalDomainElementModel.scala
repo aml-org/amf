@@ -1,8 +1,9 @@
 package amf.metadata.domain
 
-import amf.domain.ExternalDomainElement
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
+import amf.framework.metamodel.domain.DomainElementModel
+import amf.plugins.domain.webapi.models.ExternalDomainElement
 import amf.vocabulary.Namespace._
 import amf.vocabulary.ValueType
 

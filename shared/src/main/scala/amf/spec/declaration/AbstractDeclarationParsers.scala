@@ -1,8 +1,9 @@
 package amf.spec.declaration
 
-import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
+import amf.framework.model.domain.templates.AbstractDeclaration
 import amf.framework.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.spec.SearchScope
 import amf.spec.common.{AbstractVariables, DataNodeParser}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
