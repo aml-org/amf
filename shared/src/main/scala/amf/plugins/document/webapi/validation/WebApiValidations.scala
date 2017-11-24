@@ -5,7 +5,7 @@ import amf.framework.remote.Platform
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation._
 import amf.framework.validation.core.ValidationResult
-import amf.validation.model.{DefaultAMFValidations, ValidationProfile, ValidationSpecification}
+import amf.plugins.features.validation.model.{DefaultAMFValidations, ValidationProfile, ValidationSpecification}
 import amf.framework.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global

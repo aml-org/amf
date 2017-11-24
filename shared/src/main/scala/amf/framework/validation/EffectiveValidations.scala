@@ -1,6 +1,6 @@
 package amf.framework.validation
 
-import amf.validation.model.{ValidationProfile, ValidationSpecification}
+import amf.plugins.features.validation.model.{ValidationProfile, ValidationSpecification}
 import amf.framework.vocabulary.Namespace
 
 import scala.collection.mutable

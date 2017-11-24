@@ -5,7 +5,7 @@ import amf.framework.model.domain.LexicalInformation
 import amf.framework.plugins.AMFPlugin
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.core.{ValidationReport, ValidationResult}
-import amf.validation.model.DefaultAMFValidations
+import amf.plugins.features.validation.model.DefaultAMFValidations
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global

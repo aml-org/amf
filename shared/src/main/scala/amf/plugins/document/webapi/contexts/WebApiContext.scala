@@ -4,7 +4,7 @@ import amf.framework.parser.ParserContext
 import amf.framework.remote.Vendor
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.domain.shapes.models.Shape
-import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
+import amf.framework.validation.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.validation, wrapped.rootContextDocument, wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {

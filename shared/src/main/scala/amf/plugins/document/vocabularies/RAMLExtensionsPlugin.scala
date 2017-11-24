@@ -12,8 +12,9 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.spec.{DialectEmitter, DialectParser}
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.validation.model.{AMFDialectValidations, ValidationProfile}
+import amf.plugins.features.validation.model.ValidationProfile
 import org.yaml.model.{YComment, YDocument}
 
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -3,7 +3,7 @@ package amf.framework.plugins
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.Platform
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
-import amf.validation.model.ValidationProfile
+import amf.plugins.features.validation.model.ValidationProfile
 
 import scala.concurrent.Future
 

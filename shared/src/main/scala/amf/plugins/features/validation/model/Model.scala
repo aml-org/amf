@@ -1,4 +1,4 @@
-package amf.validation.model
+package amf.plugins.features.validation.model
 
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.framework.vocabulary.Namespace

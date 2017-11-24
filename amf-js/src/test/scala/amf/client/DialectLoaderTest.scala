@@ -2,10 +2,10 @@ package amf.client
 
 import amf.common.Tests._
 import amf.compiler.AMFCompiler
+import amf.core.client.GenerationOptions
+import amf.core.unsafe.PlatformSecrets
 import amf.dumper.AMFDumper
 import amf.framework.remote.Syntax.Json
-import amf.remote.Amf
-import amf.core.unsafe.PlatformSecrets
 import amf.framework.remote.{Amf, RamlYamlHint}
 import amf.validation.Validation
 import org.scalatest.AsyncFunSuite

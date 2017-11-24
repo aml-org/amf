@@ -1,4 +1,4 @@
-package amf.validation.emitters
+package amf.plugins.features.validation.emitters
 
 import amf.framework.model.domain.LexicalInformation
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}

@@ -5,7 +5,7 @@ import amf.framework.model.document.BaseUnit
 import amf.framework.remote.Platform
 import amf.framework.validation.AMFValidationReport
 import amf.validation.Validation
-import amf.validation.emitters.ValidationReportJSONLDEmitter
+import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}

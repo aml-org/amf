@@ -8,7 +8,7 @@ import amf.framework.remote.Platform
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.plugins.domain.shapes.models.Shape
-import amf.validation.model.{AMFShapeValidations, ValidationSpecification}
+import amf.plugins.features.validation.model.ValidationSpecification
 import amf.framework.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global

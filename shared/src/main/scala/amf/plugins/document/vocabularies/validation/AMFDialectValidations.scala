@@ -1,8 +1,10 @@
-package amf.validation.model
+package amf.plugins.document.vocabularies.validation
 
 import amf.framework.metamodel.Type.{Bool, Int, Iri, Str}
-import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, DialectPropertyMapping}
+import amf.framework.validation.ParserSideValidations
 import amf.framework.vocabulary.Namespace
+import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, DialectPropertyMapping}
+import amf.plugins.features.validation.model.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer

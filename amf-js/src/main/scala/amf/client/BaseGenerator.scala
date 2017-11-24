@@ -1,5 +1,5 @@
 package amf.client
-import amf.core.client.{Handler, PlatformGenerator}
+import amf.core.client.{GenerationOptions, Handler, PlatformGenerator}
 import amf.model.BaseUnit
 import amf.framework.remote.Syntax.Syntax
 import amf.framework.remote.Vendor

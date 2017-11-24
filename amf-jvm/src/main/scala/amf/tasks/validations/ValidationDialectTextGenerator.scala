@@ -1,6 +1,6 @@
 package amf.tasks.validations
 
-import amf.validation.model.{ValidationProfile, ValidationSpecification}
+import amf.plugins.features.validation.model.{ValidationProfile, ValidationSpecification}
 import amf.framework.vocabulary.Namespace
 
 class ValidationDialectTextGenerator(profile: ValidationProfile) {

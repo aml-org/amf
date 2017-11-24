@@ -3,7 +3,7 @@ package amf.framework.validation
 import amf.ProfileNames
 import amf.framework.model.document.BaseUnit
 import amf.framework.validation.core.ValidationResult
-import amf.validation.model.ValidationSpecification
+import amf.plugins.features.validation.model.ValidationSpecification
 import amf.framework.vocabulary.Namespace
 
 import scala.collection.mutable
