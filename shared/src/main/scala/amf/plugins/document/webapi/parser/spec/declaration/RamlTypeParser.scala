@@ -16,7 +16,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender

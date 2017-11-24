@@ -5,7 +5,7 @@ import amf.framework.metamodel.Type
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ParserContext
 import amf.plugins.document.vocabularies.spec._
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 /**
   * Created by Pavel Petrochenko on 14/09/17.

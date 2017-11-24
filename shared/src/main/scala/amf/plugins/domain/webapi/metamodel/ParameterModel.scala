@@ -6,8 +6,8 @@ import amf.framework.metamodel.domain.templates.KeyField
 import amf.framework.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.Parameter
-import amf.vocabulary.Namespace.{Http, Hydra, Schema => SchemaNamespace}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Http, Hydra, Schema => SchemaNamespace}
+import amf.framework.vocabulary.ValueType
 
 /**
   * Parameter metamodel.

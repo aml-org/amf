@@ -11,7 +11,7 @@ import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
 import amf.plugins.document.webapi.annotations.Aliases
 import amf.plugins.document.webapi.model.DialectFragment
 import amf.plugins.document.webapi.parser.spec.common.ValueNode
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 import org.yaml.model._
 
 import scala.collection.mutable

@@ -3,8 +3,8 @@ package amf.framework.metamodel.domain.templates
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Iri, Str}
 import amf.framework.metamodel.domain.DomainElementModel
-import amf.vocabulary.Namespace.Document
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Document
+import amf.framework.vocabulary.ValueType
 
 trait ParametrizedDeclarationModel extends DomainElementModel with KeyField {
 

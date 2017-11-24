@@ -4,7 +4,7 @@ import amf.ProfileNames
 import amf.framework.model.document.BaseUnit
 import amf.framework.validation.core.ValidationResult
 import amf.validation.model.ValidationSpecification
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.collection.mutable
 

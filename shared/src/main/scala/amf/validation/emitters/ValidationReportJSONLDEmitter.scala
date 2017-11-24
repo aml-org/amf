@@ -3,7 +3,7 @@ package amf.validation.emitters
 import amf.framework.model.domain.LexicalInformation
 import amf.framework.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender

@@ -4,7 +4,7 @@ import amf.core.lexer.CharSequenceStream
 import amf.framework.validation.core.SHACLValidator
 import amf.plugins.document.vocabularies.core.PlatformDialectRegistry
 import amf.validation.Validation
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 
 import scala.collection.mutable

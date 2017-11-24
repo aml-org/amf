@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.framework.validation.core.ValidationResult
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.json4s.JObject
 import org.json4s.JsonAST.JString
 

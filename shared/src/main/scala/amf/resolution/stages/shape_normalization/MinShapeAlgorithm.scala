@@ -4,7 +4,7 @@ import amf.framework.model.domain.AmfArray
 import amf.framework.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.collection.mutable
 

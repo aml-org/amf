@@ -4,11 +4,10 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.domain.templates.KeyField
-import amf.metadata.domain._
+import amf.framework.vocabulary.Namespace._
+import amf.framework.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.models.Response
-import amf.vocabulary.Namespace._
-import amf.vocabulary.ValueType
 
 /**
   * Response metamodel.

@@ -5,8 +5,8 @@ import amf.framework.metamodel.Type.Array
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.Request
-import amf.vocabulary.Namespace.Http
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Http
+import amf.framework.vocabulary.ValueType
 
 /**
   * Request metamodel.

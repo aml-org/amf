@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.parser
 
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.vocabulary.Namespace.{Shapes, Xsd}
+import amf.framework.vocabulary.Namespace.{Shapes, Xsd}
 
 /**
   * XSD [[TypeDef]] mapping

@@ -8,7 +8,7 @@ import amf.framework.model.domain.templates.Variable
 import amf.framework.parser.{Annotations, Fields}
 import amf.framework.utils._
 import amf.resolution.stages.VariableReplacer
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YPart, YSequence}
 
 import scala.collection.mutable

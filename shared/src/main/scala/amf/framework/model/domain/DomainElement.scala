@@ -5,7 +5,7 @@ import amf.framework.parser.{FieldEntry, Range}
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.framework.metamodel.domain.DomainElementModel._
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 /**
   * Internal model for any domain element

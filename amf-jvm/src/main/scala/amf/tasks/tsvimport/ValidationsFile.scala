@@ -3,7 +3,7 @@ package amf.tasks.tsvimport
 import java.io.{BufferedReader, File, FileReader}
 
 import amf.validation.model.AMFValidation
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.collection.JavaConverters._
 

@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.document._
 import amf.framework.model.domain.AmfObject
 import amf.plugins.document.webapi.model._
-import amf.vocabulary.Namespace.Document
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Document
+import amf.framework.vocabulary.ValueType
 
 object FragmentsTypesModels {
 

@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
 import amf.validation.Validation
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 import org.scalatest.Matchers._
 
 import scala.util.{Failure, Success}

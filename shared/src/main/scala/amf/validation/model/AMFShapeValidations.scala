@@ -4,7 +4,7 @@ import amf.framework.model.domain.AmfScalar
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models._
 import amf.resolution.pipelines.CanonicalShapePipeline
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 class AMFShapeValidations(shape: Shape) {
 

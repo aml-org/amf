@@ -6,8 +6,8 @@ import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.EndPoint
-import amf.vocabulary.Namespace.{Http, Hydra, Schema}
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.Namespace.{Http, Hydra, Schema}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 /**
   * EndPoint metamodel

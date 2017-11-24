@@ -11,8 +11,8 @@ import amf.framework.parser.{FieldEntry, Value}
 import amf.metadata._
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
-import amf.vocabulary.Namespace.SourceMaps
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.Namespace.SourceMaps
+import amf.framework.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

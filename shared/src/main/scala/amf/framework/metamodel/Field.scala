@@ -1,6 +1,6 @@
 package amf.framework.metamodel
 
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.ValueType
 
 /**
   * Field

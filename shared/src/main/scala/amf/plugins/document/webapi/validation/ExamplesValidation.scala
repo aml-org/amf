@@ -10,7 +10,7 @@ import amf.core.unsafe.TrunkPlatform
 import amf.framework.remote.Platform
 import amf.validation._
 import amf.validation.model.ParserSideValidations
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}

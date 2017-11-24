@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Array, Str}
 import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
 import amf.plugins.domain.webapi.models.security.{ApiKeySettings, OAuth1Settings, OAuth2Settings, Settings}
-import amf.vocabulary.Namespace.Security
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Security
+import amf.framework.vocabulary.ValueType
 
 trait SettingsModel extends DomainElementModel
 

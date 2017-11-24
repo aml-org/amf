@@ -1,6 +1,5 @@
 package amf.plugins.domain.webapi.models
 
-import amf.domain._
 import amf.framework.model.domain.{AmfArray, DomainElement}
 import amf.framework.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example

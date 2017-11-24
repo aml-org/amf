@@ -10,7 +10,7 @@ import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.resolution.stages.shape_normalization.MinShapeAlgorithm
 import amf.validation.Validation
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 import scala.collection.mutable.ListBuffer
 

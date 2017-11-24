@@ -4,7 +4,7 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.vocabulary.{Namespace, ValueType}
+import amf.framework.vocabulary.{Namespace, ValueType}
 
 object AnyShapeModel extends DomainElementModel {
   val Name = Field(Str, Namespace.Shacl + "name")

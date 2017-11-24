@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type._
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.PropertyDependencies
-import amf.vocabulary.Namespace.Shapes
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Shapes
+import amf.framework.vocabulary.ValueType
 
 /**
   *

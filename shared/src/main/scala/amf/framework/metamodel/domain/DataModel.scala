@@ -2,8 +2,8 @@ package amf.framework.metamodel.domain
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
-import amf.vocabulary.Namespace.{Data, Schema}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Data, Schema}
+import amf.framework.vocabulary.ValueType
 
 /**
   * Data Model to parse any generic data structure defined

@@ -2,7 +2,7 @@ package amf.validation.model
 
 import amf.ProfileNames
 import amf.framework.validation.SeverityLevels
-import amf.vocabulary.Namespace
+import amf.framework.vocabulary.Namespace
 
 /**
   * Created by antoniogarrote on 17/07/2017.

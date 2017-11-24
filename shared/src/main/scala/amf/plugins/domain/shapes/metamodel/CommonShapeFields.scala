@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.{Int, Str}
-import amf.vocabulary.Namespace.{Shacl, Shapes}
+import amf.framework.vocabulary.Namespace.{Shacl, Shapes}
 
 trait CommonShapeFields {
 

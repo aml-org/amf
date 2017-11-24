@@ -10,7 +10,8 @@ import amf.plugins.domain.shapes.models.{Shape, ShapeExtension}
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
-import amf.vocabulary.{Namespace, VocabularyMappings}
+import amf.framework.vocabulary.Namespace
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 

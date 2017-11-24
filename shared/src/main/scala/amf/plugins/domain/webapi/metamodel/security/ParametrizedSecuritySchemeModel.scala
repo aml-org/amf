@@ -5,8 +5,8 @@ import amf.framework.metamodel.Type.{Iri, Str}
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.framework.metamodel.domain.templates.KeyField
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
-import amf.vocabulary.Namespace.Security
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Security
+import amf.framework.vocabulary.ValueType
 
 object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField {
 

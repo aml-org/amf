@@ -2,7 +2,7 @@ package amf.framework.metamodel.document
 
 import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Iri
-import amf.vocabulary.Namespace.Document
+import amf.framework.vocabulary.Namespace.Document
 
 object ExtensionLikeModel extends ExtensionLikeModel
 

@@ -4,8 +4,8 @@ import amf.framework.metamodel.Type.Array
 import amf.framework.metamodel.document.SourceMapModel
 import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj}
 import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel
-import amf.vocabulary.Namespace.{Document, SourceMaps}
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.{Document, SourceMaps}
+import amf.framework.vocabulary.ValueType
 
 /**
   * Domain element meta-model

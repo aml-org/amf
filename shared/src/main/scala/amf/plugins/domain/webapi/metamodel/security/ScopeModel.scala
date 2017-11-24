@@ -4,8 +4,8 @@ import amf.framework.metamodel.Field
 import amf.framework.metamodel.Type.Str
 import amf.framework.metamodel.domain.DomainElementModel
 import amf.plugins.domain.webapi.models.security.Scope
-import amf.vocabulary.Namespace.Security
-import amf.vocabulary.ValueType
+import amf.framework.vocabulary.Namespace.Security
+import amf.framework.vocabulary.ValueType
 
 object ScopeModel extends DomainElementModel {
 
