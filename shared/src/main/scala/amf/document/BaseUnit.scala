@@ -60,7 +60,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def findBy(predicate: (DomainElement) => Boolean): Seq[DomainElement] = {
     findInDeclaredModel(predicate, this, first = false, ListBuffer.empty) ++
-      findInEncodedModel(predicate, this,first = false)
+      findInEncodedModel(predicate, this, first = false)
   }
 
   def transform(selector: (DomainElement) => Boolean,
@@ -88,8 +88,9 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
                                  first: Boolean = false,
                                  acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement]) = {
     encoder match {
-      case encoder: EncodesModel => findModelByCondition(predicate, encoder.encodes, first, acc)
-      case _                     => ListBuffer.empty
+      case encoder: EncodesModel if Option(encoder.encodes).isDefined =>
+        findModelByCondition(predicate, encoder.encodes, first, acc)
+      case _ => ListBuffer.empty
     }
   }
 
