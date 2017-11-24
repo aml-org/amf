@@ -1,6 +1,7 @@
 // auto-generated class from ValidationsImporter.toScala
 package amf.validation.model
 
+// scalastyle:off line.contains.tab
 object AMFRawValidations {
   val raw = List(
     "		AMF	Domain	raml-doc:DomainElement	schema-org:name	PropertyShape	sh:path	sh:datatype	xsd:string	Title and names must be string	Names must be string",
@@ -130,7 +131,6 @@ object AMFRawValidations {
     "amf-parser:mandatory-api-version	Missing madatory Swagger / info / version	OpenAPI	Domain	schema-org:WebAPI	schema-org:version	PropertyShape	sh:path	sh:minCount	1	API Version is Mandatory	Version is mandatory in Info object",
     "amf-parser:raml-schemes	Protocols property must be http or https	RAML	Domain	schema-org:WebAPI	raml-http:scheme	PropertyShape	sh:path	sh:in	http,https,HTTP,HTTPS	Protocols must have a case insensitive value matching http or https	Swagger object 'schemes' property must have a case insensitive value matching http or https",
     "amf-parser:openapi-schemes	Protocols property must be http,https,ws,wss	OpenAPI	Domain	schema-org:WebAPI	raml-http:scheme	PropertyShape	sh:path	sh:in	http,https,ws,wss	Protocols must match a value http, https, ws or wss	Swagger object 'schemes' property must have a value matching http, https, ws or wss",
-    "amf-parser:empty-endpoints	No endpoints declared	OpenAPI	Domain	schema-org:WebAPI	raml-http:endpoint	PropertyShape	sh:path	sh:minCount	1	Resources cannot be empty	Paths object cannot be empty",
     "amf-parser:mandatory-external-doc-url	Swagger external-doc element without URL	OpenAPI	Domain	schema-org:CreativeWork	schema-org:url	PropertyShape	sh:path	sh:minCount	1	Documentation URL is mandatory in API external documentation	URL is mandatory in External Documentation object",
     "amf-parser:mandatory-license-name	Swagger License node without name	OpenAPI	Domain	raml-http:License	schema-org:name	PropertyShape	sh:path	sh:minCount	1	License name is mandatory if license information is included	Name is mandatory in License object",
     "amf-parser:strict-url-strings	URLs in values mapped to schema-org:url must be valid	AMF	Domain	raml-doc:DomainElement	schema-org:url	NodeShape	sh:targetObjectsOf	sh:nodeKind	sh:IRI	URLs must be valid	URLs must be valid",
