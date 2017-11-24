@@ -33,14 +33,6 @@ validations:
       in: [ http,https,ws,wss ]
          
 
-  amf-parser.empty-endpoints:
-    message: Resources cannot be empty
-    targetClass: schema.WebAPI
-    propertyConstraint: http.endpoint
-    http.endpoint:
-      minCount: 1
-         
-
   amf-parser.mandatory-external-doc-url:
     message: Documentation URL is mandatory in API external documentation
     targetClass: schema.CreativeWork
