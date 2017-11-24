@@ -2,8 +2,10 @@ package amf.spec.domain
 
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.{FieldEntry, Position}
+import amf.framework.parser._
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.document.webapi.annotations.SynthesizedField
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.spec.common.BaseEmitters._
 import amf.spec.common.SpecEmitterContext
@@ -126,7 +128,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
         fs.entry(Strict).foreach(f => results += ValueEmitter("strict", f))
       }
 
-      fs.entry(Value)
+      fs.entry(ExampleModel.Value)
         .foreach(f => {
           results += EntryPartEmitter("value",
                                       StringToAstEmitter(f.value.toString),
@@ -136,7 +138,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
       results ++= AnnotationsEmitter(example, ordering).emitters
 
     } else {
-      fs.entry(Value).foreach(f => results += StringToAstEmitter(f.value.toString))
+      fs.entry(ExampleModel.Value).foreach(f => results += StringToAstEmitter(f.value.toString))
     }
 
     results
