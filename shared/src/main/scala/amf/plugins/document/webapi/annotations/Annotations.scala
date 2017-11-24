@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.annotations
 
 import amf.framework.model.domain.{AmfElement, Annotation, SerializableAnnotation, _}
 import amf.framework.parser.Range
+import amf.framework.remote._
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.remote._

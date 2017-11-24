@@ -2,6 +2,7 @@ package amf.core.unsafe
 
 
 import amf.core.lexer.CharSequenceStream
+import amf.framework.remote.{Content, Context, Platform, UnsupportedFileSystem}
 import amf.remote._
 import amf.framework.validation.core.SHACLValidator
 import amf.plugins.document.vocabularies.core.{DialectLanguageDefinition, PlatformDialectRegistry, VocabularyLanguageDefinition}

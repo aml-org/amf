@@ -4,10 +4,10 @@ import amf.framework.metamodel.document.FragmentModel
 import amf.framework.model.document.{BaseUnit, Fragment}
 import amf.framework.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 import amf.framework.parser.{Annotations, Fields}
+import amf.framework.remote.Platform
 import amf.framework.services.RuntimeValidator
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.plugins.domain.shapes.models.Shape
-import amf.remote.Platform
 import amf.validation.model.{AMFShapeValidations, ValidationSpecification}
 import amf.vocabulary.Namespace
 

@@ -3,8 +3,9 @@ package amf.remote
 import java.util.Date
 
 import amf.common.ListAssertions
-import amf.remote.Mimes.`APPLICATION/YAML`
+import amf.framework.remote.Mimes.`APPLICATION/YAML`
 import amf.core.unsafe.PlatformSecrets
+import amf.framework.remote.Content
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
 

@@ -6,8 +6,8 @@ import amf.framework.services.RuntimeCompiler
 import amf.framework.validation.{AMFValidationResult, SeverityLevels}
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.domain.shapes.models.{Example, Shape}
-import amf.remote.Platform
 import amf.core.unsafe.TrunkPlatform
+import amf.framework.remote.Platform
 import amf.validation._
 import amf.validation.model.ParserSideValidations
 import amf.vocabulary.Namespace

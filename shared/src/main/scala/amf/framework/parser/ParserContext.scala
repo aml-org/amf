@@ -2,10 +2,10 @@ package amf.framework.parser
 
 import amf.compiler.ParsedReference
 import amf.framework.model.domain.LexicalInformation
+import amf.framework.remote.{Unknown, Vendor}
 import amf.framework.validation.SeverityLevels.VIOLATION
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.parser.spec.{Declarations, SpecSyntax}
-import amf.remote.{Unknown, Vendor}
 import amf.validation.Validation
 import amf.validation.model.ParserSideValidations.ParsingErrorSpecification
 import org.mulesoft.lexer.InputRange

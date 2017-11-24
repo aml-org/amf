@@ -6,6 +6,7 @@ import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
+import amf.framework.remote._
 import amf.io.BuildCycleTests
 import amf.remote._
 import amf.validation.Validation

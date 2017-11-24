@@ -3,14 +3,12 @@ package amf.dialects
 import amf.client.GenerationOptions
 import amf.common.Tests.checkDiff
 import amf.compiler.AMFCompiler
-import amf.framework.model.document.BaseUnit
-import amf.dumper.AMFDumper
-import amf.remote.Syntax.Yaml
-import amf.remote.Syntax.Json
-import amf.remote.{Amf, ExtensionYamlHint, Raml, RamlYamlHint}
 import amf.core.unsafe.PlatformSecrets
+import amf.dumper.AMFDumper
+import amf.framework.model.document.BaseUnit
+import amf.framework.remote.Syntax.{Json, Yaml}
+import amf.framework.remote.{Amf, ExtensionYamlHint, Raml}
 import amf.validation.Validation
-import amf.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,8 +1,8 @@
 package amf.dialects
 import amf.compiler.AMFCompiler
+import amf.framework.remote.{ExtensionYamlHint, Platform}
 import amf.plugins.document.vocabularies.core.{DialectLoader, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.remote.{ExtensionYamlHint, Platform, RamlYamlHint}
 import amf.validation.Validation
 
 import scala.concurrent.Future

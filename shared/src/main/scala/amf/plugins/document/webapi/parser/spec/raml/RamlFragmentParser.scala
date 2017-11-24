@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.framework.model.document.Fragment
 import amf.framework.parser.Annotations
+import amf.framework.remote.Raml
 import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._
@@ -11,7 +12,6 @@ import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.remote.Raml
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
 import org.yaml.model.{YMap, YType}

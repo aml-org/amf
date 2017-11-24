@@ -2,14 +2,13 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.framework.model.domain.AmfScalar
 import amf.framework.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ScalarEmitter
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.framework.remote.{Oas, Raml}
+import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ScalarEmitter, _}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters
+import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.remote.{Oas, Raml}
-import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 /**

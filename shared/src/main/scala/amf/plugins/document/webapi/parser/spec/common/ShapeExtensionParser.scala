@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.common
 
 import amf.framework.parser._
+import amf.framework.remote.{Oas, Raml}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.shapes.models.{Shape, ShapeExtension}
-import amf.remote.{Oas, Raml}
 import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: ParserContext) {

@@ -1,4 +1,4 @@
-package amf.remote
+package amf.framework.remote
 
 /**
   *

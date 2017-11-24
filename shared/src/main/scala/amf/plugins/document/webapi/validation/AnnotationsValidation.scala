@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.validation
 
 import amf.framework.model.document.BaseUnit
+import amf.framework.remote.Platform
 import amf.framework.validation.AMFValidationResult
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
-import amf.remote.Platform
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
 
 import scala.concurrent.ExecutionContext.Implicits.global

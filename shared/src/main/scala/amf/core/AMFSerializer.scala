@@ -5,12 +5,12 @@ import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.idCounter
 import amf.framework.plugins.AMFSyntaxPlugin
 import amf.framework.registries.AMFPluginsRegistry
+import amf.framework.remote.Platform
 import amf.framework.services.RuntimeSerializer
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.remote.Platform
 import org.yaml.model.YDocument
 
 import scala.concurrent.ExecutionContext.Implicits.global

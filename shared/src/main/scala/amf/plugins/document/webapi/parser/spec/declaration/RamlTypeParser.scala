@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.framework.parser.{Annotations, Value, _}
+import amf.framework.remote.Raml
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
@@ -15,7 +16,6 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.remote.Raml
 import amf.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser

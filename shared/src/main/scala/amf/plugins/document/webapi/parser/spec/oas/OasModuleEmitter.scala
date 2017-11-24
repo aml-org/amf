@@ -4,13 +4,13 @@ import amf.framework.metamodel.document.BaseUnitModel
 import amf.framework.model.document.{Module, _}
 import amf.framework.model.domain.templates.AbstractDeclaration
 import amf.framework.parser.Position
+import amf.framework.remote.Oas
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ValueEmitter, _}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
-import amf.remote.Oas
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 

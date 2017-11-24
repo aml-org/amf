@@ -3,13 +3,13 @@ package amf.client
 import java.util.concurrent.CompletableFuture
 
 import amf.ProfileNames
+import amf.framework.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
+import amf.framework.remote.Syntax.Syntax
+import amf.framework.remote.{Platform, StringContentPlatform, Vendor}
 import amf.framework.validation.AMFValidationReport
 import amf.model.{Fragment, _}
-import amf.remote.FutureConverter.converters
-import amf.remote.Syntax.Syntax
-import amf.remote.{Platform, StringContentPlatform, Vendor}
 import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
-import amf.framework.model.document.{Document => CoreDocument, BaseUnit => CoreBaseUnit, Fragment => CoreFragment, Module => CoreModule}
+import amf.remote.FutureConverter.converters
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions

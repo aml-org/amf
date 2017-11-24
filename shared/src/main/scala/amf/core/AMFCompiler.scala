@@ -2,18 +2,19 @@ package amf.core
 
 import amf.compiler.{ParsedDocument, ParsedReference}
 import amf.core.exception.CyclicReferenceException
+import amf.framework
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.idCounter
 import amf.framework.parser.{ParserContext, ReferenceKind}
 import amf.framework.plugins.AMFDocumentPlugin
 import amf.framework.registries.AMFPluginsRegistry
+import amf.framework.remote.Syntax.{Json, Yaml}
+import amf.framework.remote._
 import amf.framework.services.RuntimeCompiler
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.remote.Syntax.{Json, Yaml}
-import amf.remote._
 import amf.validation.Validation
 
 import scala.collection.mutable.ListBuffer
@@ -32,7 +33,7 @@ class AMFCompiler(val url: String,
                   private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None) {
 
-  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
+  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(framework.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
   private val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
@@ -134,8 +135,8 @@ object AMFCompiler {
     // We register ourselves as the Runtime compiler
     if (RuntimeCompiler.compiler.isEmpty) {
       RuntimeCompiler.register(new RuntimeCompiler {
-        override def build(url: String, remote: Platform, base: Option[Context], mediaType: String, vendor: String, currentValidation: Validation, referenceKind: ReferenceKind, cache: Cache): Future[BaseUnit] = {
-          new AMFCompiler(url, remote, base, mediaType, vendor, referenceKind, currentValidation, cache).build()
+        override def build(url: String, remote: Platform, base: Option[Context], mediaType: String, vendor: String, currentValidation: Validation, referenceKind: ReferenceKind, cache: Cache, ctx: Option[ParserContext]): Future[BaseUnit] = {
+          new AMFCompiler(url, remote, base, mediaType, vendor, referenceKind, currentValidation, cache, ctx).build()
         }
       })
     }

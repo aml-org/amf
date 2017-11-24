@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.framework.metamodel.document.BaseUnitModel
 import amf.framework.model.document.{BaseUnit, Module, _}
 import amf.framework.model.domain.templates.AbstractDeclaration
+import amf.framework.remote.Raml
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ValueEmitter
@@ -10,7 +11,6 @@ import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
-import amf.remote.Raml
 import org.yaml.model.YDocument
 
 /**

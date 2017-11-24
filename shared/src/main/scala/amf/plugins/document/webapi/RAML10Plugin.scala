@@ -7,18 +7,17 @@ import amf.framework.model.document._
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.ParserContext
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.framework.remote.{Platform, Raml}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
-import amf.remote.{Platform, Raml}
-import amf.plugins.document.webapi.parser.spec.raml._
 
 import scala.concurrent.Future
 

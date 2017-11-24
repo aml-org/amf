@@ -1,12 +1,12 @@
 package amf.client
 
-import amf.remote.Oas
-import amf.remote.Syntax.Json
+import amf.framework.remote.Oas
+import amf.framework.remote.Syntax.Json
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * [[amf.remote.Oas]] generator.
+  * [[Oas]] generator.
   */
 @JSExportTopLevel("OasGenerator")
 class OasGenerator extends BaseGenerator(Oas, Json)

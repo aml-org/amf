@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.contexts
 
 import amf.framework.parser.ParserContext
+import amf.framework.remote.Vendor
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.domain.shapes.models.Shape
-import amf.remote.Vendor
 import amf.validation.model.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 

@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.framework.remote.{Amf, OasJsonHint, RamlYamlHint}
 import amf.remote._
 
 class SecurityResolutionTest extends ResolutionTest {

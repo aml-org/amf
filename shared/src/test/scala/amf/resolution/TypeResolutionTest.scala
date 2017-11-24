@@ -4,11 +4,11 @@ import amf.ProfileNames
 import amf.compiler.AMFCompiler
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ParserContext
+import amf.framework.remote.{Raml, RamlYamlHint}
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
-import amf.remote.{Raml, RamlYamlHint}
 import amf.validation.Validation
 import amf.vocabulary.Namespace
 import org.scalatest.Matchers._

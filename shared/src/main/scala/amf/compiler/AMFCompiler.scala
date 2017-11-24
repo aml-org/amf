@@ -1,8 +1,10 @@
 package amf.compiler
 
 import amf.core.{AMFCompiler => ModularCompiler}
+import amf.framework
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ReferenceKind
+import amf.framework.remote._
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
 import amf.remote._
 import amf.spec.ParserContext
@@ -20,8 +22,12 @@ class AMFCompiler private (val url: String,
                            private val cache: Cache,
                            private val baseContext: Option[ParserContext] = None) extends RamlHeaderExtractor {
 
+<<<<<<< HEAD
   implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(currentValidation, url, Seq.empty))
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(Context(remote, url))
+=======
+  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(framework.remote.Context(remote, url))
+>>>>>>> APIMF-161 Moving remote/platform into the framework
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
 

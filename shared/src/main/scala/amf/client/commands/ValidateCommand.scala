@@ -2,8 +2,8 @@ package amf.client.commands
 
 import amf.client.{ExitCodes, ParserConfig}
 import amf.framework.model.document.BaseUnit
+import amf.framework.remote.Platform
 import amf.framework.validation.AMFValidationReport
-import amf.remote.Platform
 import amf.validation.emitters.ValidationReportJSONLDEmitter
 import amf.validation.Validation
 

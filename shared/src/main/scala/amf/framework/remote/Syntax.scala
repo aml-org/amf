@@ -1,6 +1,6 @@
-package amf.remote
+package amf.framework.remote
 
-import amf.remote.Mimes._
+import amf.framework.remote.Mimes._
 
 /**
   * Syntax

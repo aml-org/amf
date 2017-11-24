@@ -5,9 +5,10 @@ import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.parser.UnspecifiedReference
 import amf.framework.parser._
 import amf.plugins.domain.webapi.models.WebApi
-import amf.remote.Syntax.{Json, Syntax, Yaml}
+import amf.framework.remote.Syntax.{Json, Syntax, Yaml}
 import amf.remote._
 import amf.core.unsafe.PlatformSecrets
+import amf.framework.remote._
 import amf.validation.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}

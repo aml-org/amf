@@ -3,9 +3,9 @@ package amf.dialects
 import java.util.concurrent.CompletableFuture
 
 import amf.compiler.AMFCompiler
+import amf.framework.remote.{ExtensionYamlHint, Platform}
 import amf.plugins.document.vocabularies.core.{DialectLoader, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.remote.{ExtensionYamlHint, Platform, RamlYamlHint}
 import amf.remote.FutureConverter.converters
 import amf.validation.Validation
 

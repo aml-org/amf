@@ -3,15 +3,14 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.framework.model.document.{BaseUnit, Fragment, Module}
 import amf.framework.model.domain.{DomainElement, Linkable}
 import amf.framework.parser.Position
+import amf.framework.remote.{Oas, Raml, Vendor}
 import amf.plugins.document.webapi.annotations.DeclaredElement
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.MapEntryEmitter
+import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{MapEntryEmitter, _}
+import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
+import amf.plugins.document.webapi.parser.spec.raml.RamlSpecEmitter
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, PartEmitter}
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.models.Parameter
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.remote.{Oas, Raml, Vendor}
-import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.document.webapi.parser.spec.raml.RamlSpecEmitter
 import org.yaml.model.YDocument.PartBuilder
 
 /**

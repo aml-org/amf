@@ -5,10 +5,10 @@ import amf.core.Root
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser._
 import amf.framework.plugins.AMFDocumentPlugin
+import amf.framework.remote.Platform
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import amf.plugins.document.graph.references.AMFGraphReferenceCollector
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.remote.Platform
 import amf.vocabulary.Namespace
 import org.yaml.model.YMap
 

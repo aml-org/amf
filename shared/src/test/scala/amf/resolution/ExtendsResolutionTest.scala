@@ -3,6 +3,7 @@ package amf.resolution
 import amf.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 import amf.dumper.AMFDumper
+import amf.framework.remote.{Amf, Raml, RamlYamlHint}
 import amf.remote._
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,7 +1,7 @@
 package amf.client
 import amf.model.BaseUnit
-import amf.remote.Syntax.Syntax
-import amf.remote.Vendor
+import amf.framework.remote.Syntax.Syntax
+import amf.framework.remote.Vendor
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js

@@ -1,6 +1,6 @@
-package amf.remote
+package amf.framework.remote
 
-import amf.remote.Syntax.{Json, PlainText, Syntax, Yaml}
+import amf.framework.remote.Syntax.{Json, PlainText, Syntax, Yaml}
 
 /**
   * Created by pedro.colunga on 10/9/17.

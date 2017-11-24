@@ -5,11 +5,11 @@ import amf.core.Root
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ParserContext
 import amf.framework.plugins.AMFDocumentPlugin
+import amf.framework.remote.Platform
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.references.PayloadReferenceCollector
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.remote.Platform
 import org.yaml.model.{YMap, YScalar}
 
 object PayloadPlugin extends AMFDocumentPlugin {

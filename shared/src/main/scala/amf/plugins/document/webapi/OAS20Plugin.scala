@@ -7,6 +7,7 @@ import amf.framework.model.document._
 import amf.framework.model.domain.DomainElement
 import amf.framework.parser.{LibraryReference, LinkReference, ParserContext}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.framework.remote.{Oas, Platform}
 import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
@@ -18,7 +19,6 @@ import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
-import amf.remote.{Oas, Platform}
 
 import scala.concurrent.Future
 
