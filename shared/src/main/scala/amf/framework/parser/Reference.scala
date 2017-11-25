@@ -1,5 +1,6 @@
 package amf.framework.parser
 
+import amf.facades.Validation
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.{Cache, Context, Platform}
 import amf.framework.services.RuntimeCompiler

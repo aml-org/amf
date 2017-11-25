@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi.references
 
-import amf.compiler.ParsedDocument
+import amf.facades.Validation
 import amf.framework.parser._
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
-import amf.validation.Validation
 import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer

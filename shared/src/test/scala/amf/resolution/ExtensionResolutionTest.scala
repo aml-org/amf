@@ -1,8 +1,8 @@
 package amf.resolution
 
 import amf.core.client.GenerationOptions
+import amf.facades.AMFDumper
 import amf.framework.model.document.BaseUnit
-import amf.dumper.AMFDumper
 import amf.framework.remote.{Amf, Raml, RamlYamlHint}
 import amf.remote._
 

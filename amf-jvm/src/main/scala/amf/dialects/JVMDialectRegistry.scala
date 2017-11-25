@@ -2,13 +2,12 @@ package amf.dialects
 
 import java.util.concurrent.CompletableFuture
 
-import amf.compiler.AMFCompiler
+import amf.facades.{AMFCompiler, Validation}
 import amf.framework.remote.{ExtensionYamlHint, Platform}
 import amf.framework.services.RuntimeValidator
 import amf.plugins.document.vocabularies.core.{DialectLoader, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.remote.FutureConverter.converters
-import amf.validation.Validation
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

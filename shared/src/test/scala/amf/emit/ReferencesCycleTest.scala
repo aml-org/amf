@@ -2,14 +2,12 @@ package amf.emit
 
 import amf.common.ListAssertions
 import amf.common.Tests.checkDiff
-import amf.compiler.AMFCompiler
 import amf.core.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
-import amf.dumper.AMFDumper
+import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.framework.remote._
 import amf.io.BuildCycleTests
 import amf.remote._
-import amf.validation.Validation
 import org.mulesoft.common.io.AsyncFile
 
 import scala.concurrent.Future

@@ -1,11 +1,9 @@
 package amf.core
 
-import amf.compiler.{ParsedDocument, ParsedReference}
 import amf.core.exception.CyclicReferenceException
-import amf.framework
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.idCounter
-import amf.framework.parser.{ParserContext, ReferenceKind}
+import amf.framework.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
 import amf.framework.plugins.AMFDocumentPlugin
 import amf.framework.registries.AMFPluginsRegistry
 import amf.framework.remote.Syntax.{Json, Yaml}
@@ -15,6 +13,7 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.{facades, framework}
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -150,7 +149,7 @@ case class Root(parsed: ParsedDocument,
                 raw: String) {
 
   // TODO: remove me, only for compatibility while refactoring
-  def oldFormat(): amf.compiler.Root = {
+  def oldFormat(): facades.Root = {
     val mediaType = if (mediatype.indexOf("yaml") > -1 ) {
       Yaml
     } else if (mediatype.indexOf("json") > -1) {
@@ -170,7 +169,7 @@ case class Root(parsed: ParsedDocument,
       case _                                  => AmfJsonHint
     }
 
-    amf.compiler.Root(
+    facades.Root(
       parsed,
       location,
       references,

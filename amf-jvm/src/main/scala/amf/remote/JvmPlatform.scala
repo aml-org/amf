@@ -4,11 +4,12 @@ import java.net.{HttpURLConnection, URI}
 import java.util.concurrent.CompletableFuture
 
 import amf.dialects.JVMDialectRegistry
+import amf.facades.Validation
 import amf.framework.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 import amf.framework.remote.{Content, Platform}
 import amf.framework.unsafe.PlatformBuilder
 import amf.remote.FutureConverter.converters
-import amf.validation.{SHACLValidator, Validation}
+import amf.validation.SHACLValidator
 import org.mulesoft.common.io.{FileSystem, JvmFileSystem}
 
 import scala.concurrent.ExecutionContext.Implicits.global

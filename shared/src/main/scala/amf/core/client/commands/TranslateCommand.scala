@@ -1,9 +1,9 @@
 package amf.core.client.commands
 
 import amf.core.client.{ExitCodes, ParserConfig}
+import amf.facades.Validation
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.Platform
-import amf.validation.Validation
 
 import scala.concurrent.{Future, Promise}
 import scala.util.{Failure, Success}

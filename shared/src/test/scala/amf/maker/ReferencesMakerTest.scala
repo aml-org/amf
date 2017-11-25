@@ -1,7 +1,7 @@
 package amf.maker
 
 import amf.common.AmfObjectTestMatcher
-import amf.compiler.AMFCompiler
+import amf.facades.{AMFCompiler, Validation}
 import amf.framework.model.document.{Document, Fragment}
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.domain.shapes.models.NodeShape
@@ -9,7 +9,6 @@ import amf.plugins.domain.webapi.models.WebApi
 import amf.remote._
 import amf.framework.unsafe.PlatformSecrets
 import amf.framework.remote._
-import amf.validation.Validation
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}

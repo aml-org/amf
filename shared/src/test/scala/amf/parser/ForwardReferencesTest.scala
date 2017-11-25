@@ -1,11 +1,10 @@
 package amf.parser
 
-import amf.compiler.AMFCompiler
-import amf.framework.validation.AMFValidationResult
-import amf.remote._
-import amf.framework.unsafe.PlatformSecrets
+import amf.facades.{AMFCompiler, Validation}
 import amf.framework.remote.RamlYamlHint
-import amf.validation.Validation
+import amf.framework.unsafe.PlatformSecrets
+import amf.framework.validation.AMFValidationResult
+import amf.framework.parser.Range
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
 

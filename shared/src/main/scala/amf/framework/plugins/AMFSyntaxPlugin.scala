@@ -1,6 +1,6 @@
 package amf.framework.plugins
 
-import amf.compiler.ParsedDocument
+import amf.framework.parser.ParsedDocument
 import org.yaml.model.YDocument
 
 abstract class AMFSyntaxPlugin extends AMFPlugin {

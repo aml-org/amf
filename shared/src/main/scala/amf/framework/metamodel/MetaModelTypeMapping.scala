@@ -1,10 +1,9 @@
-package amf.metadata
+package amf.framework.metamodel
 
 import amf.framework.metamodel.Obj
 import amf.framework.model.document.BaseUnit
 import amf.framework.model.domain.DomainElement
 
-// TODO Only for compatibility in tests
 trait MetaModelTypeMapping {
 
   /** Metadata Type references. */

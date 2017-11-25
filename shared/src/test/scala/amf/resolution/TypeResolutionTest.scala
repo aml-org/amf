@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.ProfileNames
-import amf.compiler.AMFCompiler
+import amf.facades.{AMFCompiler, Validation}
 import amf.framework.model.document.BaseUnit
 import amf.framework.parser.ParserContext
 import amf.framework.remote.{Raml, RamlYamlHint}
@@ -12,7 +12,6 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
-import amf.validation.Validation
 import org.scalatest.Matchers._
 
 import scala.util.{Failure, Success}

@@ -1,8 +1,7 @@
 package amf.plugins.document.vocabularies.references
 
-import amf.compiler.ParsedDocument
+import amf.facades.Validation
 import amf.framework.parser.{AbstractReferenceCollector, LibraryReference, LinkReference, Reference, _}
-import amf.validation.Validation
 import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer
