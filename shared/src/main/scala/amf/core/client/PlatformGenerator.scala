@@ -1,7 +1,7 @@
 package amf.core.client
 
+import amf.facades.AMFDumper
 import amf.framework.unsafe.PlatformSecrets
-import amf.dumper.AMFDumper
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.Syntax.Syntax
 import amf.framework.remote.Vendor

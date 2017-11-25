@@ -2,8 +2,9 @@ package amf.remote.browser
 
 import amf.framework.lexer.CharSequenceStream
 import amf.dialects.JSDialectRegistry
+import amf.facades.Validation
 import amf.framework.remote.{Content, Platform, UnsupportedFileSystem}
-import amf.validation.{SHACLValidator, Validation}
+import amf.validation.SHACLValidator
 import org.mulesoft.common.io.FileSystem
 import org.scalajs.dom.ext.Ajax
 

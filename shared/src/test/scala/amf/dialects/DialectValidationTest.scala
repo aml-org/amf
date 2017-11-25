@@ -1,14 +1,12 @@
 package amf.dialects
-import amf.compiler.AMFCompiler
 import amf.core.client.GenerationOptions
-import amf.dumper.AMFDumper
+import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.framework.remote.Syntax.Json
 import amf.remote._
 import amf.framework.unsafe.PlatformSecrets
 import amf.framework.remote.RamlYamlHint
-import amf.validation.Validation
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 

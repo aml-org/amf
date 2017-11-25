@@ -1,12 +1,11 @@
-package amf.compiler
+package amf.facades
 
 import amf.core.{AMFCompiler => ModularCompiler}
 import amf.framework
 import amf.framework.model.document.BaseUnit
-import amf.framework.parser.{ParserContext, ReferenceKind}
+import amf.framework.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
 import amf.framework.remote._
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
-import amf.validation.Validation
 import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
@@ -288,10 +287,6 @@ case class Root(parsed: ParsedDocument,
     )
   }
 }
-
-case class ParsedDocument(comment: Option[YComment], document: YDocument)
-
-case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String, referenceKind: ReferenceKind)
 
 object AMFCompiler {
   def apply(url: String,

@@ -4,15 +4,14 @@ import amf.core.client.GenerationOptions
 import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.framework.metamodel.document.SourceMapModel
 import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.metamodel.{Field, Obj, Type}
+import amf.framework.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
 import amf.framework.model.document.{BaseUnit, SourceMap}
 import amf.framework.model.domain._
 import amf.framework.parser.{FieldEntry, Value}
-import amf.metadata._
-import amf.plugins.domain.shapes.metamodel.ShapeModel
-import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.framework.vocabulary.Namespace.SourceMaps
 import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.plugins.domain.shapes.metamodel.ShapeModel
+import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

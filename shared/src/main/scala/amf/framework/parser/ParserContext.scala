@@ -1,6 +1,5 @@
 package amf.framework.parser
 
-import amf.compiler.ParsedReference
 import amf.framework.model.domain.LexicalInformation
 import amf.framework.remote.{Unknown, Vendor}
 import amf.framework.services.RuntimeValidator

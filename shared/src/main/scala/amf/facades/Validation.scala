@@ -1,4 +1,4 @@
-package amf.validation
+package amf.facades
 
 import amf.ProfileNames
 import amf.core.AMF

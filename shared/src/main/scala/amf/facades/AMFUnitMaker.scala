@@ -1,24 +1,18 @@
-package amf.dumper
+package amf.facades
 
 import amf.core.AMFSerializer
 import amf.core.client.GenerationOptions
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote._
-import amf.framework.remote.Syntax.Syntax
-import amf.remote._
+import org.yaml.model.YDocument
 
-import scala.concurrent.Future
-
+/**
+  * AMF Unit Maker
+  */
 // TODO: this is only here for compatibility with the test suite
-class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: GenerationOptions) {
+class AMFUnitMaker {
 
-  /** Print ast to string. */
-  def dumpToString: String = dump()
-
-  /** Print ast to file. */
-  def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())
-
-  private def dump(): String = {
+  def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
     val vendorString = vendor match {
       case Amf           => "AMF Graph"
       case Payload       => "AMF Payload"
@@ -37,15 +31,11 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
       case Unknown       => "text/plain"
     }
 
-    new AMFSerializer(unit, mediaType, vendorString, options).dumpToString
-  }
-
-  private def unsupported = {
-    throw new RuntimeException(s"Unsupported '$syntax' syntax for '$vendor'")
+    new AMFSerializer(unit, mediaType, vendorString, options).make()
   }
 }
 
-object AMFDumper {
-  def apply(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: GenerationOptions): AMFDumper =
-    new AMFDumper(unit, vendor, syntax, options)
+object AMFUnitMaker {
+  def apply(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument =
+    new AMFUnitMaker().make(unit, vendor, options)
 }

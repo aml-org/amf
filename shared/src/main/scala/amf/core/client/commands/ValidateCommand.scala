@@ -1,10 +1,10 @@
 package amf.core.client.commands
 
 import amf.core.client.{ExitCodes, ParserConfig}
+import amf.facades.Validation
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.Platform
 import amf.framework.validation.AMFValidationReport
-import amf.validation.Validation
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
 import scala.concurrent.Future

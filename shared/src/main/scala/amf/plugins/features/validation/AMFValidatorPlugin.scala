@@ -2,6 +2,7 @@ package amf.plugins.features.validation
 
 import amf.ProfileNames
 import amf.core.client.GenerationOptions
+import amf.facades.ValidationMutex
 import amf.framework.model.document.{BaseUnit, Document}
 import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.framework.registries.AMFPluginsRegistry

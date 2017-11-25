@@ -1,6 +1,6 @@
 package amf.plugins.syntax
 
-import amf.compiler.ParsedDocument
+import amf.framework.parser.ParsedDocument
 import amf.framework.plugins.AMFSyntaxPlugin
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser

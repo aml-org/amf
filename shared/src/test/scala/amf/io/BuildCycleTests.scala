@@ -1,13 +1,11 @@
 package amf.io
 
 import amf.common.Tests.checkDiff
-import amf.compiler.AMFCompiler
 import amf.core.client.GenerationOptions
 import amf.framework.unsafe.PlatformSecrets
-import amf.dumper.AMFDumper
+import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.framework.model.document.BaseUnit
 import amf.framework.remote.{Hint, Vendor}
-import amf.validation.Validation
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
