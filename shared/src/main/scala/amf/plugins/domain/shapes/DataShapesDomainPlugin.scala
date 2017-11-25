@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes
 
-import amf.framework.plugins.AMFDomainPlugin
+import amf.core.plugins.AMFDomainPlugin
 import amf.plugins.domain.shapes.metamodel._
 
 object DataShapesDomainPlugin extends AMFDomainPlugin {

@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.model.domain.AmfArray
-import amf.framework.parser.Annotations
-import amf.framework.parser._
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.model.domain.AmfArray
+import amf.core.parser.Annotations
+import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method

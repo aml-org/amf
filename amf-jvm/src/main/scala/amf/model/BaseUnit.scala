@@ -1,7 +1,7 @@
 package amf.model
 
-import amf.framework.model.document
-import amf.framework.vocabulary.Namespace
+import amf.core.model.document
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.model.{
   AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment,
   DataTypeFragment => CoreDataTypeFragment,
@@ -20,7 +20,7 @@ import scala.collection.JavaConverters._
 /** Any parsable unit, backed by a source URI. */
 trait BaseUnit {
 
-  private[amf] val element: amf.framework.model.document.BaseUnit
+  private[amf] val element: amf.core.model.document.BaseUnit
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   lazy val references: java.util.List[BaseUnit] = {

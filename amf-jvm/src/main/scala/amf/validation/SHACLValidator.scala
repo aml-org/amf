@@ -3,7 +3,7 @@ package amf.validation
 import java.io.{InputStreamReader, Reader, StringReader}
 import java.nio.charset.Charset
 
-import amf.framework.validation.core.ValidationReport
+import amf.core.validation.core.ValidationReport
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.jena.rdf.model.{Model, Resource}
@@ -19,7 +19,7 @@ import scala.concurrent.{Future, Promise}
   * Created by antoniogarrote on 17/07/2017.
   */
 
-class SHACLValidator extends amf.framework.validation.core.SHACLValidator {
+class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   var functionUrl: Option[String] = None
   var functionCode: Option[String] = None

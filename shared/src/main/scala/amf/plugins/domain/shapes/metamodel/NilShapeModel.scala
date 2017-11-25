@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.Str
-import amf.framework.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Str
+import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.NilShape
-import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.{Namespace, ValueType}
 
 object NilShapeModel extends DomainElementModel {
 

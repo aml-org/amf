@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.parser.Position
+import amf.core.parser.Position
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ValueEmitter
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext

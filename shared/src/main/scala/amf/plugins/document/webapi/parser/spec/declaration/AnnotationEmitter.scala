@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.domain._
-import amf.framework.parser.{Annotations, FieldEntry, Position, Value}
-import amf.framework.remote.{Oas, Raml}
+import amf.core.model.domain._
+import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
@@ -10,7 +10,7 @@ import amf.plugins.domain.shapes.models.{Shape, ShapeExtension}
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType

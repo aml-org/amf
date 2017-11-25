@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.references
 
 import amf.facades.Validation
-import amf.framework.parser._
+import amf.core.parser._
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import org.yaml.model._

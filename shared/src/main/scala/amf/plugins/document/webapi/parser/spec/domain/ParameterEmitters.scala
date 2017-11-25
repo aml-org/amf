@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.AmfScalar
-import amf.framework.parser.{FieldEntry, Fields, Position}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations.{ExplicitField, SynthesizedField}
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext

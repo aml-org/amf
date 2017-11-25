@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.Platform
-import amf.framework.services.RuntimeValidator
-import amf.framework.validation._
-import amf.framework.validation.core.ValidationResult
+import amf.core.model.document.BaseUnit
+import amf.core.remote.Platform
+import amf.core.services.RuntimeValidator
+import amf.core.validation._
+import amf.core.validation.core.ValidationResult
 import amf.plugins.features.validation.model.{DefaultAMFValidations, ValidationProfile, ValidationSpecification}
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

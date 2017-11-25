@@ -1,13 +1,13 @@
 package amf.plugins.domain.webapi.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Array, Iri, Str}
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.metamodel.domain.templates.KeyField
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Array, Iri, Str}
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.templates.KeyField
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.CustomDomainProperty
-import amf.framework.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
-import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
+import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
   * Custom Domain Property

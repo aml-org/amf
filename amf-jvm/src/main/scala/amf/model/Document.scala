@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.framework.model.document.{Document => CoreDocument}
+import amf.core.model.document.{Document => CoreDocument}
 import amf.plugins.document.webapi.model.{Overlay => CoreOverlay, Extension => CoreExtension}
 
 /**
@@ -11,9 +11,9 @@ case class Document(private[amf] val document: CoreDocument)
     with DeclaresModel
     with EncodesModel {
 
-  def this() = this(amf.framework.model.document.Document())
+  def this() = this(amf.core.model.document.Document())
 
-  def this(webApi: WebApi) = this(amf.framework.model.document.Document().withEncodes(webApi.element))
+  def this(webApi: WebApi) = this(amf.core.model.document.Document().withEncodes(webApi.element))
 
   def resolve(profile: String): Document = Document(document.resolve(profile))
 

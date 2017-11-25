@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.framework.model.document.{BaseUnit, Document}
-import amf.framework.resolution.stages.ResolutionStage
+import amf.core.model.document.{BaseUnit, Document}
+import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.models.WebApi
 

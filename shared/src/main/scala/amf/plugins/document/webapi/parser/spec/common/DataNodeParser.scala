@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.framework.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
-import amf.framework.parser.{Annotations, _}
+import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.model.ExternalFragment
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 

@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.framework.metamodel.{Field, Type}
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.{AmfScalar, DomainElement, LexicalInformation, Linkable}
-import amf.framework.parser.Position._
-import amf.framework.parser.{Annotations, FieldEntry, Position, Value}
-import amf.framework.remote.Vendor
+import amf.core.metamodel.{Field, Type}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{AmfScalar, DomainElement, LexicalInformation, Linkable}
+import amf.core.parser.Position._
+import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.remote.Vendor
 import amf.plugins.document.webapi.annotations.SingleValueArray
 import amf.plugins.document.webapi.parser.spec.declaration.TagToReferenceEmitter
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}

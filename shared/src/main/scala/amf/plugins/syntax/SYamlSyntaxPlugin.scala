@@ -1,7 +1,7 @@
 package amf.plugins.syntax
 
-import amf.framework.parser.ParsedDocument
-import amf.framework.plugins.AMFSyntaxPlugin
+import amf.core.parser.ParsedDocument
+import amf.core.plugins.AMFSyntaxPlugin
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.{JsonRender, YamlRender}

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.framework.parser.Position
+import amf.core.parser.Position
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 /**

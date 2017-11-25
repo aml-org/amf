@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.framework.model.domain.{AmfArray, AmfScalar}
-import amf.framework.parser.{Annotations, _}
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
 import org.yaml.model._
 
 /**

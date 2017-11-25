@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.model.document.{BaseUnit, Document}
-import amf.framework.model.domain.{AmfArray, AmfScalar}
-import amf.framework.parser.{Annotations, _}
-import amf.framework.utils.{Lazy, TemplateUri}
+import amf.core.metamodel.Field
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
+import amf.core.utils.{Lazy, TemplateUri}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}

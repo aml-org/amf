@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.domain.{AmfArray, AmfScalar}
-import amf.framework.parser.{Annotations, _}
-import amf.framework.remote.Oas
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
+import amf.core.remote.Oas
 import amf.plugins.document.webapi.annotations.{ExplicitField, Inferred}
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
@@ -15,7 +15,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{Example, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.models.CreativeWork
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.render.YamlRender
 

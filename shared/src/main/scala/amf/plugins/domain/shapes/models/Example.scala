@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.framework.model.domain.{DomainElement, Linkable}
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import org.yaml.model.YPart

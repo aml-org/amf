@@ -1,7 +1,7 @@
 package amf.common
 
-import amf.framework.utils.TSort
-import amf.framework.utils.TSort.tsort
+import amf.core.utils.TSort
+import amf.core.utils.TSort.tsort
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

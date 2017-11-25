@@ -1,7 +1,7 @@
 package amf.client
 
-import amf.framework.remote.Amf
-import amf.framework.remote.Syntax.Json
+import amf.core.remote.Amf
+import amf.core.remote.Syntax.Json
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 

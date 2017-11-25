@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.ProfileNames
-import amf.framework.metamodel.document.FragmentModel
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser.{Annotations, Fields}
-import amf.framework.resolution.pipelines.ResolutionPipeline
-import amf.framework.resolution.stages.ReferenceResolutionStage
+import amf.core.metamodel.document.FragmentModel
+import amf.core.model.document.BaseUnit
+import amf.core.parser.{Annotations, Fields}
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage

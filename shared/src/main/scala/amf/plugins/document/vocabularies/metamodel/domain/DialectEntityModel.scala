@@ -1,11 +1,11 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.Annotations
+import amf.core.metamodel.Field
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.model.domain.DomainElement
+import amf.core.parser.Annotations
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.ValueType
 
 /**
   * Created by Pavel Petrochenko on 13/09/17.

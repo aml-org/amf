@@ -1,6 +1,6 @@
 package amf.core
 
-import amf.framework.registries.AMFPluginsRegistry
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}

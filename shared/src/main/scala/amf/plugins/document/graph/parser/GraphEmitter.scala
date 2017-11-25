@@ -1,15 +1,15 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.client.GenerationOptions
-import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.framework.metamodel.document.SourceMapModel
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
-import amf.framework.model.document.{BaseUnit, SourceMap}
-import amf.framework.model.domain._
-import amf.framework.parser.{FieldEntry, Value}
-import amf.framework.vocabulary.Namespace.SourceMaps
-import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.core.metamodel.document.SourceMapModel
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
+import amf.core.model.document.{BaseUnit, SourceMap}
+import amf.core.model.domain._
+import amf.core.parser.{FieldEntry, Value}
+import amf.core.vocabulary.Namespace.SourceMaps
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

@@ -1,10 +1,10 @@
 package amf.core.client
 
 import amf.facades.AMFDumper
-import amf.framework.unsafe.PlatformSecrets
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.Syntax.Syntax
-import amf.framework.remote.Vendor
+import amf.core.unsafe.PlatformSecrets
+import amf.core.model.document.BaseUnit
+import amf.core.remote.Syntax.Syntax
+import amf.core.remote.Vendor
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

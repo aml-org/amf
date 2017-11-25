@@ -1,7 +1,7 @@
 package amf.client
 
-import amf.framework.remote.Raml
-import amf.framework.remote.Syntax.Yaml
+import amf.core.remote.Raml
+import amf.core.remote.Syntax.Yaml
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 

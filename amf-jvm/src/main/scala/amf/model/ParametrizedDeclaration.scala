@@ -1,7 +1,7 @@
 package amf.model
 
 import scala.collection.JavaConverters._
-import amf.framework.model.domain.templates
+import amf.core.model.domain.templates
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType => CoreParametrizedResourcetype, ParametrizedTrait => CoreParametrizedTrait}
 
 /**

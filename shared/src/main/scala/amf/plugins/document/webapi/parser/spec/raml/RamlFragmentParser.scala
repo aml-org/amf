@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
-import amf.framework.model.document.Fragment
-import amf.framework.parser.Annotations
-import amf.framework.remote.Raml
+import amf.core.model.document.Fragment
+import amf.core.parser.Annotations
+import amf.core.remote.Raml
 import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._

@@ -1,7 +1,7 @@
 package amf.client
 
-import amf.framework.remote.Oas
-import amf.framework.remote.Syntax.Json
+import amf.core.remote.Oas
+import amf.core.remote.Syntax.Json
 
 /**
   * [[Oas]] parser.

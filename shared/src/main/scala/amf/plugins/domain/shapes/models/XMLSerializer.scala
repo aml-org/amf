@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.DomainElement
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel._
 import org.yaml.model.YMap

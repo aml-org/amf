@@ -1,12 +1,12 @@
 package amf.plugins.domain.webapi.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.Array
-import amf.framework.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Array
+import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.models.Request
-import amf.framework.vocabulary.Namespace.Http
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Http
+import amf.core.vocabulary.ValueType
 
 /**
   * Request metamodel.

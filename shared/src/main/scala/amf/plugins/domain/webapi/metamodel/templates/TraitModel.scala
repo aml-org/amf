@@ -1,9 +1,9 @@
 package amf.plugins.domain.webapi.metamodel.templates
 
-import amf.framework.metamodel.domain.templates.AbstractDeclarationModel
+import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.plugins.domain.webapi.models.templates.Trait
-import amf.framework.vocabulary.Namespace.Document
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Document
+import amf.core.vocabulary.ValueType
 
 object TraitModel extends AbstractDeclarationModel {
   override val `type`: List[ValueType] = Document + "Trait" :: AbstractDeclarationModel.`type`

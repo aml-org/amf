@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.JSExportAll
 trait EncodesModel {
 
   /** Encoded [[DomainElement]] described in the document element. */
-  private[amf] val element: amf.framework.model.document.EncodesModel
+  private[amf] val element: amf.core.model.document.EncodesModel
 
   /** Encoded [[DomainElement]] described in the document element. */
   lazy val encodes: DomainElement = element.encodes match {

@@ -5,7 +5,7 @@ import amf.plugins.domain.webapi.models.templates
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
-import amf.framework.model.domain.templates.{AbstractDeclaration => CoreAbstractDeclaration}
+import amf.core.model.domain.templates.{AbstractDeclaration => CoreAbstractDeclaration}
 
 /**
   * JVM AbstractDeclaration model class.

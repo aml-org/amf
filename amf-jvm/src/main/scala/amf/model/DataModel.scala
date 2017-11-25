@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.framework.model.domain
+import amf.core.model.domain
 
 import scala.collection.JavaConverters._
 

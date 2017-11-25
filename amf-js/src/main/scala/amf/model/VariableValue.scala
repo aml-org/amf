@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.framework.model.domain.templates
+import amf.core.model.domain.templates
 
 import scala.scalajs.js.annotation.JSExportAll
 

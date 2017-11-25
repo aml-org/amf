@@ -10,6 +10,11 @@ import amf.framework.model.document.{BaseUnit, Module}
 import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.framework.parser.Position.ZERO
 import amf.framework.parser.{FieldEntry, Position}
+import amf.core.metamodel.domain.LinkableElementModel
+import amf.core.model.document.{BaseUnit, Module}
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
+import amf.core.parser.Position.ZERO
+import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.Dialect.retrieveDomainEntity
 import amf.plugins.document.webapi.annotations.Aliases

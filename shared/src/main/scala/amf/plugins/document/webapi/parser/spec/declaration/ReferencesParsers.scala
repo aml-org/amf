@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
-import amf.framework.parser.{ParsedReference, _}
+import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
+import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.webapi.annotations.Aliases
 import org.yaml.model.YMap

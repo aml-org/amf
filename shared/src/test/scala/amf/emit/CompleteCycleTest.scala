@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.framework.remote._
+import amf.core.remote._
 import amf.io.BuildCycleTests
 import amf.remote._
 

@@ -1,12 +1,12 @@
 package amf.core
 
 import amf.core.client.GenerationOptions
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.idCounter
-import amf.framework.plugins.AMFSyntaxPlugin
-import amf.framework.registries.AMFPluginsRegistry
-import amf.framework.remote.Platform
-import amf.framework.services.RuntimeSerializer
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.idCounter
+import amf.core.plugins.AMFSyntaxPlugin
+import amf.core.registries.AMFPluginsRegistry
+import amf.core.remote.Platform
+import amf.core.services.RuntimeSerializer
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}

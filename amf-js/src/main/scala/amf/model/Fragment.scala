@@ -1,7 +1,7 @@
 package amf.model
 
 import scala.scalajs.js.annotation.JSExportAll
-import amf.framework.model.document.{Fragment => CoreFragment}
+import amf.core.model.document.{Fragment => CoreFragment}
 import amf.plugins.document.webapi.model.{
   AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment,
   DataTypeFragment => CoreDataTypeFragment,

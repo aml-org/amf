@@ -4,7 +4,7 @@ import amf.ProfileNames
 import amf.common.AmfObjectTestMatcher
 import amf.facades.Validation
 import amf.model.{BaseUnit, Document, Module, WebApi}
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser.{FieldEntry, Position}
+import amf.core.model.document.BaseUnit
+import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ScalarEmitter, _}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter

@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.framework.model.document.Module
-import amf.framework.parser.Annotations
-import amf.framework.metamodel.document.BaseUnitModel
-import amf.framework.parser._
+import amf.core.model.document.Module
+import amf.core.parser.Annotations
+import amf.core.metamodel.document.BaseUnitModel
+import amf.core.parser._
 import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser

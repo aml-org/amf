@@ -1,8 +1,8 @@
 package amf.model
 
-import amf.framework.model.domain
-import amf.framework.model.domain.templates
-import amf.framework.parser.Range
+import amf.core.model.domain
+import amf.core.model.domain.templates
+import amf.core.parser.Range
 import amf.plugins.document.vocabularies.model
 import amf.plugins.domain.shapes
 import amf.plugins.domain.webapi.models

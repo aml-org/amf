@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser.{FieldEntry, Position}
-import amf.framework.remote.{Oas, Raml}
+import amf.core.model.document.BaseUnit
+import amf.core.parser.{FieldEntry, Position}
+import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}

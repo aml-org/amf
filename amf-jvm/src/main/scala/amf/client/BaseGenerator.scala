@@ -4,8 +4,8 @@ import java.io.File
 import java.util.concurrent.CompletableFuture
 
 import amf.core.client.{GenerationOptions, Handler, PlatformGenerator}
-import amf.framework.remote.Syntax.Syntax
-import amf.framework.remote.Vendor
+import amf.core.remote.Syntax.Syntax
+import amf.core.remote.Vendor
 import amf.model.BaseUnit
 import amf.remote.FutureConverter.converters
 

@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.framework.model.domain.{AmfArray, DomainElement, Linkable}
+import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
 import amf.plugins.document.webapi.annotations.{ExplicitField, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel.ShapeModel._
 import amf.plugins.domain.webapi.models.CreativeWork

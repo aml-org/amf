@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.framework.validation.core.ValidationResult
-import amf.framework.vocabulary.Namespace
+import amf.core.validation.core.ValidationResult
+import amf.core.vocabulary.Namespace
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll

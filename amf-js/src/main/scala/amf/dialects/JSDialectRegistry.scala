@@ -1,6 +1,6 @@
 package amf.dialects
 import amf.facades.{AMFCompiler, Validation}
-import amf.framework.remote.{ExtensionYamlHint, Platform}
+import amf.core.remote.{ExtensionYamlHint, Platform}
 import amf.plugins.document.vocabularies.core.{DialectLoader, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.spec.Dialect
 

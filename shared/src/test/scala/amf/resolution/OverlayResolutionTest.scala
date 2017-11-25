@@ -2,8 +2,8 @@ package amf.resolution
 
 import amf.core.client.GenerationOptions
 import amf.facades.AMFDumper
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.{Raml, RamlYamlHint}
+import amf.core.model.document.BaseUnit
+import amf.core.remote.{Raml, RamlYamlHint}
 import amf.remote._
 
 import scala.concurrent.{ExecutionContext, Future}

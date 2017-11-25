@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.metamodel.Field
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.{AmfScalar, Linkable}
-import amf.framework.parser.Position.ZERO
-import amf.framework.parser.{Annotations, FieldEntry, Fields, Position}
+import amf.core.metamodel.Field
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{AmfScalar, Linkable}
+import amf.core.parser.Position.ZERO
+import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._

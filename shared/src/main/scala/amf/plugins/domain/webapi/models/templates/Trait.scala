@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.templates
 
-import amf.framework.model.domain.templates.AbstractDeclaration
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.TraitModel
 import org.yaml.model.YPart
 

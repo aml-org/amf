@@ -3,12 +3,12 @@ package amf.plugins.document.webapi
 import amf.ProfileNames
 import amf.core.Root
 import amf.core.client.GenerationOptions
-import amf.framework.model.document._
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{LibraryReference, LinkReference, ParserContext}
-import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
-import amf.framework.remote.{Oas, Platform}
-import amf.framework.validation.{AMFValidationReport, EffectiveValidations}
+import amf.core.model.document._
+import amf.core.model.domain.DomainElement
+import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
+import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.remote.{Oas, Platform}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}

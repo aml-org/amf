@@ -3,8 +3,8 @@ package amf.resolution
 import amf.ProfileNames
 import amf.core.client.GenerationOptions
 import amf.facades.AMFDumper
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.{Amf, Oas, Raml}
+import amf.core.model.document.BaseUnit
+import amf.core.remote.{Amf, Oas, Raml}
 import amf.io.BuildCycleTests
 import amf.remote._
 

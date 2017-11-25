@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.metamodel.domain.templates.ParametrizedDeclarationModel
-import amf.framework.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
-import amf.framework.parser.{Annotations, _}
+import amf.core.metamodel.domain.templates.ParametrizedDeclarationModel
+import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.SearchScope
 import org.yaml.model._

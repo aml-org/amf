@@ -2,11 +2,11 @@ package amf.resolution
 
 import amf.ProfileNames
 import amf.facades.{AMFCompiler, Validation}
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser.ParserContext
-import amf.framework.remote.{Raml, RamlYamlHint}
-import amf.framework.services.RuntimeValidator
-import amf.framework.vocabulary.Namespace
+import amf.core.model.document.BaseUnit
+import amf.core.parser.ParserContext
+import amf.core.remote.{Raml, RamlYamlHint}
+import amf.core.services.RuntimeValidator
+import amf.core.vocabulary.Namespace
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec._

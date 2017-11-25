@@ -1,15 +1,15 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.metamodel.document.FragmentModel
-import amf.framework.model.document.{BaseUnit, Fragment}
-import amf.framework.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
-import amf.framework.parser.{Annotations, Fields}
-import amf.framework.remote.Platform
-import amf.framework.services.RuntimeValidator
-import amf.framework.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
+import amf.core.metamodel.document.FragmentModel
+import amf.core.model.document.{BaseUnit, Fragment}
+import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
+import amf.core.parser.{Annotations, Fields}
+import amf.core.remote.Platform
+import amf.core.services.RuntimeValidator
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.features.validation.model.ValidationSpecification
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

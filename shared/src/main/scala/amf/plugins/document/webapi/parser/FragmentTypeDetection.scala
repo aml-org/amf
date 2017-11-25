@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser
 
-import amf.framework.parser._
+import amf.core.parser._
 import amf.plugins.document.webapi.parser.FragmentTypes._
 import org.yaml.model.YMap
 

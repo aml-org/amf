@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.DomainElement
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ScopeModel
 import amf.plugins.domain.webapi.metamodel.security.ScopeModel._
 import org.yaml.model.YPart

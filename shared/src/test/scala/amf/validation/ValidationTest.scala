@@ -4,12 +4,12 @@ import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.client.GenerationOptions
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
-import amf.framework.model.document.{Document, Module}
-import amf.framework.model.domain.DataNode
-import amf.framework.remote.Syntax.{Json, Yaml}
-import amf.framework.remote._
-import amf.framework.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.framework.validation.SeverityLevels
+import amf.core.model.document.{Document, Module}
+import amf.core.model.domain.DataNode
+import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.remote._
+import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
+import amf.core.validation.SeverityLevels
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation}
 import amf.plugins.domain.shapes.models.Shape

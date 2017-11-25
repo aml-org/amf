@@ -2,9 +2,9 @@ package amf.core.client.commands
 
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.facades.Validation
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.Platform
-import amf.framework.validation.AMFValidationReport
+import amf.core.model.document.BaseUnit
+import amf.core.remote.Platform
+import amf.core.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
 import scala.concurrent.Future

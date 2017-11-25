@@ -1,9 +1,9 @@
 package amf.client
 
 import amf.core.client.GenerationOptions
-import amf.framework.remote.Amf
+import amf.core.remote.Amf
 import amf.model.BaseUnit
-import amf.framework.remote.Syntax.Json
+import amf.core.remote.Syntax.Json
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._

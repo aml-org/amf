@@ -1,17 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.model.domain.{AmfArray, AmfScalar}
-import amf.framework.parser.{Annotations, _}
-import amf.framework.utils.TemplateUri
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
+import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.ParentEndPoint
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import amf.spec.common.{AnnotationParser, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YNode}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 import scala.collection.mutable
 

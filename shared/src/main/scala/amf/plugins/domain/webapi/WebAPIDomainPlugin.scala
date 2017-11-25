@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi
 
-import amf.framework.plugins.AMFDomainPlugin
+import amf.core.plugins.AMFDomainPlugin
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel

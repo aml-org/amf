@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser
 
 import amf.core.Root
 import amf.plugins.document.webapi.parser.FragmentTypes._
-import amf.framework.parser._
+import amf.core.parser._
 import org.yaml.model.YMap
 
 /**

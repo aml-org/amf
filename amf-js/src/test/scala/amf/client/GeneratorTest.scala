@@ -1,7 +1,7 @@
 package amf.client
 
 import amf.common.Tests.checkDiff
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

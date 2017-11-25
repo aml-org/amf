@@ -1,10 +1,10 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.ProfileNames
-import amf.framework.metamodel.Field
-import amf.framework.model.document.{BaseUnit, Document}
-import amf.framework.model.domain.{AmfScalar, DomainElement}
-import amf.framework.resolution.stages.ResolutionStage
+import amf.core.metamodel.Field
+import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.{OperationModel, PayloadModel, RequestModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
 

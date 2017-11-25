@@ -1,10 +1,11 @@
 package amf.facades
 
+import amf.core.parser.ParserContext
 import amf.core.{AMFCompiler => ModularCompiler}
-import amf.framework
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
-import amf.framework.remote._
+import amf.core
+import amf.core.model.document.BaseUnit
+import amf.core.parser.{ParsedDocument, ParsedReference, ReferenceKind}
+import amf.core.remote._
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
 import org.yaml.model._
 
@@ -20,7 +21,7 @@ class AMFCompiler private (val url: String,
                            private val baseContext: Option[ParserContext] = None) extends RamlHeaderExtractor {
 
   implicit val ctx: ParserContext = baseContext.getOrElse(ParserContext(url, Seq.empty))
-  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(framework.remote.Context(remote, url))
+  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
 

@@ -1,8 +1,8 @@
 package amf.plugins.features.validation.model
 
 import amf.ProfileNames
-import amf.framework.validation.{ParserSideValidations, SeverityLevels}
-import amf.framework.vocabulary.Namespace
+import amf.core.validation.{ParserSideValidations, SeverityLevels}
+import amf.core.vocabulary.Namespace
 
 /**
   * Created by antoniogarrote on 17/07/2017.

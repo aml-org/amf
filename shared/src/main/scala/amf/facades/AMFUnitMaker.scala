@@ -2,8 +2,8 @@ package amf.facades
 
 import amf.core.AMFSerializer
 import amf.core.client.GenerationOptions
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote._
+import amf.core.model.document.BaseUnit
+import amf.core.remote._
 import org.yaml.model.YDocument
 
 /**

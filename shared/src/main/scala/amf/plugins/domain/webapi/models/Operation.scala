@@ -1,8 +1,8 @@
 package amf.plugins.domain.webapi.models
 
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.DomainElement
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait

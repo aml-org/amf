@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.model.domain.AmfScalar
-import amf.framework.parser.{FieldEntry, Position}
-import amf.framework.remote.{Oas, Raml}
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{FieldEntry, Position}
+import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ScalarEmitter, _}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters

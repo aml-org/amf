@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.extensions
 
-import amf.framework.model.domain.{DataNode, DomainElement}
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.{DataNode, DomainElement}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel
 import amf.plugins.domain.webapi.metamodel.extensions.DomainExtensionModel._
 import amf.plugins.domain.webapi.models.CustomDomainProperty

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.framework.parser.Annotations
-import amf.framework.remote.{Amf, Vendor}
+import amf.core.parser.Annotations
+import amf.core.remote.{Amf, Vendor}
 import amf.plugins.document.webapi.annotations.SourceVendor
 
 /**

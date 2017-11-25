@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.framework.model.domain.templates
+import amf.core.model.domain.templates
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType => CoreParametrizedResourceType, ParametrizedTrait => CoreParametrizedTrait}
 
 import scala.scalajs.js

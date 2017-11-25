@@ -1,19 +1,19 @@
 package amf.core
 
 import amf.core.exception.CyclicReferenceException
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.idCounter
-import amf.framework.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
-import amf.framework.plugins.AMFDocumentPlugin
-import amf.framework.registries.AMFPluginsRegistry
-import amf.framework.remote.Syntax.{Json, Yaml}
-import amf.framework.remote._
-import amf.framework.services.RuntimeCompiler
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.idCounter
+import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
+import amf.core.plugins.AMFDocumentPlugin
+import amf.core.registries.AMFPluginsRegistry
+import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.remote._
+import amf.core.services.RuntimeCompiler
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.{facades, framework}
+import amf.{facades, core}
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -30,7 +30,7 @@ class AMFCompiler(val url: String,
                   private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None) {
 
-  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(framework.remote.Context(remote, url))
+  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
   private val ctx: ParserContext = baseContext.getOrElse(ParserContext(url, Seq.empty))

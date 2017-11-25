@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.framework.model.domain._
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain._
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectEntityModel
 import amf.plugins.document.vocabularies.spec.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 

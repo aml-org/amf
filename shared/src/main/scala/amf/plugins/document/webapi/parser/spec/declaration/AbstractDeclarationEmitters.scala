@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.templates.AbstractDeclaration
-import amf.framework.parser.Position
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.parser.Position
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._

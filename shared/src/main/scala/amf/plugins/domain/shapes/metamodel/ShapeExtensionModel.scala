@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.core.metamodel.Field
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel}
 import amf.plugins.domain.shapes.models.ShapeExtension
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
-import amf.framework.vocabulary.Namespace.{Document, Http}
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.{Document, Http}
+import amf.core.vocabulary.ValueType
 
 object ShapeExtensionModel extends DomainElementModel {
   val DefinedBy = Field(CustomDomainPropertyModel, Document + "definedBy")

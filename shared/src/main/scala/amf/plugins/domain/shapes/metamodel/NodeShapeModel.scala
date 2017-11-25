@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Array, Bool, Int, Str}
-import amf.framework.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Array, Bool, Int, Str}
+import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.NodeShape
-import amf.framework.vocabulary.Namespace.{Shacl, Shapes}
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.vocabulary.ValueType
 
 /**
   * Node shape metamodel.

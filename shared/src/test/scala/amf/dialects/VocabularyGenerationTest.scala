@@ -2,8 +2,8 @@ package amf.dialects
 
 import amf.core.client.GenerationOptions
 import amf.facades.AMFDumper
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.{Amf, Raml, RamlYamlHint}
+import amf.core.model.document.BaseUnit
+import amf.core.remote.{Amf, Raml, RamlYamlHint}
 import amf.io.BuildCycleTests
 import amf.remote._
 import org.scalatest.Assertion

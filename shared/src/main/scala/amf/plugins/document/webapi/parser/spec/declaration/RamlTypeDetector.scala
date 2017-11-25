@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.parser._
+import amf.core.parser._
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.SearchScope
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
@@ -8,8 +8,8 @@ import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefString
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.framework.unsafe.PlatformSecrets
-import amf.framework.validation.ParserSideValidations
+import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.ParserSideValidations
 import org.yaml.model._
 
 /**

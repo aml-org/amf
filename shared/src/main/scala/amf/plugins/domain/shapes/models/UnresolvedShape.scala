@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.models
 
-import amf.framework.model.domain.{LexicalInformation, Linkable}
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.{LexicalInformation, Linkable}
+import amf.core.parser.{Annotations, Fields, ParserContext}
+import amf.core.validation.ParserSideValidations
+import amf.plugins.document.webapi.parser.spec.DeclarationPromise
 import amf.plugins.domain.shapes.metamodel.ShapeModel
-import amf.spec.{DeclarationPromise, ParserContext}
-import amf.validation.model.ParserSideValidations.ParsingErrorSpecification
 import org.yaml.model.{YNode, YPart}
 
 /**
@@ -35,7 +35,7 @@ case class UnresolvedShape(fields: Fields, annotations: Annotations, reference: 
           resolve,
           () =>
             c.violation(
-              ParsingErrorSpecification.id(),
+              ParserSideValidations.ParsingErrorSpecification.id(),
               id,
               None,
               s"Unresolved reference $reference from root context ${c.rootContextDocument}",

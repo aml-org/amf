@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.framework.model.domain.templates.Variable
-import amf.framework.utils.InflectorBase.Inflector
+import amf.core.model.domain.templates.Variable
+import amf.core.utils.InflectorBase.Inflector
 
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match

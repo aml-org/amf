@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.parser.{Annotations, _}
+import amf.core.parser.{Annotations, _}
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
 import amf.plugins.document.webapi.parser.spec.common._

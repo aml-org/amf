@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.domain.{AmfArray, AmfScalar}
-import amf.framework.parser.{Annotations, _}
-import amf.framework.remote.{Oas, Raml}
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
+import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.{SearchScope, _}
 import amf.plugins.document.webapi.parser.spec.common._

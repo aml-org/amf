@@ -1,12 +1,12 @@
 package amf.core.client
 
 import amf.ProfileNames
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.Syntax.{Json, Syntax, Yaml}
-import amf.framework.remote._
-import amf.framework.services.{RuntimeCompiler, RuntimeValidator}
-import amf.framework.unsafe.PlatformSecrets
-import amf.framework.validation.AMFValidationReport
+import amf.core.model.document.BaseUnit
+import amf.core.remote.Syntax.{Json, Syntax, Yaml}
+import amf.core.remote._
+import amf.core.services.{RuntimeCompiler, RuntimeValidator}
+import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
