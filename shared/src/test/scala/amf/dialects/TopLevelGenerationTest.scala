@@ -2,7 +2,7 @@ package amf.dialects
 
 import amf.common.Tests.checkDiffIgnoreAllSpaces
 import amf.plugins.document.vocabularies.core.{DialectLanguageDefinition, TopLevelGenerator, VocabularyLanguageDefinition}
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.document._
-import amf.framework.model.domain.AmfObject
+import amf.core.metamodel.Field
+import amf.core.metamodel.document._
+import amf.core.model.domain.AmfObject
 import amf.plugins.document.webapi.model._
-import amf.framework.vocabulary.Namespace.Document
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Document
+import amf.core.vocabulary.ValueType
 
 object FragmentsTypesModels {
 

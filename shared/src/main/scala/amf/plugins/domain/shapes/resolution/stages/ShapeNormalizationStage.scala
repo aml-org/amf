@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.resolution.stages
 
-import amf.framework.metamodel.{MetaModelTypeMapping, Obj}
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.{AmfArray, AmfScalar, DomainElement, LexicalInformation}
-import amf.framework.parser.Annotations
-import amf.framework.resolution.stages.ResolutionStage
-import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.core.metamodel.{MetaModelTypeMapping, Obj}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, LexicalInformation}
+import amf.core.parser.Annotations
+import amf.core.resolution.stages.ResolutionStage
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.webapi.annotations.{ExplicitField, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._

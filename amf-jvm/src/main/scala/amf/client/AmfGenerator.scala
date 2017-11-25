@@ -4,10 +4,10 @@ import java.io.File
 import java.util.concurrent.CompletableFuture
 
 import amf.core.client.GenerationOptions
-import amf.framework.remote.Amf
+import amf.core.remote.Amf
 import amf.model.BaseUnit
 import amf.remote.FutureConverter.converters
-import amf.framework.remote.Syntax.Json
+import amf.core.remote.Syntax.Json
 
 /**
   * [[Amf]] generator.

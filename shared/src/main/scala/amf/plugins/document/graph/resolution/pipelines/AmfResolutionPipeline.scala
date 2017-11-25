@@ -1,9 +1,9 @@
 package amf.plugins.document.graph.resolution.pipelines
 
 import amf.ProfileNames
-import amf.framework.model.document.BaseUnit
-import amf.framework.resolution.pipelines.ResolutionPipeline
-import amf.framework.resolution.stages.ReferenceResolutionStage
+import amf.core.model.document.BaseUnit
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.plugins.document.webapi.resolution.stages.{ExtendsResolutionStage, ExtensionsResolutionStage}
 import amf.plugins.domain.shapes.resolution.stages._
 import amf.plugins.domain.webapi.resolution.stages._

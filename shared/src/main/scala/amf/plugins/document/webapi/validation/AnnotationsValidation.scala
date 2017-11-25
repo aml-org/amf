@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.Platform
-import amf.framework.validation.AMFValidationResult
+import amf.core.model.document.BaseUnit
+import amf.core.remote.Platform
+import amf.core.validation.AMFValidationResult
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
 

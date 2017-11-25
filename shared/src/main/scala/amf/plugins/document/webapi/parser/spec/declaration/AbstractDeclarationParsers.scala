@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.domain.templates.AbstractDeclaration
-import amf.framework.parser.{Annotations, _}
+import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.SearchScope
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}

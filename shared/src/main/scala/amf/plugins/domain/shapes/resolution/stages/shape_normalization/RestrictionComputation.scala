@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.framework.metamodel.Field
-import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
+import amf.core.metamodel.Field
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.Shape
 

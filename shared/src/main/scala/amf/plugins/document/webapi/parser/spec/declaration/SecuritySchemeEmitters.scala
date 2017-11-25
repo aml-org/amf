@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.DataNode
-import amf.framework.parser.{FieldEntry, Position}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.DataNode
+import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ValueEmitter}
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext

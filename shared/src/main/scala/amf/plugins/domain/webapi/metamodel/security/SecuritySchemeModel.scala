@@ -1,14 +1,14 @@
 package amf.plugins.domain.webapi.metamodel.security
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Array, Str}
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.metamodel.domain.templates.KeyField
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.templates.KeyField
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.framework.vocabulary.Namespace.Security
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Security
+import amf.core.vocabulary.ValueType
 
 object SecuritySchemeModel extends DomainElementModel with KeyField {
 

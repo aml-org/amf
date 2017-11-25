@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.metamodel.domain.DomainElementModel._
-import amf.framework.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.framework.metamodel.{Field, Type}
-import amf.framework.model.domain._
-import amf.framework.parser.{FieldEntry, Value}
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.DomainElementModel._
+import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.core.metamodel.{Field, Type}
+import amf.core.model.domain._
+import amf.core.parser.{FieldEntry, Value}
 
 /**
   * Merge 'other' element into 'main' element:

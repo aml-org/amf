@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.framework.validation.core.{ValidationReport, ValidationResult}
+import amf.core.validation.core.{ValidationReport, ValidationResult}
 import org.json4s
 import org.json4s._
 import org.json4s.jackson.JsonMethods._

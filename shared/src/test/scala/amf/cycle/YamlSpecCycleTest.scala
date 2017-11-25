@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.framework.remote.{Raml, RamlYamlHint}
+import amf.core.remote.{Raml, RamlYamlHint}
 import amf.io.BuildCycleTests
 import amf.remote._
 

@@ -1,16 +1,16 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.model.document.{BaseUnit, DeclaresModel}
-import amf.framework.model.domain.{DataNode, ObjectNode}
-import amf.framework.remote.Platform
-import amf.framework.validation.AMFValidationResult
+import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.model.domain.{DataNode, ObjectNode}
+import amf.core.remote.Platform
+import amf.core.validation.AMFValidationResult
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.shapes.models.{NodeShape, Shape, UnionShape}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, RequestModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{CustomDomainProperty, Parameter, Payload, Request}
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

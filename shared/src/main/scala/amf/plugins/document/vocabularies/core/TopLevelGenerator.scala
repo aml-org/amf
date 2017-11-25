@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.core
 
-import amf.framework.metamodel.Type
+import amf.core.metamodel.Type
 import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, DialectPropertyMapping}
 
 import scala.collection.mutable
@@ -152,7 +152,7 @@ class TopLevelGenerator(d: Dialect) {
   def generate(): String = {
     val bld = new mutable.StringBuilder()
     bld.append(
-      "package amf.dialects\nimport amf.dialects._\nimport amf.plugins.document.vocabularies.core._\nimport amf.framework.model.domain.AmfScalar\nimport amf.plugins.document.vocabularies.model.domain.DomainEntity\n")
+      "package amf.dialects\nimport amf.dialects._\nimport amf.plugins.document.vocabularies.core._\nimport amf.core.model.domain.AmfScalar\nimport amf.plugins.document.vocabularies.model.domain.DomainEntity\n")
     bld.append(s"object ${d.name.replace(' ', '_').replace('.', '_')}TopLevel {\n")
     generateNode(this.d.root)
     map.values.foreach { v =>

@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.metamodel.security
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Array, Str}
-import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel}
 import amf.plugins.domain.webapi.models.security.{ApiKeySettings, OAuth1Settings, OAuth2Settings, Settings}
-import amf.framework.vocabulary.Namespace.Security
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Security
+import amf.core.vocabulary.ValueType
 
 trait SettingsModel extends DomainElementModel
 

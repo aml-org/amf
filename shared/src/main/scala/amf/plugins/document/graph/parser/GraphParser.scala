@@ -1,16 +1,16 @@
 package amf.plugins.document.graph.parser
 
-import amf.framework.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
-import amf.framework.metamodel.document.BaseUnitModel.Location
-import amf.framework.metamodel.document._
-import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
-import amf.framework.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
-import amf.framework.model.document._
-import amf.framework.model.domain._
-import amf.framework.parser.{Annotations, _}
-import amf.framework.registries.AMFDomainRegistry
-import amf.framework.remote.Platform
-import amf.framework.unsafe.TrunkPlatform
+import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.core.metamodel.document.BaseUnitModel.Location
+import amf.core.metamodel.document._
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
+import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
+import amf.core.model.document._
+import amf.core.model.domain._
+import amf.core.parser.{Annotations, _}
+import amf.core.registries.AMFDomainRegistry
+import amf.core.remote.Platform
+import amf.core.unsafe.TrunkPlatform
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.DialectNode
 import amf.plugins.domain.shapes.metamodel._

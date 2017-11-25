@@ -1,12 +1,12 @@
 package amf.plugins.document.vocabularies.spec
 
 import amf.core.Root
-import amf.framework.metamodel.Type
-import amf.framework.model.document.{BaseUnit, Document, Module}
-import amf.framework.model.domain.{AmfArray, AmfScalar, LexicalInformation}
-import amf.framework.parser.{Annotations, Fields, _}
-import amf.framework.services.RuntimeValidator
-import amf.framework.validation.ParserSideValidations
+import amf.core.metamodel.Type
+import amf.core.model.document.{BaseUnit, Document, Module}
+import amf.core.model.domain.{AmfArray, AmfScalar, LexicalInformation}
+import amf.core.parser.{Annotations, Fields, _}
+import amf.core.services.RuntimeValidator
+import amf.core.validation.ParserSideValidations
 import amf.plugins.document.vocabularies.core.{DialectRegistry, DialectValidator, ValidationIssue}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.webapi.annotations.{SourceAST, SynthesizedField}

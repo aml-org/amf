@@ -8,9 +8,10 @@ import amf.domain.dialects.DomainEntity
 import amf.model.AmfScalar
 import amf.framework.parser.Annotations
 import amf.framework.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec._
-import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
   * Created by Pavel Petrochenko on 12/09/17.

@@ -1,8 +1,8 @@
 package amf.emit
 
-import amf.framework.model.document.{Document, Module}
+import amf.core.model.document.{Document, Module}
 import amf.plugins.domain.webapi.models.{CreativeWork, License, Organization, WebApi}
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 
 /**
   *

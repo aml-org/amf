@@ -1,13 +1,13 @@
 package amf.plugins.domain.webapi.metamodel.extensions
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.Str
-import amf.framework.metamodel.domain.templates.KeyField
-import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Str
+import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel}
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
-import amf.framework.vocabulary.Namespace.{Document, Http}
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.{Document, Http}
+import amf.core.vocabulary.ValueType
 
 /**
   * Extension to the model being parsed from RAML annotation or OpenAPI extensions.

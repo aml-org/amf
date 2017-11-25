@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Bool, Str}
-import amf.framework.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Bool, Str}
+import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.XMLSerializer
-import amf.framework.vocabulary.Namespace.Shapes
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Shapes
+import amf.core.vocabulary.ValueType
 
 /**
   * Scalar shape metamodel

@@ -11,7 +11,7 @@ import scala.language.postfixOps
 
 trait DeclaresModel {
 
-  private[amf] val element: amf.framework.model.document.DeclaresModel
+  private[amf] val element: amf.core.model.document.DeclaresModel
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   lazy val declares: util.List[DomainElement] = {

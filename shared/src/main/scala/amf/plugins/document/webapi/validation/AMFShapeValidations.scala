@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.validation
 
-import amf.framework.model.domain.AmfScalar
-import amf.framework.validation.ParserSideValidations
-import amf.framework.vocabulary.Namespace
+import amf.core.model.domain.AmfScalar
+import amf.core.validation.ParserSideValidations
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, PropertyShapeModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models._

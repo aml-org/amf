@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.framework.model.domain.{DataNode, DomainElement}
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.{DataNode, DomainElement}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ShapeExtensionModel
 import amf.plugins.domain.shapes.metamodel.ShapeExtensionModel._
 import org.yaml.model.YPart

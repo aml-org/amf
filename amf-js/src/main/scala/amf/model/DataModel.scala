@@ -1,6 +1,6 @@
 package amf.model
 
-import amf.framework.model.domain
+import amf.core.model.domain
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.parser.Annotations
+import amf.core.parser.Annotations
 import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.models.Payload

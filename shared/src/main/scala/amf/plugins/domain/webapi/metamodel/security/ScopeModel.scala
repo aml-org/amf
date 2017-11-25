@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.metamodel.security
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.Str
-import amf.framework.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Str
+import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.webapi.models.security.Scope
-import amf.framework.vocabulary.Namespace.Security
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Security
+import amf.core.vocabulary.ValueType
 
 object ScopeModel extends DomainElementModel {
 

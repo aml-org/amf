@@ -1,17 +1,17 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
-import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.framework.metamodel.domain.DomainElementModel._
-import amf.framework.metamodel.domain.templates.KeyField
-import amf.framework.metamodel.domain.{DataNodeModel, DomainElementModel}
-import amf.framework.metamodel.{Field, Type}
-import amf.framework.model.document._
-import amf.framework.model.domain._
-import amf.framework.parser.{FieldEntry, ParserContext, Value}
-import amf.framework.remote.Raml
-import amf.framework.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.domain.DomainElementModel._
+import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.core.metamodel.{Field, Type}
+import amf.core.model.document._
+import amf.core.model.domain._
+import amf.core.parser.{FieldEntry, ParserContext, Value}
+import amf.core.remote.Raml
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.Declarations

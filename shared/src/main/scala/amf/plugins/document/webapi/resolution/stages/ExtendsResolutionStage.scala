@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.model.document.{BaseUnit, DeclaresModel}
-import amf.framework.model.domain.{DataNode, DomainElement}
-import amf.framework.parser.ParserContext
-import amf.framework.remote.Raml
-import amf.framework.resolution.stages.ResolutionStage
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.model.domain.{DataNode, DomainElement}
+import amf.core.parser.ParserContext
+import amf.core.remote.Raml
+import amf.core.resolution.stages.ResolutionStage
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.SpecOrdering
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter

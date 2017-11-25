@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.framework.model.document._
-import amf.framework.parser.Annotations
+import amf.core.model.document._
+import amf.core.parser.Annotations
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader

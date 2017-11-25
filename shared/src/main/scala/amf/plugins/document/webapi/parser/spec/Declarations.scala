@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.framework.model.document.Fragment
-import amf.framework.model.domain.{DomainElement, Linkable}
-import amf.framework.parser.{Annotations, ErrorHandler, Fields}
-import amf.framework.utils.QName
+import amf.core.model.document.Fragment
+import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.parser.{Annotations, ErrorHandler, Fields}
+import amf.core.utils.QName
 import amf.plugins.document.webapi.parser.spec.SearchScope.{All, Fragments, Named}
 import amf.plugins.domain.shapes.models.{Example, Shape, UnresolvedShape}
 import amf.plugins.domain.webapi.models.security.SecurityScheme

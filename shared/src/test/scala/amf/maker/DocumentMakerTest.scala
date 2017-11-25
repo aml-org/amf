@@ -1,8 +1,8 @@
 package amf.maker
 
 import amf.facades.{AMFCompiler, Validation}
-import amf.framework.model.document.Document
-import amf.framework.remote._
+import amf.core.model.document.Document
+import amf.core.remote._
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.WebApi
 import amf.remote._

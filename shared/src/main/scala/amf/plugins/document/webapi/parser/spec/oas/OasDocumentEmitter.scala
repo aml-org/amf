@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.framework.unsafe.PlatformSecrets
-import amf.framework.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.model.document._
-import amf.framework.model.domain._
-import amf.framework.parser.Position.ZERO
-import amf.framework.parser.{FieldEntry, Fields, Position}
-import amf.framework.remote.{Oas, Vendor}
+import amf.core.unsafe.PlatformSecrets
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.model.document._
+import amf.core.model.domain._
+import amf.core.parser.Position.ZERO
+import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.remote.{Oas, Vendor}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}

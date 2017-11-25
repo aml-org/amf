@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.ProfileNames
-import amf.framework.model.document.BaseUnit
+import amf.core.model.document.BaseUnit
 import amf.plugins.document.graph.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.domain.webapi.resolution.stages.{ExamplesResolutionStage, MediaTypeResolutionStage, ParametersNormalizationStage}
 

@@ -5,9 +5,9 @@ import java.util.concurrent.CompletableFuture
 
 import amf.dialects.JVMDialectRegistry
 import amf.facades.Validation
-import amf.framework.lexer.{CharArraySequence, CharSequenceStream, FileStream}
-import amf.framework.remote.{Content, Platform}
-import amf.framework.unsafe.PlatformBuilder
+import amf.core.lexer.{CharArraySequence, CharSequenceStream, FileStream}
+import amf.core.remote.{Content, Platform}
+import amf.core.unsafe.PlatformBuilder
 import amf.remote.FutureConverter.converters
 import amf.validation.SHACLValidator
 import org.mulesoft.common.io.{FileSystem, JvmFileSystem}

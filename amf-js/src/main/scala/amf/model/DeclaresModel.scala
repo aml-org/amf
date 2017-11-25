@@ -10,7 +10,7 @@ import scala.scalajs.js.JSConverters._
 
 trait DeclaresModel {
 
-  private[amf] def element: amf.framework.model.document.DeclaresModel
+  private[amf] def element: amf.core.model.document.DeclaresModel
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   lazy val declares: js.Iterable[DomainElement] = {

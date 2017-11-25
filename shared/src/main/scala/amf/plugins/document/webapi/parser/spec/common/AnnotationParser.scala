@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.framework.model.domain.DomainElement
-import amf.framework.parser.{Annotations, _}
+import amf.core.model.domain.DomainElement
+import amf.core.parser.{Annotations, _}
 import amf.plugins.domain.webapi.models.CustomDomainProperty
 import amf.plugins.domain.webapi.models.extensions.DomainExtension
 import org.yaml.model._

@@ -1,9 +1,9 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.framework.metamodel.Obj
-import amf.framework.model.domain
-import amf.framework.model.domain.{AmfArray, DataNode, DomainElement}
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.metamodel.Obj
+import amf.core.model.domain
+import amf.core.model.domain.{AmfArray, DataNode, DomainElement}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ApiKeySettingsModel._
 import amf.plugins.domain.webapi.metamodel.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}

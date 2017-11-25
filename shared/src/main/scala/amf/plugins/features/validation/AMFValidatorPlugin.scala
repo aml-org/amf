@@ -3,13 +3,13 @@ package amf.plugins.features.validation
 import amf.ProfileNames
 import amf.core.client.GenerationOptions
 import amf.facades.ValidationMutex
-import amf.framework.model.document.{BaseUnit, Document}
-import amf.framework.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
-import amf.framework.registries.AMFPluginsRegistry
-import amf.framework.remote.Platform
-import amf.framework.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
-import amf.framework.validation.core.ValidationReport
-import amf.framework.validation.{AMFValidationReport, EffectiveValidations, ParserSideValidationPlugin}
+import amf.core.model.document.{BaseUnit, Document}
+import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.registries.AMFPluginsRegistry
+import amf.core.remote.Platform
+import amf.core.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
+import amf.core.validation.core.ValidationReport
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, ParserSideValidationPlugin}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
 import amf.plugins.document.vocabularies.model.domain.DomainEntity

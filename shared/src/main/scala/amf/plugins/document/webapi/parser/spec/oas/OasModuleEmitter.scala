@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.framework.metamodel.document.BaseUnitModel
-import amf.framework.model.document.{Module, _}
-import amf.framework.model.domain.templates.AbstractDeclaration
-import amf.framework.parser.Position
-import amf.framework.remote.Oas
+import amf.core.metamodel.document.BaseUnitModel
+import amf.core.model.document.{Module, _}
+import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.parser.Position
+import amf.core.remote.Oas
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ValueEmitter, _}

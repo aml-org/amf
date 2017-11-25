@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.Root
-import amf.framework.parser._
+import amf.core.parser._
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import org.yaml.model.YMap
 

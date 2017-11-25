@@ -1,7 +1,7 @@
 package amf.spec
 
-import amf.framework.parser.Position
-import amf.framework.parser.Position.ZERO
+import amf.core.parser.Position
+import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.parser.spec.Emitter
 import amf.plugins.document.webapi.parser.spec.SpecOrdering.Lexical
 import org.scalatest.FunSuite

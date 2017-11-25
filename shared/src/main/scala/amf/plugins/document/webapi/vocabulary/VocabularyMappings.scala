@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.vocabulary
 
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 
 object VocabularyMappings {
 

@@ -1,17 +1,13 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.framework.parser.ParserContext
-import amf.framework.remote.Vendor
+import amf.core.parser.ParserContext
+import amf.core.remote.Vendor
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.domain.shapes.models.Shape
-import amf.framework.validation.ParserSideValidations.ClosedShapeSpecification
+import amf.core.validation.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-<<<<<<< HEAD
-class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.validation, wrapped.rootContextDocument, wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
-=======
-class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
->>>>>>> APIMF-161 splitting resolution among plugins
+class WebApiContext(override val vendor: Vendor, private val wrapped: ParserContext, override val spec: SpecAwareContext, override val syntax: SpecSyntax) extends ParserContext(wrapped.rootContextDocument, wrapped.refs, Some(wrapped.declarations)) with SpecAwareContext {
 
   override def ignore(shape: String, property: String) = spec.ignore(shape, property)
 
@@ -49,7 +45,7 @@ class WebApiContext(override val vendor: Vendor, private val wrapped: ParserCont
     * need to first, compute them, and then, add them as additional valid properties to the set of properties that
     * can be defined in the AST node
     */
-  override def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
+  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
     val node = shape.id
     val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited =  true)
 

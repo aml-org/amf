@@ -2,14 +2,14 @@ package amf.plugins.document.graph
 
 import amf.core.Root
 import amf.core.client.GenerationOptions
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser._
-import amf.framework.plugins.AMFDocumentPlugin
-import amf.framework.remote.Platform
+import amf.core.model.document.BaseUnit
+import amf.core.parser._
+import amf.core.plugins.AMFDocumentPlugin
+import amf.core.remote.Platform
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import amf.plugins.document.graph.references.AMFGraphReferenceCollector
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.resolution.pipelines.AmfResolutionPipeline
 import org.yaml.model.YMap
 

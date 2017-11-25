@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.document.{BaseUnit, Fragment, Module}
-import amf.framework.model.domain.{DomainElement, Linkable}
-import amf.framework.parser.Position
-import amf.framework.remote.{Oas, Raml, Vendor}
+import amf.core.model.document.{BaseUnit, Fragment, Module}
+import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.parser.Position
+import amf.core.remote.{Oas, Raml, Vendor}
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{MapEntryEmitter, _}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter

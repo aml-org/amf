@@ -1,12 +1,12 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Bool, Str}
-import amf.framework.metamodel.domain.templates.KeyField
-import amf.framework.metamodel.domain.{DomainElementModel, LinkableElementModel}
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Bool, Str}
+import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.plugins.domain.shapes.models.Example
-import amf.framework.vocabulary.Namespace._
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace._
+import amf.core.vocabulary.ValueType
 
 /**
   *

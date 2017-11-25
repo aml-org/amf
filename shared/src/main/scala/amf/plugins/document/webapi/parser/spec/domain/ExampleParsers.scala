@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.framework.model.domain.AmfScalar
-import amf.framework.parser.Annotations
-import amf.framework.parser._
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.Annotations
+import amf.core.parser._
 import amf.plugins.document.webapi.annotations.{SingleValueArray, SynthesizedField}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}

@@ -3,14 +3,14 @@ package amf.plugins.document.vocabularies.core
 import amf.core.Root
 import amf.dialects.RAML_1_0_DialectTopLevel
 import amf.dialects.RAML_1_0_DialectTopLevel.{DeclarationObject, NodeDefinitionObject, PropertyMappingObject}
-import amf.framework.model.document.{BaseUnit, Document, Module}
-import amf.framework.metamodel.Type
-import amf.framework.model.domain.AmfScalar
+import amf.core.model.document.{BaseUnit, Document, Module}
+import amf.core.metamodel.Type
+import amf.core.model.domain.AmfScalar
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec
 import amf.plugins.document.vocabularies.spec._
 import amf.plugins.document.webapi.model.DialectFragment
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 
 import scala.collection.mutable
 

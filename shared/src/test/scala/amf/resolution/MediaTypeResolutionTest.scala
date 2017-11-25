@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.framework.remote.{Amf, Oas, OasJsonHint, RamlYamlHint}
+import amf.core.remote.{Amf, Oas, OasJsonHint, RamlYamlHint}
 import amf.remote._
 
 class MediaTypeResolutionTest extends ResolutionTest {

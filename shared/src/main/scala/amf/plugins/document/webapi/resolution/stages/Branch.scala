@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.templates.{Variable, VariableValue}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.templates.{Variable, VariableValue}
 
 
 

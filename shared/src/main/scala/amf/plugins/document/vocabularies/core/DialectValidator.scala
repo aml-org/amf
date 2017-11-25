@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.core
 
-import amf.framework.metamodel.Type
-import amf.framework.model.document.{BaseUnit, Document}
-import amf.framework.model.domain.{AmfArray, AmfElement, AmfScalar}
+import amf.core.metamodel.Type
+import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.DialectPropertyMapping
 

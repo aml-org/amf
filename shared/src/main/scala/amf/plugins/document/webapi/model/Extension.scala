@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.model
 
-import amf.framework.model.document.ExtensionLike
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.document.ExtensionLike
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.ExtensionModel
 
 class Extension(override val fields: Fields, override val annotations: Annotations)

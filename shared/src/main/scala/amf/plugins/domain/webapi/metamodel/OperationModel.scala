@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type._
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.framework.vocabulary.Namespace.{Document, Http, Hydra, Schema}
-import amf.framework.vocabulary.{Namespace, ValueType}
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type._
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.core.vocabulary.Namespace.{Document, Http, Hydra, Schema}
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.webapi.models.Operation
 
 /**

@@ -1,8 +1,8 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.framework.model.domain
-import amf.framework.model.domain.{AmfArray, DomainElement, Linkable}
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain
+import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel.{Settings => SettingsField}
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel._

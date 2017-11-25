@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.framework.parser._
+import amf.core.parser._
 import org.yaml.model.{YMap, YNode, YScalar}
 
 object OasSpecAwareContext extends SpecAwareContext {

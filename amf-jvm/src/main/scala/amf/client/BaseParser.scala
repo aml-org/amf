@@ -4,10 +4,10 @@ import java.util.concurrent.CompletableFuture
 
 import amf.ProfileNames
 import amf.core.client.{Handler, ParsingOptions, PlatformParser}
-import amf.framework.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
-import amf.framework.remote.Syntax.Syntax
-import amf.framework.remote.{Platform, StringContentPlatform, Vendor}
-import amf.framework.validation.AMFValidationReport
+import amf.core.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
+import amf.core.remote.Syntax.Syntax
+import amf.core.remote.{Platform, StringContentPlatform, Vendor}
+import amf.core.validation.AMFValidationReport
 import amf.model.{Fragment, _}
 import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
 import amf.remote.FutureConverter.converters
@@ -137,8 +137,8 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   def reportCustomValidation(profileName: String, customProfilePath: String): CompletableFuture[AMFValidationReport] =
     super.reportCustomValidationImplementation(profileName, customProfilePath).asJava
 
-  private case class BaseUnitHandlerAdapter(handler: Handler[BaseUnit]) extends Handler[amf.framework.model.document.BaseUnit] {
-    override def success(document: amf.framework.model.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
+  private case class BaseUnitHandlerAdapter(handler: Handler[BaseUnit]) extends Handler[amf.core.model.document.BaseUnit] {
+    override def success(document: amf.core.model.document.BaseUnit): Unit = handler.success(unitScalaToJVM(document))
 
     override def error(exception: Throwable): Unit = handler.error(exception)
   }

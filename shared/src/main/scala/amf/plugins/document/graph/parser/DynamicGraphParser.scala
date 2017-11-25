@@ -1,10 +1,10 @@
 package amf.plugins.document.graph.parser
 
-import amf.framework.metamodel.Type.ObjType
-import amf.framework.metamodel.domain.DomainElementModel
-import amf.framework.model.domain
-import amf.framework.model.domain._
-import amf.framework.parser.{Annotations, _}
+import amf.core.metamodel.Type.ObjType
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.model.domain
+import amf.core.model.domain._
+import amf.core.parser.{Annotations, _}
 import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable

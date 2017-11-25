@@ -3,9 +3,9 @@ package amf.emit
 import amf.common.ListAssertions
 import amf.core.client.GenerationOptions
 import amf.facades.AMFUnitMaker
-import amf.framework.model.document.Document
-import amf.framework.parser._
-import amf.framework.remote.{Oas, Raml, Vendor}
+import amf.core.model.document.Document
+import amf.core.parser._
+import amf.core.remote.{Oas, Raml, Vendor}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap

@@ -1,7 +1,7 @@
 package amf.model
 
 import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
-import amf.framework.model.document.{Document => CoreDocument}
+import amf.core.model.document.{Document => CoreDocument}
 
 import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
 

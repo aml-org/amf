@@ -3,10 +3,10 @@ package amf.client
 import amf.common.AmfObjectTestMatcher
 import amf.common.Tests._
 import amf.core.client.GenerationOptions
-import amf.framework.unsafe.PlatformSecrets
+import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
-import amf.framework.remote.Syntax.Json
-import amf.framework.remote.{Amf, RamlYamlHint}
+import amf.core.remote.Syntax.Json
+import amf.core.remote.{Amf, RamlYamlHint}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -36,7 +36,7 @@ class DialectLoaderTest
                       None,
                       None).build())
       .map { u =>
-        val encoded = u.asInstanceOf[amf.framework.model.document.Document].encodes
+        val encoded = u.asInstanceOf[amf.core.model.document.Document].encodes
         assert(encoded.getTypeIds().length == 2)
         new AMFDumper(u, Amf, Json, GenerationOptions()).dumpToString
       }

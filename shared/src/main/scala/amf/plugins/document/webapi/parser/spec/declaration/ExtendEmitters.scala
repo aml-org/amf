@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.framework.model.domain.templates.ParametrizedDeclaration
-import amf.framework.parser.{FieldEntry, Position}
+import amf.core.model.domain.templates.ParametrizedDeclaration
+import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._

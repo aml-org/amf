@@ -2,12 +2,12 @@ package amf.facades
 
 import amf.ProfileNames
 import amf.core.AMF
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.LexicalInformation
-import amf.framework.remote.Platform
-import amf.framework.services.RuntimeValidator
-import amf.framework.validation.core.ValidationDialectText
-import amf.framework.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.LexicalInformation
+import amf.core.remote.Platform
+import amf.core.services.RuntimeValidator
+import amf.core.validation.core.ValidationDialectText
+import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.features.validation.AMFValidatorPlugin

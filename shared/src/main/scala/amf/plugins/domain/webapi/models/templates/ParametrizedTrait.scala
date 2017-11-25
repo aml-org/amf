@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.templates
 
-import amf.framework.model.domain.templates.ParametrizedDeclaration
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.model.domain.templates.ParametrizedDeclaration
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import org.yaml.model.YPart
 

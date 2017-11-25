@@ -1,8 +1,8 @@
 package amf.plugins.domain.webapi.models
 
-import amf.framework.model.domain.{DomainElement, Linkable}
-import amf.framework.parser.{Annotations, Fields}
-import amf.framework.utils._
+import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.parser.{Annotations, Fields}
+import amf.core.utils._
 import amf.plugins.domain.shapes.models.Shape
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel
 import amf.plugins.domain.webapi.metamodel.CustomDomainPropertyModel._

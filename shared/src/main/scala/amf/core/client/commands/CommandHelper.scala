@@ -3,9 +3,9 @@ package amf.core.client.commands
 import amf.ProfileNames
 import amf.core.client.{GenerationOptions, ParserConfig}
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
-import amf.framework.model.document.BaseUnit
-import amf.framework.remote.Syntax.{Json, Yaml}
-import amf.framework.remote._
+import amf.core.model.document.BaseUnit
+import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.remote._
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
 

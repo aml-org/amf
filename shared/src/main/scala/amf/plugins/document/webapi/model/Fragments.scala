@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.model
 
-import amf.framework.metamodel.Obj
-import amf.framework.model.document.Fragment
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.metamodel.Obj
+import amf.core.model.document.Fragment
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.domain.shapes.models.{Example, Shape}
 import amf.plugins.domain.webapi.models.{CreativeWork, CustomDomainProperty, ExternalDomainElement}

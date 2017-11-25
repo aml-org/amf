@@ -1,7 +1,7 @@
 package amf.plugins.features.validation.model
 
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
-import amf.framework.vocabulary.Namespace
+import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable

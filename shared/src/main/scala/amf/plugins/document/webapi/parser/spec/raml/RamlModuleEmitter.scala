@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-import amf.framework.metamodel.document.BaseUnitModel
-import amf.framework.model.document.{BaseUnit, Module, _}
-import amf.framework.model.domain.templates.AbstractDeclaration
-import amf.framework.remote.Raml
+import amf.core.metamodel.document.BaseUnitModel
+import amf.core.model.document.{BaseUnit, Module, _}
+import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.remote.Raml
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ValueEmitter

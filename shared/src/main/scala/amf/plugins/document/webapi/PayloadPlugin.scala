@@ -2,10 +2,10 @@ package amf.plugins.document.webapi
 
 import amf.core.Root
 import amf.core.client.GenerationOptions
-import amf.framework.model.document.BaseUnit
-import amf.framework.parser.ParserContext
-import amf.framework.plugins.AMFDocumentPlugin
-import amf.framework.remote.Platform
+import amf.core.model.document.BaseUnit
+import amf.core.parser.ParserContext
+import amf.core.plugins.AMFDocumentPlugin
+import amf.core.remote.Platform
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.references.PayloadReferenceCollector

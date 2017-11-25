@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.framework.parser._
-import amf.framework.remote.{Oas, Raml}
+import amf.core.parser._
+import amf.core.remote.{Oas, Raml}
 import amf.plugins.domain.shapes.metamodel.ShapeModel
 import amf.plugins.domain.shapes.models.{Shape, ShapeExtension}
 import org.yaml.model.YMap

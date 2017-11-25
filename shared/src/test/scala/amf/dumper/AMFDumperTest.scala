@@ -4,10 +4,10 @@ import amf.common.Tests
 import amf.core.client.GenerationOptions
 import amf.emit.AMFUnitFixtureTest
 import amf.facades.AMFDumper
-import amf.framework.remote.Syntax.{Json, Yaml}
+import amf.core.remote.Syntax.{Json, Yaml}
 import amf.remote._
-import amf.framework.unsafe.PlatformSecrets
-import amf.framework.remote.{Amf, Oas, Raml}
+import amf.core.unsafe.PlatformSecrets
+import amf.core.remote.{Amf, Oas, Raml}
 import org.scalatest.{Assertion, FunSuite}
 
 /**

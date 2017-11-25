@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.core
 
-import amf.framework.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec.DialectPropertyMapping
 

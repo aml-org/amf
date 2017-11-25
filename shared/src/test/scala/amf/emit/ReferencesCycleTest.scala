@@ -3,9 +3,9 @@ package amf.emit
 import amf.common.ListAssertions
 import amf.common.Tests.checkDiff
 import amf.core.client.GenerationOptions
-import amf.framework.model.document.BaseUnit
+import amf.core.model.document.BaseUnit
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
-import amf.framework.remote._
+import amf.core.remote._
 import amf.io.BuildCycleTests
 import amf.remote._
 import org.mulesoft.common.io.AsyncFile

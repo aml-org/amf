@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.metamodel
 
-import amf.framework.metamodel.Field
-import amf.framework.metamodel.Type.{Iri, Str}
-import amf.framework.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.{Iri, Str}
+import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.webapi.models.Organization
-import amf.framework.vocabulary.Namespace.Schema
-import amf.framework.vocabulary.ValueType
+import amf.core.vocabulary.Namespace.Schema
+import amf.core.vocabulary.ValueType
 
 /**
   * Organization metamodel

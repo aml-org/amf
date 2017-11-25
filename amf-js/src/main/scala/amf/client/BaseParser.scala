@@ -2,12 +2,12 @@ package amf.client
 
 import amf.ProfileNames
 import amf.core.client.{Handler, PlatformParser}
-import amf.framework.validation.AMFValidationReport
-import amf.framework.remote.Syntax.Syntax
+import amf.core.validation.AMFValidationReport
+import amf.core.remote.Syntax.Syntax
 import amf.remote._
 import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
-import amf.framework.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
-import amf.framework.remote.{Platform, StringContentPlatform, Vendor}
+import amf.core.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
+import amf.core.remote.{Platform, StringContentPlatform, Vendor}
 import amf.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -105,8 +105,8 @@ abstract class BaseParser(protected val vendor: Vendor, protected val syntax: Sy
   def reportCustomValidation(profileName: String, customProfilePath: String): js.Promise[AMFValidationReport] =
     super.reportCustomValidationImplementation(profileName, customProfilePath).toJSPromise
 
-  private case class BaseUnitHandlerAdapter(handler: JsHandler[BaseUnit]) extends Handler[amf.framework.model.document.BaseUnit] {
-    override def success(document: amf.framework.model.document.BaseUnit): Unit = handler.success(unitScalaToJS(document))
+  private case class BaseUnitHandlerAdapter(handler: JsHandler[BaseUnit]) extends Handler[amf.core.model.document.BaseUnit] {
+    override def success(document: amf.core.model.document.BaseUnit): Unit = handler.success(unitScalaToJS(document))
     override def error(exception: Throwable): Unit              = handler.error(exception)
   }
 }
