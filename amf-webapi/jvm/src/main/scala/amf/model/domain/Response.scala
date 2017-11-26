@@ -1,15 +1,12 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.webapi.models
 
-import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.collection.JavaConverters._
 
 /**
   * JS Response model class.
   */
-@JSExportAll
 case class Response private[model] (private val response: models.Response) extends DomainElement {
 
   def this() = this(models.Response())
@@ -17,9 +14,9 @@ case class Response private[model] (private val response: models.Response) exten
   val name: String                    = response.name
   val description: String             = response.description
   val statusCode: String              = response.statusCode
-  val headers: js.Iterable[Parameter] = response.headers.map(Parameter).toJSArray
-  val payloads: js.Iterable[Payload]  = response.payloads.map(Payload).toJSArray
-  val examples: js.Iterable[Example]  = response.examples.map(Example).toJSArray
+  val headers: java.util.List[Parameter] = response.headers.map(Parameter).asJava
+  val payloads: java.util.List[Payload]  = response.payloads.map(Payload).asJava
+  val examples: java.util.List[Example]  = response.examples.map(Example).asJava
 
   override private[amf] def element: models.Response = response
 
@@ -42,20 +39,20 @@ case class Response private[model] (private val response: models.Response) exten
   }
 
   /** Set headers property of this [[Response]]. */
-  def withHeaders(headers: js.Iterable[Parameter]): this.type = {
-    response.withHeaders(headers.toSeq.map(_.element))
+  def withHeaders(headers: java.util.List[Parameter]): this.type = {
+    response.withHeaders(headers.asScala.map(_.element))
     this
   }
 
   /** Set payloads property of this [[Response]]. */
-  def withPayloads(payloads: js.Iterable[Payload]): this.type = {
-    response.withPayloads(payloads.toSeq.map(_.element))
+  def withPayloads(payloads: java.util.List[Payload]): this.type = {
+    response.withPayloads(payloads.asScala.map(_.element))
     this
   }
 
   /** Set examples property of this [[Response]]. */
-  def withExamples(examples: js.Iterable[Example]): this.type = {
-    response.withExamples(examples.toSeq.map(_.element))
+  def withExamples(examples: java.util.List[Example]): this.type = {
+    response.withExamples(examples.asScala.map(_.element))
     this
   }
 

@@ -1,23 +1,25 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.EndPoint
 import amf.plugins.domain.webapi.models
 
-import scala.collection.JavaConverters._
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.JSExportAll
 
 /**
-  * JVM EndPoint model class.
+  * JS EndPoint model class.
   */
+@JSExportAll
 case class EndPoint private[model] (private val endPoint: models.EndPoint) extends DomainElement {
 
   def this() = this(models.EndPoint())
 
-  val name: String                                         = endPoint.name
-  val description: String                                  = endPoint.description
-  val path: String                                         = endPoint.path
-  val operations: java.util.List[Operation]                = endPoint.operations.map(Operation).asJava
-  val parameters: java.util.List[Parameter]                = endPoint.parameters.map(Parameter).asJava
-  def security: java.util.List[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).asJava
+  val name: String                                      = endPoint.name
+  val description: String                               = endPoint.description
+  val path: String                                      = endPoint.path
+  val operations: js.Iterable[Operation]                = endPoint.operations.map(Operation).toJSArray
+  val parameters: js.Iterable[Parameter]                = endPoint.parameters.map(Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: models.EndPoint = endPoint
 
@@ -43,26 +45,26 @@ case class EndPoint private[model] (private val endPoint: models.EndPoint) exten
   }
 
   /** Set operations property of this [[EndPoint]]. */
-  def withOperations(operations: java.util.List[Operation]): this.type = {
-    endPoint.withOperations(operations.asScala.map(_.element))
+  def withOperations(operations: js.Iterable[Operation]): this.type = {
+    endPoint.withOperations(operations.toSeq.map(_.element))
     this
   }
 
   /** Set parameters property of this [[EndPoint]]. */
-  def withParameters(parameters: java.util.List[Parameter]): this.type = {
-    endPoint.withParameters(parameters.asScala.map(_.element))
+  def withParameters(parameters: js.Iterable[Parameter]): this.type = {
+    endPoint.withParameters(parameters.toSeq.map(_.element))
     this
   }
 
   /** Set security property of this [[EndPoint]] using a list of [[ParametrizedSecurityScheme]]. */
-  def withSecurity(security: java.util.List[ParametrizedSecurityScheme]): this.type = {
-    endPoint.withSecurity(security.asScala.map(_.element))
+  def withSecurity(security: js.Iterable[ParametrizedSecurityScheme]): this.type = {
+    endPoint.withSecurity(security.toSeq.map(_.element))
     this
   }
 
   /**
     * Adds one [[Operation]] to the operations property of this [[EndPoint]] and returns it for population.
-    * method property of the operation is required.
+    * Method property of the operation is required.
     */
   def withOperation(method: String): Operation = Operation(endPoint.withOperation(method))
 

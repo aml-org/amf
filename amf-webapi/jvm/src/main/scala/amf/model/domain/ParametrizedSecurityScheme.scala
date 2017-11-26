@@ -1,11 +1,9 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.ParametrizedSecurityScheme
-
-import scala.scalajs.js.annotation.JSExportAll
 import amf.plugins.domain.webapi.models.security
+
 /**
-  * JVM ParametrizedSecurityScheme model class.
+  * JS ParametrizedSecurityScheme model class.
   */
 case class ParametrizedSecurityScheme private[model] (private val s: security.ParametrizedSecurityScheme)
     extends DomainElement {

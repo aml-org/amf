@@ -1,7 +1,8 @@
-package amf.model
+package amf.model.domain
+
+import amf.plugins.domain.webapi.models.security
 
 import scala.scalajs.js.annotation.JSExportAll
-import amf.plugins.domain.webapi.models.security
 
 /**
   * JS ParametrizedSecurityScheme model class.

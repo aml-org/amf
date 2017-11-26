@@ -1,18 +1,10 @@
-package amf.model
+package amf.model.document
+
+import amf.core.model.document.{Fragment => CoreFragment}
+import amf.core.unsafe.PlatformSecrets
+import amf.plugins.document.webapi.model.{AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment, DataTypeFragment => CoreDataTypeFragment, DialectFragment => CoreDialectFragment, DocumentationItemFragment => CoreDocumentationItemFragment, ExternalFragment => CoreExternalFragment, NamedExampleFragment => CoreNamedExampleFragment, ResourceTypeFragment => CoreResourceTypeFragment, SecuritySchemeFragment => CoreSecuritySchemeFragment, TraitFragment => CoreTraitFragment}
 
 import scala.scalajs.js.annotation.JSExportAll
-import amf.core.model.document.{Fragment => CoreFragment}
-import amf.plugins.document.webapi.model.{
-  AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment,
-  DataTypeFragment => CoreDataTypeFragment,
-  DialectFragment => CoreDialectFragment,
-  DocumentationItemFragment => CoreDocumentationItemFragment,
-  ExternalFragment => CoreExternalFragment,
-  NamedExampleFragment => CoreNamedExampleFragment,
-  ResourceTypeFragment => CoreResourceTypeFragment,
-  SecuritySchemeFragment => CoreSecuritySchemeFragment,
-  TraitFragment => CoreTraitFragment
-}
 
 /**
   * JS Fragment model class
@@ -24,18 +16,10 @@ abstract class Fragment(private[amf] val fragment: CoreFragment) extends BaseUni
 
 }
 
-object Fragment {
-  def apply(fragment: CoreFragment): Fragment = fragment match {
-    case a: CoreAnnotationTypeDeclarationFragment => AnnotationTypeDeclaration(a)
-    case d: CoreDataTypeFragment                  => DataType(d)
-    case d: CoreDialectFragment                   => DialectFragment(d)
-    case d: CoreDocumentationItemFragment         => DocumentationItem(d)
-    case e: CoreExternalFragment                  => ExternalFragment(e)
-    case n: CoreNamedExampleFragment              => NamedExample(n)
-    case r: CoreResourceTypeFragment              => ResourceTypeFragment(r)
-    case s: CoreSecuritySchemeFragment            => SecuritySchemeFragment(s)
-    case t: CoreTraitFragment                     => TraitFragment(t)
-  }
+object Fragment extends PlatformSecrets {
+  // TODO: This is missing for the dialects @modularization
+  // case d: CoreDialectFragment                   => DialectFragment(d)
+  def apply(fragment: CoreFragment): Fragment = platform.wrap(fragment)
 }
 
 case class DocumentationItem(private[amf] val documentationItem: CoreDocumentationItemFragment)

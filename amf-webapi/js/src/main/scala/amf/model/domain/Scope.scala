@@ -1,12 +1,14 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.Scope
 import amf.plugins.domain.webapi.models.security
 
+import scala.scalajs.js.annotation.JSExportAll
+
 /**
-  * JVM Scope model class.
+  * JS Scope model class.
   */
-case class Scope private[model] (private val scope: security.Scope) extends DomainElement {
+@JSExportAll
+case class Scope private[model] (private val scope: amf.plugins.domain.webapi.models.security.Scope) extends DomainElement {
   def this() = this(security.Scope())
 
   val name: String        = scope.name

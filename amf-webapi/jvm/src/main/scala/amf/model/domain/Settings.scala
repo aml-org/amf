@@ -1,14 +1,12 @@
-package amf.model
-
-import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+package amf.model.domain
 
 import amf.plugins.domain.webapi.models.security
+
+import scala.collection.JavaConverters._
+
 /**
   * JS Settings model class.
   */
-@JSExportAll
 class Settings private[model] (private val settings: security.Settings) extends DomainElement {
   def this() = this(security.Settings())
 
@@ -30,7 +28,7 @@ case class OAuth1Settings private[model] (private val settings: security.OAuth1S
   val requestTokenUri: String         = settings.requestTokenUri
   val authorizationUri: String        = settings.authorizationUri
   val tokenCredentialsUri: String     = settings.tokenCredentialsUri
-  val signatures: js.Iterable[String] = settings.signatures.toJSArray
+  val signatures: java.util.List[String] = settings.signatures.asJava
 
   /** Set requestTokenUri property of this [[OAuth1Settings]]. */
   def withRequestTokenUri(requestTokenUri: String): this.type = {
@@ -52,8 +50,8 @@ case class OAuth1Settings private[model] (private val settings: security.OAuth1S
   }
 
   /** Set signatures property of this [[OAuth1Settings]]. */
-  def withSignatures(signatures: js.Iterable[String]): this.type = {
-    settings.withSignatures(signatures.toSeq)
+  def withSignatures(signatures: java.util.List[String]): this.type = {
+    settings.withSignatures(signatures.asScala)
     this
   }
 
@@ -66,9 +64,9 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
 
   val authorizationUri: String                 = settings.authorizationUri
   val accessTokenUri: String                   = settings.accessTokenUri
-  val authorizationGrants: js.Iterable[String] = settings.authorizationGrants.toJSArray
+  val authorizationGrants: java.util.List[String] = settings.authorizationGrants.asJava
   val flow: String                             = settings.flow
-  val scopes: js.Iterable[Scope]               = settings.scopes.map(Scope).toJSArray
+  val scopes: java.util.List[Scope]               = settings.scopes.map(Scope).asJava
 
   /** Set authorizationUri property of this [[OAuth2Settings]]. */
   def withAuthorizationUri(authorizationUri: String): this.type = {
@@ -83,8 +81,8 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
   }
 
   /** Set authorizationGrants property of this [[OAuth2Settings]]. */
-  def withAuthorizationGrants(authorizationGrants: js.Iterable[String]): this.type = {
-    settings.withAuthorizationGrants(authorizationGrants.toSeq)
+  def withAuthorizationGrants(authorizationGrants: java.util.List[String]): this.type = {
+    settings.withAuthorizationGrants(authorizationGrants.asScala)
     this
   }
 
@@ -95,8 +93,8 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
   }
 
   /** Set scopes property of this [[OAuth2Settings]]. */
-  def withScopes(scopes: js.Iterable[Scope]): this.type = {
-    settings.withScopes(scopes.toSeq.map(_.element))
+  def withScopes(scopes: java.util.List[Scope]): this.type = {
+    settings.withScopes(scopes.asScala.map(_.element))
     this
   }
 

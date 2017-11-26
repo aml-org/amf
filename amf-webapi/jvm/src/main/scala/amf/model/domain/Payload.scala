@@ -1,10 +1,9 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.Payload
 import amf.plugins.domain.webapi.models
 
 /**
-  * JVM Payload model class.
+  * JS Payload model class.
   */
 case class Payload private[model] (private val payload: models.Payload) extends DomainElement {
 
@@ -26,5 +25,4 @@ case class Payload private[model] (private val payload: models.Payload) extends 
 
   def withScalarSchema(name: String): ScalarShape =
     ScalarShape(payload.withScalarSchema(name))
-
 }

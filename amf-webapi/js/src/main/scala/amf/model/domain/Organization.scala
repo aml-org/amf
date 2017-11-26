@@ -1,11 +1,13 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.Organization
 import amf.plugins.domain.webapi.models
 
+import scala.scalajs.js.annotation.JSExportAll
+
 /**
-  * JVM Organization model class
+  * JS Organization model class.
   */
+@JSExportAll
 case class Organization private[model] (private val organization: models.Organization) extends DomainElement {
 
   def this() = this(models.Organization())

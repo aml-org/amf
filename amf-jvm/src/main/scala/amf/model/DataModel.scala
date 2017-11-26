@@ -1,6 +1,7 @@
 package amf.model
 
 import amf.core.model.domain
+import amf.model.domain.{ArrayNode, DataNode, ObjectNode, ScalarNode}
 
 import scala.collection.JavaConverters._
 
@@ -17,26 +18,26 @@ abstract class DataNode(private[amf] val dataNode: domain.DataNode) extends Doma
 }
 
 object DataNode {
-  def apply(x: domain.DataNode): DataNode = x match {
+  def apply(x: domain.DataNode): domain.DataNode = x match {
     case o: domain.ObjectNode => ObjectNode(o)
-    case s: domain.ScalarNode => ScalarNode(s)
+    case s: domain.ScalarNode => domain.ScalarNode(s)
     case a: domain.ArrayNode  => ArrayNode(a)
     case _                                   => throw new Exception(s"Unknown data node type $x")
   }
 }
 
-case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends DataNode(objectNode) {
+case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends domain.DataNode(objectNode) {
 
-  def properties: java.util.Map[String, DataNode] =
+  def properties: java.util.Map[String, domain.DataNode] =
     objectNode.properties
       .map({ (p) =>
         val key = p._1
-        val obj = DataNode(p._2)
+        val obj = domain.DataNode(p._2)
         key -> obj
       })
       .asJava
 
-  def addProperty(property: String, objectValue: DataNode): this.type = {
+  def addProperty(property: String, objectValue: domain.DataNode): this.type = {
     objectNode.addProperty(property, objectValue.dataNode)
     this
   }
@@ -47,7 +48,7 @@ case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends Da
 
 }
 
-case class ScalarNode(private[amf] val scalarNode: domain.ScalarNode) extends DataNode(scalarNode) {
+case class ScalarNode(private[amf] val scalarNode: domain.ScalarNode) extends domain.DataNode(scalarNode) {
 
   val value: String    = scalarNode.value
   val dataType: String = scalarNode.dataType.orNull
@@ -62,11 +63,11 @@ object ScalarNode {
   def build(value: String, dataType: String) = ScalarNode(domain.ScalarNode(value, Option(dataType)))
 }
 
-case class ArrayNode(private[amf] val arrayNode: domain.ArrayNode) extends DataNode(arrayNode) {
+case class ArrayNode(private[amf] val arrayNode: domain.ArrayNode) extends domain.DataNode(arrayNode) {
 
-  def members: java.util.List[DataNode] = arrayNode.members.map(DataNode(_)).asJava
+  def members: java.util.List[domain.DataNode] = arrayNode.members.map(DataNode(_)).asJava
 
-  def addMember(member: DataNode): this.type = {
+  def addMember(member: domain.DataNode): this.type = {
     arrayNode.addMember(member.dataNode)
     this
   }

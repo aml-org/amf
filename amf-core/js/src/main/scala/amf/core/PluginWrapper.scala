@@ -30,6 +30,7 @@ object PluginWrapper extends PlatformSecrets{
     platform.registerWrapper(amf.core.metamodel.domain.extensions.PropertyShapeModel) {
       case e: domain.extensions.PropertyShape => PropertyShape(e)
     }
+
   }
 
 }

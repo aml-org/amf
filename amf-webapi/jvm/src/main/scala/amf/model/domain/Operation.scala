@@ -1,27 +1,26 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.Operation
 import amf.plugins.domain.webapi.models
 
 import scala.collection.JavaConverters._
 
 /**
-  * JVM Operation model class.
+  * JS Operation model class.
   */
 case class Operation private[model] (private val operation: models.Operation) extends DomainElement {
 
   def this() = this(models.Operation())
 
-  val method: String                          = operation.method
-  val name: String                            = operation.name
-  val description: String                     = operation.description
-  val deprecated: Boolean                     = operation.deprecated
-  val summary: String                         = operation.summary
-  val documentation: CreativeWork             = Option(operation.documentation).map(CreativeWork).orNull
+  val method: String                       = operation.method
+  val name: String                         = operation.name
+  val description: String                  = operation.description
+  val deprecated: Boolean                  = operation.deprecated
+  val summary: String                      = operation.summary
+  val documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
   val schemes: java.util.List[String]         = operation.schemes.asJava
   val accepts: java.util.List[String]         = operation.accepts.asJava
   val contentType: java.util.List[String]     = operation.contentType.asJava
-  val request: Request                        = Option(operation.request).map(Request).orNull
+  val request: Request                     = Option(operation.request).map(Request).orNull
   val responses: java.util.List[Response]     = operation.responses.map(Response).asJava
   def security: java.util.List[DomainElement] = operation.security.map(DomainElement(_)).asJava
 

@@ -1,10 +1,10 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.License
 import amf.plugins.domain.webapi.models
 
+
 /**
-  * JVM License model class.
+  * JS License model class.
   */
 case class License private[model] (private val license: models.License) extends DomainElement {
 
