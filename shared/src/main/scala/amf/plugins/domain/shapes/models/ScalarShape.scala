@@ -8,7 +8,7 @@ import org.yaml.model.YPart
 /**
   * Scalar shape
   */
-case class ScalarShape(fields: Fields, annotations: Annotations) extends Shape with CommonShapeFields {
+case class ScalarShape(fields: Fields, annotations: Annotations) extends AnyShape with CommonShapeFields {
 
   def dataType: String = fields(DataType)
 

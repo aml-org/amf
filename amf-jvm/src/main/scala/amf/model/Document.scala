@@ -1,7 +1,9 @@
 package amf.model
 
 import amf.core.model.document.{Document => CoreDocument}
-import amf.plugins.document.webapi.model.{Overlay => CoreOverlay, Extension => CoreExtension}
+import amf.model
+import amf.model.document.Document
+import amf.plugins.document.webapi.model.{Extension => CoreExtension, Overlay => CoreOverlay}
 
 /**
   * JVM Document model class.
@@ -15,12 +17,12 @@ case class Document(private[amf] val document: CoreDocument)
 
   def this(webApi: WebApi) = this(amf.core.model.document.Document().withEncodes(webApi.element))
 
-  def resolve(profile: String): Document = Document(document.resolve(profile))
+  def resolve(profile: String): model.document.Document = model.document.Document(document.resolve(profile))
 
   override private[amf] val element = document
 }
 
-class Overlay(private[amf] val overlay: CoreOverlay) extends Document(overlay) {
+class Overlay(private[amf] val overlay: CoreOverlay) extends document.Document(overlay) {
 
   def this() = this(CoreOverlay())
 }

@@ -10,7 +10,7 @@ import amf.core.vocabulary.ValueType
 /**
   * Node shape metamodel.
   */
-object NodeShapeModel extends ShapeModel with DomainElementModel {
+object NodeShapeModel extends AnyShapeModel with DomainElementModel {
 
   val MinProperties = Field(Int, Shapes + "minProperties")
 
@@ -36,7 +36,7 @@ object NodeShapeModel extends ShapeModel with DomainElementModel {
          DiscriminatorValue,
          ReadOnly,
          Properties,
-         Dependencies) ++ ShapeModel.fields ++ DomainElementModel.fields
+         Dependencies) ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 

@@ -4,7 +4,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.NilShapeModel
 import org.yaml.model.YPart
 
-case class NilShape(fields: Fields, annotations: Annotations) extends Shape {
+case class NilShape(fields: Fields, annotations: Annotations) extends AnyShape {
   override def adopted(parent: String): this.type = withId(parent + "/nil/" + name)
 
   override def linkCopy(): NilShape = NilShape().withId(id) // todo review with antonio

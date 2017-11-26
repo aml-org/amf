@@ -2,18 +2,8 @@ package amf.model
 
 import amf.core.model.document
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.model.{
-  AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment,
-  DataTypeFragment => CoreDataTypeFragment,
-  DialectFragment => CoreDialectFragment,
-  DocumentationItemFragment => CoreDocumentationItemFragment,
-  ExternalFragment => CoreExternalFragment,
-  NamedExampleFragment => CoreNamedExampleFragment,
-  ResourceTypeFragment => CoreResourceTypeFragment,
-  SecuritySchemeFragment => CoreSecuritySchemeFragment,
-  TraitFragment => CoreTraitFragment
-}
-
+import amf.model.document.BaseUnit
+import amf.plugins.document.webapi.model.{AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment, DataTypeFragment => CoreDataTypeFragment, DialectFragment => CoreDialectFragment, DocumentationItemFragment => CoreDocumentationItemFragment, ExternalFragment => CoreExternalFragment, NamedExampleFragment => CoreNamedExampleFragment, ResourceTypeFragment => CoreResourceTypeFragment, SecuritySchemeFragment => CoreSecuritySchemeFragment, TraitFragment => CoreTraitFragment}
 
 import scala.collection.JavaConverters._
 
@@ -23,7 +13,7 @@ trait BaseUnit {
   private[amf] val element: amf.core.model.document.BaseUnit
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
-  lazy val references: java.util.List[BaseUnit] = {
+  lazy val references: java.util.List[document.BaseUnit] = {
     val units: Seq[BaseUnit] = element.references map {
       case r: document.Module                       => Module(r)
       case dt: CoreDataTypeFragment                 => DataType(dt)

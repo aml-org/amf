@@ -8,7 +8,7 @@ import org.yaml.model.YPart
 /**
   * Array shape
   */
-abstract class DataArrangementShape() extends Shape {
+abstract class DataArrangementShape() extends AnyShape {
   def minItems: Int        = fields(MinItems)
   def maxItems: Int        = fields(MaxItems)
   def uniqueItems: Boolean = fields(UniqueItems)

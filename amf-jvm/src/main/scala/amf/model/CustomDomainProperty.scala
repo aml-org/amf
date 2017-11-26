@@ -1,5 +1,7 @@
 package amf.model
 
+import amf.amf.model.domain
+import amf.amf.model.domain.CustomDomainProperty
 import amf.plugins.domain.webapi.models
 
 import scala.collection.JavaConverters._
@@ -43,7 +45,7 @@ case class CustomDomainProperty(private[amf] val customDomainProperty: models.Cu
   override private[amf] def element: models.CustomDomainProperty = customDomainProperty
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.CustomDomainProperty => CustomDomainProperty(l) })
+    element.linkTarget.map({ case l: models.CustomDomainProperty => domain.CustomDomainProperty(l) })
 
   override def linkCopy(): DomainElement with Linkable = CustomDomainProperty(element.linkCopy())
 }

@@ -1,13 +1,7 @@
 package amf.facades
 
-import amf.core.parser.ParserContext
-import amf.core.{AMFCompiler => ModularCompiler}
 import amf.core
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedDocument, ParsedReference, ReferenceKind}
-import amf.core.remote._
-import amf.plugins.document.vocabularies.RamlHeaderExtractor
-import org.yaml.model._
+import amf.core.{AMFCompiler => ModularCompiler}
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future

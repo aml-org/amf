@@ -69,7 +69,7 @@ object DeclaredElement extends AnnotationGraphLoader {
   }
 }
 
-case class SourceAST(ast: YPart) extends Annotation
+
 
 case class InlineDefinition() extends Annotation
 

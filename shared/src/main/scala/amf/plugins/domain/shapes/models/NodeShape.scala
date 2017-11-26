@@ -8,7 +8,7 @@ import org.yaml.model.YPart
 /**
   * Node shape.
   */
-case class NodeShape(fields: Fields, annotations: Annotations) extends Shape {
+case class NodeShape(fields: Fields, annotations: Annotations) extends AnyShape {
 
   def minProperties: Int                      = fields(MinProperties)
   def maxProperties: Int                      = fields(MaxProperties)
