@@ -64,11 +64,6 @@ case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fr
   override def meta: Obj = ExternalFragmentModel
 }
 
-case class DialectFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  /** Meta data for the document */
-  override def meta: Obj = DialectNodeFragmentModel
-}
-
 object DocumentationItemFragment {
   def apply(): DocumentationItemFragment = apply(Annotations())
 
@@ -103,12 +98,6 @@ object AnnotationTypeDeclarationFragment {
   def apply(): AnnotationTypeDeclarationFragment = apply(Annotations())
 
   def apply(annotations: Annotations): AnnotationTypeDeclarationFragment = apply(Fields(), annotations)
-}
-
-object DialectFragment {
-  def apply(): DialectFragment = apply(Annotations())
-
-  def apply(annotations: Annotations): DialectFragment = apply(Fields(), annotations)
 }
 
 object ExternalFragment {

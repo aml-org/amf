@@ -1,16 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{BaseUnit, Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.remote.Raml
 import amf.plugins.document.webapi.model._
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ValueEmitter
-import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
+import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
 

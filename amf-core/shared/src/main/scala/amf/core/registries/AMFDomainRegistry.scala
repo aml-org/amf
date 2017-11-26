@@ -1,6 +1,6 @@
 package amf.core.registries
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations._
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.ShapeModel
@@ -12,7 +12,11 @@ import scala.collection.mutable
 
 object AMFDomainRegistry {
   val annotationsRegistry: mutable.HashMap[String,AnnotationGraphLoader] = mutable.HashMap(
-    "lexical" -> LexicalInformation
+    "lexical"            -> LexicalInformation,
+    "source-vendor"      -> SourceVendor,
+    "single-value-array" -> SingleValueArray,
+    "aliases-array"      -> Aliases,
+    "synthesized-field"  -> SynthesizedField
   )
   val metadataRegistry: mutable.HashMap[String,Obj] = mutable.HashMap(
     defaultIri(DocumentModel)             -> DocumentModel,

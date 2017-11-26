@@ -64,14 +64,6 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
   }
 
-  object DialectNodeFragmentModel extends FragmentModel {
-    override def fields: List[Field] = FragmentModel.fields
-
-    override val `type`: List[ValueType] = List(Document + "DialectNode") ++ FragmentModel.`type`
-
-    override def modelInstance: AmfObject = DialectFragment()
-  }
-
   object ExternalFragmentModel extends FragmentModel {
     override def fields: List[Field] = FragmentModel.fields
 

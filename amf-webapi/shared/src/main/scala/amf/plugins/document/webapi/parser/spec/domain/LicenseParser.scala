@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.webapi.metamodel.LicenseModel
 import amf.plugins.domain.webapi.models.License

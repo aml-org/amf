@@ -71,7 +71,7 @@ class AMFCompiler private (val url: String,
       case Oas     => "OAS 2.0"
       case Payload => "AMF Payload"
       case Amf     => "AMF Graph"
-      case Extension => "AMF Extension"
+      case Extension => "RAML Vocabularies"
       case Unknown => "Unknown Vendor"
     }
 
@@ -259,7 +259,7 @@ case class Root(parsed: ParsedDocument,
       case Oas     => "OAS 2.0"
       case Payload => "AMF Payload"
       case Amf     => "AMF Graph"
-      case Extension => "AMF Extension"
+      case Extension => "RAML Vocabularies"
       case Unknown => "Unknown Vendor"
     }
     val mediatype = vendor match {

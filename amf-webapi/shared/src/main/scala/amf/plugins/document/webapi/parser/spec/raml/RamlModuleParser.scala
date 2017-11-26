@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
+import amf.core.annotations.SourceVendor
 import amf.core.model.document.Module
-import amf.core.parser.Annotations
-import amf.core.parser._
-import amf.plugins.document.webapi.annotations.SourceVendor
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._

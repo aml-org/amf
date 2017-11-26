@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -12,9 +13,8 @@ import amf.core.model.domain._
 import amf.core.parser.{FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
-import amf.plugins.document.webapi.parser.spec.Declarations
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.raml.RamlSyntax
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
@@ -160,7 +160,7 @@ class ExtensionsResolutionStage(profile: String)
   /** Merge annotation types, types, security schemes, resource types,  */
   def mergeDeclarations(master: Document, extension: ExtensionLike[WebApi], iriMerger: IriMerger): Unit = {
 
-    val declarations = Declarations(master.declares, Some(ctx))
+    val declarations = WebApiDeclarations(master.declares, Some(ctx))
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
     extension.declares.foreach { declaration =>

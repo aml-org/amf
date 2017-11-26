@@ -7,15 +7,13 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.remote.Oas
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.common.{ArrayNode, ValueNode}
 import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
 import amf.plugins.document.webapi.parser.spec.oas.{OasSpecParser, OasSyntax}
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, SearchScope}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{CreativeWork, Example, _}

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, SingleValueArray, SourceVendor}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel
@@ -14,10 +14,10 @@ import amf.core.utils.{Lazy, TemplateUri}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ArrayNode, BaseSpecParser, ValueNode}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, SearchScope}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.EndPointModel._

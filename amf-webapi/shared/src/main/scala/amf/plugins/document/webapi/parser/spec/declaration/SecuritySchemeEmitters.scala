@@ -1,13 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ValueEmitter, _}
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.domain.{RamlParametersEmitter, RamlResponsesEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._

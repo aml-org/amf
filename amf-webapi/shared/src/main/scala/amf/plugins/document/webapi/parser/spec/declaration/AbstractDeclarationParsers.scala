@@ -3,9 +3,8 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.SearchScope
-import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser}
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 /**

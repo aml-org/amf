@@ -1,16 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
+import amf.core.emitter.BaseEmitters.ValueEmitter
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.emitter.BaseEmitters._
 import amf.core.parser.Position
 import amf.core.remote.Oas
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ValueEmitter, _}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 

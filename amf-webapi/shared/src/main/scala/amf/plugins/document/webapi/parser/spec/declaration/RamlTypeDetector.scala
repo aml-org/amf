@@ -5,7 +5,6 @@ import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.SearchScope
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.models.TypeDef._

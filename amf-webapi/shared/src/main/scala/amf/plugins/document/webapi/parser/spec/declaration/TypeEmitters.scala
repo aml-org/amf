@@ -1,6 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, SingleValueArray, SynthesizedField}
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -11,15 +13,12 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter, StringToAstEmitter}
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 

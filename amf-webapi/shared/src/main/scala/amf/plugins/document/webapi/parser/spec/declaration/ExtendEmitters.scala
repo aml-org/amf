@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.templates.ParametrizedDeclaration
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
