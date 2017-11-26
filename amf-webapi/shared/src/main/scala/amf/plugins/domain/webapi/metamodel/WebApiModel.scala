@@ -7,6 +7,7 @@ import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeMo
 import amf.plugins.domain.webapi.models.WebApi
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 
 /**
   * Web Api metamodel

@@ -3,8 +3,8 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
-import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
-import amf.plugins.domain.webapi.models.CreativeWork
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YMap
 
 /**

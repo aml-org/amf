@@ -9,7 +9,6 @@ import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
 import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
@@ -18,6 +17,7 @@ import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.document.webapi.validation.WebApiValidations
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
 
@@ -31,7 +31,7 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
 
   override def modelEntities = webApiDocuments
 
-  override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
+  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
 
   override def serializableAnnotations() = webApiAnnotations
 

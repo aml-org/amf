@@ -1,11 +1,11 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class SchemaShape(private[amf] val schema: models.SchemaShape) extends Shape(schema) {
+case class SchemaShape(private[amf] val schema: models.SchemaShape) extends AnyShape(schema) {
 
   val mediaType: String = schema.mediaType
   val raw: String       = schema.raw

@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{ValueEmitter
 import amf.plugins.document.webapi.parser.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

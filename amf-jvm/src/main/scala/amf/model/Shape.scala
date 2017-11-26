@@ -1,4 +1,5 @@
 package amf.model
+import amf.model.domain.{AnyShape, NilShape}
 import amf.plugins.domain.shapes.models
 
 import scala.collection.JavaConverters._
@@ -7,18 +8,18 @@ case class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
   override private[amf] def element = any
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.AnyShape => AnyShape(l) })
+    element.linkTarget.map({ case l: models.AnyShape => domain.AnyShape(l) })
 
-  override def linkCopy(): DomainElement with Linkable = AnyShape(element.linkCopy())
+  override def linkCopy(): DomainElement with Linkable = domain.AnyShape(element.linkCopy())
 }
 
 case class NilShape(private[amf] val nil: models.NilShape) extends Shape(nil) {
   override private[amf] def element = nil
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.NilShape => NilShape(l) })
+    element.linkTarget.map({ case l: models.NilShape => domain.NilShape(l) })
 
-  override def linkCopy(): DomainElement with Linkable = NilShape(element.linkCopy())
+  override def linkCopy(): DomainElement with Linkable = domain.NilShape(element.linkCopy())
 }
 
 abstract class Shape(private[amf] val shape: models.Shape) extends DomainElement with Linkable {

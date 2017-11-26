@@ -1,9 +1,9 @@
-package amf.plugins.domain.webapi.models
+package amf.plugins.domain.shapes.models
 
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.webapi.metamodel.CreativeWorkModel.{Description, Title, Url}
-import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel._
 import org.yaml.model.YMap
 
 /**

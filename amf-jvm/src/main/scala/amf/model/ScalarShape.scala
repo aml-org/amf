@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.ScalarShape
 import amf.plugins.domain.shapes.models
 
 case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends Shape(scalar) {
@@ -59,7 +60,7 @@ case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends Shap
   override private[amf] def element = scalar
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.ScalarShape => ScalarShape(l) })
+    element.linkTarget.map({ case l: models.ScalarShape => domain.ScalarShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = ScalarShape(element.linkCopy())
 }

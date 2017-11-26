@@ -1,7 +1,6 @@
-package amf.model
+package amf.model.domain
 
-import amf.plugins.domain.webapi.models
-
+import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js.annotation.JSExportAll
 

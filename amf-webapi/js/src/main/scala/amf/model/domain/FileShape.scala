@@ -1,4 +1,4 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
@@ -7,7 +7,7 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class FileShape(private val file: models.FileShape) extends Shape(file) {
+case class FileShape(private val file: models.FileShape) extends AnyShape(file) {
 
   val fileTypes: js.Iterable[String] = file.fileTypes.toJSArray
   val pattern: String                = file.pattern

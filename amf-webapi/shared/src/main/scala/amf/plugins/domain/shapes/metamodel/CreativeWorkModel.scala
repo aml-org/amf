@@ -1,11 +1,11 @@
-package amf.plugins.domain.webapi.metamodel
+package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Iri, Str}
 import amf.core.metamodel.domain.DomainElementModel
-import amf.plugins.domain.webapi.models.CreativeWork
 import amf.core.vocabulary.Namespace.Schema
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.shapes.models.CreativeWork
 
 /**
   * Creative work metamodel

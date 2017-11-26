@@ -18,9 +18,8 @@ import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlSyntax, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.models.{CreativeWork, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.domain.webapi.models.CreativeWork
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender

@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.models.Operation
 
 /**

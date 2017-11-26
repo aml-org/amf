@@ -1,13 +1,11 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 import amf.plugins.domain.shapes.models.DataArrangementShape
 
-import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.collection.JavaConverters._
 
-abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) extends Shape(array) {
+abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) extends AnyShape(array) {
 
   val minItems: Int        = array.minItems
   val maxItems: Int        = array.maxItems
@@ -29,7 +27,6 @@ abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) ex
   }
 }
 
-@JSExportAll
 case class ArrayShape(private[amf] override val array: models.ArrayShape) extends DataArrangeShape(array) {
   val items: Shape = Shape(array.items)
 
@@ -46,7 +43,6 @@ case class ArrayShape(private[amf] override val array: models.ArrayShape) extend
   override def linkCopy(): DomainElement with Linkable = ArrayShape(element.linkCopy())
 }
 
-@JSExportAll
 class MatrixShape(private[amf] override val array: models.ArrayShape) extends ArrayShape(array) {
 
   override def withItems(items: Shape): this.type = {
@@ -63,12 +59,11 @@ object MatrixShape {
   def apply(array: models.MatrixShape): MatrixShape = { new MatrixShape(array.toArrayShape) }
 }
 
-@JSExportAll
 case class TupleShape(private[amf] override val array: models.TupleShape) extends DataArrangeShape(array) {
-  val items: js.Iterable[Shape] = array.items.map(Shape(_)).toJSArray
+  val items: java.util.List[Shape] = array.items.map(Shape(_)).asJava
 
-  def withItems(items: js.Iterable[Shape]): this.type = {
-    array.withItems(items.map(_.shape).toSeq)
+  def withItems(items: java.util.List[Shape]): this.type = {
+    array.withItems(items.asScala.map(_.shape))
     this
   }
 

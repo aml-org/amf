@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.SchemaShape
 import amf.plugins.domain.shapes.models
 
 case class SchemaShape(private[amf] val schema: models.SchemaShape) extends Shape(schema) {

@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.Example
 import amf.plugins.domain.shapes.models
 
 /**
@@ -42,7 +43,7 @@ case class Example private[model] (private val example: models.Example) extends 
   override private[amf] def element = example
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.Example => Example(l) })
+    element.linkTarget.map({ case l: models.Example => domain.Example(l) })
 
   override def linkCopy(): DomainElement with Linkable = Example(element.linkCopy())
 }
