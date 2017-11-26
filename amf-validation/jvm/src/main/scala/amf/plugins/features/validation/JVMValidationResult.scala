@@ -1,4 +1,4 @@
-package amf.validation
+package amf.plugins.features.validation
 
 import amf.core.validation.core.ValidationResult
 import amf.core.vocabulary.Namespace

@@ -22,17 +22,17 @@ import org.yaml.model.YPart
 /**
   * Declarations object.
   */
-case class WebApiDeclarations(override var libraries: Map[String, WebApiDeclarations] = Map(),
-                              override var fragments: Map[String, DomainElement] = Map(),
-                              var shapes: Map[String, Shape] = Map(),
-                              override var annotations: Map[String, CustomDomainProperty] = Map(),
-                              var resourceTypes: Map[String, ResourceType] = Map(),
-                              var parameters: Map[String, Parameter] = Map(),
-                              var payloads: Map[String, Payload] = Map(),
-                              var traits: Map[String, Trait] = Map(),
-                              var securitySchemes: Map[String, SecurityScheme] = Map(),
-                              errorHandler: Option[ErrorHandler])
-  extends Declarations(libraries, fragments, annotations, errorHandler) {
+class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
+                         fragments: Map[String, DomainElement] = Map(),
+                         var shapes: Map[String, Shape] = Map(),
+                          annotations: Map[String, CustomDomainProperty] = Map(),
+                         var resourceTypes: Map[String, ResourceType] = Map(),
+                         var parameters: Map[String, Parameter] = Map(),
+                         var payloads: Map[String, Payload] = Map(),
+                         var traits: Map[String, Trait] = Map(),
+                         var securitySchemes: Map[String, SecurityScheme] = Map(),
+                         errorHandler: Option[ErrorHandler])
+  extends Declarations(libs, fragments, annotations, errorHandler) {
 
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
@@ -66,20 +66,13 @@ case class WebApiDeclarations(override var libraries: Map[String, WebApiDeclarat
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): WebApiDeclarations = {
     libraries.get(alias) match {
-      case Some(lib) => lib
-      case None =>
-        val result = WebApiDeclarations(errorHandler = errorHandler)
+      case Some(lib: WebApiDeclarations) => lib
+      case _ =>
+        val result = new WebApiDeclarations(errorHandler = errorHandler)
         libraries = libraries + (alias -> result)
         result
     }
   }
-
-  private def error(message: String, ast: Option[YPart]): Unit = errorHandler match {
-    case Some(handler) => handler.violation(message, ast)
-    case _             => throw new Exception(message)
-  }
-
-  private def error(message: String, ast: YPart): Unit = error(message, Option(ast))
 
   override def declarables(): Seq[DomainElement] =
     super.declarables() ++ (shapes.values ++  resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toSeq
@@ -164,7 +157,6 @@ case class WebApiDeclarations(override var libraries: Map[String, WebApiDeclarat
 
   object ErrorTrait                extends Trait(Fields(), Annotations()) with ErrorDeclaration
   object ErrorResourceType         extends ResourceType(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorCustomDomainProperty extends CustomDomainProperty(Fields(), Annotations()) with ErrorDeclaration
   object ErrorSecurityScheme       extends SecurityScheme(Fields(), Annotations()) with ErrorDeclaration
   object ErrorNamedExample         extends Example(Fields(), Annotations()) with ErrorDeclaration
   object ErrorCreativeWork         extends CreativeWork(Fields(), Annotations()) with ErrorDeclaration
@@ -175,7 +167,7 @@ case class WebApiDeclarations(override var libraries: Map[String, WebApiDeclarat
 object WebApiDeclarations {
 
   def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler]): WebApiDeclarations = {
-    val result = WebApiDeclarations(errorHandler = errorHandler)
+    val result = new WebApiDeclarations(errorHandler = errorHandler)
     declarations.foreach(result += _)
     result
   }

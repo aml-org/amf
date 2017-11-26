@@ -163,7 +163,6 @@ lazy val amfWebApiCrossProject = crossProject
     fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter")
   )
   .jsSettings(
-//    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
@@ -212,7 +211,6 @@ lazy val amfVocabulariesCrossProject = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-vocabularies-javadoc.jar"
   )
   .jsSettings(
-    //    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
@@ -230,6 +228,55 @@ lazy val amfVocabulariesCrossProject = crossProject
 lazy val amfVocabulariesJVM = amfVocabulariesCrossProject.jvm.in(file("./amf-vocabularies/jvm"))
 lazy val amfVocabulariesJS = amfVocabulariesCrossProject.js.in(file("./amf-vocabularies/js"))
 
+
+/************************************************
+  * AMF-Validation
+  ***********************************************/
+
+
+lazy val amfValidation = project
+  .in(file("./amf-validation"))
+  .aggregate(amfValidationJS, amfValidationJVM)
+  .enablePlugins(ScalaJSPlugin)
+
+lazy val amValidationCrossProject = crossProject
+  .settings(Seq(
+    name := "amf-validation",
+    version := "1.0.0-SNAPSHOT"
+  ))
+  .dependsOn(amfCoreCrossProject, amfVocabulariesCrossProject)
+  .in(file("./amf-validation"))
+  .settings(settings: _*)
+  .jvmSettings(
+    Common.publish,
+    addArtifact(artifact in (Compile, assembly), assembly),
+    publishArtifact in (Compile, packageBin) := false,
+    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
+    libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
+    libraryDependencies += "org.topbraid" % "shacl" % "1.0.1",
+    test in assembly := {},
+    assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf-vocabularies.jar",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
+  )
+  .jsSettings(
+    //    jsDependencies += ProvidedJS / "shacl.js",
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-main-module.js",
+    scalaJSUseMainModuleInitializer := true,
+    assemblyMergeStrategy in assembly := {
+      case "JS_DEPENDENCIES"              => MergeStrategy.discard
+      case PathList("META-INF", xs @ _ *) => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+    }
+  )
+
+lazy val amfValidationJVM = amValidationCrossProject.jvm.in(file("./amf-validation/jvm"))
+lazy val amfValidationJS = amValidationCrossProject.js.in(file("./amf-validation/js"))
 
 
 // Taks

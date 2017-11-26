@@ -1,7 +1,7 @@
-package amf.validation
+package amf.plugins.features.validation
 
-import org.json4s.{JObject, JValue}
 import org.json4s.JsonAST.{JArray, JString}
+import org.json4s.{JObject, JValue}
 
 /**
   * Created by antoniogarrote on 18/07/2017.

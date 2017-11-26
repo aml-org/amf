@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
+import amf.core.annotations.SourceVendor
 import amf.core.model.document.Fragment
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Annotations
 import amf.core.remote.Raml
-import amf.plugins.document.webapi.annotations.SourceVendor
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment

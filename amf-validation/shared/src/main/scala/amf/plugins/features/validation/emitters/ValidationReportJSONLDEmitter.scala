@@ -1,9 +1,9 @@
 package amf.plugins.features.validation.emitters
 
-import amf.core.model.domain.LexicalInformation
+import amf.core.annotations.LexicalInformation
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.core.vocabulary.Namespace
+import amf.core.emitter.BaseEmitters._
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender

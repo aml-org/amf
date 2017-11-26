@@ -212,32 +212,21 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
   private val types: Map[String, Obj] = Map.empty ++ AMFDomainRegistry.metadataRegistry
 
   private def findType(typeString: String): Option[Obj] = {
-    types.get(typeString) /* .orElse(platform.dialectsRegistry.knowsType(typeString)) */
+    types.get(typeString).orElse(AMFDomainRegistry.findType(typeString))
   }
 
   private def buildType(modelType: Obj): (Annotations) => AmfObject = {
-    // TODO: We need to plug-in here somehow the dialect types that are loaded dynamically
-    /*
-    builders.getOrElse(
-      modelType,
-      default = modelType match {
-        case dialectType: DialectNode =>
-          (annotations: Annotations) =>
-            DomainEntity(dialectType, annotations)
-        case _ =>
-    */
-          AMFDomainRegistry.metadataRegistry.get(modelType.`type`.head.iri()) match {
-            case Some(modelType: ModelDefaultBuilder) =>
-              (annotations: Annotations) =>
-                val instance = modelType.modelInstance
-                instance.annotations ++= annotations
-                instance
-            case _ => throw new Exception(s"Cannot find builder for node type $modelType")
-          }
-    /*
+    AMFDomainRegistry.metadataRegistry.get(modelType.`type`.head.iri()) match {
+      case Some(modelType: ModelDefaultBuilder) =>
+        (annotations: Annotations) =>
+          val instance = modelType.modelInstance
+          instance.annotations ++= annotations
+          instance
+      case _ => AMFDomainRegistry.buildType(modelType) match {
+        case Some(builder) => builder
+        case _             => throw new Exception(s"Cannot find builder for node type $modelType")
       }
-    )
-   */
+    }
   }
 }
 

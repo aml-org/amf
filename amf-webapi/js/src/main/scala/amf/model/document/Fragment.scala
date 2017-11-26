@@ -2,7 +2,7 @@ package amf.model.document
 
 import amf.core.model.document.{Fragment => CoreFragment}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.model.{AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment, DataTypeFragment => CoreDataTypeFragment, DialectFragment => CoreDialectFragment, DocumentationItemFragment => CoreDocumentationItemFragment, ExternalFragment => CoreExternalFragment, NamedExampleFragment => CoreNamedExampleFragment, ResourceTypeFragment => CoreResourceTypeFragment, SecuritySchemeFragment => CoreSecuritySchemeFragment, TraitFragment => CoreTraitFragment}
+import amf.plugins.document.webapi.model.{AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment, DataTypeFragment => CoreDataTypeFragment, DocumentationItemFragment => CoreDocumentationItemFragment, ExternalFragment => CoreExternalFragment, NamedExampleFragment => CoreNamedExampleFragment, ResourceTypeFragment => CoreResourceTypeFragment, SecuritySchemeFragment => CoreSecuritySchemeFragment, TraitFragment => CoreTraitFragment}
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -35,10 +35,6 @@ case class DataType(private[amf] val dataType: CoreDataTypeFragment) extends Fra
 case class NamedExample(private[amf] val namedExample: CoreNamedExampleFragment)
   extends Fragment(namedExample) {
   def this() = this(CoreNamedExampleFragment())
-}
-
-case class DialectFragment(private[amf] val df: CoreDialectFragment) extends Fragment(df) {
-  def this() = this(CoreDialectFragment())
 }
 
 case class ExternalFragment(private[amf] val ef: CoreExternalFragment) extends Fragment(ef) {

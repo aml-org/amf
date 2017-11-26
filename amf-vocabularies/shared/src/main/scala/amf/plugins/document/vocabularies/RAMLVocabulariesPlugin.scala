@@ -2,20 +2,22 @@ package amf.plugins.document.vocabularies
 
 import amf.core.Root
 import amf.core.client.GenerationOptions
+import amf.core.metamodel.Obj
 import amf.core.model.document._
-import amf.core.parser.ParserContext
+import amf.core.model.domain.AmfObject
+import amf.core.parser.{Annotations, ParserContext}
 import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation._
 import amf.core.validation.core.ValidationProfile
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectNodeFragmentModel
 import amf.plugins.document.vocabularies.model.document.DialectFragment
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
-import amf.plugins.document.vocabularies.spec.{DialectContext, DialectEmitter, DialectParser}
+import amf.plugins.document.vocabularies.spec.{DialectContext, DialectEmitter, DialectNode, DialectParser}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
 
@@ -82,6 +84,21 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
 
   override def modelEntities = Seq(DialectNodeFragmentModel)
 
+  // We plug-in the logic to rebuild serialised domain entities
+  override def modelEntitiesResolver: Option[AMFDomainEntityResolver] = Some(
+    new AMFDomainEntityResolver {
+      override def buildType(modelType: Obj): Option[Annotations => AmfObject] =
+        modelType match {
+          case dialectType: DialectNode => Some({ (annotations: Annotations) =>
+            DomainEntity(dialectType, annotations)
+          })
+          case _ => None
+        }
+
+      override def findType(typeString: String): Option[Obj] = PlatformDialectRegistry.knowsType(typeString)
+    }
+  )
+
   override def documentSyntaxes = Seq(
     "application/raml",
     "application/raml+json",
@@ -131,7 +148,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
     }
   }
 
-  override def dependencies() = Seq(AMFGraphPlugin)
+  override def dependencies() = Seq()
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
