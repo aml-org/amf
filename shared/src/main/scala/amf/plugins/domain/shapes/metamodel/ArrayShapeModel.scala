@@ -26,22 +26,22 @@ trait DataArrangementShape {
   val fields: List[Field] = List(Items,
     MinItems,
     MaxItems,
-    UniqueItems) ++ ShapeModel.fields ++ DomainElementModel.fields
+    UniqueItems) ++ AnyShapeModel.fields ++ DomainElementModel.fields
 }
 
-object ArrayShapeModel extends DataArrangementShape with  ShapeModel with DomainElementModel {
+object ArrayShapeModel extends DataArrangementShape with  AnyShapeModel with DomainElementModel {
 
   override val `type`: List[ValueType] = List(Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 
   override def modelInstance = ArrayShape()
 }
 
-object MatrixShapeModel extends DataArrangementShape with  ShapeModel with DomainElementModel {
+object MatrixShapeModel extends DataArrangementShape with  AnyShapeModel with DomainElementModel {
   override val `type`: List[ValueType] = List(Shapes + "MatrixShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
   override def modelInstance = MatrixShape()
 }
 
-object TupleShapeModel extends DataArrangementShape with  ShapeModel with DomainElementModel {
+object TupleShapeModel extends DataArrangementShape with  AnyShapeModel with DomainElementModel {
   override val Items = Field(SortedArray(ShapeModel), Shapes + "items")
   override val `type`: List[ValueType] = List(Shapes + "TupleShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
   override def modelInstance = TupleShape()

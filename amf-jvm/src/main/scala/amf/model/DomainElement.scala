@@ -7,6 +7,7 @@ import amf.plugins.document.vocabularies.model
 import amf.plugins.domain.shapes
 import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.extensions
+import amf.amf
 
 import scala.collection.JavaConverters._
 
@@ -19,7 +20,7 @@ trait DomainElement {
 
   lazy val customDomainProperties: java.util.List[DomainExtension] =
     element.customDomainProperties.map(DomainExtension).asJava
-  lazy val `extends`: java.util.List[DomainElement] = element.extend.map {
+  lazy val `extends`: java.util.List[amf.model.domain.DomainElement] = element.extend.map {
     case pd: templates.ParametrizedDeclaration => ParametrizedDeclaration(pd)
     case op: models.Operation                          => Operation(op)
     case e: models.EndPoint                            => EndPoint(e)
@@ -56,12 +57,12 @@ trait DomainElement {
   def getScalarByPropertyId(propertyId: String): java.util.List[Object] =
     element.getScalarByPropertyId(propertyId).map(_.asInstanceOf[Object]).asJava
 
-  def getObjectByPropertyId(propertyId: String): java.util.List[DomainElement] =
+  def getObjectByPropertyId(propertyId: String): java.util.List[amf.model.domain.DomainElement] =
     element.getObjectByPropertyId(propertyId).map(d => DomainElement(d)).asJava
 }
 
 object DomainElement {
-  def apply(domainElement: domain.DomainElement): DomainElement = domainElement match {
+  def apply(domainElement: domain.DomainElement): amf.model.domain.DomainElement = domainElement match {
     case o: models.WebApi                                  => WebApi(o)
     case o: models.Operation                           => Operation(o)
     case o: models.Organization                            => Organization(o)
@@ -82,24 +83,24 @@ object DomainElement {
     case o: shapes.models.Shape                                => Shape(o)
     case o: model.domain.DomainEntity               => DomainEntity(o)
     case o =>
-      new DomainElement {
+      new amf.model.domain.DomainElement {
         override private[amf] def element = o
       }
   }
 }
 
-trait Linkable { this: DomainElement with Linkable =>
+trait Linkable { this: amf.model.domain.DomainElement with amf.model.domain.Linkable =>
 
   private[amf] def element: domain.DomainElement with domain.Linkable
 
-  def linkTarget: Option[DomainElement with Linkable]
+  def linkTarget: Option[amf.model.domain.DomainElement with amf.model.domain.Linkable]
 
   def isLink: Boolean           = linkTarget.isDefined
   def linkLabel: Option[String] = element.linkLabel
 
-  def linkCopy(): DomainElement with Linkable
+  def linkCopy(): amf.model.domain.DomainElement with amf.model.domain.Linkable
 
-  def withLinkTarget(target: DomainElement with Linkable): this.type = {
+  def withLinkTarget(target: amf.model.domain.DomainElement with Linkable): this.type = {
     element.withLinkTarget(target.element)
     this
   }

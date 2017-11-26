@@ -5,7 +5,7 @@ import amf.plugins.domain.shapes.metamodel.FileShapeModel._
 import amf.plugins.domain.shapes.metamodel.FileShapeModel
 import org.yaml.model.YPart
 
-case class FileShape(fields: Fields, annotations: Annotations) extends Shape with CommonShapeFields {
+case class FileShape(fields: Fields, annotations: Annotations) extends AnyShape with CommonShapeFields {
 
   def fileTypes: Seq[String] = fields(FileTypes)
 

@@ -5,7 +5,7 @@ import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel._
 import org.yaml.model.YPart
 
-case class SchemaShape(fields: Fields, annotations: Annotations) extends Shape {
+case class SchemaShape(fields: Fields, annotations: Annotations) extends Shape with ShapeHelpers {
 
   def raw: String       = fields(Raw)
   def mediaType: String = fields(MediaType)

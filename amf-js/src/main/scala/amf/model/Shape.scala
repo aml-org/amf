@@ -26,40 +26,12 @@ case class NilShape(private[amf] val nil: models.NilShape) extends Shape(nil) {
   override def linkCopy(): DomainElement with Linkable = NilShape(element.linkCopy())
 }
 
-@JSExportAll
-abstract class Shape(private[amf] val shape: models.Shape) extends DomainElement with Linkable {
-
-  val name: String                    = shape.name
-  val displayName: String             = shape.displayName
-  val description: String             = shape.description
-  val default: String                 = shape.default
-  val values: js.Iterable[String]     = shape.values.toJSArray
-  val documentation: CreativeWork     = Option(shape.documentation).map(amf.model.CreativeWork).orNull
+/*
+    val documentation: CreativeWork     = Option(shape.documentation).map(amf.model.CreativeWork).orNull
   val xmlSerialization: XMLSerializer = Option(shape.xmlSerialization).map(amf.model.XMLSerializer).orNull
-  val inherits: js.Iterable[Shape]    = shape.inherits.map(Shape(_)).toJSArray
-  val examples: js.Iterable[Example]  = shape.examples.map(Example).toJSArray
+    val examples: js.Iterable[Example]  = shape.examples.map(Example).toJSArray
 
-  def withName(name: String): this.type = {
-    shape.withName(name)
-    this
-  }
-  def withDisplayName(name: String): this.type = {
-    shape.withDisplayName(name)
-    this
-  }
-  def withDescription(description: String): this.type = {
-    shape.withDescription(description)
-    this
-  }
-  def withDefault(default: String): this.type = {
-    shape.withDefault(default)
-    this
-  }
-  def withValues(values: js.Iterable[String]): this.type = {
-    shape.withValues(values.toList)
-    this
-  }
-  def withDocumentation(documentation: CreativeWork): this.type = {
+      def withDocumentation(documentation: CreativeWork): this.type = {
     shape.withDocumentation(documentation.element)
     this
   }
@@ -69,19 +41,12 @@ abstract class Shape(private[amf] val shape: models.Shape) extends DomainElement
     this
   }
 
-  def withInherits(inherits: js.Iterable[Shape]): this.type = {
-    shape.withInherits(inherits.toList.map(_.shape))
-    this
-  }
-
-  def withExamples(examples: js.Iterable[Example]): this.type = {
+    def withExamples(examples: js.Iterable[Example]): this.type = {
     shape.withExamples(examples.toList.map(_.element))
     this
   }
-}
 
-object Shape {
-  def apply(shape: models.Shape): Shape =
+def apply(shape: domain.Shape): Shape =
     (shape match {
       case file: models.FileShape     => Some(FileShape(file))
       case any: models.AnyShape       => Some(AnyShape(any))
@@ -93,4 +58,5 @@ object Shape {
       case tuple: models.TupleShape   => Some(TupleShape(tuple))
       case _                             => None
     }).orNull
-}
+
+  */

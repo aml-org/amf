@@ -1,7 +1,9 @@
 package amf.model
 
+import amf.core.model.domain
+
 import scala.collection.JavaConverters._
-import amf.core.model.domain.templates
+import amf.core.model.domain.{ParametrizedDeclaration, templates}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType => CoreParametrizedResourcetype, ParametrizedTrait => CoreParametrizedTrait}
 
 /**
@@ -16,19 +18,19 @@ abstract class ParametrizedDeclaration private[model] (
   val target: String                           = declaration.target
   val variables: java.util.List[VariableValue] = declaration.variables.map(VariableValue).asJava
 
-  /** Set name property of this [[ParametrizedDeclaration]]. */
+  /** Set name property of this [[domain.ParametrizedDeclaration]]. */
   def withName(name: String): this.type = {
     declaration.withName(name)
     this
   }
 
-  /** Set the target property of this [[ParametrizedDeclaration]]. */
+  /** Set the target property of this [[domain.ParametrizedDeclaration]]. */
   def withTarget(target: String): this.type = {
     declaration.withTarget(target)
     this
   }
 
-  /** Set variables property of this [[ParametrizedDeclaration]]. */
+  /** Set variables property of this [[domain.ParametrizedDeclaration]]. */
   def withVariables(variables: java.util.List[VariableValue]): this.type = {
     declaration.withVariables(variables.asScala.map(_.element))
     this

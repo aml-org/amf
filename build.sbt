@@ -8,25 +8,15 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 scalaVersion in ThisBuild := "2.12.2"
 
 val settings = Common.settings ++ Seq(
-  name := "amf",
-  version := "0.0.1-SNAPSHOT",
+  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
+  credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
-    "org.mulesoft"     %%% "syaml"     % "0.0.6",
     "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
-  ),
-  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
-  credentials ++= Common.credentials()
+  )
 )
 
-lazy val root = project
-  .in(file("."))
-  .aggregate(amfJS, amfJVM)
-  .enablePlugins(ScalaJSPlugin)
-
-lazy val importScalaTask = TaskKey[Unit]("tsvScalaImport", "Import validations from AMF TSV files and generates a Scala object with the information")
-lazy val defaultProfilesGenerationTask = TaskKey[Unit]("defaultValidationProfilesGeneration", "Generates the validation dialect documents for the standard profiles")
-
+/*
 lazy val amf = crossProject
   .in(file("."))
   .settings(settings: _*)
@@ -81,6 +71,62 @@ lazy val module = crossProject
     }
   )
   .js
+*/
+
+// New modules
+
+lazy val amfCore = project
+  .in(file("./amf-core"))
+  .aggregate(amfCoreJS, amfCoreJVM)
+  .enablePlugins(ScalaJSPlugin)
+
+lazy val importScalaTask = TaskKey[Unit]("tsvScalaImport", "Import validations from AMF TSV files and generates a Scala object with the information")
+lazy val defaultProfilesGenerationTask = TaskKey[Unit]("defaultValidationProfilesGeneration", "Generates the validation dialect documents for the standard profiles")
+
+lazy val amfCoreCrossProject = crossProject
+  .settings(Seq(
+    name := "amf-core",
+    version := "1.0.0-SNAPSHOT",
+    libraryDependencies ++= Seq(
+      "org.mulesoft"     %%% "syaml"     % "0.0.6"
+    )
+  ))
+  .in(file("./amf-core"))
+  .settings(settings: _*)
+  .jvmSettings(
+    Common.publish,
+    addArtifact(artifact in (Compile, assembly), assembly),
+    publishArtifact in (Compile, packageBin) := false,
+    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
+    libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
+    libraryDependencies += "org.topbraid" % "shacl" % "1.0.1",
+
+    test in assembly := {},
+    assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",
+    fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
+    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"),
+    mainClass in Compile := Some("amf.client.Main")
+  )
+  .jsSettings(
+    jsDependencies += ProvidedJS / "shacl.js",
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "js-main-module.js",
+    scalaJSUseMainModuleInitializer := true,
+    assemblyMergeStrategy in assembly := {
+      case "JS_DEPENDENCIES"              => MergeStrategy.discard
+      case PathList("META-INF", xs @ _ *) => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+    }
+  )
+
+lazy val amfCoreJVM = amfCoreCrossProject.jvm.in(file("./amf-core/jvm"))
+lazy val amfCoreJS = amfCoreCrossProject.js.in(file("./amf-core/js"))
 
 addCommandAlias("generate", "; clean; moduleJS/fullOptJS; generateJSMainModule; generateJVM")
 addCommandAlias("generateJSMainModule", "; amfJS/fullOptJS")

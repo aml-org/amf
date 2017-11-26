@@ -10,12 +10,12 @@ import amf.core.vocabulary.ValueType
 /**
   * Scalar shape metamodel
   */
-object ScalarShapeModel extends ShapeModel with DomainElementModel with CommonShapeFields {
+object ScalarShapeModel extends AnyShapeModel with DomainElementModel with CommonShapeFields {
 
   val DataType = Field(Iri, Shacl + "datatype")
 
   override val fields
-    : List[Field] = List(DataType) ++ commonOASFields ++ ShapeModel.fields ++ DomainElementModel.fields
+    : List[Field] = List(DataType) ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 

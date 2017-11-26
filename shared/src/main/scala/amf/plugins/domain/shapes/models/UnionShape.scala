@@ -6,7 +6,7 @@ import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
 import org.yaml.model.YPart
 
-case class UnionShape(fields: Fields, annotations: Annotations) extends Shape {
+case class UnionShape(fields: Fields, annotations: Annotations) extends Shape with ShapeHelpers {
 
   def anyOf: Seq[Shape] = fields(AnyOf)
 
