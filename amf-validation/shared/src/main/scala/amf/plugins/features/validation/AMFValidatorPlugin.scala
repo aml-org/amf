@@ -7,6 +7,7 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -161,8 +162,8 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
 
 }
 
-object AMFValidatorPlugin {
-  def init(platform: Platform) {
+object AMFValidatorPlugin extends PlatformSecrets {
+  def init() {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(new AMFValidatorPlugin(platform))
   }

@@ -1,0 +1,38 @@
+#%Mule Agent Configuration 0.1
+
+transports:
+
+  websocket.transport:
+    security:
+      keyStorePassword: password
+      keyStoreAlias: agent
+      keyStoreAliasPassword: password
+
+  rest.agent.transport:
+    port: 8888
+    security:
+      keyStorePassword: password
+      keyStoreAlias: agent
+      keyStoreAliasPassword: password
+
+
+services:
+
+  mule.agent.application.serviceOther:
+    enabled: true
+
+  mule.agent.jmx.publisher.service:
+    enabled: true
+    frequency: 15
+    frequencyTimeUnit: MINUTES
+
+
+internalHandlers:
+
+  domaindeploymentnotification.internal.message.handler:
+    enabled: true
+
+externalHandlers:
+
+  domains.request.handler:
+    enabled: true

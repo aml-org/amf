@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API"
+  },
+  "consumes": [
+    "application/json",
+    "application/xml"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "paths": {
+    "/levelzero/level-one": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "one": {
+                "type": "integer"
+              },
+              "two": {
+                "type": "string"
+              }
+            }
+          },
+          "in": "body"
+        }
+      ],
+      "get": {
+        "responses": {
+          "404": {
+            "description": "Not found!",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

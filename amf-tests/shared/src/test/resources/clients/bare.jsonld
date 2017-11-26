@@ -1,0 +1,68 @@
+[
+  {
+    "@id": "file:///tmp/test",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file:///tmp/test#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "test description"
+          }
+        ],
+        "http://raml.org/vocabularies/http#host": [
+          {
+            "@value": "localhost.com"
+          }
+        ],
+        "http://raml.org/vocabularies/http#scheme": [
+          {
+            "@value": "http"
+          },
+          {
+            "@value": "https"
+          }
+        ],
+        "http://raml.org/vocabularies/http#basePath": [
+          {
+            "@value": "api"
+          }
+        ],
+        "http://raml.org/vocabularies/http#accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://raml.org/vocabularies/http#contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://schema.org/version": [
+          {
+            "@value": "1.1"
+          }
+        ],
+        "http://schema.org/termsOfService": [
+          {
+            "@value": "termsOfService"
+          }
+        ]
+      }
+    ]
+  }
+]

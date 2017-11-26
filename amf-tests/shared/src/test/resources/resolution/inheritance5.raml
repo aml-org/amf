@@ -1,0 +1,14 @@
+#%RAML 1.0 Library
+
+types:
+
+  Animal:
+    properties:
+      age: integer
+  Pet:
+    properties:
+      owner: string
+  Cat:
+    type:
+      - Animal
+      - Pet

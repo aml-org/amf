@@ -1,0 +1,35 @@
+{
+  "x-fragment-type": "2.0 SecurityScheme",
+  "type": "oauth2",
+  "x-describedBy": {
+    "headers": {
+      "Authorization": {
+        "description": "Used to send a valid OAuth 2 access token.",
+        "type": "string"
+      }
+    },
+    "queryParameters": {
+      "access_token": {
+        "description": "Used to send a valid OAuth 2 access token."
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Authorization error."
+      }
+    }
+  },
+  "authorizationUrl": "https://example.com/oauth/authorize",
+  "tokenUrl": "https://example.com/oauth/token",
+  "scopes": {
+    "profile": "",
+    "history": ""
+  },
+  "x-settings": {
+    "authorizationGrants": [
+      "authorization_code",
+      "implicit",
+      "urn:ietf:params:oauth:grant-type:saml2-bearer"
+    ]
+  }
+}

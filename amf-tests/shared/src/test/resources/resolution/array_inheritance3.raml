@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+
+types:
+  A:
+    type: array
+    items: string
+    minItems: 10
+  B:
+    type: A
+    minItems: 15
+    maxItems: 20

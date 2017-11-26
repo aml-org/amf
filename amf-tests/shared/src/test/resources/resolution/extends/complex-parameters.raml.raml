@@ -1,0 +1,81 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  collection:
+    get:
+      responses:
+        200:
+          body:
+            type: <<resourcePathName>>
+    post:
+      responses:
+        200:
+          body:
+            type: <<resourcePathName | !singularize>>
+traits:
+  secured:
+    description: Some requests require authentication
+    queryParameters:
+      <<methodName>>:
+        description: A <<methodName>>-token pair is required
+        example: <<methodName>>=h8duh3uhhu38
+/Users:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              name:
+                required: true
+                type: string
+              lastName:
+                required: true
+                type: string
+  get:
+    queryParameters:
+      get:
+        description: A get-token pair is required
+        example: get=h8duh3uhhu38
+    description: Some requests require authentication
+    body:
+    responses:
+      200:
+        body:
+          application/json:
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  required: true
+                  type: string
+                lastName:
+                  required: true
+                  type: string
+types:
+  Users:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      properties:
+        name:
+          required: true
+          type: string
+        lastName:
+          required: true
+          type: string
+  User:
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      lastName:
+        required: true
+        type: string
