@@ -3,7 +3,6 @@ package amf.core.parser
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type._
 import amf.core.model.domain._
-import amf.plugins.domain.shapes.models.UnresolvedShape
 
 import scala.collection.immutable.ListMap
 
@@ -155,7 +154,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
   override def toString: String = value.toString
 
   def checkUnresolved(): Unit = value match {
-    case unresolved: UnresolvedShape =>
+    case unresolved: UnresolvedReference =>
       // This callback will be registered in the declarations of the parser context to be executed when a reference is resolved
       unresolved.futureRef((resolved) => {
         value = resolved.link(unresolved.reference, unresolved.annotations)
@@ -163,7 +162,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
       array.values.foreach {
-        case unresolved: UnresolvedShape =>
+        case unresolved: UnresolvedReference =>
           unresolved.futureRef((resolved) => {
             val updated = value.asInstanceOf[AmfArray].values.map {
               case x if x == unresolved => resolved.link(unresolved.reference, unresolved.annotations)

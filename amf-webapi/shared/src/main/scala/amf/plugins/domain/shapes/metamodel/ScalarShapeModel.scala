@@ -10,7 +10,7 @@ import amf.core.vocabulary.ValueType
 /**
   * Scalar shape metamodel
   */
-object ScalarShapeModel extends AnyShapeModel with DomainElementModel with CommonShapeFields {
+object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
 
   val DataType = Field(Iri, Shacl + "datatype")
 

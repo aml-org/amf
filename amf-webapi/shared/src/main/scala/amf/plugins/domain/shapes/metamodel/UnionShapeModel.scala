@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.plugins.domain.shapes.models.UnionShape
 import amf.core.vocabulary.{Namespace, ValueType}
 
-object UnionShapeModel extends ShapeModel with DomainElementModel {
+object UnionShapeModel extends AnyShapeModel {
 
   val AnyOf = Field(Array(ShapeModel), Namespace.Shapes + "anyOf")
 

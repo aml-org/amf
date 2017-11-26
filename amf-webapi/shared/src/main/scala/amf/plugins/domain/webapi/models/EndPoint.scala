@@ -13,7 +13,7 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
 /**
   * EndPoint internal model
   */
-case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElement {
+case class EndPoint(fields: Fields, annotations: Annotations) extends DomainElement with ExtensibleWebApiDomainElement {
 
   def name: String                              = fields(Name)
   def description: String                       = fields(Description)

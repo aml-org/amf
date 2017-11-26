@@ -1,12 +1,12 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.{Linkable, Shape}
+import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
 import org.yaml.model.YPart
 
-case class UnionShape(fields: Fields, annotations: Annotations) extends Shape with ShapeHelpers {
+case class UnionShape(override val fields: Fields, override val annotations: Annotations) extends AnyShape(fields, annotations) {
 
   def anyOf: Seq[Shape] = fields(AnyOf)
 
@@ -14,7 +14,7 @@ case class UnionShape(fields: Fields, annotations: Annotations) extends Shape wi
 
   override def adopted(parent: String): this.type = withId(parent + "/union/" + name)
 
-  override def linkCopy(): Linkable = UnionShape().withId(id)
+  override def linkCopy(): AnyShape = UnionShape().withId(id)
 
   override def meta = UnionShapeModel
 }

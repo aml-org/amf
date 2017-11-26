@@ -1,12 +1,11 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel._
 import org.yaml.model.YPart
 
-case class SchemaShape(fields: Fields, annotations: Annotations) extends Shape with ShapeHelpers {
+case class SchemaShape(override val fields: Fields, override val annotations: Annotations) extends AnyShape(fields, annotations) {
 
   def raw: String       = fields(Raw)
   def mediaType: String = fields(MediaType)

@@ -10,7 +10,7 @@ import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
 /**
   * Operation internal model.
   */
-case class Operation(fields: Fields, annotations: Annotations) extends DomainElement {
+case class Operation(fields: Fields, annotations: Annotations) extends DomainElement with ExtensibleWebApiDomainElement {
 
   def method: String               = fields(Method)
   def name: String                 = fields(Name)
