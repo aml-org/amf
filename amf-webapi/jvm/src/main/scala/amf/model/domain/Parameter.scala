@@ -1,10 +1,9 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.Parameter
 import amf.plugins.domain.webapi.models
 
 /**
-  * JVM Parameter model class.
+  * JS Parameter model class.
   */
 case class Parameter private[model] (private val parameter: models.Parameter) extends DomainElement {
 
@@ -48,5 +47,4 @@ case class Parameter private[model] (private val parameter: models.Parameter) ex
 
   def withScalarSchema(name: String): ScalarShape =
     ScalarShape(parameter.withScalarSchema(name))
-
 }

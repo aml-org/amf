@@ -1,27 +1,29 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.SecurityScheme
-
-import scala.collection.JavaConverters._
 import amf.plugins.domain.webapi.models.security
 
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.JSExportAll
+
 /**
-  * JVM SecurityScheme model class.
+  * JS SecurityScheme model class.
   */
+@JSExportAll
 case class SecurityScheme private[model] (private val scheme: security.SecurityScheme)
     extends DomainElement
     with Linkable {
   def this() = this(security.SecurityScheme())
 
-  val name: String                               = scheme.name
-  val `type`: String                             = scheme.`type`
-  val displayName: String                        = scheme.displayName
-  val description: String                        = scheme.description
-  val headers: java.util.List[Parameter]         = scheme.headers.map(Parameter).asJava
-  val queryParameters: java.util.List[Parameter] = scheme.queryParameters.map(Parameter).asJava
-  val responses: java.util.List[Response]        = scheme.responses.map(Response).asJava
-  val settings: Settings                         = Settings(scheme.settings)
-  val queryString: Shape                         = Option(scheme.queryString).map(Shape(_)).orNull
+  val name: String                            = scheme.name
+  val `type`: String                          = scheme.`type`
+  val displayName: String                     = scheme.displayName
+  val description: String                     = scheme.description
+  val headers: js.Iterable[Parameter]         = scheme.headers.map(Parameter).toJSArray
+  val queryParameters: js.Iterable[Parameter] = scheme.queryParameters.map(Parameter).toJSArray
+  val responses: js.Iterable[Response]        = scheme.responses.map(Response).toJSArray
+  val settings: Settings                      = Settings(scheme.settings)
+  val queryString: Shape                      = Option(scheme.queryString).map(Shape(_)).orNull
 
   def withName(name: String): this.type = {
     scheme.withName(name)
@@ -43,18 +45,18 @@ case class SecurityScheme private[model] (private val scheme: security.SecurityS
     this
   }
 
-  def withHeaders(headers: java.util.List[Parameter]): this.type = {
-    scheme.withHeaders(headers.asScala.map(_.element))
+  def withHeaders(headers: js.Iterable[Parameter]): this.type = {
+    scheme.withHeaders(headers.toSeq.map(_.element))
     this
   }
 
-  def withQueryParameters(queryParameters: java.util.List[Parameter]): this.type = {
-    scheme.withQueryParameters(queryParameters.asScala.map(_.element))
+  def withQueryParameters(queryParameters: js.Iterable[Parameter]): this.type = {
+    scheme.withQueryParameters(queryParameters.toSeq.map(_.element))
     this
   }
 
-  def withResponses(responses: java.util.List[Response]): this.type = {
-    scheme.withResponses(responses.asScala.map(_.element))
+  def withResponses(responses: js.Iterable[Response]): this.type = {
+    scheme.withResponses(responses.toSeq.map(_.element))
     this
   }
 
@@ -84,7 +86,7 @@ case class SecurityScheme private[model] (private val scheme: security.SecurityS
 
   def withApiKeySettings(): ApiKeySettings = ApiKeySettings(scheme.withApiKeySettings())
 
-  override def linkCopy(): domain.SecurityScheme = domain.SecurityScheme(scheme.linkCopy())
+  override def linkCopy(): SecurityScheme = SecurityScheme(scheme.linkCopy())
 
   override def linkTarget: Option[DomainElement with Linkable] =
     element.linkTarget.map { case ss: amf.plugins.domain.webapi.models.security.SecurityScheme => SecurityScheme(ss) }

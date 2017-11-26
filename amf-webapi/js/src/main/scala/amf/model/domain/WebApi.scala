@@ -1,32 +1,35 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.WebApi
 import amf.plugins.domain.webapi.models
 
-import scala.collection.JavaConverters._
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
-  * WebApi java class
+  * JS WebApi model class.
   */
-case class WebApi private (private val webApi: models.WebApi) extends DomainElement {
+@JSExportAll
+case class WebApi(private val webApi: models.WebApi) extends DomainElement {
 
+  @JSExportTopLevel("WebApi")
   def this() = this(models.WebApi())
 
-  val name: String                                         = webApi.name
-  val description: String                                  = webApi.description
-  val host: String                                         = webApi.host
-  val schemes: java.util.List[String]                      = webApi.schemes.asJava
-  val endPoints: java.util.List[EndPoint]                  = webApi.endPoints.map(EndPoint).asJava
-  val basePath: String                                     = webApi.basePath
-  val accepts: java.util.List[String]                      = webApi.accepts.asJava
-  val contentType: java.util.List[String]                  = webApi.contentType.asJava
-  val version: String                                      = webApi.version
-  val termsOfService: String                               = webApi.termsOfService
-  val provider: Organization                               = Option(webApi.provider).map(amf.model.Organization).orNull
-  val license: License                                     = Option(webApi.license).map(amf.model.License).orNull
-  val documentations: java.util.List[CreativeWork]         = webApi.documentations.map(CreativeWork).asJava
-  val baseUriParameters: java.util.List[Parameter]         = webApi.baseUriParameters.map(Parameter).asJava
-  def security: java.util.List[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).asJava
+  val name: String                                      = webApi.name
+  val description: String                               = webApi.description
+  val host: String                                      = webApi.host
+  val schemes: js.Iterable[String]                      = webApi.schemes.toJSArray
+  val endPoints: js.Iterable[EndPoint]                  = webApi.endPoints.map(amf.model.domain.EndPoint).toJSArray
+  val basePath: String                                  = webApi.basePath
+  val accepts: js.Iterable[String]                      = webApi.accepts.toJSArray
+  val contentType: js.Iterable[String]                  = webApi.contentType.toJSArray
+  val version: String                                   = webApi.version
+  val termsOfService: String                            = webApi.termsOfService
+  val provider: Organization                            = Option(webApi.provider).map(amf.model.domain.Organization).orNull
+  val license: License                                  = Option(webApi.license).map(amf.model.domain.License).orNull
+  val documentations: js.Iterable[CreativeWork]         = webApi.documentations.map(CreativeWork).toJSArray
+  val baseUriParameters: js.Iterable[Parameter]         = webApi.baseUriParameters.map(amf.model.domain.Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: models.WebApi = webApi
 
@@ -49,14 +52,14 @@ case class WebApi private (private val webApi: models.WebApi) extends DomainElem
   }
 
   /** Set schemes property of this [[WebApi]]. */
-  def withSchemes(schemes: java.util.List[String]): this.type = {
-    webApi.withSchemes(schemes.asScala)
+  def withSchemes(schemes: js.Iterable[String]): this.type = {
+    webApi.withSchemes(schemes.toSeq)
     this
   }
 
   /** Set endPoints property of this [[WebApi]]. */
-  def withEndPoints(endPoints: java.util.List[EndPoint]): this.type = {
-    webApi.withEndPoints(endPoints.asScala.map(_.element))
+  def withEndPoints(endPoints: js.Iterable[EndPoint]): this.type = {
+    webApi.withEndPoints(endPoints.toSeq.map(_.element))
     this
   }
 
@@ -67,14 +70,14 @@ case class WebApi private (private val webApi: models.WebApi) extends DomainElem
   }
 
   /** Set accepts property of this [[WebApi]]. */
-  def withAccepts(accepts: java.util.List[String]): this.type = {
-    webApi.withAccepts(accepts.asScala)
+  def withAccepts(accepts: js.Iterable[String]): this.type = {
+    webApi.withAccepts(accepts.toSeq)
     this
   }
 
   /** Set contentType property of this [[WebApi]]. */
-  def withContentType(contentType: java.util.List[String]): this.type = {
-    webApi.withContentType(contentType.asScala)
+  def withContentType(contentType: js.Iterable[String]): this.type = {
+    webApi.withContentType(contentType.toSeq)
     this
   }
 
@@ -103,14 +106,14 @@ case class WebApi private (private val webApi: models.WebApi) extends DomainElem
   }
 
   /** Set documentation property of this [[WebApi]] using a [[CreativeWork]]. */
-  def withDocumentations(documentations: java.util.List[CreativeWork]): this.type = {
-    webApi.withDocumentations(documentations.asScala.map(_.element))
+  def withDocumentation(documentations: js.Iterable[CreativeWork]): this.type = {
+    webApi.withDocumentations(documentations.toSeq.map(_.element))
     this
   }
 
   /** Set security property of this [[WebApi]] using a list of [[ParametrizedSecurityScheme]]. */
-  def withSecurity(security: java.util.List[ParametrizedSecurityScheme]): this.type = {
-    webApi.withSecurity(security.asScala.map(_.element))
+  def withSecurity(security: js.Iterable[ParametrizedSecurityScheme]): this.type = {
+    webApi.withSecurity(security.toSeq.map(_.element))
     this
   }
 
@@ -127,8 +130,8 @@ case class WebApi private (private val webApi: models.WebApi) extends DomainElem
   def withDocumentationUrl(url: String): CreativeWork = CreativeWork(webApi.withDocumentationUrl(url))
 
   /** Set baseUriParameters property of this [[WebApi]]. */
-  def withBaseUriParameters(parameters: java.util.List[Parameter]): this.type = {
-    webApi.withBaseUriParameters(parameters.asScala.map(_.element))
+  def withBaseUriParameters(parameters: js.Iterable[Parameter]): this.type = {
+    webApi.withBaseUriParameters(parameters.toSeq.map(_.element))
     this
   }
 

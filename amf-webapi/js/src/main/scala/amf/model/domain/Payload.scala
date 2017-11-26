@@ -1,4 +1,4 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.webapi.models
 

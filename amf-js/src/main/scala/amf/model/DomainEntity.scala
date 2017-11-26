@@ -1,7 +1,4 @@
-package amf.model
-
-import amf.plugins.document.vocabularies.model.domain
-import amf.plugins.document.vocabularies.spec.DialectNode
+package amf.model.domain;
 
 case class DomainEntity(private val entity: domain.DomainEntity) extends DomainElement {
 
