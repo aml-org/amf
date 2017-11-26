@@ -1,12 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.annotations.SynthesizedField
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.SearchScope
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter

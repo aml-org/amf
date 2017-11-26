@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.common.core.TemplateUri
 import amf.core.Root
+import amf.core.annotations.{SingleValueArray, SourceVendor, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -10,7 +11,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.core.parser.Annotations
 import amf.core.parser._
-import amf.plugins.document.webapi.annotations.{DeclaredElement, SingleValueArray, SourceVendor, SynthesizedField}
+import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
@@ -19,7 +20,7 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, Declarations, SearchScope}
+import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, WebApiDeclarations}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model._
@@ -351,7 +352,7 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
     }
   }
 
-  case class UserDocumentationsParser(seq: Seq[YNode], declarations: Declarations, parent: String) {
+  case class UserDocumentationsParser(seq: Seq[YNode], declarations: WebApiDeclarations, parent: String) {
     def parse(): Seq[CreativeWork] = {
       val results = ListBuffer[CreativeWork]()
 

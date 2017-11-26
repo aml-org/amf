@@ -5,7 +5,6 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{ArrayNode, ValueNode}
 import amf.plugins.domain.shapes.metamodel.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.plugins.domain.shapes.models.{PropertyDependencies, XMLSerializer}
 import org.yaml.model.{YMap, YMapEntry, YScalar}

@@ -16,16 +16,11 @@ trait WebApiDocuments {
     TraitFragmentModel,
     AnnotationTypeDeclarationFragmentModel,
     SecuritySchemeFragmentModel,
-    ExternalFragmentModel,
-    DialectNodeFragmentModel
+    ExternalFragmentModel
   )
 
   def webApiAnnotations = Map(
     "parsed-json-schema" -> ParsedJSONSchema,
-    "source-vendor"      -> SourceVendor,
-    "declared-element"   -> DeclaredElement,
-    "synthesized-field"  -> SynthesizedField,
-    "single-value-array" -> SingleValueArray,
-    "aliases-array"      -> Aliases
+    "declared-element"   -> DeclaredElement
   )
 }

@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.BaseEmitters._
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import org.yaml.model.YDocument.EntryBuilder
 
 /**

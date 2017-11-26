@@ -1,14 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.emitter._
+import amf.core.emitter.BaseEmitters._
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.remote.{Oas, Raml}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

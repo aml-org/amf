@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.{SingleValueArray, SynthesizedField}
 import amf.core.model.domain.AmfScalar
-import amf.core.parser.Annotations
-import amf.core.parser._
-import amf.plugins.document.webapi.annotations.{SingleValueArray, SynthesizedField}
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model._

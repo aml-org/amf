@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.annotations.{ExplicitField, LexicalInformation}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.annotations._
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter._
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.model.document._
@@ -10,12 +11,11 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.{MapEntryEmitter, _}
-import amf.plugins.document.webapi.parser.spec.common.{BaseSpecEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape}
@@ -593,7 +593,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       extends PlatformSecrets {
     val emitters: Seq[EntryEmitter] = {
 
-      val declarations = Declarations(declares, None)
+      val declarations = WebApiDeclarations(declares, None)
 
       val result = ListBuffer[EntryEmitter]()
 
@@ -871,4 +871,6 @@ object OasSpecEmitterContext extends SpecEmitterContext {
 
   override def localReference(reference: Linkable): PartEmitter =
     OasTagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel)
+
+  override val tagToReferenceEmitter = new WebApiTagToReferenceEmitter(Oas)
 }

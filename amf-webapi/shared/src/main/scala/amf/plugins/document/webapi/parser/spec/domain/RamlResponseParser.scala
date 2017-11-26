@@ -1,14 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfArray
-import amf.core.parser.Annotations
-import amf.core.parser._
-import amf.plugins.document.webapi.annotations.SynthesizedField
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, RamlTypeParser}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ValueNode}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, RamlTypeParser}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable

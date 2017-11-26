@@ -22,15 +22,31 @@ trait Platform {
   def exit(code: Int): Unit = System.exit(code)
 
   val wrappersRegistry: mutable.HashMap[String, (AmfObject) => AmfObjectWrapper] = mutable.HashMap.empty
+  val wrappersRegistryFn: mutable.HashMap[(Obj) => Boolean, (AmfObject) => AmfObjectWrapper] = mutable.HashMap.empty
+
   def registerWrapper(model: Obj)(builder: (AmfObject) => AmfObjectWrapper) = wrappersRegistry.put(model.`type`.head.iri(), builder)
+  def registerWrapperPredicate(p:(Obj) => Boolean)(builder: (AmfObject) => AmfObjectWrapper) = wrappersRegistryFn.put(p, builder)
+
   def wrap[T <: AmfObjectWrapper](entity: AmfObject): T =  entity match {
     case e: DomainElement => wrappersRegistry.get(e.meta.`type`.head.iri()) match {
       case Some(builder) => builder(entity).asInstanceOf[T]
-      case None => throw new Exception(s"Cannot find builder for object meta ${e.meta}")
+      case None          => wrapFn(e)
     }
     case d: BaseUnit => wrappersRegistry.get(d.meta.`type`.head.iri()) match {
       case Some(builder) => builder(entity).asInstanceOf[T]
-      case None => throw new Exception(s"Cannot find builder for object meta ${d.meta}")
+      case None          => wrapFn(d)
+    }
+    case _ => wrapFn(entity)
+  }
+
+  def wrapFn[T <: AmfObjectWrapper](entity: AmfObject): T = entity match {
+    case e: DomainElement => wrappersRegistryFn.keys.find(p => p(e.meta)) match {
+      case Some(k) => wrappersRegistryFn(k)(e).asInstanceOf[T]
+      case None    => throw new Exception(s"Cannot find builder for object meta ${e.meta}")
+    }
+    case d: BaseUnit => wrappersRegistryFn.keys.find(p => p(d.meta)) match {
+      case Some(k) => wrappersRegistryFn(k)(d).asInstanceOf[T]
+      case None    => throw new Exception(s"Cannot find builder for object meta ${d.meta}")
     }
     case _ => throw new Exception(s"Cannot build object of type $entity")
   }

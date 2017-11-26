@@ -1,14 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.annotations.SynthesizedField
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter}
-import amf.plugins.document.webapi.parser.spec.{EntryEmitter, SpecOrdering}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.ParameterModel

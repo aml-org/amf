@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.annotations
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations._
 import amf.core.model.domain._
 import amf.core.remote._
 import amf.core.parser.Range
@@ -8,9 +8,6 @@ import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.models.EndPoint
 import org.yaml.model.YPart
-
-
-
 
 case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
   override val name: String  = "parsed-json-schema"
@@ -20,31 +17,6 @@ case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
 object ParsedJSONSchema extends AnnotationGraphLoader  {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
     ParsedJSONSchema(annotatedValue)
-  }
-}
-
-case class SourceVendor(vendor: Vendor) extends SerializableAnnotation {
-  override val name: String = "source-vendor"
-
-  override val value: String = vendor.name
-}
-
-object SourceVendor extends AnnotationGraphLoader {
-  def apply(vendor: String): SourceVendor = vendor match {
-    case Raml.name => SourceVendor(Raml)
-    case Oas.name  => SourceVendor(Oas)
-    case Amf.name  => SourceVendor(Amf)
-    case "RAML 1.0" => SourceVendor(Raml)
-    case "OAS 2.0" => SourceVendor(Oas)
-    case "AMF Graph" => SourceVendor(Amf)
-    case _         => SourceVendor(Unknown)
-  }
-
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    annotatedValue match {
-      case Vendor(vendor) => SourceVendor(vendor)
-      case _              => throw new RuntimeException(s"Illegal vendor: '$annotatedValue'")
-    }
   }
 }
 
@@ -63,17 +35,6 @@ object DeclaredElement extends AnnotationGraphLoader {
 
 
 case class InlineDefinition() extends Annotation
-
-case class SynthesizedField() extends SerializableAnnotation {
-  override val name: String  = "synthesized-field"
-  override val value: String = "true"
-}
-
-object SynthesizedField extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    SynthesizedField()
-  }
-}
 
 /*
 case class DomainElementReference(name: String, ref: Option[DomainEntity]) extends SerializableAnnotation {
@@ -94,44 +55,7 @@ case class EndPointParameter() extends Annotation
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
 
-case class SingleValueArray() extends SerializableAnnotation {
-
-  /** Extension name. */
-  override val name: String = "single-value-array"
-
-  /** Value as string. */
-  override val value: String = ""
-
-}
-object SingleValueArray extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    SingleValueArray()
-  }
-}
-
 case class Inferred() extends Annotation
-
-case class Aliases(aliases: Set[(String,String)]) extends SerializableAnnotation {
-
-  /** Extension name. */
-  override val name: String = "aliases-array"
-
-  /** Value as string. */
-  override val value: String = aliases.map { case (alias, path) => s"$alias->$path" }.mkString(",")
-
-}
-
-object Aliases extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    Aliases(
-      annotatedValue
-        .split(",")
-        .map(_.split("->") match {
-          case Array(alias, url) => alias -> url
-        })
-        .toSet)
-  }
-}
 
 object WebApiAnnotations {
 

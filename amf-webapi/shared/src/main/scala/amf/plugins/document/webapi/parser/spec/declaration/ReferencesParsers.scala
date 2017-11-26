@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
-import amf.plugins.document.webapi.annotations.Aliases
 import amf.plugins.document.webapi.contexts.WebApiContext
 import org.yaml.model.YMap
 

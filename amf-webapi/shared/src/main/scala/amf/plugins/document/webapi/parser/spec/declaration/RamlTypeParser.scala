@@ -1,19 +1,18 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.ProfileNames
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
+import amf.core.parser.SearchScope.Named
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.SearchScope
-import amf.plugins.document.webapi.parser.spec.SearchScope.Named
-import amf.plugins.document.webapi.parser.spec.common.{ArrayNode, ShapeExtensionParser, ValueNode}
+import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlSyntax, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
@@ -613,7 +612,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
     private def unresolved(node: YNode): UnresolvedShape = {
       val reference = node.as[YScalar].text
-      val shape     = UnresolvedShape(reference, node).withContext(ctx)
+      val shape     = UnresolvedShape(reference, node)
+      shape.withContext(ctx)
       adopt(shape)
       shape
     }

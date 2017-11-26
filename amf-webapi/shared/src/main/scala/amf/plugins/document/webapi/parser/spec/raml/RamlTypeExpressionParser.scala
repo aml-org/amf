@@ -9,10 +9,9 @@ import amf.plugins.document.webapi.parser.spec.SearchScope
 =======
 import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.Range
+import amf.core.parser.{Range, SearchScope}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.SearchScope
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 >>>>>>> APIMF-161 add webapi sbt project:amf-webapi/shared/src/main/scala/amf/plugins/document/webapi/parser/spec/raml/RamlTypeExpressionParser.scala
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel

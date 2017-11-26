@@ -1,14 +1,14 @@
 package amf.plugins.document.webapi.contexts
 
 import amf.core.model.domain.Shape
-import amf.plugins.features.validation.ParserSideValidations.ClosedShapeSpecification
 import amf.core.parser.ParserContext
-import amf.plugins.document.webapi.parser.spec.{Declarations, SpecSyntax}
+import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
+import amf.plugins.features.validation.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAwareContext, private val wrapped: ParserContext, private val internalDec: Option[Declarations] = None) extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations) with SpecAwareContext {
+class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAwareContext, private val wrapped: ParserContext, private val internalDec: Option[WebApiDeclarations] = None) extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations) with SpecAwareContext {
 
-  val declarations: Declarations = internalDec.getOrElse(Declarations(errorHandler = Some(this)))
+  val declarations: WebApiDeclarations = internalDec.getOrElse(WebApiDeclarations(errorHandler = Some(this)))
 
   override def ignore(shape: String, property: String) = spec.ignore(shape, property)
 

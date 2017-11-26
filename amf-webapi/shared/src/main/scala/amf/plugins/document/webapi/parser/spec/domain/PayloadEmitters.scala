@@ -1,12 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ScalarEmitter
-import amf.plugins.document.webapi.parser.spec.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, RamlTypeEmitter, RamlTypePartEmitter}
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
