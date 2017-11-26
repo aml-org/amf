@@ -4,11 +4,12 @@ import amf.core.metamodel.Obj
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
-import amf.plugins.domain.webapi.models.CreativeWork
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
+import amf.plugins.domain.webapi.models.CreativeWork
 import org.yaml.model.YPart
 
 class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape with ShapeHelpers {
+
   override def adopted(parent: String): this.type = withId(parent + "/any/" + name)
 
   def documentation: CreativeWork                = fields(Documentation)
@@ -22,6 +23,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape w
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
   override def meta: Obj = AnyShapeModel
+
+  def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations) = AnyShape(fields, annotations).withId(id)
 }
 
 object AnyShape {

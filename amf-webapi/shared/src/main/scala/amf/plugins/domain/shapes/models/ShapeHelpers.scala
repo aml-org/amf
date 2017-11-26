@@ -24,6 +24,7 @@ trait ShapeHelpers { this: Shape =>
       case _: FileShape     => FileShape()
       case _: NilShape      => NilShape()
       case _: NodeShape     => NodeShape()
+      case UnresolvedShape(_, annots, reference) => UnresolvedShape(reference, annots)
       case _: AnyShape      => AnyShape()
     }
     cloned.id = this.id

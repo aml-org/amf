@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.plugins.domain.shapes.models.FileShape
 import amf.core.vocabulary.{Namespace, ValueType}
 
-object FileShapeModel extends AnyShapeModel with DomainElementModel with CommonShapeFields {
+object FileShapeModel extends AnyShapeModel with CommonShapeFields {
 
   val FileTypes = Field(Array(Str), Namespace.Shapes + "fileType")
 

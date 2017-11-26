@@ -22,21 +22,6 @@ trait DomainElement extends AmfObject {
 
   def withExtends(extend: Seq[DomainElement]): this.type = setArray(Extends, extend)
 
-  // TODO: removed in modularization @modulirization
-  /*
-  def withResourceType(name: String): ParametrizedResourceType = {
-    val result = ParametrizedResourceType().withName(name)
-    add(Extends, result)
-    result
-  }
-
-  def withTrait(name: String): ParametrizedTrait = {
-    val result = ParametrizedTrait().withName(name)
-    add(Extends, result)
-    result
-  }
-  */
-
   def getTypeIds(): List[String] = dynamicTypes().toList ++ `type`.map(_.iri())
 
   def getPropertyIds(): List[String] = fields.fields().map(f => f.field.value.iri()).toList

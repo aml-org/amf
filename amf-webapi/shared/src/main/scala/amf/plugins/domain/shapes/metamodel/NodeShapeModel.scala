@@ -11,7 +11,7 @@ import amf.core.vocabulary.ValueType
 /**
   * Node shape metamodel.
   */
-object NodeShapeModel extends AnyShapeModel with DomainElementModel {
+object NodeShapeModel extends AnyShapeModel {
 
   val MinProperties = Field(Int, Shapes + "minProperties")
 

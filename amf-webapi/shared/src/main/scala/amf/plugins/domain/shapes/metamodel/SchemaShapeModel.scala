@@ -7,7 +7,7 @@ import amf.plugins.domain.shapes.models.SchemaShape
 import amf.core.vocabulary.Namespace.Shacl
 import amf.core.vocabulary.ValueType
 
-object SchemaShapeModel extends ShapeModel with DomainElementModel {
+object SchemaShapeModel extends AnyShapeModel {
   val MediaType = Field(Str, Shacl + "mediaType")
   val Raw       = Field(Str, Shacl + "raw")
 
