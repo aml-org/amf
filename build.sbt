@@ -100,21 +100,19 @@ lazy val amfCoreCrossProject = crossProject
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
-    libraryDependencies += "org.topbraid" % "shacl" % "1.0.1",
-
     test in assembly := {},
-    assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf.jar",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-javadoc.jar",
-    fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
-    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"),
+    assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf-core.jar",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-core-javadoc.jar",
+//    fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
+//    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"),
     mainClass in Compile := Some("amf.client.Main")
   )
   .jsSettings(
-    jsDependencies += ProvidedJS / "shacl.js",
+//    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "js-main-module.js",
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-core-main-module.js",
     scalaJSUseMainModuleInitializer := true,
     assemblyMergeStrategy in assembly := {
       case "JS_DEPENDENCIES"              => MergeStrategy.discard
@@ -127,6 +125,53 @@ lazy val amfCoreCrossProject = crossProject
 
 lazy val amfCoreJVM = amfCoreCrossProject.jvm.in(file("./amf-core/jvm"))
 lazy val amfCoreJS = amfCoreCrossProject.js.in(file("./amf-core/js"))
+
+
+lazy val amfWebApi = project
+  .in(file("./amf-webapi"))
+  .aggregate(amfWebApiJS, amfWebApiJVM)
+  .enablePlugins(ScalaJSPlugin)
+
+lazy val amfWebApiCrossProject = crossProject
+  .settings(Seq(
+    name := "amf-webapi",
+    version := "1.0.0-SNAPSHOT",
+    libraryDependencies ++= Seq(
+      "org.mulesoft"     %%% "syaml"     % "0.0.6"
+    )
+  ))
+  .dependsOn(amfCoreCrossProject)
+  .in(file("./amf-webapi"))
+  .settings(settings: _*)
+  .jvmSettings(
+    Common.publish,
+    addArtifact(artifact in (Compile, assembly), assembly),
+    publishArtifact in (Compile, packageBin) := false,
+    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
+    libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
+    test in assembly := {},
+    assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf-webapi.jar",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
+  )
+  .jsSettings(
+//    jsDependencies += ProvidedJS / "shacl.js",
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-main-module.js",
+    scalaJSUseMainModuleInitializer := true,
+    assemblyMergeStrategy in assembly := {
+      case "JS_DEPENDENCIES"              => MergeStrategy.discard
+      case PathList("META-INF", xs @ _ *) => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+    }
+  )
+
+lazy val amfWebApiJVM = amfWebApiCrossProject.jvm.in(file("./amf-webapi/jvm"))
+lazy val amfWebApiJS = amfWebApiCrossProject.js.in(file("./amf-webapi/js"))
 
 addCommandAlias("generate", "; clean; moduleJS/fullOptJS; generateJSMainModule; generateJVM")
 addCommandAlias("generateJSMainModule", "; amfJS/fullOptJS")

@@ -69,7 +69,7 @@ abstract class Shape extends DomainElement with Linkable {
     }
   }
 
-  def cloneShape(): this.type
+  def cloneShape(): Shape
 
 
   // Copy fields into a cloned shape

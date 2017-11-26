@@ -1,11 +1,12 @@
 package amf.core.registries
 
+import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel, PropertyShapeModel, ShapeExtensionModel}
 import amf.core.metamodel.domain.templates.VariableValueModel
-import amf.core.model.domain.{AnnotationGraphLoader, LexicalInformation}
+import amf.core.model.domain.AnnotationGraphLoader
 
 import scala.collection.mutable
 

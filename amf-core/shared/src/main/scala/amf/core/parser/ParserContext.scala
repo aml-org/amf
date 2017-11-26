@@ -1,6 +1,7 @@
 package amf.core.parser
 
-import amf.core.model.domain.LexicalInformation
+import amf.core.annotations
+import amf.core.annotations.LexicalInformation
 import amf.core.services.RuntimeValidator
 import amf.plugins.features.validation.ParserSideValidations.ParsingErrorSpecification
 import amf.core.validation.SeverityLevels.VIOLATION
@@ -57,7 +58,7 @@ class ErrorHandler extends IllegalTypeHandler {
   private def lexical(ast: YPart): Option[LexicalInformation] = {
     ast.range match {
       case InputRange.Zero => None
-      case range           => Some(LexicalInformation(Range(range)))
+      case range           => Some(annotations.LexicalInformation(Range(range)))
     }
   }
 }
