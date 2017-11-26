@@ -6,10 +6,10 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.{Annotations, ErrorHandler, Fields, FutureDeclarations}
 import amf.core.utils.QName
 import amf.plugins.document.webapi.parser.spec.SearchScope.{All, Fragments, Named}
-import amf.plugins.domain.shapes.models.{Example, UnresolvedShape}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example, UnresolvedShape}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{CreativeWork, Parameter, Payload}
+import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YPart
 
 

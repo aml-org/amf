@@ -9,7 +9,6 @@ import amf.core.parser.ParserContext
 import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
@@ -17,6 +16,7 @@ import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.document.webapi.validation.WebApiValidations
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
 
@@ -32,7 +32,7 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
 
   override def modelEntities = webApiDocuments
 
-  override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
+  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
 
   def canParse(root: Root): Boolean = RamlHeader(root) match {
     case Some(RamlHeader.Raml10)          => true

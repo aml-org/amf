@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.CreativeWork
 import amf.plugins.domain.webapi.models
 /**
   * JVM CreativeWork model class.

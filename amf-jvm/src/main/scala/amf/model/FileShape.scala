@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.FileShape
 import amf.plugins.domain.shapes.models
 
 import scala.collection.JavaConverters._
@@ -60,8 +61,8 @@ case class FileShape(private val file: models.FileShape) extends Shape(file) {
 
   override private[amf] def element = file
 
-  override def linkTarget: Option[FileShape] =
-    element.linkTarget.map({ case l: models.FileShape => FileShape(l) })
+  override def linkTarget: Option[domain.FileShape] =
+    element.linkTarget.map({ case l: models.FileShape => domain.FileShape(l) })
 
-  override def linkCopy(): FileShape = FileShape(element.linkCopy())
+  override def linkCopy(): domain.FileShape = FileShape(element.linkCopy())
 }

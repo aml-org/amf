@@ -6,10 +6,10 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.plugins.AMFDocumentPlugin
 import amf.core.remote.Platform
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.references.PayloadReferenceCollector
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import org.yaml.model.{YMap, YScalar}
 
@@ -23,7 +23,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override def serializableAnnotations() = Map.empty
 
-  override def dependencies() = Seq(AMFGraphPlugin, WebAPIDomainPlugin)
+  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
 
   // we are looking for documents with a very specific payload
   // otherwise, this plugin can become the fallback option.

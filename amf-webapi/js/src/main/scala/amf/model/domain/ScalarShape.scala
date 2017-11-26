@@ -1,11 +1,11 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends Shape(scalar) {
+case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends AnyShape(scalar) {
 
   val dataType: String         = scalar.dataType
   val pattern: String          = scalar.pattern

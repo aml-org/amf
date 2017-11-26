@@ -18,9 +18,8 @@ import amf.plugins.document.webapi.parser.spec.oas.{OasSpecParser, OasSyntax}
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, SearchScope}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models.{Example, _}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.domain.webapi.models.CreativeWork
 import org.yaml.model._
 import org.yaml.render.YamlRender
 

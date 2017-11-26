@@ -1,4 +1,4 @@
-package amf.model
+package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
@@ -7,7 +7,7 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-case class NodeShape(private val node: models.NodeShape) extends Shape(node) {
+case class NodeShape(private val node: models.NodeShape) extends AnyShape(node) {
 
   val minProperties: Int                              = node.minProperties
   val maxProperties: Int                              = node.maxProperties

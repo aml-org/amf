@@ -6,7 +6,6 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
 
 trait AnyShapeModel extends ShapeModel {
 

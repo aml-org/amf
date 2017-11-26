@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.{DataArrangeShape, MatrixShape, TupleShape}
 import amf.plugins.domain.shapes.models
 import amf.plugins.domain.shapes.models.DataArrangementShape
 
@@ -27,7 +28,7 @@ abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) ex
   }
 }
 
-class ArrayShape(private[amf] override val array: models.ArrayShape) extends DataArrangeShape(array) {
+class ArrayShape(private[amf] override val array: models.ArrayShape) extends domain.DataArrangeShape(array) {
   val items: Shape = Shape(array.items)
 
   def withItems(items: Shape): this.type = {
@@ -44,14 +45,14 @@ class ArrayShape(private[amf] override val array: models.ArrayShape) extends Dat
 }
 
 object ArrayShape {
-  def apply(array: models.ArrayShape): ArrayShape = { new ArrayShape(array) }
+  def apply(array: models.ArrayShape): domain.ArrayShape = { new domain.ArrayShape(array) }
 }
 
-class MatrixShape(private[amf] override val array: models.ArrayShape) extends ArrayShape(array) {
+class MatrixShape(private[amf] override val array: models.ArrayShape) extends domain.ArrayShape(array) {
 
   override def withItems(items: Shape): this.type = {
     items match {
-      case array: ArrayShape => array.withItems(array)
+      case array: domain.ArrayShape => array.withItems(array)
       case _                 => throw new Exception("Matrix shapes can only accept arrays as items")
     }
     this
@@ -61,7 +62,7 @@ class MatrixShape(private[amf] override val array: models.ArrayShape) extends Ar
 }
 
 object MatrixShape {
-  def apply(array: models.MatrixShape): MatrixShape = { new MatrixShape(array.toArrayShape) }
+  def apply(array: models.MatrixShape): domain.MatrixShape = { new MatrixShape(array.toArrayShape) }
 }
 
 case class TupleShape(private[amf] override val array: models.TupleShape) extends DataArrangeShape(array) {
@@ -75,7 +76,7 @@ case class TupleShape(private[amf] override val array: models.TupleShape) extend
   override private[amf] def element = array
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.TupleShape => TupleShape(l) })
+    element.linkTarget.map({ case l: models.TupleShape => domain.TupleShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = TupleShape(element.linkCopy())
 }

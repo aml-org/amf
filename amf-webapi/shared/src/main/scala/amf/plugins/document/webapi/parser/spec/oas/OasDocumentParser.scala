@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarations
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, SearchScope}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}

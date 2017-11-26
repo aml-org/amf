@@ -4,11 +4,10 @@ import amf.core.parser.Position
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters.ValueEmitter
 import amf.plugins.document.webapi.parser.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.plugins.document.webapi.parser.spec.common.SpecEmitterContext
-import amf.plugins.domain.webapi.metamodel.CreativeWorkModel
-import amf.plugins.domain.webapi.models.CreativeWork
 import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-
 
 import scala.collection.mutable.ListBuffer
 

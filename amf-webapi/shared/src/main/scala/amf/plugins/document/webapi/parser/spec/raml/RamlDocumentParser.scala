@@ -21,6 +21,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, Declarations, SearchScope}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model._
 
 import scala.collection.mutable

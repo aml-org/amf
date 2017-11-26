@@ -3,6 +3,7 @@ package amf.plugins.domain.webapi
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.core.plugins.AMFDomainPlugin
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security._

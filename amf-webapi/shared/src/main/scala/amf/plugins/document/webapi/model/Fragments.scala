@@ -6,8 +6,8 @@ import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
-import amf.plugins.domain.shapes.models.Example
-import amf.plugins.domain.webapi.models.{CreativeWork, ExternalDomainElement}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
+import amf.plugins.domain.webapi.models.ExternalDomainElement
 
 // todo review
 

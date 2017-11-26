@@ -7,9 +7,10 @@ import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{CreativeWork, Operation, Response}
+import amf.plugins.domain.webapi.models.{Operation, Response}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ArrayNode, ValueNode}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model._
 
 import scala.collection.mutable

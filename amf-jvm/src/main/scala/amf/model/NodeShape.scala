@@ -1,5 +1,6 @@
 package amf.model
 
+import amf.model.domain.NodeShape
 import amf.plugins.domain.shapes.models
 
 import scala.collection.JavaConverters._
@@ -53,14 +54,14 @@ case class NodeShape(private val node: models.NodeShape) extends Shape(node) {
 
   def withDependency(): PropertyDependencies = PropertyDependencies(node.withDependency())
 
-  def withInheritsObject(name: String): NodeShape = NodeShape(node.withInheritsObject(name))
+  def withInheritsObject(name: String): domain.NodeShape = domain.NodeShape(node.withInheritsObject(name))
 
   def withInheritsScalar(name: String): ScalarShape = ScalarShape(node.withInheritsScalar(name))
 
   override private[amf] def element = node
 
   override def linkTarget: Option[DomainElement with Linkable] =
-    element.linkTarget.map({ case l: models.NodeShape => NodeShape(l) })
+    element.linkTarget.map({ case l: models.NodeShape => domain.NodeShape(l) })
 
   override def linkCopy(): DomainElement with Linkable = NodeShape(element.linkCopy())
 }
