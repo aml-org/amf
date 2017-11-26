@@ -2,21 +2,18 @@ package amf.plugins.features.validation
 
 import amf.ProfileNames
 import amf.core.client.GenerationOptions
-import amf.facades.ValidationMutex
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
-import amf.core.validation.core.ValidationReport
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, ParserSideValidationPlugin}
+import amf.core.validation.core.{ValidationProfile, ValidationReport}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.RAMLExtensionsPlugin
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
-import amf.plugins.document.webapi.PayloadPlugin
-import amf.validation._
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
-import amf.plugins.features.validation.model.ValidationProfile
+import amf.plugins.features.validation.model.ParsedValidationProfile
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -24,7 +21,7 @@ import scala.concurrent.Future
 class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin {
   override val ID = "AMF Validation"
 
-  override def dependencies() = Seq(AMFGraphPlugin, PayloadPlugin)
+  override def dependencies() = Seq(AMFGraphPlugin)
 
   val url = "http://raml.org/dialects/profile.raml"
 
@@ -50,11 +47,11 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
       validationProfilePath,
       platform,
       "application/yaml",
-      RAMLExtensionsPlugin.ID,
+      RAMLVocabulariesPlugin.ID,
     ).map { case parsed: Document => parsed.encodes }
       .map {
         case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
-          val profile = ValidationProfile(encoded)
+          val profile = ParsedValidationProfile(encoded)
           val domainPlugin = profilesPlugins.get(profile.name) match {
             case Some(plugin) => {
               plugin
@@ -104,7 +101,7 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
     val jsLibrary  = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
 
     jsLibrary match {
-      case Some(code) => platform.validator.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+      case Some(code) => PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
       case _          => // ignore
     }
 
@@ -122,7 +119,7 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
     */
 
     ValidationMutex.synchronized {
-      platform.validator.report(
+      PlatformValidator.instance.report(
         modelJSON,
         "application/ld+json",
         shapesJSON,
@@ -170,3 +167,6 @@ object AMFValidatorPlugin {
     RuntimeValidator.register(new AMFValidatorPlugin(platform))
   }
 }
+
+
+object ValidationMutex {}

@@ -89,6 +89,11 @@ object AMFPluginsRegistry {
 
         domainPlugin.modelEntities.foreach{ entity => AMFDomainRegistry.registerModelEntity(entity) }
 
+        domainPlugin.modelEntitiesResolver match {
+          case Some(resolver) => AMFDomainRegistry.registerModelEntityResolver(resolver)
+          case _ => // ignore
+        }
+
         registerDependencies(domainPlugin)
     }
   }

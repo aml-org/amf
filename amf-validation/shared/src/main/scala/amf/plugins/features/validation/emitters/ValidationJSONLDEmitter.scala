@@ -1,15 +1,16 @@
 package amf.plugins.features.validation.emitters
 
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.PartEmitter
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.PartEmitter
-import amf.plugins.document.webapi.parser.spec.common.BaseEmitters._
-import amf.plugins.features.validation.model.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender
 
 import scala.collection.mutable.ListBuffer
+
 
 /**
   * Generates a JSON-LD graph with the shapes for a set of validations

@@ -81,7 +81,6 @@ trait Platform {
   }
 
   // TODO: Removed from core @modularization
-  // val dialectsRegistry: PlatformDialectRegistry
 
   //  @modularization
   // val validator: SHACLValidator

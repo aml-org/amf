@@ -6,6 +6,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{AbstractReferenceCollector, ParserContext}
+import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import org.yaml.model.YDocument
 
@@ -14,6 +15,8 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   val vendors: Seq[String]
 
   def modelEntities: Seq[Obj]
+
+  def modelEntitiesResolver: Option[AMFDomainEntityResolver] = None
 
   def serializableAnnotations(): Map[String, AnnotationGraphLoader]
 

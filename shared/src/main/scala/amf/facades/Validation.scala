@@ -98,7 +98,6 @@ class Validation(platform: Platform) {
   def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = validator.shapesGraph(validations, messageStyle)
 }
 
-object ValidationMutex {}
 object Validation {
   def apply(platform: Platform) = new Validation(platform)
 }

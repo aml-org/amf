@@ -1,6 +1,6 @@
 package amf.plugins.features.validation.emitters
 
-import amf.plugins.features.validation.model.{ValidationProfile, ValidationSpecification}
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 
 class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
