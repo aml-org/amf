@@ -1,5 +1,6 @@
 package amf.core.model.domain
 
+import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.model.domain.extensions.DomainExtension

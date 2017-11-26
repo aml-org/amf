@@ -1,7 +1,7 @@
 package amf.core.services
 
+import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.LexicalInformation
 import amf.core.validation.core.ValidationReport
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 

@@ -1,6 +1,7 @@
 package amf.core.parser
 
-import amf.core.model.domain.{Annotation, LexicalInformation, SerializableAnnotation, SourceAST}
+import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.model.domain.{Annotation, SerializableAnnotation}
 import org.yaml.model.YPart
 
 import scala.collection.mutable

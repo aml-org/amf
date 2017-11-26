@@ -1,8 +1,8 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
+import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.LexicalInformation
 import amf.core.plugins.AMFPlugin
 import amf.core.services.RuntimeValidator
 import amf.core.validation._

@@ -1,5 +1,6 @@
 package amf.core.model.domain
 
+import amf.core.annotations.ScalarType
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel

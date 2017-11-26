@@ -1,5 +1,6 @@
 package amf.plugins.document.graph.parser
 
+import amf.core.annotations.ScalarType
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel

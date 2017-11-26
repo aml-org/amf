@@ -8,18 +8,7 @@ import amf.plugins.domain.webapi.models.EndPoint
 import org.yaml.model.YPart
 
 
-case class ParentEndPoint(parent: EndPoint) extends SerializableAnnotation {
-  override val name: String = "parent-end-point"
 
-  override val value: String = parent.id
-
-}
-
-object ParentEndPoint extends AnnotationGraphLoader  {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ParentEndPoint(objects(annotatedValue).asInstanceOf[EndPoint])
-  }
-}
 
 case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
   override val name: String  = "parsed-json-schema"
@@ -72,8 +61,6 @@ object DeclaredElement extends AnnotationGraphLoader {
 
 
 case class InlineDefinition() extends Annotation
-
-case class ExplicitField() extends Annotation
 
 case class SynthesizedField() extends SerializableAnnotation {
   override val name: String  = "synthesized-field"
