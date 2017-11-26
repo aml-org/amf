@@ -1,0 +1,51 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "E": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/C"
+        },
+        {
+          "$ref": "#/definitions/D"
+        }
+      ]
+    },
+    "F": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/C"
+        },
+        {
+          "$ref": "#/definitions/D"
+        }
+      ]
+    },
+    "A": {
+      "type": "string"
+    },
+    "B": {
+      "type": "integer"
+    },
+    "C": {
+      "properties": {
+        "a": {
+          "$ref": "#/definitions/A"
+        },
+        "b": {
+          "$ref": "#/definitions/B"
+        }
+      }
+    },
+    "D": {
+      "properties": {
+        "a": {
+          "$ref": "#/definitions/A"
+        },
+        "b": {
+          "$ref": "#/definitions/B"
+        }
+      }
+    }
+  }
+}

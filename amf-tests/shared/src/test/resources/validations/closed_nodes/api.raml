@@ -1,0 +1,30 @@
+#%RAML 1.0
+
+title: test
+version: 1.0
+
+annotationTypes:
+  z:
+    type: any
+
+a: error
+(z): valid
+/nested:
+  b: error
+  (z): valid
+  get:
+    c: error
+    (z): valid
+    responses:
+      200:
+        d: error
+        (z): valid
+        body:
+          application/json:
+            e: error
+            (z): valid
+            type: object
+            properties:
+              a:
+                type: string
+                f: error

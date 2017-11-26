@@ -1,0 +1,37 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API"
+  },
+  "basePath": "/some/uri",
+  "paths": {
+    "/levelzero/level-one": {
+      "x-displayName": "One display name",
+      "x-description": "and this description!",
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "in": "body"
+        }
+      ],
+      "get": {
+        "operationId": "Some title",
+        "responses": {
+          "200": {
+            "description": "200 descr",
+            "headers": {
+              "Time-Ago": {
+                "type": "integer"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found!"
+          }
+        }
+      }
+    }
+  }
+}

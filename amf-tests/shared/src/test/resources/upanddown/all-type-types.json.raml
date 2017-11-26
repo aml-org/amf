@@ -1,0 +1,50 @@
+#%RAML 1.0
+title: test title
+types:
+  StringType:
+    type: string
+  AnyType:
+    type: any
+  IntegerType:
+    type: integer
+    format: int32
+  DateTimeOnlyType:
+    type: datetime-only
+  TimeOnlyType:
+    type: time-only
+  UnionType:
+    type: union
+    anyOf:
+      -
+        type: string
+      -
+        type: integer
+        format: int32
+  FileType:
+    type: file
+    maxLength: 307200
+    fileTypes:
+      - image/jpeg
+      - image/png
+  BinaryType:
+    type: string
+    (format): binary
+  DateTimeType:
+    type: datetime
+  DateOnlyType:
+    type: date-only
+  BooleanType:
+    type: boolean
+  ObjectType:
+    type: object
+  ByteType:
+    type: string
+    (format): byte
+  NumberType:
+    type: number
+    format: float
+  NilType:
+    type: nil
+  PasswordType:
+    type: string
+    (format): password

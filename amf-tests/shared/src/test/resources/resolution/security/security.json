@@ -1,0 +1,97 @@
+{
+  "swagger": "2.0",
+  "security": [
+    {
+      "oauth_2_0": []
+    }
+  ],
+  "x-securitySchemes": {
+    "oauth_1_0": {
+      "description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.",
+      "type": "OAuth 1.0",
+      "x-settings": {
+        "requestTokenUri": "https://api.mysampleapi.com/1/oauth/request_token",
+        "authorizationUri": "https://api.mysampleapi.com/1/oauth/authorize",
+        "tokenCredentialsUri": "https://api.mysampleapi.com/1/oauth/access_token"
+      },
+      "x-describedBy": {
+        "headers": {
+          "Authorization": {
+            "description": "Used to send a valid OAuth 2 access token.",
+            "type": "string"
+          }
+        },
+        "queryParameters": {
+          "access_token": {
+            "description": "Used to send a valid OAuth 2 access token."
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Authorization error."
+          }
+        }
+      }
+    },
+    "oauth_2_0": {
+      "type": "oauth2",
+      "x-describedBy": {
+        "headers": {
+          "Authorization": {
+            "description": "Used to send a valid OAuth 2 access token.",
+            "type": "string"
+          }
+        },
+        "queryParameters": {
+          "access_token": {
+            "description": "Used to send a valid OAuth 2 access token."
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Authorization error."
+          }
+        }
+      },
+      "authorizationUrl": "https://example.com/oauth/authorize",
+      "tokenUrl": "https://example.com/oauth/token",
+      "scopes": {
+        "profile": "",
+        "history": ""
+      },
+      "x-settings": {
+        "authorizationGrants": [
+          "authorization_code",
+          "implicit",
+          "urn:ietf:params:oauth:grant-type:saml2-bearer"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "security": [
+          {
+            "oauth_2_0": []
+          },
+          {
+            "oauth_1_0": []
+          }
+        ]
+      }
+    },
+    "/users/{userid}/gists": {
+      "get": {
+        "security": [
+          {
+            "oauth_2_0": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

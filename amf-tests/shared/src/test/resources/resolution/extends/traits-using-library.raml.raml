@@ -1,0 +1,787 @@
+#%RAML 1.0
+title: ACME Banking HTTP API
+version: 1.0
+baseUri: acme-banking.com/apis
+/customers:
+  displayName: Customer Resource
+  /corporate:
+    post:
+      description: Customer data created correctly for an Organization
+      body:
+        type: object
+        additionalProperties: true
+        properties:
+          street_address:
+            required: true
+            type: string
+          address_region:
+            required: true
+            type: string
+          name:
+            required: true
+            type: string
+          tax_id:
+            required: true
+            type: string
+          telephone:
+            required: true
+            type: string
+          email:
+            required: true
+            type: string
+          lei:
+            required: true
+            type: string
+          address_locality:
+            required: true
+            type: string
+          vat_id:
+            required: true
+            type: string
+          address_country:
+            required: true
+            type: string
+          postal_code:
+            required: true
+            type: string
+  /commercial:
+    post:
+      description: Customer data created correctly for a Person
+      body:
+        type: object
+        additionalProperties: true
+        properties:
+          birth_date:
+            required: true
+            type: date-only
+          street_address:
+            required: true
+            type: string
+          gender:
+            type: string
+            enum:
+              - female
+              - male
+            required: true
+          address_region:
+            required: true
+            type: string
+          tax_id:
+            required: true
+            type: string
+          family_name:
+            required: true
+            type: string
+          telephone:
+            required: true
+            type: string
+          email:
+            required: true
+            type: string
+          lei:
+            required: true
+            type: string
+          given_name:
+            required: true
+            type: string
+          address_locality:
+            required: true
+            type: string
+          address_country:
+            required: true
+            type: string
+          vat_id:
+            required: false
+            type: string
+          title:
+            type: string
+            enum:
+              - mr
+              - mrs
+              - ms
+              - dr
+            required: false
+          postal_code:
+            required: true
+            type: string
+  /{customer_id}:
+    get:
+      description: Returns Customer data
+      responses:
+        200:
+          body:
+            application/json:
+              type: union
+              anyOf:
+                -
+                  discriminator: type
+                  discriminatorValue: Organization
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    name:
+                      required: true
+                      type: string
+                    tax_id:
+                      required: true
+                      type: string
+                    address:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        address_country:
+                          required: true
+                          type: string
+                        address_locality:
+                          required: true
+                          type: string
+                        address_region:
+                          required: true
+                          type: string
+                        postal_code:
+                          required: true
+                          type: string
+                        street_address:
+                          required: true
+                          type: string
+                    id:
+                      required: true
+                      type: string
+                    lei:
+                      required: true
+                      type: string
+                    email:
+                      required: true
+                      type: string
+                    vat_id:
+                      required: true
+                      type: string
+                    type:
+                      required: true
+                      type: string
+                -
+                  discriminator: type
+                  discriminatorValue: Person
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    birth_date:
+                      required: true
+                      type: date-only
+                    gender:
+                      type: string
+                      enum:
+                        - female
+                        - male
+                      required: true
+                    id:
+                      required: true
+                      type: string
+                    tax_id:
+                      required: true
+                      type: string
+                    address:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        address_country:
+                          required: true
+                          type: string
+                        address_locality:
+                          required: true
+                          type: string
+                        address_region:
+                          required: true
+                          type: string
+                        postal_code:
+                          required: true
+                          type: string
+                        street_address:
+                          required: true
+                          type: string
+                    family_name:
+                      required: true
+                      type: string
+                    lei:
+                      required: true
+                      type: string
+                    email:
+                      required: true
+                      type: string
+                    given_name:
+                      required: true
+                      type: string
+                    death_date:
+                      required: false
+                      type: date-only
+                    vat_id:
+                      required: false
+                      type: string
+                    title:
+                      type: string
+                      enum:
+                        - mr
+                        - mrs
+                        - ms
+                        - dr
+                      required: false
+                    type:
+                      required: true
+                      type: string
+    patch:
+      description: Updates Customer data
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              additionalProperties: true
+              properties:
+                email:
+                  required: false
+                  type: string
+                name:
+                  required: false
+                  type: string
+                tax_id:
+                  required: false
+                  type: string
+                birth_date:
+                  required: false
+                  type: date-only
+                death_date:
+                  required: false
+                  type: date-only
+                family_name:
+                  required: false
+                  type: string
+                vat_id:
+                  required: false
+                  type: string
+                address_region:
+                  required: false
+                  type: string
+                postal_code:
+                  required: false
+                  type: string
+                title:
+                  type: string
+                  enum:
+                    - mr
+                    - mrs
+                    - ms
+                    - dr
+                  required: false
+                address_country:
+                  required: false
+                  type: string
+                address_locality:
+                  required: false
+                  type: string
+                street_address:
+                  required: false
+                  type: string
+                lei:
+                  required: false
+                  type: string
+                gender:
+                  type: string
+                  enum:
+                    - female
+                    - male
+                  required: false
+    delete:
+      description: Removes a Customer from the system
+    /accounts:
+      get:
+        queryParameters:
+          limit?:
+            description: The `limit` parameter restricts the number of entries returned.
+            default: 50
+            type: integer
+            minimum: 1
+          page?:
+            description: The `page` parameter specifies the page of results to return.
+            default: 1
+            type: integer
+            minimum: 1
+          offset?:
+            description: The `offset` parameter specifies the first entry to return from a collection.
+            default: 10
+            type: integer
+            minimum: 0
+          sort?:
+            example: name,-age
+            type: string
+        description: Returns a collection accounts
+        responses:
+          200:
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    id:
+                      required: true
+                      type: string
+                    account_number:
+                      required: true
+                      type: string
+                    accountType:
+                      type: string
+                      enum:
+                        - standard
+                        - saver
+                      required: true
+                    amount:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    lei:
+                      required: true
+                      type: string
+                    fees_and_comissions:
+                      required: true
+                      type: string
+                    review_state:
+                      type: string
+                      enum:
+                        - requested
+                        - cancelled
+                        - opened
+                        - closed
+                      required: true
+                    interest_rate:
+                      required: true
+                      type: number
+                    annual_interest_rate:
+                      required: true
+                      type: number
+                    minimum_inflow:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    overdraft_limit:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+      post:
+        description: Requests the creation of a new BankAccount
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              accountType:
+                type: string
+                enum:
+                  - standard
+                  - saver
+                required: true
+      /{account_id}:
+        get:
+          description: Returns BankAccount data
+          responses:
+            200:
+              body:
+                application/json:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    review_state:
+                      type: string
+                      enum:
+                        - requested
+                        - cancelled
+                        - opened
+                        - closed
+                      required: true
+                    minimum_inflow:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    id:
+                      required: true
+                      type: string
+                    account_number:
+                      required: true
+                      type: string
+                    overdraft_limit:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    lei:
+                      required: true
+                      type: string
+                    annual_interest_rate:
+                      required: true
+                      type: number
+                    interest_rate:
+                      required: true
+                      type: number
+                    amount:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    accountType:
+                      type: string
+                      enum:
+                        - standard
+                        - saver
+                      required: true
+                    fees_and_comissions:
+                      required: true
+                      type: string
+        delete:
+          description: Removes a BankAccount from the system
+        uriParameters:
+          account_id:
+            type: string
+    /loans:
+      get:
+        queryParameters:
+          limit?:
+            description: The `limit` parameter restricts the number of entries returned.
+            default: 50
+            type: integer
+            minimum: 1
+          page?:
+            description: The `page` parameter specifies the page of results to return.
+            default: 1
+            type: integer
+            minimum: 1
+          offset?:
+            description: The `offset` parameter specifies the first entry to return from a collection.
+            default: 10
+            type: integer
+            minimum: 0
+          sort?:
+            example: name,-age
+            type: string
+        description: Returns a collection accounts
+        responses:
+          200:
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    id:
+                      required: true
+                      type: string
+                    account_number:
+                      required: true
+                      type: string
+                    accountType:
+                      type: string
+                      enum:
+                        - standard
+                        - saver
+                      required: true
+                    amount:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    lei:
+                      required: true
+                      type: string
+                    fees_and_comissions:
+                      required: true
+                      type: string
+                    review_state:
+                      type: string
+                      enum:
+                        - requested
+                        - cancelled
+                        - underwriting
+                        - accepted
+                        - opened
+                        - failed
+                        - closed
+                      required: true
+                    interest_rate:
+                      required: true
+                      type: number
+                    annual_interest_rate:
+                      required: true
+                      type: number
+                    minimum_inflow:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    overdraft_limit:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: number
+                        currency:
+                          required: true
+                          type: string
+                    grace_period:
+                      required: true
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        value:
+                          required: true
+                          type: string
+      post:
+        description: Requests the creation of a new Loan
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              review_state:
+                type: string
+                enum:
+                  - requested
+                  - underwriting
+                  - rejected
+                  - accepted
+                  - repaying
+                  - failed
+                  - closed
+                required: true
+              down_payment:
+                required: true
+                type: object
+                additionalProperties: true
+                properties:
+                  value:
+                    required: true
+                    type: number
+                  currency:
+                    required: true
+                    type: string
+              payment_amount:
+                required: true
+                type: object
+                additionalProperties: true
+                properties:
+                  value:
+                    required: true
+                    type: number
+                  currency:
+                    required: true
+                    type: string
+              term:
+                required: true
+                type: object
+                additionalProperties: true
+                properties:
+                  value:
+                    required: true
+                    type: string
+              category:
+                required: true
+                type: string
+              interest_rate:
+                required: true
+                type: number
+              amount:
+                required: true
+                type: object
+                additionalProperties: true
+                properties:
+                  value:
+                    required: true
+                    type: number
+                  currency:
+                    required: true
+                    type: string
+              payment_frequency:
+                required: true
+                type: number
+    uriParameters:
+      customer_id:
+        type: string
+types:
+  CustomerMemberResponse:
+    type: union
+    anyOf:
+      -
+        discriminator: type
+        discriminatorValue: Organization
+        type: object
+        additionalProperties: true
+        properties:
+          name:
+            required: true
+            type: string
+          id:
+            required: true
+            type: string
+          address:
+            required: true
+            type: object
+            additionalProperties: true
+            properties:
+              address_country:
+                required: true
+                type: string
+              address_locality:
+                required: true
+                type: string
+              address_region:
+                required: true
+                type: string
+              postal_code:
+                required: true
+                type: string
+              street_address:
+                required: true
+                type: string
+          tax_id:
+            required: true
+            type: string
+          email:
+            required: true
+            type: string
+          lei:
+            required: true
+            type: string
+          vat_id:
+            required: true
+            type: string
+          type:
+            required: true
+            type: string
+      -
+        discriminator: type
+        discriminatorValue: Person
+        type: object
+        additionalProperties: true
+        properties:
+          birth_date:
+            required: true
+            type: date-only
+          gender:
+            type: string
+            enum:
+              - female
+              - male
+            required: true
+          id:
+            required: true
+            type: string
+          tax_id:
+            required: true
+            type: string
+          address:
+            required: true
+            type: object
+            additionalProperties: true
+            properties:
+              address_country:
+                required: true
+                type: string
+              address_locality:
+                required: true
+                type: string
+              address_region:
+                required: true
+                type: string
+              postal_code:
+                required: true
+                type: string
+              street_address:
+                required: true
+                type: string
+          family_name:
+            required: true
+            type: string
+          lei:
+            required: true
+            type: string
+          email:
+            required: true
+            type: string
+          given_name:
+            required: true
+            type: string
+          death_date:
+            required: false
+            type: date-only
+          vat_id:
+            required: false
+            type: string
+          title:
+            type: string
+            enum:
+              - mr
+              - mrs
+              - ms
+              - dr
+            required: false
+          type:
+            required: true
+            type: string
+uses:
+  traits: ./traits/traits.raml
+  shapes: ./types/shapes.raml

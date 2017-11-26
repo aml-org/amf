@@ -1,0 +1,64 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    properties:
+      name:
+        type: string
+      lastname:
+        type: string
+    example:
+      name: Bob
+      lastname: Marley
+  Org:
+    properties:
+      name:
+        type: string
+      address?:
+        type: string
+      value?:
+        type: string
+/organization:
+  post:
+    headers:
+      UserID:
+        description: the identifier for the user who posts a new organization
+        type: string
+        example: SWED-123
+    body:
+      application/json:
+        type:
+          - Org
+        example:
+          value:
+            name: Doe Enterprise
+            value: Silver
+  get:
+    description: Returns an organization entity.
+    responses:
+      201:
+        (examples):
+          application/json:
+            name: Puma
+            type: Dog
+            color: Black
+            gender: Female
+            breed: Mixed
+          application/xml:
+            name: Puma
+            type: Dog
+            color: Black
+            gender: Female
+            breed: Mixed
+        body:
+          application/json:
+            type:
+              - Org
+            examples:
+              acme:
+                name: Acme
+              softwareCorp:
+                value:
+                  name: Software Corp
+                  address: 35 Central Street
+                  value: Gold

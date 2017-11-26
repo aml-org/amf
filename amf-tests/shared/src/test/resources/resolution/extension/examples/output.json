@@ -1,0 +1,44 @@
+{
+    "title": {
+        "value": "master"
+    },
+    "baseUri": {
+        "value": "http://api.com/master"
+    },
+    "types": {
+        "User": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "displayName": {
+                        "value": "name"
+                    }
+                },
+                "age?": {
+                    "type": "integer",
+                    "displayName": {
+                        "value": "age?"
+                    }
+                }
+            },
+            "examples": {
+                "tato": {
+                    "name": "tato",
+                    "age": 88
+                },
+                "pepo": {
+                    "name": "pipo",
+                    "age": 77
+                },
+                "cacho": {
+                    "name": "cacho",
+                    "age": 55
+                }
+            },
+            "type": "object",
+            "displayName": {
+                "value": "User"
+            }
+        }
+    }
+}

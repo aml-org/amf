@@ -1,0 +1,64 @@
+#%Validation Profile 1.0
+
+profile: Barclays UK
+
+description: Custom profile that can be used as the base set of validations for all Barclays UK API specs
+
+# use RAML as the basic set of validations
+extends: RAML
+
+violation:
+  # We want a raise a violation if the API has no endpoints, like in OpenAPI
+  - amf-parser.empty-endpoints
+  - get-operations-with-response-js
+  - camel-case-types
+
+info:
+  # info if there's an operation without responses
+  - amf-parser.empty-responses
+
+warning:
+  # We just want a warning if a URL object value is not a valid URL
+  - amf-parser.strict-url-strings
+  - all-names-must-be-camel-case
+
+disabled:
+  # We don't want to restrict the schemes to http, HTTP, https, HTTPS
+  - amf-parser.raml-schemes
+
+
+validations:
+
+  case-insensitive-schema:
+    message: This is not a valid scheme
+    targetClass: http.WebAPI
+    propertyConstraints:
+      http.host:
+        pattern: "^(h|H)(t|T){2}(p|P)(s|S)?$"
+
+  camel-case-types:
+    message: Type declarations must be camel cased
+    # only check shapes (raml types and json schema)
+    targetClass: raml-shapes.Shape
+    propertyConstraints:
+      schema-org.name:
+        pattern: ([a-z]+[A-Z]+\\w+)+
+
+  all-names-must-be-camel-case:
+    message: All declarations
+    # This will select every entity in the domain model
+    targetClass: raml-doc.DomainEntity
+    propertyConstraints:
+      schema-org.name:
+        pattern: ([a-z]+[A-Z]+\\w+)+
+
+  get-operations-with-responses-sparql:
+    message: GET operations must have a response
+    targetQuery: ?request a hydra:Operation ;
+
+
+  get-operations-with-response-js:
+    message: GET operations must have a response
+    targetClass: http.Operation
+    functionConstraint:
+      code: function(operations) {}

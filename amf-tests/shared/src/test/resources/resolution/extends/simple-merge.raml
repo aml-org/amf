@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: API
+resourceTypes:
+  collection:
+    get:
+      description: a list
+      headers:
+        APIKey:
+/products:
+  type: collection
+  get:
+    description: override the description
+    responses:
+      200:
+        body:
+          application/json:

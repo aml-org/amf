@@ -1,0 +1,164 @@
+#%RAML 1.0 Dialect
+
+dialect: EventedAPIDialect
+version: 0.1
+
+usage: Dialect to describe the Evented API node grammar
+
+uses:
+  events: Vocabularies/Event.raml
+  transports: Vocabularies/EventTransport.raml
+
+
+external:
+  schema-org: "http://schema.org/"
+  shacl: "http://www.w3.org/ns/shacl#"
+
+raml:
+  document:
+    encodes: EventedApiNode
+#    declares:
+#      channels: ChannelNode
+#      subjects: SubjectNode
+#      producers: ProducerNode
+#      consumers: ConsumerNode
+  module:
+    declares:
+      transports: TransportNode
+      events: EventNode
+
+nodeMappings:
+
+  EventedApiNode:
+    classTerm: events.EventedAPI
+    mapping:
+      apiPersona:
+        propertyTerm: events.apiPersona
+        range: string
+      eventProducer:
+        propertyTerm: events.eventProducer
+        range: ProducerNode
+      eventConsumer:
+        propertyTerm: events.eventConsumer
+        range: ConsumerNode
+
+  ChannelNode:
+    classTerm: events.EventChannel
+    mapping:
+      channelID:
+        propertyTerm: events.channelID
+        range: string
+      subjects:
+        propertyTerm: events.eventSubject
+        range: SubjectNode
+        allowMultiple: true
+
+  SubjectNode:
+    classTerm: events.EventSubject
+    mapping:
+      eventPattern:
+        propertyTerm: events.subjectPattern
+        range: string
+        enum:
+          - pub-sub
+          - fanout
+          - stream
+
+  ConsumerNode:
+    classTerm: events.EventConsumer
+    mapping:
+      applicationID:
+        propertyTerm: events.applicationID
+        range: string
+      consumerID:
+        propertyTerm: events.consumerID
+        range: string
+      userID:
+        propertyTerm: events.userID
+        range: string
+      consumerChannel:
+        propertyTerm: events.channel
+        range: ChannelNode
+      consumerSubject:
+        propertyTerm: events.eventSubject
+        range: SubjectNode
+
+  ProducerNode:
+    classTerm: events.EventProducer
+    mapping:
+      applicationID:
+        propertyTerm: events.applicationID
+        range: string
+      userID:
+        propertyTerm: events.userID
+        range: string
+      producerID:
+        propertyTerm: events.producerID
+        range: string
+      producerChannel:
+        propertyTerm: events.channel
+        range: ChannelNode
+      producerSubject:
+        propertyTerm: events.eventSubject
+        range: SubjectNode
+
+
+  ConnectionNode:
+    classTerm: transports.EventTransportConnection
+    mapping:
+      connectionID:
+        propertyTerm: transports.connectionID
+        range:  string
+      host:
+        propertyTerm: transports.host
+        range:  string
+      port:
+        propertyTerm: transports.port
+        range: integer
+      userID:
+        propertyTerm: transports.username
+        range: string
+      userPassword:
+        propertyTerm: transports.password
+        range:  string
+
+  TransportNode:
+    classTerm: transports.EventTransport
+    mapping:
+      transportID:
+        propertyTerm: transports.transportID
+        range: string
+        mandatory: true
+      transportType:
+        propertyTerm: transports.transportType
+        range: string
+        enum: jms,ems,rv,mqtt,amqp,kafka,solace,nats
+        mandatory: true
+      transportVendor:
+        propertyTerm: transports.transportVendor
+        range: string
+        mandatory: true
+        enum: ActiveMQ,Hornet,TIBCO,Sonic,Fiorano,JBoss,WebLogic,Mosquitto
+      transportConnection:
+        propertyTerm: transports.transportConection
+        range: ConnectionNode
+         #mandatory: true
+
+  EventNode:
+    classTerm: events.BaseEvent
+    mapping:
+      eventID:
+        propertyTerm: events.eventID
+        range: string
+      eventDomain:
+        propertyTerm: events.eventDomain
+        range: string
+      eventCategory:
+        propertyTerm: events.eventCategory
+        range: string
+      eventType:
+        propertyTerm: events.eventCategory
+        range: string
+      eventPayloadType:
+        propertyTerm: events.eventPayloadType
+        range: string

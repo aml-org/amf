@@ -1,0 +1,10 @@
+#%RAML 1.0 Dialect
+uses:
+  mule-runtime: ./mule_runtime.raml
+dialect: Mule Agent Configuration
+version: 0.1
+external:
+  schema-org: http://schema.org/
+nodeMappings:
+  muleAgentConfiguration:
+    classTerm: mule-runtime.Agent

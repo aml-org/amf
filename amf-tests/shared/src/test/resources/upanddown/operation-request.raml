@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: API
+baseUriParameters:
+  one:
+    required: true
+    description: One base uri param
+/levelzero/some{two}:
+  uriParameters:
+    two:
+      required: false
+  /level-one:
+    displayName: One display name
+    description: and this description!
+    get:
+      displayName: Some title
+      queryParameters:
+        param1:
+          description: Some descr
+          type: object
+          properties:
+            name: string
+        param2?:
+          type: string
+    post:
+      displayName: Some title
+      description: Some description
+      headers:
+        Header-One:
+          required: false
+        Header-Two:
+          required: true

@@ -239,7 +239,7 @@ lazy val amfValidation = project
   .aggregate(amfValidationJS, amfValidationJVM)
   .enablePlugins(ScalaJSPlugin)
 
-lazy val amValidationCrossProject = crossProject
+lazy val amfValidationCrossProject = crossProject
   .settings(Seq(
     name := "amf-validation",
     version := "1.0.0-SNAPSHOT"
@@ -275,9 +275,40 @@ lazy val amValidationCrossProject = crossProject
     }
   )
 
-lazy val amfValidationJVM = amValidationCrossProject.jvm.in(file("./amf-validation/jvm"))
-lazy val amfValidationJS = amValidationCrossProject.js.in(file("./amf-validation/js"))
+lazy val amfValidationJVM = amfValidationCrossProject.jvm.in(file("./amf-validation/jvm"))
+lazy val amfValidationJS = amfValidationCrossProject.js.in(file("./amf-validation/js"))
 
+/************************************************
+  * AMF Integration Tests
+  ***********************************************/
+
+lazy val amfTests = project
+  .in(file("./amf-tests"))
+  .aggregate(amfTestsJS, amfTestsJVM)
+  .enablePlugins(ScalaJSPlugin)
+
+lazy val amfTestsCrossProject = crossProject
+  .settings(Seq(
+    name := "amf-tests",
+    version := "1.0.0-SNAPSHOT"
+  ))
+  .dependsOn(amfCoreCrossProject, amfWebApiCrossProject, amfVocabulariesCrossProject, amfValidationCrossProject)
+  .in(file("./amf-tests"))
+  .settings(settings: _*)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
+    libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
+    libraryDependencies += "org.topbraid" % "shacl" % "1.0.1"
+  )
+  .jsSettings(
+    jsDependencies += ProvidedJS / "shacl.js",
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSModuleKind := ModuleKind.CommonJSModule
+  )
+
+lazy val amfTestsJVM = amfTestsCrossProject.jvm.in(file("./amf-tests/jvm"))
+lazy val amfTestsJS = amfTestsCrossProject.js.in(file("./amf-tests/js"))
 
 // Taks
 

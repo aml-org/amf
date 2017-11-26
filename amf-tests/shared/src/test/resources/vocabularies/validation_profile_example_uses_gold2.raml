@@ -1,0 +1,19 @@
+#%Validation Profile 1.0
+uses: 
+  v: validation_profile_library.raml
+profile: Barclays UK
+description: Custom profile that can be used as the base set of validations for all Barclays UK API specs
+extends: RAML
+violation: 
+  - amf-parser.empty-endpoints
+  - get-operations-with-response-js
+  - camel-case-types
+info: amf-parser.empty-responses
+warning: 
+  - amf-parser.strict-url-strings
+  - all-names-must-be-camel-case
+disabled: amf-parser.raml-schemes
+validations: 
+  case-insensitive-schema: v.case-insensitive-schema
+  camel-case-types: v.camel-case-types
+  all-names-must-be-camel-case: v.all-names-must-be-camel-case
