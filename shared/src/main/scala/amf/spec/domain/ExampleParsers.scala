@@ -59,8 +59,9 @@ case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: Parse
           node.tagType match {
             case YType.Map =>
               examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_).parse())
-            case YType.Seq =>
-            case _         => RamlExampleValueAsString(node, Example(node.as[YScalar]), strict = true).populate()
+            case YType.Seq => //example sequence must have a name ??
+              RamlExampleValueAsString(node, Example(node), strict = true).populate()
+            case _ => RamlExampleValueAsString(node, Example(node.as[YScalar]), strict = true).populate()
           }
       }
     }
@@ -81,13 +82,11 @@ case class RamlSingleExampleParser(key: String, map: YMap)(implicit ctx: ParserC
     map.key(key).flatMap { entry =>
       entry.value.tagType match {
         case YType.Map => Option(RamlSingleExampleValueParser(entry.value.as[YMap]).parse().add(SingleValueArray()))
-        case YType.Seq =>
-          ctx.violation("", "Not supported part type for example", entry.value)
-          None
         case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
-          val scalar = entry.value.as[YScalar]
           Option(
-            RamlExampleValueAsString(entry.value, Example(scalar), strict = true).populate().add(SingleValueArray()))
+            RamlExampleValueAsString(entry.value, Example(entry.value), strict = true)
+              .populate()
+              .add(SingleValueArray()))
       }
     }
   }
@@ -142,12 +141,10 @@ case class RamlExampleValueAsString(node: YNode, example: Example, strict: Boole
       example.set(ExampleModel.Strict, AmfScalar(strict), Annotations() += SynthesizedField())
     }
     node.tagType match {
-      case YType.Map =>
+      case YType.Map | YType.Seq =>
         example.set(ExampleModel.Value,
                     AmfScalar(YamlRender.render(node.value), Annotations(node.value)),
                     Annotations(node.value))
-      case YType.Seq =>
-        ctx.violation("", "Not supported part type for example", node)
       case _ =>
         val scalar = node.as[YScalar]
         example.set(ExampleModel.Value, AmfScalar(scalar.text, Annotations(node.value)), Annotations(node.value))

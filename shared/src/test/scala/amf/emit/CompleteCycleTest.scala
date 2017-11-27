@@ -613,11 +613,15 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("security-with-query-string.json.jsonld", "security-with-query-string.json", AmfJsonHint, Oas)
   }
 
-  test("Example raml") {
+  test("Example raml to raml") {
     cycle("examples.raml", RamlYamlHint)
   }
 
-  test("Example json") {
+  test("Array Example raml to raml") {
+    cycle("array-example.raml", "array-example.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Example oas to oas") {
     cycle("examples.json", OasJsonHint)
   }
 
@@ -637,11 +641,11 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("examples.json.jsonld", "examples.jsonld.json", AmfJsonHint, Oas)
   }
 
-  test("Fragment Named Example raml") {
+  test("Fragment Named Example raml to raml") {
     cycle("named-example.raml", "named-example.raml", RamlYamlHint, Raml, referencesPath)
   }
 
-  test("Fragment Named Example oas") {
+  test("Fragment Named Example oas to oas") {
     cycle("named-example.json", "named-example.json", OasJsonHint, Oas, referencesPath)
   }
 
