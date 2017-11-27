@@ -8,7 +8,7 @@ import amf.model.{AmfArray, AmfScalar}
 import amf.parser.{YMapOps, YScalarYRead}
 import amf.spec.ParserContext
 import amf.spec.common.{AnnotationParser, ValueNode}
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 import scala.collection.mutable
 
@@ -22,13 +22,18 @@ case class RamlEndpointParser(entry: YMapEntry,
                               parseOptionalOperations: Boolean = false)(implicit ctx: ParserContext) {
   def parse(): Unit = {
 
-    val path = parent.map(_.path).getOrElse("") + entry.key.as[YScalar].text
+    val path = parent.map(_.path).getOrElse("") + entry.key.as[String]
 
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
+    if (collector.exists(e => e.path == path)) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
+    else parseEndpoint(endpoint)
+  }
+
+  private def parseEndpoint(endpoint: EndPoint) =
     entry.value.to[YMap] match {
       case Left(_) => collector += endpoint
       case Right(map) =>
@@ -57,34 +62,39 @@ case class RamlEndpointParser(entry: YMapEntry,
           }
         )
 
-    map.key(
-      "type",
-      entry =>
-        ParametrizedDeclarationParser(entry.value, endpoint.withResourceType, ctx.declarations.findResourceTypeOrError(entry.value))
-          .parse()
-    )
+        map.key(
+          "type",
+          entry =>
+            ParametrizedDeclarationParser(entry.value,
+                                          endpoint.withResourceType,
+                                          ctx.declarations.findResourceTypeOrError(entry.value))
+              .parse()
+        )
 
-    map.key(
-      "is",
-      entry => {
-        entry.value.as[Seq[YNode]].map(value =>
-          ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value)).parse())
-      }
-    )
+        map.key(
+          "is",
+          entry => {
+            entry.value
+              .as[Seq[YNode]]
+              .map(value =>
+                ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value))
+                  .parse())
+          }
+        )
 
         val optionalMethod = if (parseOptionalOperations) "\\??" else ""
 
-    map.regex(
-      s"(get|patch|put|post|delete|options|head)$optionalMethod",
-      entries => {
-        val operations = mutable.ListBuffer[Operation]()
-        entries.foreach(entry => {
-          operations += RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)
-            .parse()
-        })
-        endpoint.set(EndPointModel.Operations, AmfArray(operations))
-      }
-    )
+        map.regex(
+          s"(get|patch|put|post|delete|options|head)$optionalMethod",
+          entries => {
+            val operations = mutable.ListBuffer[Operation]()
+            entries.foreach(entry => {
+              operations += RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)
+                .parse()
+            })
+            endpoint.set(EndPointModel.Operations, AmfArray(operations))
+          }
+        )
 
         map.key(
           "securedBy",
@@ -102,12 +112,11 @@ case class RamlEndpointParser(entry: YMapEntry,
 
         AnnotationParser(() => endpoint, map).parse()
 
-    map.regex(
-      "^/.*",
-      entries => {
-        entries.foreach(
-          RamlEndpointParser(_, producer, Some(endpoint), collector).parse())
-      }
-    )}
-  }
+        map.regex(
+          "^/.*",
+          entries => {
+            entries.foreach(RamlEndpointParser(_, producer, Some(endpoint), collector).parse())
+          }
+        )
+    }
 }
