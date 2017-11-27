@@ -696,4 +696,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Parsing example of multiple inheritance amf to raml") {
     cycle("multiple-inheritance-2.jsonld", "multiple-inheritance-2.raml.raml", AmfJsonHint, Raml)
   }
+
+  test("Type closed true raml to amf") {
+    cycle("type-closed-true.raml", "type-closed-true.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Type closed true amf to raml") {
+    cycle("type-closed-true.raml.jsonld", "type-closed-true.raml", AmfJsonHint, Raml)
+  }
 }
