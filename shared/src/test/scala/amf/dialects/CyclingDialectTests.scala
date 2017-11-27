@@ -30,10 +30,6 @@ class CyclingDialectTests extends BuildCycleTests {
     cycle("validation_dialect_using_fragments4.raml", "validation_dialect_using_fragments4.raml", RamlYamlHint, Raml)
   }
 
-  /** Return random temporary file name for testing. */
-  override def tmp(name: String = ""): String = basePath +  name +".tmp"
-
-
   test("Parse Dialect with library and serialize back") {
     cycle("validation_dialect_uses(dialect_lib).raml",
           "validation_dialect_uses(dialect_lib).raml.gold",
@@ -42,7 +38,10 @@ class CyclingDialectTests extends BuildCycleTests {
   }
 
   test("Parse Dialect with library and serialize back (references)") {
-    cycle("validation_dialect_uses(dialect_lib2).raml", "validation_dialect_uses(dialect_lib2).raml", RamlYamlHint, Raml)
+    cycle("validation_dialect_uses(dialect_lib2).raml",
+          "validation_dialect_uses(dialect_lib2).raml",
+          RamlYamlHint,
+          Raml)
   }
 
 //  test("Parse Dialect with library and serialize back (references,cycles in libraries)") {
