@@ -165,14 +165,15 @@ case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecO
           Seq(OasSchemaEmitter(f, ordering, Nil))
         case Raml =>
           // we merge in the main body
-          f.value.value match {
-            case shape: AnyShape =>
+          Option(f.value.value) match {
+            case Some(shape: AnyShape) =>
               RamlTypeEmitter(shape, ordering, Nil, Nil).emitters() match {
                 case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
                 case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
                 case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
               }
-            case _ => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
+            case Some(x) => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
+            case _       => Nil // ignore
           }
         case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
       }

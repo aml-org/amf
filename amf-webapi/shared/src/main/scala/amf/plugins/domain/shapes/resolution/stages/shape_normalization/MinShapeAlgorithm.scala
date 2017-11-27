@@ -71,8 +71,9 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       // Nil
       case baseNil: NilShape if superShape.isInstanceOf[NilShape] => baseNil
 
-      // Any
-      case _ if baseShape.isInstanceOf[AnyShape] || superShape.isInstanceOf[AnyShape] =>
+      // Any => is explicitly Any, we are comparising the meta-model because now
+        //      all shapes inherit from Any, cannot check with instanceOf
+      case _ if baseShape.meta == AnyShapeModel || superShape.meta == AnyShapeModel =>
         baseShape match {
           case shape: AnyShape =>
             restrictShape(shape, superShape)

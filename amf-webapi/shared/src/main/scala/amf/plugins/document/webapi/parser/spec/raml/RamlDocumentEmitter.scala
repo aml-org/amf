@@ -299,10 +299,10 @@ case class RamlDocumentEmitter(document: BaseUnit) extends RamlSpecEmitter {
                 fields
                   .entry(RequestModel.QueryString)
                   .map { f =>
-                    f.value.value match {
-                      case shape: AnyShape =>
-                        result += RamlNamedTypeEmitter(shape, ordering, references)
-                      case _ => throw new Exception("Cannot emit nont WebApi Shape")
+                    Option(f.value.value) match {
+                      case Some(shape: AnyShape) => result += RamlNamedTypeEmitter(shape, ordering, references)
+                      case Some(_)               => throw new Exception("Cannot emit non WebApi Shape")
+                      case _                     => // ignore
                     }
 
                   }

@@ -18,8 +18,18 @@ trait AMFDomainEntityResolver {
 
 object AMFDomainRegistry {
 
-  def findType(typeString: String): Option[Obj] = metadataResolverRegistry.toStream.map(_.findType(typeString)).filter(_.isDefined).head
-  def buildType(modelType: Obj): Option[(Annotations) => AmfObject] = metadataResolverRegistry.toStream.map(_.buildType(modelType)).filter(_.isDefined).head
+  def findType(typeString: String): Option[Obj] = metadataResolverRegistry
+    .toStream
+    .map(_.findType(typeString))
+    .filter(_.isDefined)
+    .map(_.get)
+    .headOption
+  def buildType(modelType: Obj): Option[(Annotations) => AmfObject] = metadataResolverRegistry
+    .toStream
+    .map(_.buildType(modelType))
+    .filter(_.isDefined)
+    .map(_.get)
+    .headOption
 
   val annotationsRegistry: mutable.HashMap[String,AnnotationGraphLoader] = mutable.HashMap(
     "lexical"            -> LexicalInformation,

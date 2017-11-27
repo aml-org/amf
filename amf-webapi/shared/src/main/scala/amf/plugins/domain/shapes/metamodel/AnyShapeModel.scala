@@ -15,8 +15,7 @@ trait AnyShapeModel extends ShapeModel {
 
   val Examples = Field(Array(ExampleModel), Document + "examples")
 
-  override def fields: List[Field] = ShapeModel.fields ++ List(Name,
-                                                               Documentation,
+  override def fields: List[Field] = ShapeModel.fields ++ List(Documentation,
                                                                XMLSerialization,
                                                                Examples)
 

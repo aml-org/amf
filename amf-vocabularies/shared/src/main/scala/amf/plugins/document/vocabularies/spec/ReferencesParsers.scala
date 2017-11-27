@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies.spec
 import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
+import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import org.yaml.model.YMap
 
 import scala.collection.mutable
@@ -26,8 +27,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
       case d: DeclaresModel =>
         d.declares
           .filter({
-            // TODO: removed in modularization, should I reintroduce it later? @modularization
-            /* case _: DomainEntity => false */
+            case _: DomainEntity => false
             case _               => true
           })
           .foreach(library += _)

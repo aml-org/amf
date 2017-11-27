@@ -18,8 +18,8 @@ case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering, referenc
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val fs = payload.fields
-    payload.schema match {
-      case shape: AnyShape =>
+    Option(payload.schema) match {
+      case Some(shape: AnyShape) =>
         fs.entry(PayloadModel.MediaType)
           .foreach(mediaType => {
             b.complexEntry(
@@ -30,7 +30,18 @@ case class RamlPayloadEmitter(payload: Payload, ordering: SpecOrdering, referenc
                 references = references).emit(_)
             )
           })
-      case _ => throw new Exception("Cannot emit a non WebAPI Shape")
+      case Some(_) => throw new Exception("Cannot emit a non WebAPI Shape")
+      case None    =>
+        fs.entry(PayloadModel.MediaType)
+          .foreach(mediaType => {
+            b.complexEntry(
+              ScalarEmitter(mediaType.scalar).emit(_),
+              RamlTypePartEmitter(null,
+                ordering,
+                Some(AnnotationsEmitter(payload, ordering)),
+                references = references).emit(_)
+            )
+          })
     }
   }
 
@@ -67,10 +78,10 @@ case class RamlPayloads(payload: Payload, ordering: SpecOrdering, references: Se
     if (payload.fields.entry(PayloadModel.MediaType).isDefined) {
       Seq(RamlPayloadEmitter(payload, ordering, references = references))
     } else {
-      payload.schema match {
-        case shape: AnyShape =>
-          RamlTypeEmitter(shape, ordering, references = references).emitters()
-        case _ => throw new Exception("Cannot emit a non WebAPI shape")
+      Option(payload.schema) match {
+        case Some(shape: AnyShape) => RamlTypeEmitter(shape, ordering, references = references).emitters()
+        case Some(_)               => throw new Exception("Cannot emit a non WebAPI shape")
+        case _                     => Nil// ignore
       }
     }
   }

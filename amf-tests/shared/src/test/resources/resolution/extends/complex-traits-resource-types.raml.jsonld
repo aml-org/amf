@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml",
+    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -21,7 +21,7 @@
         ],
         "http://raml.org/vocabularies/http#endpoint": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -33,7 +33,7 @@
             ],
             "http://www.w3.org/ns/hydra/core#supportedOperation": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -50,14 +50,14 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request",
                     "@type": [
                       "http://raml.org/vocabularies/http#Request",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
                     "http://raml.org/vocabularies/http#parameter": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -79,7 +79,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -100,7 +100,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -108,7 +108,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-a-beta"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -122,7 +122,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -144,7 +144,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -163,7 +163,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta/scalar/schema/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta/scalar/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -187,7 +187,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -207,7 +207,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-beta"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -221,7 +221,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -243,7 +243,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -262,7 +262,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha/scalar/schema/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha/scalar/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -286,7 +286,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -306,7 +306,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-b-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -320,7 +320,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -342,7 +342,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -363,7 +363,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -371,7 +371,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-c-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -385,7 +385,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -407,7 +407,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -428,7 +428,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -436,7 +436,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-d"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -450,7 +450,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -472,7 +472,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -493,7 +493,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -501,7 +501,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-f"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -515,7 +515,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -537,7 +537,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -558,7 +558,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -566,7 +566,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-e"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -580,7 +580,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -602,7 +602,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -623,7 +623,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -631,7 +631,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/get-g-head"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -647,7 +647,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -671,7 +671,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -679,7 +679,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -693,7 +693,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -710,14 +710,14 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request",
                     "@type": [
                       "http://raml.org/vocabularies/http#Request",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
                     "http://raml.org/vocabularies/http#parameter": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -739,7 +739,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -760,7 +760,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -768,7 +768,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-a-beta"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -782,7 +782,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -804,7 +804,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -823,7 +823,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta/scalar/schema/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta/scalar/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -847,7 +847,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -867,7 +867,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-beta"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -881,7 +881,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -903,7 +903,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -922,7 +922,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha/scalar/schema/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha/scalar/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -946,7 +946,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -966,7 +966,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-b-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -980,7 +980,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1002,7 +1002,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1023,7 +1023,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1031,7 +1031,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-c-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1045,7 +1045,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1067,7 +1067,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1088,7 +1088,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1096,7 +1096,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-d"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1110,7 +1110,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1132,7 +1132,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1153,7 +1153,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1161,7 +1161,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-e"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1175,7 +1175,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1197,7 +1197,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1218,7 +1218,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1226,7 +1226,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/parameter/post-g-head"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1242,7 +1242,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/request/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1266,7 +1266,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1274,7 +1274,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/post"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1288,7 +1288,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -1305,14 +1305,14 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request",
                     "@type": [
                       "http://raml.org/vocabularies/http#Request",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
                     "http://raml.org/vocabularies/http#parameter": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1334,7 +1334,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1353,7 +1353,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha/scalar/schema/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha/scalar/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1377,7 +1377,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1397,7 +1397,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-b-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1411,7 +1411,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1433,7 +1433,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1454,7 +1454,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1462,7 +1462,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-c-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1476,7 +1476,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1498,7 +1498,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1519,7 +1519,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1527,7 +1527,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-d"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1541,7 +1541,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1563,7 +1563,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1584,7 +1584,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1592,7 +1592,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-e"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1606,7 +1606,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1628,7 +1628,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1649,7 +1649,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1657,7 +1657,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/parameter/put-g-head"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1673,7 +1673,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/request/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1697,7 +1697,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1705,7 +1705,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/put"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1719,7 +1719,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -1736,14 +1736,14 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request",
                     "@type": [
                       "http://raml.org/vocabularies/http#Request",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
                     "http://raml.org/vocabularies/http#parameter": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1765,7 +1765,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1784,7 +1784,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha/scalar/schema/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha/scalar/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1808,7 +1808,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1828,7 +1828,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-b-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1842,7 +1842,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1864,7 +1864,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1885,7 +1885,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1893,7 +1893,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-c-alpha"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1907,7 +1907,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1929,7 +1929,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1950,7 +1950,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1958,7 +1958,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-d"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1972,7 +1972,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -1994,7 +1994,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -2015,7 +2015,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -2023,7 +2023,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-e"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2037,7 +2037,7 @@
                         ]
                       },
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head",
                         "@type": [
                           "http://raml.org/vocabularies/http#Parameter",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -2059,7 +2059,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head/scalar/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head/scalar/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -2080,7 +2080,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -2088,7 +2088,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/parameter/head-g-head"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2104,7 +2104,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/request/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2128,7 +2128,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2136,7 +2136,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/head"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2152,7 +2152,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2160,7 +2160,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2176,7 +2176,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2184,7 +2184,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2210,7 +2210,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2226,7 +2226,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p",
         "@type": [
           "http://raml.org/vocabularies/document#ResourceType",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -2239,13 +2239,13 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#<<method>>": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_8",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_8",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -2257,7 +2257,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_8/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_8/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2265,7 +2265,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_8"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_8"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2281,14 +2281,14 @@
             ],
             "http://raml.org/vocabularies/data#is": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2",
                 "@type": [
                   "http://raml.org/vocabularies/data#Array",
                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
                 ],
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/scalar_3",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/scalar_3",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -2300,7 +2300,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/scalar_3/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/scalar_3/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2308,7 +2308,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/scalar_3"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/scalar_3"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2322,19 +2322,19 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4",
                     "@type": [
                       "http://raml.org/vocabularies/data#Object"
                     ],
                     "http://raml.org/vocabularies/data#g": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5",
                         "@type": [
                           "http://raml.org/vocabularies/data#Object"
                         ],
                         "http://raml.org/vocabularies/data#posfix": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/scalar_6",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/scalar_6",
                             "@type": [
                               "http://raml.org/vocabularies/data#Scalar"
                             ],
@@ -2346,7 +2346,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/scalar_6/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/scalar_6/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -2354,7 +2354,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/scalar_6"
+                                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/scalar_6"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2370,7 +2370,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -2378,7 +2378,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/object_5"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2394,7 +2394,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2402,7 +2402,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/object_4"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2418,7 +2418,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2426,7 +2426,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/array_2"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2442,20 +2442,20 @@
             ],
             "http://raml.org/vocabularies/data#get": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#is": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10",
                     "@type": [
                       "http://raml.org/vocabularies/data#Array",
                       "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
                     ],
                     "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/scalar_11",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/scalar_11",
                         "@type": [
                           "http://raml.org/vocabularies/data#Scalar"
                         ],
@@ -2467,7 +2467,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/scalar_11/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/scalar_11/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -2475,7 +2475,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/scalar_11"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/scalar_11"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2491,7 +2491,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2499,7 +2499,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/array_10"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2515,7 +2515,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2523,7 +2523,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/object_9"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2539,7 +2539,7 @@
             ],
             "http://raml.org/vocabularies/data#put": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_7",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_7",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -2551,7 +2551,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_7/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_7/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2559,7 +2559,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_7"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/scalar_7"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2575,7 +2575,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2583,7 +2583,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/object_1"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2604,7 +2604,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2612,7 +2612,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/p"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2626,7 +2626,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o",
         "@type": [
           "http://raml.org/vocabularies/document#ResourceType",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -2639,20 +2639,20 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#is": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16",
                 "@type": [
                   "http://raml.org/vocabularies/data#Array",
                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
                 ],
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/scalar_17",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/scalar_17",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -2664,7 +2664,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/scalar_17/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/scalar_17/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2672,7 +2672,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/scalar_17"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/scalar_17"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2688,7 +2688,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2696,7 +2696,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/array_16"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2712,19 +2712,19 @@
             ],
             "http://raml.org/vocabularies/data#type": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#p": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14",
                     "@type": [
                       "http://raml.org/vocabularies/data#Object"
                     ],
                     "http://raml.org/vocabularies/data#method": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/scalar_15",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/scalar_15",
                         "@type": [
                           "http://raml.org/vocabularies/data#Scalar"
                         ],
@@ -2736,7 +2736,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/scalar_15/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/scalar_15/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -2744,7 +2744,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/scalar_15"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/scalar_15"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2760,7 +2760,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2768,7 +2768,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/object_14"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2784,7 +2784,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2792,7 +2792,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/object_13"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2808,7 +2808,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2816,7 +2816,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/object_12"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2832,7 +2832,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2840,7 +2840,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/o"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2854,7 +2854,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -2867,19 +2867,19 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-e": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/scalar_39",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/scalar_39",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -2891,7 +2891,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/scalar_39/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/scalar_39/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2899,7 +2899,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/scalar_39"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/scalar_39"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2915,7 +2915,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2923,7 +2923,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/object_38"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2939,7 +2939,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/scalar_37",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/scalar_37",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -2951,7 +2951,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/scalar_37/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/scalar_37/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2959,7 +2959,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/scalar_37"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/scalar_37"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2975,7 +2975,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2983,7 +2983,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/object_36"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3004,7 +3004,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -3012,7 +3012,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/e"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3026,7 +3026,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -3039,19 +3039,19 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-f": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/scalar_43",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/scalar_43",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -3063,7 +3063,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/scalar_43/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/scalar_43/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3071,7 +3071,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/scalar_43"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/scalar_43"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3087,7 +3087,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3095,7 +3095,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/object_42"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3111,7 +3111,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/scalar_41",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/scalar_41",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -3123,7 +3123,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/scalar_41/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/scalar_41/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3131,7 +3131,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/scalar_41"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/scalar_41"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3147,7 +3147,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -3155,7 +3155,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/object_40"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3176,7 +3176,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -3184,7 +3184,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/f"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3198,7 +3198,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -3211,19 +3211,19 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-a-<<posfix>>?": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/scalar_21",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/scalar_21",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -3235,7 +3235,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/scalar_21/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/scalar_21/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3243,7 +3243,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/scalar_21"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/scalar_21"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3259,7 +3259,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3267,7 +3267,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/object_20"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3283,7 +3283,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/scalar_19",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/scalar_19",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -3295,7 +3295,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/scalar_19/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/scalar_19/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3303,7 +3303,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/scalar_19"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/scalar_19"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3319,7 +3319,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -3327,7 +3327,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/object_18"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3351,7 +3351,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -3359,7 +3359,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/a"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3373,7 +3373,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -3386,25 +3386,25 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-b-<<posfix>>": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25",
                     "@type": [
                       "http://raml.org/vocabularies/data#Object"
                     ],
                     "http://raml.org/vocabularies/data#required": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_27",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_27",
                         "@type": [
                           "http://raml.org/vocabularies/data#Scalar"
                         ],
@@ -3416,7 +3416,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_27/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_27/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3424,7 +3424,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_27"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_27"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3440,7 +3440,7 @@
                     ],
                     "http://raml.org/vocabularies/data#type": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_26",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_26",
                         "@type": [
                           "http://raml.org/vocabularies/data#Scalar"
                         ],
@@ -3452,7 +3452,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_26/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_26/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3460,7 +3460,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_26"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/scalar_26"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3476,7 +3476,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3484,7 +3484,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/object_25"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3500,7 +3500,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3508,7 +3508,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/object_24"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3524,7 +3524,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/scalar_23",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/scalar_23",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -3536,7 +3536,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/scalar_23/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/scalar_23/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3544,7 +3544,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/scalar_23"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/scalar_23"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3560,7 +3560,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -3568,7 +3568,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/object_22"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3592,7 +3592,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -3600,7 +3600,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/b"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3614,7 +3614,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -3627,19 +3627,19 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-g-<<posfix>>": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/scalar_47",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/scalar_47",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -3651,7 +3651,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/scalar_47/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/scalar_47/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3659,7 +3659,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/scalar_47"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/scalar_47"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3675,7 +3675,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3683,7 +3683,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/object_46"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3699,7 +3699,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/scalar_45",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/scalar_45",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -3711,7 +3711,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/scalar_45/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/scalar_45/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3719,7 +3719,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/scalar_45"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/scalar_45"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3735,7 +3735,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -3743,7 +3743,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/object_44"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3767,7 +3767,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -3775,7 +3775,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/g"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3789,7 +3789,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -3802,19 +3802,19 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-c-<<posfix>>": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/scalar_31",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/scalar_31",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -3826,7 +3826,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/scalar_31/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/scalar_31/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3834,7 +3834,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/scalar_31"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/scalar_31"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3850,7 +3850,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3858,7 +3858,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/object_30"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3874,7 +3874,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/scalar_29",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/scalar_29",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -3886,7 +3886,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/scalar_29/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/scalar_29/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3894,7 +3894,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/scalar_29"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/scalar_29"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3910,7 +3910,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -3918,7 +3918,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/object_28"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3942,7 +3942,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -3950,7 +3950,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/c"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3964,7 +3964,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d",
         "@type": [
           "http://raml.org/vocabularies/document#Trait",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -3977,19 +3977,19 @@
         ],
         "http://raml.org/vocabularies/document#dataNode": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32",
             "@type": [
               "http://raml.org/vocabularies/data#Object"
             ],
             "http://raml.org/vocabularies/data#queryParameters": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34",
                 "@type": [
                   "http://raml.org/vocabularies/data#Object"
                 ],
                 "http://raml.org/vocabularies/data#<<methodName>>-d": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/scalar_35",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/scalar_35",
                     "@type": [
                       "http://raml.org/vocabularies/data#Scalar"
                     ],
@@ -4001,7 +4001,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/scalar_35/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/scalar_35/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -4009,7 +4009,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/scalar_35"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/scalar_35"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -4025,7 +4025,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -4033,7 +4033,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/object_34"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -4049,7 +4049,7 @@
             ],
             "http://raml.org/vocabularies/data#description": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/scalar_33",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/scalar_33",
                 "@type": [
                   "http://raml.org/vocabularies/data#Scalar"
                 ],
@@ -4061,7 +4061,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/scalar_33/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/scalar_33/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -4069,7 +4069,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/scalar_33"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/scalar_33"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -4085,7 +4085,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -4093,7 +4093,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/object_32"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -4114,7 +4114,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -4122,7 +4122,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/declarations/d"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

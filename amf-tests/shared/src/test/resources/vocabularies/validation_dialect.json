@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml",
+    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#",
+        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#",
         "@type": [
           "http://raml.org/vocabularies/meta#dialect"
         ],
@@ -30,7 +30,7 @@
         ],
         "http://raml.org/vocabularies/meta#vocabularies": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#validation",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#validation",
             "@type": [
               "http://raml.org/vocabularies/meta#External"
             ],
@@ -48,7 +48,7 @@
         ],
         "http://raml.org/vocabularies/meta#external": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#schema-org",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#schema-org",
             "@type": [
               "http://raml.org/vocabularies/meta#External"
             ],
@@ -64,7 +64,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shacl",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shacl",
             "@type": [
               "http://raml.org/vocabularies/meta#External"
             ],
@@ -82,7 +82,7 @@
         ],
         "http://raml.org/vocabularies/meta#nodeMappings": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode",
             "@type": [
               "http://raml.org/vocabularies/meta#NodeDefinition"
             ],
@@ -98,7 +98,7 @@
             ],
             "http://raml.org/vocabularies/meta#mapping": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/message",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/message",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -124,7 +124,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/code",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/code",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -150,7 +150,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/libraries",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/libraries",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -176,7 +176,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/functionName",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode/functionName",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -199,7 +199,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode",
             "@type": [
               "http://raml.org/vocabularies/meta#NodeDefinition"
             ],
@@ -215,7 +215,7 @@
             ],
             "http://raml.org/vocabularies/meta#mapping": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/message",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/message",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -241,7 +241,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/name",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/name",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -267,7 +267,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/pattern",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/pattern",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -288,7 +288,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/maxCount",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/maxCount",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -309,7 +309,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/minCount",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/minCount",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -330,7 +330,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/minExclusive",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/minExclusive",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -351,7 +351,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/maxExclusive",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/maxExclusive",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -372,7 +372,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/minInclusive",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/minInclusive",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -393,7 +393,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/maxInclusive",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/maxInclusive",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -414,7 +414,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/in",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode/in",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -442,7 +442,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode",
             "@type": [
               "http://raml.org/vocabularies/meta#NodeDefinition"
             ],
@@ -458,7 +458,7 @@
             ],
             "http://raml.org/vocabularies/meta#mapping": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/name",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/name",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -479,7 +479,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/message",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/message",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -505,7 +505,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/targetClass",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/targetClass",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -536,7 +536,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/propertyConstraints",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/propertyConstraints",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -552,7 +552,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#range": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#propertyConstraintNode"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#asMap": [
@@ -567,7 +567,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/functionConstraint",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode/functionConstraint",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -583,14 +583,14 @@
                 ],
                 "http://raml.org/vocabularies/meta#range": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#functionConstraintNode"
                   }
                 ]
               }
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode",
             "@type": [
               "http://raml.org/vocabularies/meta#NodeDefinition"
             ],
@@ -606,7 +606,7 @@
             ],
             "http://raml.org/vocabularies/meta#mapping": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode/name",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode/name",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -627,7 +627,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode/message",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode/message",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -653,7 +653,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode/targetQuery",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode/targetQuery",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -676,7 +676,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode",
             "@type": [
               "http://raml.org/vocabularies/meta#NodeDefinition"
             ],
@@ -692,7 +692,7 @@
             ],
             "http://raml.org/vocabularies/meta#mapping": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/profile",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/profile",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -718,7 +718,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/description",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/description",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -739,7 +739,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/extends",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/extends",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -760,7 +760,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/violation",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/violation",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -786,7 +786,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/info",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/info",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -812,7 +812,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/warning",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/warning",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -838,7 +838,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/disabled",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/disabled",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -864,7 +864,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/validations",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode/validations",
                 "@type": [
                   "http://raml.org/vocabularies/meta#PropertyMapping"
                 ],
@@ -880,7 +880,7 @@
                 ],
                 "http://raml.org/vocabularies/meta#range": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#shapeValidationNode"
                   }
                 ],
                 "http://raml.org/vocabularies/meta#asMap": [
@@ -899,38 +899,38 @@
         ],
         "http://raml.org/vocabularies/meta#raml": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#raml",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#raml",
             "@type": [
               "http://raml.org/vocabularies/meta#Document"
             ],
             "http://raml.org/vocabularies/meta#document": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#raml/document",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#raml/document",
                 "@type": [
                   "http://raml.org/vocabularies/meta#DocumentContentDeclaration"
                 ],
                 "http://raml.org/vocabularies/meta#encodes": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#profileNode"
                   }
                 ]
               }
             ],
             "http://raml.org/vocabularies/meta#module": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#raml/module",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#raml/module",
                 "@type": [
                   "http://raml.org/vocabularies/meta#ModuleDeclaration"
                 ],
                 "http://raml.org/vocabularies/meta#declares": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#raml/module/validations",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#raml/module/validations",
                     "@type": [
                       "http://raml.org/vocabularies/meta#Declaration"
                     ],
                     "http://raml.org/vocabularies/meta#declaredNode": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
                       }
                     ]
                   }
@@ -939,19 +939,19 @@
             ],
             "http://raml.org/vocabularies/meta#fragments": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#raml/fragments",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#raml/fragments",
                 "@type": [
                   "http://raml.org/vocabularies/meta#FragmentsDeclaration"
                 ],
                 "http://raml.org/vocabularies/meta#encodes": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#raml/fragments/Validation",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#raml/fragments/Validation",
                     "@type": [
                       "http://raml.org/vocabularies/meta#Declaration"
                     ],
                     "http://raml.org/vocabularies/meta#declaredNode": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/validation_dialect.raml#queryValidationNode"
                       }
                     ]
                   }

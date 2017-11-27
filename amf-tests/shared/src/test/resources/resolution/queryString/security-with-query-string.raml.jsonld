@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml",
+    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -21,7 +21,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -29,7 +29,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -55,7 +55,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -71,7 +71,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -85,7 +85,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/lat",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/lat",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -98,7 +98,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/lat/scalar/lat",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/lat/scalar/lat",
                 "@type": [
                   "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -117,7 +117,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/lat/scalar/lat/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/lat/scalar/lat/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -151,7 +151,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/long",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/long",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -164,7 +164,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/long/scalar/long",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/long/scalar/long",
                 "@type": [
                   "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -183,7 +183,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/long/scalar/long/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/lat-long/property/long/scalar/long/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -224,7 +224,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/loc",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/loc",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -238,7 +238,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/loc/property/location",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/loc/property/location",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -251,7 +251,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/loc/property/location/nil/location",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/loc/property/location/nil/location",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#NilShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -283,7 +283,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -297,7 +297,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/start",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/start",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -310,7 +310,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/start/scalar/start",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/start/scalar/start",
                 "@type": [
                   "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -329,7 +329,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/start/scalar/start/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/start/scalar/start/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -363,7 +363,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/page-size",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/page-size",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -376,7 +376,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/page-size/scalar/page-size",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/page-size/scalar/page-size",
                 "@type": [
                   "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -395,7 +395,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/page-size/scalar/page-size/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/paging/property/page-size/scalar/page-size/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -436,7 +436,7 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0",
         "@type": [
           "http://raml.org/vocabularies/security#SecurityScheme",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -453,7 +453,7 @@
         ],
         "http://raml.org/vocabularies/security#queryString": [
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/union/null",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/union/null",
             "@type": [
               "http://raml.org/vocabularies/shapes#UnionShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -461,7 +461,7 @@
             ],
             "http://raml.org/vocabularies/shapes#anyOf": [
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -475,7 +475,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/lat",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/lat",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -488,7 +488,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/lat/scalar/lat",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/lat/scalar/lat",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -507,7 +507,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/lat/scalar/lat/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/lat/scalar/lat/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -541,7 +541,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/long",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/long",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -554,7 +554,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/long/scalar/long",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/long/scalar/long",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -573,7 +573,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/long/scalar/long/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/long/scalar/long/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -607,7 +607,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -620,7 +620,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -639,7 +639,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -673,7 +673,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -686,7 +686,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -705,7 +705,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -746,7 +746,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -760,7 +760,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/location",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/location",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -773,7 +773,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/location/nil/location",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/location/nil/location",
                         "@type": [
                           "http://raml.org/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -798,7 +798,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -811,7 +811,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -830,7 +830,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/start/scalar/start/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -864,7 +864,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -877,7 +877,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -896,7 +896,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/property/page-size/scalar/page-size/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -946,7 +946,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -954,7 +954,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -980,7 +980,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

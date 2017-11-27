@@ -1,6 +1,7 @@
 package amf.core.resolution.stages
 
-import amf.core.model.document.BaseUnit
+import amf.core.metamodel.document.DocumentModel
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DomainElement, Linkable}
 
 /**
@@ -20,7 +21,18 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
   }
 
   def transform(element: DomainElement): Option[DomainElement] = element match {
-    case l: Linkable => l.linkTarget
-    case other       => Some(other)
+    case l: Linkable if l.linkTarget.isDefined=> {
+      Some(resolveLinked(l.linkTarget.get))
+    }
+    case other       => {
+      Some(other)
+    }
+  }
+
+  def resolveLinked(element: DomainElement): DomainElement = {
+    val nested = Document()
+    nested.fields.setWithoutId(DocumentModel.Encodes, element)
+    val result = new ReferenceResolutionStage(profile).resolve(nested)
+    result.asInstanceOf[Document].encodes
   }
 }

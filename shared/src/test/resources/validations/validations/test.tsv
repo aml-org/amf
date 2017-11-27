@@ -1,4 +1,0 @@
-URI	Message	Spec	Level	OWL Class	OWL Property	Shape	Target	Constraint	Value
-amf-parser:strict-url-strings	URLs in values mapped to schema-org:url must be valid	AMF	domain	raml-doc:DomainElement	schema-org:url	NodeShape	sh:targetObjectsOf	sh:nodeKind	sh:IRI	msg_raml	msg_oas
-		AMF	Domain	schema-org:Organization	schema-org:url	PropertyShape	sh:path	sh:maxInclusive	1	msg_raml	msg_oas
-		AMF	Domain	schema-org:Organization	schema-org:email	PropertyShape	sh:path	sh:datatype	xsd:string	msg_raml	msg_oas

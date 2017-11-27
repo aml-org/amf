@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json",
+    "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api",
+        "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -21,7 +21,7 @@
         ],
         "http://raml.org/vocabularies/http#endpoint": [
           {
-            "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -33,7 +33,7 @@
             ],
             "http://www.w3.org/ns/hydra/core#supportedOperation": [
               {
-                "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -55,14 +55,14 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request",
                     "@type": [
                       "http://raml.org/vocabularies/http#Request",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -74,7 +74,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -88,7 +88,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/one",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/one",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -101,7 +101,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/one/scalar/one",
+                                    "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/one/scalar/one",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -120,7 +120,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/one/scalar/one/source-map",
+                                        "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/one/scalar/one/source-map",
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -154,7 +154,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/two",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/two",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -167,7 +167,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/two/scalar/two",
+                                    "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/two/scalar/two",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -186,7 +186,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/two/scalar/two/source-map",
+                                        "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/schema/property/two/scalar/two/source-map",
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -229,7 +229,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -237,7 +237,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml"
+                                    "@value": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application/xml"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -255,7 +255,7 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#returns": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404",
                     "@type": [
                       "http://raml.org/vocabularies/http#Response",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -277,7 +277,7 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/application/json",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/application/json",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -289,7 +289,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/application/json/scalar/default",
+                            "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/application/json/scalar/default",
                             "@type": [
                               "http://www.w3.org/ns/shacl#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -308,7 +308,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/application/json/scalar/default/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/application/json/scalar/default/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -334,7 +334,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -354,7 +354,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404"
+                                "@value": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -370,7 +370,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -390,7 +390,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get"
+                            "@value": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -406,7 +406,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -414,7 +414,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one"
+                        "@value": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -430,7 +430,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -438,7 +438,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -464,7 +464,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

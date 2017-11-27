@@ -23,16 +23,16 @@ import org.yaml.model.YPart
   * Declarations object.
   */
 class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
-                         fragments: Map[String, DomainElement] = Map(),
+                         frags: Map[String, DomainElement] = Map(),
                          var shapes: Map[String, Shape] = Map(),
-                          annotations: Map[String, CustomDomainProperty] = Map(),
+                         anns: Map[String, CustomDomainProperty] = Map(),
                          var resourceTypes: Map[String, ResourceType] = Map(),
                          var parameters: Map[String, Parameter] = Map(),
                          var payloads: Map[String, Payload] = Map(),
                          var traits: Map[String, Trait] = Map(),
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
                          errorHandler: Option[ErrorHandler])
-  extends Declarations(libs, fragments, annotations, errorHandler) {
+  extends Declarations(libs, frags, anns, errorHandler) {
 
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
@@ -75,7 +75,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
   }
 
   override def declarables(): Seq[DomainElement] =
-    super.declarables() ++ (shapes.values ++  resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toSeq
+    super.declarables().toList ++ (shapes.values ++  resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
