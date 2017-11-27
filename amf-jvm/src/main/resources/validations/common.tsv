@@ -40,13 +40,11 @@ URI	Message	Spec	Level	OWL Class	OWL Property	Shape	Target	Constraint	Value	RAML
 		AMF	Domain	hydra:Operation	hydra:returns	PropertyShape	sh:path	sh:class	raml-http:Response	An operation must have valid response information	Operation object must return a valid Response object
 		AMF	Domain	raml-http:Request	raml-http:header	PropertyShape	sh:path	sh:class	raml-http:Parameter	Header information must be a valid header	Header information must be a valid header
 		AMF	Domain	raml-http:Request	raml-http:payload	PropertyShape	sh:path	sh:class	raml-http:Payload	Payload information for a Method request info must be valid	Payload information for an Operation object request info must be valid
-		AMF	Domain	raml-http:Request	raml-http:payload	PropertyShape	sh:path	sh:maxCount	1	Payload information for a Method request must be a single value	Payload information for an Operation object requet info must be a single value
 		AMF	Domain	raml-http:Request	raml-http:parameter	PropertyShape	sh:path	sh:class	raml-http:Parameter	Parameter information for a Method must be valid	Parameter information for an Operation object must be valid
 		AMF	Domain	raml-http:Response	hydra:statusCode	PropertyShape	sh:path	sh:datatype	xsd:string	Status code for a Response must be a string	Status code for a Response object must be a string
 		AMF	Domain	raml-http:Response	hydra:statusCode	PropertyShape	sh:path	sh:pattern	^([0-9]{3})$|^(default)$	Status code for a Response must match '^([0-9]{3})$|^(default)$'	Status code for a Response must match '^([0-9]{3})$|^(default)$'
 		AMF	Domain	raml-http:Response	raml-http:header	PropertyShape	sh:path	sh:class	raml-http:Parameter	Header information must be a valid header	Header information must be a valid header
 		AMF	Domain	raml-http:Response	raml-http:payload	PropertyShape	sh:path	sh:class	raml-http:Payload	Payload information for a Response must be valid	Payload information for a response must be valid
-		AMF	Domain	raml-http:Response	raml-http:payload	PropertyShape	sh:path	sh:maxCount	1	Payload information for a Response must be a single value	Payload information for a response must be a single value
 		AMF	Domain	raml-http:Parameter	schema-org:name	PropertyShape	sh:path	sh:minCount	1	Parameter information must have a name	Parameter object must have a name property
 		AMF	Domain	raml-http:Parameter	hydra:required	PropertyShape	sh:path	sh:datatype	xsd:boolean	Information about required parameters must be a boolean value	Required property of a Parameter object must be boolean
 		AMF	Domain	raml-http:Parameter	hydra:required	PropertyShape	sh:path	sh:minCount	1	Required information about a parameter is mandatory	Required property of a Parameter object is mandatory

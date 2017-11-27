@@ -1,6 +1,6 @@
 package amf.spec.declaration
 
-import amf.domain.Annotation.{toString => _, _}
+import amf.domain.Annotation._
 import amf.domain.{Annotations, CreativeWork, Value}
 import amf.metadata.shape._
 import amf.model.{AmfArray, AmfElement, AmfScalar}
@@ -60,12 +60,12 @@ abstract class DefaultType {
 
 // By default, string si the default type
 object StringDefaultType extends DefaultType {
-  override val typeDef = TypeDef.StrType
+  override val typeDef: TypeDef = TypeDef.StrType
 }
 
 // In a body or body / application/json context it its any
 object AnyDefaultType extends DefaultType {
-  override val typeDef = TypeDef.AnyType
+  override val typeDef: TypeDef = TypeDef.AnyType
 }
 
 case class RamlTypeParser(ast: YPart,
@@ -814,10 +814,7 @@ case class RamlTypeParser(ast: YPart,
       // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
       map.key(
         "facets",
-        entry => {
-          val properties: Seq[PropertyShape] =
-            PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition).parse()
-        }
+        entry => PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition).parse()
       )
 
       val examples = RamlExamplesParser(map, "example", "examples").parse()
