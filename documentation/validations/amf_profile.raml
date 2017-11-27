@@ -462,14 +462,6 @@ validations:
       range: http.Payload
          
 
-  amf-parser.Request-payload-maxCount:
-    message: Payload information for a Method request must be a single value
-    targetClass: http.Request
-    propertyConstraint: http.payload
-    http.payload:
-      maxCount: 1
-         
-
   amf-parser.Request-parameter-class:
     message: Parameter information for a Method must be valid
     targetClass: http.Request
@@ -508,14 +500,6 @@ validations:
     propertyConstraint: http.payload
     http.payload:
       range: http.Payload
-         
-
-  amf-parser.Response-payload-maxCount:
-    message: Payload information for a Response must be a single value
-    targetClass: http.Response
-    propertyConstraint: http.payload
-    http.payload:
-      maxCount: 1
          
 
   amf-parser.Parameter-name-minCount:
