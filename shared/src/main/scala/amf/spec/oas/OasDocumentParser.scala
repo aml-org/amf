@@ -17,6 +17,7 @@ import amf.domain.extensions.CustomDomainProperty
 import amf.domain.security._
 import amf.metadata.Field
 import amf.metadata.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.metadata.domain.EndPointModel.Path
 import amf.metadata.domain._
 import amf.metadata.domain.extensions.CustomDomainPropertyModel
 import amf.metadata.domain.security._
@@ -284,113 +285,126 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
   case class EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: mutable.ListBuffer[EndPoint]) {
 
     def parse(): Unit = {
+      val path = entry.key.as[String]
 
-      val endpoint = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry))
-      val map      = entry.value.as[YMap]
+      val endpoint = producer(path).add(Annotations(entry))
 
-      ctx.closedShape(endpoint.id, map, "pathItem")
+      endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
-      map.key("x-displayName", entry => {
-        val value = ValueNode(entry.value)
-        endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
-      })
-
-      map.key("x-description", entry => {
-        val value = ValueNode(entry.value)
-        endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
-      })
-
-      var parameters = OasParameters()
-      val entries    = ListBuffer[YMapEntry]()
-      map
-        .key("parameters")
-        .foreach(
-          entry => {
-            entries += entry
-            parameters = parameters.addFromOperation(ParametersParser(entry.value.as[Seq[YMap]], endpoint.id).parse())
-            parameters.body.foreach(_.add(EndPointBodyParameter()))
-          }
-        )
-
-      map
-        .key("x-queryParameters")
-        .foreach(
-          entry => {
-            entries += entry
-            val queryParameters =
-              RamlParametersParser(
-                entry.value.as[YMap],
-                (name: String) => Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("query"))
-            parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
-          }
-        )
-
-      map
-        .key("x-headers")
-        .foreach(
-          entry => {
-            entries += entry
-            val headers =
-              RamlParametersParser(
-                entry.value.as[YMap],
-                (name: String) => Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("header"))
-            parameters = parameters.addFromOperation(OasParameters(header = headers))
-          }
-        )
-
-      parameters match {
-        case OasParameters(_, path, _, _) if path.nonEmpty =>
-          endpoint.set(EndPointModel.UriParameters, AmfArray(path, Annotations(entry.value)), Annotations(entry))
-        case _ =>
-      }
-
-      map.key(
-        "x-type",
-        entry =>
-          ParametrizedDeclarationParser(entry.value,
-                                        endpoint.withResourceType,
-                                        ctx.declarations.findResourceTypeOrError(entry.value))
-            .parse()
-      )
-
-      map.key(
-        "x-is",
-        entry => {
-          entry.value
-            .as[Seq[YNode]]
-            .map(value =>
-              ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value))
-                .parse())
-        }
-      )
-
-      collector += endpoint
-
-      AnnotationParser(() => endpoint, map).parse()
-
-      map.key(
-        "x-security",
-        entry => {
-          // TODO check for empty array for resolution ?
-          val securedBy = entry.value
-            .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
-
-          endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-        }
-      )
-
-      map.regex(
-        "get|patch|put|post|delete|options|head",
-        entries => {
-          val operations = mutable.ListBuffer[Operation]()
-          entries.foreach(entry => {
-            operations += OperationParser(entry, parameters, endpoint.withOperation).parse()
-          })
-          endpoint.set(EndPointModel.Operations, AmfArray(operations))
-        }
-      )
+      if (collector.exists(e => e.path == path)) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
+      else parseEndpoint(endpoint)
     }
+
+    private def parseEndpoint(endpoint: EndPoint) =
+      entry.value.to[YMap] match {
+        case Left(_) => collector += endpoint
+        case Right(map) =>
+          ctx.closedShape(endpoint.id, map, "pathItem")
+
+          map.key("x-displayName", entry => {
+            val value = ValueNode(entry.value)
+            endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
+          })
+
+          map.key("x-description", entry => {
+            val value = ValueNode(entry.value)
+            endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
+          })
+
+          var parameters = OasParameters()
+          val entries    = ListBuffer[YMapEntry]()
+          map
+            .key("parameters")
+            .foreach(
+              entry => {
+                entries += entry
+                parameters =
+                  parameters.addFromOperation(ParametersParser(entry.value.as[Seq[YMap]], endpoint.id).parse())
+                parameters.body.foreach(_.add(EndPointBodyParameter()))
+              }
+            )
+
+          map
+            .key("x-queryParameters")
+            .foreach(
+              entry => {
+                entries += entry
+                val queryParameters =
+                  RamlParametersParser(
+                    entry.value.as[YMap],
+                    (name: String) =>
+                      Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("query"))
+                parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
+              }
+            )
+
+          map
+            .key("x-headers")
+            .foreach(
+              entry => {
+                entries += entry
+                val headers =
+                  RamlParametersParser(
+                    entry.value.as[YMap],
+                    (name: String) =>
+                      Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("header"))
+                parameters = parameters.addFromOperation(OasParameters(header = headers))
+              }
+            )
+
+          parameters match {
+            case OasParameters(_, path, _, _) if path.nonEmpty =>
+              endpoint.set(EndPointModel.UriParameters, AmfArray(path, Annotations(entry.value)), Annotations(entry))
+            case _ =>
+          }
+
+          map.key(
+            "x-type",
+            entry =>
+              ParametrizedDeclarationParser(entry.value,
+                                            endpoint.withResourceType,
+                                            ctx.declarations.findResourceTypeOrError(entry.value))
+                .parse()
+          )
+
+          map.key(
+            "x-is",
+            entry => {
+              entry.value
+                .as[Seq[YNode]]
+                .map(value =>
+                  ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value))
+                    .parse())
+            }
+          )
+
+          collector += endpoint
+
+          AnnotationParser(() => endpoint, map).parse()
+
+          map.key(
+            "x-security",
+            entry => {
+              // TODO check for empty array for resolution ?
+              val securedBy = entry.value
+                .as[Seq[YNode]]
+                .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+
+              endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+            }
+          )
+
+          map.regex(
+            "get|patch|put|post|delete|options|head",
+            entries => {
+              val operations = mutable.ListBuffer[Operation]()
+              entries.foreach(entry => {
+                operations += OperationParser(entry, parameters, endpoint.withOperation).parse()
+              })
+              endpoint.set(EndPointModel.Operations, AmfArray(operations))
+            }
+          )
+      }
   }
 
   case class RequestParser(map: YMap, globalOrig: OasParameters, producer: () => Request) {
@@ -808,8 +822,7 @@ abstract class OasSpecParser extends BaseSpecParser {
   }
 
   object AnnotationTypesParser {
-    def apply(ast: YMapEntry,
-              adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
+    def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
       ast.value.tagType match {
         case YType.Map =>
           AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
