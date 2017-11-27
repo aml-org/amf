@@ -2,12 +2,11 @@ package amf.dumper
 
 import amf.common.Tests
 import amf.core.client.GenerationOptions
+import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.remote.{Amf, Oas, Raml}
+import amf.core.unsafe.PlatformSecrets
 import amf.emit.AMFUnitFixtureTest
 import amf.facades.AMFDumper
-import amf.core.remote.Syntax.{Json, Yaml}
-import amf.remote._
-import amf.core.unsafe.PlatformSecrets
-import amf.core.remote.{Amf, Oas, Raml}
 import org.scalatest.{Assertion, FunSuite}
 
 /**
