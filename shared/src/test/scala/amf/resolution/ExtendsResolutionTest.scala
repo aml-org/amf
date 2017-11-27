@@ -33,6 +33,13 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("complex-parameters.raml", "complex-parameters.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Extends resolution with parameter and multiple transformation resolution to Raml") {
+    cycle("resource-type-multi-transformation.raml",
+          "resource-type-multi-transformation.raml.raml",
+          RamlYamlHint,
+          Raml)
+  }
+
   test("Extends resolution with optional method to Raml") {
     cycle("optional-method.raml", "optional-method.raml.raml", RamlYamlHint, Raml)
   }

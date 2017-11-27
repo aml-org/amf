@@ -52,6 +52,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("traits-resource-types.raml", "traits-resource-types.raml.json", RamlYamlHint, Oas)
   }
 
+  test("Traits and resourceTypes with multiple variable transformations raml to raml test") {
+    cycle("resource-type-multi-transformation.raml", RamlYamlHint)
+  }
+
 //  test("Full cycle raml to amf test") {
 //    cycle("full-example.raml", RamlYamlHint, Amf)
 //  }
