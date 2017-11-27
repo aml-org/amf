@@ -1,14 +1,14 @@
 package amf.maker
 
 import amf.common.AmfObjectTestMatcher
-import amf.facades.{AMFCompiler, Validation}
 import amf.core.model.document.{Document, Fragment}
+import amf.core.remote._
+import amf.core.unsafe.PlatformSecrets
+import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.webapi.models.WebApi
-import amf.remote._
-import amf.core.unsafe.PlatformSecrets
-import amf.core.remote._
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}

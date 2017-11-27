@@ -1,11 +1,11 @@
 package amf.maker
 
-import amf.facades.{AMFCompiler, Validation}
 import amf.core.model.document.Document
 import amf.core.remote._
+import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.remote._
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -100,6 +100,7 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   private def document(): Document = {
+    amf.core.model.domain.extensions.PropertyShape().withScalarSchema("hey")
     val api = WebApi()
       .withName("test types")
       .withDescription("empty api only for test types")

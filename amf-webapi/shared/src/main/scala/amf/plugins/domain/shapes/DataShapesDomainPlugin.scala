@@ -5,6 +5,7 @@ import amf.core.plugins.AMFDomainPlugin
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 
+
 object DataShapesDomainPlugin extends AMFDomainPlugin {
 
   override val ID = "Data Shapes Domain"

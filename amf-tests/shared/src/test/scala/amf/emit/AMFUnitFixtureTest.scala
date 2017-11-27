@@ -1,8 +1,9 @@
 package amf.emit
 
 import amf.core.model.document.{Document, Module}
-import amf.plugins.domain.webapi.models.{CreativeWork, License, Organization, WebApi}
 import amf.core.unsafe.PlatformSecrets
+import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.webapi.models.{License, Organization, WebApi}
 
 /**
   *

@@ -28,7 +28,7 @@ import scala.collection.mutable
 object RamlTypeParser {
   def apply(ast: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
       implicit ctx: WebApiContext): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx))
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx, Some(ctx.declarations)))
 }
 
 trait RamlTypeSyntax {

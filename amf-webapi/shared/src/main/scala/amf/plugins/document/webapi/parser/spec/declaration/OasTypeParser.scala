@@ -29,7 +29,7 @@ import scala.collection.mutable
 object OasTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, oasNode: String = "schema")(
       implicit ctx: WebApiContext): OasTypeParser =
-    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, ctx))
+    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, ctx, Some(ctx.declarations)))
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(

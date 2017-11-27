@@ -34,5 +34,5 @@ object AnyShape {
 
   def apply(annotations: Annotations): AnyShape = AnyShape(Fields(), annotations)
 
-  def apply(fields: Fields, annotations: Annotations): AnyShape = AnyShape(fields, annotations)
+  def apply(fields: Fields, annotations: Annotations): AnyShape = new AnyShape(fields, annotations)
 }
