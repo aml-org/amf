@@ -1,6 +1,5 @@
 package amf.domain
 
-import amf.domain.dialects.DomainEntity
 import amf.model.AmfElement
 import amf.parser.Range
 import amf.remote.Vendor
@@ -89,7 +88,7 @@ object Annotation {
 
   case class Inferred() extends Annotation
 
-  case class Aliases(val aliases: Set[(String, String)]) extends SerializableAnnotation {
+  case class Aliases(aliases: Set[(String, String)]) extends SerializableAnnotation {
 
     /** Extension name. */
     override val name: String = "aliases-array"
