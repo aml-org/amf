@@ -57,7 +57,6 @@ class Fields {
     }
   }
 
-
   /** Set field value entry-point. */
   def set(id: String, field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
     if (field.value.iri() == "http://raml.org/vocabularies/document#declares") {
@@ -157,18 +156,20 @@ class Value(var value: AmfElement, val annotations: Annotations) {
 
   def checkUnresolved(): Unit = value match {
     case unresolved: UnresolvedShape =>
-      // this is a callback that will be registered
-      // in the declarations of the parser context
-      // to be executed when a reference is resolved
+      // This callback will be registered in the declarations of the parser context to be executed when a reference is resolved
       unresolved.futureRef((resolved) => {
-        value = resolved.link(unresolved.reference, unresolved.annotations) // mutation of the field value
+        value = resolved.link(unresolved.reference, unresolved.annotations)
       })
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
       array.values.foreach {
         case unresolved: UnresolvedShape =>
           unresolved.futureRef((resolved) => {
-            value = resolved.link(unresolved.reference, unresolved.annotations) // mutation of the field value
+            val updated = value.asInstanceOf[AmfArray].values.map {
+              case x if x == unresolved => resolved.link(unresolved.reference, unresolved.annotations)
+              case other                => other
+            }
+            value = AmfArray(updated, value.annotations)
           })
         case _ => // ignore
       }
