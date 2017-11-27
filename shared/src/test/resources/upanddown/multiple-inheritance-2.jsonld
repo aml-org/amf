@@ -182,6 +182,169 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
+        "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype",
+        "@type": [
+          "http://www.w3.org/ns/shacl#ScalarShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://raml.org/vocabularies/shapes#Shape",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "sometype"
+          }
+        ],
+        "http://raml.org/vocabularies/shapes#inherits": [
+          {
+            "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/document#link-target": [
+              {
+                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype"
+              }
+            ],
+            "http://raml.org/vocabularies/document#link-label": [
+              {
+                "@value": "othertype"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,8)-(14,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/document#link-target": [
+              {
+                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype"
+              }
+            ],
+            "http://raml.org/vocabularies/document#link-label": [
+              {
+                "@value": "someothertype"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(15,8)-(15,21)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/shapes#inherits"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,4)-(16,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,2)-(16,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,4)-(16,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
@@ -829,207 +992,6 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(22,2)-(30,20)]"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype",
-        "@type": [
-          "http://www.w3.org/ns/shacl#ScalarShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://raml.org/vocabularies/shapes#Shape",
-          "http://raml.org/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
-          {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "sometype"
-          }
-        ],
-        "http://raml.org/vocabularies/shapes#inherits": [
-          {
-            "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype",
-            "@type": [
-              "http://www.w3.org/ns/shacl#NodeShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://raml.org/vocabularies/shapes#Shape",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#link-target": [
-              {
-                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype"
-              }
-            ],
-            "http://raml.org/vocabularies/document#link-label": [
-              {
-                "@value": "othertype"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "othertype"
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype/source-map",
-                "@type": [
-                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#lexical": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/othertype"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(13,9)-(16,0)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype",
-            "@type": [
-              "http://www.w3.org/ns/shacl#NodeShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://raml.org/vocabularies/shapes#Shape",
-              "http://raml.org/vocabularies/document#DomainElement"
-            ],
-            "http://raml.org/vocabularies/document#link-target": [
-              {
-                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype"
-              }
-            ],
-            "http://raml.org/vocabularies/document#link-label": [
-              {
-                "@value": "someothertype"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#name": [
-              {
-                "@value": "someothertype"
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype/source-map",
-                "@type": [
-                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#lexical": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/someothertype"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(13,9)-(16,0)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "http://raml.org/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype/source-map",
-            "@type": [
-              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://raml.org/vocabularies/document-source-maps#declared-element": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#lexical": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://raml.org/vocabularies/shapes#inherits"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(13,4)-(16,0)]"
-                  }
-                ]
-              },
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://shared/src/test/resources/upanddown/multiple-inheritance-2.raml#/declarations/scalar/sometype"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(12,2)-(16,0)]"
-                  }
-                ]
-              },
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://www.w3.org/ns/shacl#datatype"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(13,4)-(16,0)]"
                   }
                 ]
               }
