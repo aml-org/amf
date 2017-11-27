@@ -53,7 +53,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
         undefined.level should be("Violation")
         undefined.message should be(
           "Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error-array.raml")
-        undefined.position.map(_.range) should be(Some(Range((3, 26), (3, 39))))
+        undefined.position.map(_.range) should be(Some(Range((5, 26), (5, 39))))
       }
     )
   }
