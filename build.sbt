@@ -107,11 +107,9 @@ lazy val amfCoreCrossProject = crossProject
     test in assembly := {},
     assemblyOutputPath in assembly := baseDirectory.value / "target" / "artifact" / "amf-core.jar",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-core-javadoc.jar",
-//    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"),
     mainClass in Compile := Some("amf.client.Main")
   )
   .jsSettings(
-//    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
@@ -260,7 +258,7 @@ lazy val amfValidationCrossProject = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
-    //    jsDependencies += ProvidedJS / "shacl.js",
+    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,

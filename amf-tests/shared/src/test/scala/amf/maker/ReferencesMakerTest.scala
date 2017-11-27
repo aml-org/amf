@@ -21,13 +21,13 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
   test("Data type fragment test raml") {
     val file         = "data-type-fragment.raml"
-    val rootDocument = "file://shared/src/test/resources/references/data-type-fragment.raml"
+    val rootDocument = "file://amf-tests/shared/src/test/resources/references/data-type-fragment.raml"
     assertFixture(rootDocument, RamlYamlHint)
   }
 
   test("Data type fragment test oas") {
     val file         = "data-type-fragment.json"
-    val rootDocument = "file://shared/src/test/resources/references/data-type-fragment.json"
+    val rootDocument = "file://amf-tests/shared/src/test/resources/references/data-type-fragment.json"
     assertFixture(rootDocument, OasJsonHint)
   }
 
@@ -70,15 +70,15 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
     private val dataTypeFragment: Fragment = {
       DataTypeFragment()
-        .withId("file://shared/src/test/resources/references/fragments/" + fragmentFile)
+        .withId("file://amf-tests/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withEncodes(person)
     }
 
     val usesDataType: Document = {
 
       Document()
-        .withId("/Users/hernan.najles/mulesoft/amf/shared/src/test/resources/references/" + file)
-        .withEncodes(WebApi().withId("shared/src/test/resources/references/" + file + "#/web-api"))
+        .withId("/Users/hernan.najles/mulesoft/amf/amf-tests/shared/src/test/resources/references/" + file)
+        .withEncodes(WebApi().withId("amf-tests/shared/src/test/resources/references/" + file + "#/web-api"))
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")))
     }

@@ -22,7 +22,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Api (raml)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
+    AMFCompiler("file://amf-tests/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
                 platform,
                 RamlYamlHint,
                 Validation(platform))
@@ -30,7 +30,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Vocabulary") {
-    AMFCompiler("file://shared/src/test/resources/vocabularies/raml_doc.raml",
+    AMFCompiler("file://amf-tests/shared/src/test/resources/vocabularies/raml_doc.raml",
                 platform,
                 ExtensionYamlHint,
                 Validation(platform))
@@ -40,7 +40,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Api (oas)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi",
+    AMFCompiler("file://amf-tests/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi",
                 platform,
                 OasJsonHint,
                 Validation(platform))
@@ -48,7 +48,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Api (amf)") {
-    AMFCompiler("file://shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld",
+    AMFCompiler("file://amf-tests/shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld",
                 platform,
                 AmfJsonHint,
                 Validation(platform))
@@ -56,7 +56,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Simple import") {
-    AMFCompiler("file://shared/src/test/resources/input.json", platform, OasJsonHint, Validation(platform))
+    AMFCompiler("file://amf-tests/shared/src/test/resources/input.json", platform, OasJsonHint, Validation(platform))
       .build() map {
       _ should not be null
     }
@@ -72,7 +72,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Cache duplicate imports") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/input-duplicate-includes.json",
+    AMFCompiler("file://amf-tests/shared/src/test/resources/input-duplicate-includes.json",
                 platform,
                 OasJsonHint,
                 Validation(platform),
@@ -84,7 +84,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Cache different imports") {
     val cache = new TestCache()
-    AMFCompiler("file://shared/src/test/resources/input.json",
+    AMFCompiler("file://amf-tests/shared/src/test/resources/input.json",
                 platform,
                 OasJsonHint,
                 Validation(platform),
@@ -95,7 +95,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Libraries (raml)") {
-    AMFCompiler("file://shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
+    AMFCompiler("file://amf-tests/shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
       .root() map {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
@@ -106,7 +106,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Libraries (oas)") {
-    AMFCompiler("file://shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
+    AMFCompiler("file://amf-tests/shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
       .root() map {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
@@ -118,7 +118,7 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   /*
   test("Parse payloads") {
-    val path = "file://shared/src/test/resources/payloads/a_valid.json"
+    val path = "file://amf-tests/shared/src/test/resources/payloads/a_valid.json"
     AMFCompiler(path, platform, PayloadJsonHint)
         .build() map { parsed: BaseUnit =>
       assert(parsed != null)
@@ -153,14 +153,14 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[CyclicReferenceException] {
-      AMFCompiler(s"file://shared/src/test/resources/input-cycle.${syntax.extension}",
+      AMFCompiler(s"file://amf-tests/shared/src/test/resources/input-cycle.${syntax.extension}",
                   platform,
                   hint,
                   Validation(platform))
         .build()
     } map { ex =>
       assert(ex.getMessage ==
-        s"Cyclic found following references file://shared/src/test/resources/input-cycle.${syntax.extension} -> file://shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://shared/src/test/resources/input-cycle.${syntax.extension}")
+        s"Cyclic found following references file://amf-tests/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-tests/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-tests/shared/src/test/resources/input-cycle.${syntax.extension}")
     }
   }
 

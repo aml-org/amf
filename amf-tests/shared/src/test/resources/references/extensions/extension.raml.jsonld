@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/references/extensions/extension.raml",
+    "@id": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Extension",
       "http://raml.org/vocabularies/document#Document",
@@ -10,19 +10,19 @@
     ],
     "http://raml.org/vocabularies/document#extends": [
       {
-        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml"
+        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml"
       }
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api",
+        "@id": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://raml.org/vocabularies/http#endpoint": [
           {
-            "@id": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api/end-points/%2Fbooks",
+            "@id": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api/end-points/%2Fbooks",
             "@type": [
               "http://raml.org/vocabularies/http#EndPoint",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -39,7 +39,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api/end-points/%2Fbooks/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api/end-points/%2Fbooks/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -59,7 +59,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api/end-points/%2Fbooks"
+                        "@value": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api/end-points/%2Fbooks"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -75,7 +75,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -83,7 +83,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -97,7 +97,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/references/extensions/extension.raml#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -113,7 +113,7 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml",
+        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml",
         "@type": [
           "http://raml.org/vocabularies/document#Document",
           "http://raml.org/vocabularies/document#Fragment",
@@ -122,7 +122,7 @@
         ],
         "http://raml.org/vocabularies/document#encodes": [
           {
-            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api",
+            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api",
             "@type": [
               "http://schema.org/WebAPI",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -159,7 +159,7 @@
             ],
             "http://raml.org/vocabularies/http#endpoint": [
               {
-                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers",
+                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers",
                 "@type": [
                   "http://raml.org/vocabularies/http#EndPoint",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -171,7 +171,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -179,7 +179,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -193,7 +193,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D",
+                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D",
                 "@type": [
                   "http://raml.org/vocabularies/http#EndPoint",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -205,7 +205,7 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#supportedOperation": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get",
                     "@type": [
                       "http://www.w3.org/ns/hydra/core#Operation",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -222,7 +222,7 @@
                     ],
                     "http://www.w3.org/ns/hydra/core#returns": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200",
                         "@type": [
                           "http://raml.org/vocabularies/http#Response",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -239,7 +239,7 @@
                         ],
                         "http://raml.org/vocabularies/http#payload": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json",
                             "@type": [
                               "http://raml.org/vocabularies/http#Payload",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -251,7 +251,7 @@
                             ],
                             "http://raml.org/vocabularies/http#schema": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -264,7 +264,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema/source-map",
+                                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -272,7 +272,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -286,7 +286,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/any/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -302,7 +302,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -310,7 +310,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json"
+                                        "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application/json"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -326,7 +326,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -346,7 +346,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200"
+                                    "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -362,7 +362,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -382,7 +382,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get"
+                                "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -408,7 +408,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/delete",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/delete",
                     "@type": [
                       "http://www.w3.org/ns/hydra/core#Operation",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -425,7 +425,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/delete/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/delete/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -445,7 +445,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/delete"
+                                "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/delete"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -461,7 +461,7 @@
                 ],
                 "http://raml.org/vocabularies/http#parameter": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id",
                     "@type": [
                       "http://raml.org/vocabularies/http#Parameter",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -483,7 +483,7 @@
                     ],
                     "http://raml.org/vocabularies/http#schema": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema",
                         "@type": [
                           "http://www.w3.org/ns/shacl#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -502,7 +502,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -510,7 +510,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema"
+                                    "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -526,7 +526,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -546,7 +546,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id"
+                                "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -574,7 +574,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -582,12 +582,12 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers"
                           }
                         ]
                       }
@@ -608,7 +608,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -622,7 +622,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts",
+                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts",
                 "@type": [
                   "http://raml.org/vocabularies/http#EndPoint",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -634,7 +634,7 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#supportedOperation": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get",
                     "@type": [
                       "http://www.w3.org/ns/hydra/core#Operation",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -651,7 +651,7 @@
                     ],
                     "http://www.w3.org/ns/hydra/core#returns": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200",
                         "@type": [
                           "http://raml.org/vocabularies/http#Response",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -668,7 +668,7 @@
                         ],
                         "http://raml.org/vocabularies/http#payload": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json",
                             "@type": [
                               "http://raml.org/vocabularies/http#Payload",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -680,7 +680,7 @@
                             ],
                             "http://raml.org/vocabularies/http#schema": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -693,7 +693,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema/source-map",
+                                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -701,7 +701,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -715,7 +715,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/any/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -731,7 +731,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -739,7 +739,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json"
+                                        "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/application/json"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -755,7 +755,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -775,7 +775,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200"
+                                    "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -791,7 +791,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -811,7 +811,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get"
+                                "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -839,7 +839,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -847,12 +847,12 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
                           }
                         ]
                       }
@@ -861,7 +861,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -875,7 +875,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards",
+                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards",
                 "@type": [
                   "http://raml.org/vocabularies/http#EndPoint",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -887,7 +887,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -895,12 +895,12 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
                           }
                         ]
                       }
@@ -909,7 +909,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -923,7 +923,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit",
+                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit",
                 "@type": [
                   "http://raml.org/vocabularies/http#EndPoint",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -935,7 +935,7 @@
                 ],
                 "http://www.w3.org/ns/hydra/core#supportedOperation": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get",
                     "@type": [
                       "http://www.w3.org/ns/hydra/core#Operation",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -952,7 +952,7 @@
                     ],
                     "http://www.w3.org/ns/hydra/core#returns": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200",
                         "@type": [
                           "http://raml.org/vocabularies/http#Response",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -969,7 +969,7 @@
                         ],
                         "http://raml.org/vocabularies/http#payload": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json",
                             "@type": [
                               "http://raml.org/vocabularies/http#Payload",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -981,7 +981,7 @@
                             ],
                             "http://raml.org/vocabularies/http#schema": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -994,7 +994,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema/source-map",
+                                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -1002,7 +1002,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1016,7 +1016,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/any/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1032,7 +1032,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1040,7 +1040,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json"
+                                        "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/application/json"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1056,7 +1056,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1076,7 +1076,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200"
+                                    "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1092,7 +1092,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1112,7 +1112,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get"
+                                "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1138,7 +1138,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post",
                     "@type": [
                       "http://www.w3.org/ns/hydra/core#Operation",
                       "http://raml.org/vocabularies/document#DomainElement"
@@ -1155,14 +1155,14 @@
                     ],
                     "http://www.w3.org/ns/hydra/core#expects": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request",
                         "@type": [
                           "http://raml.org/vocabularies/http#Request",
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
                         "http://raml.org/vocabularies/http#payload": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json",
                             "@type": [
                               "http://raml.org/vocabularies/http#Payload",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -1174,7 +1174,7 @@
                             ],
                             "http://raml.org/vocabularies/http#schema": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/scalar/schema",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/scalar/schema",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1193,7 +1193,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/scalar/schema/source-map",
+                                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/scalar/schema/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -1201,7 +1201,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/scalar/schema"
+                                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/scalar/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1217,7 +1217,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/source-map",
+                                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1225,7 +1225,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json"
+                                        "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/application/json"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1241,7 +1241,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/source-map",
+                            "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1265,7 +1265,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/source-map",
+                        "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1285,7 +1285,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post"
+                                "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1301,7 +1301,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/source-map",
+                    "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1309,12 +1309,12 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards"
                           }
                         ]
                       }
@@ -1323,7 +1323,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit"
+                            "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1339,7 +1339,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api/source-map",
+                "@id": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1409,7 +1409,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api"
+                        "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1459,7 +1459,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/upanddown/banking-api.raml#/web-api"
+                        "@value": "file://amf-tests/shared/src/test/resources/upanddown/banking-api.raml#/web-api"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1482,7 +1482,7 @@
     ],
     "http://raml.org/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://shared/src/test/resources/references/extensions/extension.raml/source-map",
+        "@id": "file://amf-tests/shared/src/test/resources/references/extensions/extension.raml/source-map",
         "@type": [
           "http://raml.org/vocabularies/document-source-maps#SourceMap"
         ],

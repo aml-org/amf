@@ -20,7 +20,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
         case Some(ast) => ast
         case None      => throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
       }
-      case None => throw new Exception(s"Cannot parse domain model for media type $mediaType and vendor $vendor")
+      case None => throw new Exception(s"Cannot serialize domain model '${unit.location}' for detected media type $mediaType and vendor $vendor")
     }
   }
 

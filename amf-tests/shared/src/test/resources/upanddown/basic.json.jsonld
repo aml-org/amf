@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/upanddown/basic.json",
+    "@id": "file://amf-tests/shared/src/test/resources/upanddown/basic.json",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/upanddown/basic.json#/web-api",
+        "@id": "file://amf-tests/shared/src/test/resources/upanddown/basic.json#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -64,7 +64,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/upanddown/basic.json#/web-api/source-map",
+            "@id": "file://amf-tests/shared/src/test/resources/upanddown/basic.json#/web-api/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -72,7 +72,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/upanddown/basic.json#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/upanddown/basic.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -146,7 +146,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/upanddown/basic.json#/web-api"
+                    "@value": "file://amf-tests/shared/src/test/resources/upanddown/basic.json#/web-api"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

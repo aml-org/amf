@@ -18,7 +18,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://shared/src/test/resources/maker/"
+  val basePath = "file://amf-tests/shared/src/test/resources/maker/"
 
   test("Generate complete web api instance") {
 
@@ -809,7 +809,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
-      .withId("shared/src/test/resources/maker/types-dependency.raml#/web-api")
+      .withId("amf-tests/shared/src/test/resources/maker/types-dependency.raml#/web-api")
 
     val operation = api
       .withEndPoint("/level-zero")
@@ -964,7 +964,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
-      .withId("shared/src/test/resources/maker/types-dependency.json#/web-api")
+      .withId("amf-tests/shared/src/test/resources/maker/types-dependency.json#/web-api")
 
     val operation = api
       .withEndPoint("/level-zero")

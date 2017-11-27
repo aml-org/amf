@@ -47,6 +47,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
         shape.examples.map { example =>
           (shape, example, mediaType(example))
         }
+      case _ => Nil
     }
     val supportedExamples = allExamples.filter {
       case (_, example, mediaType) =>

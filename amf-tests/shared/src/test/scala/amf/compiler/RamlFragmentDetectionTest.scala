@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val basePath = "file://shared/src/test/resources/references/fragments/"
+  private val basePath = "file://amf-tests/shared/src/test/resources/references/fragments/"
   test("Detect Raml Data Type Fragment") {
     assertHeader("data-type-without-header.raml", Some(RamlFragmentHeader.Raml10DataType))
   }

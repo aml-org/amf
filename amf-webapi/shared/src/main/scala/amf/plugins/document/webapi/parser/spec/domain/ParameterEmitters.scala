@@ -83,10 +83,10 @@ case class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, re
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
             .map(f => result += ValueEmitter("required", f))
 
-          parameter.schema match {
-            case shape: AnyShape =>
-              result ++= RamlTypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
-            case _ => throw new Exception("Cannot emit parameter for a non WebAPI shape")
+          Option(parameter.schema) match {
+            case Some(shape: AnyShape) => result ++= RamlTypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
+            case Some(_)               => throw new Exception("Cannot emit parameter for a non WebAPI shape")
+            case None                  => // ignore
           }
 
 

@@ -286,10 +286,10 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       request.fields
         .entry(RequestModel.QueryString)
         .map { f =>
-          f.value.value match {
-            case shape: AnyShape =>
-              result += RamlNamedTypeEmitter(shape, ordering)
-            case _ => throw new Exception("Cannot emit a non WebApi Shape")
+          Option(f.value.value) match {
+            case Some(shape: AnyShape) => result += RamlNamedTypeEmitter(shape, ordering)
+            case Some(_)               => throw new Exception("Cannot emit a non WebApi Shape")
+            case None                  => // ignore
           }
         }
 

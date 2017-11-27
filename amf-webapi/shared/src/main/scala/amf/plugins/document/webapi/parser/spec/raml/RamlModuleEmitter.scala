@@ -84,9 +84,10 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     override val header: RamlHeader = RamlFragmentHeader.Raml10DataType
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
-      dataType.encodes match {
-        case shape: AnyShape => RamlTypeEmitter(shape, ordering, references = Nil).entries()
-        case _               => throw new Exception("Cannot emit non WebApi Shape")
+      Option(dataType.encodes) match {
+        case Some(shape: AnyShape) => RamlTypeEmitter(shape, ordering, references = Nil).entries()
+        case Some(_)               => throw new Exception("Cannot emit non WebApi Shape")
+        case _                     => Nil // ignore
       }
 
   }

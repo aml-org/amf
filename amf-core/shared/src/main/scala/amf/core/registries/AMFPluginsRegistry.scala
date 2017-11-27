@@ -61,6 +61,7 @@ object AMFPluginsRegistry {
         }
 
         documentPlugin.modelEntities.foreach{ entity => AMFDomainRegistry.registerModelEntity(entity) }
+        documentPlugin.modelEntitiesResolver.foreach(resolver => AMFDomainRegistry.registerModelEntityResolver(resolver))
 
         registerDependencies(documentPlugin)
     }

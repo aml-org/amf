@@ -10,7 +10,7 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
-import amf.plugins.document.webapi.model.{Extension, Overlay}
+import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.WebApiReferenceCollector
@@ -67,8 +67,15 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
         case _:DomainElement  => true
         case _                => false
       }
-    case _: Fragment  => true
-    case _            => false
+    case _: DocumentationItemFragment         => true
+    case _: DataTypeFragment                  => true
+    case _: NamedExampleFragment              => true
+    case _: ResourceTypeFragment              => true
+    case _: TraitFragment                     => true
+    case _: AnnotationTypeDeclarationFragment => true
+    case _: SecuritySchemeFragment            => true
+    case _: ExternalFragment                  => true
+    case _                                    => false
   }
 
   override def unparse(unit: BaseUnit, options: GenerationOptions) = unit match {

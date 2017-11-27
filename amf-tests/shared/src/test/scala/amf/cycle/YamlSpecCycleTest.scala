@@ -6,7 +6,7 @@ import amf.remote._
 
 class YamlSpecCycleTest extends BuildCycleTests {
 
-  override val basePath = "shared/src/test/resources/yaml/"
+  override val basePath = "amf-tests/shared/src/test/resources/yaml/"
 
   test("Example 5.3 - Mapping key structure indicator") {
     cycle("example-5.3.raml", "example-5.3.raml.raml", RamlYamlHint, Raml)

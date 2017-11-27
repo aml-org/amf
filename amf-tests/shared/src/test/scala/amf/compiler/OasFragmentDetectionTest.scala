@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class OasFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val basePath = "file://shared/src/test/resources/references/fragments/"
+  private val basePath = "file://amf-tests/shared/src/test/resources/references/fragments/"
 
   test("Detect Oas Data Type Fragment") {
     assertHeader("data-type-without-header.json", Some(OasHeader.Oas20DataType))

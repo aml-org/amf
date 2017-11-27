@@ -92,8 +92,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
 
   def libraryBare(): Module = {
     Module()
-      .withId("file://shared/src/test/resources/clients/lib/lib.raml")
-      .withLocation("file://shared/src/test/resources/clients/lib/lib.raml")
+      .withId("file://amf-tests/shared/src/test/resources/clients/lib/lib.raml")
+      .withLocation("file://amf-tests/shared/src/test/resources/clients/lib/lib.raml")
       .withUsage("Data types and annotation types")
 
   }

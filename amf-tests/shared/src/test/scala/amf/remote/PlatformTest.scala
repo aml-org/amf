@@ -17,7 +17,7 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
 
   test("File") {
     platform
-      .resolve("file://shared/src/test/resources/input.yaml", None) map {
+      .resolve("file://amf-tests/shared/src/test/resources/input.yaml", None) map {
       case Content(content, url, mime) =>
         mime should contain(`APPLICATION/YAML`)
 
@@ -28,7 +28,7 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
                      |  - 2
                      |d: !include includes/include2.yaml""".stripMargin
 
-        content.sourceName should be("shared/src/test/resources/input.yaml")
+        content.sourceName should be("amf-tests/shared/src/test/resources/input.yaml")
     }
   }
 
@@ -52,10 +52,10 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
 
   test("Path resolution") {
     Future.successful({
-      val url = "file://shared/src/test/resources/input.yaml"
+      val url = "file://amf-tests/shared/src/test/resources/input.yaml"
 
       platform.resolvePath(url) should be(url)
-      platform.resolvePath("file://shared/src/test/resources/ignored/../input.yaml") should be(url)
+      platform.resolvePath("file://amf-tests/shared/src/test/resources/ignored/../input.yaml") should be(url)
     })
   }
 
