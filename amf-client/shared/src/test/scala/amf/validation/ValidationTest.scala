@@ -471,6 +471,30 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Mutually exclusive 'type' and 'schema' facets validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "types/exclusive_facets.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("Mutually exclusive 'types' and 'schemas' facets validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "webapi/exclusive_facets.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      assert(report.results.length == 1)
+    }
+  }
+
   test("Valid baseUri validations test") {
     val validation = Validation(platform)
     for {
