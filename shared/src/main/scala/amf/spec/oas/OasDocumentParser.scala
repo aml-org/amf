@@ -1,6 +1,7 @@
 package amf.spec.oas
 
 import amf.common.Lazy
+import amf.common.core.TemplateUri
 import amf.compiler.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain.Annotation.{
@@ -290,6 +291,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: ParserContext) extend
       val endpoint = producer(path).add(Annotations(entry))
 
       endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
+
+      if (!TemplateUri.isValid(path))
+        ctx.violation(endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
       if (collector.exists(e => e.path == path)) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
       else parseEndpoint(endpoint)

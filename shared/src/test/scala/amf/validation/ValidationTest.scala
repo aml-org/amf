@@ -464,6 +464,29 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Invalid baseUri validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "webapi/invalid_baseuri.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("Valid baseUri validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "webapi/valid_baseuri.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
+
   test("Annotations model validations test") {
     val validation = Validation(platform)
     for {

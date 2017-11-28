@@ -1,5 +1,6 @@
 package amf.spec.domain
 
+import amf.common.core.TemplateUri
 import amf.domain.Annotation.ParentEndPoint
 import amf.domain.{Annotations, EndPoint, Operation, Parameter}
 import amf.metadata.domain.EndPointModel
@@ -28,6 +29,9 @@ case class RamlEndpointParser(entry: YMapEntry,
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
+
+    if (!TemplateUri.isValid(path))
+      ctx.violation(endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
     if (collector.exists(e => e.path == path)) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
     else parseEndpoint(endpoint)

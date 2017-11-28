@@ -1,5 +1,6 @@
 package amf.spec.raml
 
+import amf.common.core.TemplateUri
 import amf.compiler.Root
 import amf.document.{BaseUnit, Document, Extension, Overlay}
 import amf.domain.Annotation._
@@ -184,8 +185,11 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: ParserContext) exten
     map.key(
       "baseUri",
       entry => {
-        val value = ValueNode(entry.value)
-        val uri   = BaseUriSplitter(value.string().value.toString)
+        val value = entry.value.as[String]
+        val uri   = BaseUriSplitter(value)
+
+        if (!TemplateUri.isValid(value))
+          ctx.violation(api.id, TemplateUri.invalidMsg(value), entry.value)
 
         if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
           api.set(WebApiModel.Schemes,
