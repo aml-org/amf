@@ -260,17 +260,21 @@ abstract class RamlSpecParser extends BaseSpecParser {
       "annotationTypes",
       e => {
         e.value
-          .as[YMap]
-          .entries
-          .map { entry =>
-            val typeName = entry.key.as[String]
-            val customProperty = AnnotationTypesParser(entry,
-                                                       customProperty =>
-                                                         customProperty
-                                                           .withName(typeName)
-                                                           .adopted(customProperties))
-            ctx.declarations += customProperty.add(DeclaredElement())
-          }
+          .to[YMap] match {
+          case Right(annotationTypes) =>
+            annotationTypes.entries
+              .map { entry =>
+                val typeName = entry.key.as[String]
+                val customProperty = AnnotationTypesParser(entry,
+                                                           customProperty =>
+                                                             customProperty
+                                                               .withName(typeName)
+                                                               .adopted(customProperties))
+                ctx.declarations += customProperty.add(DeclaredElement())
+              }
+          case Left(_) =>
+        }
+
       }
     )
   }
@@ -279,15 +283,19 @@ abstract class RamlSpecParser extends BaseSpecParser {
     map.key(
       "types",
       e => {
-        e.value.as[YMap].entries.foreach { entry =>
-          RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
-            .parse() match {
-            case Some(shape) =>
-              if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
-              ctx.declarations += shape.add(DeclaredElement())
-            case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
-          }
+        e.value.to[YMap] match {
+          case Right(types) =>
+            types.entries.foreach { entry =>
+              RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
+                .parse() match {
+                case Some(shape) =>
+                  if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
+                  ctx.declarations += shape.add(DeclaredElement())
+                case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
+              }
 
+            }
+          case Left(_) =>
         }
       }
     )
@@ -297,10 +305,14 @@ abstract class RamlSpecParser extends BaseSpecParser {
     map.key(
       "securitySchemes",
       e => {
-        e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
-            .parse()
-            .add(DeclaredElement())
+        e.value.to[YMap] match {
+          case Right(securitySchemes) =>
+            securitySchemes.entries.foreach { entry =>
+              ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
+                .parse()
+                .add(DeclaredElement())
+            }
+          case Left(_) =>
         }
       }
     )
