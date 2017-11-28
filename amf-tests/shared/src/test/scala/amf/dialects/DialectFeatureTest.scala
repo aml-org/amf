@@ -2,11 +2,11 @@ package amf.dialects
 
 import amf.common.Tests.checkDiff
 import amf.core.client.GenerationOptions
-import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote.{Amf, ExtensionYamlHint, Raml}
+import amf.core.unsafe.PlatformSecrets
+import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import org.scalatest.AsyncFunSuite
 
@@ -181,7 +181,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Bruno problems in sequences") {
-    val validation = platform.dialectsRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
     val expected =
       platform.resolve(basePath + "bruno/EventedAPI_Banking.json", None).map(_.stream.toString)
     val actual = validation
@@ -189,12 +189,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
         unit =>
           AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking.raml",
             platform,
-            RamlYamlHint,
+            ExtensionYamlHint,
             Validation(platform),
             None,
-            None,
-            platform.dialectsRegistry)
-            .build())
+            None).build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
@@ -206,7 +204,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Bruno problems in sequences 2") {
-    val validation = platform.dialectsRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
     val expected =
       platform.resolve(basePath + "bruno/EventedAPI_Banking1.json", None).map(_.stream.toString)
     val actual = validation
@@ -214,12 +212,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
         unit =>
           AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking1.raml",
             platform,
-            RamlYamlHint,
+            ExtensionYamlHint,
             Validation(platform),
             None,
-            None,
-            platform.dialectsRegistry)
-            .build())
+            None).build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
@@ -231,7 +227,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Bruno problems in sequences 3") {
-    val validation = platform.dialectsRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
     val expected =
       platform.resolve(basePath + "bruno/EventedAPI_Banking2.json", None).map(_.stream.toString)
     val actual = validation
@@ -239,12 +235,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
         unit =>
           AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking1.raml",
             platform,
-            RamlYamlHint,
+            ExtensionYamlHint,
             Validation(platform),
             None,
-            None,
-            platform.dialectsRegistry)
-            .build())
+            None).build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {

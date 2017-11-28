@@ -40,7 +40,7 @@ object OasHeader {
 
   object Oas20Overlay extends OasHeader(extensionType, "2.0 Overlay")
 
-  def apply(root: Root): Option[OasHeader] = {
+  def apply(root: Root): Option[OasHeader] = try {
     val map = root.parsed.document.as[YMap]
 
     map
@@ -49,6 +49,8 @@ object OasHeader {
       .orElse(map.key(swagger))
       .flatMap(extension => OasHeader(extension.value))
       .orElse(toOasType(FragmentTypes(map)))
+  } catch {
+    case e: Exception => None
   }
 
   def apply(text: String): Option[OasHeader] = text match {

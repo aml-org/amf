@@ -1,8 +1,5 @@
 package amf.core.metamodel
 
-import amf.framework.metamodel.Obj
-import amf.framework.model.document.BaseUnit
-import amf.framework.model.domain.DomainElement
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 

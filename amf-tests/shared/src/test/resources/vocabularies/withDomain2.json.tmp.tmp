@@ -1,0 +1,202 @@
+[
+  {
+    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/withDomain2.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "http://raml.org1/vocabularies/myvocab#",
+        "@type": [
+          "http://raml.org/vocabularies/meta#Vocabulary",
+          "http://www.w3.org/2002/07/owl#Ontology"
+        ],
+        "http://raml.org/vocabularies/meta#base": [
+          {
+            "@value": "http://raml.org1/vocabularies/myvocab#"
+          }
+        ],
+        "http://raml.org/vocabularies/meta#version": [
+          {
+            "@value": "1.01211"
+          }
+        ],
+        "http://raml.org/vocabularies/meta#external": [
+          {
+            "@id": "http://raml.org1/vocabularies/myvocab#wm",
+            "@type": [
+              "http://raml.org/vocabularies/meta#External"
+            ],
+            "http://raml.org/vocabularies/meta#name": [
+              {
+                "@value": "wm"
+              }
+            ],
+            "http://raml.org/vocabularies/meta#uri": [
+              {
+                "@value": "d"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://raml.org1/vocabularies/myvocab#wm/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/meta#uri"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,6)-(5,7)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org1/vocabularies/myvocab#wm"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,6)-(5,7)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/meta#classes": [
+          {
+            "@id": "http://raml.org1/vocabularies/myvocab#MyOperation",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://raml.org1/vocabularies/myvocab#MyOperation/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org1/vocabularies/myvocab#MyOperation"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,14)-(9,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/meta#properties": [
+          {
+            "@id": "dmp",
+            "@type": [
+              "http://raml.org/vocabularies/meta#Property",
+              "http://www.w3.org/2002/07/owl#ObjectProperty"
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#domain": [
+              {
+                "@id": "http://raml.org1/vocabularies/myvocab#MyOperation"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "dmp/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "dmp"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/meta#externalEntities": [
+          {
+            "@id": "dmp",
+            "@type": [
+              "http://raml.org/vocabularies/meta#ExternalEntity"
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://raml.org1/vocabularies/myvocab#/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/meta#version"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,9)-(3,16)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org1/vocabularies/myvocab#"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(9,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/meta#base"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,6)-(2,44)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

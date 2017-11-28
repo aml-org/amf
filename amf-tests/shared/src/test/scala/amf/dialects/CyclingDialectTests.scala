@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.core.remote.{Amf, Raml, RamlYamlHint}
+import amf.core.remote._
 import amf.io.BuildCycleTests
 
 import scala.concurrent.ExecutionContext
@@ -53,13 +53,13 @@ class CyclingDialectTests extends BuildCycleTests {
   }
 
   test("Vocabulary with domain") {
-    cycle("withDomain.json", "withDomain.raml", AmfJsonHint, Raml)
+    cycle("withDomain.json", "withDomain.raml", AmfJsonHint, Extension)
   }
   test("Vocabulary with domain external") {
-    cycle("withDomain2.raml", "withDomain2.json", RamlYamlHint, Amf)
+    cycle("withDomain2.raml", "withDomain2.json", ExtensionYamlHint, Amf)
   }
 
   test("Vocabulary with domain external2") {
-    cycle("withDomain2.json", "withDomain2.raml", AmfJsonHint, Raml)
+    cycle("withDomain2.json", "withDomain2.raml", AmfJsonHint, Extension)
   }
 }
