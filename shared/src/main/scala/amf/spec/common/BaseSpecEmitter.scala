@@ -12,7 +12,7 @@ import amf.remote.Vendor
 import amf.spec.declaration.TagToReferenceEmitter
 import amf.spec.{EntryEmitter, PartEmitter, SpecOrdering}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -139,6 +139,11 @@ package object BaseEmitters {
       tuple match {
         case (key, value) => MapEntryEmitter(key, value)
       }
+  }
+
+  case class EmptyMapEmitter(position: Position = Position.ZERO) extends PartEmitter {
+
+    override def emit(b: PartBuilder): Unit = b += YMap.empty
   }
 
   protected[amf] def link(b: PartBuilder, id: String): Unit = b.obj(_.entry("@id", id.trim))

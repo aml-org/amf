@@ -34,7 +34,8 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |  "schemes": [
         |    "http",
         |    "https"
-        |  ]
+        |  ],
+        |  "paths": {}
         |}""".stripMargin
 
     val actual = new AMFDumper(`document/api/bare`, Oas, Json, GenerationOptions()).dumpToString

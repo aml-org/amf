@@ -18,7 +18,7 @@ import amf.spec.common._
 import amf.spec.declaration._
 import amf.spec.domain._
 import amf.unsafe.PlatformSecrets
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YMap}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
@@ -99,7 +99,9 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
       fs.entry(WebApiModel.Documentations).map(f => result ++= UserDocumentationsEmitter(f, ordering).emitters())
 
-      fs.entry(WebApiModel.EndPoints).map(f => result += EndpointsEmitter("paths", f, ordering, references))
+      fs.entry(WebApiModel.EndPoints)
+        .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
+          result += EndpointsEmitter("paths", f, ordering, references))
 
       fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
 
