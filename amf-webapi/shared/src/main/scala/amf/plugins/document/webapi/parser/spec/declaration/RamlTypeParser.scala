@@ -118,13 +118,15 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx).parse()
       case _                                  => // ignore if it is not a map or we haven't been able to parse a shape
     }
-
   }
+
+  private def typeOrSchema(map: YMap) = map.key("type").orElse(map.key("schema"))
 
   private def parseXMLSchemaExpression(entry: YMapEntry): Shape = {
     entry.value.tagType match {
       case YType.Map =>
-        entry.value.as[YMap].key("type") match {
+        val map = entry.value.as[YMap]
+        typeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
@@ -153,7 +155,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
   private def parseJSONSchemaExpression(entry: YMapEntry): Shape = {
     val text = entry.value.tagType match {
       case YType.Map =>
-        entry.value.as[YMap].key("type") match {
+        val map = entry.value.as[YMap]
+        typeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             typeEntry.value.as[YScalar].text
           case _ =>
@@ -269,8 +272,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
   private def isFileType: Boolean = {
     node.to[YMap] match {
       case Right(map) =>
-        map
-          .key("type")
+        typeOrSchema(map)
           .exists { entry: YMapEntry =>
             entry.value.to[YScalar] match {
               case Right(scalar) =>
@@ -320,10 +322,10 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
       parseOASFields(map, shape)
 
-      map
-        .key("type")
-        .fold(shape
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
+      typeOrSchema(map)
+        .fold(
+          shape
+            .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
       map.key("minimum", entry => {
@@ -829,11 +831,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
     }
 
     protected def parseInheritance(): Unit = {
-      map.key(
-        "type",
-        entry => InheritanceParser(entry, shape).parse()
-      )
+      typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape).parse())
     }
   }
-
 }

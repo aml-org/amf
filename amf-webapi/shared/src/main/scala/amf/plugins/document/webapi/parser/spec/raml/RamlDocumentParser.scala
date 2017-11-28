@@ -287,25 +287,37 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
   }
 
   private def parseTypeDeclarations(map: YMap, parent: String): Unit = {
-    map.key(
-      "types",
-      e => {
-        e.value.to[YMap] match {
-          case Right(types) =>
-            types.entries.foreach { entry =>
-              RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
-                .parse() match {
-                case Some(shape) =>
-                  if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
-                  ctx.declarations += shape.add(DeclaredElement())
-                case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
-              }
-
+    typeOrSchema(map).foreach { e =>
+      e.value.to[YMap] match {
+        case Right(types) =>
+          types.entries.foreach { entry =>
+            RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
+              .parse() match {
+              case Some(shape) =>
+                if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
+                ctx.declarations += shape.add(DeclaredElement())
+              case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
             }
-          case Left(_) =>
-        }
+
+          }
+        case Left(_) =>
       }
-    )
+    }
+  }
+
+  /** Get types or schemas facet. If both are available, default to types facet and throw a validation error. */
+  private def typeOrSchema(map: YMap) = {
+    val types   = map.key("types")
+    val schemas = map.key("schemas")
+
+    for {
+      _ <- types
+      s <- schemas
+    } {
+      ctx.violation("'schemas' and 'types' properties are mutually exclusive", Some(s.key))
+    }
+
+    types.orElse(schemas)
   }
 
   private def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {

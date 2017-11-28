@@ -43,7 +43,7 @@ case class RamlTypeDetector(parent: String,
         .orElse(detectAnyOf(filterMap))
         .orElse(detectTypeOrSchema(filterMap))
 
-      // Default type as received from the parsing process
+    // Default type as received from the parsing process
     case YType.Null => Some(defaultType.typeDef)
 
     case _ =>
@@ -91,17 +91,31 @@ case class RamlTypeDetector(parent: String,
 
   private def detectTypeOrSchema(map: YMap): Option[TypeDef] = {
     if (map.entries.nonEmpty)
-      (map
-        .key("type")
-        .orElse(map.key("schema"))
-        .flatMap(e =>
-          RamlTypeDetector(parent, map.key("(format)").map(_.value.toString()), recursive = true)
-            .detect(e.value)) match {
+      (typeOrSchema(map)
+        .flatMap(
+          e =>
+            RamlTypeDetector(parent, map.key("(format)").map(_.value.toString()), recursive = true)
+              .detect(e.value)) match {
         case Some(t) if t == UndefinedType => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
         case Some(other)                   => Some(other)
         case None                          => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
       }).orElse(Some(ObjectType)) // this is for forward refferences.
     else None
+  }
+
+  /** Get type or schema facet. If both are available, default to type facet and throw a validation error. */
+  private def typeOrSchema(map: YMap) = {
+    val `type` = map.key("type")
+    val schema = map.key("schema")
+
+    for {
+      _ <- `type`
+      s <- schema
+    } {
+      ctx.violation("'schema' and 'type' properties are mutually exclusive", Some(s.key))
+    }
+
+    `type`.orElse(schema)
   }
 
   private def collectTypeDefs(sequence: Seq[YNode]): Seq[TypeDef] =
@@ -113,7 +127,10 @@ case class RamlTypeDetector(parent: String,
     def apply(inheritsTypes: Seq[TypeDef], ast: YPart): Option[TypeDef] = {
       val head = inheritsTypes.headOption
       if (inheritsTypes.count(_.equals(head.get)) != inheritsTypes.size) {
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(), parent, "Can't inherit from more than one class type", ast)
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                      parent,
+                      "Can't inherit from more than one class type",
+                      ast)
         Some(UndefinedType)
       } else
         head
@@ -126,14 +143,16 @@ case class RamlTypeDetector(parent: String,
   object ShapeClassTypeDefMatcher {
     def apply(shape: Shape, part: YNode, plainUnion: Boolean)(implicit ctx: ParserContext): Option[TypeDef] =
       shape match {
-        case _ if shape.isLink => shape.linkTarget match {
-          case Some(linkedShape: Shape) => apply(linkedShape, part, plainUnion)
-          case _ => ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
-                                  shape.id,
-                                  "Found reference to domain element different of Shape when shape was expected",
-                                  part)
-                    None
-        }
+        case _ if shape.isLink =>
+          shape.linkTarget match {
+            case Some(linkedShape: Shape) => apply(linkedShape, part, plainUnion)
+            case _ =>
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                            shape.id,
+                            "Found reference to domain element different of Shape when shape was expected",
+                            part)
+              None
+          }
         case _: NilShape => Some(NilType)
         case s: ScalarShape =>
           val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(s.dataType))
@@ -152,7 +171,8 @@ case class RamlTypeDetector(parent: String,
 
     case class InheritsUnionMatcher(union: UnionShape)(implicit ctx: ParserContext) extends PlatformSecrets {
       def matchUnionFather(part: YPart): Option[TypeDef] = {
-        val typeSet = union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
+        val typeSet =
+          union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
         if (typeSet.size == 1) {
           Some(typeSet.head)
         } else {
