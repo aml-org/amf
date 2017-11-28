@@ -1,17 +1,14 @@
 package amf.plugins.document.vocabularies.core
 
 
-import amf.compiler.Root
-import amf.domain.Annotation.SynthesizedField
 import amf.core.Root
-import amf.domain.dialects.DomainEntity
-import amf.model.AmfScalar
-import amf.framework.parser.Annotations
-import amf.framework.parser.{Annotations, Fields}
+import amf.core.annotations.SynthesizedField
 import amf.core.parser.{Annotations, Fields}
+import amf.core.vocabulary.{Namespace, ValueType}
+import amf.dialects.RAML_1_0_VocabularyTopLevel
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec._
-import amf.core.vocabulary.{Namespace, ValueType}
+
 
 /**
   * Created by Pavel Petrochenko on 12/09/17.

@@ -51,12 +51,14 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     * to decide which one will parse the document base on information fromt
     * the document structure
     */
-  override def canParse(root: Root): Boolean = OasHeader(root) match {
-    case Some(Oas20Overlay)   => true
-    case Some(Oas20Extension) => true
-    case Some(Oas20Header)    => true
-    case f if f.isDefined     => true
-    case _                    => false
+  override def canParse(root: Root): Boolean = {
+    OasHeader(root) match {
+      case Some(Oas20Overlay)   => true
+      case Some(Oas20Extension) => true
+      case Some(Oas20Header)    => true
+      case f if f.isDefined     => true
+      case _                    => false
+    }
   }
 
   override def parse(document: Root, parentContext: ParserContext, platform: Platform) = {

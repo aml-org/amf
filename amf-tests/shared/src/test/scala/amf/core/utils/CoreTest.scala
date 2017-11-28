@@ -1,11 +1,10 @@
-package amf.common
+package amf.core.utils
 
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
-import amf.common.core.{QName, Strings}
 
 /**
-  * [[core]] test
+  * [[amf.core.utils]] test
   */
 class CoreTest extends FunSuite {
 

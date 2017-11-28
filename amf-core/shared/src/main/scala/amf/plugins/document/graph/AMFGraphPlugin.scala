@@ -16,7 +16,7 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
   override val ID = "AMF Graph"
   override def dependencies() = Seq()
 
-  val vendors = Seq("AMF JSON-LD")
+  val vendors = Seq("AMF JSON-LD", "AMF Graph")
 
   override def modelEntities = Nil
 

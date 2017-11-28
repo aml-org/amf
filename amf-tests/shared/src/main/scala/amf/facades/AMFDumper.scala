@@ -39,7 +39,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
       case Payload       => "AMF Payload"
       case Raml          => "RAML 1.0"
       case Oas           => "OAS 2.0"
-      case Extension     => "RAML Extension"
+      case Extension     => "RAML Vocabularies"
       case Unknown       => "Uknown Vendor"
     }
 

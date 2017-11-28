@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml",
+    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml",
     "@type": [
       "http://raml.org/vocabularies/document#Document",
       "http://raml.org/vocabularies/document#Fragment",
@@ -9,13 +9,13 @@
     ],
     "http://raml.org/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#",
+        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#",
         "@type": [
           "http://raml.org/vocabularies/events#EventedAPI"
         ],
         "http://raml.org/vocabularies/events#producers": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1",
             "@type": [
               "http://raml.org/vocabularies/events#EventProducer"
             ],
@@ -41,7 +41,7 @@
             ],
             "http://raml.org/vocabularies/events#eventChannel": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1/producerChannel",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1/producerChannel",
                 "@type": [
                   "http://raml.org/vocabularies/events#EventChannel"
                 ]
@@ -49,7 +49,7 @@
             ],
             "http://raml.org/vocabularies/events#eventSubject": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1/producerSubject",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1/producerSubject",
                 "@type": [
                   "http://raml.org/vocabularies/events#EventSubject"
                 ]
@@ -59,7 +59,7 @@
         ],
         "http://raml.org/vocabularies/events#subjects": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1",
             "@type": [
               "http://raml.org/vocabularies/events#EventSubject"
             ],
@@ -80,7 +80,7 @@
             ],
             "http://raml.org/vocabularies/transports#eventTransport": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
                 "@type": [
                   "http://raml.org/vocabularies/transports#EventTransport"
                 ],
@@ -91,7 +91,7 @@
                 ],
                 "http://raml.org/vocabularies/document#link-target": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
                   }
                 ],
                 "http://raml.org/vocabularies/document#link-label": [
@@ -116,7 +116,7 @@
                 ],
                 "http://raml.org/vocabularies/transports#transportConection": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
                     "@type": [
                       "http://raml.org/vocabularies/transports#EventTransportConnection"
                     ],
@@ -149,7 +149,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
                 "@type": [
                   "http://raml.org/vocabularies/transports#EventTransport"
                 ],
@@ -160,7 +160,7 @@
                 ],
                 "http://raml.org/vocabularies/document#link-target": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
                   }
                 ],
                 "http://raml.org/vocabularies/document#link-label": [
@@ -185,7 +185,7 @@
                 ],
                 "http://raml.org/vocabularies/transports#transportConection": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
                     "@type": [
                       "http://raml.org/vocabularies/transports#EventTransportConnection"
                     ],
@@ -220,7 +220,7 @@
             ],
             "http://raml.org/vocabularies/events#baseEvent": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
                 "@type": [
                   "http://raml.org/vocabularies/events#BaseEvent"
                 ],
@@ -231,7 +231,7 @@
                 ],
                 "http://raml.org/vocabularies/document#link-target": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
                   }
                 ],
                 "http://raml.org/vocabularies/document#link-label": [
@@ -261,7 +261,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
                 "@type": [
                   "http://raml.org/vocabularies/events#BaseEvent"
                 ],
@@ -272,7 +272,7 @@
                 ],
                 "http://raml.org/vocabularies/document#link-target": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
                   }
                 ],
                 "http://raml.org/vocabularies/document#link-label": [
@@ -302,7 +302,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
                 "@type": [
                   "http://raml.org/vocabularies/events#BaseEvent"
                 ],
@@ -313,7 +313,7 @@
                 ],
                 "http://raml.org/vocabularies/document#link-target": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
                   }
                 ],
                 "http://raml.org/vocabularies/document#link-label": [
@@ -343,7 +343,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
                 "@type": [
                   "http://raml.org/vocabularies/events#BaseEvent"
                 ],
@@ -354,7 +354,7 @@
                 ],
                 "http://raml.org/vocabularies/document#link-target": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
                   }
                 ],
                 "http://raml.org/vocabularies/document#link-label": [
@@ -388,7 +388,7 @@
         ],
         "http://raml.org/vocabularies/events#channels": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#channel1",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#channel1",
             "@type": [
               "http://raml.org/vocabularies/events#EventChannel"
             ],
@@ -406,7 +406,7 @@
         ],
         "http://raml.org/vocabularies/events#consumers": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1",
             "@type": [
               "http://raml.org/vocabularies/events#EventConsumer"
             ],
@@ -432,7 +432,7 @@
             ],
             "http://raml.org/vocabularies/events#eventChannel": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerChannel",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerChannel",
                 "@type": [
                   "http://raml.org/vocabularies/events#EventChannel"
                 ],
@@ -450,7 +450,7 @@
             ],
             "http://raml.org/vocabularies/events#eventSubject": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerSubject",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerSubject",
                 "@type": [
                   "http://raml.org/vocabularies/events#EventSubject"
                 ],
@@ -471,7 +471,7 @@
                 ],
                 "http://raml.org/vocabularies/transports#eventTransport": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
                     "@type": [
                       "http://raml.org/vocabularies/transports#EventTransport"
                     ],
@@ -482,7 +482,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -507,7 +507,7 @@
                     ],
                     "http://raml.org/vocabularies/transports#transportConection": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
                         "@type": [
                           "http://raml.org/vocabularies/transports#EventTransportConnection"
                         ],
@@ -540,7 +540,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
                     "@type": [
                       "http://raml.org/vocabularies/transports#EventTransport"
                     ],
@@ -551,7 +551,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -576,7 +576,7 @@
                     ],
                     "http://raml.org/vocabularies/transports#transportConection": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
                         "@type": [
                           "http://raml.org/vocabularies/transports#EventTransportConnection"
                         ],
@@ -611,7 +611,7 @@
                 ],
                 "http://raml.org/vocabularies/events#baseEvent": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -622,7 +622,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -652,7 +652,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -663,7 +663,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -693,7 +693,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -704,7 +704,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -734,7 +734,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -745,7 +745,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -779,7 +779,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#apiPersona",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#apiPersona",
             "@type": [
               "http://raml.org/vocabularies/events#EventConsumer"
             ],
@@ -790,7 +790,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#eventProducer",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#eventProducer",
             "@type": [
               "http://raml.org/vocabularies/events#EventConsumer"
             ],
@@ -816,7 +816,7 @@
             ],
             "http://raml.org/vocabularies/events#eventChannel": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerChannel",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerChannel",
                 "@type": [
                   "http://raml.org/vocabularies/events#EventChannel"
                 ],
@@ -834,7 +834,7 @@
             ],
             "http://raml.org/vocabularies/events#eventSubject": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerSubject",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerSubject",
                 "@type": [
                   "http://raml.org/vocabularies/events#EventSubject"
                 ],
@@ -855,7 +855,7 @@
                 ],
                 "http://raml.org/vocabularies/transports#eventTransport": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
                     "@type": [
                       "http://raml.org/vocabularies/transports#EventTransport"
                     ],
@@ -866,7 +866,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -891,7 +891,7 @@
                     ],
                     "http://raml.org/vocabularies/transports#transportConection": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
                         "@type": [
                           "http://raml.org/vocabularies/transports#EventTransportConnection"
                         ],
@@ -924,7 +924,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
                     "@type": [
                       "http://raml.org/vocabularies/transports#EventTransport"
                     ],
@@ -935,7 +935,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -960,7 +960,7 @@
                     ],
                     "http://raml.org/vocabularies/transports#transportConection": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
                         "@type": [
                           "http://raml.org/vocabularies/transports#EventTransportConnection"
                         ],
@@ -995,7 +995,7 @@
                 ],
                 "http://raml.org/vocabularies/events#baseEvent": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -1006,7 +1006,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -1036,7 +1036,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -1047,7 +1047,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -1077,7 +1077,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -1088,7 +1088,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -1118,7 +1118,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
+                    "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
                     "@type": [
                       "http://raml.org/vocabularies/events#BaseEvent"
                     ],
@@ -1129,7 +1129,7 @@
                     ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
+                        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
@@ -1167,14 +1167,14 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml",
+        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml",
         "@type": [
           "http://raml.org/vocabularies/document#Module",
           "http://raml.org/vocabularies/document#Unit"
         ],
         "http://raml.org/vocabularies/document#declares": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#loanProcessedEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#loanProcessedEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1205,7 +1205,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1236,7 +1236,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1267,7 +1267,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1298,7 +1298,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#tradeEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#tradeEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1329,7 +1329,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#loanOriginationEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#loanOriginationEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1360,7 +1360,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent",
             "@type": [
               "http://raml.org/vocabularies/events#BaseEvent"
             ],
@@ -1393,14 +1393,14 @@
         ]
       },
       {
-        "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml",
+        "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml",
         "@type": [
           "http://raml.org/vocabularies/document#Module",
           "http://raml.org/vocabularies/document#Unit"
         ],
         "http://raml.org/vocabularies/document#declares": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport",
             "@type": [
               "http://raml.org/vocabularies/transports#EventTransport"
             ],
@@ -1426,7 +1426,7 @@
             ],
             "http://raml.org/vocabularies/transports#transportConection": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
                 "@type": [
                   "http://raml.org/vocabularies/transports#EventTransportConnection"
                 ],
@@ -1459,7 +1459,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport",
             "@type": [
               "http://raml.org/vocabularies/transports#EventTransport"
             ],
@@ -1485,7 +1485,7 @@
             ],
             "http://raml.org/vocabularies/transports#transportConection": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
                 "@type": [
                   "http://raml.org/vocabularies/transports#EventTransportConnection"
                 ],
@@ -1518,7 +1518,7 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#solaceTransport",
+            "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#solaceTransport",
             "@type": [
               "http://raml.org/vocabularies/transports#EventTransport"
             ],
@@ -1544,7 +1544,7 @@
             ],
             "http://raml.org/vocabularies/transports#transportConection": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#solaceTransport/transportConnection",
+                "@id": "file://amf-tests/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#solaceTransport/transportConnection",
                 "@type": [
                   "http://raml.org/vocabularies/transports#EventTransportConnection"
                 ],
