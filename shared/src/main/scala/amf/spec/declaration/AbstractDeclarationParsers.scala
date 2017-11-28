@@ -2,9 +2,9 @@ package amf.spec.declaration
 
 import amf.domain.Annotations
 import amf.domain.`abstract`.{AbstractDeclaration, ResourceType, Trait}
-import amf.parser.{YMapOps, YNodeLikeOps}
-import amf.spec.{ParserContext, SearchScope}
+import amf.parser.YMapOps
 import amf.spec.common.{AbstractVariables, DataNodeParser}
+import amf.spec.{ParserContext, SearchScope}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 /**
@@ -18,12 +18,15 @@ case class AbstractDeclarationsParser(key: String,
     map.key(
       key,
       e => {
-        e.value
-          .as[YMap]
-          .entries
-          .map(entry =>
-            ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
-              .parse())
+        e.value.to[YMap] match {
+          case Right(declarations) =>
+            declarations.entries
+              .map(
+                entry =>
+                  ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
+                    .parse())
+          case Left(_) =>
+        }
       }
     )
   }
