@@ -1,5 +1,7 @@
 package amf.common
 
+import scala.annotation.tailrec
+
 package object core {
 
   /**
@@ -57,5 +59,21 @@ package object core {
     }
 
     val Empty = QName("", "")
+  }
+
+  object TemplateUri {
+    def isValid(chars: String): Boolean = {
+      @tailrec
+      def isBalanced(cs: List[Char], level: Int): Boolean = cs match {
+        case Nil                   => level == 0
+        case '}' :: _ if level < 1 => false
+        case '}' :: xs             => isBalanced(xs, level - 1)
+        case '{' :: xs             => isBalanced(xs, level + 1)
+        case _ :: xs               => isBalanced(xs, level)
+      }
+      isBalanced(chars.toList, 0)
+    }
+
+    def invalidMsg(uri: String): String = s"'$uri' is not a valid template uri."
   }
 }
