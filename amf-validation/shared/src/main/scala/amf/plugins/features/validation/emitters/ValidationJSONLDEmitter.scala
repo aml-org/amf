@@ -143,37 +143,20 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       b.entry("@id", constraintId)
       b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
 
-      constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _))
-      constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _))
-      constraint.maxLength.foreach(genPropertyConstraintValue(b, "maxLength", _))
-      constraint.minLength.foreach(genPropertyConstraintValue(b, "minLength", _))
-      constraint.maxExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _))
-      constraint.minExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _))
-      constraint.maxInclusive.foreach(genPropertyConstraintValue(b, "maxInclusive", _))
-      constraint.minInclusive.foreach(genPropertyConstraintValue(b, "minInclusive", _))
+      constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _, Some(constraint)))
+      constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _, Some(constraint)))
+      constraint.maxLength.foreach(genPropertyConstraintValue(b, "maxLength", _, Some(constraint)))
+      constraint.minLength.foreach(genPropertyConstraintValue(b, "minLength", _, Some(constraint)))
+      constraint.maxExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _, Some(constraint)))
+      constraint.minExclusive.foreach(genPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
+      constraint.maxInclusive.foreach(genPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
+      constraint.minInclusive.foreach(genPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
       constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", escapeRegex(v)))
       constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
       constraint.datatype.foreach { v =>
-        if (v.endsWith("#float")) {
+        if (!v.endsWith("#float") && !v.endsWith("#number")) {
           // raml/oas 'number' are actually the union of integers and floats
-          b.entry(
-            (Namespace.Shacl + "or").iri(),
-            _.obj {
-              _.entry(
-                "@list",
-                _.list { l =>
-                  l.obj {
-                    _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "integer").iri()))
-                  }
-
-                  l.obj {
-                    _.entry((Namespace.Shacl + "datatype").iri(), link(_, (Namespace.Xsd + "float").iri()))
-                  }
-                }
-              )
-            }
-          )
-        } else {
+          // i handle the data type integer and float inside of every constraint. Here only need to generate the simples data types for path entry
           b.entry((Namespace.Shacl + "datatype").iri(), link(_, v))
         }
       }
@@ -308,8 +291,38 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     }
   }
 
-  private def genPropertyConstraintValue(b: EntryBuilder, constraintName: String, value: String): Unit =
-    b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value))
+  private def genPropertyConstraintValue(b: EntryBuilder,
+                                         constraintName: String,
+                                         value: String,
+                                         constraint: Option[PropertyConstraint] = None): Unit = {
+    constraint.flatMap(_.datatype) match {
+      case Some(scalarType) if scalarType == (Namespace.Shapes + "number").iri() =>
+        b.entry(
+          (Namespace.Shacl + "or").iri(),
+          _.obj {
+            _.entry(
+              "@list",
+              _.list { l =>
+                l.obj { o =>
+                  o.entry((Namespace.Shacl + constraintName).iri(),
+                          genValue(_, value, Some((Namespace.Xsd + "integer").iri())))
+                }
+
+                l.obj { o =>
+                  o.entry((Namespace.Shacl + constraintName).iri(),
+                          genValue(_, value, Some((Namespace.Xsd + "float").iri())))
+                }
+              }
+            )
+          }
+        )
+      case Some(_) =>
+        b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value, constraint.flatMap(_.datatype)))
+      case None =>
+        b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value, None))
+    }
+
+  }
 
   private def expandRamlId(s: String): String =
     if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
@@ -339,17 +352,25 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     }
   }
 
-  private def genValue(b: PartBuilder, s: String): Unit = {
-    if (s.matches("[\\d]+")) {
-      b.obj(_.entry("@value", raw(_, s, YType.Int)))
-    } else if (s == "true" || s == "false") {
-      b.obj(_.entry("@value", raw(_, s, YType.Bool)))
-    } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
-      genNonEmptyList(b)
-    } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
-      link(b, s)
-    } else {
-      b.obj(_.entry("@value", s))
+  private def genValue(b: PartBuilder, s: String, dType: Option[String] = None): Unit = {
+    dType match {
+      case Some(dt) =>
+        b.obj(p => {
+          p.entry("@value", s)
+          p.entry("@type", dt)
+        })
+      case None =>
+        if (s.matches("[\\d]+")) {
+          b.obj(_.entry("@value", raw(_, s, YType.Int)))
+        } else if (s == "true" || s == "false") {
+          b.obj(_.entry("@value", raw(_, s, YType.Bool)))
+        } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
+          genNonEmptyList(b)
+        } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
+          link(b, s)
+        } else {
+          b.obj(b => b.entry("@value", s))
+        }
     }
   }
 }

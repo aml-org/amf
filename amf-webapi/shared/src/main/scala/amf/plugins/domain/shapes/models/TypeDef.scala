@@ -45,6 +45,7 @@ object TypeDef {
   object IntType            extends TypeDef with ScalarType
   object LongType           extends TypeDef with ScalarType
   object FloatType          extends TypeDef with ScalarType
+  object NumberType         extends TypeDef with ScalarType // not use this type def, only for emit union type in shaclvalidation
   object DoubleType         extends TypeDef with ScalarType
   object BoolType           extends TypeDef with ScalarType
   object DateTimeType       extends TypeDef with ScalarType
