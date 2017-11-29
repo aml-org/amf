@@ -63,8 +63,10 @@ class ErrorHandler extends IllegalTypeHandler {
   }
 }
 
-object EmptyFutureDeclarations extends FutureDeclarations {}
-case class ParserContext(rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, futureDeclarations: FutureDeclarations = EmptyFutureDeclarations) extends ErrorHandler
+object EmptyFutureDeclarations  {
+  def apply(): FutureDeclarations = new FutureDeclarations {}
+}
+case class ParserContext(rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, futureDeclarations: FutureDeclarations = EmptyFutureDeclarations()) extends ErrorHandler
 
 
 

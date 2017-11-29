@@ -68,7 +68,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("basic.raml", RamlYamlHint)
   }
 
-  test("Basic cycle for oas") {
+  test("HERE_HERE Basic cycle for oas") {
     cycle("basic.json", OasJsonHint)
   }
 

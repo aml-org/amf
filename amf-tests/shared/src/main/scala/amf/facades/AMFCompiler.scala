@@ -16,6 +16,7 @@ import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AMFCompiler private (val url: String,
                            val remote: Platform,

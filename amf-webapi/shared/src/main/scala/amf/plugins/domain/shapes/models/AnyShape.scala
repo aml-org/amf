@@ -5,7 +5,6 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
-import amf.plugins.domain.webapi.models.CreativeWork
 import org.yaml.model.YPart
 
 class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape with ShapeHelpers {

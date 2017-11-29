@@ -259,6 +259,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
               val shape = UnresolvedShape(text, node).withName(text)
               shape.withContext(ctx)
               adopt(shape)
+              shape.unresolved(text, node)
               shape
           }
       }
@@ -614,6 +615,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       val reference = node.as[YScalar].text
       val shape     = UnresolvedShape(reference, node)
       shape.withContext(ctx)
+      shape.unresolved(reference, node)
       adopt(shape)
       shape
     }

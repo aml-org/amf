@@ -153,22 +153,26 @@ class Value(var value: AmfElement, val annotations: Annotations) {
 
   override def toString: String = value.toString
 
-  def checkUnresolved(): Unit = value match {
-    case unresolved: UnresolvedReference =>
-      // This callback will be registered in the declarations of the parser context to be executed when a reference is resolved
-      unresolved.futureRef((resolved) => {
-        value = resolved.link(unresolved.reference, unresolved.annotations)
+  def checkUnresolved() = value match {
+    case linkable: Linkable if linkable.isUnresolved =>
+      // this is a callback that will be registered
+      // in the declarations of the parser context
+      // to be executed when a reference is resolved
+      linkable.toFutureRef((resolved) => {
+        value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
       })
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
       array.values.foreach {
-        case unresolved: UnresolvedReference =>
-          unresolved.futureRef((resolved) => {
-            val updated = value.asInstanceOf[AmfArray].values.map {
-              case x if x == unresolved => resolved.link(unresolved.reference, unresolved.annotations)
-              case other                => other
+        case linkable: Linkable if linkable.isUnresolved =>
+          linkable.toFutureRef((resolved) => {
+            value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map { element =>
+              if (element == linkable) {
+                resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+              } else {
+                element
+              }
             }
-            value = AmfArray(updated, value.annotations)
           })
         case _ => // ignore
       }

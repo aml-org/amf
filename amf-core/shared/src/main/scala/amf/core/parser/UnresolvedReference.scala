@@ -18,6 +18,7 @@ trait UnresolvedReference { this: DomainElement =>
   def futureRef(resolve: (Linkable) => Unit): Unit = ctx match {
     case Some(c) =>
       c.futureDeclarations.futureRef(
+        id,
         reference,
         DeclarationPromise(
           resolve,

@@ -1,8 +1,7 @@
 package amf.core.model.domain
 
 import amf.core.metamodel.domain.LinkableElementModel
-import amf.core.parser.{Annotations, ParserContext}
-import amf.plugins.document.webapi.parser.spec.DeclarationPromise
+import amf.core.parser.{Annotations, DeclarationPromise, ParserContext}
 import org.yaml.model.YPart
 
 trait Linkable extends AmfObject { this: DomainElement with Linkable =>
@@ -46,7 +45,7 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
 
   def toFutureRef(resolve:(Linkable) => Unit) = {
     refCtx match {
-      case Some(ctx) => ctx.declarations.futureRef(refName, DeclarationPromise(
+      case Some(ctx) => ctx.futureDeclarations.futureRef(id, refName, DeclarationPromise(
         resolve,
         () => ctx.violation(id, s"Unresolved reference $refName from root context ${ctx.rootContextDocument}", refAst.get)
       ))

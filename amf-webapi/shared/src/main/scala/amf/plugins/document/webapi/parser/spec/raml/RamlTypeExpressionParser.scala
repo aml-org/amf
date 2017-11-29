@@ -1,26 +1,18 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-<<<<<<< HEAD:shared/src/main/scala/amf/plugins/document/webapi/parser/spec/raml/RamlTypeExpressionParser.scala
-import amf.core.model.domain.{AmfArray, LexicalInformation}
-import amf.core.parser.{ParserContext, Range}
-import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.ParsedFromTypeExpression
-import amf.plugins.document.webapi.parser.spec.SearchScope
-=======
 import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Range, SearchScope}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
->>>>>>> APIMF-161 add webapi sbt project:amf-webapi/shared/src/main/scala/amf/plugins/document/webapi/parser/spec/raml/RamlTypeExpressionParser.scala
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._
-import org.yaml.model.YPart
+import org.yaml.model.{YNode, YPart}
 
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Option[YPart] = None)(
+class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Option[YPart] = None, checking: Boolean)(
     implicit ctx: WebApiContext) {
   var parsedShape: Option[Shape] = None
   var acc: String                = ""
@@ -48,7 +40,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
           ParsingResult(parsedShape, input.tail)
         case '(' =>
           processChars()
-          val result = new RamlTypeExpressionParser(adopt, i + 1, part).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, i + 1, part, checking).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '|' =>
@@ -57,7 +49,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
           }
           processChars()
           parsedShape = Some(toUnion)
-          val result = new RamlTypeExpressionParser(adopt, i + 1, part).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, i + 1, part, checking).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '[' =>
@@ -95,8 +87,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
             .findType(other, SearchScope.Named) match { //i should not have a reference to fragment in a type expression.
             case Some(s) => s.link(other).asInstanceOf[Shape]
             case _ =>
-              val shape = UnresolvedShape(other, part).withName(other).withContext(ctx)
+              val shape = UnresolvedShape(other, part).withName(other)
+              shape.withContext(ctx)
               adopt(shape)
+              if (!checking) { // if we are just checking a raml type expression type, not parsing it we don't generate unresolved
+                shape.unresolved(other, part.getOrElse(YNode.Null))
+              }
               shape
           }
       }
@@ -204,6 +200,6 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, part: Option[YPart] = None)(implicit ctx: WebApiContext) =
-    new RamlTypeExpressionParser(adopt, 0, part)
+  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(implicit ctx: WebApiContext) =
+    new RamlTypeExpressionParser(adopt, 0, part, checking)
 }

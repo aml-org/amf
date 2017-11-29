@@ -8,7 +8,7 @@ import org.yaml.model.{YMap, YMapEntry, YNode}
 
 class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAwareContext, private val wrapped: ParserContext, private val internalDec: Option[WebApiDeclarations] = None) extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations) with SpecAwareContext {
 
-  val declarations: WebApiDeclarations = internalDec.getOrElse(new WebApiDeclarations(errorHandler = Some(this)))
+  val declarations: WebApiDeclarations = internalDec.getOrElse(new WebApiDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
   override def ignore(shape: String, property: String) = spec.ignore(shape, property)
 

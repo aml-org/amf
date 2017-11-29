@@ -10,8 +10,11 @@ import scala.util.matching.Regex.Match
 
 object VariableReplacer {
 
-  val VariableRegex: Regex =
-    "<<([^<<>>\\s]+)(?:\\s*\\|\\s*!(singularize|pluralize|uppercase|lowercase|lowercamelcase|uppercamelcase|lowerunderscorecase|upperunderscorecase|lowerhyphencase|upperhyphencase))?>>".r
+  private val Transformations =
+    "singularize|pluralize|uppercase|lowercase|lowercamelcase|uppercamelcase|lowerunderscorecase|upperunderscorecase|lowerhyphencase|upperhyphencase"
+  private val TransformationsRegex = Transformations.r
+
+  val VariableRegex: Regex = s"<<\\s*([^<<>>\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
 
   def replaceVariables(s: String, values: Set[Variable]): String =
     VariableRegex.replaceAllIn(s, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
@@ -19,7 +22,12 @@ object VariableReplacer {
   private def replaceMatch(values: Map[String, String])(m: Match): String = {
     values
       .get(m.group(1))
-      .map(v => Option(m.group(2)).map(variableTransformation(v, _)).getOrElse(v))
+      .map(v =>
+        Option(m.group(2))
+          .map { transformations =>
+            TransformationsRegex.findAllIn(transformations).foldLeft(v)(variableTransformation)
+          }
+          .getOrElse(v))
       .getOrElse(m.group(1))
   }
 
