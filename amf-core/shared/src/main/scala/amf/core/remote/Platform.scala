@@ -16,10 +16,20 @@ import scala.concurrent.{Future, Promise}
   */
 trait Platform {
 
+
   /** Underlying file system for platform. */
   val fs: FileSystem
+  var testingCommandLine: Boolean = false
 
   def exit(code: Int): Unit = System.exit(code)
+
+  def stdout(text: String) = System.out.println(text)
+
+  def stdout(e: Throwable): Unit = System.out.println(e)
+
+  def stderr(text: String) = System.err.println(text)
+
+  def stderr(ex: Exception) = System.err.println(ex)
 
   val wrappersRegistry: mutable.HashMap[String, (AmfObject) => AmfObjectWrapper] = mutable.HashMap.empty
   val wrappersRegistryFn: mutable.HashMap[(Obj) => Boolean, (AmfObject) => AmfObjectWrapper] = mutable.HashMap.empty

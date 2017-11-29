@@ -15,7 +15,7 @@ trait RuntimeValidator {
   /**
     * Loads a validation profile from a URL
     */
-  def loadValidationProfile(validationProfilePath: String): Future[Unit]
+  def loadValidationProfile(validationProfilePath: String): Future[String]
 
   /**
     * Low level validation returning a SHACL validation report

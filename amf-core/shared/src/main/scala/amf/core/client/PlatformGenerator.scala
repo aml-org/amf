@@ -45,4 +45,5 @@ abstract class PlatformGenerator extends PlatformSecrets {
     case Success(unit)      => handler.success(unit)
     case Failure(exception) => handler.error(exception)
   }
+
 }

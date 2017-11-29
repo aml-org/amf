@@ -18,17 +18,3 @@ case class Document(private[amf] val document: CoreDocument)
   override private[amf] val element = document
 
 }
-
-/* TODO: to webapi plugin @modularization
-@JSExportAll
-class Overlay(private[amf] val overlay: CoreOverlay) extends Document(overlay) {
-
-  def this() = this(CoreOverlay())
-}
-
-@JSExportAll
-class Extension(private[amf] val extensionFragment: CoreExtension) extends Document(extensionFragment) {
-
-  def this() = this(CoreExtension())
-}
-*/

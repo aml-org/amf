@@ -2,7 +2,6 @@ package amf.core.client
 
 import amf.ProfileNames
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
@@ -14,13 +13,13 @@ import scala.util.{Failure, Success, Try}
 
 abstract class PlatformParser extends PlatformSecrets {
 
-  protected val vendor: Vendor
-  protected val syntax: Syntax
+  protected val vendor: String
+  protected val mediaType: String
   var parsedModel: Option[BaseUnit] = None
 
   protected def parseAsync(url: String, overridePlatForm: Option[Platform] = None, parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
     RuntimeValidator.reset()
-    RuntimeCompiler(url, overridePlatForm.getOrElse(platform), effectiveMediaType(), effectiveVendor()) map { model =>
+    RuntimeCompiler(url, overridePlatForm.getOrElse(platform), mediaType, vendor) map { model =>
       parsedModel = Some(model)
       model
     }
@@ -71,6 +70,7 @@ abstract class PlatformParser extends PlatformSecrets {
     parseAsync(url, overridePlatForm)
       .onComplete(callback(handler, url))
 
+  /*
   private def effectiveVendor(): String = vendor match {
     case Raml => "RAML 1.0"
     case Oas  => "OAS 2.0"
@@ -82,6 +82,7 @@ abstract class PlatformParser extends PlatformSecrets {
     case Json  => "application/json"
     case _     => s"application/${syntax.extension}"
   }
+ */
 
   private def callback(handler: Handler[BaseUnit], url: String)(t: Try[BaseUnit]) = t match {
     case Success(value)     => handler.success(value)

@@ -1,0 +1,58 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies/validation_profile_prefixes.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies/validation_profile_prefixes.raml#",
+        "@type": [
+          "http://raml.org/vocabularies/amf-validation#Profile"
+        ],
+        "http://raml.org/vocabularies/amf-validation#ramlPrefixes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/validation_profile_prefixes.raml#schema-org",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#RamlPrefix"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlPrefixName": [
+              {
+                "@value": "schema-org"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlPrefixUri": [
+              {
+                "@value": "http://schema.org/"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/validation_profile_prefixes.raml#foaf",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#RamlPrefix"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlPrefixName": [
+              {
+                "@value": "foaf"
+              }
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlPrefixUri": [
+              {
+                "@value": "http://xmlns.com/foaf/0.1/"
+              }
+            ]
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "Test Validation Profile"
+          }
+        ]
+      }
+    ]
+  }
+]

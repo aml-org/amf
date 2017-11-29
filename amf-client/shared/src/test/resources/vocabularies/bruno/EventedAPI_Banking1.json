@@ -1,0 +1,1583 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#",
+        "@type": [
+          "http://raml.org/vocabularies/events#EventedAPI"
+        ],
+        "http://raml.org/vocabularies/events#producers": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1",
+            "@type": [
+              "http://raml.org/vocabularies/events#EventProducer"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "producer1"
+              }
+            ],
+            "http://raml.org/vocabularies/events#applicationID": [
+              {
+                "@value": "app123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#userID": [
+              {
+                "@value": "me"
+              }
+            ],
+            "http://raml.org/vocabularies/events#producerID": [
+              {
+                "@value": "prod123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventChannel": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1/producerChannel",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventChannel"
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventSubject": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#producer1/producerSubject",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventSubject"
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/events#subjects": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1",
+            "@type": [
+              "http://raml.org/vocabularies/events#EventSubject"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "subject1"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventSubjectID": [
+              {
+                "@value": "subject123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#subjectPattern": [
+              {
+                "@value": "pub-sub"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#eventTransport": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
+                "@type": [
+                  "http://raml.org/vocabularies/transports#EventTransport"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "mqttTransport"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "transports.mqttTransport"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportID": [
+                  {
+                    "@value": "mqttMosquitto123"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportType": [
+                  {
+                    "@value": "mqtt"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportVendor": [
+                  {
+                    "@value": "Mosquitto"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportConection": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                    "@type": [
+                      "http://raml.org/vocabularies/transports#EventTransportConnection"
+                    ],
+                    "http://raml.org/vocabularies/transports#connectionID": [
+                      {
+                        "@value": "mqttConn123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#host": [
+                      {
+                        "@value": "localhost"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#port": [
+                      {
+                        "@value": 8089
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#username": [
+                      {
+                        "@value": "me"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#password": [
+                      {
+                        "@value": "password"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
+                "@type": [
+                  "http://raml.org/vocabularies/transports#EventTransport"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "natsTransport"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "transports.natsTransport"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportID": [
+                  {
+                    "@value": "nats123"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportType": [
+                  {
+                    "@value": "nats"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportVendor": [
+                  {
+                    "@value": "appcera"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#transportConection": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                    "@type": [
+                      "http://raml.org/vocabularies/transports#EventTransportConnection"
+                    ],
+                    "http://raml.org/vocabularies/transports#connectionID": [
+                      {
+                        "@value": "natsonn123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#host": [
+                      {
+                        "@value": "localhost"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#port": [
+                      {
+                        "@value": 8089
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#username": [
+                      {
+                        "@value": "me"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#password": [
+                      {
+                        "@value": "password"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/events#baseEvent": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
+                "@type": [
+                  "http://raml.org/vocabularies/events#BaseEvent"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "paymentEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "bankingEvents.paymentEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventID": [
+                  {
+                    "@value": "pay123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventDomain": [
+                  {
+                    "@value": "Banking_Core"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventCategory": [
+                  {
+                    "@value": "paymentEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventPayloadType": [
+                  {
+                    "@value": "json"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
+                "@type": [
+                  "http://raml.org/vocabularies/events#BaseEvent"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "accountCreditEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "bankingEvents.accountCreditEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventID": [
+                  {
+                    "@value": "cre123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventDomain": [
+                  {
+                    "@value": "Banking_Core"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventCategory": [
+                  {
+                    "@value": "creditEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventPayloadType": [
+                  {
+                    "@value": "json"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
+                "@type": [
+                  "http://raml.org/vocabularies/events#BaseEvent"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "accountDebitEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "bankingEvents.accountDebitEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventID": [
+                  {
+                    "@value": "deb123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventDomain": [
+                  {
+                    "@value": "Banking_Core"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventCategory": [
+                  {
+                    "@value": "debitEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventPayloadType": [
+                  {
+                    "@value": "json"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
+                "@type": [
+                  "http://raml.org/vocabularies/events#BaseEvent"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "accountTransferEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "bankingEvents.accountTransferEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventID": [
+                  {
+                    "@value": "trans123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventDomain": [
+                  {
+                    "@value": "Banking_Core"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventCategory": [
+                  {
+                    "@value": "transferEvent"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventPayloadType": [
+                  {
+                    "@value": "json"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/events#channels": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#channel1",
+            "@type": [
+              "http://raml.org/vocabularies/events#EventChannel"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "channel1"
+              }
+            ],
+            "http://raml.org/vocabularies/events#channelID": [
+              {
+                "@value": "ch123"
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/events#consumers": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1",
+            "@type": [
+              "http://raml.org/vocabularies/events#EventConsumer"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "consumer1"
+              }
+            ],
+            "http://raml.org/vocabularies/events#applicationID": [
+              {
+                "@value": "app123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#consumerID": [
+              {
+                "@value": "cons123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#userID": [
+              {
+                "@value": "me"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventChannel": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerChannel",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventChannel"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "channel1"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#channelID": [
+                  {
+                    "@value": "ch123"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventSubject": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerSubject",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventSubject"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "subject1"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventSubjectID": [
+                  {
+                    "@value": "subject123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#subjectPattern": [
+                  {
+                    "@value": "pub-sub"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#eventTransport": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
+                    "@type": [
+                      "http://raml.org/vocabularies/transports#EventTransport"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "mqttTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "transports.mqttTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportID": [
+                      {
+                        "@value": "mqttMosquitto123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportType": [
+                      {
+                        "@value": "mqtt"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportVendor": [
+                      {
+                        "@value": "Mosquitto"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportConection": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                        "@type": [
+                          "http://raml.org/vocabularies/transports#EventTransportConnection"
+                        ],
+                        "http://raml.org/vocabularies/transports#connectionID": [
+                          {
+                            "@value": "mqttConn123"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#host": [
+                          {
+                            "@value": "localhost"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#port": [
+                          {
+                            "@value": 8089
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#username": [
+                          {
+                            "@value": "me"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#password": [
+                          {
+                            "@value": "password"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
+                    "@type": [
+                      "http://raml.org/vocabularies/transports#EventTransport"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "natsTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "transports.natsTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportID": [
+                      {
+                        "@value": "nats123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportType": [
+                      {
+                        "@value": "nats"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportVendor": [
+                      {
+                        "@value": "appcera"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportConection": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                        "@type": [
+                          "http://raml.org/vocabularies/transports#EventTransportConnection"
+                        ],
+                        "http://raml.org/vocabularies/transports#connectionID": [
+                          {
+                            "@value": "natsonn123"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#host": [
+                          {
+                            "@value": "localhost"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#port": [
+                          {
+                            "@value": 8089
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#username": [
+                          {
+                            "@value": "me"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#password": [
+                          {
+                            "@value": "password"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/events#baseEvent": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "pay123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "accountCreditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.accountCreditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "cre123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "creditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "accountDebitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.accountDebitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "deb123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "debitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "accountTransferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.accountTransferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "trans123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "transferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#apiPersona",
+            "@type": [
+              "http://raml.org/vocabularies/events#EventConsumer"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "apiPersona"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#eventProducer",
+            "@type": [
+              "http://raml.org/vocabularies/events#EventConsumer"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "eventProducer"
+              }
+            ],
+            "http://raml.org/vocabularies/events#applicationID": [
+              {
+                "@value": "app123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#consumerID": [
+              {
+                "@value": "cons123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#userID": [
+              {
+                "@value": "me"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventChannel": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerChannel",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventChannel"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "channel1"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#channelID": [
+                  {
+                    "@value": "ch123"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventSubject": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#consumer1/consumerSubject",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventSubject"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "subject1"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventSubjectID": [
+                  {
+                    "@value": "subject123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#subjectPattern": [
+                  {
+                    "@value": "pub-sub"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#eventTransport": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/1",
+                    "@type": [
+                      "http://raml.org/vocabularies/transports#EventTransport"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "mqttTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "transports.mqttTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportID": [
+                      {
+                        "@value": "mqttMosquitto123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportType": [
+                      {
+                        "@value": "mqtt"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportVendor": [
+                      {
+                        "@value": "Mosquitto"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportConection": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                        "@type": [
+                          "http://raml.org/vocabularies/transports#EventTransportConnection"
+                        ],
+                        "http://raml.org/vocabularies/transports#connectionID": [
+                          {
+                            "@value": "mqttConn123"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#host": [
+                          {
+                            "@value": "localhost"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#port": [
+                          {
+                            "@value": 8089
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#username": [
+                          {
+                            "@value": "me"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#password": [
+                          {
+                            "@value": "password"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/eventTransports/2",
+                    "@type": [
+                      "http://raml.org/vocabularies/transports#EventTransport"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "natsTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "transports.natsTransport"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportID": [
+                      {
+                        "@value": "nats123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportType": [
+                      {
+                        "@value": "nats"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportVendor": [
+                      {
+                        "@value": "appcera"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/transports#transportConection": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                        "@type": [
+                          "http://raml.org/vocabularies/transports#EventTransportConnection"
+                        ],
+                        "http://raml.org/vocabularies/transports#connectionID": [
+                          {
+                            "@value": "natsonn123"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#host": [
+                          {
+                            "@value": "localhost"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#port": [
+                          {
+                            "@value": 8089
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#username": [
+                          {
+                            "@value": "me"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/transports#password": [
+                          {
+                            "@value": "password"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/events#baseEvent": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/1",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "pay123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "paymentEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/2",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "accountCreditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.accountCreditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "cre123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "creditEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/3",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "accountDebitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.accountDebitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "deb123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "debitEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking1.raml#subject1/supportedEvents/4",
+                    "@type": [
+                      "http://raml.org/vocabularies/events#BaseEvent"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "accountTransferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
+                      {
+                        "@value": "bankingEvents.accountTransferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventID": [
+                      {
+                        "@value": "trans123"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventDomain": [
+                      {
+                        "@value": "Banking_Core"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventCategory": [
+                      {
+                        "@value": "transferEvent"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/events#eventPayloadType": [
+                      {
+                        "@value": "json"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml",
+        "@type": [
+          "http://raml.org/vocabularies/document#Module",
+          "http://raml.org/vocabularies/document#Unit"
+        ],
+        "http://raml.org/vocabularies/document#declares": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#loanProcessedEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "loanProcessedEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "loanProc123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_Core"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "loanProcEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#paymentEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "paymentEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "pay123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_Core"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "paymentEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountDebitEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "accountDebitEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "deb123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_Core"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "debitEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountCreditEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "accountCreditEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "cre123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_Core"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "creditEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#tradeEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "tradeEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "trade123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_CapitalMarkets"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "stockTradeEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#loanOriginationEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "loanOriginationEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "loanStart123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_Core"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "loanStartEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/BankingEventLibrary.raml#accountTransferEvent",
+            "@type": [
+              "http://raml.org/vocabularies/events#BaseEvent"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "accountTransferEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventID": [
+              {
+                "@value": "trans123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventDomain": [
+              {
+                "@value": "Banking_Core"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventCategory": [
+              {
+                "@value": "transferEvent"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventPayloadType": [
+              {
+                "@value": "json"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml",
+        "@type": [
+          "http://raml.org/vocabularies/document#Module",
+          "http://raml.org/vocabularies/document#Unit"
+        ],
+        "http://raml.org/vocabularies/document#declares": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport",
+            "@type": [
+              "http://raml.org/vocabularies/transports#EventTransport"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "mqttTransport"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportID": [
+              {
+                "@value": "mqttMosquitto123"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportType": [
+              {
+                "@value": "mqtt"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportVendor": [
+              {
+                "@value": "Mosquitto"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportConection": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#mqttTransport/transportConnection",
+                "@type": [
+                  "http://raml.org/vocabularies/transports#EventTransportConnection"
+                ],
+                "http://raml.org/vocabularies/transports#connectionID": [
+                  {
+                    "@value": "mqttConn123"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#host": [
+                  {
+                    "@value": "localhost"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#port": [
+                  {
+                    "@value": 8089
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#username": [
+                  {
+                    "@value": "me"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#password": [
+                  {
+                    "@value": "password"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport",
+            "@type": [
+              "http://raml.org/vocabularies/transports#EventTransport"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "natsTransport"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportID": [
+              {
+                "@value": "nats123"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportType": [
+              {
+                "@value": "nats"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportVendor": [
+              {
+                "@value": "appcera"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportConection": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#natsTransport/transportConnection",
+                "@type": [
+                  "http://raml.org/vocabularies/transports#EventTransportConnection"
+                ],
+                "http://raml.org/vocabularies/transports#connectionID": [
+                  {
+                    "@value": "natsonn123"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#host": [
+                  {
+                    "@value": "localhost"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#port": [
+                  {
+                    "@value": 8089
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#username": [
+                  {
+                    "@value": "me"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#password": [
+                  {
+                    "@value": "password"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#solaceTransport",
+            "@type": [
+              "http://raml.org/vocabularies/transports#EventTransport"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "solaceTransport"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportID": [
+              {
+                "@value": "nats123"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportType": [
+              {
+                "@value": "solacce"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportVendor": [
+              {
+                "@value": "solace"
+              }
+            ],
+            "http://raml.org/vocabularies/transports#transportConection": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/Libraries/EventTransportLibrary.raml#solaceTransport/transportConnection",
+                "@type": [
+                  "http://raml.org/vocabularies/transports#EventTransportConnection"
+                ],
+                "http://raml.org/vocabularies/transports#connectionID": [
+                  {
+                    "@value": "solaceConn123"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#host": [
+                  {
+                    "@value": "http://solace.io"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#port": [
+                  {
+                    "@value": 8089
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#username": [
+                  {
+                    "@value": "me"
+                  }
+                ],
+                "http://raml.org/vocabularies/transports#password": [
+                  {
+                    "@value": "password"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
