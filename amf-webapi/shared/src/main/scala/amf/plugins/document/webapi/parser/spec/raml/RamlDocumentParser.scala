@@ -262,14 +262,14 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
   }
 
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
-
     map.key(
       "annotationTypes",
       e => {
-        e.value
-          .to[YMap] match {
-          case Right(annotationTypes) =>
-            annotationTypes.entries
+        e.value.tagType match {
+          case YType.Map =>
+            e.value
+              .as[YMap]
+              .entries
               .map { entry =>
                 val typeName = entry.key.as[String]
                 val customProperty = AnnotationTypesParser(entry,
@@ -279,18 +279,18 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
                                                                .adopted(customProperties))
                 ctx.declarations += customProperty.add(DeclaredElement())
               }
-          case Left(_) =>
+          case YType.Null =>
+          case t          => ctx.violation(customProperties, s"Invalid type $t for 'annotationTypes' node.", e.value)
         }
-
       }
     )
   }
 
   private def parseTypeDeclarations(map: YMap, parent: String): Unit = {
     typeOrSchema(map).foreach { e =>
-      e.value.to[YMap] match {
-        case Right(types) =>
-          types.entries.foreach { entry =>
+      e.value.tagType match {
+        case YType.Map =>
+          e.value.as[YMap].entries.foreach { entry =>
             RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
               .parse() match {
               case Some(shape) =>
@@ -300,7 +300,8 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
             }
 
           }
-        case Left(_) =>
+        case YType.Null =>
+        case t          => ctx.violation(parent, s"Invalid type $t for 'types' node.", e.value)
       }
     }
   }
@@ -324,14 +325,15 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
     map.key(
       "securitySchemes",
       e => {
-        e.value.to[YMap] match {
-          case Right(securitySchemes) =>
-            securitySchemes.entries.foreach { entry =>
+        e.value.tagType match {
+          case YType.Map =>
+            e.value.as[YMap].entries.foreach { entry =>
               ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
                 .parse()
                 .add(DeclaredElement())
             }
-          case Left(_) =>
+          case YType.Null =>
+          case t          => ctx.violation(parent, s"Invalid type $t for 'securitySchemes' node.", e.value)
         }
       }
     )

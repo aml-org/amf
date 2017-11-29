@@ -5,7 +5,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
+import org.yaml.model._
 
 /**
   *
@@ -18,14 +18,16 @@ case class AbstractDeclarationsParser(key: String,
     map.key(
       key,
       e => {
-        e.value.to[YMap] match {
-          case Right(declarations) =>
-            declarations.entries
-              .map(
-                entry =>
-                  ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
-                    .parse())
-          case Left(_) =>
+        e.value.tagType match {
+          case YType.Map =>
+            e.value
+              .as[YMap]
+              .entries
+              .map(entry =>
+                ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
+                  .parse())
+          case YType.Null =>
+          case t          => ctx.violation(customProperties, s"Invalid type $t for '$key' node.", e.value)
         }
       }
     )
