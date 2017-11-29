@@ -15,10 +15,10 @@ case class Request private[model] (private val request: models.Request) extends 
   @JSExportTopLevel("Request")
   def this() = this(models.Request())
 
-  val queryParameters: js.Iterable[Parameter] = request.queryParameters.map(Parameter).toJSArray
-  val headers: js.Iterable[Parameter]         = request.headers.map(Parameter).toJSArray
-  val payloads: js.Iterable[Payload]          = request.payloads.map(Payload).toJSArray
-  val queryString: Shape                      = Option(request.queryString).map(Shape(_)).orNull
+  def queryParameters: js.Iterable[Parameter] = request.queryParameters.map(Parameter).toJSArray
+  def headers: js.Iterable[Parameter]         = Option(request.headers).getOrElse(Nil).map(Parameter).toJSArray
+  def payloads: js.Iterable[Payload]          = Option(request.payloads).getOrElse(Nil).map(Payload).toJSArray
+  def queryString: Shape                      = Option(request.queryString).map(Shape(_)).orNull
 
   override private[amf] def element: models.Request = request
 

@@ -12,9 +12,9 @@ class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
 
   override def linkCopy(): DomainElement with Linkable = new AnyShape(element.linkCopy())
 
-  val documentation: CreativeWork     = Option(any.documentation).map(amf.model.domain.CreativeWork).orNull
-  val xmlSerialization: XMLSerializer = Option(any.xmlSerialization).map(amf.model.domain.XMLSerializer).orNull
-  val examples: java.util.List[Example]  = any.examples.map(Example).asJava
+  def documentation: CreativeWork     = Option(any.documentation).map(amf.model.domain.CreativeWork).orNull
+  def xmlSerialization: XMLSerializer = Option(any.xmlSerialization).map(amf.model.domain.XMLSerializer).orNull
+  def examples: java.util.List[Example]  = Option(any.examples).getOrElse(Nil).map(Example).asJava
 
   def withDocumentation(documentation: CreativeWork): this.type = {
     any.withDocumentation(documentation.element)

@@ -1,9 +1,10 @@
 package amf
 
-import amf.core.client.Validator
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.validation.AMFValidationReport
 import amf.model.document.BaseUnit
+import amf.plugins.document.Vocabularies
+import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.scalajs.js.Promise
@@ -36,9 +37,13 @@ object AMF {
 
   def amfGraphGenerator(): AmfGraphGenerator = new AmfGraphGenerator()
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] = Validator.validate(model, profileName, messageStyle)
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] = Core.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(url: String): Promise[String] = Validator.loadValidationProfile(url)
+  def loadValidationProfile(url: String): Promise[String] = Core.loadValidationProfile(url)
+
+  def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
+
+  def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
 
   def resolveRaml10(unit: BaseUnit) = new Raml10Resolver().resolve(unit)
 

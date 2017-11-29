@@ -5,16 +5,16 @@ import amf.plugins.domain.shapes.models
 
 case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends AnyShape(scalar) {
 
-  val dataType: String         = scalar.dataType
-  val pattern: String          = scalar.pattern
-  val minLength: Int           = scalar.minLength
-  val maxLength: Int           = scalar.maxLength
-  val minimum: String          = scalar.minimum
-  val maximum: String          = scalar.maximum
-  val exclusiveMinimum: String = scalar.exclusiveMinimum
-  val exclusiveMaximum: String = scalar.exclusiveMaximum
-  val format: String           = scalar.format
-  val multipleOf: Int          = scalar.multipleOf
+  def dataType: String         = scalar.dataType
+  def pattern: String          = scalar.pattern
+  def minLength: Int           = scalar.minLength
+  def maxLength: Int           = scalar.maxLength
+  def minimum: String          = scalar.minimum
+  def maximum: String          = scalar.maximum
+  def exclusiveMinimum: String = scalar.exclusiveMinimum
+  def exclusiveMaximum: String = scalar.exclusiveMaximum
+  def format: String           = scalar.format
+  def multipleOf: Int          = scalar.multipleOf
 
   def withDataType(dataType: String): this.type = {
     scalar.withDataType(dataType)

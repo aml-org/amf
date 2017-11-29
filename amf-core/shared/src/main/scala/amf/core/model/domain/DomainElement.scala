@@ -22,7 +22,7 @@ trait DomainElement extends AmfObject {
 
   def withExtends(extend: Seq[DomainElement]): this.type = setArray(Extends, extend)
 
-  def getTypeIds(): List[String] = dynamicTypes().toList ++ `type`.map(_.iri())
+  def getTypeIds(): List[String] = (dynamicTypes().toList ++ `type`.map(_.iri()) ++ meta.`type`.map(_.iri())).distinct
 
   def getPropertyIds(): List[String] = fields.fields().map(f => f.field.value.iri()).toList
 

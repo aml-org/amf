@@ -12,8 +12,8 @@ case class Payload private[model] (private val payload: models.Payload) extends 
 
   def this() = this(models.Payload())
 
-  val mediaType: String = payload.mediaType
-  val schema: Shape     = Shape(payload.schema)
+  def mediaType: String = payload.mediaType
+  def schema: Shape     = Shape(payload.schema)
 
   override private[amf] def element: models.Payload = payload
 

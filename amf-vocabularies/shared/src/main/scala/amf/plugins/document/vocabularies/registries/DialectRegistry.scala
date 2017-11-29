@@ -87,4 +87,6 @@ object PlatformDialectRegistry extends DialectRegistry with PlatformSecrets {
     res
   }
 
+  def registerNamespace(alias: String, prefix: String) = platform.registerNamespace(alias, prefix)
+
 }

@@ -7,9 +7,9 @@ import scala.collection.JavaConverters._
 
 abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) extends AnyShape(array) {
 
-  val minItems: Int        = array.minItems
-  val maxItems: Int        = array.maxItems
-  val uniqueItems: Boolean = array.uniqueItems
+  def minItems: Int        = array.minItems
+  def maxItems: Int        = array.maxItems
+  def uniqueItems: Boolean = array.uniqueItems
 
   def withMinItems(minItems: Int): this.type = {
     array.withMinItems(minItems)
@@ -28,7 +28,7 @@ abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) ex
 }
 
 case class ArrayShape(private[amf] override val array: models.ArrayShape) extends DataArrangeShape(array) {
-  val items: Shape = Shape(array.items)
+  def items: Shape = Shape(array.items)
 
   def withItems(items: Shape): this.type = {
     array.withItems(items.shape)
@@ -60,7 +60,7 @@ object MatrixShape {
 }
 
 case class TupleShape(private[amf] override val array: models.TupleShape) extends DataArrangeShape(array) {
-  val items: java.util.List[Shape] = array.items.map(Shape(_)).asJava
+  def items: java.util.List[Shape] = Option(array.items).getOrElse(Nil).map(Shape(_)).asJava
 
   def withItems(items: java.util.List[Shape]): this.type = {
     array.withItems(items.asScala.map(_.shape))

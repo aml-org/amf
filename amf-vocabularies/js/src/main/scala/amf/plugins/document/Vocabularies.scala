@@ -8,8 +8,13 @@ import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectNodeFragmentModel
 import amf.plugins.document.vocabularies.metamodel.domain.DialectEntityModel
 import amf.plugins.document.vocabularies.model.{document, domain}
+import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
+import amf.plugins.document.vocabularies.spec.Dialect
 
+import scala.scalajs.js.Promise
+import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
+import scala.concurrent.ExecutionContext.Implicits.global
 
 @JSExportAll
 object Vocabularies extends PlatformSecrets{
@@ -26,4 +31,5 @@ object Vocabularies extends PlatformSecrets{
     AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
   }
 
+  def registerDialect(url: String): Promise[Dialect] = PlatformDialectRegistry.registerDialect(url).toJSPromise
 }

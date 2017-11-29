@@ -1,12 +1,15 @@
 package amf
 
 import amf.core.AMF
+import amf.core.client.{Generator, Parser, Validator}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
-import amf.model.document.{Document, Fragment, Module}
+import amf.core.validation.AMFValidationReport
+import amf.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.model.domain.{CustomDomainProperty, DomainElement, DomainExtension, PropertyShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
+import scala.scalajs.js.Promise
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
@@ -39,5 +42,11 @@ object Core extends PlatformSecrets{
     AMF.init()
     AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
   }
+
+  def parser(vendor: String, mediaType: String): Parser = new Parser(vendor, mediaType)
+  def generator(vendor: String, mediaType: String): Generator = new Generator(vendor, mediaType)
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] = Validator.validate(model, profileName, messageStyle)
+  def loadValidationProfile(url: String): Promise[String] = Validator.loadValidationProfile(url)
+  def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
 
 }

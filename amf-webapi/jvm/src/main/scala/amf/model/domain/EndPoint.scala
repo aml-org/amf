@@ -11,12 +11,12 @@ case class EndPoint private[model](private val endPoint: models.EndPoint) extend
 
   def this() = this(models.EndPoint())
 
-  val name: String                                      = endPoint.name
-  val description: String                               = endPoint.description
-  val path: String                                      = endPoint.path
-  val operations: java.util.List[Operation]                = endPoint.operations.map(Operation).asJava
-  val parameters: java.util.List[Parameter]                = endPoint.parameters.map(Parameter).asJava
-  def security: java.util.List[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).asJava
+  def name: String                                         = endPoint.name
+  def description: String                                  = endPoint.description
+  def path: String                                         = endPoint.path
+  def operations: java.util.List[Operation]                = Option(endPoint.operations).getOrElse(Nil).map(Operation).asJava
+  def parameters: java.util.List[Parameter]                = Option(endPoint.parameters).getOrElse(Nil).map(Parameter).asJava
+  def security: java.util.List[ParametrizedSecurityScheme] = Option(endPoint.security).getOrElse(Nil).map(ParametrizedSecurityScheme).asJava
 
   override private[amf] def element: models.EndPoint = endPoint
 

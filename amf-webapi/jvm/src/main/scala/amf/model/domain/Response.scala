@@ -11,12 +11,12 @@ case class Response private[model] (private val response: models.Response) exten
 
   def this() = this(models.Response())
 
-  val name: String                    = response.name
-  val description: String             = response.description
-  val statusCode: String              = response.statusCode
-  val headers: java.util.List[Parameter] = response.headers.map(Parameter).asJava
-  val payloads: java.util.List[Payload]  = response.payloads.map(Payload).asJava
-  val examples: java.util.List[Example]  = response.examples.map(Example).asJava
+  def name: String                    = response.name
+  def description: String             = response.description
+  def statusCode: String              = response.statusCode
+  def headers: java.util.List[Parameter] = Option(response.headers).getOrElse(Nil).map(Parameter).asJava
+  def payloads: java.util.List[Payload]  = Option(response.payloads).getOrElse(Nil).map(Payload).asJava
+  def examples: java.util.List[Example]  = Option(response.examples).getOrElse(Nil).map(Example).asJava
 
   override private[amf] def element: models.Response = response
 

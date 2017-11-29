@@ -12,15 +12,15 @@ case class SecurityScheme private[model] (private val scheme: security.SecurityS
     with Linkable {
   def this() = this(security.SecurityScheme())
 
-  val name: String                            = scheme.name
-  val `type`: String                          = scheme.`type`
-  val displayName: String                     = scheme.displayName
-  val description: String                     = scheme.description
-  val headers: java.util.List[Parameter]         = scheme.headers.map(Parameter).asJava
-  val queryParameters: java.util.List[Parameter] = scheme.queryParameters.map(Parameter).asJava
-  val responses: java.util.List[Response]        = scheme.responses.map(Response).asJava
-  val settings: Settings                      = Settings(scheme.settings)
-  val queryString: Shape                      = Option(scheme.queryString).map(Shape(_)).orNull
+  def name: String                            = scheme.name
+  def `type`: String                          = scheme.`type`
+  def displayName: String                     = scheme.displayName
+  def description: String                     = scheme.description
+  def headers: java.util.List[Parameter]         = Option(scheme.headers).getOrElse(Nil).map(Parameter).asJava
+  def queryParameters: java.util.List[Parameter] = Option(scheme.queryParameters).getOrElse(Nil).map(Parameter).asJava
+  def responses: java.util.List[Response]        = Option(scheme.responses).getOrElse(Nil).map(Response).asJava
+  def settings: Settings                      = Settings(scheme.settings)
+  def queryString: Shape                      = Option(scheme.queryString).map(Shape(_)).orNull
 
   def withName(name: String): this.type = {
     scheme.withName(name)

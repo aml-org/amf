@@ -17,6 +17,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: WebApiContext) extends 
   def parseModule(): Module = {
     val sourceVendor = SourceVendor(root.vendor)
     val module = Module(Annotations(root.parsed.document))
+      .withLocation(root.location)
       .adopted(root.location)
       .add(sourceVendor)
     module.set(BaseUnitModel.Location, root.location)

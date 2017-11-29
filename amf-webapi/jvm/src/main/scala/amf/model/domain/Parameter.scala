@@ -9,11 +9,11 @@ case class Parameter private[model] (private val parameter: models.Parameter) ex
 
   def this() = this(models.Parameter())
 
-  val name: String        = parameter.name
-  val description: String = parameter.description
-  val required: Boolean   = parameter.required
-  val binding: String     = parameter.binding
-  val schema: Shape       = Shape(parameter.schema)
+  def name: String        = parameter.name
+  def description: String = parameter.description
+  def required: Boolean   = parameter.required
+  def binding: String     = parameter.binding
+  def schema: Shape       = Shape(parameter.schema)
 
   override private[amf] def element: models.Parameter = parameter
 

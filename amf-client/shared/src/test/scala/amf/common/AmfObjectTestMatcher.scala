@@ -14,8 +14,10 @@ trait AmfObjectTestMatcher extends Assertions {
 
     def assert(actual: AmfObject): Unit = {
       if (actual.fields.size != expected.fields.size) {
+        println(s"HERE ${actual.fields.size}")
         actual.fields.foreach(println(_))
         println("-----")
+        println(s"THERE ${expected.fields.size}")
         expected.fields.foreach(println(_))
         fail(s"Expected ${expected.fields} but ${actual.fields} fields have different sizes")
       }

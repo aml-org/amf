@@ -9,9 +9,9 @@ import scala.scalajs.js.annotation.JSExportAll
 
 abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) extends AnyShape(array) {
 
-  val minItems: Int        = array.minItems
-  val maxItems: Int        = array.maxItems
-  val uniqueItems: Boolean = array.uniqueItems
+  def minItems: Int        = array.minItems
+  def maxItems: Int        = array.maxItems
+  def uniqueItems: Boolean = array.uniqueItems
 
   def withMinItems(minItems: Int): this.type = {
     array.withMinItems(minItems)
@@ -65,7 +65,7 @@ object MatrixShape {
 
 @JSExportAll
 case class TupleShape(private[amf] override val array: models.TupleShape) extends DataArrangeShape(array) {
-  val items: js.Iterable[Shape] = array.items.map(Shape(_)).toJSArray
+  def items: js.Iterable[Shape] = Option(array.items).getOrElse(Nil).map(Shape(_)).toJSArray
 
   def withItems(items: js.Iterable[Shape]): this.type = {
     array.withItems(items.map(_.shape).toSeq)

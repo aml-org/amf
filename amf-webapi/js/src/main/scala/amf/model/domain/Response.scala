@@ -14,12 +14,12 @@ case class Response private[model] (private val response: models.Response) exten
 
   def this() = this(models.Response())
 
-  val name: String                    = response.name
-  val description: String             = response.description
-  val statusCode: String              = response.statusCode
-  val headers: js.Iterable[Parameter] = response.headers.map(Parameter).toJSArray
-  val payloads: js.Iterable[Payload]  = response.payloads.map(Payload).toJSArray
-  val examples: js.Iterable[Example]  = response.examples.map(Example).toJSArray
+  def name: String                    = response.name
+  def description: String             = response.description
+  def statusCode: String              = response.statusCode
+  def headers: js.Iterable[Parameter] = Option(response.headers).getOrElse(Nil).map(Parameter).toJSArray
+  def payloads: js.Iterable[Payload]  = Option(response.payloads).getOrElse(Nil).map(Payload).toJSArray
+  def examples: js.Iterable[Example]  = Option(response.examples).getOrElse(Nil).map(Example).toJSArray
 
   override private[amf] def element: models.Response = response
 

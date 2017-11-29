@@ -1,6 +1,7 @@
 package amf.model.domain
 
 import amf.core.model.domain
+import amf.core.unsafe.PlatformSecrets
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -10,12 +11,12 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
 
-  val name: String                    = shape.name
-  val displayName: String             = shape.displayName
-  val description: String             = shape.description
-  val default: String                 = shape.default
-  val values: js.Iterable[String]     = shape.values.toJSArray
-  val inherits: js.Iterable[Shape]    = shape.inherits.map(Shape(_)).toJSArray
+  def name: String                    = shape.name
+  def displayName: String             = shape.displayName
+  def description: String             = shape.description
+  def default: String                 = shape.default
+  def values: js.Iterable[String]     = Option(shape.values).getOrElse(Seq()).toJSArray
+  def inherits: js.Iterable[Shape]    = Option(shape.inherits).getOrElse(Seq()).map(Shape(_)).toJSArray
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -45,6 +46,6 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
 
 }
 
-object Shape {
-  def apply(shape: domain.Shape): Shape = throw new Exception("Shape is abstract and cannot be built")
+object Shape extends PlatformSecrets {
+  def apply(shape: domain.Shape): Shape = platform.wrap(shape)
 }

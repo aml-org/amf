@@ -1,11 +1,12 @@
 package amf
 
-import java.util.concurrent.CompletableFuture
+import java.util.concurrent.{CompletableFuture, Future}
 
-import amf.core.client.Validator
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.validation.AMFValidationReport
 import amf.model.document.BaseUnit
+import amf.plugins.document.Vocabularies
+import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 object AMF {
@@ -34,9 +35,13 @@ object AMF {
 
   def amfGraphGenerator(): AmfGraphGenerator = new AmfGraphGenerator()
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] = Validator.validate(model, profileName, messageStyle)
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] = Core.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(path: java.io.File): CompletableFuture[Nothing] = Validator.loadValidationProfile(path)
+  def loadValidationProfile(url: String): CompletableFuture[Nothing] = Core.loadValidationProfile(url)
+
+  def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
+
+  def registerDialect(url: String): Future[Dialect] = Vocabularies.registerDialect(url)
 
   def resolveRaml10(unit: BaseUnit) = new Raml10Resolver().resolve(unit)
 
