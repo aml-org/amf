@@ -7,6 +7,8 @@ import org.yaml.model.YAggregate
 
 import scala.concurrent.Future
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
 
   def isRemote: Boolean = !url.startsWith("#")

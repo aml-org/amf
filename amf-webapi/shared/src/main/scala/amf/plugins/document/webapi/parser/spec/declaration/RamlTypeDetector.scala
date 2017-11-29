@@ -50,7 +50,7 @@ case class RamlTypeDetector(parent: String,
       val scalar = node.as[YScalar]
       scalar.text match {
         case RamlTypeDefMatcher.TypeExpression(text) =>
-          RamlTypeExpressionParser(shape => shape, Some(node.as[YScalar]))
+          RamlTypeExpressionParser(shape => shape, Some(node.as[YScalar]), checking = true)
             .parse(text)
             .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
             .map {

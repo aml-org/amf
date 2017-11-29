@@ -1,18 +1,9 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.core.model.document.Fragment
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.{Annotations, ErrorHandler, Fields, FutureDeclarations}
-import amf.core.utils.QName
-import amf.plugins.document.webapi.parser.spec.SearchScope.{All, Fragments, Named}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example, UnresolvedShape}
-import amf.core.annotations.SourceAST
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, DomainElement, Shape}
-import amf.core.parser.{Annotations, Declarations, ErrorHandler, Fields, SearchScope}
-import amf.plugins.document.webapi.annotations.DeclaredElement
-import amf.plugins.domain.shapes.models.{CreativeWork, Example, NodeShape, UnresolvedShape}
+import amf.core.parser.{Annotations, Declarations, EmptyFutureDeclarations, ErrorHandler, Fields, FutureDeclarations, SearchScope}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -31,17 +22,28 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
                          var payloads: Map[String, Payload] = Map(),
                          var traits: Map[String, Trait] = Map(),
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
-                         errorHandler: Option[ErrorHandler])
-  extends Declarations(libs, frags, anns, errorHandler) {
+                         errorHandler: Option[ErrorHandler],
+                         futureDeclarations: FutureDeclarations)
+  extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
-      case r: ResourceType         => resourceTypes = resourceTypes + (r.name      -> r)
-      case t: Trait                => traits = traits + (t.name                    -> t)
-      case s: Shape                => shapes = shapes + (s.name                    -> s)
-      case p: Parameter            => parameters = parameters + (p.name            -> p)
-      case ss: SecurityScheme      => securitySchemes = securitySchemes + (ss.name -> ss)
-      case _                       => super.+=(element)
+      case r: ResourceType =>
+        futureDeclarations.resolveRef(r.name, r)
+        resourceTypes = resourceTypes + (r.name -> r)
+      case t: Trait =>
+        futureDeclarations.resolveRef(t.name, t)
+        traits = traits + (t.name -> t)
+      case s: Shape =>
+        futureDeclarations.resolveRef(s.name, s)
+        shapes = shapes + (s.name -> s)
+      case p: Parameter =>
+        futureDeclarations.resolveRef(p.name, p)
+        parameters = parameters + (p.name -> p)
+      case ss: SecurityScheme =>
+        futureDeclarations.resolveRef(ss.name, ss)
+        securitySchemes = securitySchemes + (ss.name -> ss)
+      case _  => super.+=(element)
     }
     this
   }
@@ -68,7 +70,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
     libraries.get(alias) match {
       case Some(lib: WebApiDeclarations) => lib
       case _ =>
-        val result = new WebApiDeclarations(errorHandler = errorHandler)
+        val result = new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
         libraries = libraries + (alias -> result)
         result
     }
@@ -146,13 +148,6 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
 
   def findNamedExample(key: String): Option[Example] = fragments.get(key) collect { case e: Example => e }
 
-  /** Resolve all [[UnresolvedShape]] references or fail. */
-  def resolve(): Unit = {
-    // we fail unresolved references
-    promises.values.flatten.filter(!_.resolved).foreach(_.fail())
-  }
-
-
   trait ErrorDeclaration
 
   object ErrorTrait                extends Trait(Fields(), Annotations()) with ErrorDeclaration
@@ -166,8 +161,8 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
 
 object WebApiDeclarations {
 
-  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler]): WebApiDeclarations = {
-    val result = new WebApiDeclarations(errorHandler = errorHandler)
+  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler], futureDeclarations: FutureDeclarations): WebApiDeclarations = {
+    val result = new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
   }

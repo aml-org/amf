@@ -717,7 +717,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
     parseSecuritySchemeDeclarations(map, parent)
     parseParameterDeclarations("parameters", map, parent)
 
-    ctx.declarations.resolve()
+    ctx.futureDeclarations.resolve()
 
   }
 

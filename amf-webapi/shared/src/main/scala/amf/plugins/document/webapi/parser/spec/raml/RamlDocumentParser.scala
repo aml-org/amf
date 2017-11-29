@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-import amf.common.core.TemplateUri
 import amf.core.Root
 import amf.core.annotations.{SingleValueArray, SourceVendor, SynthesizedField}
 import amf.core.metamodel.Field
@@ -11,6 +10,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.core.parser.Annotations
 import amf.core.parser._
+import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -81,6 +81,8 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
     val declarables = ctx.declarations.declarables()
     if (declarables.nonEmpty) document.withDeclares(declarables)
     if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
+
+    ctx.futureDeclarations.resolve()
 
     document
   }
@@ -256,7 +258,6 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
     AbstractDeclarationsParser("traits", entry => Trait(entry), map, parent).parse()
     parseSecuritySchemeDeclarations(map, parent)
     parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")
-    ctx.declarations.resolve()
   }
 
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {

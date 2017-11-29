@@ -161,46 +161,4 @@ object InflectorBase {
     }
 
   }
-
 }
-<<<<<<< HEAD:shared/src/main/scala/amf/resolution/stages/VariableReplacer.scala
-
-object VariableReplacer {
-
-  private val Transformations =
-    "singularize|pluralize|uppercase|lowercase|lowercamelcase|uppercamelcase|lowerunderscorecase|upperunderscorecase|lowerhyphencase|upperhyphencase"
-  private val TransformationsRegex = Transformations.r
-
-  val VariableRegex: Regex = s"<<\\s*([^<<>>\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
-
-  def replaceVariables(s: String, values: Set[Variable]): String =
-    VariableRegex.replaceAllIn(s, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
-
-  private def replaceMatch(values: Map[String, String])(m: Match): String = {
-    values
-      .get(m.group(1))
-      .map(v =>
-        Option(m.group(2))
-          .map { transformations =>
-            TransformationsRegex.findAllIn(transformations).foldLeft(v)(variableTransformation)
-          }
-          .getOrElse(v))
-      .getOrElse(m.group(1))
-  }
-
-  protected[amf] def variableTransformation(value: String, transformation: String): String = transformation match {
-    case "singularize"         => value.singularize
-    case "pluralize"           => value.pluralize
-    case "uppercase"           => value.toUpperCase
-    case "lowercase"           => value.toLowerCase
-    case "lowercamelcase"      => value.camelize().decapitalize
-    case "uppercamelcase"      => value.camelize().capitalize
-    case "lowerunderscorecase" => value.camelToScoreSing().toLowerCase
-    case "upperunderscorecase" => value.camelToScoreSing().toUpperCase
-    case "lowerhyphencase"     => value.camelToScoreSing("-").toLowerCase
-    case "upperhyphencase"     => value.camelToScoreSing("-").toUpperCase
-    case _                     => throw new Exception(s"Transformation '$transformation' on '$value' is not valid.")
-  }
-}
-=======
->>>>>>> APIMF-161 splitting resolution among plugins:shared/src/main/scala/amf/framework/utils/InflectorBase.scala

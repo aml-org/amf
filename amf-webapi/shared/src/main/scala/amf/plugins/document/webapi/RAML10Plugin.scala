@@ -5,7 +5,7 @@ import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.ParserContext
+import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
@@ -45,7 +45,7 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     val updated: WebApiContext = new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, parentContext)
-    val cleanNested = ParserContext(root.location, root.references, parentContext.futureDeclarations)
+    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations())
     val clean: WebApiContext = new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, cleanNested)
 
     RamlHeader(root) match {

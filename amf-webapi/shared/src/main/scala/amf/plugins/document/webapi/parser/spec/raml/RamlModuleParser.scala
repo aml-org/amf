@@ -31,7 +31,7 @@ case class RamlModuleParser(root: Root)(implicit val ctx: WebApiContext) extends
       if (declarables.nonEmpty) module.withDeclares(declarables)
       if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
     }
-    ctx.declarations.resolve()
+    ctx.futureDeclarations.resolve()
 
     module
 

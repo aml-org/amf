@@ -26,7 +26,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       undefined => {
         undefined.level should be("Violation")
         undefined.message should be(
-          "Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error.raml")
+          "Unresolved reference UndefinedType from root context file://amf-tests/shared/src/test/resources/upanddown/forward-references-types-error.raml")
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
       }
     )
@@ -38,11 +38,8 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       undefined => {
         undefined.level should be("Violation")
         undefined.message should be(
-          "Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error-expression.raml")
+          "Unresolved reference UndefinedType from root context file://amf-tests/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml")
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 40))))
-      },
-      _ => {
-        // todo duplicate error?
       }
     )
   }
@@ -53,7 +50,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       undefined => {
         undefined.level should be("Violation")
         undefined.message should be(
-          "Unresolved reference UndefinedType from root context file://shared/src/test/resources/upanddown/forward-references-types-error-array.raml")
+          "Unresolved reference UndefinedType from root context file://amf-tests/shared/src/test/resources/upanddown/forward-references-types-error-array.raml")
         undefined.position.map(_.range) should be(Some(Range((5, 26), (5, 39))))
       }
     )
@@ -65,13 +62,13 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       a => {
         a.level should be("Violation")
         a.message should be(
-          "Unresolved reference A from root context file://shared/src/test/resources/references/contexts/library.raml")
+          "Unresolved reference A from root context file://amf-tests/shared/src/test/resources/references/contexts/library.raml")
         a.position.map(_.range) should be(Some(Range((4, 5), (4, 6))))
       },
       c => {
         c.level should be("Violation")
         c.message should be(
-          "Unresolved reference C from root context file://shared/src/test/resources/references/contexts/api.raml")
+          "Unresolved reference C from root context file://amf-tests/shared/src/test/resources/references/contexts/api.raml")
         c.position.map(_.range) should be(Some(Range((6, 5), (6, 6))))
       }
     )

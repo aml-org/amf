@@ -21,14 +21,20 @@ trait FutureDeclarations {
 
   var promises: Map[String, Seq[DeclarationPromise]] = Map()
 
-  def futureRef(name: String, promise: DeclarationPromise): Unit = {
-    val otherPromises = promises.getOrElse(name, Seq())
+  def futureRef(id: String, name: String, promise: DeclarationPromise): Unit = {
+    val otherPromises = promises.getOrElse(name, Seq[DeclarationPromise]())
     promises = promises.updated(name, otherPromises ++ Seq(promise))
   }
 
   def resolveRef(name: String, value: Linkable): Unit = {
-    promises.getOrElse(name, Seq()).foreach { _.resolve(value) }
-    promises = promises.updated(name, Seq())
+    promises.getOrElse(name, Seq[DeclarationPromise]()).foreach(_.resolve(value))
+    promises = promises.updated(name, Seq[DeclarationPromise]())
+  }
+
+  /** Resolve all UnresolvedShape references or fail. */
+  def resolve(): Unit = {
+    // we fail unresolved references
+    promises.values.flatten.filter(!_.resolved).foreach(_.fail())
   }
 
 }

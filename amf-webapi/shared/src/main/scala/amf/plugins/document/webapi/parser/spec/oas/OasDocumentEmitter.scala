@@ -9,7 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations._
@@ -593,7 +593,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       extends PlatformSecrets {
     val emitters: Seq[EntryEmitter] = {
 
-      val declarations = WebApiDeclarations(declares, None)
+      val declarations = WebApiDeclarations(declares, None, EmptyFutureDeclarations())
 
       val result = ListBuffer[EntryEmitter]()
 

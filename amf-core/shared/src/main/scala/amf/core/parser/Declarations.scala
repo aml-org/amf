@@ -10,7 +10,8 @@ import org.yaml.model.YPart
 class Declarations(var libraries: Map[String, Declarations] = Map(),
                    var fragments: Map[String, DomainElement] = Map(),
                    var annotations: Map[String, CustomDomainProperty] = Map(),
-                   errorHandler: Option[ErrorHandler]) extends FutureDeclarations {
+                   errorHandler: Option[ErrorHandler],
+                  futureDeclarations: FutureDeclarations) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
@@ -21,7 +22,9 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def +=(element: DomainElement): Declarations = {
     element match {
-      case a: CustomDomainProperty => annotations = annotations + (a.name          -> a)
+      case a: CustomDomainProperty =>
+        futureDeclarations.resolveRef(a.name, a)
+        annotations = annotations + (a.name -> a)
     }
     this
   }
@@ -37,7 +40,7 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
     libraries.get(alias) match {
       case Some(lib) => lib
       case None =>
-        val result = new Declarations(errorHandler = errorHandler)
+        val result = new Declarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
         libraries = libraries + (alias -> result)
         result
     }
@@ -98,8 +101,8 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
 
 object Declarations {
 
-  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler]): Declarations = {
-    val result = new Declarations(errorHandler = errorHandler)
+  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler], futureDeclarations: FutureDeclarations): Declarations = {
+    val result = new Declarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
   }
