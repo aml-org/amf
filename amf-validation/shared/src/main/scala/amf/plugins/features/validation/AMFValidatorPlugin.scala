@@ -13,8 +13,11 @@ import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
-import amf.plugins.features.validation.model.ParsedValidationProfile
+import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
+import amf.plugins.features.validation.PlatformValidator
+import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -43,7 +46,7 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
   var customValidationProfiles: Map[String, ()=> ValidationProfile]= Map.empty
   var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin]= Map.empty
 
-  override def loadValidationProfile(validationProfilePath: String): Future[Unit] = {
+  override def loadValidationProfile(validationProfilePath: String): Future[String] = {
     RuntimeCompiler(
       validationProfilePath,
       platform,
@@ -70,6 +73,9 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
           }
           customValidationProfiles += (profile.name -> {() => profile })
           customValidationProfilesPlugins += (profile.name -> domainPlugin)
+          profile.name
+
+        case _ => throw new Exception("Trying to load as a validation profile that does not match the Validation Profile dialect")
       }
   }
 
@@ -163,9 +169,14 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
 }
 
 object AMFValidatorPlugin extends PlatformSecrets {
-  def init() {
+  def init(): Future[Any] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(new AMFValidatorPlugin(platform))
+    // we need working vocabularies before registering the validation dialect
+    AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+    AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
+    val url = "http://raml.org/dialects/profile.raml"
+    PlatformDialectRegistry.registerDialect(url, ValidationDialectText.text)
   }
 }
 

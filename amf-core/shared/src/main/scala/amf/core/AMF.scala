@@ -7,6 +7,5 @@ object AMF {
     AMFCompiler.init()
     AMFSerializer.init()
     ParserSideValidationPlugin.init()
-    amf.core.PluginWrapper.init()
   }
 }

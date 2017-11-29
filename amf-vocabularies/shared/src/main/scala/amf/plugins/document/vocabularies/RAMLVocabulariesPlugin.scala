@@ -116,7 +116,8 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
     */
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
     PlatformDialectRegistry.dialects.foldLeft(Map[String, () => ValidationProfile]()) {
-      case (acc, dialect) => acc.updated(dialect.name, () => new AMFDialectValidations(dialect).profile())
+      case (acc, dialect) if dialect.name.indexOf("Validation Profile") == -1 => acc.updated(dialect.name, () => new AMFDialectValidations(dialect).profile())
+      case (acc, _) => acc
     }
   }
 

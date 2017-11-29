@@ -27,7 +27,7 @@ class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with Va
     }.map(_.name)
 
     ValidationProfile(
-      name            = "ServerSide",
+      name            = ID,
       baseProfileName = None,
       infoLevel       = infoParserSideValidations,
       warningLevel    = warningParserSideValidations,
@@ -88,7 +88,7 @@ class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with Va
   /**
     * Loads a validation profile from a URL
     */
-  override def loadValidationProfile(validationProfilePath: String): Future[Unit] = Future {}
+  override def loadValidationProfile(validationProfilePath: String): Future[String] = Future { ID }
 
   /**
     * Low level validation returning a SHACL validation report

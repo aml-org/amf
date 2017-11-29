@@ -1,6 +1,6 @@
 package amf.core.unsafe
 
-import amf.core.Utils._
+import amf.core.client.Utils._
 import amf.core.remote.Platform
 import amf.core.remote.browser.JsBrowserPlatform
 import amf.core.remote.server.JsServerPlatform
