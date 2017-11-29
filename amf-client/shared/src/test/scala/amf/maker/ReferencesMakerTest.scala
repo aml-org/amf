@@ -2,6 +2,7 @@ package amf.maker
 
 import amf.common.AmfObjectTestMatcher
 import amf.core.model.document.{Document, Fragment}
+import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -41,13 +42,18 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
         case actual: Document => actual
       })
       .map({ actual =>
-        AmfObjectMatcher(rootExpected).assert(actual)
+        AmfObjectMatcher(withoutLocation(rootExpected)).assert(withoutLocation(actual))
         actual.references.zipWithIndex foreach {
           case (actualRef, index) =>
-            AmfObjectMatcher(rootExpected.references(index)).assert(actualRef)
+            AmfObjectMatcher(withoutLocation(rootExpected.references(index))).assert(withoutLocation(actualRef))
         }
         Succeeded
       })
+  }
+
+  def withoutLocation(e: AmfObject): AmfObject = {
+    e.fields.remove(amf.core.metamodel.document.DocumentModel.Location)
+    e
   }
 
   case class UnitsCreator(spec: Vendor) {
@@ -70,6 +76,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
     private val dataTypeFragment: Fragment = {
       DataTypeFragment()
+        .withLocation("file://amf-client/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withId("file://amf-client/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withEncodes(person)
     }
@@ -78,6 +85,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
       Document()
         .withId("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
+        .withLocation("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
         .withEncodes(WebApi().withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api"))
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")))

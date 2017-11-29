@@ -44,6 +44,7 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
     }
 
     fragment
+      .withLocation(root.location)
       .add(Annotations(root.parsed.document))
 
     UsageParser(rootMap, fragment).parse()

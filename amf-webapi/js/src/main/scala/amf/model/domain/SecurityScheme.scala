@@ -15,15 +15,15 @@ case class SecurityScheme private[model] (private val scheme: security.SecurityS
     with Linkable {
   def this() = this(security.SecurityScheme())
 
-  val name: String                            = scheme.name
-  val `type`: String                          = scheme.`type`
-  val displayName: String                     = scheme.displayName
-  val description: String                     = scheme.description
-  val headers: js.Iterable[Parameter]         = scheme.headers.map(Parameter).toJSArray
-  val queryParameters: js.Iterable[Parameter] = scheme.queryParameters.map(Parameter).toJSArray
-  val responses: js.Iterable[Response]        = scheme.responses.map(Response).toJSArray
-  val settings: Settings                      = Settings(scheme.settings)
-  val queryString: Shape                      = Option(scheme.queryString).map(Shape(_)).orNull
+  def name: String                            = scheme.name
+  def `type`: String                          = scheme.`type`
+  def displayName: String                     = scheme.displayName
+  def description: String                     = scheme.description
+  def headers: js.Iterable[Parameter]         = scheme.headers.map(Parameter).toJSArray
+  def queryParameters: js.Iterable[Parameter] = scheme.queryParameters.map(Parameter).toJSArray
+  def responses: js.Iterable[Response]        = Option(scheme.responses).getOrElse(Nil).map(Response).toJSArray
+  def settings: Settings                      = Settings(scheme.settings)
+  def queryString: Shape                      = Option(scheme.queryString).map(Shape(_)).orNull
 
   def withName(name: String): this.type = {
     scheme.withName(name)

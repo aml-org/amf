@@ -14,18 +14,18 @@ case class Operation private[model] (private val operation: models.Operation) ex
 
   def this() = this(models.Operation())
 
-  val method: String                       = operation.method
-  val name: String                         = operation.name
-  val description: String                  = operation.description
-  val deprecated: Boolean                  = operation.deprecated
-  val summary: String                      = operation.summary
-  val documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
-  val schemes: js.Iterable[String]         = operation.schemes.toJSArray
-  val accepts: js.Iterable[String]         = operation.accepts.toJSArray
-  val contentType: js.Iterable[String]     = operation.contentType.toJSArray
-  val request: Request                     = Option(operation.request).map(Request).orNull
-  val responses: js.Iterable[Response]     = operation.responses.map(Response).toJSArray
-  def security: js.Iterable[DomainElement] = operation.security.map(DomainElement(_)).toJSArray
+  def method: String                       = operation.method
+  def name: String                         = operation.name
+  def description: String                  = operation.description
+  def deprecated: Boolean                  = operation.deprecated
+  def summary: String                      = operation.summary
+  def documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
+  def schemes: js.Iterable[String]         = Option(operation.schemes).getOrElse(Nil).toJSArray
+  def accepts: js.Iterable[String]         = Option(operation.accepts).getOrElse(Nil).toJSArray
+  def contentType: js.Iterable[String]     = Option(operation.contentType).getOrElse(Nil).toJSArray
+  def request: Request                     = Option(operation.request).map(Request).orNull
+  def responses: js.Iterable[Response]     = Option(operation.responses).getOrElse(Nil).map(Response).toJSArray
+  def security: js.Iterable[DomainElement] = Option(operation.security).getOrElse(Nil).map(DomainElement(_)).toJSArray
 
   override private[amf] def element: models.Operation = operation
 

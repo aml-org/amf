@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 class Settings private[model] (private val settings: security.Settings) extends DomainElement {
   def this() = this(security.Settings())
 
-  val additionalProperties: DataNode = DataNode(settings.additionalProperties)
+  def additionalProperties: DataNode = DataNode(settings.additionalProperties)
 
   override private[amf] def element: amf.plugins.domain.webapi.models.security.Settings = settings
 
@@ -25,10 +25,10 @@ case class OAuth1Settings private[model] (private val settings: security.OAuth1S
     extends Settings(settings) {
   def this() = this(security.OAuth1Settings())
 
-  val requestTokenUri: String         = settings.requestTokenUri
-  val authorizationUri: String        = settings.authorizationUri
-  val tokenCredentialsUri: String     = settings.tokenCredentialsUri
-  val signatures: java.util.List[String] = settings.signatures.asJava
+  def requestTokenUri: String         = settings.requestTokenUri
+  def authorizationUri: String        = settings.authorizationUri
+  def tokenCredentialsUri: String     = settings.tokenCredentialsUri
+  def signatures: java.util.List[String] = Option(settings.signatures).getOrElse(Nil).asJava
 
   /** Set requestTokenUri property of this [[OAuth1Settings]]. */
   def withRequestTokenUri(requestTokenUri: String): this.type = {
@@ -62,11 +62,11 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
     extends Settings(settings) {
   def this() = this(security.OAuth2Settings())
 
-  val authorizationUri: String                 = settings.authorizationUri
-  val accessTokenUri: String                   = settings.accessTokenUri
-  val authorizationGrants: java.util.List[String] = settings.authorizationGrants.asJava
-  val flow: String                             = settings.flow
-  val scopes: java.util.List[Scope]               = settings.scopes.map(Scope).asJava
+  def authorizationUri: String                 = settings.authorizationUri
+  def accessTokenUri: String                   = settings.accessTokenUri
+  def authorizationGrants: java.util.List[String] = Option(settings.authorizationGrants).getOrElse(Nil).asJava
+  def flow: String                             = settings.flow
+  def scopes: java.util.List[Scope]               = Option(settings.scopes).getOrElse(Nil).map(Scope).asJava
 
   /** Set authorizationUri property of this [[OAuth2Settings]]. */
   def withAuthorizationUri(authorizationUri: String): this.type = {
@@ -105,8 +105,8 @@ case class ApiKeySettings private[model] (private val settings: security.ApiKeyS
     extends Settings(settings) {
   def this() = this(security.ApiKeySettings())
 
-  val name: String = settings.name
-  val in: String   = settings.in
+  def name: String = settings.name
+  def in: String   = settings.in
 
   /** Set authorizationUri property of this [[ApiKeySettings]]. */
   def withName(name: String): this.type = {

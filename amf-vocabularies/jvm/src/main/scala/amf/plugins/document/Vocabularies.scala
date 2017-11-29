@@ -1,5 +1,7 @@
 package amf.plugins.document
 
+import java.util.concurrent.CompletableFuture
+
 import amf.core.metamodel.Obj
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
@@ -8,6 +10,9 @@ import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectNodeFragmentModel
 import amf.plugins.document.vocabularies.metamodel.domain.DialectEntityModel
 import amf.plugins.document.vocabularies.model.{document, domain}
+import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
+import amf.core.remote.FutureConverter._
+import amf.plugins.document.vocabularies.spec.Dialect
 
 object Vocabularies extends PlatformSecrets{
 
@@ -22,5 +27,7 @@ object Vocabularies extends PlatformSecrets{
 
     AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
   }
+
+  def registerDialect(url: String): CompletableFuture[Dialect] = PlatformDialectRegistry.registerDialect(url).asJava
 
 }

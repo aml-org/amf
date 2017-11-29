@@ -14,7 +14,7 @@ case class CustomDomainProperty(private[amf] val customDomainProperty: extension
   def name: String                = customDomainProperty.name
   def displayName: String         = customDomainProperty.displayName
   def description: String         = customDomainProperty.description
-  def domain: js.Iterable[String] = customDomainProperty.domain.toJSArray
+  def domain: js.Iterable[String] = Option(customDomainProperty.domain).getOrElse(Nil).toJSArray
   def schema: Shape               = Shape(customDomainProperty.schema)
 
   def withName(name: String): this.type = {

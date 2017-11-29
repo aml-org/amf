@@ -46,7 +46,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
 
   private def parseExtension(document: Document, field: Field): Unit = {
     val map = root.parsed.document.as[YMap]
-
+    document.withLocation(root.location)
     UsageParser(map, document).parse()
 
     map

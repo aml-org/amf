@@ -8,8 +8,8 @@ import amf.plugins.domain.webapi.models.security
 case class Scope private[model](private val scope: amf.plugins.domain.webapi.models.security.Scope) extends DomainElement {
   def this() = this(security.Scope())
 
-  val name: String        = scope.name
-  val description: String = scope.description
+  def name: String        = scope.name
+  def description: String = scope.description
 
   override private[amf] def element: amf.plugins.domain.webapi.models.security.Scope = scope
 

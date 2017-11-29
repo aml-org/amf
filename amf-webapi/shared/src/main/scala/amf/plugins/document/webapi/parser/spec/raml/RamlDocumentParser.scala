@@ -69,6 +69,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
 
   private def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location)
+    document.withLocation(root.location)
 
     val map = root.parsed.document.as[YMap]
 

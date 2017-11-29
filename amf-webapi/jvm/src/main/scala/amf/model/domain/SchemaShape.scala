@@ -4,8 +4,8 @@ import amf.plugins.domain.shapes.models
 
 case class SchemaShape(private[amf] val schema: models.SchemaShape) extends AnyShape(schema) {
 
-  val mediaType: String = schema.mediaType
-  val raw: String       = schema.raw
+  def mediaType: String = schema.mediaType
+  def raw: String       = schema.raw
 
   def withMediatype(mediaType: String): this.type = {
     schema.withMediaType(mediaType)

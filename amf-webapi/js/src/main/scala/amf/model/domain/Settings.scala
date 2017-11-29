@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 class Settings private[model] (private val settings: security.Settings) extends DomainElement {
   def this() = this(security.Settings())
 
-  val additionalProperties: DataNode = DataNode(settings.additionalProperties)
+  def additionalProperties: DataNode = DataNode(settings.additionalProperties)
 
   override private[amf] def element: amf.plugins.domain.webapi.models.security.Settings = settings
 
@@ -23,14 +23,16 @@ class Settings private[model] (private val settings: security.Settings) extends 
   }
 }
 
+
+
 case class OAuth1Settings private[model] (private val settings: security.OAuth1Settings)
     extends Settings(settings) {
   def this() = this(security.OAuth1Settings())
 
-  val requestTokenUri: String         = settings.requestTokenUri
-  val authorizationUri: String        = settings.authorizationUri
-  val tokenCredentialsUri: String     = settings.tokenCredentialsUri
-  val signatures: js.Iterable[String] = settings.signatures.toJSArray
+  def requestTokenUri: String         = settings.requestTokenUri
+  def authorizationUri: String        = settings.authorizationUri
+  def tokenCredentialsUri: String     = settings.tokenCredentialsUri
+  def signatures: js.Iterable[String] = Option(settings.signatures).getOrElse(Nil).toJSArray
 
   /** Set requestTokenUri property of this [[OAuth1Settings]]. */
   def withRequestTokenUri(requestTokenUri: String): this.type = {
@@ -64,11 +66,11 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
     extends Settings(settings) {
   def this() = this(security.OAuth2Settings())
 
-  val authorizationUri: String                 = settings.authorizationUri
-  val accessTokenUri: String                   = settings.accessTokenUri
-  val authorizationGrants: js.Iterable[String] = settings.authorizationGrants.toJSArray
-  val flow: String                             = settings.flow
-  val scopes: js.Iterable[Scope]               = settings.scopes.map(Scope).toJSArray
+  def authorizationUri: String                 = settings.authorizationUri
+  def accessTokenUri: String                   = settings.accessTokenUri
+  def authorizationGrants: js.Iterable[String] = Option(settings.authorizationGrants).getOrElse(Nil).toJSArray
+  def flow: String                             = settings.flow
+  def scopes: js.Iterable[Scope]               = Option(settings.scopes).getOrElse(Nil).map(Scope).toJSArray
 
   /** Set authorizationUri property of this [[OAuth2Settings]]. */
   def withAuthorizationUri(authorizationUri: String): this.type = {
@@ -107,8 +109,8 @@ case class ApiKeySettings private[model] (private val settings: security.ApiKeyS
     extends Settings(settings) {
   def this() = this(security.ApiKeySettings())
 
-  val name: String = settings.name
-  val in: String   = settings.in
+  def name: String = settings.name
+  def in: String   = settings.in
 
   /** Set authorizationUri property of this [[ApiKeySettings]]. */
   def withName(name: String): this.type = {

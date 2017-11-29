@@ -16,7 +16,7 @@ abstract class ParametrizedDeclaration private[model] (
     extends DomainElement {
   val name: String                          = declaration.name
   val target: String                        = declaration.target
-  val variables: js.Iterable[VariableValue] = declaration.variables.map(VariableValue).toJSArray
+  val variables: js.Iterable[VariableValue] = Option(declaration.variables).getOrElse(Nil).map(VariableValue).toJSArray
 
   /** Set name property of this [[ParametrizedDeclaration]]. */
   def withName(name: String): this.type = {

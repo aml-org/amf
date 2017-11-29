@@ -9,9 +9,9 @@ case class CreativeWork private[model] (private val creativeWork: models.Creativ
 
   def this() = this(models.CreativeWork())
 
-  val url: String         = creativeWork.url
-  val description: String = creativeWork.description
-  val title: String       = creativeWork.title
+  def url: String         = creativeWork.url
+  def description: String = creativeWork.description
+  def title: String       = creativeWork.title
 
   override private[amf] def element: models.CreativeWork = creativeWork
 

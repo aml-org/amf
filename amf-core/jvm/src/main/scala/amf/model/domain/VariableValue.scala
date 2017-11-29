@@ -9,8 +9,8 @@ case class VariableValue private[model] (private[amf] val variable: templates.Va
     extends DomainElement {
   def this() = this(templates.VariableValue())
 
-  val name: String  = variable.name
-  val value: String = variable.value
+  def name: String  = variable.name
+  def value: String = variable.value
 
   def withName(name: String): this.type = {
     variable.withName(name)

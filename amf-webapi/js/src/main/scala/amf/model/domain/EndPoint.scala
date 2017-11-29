@@ -14,12 +14,12 @@ case class EndPoint private[model] (private val endPoint: models.EndPoint) exten
 
   def this() = this(models.EndPoint())
 
-  val name: String                                      = endPoint.name
-  val description: String                               = endPoint.description
-  val path: String                                      = endPoint.path
-  val operations: js.Iterable[Operation]                = endPoint.operations.map(Operation).toJSArray
-  val parameters: js.Iterable[Parameter]                = endPoint.parameters.map(Parameter).toJSArray
-  def security: js.Iterable[ParametrizedSecurityScheme] = endPoint.security.map(ParametrizedSecurityScheme).toJSArray
+  def name: String                                      = endPoint.name
+  def description: String                               = endPoint.description
+  def path: String                                      = endPoint.path
+  def operations: js.Iterable[Operation]                = Option(endPoint.operations).getOrElse(Nil).map(Operation).toJSArray
+  def parameters: js.Iterable[Parameter]                = Option(endPoint.parameters).getOrElse(Nil).map(Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] = Option(endPoint.security).getOrElse(Nil).map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: models.EndPoint = endPoint
 

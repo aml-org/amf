@@ -12,8 +12,8 @@ case class License private[model] (private val license: models.License) extends 
 
   def this() = this(models.License())
 
-  val url: String  = license.url
-  val name: String = license.name
+  def url: String  = license.url
+  def name: String = license.name
 
   override private[amf] def element: models.License = license
 

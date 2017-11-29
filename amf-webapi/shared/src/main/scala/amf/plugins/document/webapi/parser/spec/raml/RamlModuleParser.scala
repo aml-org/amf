@@ -15,6 +15,7 @@ case class RamlModuleParser(root: Root)(implicit val ctx: WebApiContext) extends
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.parsed.document))
+      .withLocation(root.location)
       .adopted(root.location)
       .add(SourceVendor(root.vendor))
 

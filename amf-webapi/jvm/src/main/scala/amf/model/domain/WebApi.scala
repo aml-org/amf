@@ -11,21 +11,21 @@ case class WebApi(private val webApi: models.WebApi) extends DomainElement {
 
   def this() = this(models.WebApi())
 
-  val name: String                                      = webApi.name
-  val description: String                               = webApi.description
-  val host: String                                      = webApi.host
-  val schemes: java.util.List[String]                      = webApi.schemes.asJava
-  val endPoints: java.util.List[EndPoint]                  = webApi.endPoints.map(amf.model.domain.EndPoint).asJava
-  val basePath: String                                  = webApi.basePath
-  val accepts: java.util.List[String]                      = webApi.accepts.asJava
-  val contentType: java.util.List[String]                  = webApi.contentType.asJava
-  val version: String                                   = webApi.version
-  val termsOfService: String                            = webApi.termsOfService
-  val provider: Organization                            = Option(webApi.provider).map(amf.model.domain.Organization).orNull
-  val license: License                                  = Option(webApi.license).map(amf.model.domain.License).orNull
-  val documentations: java.util.List[CreativeWork]         = webApi.documentations.map(CreativeWork).asJava
-  val baseUriParameters: java.util.List[Parameter]         = webApi.baseUriParameters.map(amf.model.domain.Parameter).asJava
-  def security: java.util.List[ParametrizedSecurityScheme] = webApi.security.map(ParametrizedSecurityScheme).asJava
+  def name: String                                      = webApi.name
+  def description: String                               = webApi.description
+  def host: String                                      = webApi.host
+  def schemes: java.util.List[String]                   = Option(webApi.schemes).getOrElse(Nil).asJava
+  def endPoints: java.util.List[EndPoint]               = Option(webApi.endPoints).getOrElse(Nil).map(amf.model.domain.EndPoint).asJava
+  def basePath: String                                  = webApi.basePath
+  def accepts: java.util.List[String]                   = Option(webApi.accepts).getOrElse(Nil).asJava
+  def contentType: java.util.List[String]               = Option(webApi.contentType).getOrElse(Nil).asJava
+  def version: String                                   = webApi.version
+  def termsOfService: String                            = webApi.termsOfService
+  def provider: Organization                            = Option(webApi.provider).map(amf.model.domain.Organization).orNull
+  def license: License                                  = Option(webApi.license).map(amf.model.domain.License).orNull
+  def documentations: java.util.List[CreativeWork]         = Option(webApi.documentations).getOrElse(Nil).map(CreativeWork).asJava
+  def baseUriParameters: java.util.List[Parameter]         = Option(webApi.baseUriParameters).getOrElse(Nil).map(amf.model.domain.Parameter).asJava
+  def security: java.util.List[ParametrizedSecurityScheme] = Option(webApi.security).getOrElse(Nil).map(ParametrizedSecurityScheme).asJava
 
   override private[amf] def element: models.WebApi = webApi
 

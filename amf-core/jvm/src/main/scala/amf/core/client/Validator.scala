@@ -1,7 +1,5 @@
 package amf.core.client
 
-import java.io.File
-
 import amf.core.remote.FutureConverter._
 import amf.core.services.RuntimeValidator
 import amf.core.validation.AMFValidationReport
@@ -15,7 +13,7 @@ object Validator {
     messageStyle
   ).asJava[AMFValidationReport]
 
-  def loadValidationProfile(path: File) = {
-    RuntimeValidator.loadValidationProfile("file://" + path.getAbsolutePath).asJava
+  def loadValidationProfile(url: String) = {
+    RuntimeValidator.loadValidationProfile(url).asJava
   }
 }

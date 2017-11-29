@@ -11,18 +11,18 @@ case class Operation private[model] (private val operation: models.Operation) ex
 
   def this() = this(models.Operation())
 
-  val method: String                       = operation.method
-  val name: String                         = operation.name
-  val description: String                  = operation.description
-  val deprecated: Boolean                  = operation.deprecated
-  val summary: String                      = operation.summary
-  val documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
-  val schemes: java.util.List[String]         = operation.schemes.asJava
-  val accepts: java.util.List[String]         = operation.accepts.asJava
-  val contentType: java.util.List[String]     = operation.contentType.asJava
-  val request: Request                     = Option(operation.request).map(Request).orNull
-  val responses: java.util.List[Response]     = operation.responses.map(Response).asJava
-  def security: java.util.List[DomainElement] = operation.security.map(DomainElement(_)).asJava
+  def method: String                       = operation.method
+  def name: String                         = operation.name
+  def description: String                  = operation.description
+  def deprecated: Boolean                  = operation.deprecated
+  def summary: String                      = operation.summary
+  def documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
+  def schemes: java.util.List[String]         = Option(operation.schemes).getOrElse(Nil).asJava
+  def accepts: java.util.List[String]         = Option(operation.accepts).getOrElse(Nil).asJava
+  def contentType: java.util.List[String]     = Option(operation.contentType).getOrElse(Nil).asJava
+  def request: Request                     = Option(operation.request).map(Request).orNull
+  def responses: java.util.List[Response]     = Option(operation.responses).getOrElse(Nil).map(Response).asJava
+  def security: java.util.List[DomainElement] = Option(operation.security).getOrElse(Nil).map(DomainElement(_)).asJava
 
   override private[amf] def element: models.Operation = operation
 

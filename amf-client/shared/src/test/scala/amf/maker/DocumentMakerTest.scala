@@ -16,8 +16,9 @@ import scala.concurrent.Future
 class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml declared types ") {
-
-    assertFixture(documentWithTypes(Raml), "declared-types.raml", RamlYamlHint)
+    val doc = documentWithTypes(Raml)
+      .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.raml")
+    assertFixture(doc,"declared-types.raml", RamlYamlHint)
   }
 
   test("Oas declared types ") {
@@ -26,8 +27,8 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   test("Raml inherits declared types ") {
-
-    assertFixture(documentWithInheritsTypes(Raml), "inherits-declared-types.raml", RamlYamlHint)
+    val doc = documentWithInheritsTypes(Raml).withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml")
+    assertFixture(doc, "inherits-declared-types.raml", RamlYamlHint)
   }
 
   test("Oas inherits declared types ") {

@@ -9,9 +9,9 @@ case class Organization private[model] (private val organization: models.Organiz
 
   def this() = this(models.Organization())
 
-  val url: String   = organization.url
-  val name: String  = organization.name
-  val email: String = organization.email
+  def url: String   = organization.url
+  def name: String  = organization.name
+  def email: String = organization.email
 
   override private[amf] def element: models.Organization = organization
 

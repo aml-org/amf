@@ -9,12 +9,12 @@ case class Example private[model] (private val example: models.Example) extends 
 
   def this() = this(models.Example())
 
-  val name: String        = element.name
-  val displayName: String = element.displayName
-  val description: String = element.description
-  val value: String       = element.value
-  val strict: Boolean     = element.strict
-  val mediaType: String   = element.mediaType
+  def name: String        = element.name
+  def displayName: String = element.displayName
+  def description: String = element.description
+  def value: String       = element.value
+  def strict: Boolean     = element.strict
+  def mediaType: String   = element.mediaType
 
   def withName(name: String): this.type = {
     example.withName(name)

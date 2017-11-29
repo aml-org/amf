@@ -13,9 +13,9 @@ abstract class ParametrizedDeclaration private[model] (
     private[amf] val declaration: templates.ParametrizedDeclaration)
     extends DomainElement {
 
-  val name: String                             = declaration.name
-  val target: String                           = declaration.target
-  val variables: java.util.List[VariableValue] = declaration.variables.map(VariableValue).asJava
+  def name: String                             = declaration.name
+  def target: String                           = declaration.target
+  def variables: java.util.List[VariableValue] = Option(declaration.variables).getOrElse(Nil).map(VariableValue).asJava
 
   /** Set name property of this [[ParametrizedDeclaration]]. */
   def withName(name: String): this.type = {

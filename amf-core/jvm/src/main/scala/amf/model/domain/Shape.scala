@@ -8,12 +8,12 @@ import scala.collection.JavaConverters._
 
 abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
 
-  val name: String                       = shape.name
-  val displayName: String                = shape.displayName
-  val description: String                = shape.description
-  val default: String                    = shape.default
-  val values: java.util.List[String]     = shape.values.asJava
-  val inherits: java.util.List[Shape]    = shape.inherits.map(platform.wrap(_)).asJava
+  def name: String                       = shape.name
+  def displayName: String                = shape.displayName
+  def description: String                = shape.description
+  def default: String                    = shape.default
+  def values: java.util.List[String]     = Option(shape.values).getOrElse(Nil).asJava
+  def inherits: java.util.List[Shape]    = Option(shape.inherits).getOrElse(Nil).map(platform.wrap(_)).asJava
 
   def withName(name: String): this.type = {
     shape.withName(name)

@@ -9,9 +9,9 @@ case class ParametrizedSecurityScheme private[model] (private val s: security.Pa
     extends DomainElement {
   def this() = this(security.ParametrizedSecurityScheme())
 
-  val name: String       = s.name
-  val scheme: String     = s.scheme
-  val settings: Settings = Settings(s.settings)
+  def name: String       = s.name
+  def scheme: String     = s.scheme
+  def settings: Settings = Settings(s.settings)
 
   override private[amf] def element: amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme = s
 

@@ -7,14 +7,14 @@ import scala.collection.JavaConverters._
 
 case class NodeShape(private val node: models.NodeShape) extends AnyShape(node) {
 
-  val minProperties: Int                              = node.minProperties
-  val maxProperties: Int                              = node.maxProperties
-  val closed: Boolean                                 = node.closed
-  val discriminator: String                           = node.discriminator
-  val discriminatorValue: String                      = node.discriminatorValue
-  val readOnly: Boolean                               = node.readOnly
-  val properties: java.util.List[PropertyShape]          = node.properties.map(PropertyShape).asJava
-  val dependencies: java.util.List[PropertyDependencies] = node.dependencies.map(PropertyDependencies).asJava
+  def minProperties: Int                                 = node.minProperties
+  def maxProperties: Int                                 = node.maxProperties
+  def closed: Boolean                                    = node.closed
+  def discriminator: String                              = node.discriminator
+  def discriminatorValue: String                         = node.discriminatorValue
+  def readOnly: Boolean                                  = node.readOnly
+  def properties: java.util.List[PropertyShape]          = Option(node.properties).getOrElse(Nil).map(PropertyShape).asJava
+  def dependencies: java.util.List[PropertyDependencies] = Option(node.dependencies).getOrElse(Nil).map(PropertyDependencies).asJava
 
   def withMinProperties(min: Int): this.type = {
     node.withMinProperties(min)

@@ -13,11 +13,11 @@ case class XMLSerializer private[model] (private[amf] val xmlSerializer: models.
 
   def this() = this(models.XMLSerializer())
 
-  val attribute: Boolean = xmlSerializer.attribute
-  val wrapped: Boolean   = xmlSerializer.wrapped
-  val name: String       = xmlSerializer.name
-  val namespace: String  = xmlSerializer.namespace
-  val prefix: String     = xmlSerializer.prefix
+  def attribute: Boolean = xmlSerializer.attribute
+  def wrapped: Boolean   = xmlSerializer.wrapped
+  def name: String       = xmlSerializer.name
+  def namespace: String  = xmlSerializer.namespace
+  def prefix: String     = xmlSerializer.prefix
 
   override private[amf] def element: models.XMLSerializer = xmlSerializer
 
