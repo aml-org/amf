@@ -23,7 +23,7 @@ object Core extends PlatformSecrets{
       case m: amf.core.model.document.Document => Document(m)
     }
     platform.registerWrapper(amf.core.metamodel.document.FragmentModel) {
-      case f: amf.core.model.document.Fragment => Fragment(f)
+      case f: amf.core.model.document.Fragment => new Fragment(f)
     }
     platform.registerWrapper(amf.core.metamodel.domain.DomainElementModel) {
       case e: amf.core.model.domain.DomainElement => DomainElement(e)

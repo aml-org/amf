@@ -1,24 +1,11 @@
 package amf.model.document
 
 import amf.core.model.document.{Fragment => CoreFragment}
-import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.model.{AnnotationTypeDeclarationFragment => CoreAnnotationTypeDeclarationFragment, DataTypeFragment => CoreDataTypeFragment, DocumentationItemFragment => CoreDocumentationItemFragment, ExternalFragment => CoreExternalFragment, NamedExampleFragment => CoreNamedExampleFragment, ResourceTypeFragment => CoreResourceTypeFragment, SecuritySchemeFragment => CoreSecuritySchemeFragment, TraitFragment => CoreTraitFragment}
 
 /**
   * JS Fragment model class
   */
-abstract class Fragment(private[amf] val fragment: CoreFragment) extends BaseUnit with EncodesModel {
-
-  override private[amf] val element = fragment
-
-}
-
-object Fragment extends PlatformSecrets {
-  // TODO: This is missing for the dialects @modularization
-  // case d: CoreDialectFragment                   => DialectFragment(d)
-  def apply(fragment: CoreFragment): Fragment = platform.wrap(fragment)
-}
-
 case class DocumentationItem(private[amf] val documentationItem: CoreDocumentationItemFragment)
   extends Fragment(documentationItem) {
   def this() = this(CoreDocumentationItemFragment())
