@@ -48,4 +48,16 @@ object TypeDefXsdMapping {
       case s if s == (Shapes + "password").iri()     => PasswordType
       case s                                         => throw new RuntimeException(s"Unknown mapping: $s")
     }
+
+  def typeDef(iri: String, format: String): TypeDef = typeDef(iri) match {
+    case FloatType =>
+      format match {
+        case "int32"  => IntType
+        case "int64"  => LongType
+        case "float"  => FloatType
+        case "double" => DoubleType
+        case _        => NumberType
+      }
+    case other => other
+  }
 }
