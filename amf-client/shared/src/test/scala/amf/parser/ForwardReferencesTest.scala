@@ -1,9 +1,9 @@
 package amf.parser
 
+import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
-import amf.core.parser.Range
 import amf.facades.{AMFCompiler, Validation}
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
@@ -16,7 +16,7 @@ import scala.concurrent.ExecutionContext
 class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
 
   private val referencesPath = "file://amf-client/shared/src/test/resources/references/"
-  private val basePath = "file://amf-client/shared/src/test/resources/upanddown/"
+  private val basePath       = "file://amf-client/shared/src/test/resources/upanddown/"
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -80,10 +80,11 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       .build()
       .map { _ =>
         val report = validation.aggregatedReport
-        report.size should be(fixture.size)
-        fixture.zip(report).foreach {
-          case (fn, result) => fn(result)
-        }
+        if (report.size == fixture.size) {
+          fixture.zip(report).foreach {
+            case (fn, result) => fn(result)
+          }
+        } else fail(s"Report and fixture sizes are different!\nActual:\n${report.map(_.toString).mkString("\n")}")
         Succeeded
       }
   }
