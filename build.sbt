@@ -7,6 +7,8 @@ version in ThisBuild := "1.0.0-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.12.2"
 
+publish := {}
+
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Seq(
@@ -159,7 +161,17 @@ lazy val clientJS  = client.js.in(file("./amf-client/js"))
 
 // Tasks
 
-addCommandAlias("generate", "; clean; moduleJS/fullOptJS; generateJSMainModule; generateJVM")
-addCommandAlias("generateJSMainModule", "; amfClientJS/fullOptJS")
-addCommandAlias("generateJVM", "; amfJClientJVM/assembly; amfClientJVM/packageDoc")
-//addCommandAlias("publish", "; clean; moduleJS/fullOptJS; moduleJS/publish; amfJVM/publish")
+addCommandAlias(
+  "publish",
+  ";clean; " +
+    "coreJVM/publish; " +
+    "coreJS/publish; " +
+    "webapiJVM/publish; " +
+    "webapiJS/publish; " +
+    "vocabulariesJVM/publish; " +
+    "vocabulariesJS/publish; " +
+    "validationJVM/publish; " +
+    "validationJS/publish;" +
+    "clientJVM/publish; " +
+    "clientJS/publish;"
+)
