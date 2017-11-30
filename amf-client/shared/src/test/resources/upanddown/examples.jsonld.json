@@ -1,9 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "API with Examples"
+    "title": "API with Examples",
+    "version": "1.0"
   },
-  "definitions":{
+  "definitions": {
     "User": {
       "properties": {
         "name": {
@@ -55,7 +56,7 @@
                 }
               ],
               "example": {
-                "value":{
+                "value": {
                   "name": "Doe Enterprise",
                   "value": "Silver"
                 }
@@ -64,7 +65,8 @@
             "x-media-type": "application/json",
             "in": "body"
           }
-        ]
+        ],
+        "responses": {}
       },
       "get": {
         "description": "Returns an organization entity.",
