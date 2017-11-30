@@ -9,8 +9,6 @@ scalaVersion in ThisBuild := "2.12.2"
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
-publishTo := None
-
 val settings = Common.settings ++ Seq(
   Common.publish,
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
