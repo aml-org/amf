@@ -21,7 +21,6 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.Future
 
-
 class Validation(platform: Platform) {
 
   amf.Core.init()
@@ -34,7 +33,6 @@ class Validation(platform: Platform) {
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
-
   // Temporary
   RuntimeValidator.validator match {
     case Some(runtimeValidator: AMFValidatorPlugin) =>
@@ -44,7 +42,7 @@ class Validation(platform: Platform) {
       Core.init()
       AMFValidatorPlugin.init()
   }
-  val validator = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin]
+  val validator: AMFValidatorPlugin = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin]
   //
 
   val url = "http://raml.org/dialects/profile.raml"
@@ -59,7 +57,7 @@ class Validation(platform: Platform) {
       case Some(dialect) => Promise().success(dialect).future
       case None          => platform.dialectsRegistry.registerDialect(url, ValidationDialectText.text)
     }
-    */
+   */
   }
 
   var profile: Option[ValidationProfile] = None
@@ -102,7 +100,6 @@ class Validation(platform: Platform) {
   def loadDialectValidationProfile(dialect: Dialect): Unit =
     profile = Some(new AMFDialectValidations(dialect).profile())
 
-
   def validate(model: BaseUnit,
                profileName: String,
                messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
@@ -112,7 +109,8 @@ class Validation(platform: Platform) {
 
   def computeValidations(profileName: String): EffectiveValidations = validator.computeValidations(profileName)
 
-  def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = validator.shapesGraph(validations, messageStyle)
+  def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String =
+    validator.shapesGraph(validations, messageStyle)
 }
 
 object Validation {

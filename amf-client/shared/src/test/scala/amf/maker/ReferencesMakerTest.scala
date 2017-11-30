@@ -21,13 +21,11 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Data type fragment test raml") {
-    val file         = "data-type-fragment.raml"
-    val rootDocument = "file://amf-client/shared/src/test/resources/references/data-type-fragment.raml"
+    val rootDocument = "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml"
     assertFixture(rootDocument, RamlYamlHint)
   }
 
   test("Data type fragment test oas") {
-    val file         = "data-type-fragment.json"
     val rootDocument = "file://amf-client/shared/src/test/resources/references/data-type-fragment.json"
     assertFixture(rootDocument, OasJsonHint)
   }
@@ -59,7 +57,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
   case class UnitsCreator(spec: Vendor) {
 
     val (file, fragmentFile, minCount) = spec match {
-      case Raml => ("data-type-fragment.raml", "person.raml", 1)
+      case Raml => ("data-type-fragment.reference.raml", "person.raml", 1)
       case _    => ("data-type-fragment.json", "person.json", 0)
     }
 
@@ -86,7 +84,11 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
       Document()
         .withId("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
         .withLocation("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
-        .withEncodes(WebApi().withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api"))
+        .withEncodes(
+          WebApi()
+            .withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api")
+            .withName("API")
+            .withVersion("1.0"))
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")))
     }

@@ -28,7 +28,7 @@ class ErrorHandler extends IllegalTypeHandler {
   }
 
   def violation(message: String, ast: Option[YPart]): Unit = {
-    violation("", "", None, message, ast.flatMap(lexical))
+    violation(ParsingErrorSpecification.id(), "", None, message, ast.flatMap(lexical))
   }
 
   /** Report constraint failure of severity violation. */
@@ -63,14 +63,10 @@ class ErrorHandler extends IllegalTypeHandler {
   }
 }
 
-object EmptyFutureDeclarations  {
+object EmptyFutureDeclarations {
   def apply(): FutureDeclarations = new FutureDeclarations {}
 }
-case class ParserContext(rootContextDocument: String = "", refs: Seq[ParsedReference] = Seq.empty, futureDeclarations: FutureDeclarations = EmptyFutureDeclarations()) extends ErrorHandler
-
-
-
-
-
-
-
+case class ParserContext(rootContextDocument: String = "",
+                         refs: Seq[ParsedReference] = Seq.empty,
+                         futureDeclarations: FutureDeclarations = EmptyFutureDeclarations())
+    extends ErrorHandler

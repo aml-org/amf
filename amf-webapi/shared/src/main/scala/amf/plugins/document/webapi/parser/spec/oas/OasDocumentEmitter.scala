@@ -117,23 +117,24 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       override def emit(b: EntryBuilder): Unit = {
         val result = mutable.ListBuffer[EntryEmitter]()
 
-        fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
+        fs.entry(WebApiModel.Name)
+          .fold(result += MapEntryEmitter("title", "API"))(f => result += ValueEmitter("title", f))
 
         fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
 
         fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService", f))
 
-        fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
+        fs.entry(WebApiModel.Version)
+          .fold(result += MapEntryEmitter("version", "1.0"))(f => result += ValueEmitter("version", f))
 
         fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
 
         fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact", f, ordering))
 
-        if (result.nonEmpty)
-          b.entry(
-            "info",
-            _.obj(traverse(ordering.sorted(result), _))
-          )
+        b.entry(
+          "info",
+          _.obj(traverse(ordering.sorted(result), _))
+        )
       }
 
       override def position(): Position = {
@@ -252,7 +253,8 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
               result ++= requestEmitters(req, ordering, endpointPayloadEmitted, references))
 
             fs.entry(OperationModel.Responses)
-              .map(f => result += ResponsesEmitter("responses", f, ordering, references))
+              .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
+                result += ResponsesEmitter("responses", f, ordering, references))
 
             fs.entry(OperationModel.Security)
               .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))

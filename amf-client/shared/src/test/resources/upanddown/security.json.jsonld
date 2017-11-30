@@ -19,6 +19,11 @@
             "@value": "Example API"
           }
         ],
+        "http://schema.org/version": [
+          {
+            "@value": "1.0"
+          }
+        ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/web-api/source-map",
@@ -43,12 +48,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://schema.org/version"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,4)-(4,26)]"
+                    "@value": "[(5,4)-(5,20)]"
                   }
                 ]
               },
@@ -60,7 +65,19 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(62,1)]"
+                    "@value": "[(1,0)-(63,1)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,4)-(4,26)]"
                   }
                 ]
               }
@@ -126,7 +143,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(57,18)-(57,27)]"
+                                "@value": "[(58,18)-(58,27)]"
                               }
                             ]
                           }
@@ -150,7 +167,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(57,8)-(57,27)]"
+                            "@value": "[(58,8)-(58,27)]"
                           }
                         ]
                       }
@@ -174,7 +191,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(54,19)-(59,5)]"
+                        "@value": "[(55,19)-(60,5)]"
                       }
                     ]
                   }
@@ -212,7 +229,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(54,4)-(59,5)]"
+                    "@value": "[(55,4)-(60,5)]"
                   }
                 ]
               },
@@ -224,7 +241,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(54,4)-(59,5)]"
+                    "@value": "[(55,4)-(60,5)]"
                   }
                 ]
               },
@@ -236,7 +253,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(55,6)-(55,24)]"
+                    "@value": "[(56,6)-(56,24)]"
                   }
                 ]
               }
@@ -289,7 +306,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(42,6)-(42,21)]"
+                    "@value": "[(43,6)-(43,21)]"
                   }
                 ]
               },
@@ -301,7 +318,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(41,4)-(43,5)]"
+                    "@value": "[(42,4)-(44,5)]"
                   }
                 ]
               }
@@ -391,7 +408,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(25,12)-(25,71)]"
+                            "@value": "[(26,12)-(26,71)]"
                           }
                         ]
                       },
@@ -403,7 +420,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(24,10)-(27,11)]"
+                            "@value": "[(25,10)-(28,11)]"
                           }
                         ]
                       },
@@ -415,7 +432,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(26,12)-(26,28)]"
+                            "@value": "[(27,12)-(27,28)]"
                           }
                         ]
                       }
@@ -439,7 +456,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(24,10)-(27,11)]"
+                        "@value": "[(25,10)-(28,11)]"
                       }
                     ]
                   },
@@ -451,7 +468,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(24,10)-(27,11)]"
+                        "@value": "[(25,10)-(28,11)]"
                       }
                     ]
                   },
@@ -463,7 +480,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(25,12)-(25,71)]"
+                        "@value": "[(26,12)-(26,71)]"
                       }
                     ]
                   }
@@ -538,7 +555,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(31,12)-(31,71)]"
+                            "@value": "[(32,12)-(32,71)]"
                           }
                         ]
                       },
@@ -550,7 +567,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(30,10)-(32,11)]"
+                            "@value": "[(31,10)-(33,11)]"
                           }
                         ]
                       }
@@ -574,7 +591,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(30,10)-(32,11)]"
+                        "@value": "[(31,10)-(33,11)]"
                       }
                     ]
                   },
@@ -586,7 +603,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(30,10)-(32,11)]"
+                        "@value": "[(31,10)-(33,11)]"
                       }
                     ]
                   },
@@ -598,7 +615,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(31,12)-(31,71)]"
+                        "@value": "[(32,12)-(32,71)]"
                       }
                     ]
                   }
@@ -644,7 +661,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(36,12)-(36,49)]"
+                        "@value": "[(37,12)-(37,49)]"
                       }
                     ]
                   },
@@ -656,7 +673,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(35,10)-(37,11)]"
+                        "@value": "[(36,10)-(38,11)]"
                       }
                     ]
                   }
@@ -726,7 +743,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(19,19)-(19,21)]"
+                            "@value": "[(20,19)-(20,21)]"
                           }
                         ]
                       },
@@ -738,7 +755,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(19,8)-(19,21)]"
+                            "@value": "[(20,8)-(20,21)]"
                           }
                         ]
                       },
@@ -750,7 +767,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(19,8)-(19,17)]"
+                            "@value": "[(20,8)-(20,17)]"
                           }
                         ]
                       }
@@ -789,7 +806,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(20,19)-(20,21)]"
+                            "@value": "[(21,19)-(21,21)]"
                           }
                         ]
                       },
@@ -801,7 +818,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(20,8)-(20,21)]"
+                            "@value": "[(21,8)-(21,21)]"
                           }
                         ]
                       },
@@ -813,7 +830,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(20,8)-(20,17)]"
+                            "@value": "[(21,8)-(21,17)]"
                           }
                         ]
                       }
@@ -837,7 +854,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,6)-(21,7)]"
+                        "@value": "[(19,6)-(22,7)]"
                       }
                     ]
                   },
@@ -849,7 +866,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(17,6)-(17,51)]"
+                        "@value": "[(18,6)-(18,51)]"
                       }
                     ]
                   },
@@ -861,7 +878,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,17)-(40,5)]"
+                        "@value": "[(8,17)-(41,5)]"
                       }
                     ]
                   },
@@ -873,7 +890,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(16,6)-(16,63)]"
+                        "@value": "[(17,6)-(17,63)]"
                       }
                     ]
                   },
@@ -885,7 +902,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(10,8)-(14,9)]"
+                        "@value": "[(11,8)-(15,9)]"
                       }
                     ]
                   }
@@ -923,7 +940,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,4)-(40,5)]"
+                    "@value": "[(8,4)-(41,5)]"
                   }
                 ]
               },
@@ -935,7 +952,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(29,8)-(33,9)]"
+                    "@value": "[(30,8)-(34,9)]"
                   }
                 ]
               },
@@ -947,7 +964,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,6)-(8,22)]"
+                    "@value": "[(9,6)-(9,22)]"
                   }
                 ]
               },
@@ -959,7 +976,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,4)-(40,5)]"
+                    "@value": "[(8,4)-(41,5)]"
                   }
                 ]
               },
@@ -971,7 +988,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(23,8)-(28,9)]"
+                    "@value": "[(24,8)-(29,9)]"
                   }
                 ]
               },
@@ -983,7 +1000,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(34,8)-(38,9)]"
+                    "@value": "[(35,8)-(39,9)]"
                   }
                 ]
               }
@@ -1040,7 +1057,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(47,6)-(47,29)]"
+                        "@value": "[(48,6)-(48,29)]"
                       }
                     ]
                   },
@@ -1052,7 +1069,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(44,15)-(48,5)]"
+                        "@value": "[(45,15)-(49,5)]"
                       }
                     ]
                   },
@@ -1064,7 +1081,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(46,6)-(46,26)]"
+                        "@value": "[(47,6)-(47,26)]"
                       }
                     ]
                   }
@@ -1102,7 +1119,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(44,4)-(48,5)]"
+                    "@value": "[(45,4)-(49,5)]"
                   }
                 ]
               },
@@ -1114,7 +1131,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(44,4)-(48,5)]"
+                    "@value": "[(45,4)-(49,5)]"
                   }
                 ]
               },
@@ -1126,7 +1143,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(45,6)-(45,22)]"
+                    "@value": "[(46,6)-(46,22)]"
                   }
                 ]
               }
@@ -1179,7 +1196,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(52,6)-(52,37)]"
+                    "@value": "[(53,6)-(53,37)]"
                   }
                 ]
               },
@@ -1191,7 +1208,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(51,4)-(53,5)]"
+                    "@value": "[(52,4)-(54,5)]"
                   }
                 ]
               }

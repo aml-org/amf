@@ -1,7 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Illustrate query parameter variations"
+    "title": "Illustrate query parameter variations",
+    "version": "1.0"
   },
   "definitions": {
     "lat-long": {
@@ -40,7 +41,8 @@
             "paging",
             "lat-long | loc"
           ]
-        }
+        },
+        "responses": {}
       }
     }
   }

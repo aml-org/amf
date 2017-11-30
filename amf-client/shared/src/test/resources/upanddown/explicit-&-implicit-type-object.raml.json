@@ -1,8 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "API"
- },
+    "title": "API",
+    "version": "1.0"
+  },
   "paths": {
     "/levelzero": {
       "x-displayName": "One display name",
@@ -26,7 +27,8 @@
               }
             }
           }
-        }
+        },
+        "responses": {}
       }
     }
   }
