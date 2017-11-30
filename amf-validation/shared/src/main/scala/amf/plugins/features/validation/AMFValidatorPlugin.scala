@@ -16,7 +16,6 @@ import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
-import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.ExecutionContext.Implicits.global
