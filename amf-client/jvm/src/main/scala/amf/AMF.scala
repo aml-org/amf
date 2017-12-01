@@ -22,7 +22,6 @@ object AMF {
     amf.plugins.features.AMFValidation.init()
   }
 
-
   def raml10Parser(): Raml10Parser = new Raml10Parser()
 
   def raml10Generator(): Raml10Generator = new Raml10Generator()
@@ -35,7 +34,10 @@ object AMF {
 
   def amfGraphGenerator(): AmfGraphGenerator = new AmfGraphGenerator()
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] = Core.validate(model, profileName, messageStyle)
+  def validate(model: BaseUnit,
+               profileName: String,
+               messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] =
+    Core.validate(model, profileName, messageStyle)
 
   def loadValidationProfile(url: String): CompletableFuture[Nothing] = Core.loadValidationProfile(url)
 
@@ -43,9 +45,9 @@ object AMF {
 
   def registerDialect(url: String): Future[Dialect] = Vocabularies.registerDialect(url)
 
-  def resolveRaml10(unit: BaseUnit) = new Raml10Resolver().resolve(unit)
+  def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
-  def resolveOas20(unit: BaseUnit) = new Oas20Resolver().resolve(unit)
+  def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
 
-  def resolveAmfGraph(unit: BaseUnit) = new AmfGraphResolver().resolve(unit)
+  def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)
 }
