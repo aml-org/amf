@@ -14,10 +14,10 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Parsing test") {
     AMF.init().get()
-    val parser = new Raml10Parser()
+    val parser   = new Raml10Parser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
     assert(baseUnit.location == "file://amf-client/shared/src/test/resources/api/zencoder.raml")
-    val api = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    val api      = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     val endpoint = api.endPoints.get(0)
     assert(endpoint.path == "/v3.5/path")
     assert(api.endPoints.size() == 1)
@@ -29,30 +29,52 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://www.w3.org/ns/shacl#ScalarShape"))
     assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://www.w3.org/ns/shacl#Shape"))
     assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/shapes#Shape"))
-    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/document#DomainElement"))
-    assert(post.responses.get(0).payloads.get(0).schema.asInstanceOf[ScalarShape].dataType == "http://www.w3.org/2001/XMLSchema#string")
-    assert(post.request.payloads.get(0).schema.asInstanceOf[ScalarShape].dataType == "http://www.w3.org/2001/XMLSchema#string")
+    assert(
+      post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/document#DomainElement"))
+    assert(
+      post.responses
+        .get(0)
+        .payloads
+        .get(0)
+        .schema
+        .asInstanceOf[ScalarShape]
+        .dataType == "http://www.w3.org/2001/XMLSchema#string")
+    assert(
+      post.request.payloads
+        .get(0)
+        .schema
+        .asInstanceOf[ScalarShape]
+        .dataType == "http://www.w3.org/2001/XMLSchema#string")
     assert(post.responses.get(0).statusCode == "200")
   }
 
   test("Generation test") {
     AMF.init().get()
-    val parser = new Raml10Parser()
+    val parser   = new Raml10Parser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
     assert(new Raml10Generator().generateString(baseUnit) != "") // TODO: test this properly
     assert(new Oas20Generator().generateString(baseUnit) != "")
     assert(new AmfGraphGenerator().generateString(baseUnit) != "")
   }
 
-  test("Resolution test") {
+  test("Validation test") {
     AMF.init().get()
-    val parser = new Raml10Parser()
+    val parser   = new Raml10Parser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
-    val report = AMF.validate(baseUnit, "RAML").get()
+    val report   = AMF.validate(baseUnit, "RAML").get()
     assert(report.conforms)
     AMF.loadValidationProfile("file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml").get()
     val custom = AMF.validate(baseUnit, "Banking").get()
     assert(!custom.conforms)
+  }
+
+  test("Resolution test") {
+    AMF.init().get()
+    val parser           = new Raml10Parser()
+    val baseUnit         = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
+    val resolvedBaseUnit = AMF.resolveRaml10(baseUnit) // TODO: test this properly
+    val report           = AMF.validate(resolvedBaseUnit, "RAML").get()
+    assert(report.conforms)
   }
 
   test("Vocabularies test") {
@@ -61,15 +83,15 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     AMF.registerDialect("file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml").get()
 
     val parser = new Raml10Parser()
-    val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml").get()
-
+    val baseUnit =
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml").get()
 
     PlatformDialectRegistry
     val report = AMF.validate(baseUnit, "Eng Demos 0.1").get()
     assert(report.conforms)
 
     AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
-    val elem = baseUnit.asInstanceOf[Document].encodes
+    val elem     = baseUnit.asInstanceOf[Document].encodes
     val speakers = elem.getObjectByPropertyId("eng-demos:speakers")
     assert(speakers.size() > 0)
   }
