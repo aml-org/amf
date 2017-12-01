@@ -8,13 +8,14 @@ object RuntimeResolver {
 
   def resolve(vendor: String, unit: BaseUnit): BaseUnit = {
     var plugin = AMFPluginsRegistry.documentPluginForID(vendor) match {
-      case Some(documentPlugin) => documentPlugin
-      case None => AMFPluginsRegistry.documentPluginForVendor(vendor).headOption
+      case Some(documentPlugin) => Some(documentPlugin)
+      case None                 => AMFPluginsRegistry.documentPluginForVendor(vendor).headOption
     }
 
     plugin match {
       case Some(documentPlugin: AMFDocumentPlugin) => documentPlugin.resolve(unit)
-      case None                                    => throw new Exception(s"Cannot find domain plugin for vendor $vendor to resolve unit ${unit.location}")
+      case None =>
+        throw new Exception(s"Cannot find domain plugin for vendor $vendor to resolve unit ${unit.location}")
     }
   }
 }
