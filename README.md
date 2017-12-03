@@ -10,12 +10,6 @@ The API Modeling Framework (AMF) allows users to formally describe different kin
 
 ![Overview](https://raw.githubusercontent.com/raml-org/api-modeling-framework/gh-pages/images/diagram.png)
 
-## Status
-
-AMF is under active development.
-Artifacts have been pushed to private repositories. Can be built from the source code as well, as described below.
-Changes to the current interfaces and vocabularies are to be expected, as well as a possible split of the library into smaller units.
-
 ## Goals
 
 - Support for multiple languages with a unified output API/model for clients
@@ -26,19 +20,12 @@ Changes to the current interfaces and vocabularies are to be expected, as well a
 - Extensible, single document model for multiple domain vocabularies
 - Consistent parsing behavior
 
-## On development features
+## General scope
 The library supports many of the required uses cases:
 - Parse a 1.0 RAML, 2.0 OAS and JSON-LD AMF model.
 - AMF API design model creation.
 - Model edition.
 - Export to any of the mentioned standards.
-
-However there's work in progress that will be delivered in first version:
-- Fragments and Libraries
-- Types support
-- Model validation
-- Improved yaml/json lexer integration
-- Improved error handling
 
 ## Usage
 
@@ -49,9 +36,18 @@ To use AMF you should first generate or get the right distribution for your proj
 You can build a standalone Java executable running the following SBT target:
 
 ```bash
-sbt assembly
+sbt package
 ```
-This will create a single stand-alone jar located in `target/artifact/amf.jar`.
+This will create set of jars:
+```bash
+/amf/amf-client/jvm/target/scala-2.12/amf-client_2.12-X_X_X.jar
+/amf/amf-core/jvm/target/scala-2.12/amf-core_2.12-X_X_X.jar
+/amf/amf-validation/jvm/target/scala-2.12/amf-validation_2.12-X_X_X.jar
+/amf/amf-vocabularies/jvm/target/scala-2.12/amf-vocabularies_2.12-X_X_X.jar
+/amf/amf-webapi/jvm/target/scala-2.12/amf-webapi_2.12-X_X_X.jar
+```
+
+##### //TODO: check
 
 The command line tool can also be built for node.js:
 
@@ -61,12 +57,11 @@ The command line tool can also be built for node.js:
 
 This will create a single executable JS in the root directory:
 
-
 ``` bash
 ./amf.js
 ```
 
-Using this jar or the node script, you can execute the JS by passing one of the following commands:
+Using these jars or the node script, you can execute the JS by passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
@@ -78,6 +73,7 @@ If you want to parse any RAML dialect other than RAML 1.0, you can pass a list o
 
 Refer to the usage of the application for additional commands and explanations.
 
+[Validation insights](./documentation/validation.md)
 
 ### JVM artifacts (private repository)
 
@@ -87,7 +83,7 @@ Gradle example:
 
 ```groovy
 dependencies {
-    compile 'org.mulesoft:amf_2.12:0.0.1-SNAPSHOT'
+    compile 'org.mulesoft:amf-client_2.12:X_X_X'
 }
 ```
 
@@ -97,19 +93,19 @@ Maven example:
 <dependency>
     <groupId>org.mulesoft</groupId>
     <artifactId>amf_2.12</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>X_X_X</version>
 </dependency>
 ```
 
-#### Private repository registration
+#### Private repository registration //TODO: check
 
-Add the mulesoft *ci-snapshots* repository and its credentials to the repositories.
+Add the mulesoft *releases* repository and its credentials to the repositories.
 
 Gradle example:
 
 ```groovy
 maven {
-        url 'https://nexus.build.msap.io/nexus/content/repositories/ci-snapshots'
+        url 'https://nexus.build.msap.io/nexus/content/repositories/releases'
         credentials {
             username = "username"
             password = "password"
@@ -121,7 +117,7 @@ maven {
 
 To use, import:
 
-```javascript
+```bash
 import amf from '@mulesoft/amf-js'
 ```
 
@@ -130,7 +126,7 @@ The *amf* package will contain all exported classes:
 const parser = new amf.RamlParser()
 ```
 
-#### Private repository registration
+#### Private repository registration @TODO: Check
 
 See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-js/dw-parser-js/README.md#getting-started
 
@@ -161,7 +157,7 @@ sbt coverage test coverageReport
 ### Generate artifacts directly from cloned repository
 
 ```sh
-sbt generate
+sbt package
 ```
 This will generate two *JS artifacts*:
 - **Client**: JS file in amf-js/target/artifact/amf-browser.js that can be imported from a script tag to be used on the client side.
@@ -178,7 +174,7 @@ npm install --save amf-project-location/amf-js/
 ```
 
 If you are using *Node.js* (server side) just import it using:
-```javascript
+```bash
 import amf from '@mulesoft/amf-js'
 ```
 
@@ -238,7 +234,7 @@ This is a simple example that uses the **JVM jar artifact** in a gradle projects
 
 ### Converter
 
-This is a node project that demonstrates how amf parses and generates an OAS/RAML document. Note that it's not a conversion tool per se as you can quickly see in the code. AMF will build the model every time.
+This is a node project that demonstrates how amf parses and generates an OAS/RAML document. Note that it's not a conversion tool per se as you can quickly see in the code. AMF will build the model every time, dumping the required spec output when selected.
 
 #### Usage
 
