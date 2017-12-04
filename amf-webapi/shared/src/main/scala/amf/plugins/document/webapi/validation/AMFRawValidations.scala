@@ -137,6 +137,7 @@ object AMFRawValidations {
     "amf-parser:empty-enum	Enum in types cannot be empty	OpenAPI	Domain	raml-shapes:Shape	sh:in	PropertyShape	sh:path	sh:node	amf-parser:NonEmptyList	Property 'enum' must have at least one value	Property 'enum' for a Schema object must have at least one value",
     "amf-parser:raml-status-code	Status code must match a valid numeric status code	RAML	Domain	raml-http:Response	hydra:statusCode	PropertyShape	sh:path	sh:pattern	^([0-9]{3})$	Status code must be numeric	Status code must be numeric",
     "amf-parser:array-shape-items-mandatory	Declaration of the type of the items for an array is required	OpenAPI	Domain	raml-shapes:ArrayShape	raml-shapes:item	PropertyShape	sh:path	sh:minCount	1	items facet of RAML Array type is required	items property of Schame objects of type 'array' is required",
-    "amf-parser:array-shape-items-optional	Declaration of the type of the items for an array is optional	RAML	Domain	raml-shapes:ArrayShape	raml-shapes:item	PropertyShape	sh:path	sh:minCount	0	items facet of RAML Array type is required	items property of Schame objects of type 'array' is required"
+    "amf-parser:array-shape-items-optional	Declaration of the type of the items for an array is optional	RAML	Domain	raml-shapes:ArrayShape	raml-shapes:item	PropertyShape	sh:path	sh:minCount	0	items facet of RAML Array type is required	items property of Schame objects of type 'array' is required",
+    "amf-parser:multiple-of\tMultiple of should be greater than 0\tRAML\tDomain\tsh:ScalarShape\traml-shapes:multipleOf\tPropertyShape\tsh:path\traml-shapes:multipleOfValidation\t0\tMultiple of facet should be greater than 0\tMultiple of facet should be greater than 0"
   )
 }

@@ -96,13 +96,51 @@ object Namespace {
   }
 
   def compact(uri: String): String = {
-    ns.find { case (_, namespace) =>
-      uri.indexOf(namespace.base) == 0
+    ns.find {
+      case (_, namespace) =>
+        uri.indexOf(namespace.base) == 0
     } match {
       case Some((prefix, namespace)) =>
         prefix ++ uri.replace(namespace.base, ":")
       case None => uri
     }
+  }
+
+  def find(uri: String): Namespace = uri match {
+    case "http://raml.org/vocabularies/document" => Document
+
+    case "http://raml.org/vocabularies/http" => Http
+
+    case "http://raml.org/vocabularies/security" => Security
+
+    case "http://raml.org/vocabularies/shapes" => Shapes
+
+    case "http://raml.org/vocabularies/data" => Data
+
+    case "http://raml.org/vocabularies/document-source-maps" => SourceMaps
+
+    case "http://www.w3.org/ns/shacl" => Shacl
+
+    case "http://schema.org/" => Schema
+
+    case "http://www.w3.org/ns/hydra/core" => Hydra
+
+    case "http://www.w3.org/2001/XMLSchema" => Xsd
+
+    case "http://raml.org/vocabularies/shapes/anon" => AnonShapes
+
+    case "http://www.w3.org/1999/02/22-rdf-syntax-ns" => Rdf
+
+    // To build full URIs without namespace
+    case "" => WihtoutNamespace
+
+    case "http://raml.org/vocabularies/meta" => Meta
+
+    case "http://www.w3.org/2002/07/owl" => Owl
+
+    case "http://www.w3.org/2000/01/rdf-schema" => Rdfs
+
+    case "http://raml.org/vocabularies/amf/parser" => AmfParser
   }
 
   private def resolve(prefix: String): Option[Namespace] = ns.get(prefix)
