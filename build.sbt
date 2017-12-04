@@ -21,9 +21,9 @@ val settings = Common.settings ++ Seq(
   )
 )
 
-/************************************************
+/** **********************************************
   * AMF-Core
-  ***********************************************/
+  ********************************************** */
 lazy val importScalaTask = TaskKey[Unit](
   "tsvScalaImport",
   "Import validations from AMF TSV files and generates a Scala object with the information")
@@ -55,9 +55,9 @@ lazy val core = crossProject
 lazy val coreJVM = core.jvm.in(file("./amf-core/jvm"))
 lazy val coreJS  = core.js.in(file("./amf-core/js"))
 
-/************************************************
+/** **********************************************
   * AMF-WebAPI
-  ***********************************************/
+  ********************************************** */
 lazy val webapi = crossProject
   .settings(name := "amf-webapi")
   .dependsOn(core)
@@ -80,9 +80,9 @@ lazy val webapi = crossProject
 lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm"))
 lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js"))
 
-/************************************************
+/** **********************************************
   * AMF-Vocabularies
-  ***********************************************/
+  ********************************************** */
 lazy val vocabularies = crossProject
   .settings(name := "amf-vocabularies")
   .dependsOn(core)
@@ -104,9 +104,9 @@ lazy val vocabularies = crossProject
 lazy val vocabulariesJVM = vocabularies.jvm.in(file("./amf-vocabularies/jvm"))
 lazy val vocabulariesJS  = vocabularies.js.in(file("./amf-vocabularies/js"))
 
-/************************************************
+/** **********************************************
   * AMF-Validation
-  ***********************************************/
+  ********************************************** */
 lazy val validation = crossProject
   .settings(name := "amf-validation")
   .dependsOn(core, vocabularies)
@@ -130,9 +130,9 @@ lazy val validation = crossProject
 lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm"))
 lazy val validationJS  = validation.js.in(file("./amf-validation/js"))
 
-/************************************************
+/** **********************************************
   * AMF Client
-  ***********************************************/
+  ********************************************** */
 lazy val client = crossProject
   .settings(Seq(
     name := "amf-client",
@@ -152,6 +152,7 @@ lazy val client = crossProject
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )

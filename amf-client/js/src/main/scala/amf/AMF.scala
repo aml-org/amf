@@ -8,9 +8,10 @@ import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.scalajs.js.Promise
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
+@JSExportTopLevel("AMF")
 object AMF {
 
   def init(): Promise[Any] = {
@@ -24,7 +25,6 @@ object AMF {
     amf.plugins.features.AMFValidation.init()
   }
 
-
   def raml10Parser(): Raml10Parser = new Raml10Parser()
 
   def raml10Generator(): Raml10Generator = new Raml10Generator()
@@ -37,7 +37,8 @@ object AMF {
 
   def amfGraphGenerator(): AmfGraphGenerator = new AmfGraphGenerator()
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] = Core.validate(model, profileName, messageStyle)
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] =
+    Core.validate(model, profileName, messageStyle)
 
   def loadValidationProfile(url: String): Promise[String] = Core.loadValidationProfile(url)
 
