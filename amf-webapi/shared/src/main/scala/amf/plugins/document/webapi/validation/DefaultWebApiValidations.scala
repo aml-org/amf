@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.validation.SeverityLevels
-import amf.core.validation.core.{NodeConstraint, PropertyConstraint, ValidationProfile, ValidationSpecification}
-import amf.core.vocabulary.Namespace
+import amf.core.validation.core._
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.features.validation.ParserSideValidations
 
 /**
@@ -37,17 +37,17 @@ object AMFValidation {
   def fromLine(line: String): Option[AMFValidation] =
     line.split("\t") match {
       case Array(uri,
-      message,
-      spec: String,
-      level,
-      owlClass,
-      owlProperty,
-      shape,
-      target,
-      constraint,
-      value,
-      ramlError,
-      openApiError) =>
+                 message,
+                 spec: String,
+                 level,
+                 owlClass,
+                 owlProperty,
+                 shape,
+                 target,
+                 constraint,
+                 value,
+                 ramlError,
+                 openApiError) =>
         Some(
           AMFValidation(
             nonNullString(Namespace.uri(uri).iri()),
@@ -113,23 +113,31 @@ object DefaultAMFValidations extends ImportUtils {
         val validations = parseValidation(validationsInGroup)
 
         // sorting parser side validation for this profile
-        val violationParserSideValidations = ParserSideValidations.validations.filter { v =>
-          ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
-        }.map(_.name)
-        val infoParserSideValidations = ParserSideValidations.validations.filter { v =>
-          ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
-        }.map(_.name)
-        val warningParserSideValidations = ParserSideValidations.validations.filter { v =>
-          ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
-        }.map(_.name)
+        val violationParserSideValidations = ParserSideValidations.validations
+          .filter { v =>
+            ParserSideValidations
+              .levels(v.id())
+              .getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+          }
+          .map(_.name)
+        val infoParserSideValidations = ParserSideValidations.validations
+          .filter { v =>
+            ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+          }
+          .map(_.name)
+        val warningParserSideValidations = ParserSideValidations.validations
+          .filter { v =>
+            ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+          }
+          .map(_.name)
 
         ValidationProfile(
-          name            = profile,
+          name = profile,
           baseProfileName = if (profile == "AMF") { None } else { Some("AMF") },
-          infoLevel       = infoParserSideValidations,
-          warningLevel    = warningParserSideValidations,
-          violationLevel  = validations.map(_.name) ++ violationParserSideValidations,
-          validations     = validations ++ ParserSideValidations.validations
+          infoLevel = infoParserSideValidations,
+          warningLevel = warningParserSideValidations,
+          violationLevel = validations.map(_.name) ++ violationParserSideValidations,
+          validations = validations ++ ParserSideValidations.validations
         )
 
     }.toList
@@ -152,7 +160,17 @@ object DefaultAMFValidations extends ImportUtils {
 
       Namespace.expand(validation.target.trim).iri() match {
         case "http://www.w3.org/ns/shacl#path" =>
-          spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation)))
+          val valueType = if (validation.constraint.trim.contains("#")) {
+            val strings = validation.constraint.trim.split("#")
+            ValueType(Namespace.find(strings.head), strings.last)
+          } else Namespace.expand(validation.constraint)
+          valueType match {
+            case sh @ ValueType(Namespace.Shacl, _) =>
+              spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh)))
+            case sh @ ValueType(Namespace.Shapes, _) =>
+              spec.copy(functionConstraint = Option(parseFunctionConstraint(s"$uri/prop", validation, sh)))
+          }
+
         case "http://www.w3.org/ns/shacl#targetObjectsOf" if validation.owlProperty.isDefined =>
           spec.copy(
             targetObject = Seq(validation.owlProperty.get),
@@ -163,14 +181,15 @@ object DefaultAMFValidations extends ImportUtils {
     }
   }
 
-  private def parsePropertyConstraint(constraintUri: String, validation: AMFValidation): PropertyConstraint = {
+  private def parsePropertyConstraint(constraintUri: String,
+                                      validation: AMFValidation,
+                                      sh: ValueType): PropertyConstraint = {
     val constraint = PropertyConstraint(
       ramlPropertyId = validation.owlProperty.get,
       name = constraintUri,
       message = validation.message
     )
-
-    Namespace.expand(validation.constraint.trim).iri() match {
+    sh.iri() match {
       case "http://www.w3.org/ns/shacl#minCount"     => constraint.copy(minCount = Some(validation.value))
       case "http://www.w3.org/ns/shacl#maxCount"     => constraint.copy(maxCount = Some(validation.value))
       case "http://www.w3.org/ns/shacl#pattern"      => constraint.copy(pattern = Some(validation.value))
@@ -188,4 +207,27 @@ object DefaultAMFValidations extends ImportUtils {
     }
   }
 
+  private def parseFunctionConstraint(constraintUri: String,
+                                      validation: AMFValidation,
+                                      sh: ValueType): FunctionConstraint = {
+    FunctionConstraint(
+      message = validation.message,
+      functionName = None, // i have to ignore the function name so it will be taken from the generated js library
+      code = JsCustomValidations(sh.name)
+    )
+  }
+
+}
+
+object JsCustomValidations {
+  val functions: Map[String, String] = Map(
+    "multipleOfValidation" ->
+      """|function(shape) {
+           |  var multipleOf = shape["raml-shapes:multipleOf"];
+           |  if ( multipleOf == undefined) return true;
+           |  else return parseInt(multipleOf) > 0;
+           |}
+        """.stripMargin)
+
+  def apply(name: String): Option[String] = functions.get(name)
 }

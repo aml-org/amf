@@ -15,6 +15,12 @@ import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation._
 import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape}
+import amf.plugins.document.webapi.validation.{
+  AnnotationsValidation,
+  ExamplesValidation,
+  PayloadValidation,
+  ShapeFacetsValidation
+}
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -40,12 +46,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile,
-                  platform,
-                  RamlYamlHint,
-                  Validation(platform),
-                  None,
-                  None).build()
+      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -56,12 +57,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile,
-                  platform,
-                  RamlYamlHint,
-                  Validation(platform),
-                  None,
-                  None).build()
+      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -72,12 +68,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile,
-                  platform,
-                  AmfJsonHint,
-                  Validation(platform),
-                  None,
-                  None).build()
+      AMFCompiler(basePath + exampleFile, platform, AmfJsonHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -88,12 +79,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile,
-                  platform,
-                  RamlYamlHint,
-                  Validation(platform),
-                  None,
-                  None).build()
+      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -104,12 +90,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile,
-                  platform,
-                  RamlYamlHint,
-                  Validation(platform),
-                  None,
-                  None).build()
+      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -120,12 +101,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = validation.loadValidationDialect() flatMap { _ =>
-      AMFCompiler(basePath + exampleFile,
-                  platform,
-                  RamlYamlHint,
-                  Validation(platform),
-                  None,
-                  None).build()
+      AMFCompiler(basePath + exampleFile, platform, RamlYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -532,6 +508,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+
   test("Example min and max constraint validations test") {
     val validation = Validation(platform)
     for {
@@ -540,6 +517,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Test js custom validation - multiple of") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "/custom-js-validations/mutiple-of.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+
     }
   }
 

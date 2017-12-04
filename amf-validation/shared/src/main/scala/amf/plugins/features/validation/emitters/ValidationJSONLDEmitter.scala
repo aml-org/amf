@@ -11,7 +11,6 @@ import org.yaml.render.JsonRender
 
 import scala.collection.mutable.ListBuffer
 
-
 /**
   * Generates a JSON-LD graph with the shapes for a set of validations
   * @param targetProfile which kind of messages should be generated
@@ -42,9 +41,9 @@ class ValidationJSONLDEmitter(targetProfile: String) {
   private def emitValidation(b: PartBuilder, validation: ValidationSpecification): Unit = {
     val validationId = validation.id()
 
-    b.obj { b =>
-      b.entry("@id", validationId)
-      b.entry("@type", (Namespace.Shacl + "NodeShape").iri())
+    b.obj { p =>
+      p.entry("@id", validationId)
+      p.entry("@type", (Namespace.Shacl + "NodeShape").iri())
 
       val message = targetProfile match {
         case "RAML" => validation.ramlMessage.getOrElse(validation.message)
@@ -52,37 +51,37 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         case _      => validation.message
       }
       if (message != "") {
-        b.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
+        p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
       }
 
       for {
         targetInstance <- validation.targetInstance
       } yield {
-        b.entry((Namespace.Shacl + "targetNode").iri(), link(_, expandRamlId(targetInstance)))
+        p.entry((Namespace.Shacl + "targetNode").iri(), link(_, expandRamlId(targetInstance)))
       }
 
       for {
         targetClass <- validation.targetClass
       } yield {
-        b.entry((Namespace.Shacl + "targetClass").iri(), link(_, expandRamlId(targetClass)))
+        p.entry((Namespace.Shacl + "targetClass").iri(), link(_, expandRamlId(targetClass)))
       }
 
       for {
         closedShape <- validation.closed
       } yield {
         if (closedShape) {
-          b.entry((Namespace.Shacl + "closed").iri(), genValue(_, closedShape.toString))
+          p.entry((Namespace.Shacl + "closed").iri(), genValue(_, closedShape.toString))
         }
       }
 
       for {
         targetObject <- validation.targetObject
       } yield {
-        b.entry((Namespace.Shacl + "targetObjectsOf").iri(), link(_, Namespace.expand(targetObject).iri()))
+        p.entry((Namespace.Shacl + "targetObjectsOf").iri(), link(_, Namespace.expand(targetObject).iri()))
       }
 
       if (validation.unionConstraints.nonEmpty) {
-        b.entry((Namespace.Shacl + "or").iri(), _.obj {
+        p.entry((Namespace.Shacl + "or").iri(), _.obj {
           _.entry("@list",
                   _.list(l =>
                     validation.unionConstraints.foreach { v =>
@@ -92,19 +91,19 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       }
 
       validation.functionConstraint match {
-        case Some(f) => emitFunctionConstraint(b, validationId, f)
+        case Some(f) => emitFunctionConstraint(p, validationId, f)
         case _       => // ignore
       }
 
       for {
         (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
       } yield {
-        b.entry(Namespace.expand(constraint).iri(),
+        p.entry(Namespace.expand(constraint).iri(),
                 _.list(b => values.foreach(v => link(b, Namespace.expand(v.value).iri()))))
       }
 
       if (validation.propertyConstraints.nonEmpty) {
-        b.entry(
+        p.entry(
           (Namespace.Shacl + "property").iri(),
           _.list { b =>
             for {
