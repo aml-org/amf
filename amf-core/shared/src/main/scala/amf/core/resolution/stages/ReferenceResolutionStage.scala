@@ -4,6 +4,8 @@ import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DomainElement, Linkable}
 
+import scala.collection.mutable
+
 /**
   * Resolves the local and remote references found in the model.
   */
@@ -20,13 +22,17 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     }
   }
 
-  def transform(element: DomainElement): Option[DomainElement] = element match {
-    case l: Linkable if l.linkTarget.isDefined=> {
-      Some(resolveLinked(l.linkTarget.get))
-    }
-    case other       => {
-      Some(other)
-    }
+  def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = element match {
+
+      // link not traversed, cache it and traverse it
+    case l: Linkable if l.linkTarget.isDefined && !isCycle => Some(resolveLinked(l.linkTarget.get))
+
+      // link traversed, return the link
+    case l:Linkable if l.linkTarget.isDefined => Some(l)
+
+      // no link
+    case other => Some(other)
+
   }
 
   def resolveLinked(element: DomainElement): DomainElement = {

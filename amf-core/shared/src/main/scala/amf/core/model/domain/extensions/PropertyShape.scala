@@ -29,29 +29,14 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
     this
   }
 
-  // TODO: removed to avoid dependencies @modularization
-  /*
-  def withObjectRange(name: String): NodeShape = {
-    val node = NodeShape().withName(name)
-    set(PropertyShapeModel.Range, node)
-    node
-  }
-
-  def withScalarSchema(name: String): ScalarShape = {
-    val scalar = ScalarShape().withName(name)
-    set(PropertyShapeModel.Range, scalar)
-    scalar
-  }
-  */
-
   override def linkCopy() = PropertyShape().withId(id)
 
   override def meta = PropertyShapeModel
 
-  override def cloneShape() = {
+  override def cloneShape(withRecursionBase: Option[String]) = {
     val cloned = PropertyShape()
     cloned.id = this.id
-    copyFields(cloned)
+    copyFields(cloned, withRecursionBase)
     cloned.asInstanceOf[this.type]
   }
 }

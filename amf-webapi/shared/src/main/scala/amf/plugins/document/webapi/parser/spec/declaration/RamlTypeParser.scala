@@ -92,7 +92,12 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       case ArrayType                             => parseArrayType()
       case AnyType                               => parseAnyType()
       case typeDef if typeDef.isScalar           => parseScalarType(typeDef)
-      case MultipleMatch                         => parseScalarType(StrType)
+      case MultipleMatch                         => // Multiple match, we try to disambiguate using the default type info
+        defaultType.typeDef match {
+          case typeDef if typeDef.isScalar => parseScalarType(typeDef)
+          case ObjectType                  => parseObjectType()
+          case _                           => parseAnyType() // multiple matches, no disambiguation with default type => any
+        }
     }
 
     // Add 'inline' annotation for shape
@@ -216,7 +221,12 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
   private def parseAnyType(): Shape = {
     val shape = AnyShape(ast).withName(name)
     adopt(shape)
-    shape
+    ast match {
+      case entry: YMapEntry if entry.value.value.isInstanceOf[YMap] =>
+        AnyShapeParser(shape, entry.value.value.asInstanceOf[YMap]).parse()
+      case map: YMap => AnyShapeParser(shape, map).parse()
+      case _         => shape
+    }
   }
 
   def parseArrayType(): Shape = {
@@ -313,6 +323,13 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
     }
   }
 
+  case class AnyShapeParser(shape: AnyShape, map: YMap) extends ShapeParser {
+    override def parse(): AnyShape = {
+      super.parse()
+      shape
+    }
+  }
+
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
       extends ShapeParser
       with CommonScalarParsingLogic {
@@ -382,7 +399,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
                                    unionNode,
                                    item => item.adopted(shape.id + "/items/" + index),
                                    isAnnotation,
-                                   StringDefaultType).parse()
+                                   AnyDefaultType).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -487,7 +504,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
-        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items")).parse()
+        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), false, AnyDefaultType).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -602,7 +619,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
           // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
           ctx.declarations.findType(text, SearchScope.Named) match {
             case Some(ancestor) =>
-              shape.set(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
+              // set without ID!, we keep the ID of the referred element
+              shape.fields.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
             case _ =>
               val u: UnresolvedShape = unresolved(entry.value)
               shape.set(ShapeModel.Inherits, AmfArray(Seq(u), Annotations(entry.value)), Annotations(entry))
@@ -731,7 +749,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
 
-      RamlTypeParser(entry, shape => shape.adopted(property.id))
+      RamlTypeParser(entry, shape => shape.adopted(property.id), false, StringDefaultType)
         .parse()
         .foreach { range =>
           if (explicitRequired.isDefined) {

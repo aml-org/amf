@@ -47,12 +47,12 @@ abstract class Shape extends DomainElement with Linkable {
       })
     }
 
-    // Check in the inheritance chain to add properties comming from super shapes and merging them with the facet
+    // Check in the inheritance chain to add properties coming from super shapes and merging them with the facet
     // properties or properties for the current shape.
     // Notice that the properties map for this shape or from the inheritance can be sequences with more than one
     // element if unions are involved
     Option(inherits) match {
-      // inheritance well get the map of facet properties for each element in the union
+      // inheritance will get the map of facet properties for each element in the union
       case Some(baseShapes: Seq[Shape]) =>
 
         // for each base shape compute sequence(s) of facets map and merge it with the
@@ -69,18 +69,18 @@ abstract class Shape extends DomainElement with Linkable {
     }
   }
 
-  def cloneShape(): Shape
+  def cloneShape(recursionBase: Option[String] = None): Shape
 
 
   // Copy fields into a cloned shape
-  protected def copyFields(cloned: Shape) = {
+  protected def copyFields(cloned: Shape, recursionBase: Option[String]) = {
     this.fields.foreach {
       case (f, v) =>
         val clonedValue = v.value match {
-          case s: Shape => s.cloneShape()
+          case s: Shape => s.cloneShape(recursionBase)
           case a: AmfArray =>
             AmfArray(a.values.map {
-              case e: Shape => e.cloneShape()
+              case e: Shape => e.cloneShape(recursionBase)
               case o        => o
             }, a.annotations)
           case o => o

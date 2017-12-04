@@ -23,7 +23,6 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
 }
 
 object ScalarShape {
-
   def apply(): ScalarShape = apply(Annotations())
 
   def apply(ast: YPart): ScalarShape = apply(Annotations(ast))
