@@ -28,9 +28,9 @@ class ShapeNormalizationStage(profile: String)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {
 
-  override def resolve(model: BaseUnit): BaseUnit = {
-    model.transform(findShapesPredicate, transform)
-  }
+  var fixPointCount = 0
+
+  override def resolve(model: BaseUnit): BaseUnit = model.transform(findShapesPredicate, transform)
 
   protected def ensureCorrect(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
@@ -52,25 +52,28 @@ class ShapeNormalizationStage(profile: String)
     }
   }
 
-  protected def transform(element: DomainElement): Option[DomainElement] = element match {
-    case shape: Shape => Some(canonical(expand(shape.cloneShape())))
-    case other        => Some(other)
+  protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+    element match {
+      case shape: Shape                       => Some(canonical(expand(shape.cloneShape(Some(element.id)))))
+      case other                              => Some(other)
+    }
   }
 
   protected def expand(shape: Shape): Shape = {
     ensureCorrect(shape)
     cleanLexicalInfo(shape)
     shape match {
-      case union: UnionShape       => expandUnion(union)
-      case scalar: ScalarShape     => scalar
-      case array: ArrayShape       => expandArray(array)
-      case matrix: MatrixShape     => expandMatrix(matrix)
-      case tuple: TupleShape       => expandTuple(tuple)
-      case property: PropertyShape => expandProperty(property)
-      case fileShape: FileShape    => fileShape
-      case nil: NilShape           => nil
-      case node: NodeShape         => expandNode(node)
-      case any: AnyShape           => any
+      case union: UnionShape         => expandUnion(union)
+      case scalar: ScalarShape       => scalar
+      case array: ArrayShape         => expandArray(array)
+      case matrix: MatrixShape       => expandMatrix(matrix)
+      case tuple: TupleShape         => expandTuple(tuple)
+      case property: PropertyShape   => expandProperty(property)
+      case fileShape: FileShape      => fileShape
+      case nil: NilShape             => nil
+      case node: NodeShape           => expandNode(node)
+      case recursive: RecursiveShape => recursive
+      case any: AnyShape             => any
     }
   }
 
@@ -173,20 +176,27 @@ class ShapeNormalizationStage(profile: String)
 
   protected def canonical(shape: Shape): Shape = {
     shape match {
-      case union: UnionShape       => canonicalUnion(union)
-      case scalar: ScalarShape     => canonicalScalar(scalar)
-      case array: ArrayShape       => canonicalArray(array)
-      case matrix: MatrixShape     => canonicalMatrix(matrix)
-      case tuple: TupleShape       => canonicalTuple(tuple)
-      case property: PropertyShape => canonicalProperty(property)
-      case fileShape: FileShape    => canonicalShape(fileShape)
-      case nil: NilShape           => canonicalShape(nil)
-      case node: NodeShape         => canonicalNode(node)
-      case any: AnyShape           => canonicalShape(any)
+      case union: UnionShape         => canonicalUnion(union)
+      case scalar: ScalarShape       => canonicalScalar(scalar)
+      case array: ArrayShape         => canonicalArray(array)
+      case matrix: MatrixShape       => canonicalMatrix(matrix)
+      case tuple: TupleShape         => canonicalTuple(tuple)
+      case property: PropertyShape   => canonicalProperty(property)
+      case fileShape: FileShape      => canonicalShape(fileShape)
+      case nil: NilShape             => canonicalShape(nil)
+      case node: NodeShape           => canonicalNode(node)
+      case recursive: RecursiveShape => recursive
+      case any: AnyShape             => canonicalShape(any)
     }
   }
 
-  private def canonicalShape(shape: Shape) = shape
+  private def canonicalShape(any: Shape) = {
+    if (Option(any.inherits).isDefined && any.inherits.nonEmpty) {
+      canonicalInheritance(any)
+    } else {
+      any
+    }
+  }
 
   protected def canonicalScalar(scalar: ScalarShape): Shape = {
     if (Option(scalar.inherits).isDefined && scalar.inherits.nonEmpty) {

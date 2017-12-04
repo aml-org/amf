@@ -2,16 +2,19 @@ package amf.validation
 
 import amf.ProfileNames
 import amf.common.Tests.checkDiff
+import amf.core.AMFSerializer
 import amf.core.client.GenerationOptions
 import amf.core.model.document.{Document, Module}
-import amf.core.model.domain.{DataNode, Shape}
+import amf.core.model.domain.{DataNode, RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
-import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation}
+import amf.plugins.document.webapi.RAML10Plugin
+import amf.plugins.document.webapi.validation._
+import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape}
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -29,6 +32,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val vocabulariesPath = "file://amf-client/shared/src/test/resources/vocabularies/"
   val examplesPath     = "file://amf-client/shared/src/test/resources/validations/"
   val payloadsPath     = "file://amf-client/shared/src/test/resources/payloads/"
+  val productionPath     = "file://amf-client/shared/src/test/resources/production/"
 
   test("Loading and serializing validations") {
     val expectedFile             = "validation_profile_example_gold.raml"
@@ -535,7 +539,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      println(report)
       assert(report.conforms)
     }
   }
@@ -552,4 +555,57 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.length == 1)
     }
   }
+
+  test("Can parse and validate a complex recursive API") {
+    val validation = Validation(platform) //
+    for {
+      library <- AMFCompiler(productionPath + "getsandbox.comv1swagger.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(Option(report).isDefined)
+    }
+  }
+
+  test("Can parse a recursive API") {
+    val validation = Validation(platform)
+    for {
+      doc    <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, validation).build()
+    } yield {
+      val resolved = RAML10Plugin.resolve(doc)
+      val A: NodeShape = resolved.asInstanceOf[Document].declares.head.asInstanceOf[NodeShape]
+      assert(A.properties.head.range.isInstanceOf[RecursiveShape])
+      assert(A.properties.head.range.asInstanceOf[RecursiveShape].fixpoint == A.id)
+      assert(Option(resolved).isDefined)
+    }
+  }
+
+  test("Can parse a recursive array API") {
+    val validation = Validation(platform)
+    for {
+      doc    <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, validation).build()
+    } yield {
+      val resolved = RAML10Plugin.resolve(doc)
+      val A: ArrayShape = resolved.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
+      assert(A.items.isInstanceOf[RecursiveShape])
+      assert(A.items.name == "items")
+      val AOrig = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
+      val profile = new AMFShapeValidations(AOrig).profile()
+      assert(profile != null)
+    }
+  }
+
+  test("Can normalize a recursive array API") {
+    val validation = Validation(platform)
+    for {
+      doc    <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, validation).build()
+    } yield {
+      val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
+      val profile = new AMFShapeValidations(A).profile()
+      assert(profile.violationLevel.size == 2)
+      assert(profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_validation")
+      assert(profile.violationLevel.last == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_recursive_validation")
+    }
+  }
+
 }

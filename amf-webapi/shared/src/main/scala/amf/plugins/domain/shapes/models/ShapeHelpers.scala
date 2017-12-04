@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.ExplicitField
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 
@@ -13,8 +13,9 @@ trait ShapeHelpers { this: Shape =>
     case _                                    => throw new Exception("Trying to extract non existent type expression")
   }
 
-  def cloneShape(): this.type = {
+  def cloneShape(withRecursionBase: Option[String] = None): this.type = {
     val cloned: Shape = this match {
+      case _: Linkable if this.isLink => buildFixPoint(withRecursionBase, this)
       case _: UnionShape    => UnionShape()
       case _: ScalarShape   => ScalarShape()
       case _: ArrayShape    => ArrayShape()
@@ -28,10 +29,16 @@ trait ShapeHelpers { this: Shape =>
       case _: AnyShape      => AnyShape()
     }
     cloned.id = this.id
-    copyFields(cloned)
+    copyFields(cloned, withRecursionBase)
     if (cloned.isInstanceOf[NodeShape]) {
       cloned.add(ExplicitField())
     }
     cloned.asInstanceOf[this.type]
   }
+
+  protected def buildFixPoint(id: Option[String], link: Shape): RecursiveShape = {
+    val fixPointId = id.getOrElse(link.id)
+    RecursiveShape().withId(link.id).withFixPoint(fixPointId)
+  }
+
 }
