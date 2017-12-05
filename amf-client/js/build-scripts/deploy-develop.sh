@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# THIS SCRIPT MUST BE EXECUTED FROM PATH (root) AND NOT FROM (root)/amf-js/build-scripts
+# THIS SCRIPT MUST BE EXECUTED FROM PATH (root) AND NOT FROM (root)/amf-client/js/build-scripts
 
-cd ./amf-js
+cd ./amf-client/js
 
 source ./build-scripts/pre-deploy.sh
 
 echo "Current directory: `pwd`"
 
-export DEVELOP_VERSION_BASE=`npm v @mulesoft/amf-js dist-tags.latest`
+export DEVELOP_VERSION_BASE=`npm v @mulesoft/amf-client-js dist-tags.latest`
 
 if [[ "$DEVELOP_VERSION_BASE" == "undefined" ]]; then
   DEVELOP_VERSION_BASE='0.0.1-automatic'
@@ -39,4 +39,4 @@ else
     npm publish
 fi
 
-cd ..
+cd ../..

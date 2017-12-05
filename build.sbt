@@ -30,6 +30,9 @@ lazy val importScalaTask = TaskKey[Unit](
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
+lazy val publishJS = TaskKey[Unit](
+  "publishJS",
+  "Publish npm module")
 
 lazy val core = crossProject
   .settings(
@@ -154,7 +157,10 @@ lazy val client = crossProject
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js",
+    publishJS := {
+      "./amf-client/js/build-scripts/deploy-develop.sh".!
+    }
   )
 
 lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
@@ -164,7 +170,7 @@ lazy val clientJS  = client.js.in(file("./amf-client/js"))
 
 addCommandAlias(
   "publish",
-  ";clean; " +
+  "; clean; " +
     "coreJVM/publish; " +
     "coreJS/publish; " +
     "webapiJVM/publish; " +
@@ -174,5 +180,7 @@ addCommandAlias(
     "validationJVM/publish; " +
     "validationJS/publish;" +
     "clientJVM/publish; " +
-    "clientJS/publish;"
+    "clientJS/publish;" +
+    "clientJS/fullOptJS;" +
+    "clientJS/publishJS;"
 )
