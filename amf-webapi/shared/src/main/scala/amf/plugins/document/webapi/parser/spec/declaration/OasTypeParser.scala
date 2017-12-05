@@ -38,7 +38,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
   def parse(): Option[Shape] = {
 
-    val parsedShape = detect() match {
+    val parsedShape = detect(oasNode) match {
       case UnionType                   => Some(parseUnionType())
       case LinkType                    => parseLinkType()
       case ObjectType                  => Some(parseObjectType())
@@ -56,12 +56,16 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  private def detect(): TypeDef =
+  private def detect(position: String): TypeDef = {
+    val defaultType = if (position == "parameter") UndefinedType
+                      else AnyType
+
     detectDependency()
       .orElse(detectType())
       .orElse(detectProperties())
       .orElse(detectAnyOf())
-      .getOrElse(if (map.entries.isEmpty) AnyType else UndefinedType)
+      .getOrElse(defaultType)
+  }
 
   private def detectProperties(): Option[TypeDef.ObjectType.type] =
     map.key("properties").orElse(map.key("allOf")).map(_ => ObjectType)
@@ -99,7 +103,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   private def parseAnyType(): Shape = {
     val shape = AnyShape(ast).withName(name)
     adopt(shape)
-    shape
+    AnyShapeParser(shape, map).parse()
   }
 
   private def parseArrayType(): Shape = {
@@ -351,6 +355,16 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
           ctx.violation(arrayShape.id, "Cannot parse data arrangement shape", map)
           arrayShape
       }
+    }
+  }
+
+  case class AnyShapeParser(shape: AnyShape, map: YMap) extends ShapeParser() {
+    override def parse(): AnyShape = {
+      super.parse()
+
+      map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+
+      shape
     }
   }
 

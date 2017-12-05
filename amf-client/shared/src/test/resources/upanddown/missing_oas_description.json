@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Annotating Examples",
+    "version": "1.0"
+  },
+  "paths": {
+    "/request": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-media-type": "application/json",
+            "schema": {
+              "x-examples": {
+                "example1": {
+                  "value": {
+                    "a:1": ""
+                  },
+                  "x-condition": "test"
+                },
+                "example2": {
+                  "value": {
+                    "a:2": ""
+                  },
+                  "x-condition": "test"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-annotationTypes": {
+    "condition": {
+      "schema": {
+        "type": "string"
+      }
+    }
+  }
+}
