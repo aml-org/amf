@@ -30,7 +30,7 @@ class Generator(protected val vendor: String, protected val mediaType: String) e
     * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  def generateFile(unit: BaseUnit, url: File): CompletableFuture[String] =
+  def generateFile(unit: BaseUnit, url: File): CompletableFuture[Void] =
     generate(unit.element, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
 
   /** Generates the syntax text and returns it. */
