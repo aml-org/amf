@@ -18,22 +18,25 @@ class DocumentMakerTest extends WebApiMakerTest {
   test("Raml declared types ") {
     val doc = documentWithTypes(Raml)
       .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.raml")
-    assertFixture(doc,"declared-types.raml", RamlYamlHint)
+    assertFixture(doc, "declared-types.raml", RamlYamlHint)
   }
 
   test("Oas declared types ") {
-
-    assertFixture(documentWithTypes(Oas), "declared-types.json", OasJsonHint)
+    val doc = documentWithTypes(Oas)
+      .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.json")
+    assertFixture(doc, "declared-types.json", OasJsonHint)
   }
 
   test("Raml inherits declared types ") {
-    val doc = documentWithInheritsTypes(Raml).withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml")
+    val doc = documentWithInheritsTypes(Raml)
+      .withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml")
     assertFixture(doc, "inherits-declared-types.raml", RamlYamlHint)
   }
 
   test("Oas inherits declared types ") {
-
-    assertFixture(documentWithInheritsTypes(Oas), "inherits-declared-types.json", OasYamlHint)
+    val doc = documentWithInheritsTypes(Oas)
+      .withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.json")
+    assertFixture(doc, "inherits-declared-types.json", OasYamlHint)
   }
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {

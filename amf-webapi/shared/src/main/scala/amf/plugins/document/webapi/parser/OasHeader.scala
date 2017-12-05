@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.Root
-import amf.plugins.document.webapi.parser.FragmentTypes._
 import amf.core.parser._
+import amf.plugins.document.webapi.parser.FragmentTypes._
 import org.yaml.model.YMap
 
 /**
@@ -40,17 +40,15 @@ object OasHeader {
 
   object Oas20Overlay extends OasHeader(extensionType, "2.0 Overlay")
 
-  def apply(root: Root): Option[OasHeader] = try {
-    val map = root.parsed.document.as[YMap]
-
-    map
-      .key(extensionName)
-      .orElse(map.key(extensionType))
-      .orElse(map.key(swagger))
-      .flatMap(extension => OasHeader(extension.value))
-      .orElse(toOasType(FragmentTypes(map)))
-  } catch {
-    case e: Exception => None
+  def apply(root: Root): Option[OasHeader] = root.parsed.document.to[YMap] match {
+    case Right(map) =>
+      map
+        .key(extensionName)
+        .orElse(map.key(extensionType))
+        .orElse(map.key(swagger))
+        .flatMap(extension => OasHeader(extension.value))
+        .orElse(toOasType(FragmentTypes(map)))
+    case Left(_) => None
   }
 
   def apply(text: String): Option[OasHeader] = text match {
