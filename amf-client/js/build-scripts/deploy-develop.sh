@@ -6,6 +6,8 @@ cd ./amf-client/js
 
 source ./build-scripts/pre-deploy.sh
 
+source ./build-scripts/buildjs.sh
+
 echo "Current directory: `pwd`"
 
 export DEVELOP_VERSION_BASE=`npm v @mulesoft/amf-client-js dist-tags.latest`
