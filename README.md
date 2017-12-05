@@ -38,7 +38,7 @@ You can build a standalone Java executable running the following SBT target:
 ```bash
 sbt package
 ```
-This will create set of jars:
+This will create a set of jars:
 ```bash
 /amf/amf-client/jvm/target/scala-2.12/amf-client_2.12-X_X_X.jar
 /amf/amf-core/jvm/target/scala-2.12/amf-core_2.12-X_X_X.jar
@@ -75,7 +75,7 @@ Refer to the usage of the application for additional commands and explanations.
 
 [Validation insights](./documentation/validation.md)
 
-### JVM artifacts (private repository)
+### JVM artifacts
 
 To use, specify dependency.
 
@@ -87,33 +87,32 @@ dependencies {
 }
 ```
 
+```groovy
+repositories {
+    ...
+    maven {
+            url 'https://nexus.build.msap.io/nexus/content/repositories/releases'
+            @TODO CHECK
+            credentials {
+                username = "username"
+                password = "password"
+            }
+        }
+    ...
+}
+```
+
 Maven example:
 
 ```xml
 <dependency>
     <groupId>org.mulesoft</groupId>
-    <artifactId>amf_2.12</artifactId>
+    <artifactId>amf-client_2.12</artifactId>
     <version>X_X_X</version>
 </dependency>
 ```
 
-#### Private repository registration //TODO: check
-
-Add the mulesoft *releases* repository and its credentials to the repositories.
-
-Gradle example:
-
-```groovy
-maven {
-        url 'https://nexus.build.msap.io/nexus/content/repositories/releases'
-        credentials {
-            username = "username"
-            password = "password"
-        }
-    }
-```
-
-### JS artifacts (private repository)
+### JS artifacts
 
 To use, import:
 
@@ -124,16 +123,6 @@ import amf from '@mulesoft/amf-js'
 The *amf* package will contain all exported classes:
 ```javascript
 const parser = new amf.RamlParser()
-```
-
-#### Private repository registration @TODO: Check
-
-See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-js/dw-parser-js/README.md#getting-started
-
-And then:
-
-```bash
-npm install --save @mulesoft/amf-js@latest
 ```
 
 ## Installation
@@ -170,34 +159,23 @@ And two *JVM artifacts*:
 #### Using AMF in a node.js project
 
 ```bash
-npm install --save amf-project-location/amf-js/
+npm install --save amf-project-location/amf-client-js/
 ```
 
 If you are using *Node.js* (server side) just import it using:
 ```bash
-import amf from '@mulesoft/amf-js'
+import amf from '@mulesoft/amf-client-js'
 ```
 
 The *amf* package will contain all exported classes:
 ```javascript
-const parser = new amf.RamlParser()
-```
-
-### Using AMF from client browser
-
-Just import the generated JS file in a script tag
-```html
-<script src="amf-browser.js"></script>
-```
-
-and use the exported classes as if they were global ones, for example:
-```javascript
-const parser = new RamlParser()
+amf.AMF.init()
+const parser = amf.AMF.raml10Parser()
 ```
 
 ## Examples
 
-Inside the *usage* folder we have an example for each of the three usages and a *converter* project for adding some UI features to the library.
+Go to [amf examples repository](https://github.com/mulesoft/amf-byExample) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
 
 ### Browser-client
 
@@ -211,7 +189,7 @@ Just open the *html* file in any browser and play with what's inside the script 
 
 This example has a *node.js* file **index.js** where the amf library will be imported and can be used as a node module.
 
-#### Usage
+#### Usage //@TODO check
 
 1. Run *cd usage/jsClient* while positioned at the root of the project.
 2. Run *npm install*.
@@ -225,7 +203,7 @@ Modify *parser* and generator *modules* to change the server-side use of the lib
 
 ### JVM Client
 
-This is a simple example that uses the **JVM jar artifact** in a gradle projects' main file.
+This is a simple example that uses the **JVM jar artifact** in a gradle project main file.
 
 #### Usage
 
