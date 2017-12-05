@@ -21,6 +21,13 @@ case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
     AmfArray(elements, annotations())
   }
 
+  def rawMembers(): AmfArray = {
+    val nodes    = ast.as[Seq[Any]]
+    val elements = nodes.map(child => AmfScalar(child.toString, annotations()))
+
+    AmfArray(elements, annotations())
+  }
+
   private def annotations() = Annotations(ast.value)
 }
 
