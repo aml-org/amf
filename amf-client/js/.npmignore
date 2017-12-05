@@ -5,5 +5,11 @@ build-scripts
 build-scripts/.*
 build-scripts/
 src
-!target/artifact/amf-client-module.js
-!target/artifact/amf-client-module.js.map
+src/*
+src/.*
+src/main/scala
+src/main/scala/*
+src/main/scala/.*
+!amf.js
+!/src/main/resources/shacl_node.js
+/src/main/resources/shacl.js
