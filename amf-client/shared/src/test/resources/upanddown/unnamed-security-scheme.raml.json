@@ -1,0 +1,31 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "GitHub API",
+    "version": "v3"
+  },
+  "host": "api.github.com",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/users/{userid}/gists": {
+      "get": {
+        "responses": {},
+        "security": [
+          {
+            "null": []
+          },
+          {
+            "oauth_2_0": []
+          }
+        ]
+      }
+    }
+  },
+  "x-securitySchemes": {
+    "oauth_2_0": {
+      "$ref": "../references/fragments/oauth-2-0_Rv1-0.raml"
+    }
+  }
+}

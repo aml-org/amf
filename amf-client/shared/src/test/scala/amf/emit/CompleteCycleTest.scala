@@ -716,4 +716,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("OAS descriptions for responses area added automatically oas to raml") {
     cycle("missing_oas_description.json", "missing_oas_description.json.raml", OasJsonHint, Raml)
   }
+
+  test("SecurityScheme without name raml to oas") {
+    cycle("unnamed-security-scheme.raml", "unnamed-security-scheme.raml.json", RamlYamlHint, Oas)
+  }
 }
