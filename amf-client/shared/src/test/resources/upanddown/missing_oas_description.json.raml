@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Annotating Examples
+version: 1.0
+/request:
+  get:
+    responses:
+      200:
+        description: 
+        body:
+          application/json:
+            examples:
+              example1:
+                value:
+                  a:1: 
+                (condition): test
+              example2:
+                value:
+                  a:2: 
+                (condition): test
+            type: any
+annotationTypes:
+  condition:
+    type: string

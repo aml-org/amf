@@ -1030,6 +1030,11 @@
                         "@value": "201"
                       }
                     ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": ""
+                      }
+                    ],
                     "http://www.w3.org/ns/hydra/core#statusCode": [
                       {
                         "@value": "201"
@@ -1877,12 +1882,24 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://schema.org/description"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(114,12)-(114,29)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(76,10)-(114,11)]"
+                                "@value": "[(76,10)-(115,11)]"
                               }
                             ]
                           }
@@ -1906,7 +1923,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(75,8)-(115,9)]"
+                            "@value": "[(75,8)-(116,9)]"
                           }
                         ]
                       },
@@ -1918,7 +1935,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(73,6)-(116,7)]"
+                            "@value": "[(73,6)-(117,7)]"
                           }
                         ]
                       },
@@ -1954,7 +1971,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(43,4)-(117,5)]"
+                        "@value": "[(43,4)-(118,5)]"
                       }
                     ]
                   }
@@ -1992,7 +2009,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(42,11)-(118,3)]"
+                    "@value": "[(42,11)-(119,3)]"
                   }
                 ]
               },
@@ -2016,7 +2033,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(119,1)]"
+                    "@value": "[(1,0)-(120,1)]"
                   }
                 ]
               },

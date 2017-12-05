@@ -9,7 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Fields, Position}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Fields, Position, Value}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations._
@@ -336,7 +336,9 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
           _.obj { b =>
             val result = mutable.ListBuffer[EntryEmitter]()
 
-            fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))
+            fs.entry(ResponseModel.Description)
+              .orElse(Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))) // this is mandatory in OAS 2.0
+              .map(f => result += ValueEmitter("description", f))
             fs.entry(RequestModel.Headers)
               .map(f => result += RamlParametersEmitter("headers", f, ordering, references))
 

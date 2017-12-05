@@ -808,7 +808,7 @@ case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fie
         OasScalarShapeEmitter(copiedScalar, ordering, references).emitters()
       case any: AnyShape =>
         val copiedNode = any.copyAnyShape(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
-        Seq(OasAnyShapeEmitter(copiedNode, ordering))
+        OasAnyShapeEmitter(copiedNode, ordering, references).emitters()
       case _ => Seq()
     }
   }
@@ -892,12 +892,9 @@ case class OasUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refer
   override def position(): Position = pos(shape.annotations)
 }
 
-case class OasAnyShapeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-    // ignore
-  }
-  override def position(): Position = pos(shape.annotations)
+case class OasAnyShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+    extends OasShapeEmitter(shape, ordering, references) {
+  override def emitters(): Seq[EntryEmitter] = ListBuffer(super.emitters(): _*)
 }
 
 case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(

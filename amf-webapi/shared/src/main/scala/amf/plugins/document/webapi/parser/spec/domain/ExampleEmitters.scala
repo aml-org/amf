@@ -108,7 +108,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
-    val explicitFielMeta = List(Strict, Description, DisplayName).filter { f =>
+    val explicitFielMeta = List(Strict, Description, DisplayName, CustomDomainProperties).filter { f =>
       fs.entry(f) match {
         case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
         case None        => false
