@@ -427,6 +427,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Annotations enum validations test") {
+    for {
+      library <- AMFCompiler(examplesPath + "annotations/annotations_enum.raml",
+        platform,
+        RamlYamlHint,
+        Validation(platform))
+        .build()
+      results <- AnnotationsValidation(library, platform).validate()
+    } yield {
+      assert(results.length == 4)
+    }
+  }
+
   test("Duplicated endpoints validations test") {
     val validation = Validation(platform)
     for {

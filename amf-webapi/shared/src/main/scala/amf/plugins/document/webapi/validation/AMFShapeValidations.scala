@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation
 
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, RecursiveShape, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
@@ -78,7 +78,7 @@ class AMFShapeValidations(shape: Shape) {
     nestedConstraints ++= emitShapeValidations(context + s"/items", array.items)
 
     val itemsValidationId = validationId(array) + "/prop"
-    val itemsConstraint = new PropertyConstraint(
+    val itemsConstraint = PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "member").iri(),
       name = itemsValidationId,
       message = Some(s"Array items at $context must be valid"),
@@ -120,7 +120,7 @@ class AMFShapeValidations(shape: Shape) {
 
       val propertyValidationId = validationId(property.range)
       val propertyId           = (Namespace.Data + property.name).iri()
-      val nodeConstraint = new PropertyConstraint(
+      val nodeConstraint = PropertyConstraint(
         ramlPropertyId = propertyId,
         name = validationId(node) + s"_validation_node_prop_${property.name}",
         message = Some(s"Property ${property.name} at $context must have a valid value"),
@@ -152,7 +152,7 @@ class AMFShapeValidations(shape: Shape) {
       oasMessage = Some(msg),
       targetClass = Seq.empty,
       propertyConstraints = Seq(
-        new PropertyConstraint(
+        PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = scalar.id + "_validation_range/prop",
           message = Some(s"Scalar at $context must have data type ${scalar.dataType}"),
@@ -167,6 +167,7 @@ class AMFShapeValidations(shape: Shape) {
     validation = checkMaximum(context, validation, scalar)
     validation = checkMinimumExclusive(context, validation, scalar)
     validation = checkMaximumExclusive(context, validation, scalar)
+    validation = checkEnum(context, validation, scalar)
     List(validation)
   }
 
@@ -174,7 +175,7 @@ class AMFShapeValidations(shape: Shape) {
                                 context: String,
                                 validation: ValidationSpecification): ValidationSpecification = {
     val msg = s"Data at $context must be a scalar"
-    val propertyValidation = new PropertyConstraint(
+    val propertyValidation = PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "type").iri(),
       name = validation.name + "_validation_type/prop",
       message = Some(msg),
@@ -187,7 +188,7 @@ class AMFShapeValidations(shape: Shape) {
                                 context: String,
                                 validation: ValidationSpecification): ValidationSpecification = {
     val msg = s"Data at $context must be an object"
-    val propertyValidation = new PropertyConstraint(
+    val propertyValidation = PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "type").iri(),
       name = validation.name + "_validation_type/prop",
       message = Some(msg),
@@ -200,7 +201,7 @@ class AMFShapeValidations(shape: Shape) {
                                context: String,
                                validation: ValidationSpecification): ValidationSpecification = {
     val msg = s"Data at $context must be an array"
-    val propertyValidation = new PropertyConstraint(
+    val propertyValidation = PropertyConstraint(
       ramlPropertyId = (Namespace.Rdf + "type").iri(),
       name = validation.name + "_validation_type/prop",
       message = Some(msg),
@@ -216,7 +217,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](PropertyShapeModel.MinCount) match {
       case Some(minCount) if minCount.toNumber.intValue() > 0 =>
         val msg = s"Data at $context must have min. cardinality $minCount"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + shape.name).iri(),
           name = validation.name + "_" + property.name + "_validation_minCount/prop",
           message = Some(msg),
@@ -235,7 +236,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](PropertyShapeModel.MaxCount) match {
       case Some(maxCount) =>
         val msg = s"Data at $context must have max. cardinality $maxCount"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + shape.name).iri(),
           name = validation.name + "_" + property.name + "_validation_minCount/prop",
           message = Some(msg),
@@ -253,7 +254,7 @@ class AMFShapeValidations(shape: Shape) {
     Option(shape.pattern) match {
       case Some(pattern) =>
         val msg = s"Data at $context must match pattern $pattern"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_pattern/prop",
           message = Some(msg),
@@ -270,7 +271,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](ScalarShapeModel.MinLength) match {
       case Some(length) =>
         val msg = s"Data at $context must have length greater than $length"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_minLength/prop",
           message = Some(msg),
@@ -287,7 +288,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](ScalarShapeModel.MaxLength) match {
       case Some(length) =>
         val msg = s"Data at $context must have length smaller than $length"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_maxLength/prop",
           message = Some(msg),
@@ -304,7 +305,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](ScalarShapeModel.Minimum) match {
       case Some(minimum) =>
         val msg = s"Data at $context must be greater than or equal to $minimum"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_minimum/prop",
           message = Some(msg),
@@ -322,7 +323,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](ScalarShapeModel.Maximum) match {
       case Some(maximum) =>
         val msg = s"Data at $context must be smaller than or equal to $maximum"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_maximum/prop",
           message = Some(msg),
@@ -340,7 +341,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMinimum) match {
       case Some(exclusiveMinimum) =>
         val msg = s"Data at $context must be greater than $exclusiveMinimum"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_exclusiveMinimum/prop",
           message = Some(msg),
@@ -358,12 +359,30 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMaximum) match {
       case Some(exclusiveMaximum) =>
         val msg = s"Data at $context must be smaller than $exclusiveMaximum"
-        val propertyValidation = new PropertyConstraint(
+        val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_exclusiveMaximum/prop",
           message = Some(msg),
           maxExclusive = Some(s"$exclusiveMaximum"),
           datatype = effectiveDataType(shape)
+        )
+        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
+      case None => validation
+    }
+  }
+
+  protected def checkEnum(context: String,
+                          validation: ValidationSpecification,
+                          shape: Shape with CommonShapeFields): ValidationSpecification = {
+    shape.fields.?[AmfArray](ScalarShapeModel.Values) match {
+      case Some(valuesArray) =>
+        val values = valuesArray.scalars.map(_.toString)
+        val msg = s"Data at $context must be within the values (${values.mkString(",")})"
+        val propertyValidation = PropertyConstraint(
+          ramlPropertyId = (Namespace.Data + "value").iri(),
+          name = validation.name + "_validation_enum/prop",
+          message = Some(msg),
+          in = values
         )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case None => validation
