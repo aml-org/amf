@@ -73,7 +73,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
     }
   }
 
-  private def transform(model: BaseUnit)(element: DomainElement): Option[DomainElement] =
+  private def transform(model: BaseUnit)(element: DomainElement, isCycle: Boolean): Option[DomainElement] =
     element match {
       case e: EndPoint => Some(convert(model, e))
       case other       => Some(other)

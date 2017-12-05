@@ -29,7 +29,7 @@ object AMFValidationResult {
                           level: String,
                           validation: ValidationResult): AMFValidationResult = {
     model.findById(validation.focusNode) match {
-      case None => throw new Exception(s"Cannot find node with validation error ${validation.focusNode}")
+      case None       => throw new Exception(s"Cannot find node with validation error ${validation.focusNode}")
       case Some(node) =>
         val position = findPosition(node, validation)
         AMFValidationResult(

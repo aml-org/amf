@@ -34,13 +34,4 @@ case class PropertyShape(private[amf] val propertyShape: extensions.PropertyShap
 
   override def element: extensions.PropertyShape = propertyShape
 
-  /* @modularization
-  def withObjectRange(name: String): NodeShape = {
-    NodeShape(propertyShape.withObjectRange(name))
-  }
-
-  def withScalarSchema(name: String): ScalarShape = {
-    ScalarShape(propertyShape.withScalarSchema(name))
-  }
-  */
 }

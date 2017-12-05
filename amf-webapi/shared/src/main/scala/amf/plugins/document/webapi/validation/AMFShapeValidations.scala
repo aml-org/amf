@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation
 
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.model.domain.{AmfScalar, RecursiveShape, Shape}
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
@@ -28,16 +28,20 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def emitShapeValidations(context: String, shape: Shape): List[ValidationSpecification] = {
     shape match {
-      case union: UnionShape   => unionConstraints(context, union)
-      case scalar: ScalarShape => scalarConstraints(context, scalar)
-      case array: ArrayShape   => arrayConstraints(context, array)
-      case obj: NodeShape      => nodeConstraints(context, obj)
-      case _: AnyShape         => List.empty
-      case _                   => List.empty
+      case union: UnionShape     =>  unionConstraints(context, union)
+      case scalar: ScalarShape   =>  scalarConstraints(context, scalar)
+      case array: ArrayShape     =>  arrayConstraints(context, array)
+      case obj: NodeShape        =>  nodeConstraints(context, obj)
+      case recur: RecursiveShape =>  recursiveShapeConstraints(context, recur)
+      case _: AnyShape           =>  List.empty
+      case _                     =>  List.empty
     }
   }
 
-  def validationId(shape: Shape): String = shape.id + "_validation"
+  def validationId(shape: Shape) = shape match {
+    case recursive: RecursiveShape => shape.id + "_recursive_validation"
+    case _                         => shape.id + "_validation"
+  }
 
   protected def canonicalShape(): Shape = CanonicalShapePipeline(shape)
 
@@ -83,6 +87,20 @@ class AMFShapeValidations(shape: Shape) {
     validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(itemsConstraint))
     validation = checkArrayType(array, context, validation)
     List(validation) ++ nestedConstraints
+  }
+
+  protected def recursiveShapeConstraints(context: String, shape: RecursiveShape): List[ValidationSpecification] = {
+    val msg = s"Recursive object at $context must be valid"
+    var nestedConstraints: List[ValidationSpecification] = List.empty
+    var validation = new ValidationSpecification(
+      name = validationId(shape),
+      message = msg,
+      ramlMessage = Some(msg),
+      oasMessage = Some(msg),
+      targetClass = Seq(shape.fixpoint),
+      propertyConstraints = Seq()
+    )
+    List(validation)
   }
 
   protected def nodeConstraints(context: String, node: NodeShape): List[ValidationSpecification] = {

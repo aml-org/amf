@@ -19,22 +19,3 @@ abstract class ResolutionPipeline {
     model.get.asInstanceOf[T]
   }
 }
-
-// TODO: Is this still necessary? @modularization
-/*
-object ResolutionPipeline {
-
-  def raml = new RamlResolutionPipeline()
-  def oas  = new OasResolutionPipeline()
-  def amf  = new AmfResolutionPipeline()
-
-  def forProfile(profile: String): ResolutionPipeline = {
-    profile match {
-      case ProfileNames.RAML => raml
-      case ProfileNames.OAS  => oas
-      case ProfileNames.AMF  => amf
-      case _                 => throw new Exception(s"Unknown resolution pipeline $profile")
-    }
-  }
-}
-*/
