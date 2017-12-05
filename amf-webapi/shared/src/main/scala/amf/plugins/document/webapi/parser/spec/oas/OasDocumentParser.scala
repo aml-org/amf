@@ -46,7 +46,6 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
 
   private def parseExtension(document: Document, field: Field): Unit = {
     val map = root.parsed.document.as[YMap]
-    document.withLocation(root.location)
     UsageParser(map, document).parse()
 
     map
@@ -75,7 +74,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location)
+    document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.document.as[YMap]
 
@@ -671,7 +670,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
             .parse()
             .map { s =>
               payload.set(PayloadModel.Schema, s, Annotations(entry))
-            }
+          }
       )
 
       if (payload.fields.nonEmpty) Some(payload) else None

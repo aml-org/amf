@@ -11,8 +11,8 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
-import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.ExternalDomainElement
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YMap, YType}
 
 /**
@@ -23,24 +23,24 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
-    val rootMap: YMap = root.parsed.document.to[YMap] match {
-      case Right(map) => map
+    val map: YMap = root.parsed.document.to[YMap] match {
+      case Right(m) => m
       case _ =>
         ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
         YMap()
     }
 
     val fragment = (detectType() map {
-      case Oas20DocumentationItem         => DocumentationItemFragmentParser(rootMap).parse()
-      case Oas20DataType                  => DataTypeFragmentParser(rootMap).parse()
-      case Oas20ResourceType              => ResourceTypeFragmentParser(rootMap).parse()
-      case Oas20Trait                     => TraitFragmentParser(rootMap).parse()
-      case Oas20AnnotationTypeDeclaration => AnnotationFragmentParser(rootMap).parse()
-      case Oas20SecurityScheme            => SecuritySchemeFragmentParser(rootMap).parse()
-      case Oas20NamedExample              => NamedExampleFragmentParser(rootMap).parse()
+      case Oas20DocumentationItem         => DocumentationItemFragmentParser(map).parse()
+      case Oas20DataType                  => DataTypeFragmentParser(map).parse()
+      case Oas20ResourceType              => ResourceTypeFragmentParser(map).parse()
+      case Oas20Trait                     => TraitFragmentParser(map).parse()
+      case Oas20AnnotationTypeDeclaration => AnnotationFragmentParser(map).parse()
+      case Oas20SecurityScheme            => SecuritySchemeFragmentParser(map).parse()
+      case Oas20NamedExample              => NamedExampleFragmentParser(map).parse()
     }).getOrElse {
       val fragment = ExternalFragment().withEncodes(ExternalDomainElement().withRaw(root.raw))
-      ctx.violation(fragment.id, "Unsupported oas type", rootMap)
+      ctx.violation(fragment.id, "Unsupported oas type", map)
       fragment
     }
 
@@ -48,20 +48,15 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       .withLocation(root.location)
       .add(Annotations(root.parsed.document))
 
-    UsageParser(rootMap, fragment).parse()
+    UsageParser(map, fragment).parse()
 
-    val references = ReferencesParser("x-uses", rootMap, root.references).parse(root.location)
+    val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
 
     if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment
   }
 
-  def detectType(): Option[OasHeader] = {
-    fragment match {
-      case t if t.isDefined => t
-      case _                => OasHeader(root)
-    }
-  }
+  def detectType(): Option[OasHeader] = fragment.orElse(OasHeader(root))
 
   case class DocumentationItemFragmentParser(map: YMap) {
     def parse(): DocumentationItemFragment = {
