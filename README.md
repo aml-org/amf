@@ -125,6 +125,16 @@ The *amf* package will contain all exported classes:
 const parser = new amf.RamlParser()
 ```
 
+### Excutable AMF client
+
+The client can be built using `buildCommandLine` SBT task
+
+```bash
+sbt buildCommandLine
+```
+
+This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
+
 ## Installation
 
 ### Requirements
