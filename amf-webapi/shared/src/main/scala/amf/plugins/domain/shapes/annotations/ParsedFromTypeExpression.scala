@@ -9,6 +9,6 @@ object ParsedFromTypeExpression extends AnnotationGraphLoader {
 }
 
 case class ParsedFromTypeExpression(expression: String) extends SerializableAnnotation {
-  override val name: String  = "type-exprssion"
+  override val name: String  = "type-expression"
   override val value: String = expression
 }

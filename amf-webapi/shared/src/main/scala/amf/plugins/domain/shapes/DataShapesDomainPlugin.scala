@@ -5,7 +5,6 @@ import amf.core.plugins.AMFDomainPlugin
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 
-
 object DataShapesDomainPlugin extends AMFDomainPlugin {
 
   override val ID = "Data Shapes Domain"
@@ -13,7 +12,7 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
   override def dependencies() = Seq()
 
   override def serializableAnnotations() = Map(
-    "type-exprssion" -> ParsedFromTypeExpression
+    "type-expression" -> ParsedFromTypeExpression
   )
 
   override def modelEntities = Seq(
