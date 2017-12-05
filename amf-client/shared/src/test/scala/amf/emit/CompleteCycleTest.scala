@@ -708,4 +708,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Type closed true amf to raml") {
     cycle("type-closed-true.raml.jsonld", "type-closed-true.raml", AmfJsonHint, Raml)
   }
+
+  test("OAS descriptions for responses area added automatically raml to oas") {
+    cycle("missing_oas_description.raml", "missing_oas_description.json", RamlYamlHint, Oas)
+  }
+
+  test("OAS descriptions for responses area added automatically oas to raml") {
+    cycle("missing_oas_description.json", "missing_oas_description.json.raml", OasJsonHint, Raml)
+  }
 }
