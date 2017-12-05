@@ -100,8 +100,12 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
   // Create a data node with the facets and a shape with the facet definitions.
   // Validate as a payload afterwards.
   protected def validateFacets(shape: Shape, facetDefinitons: Seq[Shape#FacetsMap]): Future[Seq[AMFValidationResult]] = {
-    val facetsPayload = toFacetsPayload(shape)
-    val facetsShape = toFacetsDefinitionShape(shape, facetDefinitons)
+    val effectiveShape = shape match {
+      case _ if shape.isLink && shape.linkTarget.isDefined => shape.linkTarget.get.asInstanceOf[Shape]
+      case _                                               => shape
+    }
+    val facetsPayload = toFacetsPayload(effectiveShape)
+    val facetsShape = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
     PayloadValidation(platform, facetsShape).validate(facetsPayload) map { report =>
       if (report.conforms) {
         Seq.empty

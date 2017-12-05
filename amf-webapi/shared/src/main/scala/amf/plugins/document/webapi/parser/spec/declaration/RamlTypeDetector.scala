@@ -56,7 +56,7 @@ case class RamlTypeDetector(parent: String,
             .map {
               case (TypeDef.UnionType | TypeDef.ArrayType) if !recursive => TypeExpressionType
               case other                                                 => other
-            } // exceptionc ase when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
+            } // exception case when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
         case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
@@ -207,7 +207,10 @@ case class RamlTypeDetector(parent: String,
             case "numberScalarShape" => TypeDef.IntType
             case "fileShape"         => TypeDef.FileType
           }
-        case _ :: tail if tail.nonEmpty => MultipleMatch
+          // explicit inheritance
+        case _ :: tail if tail.nonEmpty && map.key("type").isDefined => TypeDef.AnyType
+          // multiple matches without inheritance
+        case _ :: tail if tail.nonEmpty                              => MultipleMatch
       })
     }
 

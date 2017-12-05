@@ -3,7 +3,7 @@ package amf.core.registries
 import amf.core.annotations._
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ModuleModel, SourceMapModel}
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{RecursiveShapeModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel, PropertyShapeModel, ShapeExtensionModel}
 import amf.core.metamodel.domain.templates.VariableValueModel
 import amf.core.model.domain.{AmfObject, AnnotationGraphLoader}
@@ -44,6 +44,7 @@ object AMFDomainRegistry {
     defaultIri(VariableValueModel)        -> VariableValueModel,
     defaultIri(SourceMapModel)            -> SourceMapModel,
     defaultIri(ShapeModel)                -> ShapeModel,
+    defaultIri(RecursiveShapeModel)       -> RecursiveShapeModel,
     defaultIri(PropertyShapeModel)        -> PropertyShapeModel,
     defaultIri(ShapeExtensionModel)       -> ShapeExtensionModel,
     defaultIri(CustomDomainPropertyModel) -> CustomDomainPropertyModel,

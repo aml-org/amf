@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, Shape}
+import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
 import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
@@ -11,6 +11,11 @@ import amf.core.vocabulary.Namespace
 import scala.collection.mutable
 
 trait MinShapeAlgorithm extends RestrictionComputation {
+
+  // this is inverted, it is safe because recursive shape does not have facets
+  def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
+    restrictShape(baseShape, recursiveShape)
+  }
 
   protected def minShape(baseShapeOrig: Shape, superShape: Shape): Shape = {
     val baseShape = baseShapeOrig.cloneShape() // this is destructive, we need to clone
@@ -71,8 +76,12 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       // Nil
       case baseNil: NilShape if superShape.isInstanceOf[NilShape] => baseNil
 
-      // Any => is explicitly Any, we are comparising the meta-model because now
-        //      all shapes inherit from Any, cannot check with instanceOf
+      // Generic inheritance
+      case _ if superShape.isInstanceOf[RecursiveShape] =>
+        computeMinRecursive(baseShape, superShape.asInstanceOf[RecursiveShape])
+
+      // Any => is explicitly Any, we are comparing the meta-model because now
+      //      all shapes inherit from Any, cannot check with instanceOf
       case _ if baseShape.meta == AnyShapeModel || superShape.meta == AnyShapeModel =>
         baseShape match {
           case shape: AnyShape =>

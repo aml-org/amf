@@ -1,0 +1,15 @@
+#%RAML 1.0
+
+title: test
+
+types:
+  A:
+    properties:
+      a: A
+
+/a:
+  get:
+    responses:
+      200:
+        body:
+          application/json: A
