@@ -805,7 +805,8 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
 
       map.key("enum", entry => {
         val value = ArrayNode(entry.value)
-        shape.set(ShapeModel.Values, value.strings(), Annotations(entry))
+        val values = value.rawMembers()
+        shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
       })
 
       map.key("minItems", entry => {

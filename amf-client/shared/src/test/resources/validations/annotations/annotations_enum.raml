@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Invalid annotation instance using a wrong enum value
+
+annotationTypes:
+  test:
+     properties:
+      items:
+        type: string
+        enum: [W,A]
+
+  testInt:
+     properties:
+      items:
+        type: integer
+        enum: [2,3]
+
+  testInt2:
+     properties:
+      items:
+        type: integer
+        enum: [2,3]
+(test):
+  items: E
+
+(testInt):
+  items: 4
+
+(testInt2):
+  items: 2
