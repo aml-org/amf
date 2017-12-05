@@ -689,6 +689,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("matrix.raml", "matrix.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Parsing example fragment raml to raml") {
+    cycle("example-fragment.raml", "example-fragment.raml", RamlYamlHint, Raml)
+  }
+
   test("Parsing example of matrixShape amf to raml") {
     cycle("matrix.jsonld", "matrix.raml.raml", AmfJsonHint, Raml)
   }

@@ -59,7 +59,7 @@ case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: WebAp
           node.tagType match {
             case YType.Map =>
               examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_).parse())
-            case YType.Seq => //example sequence must have a name ??
+            case YType.Seq => // example sequence must have a name ??
               RamlExampleValueAsString(node, Example(node), strict = true).populate()
             case _ => RamlExampleValueAsString(node, Example(node.as[YScalar]), strict = true).populate()
           }
