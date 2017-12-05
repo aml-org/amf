@@ -528,6 +528,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Example min and max constraint validations test") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(examplesPath + "examples/max-min-constraint.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      println(report)
+      assert(report.conforms)
+    }
+  }
+
   ignore("Example JS library validations") {
     val validation = Validation(platform)
     for {
