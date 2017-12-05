@@ -18,7 +18,8 @@ import org.yaml.model.{YMap, YType}
 /**
   *
   */
-case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(implicit val ctx: WebApiContext) extends OasSpecParser {
+case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: WebApiContext)
+    extends OasSpecParser {
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
@@ -78,7 +79,7 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
       val dataType = DataTypeFragment().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location),  "schema")
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), "schema")
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -132,20 +133,18 @@ case class OasFragmentParser(root: Root,  fragment: Option[OasHeader] = None)(im
         OasSecuritySchemeParser(map,
                                 "securityDefinitions",
                                 map,
-                                (security: amf.plugins.domain.webapi.models.security.SecurityScheme) => security.adopted(root.location))
+                                (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
+                                  security.adopted(root.location))
           .parse())
     }
   }
 
   case class NamedExampleFragmentParser(map: YMap) {
     def parse(): NamedExampleFragment = {
-      val entries      = map.entries.filter(e => e.value.tagType == YType.Map)
+      val entries      = map.entries.filter(e => e.key.as[String] != "x-fragment-type")
       val namedExample = NamedExampleFragment().adopted(root.location)
 
-      if (entries.size == 1) namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
-      else
-        throw new IllegalStateException(
-          "Could not identified the named example in fragment because it contains more than one named map.")
+      namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
     }
   }
 }
