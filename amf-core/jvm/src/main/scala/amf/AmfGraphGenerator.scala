@@ -23,7 +23,7 @@ class AmfGraphGenerator extends Generator("AMF Graph", "application/ld+json") {
   def generateString(unit: BaseUnit, options: GenerationOptions, handler: StringHandler): Unit =
     generate(unit.element, options, StringHandlerAdapter(handler))
 
-  def generateFile(unit: BaseUnit, url: String, options: GenerationOptions): CompletableFuture[String] =
+  def generateFile(unit: BaseUnit, url: String, options: GenerationOptions): CompletableFuture[Void] =
     generate(unit.element, url, options).asJava
 
   def generateString(unit: BaseUnit, options: GenerationOptions): String =
