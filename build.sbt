@@ -15,6 +15,7 @@ val settings = Common.settings ++ Seq(
   Common.publish,
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials(),
+  aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
@@ -137,8 +138,7 @@ lazy val client = crossProject
   .settings(Seq(
     name := "amf-client",
     fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
-    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")
-  ))
+    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
   .dependsOn(core, webapi, vocabularies, validation)
   .in(file("./amf-client"))
   .settings(settings: _*)
@@ -147,7 +147,19 @@ lazy val client = crossProject
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.0.1",
-    mainClass in Compile := Some("amf.Main")
+    mainClass in Compile := Some("amf.Main"),
+    aggregate in assembly := true,
+    test in assembly := {},
+    mainClass in assembly := Some("amf.Main"),
+    assemblyJarName in assembly := "amf.jar",
+    assemblyOutputPath in assembly := new File("./amf.jar"),
+    assemblyMergeStrategy in assembly := {
+      case x if x.toString.endsWith("JS_DEPENDENCIES")             => MergeStrategy.discard
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+    }
   )
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
@@ -174,3 +186,8 @@ publish := {
   val _ = (publish.value, publishJS.value)
   ()
 }
+
+addCommandAlias(
+  "buildCommandLine",
+  "; clean; clientJVM/assembly"
+)
