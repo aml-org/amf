@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.security
 
 import amf.core.model.domain
-import amf.core.model.domain.{AmfArray, DomainElement, Linkable, Shape}
+import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel.{Settings => SettingsField, _}
@@ -11,6 +11,7 @@ import org.yaml.model.YPart
 case class SecurityScheme(fields: Fields, annotations: Annotations)
     extends DomainElement
     with Linkable
+    with NamedDomainElement
     with WithSettings {
   def name: String                    = fields(Name)
   def `type`: String                  = fields(Type)

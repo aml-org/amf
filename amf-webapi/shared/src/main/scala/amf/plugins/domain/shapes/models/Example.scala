@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Obj
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -10,7 +10,10 @@ import org.yaml.model.YPart
 /**
   *
   */
-case class Example(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class Example(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
 
   def name: String        = fields(Name)
   def displayName: String = fields(DisplayName)
