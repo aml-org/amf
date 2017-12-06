@@ -29,7 +29,8 @@ import scala.collection.mutable
 object OasTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, oasNode: String = "schema")(
       implicit ctx: WebApiContext): OasTypeParser =
-    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, ctx, Some(ctx.declarations)))
+    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(
+      new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, ctx, Some(ctx.declarations)))
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(
@@ -57,8 +58,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def detect(position: String): TypeDef = {
-    val defaultType = if (position == "parameter") UndefinedType
-                      else AnyType
+    val defaultType =
+      if (position == "parameter") UndefinedType
+      else AnyType
 
     detectDependency()
       .orElse(detectType())
@@ -126,7 +128,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             shape.unresolved(text, map)
             adopt(shape)
             shape
-        })
+      })
   }
 
   private def parseObjectType(): Shape = {
@@ -225,7 +227,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
               val unionNodes = seq.zipWithIndex
                 .map {
                   case (node, index) =>
-                    val entry = YMapEntry(YNode(YScalar(s"item$index", true, node.range)), node)
+                    val entry = YMapEntry(YNode(s"item$index"), node)
                     OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index)).parse()
                 }
                 .filter(_.isDefined)

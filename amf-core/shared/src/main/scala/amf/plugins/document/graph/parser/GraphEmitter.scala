@@ -82,11 +82,12 @@ object GraphEmitter extends MetaModelTypeMapping {
 
       // workaround for lazy values in shape
       val modelFields = obj match {
-        case shapeModel: ShapeModel => shapeModel.fields ++ Seq(
-          ShapeModel.CustomShapePropertyDefinitions,
-          ShapeModel.CustomShapeProperties
-        )
-        case _                      => obj.fields
+        case shapeModel: ShapeModel =>
+          shapeModel.fields ++ Seq(
+            ShapeModel.CustomShapePropertyDefinitions,
+            ShapeModel.CustomShapeProperties
+          )
+        case _ => obj.fields
       }
       modelFields.map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
@@ -146,7 +147,7 @@ object GraphEmitter extends MetaModelTypeMapping {
             case Some(annotation) => {
               typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
             }
-            case None             => {
+            case None => {
               scalar(b, v.value.asInstanceOf[AmfScalar].toString)
             }
           }
@@ -178,14 +179,15 @@ object GraphEmitter extends MetaModelTypeMapping {
             sources(v)
             a.element match {
               case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(obj(b, _, parent, inArray = true))
-              case Str    =>
+              case Str =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
                   e.annotations.find(classOf[ScalarType]) match {
-                    case Some(annotation) => typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray =  true)
-                    case None             => scalar(b, e.toString, inArray = true)
+                    case Some(annotation) =>
+                      typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = true)
+                    case None => scalar(b, e.toString, inArray = true)
                   }
                 }
-              case Iri    => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
+              case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
               case Type.Int =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
@@ -212,13 +214,12 @@ object GraphEmitter extends MetaModelTypeMapping {
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def fixTagIfNeeded(tag:YType,content:String):YType = {
-      var tg:YType = tag match {
+    private def fixTagIfNeeded(tag: YType, content: String): YType = {
+      var tg: YType = tag match {
         case YType.Bool => {
           if (content != "true" && content != "false") {
             YType.Str
-          }
-          else {
+          } else {
             tag
           }
         }
@@ -247,8 +248,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder): Unit = {
 
-
-        var tg: YType = fixTagIfNeeded(tag,content)
+        var tg: YType = fixTagIfNeeded(tag, content)
 
         b.obj(_.entry("@value", raw(_, content, tg)))
       }
@@ -257,7 +257,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def typedScalar(b: PartBuilder, content: String, dataType: String, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = b.map{ m =>
+      def emit(b: PartBuilder): Unit = b.obj { m =>
         m.entry("@value", raw(_, content, YType.Str))
         m.entry("@type", raw(_, dataType, YType.Str))
       }
@@ -293,7 +293,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
-      b.scalar(YNode(YScalar(content), tag))
+      b.+=(YNode(YScalar(content), tag))
 
     private def createSourcesNode(id: String, sources: SourceMap, b: EntryBuilder): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {

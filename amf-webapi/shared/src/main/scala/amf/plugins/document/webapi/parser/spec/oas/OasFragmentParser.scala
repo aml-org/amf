@@ -26,7 +26,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Right(m) => m
       case _ =>
         ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
-        YMap()
+        YMap.empty
     }
 
     val fragment = (detectType() map {

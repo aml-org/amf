@@ -4,7 +4,7 @@ import amf.core.interop.{OS, Path, ServerResponse}
 import amf.core.lexer.CharSequenceStream
 import amf.core.remote.File.FILE_PROTOCOL
 import amf.core.remote.{Content, File, Http, Platform}
-import org.mulesoft.common.io.{FileSystem, JsServerFileSystem}
+import org.mulesoft.common.io.{FileSystem, Fs}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -17,9 +17,9 @@ import scala.scalajs.js.annotation.JSExportAll
 class JsServerPlatform extends Platform {
 
   /** Underlying file system for platform. */
-  override val fs: FileSystem = JsServerFileSystem
+  override val fs: FileSystem = Fs
 
-  override def exit(code: Int) = {
+  override def exit(code: Int): Unit = {
     js.Dynamic.global.process.exit(code)
   }
 
@@ -71,7 +71,7 @@ class JsServerPlatform extends Platform {
 
   @JSExport
   def setupValidation(validation: Validation): js.Promise[Validation] = setupValidationBase(validation).toJSPromise
-  */
+ */
 }
 
 @JSExportAll

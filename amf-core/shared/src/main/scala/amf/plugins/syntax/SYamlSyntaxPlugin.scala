@@ -30,7 +30,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
   override def parse(mediaType: String, text: CharSequence) = {
     val parser = YamlParser(text)
-    val parts = parser.parse(true)
+    val parts  = parser.parse(true)
 
     if (parts.exists(v => v.isInstanceOf[YDocument])) {
       parts collectFirst { case d: YDocument => d } map { document =>
@@ -39,7 +39,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
       }
     } else {
       parts collectFirst { case d: YComment => d } map { comment =>
-        ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap()))))
+        ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty))))
       }
     }
   }
@@ -52,11 +52,12 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
       case "text/x-yaml"        => "yaml"
       case "application/json"   => "json"
       case "text/json"          => "json"
-      case _                    => if (mediaType.indexOf("json") > -1) {
-        "json"
-      } else {
-        "yaml"
-      }
+      case _ =>
+        if (mediaType.indexOf("json") > -1) {
+          "json"
+        } else {
+          "yaml"
+        }
     }
 
     if (format == "yaml") {

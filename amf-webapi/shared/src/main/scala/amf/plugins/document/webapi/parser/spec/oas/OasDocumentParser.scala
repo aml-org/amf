@@ -799,7 +799,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
             val oasParameter = e.value.to[YMap] match {
               case Right(m) => ParameterParser(m, parentPath).parse()
               case _ =>
-                val parameter = ParameterParser(YMap(), parentPath).parse()
+                val parameter = ParameterParser(YMap.empty, parentPath).parse()
                 ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
                 parameter
             }
@@ -933,7 +933,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
             ctx.declarations.findDocumentations(text, SearchScope.All) match {
               case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
               case _ =>
-                val documentation = RamlCreativeWorkParser(YMap(), withExtention).parse()
+                val documentation = RamlCreativeWorkParser(YMap.empty, withExtention).parse()
                 ctx.violation(documentation.id, s"not supported scalar $n.text for documentation item", n)
                 documentation
             }
@@ -1020,7 +1020,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
           parameter.withName(refUrl).adopted(parentId)
           OasParameter(parameter, payload)
         case None =>
-          val oasParameter = OasParameter(Parameter(YMap()), Payload(YMap()))
+          val oasParameter = OasParameter(Parameter(YMap.empty), Payload(YMap.empty))
           ctx.violation(oasParameter.parameter.id, s"Cannot find parameter reference $refUrl", ref)
           oasParameter
       }

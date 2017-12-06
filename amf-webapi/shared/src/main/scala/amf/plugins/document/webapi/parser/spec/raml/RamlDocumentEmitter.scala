@@ -574,7 +574,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
 
 object RamlSpecEmitterContext extends SpecEmitterContext {
   override def ref(b: PartBuilder, url: String): Unit =
-    b.scalar(YNode(YScalar("!include " + url), YType("!include"))) //todo syaml bug not rendering custom tags
+    b.+=(YNode.include(url))
 
   override val vendor: Vendor = Raml
 
