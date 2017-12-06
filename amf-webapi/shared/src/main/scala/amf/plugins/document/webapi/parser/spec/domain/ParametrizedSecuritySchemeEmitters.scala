@@ -72,7 +72,7 @@ case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrize
           _.entry(parametrizedScheme.name,
                   _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))))
       case None =>
-        b.scalar(parametrizedScheme.name)
+        b.+=(parametrizedScheme.name)
     }
 
   }

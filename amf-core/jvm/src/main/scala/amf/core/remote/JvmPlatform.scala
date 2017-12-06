@@ -4,7 +4,7 @@ import java.net.{HttpURLConnection, URI}
 
 import amf.core.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 import amf.core.unsafe.PlatformBuilder
-import org.mulesoft.common.io.{FileSystem, JvmFileSystem}
+import org.mulesoft.common.io.{FileSystem, Fs}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -12,7 +12,7 @@ import scala.concurrent.Future
 class JvmPlatform extends Platform {
 
   /** Underlying file system for platform. */
-  override val fs: FileSystem = JvmFileSystem
+  override val fs: FileSystem = Fs
 
   /** Resolve specified url. */
   override protected def fetchHttp(url: String): Future[Content] = {
@@ -67,7 +67,7 @@ class JvmPlatform extends Platform {
   override val validator        = new SHACLValidator
 
   def setupValidation(validation: Validation): CompletableFuture[Validation] = setupValidationBase(validation).asJava
-  */
+ */
 }
 
 object JvmPlatform {

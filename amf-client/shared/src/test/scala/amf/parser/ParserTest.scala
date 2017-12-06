@@ -54,10 +54,10 @@ class ParserTest extends FunSuite {
     comment.metaText should be("%RAML 1.0")
 
     val document = root.last.asInstanceOf[YDocument]
-    document.value shouldBe defined
-    document.value.get shouldBe a[YMap]
+    document.node.value shouldNot be(YNode.Null)
+    document.node.value shouldBe a[YMap]
 
-    assertDocumentRoot(document.value.get.asInstanceOf[YMap], assertRamlInclude)
+    assertDocumentRoot(document.node.value.asInstanceOf[YMap], assertRamlInclude)
   }
 
   test("Test OAS/json") {
@@ -66,10 +66,10 @@ class ParserTest extends FunSuite {
 
     root.head shouldBe a[YDocument]
     val document = root.head.asInstanceOf[YDocument]
-    document.value shouldBe defined
-    document.value.get shouldBe a[YMap]
+    document.node.value shouldNot be(YNode.Null)
+    document.node.value shouldBe a[YMap]
 
-    assertDocumentRoot(document.value.get.asInstanceOf[YMap], assertOasInclude)
+    assertDocumentRoot(document.node.value.asInstanceOf[YMap], assertOasInclude)
   }
 
   test("Test OAS/yaml") {
@@ -77,10 +77,10 @@ class ParserTest extends FunSuite {
     root.size should be(1)
 
     val document = root.head.asInstanceOf[YDocument]
-    document.value shouldBe defined
-    document.value.get shouldBe a[YMap]
+    document.node.value shouldNot be(YNode.Null)
+    document.node.value shouldBe a[YMap]
 
-    assertDocumentRoot(document.value.get.asInstanceOf[YMap], assertOasInclude)
+    assertDocumentRoot(document.node.value.asInstanceOf[YMap], assertOasInclude)
   }
 
   private def assertRamlInclude(entry: YMapEntry) = {
@@ -117,15 +117,15 @@ class ParserTest extends FunSuite {
 
     val third = content.entries(2)
     third.key.value shouldBe a[YScalar]
-    third.key.value.asInstanceOf[YScalar].text shouldBe "c"
+    third.key.as[String] shouldBe "c"
     third.value.value shouldBe a[YSequence]
 
     val sequence = third.value.value.asInstanceOf[YSequence]
-    sequence.values.size should be(2)
-    sequence.values(0) shouldBe a[YScalar]
-    sequence.values(0).asInstanceOf[YScalar].text shouldBe "2"
-    sequence.values(1) shouldBe a[YScalar]
-    sequence.values(1).asInstanceOf[YScalar].text shouldBe "3"
+    sequence.nodes.size should be(2)
+    sequence.nodes.head.value shouldBe a[YScalar]
+    sequence.nodes.head.as[String] shouldBe "2"
+    sequence.nodes(1).value shouldBe a[YScalar]
+    sequence.nodes(1).as[String] shouldBe "3"
 
     include(content.entries(3))
 

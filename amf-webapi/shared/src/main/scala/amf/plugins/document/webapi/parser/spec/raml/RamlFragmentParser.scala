@@ -29,7 +29,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case Right(map) => map
       case _ =>
         ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
-        YMap()
+        YMap.empty
     }
 
     val optionFragment = fragmentType match {

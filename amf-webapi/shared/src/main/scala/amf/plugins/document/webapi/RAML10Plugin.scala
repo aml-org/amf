@@ -49,7 +49,9 @@ object RAML10Plugin extends BaseWebApiPlugin {
 
   def inlineExternalReferences(root: Root): Unit = {
     root.references.filter(_.isExternalFragment).foreach { ref =>
-      ref.origin.ast.into(YNode(ref.unit.asInstanceOf[ExternalFragment].encodes.raw))
+      val node = ref.origin.ast
+      node /*.into(YNode(ref.unit.asInstanceOf[ExternalFragment].encodes.raw))*/
+      println(node)
     }
   }
 
