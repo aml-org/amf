@@ -2,9 +2,14 @@ package amf.core.registries
 
 import amf.core.annotations._
 import amf.core.metamodel.Obj
-import amf.core.metamodel.document.{DocumentModel, ModuleModel, SourceMapModel}
+import amf.core.metamodel.document._
 import amf.core.metamodel.domain.{RecursiveShapeModel, ShapeModel}
-import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel, PropertyShapeModel, ShapeExtensionModel}
+import amf.core.metamodel.domain.extensions.{
+  CustomDomainPropertyModel,
+  DomainExtensionModel,
+  PropertyShapeModel,
+  ShapeExtensionModel
+}
 import amf.core.metamodel.domain.templates.VariableValueModel
 import amf.core.model.domain.{AmfObject, AnnotationGraphLoader}
 import amf.core.parser.Annotations
@@ -18,27 +23,27 @@ trait AMFDomainEntityResolver {
 
 object AMFDomainRegistry {
 
-  def findType(typeString: String): Option[Obj] = metadataResolverRegistry
-    .toStream
-    .map(_.findType(typeString))
-    .filter(_.isDefined)
-    .map(_.get)
-    .headOption
-  def buildType(modelType: Obj): Option[(Annotations) => AmfObject] = metadataResolverRegistry
-    .toStream
-    .map(_.buildType(modelType))
-    .filter(_.isDefined)
-    .map(_.get)
-    .headOption
+  def findType(typeString: String): Option[Obj] =
+    metadataResolverRegistry.toStream
+      .map(_.findType(typeString))
+      .filter(_.isDefined)
+      .map(_.get)
+      .headOption
+  def buildType(modelType: Obj): Option[(Annotations) => AmfObject] =
+    metadataResolverRegistry.toStream
+      .map(_.buildType(modelType))
+      .filter(_.isDefined)
+      .map(_.get)
+      .headOption
 
-  val annotationsRegistry: mutable.HashMap[String,AnnotationGraphLoader] = mutable.HashMap(
+  val annotationsRegistry: mutable.HashMap[String, AnnotationGraphLoader] = mutable.HashMap(
     "lexical"            -> LexicalInformation,
     "source-vendor"      -> SourceVendor,
     "single-value-array" -> SingleValueArray,
     "aliases-array"      -> Aliases,
     "synthesized-field"  -> SynthesizedField
   )
-  val metadataRegistry: mutable.HashMap[String,Obj] = mutable.HashMap(
+  val metadataRegistry: mutable.HashMap[String, Obj] = mutable.HashMap(
     defaultIri(DocumentModel)             -> DocumentModel,
     defaultIri(ModuleModel)               -> ModuleModel,
     defaultIri(VariableValueModel)        -> VariableValueModel,
@@ -48,6 +53,7 @@ object AMFDomainRegistry {
     defaultIri(PropertyShapeModel)        -> PropertyShapeModel,
     defaultIri(ShapeExtensionModel)       -> ShapeExtensionModel,
     defaultIri(CustomDomainPropertyModel) -> CustomDomainPropertyModel,
+    defaultIri(ExternalFragmentModel)     -> ExternalFragmentModel,
     defaultIri(DomainExtensionModel)      -> DomainExtensionModel
   )
 

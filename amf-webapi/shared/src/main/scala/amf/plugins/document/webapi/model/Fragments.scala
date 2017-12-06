@@ -7,7 +7,6 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
-import amf.plugins.domain.webapi.models.ExternalDomainElement
 
 // todo review
 
@@ -33,11 +32,13 @@ case class NamedExampleFragment(fields: Fields, annotations: Annotations) extend
 }
 
 case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment {
+
   /** Meta data for the document */
   override def meta: Obj = ResourceTypeFragmentModel
 }
 
 case class TraitFragment(fields: Fields, annotations: Annotations) extends Fragment {
+
   /** Meta data for the document */
   override def meta: Obj = TraitFragmentModel
 }
@@ -55,13 +56,6 @@ case class SecuritySchemeFragment(fields: Fields, annotations: Annotations) exte
 
   /** Meta data for the document */
   override def meta: Obj = SecuritySchemeFragmentModel
-}
-
-case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
-
-  /** Meta data for the document */
-  override def meta: Obj = ExternalFragmentModel
 }
 
 object DocumentationItemFragment {
@@ -98,11 +92,6 @@ object AnnotationTypeDeclarationFragment {
   def apply(): AnnotationTypeDeclarationFragment = apply(Annotations())
 
   def apply(annotations: Annotations): AnnotationTypeDeclarationFragment = apply(Fields(), annotations)
-}
-
-object ExternalFragment {
-  def apply(): ExternalFragment                         = apply(Annotations())
-  def apply(annotations: Annotations): ExternalFragment = ExternalFragment(Fields(), annotations)
 }
 
 object SecuritySchemeFragment {

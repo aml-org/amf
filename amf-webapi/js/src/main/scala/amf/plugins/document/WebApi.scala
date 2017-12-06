@@ -20,9 +20,6 @@ object WebApi extends PlatformSecrets {
     platform.registerWrapper(DocumentationItemFragmentModel) {
       case s: model.DocumentationItemFragment => DocumentationItem(s)
     }
-    platform.registerWrapper(ExternalFragmentModel) {
-      case s: model.ExternalFragment => ExternalFragment(s)
-    }
     platform.registerWrapper(NamedExampleFragmentModel) {
       case s: model.NamedExampleFragment => NamedExample(s)
     }

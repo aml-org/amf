@@ -11,7 +11,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
 
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(parsed: ParsedDocument, ctx: ParserContext) = {
+  override def traverse(parsed: ParsedDocument, ctx: ParserContext): ArrayBuffer[Reference] = {
     libraries(parsed.document, ctx)
     links(parsed.document, ctx)
     if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(parsed.document, ctx)
@@ -47,14 +47,14 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
                 case YType.Map | YType.Seq =>
                   ctx.violation("", s"Expected scalar but found: ${entry.value}", entry.value)
                 case _ => extension(entry) // assume scalar
-              })
+            })
         }
       case _ =>
     }
   }
 
   private def extension(entry: YMapEntry) = {
-    references += Reference(entry.value, ExtensionReference, entry)
+    references += Reference(entry.value, ExtensionReference, entry.value)
   }
 
   private def links(part: YPart, ctx: ParserContext): Unit = {
@@ -88,7 +88,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
   }
 
   private def library(entry: YMapEntry) = {
-    references += Reference(entry.value, LibraryReference, entry)
+    references += Reference(entry.value, LibraryReference, entry.value)
   }
 
   def oasLinks(part: YPart, ctx: ParserContext): Unit = {
@@ -102,7 +102,7 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
     val ref = map.entries.head
     ref.value.tagType match {
       case YType.Str =>
-        references += Reference(ref.value.as[String], LinkReference, map) // this is not for all scalar, link must be a string
+        references += Reference(ref.value.as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
       case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
     }
   }

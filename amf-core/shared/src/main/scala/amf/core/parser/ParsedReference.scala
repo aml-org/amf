@@ -1,5 +1,7 @@
 package amf.core.parser
 
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, ExternalFragment}
 
-case class ParsedReference(baseUnit: BaseUnit, parsedUrl: String, referenceKind: ReferenceKind)
+case class ParsedReference(unit: BaseUnit, origin: Reference) {
+  def isExternalFragment: Boolean = unit.isInstanceOf[ExternalFragment]
+}

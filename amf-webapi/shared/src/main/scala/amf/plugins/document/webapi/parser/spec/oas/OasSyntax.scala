@@ -140,6 +140,7 @@ object OasSyntax extends SpecSyntax {
     ),
     "schema" -> Set(
       "$ref",
+      "$schema",
       "format",
       "title",
       "description",

@@ -54,10 +54,10 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         ctx.link(e.value) match {
           case Left(url) =>
             root.references
-              .find(_.parsedUrl == url)
+              .find(_.origin.url == url)
               .foreach(extend =>
                 document
-                  .set(field, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
+                  .set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e)))
           case _ =>
         }
       })

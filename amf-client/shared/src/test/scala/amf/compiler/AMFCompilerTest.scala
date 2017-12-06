@@ -95,23 +95,29 @@ class AMFCompilerTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Libraries (raml)") {
-    AMFCompiler("file://amf-client/shared/src/test/resources/modules.raml", platform, RamlYamlHint, Validation(platform))
+    AMFCompiler("file://amf-client/shared/src/test/resources/modules.raml",
+                platform,
+                RamlYamlHint,
+                Validation(platform))
       .root() map {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(2)
-        assertUses(body.key("uses").get, references.map(_.baseUnit))
+        assertUses(body.key("uses").get, references.map(_.unit))
       case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")
     }
   }
 
   test("Libraries (oas)") {
-    AMFCompiler("file://amf-client/shared/src/test/resources/modules.json", platform, OasJsonHint, Validation(platform))
+    AMFCompiler("file://amf-client/shared/src/test/resources/modules.json",
+                platform,
+                OasJsonHint,
+                Validation(platform))
       .root() map {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(3)
-        assertUses(body.key("x-uses").get, references.map(_.baseUnit))
+        assertUses(body.key("x-uses").get, references.map(_.unit))
       case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")
     }
   }

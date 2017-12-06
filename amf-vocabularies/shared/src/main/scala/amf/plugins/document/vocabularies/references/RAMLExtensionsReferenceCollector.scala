@@ -31,7 +31,7 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
   }
 
   private def library(entry: YMapEntry) = {
-    references += Reference(entry.value, LibraryReference, entry)
+    references += Reference(entry.value, LibraryReference, entry.value)
   }
 
   private def links(part: YPart): Unit = {

@@ -646,11 +646,15 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Fragment Named Example raml to raml") {
-    cycle("named-example.raml", "named-example.raml", RamlYamlHint, Raml, referencesPath)
+    cycle("named-example.raml", RamlYamlHint, referencesPath)
   }
 
   test("Fragment Named Example oas to oas") {
-    cycle("named-example.json", "named-example.json", OasJsonHint, Oas, referencesPath)
+    cycle("named-example.json", OasJsonHint, referencesPath)
+  }
+
+  test("External Fragment raml to amf") {
+    cycle("jukebox-api.raml", "jukebox-api.jsonld", RamlYamlHint, Amf, referencesPath)
   }
 
   test("Facets raml to raml") {
