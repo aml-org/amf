@@ -7,13 +7,13 @@ import amf.core.client.{Generator, Parser, Validator}
 import amf.core.plugins.AMFPlugin
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
-import amf.model.document.{BaseUnit, Document, Fragment, Module}
+import amf.model.document._
 import amf.model.domain.{CustomDomainProperty, DomainElement, DomainExtension, PropertyShape}
 import amf.core.remote.FutureConverter._
 
-object Core extends PlatformSecrets{
+object Core extends PlatformSecrets {
 
-  def init() = {
+  def init(): CompletableFuture[Nothing] = {
     platform.registerWrapper(amf.core.metamodel.document.ModuleModel) {
       case m: amf.core.model.document.Module => Module(m)
     }
@@ -22,6 +22,9 @@ object Core extends PlatformSecrets{
     }
     platform.registerWrapper(amf.core.metamodel.document.FragmentModel) {
       case f: amf.core.model.document.Fragment => new Fragment(f)
+    }
+    platform.registerWrapper(amf.core.metamodel.document.ExternalFragmentModel) {
+      case f: amf.core.model.document.ExternalFragment => ExternalFragment(f)
     }
     platform.registerWrapper(amf.core.metamodel.domain.DomainElementModel) {
       case e: amf.core.model.domain.DomainElement => DomainElement(e)
@@ -39,10 +42,13 @@ object Core extends PlatformSecrets{
     AMF.init().asJava
   }
 
-  def parser(vendor: String, mediaType: String): Parser = new Parser(vendor, mediaType)
+  def parser(vendor: String, mediaType: String): Parser       = new Parser(vendor, mediaType)
   def generator(vendor: String, mediaType: String): Generator = new Generator(vendor, mediaType)
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] = Validator.validate(model, profileName, messageStyle)
+  def validate(model: BaseUnit,
+               profileName: String,
+               messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] =
+    Validator.validate(model, profileName, messageStyle)
   def loadValidationProfile(url: String): CompletableFuture[Nothing] = Validator.loadValidationProfile(url)
-  def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
-  def registerPlugin(plugin: AMFPlugin) = AMF.registerPlugin(plugin)
+  def registerNamespace(alias: String, prefix: String): Boolean      = platform.registerNamespace(alias, prefix).isDefined
+  def registerPlugin(plugin: AMFPlugin): Unit                        = AMF.registerPlugin(plugin)
 }
