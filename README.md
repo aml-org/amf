@@ -182,57 +182,7 @@ const parser = amf.AMF.raml10Parser()
 
 ## Examples
 
-Go to [amf examples repository](https://github.com/mulesoft/amf-byExample) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
-
-### Browser-client
-
-It shows a static *html* file that imports the *amf-browser.js* artifact as a script and uses its globally exported classes.
-
-#### Usage
-
-Just open the *html* file in any browser and play with what's inside the script tag.
-
-### NodeJS Client
-
-This example has a *node.js* file **index.js** where the amf library will be imported and can be used as a node module.
-
-#### Usage //@TODO check
-
-1. Run *cd usage/jsClient* while positioned at the root of the project.
-2. Run *npm install*.
-3. Make sure that artifacts for amf have been generated (Run *sbt generate*).
-4. Run *npm install ../../amf-js/*. (This will pick up configurations from *package.json* to install the *amf-module.js* file as a node module in the jsClient project.)
-5. Run *node start*.
-6. Open *localhost:3000* in the browser.
-
-You can see *index.js* with examples of use and play with the module.
-Modify *parser* and generator *modules* to change the server-side use of the library.
-
-### JVM Client
-
-This is a simple example that uses the **JVM jar artifact** in a gradle project main file.
-
-#### Usage
-
-1. Make sure that artifacts for amf have been generated (Run *sbt generate*), as the project will pick up the jar from the generated location.
-2. Play with the library in java files. (There's a main class in src/main/java/ with some examples.)
-
-### Converter
-
-This is a node project that demonstrates how amf parses and generates an OAS/RAML document. Note that it's not a conversion tool per se as you can quickly see in the code. AMF will build the model every time, dumping the required spec output when selected.
-
-#### Usage
-
-1. Make sure that artifacts for amf have been generated (Run *sbt generate*).
-
-2. Inside the *site* directory (*cd usage/site*):
-    - Create directory *"build"*.
-    - Run *npm install*.
-    - Check if you have a *"public/build"* in the *site* directory. In not, create it.
-    - Run *npm start* from *site* directory.
-    - Open *localhost:3000* in the browser.
-
-You can now start trying AMF by reading and dumping from/to different API Design specs.
+Check [amf examples repository](https://github.com/mulesoft/amf-examples). You will find code for Java and JS along with a converter application that uses AMF.
 
 ## Validation
 
