@@ -119,14 +119,13 @@ The *amf* package will contain all exported classes:
 const parser = new amf.RamlParser()
 ```
 
-### Excutable AMF client
+### Executable AMF client
 
 The client can be built using `buildCommandLine` SBT task
 
 ```bash
 sbt buildCommandLine
 ```
-
 This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
 
 ## Installation
@@ -162,6 +161,10 @@ And two *JVM artifacts*:
 
 #### Using AMF in a node.js project
 
+##### Private repository registration
+See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-js/dw-parser-js/README.md#getting-started
+
+Then: 
 ```bash
 npm install --save amf-project-location/amf-client-js/
 ```
