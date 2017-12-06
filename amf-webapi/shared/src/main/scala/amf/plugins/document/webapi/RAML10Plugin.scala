@@ -6,7 +6,7 @@ import amf.core.client.GenerationOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
-import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
@@ -21,6 +21,7 @@ import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with WebApiDocuments {
 
@@ -115,4 +116,5 @@ object RAML10Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebA
     */
   override def resolve(unit: BaseUnit) = new RamlResolutionPipeline().resolve(unit)
 
+  override def init(): Future[AMFPlugin] = Future { this }
 }

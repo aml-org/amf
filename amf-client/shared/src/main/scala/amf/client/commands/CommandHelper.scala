@@ -5,13 +5,10 @@ import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.webapi.{OAS20Plugin, RAML10Plugin}
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.plugins.features.validation.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -19,16 +16,12 @@ trait CommandHelper {
   implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val platform: Platform
 
-  def AMFInit(): Future[Any] = {
+  def AMFInit(): Future[Unit] = {
+    amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
+    amf.core.AMF.registerPlugin(RAML10Plugin)
+    amf.core.AMF.registerPlugin(OAS20Plugin)
+    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.init()
-    AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
-    AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
-    AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
-    AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-    AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
-    AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-    amf.plugins.features.validation.AMFValidatorPlugin.init()
   }
 
   def ensureUrl(inputFile: String): String =

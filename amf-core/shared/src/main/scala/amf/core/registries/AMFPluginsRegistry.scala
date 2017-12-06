@@ -12,8 +12,11 @@ object AMFPluginsRegistry {
   private val documentPluginIDRegistry: mutable.HashMap[String, AMFDocumentPlugin] = mutable.HashMap()
   private val documentPluginVendorsRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]] = mutable.HashMap()
   private val domainPluginRegistry: mutable.HashMap[String, AMFDomainPlugin] = mutable.HashMap()
+  private val featurePluginIDRegistry: mutable.HashMap[String, AMFPlugin] = mutable.HashMap()
+  private val featurePlugin: mutable.HashMap[String, AMFPlugin] = mutable.HashMap()
 
 
+  def plugins = syntaxPluginIDRegistry.values ++ documentPluginIDRegistry.values ++ domainPluginRegistry.values ++ featurePluginIDRegistry.values
 
   def documentPlugins = documentPluginIDRegistry.values
 
@@ -37,6 +40,15 @@ object AMFPluginsRegistry {
     syntaxPluginRegistry.get(mediaType) match {
       case Some(plugin) => Some(plugin)
       case _ => syntaxPluginRegistry.get(simpleMediaType(mediaType))
+    }
+  }
+
+  def registerFeaturePlugin(featurePlugin: AMFPlugin) = {
+    featurePluginIDRegistry.get(featurePlugin.ID) match {
+      case Some(_)  => // ignore
+      case None     =>
+        featurePluginIDRegistry.put(featurePlugin.ID, featurePlugin)
+        registerDependencies(featurePlugin)
     }
   }
 

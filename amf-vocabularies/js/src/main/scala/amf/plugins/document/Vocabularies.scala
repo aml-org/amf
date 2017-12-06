@@ -32,4 +32,5 @@ object Vocabularies extends PlatformSecrets{
   }
 
   def registerDialect(url: String): Promise[Dialect] = PlatformDialectRegistry.registerDialect(url).toJSPromise
+  def registerDialect(url: String, dialectText: String): Promise[Dialect] = PlatformDialectRegistry.registerDialect(url, dialectText).toJSPromise
 }
