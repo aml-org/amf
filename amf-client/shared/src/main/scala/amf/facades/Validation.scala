@@ -35,14 +35,14 @@ class Validation(platform: Platform) {
 
   // Temporary
   RuntimeValidator.validator match {
-    case Some(runtimeValidator: AMFValidatorPlugin) =>
-      runtimeValidator.asInstanceOf[AMFValidatorPlugin].enabled = true
-      runtimeValidator.reset()
+    case Some(AMFValidatorPlugin) =>
+      AMFValidatorPlugin.enabled = true
+      AMFValidatorPlugin.reset()
     case _ =>
       Core.init()
       AMFValidatorPlugin.init()
   }
-  val validator: AMFValidatorPlugin = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin]
+  val validator: AMFValidatorPlugin.type = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin.type]
   //
 
   val url = "http://raml.org/dialects/profile.raml"

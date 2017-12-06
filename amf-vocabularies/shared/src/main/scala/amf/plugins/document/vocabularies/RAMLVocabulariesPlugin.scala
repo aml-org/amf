@@ -6,7 +6,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AmfObject
 import amf.core.parser.{Annotations, ParserContext}
-import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -17,7 +17,7 @@ import amf.plugins.document.vocabularies.model.document.DialectFragment
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
-import amf.plugins.document.vocabularies.spec.{DialectContext, DialectEmitter, DialectNode, DialectParser}
+import amf.plugins.document.vocabularies.spec._
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
 
@@ -47,6 +47,8 @@ object DialectHeader extends RamlHeaderExtractor {
 object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin with ValidationResultProcessor with RamlHeaderExtractor {
 
   override val ID = "RAML Vocabularies"
+
+  override def init(): Future[AMFPlugin] = Future { this }
 
   val vendors = Seq("RAML Vocabularies", "RAML 1.0")
 
@@ -122,7 +124,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
   }
 
   /**
-    * Request for validation of a particular model, profile and list of effective validations form that profile
+    * Request for validation of a particular model, profile and list of effective validations for that profile
     */
   override def validationRequest(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, platform: Platform): Future[AMFValidationReport] = {
     var aggregatedReport: List[AMFValidationResult] = List()
@@ -154,5 +156,16 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit) = unit // we don't support resolutino in vocabularies yet
+  override def resolve(unit: BaseUnit) = unit // we don't support resolution in vocabularies yet
+
+  /**
+    * Registers the dialect located in the provided URL into the platform
+    */
+  def registerDialect(url: String): Future[Dialect] = PlatformDialectRegistry.registerDialect(url)
+
+  /**
+    * Registers a dialect identified by the provided URL and using the provided text
+    */
+  def registerDialect(url: String, dialectText: String): Future[Dialect] = PlatformDialectRegistry.registerDialect(url, dialectText)
+
 }

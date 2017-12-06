@@ -4,14 +4,19 @@ import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser._
-import amf.core.plugins.AMFDocumentPlugin
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.BasicResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import org.yaml.model.YMap
 
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
 object AMFGraphPlugin extends AMFDocumentPlugin {
+
+  override def init(): Future[AMFPlugin] = Future { this }
 
   override val ID = "AMF Graph"
   override def dependencies() = Seq()

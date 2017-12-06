@@ -3,9 +3,8 @@ package amf.plugins.features.validation
 import amf.ProfileNames
 import amf.core.client.GenerationOptions
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.Platform
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport}
@@ -13,7 +12,6 @@ import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
-import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -21,10 +19,20 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin {
+object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecrets {
+
   override val ID = "AMF Validation"
 
-  override def dependencies() = Seq(AMFGraphPlugin)
+  override def init(): Future[AMFPlugin] = {
+    // Registering ourselves as the runtime validator
+    RuntimeValidator.register(AMFValidatorPlugin)
+    val url = "http://raml.org/dialects/profile.raml"
+    RAMLVocabulariesPlugin.registerDialect(url, ValidationDialectText.text) map { _ =>
+      this
+    }
+  }
+
+  override def dependencies() = Seq(SYamlSyntaxPlugin, RAMLVocabulariesPlugin, AMFGraphPlugin)
 
   val url = "http://raml.org/dialects/profile.raml"
 
@@ -166,18 +174,5 @@ class AMFValidatorPlugin(platform: Platform) extends ParserSideValidationPlugin 
   }
 
 }
-
-object AMFValidatorPlugin extends PlatformSecrets {
-  def init(): Future[Any] = {
-    // Registering ourselves as the runtime validator
-    RuntimeValidator.register(new AMFValidatorPlugin(platform))
-    // we need working vocabularies before registering the validation dialect
-    AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
-    val url = "http://raml.org/dialects/profile.raml"
-    PlatformDialectRegistry.registerDialect(url, ValidationDialectText.text)
-  }
-}
-
 
 object ValidationMutex {}
