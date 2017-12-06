@@ -1,6 +1,5 @@
 package amf.plugins.document
 
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document._
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
@@ -11,7 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 object WebApi extends PlatformSecrets {
 
-  def init() = {
+  def register() = {
     platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) {
       case s: model.AnnotationTypeDeclarationFragment => AnnotationTypeDeclaration(s)
     }
@@ -43,10 +42,14 @@ object WebApi extends PlatformSecrets {
       case m: model.Overlay => new Overlay(m)
     }
 
+    // initialization of wrappers
+    amf.plugins.domain.DataShapes.register()
+    amf.plugins.domain.WebApi.register()
+
     // Initialization of plugins
-    AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
-    AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
-    AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+    amf.Core.registerPlugin(OAS20Plugin)
+    amf.Core.registerPlugin(RAML10Plugin)
+    amf.Core.registerPlugin(PayloadPlugin)
 
   }
 }

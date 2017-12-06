@@ -1,6 +1,5 @@
 package amf.plugins.domain
 
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
 import amf.model.domain._
 import amf.plugins.domain.webapi.metamodel.templates
@@ -10,7 +9,7 @@ import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 object WebApi extends PlatformSecrets {
-  def init() = {
+  def register() = {
     platform.registerWrapper(metamodel.EndPointModel) {
       case s: models.EndPoint => EndPoint(s)
     }
@@ -54,6 +53,6 @@ object WebApi extends PlatformSecrets {
       case s: models.WebApi => amf.model.domain.WebApi(s)
     }
 
-    AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+    amf.Core.registerPlugin(WebAPIDomainPlugin)
   }
 }
