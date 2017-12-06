@@ -11,15 +11,11 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 
 object AMF {
 
-  def init(): CompletableFuture[Any] = {
+  def init(): CompletableFuture[Nothing] = {
+    amf.plugins.document.WebApi.register()
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.features.AMFValidation.register()
     amf.Core.init()
-    AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    amf.plugins.document.WebApi.init()
-    amf.plugins.document.Vocabularies.init()
-    amf.plugins.domain.WebApi.init()
-    amf.plugins.domain.DataShapes.init()
-    amf.plugins.document.Vocabularies.init()
-    amf.plugins.features.AMFValidation.init()
   }
 
   def raml10Parser(): Raml10Parser = new Raml10Parser()

@@ -1,7 +1,6 @@
 package amf.plugins.document
 
 import amf.core.metamodel.Obj
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
 import amf.model.{DialectFragment, DomainEntity}
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
@@ -11,15 +10,15 @@ import amf.plugins.document.vocabularies.model.{document, domain}
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
 
-import scala.scalajs.js.Promise
-import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.Promise
+import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 object Vocabularies extends PlatformSecrets{
 
-  def init() = {
+  def register() = {
     val p: (Obj) => Boolean = (x: Obj) => x.isInstanceOf[DialectEntityModel]
     platform.registerWrapperPredicate(p) {
       case m: domain.DomainEntity => DomainEntity(m)
@@ -28,7 +27,7 @@ object Vocabularies extends PlatformSecrets{
       case d: document.DialectFragment => new DialectFragment(d)
     }
 
-    AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
+    amf.Core.registerPlugin(RAMLVocabulariesPlugin)
   }
 
   def registerDialect(url: String): Promise[Dialect] = PlatformDialectRegistry.registerDialect(url).toJSPromise

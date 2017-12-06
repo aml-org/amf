@@ -1,11 +1,9 @@
 package amf
 
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.validation.AMFValidationReport
 import amf.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.scalajs.js.Promise
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -15,14 +13,10 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 object AMF {
 
   def init(): Promise[Any] = {
+    amf.plugins.document.WebApi.register()
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.features.AMFValidation.register()
     amf.Core.init()
-    AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    amf.plugins.document.WebApi.init()
-    amf.plugins.document.Vocabularies.init()
-    amf.plugins.domain.WebApi.init()
-    amf.plugins.domain.DataShapes.init()
-    amf.plugins.document.Vocabularies.init()
-    amf.plugins.features.AMFValidation.init()
   }
 
   def raml10Parser(): Raml10Parser = new Raml10Parser()

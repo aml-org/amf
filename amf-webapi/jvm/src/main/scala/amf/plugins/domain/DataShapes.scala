@@ -1,12 +1,11 @@
 package amf.plugins.domain
 
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
 import amf.model.domain._
 import amf.plugins.domain.shapes.{DataShapesDomainPlugin, metamodel, models}
 
 object DataShapes extends PlatformSecrets {
-  def init() = {
+  def register() = {
     platform.registerWrapper(metamodel.AnyShapeModel) {
       case s: models.AnyShape => new AnyShape(s)
     }
@@ -48,6 +47,6 @@ object DataShapes extends PlatformSecrets {
     }
 
     // plugin initialization
-    AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+    amf.Core.registerPlugin(DataShapesDomainPlugin)
   }
 }
