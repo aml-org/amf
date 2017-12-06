@@ -1,5 +1,6 @@
 package amf
 
+import amf.core.plugins.AMFPlugin
 import amf.core.validation.AMFValidationReport
 import amf.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
@@ -32,11 +33,11 @@ object AMF {
   def amfGraphGenerator(): AmfGraphGenerator = new AmfGraphGenerator()
 
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] =
-    Core.validate(model, profileName, messageStyle)
+    amf.Core.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(url: String): Promise[String] = Core.loadValidationProfile(url)
+  def loadValidationProfile(url: String): Promise[String] = amf.Core.loadValidationProfile(url)
 
-  def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
+  def registerNamespace(alias: String, prefix: String): Boolean = amf.Core.registerNamespace(alias, prefix)
 
   def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
 
@@ -45,4 +46,34 @@ object AMF {
   def resolveOas20(unit: BaseUnit) = new Oas20Resolver().resolve(unit)
 
   def resolveAmfGraph(unit: BaseUnit) = new AmfGraphResolver().resolve(unit)
+}
+
+@JSExportAll
+@JSExportTopLevel("Core")
+object CoreWrapper {
+  def init() = Core.init()
+  def parser(vendor: String, mediaType: String) = amf.Core.parser(vendor, mediaType)
+  def generator(vendor: String, mediaType: String) = amf.Core.generator(vendor, mediaType)
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF") =  amf.Core.validate(model, profileName, messageStyle)
+  def loadValidationProfile(url: String) = amf.Core.loadValidationProfile(url)
+  def registerNamespace(alias: String, prefix: String) = amf.Core.registerNamespace(alias, prefix)
+  def registerPlugin(plugin: AMFPlugin) = amf.Core.registerPlugin(plugin)
+}
+
+@JSExportAll
+@JSExportTopLevel("plugins")
+object PluginsWrapper {
+  val document = DocumentPluginsWrapper
+  val features = FeaturesPluginsWrapper
+}
+
+@JSExportAll
+object DocumentPluginsWrapper {
+  val WebApi = amf.plugins.document.WebApi
+  val Vocabularies = amf.plugins.document.Vocabularies
+}
+
+@JSExportAll
+object FeaturesPluginsWrapper {
+  val AMFValidation = amf.plugins.features.AMFValidation
 }
