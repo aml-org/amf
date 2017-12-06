@@ -36,32 +36,28 @@ To use AMF you should first generate or get the right distribution for your proj
 You can build a standalone Java executable running the following SBT target:
 
 ```bash
-sbt package
+sbt buildCommandLine
 ```
 This will create a set of jars:
 ```bash
-/amf/amf-client/jvm/target/scala-2.12/amf-client_2.12-X_X_X.jar
-/amf/amf-core/jvm/target/scala-2.12/amf-core_2.12-X_X_X.jar
-/amf/amf-validation/jvm/target/scala-2.12/amf-validation_2.12-X_X_X.jar
-/amf/amf-vocabularies/jvm/target/scala-2.12/amf-vocabularies_2.12-X_X_X.jar
-/amf/amf-webapi/jvm/target/scala-2.12/amf-webapi_2.12-X_X_X.jar
+/amf/amf.jar
+```
+This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
+
+Using this jar, you can run tasks from command line, for instance:
+```bash
+java -jar amf.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
+```
+or 
+```bash
+java -jar amf.jar validate -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
+```
+To get all available options:
+```bash
+java -jar amf.jar
 ```
 
-##### //TODO: check
-
-The command line tool can also be built for node.js:
-
-``` bash
-./amf-js/build-scripts/buildjs.sh
-```
-
-This will create a single executable JS in the root directory:
-
-``` bash
-./amf.js
-```
-
-Using these jars or the node script, you can execute the JS by passing one of the following commands:
+Using this jar you can execute AMF by passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
@@ -72,8 +68,6 @@ An interactive section can be started using the `repl` command.
 If you want to parse any RAML dialect other than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
 
 Refer to the usage of the application for additional commands and explanations.
-
-[Validation insights](./documentation/validation.md)
 
 ### JVM artifacts
 
@@ -236,3 +230,9 @@ This is a node project that demonstrates how amf parses and generates an OAS/RAM
     - Open *localhost:3000* in the browser.
 
 You can now start trying AMF by reading and dumping from/to different API Design specs.
+
+## Validation
+
+Validation is one of the key features of AMF. Please check the following link to get more information:
+[Validation insights](./documentation/validation.md)
+
