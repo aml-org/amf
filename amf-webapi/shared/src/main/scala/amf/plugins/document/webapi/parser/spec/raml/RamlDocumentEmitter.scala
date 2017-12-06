@@ -457,12 +457,15 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
   case class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      b.entry("types", _.obj { b =>
-        traverse(ordering.sorted(types.map {
-          case s: AnyShape => RamlNamedTypeEmitter(s, ordering, references)
-          case _           => throw new Exception("Cannot emit non WebApi shape")
-        }), b)
-      })
+      b.entry(
+        "types",
+        _.obj { b =>
+          traverse(ordering.sorted(types.map {
+            case s: AnyShape => RamlNamedTypeEmitter(s, ordering, references)
+            case _           => throw new Exception("Cannot emit non WebApi shape")
+          }), b)
+        }
+      )
     }
 
     override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
@@ -570,7 +573,8 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
 }
 
 object RamlSpecEmitterContext extends SpecEmitterContext {
-  override def ref(b: PartBuilder, url: String): Unit = b.scalar(YNode(YScalar("!include " + url), YType("!include")))
+  override def ref(b: PartBuilder, url: String): Unit =
+    b.scalar(YNode(YScalar("!include " + url), YType("!include"))) //todo syaml bug not rendering custom tags
 
   override val vendor: Vendor = Raml
 

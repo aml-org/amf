@@ -64,14 +64,6 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
   }
 
-  object ExternalFragmentModel extends FragmentModel {
-    override def fields: List[Field] = FragmentModel.fields
-
-    override val `type`: List[ValueType] = List(Document + "ExternalModel") ++ FragmentModel.`type`
-
-    override def modelInstance: AmfObject = ExternalFragment()
-  }
-
   object SecuritySchemeFragmentModel extends FragmentModel {
     override def fields: List[Field] = FragmentModel.fields
 

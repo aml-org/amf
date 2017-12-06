@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
 import amf.core.model.document._
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{ExternalDomainElement, Shape}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Annotations
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -11,7 +11,6 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
-import amf.plugins.domain.webapi.models.ExternalDomainElement
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YMap, YType}
 

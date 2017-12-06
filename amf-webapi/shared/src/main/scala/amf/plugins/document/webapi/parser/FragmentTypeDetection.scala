@@ -28,6 +28,8 @@ case class FragmentTypeDetection(map: YMap) {
   def detect(): FragmentType = {
     val matchingTypes = ListBuffer[FragmentType]()
 
+    map.key("$schema").foreach(_ => matchingTypes += UnknownFragment) // Do not detect DataType for json schemas
+
     map
       .regex(
         "default|schema|example|examples|facets|xml|enum|properties|" +

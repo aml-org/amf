@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.model.document.ExternalFragment
 import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.model.ExternalFragment
 import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -12,8 +12,7 @@ import org.yaml.parser.YamlParser
   */
 case class DataNodeParser(node: YNode,
                           parameters: AbstractVariables = AbstractVariables(),
-                          parent: Option[String] = None)(
-  implicit ctx: ParserContext) {
+                          parent: Option[String] = None)(implicit ctx: ParserContext) {
   def parse(): DataNode = {
     node.tag.tagType match {
       case YType.Str =>
@@ -40,37 +39,37 @@ case class DataNodeParser(node: YNode,
       // Included external fragment
       case _ if node.tag.text == "!include" => parseInclusion(node)
 
-      case other => {
+      case other =>
         throw new Exception(s"Cannot parse data node from AST structure $other")
-      }
     }
   }
 
   protected def parseInclusion(node: YNode): DataNode = {
     node.value match {
       case reference: YScalar =>
-        ctx.refs.find(ref => ref.parsedUrl == reference.text) match {
-          case Some(ref) if ref.baseUnit.isInstanceOf[ExternalFragment] =>
-            val includedText = ref.baseUnit.asInstanceOf[ExternalFragment].encodes.raw
+        ctx.refs.find(ref => ref.origin.url == reference.text) match {
+          case Some(ref) if ref.unit.isInstanceOf[ExternalFragment] =>
+            val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw
             parseIncludedAST(includedText)
-          case _ => ScalarNode(
-            node.value.toString,
-            Some((Namespace.Xsd + "string").iri())
-          ).withId(parent.getOrElse("") + "/included")
+          case _ =>
+            ScalarNode(
+              node.value.toString,
+              Some((Namespace.Xsd + "string").iri())
+            ).withId(parent.getOrElse("") + "/included")
         }
-      case _ => ScalarNode(
-        node.value.toString,
-        Some((Namespace.Xsd + "string").iri())
-      ).withId(parent.getOrElse("") + "/included")
+      case _ =>
+        ScalarNode(
+          node.value.toString,
+          Some((Namespace.Xsd + "string").iri())
+        ).withId(parent.getOrElse("") + "/included")
     }
   }
 
-
   def parseIncludedAST(raw: String): DataNode = {
     YamlParser(raw).parse().find(_.isInstanceOf[YNode]) match {
-        case Some(node: YNode) => DataNodeParser(node, parameters, parent).parse()
-        case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
-      }
+      case Some(node: YNode) => DataNodeParser(node, parameters, parent).parse()
+      case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
+    }
   }
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {

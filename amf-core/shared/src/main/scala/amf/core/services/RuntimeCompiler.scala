@@ -19,7 +19,7 @@ trait RuntimeCompiler {
 
 object RuntimeCompiler {
   var compiler: Option[RuntimeCompiler] = None
-  def register(runtimeCompiler: RuntimeCompiler) = {
+  def register(runtimeCompiler: RuntimeCompiler): Unit = {
     compiler = Some(runtimeCompiler)
   }
 
@@ -30,10 +30,11 @@ object RuntimeCompiler {
             base: Option[Context] = None,
             referenceKind: ReferenceKind = UnspecifiedReference,
             cache: Cache = Cache(),
-            ctx: Option[ParserContext] = None) = {
+            ctx: Option[ParserContext] = None): Future[BaseUnit] = {
     compiler match {
-      case Some(runtimeCompiler) => runtimeCompiler.build(url, remote, base, mediaType, vendor, referenceKind, cache, ctx)
-      case _                     => throw new Exception("No registered runtime compiler")
+      case Some(runtimeCompiler) =>
+        runtimeCompiler.build(url, remote, base, mediaType, vendor, referenceKind, cache, ctx)
+      case _ => throw new Exception("No registered runtime compiler")
     }
   }
 }

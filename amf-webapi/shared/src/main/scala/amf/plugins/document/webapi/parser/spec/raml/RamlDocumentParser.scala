@@ -50,10 +50,10 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
       .key("extends")
       .foreach(e => {
         root.references
-          .find(_.parsedUrl == e.value.as[String])
+          .find(_.origin.url == e.value.as[String])
           .foreach(extend =>
             document
-              .set(field, AmfScalar(extend.baseUnit.id, Annotations(e.value)), Annotations(e)))
+              .set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e)))
       })
   }
 

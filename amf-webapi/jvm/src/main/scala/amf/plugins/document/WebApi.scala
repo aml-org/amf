@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin, mo
 
 object WebApi extends PlatformSecrets {
 
-  def register() = {
+  def register(): Unit = {
     platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) {
       case s: model.AnnotationTypeDeclarationFragment => AnnotationTypeDeclaration(s)
     }
@@ -16,9 +16,6 @@ object WebApi extends PlatformSecrets {
     }
     platform.registerWrapper(DocumentationItemFragmentModel) {
       case s: model.DocumentationItemFragment => DocumentationItem(s)
-    }
-    platform.registerWrapper(ExternalFragmentModel) {
-      case s: model.ExternalFragment => ExternalFragment(s)
     }
     platform.registerWrapper(NamedExampleFragmentModel) {
       case s: model.NamedExampleFragment => NamedExample(s)

@@ -1,43 +1,28 @@
 package amf.plugins.document.webapi
 
-import amf.ProfileNames
+import amf.ProfileNames.OAS
 import amf.core.Root
 import amf.core.client.GenerationOptions
-import amf.core.metamodel.document.FragmentModel
 import amf.core.model.document._
-import amf.core.model.domain.{AnnotationGraphLoader, DomainElement}
+import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
-import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec.oas._
-import amf.plugins.document.webapi.references.WebApiReferenceCollector
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
-import amf.plugins.document.webapi.validation.WebApiValidations
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YDocument
 
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
+object OAS20Plugin extends BaseWebApiPlugin {
 
-object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with WebApiDocuments {
+  override val ID: String = "OAS 2.0"
 
-  val ID: String = "OAS 2.0"
+  override val vendors = Seq("OAS 2.0", "OAS")
 
-  val vendors = Seq("OAS 2.0", "OAS")
-
-  override def modelEntities: Seq[FragmentModel] = webApiDocuments
-
-  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
-
-  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = webApiAnnotations
+  override val validationProfile: String = OAS
 
   private def detectOasUnit(root: Root)(implicit ctx: WebApiContext): Option[BaseUnit] = {
     OasHeader(root) map {
@@ -58,7 +43,7 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
 
   override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     implicit val ctx: WebApiContext =
-      new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, parentContext)
+      new WebApiContext(OasSyntax, OAS, OasSpecAwareContext, parentContext)
     document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
       case LinkReference    => Some(OasFragmentParser(document).parseFragment())
@@ -86,20 +71,6 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     case _                  => None
   }
 
-  override def referenceCollector() = new WebApiReferenceCollector(ID)
-
-  /**
-    * Validation profiles supported by this plugin by default
-    */
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    defaultValidationProfiles
-
-  def validationRequest(baseUnit: BaseUnit,
-                        profile: String,
-                        validations: EffectiveValidations,
-                        platform: Platform): Future[AMFValidationReport] =
-    validationRequestsForBaseUnit(baseUnit, profile, validations, ProfileNames.OAS, platform)
-
   /**
     * List of media types used to encode serialisations of
     * this domain
@@ -123,6 +94,4 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit): BaseUnit = new OasResolutionPipeline().resolve(unit)
-
-  override def init(): Future[AMFPlugin] = Future { this }
 }

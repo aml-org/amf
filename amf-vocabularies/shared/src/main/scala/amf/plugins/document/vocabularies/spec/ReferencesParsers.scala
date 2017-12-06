@@ -8,7 +8,6 @@ import org.yaml.model.YMap
 
 import scala.collection.mutable
 
-
 object ReferenceDeclarations {
   def apply(references: mutable.Map[String, BaseUnit])(implicit ctx: DialectContext) =
     new ReferenceDeclarations(references)
@@ -44,23 +43,21 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
   def solvedReferences(): Seq[BaseUnit] = references.values.toSet.toSeq
 }
 
-
-
 case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference])(implicit ctx: DialectContext) {
   def parse(location: String): ReferenceDeclarations = {
     val result: ReferenceDeclarations = parseLibraries(location)
 
     references.foreach {
-      case ParsedReference(f: Fragment, s: String, _) => result += (s, f)
-      case ParsedReference(d: Document, s: String, _) => result += (s, d)
-      case _                                          =>
+      case ParsedReference(f: Fragment, origin: Reference) => result += (origin.url, f)
+      case ParsedReference(d: Document, origin: Reference) => result += (origin.url, d)
+      case _                                               =>
     }
 
     result
   }
 
   private def target(url: String): Option[BaseUnit] =
-    references.find(r => r.parsedUrl.equals(url)).map(_.baseUnit)
+    references.find(r => r.origin.url.equals(url)).map(_.unit)
 
   private def parseLibraries(id: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()

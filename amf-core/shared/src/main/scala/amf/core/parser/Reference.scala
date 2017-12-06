@@ -3,13 +3,11 @@ package amf.core.parser
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Cache, Context, Platform}
 import amf.core.services.RuntimeCompiler
-import org.yaml.model.YAggregate
+import org.yaml.model.YNode
 
 import scala.concurrent.Future
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
-case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
+case class Reference(url: String, kind: ReferenceKind, ast: YNode) {
 
   def isRemote: Boolean = !url.startsWith("#")
 
@@ -20,10 +18,5 @@ case class Reference(url: String, kind: ReferenceKind, ast: YAggregate) {
               cache: Cache,
               ctx: ParserContext): Future[BaseUnit] = {
     RuntimeCompiler(url, remote, mediaType, vendor, base, kind, cache, Some(ctx))
-
-      .map(root => {
-//        target = root
-        root
-      })
   }
 }

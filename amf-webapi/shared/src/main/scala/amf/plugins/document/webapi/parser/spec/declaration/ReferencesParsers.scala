@@ -31,7 +31,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
           .filter({
             // TODO: removed in modularization, should I reintroduce it later? @modularization
             /* case _: DomainEntity => false */
-            case _               => true
+            case _ => true
           })
           .foreach(library += _)
     }
@@ -52,16 +52,16 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
     val result: ReferenceDeclarations = parseLibraries(location)
 
     references.foreach {
-      case ParsedReference(f: Fragment, s: String, _) => result += (s, f)
-      case ParsedReference(d: Document, s: String, _) => result += (s, d)
-      case _                                          =>
+      case ParsedReference(f: Fragment, origin: Reference) => result += (origin.url, f)
+      case ParsedReference(d: Document, origin: Reference) => result += (origin.url, d)
+      case _                                               =>
     }
 
     result
   }
 
   private def target(url: String): Option[BaseUnit] =
-    references.find(r => r.parsedUrl.equals(url)).map(_.baseUnit)
+    references.find(r => r.origin.url.equals(url)).map(_.unit)
 
   private def parseLibraries(id: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()
