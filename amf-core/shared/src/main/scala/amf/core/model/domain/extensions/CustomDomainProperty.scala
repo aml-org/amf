@@ -1,13 +1,16 @@
 package amf.core.model.domain.extensions
 
-import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel._
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel._
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils._
 import org.yaml.model.YPart
 
-case class CustomDomainProperty(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class CustomDomainProperty(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
 
   def name: String        = fields(Name)
   def displayName: String = fields(DisplayName)

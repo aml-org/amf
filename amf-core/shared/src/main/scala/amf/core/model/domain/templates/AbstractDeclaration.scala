@@ -1,11 +1,13 @@
 package amf.core.model.domain.templates
 
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel._
-import amf.core.model.domain.{DataNode, DomainElement, Linkable}
+import amf.core.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 
-
-abstract class AbstractDeclaration(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+abstract class AbstractDeclaration(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
   def name: String           = fields(Name)
   def dataNode: DataNode     = fields(DataNode)
   def variables: Seq[String] = fields(Variables)

@@ -96,4 +96,17 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(speakers.size() > 0)
   }
 
+  test("Raml to oas secutiry scheme pos resolution") {
+    AMF.init().get()
+    val parser = new Raml10Parser()
+
+    val baseUnit =
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml").get()
+    val resolver = new Raml10Resolver()
+    resolver.resolve(baseUnit)
+    val generator = new Oas20Generator()
+    val str       = generator.generateString(baseUnit)
+    assert(!str.isEmpty)
+  }
+
 }

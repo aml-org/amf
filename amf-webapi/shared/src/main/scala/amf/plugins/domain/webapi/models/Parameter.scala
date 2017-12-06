@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
@@ -10,7 +10,10 @@ import org.yaml.model.YPart
 /**
   * Parameter internal model.
   */
-case class Parameter(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class Parameter(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
 
   def name: String        = fields(Name)
   def description: String = fields(Description)
