@@ -123,9 +123,9 @@ class ParserTest extends FunSuite {
     val sequence = third.value.value.asInstanceOf[YSequence]
     sequence.nodes.size should be(2)
     sequence.nodes.head.value shouldBe a[YScalar]
-    sequence.nodes.head.as[String] shouldBe "2"
+    sequence.nodes.head.as[Int] shouldBe 2
     sequence.nodes(1).value shouldBe a[YScalar]
-    sequence.nodes(1).as[String] shouldBe "3"
+    sequence.nodes(1).as[Int] shouldBe 3
 
     include(content.entries(3))
 

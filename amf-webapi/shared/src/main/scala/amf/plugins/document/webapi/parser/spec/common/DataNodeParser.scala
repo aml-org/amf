@@ -37,7 +37,7 @@ case class DataNodeParser(node: YNode,
         }
 
       // Included external fragment
-      case _ if node.tag.text == "!include" => parseInclusion(node)
+      case _ if node.tagType == YType.Include => parseInclusion(node)
 
       case other =>
         throw new Exception(s"Cannot parse data node from AST structure $other")
@@ -66,7 +66,7 @@ case class DataNodeParser(node: YNode,
   }
 
   def parseIncludedAST(raw: String): DataNode = {
-    YamlParser(raw).parse().find(_.isInstanceOf[YNode]) match {
+    YamlParser(raw).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
       case Some(node: YNode) => DataNodeParser(node, parameters, parent).parse()
       case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
     }

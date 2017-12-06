@@ -56,8 +56,8 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
   private def parseModule = {
     val module = Module().adopted(root.location)
     module.withLocation(root.location)
-    var v=List(parseEntity(module));
-    v=this.internalRefs.values.toList;
+    var v = List(parseEntity(module));
+    v = this.internalRefs.values.toList;
     module.withDeclares(v)
     module
   }
@@ -76,7 +76,6 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
 
         if (references.references.nonEmpty) {
           unit.withReferences(references.solvedReferences())
-
 
         }
         entity
@@ -153,18 +152,16 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
         parseCollection(mapping, entryNode, domainEntity)
       } else if (!mapping.isScalar) {
         parseSingleObject(mapping, entryNode, domainEntity)
-      } else if (entryNode.value.tag.tagType == YType.Unknown && entryNode.value.tag.text == "!include") {
+      } else if (entryNode.value.tagType == YType.Include) {
         resolver
           .resolveToEntity(root, entryNode.value.as[YScalar].text, mapping.referenceTarget.get)
           .foreach(child => {
-            if (mapping.isRef){
-              if (child.isLink){
-                domainEntity.set(mapping.field(),child.linkTarget.get.id);
-              }
-              else domainEntity.set(mapping.field(),child.id);
-            }
-            else{
-              val lnk= child.link[DomainEntity](entryNode.value.value.asInstanceOf[YScalar].text)
+            if (mapping.isRef) {
+              if (child.isLink) {
+                domainEntity.set(mapping.field(), child.linkTarget.get.id);
+              } else domainEntity.set(mapping.field(), child.id);
+            } else {
+              val lnk = child.link[DomainEntity](entryNode.value.value.asInstanceOf[YScalar].text)
               //child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
               domainEntity.set(mapping.field(), lnk)
               //parseNode(entryNode.value.value, child)
@@ -213,15 +210,15 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
               case Some(internalRef) if internalRef.definition.id == domainEntity.definition.id =>
                 internalRef.fields.into(domainEntity.fields)
                 domainEntity.annotations += SynthesizedField()
-                //domainEntity.annotations += DomainElementReference(name, Some(internalRef))
+              //domainEntity.annotations += DomainElementReference(name, Some(internalRef))
               case _ =>
                 resolver.resolveToEntity(root, name, domainEntity.definition) match {
                   case Some(entity) =>
                     entity.fields.into(domainEntity.fields)
                     domainEntity.annotations += SynthesizedField()
-                    //domainEntity.annotations += DomainElementReference(name, Some(entity))
+                  //domainEntity.annotations += DomainElementReference(name, Some(entity))
                   case None =>
-                    //Some(domainEntity.annotations += DomainElementReference(name, None))
+                  //Some(domainEntity.annotations += DomainElementReference(name, None))
                 }
             }
         }
@@ -374,7 +371,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
           if (entryNode.value.value.isInstanceOf[YScalar]) {
             val scalar = ValueNode(entryNode.value).string()
             if (Option(scalar.value).isDefined) {
-              val resolvedVal = resolveValue(mapping, scalar,parentDomainEntity)
+              val resolvedVal = resolveValue(mapping, scalar, parentDomainEntity)
               parentDomainEntity.setArray(mapping.field(), Seq(resolvedVal))
             }
           } else {
@@ -387,8 +384,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
               })
             }
           }
-        }
-        else {
+        } else {
           ctx.violation(
             ParserSideValidations.ParsingErrorSpecification.id(),
             parentDomainEntity.id,
@@ -413,7 +409,9 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
       case s =>
         AmfScalar(s)
     }
-    parentDomainEntity.set(mapping.field(), AmfArray(scalars.map(resolveValue(mapping, _,parentDomainEntity))), Annotations(entryNode))
+    parentDomainEntity.set(mapping.field(),
+                           AmfArray(scalars.map(resolveValue(mapping, _, parentDomainEntity))),
+                           Annotations(entryNode))
   }
 
   private def parseSingleObject(mapping: DialectPropertyMapping,
@@ -535,7 +533,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
     }
   }
 
-  private def resolveValue(mapping: DialectPropertyMapping, value: AmfScalar,parent:DomainEntity): AmfScalar = {
+  private def resolveValue(mapping: DialectPropertyMapping, value: AmfScalar, parent: DomainEntity): AmfScalar = {
     if (mapping.isRef) {
       resolver.resolve(root, value.toString(), mapping.referenceTarget.get) match {
         case Some(finalValue) => AmfScalar(finalValue, value.annotations)
@@ -561,7 +559,9 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
 
   private def setScalar(node: DomainEntity, mapping: DialectPropertyMapping, value: YScalar) = {
 
-    node.set(mapping.field(), resolveValue(mapping, AmfScalar(value.text, Annotations(value)),node), Annotations(value))
+    node.set(mapping.field(),
+             resolveValue(mapping, AmfScalar(value.text, Annotations(value)), node),
+             Annotations(value))
   }
 
 }

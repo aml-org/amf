@@ -36,8 +36,8 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
 
   private def links(part: YPart): Unit = {
     part match {
-      case node: YNode if !node.tag.synthesized && node.tag.text == "!include" => ramlInclude(node)
-      case _                                                                   => part.children.foreach(links)
+      case node: YNode if node.tagType == YType.Include => ramlInclude(node)
+      case _                                            => part.children.foreach(links)
     }
   }
 

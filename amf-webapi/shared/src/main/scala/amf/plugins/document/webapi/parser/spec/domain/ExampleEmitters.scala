@@ -153,7 +153,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
 case class StringToAstEmitter(value: String) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
-    val parts = YamlParser(value).parse()
+    val parts = YamlParser(value).withIncludeTag("!include").parse()
     parts.collect({ case d: YDocument => d }).headOption.map(_.node) match {
       case Some(node) => emitNode(node, b)
       case _          => throw new IllegalStateException(s"Could not parse string example $value")

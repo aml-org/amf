@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi
 
 import amf.core.model.document.BaseUnit
-import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
@@ -52,4 +52,6 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
                         platform: Platform): Future[AMFValidationReport] = {
     validationRequestsForBaseUnit(baseUnit, profile, validations, validationProfile, platform)
   }
+
+  override def init(): Future[AMFPlugin] = Future.successful(this)
 }
