@@ -116,8 +116,8 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
 
   def ramlLinks(part: YPart): Unit = {
     part match {
-      case node: YNode if !node.tag.synthesized && node.tag.text == "!include" => ramlInclude(node)
-      case _                                                                   => part.children.foreach(ramlLinks)
+      case node: YNode if node.tagType == YType.Include => ramlInclude(node)
+      case _                                            => part.children.foreach(ramlLinks)
     }
   }
 

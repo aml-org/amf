@@ -26,9 +26,12 @@ import org.yaml.render.YamlRender
 import scala.collection.mutable
 
 object RamlTypeParser {
-  def apply(ast: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
-      implicit ctx: WebApiContext): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx, Some(ctx.declarations)))
+  def apply(ast: YMapEntry,
+            adopt: Shape => Shape,
+            isAnnotation: Boolean = false,
+            defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): RamlTypeParser =
+    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(
+      new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx, Some(ctx.declarations)))
 }
 
 trait RamlTypeSyntax {
@@ -72,8 +75,12 @@ object AnyDefaultType extends DefaultType {
   override val typeDef: TypeDef = TypeDef.AnyType
 }
 
-case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
-    implicit val ctx: WebApiContext)
+case class RamlTypeParser(ast: YPart,
+                          name: String,
+                          node: YNode,
+                          adopt: Shape => Shape,
+                          isAnnotation: Boolean,
+                          defaultType: DefaultType)(implicit val ctx: WebApiContext)
     extends RamlSpecParser {
 
   def parse(): Option[Shape] = {
@@ -92,7 +99,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       case ArrayType                             => parseArrayType()
       case AnyType                               => parseAnyType()
       case typeDef if typeDef.isScalar           => parseScalarType(typeDef)
-      case MultipleMatch                         => // Multiple match, we try to disambiguate using the default type info
+      case MultipleMatch => // Multiple match, we try to disambiguate using the default type info
         defaultType.typeDef match {
           case typeDef if typeDef.isScalar => parseScalarType(typeDef)
           case ObjectType                  => parseObjectType()
@@ -178,7 +185,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       case _ => entry.value.as[YScalar].text
     }
 
-    val schemaAst   = YamlParser(text).parse(keepTokens = true)
+    val schemaAst   = YamlParser(text).withIncludeTag("!include").parse(keepTokens = true)
     val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
     OasTypeParser(schemaEntry, (shape) => adopt(shape)).parse() match {
       case Some(shape) =>
@@ -620,7 +627,9 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
           ctx.declarations.findType(text, SearchScope.Named) match {
             case Some(ancestor) =>
               // set without ID!, we keep the ID of the referred element
-              shape.fields.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(ancestor), Annotations(entry.value)), Annotations(entry))
+              shape.fields.setWithoutId(ShapeModel.Inherits,
+                                        AmfArray(Seq(ancestor), Annotations(entry.value)),
+                                        Annotations(entry))
             case _ =>
               val u: UnresolvedShape = unresolved(entry.value)
               shape.set(ShapeModel.Inherits, AmfArray(Seq(u), Annotations(entry.value)), Annotations(entry))
@@ -804,7 +813,7 @@ case class RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape =>
       )
 
       map.key("enum", entry => {
-        val value = ArrayNode(entry.value)
+        val value  = ArrayNode(entry.value)
         val values = value.rawMembers()
         shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
       })

@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.annotations._
-import amf.core.emitter.BaseEmitters.ValueEmitter
+import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter._
-import amf.core.emitter.BaseEmitters._
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document._
@@ -23,7 +22,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YDocument, YNode, YScalar, YType}
+import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -573,8 +572,7 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
 }
 
 object RamlSpecEmitterContext extends SpecEmitterContext {
-  override def ref(b: PartBuilder, url: String): Unit =
-    b.+=(YNode.include(url))
+  override def ref(b: PartBuilder, url: String): Unit = b += YNode.include(url)
 
   override val vendor: Vendor = Raml
 

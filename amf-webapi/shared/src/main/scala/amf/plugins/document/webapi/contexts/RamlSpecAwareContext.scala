@@ -15,7 +15,5 @@ object RamlSpecAwareContext extends SpecAwareContext {
   override def ignore(shape: String, property: String): Boolean =
     (property.startsWith("(") && property.endsWith(")")) || (property.startsWith("/") && (shape == "webApi" || shape == "endPoint"))
 
-  private def isInclude(node: YNode) = {
-    node.tagType == YType.Unknown && node.tag.text == "!include"
-  }
+  private def isInclude(node: YNode) = node.tagType == YType.Include
 }

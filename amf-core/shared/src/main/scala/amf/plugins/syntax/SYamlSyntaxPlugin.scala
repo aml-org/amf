@@ -29,7 +29,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
   )
 
   override def parse(mediaType: String, text: CharSequence) = {
-    val parser = YamlParser(text)
+    val parser = YamlParser(text).withIncludeTag("!include")
     val parts  = parser.parse(true)
 
     if (parts.exists(v => v.isInstanceOf[YDocument])) {

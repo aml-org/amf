@@ -5,7 +5,7 @@ import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
+import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model._
@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFr
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.domain.webapi.models.WebApi
+import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
 object RAML10Plugin extends BaseWebApiPlugin {
@@ -49,9 +50,13 @@ object RAML10Plugin extends BaseWebApiPlugin {
 
   def inlineExternalReferences(root: Root): Unit = {
     root.references.filter(_.isExternalFragment).foreach { ref =>
-      val node = ref.origin.ast
-      node /*.into(YNode(ref.unit.asInstanceOf[ExternalFragment].encodes.raw))*/
-      println(node)
+      ref.unit match {
+        case external: ExternalFragment =>
+          ref.origin.ast match {
+            case mut: MutRef => mut.target = Some(YNode(external.encodes.raw))
+            case _           =>
+          }
+      }
     }
   }
 
