@@ -16,48 +16,55 @@ import scala.concurrent.{Future, Promise}
   */
 trait Platform {
 
-
   /** Underlying file system for platform. */
   val fs: FileSystem
   var testingCommandLine: Boolean = false
 
   def exit(code: Int): Unit = System.exit(code)
 
-  def stdout(text: String) = System.out.println(text)
+  def stdout(text: String): Unit = System.out.println(text)
 
   def stdout(e: Throwable): Unit = System.out.println(e)
 
-  def stderr(text: String) = System.err.println(text)
+  def stderr(text: String): Unit = System.err.println(text)
 
-  def stderr(ex: Exception) = System.err.println(ex)
+  def stderr(ex: Exception): Unit = System.err.println(ex)
 
-  val wrappersRegistry: mutable.HashMap[String, (AmfObject) => AmfObjectWrapper] = mutable.HashMap.empty
+  val wrappersRegistry: mutable.HashMap[String, (AmfObject) => AmfObjectWrapper]             = mutable.HashMap.empty
   val wrappersRegistryFn: mutable.HashMap[(Obj) => Boolean, (AmfObject) => AmfObjectWrapper] = mutable.HashMap.empty
 
-  def registerWrapper(model: Obj)(builder: (AmfObject) => AmfObjectWrapper) = wrappersRegistry.put(model.`type`.head.iri(), builder)
-  def registerWrapperPredicate(p:(Obj) => Boolean)(builder: (AmfObject) => AmfObjectWrapper) = wrappersRegistryFn.put(p, builder)
+  def registerWrapper(model: Obj)(builder: (AmfObject) => AmfObjectWrapper): Option[AmfObject => AmfObjectWrapper] =
+    wrappersRegistry.put(model.`type`.head.iri(), builder)
+  def registerWrapperPredicate(p: (Obj) => Boolean)(
+      builder: (AmfObject) => AmfObjectWrapper): Option[AmfObject => AmfObjectWrapper] =
+    wrappersRegistryFn.put(p, builder)
 
-  def wrap[T <: AmfObjectWrapper](entity: AmfObject): T =  entity match {
-    case e: DomainElement => wrappersRegistry.get(e.meta.`type`.head.iri()) match {
-      case Some(builder) => builder(entity).asInstanceOf[T]
-      case None          => wrapFn(e)
-    }
-    case d: BaseUnit => wrappersRegistry.get(d.meta.`type`.head.iri()) match {
-      case Some(builder) => builder(entity).asInstanceOf[T]
-      case None          => wrapFn(d)
-    }
-    case _ => wrapFn(entity)
+  def wrap[T <: AmfObjectWrapper](entity: AmfObject): T = entity match {
+    case e: DomainElement =>
+      wrappersRegistry.get(e.meta.`type`.head.iri()) match {
+        case Some(builder) => builder(entity).asInstanceOf[T]
+        case None          => wrapFn(e)
+      }
+    case d: BaseUnit =>
+      wrappersRegistry.get(d.meta.`type`.head.iri()) match {
+        case Some(builder) => builder(entity).asInstanceOf[T]
+        case None          => wrapFn(d)
+      }
+    case null => null.asInstanceOf[T] // TODO solve this in a better way
+    case _    => wrapFn(entity)
   }
 
   def wrapFn[T <: AmfObjectWrapper](entity: AmfObject): T = entity match {
-    case e: DomainElement => wrappersRegistryFn.keys.find(p => p(e.meta)) match {
-      case Some(k) => wrappersRegistryFn(k)(e).asInstanceOf[T]
-      case None    => throw new Exception(s"Cannot find builder for object meta ${e.meta}")
-    }
-    case d: BaseUnit => wrappersRegistryFn.keys.find(p => p(d.meta)) match {
-      case Some(k) => wrappersRegistryFn(k)(d).asInstanceOf[T]
-      case None    => throw new Exception(s"Cannot find builder for object meta ${d.meta}")
-    }
+    case e: DomainElement =>
+      wrappersRegistryFn.keys.find(p => p(e.meta)) match {
+        case Some(k) => wrappersRegistryFn(k)(e).asInstanceOf[T]
+        case None    => throw new Exception(s"Cannot find builder for object meta ${e.meta}")
+      }
+    case d: BaseUnit =>
+      wrappersRegistryFn.keys.find(p => p(d.meta)) match {
+        case Some(k) => wrappersRegistryFn(k)(d).asInstanceOf[T]
+        case None    => throw new Exception(s"Cannot find builder for object meta ${d.meta}")
+      }
     case _ => throw new Exception(s"Cannot build object of type $entity")
   }
 
@@ -98,7 +105,7 @@ trait Platform {
   /*  @modularization
   protected def setupValidationBase(validation: Validation): Future[Validation] =
     validation.loadValidationDialect().map(_ => validation)
-  */
+   */
 
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 
