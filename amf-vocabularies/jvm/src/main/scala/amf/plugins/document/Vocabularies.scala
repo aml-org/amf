@@ -28,6 +28,7 @@ object Vocabularies extends PlatformSecrets{
     AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
   }
 
-  def registerDialect(url: String): CompletableFuture[Dialect] = PlatformDialectRegistry.registerDialect(url).asJava
+  def registerDialect(url: String): CompletableFuture[Dialect] = RAMLVocabulariesPlugin.registerDialect(url).asJava
+  def registerDialect(url: String, dialectText: String): CompletableFuture[Dialect] = RAMLVocabulariesPlugin.registerDialect(url, dialectText).asJava
 
 }

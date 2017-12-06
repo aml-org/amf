@@ -12,7 +12,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with ValidationResultProcessor {
+
   override val ID: String = "Parser side AMF Validation"
+
+  override def init(): Future[AMFPlugin] = Future {
+    RuntimeValidator.validator match {
+      case Some(validator) => // ignore, we use whatever has already been initialised by client code
+      case None            => RuntimeValidator.register(new ParserSideValidationPlugin())
+    }
+    this
+  }
 
   val parserSideValidationsProfile: ValidationProfile = {
     // sorting parser side validation for this profile
@@ -136,14 +145,4 @@ class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with Va
     }
   }
 
-}
-
-object ParserSideValidationPlugin {
-  def init() = {
-    RuntimeValidator.validator match {
-      case Some(validator) => // ignore, we use whatever has already been initialised by client code
-      case None            => RuntimeValidator.register(new ParserSideValidationPlugin())
-    }
-  }
-  def apply() = new ParserSideValidationPlugin
 }

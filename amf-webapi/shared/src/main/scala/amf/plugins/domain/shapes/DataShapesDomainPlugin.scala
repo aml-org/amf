@@ -1,9 +1,12 @@
 package amf.plugins.domain.shapes
 
 import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
-import amf.core.plugins.AMFDomainPlugin
+import amf.core.plugins.{AMFDomainPlugin, AMFPlugin}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
+
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object DataShapesDomainPlugin extends AMFDomainPlugin {
 
@@ -33,4 +36,5 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
     ExampleModel
   )
 
+  override def init(): Future[AMFPlugin] = Future { this }
 }

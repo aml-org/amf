@@ -6,7 +6,7 @@ import amf.core.client.GenerationOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
-import amf.core.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
@@ -22,6 +22,7 @@ import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.models.WebApi
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with WebApiDocuments {
 
@@ -123,4 +124,6 @@ object OAS20Plugin extends AMFDocumentPlugin with AMFValidationPlugin with WebAp
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit) = new OasResolutionPipeline().resolve(unit)
+
+  override def init(): Future[AMFPlugin] = Future { this }
 }
