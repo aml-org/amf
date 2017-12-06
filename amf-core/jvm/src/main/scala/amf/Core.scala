@@ -4,10 +4,12 @@ import java.util.concurrent.CompletableFuture
 
 import amf.core.AMF
 import amf.core.client.{Generator, Parser, Validator}
+import amf.core.plugins.AMFPlugin
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
-import amf.model.document.{BaseUnit, Document, Module, Fragment}
+import amf.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.model.domain.{CustomDomainProperty, DomainElement, DomainExtension, PropertyShape}
+import amf.core.remote.FutureConverter._
 
 object Core extends PlatformSecrets{
 
@@ -34,7 +36,7 @@ object Core extends PlatformSecrets{
       case e: amf.core.model.domain.extensions.PropertyShape => PropertyShape(e)
     }
 
-    AMF.init()
+    AMF.init().asJava
   }
 
   def parser(vendor: String, mediaType: String): Parser = new Parser(vendor, mediaType)
@@ -42,4 +44,5 @@ object Core extends PlatformSecrets{
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] = Validator.validate(model, profileName, messageStyle)
   def loadValidationProfile(url: String): CompletableFuture[Nothing] = Validator.loadValidationProfile(url)
   def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
+  def registerPlugin(plugin: AMFPlugin) = AMF.registerPlugin(plugin)
 }
