@@ -114,15 +114,6 @@ amf.Core.init().then(function () {
 })
 ```
 
-### Executable AMF client
-
-The client can be built using `buildCommandLine` SBT task
-
-```bash
-sbt buildCommandLine
-```
-This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
-
 ### Command line usage
 
 You can build a standalone Java executable running the following SBT target:
