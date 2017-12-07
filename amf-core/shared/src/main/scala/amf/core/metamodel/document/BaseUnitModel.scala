@@ -6,7 +6,10 @@ import amf.core.vocabulary.Namespace.Document
 import amf.core.vocabulary.ValueType
 
 /**
-  * Unit metamodel
+  * BaseUnit metamodel
+  *
+  * Base class for every single document model unit. After parsing a document the parser generate parsing Base Units.
+  * Base Units encode the domain elements and can reference other units to re-use descriptions.
   */
 trait BaseUnitModel extends Obj with ModelDefaultBuilder {
 
