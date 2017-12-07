@@ -5,10 +5,10 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 /**
   * Created by Pavel Petrochenko on 22/09/17.
