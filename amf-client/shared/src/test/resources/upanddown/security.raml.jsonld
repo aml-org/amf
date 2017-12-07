@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/security.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://schema.org/name": [
@@ -325,7 +326,7 @@
             "@value": "OAuth 2.0"
           }
         ],
-        "http://raml.org/vocabularies/security#header": [
+        "http://raml.org/vocabularies/http#header": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/parameter/Authorization",
             "@type": [
@@ -472,7 +473,7 @@
             ]
           }
         ],
-        "http://raml.org/vocabularies/security#parameter": [
+        "http://raml.org/vocabularies/http#parameter": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/parameter/access_token",
             "@type": [
@@ -607,7 +608,7 @@
             ]
           }
         ],
-        "http://raml.org/vocabularies/security#response": [
+        "http://www.w3.org/ns/hydra/core#response": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/401",
             "@type": [
@@ -683,7 +684,7 @@
                 "@value": "https://example.com/oauth/token"
               }
             ],
-            "http://raml.org/vocabularies/security#authorizationGrants": [
+            "http://raml.org/vocabularies/security#authorizationGrant": [
               {
                 "@value": "authorization_code"
               },
@@ -694,7 +695,7 @@
                 "@value": "urn:ietf:params:oauth:grant-type:saml2-bearer"
               }
             ],
-            "http://raml.org/vocabularies/security#scopes": [
+            "http://raml.org/vocabularies/security#scope": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/security.raml#/declarations/oauth_2_0/settings/oauth2/profile",
                 "@type": [
@@ -730,7 +731,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://raml.org/vocabularies/security#scopes"
+                        "@value": "http://raml.org/vocabularies/security#scope"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -778,7 +779,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://raml.org/vocabularies/security#authorizationGrants"
+                        "@value": "http://raml.org/vocabularies/security#authorizationGrant"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -828,7 +829,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#parameter"
+                    "@value": "http://raml.org/vocabularies/http#parameter"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -864,7 +865,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#header"
+                    "@value": "http://raml.org/vocabularies/http#header"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -876,7 +877,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#response"
+                    "@value": "http://www.w3.org/ns/hydra/core#response"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

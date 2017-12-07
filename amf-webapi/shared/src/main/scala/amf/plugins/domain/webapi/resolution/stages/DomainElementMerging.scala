@@ -117,8 +117,8 @@ object DomainElementMerging {
       .exists(_.scalar.toBool)
 
   private def ignored(entry: FieldEntry) = entry.field match {
-    case Extends | Includes | Sources => false
-    case _                            => true
+    case Extends | Sources => false
+    case _                 => true
   }
 }
 

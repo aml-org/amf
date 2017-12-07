@@ -1,0 +1,52 @@
+#%RAML 1.0 Vocabulary
+
+base: "http://raml.org/vocabularies/data#"
+
+version: "1.0"
+
+usage: |
+  Vocabulary defining a default set of classes to map data structures composed of recursive records of fields,
+  like the ones used in JSON or YAML into a RDF graph.
+  They can be validated using data shapes.
+
+uses:
+  raml-doc: ./raml_doc.raml
+
+classTerms:
+
+  DataNode:
+    displayName: Data Node
+    description: Base class for all data nodes parsed from the data structure
+    extends:
+      - raml-doc.DomainElement
+
+  Object:
+    displayName: Object
+    description: Record of fields, like a JS object
+    extends: DataNode
+
+  Scalar:
+    displayName: Scalar
+    description: Scalar data value
+    extends: DataNode
+    properties:
+      - value
+
+  Array:
+    displayName: Scalar
+    description: Ordered collection of values, like a JS Array
+    extends: DataNode
+    properties:
+      - members
+
+propertyTerms:
+
+  value:
+    displayName: scalar value
+    description: Actual value stored in a Scalar data node
+    range: any
+
+  members:
+    displayName: member
+    description: The values in a data array
+    range: DataNode

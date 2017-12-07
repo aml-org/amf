@@ -117,7 +117,12 @@ class ValidationJSONLDEmitter(targetProfile: String) {
               } else {
                 // this happens when the constraint comes from a profile document
                 // an alias for a model element is all the name we provide
-                emitConstraint(b, s"$validationId/prop/${constraint.name.replace(".", "-")}", constraint)
+                val constraintSegment = if (constraint.name.indexOf("#") > -1 ) {
+                  constraint.name.split("#").last.replace(".", "-")
+                } else {
+                  constraint.name.replace(".", "-")
+                }
+                emitConstraint(b, s"$validationId/prop/$constraintSegment", constraint)
               }
             }
           }
@@ -302,9 +307,11 @@ class ValidationJSONLDEmitter(targetProfile: String) {
             _.entry(
               "@list",
               _.list { l =>
-                l.obj { o =>
-                  o.entry((Namespace.Shacl + constraintName).iri(),
-                          genValue(_, value, Some((Namespace.Xsd + "integer").iri())))
+                if (value.indexOf(".") == -1) {
+                  l.obj { o =>
+                    o.entry((Namespace.Shacl + constraintName).iri(),
+                      genValue(_, value, Some((Namespace.Xsd + "integer").iri())))
+                  }
                 }
 
                 l.obj { o =>

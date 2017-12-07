@@ -18,6 +18,7 @@
         "@id": "file://amf-client/shared/src/test/resources/references/extensions/extension.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://raml.org/vocabularies/http#endpoint": [
@@ -125,6 +126,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api",
             "@type": [
               "http://schema.org/WebAPI",
+              "http://raml.org/vocabularies/document#RootDomainElement",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://schema.org/name": [

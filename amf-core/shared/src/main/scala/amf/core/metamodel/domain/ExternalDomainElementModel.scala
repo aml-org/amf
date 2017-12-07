@@ -6,8 +6,14 @@ import amf.core.model.domain.ExternalDomainElement
 import amf.core.vocabulary.Namespace.{Document, Http}
 import amf.core.vocabulary.ValueType
 
+/**
+  * Domain element containing foreign information that cannot be included into the model semantics
+  */
 object ExternalDomainElementModel extends DomainElementModel {
 
+  /**
+    * Raw textual information that cannot be processed for the current model semantics.
+    */
   val Raw = Field(Str, Document + "raw")
 
   val MediaType = Field(Str, Http + "mediaType")

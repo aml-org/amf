@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/resolution/examples/response-examples.json#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://schema.org/name": [
@@ -946,7 +947,7 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#name": [
+                                "http://schema.org/name": [
                                   {
                                     "@value": "softwareCorp"
                                   }
@@ -1009,7 +1010,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#name"
+                                            "@value": "http://schema.org/name"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1398,7 +1399,7 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#name": [
+                                "http://schema.org/name": [
                                   {
                                     "@value": "softwareCorp"
                                   }
@@ -1461,7 +1462,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#name"
+                                            "@value": "http://schema.org/name"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
