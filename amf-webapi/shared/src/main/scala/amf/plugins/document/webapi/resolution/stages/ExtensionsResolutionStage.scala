@@ -38,8 +38,8 @@ class ExtensionsResolutionStage(profile: String)
   override def resolve(model: BaseUnit): BaseUnit = {
     val extendsStage = new ExtendsResolutionStage(ProfileNames.AMF)
     model match {
-      case overlay: ExtensionLike[WebApi] => resolveOverlay(model, overlay)
-      case _                              => extendsStage.resolve(model)
+      case overlay: ExtensionLike[_] => resolveOverlay(model, overlay.asInstanceOf[ExtensionLike[WebApi]])
+      case _                         => extendsStage.resolve(model)
     }
   }
 
@@ -78,15 +78,15 @@ class ExtensionsResolutionStage(profile: String)
 
     extensions.foreach {
       // Current Extension Tree Object is set to the Extension Tree root (API).
-      case extension: ExtensionLike[WebApi] =>
+      case extension: ExtensionLike[_] =>
         // Resolve references.
         referenceStage.resolve(extension)
 
         val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
-        mergeDeclarations(document, extension, iriMerger)
+        mergeDeclarations(document, extension.asInstanceOf[ExtensionLike[WebApi]], iriMerger)
 
-        mergeReferences(document, extension)
+        mergeReferences(document, extension.asInstanceOf[ExtensionLike[WebApi]])
 
         merge(masterTree, extension.encodes)
 
@@ -249,7 +249,7 @@ class ExtensionsResolutionStage(profile: String)
   }
 
   private def ignored(entry: FieldEntry) = entry.field match {
-    case Includes | Sources | BaseUnitModel.Usage | ExtensionLikeModel.Extends => false
+    case Sources | BaseUnitModel.Usage | ExtensionLikeModel.Extends => false
     case _                                                                     => true
   }
 
@@ -285,7 +285,7 @@ class ExtensionsResolutionStage(profile: String)
   }
 
   def extensionsQueue(collector: ListBuffer[BaseUnit], model: BaseUnit): List[BaseUnit] = model match {
-    case extension: ExtensionLike[WebApi] =>
+    case extension: ExtensionLike[_] =>
       model.findInReferences(extension.extend) match {
         case Some(e) =>
           collector += e

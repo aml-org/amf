@@ -44,7 +44,7 @@ object WebApiModel extends DomainElementModel {
 
   val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
 
-  override val `type`: List[ValueType] = Schema + "WebAPI" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = Schema + "WebAPI" :: Document + "RootDomainElement" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
     List(

@@ -8,9 +8,15 @@ import amf.core.vocabulary.ValueType
 
 /**
   * Fragment meta model.
+  *
+  * A Module is a parsing Unit that declares DomainElements that can be referenced from the DomainElements in other parsing Units.
+  * It main purpose is to expose the declared references so they can be re-used
   */
 trait FragmentModel extends BaseUnitModel {
 
+  /**
+    * The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains.
+    */
   val Encodes = Field(DomainElementModel, Document + "encodes")
 
   override def modelInstance: AmfObject = throw new Exception("Fragment is abstract instances cannot be created directly")
