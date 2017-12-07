@@ -13,9 +13,9 @@ import amf.core.vocabulary.ValueType
   */
 object ExampleModel extends DomainElementModel with LinkableElementModel with KeyField {
 
-  val Name        = Field(Str, Document + "name")
+  val Name        = Field(Str, Schema + "name")
   val DisplayName = Field(Str, Document + "displayName")
-  val Description = Field(Str, Document + "description")
+  val Description = Field(Str, Schema + "description")
   val Value       = Field(Str, Document + "value")
   val Strict      = Field(Bool, Document + "strict")
   val MediaType   = Field(Str, Http + "mediaType")

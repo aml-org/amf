@@ -9,6 +9,8 @@ import amf.core.vocabulary.ValueType
 
 /**
   * Property shape metamodel
+  *
+  * Model for SHACL PropertyShapes
   */
 object PropertyShapeModel extends ShapeModel {
 
