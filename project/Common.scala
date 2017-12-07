@@ -7,19 +7,25 @@ object Common {
 
   private val nexus = "https://repository-master.mulesoft.org/nexus/content/repositories"
 
-  val snapshots: MavenRepository = "MuleSoft private snapshots" at s"$nexus/ci-snapshots"
-  val releases: MavenRepository  = "MuleSoft private releases" at s"$nexus/ci-releases"
+  val snapshots: MavenRepository = "MuleSoft snapshots" at s"$nexus/snapshots"
+  val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
 
   val settings: Seq[Def.Setting[_]] = Seq(
     organization := organizationName,
     scalaVersion := "2.12.2",
     parallelExecution in Test := false,
     fork in Test := false,
-    scalacOptions ++= Seq("-unchecked"/*, "-deprecation", "-Xfatal-warnings" */),
+    scalacOptions ++= Seq("-unchecked" /*, "-deprecation", "-Xfatal-warnings" */ ),
     scalacOptions ++= Seq("-encoding", "utf-8")
   )
 
-  val publish: Def.Setting[_] = publishTo := Some(if (isSnapshot.value) snapshots else releases)
+  val publish: Seq[Def.Setting[_]] = Seq(
+    publishTo := Some(if (isSnapshot.value) snapshots else releases),
+    publishConfiguration ~= { config =>
+      val newArts = config.artifacts.filterKeys(_.`type` != Artifact.SourceType)
+      new PublishConfiguration(config.ivyFile, config.resolverName, newArts, config.checksums, config.logging)
+    }
+  )
 
   def credentials(): Seq[Credentials] = {
     val cs =
