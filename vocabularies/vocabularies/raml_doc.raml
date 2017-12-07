@@ -4,6 +4,9 @@ base: "http://raml.org/vocabularies/document#"
 
 version: "1.0"
 
+external:
+  shacl: "http://www.w3.org/ns/shacl#"
+
 usage: Document Model vocabulary for AMF. The Document Model defines the basic modular units where domain descriptions can be encoded.
 
 classTerms:
@@ -66,6 +69,53 @@ classTerms:
     description: Domain element that is the entrypoint for a domain description. Domain elements encoded in Documents must be RootDomainElements.
     extends: DomainElement
 
+  ExternalDomainElement:
+    displayName: External Domain Element
+    description: Domain element containing foreign information that cannot be included into the model semantics
+    extends: DomainElement
+    properties:
+      - raw
+
+  LinkableElement:
+    displayName: Linkable Element
+    description: |
+      Reification of a link between elements in the model. Used when we want to capture the structure of the source document
+      in the graph itself. Linkable elements are just replaced by regular links after resolution.
+    properties:
+      - link-label
+      - link-target
+
+  CustomDomainProperty:
+    displayName: Custom Domain Property
+    description: |
+      Definition of an extension to the domain model defined directly by a user in the RAML/OpenAPI document.
+      This can be achieved by using an annotationType in RAML. In OpenAPI thy don't need to
+      be declared, they can just be used.
+      This should be mapped to new RDF properties declared directly in the main document or module.
+      Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more
+      re-usable and generic way of achieving the same functionality.
+      It can be validated using a SHACL shape
+
+  AbstractDeclaration:
+    displayName: Abstract declaration
+    description: |
+      Graph template that can be used to declare a re-usable graph structure that can be applied to different domain elements
+      in order to re-use common semantics. Similar to a Lisp macro or a C++ template.
+      It can be extended by any domain element adding bindings for the variables in the declaration.
+    properties:
+      - variables
+
+  Variable:
+    displayName: Variable
+    description: Variables that can be replaced in the abstract declaration
+
+  Example:
+    displayName: Example
+    description: Example for a particular domain element
+    properties:
+      - value
+      - strict
+
 propertyTerms:
 
   references:
@@ -97,3 +147,44 @@ propertyTerms:
     displayName: source
     description: Indicates that this parsing Unit has SourceMaps
     range: SourceMap
+
+  raw:
+    displayName: raw
+    description: Raw textual information that cannot be processed for the current model semantics.
+    range: string
+
+  link-label:
+    displayName: link label
+    description: Label for the type of link
+    range: string
+
+  link-target:
+    displayName: link target
+    description: Uri of the linked element
+    range: DomainElement
+
+  schema:
+    displayName: schema
+    description: Data shape associated to one property that can be used to validate values of that property.
+    range: shacl.Shape
+
+  variables:
+    displayName: variables
+    description: Variables to be replaced in the graph template introduced by an AbstractDeclaration
+    range: Variable
+
+  deprecated:
+    displayName: deprecated
+    description: Indicates that a particular domain element definition is deprecated
+    range: boolean
+
+  value:
+    displayName: example value
+    description: value of one example as a string encoded in some media type
+    range: string
+    extends: raw
+
+  strict:
+    displayName: strict example
+    description: Indication that this example is meant to be stritly valid according to the domain element semantics, not just a reference
+    range: boolean

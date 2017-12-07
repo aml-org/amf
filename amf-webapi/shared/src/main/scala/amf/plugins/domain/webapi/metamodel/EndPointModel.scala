@@ -11,6 +11,8 @@ import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
   * EndPoint metamodel
+  *
+  * EndPoint in the API holding a number of executable operations
   */
 object EndPointModel extends DomainElementModel with KeyField {
 

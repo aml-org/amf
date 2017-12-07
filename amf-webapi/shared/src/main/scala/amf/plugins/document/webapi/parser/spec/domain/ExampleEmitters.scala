@@ -108,7 +108,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
-    val explicitFielMeta = List(Strict, Description, DisplayName, CustomDomainProperties).filter { f =>
+    val explicitFielMeta = List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties).filter { f =>
       fs.entry(f) match {
         case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
         case None        => false
@@ -118,12 +118,12 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
       .contains("value")
 
     if (isExpanded) {
-      fs.entry(DisplayName).foreach(f => results += ValueEmitter("displayName", f))
+      fs.entry(ExampleModel.DisplayName).foreach(f => results += ValueEmitter("displayName", f))
 
-      fs.entry(Description).foreach(f => results += ValueEmitter("description", f))
+      fs.entry(ExampleModel.Description).foreach(f => results += ValueEmitter("description", f))
 
-      if (fs.entry(Strict).isDefined && !fs.entry(Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
-        fs.entry(Strict).foreach(f => results += ValueEmitter("strict", f))
+      if (fs.entry(ExampleModel.Strict).isDefined && !fs.entry(ExampleModel.Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
+        fs.entry(ExampleModel.Strict).foreach(f => results += ValueEmitter("strict", f))
       }
 
       fs.entry(ExampleModel.Value)

@@ -5,10 +5,10 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
-import org.scalatest.AsyncFunSuite
+import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * Created by Pavel Petrochenko on 22/09/17.
@@ -82,6 +82,32 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     } flatMap { report =>
       assert(report.conforms)
       assert(report.results.isEmpty)
+    }
+  }
+
+
+  val vocabularies = Seq(
+    "file://vocabularies/vocabularies/raml_doc.raml",
+    "file://vocabularies/vocabularies/raml_http.raml",
+    "file://vocabularies/vocabularies/raml_shapes.raml",
+    "file://vocabularies/vocabularies/data_model.raml"
+  )
+  vocabularies.foreach { vocab =>
+    test(s"Standard vocabularies ${vocab} validates") {
+      val validation = Validation(platform)
+      AMFCompiler(
+        vocab,
+        platform,
+        RamlYamlHint,
+        validation,
+        None,
+        None
+      ).build() flatMap { model =>
+        validation.validate(model, "RAML 1.0 Vocabulary")
+      } flatMap { report =>
+        assert(report.conforms)
+        assert(report.results.isEmpty)
+      }
     }
   }
 

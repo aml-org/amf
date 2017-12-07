@@ -56,7 +56,7 @@
                         "@value": "OAuth 2.0"
                       }
                     ],
-                    "http://raml.org/vocabularies/security#header": [
+                    "http://raml.org/vocabularies/http#header": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_2_0/parameter/Authorization",
                         "@type": [
@@ -179,7 +179,7 @@
                         ]
                       }
                     ],
-                    "http://raml.org/vocabularies/security#parameter": [
+                    "http://raml.org/vocabularies/http#parameter": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_2_0/parameter/access_token",
                         "@type": [
@@ -291,7 +291,7 @@
                         ]
                       }
                     ],
-                    "http://raml.org/vocabularies/security#response": [
+                    "http://www.w3.org/ns/hydra/core#response": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_2_0/401",
                         "@type": [
@@ -357,7 +357,7 @@
                           "http://raml.org/vocabularies/security#Settings",
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
-                        "http://raml.org/vocabularies/security#scopes": [],
+                        "http://raml.org/vocabularies/security#scope": [],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_2_0/settings/oauth2/source-map",
@@ -368,7 +368,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://raml.org/vocabularies/security#scopes"
+                                    "@value": "http://raml.org/vocabularies/security#scope"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -406,7 +406,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#response"
+                                "@value": "http://www.w3.org/ns/hydra/core#response"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -418,7 +418,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#header"
+                                "@value": "http://raml.org/vocabularies/http#header"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -454,7 +454,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#parameter"
+                                "@value": "http://raml.org/vocabularies/http#parameter"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -483,12 +483,12 @@
                         "@value": "OAuth 1.0"
                       }
                     ],
-                    "http://raml.org/vocabularies/security#description": [
+                    "http://schema.org/description": [
                       {
                         "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
                       }
                     ],
-                    "http://raml.org/vocabularies/security#header": [
+                    "http://raml.org/vocabularies/http#header": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_1_0/parameter/Authorization",
                         "@type": [
@@ -611,7 +611,7 @@
                         ]
                       }
                     ],
-                    "http://raml.org/vocabularies/security#parameter": [
+                    "http://raml.org/vocabularies/http#parameter": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_1_0/parameter/access_token",
                         "@type": [
@@ -723,7 +723,7 @@
                         ]
                       }
                     ],
-                    "http://raml.org/vocabularies/security#response": [
+                    "http://www.w3.org/ns/hydra/core#response": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers/get/oauth_1_0/401",
                         "@type": [
@@ -888,7 +888,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#response"
+                                "@value": "http://www.w3.org/ns/hydra/core#response"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -900,7 +900,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#header"
+                                "@value": "http://raml.org/vocabularies/http#header"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -936,7 +936,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#description"
+                                "@value": "http://schema.org/description"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -948,7 +948,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#parameter"
+                                "@value": "http://raml.org/vocabularies/http#parameter"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1049,7 +1049,7 @@
                         "@value": "OAuth 2.0"
                       }
                     ],
-                    "http://raml.org/vocabularies/security#header": [
+                    "http://raml.org/vocabularies/http#header": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/parameter/Authorization",
                         "@type": [
@@ -1172,7 +1172,7 @@
                         ]
                       }
                     ],
-                    "http://raml.org/vocabularies/security#parameter": [
+                    "http://raml.org/vocabularies/http#parameter": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/parameter/access_token",
                         "@type": [
@@ -1284,7 +1284,7 @@
                         ]
                       }
                     ],
-                    "http://raml.org/vocabularies/security#response": [
+                    "http://www.w3.org/ns/hydra/core#response": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/401",
                         "@type": [
@@ -1350,7 +1350,7 @@
                           "http://raml.org/vocabularies/security#Settings",
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
-                        "http://raml.org/vocabularies/security#scopes": [
+                        "http://raml.org/vocabularies/security#scope": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/settings/oauth2/write:pets",
                             "@type": [
@@ -1454,7 +1454,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://raml.org/vocabularies/security#scopes"
+                                    "@value": "http://raml.org/vocabularies/security#scope"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1492,7 +1492,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#response"
+                                "@value": "http://www.w3.org/ns/hydra/core#response"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1504,7 +1504,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#header"
+                                "@value": "http://raml.org/vocabularies/http#header"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1540,7 +1540,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://raml.org/vocabularies/security#parameter"
+                                "@value": "http://raml.org/vocabularies/http#parameter"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1669,12 +1669,12 @@
             "@value": "OAuth 1.0"
           }
         ],
-        "http://raml.org/vocabularies/security#description": [
+        "http://schema.org/description": [
           {
             "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
           }
         ],
-        "http://raml.org/vocabularies/security#header": [
+        "http://raml.org/vocabularies/http#header": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_1_0/parameter/Authorization",
             "@type": [
@@ -1797,7 +1797,7 @@
             ]
           }
         ],
-        "http://raml.org/vocabularies/security#parameter": [
+        "http://raml.org/vocabularies/http#parameter": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_1_0/parameter/access_token",
             "@type": [
@@ -1909,7 +1909,7 @@
             ]
           }
         ],
-        "http://raml.org/vocabularies/security#response": [
+        "http://www.w3.org/ns/hydra/core#response": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_1_0/401",
             "@type": [
@@ -2074,7 +2074,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#response"
+                    "@value": "http://www.w3.org/ns/hydra/core#response"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2086,7 +2086,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#header"
+                    "@value": "http://raml.org/vocabularies/http#header"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2122,7 +2122,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#description"
+                    "@value": "http://schema.org/description"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2134,7 +2134,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#parameter"
+                    "@value": "http://raml.org/vocabularies/http#parameter"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2163,7 +2163,7 @@
             "@value": "OAuth 2.0"
           }
         ],
-        "http://raml.org/vocabularies/security#header": [
+        "http://raml.org/vocabularies/http#header": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_2_0/parameter/Authorization",
             "@type": [
@@ -2286,7 +2286,7 @@
             ]
           }
         ],
-        "http://raml.org/vocabularies/security#parameter": [
+        "http://raml.org/vocabularies/http#parameter": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_2_0/parameter/access_token",
             "@type": [
@@ -2398,7 +2398,7 @@
             ]
           }
         ],
-        "http://raml.org/vocabularies/security#response": [
+        "http://www.w3.org/ns/hydra/core#response": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_2_0/401",
             "@type": [
@@ -2474,7 +2474,7 @@
                 "@value": "https://example.com/oauth/token"
               }
             ],
-            "http://raml.org/vocabularies/security#authorizationGrants": [
+            "http://raml.org/vocabularies/security#authorizationGrant": [
               {
                 "@value": "authorization_code"
               },
@@ -2485,7 +2485,7 @@
                 "@value": "urn:ietf:params:oauth:grant-type:saml2-bearer"
               }
             ],
-            "http://raml.org/vocabularies/security#scopes": [
+            "http://raml.org/vocabularies/security#scope": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/oauth_2_0/settings/oauth2/profile",
                 "@type": [
@@ -2623,7 +2623,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://raml.org/vocabularies/security#scopes"
+                        "@value": "http://raml.org/vocabularies/security#scope"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2671,7 +2671,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://raml.org/vocabularies/security#authorizationGrants"
+                        "@value": "http://raml.org/vocabularies/security#authorizationGrant"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2709,7 +2709,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#response"
+                    "@value": "http://www.w3.org/ns/hydra/core#response"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2721,7 +2721,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#header"
+                    "@value": "http://raml.org/vocabularies/http#header"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2757,7 +2757,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/security#parameter"
+                    "@value": "http://raml.org/vocabularies/http#parameter"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

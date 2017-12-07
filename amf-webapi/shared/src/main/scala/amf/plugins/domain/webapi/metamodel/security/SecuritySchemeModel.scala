@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.core.vocabulary.Namespace.Security
+import amf.core.vocabulary.Namespace.{Security, Schema, Http, Hydra}
 import amf.core.vocabulary.ValueType
 
 object SecuritySchemeModel extends DomainElementModel with KeyField {
@@ -15,19 +15,19 @@ object SecuritySchemeModel extends DomainElementModel with KeyField {
 
   val Type = Field(Str, Security + "type")
 
-  val DisplayName = Field(Str, Security + "displayName")
+  val DisplayName = Field(Str, Schema + "displayName")
 
-  val Description = Field(Str, Security + "description")
+  val Description = Field(Str, Schema + "description")
 
-  val Headers = Field(Array(ParameterModel), Security + "header")
+  val Headers = Field(Array(ParameterModel), Http + "header")
 
-  val QueryParameters = Field(Array(ParameterModel), Security + "parameter")
+  val QueryParameters = Field(Array(ParameterModel), Http + "parameter")
 
-  val Responses = Field(Array(ResponseModel), Security + "response")
+  val Responses = Field(Array(ResponseModel), Hydra + "response")
 
   val Settings = Field(SettingsModel, Security + "settings")
 
-  val QueryString = Field(ShapeModel, Security + "queryString")
+  val QueryString = Field(ShapeModel, Http + "queryString")
 
   override val key: Field = Name
 

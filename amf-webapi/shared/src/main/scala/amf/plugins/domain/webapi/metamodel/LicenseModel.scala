@@ -9,6 +9,8 @@ import amf.core.vocabulary.ValueType
 
 /**
   * License metamodel
+  *
+  * License for the API
   */
 object LicenseModel extends DomainElementModel {
 
