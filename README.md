@@ -65,7 +65,7 @@ Gradle example:
 
 ```groovy
 dependencies {
-    compile 'org.mulesoft:amf-client_2.12:X_X_X'
+    compile 'org.mulesoft:amf-client_2.12:1.0.0'
 }
 ```
 
@@ -85,7 +85,7 @@ Maven example:
 <dependency>
     <groupId>org.mulesoft</groupId>
     <artifactId>amf-client_2.12</artifactId>
-    <version>X_X_X</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -95,7 +95,7 @@ See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-j
 
 Then:
 ```bash
-npm install --save @mulesoft/amf-client-js/
+npm install --save @mulesoft/amf-client-js@1.0.0
 ```
 
 Using *Node.js* just import it using:
