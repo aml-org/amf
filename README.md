@@ -31,7 +31,94 @@ The library supports many of the required uses cases:
 
 To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
 
-### Comand line usage
+## Installation
+
+### Requirements
+* Scala 2.12.2
+* sbt 0.13.15
+* Node
+
+### Useful sbt commands
+
+#### Test
+* Tests on jvm and js
+```sh
+sbt test
+```
+
+#### Coverage reports
+```sh
+sbt coverage test coverageReport
+```
+### Generate artifacts directly from cloned repository
+
+```sh
+sbt package
+```
+This will generate jvm jars in each of the module's targets.
+
+### JVM artifacts
+
+To use, specify dependency.
+
+Gradle example:
+
+```groovy
+dependencies {
+    compile 'org.mulesoft:amf-client_2.12:X_X_X'
+}
+```
+
+```groovy
+repositories {
+    ...
+    maven {
+            url 'https://repository-master.mulesoft.org/nexus/content/repositories/releases'
+        }
+    ...
+}
+```
+
+Maven example:
+
+```xml
+<dependency>
+    <groupId>org.mulesoft</groupId>
+    <artifactId>amf-client_2.12</artifactId>
+    <version>X_X_X</version>
+</dependency>
+```
+
+### JS artifacts
+
+See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-js/dw-parser-js/README.md#getting-started
+
+Then:
+```bash
+npm install --save @mulesoft/amf-client-js/
+```
+
+Using *Node.js* just import it using:
+```bash
+import amf from '@mulesoft/amf-client-js'
+```
+
+The *amf* package will contain all exported classes:
+```javascript
+amf.AMF.init()
+const parser = amf.AMF.raml10Parser()
+```
+
+### Executable AMF client
+
+The client can be built using `buildCommandLine` SBT task
+
+```bash
+sbt buildCommandLine
+```
+This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
+
+### Command line usage
 
 You can build a standalone Java executable running the following SBT target:
 
@@ -69,120 +156,9 @@ If you want to parse any RAML dialect other than RAML 1.0, you can pass a list o
 
 Refer to the usage of the application for additional commands and explanations.
 
-### JVM artifacts
-
-To use, specify dependency.
-
-Gradle example:
-
-```groovy
-dependencies {
-    compile 'org.mulesoft:amf-client_2.12:X_X_X'
-}
-```
-
-```groovy
-repositories {
-    ...
-    maven {
-            url 'https://nexus.build.msap.io/nexus/content/repositories/releases'
-            @TODO CHECK
-            credentials {
-                username = "username"
-                password = "password"
-            }
-        }
-    ...
-}
-```
-
-Maven example:
-
-```xml
-<dependency>
-    <groupId>org.mulesoft</groupId>
-    <artifactId>amf-client_2.12</artifactId>
-    <version>X_X_X</version>
-</dependency>
-```
-
-### JS artifacts
-
-To use, import:
-
-```bash
-import amf from '@mulesoft/amf-js'
-```
-
-The *amf* package will contain all exported classes:
-```javascript
-const parser = new amf.RamlParser()
-```
-
-### Executable AMF client
-
-The client can be built using `buildCommandLine` SBT task
-
-```bash
-sbt buildCommandLine
-```
-This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
-
-## Installation
-
-### Requirements
-* Scala 2.12.2
-* sbt 0.13.15
-
-### Useful sbt commands
-
-#### Test
-* Tests on jvm and js
-```sh
-sbt test
-```
-
-#### Coverage reports
-```sh
-sbt coverage test coverageReport
-```
-### Generate artifacts directly from cloned repository
-
-```sh
-sbt package
-```
-This will generate two *JS artifacts*:
-- **Client**: JS file in amf-js/target/artifact/amf-browser.js that can be imported from a script tag to be used on the client side.
-- **Server**: JS file in amf-js/target/artifact/amf-module.js that has commonJS modules, and can be installed as a node module.
-
-And two *JVM artifacts*:
-- **Jar**: jar file in amf-jvm/target/artifact/amf.jar with the amf library.
-- **Javadoc jar**: jar file in amf-jvm/target/artifact/amf-javadoc.jar with the docs of the project in Scaladoc format.
-
-#### Using AMF in a node.js project
-
-##### Private repository registration
-See Getting started: https://github.com/mulesoft/data-weave/blob/master/parser-js/dw-parser-js/README.md#getting-started
-
-Then: 
-```bash
-npm install --save amf-project-location/amf-client-js/
-```
-
-If you are using *Node.js* (server side) just import it using:
-```bash
-import amf from '@mulesoft/amf-client-js'
-```
-
-The *amf* package will contain all exported classes:
-```javascript
-amf.AMF.init()
-const parser = amf.AMF.raml10Parser()
-```
-
 ## Examples
 
-Check [amf examples repository](https://github.com/mulesoft/amf-examples). You will find code for Java and JS along with a converter application that uses AMF.
+Go to [amf examples repository](https://github.com/mulesoft/amf-byExample) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
 
 ## Validation
 
