@@ -3,7 +3,7 @@ import sbt.Keys.{libraryDependencies, resolvers}
 
 name := "amf"
 
-version in ThisBuild := "1.0.0-SNAPSHOT"
+version in ThisBuild := "1.0.1-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.12.2"
 
@@ -11,8 +11,7 @@ publish := {}
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
-val settings = Common.settings ++ Seq(
-  Common.publish,
+val settings = Common.settings ++ Common.publish ++ Seq(
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
@@ -36,7 +35,7 @@ lazy val core = crossProject
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mulesoft" %%% "syaml" % "0.0.8"
+      libraryDependencies += "org.mulesoft" %%% "syaml" % "0.0.9"
     ))
   .in(file("./amf-core"))
   .settings(settings: _*)
@@ -178,6 +177,7 @@ lazy val clientJS  = client.js.in(file("./amf-client/js"))
 val publishJS = TaskKey[Unit](
   "publishJS",
   "Publish npm module")
+
 publishJS := {
   val _ = (fullOptJS in Compile in clientJS).value
   "./amf-client/js/build-scripts/deploy-develop.sh".!
