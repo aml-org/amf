@@ -77,6 +77,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
         |          "http://schema.org/WebAPI",
+        |          "http://raml.org/vocabularies/document#RootDomainElement",
         |          "http://raml.org/vocabularies/document#DomainElement"
         |        ],
         |        "http://schema.org/name": [
@@ -152,6 +153,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
         |          "http://schema.org/WebAPI",
+        |          "http://raml.org/vocabularies/document#RootDomainElement",
         |          "http://raml.org/vocabularies/document#DomainElement"
         |        ],
         |        "http://schema.org/name": [

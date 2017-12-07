@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://schema.org/name": [
@@ -1024,7 +1025,7 @@
       {
         "@id": "null",
         "@type": [
-          "http://raml.org/vocabularies/document#ExternalModel",
+          "http://raml.org/vocabularies/document#ExternalFragment",
           "http://raml.org/vocabularies/document#Fragment",
           "http://raml.org/vocabularies/document#Unit"
         ],
@@ -1051,7 +1052,7 @@
       {
         "@id": "null",
         "@type": [
-          "http://raml.org/vocabularies/document#ExternalModel",
+          "http://raml.org/vocabularies/document#ExternalFragment",
           "http://raml.org/vocabularies/document#Fragment",
           "http://raml.org/vocabularies/document#Unit"
         ],

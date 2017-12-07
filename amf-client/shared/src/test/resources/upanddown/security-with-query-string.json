@@ -35,15 +35,7 @@
   },
   "securityDefinitions": {
     "oauth_2_0": {
-      "type": "oauth2",
-      "x-describedBy": {
-        "queryString": {
-          "type": [
-            "paging",
-            "lat-long | loc"
-          ]
-        }
-      }
+      "type": "oauth2"
     }
   },
   "paths": {}

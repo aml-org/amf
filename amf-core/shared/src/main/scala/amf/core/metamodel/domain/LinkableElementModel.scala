@@ -5,11 +5,19 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
-  *
+  * Reification of a link between elements in the model. Used when we want to capture the structure of the source document
+  * in the graph itself. Linkable elements are just replaced by regular links after resolution.
   */
 trait LinkableElementModel extends Obj {
 
+  /**
+    * Uri of the linked element
+    */
   val TargetId = Field(Iri, Namespace.Document + "link-target")
+
+  /**
+    * Label for the type of link
+    */
   val Label    = Field(Str, Namespace.Document + "link-label")
 
 }

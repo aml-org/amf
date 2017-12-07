@@ -7,6 +7,9 @@ import amf.core.vocabulary.ValueType
 
 /**
   * Source Map Metadata
+  *
+  * SourceMaps include tags with syntax specific information obtained when parsing a particular specification syntax like RAML or OpenAPI.
+  * It can be used to re-generate the document from the RDF model with a similar syntax
   */
 object SourceMapModel extends Obj {
 

@@ -7,6 +7,11 @@ import amf.core.metamodel.domain.templates.KeyField
 import amf.core.vocabulary.Namespace.{Schema, Shacl, Shapes}
 import amf.core.vocabulary.ValueType
 
+/**
+  * Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph.
+  * They can be used to define and enforce schemas for the data graph information through SHACL.
+  * Shapes can be recursive and inherit from other shapes.
+  */
 trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyField {
 
   val Name = Field(Str, Shacl + "name")
@@ -19,6 +24,10 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
 
   val Values = Field(SortedArray(Str), Shacl + "in")
 
+  /**
+    * Inheritance relationship between shapes. Introduces the idea that the constraints defined by this shape are a specialization of the constraints of the base shapes.
+    * Graphs validating this shape should also validate all the constraints for the base shapes
+    */
   val Inherits = Field(Array(ShapeModel), Shapes + "inherits")
 
   override val key: Field = Name

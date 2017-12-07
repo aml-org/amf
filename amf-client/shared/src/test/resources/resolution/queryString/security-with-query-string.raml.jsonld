@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://schema.org/name": [
@@ -451,7 +452,7 @@
             "@value": "OAuth 2.0"
           }
         ],
-        "http://raml.org/vocabularies/security#queryString": [
+        "http://raml.org/vocabularies/http#queryString": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/oauth_2_0/queryString/union/null",
             "@type": [

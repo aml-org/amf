@@ -27,7 +27,7 @@ object OAuth1SettingsModel extends SettingsModel {
 
   val TokenCredentialsUri = Field(Str, Security + "tokenCredentialsUri")
 
-  val Signatures = Field(Array(Str), Security + "signatures")
+  val Signatures = Field(Array(Str), Security + "signature")
 
   override val `type`: List[ValueType] = List(Security + "OAuth1Settings") ++ SettingsModel.`type`
 
@@ -43,11 +43,11 @@ object OAuth2SettingsModel extends SettingsModel {
 
   val AccessTokenUri = Field(Str, Security + "accessTokenUri")
 
-  val AuthorizationGrants = Field(Array(Str), Security + "authorizationGrants")
+  val AuthorizationGrants = Field(Array(Str), Security + "authorizationGrant")
 
   val Flow = Field(Str, Security + "flow")
 
-  val Scopes = Field(Array(ScopeModel), Security + "scopes")
+  val Scopes = Field(Array(ScopeModel), Security + "scope")
 
   override val `type`: List[ValueType] = List(Security + "OAuth2Settings") ++ SettingsModel.`type`
 
