@@ -105,8 +105,13 @@ import amf from '@mulesoft/amf-client-js'
 
 The *amf* package will contain all exported classes:
 ```javascript
-amf.AMF.init()
-const parser = amf.AMF.raml10Parser()
+amf.plugins.document.WebApi.register();
+amf.plugins.document.Vocabularies.register();
+amf.plugins.features.AMFValidation.register();
+
+amf.Core.init().then(function () {
+  // AMF code here
+})
 ```
 
 ### Executable AMF client
