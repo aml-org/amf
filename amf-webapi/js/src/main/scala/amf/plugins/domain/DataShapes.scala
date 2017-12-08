@@ -48,6 +48,9 @@ object DataShapes extends PlatformSecrets {
     platform.registerWrapper(metamodel.PropertyDependenciesModel) {
       case s: models.PropertyDependencies => PropertyDependencies(s)
     }
+    platform.registerWrapper(metamodel.UnionShapeModel) {
+      case s: models.UnionShape => UnionShape(s)
+    }
 
     // plugin initialization
     amf.Core.registerPlugin(DataShapesDomainPlugin)

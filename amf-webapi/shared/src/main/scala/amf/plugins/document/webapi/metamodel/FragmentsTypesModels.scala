@@ -41,7 +41,7 @@ object FragmentsTypesModels {
 
     override def fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "ResourceType") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Document + "ResourceTypeFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = ResourceTypeFragment()
   }
@@ -50,7 +50,7 @@ object FragmentsTypesModels {
 
     override def fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "Trait") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Document + "TraitFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = TraitFragment()
   }
@@ -59,7 +59,7 @@ object FragmentsTypesModels {
 
     override def fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "AnnotationTypeDeclaration") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Document + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
   }
@@ -67,7 +67,7 @@ object FragmentsTypesModels {
   object SecuritySchemeFragmentModel extends FragmentModel {
     override def fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "SecurityScheme") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Document + "SecuritySchemeFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = SecuritySchemeFragment()
   }

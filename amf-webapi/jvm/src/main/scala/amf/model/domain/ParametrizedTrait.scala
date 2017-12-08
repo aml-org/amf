@@ -1,10 +1,10 @@
 package amf.model.domain
 
-import amf.plugins.domain.webapi.models.templates.{ParametrizedTrait => CoreParametrizedTrait}
+import amf.plugins.domain.webapi.models.templates
 
-case class ParametrizedTrait private[model] (private val tr: CoreParametrizedTrait)
+case class ParametrizedTrait private[model] (private val tr: templates.ParametrizedTrait)
     extends ParametrizedDeclaration(tr) {
-  def this() = this(CoreParametrizedTrait())
+  def this() = this(templates.ParametrizedTrait())
 
-  override private[amf] def element: CoreParametrizedTrait = tr
+  override private[amf] def element: templates.ParametrizedTrait = tr
 }

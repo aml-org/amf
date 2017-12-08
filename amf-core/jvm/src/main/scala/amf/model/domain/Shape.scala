@@ -13,7 +13,7 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
   def description: String                = shape.description
   def default: String                    = shape.default
   def values: java.util.List[String]     = Option(shape.values).getOrElse(Nil).asJava
-  def inherits: java.util.List[Shape]    = Option(shape.inherits).getOrElse(Nil).map(platform.wrap(_)).asJava
+  def inherits: java.util.List[Shape]    = Option(shape.inherits).getOrElse(Nil).map(platform.wrap[Shape](_)).asJava
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -44,5 +44,5 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
 }
 
 object Shape extends PlatformSecrets{
-  def apply(shape: domain.Shape): Shape = platform.wrap(shape)
+  def apply(shape: domain.Shape): Shape = platform.wrap[Shape](shape)
 }
