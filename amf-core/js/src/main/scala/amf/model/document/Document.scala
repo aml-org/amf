@@ -8,6 +8,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 /**
   * JS Document model class.
   */
+@JSExportTopLevel("model.document.Document")
 @JSExportAll
 case class Document(private[amf] val document: CoreDocument)
     extends BaseUnit

@@ -25,5 +25,5 @@ case class VariableValue private[model] (private val variable: templates.Variabl
     this
   }
 
-  def element: templates.VariableValue = variable
+  override def element: templates.VariableValue = variable
 }

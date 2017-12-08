@@ -13,8 +13,8 @@ import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import org.yaml.model.{YMap, YScalar}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object PayloadPlugin extends AMFDocumentPlugin {
 

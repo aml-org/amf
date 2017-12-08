@@ -4,9 +4,9 @@ import amf.core.AMF
 import amf.core.client.{Generator, Parser, Validator}
 import amf.core.plugins.AMFPlugin
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.AMFValidationReport
 import amf.model.document._
-import amf.model.domain.{CustomDomainProperty, DomainElement, DomainExtension, PropertyShape}
+import amf.model.domain._
+import amf.validation.AMFValidationReport
 
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.Promise
@@ -40,6 +40,12 @@ object Core extends PlatformSecrets {
     }
     platform.registerWrapper(amf.core.metamodel.domain.extensions.PropertyShapeModel) {
       case e: amf.core.model.domain.extensions.PropertyShape => PropertyShape(e)
+    }
+    platform.registerWrapper(amf.core.metamodel.domain.DataNodeModel) {
+      case o: amf.core.model.domain.ObjectNode => ObjectNode(o)
+      case s: amf.core.model.domain.ScalarNode => ScalarNode(s)
+      case a: amf.core.model.domain.ArrayNode  => ArrayNode(a)
+      case d: amf.core.model.domain.DataNode   => DataNode(d)
     }
 
     // Init the core component

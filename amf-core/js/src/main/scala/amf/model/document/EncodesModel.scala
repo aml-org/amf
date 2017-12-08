@@ -3,7 +3,7 @@ package amf.model.document
 import amf.core.unsafe.PlatformSecrets
 import amf.model.domain.DomainElement
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 trait EncodesModel extends PlatformSecrets {

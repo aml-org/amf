@@ -1,9 +1,16 @@
 package amf.plugins.document
 
+import java.util.concurrent.CompletableFuture
+
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document._
+import amf.model.domain.{DataNode, Shape}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin, model}
+import amf.core.remote.FutureConverter._
+import amf.validation.AMFValidationReport
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object WebApi extends PlatformSecrets {
 
@@ -44,6 +51,9 @@ object WebApi extends PlatformSecrets {
     amf.Core.registerPlugin(OAS20Plugin)
     amf.Core.registerPlugin(RAML10Plugin)
     amf.Core.registerPlugin(PayloadPlugin)
+  }
 
+  def validatePayload(shape: Shape, payload: DataNode): CompletableFuture[AMFValidationReport] = {
+    RAML10Plugin.validatePayload(shape.shape, payload.dataNode).map(new AMFValidationReport(_)).asJava
   }
 }

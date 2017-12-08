@@ -7,13 +7,14 @@ import amf.core.vocabulary.Namespace
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /** Any parsable unit, backed by a source URI. */
 @JSExportAll
-trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
+@JSExportTopLevel("model.document.BaseUnit")
+class BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
-  private[amf] val element: amf.core.model.document.BaseUnit
+  private[amf] val element: amf.core.model.document.BaseUnit = null
 
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
