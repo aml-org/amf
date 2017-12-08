@@ -3,12 +3,12 @@ package amf.core.metamodel.domain.templates
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Iri, Str}
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.vocabulary.Namespace.Document
+import amf.core.vocabulary.Namespace.{Document,Schema}
 import amf.core.vocabulary.ValueType
 
 trait ParametrizedDeclarationModel extends DomainElementModel with KeyField {
 
-  val Name = Field(Str, Document + "name")
+  val Name = Field(Str, Schema + "name")
 
   val Target = Field(Iri, Document + "target")
 
