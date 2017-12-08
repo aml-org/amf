@@ -6,7 +6,9 @@ import amf.core.unsafe.PlatformSecrets
 import scala.language.postfixOps
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+@JSExportAll
 trait DeclaresModel extends PlatformSecrets {
 
   private[amf] def element: amf.core.model.document.DeclaresModel

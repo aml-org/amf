@@ -2,12 +2,10 @@ package amf
 
 import java.util.concurrent.{CompletableFuture, Future}
 
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.validation.AMFValidationReport
 import amf.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.validation.AMFValidationReport
 
 object AMF {
 

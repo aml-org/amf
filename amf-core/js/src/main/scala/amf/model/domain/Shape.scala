@@ -5,11 +5,12 @@ import amf.core.unsafe.PlatformSecrets
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 
 @JSExportAll
-abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
+@JSExportTopLevel("model.domain.Shape")
+class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
 
   def name: String                    = shape.name
   def displayName: String             = shape.displayName
@@ -44,6 +45,9 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
     this
   }
 
+  override def linkTarget: Option[DomainElement with Linkable] = throw new Exception("Shape is abstract")
+
+  override def linkCopy(): DomainElement with Linkable = throw new Exception("Shape is abstract")
 }
 
 object Shape extends PlatformSecrets {
