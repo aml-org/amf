@@ -71,7 +71,7 @@ class AMFCompiler(val url: String,
       case Some(domainPlugin) =>
         parseReferences(document, domainPlugin) map { documentWithReferences =>
           domainPlugin.parse(documentWithReferences, ctx, remote) match {
-            case Some(baseUnit) => baseUnit
+            case Some(baseUnit) => baseUnit.withRaw(document.raw)
             case None =>
               throw new Exception(
                 s"Cannot parse domain model for media type ${document.mediatype} with plugin ${domainPlugin.ID} $domainPlugin")

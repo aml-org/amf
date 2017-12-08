@@ -5,14 +5,15 @@ import amf.core.unsafe.PlatformSecrets
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JVM AbstractDeclaration model class.
   */
 @JSExportAll
-abstract class ParametrizedDeclaration private[model] (
-    private val declaration: templates.ParametrizedDeclaration)
+@JSExportTopLevel("model.domain.ParametrizedDeclaration")
+class ParametrizedDeclaration(
+    private[amf] val declaration: templates.ParametrizedDeclaration)
     extends DomainElement {
   val name: String                          = declaration.name
   val target: String                        = declaration.target

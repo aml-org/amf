@@ -38,7 +38,7 @@ abstract class ParametrizedDeclaration private[model] (
 
 object ParametrizedDeclaration extends PlatformSecrets {
   def apply(declaration: templates.ParametrizedDeclaration): ParametrizedDeclaration = declaration match {
-    case resourceType: templates.ParametrizedDeclaration => platform.wrap(resourceType)
+    case resourceType: templates.ParametrizedDeclaration => platform.wrap[ParametrizedDeclaration](resourceType)
     case _                                               => throw new Exception("No wrapper for instance of ParametrizedDeclaration.")
   }
 }

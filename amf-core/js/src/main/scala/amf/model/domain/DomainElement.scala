@@ -9,6 +9,7 @@ import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+
 /**
   * Domain element.
   */
@@ -18,9 +19,9 @@ class DomainElement extends AmfObjectWrapper with PlatformSecrets {
 
   private[amf] def element: domain.DomainElement = throw new Exception("DomainElement is abstract")
 
-  def customDomainProperties =  element.customDomainProperties.map(platform.wrap).toJSArray
+  def customDomainProperties =  element.customDomainProperties.map(platform.wrap[CustomDomainProperty](_)).toJSArray
 
-  def `extends` = element.extend.map(platform.wrap).toJSArray
+  def `extends` = element.extend.map(platform.wrap[DomainElement](_)).toJSArray
 
   def withCustomDomainProperties(customProperties: js.Iterable[DomainExtension]) = {
     element.withCustomDomainProperties(customProperties.map(_.element).toSeq)
@@ -56,6 +57,7 @@ object DomainElement extends PlatformSecrets {
   def apply(domainElement: domain.DomainElement): DomainElement = platform.wrap(domainElement)
 }
 
+@JSExportAll
 trait Linkable { this: DomainElement with Linkable =>
 
   def linkTarget: Option[DomainElement with Linkable]

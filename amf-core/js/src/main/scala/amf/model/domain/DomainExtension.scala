@@ -2,9 +2,10 @@ package amf.model.domain
 
 import amf.core.model.domain.extensions
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
+@JSExportTopLevel("model.domain.DomainExtension")
 case class DomainExtension(private[amf] val domainExtension: extensions.DomainExtension)
     extends DomainElement {
 

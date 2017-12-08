@@ -30,5 +30,5 @@ class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
     any.withExamples(examples.asScala.map(_.element))
     this
   }
-  def build(shape: models.AnyShape): Shape = platform.wrap(shape)
+  def build(shape: models.AnyShape): Shape = platform.wrap[Shape](shape)
 }

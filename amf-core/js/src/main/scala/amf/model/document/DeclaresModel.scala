@@ -14,8 +14,8 @@ trait DeclaresModel extends PlatformSecrets {
   private[amf] def element: amf.core.model.document.DeclaresModel
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
-  lazy val declares: js.Iterable[DomainElement] = {
-    val declarations = element.declares.map { e => platform.wrap(e) }
+  lazy val declares: js.Iterable[amf.model.domain.DomainElement] = {
+    val declarations = element.declares.map { e => platform.wrap[amf.model.domain.DomainElement](e) }
     declarations.toJSArray
   }
 

@@ -51,5 +51,5 @@ class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Lin
 }
 
 object Shape extends PlatformSecrets {
-  def apply(shape: domain.Shape): Shape = platform.wrap(shape)
+  def apply(shape: domain.Shape): Shape = platform.wrap[Shape](shape)
 }

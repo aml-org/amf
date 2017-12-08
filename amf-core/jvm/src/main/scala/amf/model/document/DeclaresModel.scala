@@ -13,7 +13,7 @@ trait DeclaresModel extends PlatformSecrets {
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   lazy val declares: java.util.List[DomainElement] = {
-    val declarations = element.declares.map { e => platform.wrap(e) }
+    val declarations = element.declares.map { e => platform.wrap[DomainElement](e) }
     declarations.asJava
   }
 
