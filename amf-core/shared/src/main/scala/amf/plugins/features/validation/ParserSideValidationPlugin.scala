@@ -137,7 +137,7 @@ class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with Va
                               targetProperty: Option[String] = None,
                               message: String = "",
                               position: Option[LexicalInformation] = None): Unit = {
-    val validationError = AMFValidationResult(message, level, targetNode, targetProperty, validationId, position)
+    val validationError = AMFValidationResult(message, level, targetNode, targetProperty, validationId, position, this)
     if (enabled) {
       aggregatedReport ++= Seq(validationError)
     } else {

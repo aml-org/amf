@@ -80,7 +80,8 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
                 targetNode = example.id,
                 targetProperty = Some((Namespace.Document + "value").iri()),
                 ParserSideValidations.ExampleValidationErrorSpecification.id(),
-                position = example.annotations.find(classOf[LexicalInformation])
+                position = example.annotations.find(classOf[LexicalInformation]),
+                source = example
               )
             )
           }
@@ -98,7 +99,8 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       targetNode = example.id,
       targetProperty = Some((Namespace.Document + "value").iri()),
       ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id(),
-      position = example.annotations.find(classOf[LexicalInformation])
+      position = example.annotations.find(classOf[LexicalInformation]),
+      source = example
     )
   }
 
@@ -110,7 +112,8 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       targetNode = example.id,
       targetProperty = None,
       ParserSideValidations.ExampleValidationErrorSpecification.id(),
-      position = example.annotations.find(classOf[LexicalInformation])
+      position = example.annotations.find(classOf[LexicalInformation]),
+      source = example
     )
     promise.success(Some(validationResult))
     promise.future

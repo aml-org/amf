@@ -1,10 +1,10 @@
 package amf
 
 import amf.core.plugins.AMFPlugin
-import amf.core.validation.AMFValidationReport
 import amf.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.spec.Dialect
+import amf.validation.AMFValidationReport
 
 import scala.scalajs.js.Promise
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

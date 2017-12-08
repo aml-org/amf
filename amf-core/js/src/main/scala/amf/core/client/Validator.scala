@@ -2,6 +2,7 @@ package amf.core.client
 
 import amf.core.services.RuntimeValidator
 import amf.model.document.BaseUnit
+import amf.validation.AMFValidationReport
 
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
@@ -14,7 +15,8 @@ object Validator {
     model.element,
     profileName,
     messageStyle
-  ).toJSPromise
+  ).map(new AMFValidationReport(_))
+   .toJSPromise
 
   def loadValidationProfile(url: String) = {
     RuntimeValidator.loadValidationProfile(url).toJSPromise
