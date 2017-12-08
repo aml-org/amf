@@ -48,6 +48,14 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(post.responses.get(0).statusCode == "200")
   }
 
+  test("Parsing refs test") {
+    AMF.init().get()
+    val parser   = new Raml10Parser()
+    val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/banking.raml").get()
+    assert(baseUnit.references().size() == 2)
+    assert(Option(baseUnit.references().get(0).location).isDefined)
+  }
+
   test("Generation test") {
     AMF.init().get()
     val parser   = new Raml10Parser()

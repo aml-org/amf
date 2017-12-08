@@ -6,15 +6,6 @@ import amf.core.parser.Position.ZERO
 
 import scala.collection.JavaConverters._
 
-class Position(position: parser.Position) {
-  val line: Int = position.line
-  val column: Int = position.column
-}
-
-class Range(range: parser.Range) {
-  val start: Position = new Position(range.start)
-  val end: Position = new Position(range.end)
-}
 
 class AMFValidationResult(result: validation.AMFValidationResult) {
   val message: String = result.message
@@ -22,9 +13,9 @@ class AMFValidationResult(result: validation.AMFValidationResult) {
   val targetNode: String = result.targetNode
   val targetProperty: String = result.targetProperty.orNull
   val validationId: String = result.validationId
-  val position: Range = result.position match {
-    case Some(lexicalInformation) => new Range(lexicalInformation.range)
-    case _                        => new Range(new parser.Range(ZERO, ZERO))
+  val position: amf.core.parser.Range = result.position match {
+    case Some(lexicalInformation) => lexicalInformation.range
+    case _                        => new parser.Range(ZERO, ZERO)
   }
   val source = result.source
 }

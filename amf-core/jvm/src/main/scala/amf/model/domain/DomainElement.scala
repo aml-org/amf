@@ -14,9 +14,9 @@ trait DomainElement extends AmfObjectWrapper with PlatformSecrets {
 
   private[amf] def element: domain.DomainElement
 
-  def customDomainProperties =  element.customDomainProperties.map(platform.wrap).asJava
+  def customDomainProperties =  element.customDomainProperties.map(platform.wrap[CustomDomainProperty](_)).asJava
 
-  def `extends` = element.extend.map(platform.wrap).asJava
+  def `extends` = element.extend.map(platform.wrap[DomainElement](_)).asJava
 
   def withCustomDomainProperties(customProperties: java.util.List[DomainExtension]) = {
     element.withCustomDomainProperties(customProperties.asScala.map(_.element))

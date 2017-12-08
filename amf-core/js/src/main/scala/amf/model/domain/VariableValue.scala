@@ -2,13 +2,14 @@ package amf.model.domain
 
 import amf.core.model.domain.templates
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS VariableValue model class.
   */
+@JSExportTopLevel("model.domain.VariableValue")
 @JSExportAll
-case class VariableValue private[model] (private val variable: templates.VariableValue)
+case class VariableValue(private[amf] val variable: templates.VariableValue)
     extends DomainElement {
   def this() = this(templates.VariableValue())
 

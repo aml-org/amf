@@ -31,6 +31,9 @@ object WebApi extends PlatformSecrets {
     platform.registerWrapper(metamodel.security.ParametrizedSecuritySchemeModel) {
       case s: models.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(s)
     }
+    platform.registerWrapper(metamodel.security.SecuritySchemeModel) {
+      case s: models.security.SecurityScheme => SecurityScheme(s)
+    }
     platform.registerWrapper(metamodel.PayloadModel) {
       case s: models.Payload => Payload(s)
     }
@@ -48,6 +51,12 @@ object WebApi extends PlatformSecrets {
     }
     platform.registerWrapper(metamodel.WebApiModel) {
       case s: models.WebApi => amf.model.domain.WebApi(s)
+    }
+    platform.registerWrapper(metamodel.templates.TraitModel) {
+      case s: models.templates.Trait => amf.model.domain.Trait(s)
+    }
+    platform.registerWrapper(metamodel.templates.ResourceTypeModel) {
+      case s: models.templates.ResourceType => amf.model.domain.ResourceType(s)
     }
 
     amf.Core.registerPlugin(WebAPIDomainPlugin)

@@ -18,25 +18,36 @@ class BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
-  lazy val references: js.Iterable[BaseUnit] = {
-    val units: Seq[BaseUnit] = element.references map { e => platform.wrap(e) }
+  def references(): js.Iterable[BaseUnit] = {
+    val units: Seq[BaseUnit] = element.references map(e => { platform.wrap[BaseUnit](e) })
     units.toJSArray
   }
 
+  def withReferences(newReferences: js.Iterable[BaseUnit]) = {
+    val refs = newReferences.map(_.element).toSeq
+    element.withReferences(refs)
+  }
+
+  def raw: String = element.raw.orNull
+
+  def withRaw(raw: String) = {
+    element.withRaw(raw)
+    this
+  }
 
   /** Returns the file location for the document that has been parsed to generate this model */
   def location: String = element.location
 
   def usage: String = element.usage
 
-  def findById(id: String): DomainElement = {
+  def findById(id: String): amf.model.domain.DomainElement = {
     element.findById(Namespace.uri(id).iri()) match {
-      case Some(e: DomainElement) => platform.wrap(e)
+      case Some(e: DomainElement) => platform.wrap[amf.model.domain.DomainElement](e)
       case _                      => null
     }
   }
 
-  def findByType(typeId: String): js.Iterable[DomainElement] =
-    element.findByType(Namespace.expand(typeId).iri()).map(e => platform.wrap(e)).toJSIterable
+  def findByType(typeId: String): js.Iterable[amf.model.domain.DomainElement] =
+    element.findByType(Namespace.expand(typeId).iri()).map(e => platform.wrap[amf.model.domain.DomainElement](e)).toJSIterable
 
 }
