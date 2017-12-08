@@ -1,12 +1,13 @@
 package amf.model.domain
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 
 @JSExportAll
+@JSExportTopLevel("model.domain.AnyShape")
 class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
   override private[amf] def element = any
 
@@ -33,5 +34,5 @@ class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
     any.withExamples(examples.toList.map(_.element))
     this
   }
-  def build(shape: models.AnyShape): Shape = platform.wrap(shape)
+  def build(shape: models.AnyShape): Shape = platform.wrap[Shape](shape)
 }

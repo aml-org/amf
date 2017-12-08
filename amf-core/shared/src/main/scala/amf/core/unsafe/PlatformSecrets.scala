@@ -69,16 +69,4 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
     fetchFile(url)
   }
 
-  // TODO: removed from core @modularization
-  /*
-  override val dialectsRegistry = wrappedPlatform match {
-    case Some(p) => p.dialectsRegistry
-    case None    => new TrunkDialectsRegistry(this)
-  }
-
-  override val validator = wrappedPlatform match {
-    case Some(p) => p.validator
-    case None    => new TrunkValidator()
-  }
-  */
 }

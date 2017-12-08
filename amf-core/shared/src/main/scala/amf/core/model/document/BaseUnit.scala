@@ -11,6 +11,9 @@ import scala.collection.mutable.ListBuffer
 /** Any parseable unit, backed by a source URI. */
 trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
+  // Raw text  used to generated this unit
+  var raw: Option[String] = None
+
   /** Meta data for the document */
   def meta: Obj
 
@@ -22,6 +25,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   /** Returns the usage comment for de element */
   def usage: String
+
+  // Set the raw value for the base unit
+  def withRaw(raw: String) = {
+    this.raw = Some(raw)
+    this
+  }
 
   def withReferences(references: Seq[BaseUnit]): this.type = setArrayWithoutId(References, references)
 

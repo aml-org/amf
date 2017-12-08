@@ -2,8 +2,9 @@ package amf.model.domain
 
 import amf.core.model.domain.extensions
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+@JSExportTopLevel("model.domain.PropertyShape")
 @JSExportAll
 case class PropertyShape(private[amf] val propertyShape: extensions.PropertyShape) extends DomainElement {
 
