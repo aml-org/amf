@@ -8,7 +8,7 @@ import amf.core.vocabulary.ValueType
 
 trait AbstractDeclarationModel extends DomainElementModel with KeyField {
 
-  val Name = Field(Str, Document + "name")
+  val Name = Field(Str, Schema + "name")
 
   val DataNode = Field(DataNodeModel, Document + "dataNode")
 
