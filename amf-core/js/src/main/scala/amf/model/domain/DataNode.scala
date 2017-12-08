@@ -5,10 +5,11 @@ import amf.core.unsafe.PlatformSecrets
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+@JSExportTopLevel("model.domain.DataNode")
 @JSExportAll
-abstract class DataNode(private[amf] val dataNode: domain.DataNode) extends DomainElement {
+class DataNode(private[amf] val dataNode: domain.DataNode) extends DomainElement {
 
   def name: String = dataNode.name
 
@@ -17,7 +18,9 @@ abstract class DataNode(private[amf] val dataNode: domain.DataNode) extends Doma
     this
   }
 
-  def canEqual(other: Any): Boolean
+  def canEqual(other: Any): Boolean = throw new Exception("DataNode is abstract")
+
+  override private[amf] def element: domain.DataNode = throw new Exception("DataNode is abstract")
 }
 
 object DataNode extends PlatformSecrets {
@@ -46,7 +49,7 @@ case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends Da
     this
   }
 
-  override private[amf] def element = objectNode
+  override private[amf] def element: domain.ObjectNode = objectNode
 
   def this() = this(domain.ObjectNode())
 
@@ -58,7 +61,7 @@ case class ScalarNode(private[amf] val scalarNode: domain.ScalarNode) extends Da
   val value: String    = scalarNode.value
   val dataType: String = scalarNode.dataType.orNull
 
-  override private[amf] def element = scalarNode
+  override private[amf] def element: domain.ScalarNode = scalarNode
 
   def this() = this(domain.ScalarNode())
 
@@ -79,7 +82,7 @@ case class ArrayNode(private[amf] val arrayNode: domain.ArrayNode) extends DataN
     this
   }
 
-  override private[amf] def element = arrayNode
+  override private[amf] def element: domain.ArrayNode = arrayNode
 
   def this() = this(domain.ArrayNode())
 

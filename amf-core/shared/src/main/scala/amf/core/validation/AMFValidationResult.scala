@@ -10,7 +10,8 @@ case class AMFValidationResult(message: String,
                                targetNode: String,
                                targetProperty: Option[String],
                                validationId: String,
-                               position: Option[LexicalInformation]) {
+                               position: Option[LexicalInformation],
+                               source: Any) {
   override def toString: String = {
     var str = s"\n- Source: $validationId\n"
     str += s"  Message: $message\n"
@@ -38,7 +39,8 @@ object AMFValidationResult {
           targetNode = node.id,
           targetProperty = Option(validation.path),
           validation.sourceShape,
-          position = position
+          position = position,
+          source = validation
         )
     }
   }
@@ -49,7 +51,8 @@ object AMFValidationResult {
                         validation.targetNode,
                         validation.targetProperty,
                         shapeId,
-                        validation.position)
+                        validation.position,
+                        validation.source)
 
   def findPosition(node: DomainElement, validation: ValidationResult): Option[LexicalInformation] = {
     if (Option(validation.path).isDefined && validation.path != "") {

@@ -7,13 +7,16 @@ import amf.core.unsafe.PlatformSecrets
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * Domain element.
   */
-trait DomainElement extends AmfObjectWrapper with PlatformSecrets {
+@JSExportAll
+@JSExportTopLevel("model.domain.DomainElement")
+class DomainElement extends AmfObjectWrapper with PlatformSecrets {
 
-  private[amf] def element: domain.DomainElement
+  private[amf] def element: domain.DomainElement = throw new Exception("DomainElement is abstract")
 
   def customDomainProperties =  element.customDomainProperties.map(platform.wrap).toJSArray
 
@@ -55,8 +58,6 @@ object DomainElement extends PlatformSecrets {
 
 trait Linkable { this: DomainElement with Linkable =>
 
-  private[amf] def element: domain.DomainElement with domain.Linkable
-
   def linkTarget: Option[DomainElement with Linkable]
 
   def isLink: Boolean           = linkTarget.isDefined
@@ -65,12 +66,12 @@ trait Linkable { this: DomainElement with Linkable =>
   def linkCopy(): DomainElement with Linkable
 
   def withLinkTarget(target: DomainElement with Linkable): this.type = {
-    element.withLinkTarget(target.element)
+    element.asInstanceOf[domain.Linkable].withLinkTarget(target.element)
     this
   }
 
   def withLinkLabel(label: String): this.type = {
-    element.withLinkLabel(label)
+    element.asInstanceOf[domain.Linkable].withLinkLabel(label)
     this
   }
 

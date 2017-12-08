@@ -3,9 +3,10 @@ package amf.model.domain
 import amf.core.model.domain.extensions
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import scala.scalajs.js.JSConverters._
 
+@JSExportTopLevel("model.domain.CustomDomainProperty")
 @JSExportAll
 case class CustomDomainProperty(private[amf] val customDomainProperty: extensions.CustomDomainProperty)
     extends DomainElement

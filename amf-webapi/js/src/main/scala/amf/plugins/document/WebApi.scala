@@ -2,10 +2,15 @@ package amf.plugins.document
 
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document._
+import amf.model.domain.{DataNode, Shape}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin, model}
+import amf.validation.AMFValidationReport
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js
 
 @JSExportAll
 object WebApi extends PlatformSecrets {
@@ -47,6 +52,9 @@ object WebApi extends PlatformSecrets {
     amf.Core.registerPlugin(OAS20Plugin)
     amf.Core.registerPlugin(RAML10Plugin)
     amf.Core.registerPlugin(PayloadPlugin)
+  }
 
+  def validatePayload(shape: Shape, payload: DataNode): js.Promise[AMFValidationReport] = {
+    RAML10Plugin.validatePayload(shape.shape, payload.dataNode).map(new AMFValidationReport(_)).toJSPromise
   }
 }
