@@ -20,7 +20,7 @@ import amf.plugins.domain.shapes.metamodel.{ExampleModel, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.YType
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -975,7 +975,7 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("readOnly", f))
 
-    // TODO required array.
+    fs.entry(NodeShapeModel.Properties).map(f => result += OasRequiredPropertiesShapeEmitter(f, references))
 
     fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references))
 
@@ -1133,6 +1133,30 @@ case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refere
 
     result
   }
+}
+
+case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[BaseUnit])(
+  implicit spec: SpecEmitterContext)
+  extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    val requiredProperties = f.array.values.filter {
+      case property: PropertyShape => property.minCount > 0
+      case _                       => false
+    }
+    if (requiredProperties.nonEmpty) {
+      b.entry(
+        "required",
+        _.list { b =>
+          requiredProperties.foreach { case property: PropertyShape =>
+            TextScalarEmitter(property.name, Annotations()).emit(b)
+          }
+        }
+      )
+    }
+  }
+
+  override def position(): Position = pos(f.value.annotations)
 }
 
 case class OasPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
