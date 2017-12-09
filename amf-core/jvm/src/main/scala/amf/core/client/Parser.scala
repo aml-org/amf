@@ -19,7 +19,7 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
 
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 
-  private def unitScalaToJVM(unit: CoreBaseUnit): BaseUnit = platform.wrap(unit)
+  private def unitScalaToJVM(unit: CoreBaseUnit): BaseUnit = platform.wrap[BaseUnit](unit)
 
   /**
     * Generates a [[amf.model.document.BaseUnit]] from the api located in the given url.
