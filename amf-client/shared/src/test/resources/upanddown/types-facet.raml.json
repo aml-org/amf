@@ -49,6 +49,9 @@
       "discriminator": "ddd",
       "x-discriminator-value": "valueD",
       "readOnly": false,
+      "required": [
+        "name"
+      ],
       "properties": {
         "name": {
           "type": "string"

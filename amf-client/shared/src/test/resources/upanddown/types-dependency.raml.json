@@ -28,6 +28,13 @@
           {
             "schema": {
               "type": "object",
+              "required": [
+                "credit_card",
+                "city",
+                "street",
+                "number",
+                "postal"
+              ],
               "properties": {
                 "credit_card": {
                   "type": "integer"
