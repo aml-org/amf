@@ -1,5 +1,6 @@
 package amf
 
+import amf.core.client.Resolver
 import amf.core.plugins.AMFPlugin
 import amf.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
@@ -54,6 +55,7 @@ object CoreWrapper {
   def init() = Core.init()
   def parser(vendor: String, mediaType: String) = amf.Core.parser(vendor, mediaType)
   def generator(vendor: String, mediaType: String) = amf.Core.generator(vendor, mediaType)
+  def resolver(vendor: String): Resolver = amf.Core.resolver(vendor)
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF") =  amf.Core.validate(model, profileName, messageStyle)
   def loadValidationProfile(url: String) = amf.Core.loadValidationProfile(url)
   def registerNamespace(alias: String, prefix: String) = amf.Core.registerNamespace(alias, prefix)

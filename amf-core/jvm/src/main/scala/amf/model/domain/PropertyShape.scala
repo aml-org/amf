@@ -5,7 +5,7 @@ import amf.core.model.domain.extensions
 case class PropertyShape(private[amf] val propertyShape: extensions.PropertyShape) extends DomainElement {
 
   def path: String = propertyShape.path
-  def range: Shape = platform.wrap(propertyShape.range)
+  def range: Shape = platform.wrap[Shape](propertyShape.range)
 
   def minCount: Int = propertyShape.minCount
   def maxCount: Int = propertyShape.maxCount

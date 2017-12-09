@@ -2,6 +2,10 @@
   "swagger": "2.0",
   "definitions": {
     "ObjectType": {
+      "required": [
+        "objProp1",
+        "objProp2"
+      ],
       "properties": {
         "objProp1": {
           "type": "string"

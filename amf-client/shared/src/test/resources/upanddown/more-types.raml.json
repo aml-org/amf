@@ -33,6 +33,10 @@
       "type": "integer"
     },
     "C": {
+      "required": [
+        "a",
+        "b"
+      ],
       "properties": {
         "a": {
           "$ref": "#/definitions/A"
@@ -43,6 +47,10 @@
       }
     },
     "D": {
+      "required": [
+        "a",
+        "b"
+      ],
       "properties": {
         "a": {
           "$ref": "#/definitions/A"

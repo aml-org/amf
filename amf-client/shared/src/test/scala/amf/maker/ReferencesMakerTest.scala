@@ -25,7 +25,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
     assertFixture(rootDocument, RamlYamlHint)
   }
 
-  test("Data type fragment test oas") {
+  test("HERE_HERE Data type fragment test oas") {
     val rootDocument = "file://amf-client/shared/src/test/resources/references/data-type-fragment.json"
     assertFixture(rootDocument, OasJsonHint)
   }
@@ -58,7 +58,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
     val (file, fragmentFile, minCount) = spec match {
       case Raml => ("data-type-fragment.reference.raml", "person.raml", 1)
-      case _    => ("data-type-fragment.json", "person.json", 0)
+      case _    => ("data-type-fragment.json", "person.json", 1)
     }
 
     private val person: NodeShape = {
