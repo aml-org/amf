@@ -7,5 +7,9 @@ import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 class Resolver(vendor: String) extends PlatformResolver(vendor) with PlatformSecrets {
-  def resolve(unit: BaseUnit) = platform.wrap(super.resolve(unit.element))
+  def resolve(unit: BaseUnit) = {
+    val resolved = super.resolve(unit.element)
+    println(s"RESOLVED ${resolved}")
+    platform.wrap[BaseUnit](resolved)
+  }
 }

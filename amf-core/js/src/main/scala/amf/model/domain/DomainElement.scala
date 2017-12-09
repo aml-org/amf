@@ -54,7 +54,7 @@ class DomainElement extends AmfObjectWrapper with PlatformSecrets {
 }
 
 object DomainElement extends PlatformSecrets {
-  def apply(domainElement: domain.DomainElement): DomainElement = platform.wrap(domainElement)
+  def apply(domainElement: domain.DomainElement): DomainElement = platform.wrap[DomainElement](domainElement)
 }
 
 @JSExportAll
