@@ -16,7 +16,7 @@ class AbstractDeclaration(private[amf] val decl: templates.AbstractDeclaration) 
     this
   }
 
-  def dataNode(): DataNode = platform.wrap(decl.dataNode)
+  def dataNode(): DataNode = platform.wrap[DataNode](decl.dataNode)
   def withDatanode(dataNode: DataNode) = {
     decl.withDataNode(dataNode.element)
     this
