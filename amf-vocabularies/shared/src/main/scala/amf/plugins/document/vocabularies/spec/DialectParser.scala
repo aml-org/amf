@@ -30,6 +30,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
   // map of references declared within this document
   // references introduced trhough libraries will be handled by the resolver
   private val internalRefs: mutable.HashMap[String, DomainEntity] = mutable.HashMap.empty
+  private val possibleRefs: mutable.HashMap[DomainEntity, String] = mutable.HashMap.empty
 
   def parseUnit(): BaseUnit = {
     dialect.kind match {
@@ -73,7 +74,18 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
         resolver = dialect.resolver.resolver(root, references.references.toMap, ctx)
 
         val entity = parse()
+        if (!possibleRefs.isEmpty){
+          possibleRefs.foreach(p=>{
+            internalRefs.get(p._2).foreach(referenced=>{
+              // this is referenced object
+              referenced.fields.into(p._1.fields)
+              p._1.annotations += SynthesizedField()
+              p._1.withLinkTarget(referenced);
+              p._1.withLinkLabel(p._2);
 
+            })
+          })
+        }
         if (references.references.nonEmpty) {
           unit.withReferences(references.solvedReferences())
 
@@ -210,6 +222,8 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
               case Some(internalRef) if internalRef.definition.id == domainEntity.definition.id =>
                 internalRef.fields.into(domainEntity.fields)
                 domainEntity.annotations += SynthesizedField()
+                domainEntity.withLinkTarget(internalRef)
+                domainEntity.withLinkLabel(name)
               //domainEntity.annotations += DomainElementReference(name, Some(internalRef))
               case _ =>
                 resolver.resolveToEntity(root, name, domainEntity.definition) match {
@@ -218,6 +232,8 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                     domainEntity.annotations += SynthesizedField()
                   //domainEntity.annotations += DomainElementReference(name, Some(entity))
                   case None =>
+                     //this is possible internal reference;
+                      possibleRefs.put(domainEntity,name);
                   //Some(domainEntity.annotations += DomainElementReference(name, None))
                 }
             }
