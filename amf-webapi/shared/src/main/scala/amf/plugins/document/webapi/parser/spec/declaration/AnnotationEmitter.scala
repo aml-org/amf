@@ -209,6 +209,7 @@ case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecO
         result ++= AnnotationsEmitter(property, ordering).emitters
         Left(result)
       case (head: PartEmitter) :: Nil => Right(head)
+      case Nil                        => Left(Nil)
       case other =>
         throw new Exception(s"IllegalTypeDeclarations found: $other") // todo handle
     }

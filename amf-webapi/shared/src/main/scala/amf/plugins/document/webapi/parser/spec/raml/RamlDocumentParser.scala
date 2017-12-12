@@ -408,9 +408,11 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
           val domainProp      = CustomDomainProperty()
           adopt(domainProp)
 
-          ctx.declarations.findAnnotation(scalar.text, SearchScope.Named) match {
+          ctx.declarations.findAnnotation(scalar.text, SearchScope.All) match {
             case Some(a) =>
               val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
+              copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
+                               // because the way they are inserted in the mode later in the parsing
               adopt(copied.withName(key))
               copied
             case _ =>
@@ -436,51 +438,66 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
 
       // We parse the node as if it were a data shape, this will also check the closed node condition including the
       // annotation type facets
-      RamlTypeParser(ast.asInstanceOf[YMapEntry], shape => shape.adopted(custom.id), isAnnotation = true)
-        .parse()
-        .foreach({ shape =>
-          custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))
-        })
+      val maybeAnnotationType: Option[YMapEntry] = ast match {
+        case me: YMapEntry => Some(me)
+        case m: YMap       => Some(YMapEntry(YNode("annotationType"), YNode(m)))
+        case _             => None
+      }
 
-      map.key(
-        "allowedTargets",
-        entry => {
-          val annotations = Annotations(entry)
-          val targets: AmfArray = entry.value.tagType match {
-            case YType.Seq =>
-              ArrayNode(entry.value).strings()
-            case YType.Map =>
-              ctx.violation(
-                custom.id,
-                "Property 'allowedTargets' in a RAML annotation can only be a valid scalar or an array of valid scalars",
-                entry.value)
-              AmfArray(Seq())
-            case _ =>
-              annotations += SingleValueArray()
-              AmfArray(Seq(ValueNode(entry.value).string()))
-          }
+      maybeAnnotationType match {
+        case Some(annotationType) => {
+          RamlTypeParser(annotationType, shape => shape.adopted(custom.id), isAnnotation = true)
+            .parse()
+            .foreach({ shape =>
+              custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))
+            })
 
-          val targetUris = targets.values.map({
-            case s: AmfScalar =>
-              VocabularyMappings.ramlToUri.get(s.toString) match {
-                case Some(uri) => AmfScalar(uri, s.annotations)
-                case None      => s
+          map.key(
+            "allowedTargets",
+            entry => {
+              val annotations = Annotations(entry)
+              val targets: AmfArray = entry.value.tagType match {
+                case YType.Seq =>
+                  ArrayNode(entry.value).strings()
+                case YType.Map =>
+                  ctx.violation(
+                    custom.id,
+                    "Property 'allowedTargets' in a RAML annotation can only be a valid scalar or an array of valid scalars",
+                    entry.value)
+                  AmfArray(Seq())
+                case _ =>
+                  annotations += SingleValueArray()
+                  AmfArray(Seq(ValueNode(entry.value).string()))
               }
-            case nodeType => AmfScalar(nodeType.toString, nodeType.annotations)
+
+              val targetUris = targets.values.map({
+                case s: AmfScalar =>
+                  VocabularyMappings.ramlToUri.get(s.toString) match {
+                    case Some(uri) => AmfScalar(uri, s.annotations)
+                    case None      => s
+                  }
+                case nodeType => AmfScalar(nodeType.toString, nodeType.annotations)
+              })
+
+              custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris), annotations)
+            }
+          )
+
+          map.key("description", entry => {
+            val value = ValueNode(entry.value)
+            custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
           })
 
-          custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris), annotations)
+          AnnotationParser(() => custom, map).parse()
+
+          custom
         }
-      )
+        case None => {
+          ctx.violation(custom.id, "Cannot parse annotation type fragment, cannot find information map", ast)
+          custom
+        }
+      }
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
-      })
-
-      AnnotationParser(() => custom, map).parse()
-
-      custom
     }
   }
 }

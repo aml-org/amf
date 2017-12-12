@@ -19,7 +19,10 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => Pa
       val scheme       = producer(name).add(Annotations(s))
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
-        case Some(declaration) => scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+        case Some(declaration) => {
+          scheme.fields.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations())
+          scheme
+        }
         case None =>
           ctx.violation(scheme.id, s"Security scheme '$name' not found in declarations.", s)
           scheme
@@ -32,7 +35,7 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => Pa
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
         case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
 
           val settings = RamlSecuritySettingsParser(schemeEntry.value.as[YMap], declaration.`type`, scheme).parse()
 

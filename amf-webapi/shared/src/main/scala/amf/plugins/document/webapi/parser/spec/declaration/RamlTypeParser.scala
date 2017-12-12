@@ -274,7 +274,10 @@ case class RamlTypeParser(ast: YPart,
           }
 
           refTuple match {
-            case (text: String, Some(s)) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
+            case (text: String, Some(s)) =>
+              s.link(text, Annotations(node.value)).asInstanceOf[Shape]
+                .withName(name) // we setup the local reference in the name
+                .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             case (text: String, _) =>
               val shape = UnresolvedShape(text, node).withName(text)
               shape.withContext(ctx)

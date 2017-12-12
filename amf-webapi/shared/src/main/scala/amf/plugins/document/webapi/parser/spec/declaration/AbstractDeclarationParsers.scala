@@ -46,7 +46,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
   def parse(): AbstractDeclaration = {
 
     ctx.link(entryValue) match {
-      case Left(link) => parseReferenced(declaration, link, entryValue)
+      case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)
       case Right(value) =>
         val variables = AbstractVariables()
         val dataNode  = DataNodeParser(value, variables, Some(parent + s"/$key")).parse()
@@ -65,6 +65,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       case _: ResourceType => ctx.declarations.findResourceTypeOrError(ast)(parsedUrl, SearchScope.Fragments)
     }
     val copied: AbstractDeclaration = d.link(parsedUrl, Annotations(ast))
+    copied.withId(d.id)
     copied.withName(key)
   }
 }

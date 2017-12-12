@@ -4,12 +4,12 @@ import amf.core.annotations.ScalarType
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
 import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{FieldEntry, Value}
+import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.Namespace.SourceMaps
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -134,7 +134,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder): Unit = {
       t match {
         case t: DomainElement with Linkable if t.isLink =>
-          t.linkTarget.foreach(l => iri(b, l.id))
+          link(b, t, parent)
           sources(v)
         case _: Obj =>
           obj(b, v.value.asInstanceOf[AmfObject], parent)
@@ -166,7 +166,12 @@ object GraphEmitter extends MetaModelTypeMapping {
                 sources(v)
                 val seq = v.value.asInstanceOf[AmfArray]
                 a.element match {
-                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(obj(b, _, parent, inArray = true))
+                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach {
+                    case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                      link(b, elementInArray, parent, inArray = true)
+                    case elementInArray =>
+                      obj(b, elementInArray, parent, inArray = true)
+                  }
                   case Str =>
                     seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(b, e.toString, inArray = true))
                 }
@@ -178,7 +183,12 @@ object GraphEmitter extends MetaModelTypeMapping {
             val seq = v.value.asInstanceOf[AmfArray]
             sources(v)
             a.element match {
-              case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach(obj(b, _, parent, inArray = true))
+              case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach {
+                case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                  link(b, elementInArray, parent, inArray = true)
+                case elementInArray =>
+                  obj(b, elementInArray, parent, inArray = true)
+              }
               case Str =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
                   e.annotations.find(classOf[ScalarType]) match {
@@ -204,6 +214,16 @@ object GraphEmitter extends MetaModelTypeMapping {
 
     private def obj(b: PartBuilder, element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder) = b.obj(traverse(element, parent, _))
+
+      if (inArray) emit(b) else b.list(emit)
+    }
+
+    private def link(b: PartBuilder, elementWithLink: DomainElement with Linkable, parent: String, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder): Unit = {
+        b.obj { o =>
+          traverse(elementWithLink, parent, o)
+        }
+      }
 
       if (inArray) emit(b) else b.list(emit)
     }
