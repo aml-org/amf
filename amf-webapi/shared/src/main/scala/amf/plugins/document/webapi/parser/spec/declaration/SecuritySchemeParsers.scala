@@ -36,7 +36,7 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
     ctx.link(node) match {
-      case Left(link) => parseReferenced(key, link, Annotations(node))
+      case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
       case Right(value) =>
         val scheme = adopt(SecurityScheme(ast))
 
@@ -74,11 +74,12 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
     }
   }
 
-  def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
+  def parseReferenced(name: String, parsedUrl: String, annotations: Annotations, adopt:(SecurityScheme) => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
+    adopt(copied)
     copied.withName(name)
   }
 }
@@ -157,7 +158,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {
-      case Left(link) => parseReferenced(key, link, Annotations(node))
+      case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
       case Right(value) =>
         val scheme = adopt(SecurityScheme(ast))
 
@@ -359,11 +360,12 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
     }
   }
 
-  def parseReferenced(name: String, parsedUrl: String, annotations: Annotations): SecurityScheme = {
+  def parseReferenced(name: String, parsedUrl: String, annotations: Annotations, adopt: (SecurityScheme) => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
+    adopt(copied)
     copied.withName(name)
   }
 }

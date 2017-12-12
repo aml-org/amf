@@ -25,7 +25,13 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations)
   def withSchema(schema: Shape): this.type            = set(Schema, schema)
 
   override def adopted(parent: String): this.type =
-    if (Option(this.id).isEmpty) { withId(parent + "/" + name.urlEncoded) } else { this }
+    if (Option(this.id).isEmpty) {
+      if (parent.contains("#")) {
+        withId(parent + "/" + name.urlEncoded)
+      } else {
+        withId(parent + "#" + name.urlEncoded)
+      }
+    } else { this }
 
   override def linkCopy(): CustomDomainProperty = CustomDomainProperty().withId(id)
 

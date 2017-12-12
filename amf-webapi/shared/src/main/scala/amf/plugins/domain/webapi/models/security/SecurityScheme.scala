@@ -33,7 +33,11 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   def withSettings(settings: Settings): this.type                     = set(SettingsField, settings)
   def withQueryString(queryString: Shape): this.type                  = set(QueryString, queryString)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name)
+  override def adopted(parent: String): this.type = if (parent.contains("#")) {
+    withId(parent + "/" + Option(name).getOrElse("fragment"))
+  } else {
+    withId(parent + "#" + Option(name).getOrElse("fragment"))
+  }
 
   def withHeader(name: String): Parameter = {
     val result = Parameter().withName(name)

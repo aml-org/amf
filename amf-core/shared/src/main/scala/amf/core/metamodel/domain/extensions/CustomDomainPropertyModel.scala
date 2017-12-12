@@ -3,7 +3,7 @@ package amf.core.metamodel.domain.extensions
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Iri, Str}
 import amf.core.metamodel.domain.templates.KeyField
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -46,7 +46,7 @@ object CustomDomainPropertyModel extends DomainElementModel with KeyField {
     */
   val Schema = Field(ShapeModel, Shapes + "schema")
 
-  override def fields: List[Field] = List(Domain, Schema, Name) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Domain, Schema, Name) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Rdf + "Property" :: Document + "DomainProperty" :: DomainElementModel.`type`
 

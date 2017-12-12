@@ -73,7 +73,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val dataType = DataTypeFragment().adopted(root.location)
 
       val shapeOption =
-        OasTypeParser(map, "type", map, (shape: Shape) => shape.adopted(root.location), "schema")
+        OasTypeParser(map, "type", map, (shape: Shape) => shape.withId(root.location + "#shape"), "schema")
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
