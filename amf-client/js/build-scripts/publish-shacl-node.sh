@@ -25,7 +25,7 @@ echo "Base $DEVELOP_VERSION_BASE"
 export DEVELOP_VERSION=${DEVELOP_VERSION_BASE/automatic/master}
 echo "Targeting $DEVELOP_VERSION"
 
-export NPM_USER=`npm whoami --registry https://npm.mulesoft.com 2> /dev/null`
+export NPM_USER=`npm whoami --registry https://nexus3.build.msap.io/repository/npm-internal 2> /dev/null`
 
 if [ -z ${NPM_USER} ]; then
     echo 'NPM_USER NOT VALID FOR @mulesoft REGISTRY. CHECK THE ENV-VAR NPM_TOKEN'

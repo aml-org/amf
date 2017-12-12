@@ -183,6 +183,14 @@ publishJS := {
   "./amf-client/js/build-scripts/deploy-develop.sh".!
 }
 
+val buildJS = TaskKey[Unit](
+  "buildJS",
+  "Publish npm module")
+buildJS := {
+  val _ = (fullOptJS in Compile in clientJS).value
+  "./amf-client/js/build-scripts/buildjs.sh".!
+}
+
 publish := {
   val _ = (publish.value, publishJS.value)
   ()

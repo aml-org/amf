@@ -55,7 +55,12 @@ sbt coverage test coverageReport
 ```sh
 sbt package
 ```
-This will generate jvm jars in each of the module's targets.
+This will generate *jvm* jars in each of the module's targets.
+
+```sh
+sbt buildJS
+```
+This will generate a *js* artifact in ./amf-client/js/amf.js
 
 ### JVM artifacts
 
