@@ -28,7 +28,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
   }
 
   case class Parser(var nodes: Map[String, AmfElement]) {
-    private val unresolvedReferences = mutable.Map[String, DomainElement with Linkable]()
+    private val unresolvedReferences = mutable.Map[String, Seq[DomainElement with Linkable]]()
+    private val referencesMap = mutable.Map[String, DomainElement with Linkable]()
 
     val dynamicGraphParser = new DynamicGraphParser(nodes)
 
@@ -83,6 +84,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             val instance = buildType(model)(annotations(nodes, sources, id))
             instance.withId(id)
 
+            checkLinkables(instance)
+
             // workaround for lazy values in shape
             val modelFields = model match {
               case shapeModel: ShapeModel =>
@@ -113,30 +116,46 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         }
     }
 
+    private def checkLinkables(instance: AmfObject) = {
+      instance match {
+        case link: DomainElement with Linkable =>
+          referencesMap += (link.id -> link)
+          unresolvedReferences.getOrElse(link.id, Nil).foreach { unresolved: Linkable =>
+            unresolved.linkTarget = Some(link)
+          }
+          unresolvedReferences.update(link.id, Nil)
+        case _ => // ignore
+      }
+    }
+
+    private def setLinkTarget(instance: DomainElement with Linkable, targetId: String) = {
+      referencesMap.get(targetId) match {
+        case Some(target) => instance.linkTarget = Some(target)
+        case None         =>
+          val unresolved: Seq[DomainElement with Linkable] = unresolvedReferences.getOrElse(targetId, Nil)
+          unresolvedReferences += (targetId -> (unresolved ++ Seq(instance)))
+      }
+    }
+
     private def parseLinkableProperties(map: YMap, instance: DomainElement with Linkable): Unit = {
       map
         .key(LinkableElementModel.TargetId.value.iri())
         .flatMap(entry => {
           retrieveId(entry.value.as[Seq[YMap]].head, ctx)
         })
-        .foreach(unresolvedReferences += _ -> instance)
+        .foreach { targetId =>
+          setLinkTarget(instance, targetId)
+        }
 
       map
         .key(LinkableElementModel.Label.value.iri())
         .flatMap(entry => {
-          entry.value
-            .toOption[Seq[YNode]]
+          entry.value.toOption[Seq[YNode]]
             .flatMap(nodes => nodes.head.toOption[YMap])
             .flatMap(map => map.key("@value"))
             .flatMap(_.value.toOption[YScalar].map(_.text))
         })
         .foreach(s => instance.withLinkLabel(s))
-
-      val unresolvedOption = unresolvedReferences.get(instance.id)
-      unresolvedOption.foreach(u => {
-        u.withLinkTarget(instance)
-        unresolvedReferences.remove(instance.id)
-      }) // todo remove?
     }
 
     private def parseCustomProperties(map: YMap, instance: DomainElement) = {

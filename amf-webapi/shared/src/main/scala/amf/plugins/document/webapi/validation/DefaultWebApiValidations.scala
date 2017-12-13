@@ -147,7 +147,7 @@ object DefaultAMFValidations extends ImportUtils {
     validations.map { validation =>
       val uri = validation.uri match {
         case Some(s) => s.trim
-        case _       => validationId(validation)
+        case _ => validationId(validation)
       }
 
       val spec = ValidationSpecification(
@@ -165,10 +165,11 @@ object DefaultAMFValidations extends ImportUtils {
             ValueType(Namespace.find(strings.head), strings.last)
           } else Namespace.expand(validation.constraint)
           valueType match {
-            case sh @ ValueType(Namespace.Shacl, _) =>
+            case sh@ValueType(Namespace.Shacl, _) =>
               spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh)))
-            case sh @ ValueType(Namespace.Shapes, _) =>
+            case sh@ValueType(Namespace.Shapes, _) =>
               spec.copy(functionConstraint = Option(parseFunctionConstraint(s"$uri/prop", validation, sh)))
+            case _ => spec
           }
 
         case "http://www.w3.org/ns/shacl#targetObjectsOf" if validation.owlProperty.isDefined =>

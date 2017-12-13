@@ -256,6 +256,87 @@
               {
                 "@value": "consumer1"
               }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "eventProducer"
+              }
+            ],
+            "http://raml.org/vocabularies/events#applicationID": [
+              {
+                "@value": "app123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#consumerID": [
+              {
+                "@value": "cons123"
+              }
+            ],
+            "http://raml.org/vocabularies/events#userID": [
+              {
+                "@value": "me"
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventChannel": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking.raml#consumer1/consumerChannel",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventChannel"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "channel1"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking.raml#channel1"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "channel1"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#channelID": [
+                  {
+                    "@value": "ch123"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/events#eventSubject": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking.raml#consumer1/consumerSubject",
+                "@type": [
+                  "http://raml.org/vocabularies/events#EventSubject"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "subject1"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies/bruno/examples/EventedAPI_Banking.raml#subject1"
+                  }
+                ],
+                "http://raml.org/vocabularies/document#link-label": [
+                  {
+                    "@value": "subject1"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#eventSubjectID": [
+                  {
+                    "@value": "subject123"
+                  }
+                ],
+                "http://raml.org/vocabularies/events#subjectPattern": [
+                  {
+                    "@value": "pub-sub"
+                  }
+                ]
+              }
             ]
           }
         ]
