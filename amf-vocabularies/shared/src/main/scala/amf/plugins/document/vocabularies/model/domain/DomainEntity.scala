@@ -6,7 +6,8 @@ import amf.plugins.document.vocabularies.metamodel.domain.DialectEntityModel
 import amf.plugins.document.vocabularies.spec.{DialectNode, DialectPropertyMapping, DomainEntityVisitor}
 
 case class DomainEntity(linkValue: Option[String], definition: DialectNode, fields: Fields, annotations: Annotations)
-    extends DomainElement with Linkable {
+    extends DomainElement
+    with Linkable {
 
   override def adopted(parent: String): this.type = {
     if (Option(this.id).isEmpty) {
@@ -24,10 +25,10 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
     this
   }
 
-  def linkCopy():Linkable= {
-    val f=Fields();
+  def linkCopy(): Linkable = {
+    val f = Fields()
     fields.into(f)
-    this.copy(None,fields =f)
+    this.copy(None, fields = f)
   }
 
   def traverse(visitor: DomainEntityVisitor): Unit =
@@ -103,13 +104,13 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
     }
   }
 
-  val dynamicType: Boolean = true
+  val dynamicType: Boolean                 = true
   override def dynamicTypes(): Seq[String] = definition.calcTypes(this).map(_.iri())
 
   override def meta = new DialectEntityModel(this)
 }
 
 object DomainEntity {
-  def apply(d: DialectNode): DomainEntity = DomainEntity(None, d, Fields(), Annotations())
+  def apply(d: DialectNode): DomainEntity                           = DomainEntity(None, d, Fields(), Annotations())
   def apply(d: DialectNode, annotations: Annotations): DomainEntity = DomainEntity(None, d, Fields(), annotations)
 }

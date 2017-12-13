@@ -16,7 +16,7 @@ import org.yaml.model._
 import scala.collection.mutable
 
 /**
-  * Created by Pavel Petrochenko on 12/09/17.
+  * Dialect.
   */
 case class Dialect(name: String,
                    version: String,
@@ -31,35 +31,35 @@ case class Dialect(name: String,
   def knows(nodeType: String): Option[DialectNode] = {
     findNodeType(nodeType, Seq(root), Set(root))
   }
-  val external = new DialectNode("ExternalEntity", Namespace.Meta)
-  val externalIri = Namespace.Meta.+("ExternalEntity").iri()
+  val external            = new DialectNode("ExternalEntity", Namespace.Meta)
+  val externalIri: String = (Namespace.Meta + "ExternalEntity").iri()
 
-  private def findNodeType(nodeType: String, nodes: Seq[DialectNode], visited: Set[DialectNode] = Set()): Option[DialectNode] = {
-    if (nodeType==externalIri){
-      Some(external);
-    }
-    else if (nodes.isEmpty) {
-      None
-    } else {
+  private def findNodeType(nodeType: String,
+                           nodes: Seq[DialectNode],
+                           visited: Set[DialectNode] = Set()): Option[DialectNode] = {
+    if (nodeType == externalIri) Some(external)
+    else if (nodes.isEmpty) None
+    else {
       val node = nodes.head
       node.`type`.find(_.iri() == nodeType) match {
         case Some(_) => Some(node)
         case None =>
-          val types = node.mappings().flatMap(mapping => Seq(mapping.range) ++ mapping.unionTypes.getOrElse(Seq()))
+          val types = node.mappings().flatMap(mapping => Seq(mapping.range) ++ mapping.unionTypes)
+
           val dialectNodes: Set[DialectNode] = types
-            .filter(_.isInstanceOf[DialectNode])
-            .filter(n => !visited.contains(n.asInstanceOf[DialectNode]))
+            .collect { case dn: DialectNode => dn }
+            .filter(!visited.contains(_))
             .toSet
-            .asInstanceOf[Set[DialectNode]]
+
           findNodeType(nodeType, dialectNodes.toSeq ++ nodes.tail, visited + node)
       }
     }
   }
 
-  var jsonLDrefiner: Option[Refiner] = None
+  var jsonLDRefiner: Option[Refiner]   = None
   var ramlRefiner: Option[RamlRefiner] = None
 
-  def header: String           = ("#%" + name + " " + version).trim
+  def header: String = ("#%" + name + " " + version).trim
 }
 
 trait ResolverFactory {
@@ -72,7 +72,7 @@ object NullReferenceResolverFactory extends ResolverFactory {
 }
 
 trait LocalNameProviderFactory {
-  def apply(u:BaseUnit): LocalNameProvider
+  def apply(u: BaseUnit): LocalNameProvider
 }
 
 trait ReferenceResolver {
@@ -92,7 +92,7 @@ object NullReferenceResolver extends ReferenceResolver {
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
-  val referencedDocuments: Map[String, BaseUnit]=Map();
+  val referencedDocuments: Map[String, BaseUnit] = Map()
 }
 
 trait LocalNameProvider {
@@ -104,8 +104,6 @@ trait RamlRefiner {
 trait Refiner {
   def refine(root: DomainEntity, resolver: ReferenceResolver)
 }
-
-
 
 case class DialectPropertyMapping(name: String,
                                   range: Type,
@@ -135,13 +133,12 @@ case class DialectPropertyMapping(name: String,
 
   def scalaName: String = scalaNameOverride.getOrElse(name)
 
-
   def isScalar: Boolean = range match {
     case _: Type.Scalar => true
     case _              => false
   }
 
-  def enumValues = enum
+  def enumValues: Option[Seq[String]] = enum
 
   def isMap: Boolean = hash.isDefined
 
@@ -228,7 +225,6 @@ class FieldValueDiscriminator(val dialectPropertyMapping: DialectPropertyMapping
     }
     buf.toList
   }
-
 }
 
 object FieldValueDiscriminator {
@@ -260,7 +256,7 @@ trait Builtins extends LocalNameProvider with ReferenceResolver {
     this
   }
 
-  val referencedDocuments: Map[String, BaseUnit]=Map()
+  val referencedDocuments: Map[String, BaseUnit] = Map()
 }
 
 trait TypeBuiltins extends Builtins {
@@ -290,11 +286,9 @@ object TypeBuiltins {
 
 }
 
-
-
-class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], override  val referencedDocuments: Map[String, BaseUnit])(
-    implicit val ctx: ParserContext)
-    // extends RamlSpecParser
+class BasicResolver(root: Root,
+                    val externals: List[DialectPropertyMapping],
+                    override val referencedDocuments: Map[String, BaseUnit])(implicit val ctx: ParserContext)
     extends TypeBuiltins {
 
   val REGEX_URI =
@@ -318,12 +312,15 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ove
   val resolvedExternals: mutable.Set[String] = mutable.Set.empty
 
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] =
-    declarationsFromLibraries.get(name).orElse(declarationsFromFragments.get(name)).map(
-      x=>{
-        val res:DomainEntity=x.link(name)
-        res
-      }
-    )
+    declarationsFromLibraries
+      .get(name)
+      .orElse(declarationsFromFragments.get(name))
+      .map(
+        x => {
+          val res: DomainEntity = x.link(name)
+          res
+        }
+      )
 
   def resolveBasicRef(name: String): String =
     if (Option(name).isEmpty) {
@@ -361,35 +358,35 @@ class BasicResolver(root: Root, val externals: List[DialectPropertyMapping], ove
     // val entries = Entries(ast)
 
     referencedDocuments.foreach {
-      case (namespace:String, unit:BaseUnit) => {
-        if (unit.isInstanceOf[Module]) {
-            unit.asInstanceOf[Module].declares.foreach(r => {
-              val entity = r.asInstanceOf[DomainEntity]
-              if (entity.linkValue.isDefined) {
-                declarationsFromLibraries.put(namespace + "." + entity.linkValue.get, entity)
-              }
-            })
-        }
-        else {
-          val ent = retrieveDomainEntity(unit)
-          unit match {
-            case _: Fragment =>
-              declarationsFromFragments.put(namespace, ent)
-            case _ =>
-              ent.definition.props.values.foreach(p => {
-                if (p.isMap)
-                  ent
-                    .entities(p)
-                    .foreach(decl => {
-                      if (decl.linkValue.isDefined) {
-                        declarationsFromLibraries.put(namespace + "." + decl.linkValue.get, decl)
-                      }
-
-                  })
+      case (namespace: String, unit: BaseUnit) =>
+        unit match {
+          case module: Module =>
+            module.declares
+              .foreach(r => {
+                val entity = r.asInstanceOf[DomainEntity]
+                if (entity.linkValue.isDefined) {
+                  declarationsFromLibraries.put(namespace + "." + entity.linkValue.get, entity)
+                }
               })
-          }
+          case _ =>
+            val ent = retrieveDomainEntity(unit)
+            unit match {
+              case _: Fragment =>
+                declarationsFromFragments.put(namespace, ent)
+              case _ =>
+                ent.definition.props.values.foreach(p => {
+                  if (p.isMap)
+                    ent
+                      .entities(p)
+                      .foreach(decl => {
+                        if (decl.linkValue.isDefined) {
+                          declarationsFromLibraries.put(namespace + "." + decl.linkValue.get, decl)
+                        }
+
+                      })
+                })
+            }
         }
-      }
     }
 
     root.parsed.document.toOption[YMap].foreach { map =>
@@ -456,47 +453,44 @@ object BasicResolver {
     new BasicResolver(root, externals, uses)
 }
 
-class ParsedPath(val components:Array[String]){
+class ParsedPath(val components: Array[String]) {
 
-  override def toString():String={
-    components.mkString("/");
+  override def toString: String = {
+    components.mkString("/")
   }
 
-  def dir(): ParsedPath ={
-    new ParsedPath(this.components.toList.dropRight(1).toArray);
+  def dir(): ParsedPath = {
+    new ParsedPath(this.components.toList.dropRight(1).toArray)
   }
 
-  def resolve(s:ParsedPath):ParsedPath={
-    var i=0;
-    val min=Math.min(s.components.length,this.components.length);
-    while (i<min && s.components(i)==components(i)){
-       i= i + 1;
+  def resolve(s: ParsedPath): ParsedPath = {
+    var i   = 0
+    val min = Math.min(s.components.length, this.components.length)
+    while (i < min && s.components(i) == components(i)) {
+      i = i + 1
     }
-    var tail:List[String]=s.components.takeRight(s.components.length-i).toList;
-    while (i<this.components.length){
-      tail=List("..").:::(tail);
-      i=i + 1;
+    var tail: List[String] = s.components.takeRight(s.components.length - i).toList
+    while (i < this.components.length) {
+      tail = List("..").:::(tail)
+      i = i + 1
     }
     new ParsedPath(tail.toArray)
   }
 }
-object ParsedPath{
-  def apply(p:String):ParsedPath={
+object ParsedPath {
+  def apply(p: String): ParsedPath = {
     new ParsedPath(p.split('/'))
   }
 }
 
-class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPropertyMapping]) extends TypeBuiltins{
+class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPropertyMapping]) extends TypeBuiltins {
 
-  val root=Dialect.retrieveDomainEntity(unit)
-
+  val root: DomainEntity = Dialect.retrieveDomainEntity(unit)
 
   val namespaces: mutable.Map[String, String]         = mutable.Map[String, String]()
   var declarations: mutable.Map[String, DomainEntity] = mutable.Map[String, DomainEntity]()
-  var fragments: mutable.Map[String, String] = mutable.Map[String, String]()
-  var documenEntities: mutable.Map[String, String] = mutable.Map[String, String]()
-
-
+  var fragments: mutable.Map[String, String]          = mutable.Map[String, String]()
+  var documenEntities: mutable.Map[String, String]    = mutable.Map[String, String]()
 
   {
     for {
@@ -508,35 +502,40 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
       namespaces.put(uri, name)
     }
     unit.references.foreach({
-      case f: DialectFragment =>{
-        fragments.put(f.encodes.id,f.id);
-      }
-      case d: Document=>{
-         val de=d.encodes.asInstanceOf[DomainEntity];
-         d.annotations.find(classOf[Aliases]).foreach(aliases=>{
-           aliases.aliases.foreach(a=>{
-             de.definition.mappings().filter(x=>x.isMap).foreach(m=>{
-                          de.entities(m).foreach(vocEntity=>{
-                              if (vocEntity.linkValue.isDefined) {
-                                documenEntities.put(vocEntity.id, a._1 + "." + vocEntity.linkValue.get)
-                              }
-                          })})
-           })
-         })
-      }
-      case m: Module=>{
-        m.annotations.find(classOf[Aliases]).foreach(aliases=>{
-          aliases.aliases.foreach(a=>{
-            m.declares.foreach(declEntity=>{
-                          val linkValue = declEntity.asInstanceOf[DomainEntity].linkValue
-                          if (linkValue.isDefined) {
-                            documenEntities.put(declEntity.id, a._1 + "." + linkValue.get)
-                          }
-                        })
+      case f: DialectFragment =>
+        fragments.put(f.encodes.id, f.id)
+      case d: Document =>
+        val de = d.encodes.asInstanceOf[DomainEntity]
+        d.annotations
+          .find(classOf[Aliases])
+          .foreach(aliases => {
+            aliases.aliases.foreach(a => {
+              de.definition
+                .mappings()
+                .filter(x => x.isMap)
+                .foreach(m => {
+                  de.entities(m)
+                    .foreach(vocEntity => {
+                      if (vocEntity.linkValue.isDefined) {
+                        documenEntities.put(vocEntity.id, a._1 + "." + vocEntity.linkValue.get)
+                      }
+                    })
+                })
+            })
           })
-        })
-
-      }
+      case m: Module =>
+        m.annotations
+          .find(classOf[Aliases])
+          .foreach(aliases => {
+            aliases.aliases.foreach(a => {
+              m.declares.foreach(declEntity => {
+                val linkValue = declEntity.asInstanceOf[DomainEntity].linkValue
+                if (linkValue.isDefined) {
+                  documenEntities.put(declEntity.id, a._1 + "." + linkValue.get)
+                }
+              })
+            })
+          })
 
       case _ =>
     })
@@ -550,21 +549,20 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
   override def resolveToEntity(root: Root, name: String, t: Type): Option[DomainEntity] = None
 
   override def localName(uri: String, property: DialectPropertyMapping): String = {
-    if (fragments.contains(uri)){
-       val furi=fragments.get(uri).get;
-       val ruri=unit.location;
-       val relative=ParsedPath(ruri).dir().resolve(ParsedPath(furi));
-       val pp=relative.toString();
-       "!include " + pp
+    if (fragments.contains(uri)) {
+      val furi     = fragments(uri)
+      val ruri     = unit.location
+      val relative = ParsedPath(ruri).dir().resolve(ParsedPath(furi))
+      val pp       = relative.toString()
+      "!include " + pp
     }
     // this is reference to entity in the document (vocabulary)
-    else if (documenEntities.contains(uri)){
-      val furi=documenEntities.get(uri).get;
+    else if (documenEntities.contains(uri)) {
+      val furi = documenEntities(uri)
       furi
-    }
-    else {
+    } else {
       val foundLocalName = for {
-        entity <- declarations.get(uri)
+        entity      <- declarations.get(uri)
         keyProperty <- entity.definition.keyProperty
       } yield {
         entity.string(keyProperty).getOrElse(uri)
@@ -585,7 +583,7 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
                   uri.indexOf(p) > -1
               } match {
                 case Some((p, v)) => uri.replace(p, s"$v.")
-                case _ => uri
+                case _            => uri
               }
             }
           }
@@ -593,10 +591,10 @@ class BasicNameProvider(unit: BaseUnit, val namespaceDeclarators: List[DialectPr
     }
   }
 
-  override def resolveRef(ref: String) = None
+  override def resolveRef(ref: String): Option[String] = None
 }
 
-class DialectNode(val shortName: String, val namespace: Namespace) extends Type with Obj {
+class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
 
   override val dynamicType: Boolean                       = true
   protected var typeCalculator: Option[TypeCalculator]    = None
@@ -605,7 +603,7 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Type 
   val keyProperty: Option[DialectPropertyMapping]         = None
   var nameProvider: Option[LocalNameProviderFactory]      = None
   val props: mutable.Map[String, DialectPropertyMapping]  = new mutable.LinkedHashMap()
-  var dialect: Option[Dialect]                    = None
+  var dialect: Option[Dialect]                            = None
 
   def fromDialect: Option[Dialect] = dialect
 

@@ -8,14 +8,13 @@ import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.core.vocabulary.ValueType
 
 /**
-  * Created by Pavel Petrochenko on 13/09/17.
+  *
   */
-class DialectEntityModel (domainEntity: DomainEntity) extends DomainElementModel {
-
+class DialectEntityModel(domainEntity: DomainEntity) extends DomainElementModel {
 
   override val fields: List[Field] = {
     val fields = domainEntity.fields.fieldsMeta()
-    val props = domainEntity.definition.props.values.toList
+    val props  = domainEntity.definition.props.values.toList
 
     fields.sortBy { field =>
       props.indexWhere(prop => prop.field == field)
