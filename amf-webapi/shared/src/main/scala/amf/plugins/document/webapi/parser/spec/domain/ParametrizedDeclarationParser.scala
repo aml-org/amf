@@ -23,7 +23,7 @@ case class ParametrizedDeclarationParser(
         val declaration =
           producer(name)
             .add(Annotations(node.value))
-            .set(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
+        declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
         val variables = entry.value
           .as[YMap]
           .entries
