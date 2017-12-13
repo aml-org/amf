@@ -44,7 +44,7 @@ class AMFCompiler(val url: String,
 
   private def parseSyntax(content: Content): Either[Content, Root] = {
     val parsed = content.mime
-      .fold(mediaType)(mime => Some(mime))
+      .orElse(mediaType)
       .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
 
     parsed match {
@@ -65,7 +65,7 @@ class AMFCompiler(val url: String,
   def parseExternalFragment(content: Content): Future[BaseUnit] = {
     val result = ExternalDomainElement().withRaw(content.stream.toString) //
     content.mime.foreach(mime => result.withMediaType(mime))
-    Future.successful(ExternalFragment().withEncodes(result))
+    Future.successful(ExternalFragment().withId(content.url).withEncodes(result))
   }
 
   private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
@@ -93,8 +93,9 @@ class AMFCompiler(val url: String,
           }
         }
       case None =>
-        val fragment = ExternalFragment().withEncodes(
-          ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
+        val fragment = ExternalFragment()
+          .withId(document.location)
+          .withEncodes(ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
         Future.successful(fragment)
     }
   }

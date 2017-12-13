@@ -1,0 +1,51 @@
+#%RAML 1.0
+types:
+  song: |
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "required": true,
+      "properties": {
+        "songId": {
+          "type": "string",
+          "required": true,
+          "minLength": 36,
+          "maxLength": 36
+        },
+        "songTitle": {
+          "type": "string",
+          "required": true
+        },
+        "albumId": {
+          "type": "string",
+          "required": true,
+          "minLength": 36,
+          "maxLength": 36
+        }
+      }
+    }
+title: Jukebox API
+protocols:
+  - http
+baseUri: jukebox.api.com/
+version: v1
+resourceTypes:
+  collection:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: song
+              example: |
+                <<exampleItem>>
+/songs:
+  type:
+    collection:
+      exampleItem: |
+        {
+          "songId": "550e8400-e29b-41d4-a716-446655440000",
+          "songTitle": "Get Lucky",
+          "albumId": "183100e3-0e2b-4404-a716-66104d440550"
+        }
+  get:

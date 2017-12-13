@@ -26,6 +26,9 @@ object Core extends PlatformSecrets {
     platform.registerWrapper(amf.core.metamodel.document.ExternalFragmentModel) {
       case f: amf.core.model.document.ExternalFragment => ExternalFragment(f)
     }
+    platform.registerWrapper(amf.core.metamodel.domain.ExternalDomainElementModel) {
+      case f: amf.core.model.domain.ExternalDomainElement => ExternalDomainElement(f)
+    }
     platform.registerWrapper(amf.core.metamodel.domain.DomainElementModel) {
       case e: amf.core.model.domain.DomainElement => DomainElement(e)
     }
