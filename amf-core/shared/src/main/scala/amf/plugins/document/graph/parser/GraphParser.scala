@@ -51,7 +51,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case Some(t) => findType(t)
         case None =>
           ctx.violation(id, s"Error parsing JSON-LD node, unknown @types $stringTypes", map)
-          None // todo review with pedro Obj empty?
+          None
       }
     }
 
@@ -222,10 +222,11 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           val instance = modelType.modelInstance
           instance.annotations ++= annotations
           instance
-      case _ => AMFDomainRegistry.buildType(modelType) match {
-        case Some(builder) => builder
-        case _             => throw new Exception(s"Cannot find builder for node type $modelType")
-      }
+      case _ =>
+        AMFDomainRegistry.buildType(modelType) match {
+          case Some(builder) => builder
+          case _             => throw new Exception(s"Cannot find builder for node type $modelType")
+        }
     }
   }
 }

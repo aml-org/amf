@@ -144,7 +144,7 @@ trait Platform {
       case "yaml" | "yam"   => Option(Mimes.`APPLICATION/YAML`)
       case "raml"           => Option(Mimes.`APPLICATION/RAML+YAML`)
       case "openapi"        => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
-      case "jsonld" | "amf" => Option(Mimes.`APPLICATION/AMF+JSONLD`)
+      case "jsonld" | "amf" => Option(Mimes.`APPLICATION/LD+JSONLD`)
       case _                => None
     }
 

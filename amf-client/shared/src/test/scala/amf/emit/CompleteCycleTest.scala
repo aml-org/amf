@@ -657,6 +657,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("jukebox-api.raml", "jukebox-api.jsonld", RamlYamlHint, Amf, referencesPath)
   }
 
+  test("External Fragment raml to raml") {
+    cycle("jukebox-api.raml", "jukebox-api.raml.raml", RamlYamlHint, Raml, referencesPath)
+  }
+
+  test("External Fragment amf to raml") {
+    cycle("jukebox-api.jsonld", "jukebox-api.raml.raml", AmfJsonHint, Raml, referencesPath)
+  }
+
   test("Facets raml to raml") {
     cycle("type-facets.raml", RamlYamlHint)
   }

@@ -5,8 +5,8 @@ import amf.core.client.{Generator, Parser, Resolver, Validator}
 import amf.core.plugins.AMFPlugin
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document._
-import amf.model.domain._
 import amf.validation.AMFValidationReport
+import amf.model.domain._
 
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.Promise
@@ -28,6 +28,9 @@ object Core extends PlatformSecrets {
     }
     platform.registerWrapper(amf.core.metamodel.document.ExternalFragmentModel) {
       case f: amf.core.model.document.ExternalFragment => ExternalFragment(f)
+    }
+    platform.registerWrapper(amf.core.metamodel.domain.ExternalDomainElementModel) {
+      case f: amf.core.model.domain.ExternalDomainElement => ExternalDomainElement(f)
     }
     platform.registerWrapper(amf.core.metamodel.domain.DomainElementModel) {
       case e: amf.core.model.domain.DomainElement => DomainElement(e)
