@@ -51,7 +51,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
       case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
-      case _                                     => throw new UnsupportedOperationException("Unsupported fragment type")
+      case _                                     => throw new UnsupportedOperationException(s"Unsupported fragment type: $fragment")
     }
 
     val usage = fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
@@ -79,7 +79,8 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
       RamlCreativeWorkItemsEmitter(documentationItem.encodes, ordering, withExtention = true).emitters()
   }
 
-  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering) extends RamlFragmentTypeEmitter {
+  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
+      extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DataType
 
