@@ -140,11 +140,12 @@ trait Platform {
 
   protected def mimeFromExtension(extension: String): Option[String] =
     extension match {
-      case "json"         => Option(Mimes.`APPLICATION/JSON`)
-      case "yaml" | "yam" => Option(Mimes.`APPLICATION/YAML`)
-      case "raml"         => Option(Mimes.`APPLICATION/RAML+YAML`)
-      case "openapi"      => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
-      case _              => None
+      case "json"           => Option(Mimes.`APPLICATION/JSON`)
+      case "yaml" | "yam"   => Option(Mimes.`APPLICATION/YAML`)
+      case "raml"           => Option(Mimes.`APPLICATION/RAML+YAML`)
+      case "openapi"        => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
+      case "jsonld" | "amf" => Option(Mimes.`APPLICATION/AMF+JSONLD`)
+      case _                => None
     }
 
   protected def extension(path: String): Option[String] = {

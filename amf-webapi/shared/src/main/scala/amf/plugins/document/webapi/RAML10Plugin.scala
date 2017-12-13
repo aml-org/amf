@@ -4,7 +4,7 @@ import amf.ProfileNames.RAML
 import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.model.document._
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
+import org.yaml.parser.YamlParser
 
 object RAML10Plugin extends BaseWebApiPlugin {
 
@@ -51,14 +52,27 @@ object RAML10Plugin extends BaseWebApiPlugin {
   def inlineExternalReferences(root: Root): Unit = {
     root.references.filter(_.isExternalFragment).foreach { ref =>
       ref.unit match {
-        case external: ExternalFragment =>
-          ref.origin.ast match {
-            case mut: MutRef => mut.target = Some(YNode(external.encodes.raw))
-            case _           =>
-          }
+        case e: ExternalFragment => inlineFragment(ref.origin.ast, e.encodes)
       }
     }
   }
+
+  private def inlineFragment(ast: YNode, encodes: ExternalDomainElement): Unit = {
+    ast match {
+      case mut: MutRef =>
+        if (isRamlOrYaml(encodes)) inlineYNode(mut, encodes.raw)
+        else inlineYScalar(mut, encodes.raw)
+      case _ =>
+    }
+  }
+
+  private def inlineYNode(ref: MutRef, raw: String): Unit = {
+    YamlParser(raw).parse() match {
+      case Seq(document: YDocument) => ref.target = Some(document.node)
+    }
+  }
+
+  private def inlineYScalar(ref: MutRef, raw: String): Unit = ref.target = Some(YNode(raw))
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case _: Overlay         => true
@@ -106,4 +120,7 @@ object RAML10Plugin extends BaseWebApiPlugin {
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit): BaseUnit = new RamlResolutionPipeline().resolve(unit)
+
+  private def isRamlOrYaml(encodes: ExternalDomainElement) = documentSyntaxes.contains(encodes.mediaType)
+
 }

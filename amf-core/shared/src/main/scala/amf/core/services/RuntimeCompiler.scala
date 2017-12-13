@@ -10,7 +10,7 @@ trait RuntimeCompiler {
   def build(url: String,
             remote: Platform,
             base: Option[Context],
-            mediaType: String,
+            mediaType: Option[String],
             vendor: String,
             referenceKind: ReferenceKind,
             cache: Cache,
@@ -25,7 +25,7 @@ object RuntimeCompiler {
 
   def apply(url: String,
             remote: Platform,
-            mediaType: String,
+            mediaType: Option[String],
             vendor: String,
             base: Option[Context] = None,
             referenceKind: ReferenceKind = UnspecifiedReference,

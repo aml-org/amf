@@ -16,23 +16,23 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   private val basePath = "file://amf-client/shared/src/test/resources/references/fragments/"
-  test("Detect Raml Data Type Fragment") {
+  ignore("Detect Raml Data Type Fragment") {
     assertHeader("data-type-without-header.raml", Some(RamlFragmentHeader.Raml10DataType))
   }
 
-  test("Detect Raml ResourceType") {
+  ignore("Detect Raml ResourceType") {
     assertHeader("resource-type-without-header.raml", Some(RamlFragmentHeader.Raml10ResourceType))
   }
 
-  test("Detect Raml Trait") {
+  ignore("Detect Raml Trait") {
     assertHeader("trait-without-header.raml", Some(RamlFragmentHeader.Raml10Trait))
   }
 
-  test("Detect Raml DocumentationItem") {
+  ignore("Detect Raml DocumentationItem") {
     assertHeader("documentation-item-without-header.raml", Some(RamlFragmentHeader.Raml10DocumentationItem))
   }
 
-  test("Detect Raml Annotation Type Declaration") {
+  ignore("Detect Raml Annotation Type Declaration") {
     assertHeader("annotation-without-header.raml", Some(RamlFragmentHeader.Raml10AnnotationTypeDeclaration))
   }
 
@@ -48,7 +48,7 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
     assertHeader("security-scheme.raml", Some(RamlFragmentHeader.Raml10SecurityScheme))
   }
 
-  test("Detect Raml SecurityScheme without header") {
+  ignore("Detect Raml SecurityScheme without header") {
     assertHeader("security-scheme-without-header.raml", Some(RamlFragmentHeader.Raml10SecurityScheme))
   }
 

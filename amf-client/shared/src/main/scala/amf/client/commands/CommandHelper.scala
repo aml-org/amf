@@ -39,7 +39,8 @@ trait CommandHelper {
     val dialectFutures = config.dialects.map { dialect =>
       PlatformDialectRegistry.registerDialect(dialect)
     }
-    Future.sequence(dialectFutures).map[Unit] { _ => }
+    Future.sequence(dialectFutures).map[Unit] { _ =>
+      }
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
@@ -48,7 +49,7 @@ trait CommandHelper {
     RuntimeCompiler(
       inputFile,
       platform,
-      effectiveMediaType(config.inputMediaType, config.inputFormat),
+      Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
       effectiveVendor(config.inputMediaType, config.inputFormat)
     )
   }
@@ -68,35 +69,36 @@ trait CommandHelper {
           effectiveVendor(config.inputMediaType, config.inputFormat),
           generateOptions
         )
-      case None    => Future {
-        config.stdout.print(
-          RuntimeSerializer(
-            unit,
-            effectiveMediaType(config.outputMediaType, config.inputFormat),
-            effectiveVendor(config.outputMediaType, config.inputFormat),
-            generateOptions
+      case None =>
+        Future {
+          config.stdout.print(
+            RuntimeSerializer(
+              unit,
+              effectiveMediaType(config.outputMediaType, config.inputFormat),
+              effectiveVendor(config.outputMediaType, config.inputFormat),
+              generateOptions
+            )
           )
-        )
-      }
+        }
     }
   }
 
   def effectiveMediaType(mediaType: Option[String], vendor: Option[String]) = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
-      case None => vendor match {
-        case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
-          AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
-        case _ => "*/*"
-      }
+      case None =>
+        vendor match {
+          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
+            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
+          case _ => "*/*"
+        }
     }
   }
-
 
   def effectiveVendor(mediaType: Option[String], vendor: Option[String]): String = {
     vendor match {
       case Some(effectiveVendor) => effectiveVendor
-      case None => "Unknown"
+      case None                  => "Unknown"
     }
   }
 

@@ -18,7 +18,7 @@ import scala.concurrent.Future.failed
 class AMFCompiler(val url: String,
                   val remote: Platform,
                   val base: Option[Context],
-                  val mediaType: String,
+                  val mediaType: Option[String],
                   val vendor: String,
                   val referenceKind: ReferenceKind,
                   private val cache: Cache,
@@ -42,22 +42,36 @@ class AMFCompiler(val url: String,
 
   private def compile() = resolve().map(parseSyntax).flatMap(parseDomain)
 
-  private def parseSyntax(content: Content): Root = {
-    var effective = content.mime.getOrElse(mediaType)
-    val parsed = AMFPluginsRegistry.syntaxPluginForMediaType(effective) match {
-      case Some(syntaxPlugin) => syntaxPlugin.parse(effective, content.stream)
-      case None if effective != mediaType =>
-        effective = mediaType
-        AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
-          case Some(syntaxPlugin) => syntaxPlugin.parse(effective, content.stream)
-          case None               => None
-        }
-      case _ => None
-    }
+  private def parseSyntax(content: Content): Either[Content, Root] = {
+    val parsed = content.mime
+      .fold(mediaType)(mime => Some(mime))
+      .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
+
     parsed match {
-      case Some(doc) =>
-        Root(doc, content.url, effective, Seq(), referenceKind, vendor, content.stream.toString)
-      case _ => throw new Exception(s"Unsupported media type $mediaType, ${content.mime.getOrElse("")}")
+      case Some(document) =>
+        Right(
+          Root(document,
+               content.url,
+               content.mime.getOrElse(mediaType.getOrElse("")),
+               Seq(),
+               referenceKind,
+               vendor,
+               content.stream.toString))
+      case None =>
+        Left(content)
+    }
+  }
+
+  def parseExternalFragment(content: Content): Future[BaseUnit] = {
+    val result = ExternalDomainElement().withRaw(content.stream.toString) //
+    content.mime.foreach(mime => result.withMediaType(mime))
+    Future.successful(ExternalFragment().withEncodes(result))
+  }
+
+  private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
+    parsed match {
+      case Left(content)   => parseExternalFragment(content)
+      case Right(document) => parseDomain(document)
     }
   }
 
@@ -73,8 +87,9 @@ class AMFCompiler(val url: String,
           domainPlugin.parse(documentWithReferences, ctx, remote) match {
             case Some(baseUnit) => baseUnit.withRaw(document.raw)
             case None =>
-              throw new Exception(
-                s"Cannot parse domain model for media type ${document.mediatype} with plugin ${domainPlugin.ID} $domainPlugin")
+              val fragment = ExternalFragment().withEncodes(
+                ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
+              fragment
           }
         }
       case None =>
@@ -92,7 +107,7 @@ class AMFCompiler(val url: String,
       .filter(_.isRemote)
       .foreach(link => {
         references += link
-          .resolve(remote, Some(context), root.mediatype, domainPlugin.ID, cache, ctx)
+          .resolve(remote, Some(context), None, domainPlugin.ID, cache, ctx)
           .map(ParsedReference(_, link))
       })
 
@@ -101,12 +116,18 @@ class AMFCompiler(val url: String,
 
   private def resolve(): Future[Content] = remote.resolve(location, base)
 
-  def root(): Future[Root] = resolve().map(parseSyntax).flatMap { document: Root =>
-    AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document)) match {
-      case Some(domainPlugin) =>
-        parseReferences(document, domainPlugin)
-      case None => Future { document }
-    }
+  def root(): Future[Root] = resolve().map(parseSyntax).flatMap {
+    case Right(document: Root) =>
+      AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document)) match {
+        case Some(domainPlugin) =>
+          parseReferences(document, domainPlugin)
+        case None =>
+          Future {
+            document
+          }
+      }
+    case Left(content) =>
+      throw new Exception(s"Cannot parse document with mime type ${content.mime.getOrElse("none")}")
   }
 }
 
@@ -118,7 +139,7 @@ object AMFCompiler {
         (url: String,
          remote: Platform,
          base: Option[Context],
-         mediaType: String,
+         mediaType: Option[String],
          vendor: String,
          referenceKind: ReferenceKind,
          cache: Cache,

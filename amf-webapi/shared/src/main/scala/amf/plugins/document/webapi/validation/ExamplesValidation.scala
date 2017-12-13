@@ -66,7 +66,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
     RuntimeValidator.reset()
     val overridePlatform = TrunkPlatform(example.value)
     try {
-      RuntimeCompiler("http://amfparser.org/test_payload", overridePlatform, mediaType, PayloadPlugin.ID) flatMap { payload =>
+      RuntimeCompiler("http://amfparser.org/test_payload", overridePlatform, Option(mediaType), PayloadPlugin.ID) flatMap { payload =>
         // we are parsing using Payload hint, this MUST be a payload fragment encoding a data node
         val payloadDataNode = payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode]
         PayloadValidation(platform, shape).validate(payloadDataNode) map { report =>
@@ -81,8 +81,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
                 targetProperty = Some((Namespace.Document + "value").iri()),
                 ParserSideValidations.ExampleValidationErrorSpecification.id(),
                 position = example.annotations.find(classOf[LexicalInformation]),
-                source = example
-              )
+              source = example)
             )
           }
         }
