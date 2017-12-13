@@ -11,9 +11,8 @@ object FragmentsTypesModels {
 
   object DocumentationItemFragmentModel extends FragmentModel {
 
-    //  val UserDocumentation = Field(UserDocumentationModel, Document + "UserDocumentation")
+    override val fields: List[Field] = FragmentModel.fields
 
-    override val fields: List[Field]     = FragmentModel.fields
     override val `type`: List[ValueType] = List(Document + "UserDocumentation") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = DocumentationItemFragment()
