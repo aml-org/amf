@@ -728,4 +728,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("SecurityScheme without name raml to oas") {
     cycle("unnamed-security-scheme.raml", "unnamed-security-scheme.raml.json", RamlYamlHint, Oas)
   }
+
+  test("Multiple media types test") {
+    cycle("multiple-media-types.raml", "multiple-media-types.raml.raml", RamlYamlHint, Raml)
+  }
 }

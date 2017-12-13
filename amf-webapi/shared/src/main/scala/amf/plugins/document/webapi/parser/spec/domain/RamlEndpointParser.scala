@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode, YType}
 
 import scala.collection.mutable
 
@@ -38,9 +38,11 @@ case class RamlEndpointParser(entry: YMapEntry,
   }
 
   private def parseEndpoint(endpoint: EndPoint) =
-    entry.value.to[YMap] match {
-      case Left(_) => collector += endpoint
-      case Right(map) =>
+    entry.value.tagType match {
+      case YType.Null => collector += endpoint
+      case _ =>
+        val map = entry.value.as[YMap]
+
         ctx.closedShape(endpoint.id, map, "endPoint")
 
         map.key("displayName", entry => {

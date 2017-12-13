@@ -57,26 +57,21 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     RuntimeCompiler(
       validationProfilePath,
       platform,
-      "application/yaml",
+      Option("application/yaml"),
       RAMLVocabulariesPlugin.ID,
     ).map { case parsed: Document => parsed.encodes }
       .map {
         case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
           val profile = ParsedValidationProfile(encoded)
           val domainPlugin = profilesPlugins.get(profile.name) match {
-            case Some(plugin) => {
-              plugin
-            }
-            case None         => {
+            case Some(plugin) => plugin
+            case None         =>
               profilesPlugins.get(profile.baseProfileName.getOrElse("AMF")) match {
-                case Some(plugin) => {
+                case Some(plugin) =>
                   plugin
-                }
-                case None         => {
+                case None         =>
                   throw new Exception(s"Plugin for custom validation profile ${profile.name}, ${profile.baseProfileName} not found")
-                }
               }
-            }
           }
           customValidationProfiles += (profile.name -> {() => profile })
           customValidationProfilesPlugins += (profile.name -> domainPlugin)

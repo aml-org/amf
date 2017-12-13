@@ -1,9 +1,7 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.Root
-import amf.core.parser._
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
-import org.yaml.model.YMap
 
 /**
   * Raml header comment
@@ -12,7 +10,7 @@ case class RamlHeader(text: String)
 
 trait RamlFragment
 
-object RamlHeader  {
+object RamlHeader {
 
   object Raml10          extends RamlHeader("%RAML 1.0")
   object Raml10Library   extends RamlHeader("%RAML 1.0 Library")
@@ -48,20 +46,23 @@ object RamlFragmentHeader {
 
   def fromRoot(root: Root): Option[RamlHeader] = root.parsed.comment.flatMap(c => fromText(c.metaText)) match {
     case Some(header) => Option(header)
-    case _ =>
-      root.parsed.document
-        .toOption[YMap]
-        .flatMap(m =>
-          FragmentTypes(m) match {
-            case FragmentTypes.DataTypeFragment          => Some(Raml10DataType)
-            case FragmentTypes.DocumentationItemFragment => Some(Raml10DocumentationItem)
-            case FragmentTypes.ResourceTypeFragment      => Some(Raml10ResourceType)
-            case FragmentTypes.TraitFragment             => Some(Raml10Trait)
-            case FragmentTypes.AnnotationTypeFragment    => Some(Raml10AnnotationTypeDeclaration)
-            case FragmentTypes.SecuritySchemeFragment    => Some(Raml10SecurityScheme)
-            case FragmentTypes.NamedExampleFragment      => Some(Raml10NamedExample)
-            case _                                       => None // UnknownFragment
-        })
+    case _            =>
+//      root.parsed.document
+//        .toOption[YMap]
+//        .flatMap(m =>
+//          FragmentTypes(m) match {
+//            case FragmentTypes.DataTypeFragment          => Some(Raml10DataType)
+//            case FragmentTypes.DocumentationItemFragment => Some(Raml10DocumentationItem)
+//            case FragmentTypes.ResourceTypeFragment      => Some(Raml10ResourceType)
+//            case FragmentTypes.TraitFragment             => Some(Raml10Trait)
+//            case FragmentTypes.AnnotationTypeFragment    => Some(Raml10AnnotationTypeDeclaration)
+//            case FragmentTypes.SecuritySchemeFragment    => Some(Raml10SecurityScheme)
+//            case FragmentTypes.NamedExampleFragment      => Some(Raml10NamedExample)
+//            case _                                       => None // UnknownFragment
+//        })
+      // temp comment? to work with inline fragments
+
+      None
   }
 
   def unapply(root: Root): Option[RamlHeader] = fromRoot(root)

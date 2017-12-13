@@ -76,7 +76,7 @@ object PlatformDialectRegistry extends DialectRegistry with PlatformSecrets {
 
   def registerDialect(uri: String): Future[Dialect] = {
     RuntimeValidator.disableValidationsAsync() { reenableValidations =>
-      RuntimeCompiler(uri, platform, "application/yaml", RAMLVocabulariesPlugin.ID)
+      RuntimeCompiler(uri, platform, Option("application/yaml"), RAMLVocabulariesPlugin.ID)
         .map { compiled =>
           reenableValidations()
           val dialect = new DialectLoader(compiled).loadDialect()

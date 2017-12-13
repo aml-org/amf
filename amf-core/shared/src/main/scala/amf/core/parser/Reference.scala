@@ -13,7 +13,7 @@ case class Reference(url: String, kind: ReferenceKind, ast: YNode) {
 
   def resolve(remote: Platform,
               base: Option[Context],
-              mediaType: String,
+              mediaType: Option[String],
               vendor: String,
               cache: Cache,
               ctx: ParserContext): Future[BaseUnit] = {

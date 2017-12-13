@@ -17,9 +17,11 @@ abstract class PlatformParser extends PlatformSecrets {
   protected val mediaType: String
   var parsedModel: Option[BaseUnit] = None
 
-  protected def parseAsync(url: String, overridePlatForm: Option[Platform] = None, parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
+  protected def parseAsync(url: String,
+                           overridePlatForm: Option[Platform] = None,
+                           parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
     RuntimeValidator.reset()
-    RuntimeCompiler(url, overridePlatForm.getOrElse(platform), mediaType, vendor) map { model =>
+    RuntimeCompiler(url, overridePlatForm.getOrElse(platform), Option(mediaType), vendor) map { model =>
       parsedModel = Some(model)
       model
     }
@@ -31,7 +33,9 @@ abstract class PlatformParser extends PlatformSecrets {
     * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting styl
     * @return the AMF validation report
     */
-  protected def reportValidationImplementation(profileName: String, messageStyle:String = ProfileNames.RAML): Future[AMFValidationReport] = {
+  protected def reportValidationImplementation(
+      profileName: String,
+      messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
     val maybeValidationReport = for {
       model <- parsedModel
     } yield {
@@ -53,7 +57,8 @@ abstract class PlatformParser extends PlatformSecrets {
     * @param customProfilePath path to the custom profile file
     * @return the AMF validation report
     */
-  protected def reportCustomValidationImplementation(profileName: String, customProfilePath: String): Future[AMFValidationReport] = {
+  protected def reportCustomValidationImplementation(profileName: String,
+                                                     customProfilePath: String): Future[AMFValidationReport] = {
     parsedModel match {
       case Some(model) =>
         for {
@@ -82,7 +87,7 @@ abstract class PlatformParser extends PlatformSecrets {
     case Json  => "application/json"
     case _     => s"application/${syntax.extension}"
   }
- */
+   */
 
   private def callback(handler: Handler[BaseUnit], url: String)(t: Try[BaseUnit]) = t match {
     case Success(value)     => handler.success(value)
