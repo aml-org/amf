@@ -2,7 +2,7 @@
 
 # THIS SCRIPT MUST BE EXECUTED FROM PATH (root) AND NOT FROM (root)/amf-client/js/build-scripts
 
-source ./build-scripts/buildjs.sh
+source ./amf-client/js/build-scripts/buildjs.sh
 
 cd ./amf-client/js
 

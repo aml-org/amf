@@ -8,7 +8,7 @@ if [ -z $NPM_USER ]; then
     echo "TRYING TO CREATE .npmrc"
 
     if [ "${NPM_TOKEN}" ]; then
-        echo "@mulesoft:registry=https://nexus3.build.msap.io/repository/npm-internal" >> ~/.npmrc
+        echo "@mulesoft:registry=https://nexus3.build.msap.io/repository/npm-internal/" >> ~/.npmrc
         echo "//nexus3.build.msap.io/repository/npm-internal/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 
         echo OK
