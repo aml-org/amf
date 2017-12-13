@@ -2,7 +2,7 @@ package amf.resolution.stages
 
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
-import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
+import amf.plugins.domain.webapi.models.templates.{ParametrizedTrait, Trait}
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging.merge
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
@@ -78,11 +78,11 @@ class DomainElementMergingTest extends FunSuite {
 
     val a = ParametrizedTrait()
       .withName("a")
-      .withTarget("/trait/a")
+      .withTarget(Trait().withId("/trait/a"))
 
     val b = ParametrizedTrait()
       .withName("b")
-      .withTarget("/trait/b")
+      .withTarget(Trait().withId("/trait/b"))
 
     val main = EndPoint()
       .withName("Main")

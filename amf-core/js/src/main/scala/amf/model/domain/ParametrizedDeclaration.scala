@@ -16,7 +16,7 @@ class ParametrizedDeclaration(
     private[amf] val declaration: templates.ParametrizedDeclaration)
     extends DomainElement {
   val name: String                          = declaration.name
-  val target: String                        = declaration.target
+  val target: AbstractDeclaration           = platform.wrap[AbstractDeclaration](declaration.target)
   val variables: js.Iterable[VariableValue] = Option(declaration.variables).getOrElse(Nil).map(VariableValue).toJSArray
 
   /** Set name property of this [[ParametrizedDeclaration]]. */
@@ -26,8 +26,8 @@ class ParametrizedDeclaration(
   }
 
   /** Set the target property of this [[ParametrizedDeclaration]]. */
-  def withTarget(target: String): this.type = {
-    declaration.withTarget(target)
+  def withTarget(target: AbstractDeclaration): this.type = {
+    declaration.withTarget(target.decl)
     this
   }
 
