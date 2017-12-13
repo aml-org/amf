@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
 class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(parsed: ParsedDocument, ctx: ParserContext) = {
+  override def traverse(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
     libraries(parsed.document, ctx)
     links(parsed.document)
 

@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document._
-import amf.core.model.domain.AmfObject
+import amf.core.model.domain.{AmfObject, AnnotationGraphLoader}
 import amf.core.parser.{Annotations, ParserContext}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFDomainEntityResolver
@@ -33,18 +33,23 @@ trait RamlHeaderExtractor {
 
 object DialectHeader extends RamlHeaderExtractor {
   def apply(root: Root): Boolean = comment(root) match {
-    case Some(comment: YComment) => comment.metaText match {
-      case t if t.startsWith("%RAML 1.0 Vocabulary") => true
-      case t if t.startsWith("%RAML 1.0 Dialect")    => true
-      case t if t.startsWith("%RAML 1.0")            => false
-      case t if t.startsWith("%RAML 0.8")            => false
-      case t if t.startsWith("%")                    => true
-      case _                                         => false
-    }
-    case _                                           => false
+    case Some(comment: YComment) =>
+      comment.metaText match {
+        case t if t.startsWith("%RAML 1.0 Vocabulary") => true
+        case t if t.startsWith("%RAML 1.0 Dialect")    => true
+        case t if t.startsWith("%RAML 1.0")            => false
+        case t if t.startsWith("%RAML 0.8")            => false
+        case t if t.startsWith("%")                    => true
+        case _                                         => false
+      }
+    case _ => false
   }
 }
-object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin with ValidationResultProcessor with RamlHeaderExtractor {
+object RAMLVocabulariesPlugin
+    extends AMFDocumentPlugin
+    with AMFValidationPlugin
+    with ValidationResultProcessor
+    with RamlHeaderExtractor {
 
   override val ID = "RAML Vocabularies"
 
@@ -52,24 +57,17 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
 
   val vendors = Seq("RAML Vocabularies", "RAML 1.0")
 
-  override def serializableAnnotations() = Map.empty
-
+  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     implicit val ctx: DialectContext = new DialectContext(parentContext)
-    comment(root) match {
-      case Some(comment: YComment) =>
-        val header = comment.metaText
-        if (PlatformDialectRegistry.knowsHeader(header)) {
-          Some(DialectParser(root, header, PlatformDialectRegistry).parseUnit())
-        } else {
-          None
-        }
-      case _ => None
-    }
+
+    comment(root)
+      .filter(c => PlatformDialectRegistry.knowsHeader(c.metaText))
+      .map(c => DialectParser(root, c.metaText, PlatformDialectRegistry).parseUnit())
   }
 
-  override def canUnparse(unit: BaseUnit) = unit match {
+  override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case document: Document => document.encodes.isInstanceOf[DomainEntity]
     case module: Module =>
       module.declares exists {
@@ -87,19 +85,16 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
   override def modelEntities = Seq(DialectNodeFragmentModel)
 
   // We plug-in the logic to rebuild serialised domain entities
-  override def modelEntitiesResolver: Option[AMFDomainEntityResolver] = Some(
-    new AMFDomainEntityResolver {
-      override def buildType(modelType: Obj): Option[Annotations => AmfObject] =
-        modelType match {
-          case dialectType: DialectNode => Some({ (annotations: Annotations) =>
-            DomainEntity(dialectType, annotations)
-          })
-          case _ => None
-        }
+  override def modelEntitiesResolver: Option[AMFDomainEntityResolver] = Some(DomainEntityResolver())
 
-      override def findType(typeString: String): Option[Obj] = PlatformDialectRegistry.knowsType(typeString)
+  case class DomainEntityResolver() extends AMFDomainEntityResolver {
+    override def buildType(modelType: Obj): Option[Annotations => AmfObject] = modelType match {
+      case dialectType: DialectNode => Some(annotations => DomainEntity(dialectType, annotations))
+      case _                        => None
     }
-  )
+
+    override def findType(typeString: String): Option[Obj] = PlatformDialectRegistry.knowsType(typeString)
+  }
 
   override def documentSyntaxes = Seq(
     "application/raml",
@@ -118,7 +113,8 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
     */
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
     PlatformDialectRegistry.dialects.foldLeft(Map[String, () => ValidationProfile]()) {
-      case (acc, dialect) if dialect.name.indexOf("Validation Profile") == -1 => acc.updated(dialect.name, () => new AMFDialectValidations(dialect).profile())
+      case (acc, dialect) if !dialect.name.contains("Validation Profile") =>
+        acc.updated(dialect.name, () => new AMFDialectValidations(dialect).profile())
       case (acc, _) => acc
     }
   }
@@ -126,21 +122,20 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
   /**
     * Request for validation of a particular model, profile and list of effective validations for that profile
     */
-  override def validationRequest(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, platform: Platform): Future[AMFValidationReport] = {
-    var aggregatedReport: List[AMFValidationResult] = List()
-
+  override def validationRequest(baseUnit: BaseUnit,
+                                 profile: String,
+                                 validations: EffectiveValidations,
+                                 platform: Platform): Future[AMFValidationReport] = {
     for {
       shaclReport <- RuntimeValidator.shaclValidation(baseUnit, validations)
     } yield {
 
-      // aggregating parser-side validations
-      var results = aggregatedReport.map(r => processAggregatedResult(r, "RAML", validations))
+      // todo aggregating parser-side validations ?
+      // var results = aggregatedReport.map(r => processAggregatedResult(r, "RAML", validations))
 
       // adding model-side validations
-      results ++= shaclReport.results
-        .map(r => buildValidationResult(baseUnit, r, "RAML", validations))
-        .filter(_.isDefined)
-        .map(_.get)
+      val results = shaclReport.results
+        .flatMap(r => buildValidationResult(baseUnit, r, "RAML", validations))
 
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
@@ -156,7 +151,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit) = unit // we don't support resolution in vocabularies yet
+  override def resolve(unit: BaseUnit): BaseUnit = unit // we don't support resolution in vocabularies yet
 
   /**
     * Registers the dialect located in the provided URL into the platform
@@ -166,6 +161,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with AMFValidationPlugin
   /**
     * Registers a dialect identified by the provided URL and using the provided text
     */
-  def registerDialect(url: String, dialectText: String): Future[Dialect] = PlatformDialectRegistry.registerDialect(url, dialectText)
+  def registerDialect(url: String, dialectText: String): Future[Dialect] =
+    PlatformDialectRegistry.registerDialect(url, dialectText)
 
 }

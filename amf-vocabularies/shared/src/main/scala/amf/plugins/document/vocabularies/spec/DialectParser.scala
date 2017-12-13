@@ -17,7 +17,7 @@ import org.yaml.model._
 import scala.collection.{immutable, mutable}
 
 /**
-  * Created by Pavel Petrochenko on 12/09/17.
+  * Parser.
   */
 trait DomainEntityVisitor {
   def visit(entity: DomainEntity, prop: DialectPropertyMapping): Boolean
@@ -28,7 +28,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
 
   private var resolver: ReferenceResolver = NullReferenceResolverFactory.resolver(root, Map.empty, ctx)
   // map of references declared within this document
-  // references introduced trhough libraries will be handled by the resolver
+  // references introduced through libraries will be handled by the resolver
   private val internalRefs: mutable.HashMap[String, DomainEntity] = mutable.HashMap.empty
   private val possibleRefs: mutable.HashMap[DomainEntity, String] = mutable.HashMap.empty
 
@@ -57,8 +57,8 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
   private def parseModule = {
     val module = Module().adopted(root.location)
     module.withLocation(root.location)
-    var v = List(parseEntity(module));
-    v = this.internalRefs.values.toList;
+    var v = List(parseEntity(module))
+    v = this.internalRefs.values.toList
     module.withDeclares(v)
     module
   }
@@ -66,32 +66,33 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
   private def parseEntity(unit: BaseUnit): DomainEntity = {
     val result = root.parsed.document
       .toOption[YMap]
-      .map(map => {
-
+      .map { map =>
         // This are ALL references, libraries and inclusions
         val references = ReferencesParser("uses", map, root.references).parse(unit.location)
 
         resolver = dialect.resolver.resolver(root, references.references.toMap, ctx)
 
         val entity = parse()
-        if (!possibleRefs.isEmpty){
-          possibleRefs.foreach(p=>{
-            internalRefs.get(p._2).foreach(referenced=>{
-              // this is referenced object
-              referenced.fields.into(p._1.fields)
-              p._1.annotations += SynthesizedField()
-              p._1.withLinkTarget(referenced);
-              p._1.withLinkLabel(p._2);
+        if (possibleRefs.nonEmpty) {
+          possibleRefs.foreach { p =>
+            internalRefs
+              .get(p._2)
+              .foreach(referenced => {
+                // this is referenced object
+                referenced.fields.into(p._1.fields)
+                p._1.annotations += SynthesizedField()
+                p._1.withLinkTarget(referenced)
+                p._1.withLinkLabel(p._2)
 
-            })
-          })
+              })
+          }
         }
         if (references.references.nonEmpty) {
           unit.withReferences(references.solvedReferences())
 
         }
         entity
-      })
+      }
 
     result match {
       case Some(e) => e
@@ -123,7 +124,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
 
     parseNode(entries, entity, topLevel = true)
 
-    dialect.jsonLDrefiner match {
+    dialect.jsonLDRefiner match {
       case Some(dialectRefiner) => dialectRefiner.refine(entity, resolver)
       case None                 => // ignore
     }
@@ -157,7 +158,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                        domainEntity: DomainEntity,
                        declaration: Boolean = false): Unit = {
     val entryValue = entries.key(mapping.name)
-    entryValue.foreach(entryNode => {
+    entryValue.foreach { entryNode =>
       if (mapping.isMap) {
         parseMap(mapping, entryNode, domainEntity, declaration)
       } else if (mapping.collection) {
@@ -167,18 +168,18 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
       } else if (entryNode.value.tagType == YType.Include) {
         resolver
           .resolveToEntity(root, entryNode.value.as[YScalar].text, mapping.referenceTarget.get)
-          .foreach(child => {
+          .foreach { child =>
             if (mapping.isRef) {
               if (child.isLink) {
-                domainEntity.set(mapping.field(), child.linkTarget.get.id);
-              } else domainEntity.set(mapping.field(), child.id);
+                domainEntity.set(mapping.field(), child.linkTarget.get.id)
+              } else domainEntity.set(mapping.field(), child.id)
             } else {
               val lnk = child.link[DomainEntity](entryNode.value.value.asInstanceOf[YScalar].text)
-              //child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
+              // child.copy(Some(entryNode.key.value.toString)).adopted(domainEntity.id)
               domainEntity.set(mapping.field(), lnk)
-              //parseNode(entryNode.value.value, child)
+              // parseNode(entryNode.value.value, child)
             }
-          })
+          }
       } else {
         entryNode.value.tagType match {
           // in-place definition
@@ -188,7 +189,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
             setScalar(domainEntity, mapping, entryNode.value.as[YScalar])
         }
       }
-    })
+    }
     if (entryValue.isEmpty) {
       mapping.defaultValue.foreach(v => {
         domainEntity.set(mapping.field(), v, Annotations() += SynthesizedField())
@@ -224,17 +225,17 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                 domainEntity.annotations += SynthesizedField()
                 domainEntity.withLinkTarget(internalRef)
                 domainEntity.withLinkLabel(name)
-              //domainEntity.annotations += DomainElementReference(name, Some(internalRef))
+              // domainEntity.annotations += DomainElementReference(name, Some(internalRef))
               case _ =>
                 resolver.resolveToEntity(root, name, domainEntity.definition) match {
                   case Some(entity) =>
                     entity.fields.into(domainEntity.fields)
                     domainEntity.annotations += SynthesizedField()
-                  //domainEntity.annotations += DomainElementReference(name, Some(entity))
+                  // domainEntity.annotations += DomainElementReference(name, Some(entity))
                   case None =>
-                     //this is possible internal reference;
-                      possibleRefs.put(domainEntity,name);
-                  //Some(domainEntity.annotations += DomainElementReference(name, None))
+                    // this is possible internal reference;
+                    possibleRefs.put(domainEntity, name);
+                  // Some(domainEntity.annotations += DomainElementReference(name, None))
                 }
             }
         }
@@ -251,7 +252,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
 
   private def parseInlineNode(mapping: DialectPropertyMapping,
                               entryNode: YMapEntry,
-                              parentDomaineEntity: DomainEntity) = {
+                              parentDomaineEntity: DomainEntity): Unit = {
     mapping.referenceTarget.foreach(trg => {
       val linkValue = entryNode.key.value match {
         case scalar: YScalar => Some(scalar.text)
@@ -370,7 +371,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                     parseNode(element, domainEntity)
                   case _ => // ignore
                 }
-              case _ => {
+              case _ =>
                 ctx.violation(
                   ParserSideValidations.ParsingErrorSpecification.id(),
                   parentDomainEntity.id,
@@ -378,7 +379,6 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                   s"Can not determine actual range of the node",
                   parentDomainEntity.annotations.find(classOf[LexicalInformation])
                 )
-              }
             }
           }
         }

@@ -8,7 +8,7 @@ import amf.plugins.document.vocabularies.spec._
 import amf.core.vocabulary.Namespace
 
 /**
-  * Created by Pavel Petrochenko on 14/09/17.
+  *
   */
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
@@ -154,5 +154,5 @@ object DialectLanguageDefinition
       DialectDefinition,
       (r, uses, ctx) => { DialectLanguageResolver(r, uses)(ctx) },
       module = Some(DialectModuleDefinition),
-      fragments = Map().+(("DialectNode", NodeDefinition))
+      fragments = Map() + (("DialectNode", NodeDefinition))
     )

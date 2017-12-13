@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.core
 
-
 import amf.core.Root
 import amf.core.annotations.SynthesizedField
 import amf.core.parser.{Annotations, Fields}
@@ -8,7 +7,6 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.dialects.RAML_1_0_VocabularyTopLevel
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.spec._
-
 
 /**
   * Created by Pavel Petrochenko on 12/09/17.
@@ -32,10 +30,10 @@ object ClassTerm extends Declaration("Class", Namespace.Owl) {
 
   val example: DialectPropertyMapping = str("example", _.copy(namespace = Some(Namespace.Schema), collection = true))
 
-  val `extends`: DialectPropertyMapping = ref(
-    "extends",
-    ClassTerm,
-    _.copy(collection = true, rdfName = Some("subClassOf"), namespace = Some(Namespace.Rdfs)))
+  val `extends`: DialectPropertyMapping =
+    ref("extends",
+        ClassTerm,
+        _.copy(collection = true, rdfName = Some("subClassOf"), namespace = Some(Namespace.Rdfs)))
 
   val `properties`: DialectPropertyMapping = ref("properties", PropertyTerm, _.copy(collection = true, jsonld = false))
 
@@ -81,7 +79,6 @@ object NameSpaceImport extends VocabPartDialect("NameSpaceImport") {
   val uri: DialectPropertyMapping  = str("uri", _.copy(fromVal = true))
 }
 
-
 object Vocabulary extends VocabPartDialect("Vocabulary") {
 
   val base: DialectPropertyMapping = str("base")
@@ -122,20 +119,25 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
 }
 class VocabularyRAMLRefiner extends RamlRefiner {
   def refine(voc: DomainEntity): Unit = {
-    val vtop=new RAML_1_0_VocabularyTopLevel.VocabularyObject(voc,None);
-    vtop.classTerms().foreach(c=>{
-      var props=List[String]();
-      vtop.propertyTerms().foreach(p=>{
-          p.domain().foreach(d=>{
-            if (d.equals(c.domainEntity.id)){
-              props=props.::(p.entity.id);
+    val vtop = RAML_1_0_VocabularyTopLevel.VocabularyObject(voc, None)
+    vtop
+      .classTerms()
+      .foreach(c => {
+        var props = List[String]()
+        vtop
+          .propertyTerms()
+          .foreach(p => {
+            p.domain()
+              .foreach(d => {
+                if (d.equals(c.domainEntity.id)) {
+                  props = props.::(p.entity.id)
+                }
+              })
+            if (c.domainEntity.fields.raw(ClassTerm.`properties`.field()).isEmpty) {
+              c.domainEntity.set(ClassTerm.`properties`.field(), props)
             }
           })
-      if (!c.domainEntity.fields.raw(ClassTerm.`properties`.field()).isDefined) {
-        c.domainEntity.set(ClassTerm.`properties`.field(), props);
-      }
-    })
-    })
+      })
   }
 }
 class VocabularyRefiner() extends Refiner {
@@ -148,9 +150,8 @@ class VocabularyRefiner() extends Refiner {
         val fragment = vocabularyTerm.id.split("#").last
         if (fragment.indexOf(".") > -1) {
           resolver.resolveRef(fragment) match {
-            case Some(resolvedId) => {
+            case Some(resolvedId) =>
               vocabularyTerm.id = resolvedId
-            }
             case None => // ignore
           }
         }
@@ -166,14 +167,14 @@ class VocabularyRefiner() extends Refiner {
           entity
         }
         voc.setArrayWithoutId(Vocabulary.externalTerms.field(),
-          collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
+                              collection.immutable.Seq(externalEntities.toSeq: _*).sortBy(_.id))
       case _ => // ignore
     }
 
     // Set the domain of properties based on the 'properties' property fo class terms
     for {
-      classTerm <- voc.entities(Vocabulary.classTerms)
-      property <- classTerm.strings(ClassTerm.`properties`)
+      classTerm    <- voc.entities(Vocabulary.classTerms)
+      property     <- classTerm.strings(ClassTerm.`properties`)
       propertyTerm <- getOrCreateProperty(voc, property)
     } yield {
       propertyTerm.addValue(PropertyTerm.domain, classTerm.id)
@@ -181,29 +182,28 @@ class VocabularyRefiner() extends Refiner {
   }
 
   private def getOrCreateProperty(voc: DomainEntity, property: String) = {
-    voc.mapElementWithId(Vocabulary.propertyTerms, property).orElse({
-      val prop=new DomainEntity(None,PropertyTerm,Fields(),Annotations());
-      prop.annotations.+=(SynthesizedField())
-      prop.withId(property)
+    voc
+      .mapElementWithId(Vocabulary.propertyTerms, property)
+      .orElse({
+        val prop = new DomainEntity(None, PropertyTerm, Fields(), Annotations())
+        prop.annotations.+=(SynthesizedField())
+        prop.withId(property)
 
-      voc.fields.addWithoutId(Vocabulary.propertyTerms.field(),prop);
-      Some(prop)
-    })
+        voc.fields.addWithoutId(Vocabulary.propertyTerms.field(), prop)
+        Some(prop)
+      })
   }
 }
 
-
-  object VocabularyLanguageDefinition
+object VocabularyLanguageDefinition
     extends Dialect("RAML 1.0 Vocabulary",
-      "",
-      Vocabulary,
-      resolver =
-        (root: Root, uses, ctx) => new BasicResolver(root, List(Vocabulary.externals), uses)(ctx)) {
-    jsonLDrefiner = {
-      val ref = new VocabularyRefiner()
-      Some(ref)
-    }
-    ramlRefiner=Some(new VocabularyRAMLRefiner())
+                    "",
+                    Vocabulary,
+                    resolver =
+                      (root: Root, uses, ctx) => new BasicResolver(root, List(Vocabulary.externals), uses)(ctx)) {
+  jsonLDRefiner = {
+    val ref = new VocabularyRefiner()
+    Some(ref)
   }
-
-
+  ramlRefiner = Some(new VocabularyRAMLRefiner())
+}

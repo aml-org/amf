@@ -2,15 +2,21 @@ package amf.plugins.document.vocabularies.registries
 
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies.core.{DialectLanguageDefinition, DialectLoader, Vocabulary, VocabularyLanguageDefinition}
+import amf.plugins.document.vocabularies.core.{
+  DialectLanguageDefinition,
+  DialectLoader,
+  Vocabulary,
+  VocabularyLanguageDefinition
+}
 import amf.plugins.document.vocabularies.spec.{Dialect, DialectNode, FragmentKind, ModuleKind}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 /**
-  * Created by Pavel Petrochenko on 14/09/17.
+  * Dialect registry.
   */
 class DialectRegistry {
 
@@ -37,10 +43,10 @@ class DialectRegistry {
                                                dialect.resolver,
                                                kind = FragmentKind))
     }
-    if (!dialect.root.mappings().exists(x => x.name == "external")){
-       dialect.root.add(Vocabulary.externals.copy())
+    if (!dialect.root.mappings().exists(x => x.name == "external")) {
+      dialect.root.add(Vocabulary.externals.copy())
     }
-    if (!dialect.root.mappings().exists(x => x.name == "uses")){
+    if (!dialect.root.mappings().exists(x => x.name == "uses")) {
       dialect.root.add(Vocabulary.externals.copy())
     }
     this
@@ -57,7 +63,7 @@ class DialectRegistry {
     else {
       dialects.head.knows(nodeType) match {
         case Some(dialectNode) => Some(dialectNode) // Some(DomainEntity(dialectNode))
-        case None => knowsTypeInner(nodeType, dialects.tail)
+        case None              => knowsTypeInner(nodeType, dialects.tail)
       }
     }
   }
@@ -68,7 +74,7 @@ object PlatformDialectRegistry extends DialectRegistry with PlatformSecrets {
   add(VocabularyLanguageDefinition)
   add(DialectLanguageDefinition)
 
-  def registerDialect(uri: String): Future[Dialect] =  {
+  def registerDialect(uri: String): Future[Dialect] = {
     RuntimeValidator.disableValidationsAsync() { reenableValidations =>
       RuntimeCompiler(uri, platform, "application/yaml", RAMLVocabulariesPlugin.ID)
         .map { compiled =>
@@ -87,6 +93,5 @@ object PlatformDialectRegistry extends DialectRegistry with PlatformSecrets {
     res
   }
 
-  def registerNamespace(alias: String, prefix: String) = platform.registerNamespace(alias, prefix)
-
+  def registerNamespace(alias: String, prefix: String): Option[Namespace] = platform.registerNamespace(alias, prefix)
 }

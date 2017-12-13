@@ -78,7 +78,7 @@ object Namespace {
     }
   }
 
-  def registerNamespace(alias: String, prefix: String) = ns.put(alias, Namespace(prefix))
+  def registerNamespace(alias: String, prefix: String): Option[Namespace] = ns.put(alias, Namespace(prefix))
 
   def expand(uri: String): ValueType = {
     if (uri.startsWith("http://")) { // we have http: as  a valid prefix, we need to disambiguate
