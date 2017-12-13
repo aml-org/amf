@@ -10,7 +10,7 @@ trait ParametrizedDeclarationModel extends DomainElementModel with KeyField {
 
   val Name = Field(Str, Schema + "name")
 
-  val Target = Field(Iri, Document + "target")
+  val Target = Field(AbstractDeclarationModel, Document + "target")
 
   val Variables = Field(Array(VariableValueModel), Document + "variable")
 
