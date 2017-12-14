@@ -11,10 +11,28 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
 
+trait FileMediaType {
+  def mimeFromExtension(extension: String): Option[String] =
+    extension match {
+      case "json"           => Option(Mimes.`APPLICATION/JSON`)
+      case "yaml" | "yam"   => Option(Mimes.`APPLICATION/YAML`)
+      case "raml"           => Option(Mimes.`APPLICATION/RAML+YAML`)
+      case "openapi"        => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
+      case "jsonld" | "amf" => Option(Mimes.`APPLICATION/LD+JSONLD`)
+      case _                => None
+    }
+
+  def extension(path: String): Option[String] = {
+    Some(path.lastIndexOf(".")).filter(_ > 0).map(dot => path.substring(dot + 1))
+  }
+}
+
+object FileMediaType extends FileMediaType
+
 /**
   *
   */
-trait Platform {
+trait Platform extends FileMediaType {
 
   /** Underlying file system for platform. */
   val fs: FileSystem
@@ -97,16 +115,6 @@ trait Platform {
     }
   }
 
-  // TODO: Removed from core @modularization
-
-  //  @modularization
-  // val validator: SHACLValidator
-
-  /*  @modularization
-  protected def setupValidationBase(validation: Validation): Future[Validation] =
-    validation.loadValidationDialect().map(_ => validation)
-   */
-
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 
   /** Test path resolution. */
@@ -138,19 +146,6 @@ trait Platform {
   /** Write specified content on specified file path. */
   protected def writeFile(path: String, content: String): Future[Unit] = fs.asyncFile(path).write(content)
 
-  protected def mimeFromExtension(extension: String): Option[String] =
-    extension match {
-      case "json"           => Option(Mimes.`APPLICATION/JSON`)
-      case "yaml" | "yam"   => Option(Mimes.`APPLICATION/YAML`)
-      case "raml"           => Option(Mimes.`APPLICATION/RAML+YAML`)
-      case "openapi"        => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
-      case "jsonld" | "amf" => Option(Mimes.`APPLICATION/LD+JSONLD`)
-      case _                => None
-    }
-
-  protected def extension(path: String): Option[String] = {
-    Some(path.lastIndexOf(".")).filter(_ > 0).map(dot => path.substring(dot + 1))
-  }
 }
 
 object Platform {
