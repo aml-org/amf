@@ -60,14 +60,6 @@ class JvmPlatform extends Platform {
       res
     }
   }
-
-  // TODO: removed in modularization @todo
-  /*
-  override val dialectsRegistry = JVMDialectRegistry(this)
-  override val validator        = new SHACLValidator
-
-  def setupValidation(validation: Validation): CompletableFuture[Validation] = setupValidationBase(validation).asJava
- */
 }
 
 object JvmPlatform {
