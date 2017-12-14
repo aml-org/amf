@@ -83,4 +83,17 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       assert(speakers.toSeq.nonEmpty)
     }
   }
+
+  test("world-music-test") {
+    amf.plugins.features.AMFValidation.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().toFuture flatMap  { _ =>
+      val parser = amf.Core.parser("RAML 1.0", "application/yaml")
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/world-music-api/api.raml").toFuture
+    } flatMap { model =>
+      val locations = model.references().toSeq.map(_.location)
+      locations.foreach(println(_))
+      assert(!locations.contains(null))
+    }
+  }
 }

@@ -5,6 +5,7 @@ import amf.model.document.Document
 import amf.model.domain.{ScalarShape, WebApi}
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import org.scalatest.AsyncFunSuite
+import scala.collection.JavaConverters._
 
 import scala.concurrent.ExecutionContext
 
@@ -117,4 +118,12 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(!str.isEmpty)
   }
 
+  test("world-music-test") {
+    amf.plugins.features.AMFValidation.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().get()
+    val parser = amf.Core.parser("RAML 1.0", "application/yaml")
+    val model = parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/world-music-api/api.raml").get()
+    assert(!model.references().asScala.map(_.location).contains(null))
+  }
 }
