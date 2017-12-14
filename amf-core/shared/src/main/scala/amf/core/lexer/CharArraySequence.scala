@@ -1,6 +1,6 @@
 package amf.core.lexer
 
-import java.io.{File, FileInputStream, InputStream, InputStreamReader}
+import java.io._
 
 /**
   *
@@ -32,9 +32,8 @@ object CharArraySequence {
     val map: Option[InputStreamReader] = encoding.map(e => new InputStreamReader(stream, e))
     val isr: InputStreamReader         = map.getOrElse(new InputStreamReader(stream))
     try {
-      val data = new Array[Char](length)
-      val read = isr.read(data)
-      new CharArraySequence(data, 0, read)
+      val buf = Stream.continually(isr.read).takeWhile(_ != -1).map(_.toChar).toArray
+      new CharArraySequence(buf, 0, buf.length)
     } finally {
       Option(isr).foreach(_.close())
     }
