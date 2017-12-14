@@ -32,6 +32,17 @@ object DeclaredElement extends AnnotationGraphLoader {
   }
 }
 
+case class LocalLinkPath(rawPath: String) extends SerializableAnnotation {
+  override val name: String = "local-link-path"
+  override val value: String = rawPath
+}
+
+object LocalLinkPath extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    LocalLinkPath(annotatedValue)
+  }
+}
+
 
 
 case class InlineDefinition() extends Annotation
@@ -45,6 +56,8 @@ object DomainElementReference extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = ???
 }
 */
+
+
 
 case class EndPointBodyParameter() extends Annotation
 

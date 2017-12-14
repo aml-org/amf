@@ -2,11 +2,11 @@ package amf.plugins.domain.webapi.metamodel.security
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.core.vocabulary.Namespace.{Security, Schema, Http, Hydra}
+import amf.core.vocabulary.Namespace.{Http, Hydra, Schema, Security}
 import amf.core.vocabulary.ValueType
 
 object SecuritySchemeModel extends DomainElementModel with KeyField {
@@ -34,7 +34,7 @@ object SecuritySchemeModel extends DomainElementModel with KeyField {
   override val `type`: List[ValueType] = Security + "SecurityScheme" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ DomainElementModel.fields
+    List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = SecurityScheme()
 }

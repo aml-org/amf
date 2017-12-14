@@ -42,8 +42,8 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
   }
 
   def asEndPoint(r: ParametrizedResourceType, context: Context): EndPoint = {
-    val endpoint = context.model.findById(r.target).map {
-      case rt: ResourceType =>
+    Option(r.target) match {
+      case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables)
 
@@ -66,10 +66,8 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
           case Nil      => throw new Exception(s"Couldn't parse an endpoint from resourceType '${r.name}'.")
           case _        => throw new Exception(s"Nested endpoints found in resourceType '${r.name}'.")
         }
-    }
-    endpoint match {
-      case Some(e) => e
-      case _       => throw new Exception(s"EndPoint ${r.target} not found on model ${context.model}")
+
+      case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
     }
   }
 
@@ -205,15 +203,15 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
     def resolve(t: ParametrizedTrait, context: Context): TraitBranch = {
       val local = context.add(t.variables)
-      val key   = Key(t.target, local)
+      val key   = Key(t.target.id, local)
       resolved.getOrElseUpdate(key, resolveOperation(key, t, context))
     }
 
     private def resolveOperation(key: Key, parameterized: ParametrizedTrait, context: Context): TraitBranch = {
       val local = context.add(parameterized.variables)
 
-      val operation = context.model.findById(parameterized.target).map {
-        case t: Trait =>
+      Option(parameterized.target) match {
+        case Some(t: Trait) =>
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)
 
@@ -223,11 +221,6 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
           TraitBranch(key, op, children)
         case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")
-      }
-
-      operation match {
-        case Some(branch) => branch
-        case _            => throw new Exception(s"Trait ${parameterized.target} not found on model ${context.model}")
       }
     }
 

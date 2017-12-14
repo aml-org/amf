@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.core.model.domain.idCounter
 import amf.core.remote._
 import amf.io.BuildCycleTests
 
@@ -565,6 +566,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("secured-by.raml", RamlYamlHint)
   }
 
+  test("SecuredBy raml to amf") {
+    cycle("secured-by.raml", "secured-by.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("SecuredBy amf to raml") {
+    cycle("secured-by.jsonld", "secured-by.jsonld.raml", AmfJsonHint, Raml)
+  }
+
   test("SecuredBy oas to oas") {
     cycle("secured-by.json", OasJsonHint)
   }
@@ -740,4 +749,27 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Multiple media types test") {
     cycle("multiple-media-types.raml", "multiple-media-types.raml.raml", RamlYamlHint, Raml)
   }
+
+  test("References raml to amf"){
+    idCounter.reset()
+    cycle("with_references.raml", "with_references.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("References raml to raml"){
+    cycle("with_references.raml", RamlYamlHint)
+  }
+
+  test("References raml to oas"){
+    cycle("with_references.raml", "with_references.json", RamlYamlHint, Oas)
+  }
+
+  test("References oas to oas"){
+    cycle("with_references.json", OasJsonHint)
+  }
+
+  test("References oas to amf"){
+    idCounter.reset()
+    cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
+  }
 }
+

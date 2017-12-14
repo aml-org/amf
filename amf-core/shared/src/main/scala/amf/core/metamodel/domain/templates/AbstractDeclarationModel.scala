@@ -2,7 +2,7 @@ package amf.core.metamodel.domain.templates
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel}
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.ValueType
 
@@ -16,7 +16,7 @@ trait AbstractDeclarationModel extends DomainElementModel with KeyField {
 
   override val key: Field = Name
 
-  override def fields: List[Field] = List(Name, DataNode, Variables) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, DataNode, Variables) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 }
 
 object AbstractDeclarationModel extends AbstractDeclarationModel {

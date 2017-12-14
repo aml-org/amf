@@ -14,7 +14,7 @@ abstract class ParametrizedDeclaration private[model] (
     extends DomainElement {
 
   def name: String                             = declaration.name
-  def target: String                           = declaration.target
+  def target: AbstractDeclaration              = platform.wrap[AbstractDeclaration](declaration)
   def variables: java.util.List[VariableValue] = Option(declaration.variables).getOrElse(Nil).map(VariableValue).asJava
 
   /** Set name property of this [[ParametrizedDeclaration]]. */
@@ -24,8 +24,8 @@ abstract class ParametrizedDeclaration private[model] (
   }
 
   /** Set the target property of this [[ParametrizedDeclaration]]. */
-  def withTarget(target: String): this.type = {
-    declaration.withTarget(target)
+  def withTarget(target: AbstractDeclaration): this.type = {
+    declaration.withTarget(target.element)
     this
   }
 
