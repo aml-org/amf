@@ -46,6 +46,11 @@ class AMFCompiler(val url: String,
     val parsed = content.mime
       .orElse(mediaType)
       .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
+      // if we cannot find a plugin with the resolved media type, we try parsing from file extension
+      .orElse {
+      FileMediaType.extension(content.url).flatMap(FileMediaType.mimeFromExtension)
+        .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
+    }
 
     parsed match {
       case Some(document) =>
@@ -65,7 +70,7 @@ class AMFCompiler(val url: String,
   def parseExternalFragment(content: Content): Future[BaseUnit] = {
     val result = ExternalDomainElement().withRaw(content.stream.toString) //
     content.mime.foreach(mime => result.withMediaType(mime))
-    Future.successful(ExternalFragment().withId(content.url).withEncodes(result))
+    Future.successful(ExternalFragment().withId(content.url).withEncodes(result).withLocation(content.url))
   }
 
   private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
