@@ -1,6 +1,6 @@
 package amf.core.remote.server
 
-import amf.core.interop.{OS, Path, ServerResponse}
+import amf.core.interop.{OS, Path}
 import amf.core.lexer.CharSequenceStream
 import amf.core.remote.File.FILE_PROTOCOL
 import amf.core.remote.{Content, File, Http, Platform}
@@ -38,18 +38,56 @@ class JsServerPlatform extends Platform {
   override protected def fetchHttp(url: String): Future[Content] = {
     val promise: Promise[Content] = Promise()
 
-    amf.core.interop.Http.get(
-      url,
-      (response: ServerResponse) => {
-        var str = ""
+    if (url.startsWith("https:")) {
+      amf.core.interop.Https.get(
+        url,
+        (response: js.Dynamic) => {
+          var str = ""
 
-        // Another chunk of data has been received, append it to `str`
-        response.on("data", (s: String) => str += s)
+          // CAREFUL!
+          // this is required to avoid undefined behaviours
+          val dataCb: js.Function1[Any,Any] = { (res: Any) =>
+            str += res.toString
+          }
+          // Another chunk of data has been received, append it to `str`
+          response.on("data", dataCb)
 
-        // The whole response has been received
-        response.on("end", () => promise.success(Content(new CharSequenceStream(url, str), url)))
-      }
-    )
+          val completedCb: js.Function = () => {
+            val mediaType = try {
+              Some(response.headers.asInstanceOf[js.Dictionary[String]]("content-type"))
+            } catch {
+              case e: Throwable => None
+            }
+            promise.success(Content(new CharSequenceStream(url, str), url, mediaType))
+          }
+          response.on("end", completedCb)
+        }
+      )
+
+    } else {
+      amf.core.interop.Http.get(
+        url,
+        (response: js.Dynamic) => {
+          var str = ""
+
+          val dataCb: js.Function1[Any,Any] = { (res: Any) =>
+            str += res.toString
+          }
+          // Another chunk of data has been received, append it to `str`
+          response.on("data", dataCb)
+
+          val completedCb: js.Function = () => {
+            val mediaType = try {
+              Some(response.headers.asInstanceOf[js.Dictionary[String]]("content-type"))
+            } catch {
+              case e: Throwable => None
+            }
+            promise.success(Content(new CharSequenceStream(url, str), url, mediaType))
+          }
+          response.on("end", completedCb)
+        }
+      )
+    }
 
     promise.future
   }
@@ -64,14 +102,6 @@ class JsServerPlatform extends Platform {
 
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
 
-  // TODO: Removed in modularization @modularization
-  /*
-  override val dialectsRegistry = JSDialectRegistry(this)
-  override val validator        = new SHACLValidator()
-
-  @JSExport
-  def setupValidation(validation: Validation): js.Promise[Validation] = setupValidationBase(validation).toJSPromise
- */
 }
 
 @JSExportAll
