@@ -75,7 +75,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         map,
         "type",
         map,
-        (shape: Shape) => shape.adopted(root.location),
+        (shape: Shape) => shape.withId(root.location + "#shape"), // TODO: this is being ignored
         isAnnotation = false,
         StringDefaultType
       ).parse()

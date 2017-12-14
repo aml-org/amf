@@ -1,0 +1,77 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test with references",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-media-type": "application/json",
+            "schema": {
+              "required": [
+                "a",
+                "b"
+              ],
+              "properties": {
+                "a": {
+                  "$ref": "#/definitions/A"
+                },
+                "b": {
+                  "$ref": "#/definitions/B"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth20": []
+          }
+        ],
+        "x-annotA": "foo",
+        "x-annotB": "bar"
+      }
+    },
+    "/test2": {
+      "x-type": "ta"
+    },
+    "/test3": {
+      "x-type": "tb"
+    }
+  },
+  "definitions": {
+    "A": {
+      "type": "string"
+    },
+    "B": {
+      "$ref": "referred.raml"
+    }
+  },
+  "x-annotationTypes": {
+    "annotA": {
+      "schema": {
+        "type": "string"
+      }
+    },
+    "annotB": {
+      "$ref": "referred_annotation.raml"
+    }
+  },
+  "x-resourceTypes": {
+    "ta": {
+      "description": "test"
+    },
+    "tb": {
+      "$ref": "referred_resource_type.raml"
+    }
+  },
+  "x-securitySchemes": {
+    "oauth20": {
+      "$ref": "../references/fragments/security-scheme.raml"
+    }
+  }
+}

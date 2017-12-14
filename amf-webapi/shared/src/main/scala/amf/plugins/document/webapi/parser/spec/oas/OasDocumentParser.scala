@@ -266,7 +266,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
       ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
         case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration.id)
+          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
           declaration
         case None =>
           val securityScheme = SecurityScheme()
@@ -487,7 +487,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         }
       )
 
-      AnnotationParser(() => request.getOrCreate, map).parse()
+      // This has already being parsed in the operation
+      // AnnotationParser(() => request.getOrCreate, map).parse()
 
       request.option
     }
@@ -825,7 +826,12 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
     def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
       ast.value.tagType match {
         case YType.Map =>
-          AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
+          ast.value.as[YMap].key("$ref") match {
+            case Some(reference) => {
+              LinkedAnnotationTypeParser(ast, reference.value.as[YScalar].text, reference.value.as[YScalar], adopt).parse()
+            }
+            case _               => AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
+          }
         case YType.Seq =>
           val customDomainProperty = CustomDomainProperty().withName(ast.key.as[YScalar].text)
           adopt(customDomainProperty)
@@ -850,6 +856,8 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
         .findAnnotation(scalar.text, SearchScope.All)
         .map { a =>
           val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
+          copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
+                           // because the way they are inserted in the mode later in the parsing
           adopt(copied.withName(annotationName))
           copied
         }

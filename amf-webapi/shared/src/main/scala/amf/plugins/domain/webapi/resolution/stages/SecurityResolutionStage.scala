@@ -17,14 +17,14 @@ class SecurityResolutionStage(profile: String) extends ResolutionStage(profile) 
     scheme.fields
       .entry(ParametrizedSecuritySchemeModel.Scheme)
       .fold(SecurityScheme(scheme.annotations).withName(scheme.name)) { f =>
-        finder(f.scalar.toString) match {
-          case Some(s: SecurityScheme) =>
+        f.value.value match {
+          case s: SecurityScheme =>
             val cloned = s.cloneScheme(parent)
 
             validateSettings(s.settings, scheme.settings).foreach(cloned.set(SecuritySchemeModel.Settings, _))
 
             cloned
-          case _ => throw new Exception(s"Security scheme '${f.scalar.toString}' is not declared.")
+          case _ => throw new Exception(s"Security scheme not found for parameterized security scheme ${scheme.id}.")
         }
       }
   }

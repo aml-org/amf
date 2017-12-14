@@ -83,7 +83,8 @@ case class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: W
       }
     )
 
-    AnnotationParser(() => request.getOrCreate, map).parse()
+    // this has already being parsed in the endpoint
+    // AnnotationParser(() => request.getOrCreate, map).parse()
 
     request.option
   }

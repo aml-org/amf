@@ -12,7 +12,7 @@ object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField 
 
   val Name = Field(Str, Security + "name")
 
-  val Scheme = Field(Iri, Security + "scheme")
+  val Scheme = Field(SecuritySchemeModel, Security + "scheme")
 
   val Settings = Field(SettingsModel, Security + "settings")
 
