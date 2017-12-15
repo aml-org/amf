@@ -19,6 +19,8 @@ class ParametrizedDeclaration(
   val target: AbstractDeclaration           = platform.wrap[AbstractDeclaration](declaration.target)
   val variables: js.Iterable[VariableValue] = Option(declaration.variables).getOrElse(Nil).map(VariableValue).toJSArray
 
+  override private[amf] def element = declaration
+
   /** Set name property of this [[ParametrizedDeclaration]]. */
   def withName(name: String): this.type = {
     declaration.withName(name)

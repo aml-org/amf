@@ -15,7 +15,7 @@ case class License private[model] (private val license: models.License) extends 
   def url: String  = license.url
   def name: String = license.name
 
-  override private[amf] def element: models.License = license
+  override protected[amf] def element: models.License = license
 
   /** Set url property of this [[License]]. */
   def withUrl(url: String): this.type = {

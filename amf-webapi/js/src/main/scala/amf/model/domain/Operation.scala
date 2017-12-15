@@ -27,7 +27,7 @@ case class Operation private[model] (private val operation: models.Operation) ex
   def responses: js.Iterable[Response]     = Option(operation.responses).getOrElse(Nil).map(Response).toJSArray
   def security: js.Iterable[DomainElement] = Option(operation.security).getOrElse(Nil).map(DomainElement(_)).toJSArray
 
-  override private[amf] def element: models.Operation = operation
+  override protected[amf] def element: models.Operation = operation
 
   /** Set method property of this [[Operation]]. */
   def withMethod(method: String): this.type = {

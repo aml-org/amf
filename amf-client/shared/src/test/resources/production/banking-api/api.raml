@@ -1,0 +1,167 @@
+#%RAML 1.0
+
+title: ACME Banking HTTP API
+version: 1.0
+mediaType: application/json
+
+baseUri: acme-banking.com/apis
+
+uses:
+  shapes: ./dataTypes/shapes.raml
+  traits: ./traits/traits.raml
+
+securitySchemes:
+  oauth2_0: !include securitySchemes/oauth2_0.raml
+
+traits:
+  contentCacheable: !include traits/content-cacheable.raml
+
+securedBy: oauth2_0
+
+types:
+  CustomerMemberResponse: shapes.OrganizationData | shapes.PersonData
+
+/customers:
+  displayName: Customer Resource
+  /corporate:
+    post:
+      description: Customer data created correctly for an Organization
+      body: shapes.NewOrganizationData
+  /commercial:
+    post:
+      description: Customer data created correctly for a Person
+      body: shapes.NewPersonData
+
+  /{customer_id}:
+    uriParameters:
+      customer_id: string
+    get:
+      is: [ traits.partial ]
+      description: Returns Customer data
+      responses:
+        200:
+          body:
+            application/json:
+              type: CustomerMemberResponse
+    patch?:
+      description: Updates Customer data
+      responses:
+        200:
+          body:
+            application/json:
+              type: shapes.CustomerPatchData
+    delete?:
+      description: Removes a Customer from the system
+    /accounts:
+      get:
+        is: [ traits.pageable, traits.sortable ]
+        description: Returns a collection accounts
+        responses:
+          200:
+            body:
+              application/json:
+                type: shapes.BankAccountData[]
+      post:
+        description: Requests the creation of a new BankAccount
+        body:
+          application/json:
+            type: shapes.NewBankAccountRequestData
+      /{account_id}:
+        uriParameters:
+          account_id: string
+        get:
+          is: [ traits.partial ]
+          description: Returns BankAccount data
+          responses:
+            200:
+              body:
+                application/json:
+                  type: shapes.BankAccountData
+        delete:
+          description: Removes a BankAccount from the system
+    /loans:
+      get:
+        is: [ traits.pageable, traits.sortable, contentCacheable ]
+        description: Returns a collection accounts
+        responses:
+          200:
+            body:
+              application/json:
+                type: shapes.LoanData[]
+      post:
+        description: Requests the creation of a new Loan
+        body:
+          application/json:
+            type: shapes.NewLoanRequestData
+      /{loan_id}:
+        uriParameters:
+          loan_id: string
+        get:
+          is: [ traits.partial ]
+          description: Returns Loan data
+          responses:
+            200:
+              body:
+                application/json:
+                  type: shapes.LoanData
+      /schedule:
+        get:
+          description: Returns the repayments schedule for a Loan
+          responses:
+            200:
+              body: shapes.RepaymentSpecificationData
+    /cards:
+      /debit:
+        get:
+          is: [ traits.pageable, traits.sortable ]
+          description: Returns a collection of cards
+          responses:
+            200:
+              body:
+                application/json:
+                  type: shapes.DebitCardData[]
+        post:
+          description: Requests the creation of a new DebitCard
+          body:
+            application/json:
+              type: shapes.NewDebitCardRequestData
+        /{card_id}:
+          uriParameters:
+            card_id: string
+          get:
+            is: [ traits.partial ]
+            description: Returns DebitCard data
+            responses:
+              200:
+                body:
+                  application/json:
+                    type: shapes.DebitCardData
+          delete:
+            description: Removes a DebitCard from the system
+      /credit:
+        get:
+          is: [ traits.pageable, traits.sortable, contentCacheable ]
+          description: Returns a collection accounts
+          responses:
+            200:
+              body:
+                application/json:
+                  type: shapes.CreditCardData[]
+        post:
+          description: Requests the creation of a new CreditCard
+          body:
+            application/json:
+              type: shapes.NewCreditCardRequestData
+        /{card_id}:
+          uriParameters:
+            card_id: string
+          get:
+            is: [ traits.partial ]
+            description: Returns DebitCard data
+            responses:
+              200:
+                body:
+                  application/json:
+                    type: shapes.CreditCardData
+          delete:
+            description: Removes a CreditCard from the system
