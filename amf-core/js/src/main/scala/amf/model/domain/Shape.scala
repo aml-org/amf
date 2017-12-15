@@ -12,6 +12,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("model.domain.Shape")
 class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
 
+  override private[amf] def element = shape
+
   def name: String                    = shape.name
   def displayName: String             = shape.displayName
   def description: String             = shape.description
