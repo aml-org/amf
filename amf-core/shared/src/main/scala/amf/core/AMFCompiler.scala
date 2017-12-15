@@ -15,7 +15,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
 
-class AMFCompiler(val url: String,
+class AMFCompiler(val rawUrl: String,
                   val remote: Platform,
                   val base: Option[Context],
                   val mediaType: Option[String],
@@ -24,6 +24,7 @@ class AMFCompiler(val url: String,
                   private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None) {
 
+  val url                                                     = new java.net.URI(rawUrl).normalize().toString
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()

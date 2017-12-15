@@ -1,12 +1,12 @@
 package amf
 
 import amf.core.unsafe.PlatformSecrets
-import amf.model.document.Document
+import amf.model.document.{Document, TraitFragment}
 import amf.model.domain.{ScalarShape, WebApi}
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import org.scalatest.AsyncFunSuite
-import scala.collection.JavaConverters._
 
+import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 class WrapperTests extends AsyncFunSuite with PlatformSecrets {
@@ -125,5 +125,20 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     val parser = amf.Core.parser("RAML 1.0", "application/yaml")
     val model = parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/world-music-api/api.raml").get()
     assert(!model.references().asScala.map(_.location).contains(null))
+  }
+
+  test("banking-api-test") {
+    amf.plugins.features.AMFValidation.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().get()
+    val parser = amf.Core.parser("RAML 1.0", "application/yaml")
+    val model = parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/banking-api/api.raml").get()
+    assert(!model.references().asScala.map(_.location).contains(null))
+    val traitModel = model.references().asScala.find( ref => ref.location.endsWith("traits.raml") ).head
+    val traitRefs = traitModel.references()
+    val firstFragment = traitRefs.asScala.head
+    assert(firstFragment.location != null)
+    assert(firstFragment.asInstanceOf[TraitFragment].encodes != null)
+    assert(!traitRefs.asScala.map(_.location).contains(null))
   }
 }
