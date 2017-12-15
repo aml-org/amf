@@ -1,0 +1,30 @@
+#%RAML 1.0 Dialect
+
+dialect: Validation Profile
+version: 1.0
+
+usage: Dialect to describe validations over RAML documents
+uses:
+  dlib: dialect_lib.raml
+nodeMappings:
+
+  functionConstraintNode: dlib.functionConstraintNode
+  propertyConstraintNode: dlib.propertyConstraintNode
+  functionValidationNode: dlib.functionValidationNode
+  shapeValidationNode: dlib.shapeValidationNode
+  queryValidationNode:
+     !extends : !include queryNode.raml
+  profileNode: dlib.profileNode
+
+
+raml:
+  fragments:
+    encodes:
+      Validation: queryValidationNode
+
+  module:
+    declares:
+      validations: queryValidationNode
+
+  document:
+    encodes: profileNode
