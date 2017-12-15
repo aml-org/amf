@@ -771,5 +771,16 @@ class CompleteCycleTest extends BuildCycleTests {
     idCounter.reset()
     cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
   }
+
+  test("Uber oas to oas"){
+    idCounter.reset()
+    cycle("uber.json", "uber.json", OasJsonHint, Oas)
+  }
+
+  test("Uber oas to raml"){
+    idCounter.reset()
+    cycle("uber.json", "uber.raml", OasJsonHint, Raml)
+  }
+  
 }
 

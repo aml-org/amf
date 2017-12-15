@@ -1,6 +1,5 @@
 package amf.resolution
 
-import amf.core.model.domain.idCounter
 import amf.core.remote.{Amf, RamlYamlHint}
 
 class ReferencesResolutionTest extends ResolutionTest {
