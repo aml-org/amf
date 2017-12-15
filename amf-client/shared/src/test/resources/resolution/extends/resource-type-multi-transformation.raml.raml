@@ -1,11 +1,5 @@
 #%RAML 1.0
 title: Test
-resourceTypes:
-  collection:
-    post?:
-      body:
-        application/json:
-          type: Post<<resourcePathName | !singularize | !uppercamelcase>>
 /media:
   post:
     body:
@@ -18,11 +12,3 @@ resourceTypes:
           name:
             type: string
             required: true
-types:
-  PostMedium:
-    type: object
-    additionalProperties: true
-    properties:
-      name:
-        type: string
-        required: true
