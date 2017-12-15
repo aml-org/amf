@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.spec
 
 import amf.core.Root
-import amf.core.annotations.{LexicalInformation, SourceAST, SynthesizedField}
+import amf.core.annotations.{ExtendsDialectNode, LexicalInformation, SourceAST, SynthesizedField}
 import amf.core.metamodel.Type
 import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.model.domain.{AmfArray, AmfScalar}
@@ -136,12 +136,13 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                          entries: YMap,
                          mappings: List[DialectPropertyMapping],
                          topLevel: Boolean): Unit = {
-    val entriesLabels = entries.map.keys.map(_.value.toString).toSet
+    val entriesLabels = entries.map.keys.map(_.value.toString).toSet-"";
     val entityLabels = if (topLevel) {
-      (mappings.map(_.name) ++ Seq("uses", "external")).toSet
+      (mappings.map(_.name) ++ Seq("uses", "external","!extends")).toSet
     } else {
       mappings.map(_.name).toSet
     }
+
     val diff = entriesLabels.diff(entityLabels)
     if (diff.nonEmpty) {
       ctx.violation(
@@ -203,6 +204,35 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
         correctEntityNamespace(node, domainEntity)
         val mappings = domainEntity.definition.mappings()
         val map      = node.as[YMap]
+        var extended=node.as[YMap].entries.find(v=>v.key.tag.text=="!extends");
+        if (extended.isDefined){
+          extended.get.value.value match {
+            case s:YScalar => {
+              val ref=s.text;
+              var extendedEntity=resolver.resolveToEntity(root,ref,domainEntity.definition);
+              if (extendedEntity.isDefined){
+                domainEntity.annotations.+=(ExtendsDialectNode(ref))
+                extendedEntity.get.fields.into(domainEntity.fields);
+                // do we need to mark source of extension.
+                // yes
+              }
+              else{
+                ctx.violation(
+                  ParserSideValidations.DialectExtendIssue.id(),
+                  domainEntity.id,
+                  s"Extending unknown node " + ref,
+                  node
+                )
+              }
+            }
+            case _=>  ctx.violation(
+              ParserSideValidations.DialectExtendIssue.id(),
+              domainEntity.id,
+              s"Expecting scalar in !extends",
+              node
+            )
+          }
+        }
         validateClosedNode(domainEntity, map, mappings, topLevel)
         val declarationMappings  = mappings.filter(_.isDeclaration)
         val encodingDeclarations = mappings.filterNot(_.isDeclaration)
