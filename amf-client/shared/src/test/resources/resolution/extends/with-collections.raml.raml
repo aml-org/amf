@@ -1,14 +1,6 @@
 #%RAML 1.0
 title: Example API
 version: v1
-traits:
-  withQueryParameters:
-    queryParameters:
-      platform:
-        type: string
-        enum:
-          - win
-          - mac
 /installer:
   get:
     queryParameters:
