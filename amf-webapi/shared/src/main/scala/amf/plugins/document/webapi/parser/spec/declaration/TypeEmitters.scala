@@ -631,11 +631,17 @@ case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
   override def emit(b: EntryBuilder): Unit = {
     array.items match {
       case webapiArrayItem: AnyShape =>
-        b.entry(
-          "items",
+        if (webapiArrayItem.isLink) {
+          b.entry("items", RamlTypePartEmitter(webapiArrayItem, ordering, None, Nil, references).emit(_))
+        } else {
           // todo garrote review ordering
-          _.obj(b => RamlTypeEmitter(webapiArrayItem, ordering, references = references).entries().foreach(_.emit(b)))
-        )
+          b.entry(
+            "items",
+            _.obj { b =>
+              RamlTypeEmitter(webapiArrayItem, ordering, references = references).entries().foreach(_.emit(b))
+            }
+          )
+        }
       case _ => // ignore
     }
   }
@@ -946,7 +952,9 @@ case class OasItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refer
   override def emit(b: EntryBuilder): Unit =
     b.entry("items", OasTypePartEmitter(array.items, ordering, references = references).emit(_))
 
-  override def position(): Position = pos(array.items.fields.getValue(ArrayShapeModel.Items).annotations)
+  override def position(): Position = {
+    pos(array.fields.getValue(ArrayShapeModel.Items).annotations)
+  }
 }
 
 case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
