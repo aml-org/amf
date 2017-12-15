@@ -577,9 +577,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, validation).build()
     } yield {
       val resolved     = RAML10Plugin.resolve(doc)
-      val A: NodeShape = resolved.asInstanceOf[Document].declares.head.asInstanceOf[NodeShape]
-      assert(A.properties.head.range.isInstanceOf[RecursiveShape])
-      assert(A.properties.head.range.asInstanceOf[RecursiveShape].fixpoint == A.id)
       assert(Option(resolved).isDefined)
     }
   }
