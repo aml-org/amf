@@ -10,6 +10,8 @@ import scala.scalajs.js
 @JSExportTopLevel("model.domain.AbstractDeclaration")
 class AbstractDeclaration(private[amf] val decl: templates.AbstractDeclaration) extends DomainElement with Linkable  {
 
+  override private[amf] def element = decl
+
   def name(): String = decl.name
   def withName(name: String): this.type = {
     decl.withName(name)
