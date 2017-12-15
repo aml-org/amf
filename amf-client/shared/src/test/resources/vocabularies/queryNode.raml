@@ -1,0 +1,30 @@
+#%RAML DialectNode / RAML 1.0 Dialect
+external:
+  schema-org: "http://schema.org/"
+  shacl: "http://www.w3.org/ns/shacl#"
+  validation: "http://raml.org/vocabularies/amf-validation#"
+uses:
+  dlib: dialect_lib.raml
+classTerm: validation.Profile
+mapping:
+  name:
+    propertyTerm: schema-org.name
+    range: string
+  message:
+    propertyTerm: shacl.message
+    range: string
+  targetClass:
+    propertyTerm: validation.ramlClassId
+
+    range: string
+    allowMultiple: true
+  propertyConstraints:
+    propertyTerm: shacl.property
+    asMap: true
+    hash: validation.ramlPropertyId
+    range: dlib.propertyConstraintNode
+
+  targetQuery:
+    mandatory: true
+    propertyTerm: validation.targetQuery
+    range: string

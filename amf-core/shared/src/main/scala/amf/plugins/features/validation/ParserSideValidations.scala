@@ -38,6 +38,13 @@ object ParserSideValidations {
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
+  val DialectExtendIssue = ValidationSpecification(
+    (Namespace.AmfParser + "dialect-extend-issue").iri(),
+    "Extend related issue",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
 
   val DialectUnresolvableReference = ValidationSpecification(
     (Namespace.AmfParser + "dialect-unresolvable-reference").iri(),
