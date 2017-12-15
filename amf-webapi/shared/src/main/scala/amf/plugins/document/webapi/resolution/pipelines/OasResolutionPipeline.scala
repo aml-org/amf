@@ -16,6 +16,8 @@ class OasResolutionPipeline extends AmfResolutionPipeline {
       step(parameters)
       step(mediaTypes)
       step(examples)
+      step(cleanRefs)
+      step(cleanDecls)
     }
   }
 
