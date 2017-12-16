@@ -8,11 +8,29 @@ import org.yaml.model._
 import org.yaml.parser.YamlParser
 
 /**
+  * We need to generate unique IDs for all data nodes if the name is not set
+  */
+class IdCounter {
+  private var c = 0
+
+  def genId(id: String): String = {
+    c += 1
+    s"${id}_$c"
+  }
+
+  // TODO:
+  // Ideally this should be resetted every single time we parse
+  def reset(): Unit = c = 0
+}
+
+
+/**
   * Parse an object as a fully dynamic value.
   */
 case class DataNodeParser(node: YNode,
                           parameters: AbstractVariables = AbstractVariables(),
-                          parent: Option[String] = None)(implicit ctx: ParserContext) {
+                          parent: Option[String] = None,
+                          idCounter: IdCounter = new IdCounter)(implicit ctx: ParserContext) {
   def parse(): DataNode = {
     node.tag.tagType match {
       case YType.Str =>
@@ -67,30 +85,30 @@ case class DataNodeParser(node: YNode,
 
   def parseIncludedAST(raw: String): DataNode = {
     YamlParser(raw).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
-      case Some(node: YNode) => DataNodeParser(node, parameters, parent).parse()
+      case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter).parse()
       case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
     }
   }
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast))
+    val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast)).withName(idCounter.genId("scalar"))
     parent.foreach(node.adopted)
     parameters.parseVariables(ast)
     node
   }
 
   protected def parseArray(seq: Seq[YNode], ast: YPart): DataNode = {
-    val node = DataArrayNode(Annotations(ast))
+    val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
     parent.foreach(node.adopted)
     seq.foreach { v =>
-      val element = DataNodeParser(v, parameters, Some(node.id)).parse()
+      val element = DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addMember(element)
     }
     node
   }
 
   protected def parseObject(value: YMap): DataNode = {
-    val node = DataObjectNode(Annotations(value))
+    val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
     parent.foreach(node.adopted)
     value.entries.map { ast =>
       val key = ast.key.as[YScalar].text
@@ -98,7 +116,7 @@ case class DataNodeParser(node: YNode,
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 
-      val propertyNode = DataNodeParser(value, parameters, Some(node.id)).parse()
+      val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addProperty(key, propertyNode, propertyAnnotations)
     }
     node

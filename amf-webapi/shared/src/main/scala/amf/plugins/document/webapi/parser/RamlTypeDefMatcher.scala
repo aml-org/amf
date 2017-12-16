@@ -75,13 +75,18 @@ object RamlTypeDefStringValueMatcher {
     case PasswordType     => ("string", "password")
     case StrType          => ("string", "")
     case IntType          => ("integer", "")
+    case LongType         => ("intenger", "long")
     case FloatType        => ("number", "float")
+    case DoubleType       => ("number", "dobule")
     case BoolType         => ("boolean", "")
     case DateTimeType     => ("datetime", "")
     case DateTimeOnlyType => ("datetime-only", "")
     case TimeOnlyType     => ("time-only", "")
     case DateOnlyType     => ("date-only", "")
+    case ArrayType        => ("array","")
     case ObjectType       => ("object", "")
+    case FileType         => ("file", "")
+    case NilType          => ("nil", "")
     case UndefinedType    => throw new RuntimeException("Undefined type def")
   }
 }
