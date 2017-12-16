@@ -2,7 +2,6 @@ package amf.core
 
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.idCounter
 import amf.core.plugins.AMFSyntaxPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
@@ -32,9 +31,6 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
 
 
   protected def dump(): String = {
-    // reset data node counter
-    idCounter.reset()
-
     val ast = make()
 
     // Let's try to find a syntax plugin for the media type and vendor

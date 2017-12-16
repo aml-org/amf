@@ -16,22 +16,6 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
-  * We need to generate unique IDs for all data nodes if the name is not set
-  */
-object idCounter {
-  private var c = 0
-
-  def genId(id: String): String = {
-    c += 1
-    s"${id}_$c"
-  }
-
-  // TODO:
-  // Ideally this should be resetted every single time we parse
-  def reset(): Unit = c = 0
-}
-
-/**
   * Base class for all dynamic DataNodes
   */
 abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
@@ -39,9 +23,8 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
   def replaceVariables(values: Set[Variable]): Unit
 
-  def name: String = Option(fields(Name)).getOrElse(defaultName)
+  def name: String = fields(Name)
 
-  protected def defaultName: String     = idCounter.genId("dataNode")
   def withName(name: String): this.type = set(Name, name)
 
   override def adopted(parent: String): this.type =
@@ -63,8 +46,6 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   val properties: mutable.Map[String, DataNode]             = mutable.HashMap()
   val propertyAnnotations: mutable.Map[String, Annotations] = mutable.HashMap()
-
-  override def defaultName: String = idCounter.genId("object")
 
   def addProperty(propertyOrUri: String, objectValue: DataNode, annotations: Annotations = Annotations()): this.type = {
     val property = ensurePlainProperty(propertyOrUri)
@@ -146,8 +127,6 @@ class ScalarNode(var value: String,
                  val annotations: Annotations)
     extends DataNode(annotations) {
 
-  override def defaultName: String = idCounter.genId("scalar")
-
   val Value: Field = Field(Str, Namespace.Data + "value")
 
   override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
@@ -198,7 +177,6 @@ object ScalarNode {
   * Arrays of values
   */
 class ArrayNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
-  override def defaultName: String = idCounter.genId("array")
 
   val Member: Field = Field(Array(DataNodeModel), Namespace.Rdf + "member")
 

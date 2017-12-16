@@ -1,6 +1,5 @@
 package amf.emit
 
-import amf.core.model.domain.idCounter
 import amf.core.remote._
 import amf.io.BuildCycleTests
 
@@ -751,7 +750,6 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("References raml to amf"){
-    idCounter.reset()
     cycle("with_references.raml", "with_references.raml.jsonld", RamlYamlHint, Amf)
   }
 
@@ -768,19 +766,16 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("References oas to amf"){
-    idCounter.reset()
     cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
   }
 
   test("Uber oas to oas"){
-    idCounter.reset()
     cycle("uber.json", "uber.json", OasJsonHint, Oas)
   }
 
   test("Uber oas to raml"){
-    idCounter.reset()
     cycle("uber.json", "uber.raml", OasJsonHint, Raml)
   }
-  
+
 }
 
