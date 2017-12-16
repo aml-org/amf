@@ -3,7 +3,7 @@ package amf.core
 import amf.core
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.model.domain.{ExternalDomainElement, idCounter}
+import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
 import amf.core.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
@@ -31,9 +31,6 @@ class AMFCompiler(val rawUrl: String,
   private val ctx: ParserContext                              = baseContext.getOrElse(ParserContext(url, Seq.empty))
 
   def build(): Future[BaseUnit] = {
-    // Reset the data node counter
-    idCounter.reset()
-
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else
       cache.getOrUpdate(location) { () =>

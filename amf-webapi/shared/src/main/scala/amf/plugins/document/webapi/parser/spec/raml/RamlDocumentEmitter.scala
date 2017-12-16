@@ -16,6 +16,7 @@ import amf.core.utils.TSort.tsort
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
@@ -379,8 +380,8 @@ trait RamlSpecEmitter extends BaseSpecEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val modules = references.collect({ case m: Module => m })
       if (modules.nonEmpty) {
+        val idCounter = new IdCounter()
         b.entry("uses", _.obj { b =>
-          idCounter.reset()
           traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))), b)
         })
       }
