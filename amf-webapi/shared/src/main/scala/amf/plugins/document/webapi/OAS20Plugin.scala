@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header
 import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.webapi.models.WebApi
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YNode}
 
 object OAS20Plugin extends BaseWebApiPlugin {
 
@@ -67,6 +67,7 @@ object OAS20Plugin extends BaseWebApiPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
     case module: Module     => Some(OasModuleEmitter(module).emitModule())
     case document: Document => Some(OasDocumentEmitter(document).emitDocument())
+    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw)))
     case fragment: Fragment => Some(new OasFragmentEmitter(fragment).emitFragment())
     case _                  => None
   }
