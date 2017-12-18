@@ -1,7 +1,7 @@
 package amf.core
 
 import amf.core.client.GenerationOptions
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.plugins.AMFSyntaxPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
@@ -51,6 +51,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
     }
     parsed match {
       case Some(doc) => doc.toString
+      case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw
       case _         => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
     }
   }
