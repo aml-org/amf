@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
+import amf.core.utils._
 
 /**
   * We need to generate unique IDs for all data nodes if the name is not set
@@ -117,7 +118,7 @@ case class DataNodeParser(node: YNode,
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key, propertyNode, propertyAnnotations)
+      node.addProperty(key.urlEncoded, propertyNode, propertyAnnotations)
     }
     node
   }

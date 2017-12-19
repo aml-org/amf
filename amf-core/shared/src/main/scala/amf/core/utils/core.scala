@@ -23,7 +23,11 @@ package object utils {
 
     /** Url encoded string. */
     def urlEncoded: String = {
-      str.replaceAll("/", "%2F").replaceAll("\\{", "%7B").replaceAll("\\}", "%7D") // TODO encode
+      str.replaceAll("/", "%2F").replaceAll("\\{", "%7B").replaceAll("\\}", "%7D").replaceAll("<","%3C").replaceAll(">", "%3E") // TODO encode
+    }
+
+    def urlDecoded: String = {
+      str.replaceAll("%2F","/").replaceAll("%7B","\\{").replaceAll("%7D", "\\}").replaceAll("%3C","<").replaceAll("%3E",">") // TODO encode
     }
 
     def escape: String = {

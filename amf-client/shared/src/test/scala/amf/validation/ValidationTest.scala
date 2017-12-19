@@ -38,6 +38,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val examplesPath     = "file://amf-client/shared/src/test/resources/validations/"
   val payloadsPath     = "file://amf-client/shared/src/test/resources/payloads/"
   val productionPath   = "file://amf-client/shared/src/test/resources/production/"
+  val validationsPath  = "file://amf-client/shared/src/test/resources/validations/"
 
   test("Loading and serializing validations") {
     val expectedFile             = "validation_profile_example_gold.raml"
@@ -497,6 +498,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
+
+  test("Example validation of a resource type") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(validationsPath + "resource_types/resource_type1.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
 
   test("Annotations model validations test") {
     val validation = Validation(platform)
