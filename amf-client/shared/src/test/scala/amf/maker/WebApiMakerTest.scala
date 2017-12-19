@@ -39,28 +39,6 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
     assertFixture(api, "completeExample.raml", RamlYamlHint)
   }
 
-  test("Test 08") {
-
-    val api = WebApi()
-      .withName("test")
-      .withDescription("testDescription")
-      .withHost("api.example.com")
-      .withSchemes(List("http", "https"))
-      .withBasePath("/path")
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
-      .withVersion("1.1")
-      .withTermsOfService("terminos")
-      .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
-      .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
-    api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
-
-    assertFixture(api,
-                  "basics-differences.raml",
-                  RamlYamlHint,
-                  Some("file://amf-client/shared/src/test/resources/raml08/"))
-  }
-
   test("WebApi with nested endpoints - RAML.") {
     val endpoints = List(
       EndPoint()
