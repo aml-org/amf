@@ -7,6 +7,7 @@ class CompleteCycleTest extends BuildCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
+  val raml08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
 
   test("Full raml to raml test") {
     cycle("full-example.raml", "full-example.raml.raml", RamlYamlHint, Raml)
@@ -749,33 +750,35 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("multiple-media-types.raml", "multiple-media-types.raml.raml", RamlYamlHint, Raml)
   }
 
-  test("References raml to amf"){
+  test("References raml to amf") {
     cycle("with_references.raml", "with_references.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("References raml to raml"){
+  test("References raml to raml") {
     cycle("with_references.raml", RamlYamlHint)
   }
 
-  test("References raml to oas"){
+  test("References raml to oas") {
     cycle("with_references.raml", "with_references.json", RamlYamlHint, Oas)
   }
 
-  test("References oas to oas"){
+  test("References oas to oas") {
     cycle("with_references.json", OasJsonHint)
   }
 
-  test("References oas to amf"){
+  test("References oas to amf") {
     cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
   }
 
-  test("Uber oas to oas"){
+  test("Uber oas to oas") {
     cycle("uber.json", "uber.json", OasJsonHint, Oas)
   }
 
-  test("Uber oas to raml"){
+  test("Uber oas to raml") {
     cycle("uber.json", "uber.raml", OasJsonHint, Raml)
   }
 
+  test("Test 08 basic diff") {
+    cycle("basics-differences.raml", "basics-differences-10.raml", RamlYamlHint, Raml, raml08Path)
+  }
 }
-
