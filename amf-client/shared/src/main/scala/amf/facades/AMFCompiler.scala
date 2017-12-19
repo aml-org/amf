@@ -8,7 +8,7 @@ import amf.core.remote._
 import amf.core.{AMFCompiler => ModularCompiler}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.{RAMLVocabulariesPlugin, RamlHeaderExtractor}
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -36,6 +36,7 @@ class AMFCompiler private (val url: String,
   Core.init()
   amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)

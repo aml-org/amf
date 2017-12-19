@@ -194,6 +194,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
       })
 
+//      shape.set(ScalarShapeModel.Repeat, value = false)
+
     }
   }
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)

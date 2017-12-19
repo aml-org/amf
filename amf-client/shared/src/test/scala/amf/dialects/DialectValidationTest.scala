@@ -1,10 +1,14 @@
 package amf.dialects
+import amf.core.AMF
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
+import amf.plugins.document.webapi.{OAS20Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 
@@ -18,6 +22,14 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "file://amf-client/shared/src/test/resources/vocabularies/"
+
+  // todo review with mgutierrez and pcolunga.
+  amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
+  amf.core.AMF.registerPlugin(RAML10Plugin)
+  amf.core.AMF.registerPlugin(RAML08Plugin)
+  amf.core.AMF.registerPlugin(OAS20Plugin)
+  amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+  AMF.init()
 
   test("Basic Validation Test") {
     val dl = PlatformDialectRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
@@ -34,8 +46,6 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
         s should be(0)
       })
   }
-
-
 
   test("another validation test") {
     val dl = PlatformDialectRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
@@ -85,7 +95,6 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-
   val vocabularies = Seq(
     "file://vocabularies/vocabularies/raml_doc.raml",
     "file://vocabularies/vocabularies/raml_http.raml",
@@ -120,7 +129,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation,
       None,
       None
-    ).build() flatMap  { model =>
+    ).build() flatMap { model =>
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
       assert(report.conforms)
@@ -165,8 +174,9 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Custom dialect can be validated") {
     val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
-    val dialectFile              = "file://amf-client/shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml"
-    val dialectExampleFile       = "file://amf-client/shared/src/test/resources/dialects/mule_configuration/example.raml"
+    val dialectFile =
+      "file://amf-client/shared/src/test/resources/dialects/mule_configuration/configuration_dialect.raml"
+    val dialectExampleFile = "file://amf-client/shared/src/test/resources/dialects/mule_configuration/example.raml"
 
     PlatformDialectRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)
@@ -186,8 +196,6 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.length == 1)
     }
   }
-
-
 
   test("Vocabulary can be validated with closed nodes (k8)") {
     val validation = Validation(platform)
@@ -221,7 +229,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation.validate(model, "RAML 1.0 Vocabulary")
     } flatMap { report =>
       assert(!report.conforms)
-      assert(report.results.head.targetNode=="http://mulesoft.com/vocabularies/k8-core#priority")
+      assert(report.results.head.targetNode == "http://mulesoft.com/vocabularies/k8-core#priority")
     }
   }
 
@@ -317,7 +325,7 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom dialect with custom validation can be validated (amf-eng-demos)") {
-    val validation = Validation(platform)
+    val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
     val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
     val dialectExampleFile       = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/demo.raml"
@@ -350,7 +358,8 @@ class DialectValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation               = Validation(platform)
     var dialect: Option[Dialect] = None
     val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/evented_apis/dialect.raml"
-    val dialectExampleFile       = "file://amf-client/shared/src/test/resources/vocabularies/evented_apis/example/example.raml"
+    val dialectExampleFile =
+      "file://amf-client/shared/src/test/resources/vocabularies/evented_apis/example/example.raml"
 
     PlatformDialectRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
       dialect = Some(parsedDialect)

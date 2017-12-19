@@ -1,14 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.model.domain.AmfArray
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
-import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.declaration.Raml10TypeParser
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeParser
 import org.yaml.model.YMap
 
 import scala.collection.mutable
@@ -16,41 +14,16 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext) {
+case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext)
+    extends RamlRequestParser(map, producer) {
 
-  def parse(): Option[Request] = {
-    val request = new Lazy[Request](producer)
-    map.key(
-      "queryParameters",
-      entry => {
-
-        val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter)
-            .parse()
-            .map(_.withBinding("query"))
-        request.getOrCreate.set(RequestModel.QueryParameters,
-                                AmfArray(parameters, Annotations(entry.value)),
-                                Annotations(entry))
-      }
-    )
-
-    map.key(
-      "headers",
-      entry => {
-        val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withHeader)
-            .parse()
-            .map(_.withBinding("header"))
-        request.getOrCreate.set(RequestModel.Headers,
-                                AmfArray(parameters, Annotations(entry.value)),
-                                Annotations(entry))
-      }
-    )
+  override def parse(): Option[Request] = {
+    super.parse()
 
     map.key(
       "queryString",
       queryEntry => {
-        RamlTypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
+        Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
           .parse()
           .map(q => request.getOrCreate.withQueryString(q))
       }
@@ -62,7 +35,7 @@ case class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: W
         val payloads = mutable.ListBuffer[Payload]()
 
         val bodyMap = entry.value.as[YMap]
-        RamlTypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id))
+        Raml10TypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id))
           .parse()
           .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
@@ -80,6 +53,56 @@ case class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: W
         if (payloads.nonEmpty)
           request.getOrCreate
             .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
+    request.option
+  }
+
+  override def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml10ParametersParser.apply
+}
+
+case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext)
+    extends RamlRequestParser(map, producer) {
+  override def parse(): Option[Request] = {
+    super.parse()
+
+  }
+
+  override def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml08ParametersParser.apply
+}
+
+abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext) {
+  protected val request = new Lazy[Request](producer)
+
+  def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser
+
+  def parse(): Option[Request] = {
+
+    map.key(
+      "queryParameters",
+      entry => {
+
+        val parameters: Seq[Parameter] =
+          parameterParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter)
+            .parse()
+            .map(_.withBinding("query"))
+        request.getOrCreate.set(RequestModel.QueryParameters,
+                                AmfArray(parameters, Annotations(entry.value)),
+                                Annotations(entry))
+      }
+    )
+
+    map.key(
+      "headers",
+      entry => {
+        val parameters: Seq[Parameter] =
+          parameterParser(entry.value.as[YMap], request.getOrCreate.withHeader)
+            .parse()
+            .map(_.withBinding("header"))
+        request.getOrCreate.set(RequestModel.Headers,
+                                AmfArray(parameters, Annotations(entry.value)),
+                                Annotations(entry))
       }
     )
 

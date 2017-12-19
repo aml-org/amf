@@ -6,11 +6,18 @@ import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.features.validation.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAwareContext, private val wrapped: ParserContext, private val internalDec: Option[WebApiDeclarations] = None) extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations) with SpecAwareContext {
+class WebApiContext(val syntax: SpecSyntax,
+                    val vendor: String,
+                    val spec: SpecAwareContext,
+                    private val wrapped: ParserContext,
+                    private val internalDec: Option[WebApiDeclarations] = None)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
+    with SpecAwareContext {
 
-  val declarations: WebApiDeclarations = internalDec.getOrElse(new WebApiDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
+  val declarations: WebApiDeclarations =
+    internalDec.getOrElse(new WebApiDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
-  override def ignore(shape: String, property: String) = spec.ignore(shape, property)
+  override def ignore(shape: String, property: String): Boolean = spec.ignore(shape, property)
 
   def link(value: YNode): Either[String, YNode] = spec.link(value)
 
@@ -30,9 +37,9 @@ class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAw
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
             violation(ClosedShapeSpecification.id(),
-              node,
-              s"Property $key not supported in a $vendor $shape node",
-              entry)
+                      node,
+                      s"Property $key not supported in a $vendor $shape node",
+                      entry)
           }
         }
       case None => throw new Exception(s"Cannot validate unknown node type $shape for $vendor")
@@ -47,8 +54,8 @@ class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAw
     * can be defined in the AST node
     */
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
-    val node = shape.id
-    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited =  true)
+    val node   = shape.id
+    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
 
     syntax.nodes.get(shapeType) match {
       case Some(props) =>
@@ -58,7 +65,7 @@ class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAw
           props
         }
         val allResults: Seq[Seq[YMapEntry]] = facets.map { propertiesMap =>
-          val totalProperties = initialProperties ++ propertiesMap.keys.toSet
+          val totalProperties     = initialProperties ++ propertiesMap.keys.toSet
           val acc: Seq[YMapEntry] = Seq.empty
           ast.entries.foldLeft(acc) { (results: Seq[YMapEntry], entry) =>
             val key: String = entry.key
@@ -75,11 +82,10 @@ class WebApiContext(val syntax: SpecSyntax, val vendor: String, val spec: SpecAw
           case None => // at least we found a solution, this is a valid shape
           case Some(errors: Seq[YMapEntry]) =>
             violation(ClosedShapeSpecification.id(),
-              node,
-              s"Properties ${errors.map(_.key).mkString(",")} not supported in a $vendor $shapeType node",
-              errors.head) // pointing only to the first failed error
+                      node,
+                      s"Properties ${errors.map(_.key).mkString(",")} not supported in a $vendor $shapeType node",
+                      errors.head) // pointing only to the first failed error
         }
-
 
       case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
     }

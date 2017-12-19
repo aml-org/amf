@@ -31,8 +31,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Raml 1.0 spec parser
   */
-case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) extends RamlSpecParser {
-
+case class Raml10DocumentParser(root: Root)(implicit override val ctx: WebApiContext)
+    extends RamlDocumentParser(root)
+    with Raml10BaseSpecParser {
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
 
@@ -65,9 +66,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
     overlay
   }
 
-  def parseDocument(): Document = parseDocument(Document())
-
-  private def parseDocument[T <: Document](document: T): T = {
+  override def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.document.as[YMap]
@@ -87,7 +86,26 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
     document
   }
 
-  def parseWebApi(map: YMap): WebApi = {
+  override protected def endpointParser
+    : (YMapEntry, (String) => EndPoint, Option[EndPoint], ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
+    Raml10EndpointParser.apply
+
+  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
+    Raml10ParametersParser.apply
+}
+
+abstract class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) extends RamlBaseDocumentParser {
+
+  protected def endpointParser
+    : (YMapEntry, (String) => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser
+
+  protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser
+
+  def parseDocument[T <: Document](unit: T): T
+
+  def parseDocument(): Document = parseDocument(Document())
+
+  protected def parseWebApi(map: YMap): WebApi = {
 
     val api = WebApi(map).adopted(root.location)
 
@@ -102,7 +120,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
       "baseUriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
+          parametersParser(entry.value.as[YMap], api.withBaseUriParameter)
             .parse()
             .map(_.withBinding("path"))
         api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -184,7 +202,7 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
       "^/.*",
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(entry => RamlEndpointParser(entry, api.withEndPoint, None, endpoints).parse())
+        entries.foreach(entry => endpointParser(entry, api.withEndPoint, None, endpoints, false).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints))
       }
     )
@@ -247,7 +265,51 @@ case class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) exten
 
 }
 
-abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser {
+trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
+
+  implicit val ctx: WebApiContext
+
+  override def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val parameter =
+              Raml10ParameterParser(e, (name) => Parameter().withId(parentPath + "/" + name).withName(name)).parse()
+            if (Option(parameter.binding).isEmpty) {
+              ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
+            }
+            ctx.declarations.registerParameter(parameter.add(DeclaredElement()),
+                                               Payload().withSchema(parameter.schema))
+          })
+      }
+    )
+  }
+
+  override protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
+    map.key(
+      "securitySchemes",
+      e => {
+        e.value.tagType match {
+          case YType.Map =>
+            e.value.as[YMap].entries.foreach { entry =>
+              ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
+                .parse()
+                .add(DeclaredElement())
+            }
+          case YType.Null =>
+          case t          => ctx.violation(parent, s"Invalid type $t for 'securitySchemes' node.", e.value)
+        }
+      }
+    )
+  }
+}
+
+abstract class RamlBaseDocumentParser(implicit ctx: WebApiContext) extends RamlSpecParser {
+  protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
@@ -290,7 +352,7 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            RamlTypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
+            Raml10TypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
               .parse() match {
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
@@ -320,43 +382,11 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
     types.orElse(schemas)
   }
 
-  private def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
-    map.key(
-      "securitySchemes",
-      e => {
-        e.value.tagType match {
-          case YType.Map =>
-            e.value.as[YMap].entries.foreach { entry =>
-              ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
-                .parse()
-                .add(DeclaredElement())
-            }
-          case YType.Null =>
-          case t          => ctx.violation(parent, s"Invalid type $t for 'securitySchemes' node.", e.value)
-        }
-      }
-    )
-  }
+  def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit
 
-  def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
-    map.key(
-      key,
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val parameter =
-              RamlParameterParser(e, (name) => Parameter().withId(parentPath + "/" + name).withName(name)).parse()
-            if (Option(parameter.binding).isEmpty) {
-              ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
-            }
-            ctx.declarations.registerParameter(parameter.add(DeclaredElement()),
-                                               Payload().withSchema(parameter.schema))
-          })
-      }
-    )
-  }
+}
+
+abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser {
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
@@ -412,11 +442,11 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
             case Some(a) =>
               val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
               copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
-                               // because the way they are inserted in the mode later in the parsing
+              // because the way they are inserted in the mode later in the parsing
               adopt(copied.withName(key))
               copied
             case _ =>
-              RamlTypeParser(ast, (shape) => shape.adopted(domainProp.id), isAnnotation = true).parse() match {
+              Raml10TypeParser(ast, (shape) => shape.adopted(domainProp.id), isAnnotation = true).parse() match {
                 case Some(schema) => domainProp.withSchema(schema)
                 case _ =>
                   ctx.violation(domainProp.id, "Could not find declared annotation link in references", scalar)
@@ -446,7 +476,7 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
 
       maybeAnnotationType match {
         case Some(annotationType) => {
-          RamlTypeParser(annotationType, shape => shape.adopted(custom.id), isAnnotation = true)
+          Raml10TypeParser(annotationType, shape => shape.adopted(custom.id), isAnnotation = true)
             .parse()
             .foreach({ shape =>
               custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))

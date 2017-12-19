@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.validation.{
   ShapeFacetsValidation,
   _
 }
-import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape}
+import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -576,7 +576,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       doc <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val resolved     = RAML10Plugin.resolve(doc)
+      val resolved = RAML10Plugin.resolve(doc)
       assert(Option(resolved).isDefined)
     }
   }

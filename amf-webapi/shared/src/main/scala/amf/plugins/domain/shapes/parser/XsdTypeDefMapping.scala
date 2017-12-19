@@ -27,6 +27,16 @@ object XsdTypeDefMapping {
       case _                => throw new RuntimeException("Unknown mapping")
     }).iri()
 
+  /** for 0.8*/
+  def xsdFromString(text: String): String =
+    (text match {
+      case "string"  => Xsd + "string"
+      case "number"  => Xsd + "float"
+      case "integer" => Xsd + "integer"
+      case "date"    => Xsd + "datetime"
+      case "boolean" => Xsd + "boolean"
+      case "file"    => Shapes + "file"
+    }).iri()
 }
 
 object TypeDefXsdMapping {

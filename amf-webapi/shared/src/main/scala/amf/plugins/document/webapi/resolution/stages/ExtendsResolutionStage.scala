@@ -10,7 +10,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
-import amf.plugins.document.webapi.parser.spec.domain.{RamlEndpointParser, RamlOperationParser}
+import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndpointParser, Raml10OperationParser}
 import amf.plugins.document.webapi.parser.spec.raml.RamlSyntax
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -28,14 +28,17 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true) extends ResolutionStage(profile) with PlatformSecrets {
+class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true)
+    extends ResolutionStage(profile)
+    with PlatformSecrets {
 
-  implicit val ctx: WebApiContext = new WebApiContext(RamlSyntax, ProfileNames.RAML , RamlSpecAwareContext, ParserContext())
+  implicit val ctx: WebApiContext =
+    new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ParserContext())
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 
   def declarations(model: BaseUnit): Unit = {
-      model match {
+    model match {
       case d: DeclaresModel => d.declares.foreach(declaration => ctx.declarations += declaration)
       case _                =>
     }
@@ -59,7 +62,8 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
         val collector     = ListBuffer[EndPoint]()
 
         declarations(context.model)
-        RamlEndpointParser(endPointEntry, _ => EndPoint(), None, collector, parseOptionalOperations = true).parse()
+        Raml10EndpointParser(endPointEntry, _ => EndPoint(), None, collector, parseOptionalOperations = true)
+          .parse() // todo must depende in version to resolve?
 
         collector.toList match {
           case e :: Nil => e
@@ -236,7 +240,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
       val entry = document.as[YMap].entries.head
       declarations(context.model)
-      RamlOperationParser(entry, _ => Operation()).parse()
+      Raml10OperationParser(entry, _ => Operation()).parse() // todo must depende in version to resolve?
     }
   }
 

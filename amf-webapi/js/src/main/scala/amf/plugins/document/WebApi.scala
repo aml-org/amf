@@ -4,7 +4,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.model.document._
 import amf.model.domain.{DataNode, Shape}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin, model}
+import amf.plugins.document.webapi._
 import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -51,6 +51,7 @@ object WebApi extends PlatformSecrets {
     // Initialization of plugins
     amf.Core.registerPlugin(OAS20Plugin)
     amf.Core.registerPlugin(RAML10Plugin)
+    amf.Core.registerPlugin(RAML08Plugin)
     amf.Core.registerPlugin(PayloadPlugin)
   }
 

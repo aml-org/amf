@@ -4,7 +4,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.parser.{Annotations, ValueNode}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, RamlTypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.{YMap, YMapEntry, YType}
 
@@ -26,14 +26,20 @@ case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Pay
 
     entry.value.tagType match {
       case YType.Null =>
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), isAnnotation = false, AnyDefaultType)
+        Raml10TypeParser(entry,
+                         shape => shape.withName("schema").adopted(payload.id),
+                         isAnnotation = false,
+                         AnyDefaultType)
           .parse()
           .foreach { schema =>
             schema.annotations += SynthesizedField()
             payload.withSchema(schema)
           }
       case _ =>
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), isAnnotation = false, AnyDefaultType)
+        Raml10TypeParser(entry,
+                         shape => shape.withName("schema").adopted(payload.id),
+                         isAnnotation = false,
+                         AnyDefaultType)
           .parse()
           .foreach(payload.withSchema)
 

@@ -13,24 +13,24 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
-import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
+import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, RamlSingleExampleParser}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlSyntax, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{CreativeWork, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import org.yaml.model._
+import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
-object RamlTypeParser {
+object Raml10TypeParser {
   def apply(ast: YMapEntry,
             adopt: Shape => Shape,
             isAnnotation: Boolean = false,
-            defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): RamlTypeParser =
-    new RamlTypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(
+            defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml10TypeParser =
+    new Raml10TypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(
       new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx, Some(ctx.declarations)))
 }
 
@@ -75,13 +75,150 @@ object AnyDefaultType extends DefaultType {
   override val typeDef: TypeDef = TypeDef.AnyType
 }
 
-case class RamlTypeParser(ast: YPart,
-                          name: String,
-                          node: YNode,
-                          adopt: Shape => Shape,
-                          isAnnotation: Boolean,
-                          defaultType: DefaultType)(implicit val ctx: WebApiContext)
+case class Raml10TypeParser(ast: YPart,
+                            name: String,
+                            node: YNode,
+                            adopt: Shape => Shape,
+                            isAnnotation: Boolean,
+                            defaultType: DefaultType)(implicit override val ctx: WebApiContext)
+    extends RamlTypeParser(ast: YPart,
+                           name: String,
+                           node: YNode,
+                           adopt: Shape => Shape,
+                           isAnnotation: Boolean,
+                           defaultType: DefaultType) {
+  override def typeParser: (YPart, String, YNode, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser = Raml10TypeParser.apply
+
+}
+
+case class Raml08TypeParser(ast: YPart,
+                            name: String,
+                            node: YNode,
+                            adopt: Shape => Shape, isAnnotation:Boolean= false,defaultType: DefaultType=StringDefaultType)(implicit override val ctx: WebApiContext)
+  extends RamlTypeParser(ast: YPart,
+    name: String,
+    node: YNode,
+    adopt: Shape => Shape,
+    isAnnotation,
+    defaultType) {
+
+  override def parse(): Option[Shape] = {
+    val shape = ScalarShape(node).withName(name)
+    adopt(shape)
+    node.tagType match {
+      case YType.Map => Some(SimpleTypeParser(shape, node.as[YMap]).parse())
+      case YType.Seq =>
+        ctx.violation(s"Cannot parse a seq in type definition node", Some(ast))
+        None
+      case _ =>
+        val text = node.as[YScalar].text
+        val shape = ctx.declarations.findType(text,SearchScope.All) match {
+          case Some(s:Shape) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
+          case None =>
+            val shape = UnresolvedShape(text, node).withName(text)
+            shape.withContext(ctx)
+            adopt(shape)
+            shape.unresolved(text, node)
+            shape
+        }
+        Some(shape)
+    }
+  }
+
+  override def typeParser: (YPart, String, YNode, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser = Raml08TypeParser.apply
+}
+
+case class SimpleTypeParser(shape:ScalarShape ,map:YMap)(implicit val ctx: WebApiContext) {
+
+  def parse(): Shape = {
+
+    map.key("displayName", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
+    })
+
+    map.key("description", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ShapeModel.Description, value.string(), Annotations(entry))
+    })
+
+    map.key("type")
+      .fold(
+        shape
+          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(TypeDef.StrType)), Annotations() += Inferred()))(
+        entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsdFromString(entry.value.as[YScalar].text)), Annotations(entry)))
+
+
+    map.key("enum", entry => {
+      val value  = ArrayNode(entry.value)
+      val values = value.rawMembers()
+      shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
+    })
+
+    map.key("pattern", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
+    })
+
+    map.key("minLength", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.MinLength, value.string(), Annotations(entry))
+    })
+
+    map.key("maxLength", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.MaxLength, value.string(), Annotations(entry))
+    })
+
+    map.key("maxLength", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.MaxLength, value.string(), Annotations(entry))
+    })
+
+    map.key("minimum", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+    })
+
+    map.key("maximum", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+    })
+
+    RamlSingleExampleParser("example", map).parse().foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
+
+    map.key("repeat", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.Repeat, value.boolean(), Annotations(entry))
+    })
+
+    map.key("required", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ScalarShapeModel.RequiredShape, value.boolean(), Annotations(entry))
+    })
+
+    map.key(
+      "default",
+      entry => {
+        val value = ValueNode(entry.value)
+        shape.set(ShapeModel.Default, value.text(), Annotations(entry))
+
+      }
+    )
+
+    shape
+  }
+}
+
+sealed abstract class RamlTypeParser(ast: YPart,
+                                       name: String,
+                                       node: YNode,
+                                       adopt: Shape => Shape,
+                                       isAnnotation: Boolean,
+                                       defaultType: DefaultType)(implicit val ctx: WebApiContext)
     extends RamlSpecParser {
+
+  def typeParser: (YPart, String, YNode, Shape => Shape, Boolean, DefaultType) => RamlTypeParser
 
   def parse(): Option[Shape] = {
 
@@ -386,6 +523,8 @@ case class RamlTypeParser(ast: YPart,
 
       ctx.closedRamlTypeShape(shape, map, syntaxType, isAnnotation)
 
+      //shape.set(ScalarShapeModel.Repeat, value = false) // 0.8 support, not exists in 1/.0, set default
+
       shape
     }
   }
@@ -404,7 +543,7 @@ case class RamlTypeParser(ast: YPart,
               val unionNodes = seq.zipWithIndex
                 .map {
                   case (unionNode, index) =>
-                    RamlTypeParser(unionNode,
+                    typeParser(unionNode,
                                    s"item$index",
                                    unionNode,
                                    item => item.adopted(shape.id + "/items/" + index),
@@ -514,7 +653,7 @@ case class RamlTypeParser(ast: YPart,
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
-        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), false, AnyDefaultType).parse()
+        item       <- Raml10TypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), false, AnyDefaultType).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -580,7 +719,7 @@ case class RamlTypeParser(ast: YPart,
             .zipWithIndex
             .map {
               case (elem, index) =>
-                RamlTypeParser(elem, item => item.adopted(shape.id + "/items/" + index)).parse()
+                Raml10TypeParser(elem, item => item.adopted(shape.id + "/items/" + index)).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
@@ -612,13 +751,13 @@ case class RamlTypeParser(ast: YPart,
           shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
 
         case YType.Map =>
-          RamlTypeParser(entry, shape => shape.adopted(shape.id))
+          Raml10TypeParser(entry, shape => shape.adopted(shape.id))
             .parse()
             .foreach(s =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
         case _ if RamlTypeDefMatcher.TypeExpression.unapply(entry.value.as[YScalar].text).isDefined =>
-          RamlTypeParser(entry, shape => shape.adopted(shape.id))
+          Raml10TypeParser(entry, shape => shape.adopted(shape.id))
             .parse()
             .foreach(s =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
@@ -761,7 +900,7 @@ case class RamlTypeParser(ast: YPart,
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
 
-      RamlTypeParser(entry, shape => shape.adopted(property.id), false, StringDefaultType)
+      Raml10TypeParser(entry, shape => shape.adopted(property.id), false, StringDefaultType)
         .parse()
         .foreach { range =>
           if (explicitRequired.isDefined) {
