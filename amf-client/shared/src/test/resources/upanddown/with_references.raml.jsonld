@@ -478,6 +478,11 @@
                   }
                 ],
                 "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotA": {
+                  "http://raml.org/vocabularies/document#name": [
+                    {
+                      "@value": "annotA"
+                    }
+                  ],
                   "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/annotA/scalar_1",
                   "@type": [
                     "http://raml.org/vocabularies/data#Scalar"
@@ -512,6 +517,11 @@
                   ]
                 },
                 "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotB": {
+                  "http://raml.org/vocabularies/document#name": [
+                    {
+                      "@value": "annotB"
+                    }
+                  ],
                   "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/annotB/scalar_1",
                   "@type": [
                     "http://raml.org/vocabularies/data#Scalar"

@@ -5,6 +5,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ParserContext, YMapOps}
+import amf.core.vocabulary.Namespace
 import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable
@@ -34,14 +35,17 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
             entry =>
               val uri = entry.key.as[String]
               val v   = entry.value
-              if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri()) {
+              if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
+                  uri != (Namespace.Document + "name").iri()) {  // we do this to prevent parsing name of annotations
+
                 val dataNode = v match {
                   case _ if isJSONLDScalar(v) => parseJSONLDScalar(v)
-                  case _ if isJSONLDArray(v)  => parseJSONLDArray(v)
+                  case _ if isJSONLDArray(v) => parseJSONLDArray(v)
                   case _ =>
                     parseDynamicType(value(ObjType, v).as[YMap]).getOrElse(ObjectNode()) // todo fix this, its wrong
                 }
                 obj.addProperty(uri, dataNode)
+
               }
           }
 
