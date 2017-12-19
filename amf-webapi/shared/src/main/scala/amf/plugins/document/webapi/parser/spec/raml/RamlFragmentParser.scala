@@ -71,7 +71,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     def parse(): DataTypeFragment = {
       val dataType = DataTypeFragment().adopted(root.location)
 
-      RamlTypeParser(
+      Raml10TypeParser(
         map,
         "type",
         map,

@@ -12,6 +12,7 @@ trait RamlFragment
 
 object RamlHeader {
 
+  object Raml08          extends RamlHeader("%RAML 0.8")
   object Raml10          extends RamlHeader("%RAML 1.0")
   object Raml10Library   extends RamlHeader("%RAML 1.0 Library")
   object Raml10Overlay   extends RamlHeader("%RAML 1.0 Overlay")
@@ -25,6 +26,7 @@ object RamlHeader {
   }
 
   def fromText(text: String): Option[RamlHeader] = text match {
+    case t if t == Raml08.text          => Some(Raml08)
     case t if t == Raml10.text          => Some(Raml10)
     case t if t == Raml10Library.text   => Some(Raml10Library)
     case t if t == Raml10Overlay.text   => Some(Raml10Overlay)

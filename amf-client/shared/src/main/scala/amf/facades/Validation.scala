@@ -12,7 +12,7 @@ import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML10Plugin}
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -26,6 +26,7 @@ class Validation(platform: Platform) {
   amf.Core.init()
   amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)

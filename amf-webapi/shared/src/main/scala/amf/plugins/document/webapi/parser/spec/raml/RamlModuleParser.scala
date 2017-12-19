@@ -11,7 +11,7 @@ import org.yaml.model._
 /**
   *
   */
-case class RamlModuleParser(root: Root)(implicit val ctx: WebApiContext) extends RamlSpecParser {
+case class RamlModuleParser(root: Root)(implicit override val ctx: WebApiContext) extends Raml10BaseSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.parsed.document))
@@ -37,4 +37,5 @@ case class RamlModuleParser(root: Root)(implicit val ctx: WebApiContext) extends
     module
 
   }
+
 }

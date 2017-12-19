@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.document.webapi.parser.spec.declaration.{RamlTypeParser, RamlTypeSyntax}
+import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
@@ -13,15 +13,30 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Parameter] =
-    map.entries
-      .map(entry => RamlParameterParser(entry, producer).parse())
+case class Raml10ParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext)
+    extends RamlParametersParser(map, producer) {
+
+  override def parameterParser: (YMapEntry, (String) => Parameter) => RamlParameterParser = Raml10ParameterParser.apply
 }
 
-case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit val ctx: WebApiContext)
-    extends RamlTypeSyntax {
-  def parse(): Parameter = {
+case class Raml08ParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext)
+    extends RamlParametersParser(map, producer) {
+
+  override def parameterParser: (YMapEntry, (String) => Parameter) => RamlParameterParser = Raml08ParameterParser.apply
+}
+
+abstract class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext) {
+
+  def parameterParser: (YMapEntry, (String) => Parameter) => RamlParameterParser
+
+  def parse(): Seq[Parameter] =
+    map.entries
+      .map(entry => parameterParser(entry, producer).parse())
+}
+
+case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: WebApiContext)
+    extends RamlParameterParser(entry, producer) {
+  override def parse(): Parameter = {
 
     val name: String = entry.key
     val parameter    = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
@@ -47,7 +62,7 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
           }
         )
 
-        RamlTypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
+        Raml10TypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
           .parse()
           .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 
@@ -61,7 +76,7 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
         }
         entry.value.tagType match {
           case YType.Null =>
-            RamlTypeParser(
+            Raml10TypeParser(
               entry,
               shape => shape.withName("schema").adopted(parameter.id)
             ).parse().foreach { schema =>
@@ -71,30 +86,30 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
             parameter
           case _ => // we have a property type
             entry.value.to[YScalar] match {
-            case Right(ref) if ctx.declarations.findParameter(ref.text, scope).isDefined =>
-              ctx.declarations
-                .findParameter(ref.text, scope)
-                .get
-                .link(ref.text, Annotations(entry))
-                .asInstanceOf[Parameter]
-                .withName(name)
-            case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
-              val schema = ctx.declarations
-                .findType(ref.text, scope)
-                .get
-                .link[Shape](ref.text, Annotations(entry))
-                .withName("schema")
-                .adopted(parameter.id)
-              parameter.withSchema(schema)
-            case Right(ref) if wellKnownType(ref.text) =>
-              val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
-              parameter.withSchema(schema)
+              case Right(ref) if ctx.declarations.findParameter(ref.text, scope).isDefined =>
+                ctx.declarations
+                  .findParameter(ref.text, scope)
+                  .get
+                  .link(ref.text, Annotations(entry))
+                  .asInstanceOf[Parameter]
+                  .withName(name)
+              case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
+                val schema = ctx.declarations
+                  .findType(ref.text, scope)
+                  .get
+                  .link[Shape](ref.text, Annotations(entry))
+                  .withName("schema")
+                  .adopted(parameter.id)
+                parameter.withSchema(schema)
+              case Right(ref) if wellKnownType(ref.text) =>
+                val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+                parameter.withSchema(schema)
 
-            case _ =>
-              ctx.violation(parameter.id, "Cannot declare unresolved parameter", entry.value)
-              parameter
+              case _ =>
+                ctx.violation(parameter.id, "Cannot declare unresolved parameter", entry.value)
+                parameter
 
-          }
+            }
         }
     }
 
@@ -107,4 +122,25 @@ case class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
 
     p
   }
+}
+
+case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: WebApiContext)
+    extends RamlParameterParser(entry, producer) {
+  def parse(): Parameter = {
+
+    val name: String = entry.key
+    val parameter    = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+
+    // Named Parameter Parse
+    Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))
+      .parse()
+      .foreach(parameter.withSchema)
+
+    parameter
+  }
+}
+
+abstract class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit val ctx: WebApiContext)
+    extends RamlTypeSyntax {
+  def parse(): Parameter
 }

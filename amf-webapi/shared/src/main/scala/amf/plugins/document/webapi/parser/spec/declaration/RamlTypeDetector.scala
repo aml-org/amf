@@ -104,7 +104,7 @@ case class RamlTypeDetector(parent: String,
   }
 
   /** Get type or schema facet. If both are available, default to type facet and throw a validation error. */
-  private def typeOrSchema(map: YMap) = {
+  def typeOrSchema(map: YMap): Option[YMapEntry] = {
     val `type` = map.key("type")
     val schema = map.key("schema")
 
@@ -160,7 +160,7 @@ case class RamlTypeDetector(parent: String,
         case union: UnionShape => if (plainUnion) InheritsUnionMatcher(union, part) else Some(UnionType)
         case _: NodeShape      => Some(ObjectType)
         case _: ArrayShape     => Some(ArrayType)
-        case _: AnyShape => Some(AnyType)
+        case _: AnyShape       => Some(AnyType)
         case _                 => None
       }
 
@@ -207,10 +207,10 @@ case class RamlTypeDetector(parent: String,
             case "numberScalarShape" => TypeDef.IntType
             case "fileShape"         => TypeDef.FileType
           }
-          // explicit inheritance
+        // explicit inheritance
         case _ :: tail if tail.nonEmpty && map.key("type").isDefined => TypeDef.AnyType
-          // multiple matches without inheritance
-        case _ :: tail if tail.nonEmpty                              => MultipleMatch
+        // multiple matches without inheritance
+        case _ :: tail if tail.nonEmpty => MultipleMatch
       })
     }
 

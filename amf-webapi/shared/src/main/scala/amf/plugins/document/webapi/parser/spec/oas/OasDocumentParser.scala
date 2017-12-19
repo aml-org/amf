@@ -328,7 +328,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
               entry => {
                 entries += entry
                 val queryParameters =
-                  RamlParametersParser(
+                  Raml10ParametersParser( // always 1.0 from oas, right?
                     entry.value.as[YMap],
                     (name: String) =>
                       Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("query"))
@@ -342,7 +342,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
               entry => {
                 entries += entry
                 val headers =
-                  RamlParametersParser(
+                  Raml10ParametersParser(
                     entry.value.as[YMap],
                     (name: String) =>
                       Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("header"))
@@ -430,7 +430,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           entry => {
             entries += entry
             val queryParameters =
-              RamlParametersParser(
+              Raml10ParametersParser(
                 entry.value.as[YMap],
                 (name: String) =>
                   Parameter().withName(name).adopted(request.getOrCreate.id)).parse().map(_.withBinding("query"))
@@ -444,7 +444,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           entry => {
             entries += entry
             val headers =
-              RamlParametersParser(
+              Raml10ParametersParser(
                 entry.value.as[YMap],
                 (name: String) =>
                   Parameter().withName(name).adopted(request.getOrCreate.id)).parse().map(_.withBinding("header"))
@@ -481,7 +481,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       map.key(
         "x-queryString",
         queryEntry => {
-          RamlTypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
+          Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
             .parse()
             .map(request.getOrCreate.withQueryString(_))
         }
@@ -828,9 +828,10 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
         case YType.Map =>
           ast.value.as[YMap].key("$ref") match {
             case Some(reference) => {
-              LinkedAnnotationTypeParser(ast, reference.value.as[YScalar].text, reference.value.as[YScalar], adopt).parse()
+              LinkedAnnotationTypeParser(ast, reference.value.as[YScalar].text, reference.value.as[YScalar], adopt)
+                .parse()
             }
-            case _               => AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
+            case _ => AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
           }
         case YType.Seq =>
           val customDomainProperty = CustomDomainProperty().withName(ast.key.as[YScalar].text)
@@ -857,7 +858,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
         .map { a =>
           val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
           copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
-                           // because the way they are inserted in the mode later in the parsing
+          // because the way they are inserted in the mode later in the parsing
           adopt(copied.withName(annotationName))
           copied
         }

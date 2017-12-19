@@ -7,7 +7,7 @@ import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
-import amf.plugins.document.webapi.{OAS20Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{OAS20Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -19,6 +19,7 @@ trait CommandHelper {
   def AMFInit(): Future[Unit] = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
     amf.core.AMF.registerPlugin(RAML10Plugin)
+    amf.core.AMF.registerPlugin(RAML08Plugin)
     amf.core.AMF.registerPlugin(OAS20Plugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.init()
