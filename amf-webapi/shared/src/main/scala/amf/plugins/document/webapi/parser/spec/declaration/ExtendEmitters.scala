@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.domain.templates.ParametrizedDeclaration
+import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -61,8 +61,7 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
         _.entry(
           declaration.name,
           _.obj { b =>
-            val result = declaration.variables.map(variable =>
-              MapEntryEmitter(variable.name, variable.value, position = pos(variable.annotations)))
+            val result = declaration.variables.map(variable => VariableEmitter(variable, ordering))
 
             traverse(ordering.sorted(result), b)
           }
@@ -74,4 +73,15 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
   }
 
   override def position(): Position = pos(declaration.annotations)
+}
+
+case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      variable.name,
+      DataNodeEmitter(variable.value, ordering).emit(_)
+    )
+  }
+
+  override def position(): Position = pos(variable.annotations)
 }

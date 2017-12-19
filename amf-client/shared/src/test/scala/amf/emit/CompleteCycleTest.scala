@@ -56,6 +56,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("resource-type-multi-transformation.raml", RamlYamlHint)
   }
 
+  test("Traits and resourceTypes with complex variables raml to raml test") {
+    cycle("resource-type-complex-variables.raml", RamlYamlHint)
+  }
+
 //  test("Full cycle raml to amf test") {
 //    cycle("full-example.raml", RamlYamlHint, Amf)
 //  }
@@ -749,23 +753,23 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("multiple-media-types.raml", "multiple-media-types.raml.raml", RamlYamlHint, Raml)
   }
 
-  test("References raml to amf"){
+  test("References raml to amf") {
     cycle("with_references.raml", "with_references.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("References raml to raml"){
+  test("References raml to raml") {
     cycle("with_references.raml", RamlYamlHint)
   }
 
-  test("References raml to oas"){
+  test("References raml to oas") {
     cycle("with_references.raml", "with_references.json", RamlYamlHint, Oas)
   }
 
-  test("References oas to oas"){
+  test("References oas to oas") {
     cycle("with_references.json", OasJsonHint)
   }
 
-  test("References oas to amf"){
+  test("References oas to amf") {
     cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
   }
 
@@ -798,4 +802,3 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
 }
-

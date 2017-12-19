@@ -60,6 +60,10 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("complex-traits-resource-types.raml", "complex-traits-resource-types.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Traits and resourceTypes with complex variables raml to raml test") {
+    cycle("resource-type-complex-variables.raml", "resource-type-complex-variables.raml.raml", RamlYamlHint, Raml)
+  }
+
   test("Resolution using libraries to Raml") {
     cycle("traits-using-library.raml", "traits-using-library.raml.raml", RamlYamlHint, Raml)
   }
