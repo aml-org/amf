@@ -3,15 +3,12 @@ import sbt.{Def, _}
 
 object Common {
 
-  val organizationName = "org.mulesoft"
-
   private val nexus = "https://repository-master.mulesoft.org/nexus/content/repositories"
 
   val snapshots: MavenRepository = "MuleSoft snapshots" at s"$nexus/snapshots"
   val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
 
   val settings: Seq[Def.Setting[_]] = Seq(
-    organization := organizationName,
     scalaVersion := "2.12.2",
     parallelExecution in Test := false,
     fork in Test := false,

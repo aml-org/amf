@@ -3,7 +3,7 @@ import sbt.Keys.{libraryDependencies, resolvers}
 
 name := "amf"
 
-version in ThisBuild := "1.0.1-SNAPSHOT"
+version in ThisBuild := "1.0.1"
 
 scalaVersion in ThisBuild := "2.12.2"
 
@@ -12,6 +12,7 @@ publish := {}
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Common.publish ++ Seq(
+  organization := "org.mule.amf",
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
@@ -35,7 +36,7 @@ lazy val core = crossProject
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mulesoft" %%% "syaml" % "0.0.9"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.0.10"
     ))
   .in(file("./amf-core"))
   .settings(settings: _*)
