@@ -25,8 +25,6 @@ echo "Base $DEVELOP_VERSION_BASE"
 export DEVELOP_VERSION=${DEVELOP_VERSION_BASE/automatic/master}
 echo "Targeting $DEVELOP_VERSION"
 
-
-echo "PUBLISHING @master RELEASE AS @${NPM_USER}"
 npm version ${DEVELOP_VERSION} --force --no-git-tag-version
 npm version prerelease --force --no-git-tag-version
 

@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: Test
+types:
+  PostMedium:
+    properties:
+      name:
+        type: string
+    type: object
+resourceTypes:
+  collection:
+    post?:
+      body: <<complex>>
+
+/media:
+  type:
+    collection:
+      complex:
+        application/json:
+          type: Post<<resourcePathName | !singularize | !uppercamelcase>>
+  post:
+    body:
+      application/json:
+        example:
+          name: Something
+        type: object

@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Test
+/media:
+  post:
+    body:
+      application/json:
+        example:
+          name: Something
+        type: object
+        additionalProperties: true
+        properties:
+          name:
+            type: string
+            required: true
