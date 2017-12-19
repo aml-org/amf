@@ -84,13 +84,13 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
       val value = properties(key)
       properties.remove(key)
       value.replaceVariables(values)
-      properties += VariableReplacer.replaceVariables(key, values) -> value
+      properties += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
 
     propertyAnnotations.keys.foreach { key =>
       val value = propertyAnnotations(key)
       propertyAnnotations.remove(key)
-      propertyAnnotations += VariableReplacer.replaceVariables(key, values) -> value
+      propertyAnnotations += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
   }
 
