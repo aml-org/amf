@@ -27,8 +27,10 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
 
   def withName(name: String): this.type = set(Name, name)
 
-  override def adopted(parent: String): this.type =
+  override def adopted(parent: String): this.type = {
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
+  }
+
 
   def forceAdopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
 

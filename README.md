@@ -176,5 +176,6 @@ Go to [amf examples repository](https://github.com/mulesoft/amf-byExample) There
 ## Validation
 
 Validation is one of the key features of AMF. Please check the following link to get more information:
+
 [Validation insights](./documentation/validation.md)
 

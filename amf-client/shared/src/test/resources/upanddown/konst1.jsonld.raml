@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: test API
+types:
+  MyType:
+    properties:
+      p1:
+        (a): stringValue2
+    (a): stringvalue1
+/resource:
+  get:
+    body:
+      application/json:
+        properties:
+          p2:
+            (a): stringValue6
+        (a): stringValue5
+    (a): stringValue4
+  (a): stringValue3
+annotationTypes:
+  a:
+    type: string
