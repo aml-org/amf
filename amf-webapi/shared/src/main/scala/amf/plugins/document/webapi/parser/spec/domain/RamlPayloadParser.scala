@@ -16,13 +16,15 @@ case class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Pay
 
     val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
 
-    entry.value.to[YMap] match {
-      case Right(map) =>
-        // TODO
-        // Should we clean the annotations here so they are not parsed again in the shape?
-        AnnotationParser(() => payload, map).parse()
+    entry.value.tagType match {
+      case YType.Map => // ignore, in this case it will be parsed in the shape
       case _ =>
+        entry.value.to[YMap] match {
+          case Right(map) => AnnotationParser(() => payload, map).parse()
+          case _          =>
+        }
     }
+
 
     entry.value.tagType match {
       case YType.Null =>

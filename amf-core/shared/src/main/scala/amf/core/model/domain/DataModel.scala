@@ -27,8 +27,10 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
 
   def withName(name: String): this.type = set(Name, name)
 
-  override def adopted(parent: String): this.type =
+  override def adopted(parent: String): this.type = {
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
+  }
+
 
   def forceAdopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
 
@@ -82,13 +84,13 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
       val value = properties(key)
       properties.remove(key)
       value.replaceVariables(values)
-      properties += VariableReplacer.replaceVariables(key, values) -> value
+      properties += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
 
     propertyAnnotations.keys.foreach { key =>
       val value = propertyAnnotations(key)
       propertyAnnotations.remove(key)
-      propertyAnnotations += VariableReplacer.replaceVariables(key, values) -> value
+      propertyAnnotations += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
   }
 
