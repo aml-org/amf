@@ -305,8 +305,6 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
 
   ignore("Register remote dialect") {
     PlatformDialectRegistry.registerDialect("https://mulesoft-labs.github.io/ABOUT-vocabularies/ABOUT-dialect.raml") map { dialect =>
-    //PlatformDialectRegistry.registerDialect("file:///Users/antoniogarrote/Downloads/ABOUT-dialect.raml") map { dialect =>
-      println("REGISTERED")
       assert(dialect != null)
     }
   }

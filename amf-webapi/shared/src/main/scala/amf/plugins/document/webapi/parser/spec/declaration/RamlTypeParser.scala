@@ -12,7 +12,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser}
 import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlSyntax, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
@@ -118,6 +118,12 @@ case class RamlTypeParser(ast: YPart,
 
     // custom facet properties
     parseCustomShapeFacetInstances(result)
+
+    // parsing annotations
+    node.value match {
+      case map: YMap if result.isDefined => AnnotationParser(() => result.get, map).parse()
+      case _ => // ignore
+    }
 
     result
   }

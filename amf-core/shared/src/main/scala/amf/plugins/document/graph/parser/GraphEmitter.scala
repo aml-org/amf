@@ -113,8 +113,9 @@ object GraphEmitter extends MetaModelTypeMapping {
                   customProperties += propertyUri
                   b.entry(
                     propertyUri,
-                    _.obj {
-                      traverse(extension.extension, parent, _)
+                    _.obj { b =>
+                      b.entry((Namespace.Document + "name").iri(), scalar(_, extension.name))
+                      traverse(extension.extension, parent, b)
                     }
                   )
               }

@@ -14,7 +14,7 @@ case class AnnotationParser(lazyElement: () => DomainElement, map: YMap)(implici
     map.entries.foreach { entry =>
       val key = entry.key.as[YScalar].text
       if (WellKnownAnnotation.normalAnnotation(key)) {
-        domainExtensions += ExtensionParser(key, lazyElement().id, entry).parse()
+        domainExtensions += ExtensionParser(key, lazyElement().id, entry).parse().add(Annotations(entry))
       }
     }
     if (domainExtensions.nonEmpty)
