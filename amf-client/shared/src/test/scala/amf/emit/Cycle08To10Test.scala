@@ -11,7 +11,8 @@ class Cycle08To10Test extends BuildCycleTests {
   val fixture = Seq(
     FixtureData("basic diff", "basics-differences.raml", "basics-differences-10.raml"),
     FixtureData("form parameters", "form-parameters.raml", "form-parameters-10.raml"),
-    FixtureData("repeat property in parameter", "repeat-property.raml", "repeat-property-10.raml")
+    FixtureData("repeat property in parameter", "repeat-property.raml", "repeat-property-10.raml"),
+    FixtureData("date type convertion", "date-type.raml", "date-type-10.raml")
   )
 
   fixture.foreach(f => {
