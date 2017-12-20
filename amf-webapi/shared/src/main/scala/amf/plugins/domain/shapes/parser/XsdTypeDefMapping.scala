@@ -33,7 +33,7 @@ object XsdTypeDefMapping {
       case "string"  => Xsd + "string"
       case "number"  => Xsd + "float"
       case "integer" => Xsd + "integer"
-      case "date"    => Xsd + "datetime"
+      case "date"    => Xsd + "dateTime"
       case "boolean" => Xsd + "boolean"
       case "file"    => Shapes + "file"
     }).iri()
