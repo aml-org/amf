@@ -110,7 +110,7 @@ case class Raml08TypeParser(ast: YPart,
         map
           .key("scheme")
           .fold(
-            Option(SimpleTypeParser(shape, map).parse())
+            Option(SimpleTypeParser(name, adopt, map).parse())
           )(entry => {
             val maybeShape = Raml08TypeParser(entry, "scheme", entry.value, adopt).parse()
             maybeShape.foreach(s => {
@@ -161,18 +161,31 @@ case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(im
   }
 }
 
-case class SimpleTypeParser(shape: ScalarShape, map: YMap)(implicit val ctx: WebApiContext) {
+case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(implicit val ctx: WebApiContext) {
 
   def parse(): Shape = {
 
+    if (map.key("repeat").exists(entry => entry.value.as[Boolean])) {
+      val shape = ArrayShape(map).withName(name)
+      adopt(shape)
+      val items =
+        SimpleTypeParser("items",
+                         (s: Shape) => s.adopted(shape.id),
+                         YMap(map.entries.filter(entry => !entry.key.as[YScalar].text.equals("repeat")))).parse()
+      shape.withItems(items)
+      shape
+    } else {
+      val shape = ScalarShape(map).withName(name)
+      adopt(shape)
+      parseMap(shape)
+      shape.asInstanceOf[Shape]
+    }
+  }
+
+  private def parseMap(shape: Shape) = {
     map.key("displayName", entry => {
       val value = ValueNode(entry.value)
       shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
-    })
-
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Description, value.string(), Annotations(entry))
     })
 
     map
@@ -186,6 +199,11 @@ case class SimpleTypeParser(shape: ScalarShape, map: YMap)(implicit val ctx: Web
           shape.set(ScalarShapeModel.DataType,
                     AmfScalar(XsdTypeDefMapping.xsdFromString(entry.value.as[YScalar].text)),
                     Annotations(entry)))
+
+    map.key("description", entry => {
+      val value = ValueNode(entry.value)
+      shape.set(ShapeModel.Description, value.string(), Annotations(entry))
+    })
 
     map.key("enum", entry => {
       val value  = ArrayNode(entry.value)
@@ -225,11 +243,6 @@ case class SimpleTypeParser(shape: ScalarShape, map: YMap)(implicit val ctx: Web
 
     RamlSingleExampleParser("example", map).parse().foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
-    map.key("repeat", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Repeat, value.boolean(), Annotations(entry))
-    })
-
     map.key("required", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.RequiredShape, value.boolean(), Annotations(entry))
@@ -243,8 +256,6 @@ case class SimpleTypeParser(shape: ScalarShape, map: YMap)(implicit val ctx: Web
 
       }
     )
-
-    shape
   }
 }
 
