@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -45,7 +45,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
             ".*/.*",
             entries => {
               entries.foreach(entry => {
-                payloads += RamlPayloadParser(entry, producer = request.getOrCreate.withPayload)
+                payloads += Raml10PayloadParser(entry, producer = request.getOrCreate.withPayload)
                   .parse()
               })
             }
@@ -66,10 +66,41 @@ case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx:
     extends RamlRequestParser(map, producer) {
   override def parse(): Option[Request] = {
     super.parse()
+    Raml08BodyContentParser(map,
+                            (value: Option[String]) => request.getOrCreate.withPayload(value),
+                            () => request.getOrCreate).parse()
 
+    request.option
   }
 
   override def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml08ParametersParser.apply
+}
+
+case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Payload), accesor: () => DomainElement)(
+    implicit ctx: WebApiContext) {
+  def parse(): Unit = {
+    val payloads = mutable.ListBuffer[Payload]()
+
+    map.key(
+      "body",
+      entry => {
+        entry.value
+          .as[YMap]
+          .regex(
+            ".*/.*",
+            entries => {
+              entries.foreach(entry => {
+                payloads += Raml08PayloadParser(entry, producer = producer)
+                  .parse()
+              })
+            }
+          )
+        if (payloads.nonEmpty)
+          accesor()
+            .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+  }
 }
 
 abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext) {
