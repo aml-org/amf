@@ -122,8 +122,7 @@ case class Raml08TypeParser(ast: YPart,
           })
 
       case YType.Seq =>
-        ctx.violation(s"Cannot parse a seq in type definition node", Some(ast))
-        None
+        Option(Raml08UnionTypeParser(UnionShape(node).withName(name), node.as[Seq[YNode]], node).parse())
       case _ =>
         val text = node.as[YScalar].text
         val shape = ctx.declarations.findType(text, SearchScope.All) match {
@@ -141,6 +140,25 @@ case class Raml08TypeParser(ast: YPart,
 
   override def typeParser: (YPart, String, YNode, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser =
     Raml08TypeParser.apply
+}
+case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(implicit ctx: WebApiContext) {
+  def parse(): Shape = {
+
+    val unionNodes = types.zipWithIndex
+      .map {
+        case (unionNode, index) =>
+          Raml08TypeParser(unionNode,
+                           s"item$index",
+                           unionNode,
+                           item => item.adopted(shape.id + "/items/" + index),
+                           false,
+                           AnyDefaultType).parse()
+      }
+      .filter(_.isDefined)
+      .map(_.get)
+    shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(ast))
+
+  }
 }
 
 case class SimpleTypeParser(shape: ScalarShape, map: YMap)(implicit val ctx: WebApiContext) {
