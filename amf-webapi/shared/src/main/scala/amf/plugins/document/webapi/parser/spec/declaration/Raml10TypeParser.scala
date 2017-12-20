@@ -194,11 +194,14 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
         shape
           .set(ScalarShapeModel.DataType,
                AmfScalar(XsdTypeDefMapping.xsd(TypeDef.StrType)),
-               Annotations() += Inferred()))(
-        entry =>
-          shape.set(ScalarShapeModel.DataType,
-                    AmfScalar(XsdTypeDefMapping.xsdFromString(entry.value.as[YScalar].text)),
-                    Annotations(entry)))
+               Annotations() += Inferred()))(entry => {
+        XsdTypeDefMapping.xsdFromString(entry.value.as[YScalar].text) match {
+          case (iri: String, format: Option[String]) =>
+            shape.set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(entry))
+            format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))
+        }
+        shape
+      })
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)
