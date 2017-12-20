@@ -7,7 +7,6 @@ class CompleteCycleTest extends BuildCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
-  val raml08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
 
   test("Full raml to raml test") {
     cycle("full-example.raml", "full-example.raml.raml", RamlYamlHint, Raml)
@@ -776,9 +775,5 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Uber oas to raml") {
     cycle("uber.json", "uber.raml", OasJsonHint, Raml)
-  }
-
-  test("Test 08 basic diff") {
-    cycle("basics-differences.raml", "basics-differences-10.raml", RamlYamlHint, Raml, raml08Path)
   }
 }

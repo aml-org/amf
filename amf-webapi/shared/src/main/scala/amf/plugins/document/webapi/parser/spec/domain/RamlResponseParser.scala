@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable
 
@@ -20,8 +20,81 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
   override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
     Raml10ParametersParser.apply
 
-  override def parse(): Response = {
+  override def parseMap(response: Response, map: YMap): Unit = {
+    map.key(
+      "body",
+      entry => {
+        val payloads = mutable.ListBuffer[Payload]()
 
+        val payload = Payload()
+        payload.adopted(response.id)
+
+        entry.value.tagType match {
+          case YType.Null =>
+            Raml10TypeParser(entry,
+                             shape => shape.withName("default").adopted(payload.id),
+                             isAnnotation = false,
+                             AnyDefaultType)
+              .parse()
+              .foreach { schema =>
+                schema.annotations += SynthesizedField()
+                payloads += payload.withSchema(schema)
+              }
+            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+
+          case _ =>
+            Raml10TypeParser(entry,
+                             shape => shape.withName("default").adopted(payload.id),
+                             isAnnotation = false,
+                             AnyDefaultType)
+              .parse()
+              .foreach(payloads += payload.withSchema(_))
+
+            entry.value.to[YMap] match {
+              case Right(m) =>
+                m.regex(
+                  ".*/.*",
+                  entries => {
+                    entries.foreach(entry => {
+                      payloads += Raml10PayloadParser(entry, response.withPayload).parse()
+                    })
+                  }
+                )
+              case _ =>
+            }
+            if (payloads.nonEmpty)
+              response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+        }
+      }
+    )
+
+    val examples = OasResponseExamplesParser("(examples)", map).parse()
+    if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
+
+    ctx.closedShape(response.id, map, "response")
+
+    AnnotationParser(() => response, map).parse()
+
+  }
+}
+
+case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext)
+    extends RamlResponseParser(entry, producer) {
+  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
+    Raml08ParametersParser.apply
+
+  override protected def parseMap(response: Response, map: YMap): Unit = {
+    Raml08BodyContentParser(map, (value: Option[String]) => response.withPayload(value), () => response).parse()
+  }
+}
+
+abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext) {
+
+  protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser
+
+  protected def parseMap(response: Response, map: YMap)
+
+  def parse(): Response = {
     val node = ValueNode(entry.key).text()
 
     val response = producer(node.value.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
@@ -45,74 +118,9 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
           }
         )
 
-        map.key(
-          "body",
-          entry => {
-            val payloads = mutable.ListBuffer[Payload]()
-
-            val payload = Payload()
-            payload.adopted(response.id)
-
-            entry.value.tagType match {
-              case YType.Null =>
-                Raml10TypeParser(entry,
-                                 shape => shape.withName("default").adopted(payload.id),
-                                 isAnnotation = false,
-                                 AnyDefaultType)
-                  .parse()
-                  .foreach { schema =>
-                    schema.annotations += SynthesizedField()
-                    payloads += payload.withSchema(schema)
-                  }
-                response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-
-              case _ =>
-                Raml10TypeParser(entry,
-                                 shape => shape.withName("default").adopted(payload.id),
-                                 isAnnotation = false,
-                                 AnyDefaultType)
-                  .parse()
-                  .foreach(payloads += payload.withSchema(_))
-
-                entry.value.to[YMap] match {
-                  case Right(m) =>
-                    m.regex(
-                      ".*/.*",
-                      entries => {
-                        entries.foreach(entry => {
-                          payloads += RamlPayloadParser(entry, response.withPayload).parse()
-                        })
-                      }
-                    )
-                  case _ =>
-                }
-                if (payloads.nonEmpty)
-                  response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-            }
-          }
-        )
-
-        val examples = OasResponseExamplesParser("(examples)", map).parse()
-        if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
-
-        ctx.closedShape(response.id, map, "response")
-
-        AnnotationParser(() => response, map).parse()
+        parseMap(response, map)
     }
 
     response
   }
-}
-
-case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext)
-    extends RamlResponseParser(entry, producer) {
-  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
-    Raml08ParametersParser.apply
-}
-
-abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext) {
-
-  protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser
-
-  def parse() = producer(entry.key.as[YScalar].text)
 }

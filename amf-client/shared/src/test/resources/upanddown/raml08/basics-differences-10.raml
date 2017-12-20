@@ -10,50 +10,31 @@ version: v1
           propertyName2 : b
           propertyName3 : c
     queryParameters:
-      a:
+      a?:
         example: 11
-      b:
+      b?:
         example: true
-      c:
+      c?:
         example: stringValue
     responses:
       200:
         body:
           application/json:
-          securitySchemes:
-            oauth_2_0:
-              description: |
-                Dropbox supports OAuth 2.0 for authenticating all API requests.
-              type: OAuth 2.0
-              describedBy:
-                protocols: [HTTP]
-                headers:
-                  Authorization:
-                    description: |
-                       Used to send a valid OAuth 2 access token. Do not use
-                       with the "access_token" query string parameter.
-                    type: string
-                queryParameters:
-                  access_token:
-                    description: |
-                       Used to send a valid OAuth 2 access token. Do not use with
-                       the "Authorization" header.
-                    type: string
 /test:
   post:
     queryParameters:
-      limit:
+      limit?:
         default: someValue
         type: integer
 /resource:
   type: Resource
   get:
     queryParameters:
-      a:
+      a?:
         example: false
-      b:
+      b?:
         example: 111
-      c:
+      c?:
         example: stringValue
     responses:
       200:
@@ -80,11 +61,10 @@ traits:
         type: string
 securitySchemes:
   oauth_2_0:
+    type: OAuth 2.0
     description: |
       Dropbox supports OAuth 2.0 for authenticating all API requests.
-    type: OAuth 2.0
     describedBy:
-      protocols: [HTTP]
       headers:
         Authorization:
           description: |
