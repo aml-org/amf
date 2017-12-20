@@ -28,15 +28,15 @@ object XsdTypeDefMapping {
     }).iri()
 
   /** for 0.8*/
-  def xsdFromString(text: String): String =
-    (text match {
-      case "string"  => Xsd + "string"
-      case "number"  => Xsd + "float"
-      case "integer" => Xsd + "integer"
-      case "date"    => Xsd + "dateTime"
-      case "boolean" => Xsd + "boolean"
-      case "file"    => Shapes + "file"
-    }).iri()
+  def xsdFromString(text: String): (String, Option[String]) =
+    text match {
+      case "string"  => ((Xsd + "string").iri(), Option(""))
+      case "number"  => ((Xsd + "float").iri(), Option(""))
+      case "integer" => ((Xsd + "integer").iri(), Option(""))
+      case "date"    => ((Xsd + "dateTime").iri(), Option("RFC2616"))
+      case "boolean" => ((Xsd + "boolean").iri(), Option(""))
+      case "file"    => ((Shapes + "file").iri(), Option(""))
+    }
 }
 
 object TypeDefXsdMapping {
