@@ -8,9 +8,16 @@ title: Example API
         application/x-www-form-urlencoded:
           properties:
             name:
-              description: The name 1 of the resource to create
-              example: Comment1
-              type: string
+              type: union
+              anyOf:
+                -
+                  description: The name of the resource to create
+                  example: Comment
+                  type: string
+                -
+                  description: The name 1 of the resource to create
+                  example: Comment1
+                  type: string
             description:
               description: A description of the resource to create
               example: User-generated content pertinent to the associated blog post
