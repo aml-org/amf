@@ -2,5 +2,4 @@
 
 var amf = require(__dirname + "/../amf.js");
 
-console.log(process.argv.slice(2, process.argv.length));
 amf.Main.main(process.argv.slice(2, process.argv.length));
