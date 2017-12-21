@@ -122,7 +122,7 @@ case class RamlTypeParser(ast: YPart,
     // parsing annotations
     node.value match {
       case map: YMap if result.isDefined => AnnotationParser(() => result.get, map).parse()
-      case _ => // ignore
+      case _                             => // ignore
     }
 
     result
@@ -281,7 +281,8 @@ case class RamlTypeParser(ast: YPart,
 
           refTuple match {
             case (text: String, Some(s)) =>
-              s.link(text, Annotations(node.value)).asInstanceOf[Shape]
+              s.link(text, Annotations(node.value))
+                .asInstanceOf[Shape]
                 .withName(name) // we setup the local reference in the name
                 .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             case (text: String, _) =>
@@ -520,7 +521,10 @@ case class RamlTypeParser(ast: YPart,
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
-        item       <- RamlTypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), false, AnyDefaultType).parse()
+        item <- RamlTypeParser(itemsEntry,
+                               items => items.adopted(shape.id + "/items"),
+                               isAnnotation = false,
+                               AnyDefaultType).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -731,59 +735,65 @@ case class RamlTypeParser(ast: YPart,
 
     def parse(): Seq[PropertyShape] = {
       ast.entries
-        .map(entry => PropertyShapeParser(entry, producer).parse())
+        .flatMap(entry => PropertyShapeParser(entry, producer).parse())
     }
   }
 
   case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape) {
 
-    def parse(): PropertyShape = {
+    def parse(): Option[PropertyShape] = {
 
-      val name: String = entry.key
-      val property     = producer(name).add(Annotations(entry))
+      entry.key.to[String] match {
+        case Right(prop) =>
+          val property = producer(prop).add(Annotations(entry))
 
-      var explicitRequired: Option[Value] = None
-      entry.value.to[YMap] match {
-        case Right(map) =>
-          map.key(
-            "required",
-            entry => {
-              val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
-              explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
-              property.set(PropertyShapeModel.MinCount,
-                           AmfScalar(if (required) 1 else 0),
-                           Annotations(entry) += ExplicitField())
+          var explicitRequired: Option[Value] = None
+          entry.value.to[YMap] match {
+            case Right(map) =>
+              map.key(
+                "required",
+                entry => {
+                  val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                  explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
+                  property.set(PropertyShapeModel.MinCount,
+                               AmfScalar(if (required) 1 else 0),
+                               Annotations(entry) += ExplicitField())
+                }
+              )
+            case _ =>
+          }
+
+          if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
+            val required = !prop.endsWith("?")
+
+            property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
+            property.set(PropertyShapeModel.Name, if (required) prop else prop.stripSuffix("?")) // TODO property id is using a name that is not final.
+          }
+
+          property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+
+          RamlTypeParser(entry, shape => shape.adopted(property.id), isAnnotation = false, StringDefaultType)
+            .parse()
+            .foreach { range =>
+              if (explicitRequired.isDefined) {
+                range.fields.setWithoutId(ShapeModel.RequiredShape,
+                                          explicitRequired.get.value,
+                                          explicitRequired.get.annotations)
+              }
+
+              if (entry.value.tagType == YType.Null) {
+                range.annotations += SynthesizedField()
+              }
+
+              property.set(PropertyShapeModel.Range, range)
             }
-          )
-        case _ =>
+
+          Some(property)
+
+        case Left(error) =>
+          ctx.violation(error.error, Some(entry.key))
+          None
       }
-
-      if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
-        val required = !name.endsWith("?")
-
-        property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
-        property.set(PropertyShapeModel.Name, if (required) name else name.stripSuffix("?")) // TODO property id is using a name that is not final.
-      }
-
-      property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
-
-      RamlTypeParser(entry, shape => shape.adopted(property.id), false, StringDefaultType)
-        .parse()
-        .foreach { range =>
-          if (explicitRequired.isDefined) {
-            range.fields.setWithoutId(ShapeModel.RequiredShape,
-                                      explicitRequired.get.value,
-                                      explicitRequired.get.annotations)
-          }
-
-          if (entry.value.tagType == YType.Null) {
-            range.annotations += SynthesizedField()
-          }
-
-          property.set(PropertyShapeModel.Range, range)
-        }
-
-      property
     }
   }
 
