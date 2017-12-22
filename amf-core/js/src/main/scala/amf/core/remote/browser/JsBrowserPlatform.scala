@@ -40,14 +40,6 @@ class JsBrowserPlatform extends Platform {
 
   override def resolvePath(path: String): String = path
 
-  // TODO: removed in modularization @modularization
-  /*
-  override val dialectsRegistry = JSDialectRegistry(this)
-  override val validator        = new SHACLValidator()
-
-  @JSExport
-  def setupValidation(validation: Validation): js.Promise[Validation] = setupValidationBase(validation).toJSPromise
-  */
 }
 
 @JSExportAll

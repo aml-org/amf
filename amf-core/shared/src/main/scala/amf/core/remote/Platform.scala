@@ -167,11 +167,13 @@ object Http {
 object File {
   val FILE_PROTOCOL = "file://"
 
-  def unapply(url: String): Option[String] = url match {
-    case s if s.startsWith(FILE_PROTOCOL) =>
-      val path = s.stripPrefix(FILE_PROTOCOL)
-      Some(path)
-    case _ => None
+  def unapply(url: String): Option[String] = {
+    url match {
+      case s if s.startsWith(FILE_PROTOCOL) =>
+        val path = s.stripPrefix(FILE_PROTOCOL)
+        Some(path)
+      case _ => None
+    }
   }
 }
 
