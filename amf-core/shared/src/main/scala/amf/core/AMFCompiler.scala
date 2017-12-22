@@ -88,11 +88,13 @@ class AMFCompiler(val rawUrl: String,
       case Some(domainPlugin) =>
         parseReferences(document, domainPlugin) map { documentWithReferences =>
           domainPlugin.parse(documentWithReferences, ctx, remote) match {
-            case Some(baseUnit) => baseUnit.withRaw(document.raw)
+            case Some(baseUnit) =>
+              baseUnit.withRaw(document.raw)
             case None =>
-              val fragment = ExternalFragment().withEncodes(
-                ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
-              fragment
+              ExternalFragment()
+                .withEncodes(ExternalDomainElement()
+                .withRaw(document.raw)
+                .withMediaType(document.mediatype))
           }
         }
       case None =>
@@ -115,7 +117,7 @@ class AMFCompiler(val rawUrl: String,
           .map(ParsedReference(_, link))
       })
 
-    Future.sequence(references).map(rs => { root.copy(references = rs, vendor = domainPlugin.ID) })
+    Future.sequence(references).map(rs => root.copy(references = rs, vendor = domainPlugin.ID))
   }
 
   private def resolve(): Future[Content] = remote.resolve(location, base)

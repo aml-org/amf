@@ -141,5 +141,4 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(firstFragment.asInstanceOf[TraitFragment].encodes != null)
     assert(!traitRefs.asScala.map(_.location).contains(null))
   }
-
 }
