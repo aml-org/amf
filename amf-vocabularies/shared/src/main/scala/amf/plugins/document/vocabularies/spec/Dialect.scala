@@ -26,7 +26,7 @@ case class Dialect(name: String,
                    fragments: Map[String, DialectNode] = Map(),
                    kind: DialectKind = DocumentKind) {
 
-  root.dialect = Some(this)
+  root.withDialect(Some(this))
 
   def knows(nodeType: String): Option[DialectNode] = {
     findNodeType(nodeType, Seq(root), Set(root))
@@ -603,7 +603,10 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
   val keyProperty: Option[DialectPropertyMapping]         = None
   var nameProvider: Option[LocalNameProviderFactory]      = None
   val props: mutable.Map[String, DialectPropertyMapping]  = new mutable.LinkedHashMap()
-  var dialect: Option[Dialect]                            = None
+
+  protected var _dialect: Option[Dialect]                 = None
+  def dialect: Option[Dialect]                            = _dialect
+  def withDialect(dialect: Option[Dialect])               = _dialect = dialect
 
   def fromDialect: Option[Dialect] = dialect
 
@@ -642,6 +645,18 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
         DialectPropertyMapping(propertyMapping,
                                node, // DialectNode inherits from Type !!!
                                hash = Some(hash))))
+
+  def keyMap(propertyMapping: String,
+          hashKey: DialectPropertyMapping,
+          hashValue: DialectPropertyMapping,
+          node: DialectNode,
+          adapter: (DialectPropertyMapping) => DialectPropertyMapping = identity): DialectPropertyMapping =
+    add(
+      adapter(
+        DialectPropertyMapping(propertyMapping,
+          node, // DialectNode inherits from Type !!!
+          hash = Some(hashKey),
+          hashValue = Some(hashValue))))
 
   def add(p: DialectPropertyMapping): DialectPropertyMapping = {
     val mapping = p.adopt(this)

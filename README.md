@@ -168,3 +168,4 @@ Validation is one of the key features of AMF. Please check the following link to
 
 ## Want to know more?
 [Click here for more documentation and playground](https://mulesoft.github.io/amf/)
+

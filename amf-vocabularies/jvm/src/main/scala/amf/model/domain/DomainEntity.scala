@@ -1,10 +1,9 @@
-package amf.model
+package amf.model.domain
 
-import amf.model.domain.DomainElement
 import amf.plugins.document.vocabularies.model.domain.{DomainEntity => CoreDomainEntity}
 import amf.plugins.document.vocabularies.spec.DialectNode
 
-case class DomainEntity(private val entity: CoreDomainEntity) extends DomainElement {
+class DomainEntity(private val entity: CoreDomainEntity) extends DomainElement {
 
   val definition: DialectNode = entity.definition
 

@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class WebApi(private val webApi: models.WebApi) extends DomainElement {
 
-  @JSExportTopLevel("WebApi")
+  @JSExportTopLevel("model.domain.WebApi")
   def this() = this(models.WebApi())
 
   def name: String                                      = webApi.name

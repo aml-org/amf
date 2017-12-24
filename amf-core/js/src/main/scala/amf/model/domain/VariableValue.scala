@@ -10,6 +10,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("model.domain.VariableValue")
 @JSExportAll
 case class VariableValue(private[amf] val variable: templates.VariableValue) extends DomainElement {
+
+  @JSExportTopLevel("model.domain.VariableValue")
   def this() = this(templates.VariableValue())
 
   def name: String    = variable.name

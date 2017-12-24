@@ -1,5 +1,5 @@
 
-declare module "@mulesoft/amf-client-js" {
+declare module "amf-client-js" {
 
     type URI = string;
     type URL = string;
@@ -9,7 +9,8 @@ declare module "@mulesoft/amf-client-js" {
         namespace document {
 
             export interface EncodesModel {
-                encodes: model.domain.DomainElement
+                encodes: model.domain.DomainElement;
+                withEncodes(enocdes: model.domain.DomainElement): this;
             }
 
             export interface DeclaresModel {
@@ -22,6 +23,7 @@ declare module "@mulesoft/amf-client-js" {
                 references(): BaseUnit[];
                 withReferences(newReferences: BaseUnit[]): this
                 location: URL;
+                withLocation(location: URL): string;
                 usage(): string;
                 findById(id: URI): model.domain.DomainElement | null;
                 findByType(typeId: URI): model.domain.DomainElement[];
@@ -30,10 +32,12 @@ declare module "@mulesoft/amf-client-js" {
             export class Document extends BaseUnit implements EncodesModel, DeclaresModel {
                 declares: domain.DomainElement[];
                 encodes: domain.DomainElement;
+                withEncodes(enocdes: model.domain.DomainElement): this;
             }
 
             export class Fragment extends BaseUnit implements EncodesModel {
                 encodes: model.domain.DomainElement;
+                withEncodes(enocdes: model.domain.DomainElement): this;
             }
 
             export class Module extends BaseUnit implements  DeclaresModel {
@@ -52,6 +56,71 @@ declare module "@mulesoft/amf-client-js" {
                 getPropertyIds(): URI[];
                 getScalarByPropertyId(propertyId: URI): any[]
                 getObjectByPropertyId(propertyId: URI): DomainElement[]
+            }
+
+            export class DomainEntity extends DomainElement {
+              definition: any;
+            }
+
+            export class Vocabulary extends DomainEntity {
+              constructor(wrapped?: any);
+              base(): URI|null;
+              withBase(base: URI): this;
+              version(): string|null;
+              withVersion(version: string): this;
+              usage(): string|null;
+              withUsage(usage: string): this;
+              uses(): VocabularyImport[];
+              withUses(imports: VocabularyImport[]): this;
+              externals(): ExternalVocabularyImport[];
+              withExternals(externalImports: ExternalVocabularyImport[]): this;
+              classTerms(): ClassTerm[];
+              withClassTerms(classTerms: ClassTerm[]): this;
+              propertyTerms(): PropertyTerm[];
+              withPropertyTerms(propertyTerms: PropertyTerm[]): this;
+            }
+
+            export class ExternalVocabularyImport extends DomainEntity {
+              constructor(wrapped?: any);
+              name(): string|null;
+              withName(name: string): this;
+              uri(): string|null;
+              withUri(uri: URI): this;
+            }
+
+            export class VocabularyImport extends DomainEntity {
+              constructor(wrapped?: any);
+              name(): string|null;
+              withName(name: string): this;
+              uri(): string|null;
+              withUri(uri: URI): this;
+            }
+
+            export class ClassTerm extends DomainEntity {
+              getId(): URI;
+              withId(id: URI): this;
+              displayName(): string|null;
+              withDisplayName(displayName: string): this;
+              description(): string|null;
+              withDescription(description: string): this;
+              termExtends(): string[];
+              withTermExtends(termExtends: string[]): this
+              properties(): string[];
+              withProperties(properties: string[]): this;
+            }
+
+            export class ClassTerm extends DomainEntity {
+              getId(): URI;
+              withId(id: URI): this;
+              displayName(): string|null;
+              withDisplayName(displayName: string): this;
+              description(): string|null;
+              withDescription(description: string): this;
+              termExtends(): URI[];
+              withTermExtends(termExtends: URI[]): this;
+              range(): URI[];
+              withRange(range: URI[]): this;
+              withScalarRange(range: string[]): this;
             }
 
             export class CustomDomainProperty extends DomainElement {

@@ -13,6 +13,7 @@ import amf.plugins.document.vocabularies.spec._
   */
 class VocabPartDialect(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
+  override def dialect = Some(VocabularyLanguageDefinition)
   id = Some((namespace + shortName).iri())
 }
 
@@ -88,9 +89,9 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
   var usage: DialectPropertyMapping =
     str("usage", _.copy(namespace = Some(Namespace.Schema), rdfName = Some("description")))
   var externals: DialectPropertyMapping =
-    map("external", External.name, External, _.copy(scalaNameOverride = Some("externals")))
+    keyMap("external", External.name, External.uri, External, _.copy(scalaNameOverride = Some("externals")))
   var uses: DialectPropertyMapping =
-    map("uses", NameSpaceImport.name, NameSpaceImport, _.copy(scalaNameOverride = Some("externals")))
+    keyMap("uses", NameSpaceImport.name, External.uri, NameSpaceImport, _.copy(scalaNameOverride = Some("uses")))
 
   var classTerms: DialectPropertyMapping =
     map("classTerms",
@@ -113,7 +114,7 @@ object Vocabulary extends VocabPartDialect("Vocabulary") {
   withType("http://www.w3.org/2002/07/owl#Ontology")
 
   nameProvider = {
-    val provider: LocalNameProviderFactory = new BasicNameProvider(_, List(externals))
+    val provider: LocalNameProviderFactory = new BasicNameProvider(_, List(externals, uses))
     Some(provider)
   }
 }
