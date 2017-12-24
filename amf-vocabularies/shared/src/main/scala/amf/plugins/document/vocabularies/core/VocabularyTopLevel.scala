@@ -17,8 +17,8 @@ extends TopLevelObject(entity, parent){
     def withUsage(value: String): VocabularyObject = { entity.set(Vocabulary.usage.field() , AmfScalar(value)); this }
     def external(): Seq[ExternalObject] = entity.entities(Vocabulary.externals).map(ExternalObject(_, Some(this)))
     def withExternal(value: ExternalObject): VocabularyObject = { entity.add(Vocabulary.externals.field() , value.entity); this }
-    def uses(): Seq[NameSpaceImportObject] = entity.entities(Vocabulary.externals).map(NameSpaceImportObject(_, Some(this)))
-    def withUses(value: NameSpaceImportObject): VocabularyObject = { entity.add(Vocabulary.externals.field() , value.entity); this }
+    def uses(): Seq[NameSpaceImportObject] = entity.entities(Vocabulary.uses).map(NameSpaceImportObject(_, Some(this)))
+    def withUses(value: NameSpaceImportObject): VocabularyObject = { entity.add(Vocabulary.uses.field() , value.entity); this }
     def classTerms(): Seq[ClassObject] = entity.entities(Vocabulary.classTerms).map(ClassObject(_, Some(this)))
     def withClassTerms(value: ClassObject): VocabularyObject = { entity.add(Vocabulary.classTerms.field() , value.entity); this }
     def propertyTerms(): Seq[PropertyObject] = entity.entities(Vocabulary.propertyTerms).map(PropertyObject(_, Some(this)))

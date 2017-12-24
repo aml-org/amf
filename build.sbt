@@ -122,7 +122,6 @@ lazy val validation = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
-    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,

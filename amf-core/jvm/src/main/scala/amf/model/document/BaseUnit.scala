@@ -36,6 +36,10 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   /** Returns the file location for the document that has been parsed to generate this model */
   def location: String = element.location
+  def withLocation(location: String) = {
+    element.withLocation(location)
+    this
+  }
 
   def usage: String = element.usage
 
