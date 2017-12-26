@@ -502,14 +502,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Example validation of a resource type") {
     val validation = Validation(platform)
     for {
-      library <- AMFCompiler(validationsPath + "resource_types/resource_type1.raml", platform, RamlYamlHint, validation)
+      library <- AMFCompiler(validationsPath + "resource_types/resource_type1.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
     }
   }
-
 
   test("Annotations model validations test") {
     val validation = Validation(platform)
@@ -589,7 +591,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       doc <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val resolved     = RAML10Plugin.resolve(doc)
+      val resolved = RAML10Plugin.resolve(doc)
       assert(Option(resolved).isDefined)
     }
   }
@@ -624,4 +626,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  ignore("Some api") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(productionPath + "enum-inheritance.raml", platform, RamlYamlHint, validation).build()
+      report  <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(library != null)
+      assert(report.results.length == 1)
+    }
+  }
 }
