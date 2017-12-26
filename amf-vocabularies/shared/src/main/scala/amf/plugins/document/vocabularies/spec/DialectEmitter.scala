@@ -245,7 +245,15 @@ class DialectEmitter(val unit: BaseUnit) {
               case entity: DomainEntity =>
                 b.complexEntry(
                   b => {
-                    if (mapping.noLastSegmentTrimInMaps) raw(b, localId(mapping, entity))
+                    if (mapping.hash.isDefined) {
+                      mapping.hash match {
+                        case Some(hash) => entity.fields.get(hash.field()) match {
+                          case hashValueScalar: AmfScalar => raw(b, hashValueScalar.toString)
+                          case _                          => raw(b, "")
+                        }
+                        case _ => raw(b, "")
+                      }
+                    } else if (mapping.noLastSegmentTrimInMaps) raw(b, localId(mapping, entity))
                     else raw(b, lastSegment(entity))
                   },
                   entity.fields.get(mapping.hashValue.get.field()) match {

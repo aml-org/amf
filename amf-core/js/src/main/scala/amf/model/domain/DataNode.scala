@@ -32,6 +32,7 @@ object DataNode extends PlatformSecrets {
   }
 }
 
+@JSExportTopLevel("model.domain.ObjectNode")
 @JSExportAll
 case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends DataNode(objectNode) {
 
@@ -51,10 +52,12 @@ case class ObjectNode(private[amf] val objectNode: domain.ObjectNode) extends Da
 
   override protected[amf] def element: domain.ObjectNode = objectNode
 
+  @JSExportTopLevel("model.domain.ObjectNode")
   def this() = this(domain.ObjectNode())
 
 }
 
+@JSExportTopLevel("model.domain.ScalarNode")
 @JSExportAll
 case class ScalarNode(private[amf] val scalarNode: domain.ScalarNode) extends DataNode(scalarNode) {
 
@@ -63,6 +66,7 @@ case class ScalarNode(private[amf] val scalarNode: domain.ScalarNode) extends Da
 
   override protected[amf] def element: domain.ScalarNode = scalarNode
 
+  @JSExportTopLevel("model.domain.ScalarNode")
   def this() = this(domain.ScalarNode())
 
 }
@@ -72,6 +76,7 @@ object ScalarNode {
   def build(value: String, dataType: String) = ScalarNode(domain.ScalarNode(value, Option(dataType)))
 }
 
+@JSExportTopLevel("model.domain.ArrayNode")
 @JSExportAll
 case class ArrayNode(private[amf] val arrayNode: domain.ArrayNode) extends DataNode(arrayNode) {
 
@@ -84,6 +89,7 @@ case class ArrayNode(private[amf] val arrayNode: domain.ArrayNode) extends DataN
 
   override protected[amf] def element: domain.ArrayNode = arrayNode
 
+  @JSExportTopLevel("model.domain.ArrayNode")
   def this() = this(domain.ArrayNode())
 
 }

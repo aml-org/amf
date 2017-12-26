@@ -13,7 +13,7 @@ case class Module(private[amf] val model: document.Module) extends BaseUnit with
 
   override private[amf] val element = model
 
-  @JSExportTopLevel("Module")
+  @JSExportTopLevel("model.document.Module")
   def this() = this(document.Module())
 
 }
