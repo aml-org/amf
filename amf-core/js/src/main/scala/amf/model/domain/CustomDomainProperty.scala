@@ -42,6 +42,7 @@ case class CustomDomainProperty(private[amf] val customDomainProperty: extension
     this
   }
 
+  @JSExportTopLevel("model.domain.CustomDomainProperty")
   def this() = this(extensions.CustomDomainProperty())
 
   override def element: extensions.CustomDomainProperty = customDomainProperty

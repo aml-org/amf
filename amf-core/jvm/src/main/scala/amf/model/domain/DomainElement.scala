@@ -36,6 +36,10 @@ trait DomainElement extends AmfObjectWrapper with PlatformSecrets {
   // API for direct property manipulation
 
   def getId(): String = element.id
+  def withId(id: String) = {
+    element.withId(id)
+    this
+  }
 
   def getTypeIds(): java.util.List[String] = element.getTypeIds().asJava
 

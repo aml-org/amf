@@ -2,10 +2,11 @@ package amf
 
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document.{Document, TraitFragment}
-import amf.model.domain.{ScalarShape, WebApi}
+import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
+import scala.scalajs.js.JSConverters._
 
 class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
@@ -125,6 +126,84 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       assert(firstFragment.location != null)
       assert(firstFragment.asInstanceOf[TraitFragment].encodes != null)
       assert(!traitRefs.toSeq.map(_.location).contains(null))
+    }
+  }
+
+  test("Vocabulary generation") {
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().toFuture flatMap { _ =>
+
+
+      val vocab = new amf.model.domain.Vocabulary()
+      vocab
+        .withBase("http://test.com/vocab#")
+        .withVersion("1.0")
+        .withUsage("Just a small sample vocabulary")
+        .withExternals(Seq(
+          new amf.model.domain.ExternalVocabularyImport()
+            .withName("other")
+            .withUri("http://test.com/vocabulary/other#")
+        ).toJSArray)
+        .withUses(Seq(
+          new amf.model.domain.VocabularyImport()
+            .withName("raml-doc")
+            .withUri("http://raml.org/vocabularies/doc#")
+        ).toJSArray)
+
+      val doc = new amf.model.document.Document()
+      doc.withLocation("test_vocab.raml")
+      doc.withEncodes(vocab)
+
+      val readVocab = new amf.model.domain.Vocabulary(doc.encodes.asInstanceOf[DomainEntity])
+      assert(readVocab.base() == vocab.base())
+      assert(Option(readVocab.base()).isDefined)
+      assert(readVocab.usage() == vocab.usage())
+      assert(Option(readVocab.usage()).isDefined)
+      assert(readVocab.version() == vocab.version())
+      assert(Option(readVocab.version()).isDefined)
+
+
+      val propertyTerm = new amf.model.domain.PropertyTerm()
+        .withId("http://raml.org/vocabularies/doc#test")
+        .withRange(Seq("http://www.w3.org/2001/XMLSchema#string").toJSArray)
+
+      val classTerm = new amf.model.domain.ClassTerm()
+        .withId("http://test.com/vocab#Class")
+        .withDescription("A sample class")
+        .withDisplayName("Class")
+        .withTermExtends("http://test.com/vocabulary/other#Class")
+        .withProperties(Seq("http://raml.org/vocabularies/doc#test").toJSArray)
+
+      vocab
+        .withClassTerms(Seq(
+          classTerm
+        ).toJSArray)
+        .withPropertyTerms(Seq(
+          propertyTerm
+        ).toJSArray)
+
+      val generator = amf.Core.generator("RAML Vocabulary", "application/yaml")
+      val text = generator.generateString(doc)
+      assert(text ==
+        """#%RAML 1.0 Vocabulary
+          |base: http://test.com/vocab#
+          |version: 1.0
+          |usage: Just a small sample vocabulary
+          |external:
+          |  other: http://test.com/vocabulary/other#
+          |uses:
+          |  raml-doc: http://raml.org/vocabularies/doc#
+          |classTerms:
+          |  Class:
+          |    displayName: Class
+          |    description: A sample class
+          |    extends: other.Class
+          |    properties: raml-doc.test
+          |propertyTerms:
+          |  raml-doc.test:
+          |    range: string
+          |""".stripMargin)
     }
   }
 }
