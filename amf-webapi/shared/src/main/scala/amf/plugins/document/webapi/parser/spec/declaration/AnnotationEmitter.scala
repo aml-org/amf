@@ -134,8 +134,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
   override def position(): Position = pos(dataNode.annotations)
 }
 
-case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering: SpecOrdering)
-    extends EntryEmitter {
+case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering: SpecOrdering) extends EntryEmitter {
   val annotations: Annotations = dataNode.propertyAnnotations(property)
   val propertyValue: DataNode  = dataNode.properties(property)
 
@@ -167,7 +166,7 @@ case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecO
           // we merge in the main body
           Option(f.value.value) match {
             case Some(shape: AnyShape) =>
-              RamlTypeEmitter(shape, ordering, Nil, Nil).emitters() match {
+              Raml10TypeEmitter(shape, ordering, Nil, Nil).emitters() match {
                 case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
                 case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
                 case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")

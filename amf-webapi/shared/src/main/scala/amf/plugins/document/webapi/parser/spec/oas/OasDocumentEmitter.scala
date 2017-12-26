@@ -88,7 +88,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       fs.entry(WebApiModel.Host).map(f => result += ValueEmitter("host", f))
 
       fs.entry(WebApiModel.BaseUriParameters)
-        .map(f => result += RamlParametersEmitter("x-base-uri-parameters", f, ordering, Nil))
+        .map(f => result += Raml10ParametersEmitter("x-base-uri-parameters", f, ordering, Nil))
 
       fs.entry(WebApiModel.BasePath).map(f => result += ValueEmitter("basePath", f))
 
@@ -288,9 +288,10 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
         .entry(RequestModel.QueryString)
         .map { f =>
           Option(f.value.value) match {
-            case Some(shape: AnyShape) => result += RamlNamedTypeEmitter(shape, ordering)
-            case Some(_)               => throw new Exception("Cannot emit a non WebApi Shape")
-            case None                  => // ignore
+            case Some(shape: AnyShape) =>
+              result += RamlNamedTypeEmitter(shape, ordering, Nil, Raml10TypePartEmitter.apply)
+            case Some(_) => throw new Exception("Cannot emit a non WebApi Shape")
+            case None    => // ignore
           }
         }
 
@@ -339,7 +340,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
               .orElse(Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))) // this is mandatory in OAS 2.0
               .map(f => result += ValueEmitter("description", f))
             fs.entry(RequestModel.Headers)
-              .map(f => result += RamlParametersEmitter("headers", f, ordering, references))
+              .map(f => result += Raml10ParametersEmitter("headers", f, ordering, references))
 
             val payloads = Payloads(response.payloads)
 
@@ -782,7 +783,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
         if (ramlParameters.nonEmpty)
           b.entry(
             key,
-            _.obj(traverse(ramlParameters.map(p => RamlParameterEmitter(p, ordering, Nil)), _))
+            _.obj(traverse(ramlParameters.map(p => Raml10ParameterEmitter(p, ordering, Nil)), _))
           )
       }
 

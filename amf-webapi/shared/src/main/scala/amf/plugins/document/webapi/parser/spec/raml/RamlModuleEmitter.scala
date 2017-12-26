@@ -16,14 +16,14 @@ import org.yaml.model.YDocument
 /**
   *
   */
-case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
+case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter with Raml10SpecEmitter {
 
   def emitModule(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, module.annotations)
 
     // TODO ordering??
-    val declares   = DeclarationsEmitter(module.declares, module.references, ordering).emitters
+    val declares   = declarationsEmitter(module.declares, module.references, ordering)
     val references = Seq(ReferencesEmitter(module.references, ordering))
 
     val usage: Option[ValueEmitter] =
@@ -38,7 +38,7 @@ case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter {
   }
 }
 
-class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragment) {
+class RamlFragmentEmitter(fragment: Fragment) extends Raml10DocumentEmitter(fragment) {
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.annotations)
@@ -86,7 +86,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       Option(dataType.encodes) match {
-        case Some(shape: AnyShape) => RamlTypeEmitter(shape, ordering, references = Nil).entries()
+        case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(_)               => throw new Exception("Cannot emit non WebApi Shape")
         case _                     => Nil // ignore
       }
@@ -111,7 +111,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends RamlDocumentEmitter(fragme
     override val header: RamlHeader = RamlFragmentHeader.Raml10SecurityScheme
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
-      RamlSecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
+      Raml10SecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
   }
 
   case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)

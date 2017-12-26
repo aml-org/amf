@@ -8,11 +8,12 @@ import amf.core.remote.Syntax.{Json, PlainText, Syntax, Yaml}
 object Vendor {
   def unapply(name: String): Option[Vendor] = {
     name match {
-      case "raml"    => Some(Raml)
-      case "oas"     => Some(Oas)
-      case "amf"     => Some(Amf)
-      case "payload" => Some(Payload)
-      case _         => None
+      case "raml 1.0" => Some(Raml10)
+      case "raml 0.8" => Some(Raml08)
+      case "oas"      => Some(Oas)
+      case "amf"      => Some(Amf)
+      case "payload"  => Some(Payload)
+      case _          => None
     }
   }
 }
@@ -22,11 +23,25 @@ sealed trait Vendor {
   val defaultSyntax: Syntax
 }
 
-object Raml extends Vendor {
-  override val name: String          = "raml"
+trait Raml extends Vendor {
+  def version: String
+  override val name: String          = ("raml " + version).trim
   override val defaultSyntax: Syntax = Yaml
 
-  override def toString: String = name
+  override def toString: String = name.trim
+
+}
+
+object Raml extends Raml {
+  override def version: String = ""
+}
+
+object Raml10 extends Raml {
+  override def version: String = "1.0"
+}
+
+object Raml08 extends Raml {
+  override def version: String = "0.8"
 }
 
 object Oas extends Vendor {
