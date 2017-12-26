@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
@@ -15,10 +15,8 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext)
+case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: RamlWebApiContext)
     extends RamlResponseParser(entry, producer) {
-  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
-    Raml10ParametersParser.apply
 
   override def parseMap(response: Response, map: YMap): Unit = {
     map.key(
@@ -78,19 +76,15 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
   }
 }
 
-case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext)
+case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: RamlWebApiContext)
     extends RamlResponseParser(entry, producer) {
-  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
-    Raml08ParametersParser.apply
 
   override protected def parseMap(response: Response, map: YMap): Unit = {
     Raml08BodyContentParser(map, (value: Option[String]) => response.withPayload(value), () => response).parse()
   }
 }
 
-abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: WebApiContext) {
-
-  protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser
+abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: RamlWebApiContext) {
 
   protected def parseMap(response: Response, map: YMap)
 
@@ -111,7 +105,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              parametersParser(entry.value.as[YMap], response.withHeader)
+              RamlParametersParser(entry.value.as[YMap], response.withHeader)
                 .parse()
                 .map(_.withBinding("header"))
             response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))

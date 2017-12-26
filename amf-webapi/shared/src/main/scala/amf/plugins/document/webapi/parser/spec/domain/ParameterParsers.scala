@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
@@ -13,28 +13,14 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 /**
   *
   */
-case class Raml10ParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext)
-    extends RamlParametersParser(map, producer) {
-
-  override def parameterParser: (YMapEntry, (String) => Parameter) => RamlParameterParser = Raml10ParameterParser.apply
-}
-
-case class Raml08ParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext)
-    extends RamlParametersParser(map, producer) {
-
-  override def parameterParser: (YMapEntry, (String) => Parameter) => RamlParameterParser = Raml08ParameterParser.apply
-}
-
-abstract class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: WebApiContext) {
-
-  def parameterParser: (YMapEntry, (String) => Parameter) => RamlParameterParser
+case class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: RamlWebApiContext) {
 
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => parameterParser(entry, producer).parse())
+      .map(entry => ctx.factory.parameterParser(entry, producer).parse())
 }
 
-case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: WebApiContext)
+case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, producer) {
   override def parse(): Parameter = {
 
@@ -124,7 +110,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
   }
 }
 
-case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: WebApiContext)
+case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, producer) {
   def parse(): Parameter = {
 
@@ -140,7 +126,8 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
   }
 }
 
-abstract class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit val ctx: WebApiContext)
+abstract class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
+    implicit val ctx: RamlWebApiContext)
     extends RamlTypeSyntax {
   def parse(): Parameter
 }

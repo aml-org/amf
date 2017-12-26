@@ -12,7 +12,7 @@ import amf.core.parser.Annotations
 import amf.core.parser._
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.DeclaredElement
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.models._
@@ -31,7 +31,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Raml 1.0 spec parser
   */
-case class Raml10DocumentParser(root: Root)(implicit override val ctx: WebApiContext)
+case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
     extends RamlDocumentParser(root)
     with Raml10BaseSpecParser {
   def parseExtension(): Extension = {
@@ -85,21 +85,9 @@ case class Raml10DocumentParser(root: Root)(implicit override val ctx: WebApiCon
 
     document
   }
-
-  override protected def endpointParser
-    : (YMapEntry, (String) => EndPoint, Option[EndPoint], ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
-    Raml10EndpointParser.apply
-
-  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
-    Raml10ParametersParser.apply
 }
 
-abstract class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) extends RamlBaseDocumentParser {
-
-  protected def endpointParser
-    : (YMapEntry, (String) => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser
-
-  protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser
+abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContext) extends RamlBaseDocumentParser {
 
   def parseDocument[T <: Document](unit: T): T
 
@@ -120,7 +108,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) e
       "baseUriParameters",
       entry => {
         val parameters: Seq[Parameter] =
-          parametersParser(entry.value.as[YMap], api.withBaseUriParameter)
+          RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
             .parse()
             .map(_.withBinding("path"))
         api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -202,7 +190,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) e
       "^/.*",
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
-        entries.foreach(entry => endpointParser(entry, api.withEndPoint, None, endpoints, false).parse())
+        entries.foreach(entry => ctx.factory.endPointParser(entry, api.withEndPoint, None, endpoints, false).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints))
       }
     )
@@ -265,9 +253,10 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: WebApiContext) e
 
 }
 
+// todo pass to ctx. declaration parser?
 trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
 
-  implicit val ctx: WebApiContext
+  implicit val ctx: RamlWebApiContext
 
   override def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
     map.key(
@@ -308,7 +297,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
   }
 }
 
-abstract class RamlBaseDocumentParser(implicit ctx: WebApiContext) extends RamlSpecParser {
+abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends RamlSpecParser {
   protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
@@ -386,7 +375,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: WebApiContext) extends RamlS
 
 }
 
-abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser {
+abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecParser {
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
@@ -475,7 +464,7 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
       }
 
       maybeAnnotationType match {
-        case Some(annotationType) => {
+        case Some(annotationType) =>
           Raml10TypeParser(annotationType, shape => shape.adopted(custom.id), isAnnotation = true)
             .parse()
             .foreach({ shape =>
@@ -521,11 +510,9 @@ abstract class RamlSpecParser(implicit ctx: WebApiContext) extends BaseSpecParse
           AnnotationParser(() => custom, map).parse()
 
           custom
-        }
-        case None => {
+        case None =>
           ctx.violation(custom.id, "Cannot parse annotation type fragment, cannot find information map", ast)
           custom
-        }
       }
 
     }

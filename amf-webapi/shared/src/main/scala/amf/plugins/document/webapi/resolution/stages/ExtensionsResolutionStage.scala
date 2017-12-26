@@ -13,9 +13,8 @@ import amf.core.model.domain._
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
-import amf.plugins.document.webapi.parser.spec.raml.RamlSyntax
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
@@ -28,12 +27,11 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-class ExtensionsResolutionStage(profile: String)
-    extends ResolutionStage(profile)
-    with PlatformSecrets {
+class ExtensionsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
 
+// Raml10SpecAwareContext is the default, if we decide to resolve 0.8, must support the two options for context
 
-  implicit val ctx: WebApiContext = new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ParserContext())
+  implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext(ParserContext())
 
   override def resolve(model: BaseUnit): BaseUnit = {
     val extendsStage = new ExtendsResolutionStage(ProfileNames.AMF)
@@ -107,24 +105,23 @@ class ExtensionsResolutionStage(profile: String)
   def merge(master: DomainElement, overlay: DomainElement): DomainElement = {
     cleanSynthesizedFacets(master)
     overlay.fields.fields().filter(ignored).foreach {
-      case entry@FieldEntry(field, value) =>
-
+      case entry @ FieldEntry(field, value) =>
         master.fields.entry(field) match {
           case None =>
             master.set(field, adoptInner(master.id, value.value)) // Set field if it doesn't exist.
           case Some(existing) =>
             field.`type` match {
-              case _: Type.Scalar => master.set(field, value.value)
+              case _: Type.Scalar          => master.set(field, value.value)
               case Type.ArrayLike(element) => mergeByValue(master, field, element, existing.value, value)
               case DataNodeModel =>
                 mergeDataNode(master,
-                  field,
-                  existing.value.value.asInstanceOf[DomainElement],
-                  value.value.asInstanceOf[DomainElement])
+                              field,
+                              existing.value.value.asInstanceOf[DomainElement],
+                              value.value.asInstanceOf[DomainElement])
               case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
                 master.set(field, entry.domainElement)
               case _: DomainElementModel => merge(existing.domainElement, entry.domainElement)
-              case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+              case _                     => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
         }
     }
@@ -135,10 +132,9 @@ class ExtensionsResolutionStage(profile: String)
     domain match {
       case shape: Shape =>
         shape.annotations.reject(_.isInstanceOf[SynthesizedField])
-      case _            => //
+      case _ => //
     }
   }
-
 
   private def incompatibleType(master: DomainElement, overlay: DomainElement): Boolean = {
     if (master.isInstanceOf[Shape] && overlay.isInstanceOf[Shape]) {
@@ -250,7 +246,7 @@ class ExtensionsResolutionStage(profile: String)
 
   private def ignored(entry: FieldEntry) = entry.field match {
     case Sources | BaseUnitModel.Usage | ExtensionLikeModel.Extends => false
-    case _                                                                     => true
+    case _                                                          => true
   }
 
   def adoptInner(id: String, target: AmfElement): AmfElement = target match {

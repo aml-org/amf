@@ -7,9 +7,10 @@ import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.remote.Platform
-import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
+import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlHeader._
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.raml.{RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
@@ -27,14 +28,16 @@ trait RAMLPlugin extends BaseWebApiPlugin {
 
   override val validationProfile: String = RAML
 
+  def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
+
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     inlineExternalReferences(root)
 
-    val updated     = new WebApiContext(RamlSyntax, RAML, RamlSpecAwareContext, parentContext)
+    val updated     = context(parentContext)
     val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations())
-    val clean       = new WebApiContext(RamlSyntax, RAML, RamlSpecAwareContext, cleanNested)
+    val clean       = context(cleanNested)
 
-    RamlHeader(root) flatMap {
+    RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
       case Raml08          => Some(Raml08DocumentParser(root)(updated).parseDocument())
       case Raml10          => Some(Raml10DocumentParser(root)(updated).parseDocument())
       case Raml10Overlay   => Some(Raml10DocumentParser(root)(updated).parseOverlay())
@@ -126,6 +129,8 @@ object RAML08Plugin extends RAMLPlugin {
     case _                  => None
   }
 
+  override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
+    new Raml08WebApiContext(wrapped, ds)
 }
 
 object RAML10Plugin extends RAMLPlugin {
@@ -166,4 +171,6 @@ object RAML10Plugin extends RAMLPlugin {
     case _                  => None
   }
 
+  override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
+    new Raml10WebApiContext(wrapped, ds)
 }

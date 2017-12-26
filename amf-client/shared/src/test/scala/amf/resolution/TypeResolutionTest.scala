@@ -1,6 +1,5 @@
 package amf.resolution
 
-import amf.ProfileNames
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.ParserContext
@@ -10,8 +9,8 @@ import amf.core.vocabulary.Namespace
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
-import amf.plugins.document.webapi.parser.spec.raml.{RamlSyntax, RamlTypeExpressionParser}
+import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
 import org.scalatest.Matchers._
 
@@ -19,12 +18,11 @@ import scala.util.{Failure, Success}
 
 class TypeResolutionTest extends BuildCycleTests {
 
-
   test("TypeExpressions") {
 
     val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-    implicit val ctx: WebApiContext = new WebApiContext(RamlSyntax, ProfileNames.OAS, RamlSpecAwareContext, ParserContext())
+    implicit val ctx = new Raml10WebApiContext(ParserContext())
 
     var res = RamlTypeExpressionParser(adopt).parse("integer")
     assert(res.get.isInstanceOf[ScalarShape])
@@ -53,7 +51,7 @@ class TypeResolutionTest extends BuildCycleTests {
     var error = false
     try {
       RuntimeValidator.disableValidations() { () =>
-        val fail = new WebApiContext(RamlSyntax, ProfileNames.OAS, RamlSpecAwareContext, ctx)
+        val fail = new Raml10WebApiContext(ctx)
         RamlTypeExpressionParser(adopt)(fail).parse("[]")
       }
     } catch {
@@ -176,12 +174,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      val res = AMFCompiler(s"file://$basePath$example.raml",
-                            platform,
-                            RamlYamlHint,
-                            Validation(platform),
-                            None,
-                            None)
+      val res = AMFCompiler(s"file://$basePath$example.raml", platform, RamlYamlHint, Validation(platform), None, None)
       res
         .build()
         .map(RAML10Plugin.resolve)

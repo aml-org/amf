@@ -10,6 +10,7 @@ object Vendor {
     name match {
       case "raml 1.0" => Some(Raml10)
       case "raml 0.8" => Some(Raml08)
+      case "raml"     => Some(Raml) // todo remove later
       case "oas"      => Some(Oas)
       case "amf"      => Some(Amf)
       case "payload"  => Some(Payload)

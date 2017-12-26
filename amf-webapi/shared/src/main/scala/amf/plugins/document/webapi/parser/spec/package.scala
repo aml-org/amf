@@ -1,9 +1,6 @@
 package amf.plugins.document.webapi.parser
 
-import amf.ProfileNames
-import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, RamlSpecAwareContext, WebApiContext}
-import amf.plugins.document.webapi.parser.spec.oas.OasSyntax
-import amf.plugins.document.webapi.parser.spec.raml.RamlSyntax
+import amf.plugins.document.webapi.contexts._
 
 /**
   * Oas package object
@@ -24,11 +21,11 @@ package object spec {
     def appendParameterDefinitionsPrefix(url: String): String = parameterDefinitionsPrefix + url
   }
 
-  def toOas(ctx: WebApiContext) = {
-    new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, ctx, Some(ctx.declarations))
+  def toOas(ctx: WebApiContext): WebApiContext = {
+    new OasWebApiContext(ctx, Some(ctx.declarations))
   }
 
-  def toRaml(ctx: WebApiContext) = {
-    new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx, Some(ctx.declarations))
+  def toRaml(ctx: WebApiContext): RamlWebApiContext = {
+    new Raml10WebApiContext(ctx, Some(ctx.declarations))
   }
 }

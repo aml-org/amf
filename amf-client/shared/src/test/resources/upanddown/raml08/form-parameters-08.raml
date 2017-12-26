@@ -1,5 +1,4 @@
 #%RAML 0.8
-
 title: Example API
 /resource:
   /{resourceId}:
@@ -9,14 +8,14 @@ title: Example API
           formParameters:
             name:
               -
-                type: string
                 description: The name of the resource to create
+                type: string
                 example: Comment
               -
-                type: string
                 description: The name 1 of the resource to create
+                type: string
                 example: Comment1
             description:
-              type: string
               description: A description of the resource to create
+              type: string
               example: User-generated content pertinent to the associated blog post

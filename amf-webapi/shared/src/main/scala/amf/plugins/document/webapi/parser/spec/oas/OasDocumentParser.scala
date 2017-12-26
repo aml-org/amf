@@ -27,7 +27,7 @@ import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
-
+import amf.plugins.document.webapi.parser.spec._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -328,10 +328,10 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
               entry => {
                 entries += entry
                 val queryParameters =
-                  Raml10ParametersParser( // always 1.0 from oas, right?
+                  RamlParametersParser( // always 1.0 from oas, right?
                     entry.value.as[YMap],
                     (name: String) =>
-                      Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("query"))
+                      Parameter().withName(name).adopted(endpoint.id))(toRaml(ctx)).parse().map(_.withBinding("query"))
                 parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
               }
             )
@@ -342,10 +342,10 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
               entry => {
                 entries += entry
                 val headers =
-                  Raml10ParametersParser(
-                    entry.value.as[YMap],
-                    (name: String) =>
-                      Parameter().withName(name).adopted(endpoint.id)).parse().map(_.withBinding("header"))
+                  RamlParametersParser(entry.value.as[YMap],
+                                       (name: String) => Parameter().withName(name).adopted(endpoint.id))(toRaml(ctx))
+                    .parse()
+                    .map(_.withBinding("header"))
                 parameters = parameters.addFromOperation(OasParameters(header = headers))
               }
             )
@@ -430,10 +430,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           entry => {
             entries += entry
             val queryParameters =
-              Raml10ParametersParser(
-                entry.value.as[YMap],
-                (name: String) =>
-                  Parameter().withName(name).adopted(request.getOrCreate.id)).parse().map(_.withBinding("query"))
+              RamlParametersParser(entry.value.as[YMap],
+                                   (name: String) => Parameter().withName(name).adopted(request.getOrCreate.id))(
+                toRaml(ctx)).parse().map(_.withBinding("query"))
             parameters = parameters.addFromOperation(OasParameters(query = queryParameters))
           }
         )
@@ -444,10 +443,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           entry => {
             entries += entry
             val headers =
-              Raml10ParametersParser(
-                entry.value.as[YMap],
-                (name: String) =>
-                  Parameter().withName(name).adopted(request.getOrCreate.id)).parse().map(_.withBinding("header"))
+              RamlParametersParser(entry.value.as[YMap],
+                                   (name: String) => Parameter().withName(name).adopted(request.getOrCreate.id))(
+                toRaml(ctx)).parse().map(_.withBinding("header"))
             parameters = parameters.addFromOperation(OasParameters(header = headers))
           }
         )

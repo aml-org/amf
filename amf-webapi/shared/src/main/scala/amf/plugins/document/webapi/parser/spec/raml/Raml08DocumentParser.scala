@@ -6,23 +6,21 @@ import amf.core.model.document.Document
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
 import amf.plugins.document.webapi.annotations.DeclaredElement
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AbstractDeclarationParser,
   Raml08TypeParser,
   SecuritySchemeParser
 }
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
-
-import scala.collection.mutable.ListBuffer
 
 /**
   * Raml 0.8 spec parser
   */
-case class Raml08DocumentParser(root: Root)(implicit override val ctx: WebApiContext)
+case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
     extends RamlDocumentParser(root) {
 
   override protected def parseDeclarations(root: Root, map: YMap): Unit = {
@@ -111,13 +109,6 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: WebApiCon
 
     document
   }
-
-  override protected def endpointParser
-    : (YMapEntry, (String) => EndPoint, Option[EndPoint], ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
-    Raml08EndpointParser.apply
-
-  override protected def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser =
-    Raml08ParametersParser.apply
 
   override def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
     map.key(

@@ -4,14 +4,14 @@ import amf.core.Root
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
 
 /**
   *
   */
-case class RamlModuleParser(root: Root)(implicit override val ctx: WebApiContext) extends Raml10BaseSpecParser {
+case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiContext) extends Raml10BaseSpecParser {
 
   def parseModule(): Module = {
     val module = Module(Annotations(root.parsed.document))

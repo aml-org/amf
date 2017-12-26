@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.ProfileNames
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.core.remote.{Oas, Raml}
+import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -19,11 +19,11 @@ import scala.collection.mutable
   */
 object SecuritySchemeParser {
   def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme)(
-      implicit ctx: WebApiContext): SecuritySchemeParser =
+      implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
-      case ProfileNames.RAML => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)
-      case ProfileNames.OAS  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
-      case other             => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
+      case r: Raml => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toRaml(ctx))
+      case Oas     => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
+      case other   => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
     }
 
 }
@@ -32,7 +32,7 @@ trait SecuritySchemeParser {
   def parse(): SecurityScheme
 }
 case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
-    implicit ctx: WebApiContext)
+    implicit ctx: RamlWebApiContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
     ctx.link(node) match {
@@ -87,12 +87,12 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
   }
 }
 
-object RamlDescribedByParser {
-  def apply(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext): RamlDescribedByParser =
-    new RamlDescribedByParser(key, map, scheme)(toRaml(ctx))
-}
+//object RamlDescribedByParser {
+//  def apply(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext): RamlDescribedByParser =
+//    new RamlDescribedByParser(key, map, scheme)(toRaml(ctx))
+//}
 
-case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext) {
+case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: RamlWebApiContext) {
   def parse(): Unit = {
     map.key(
       key,
@@ -103,7 +103,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              Raml10ParametersParser(entry.value.as[YMap], scheme.withHeader) // todo replace in separation
+              RamlParametersParser(entry.value.as[YMap], scheme.withHeader) // todo replace in separation
                 .parse()
                 .map(_.withBinding("header"))
             scheme.set(SecuritySchemeModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -114,7 +114,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
           "queryParameters",
           entry => {
             val parameters: Seq[Parameter] =
-              Raml10ParametersParser(entry.value.as[YMap], scheme.withQueryParameter) // todo replace in separation
+              RamlParametersParser(entry.value.as[YMap], scheme.withQueryParameter) // todo replace in separation
                 .parse()
                 .map(_.withBinding("query"))
             scheme.set(SecuritySchemeModel.QueryParameters,
@@ -142,7 +142,9 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                 entries => {
                   val responses = mutable.ListBuffer[Response]()
                   entries.foreach(entry => {
-                    responses += Raml10ResponseParser(entry, scheme.withResponse).parse() // todo replace in separation
+                    responses += ctx.factory
+                      .responseParser(entry, scheme.withResponse)
+                      .parse() // todo replace in separation
                   })
                   scheme.set(SecuritySchemeModel.Responses,
                              AmfArray(responses, Annotations(entry.value)),
@@ -191,7 +193,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
         })
 
-        RamlDescribedByParser("x-describedBy", map, scheme).parse()
+        RamlDescribedByParser("x-describedBy", map, scheme)(toRaml(ctx)).parse()
 
         OasSecuritySettingsParser(map, scheme)
           .parse()

@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.TemplateUri
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
@@ -20,17 +20,8 @@ case class Raml10EndpointParser(entry: YMapEntry,
                                 producer: String => EndPoint,
                                 parent: Option[EndPoint],
                                 collector: mutable.ListBuffer[EndPoint],
-                                parseOptionalOperations: Boolean = false)(implicit ctx: WebApiContext)
+                                parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
     extends RamlEndpointParser(entry, producer, parent, collector, parseOptionalOperations) {
-
-  override def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser =
-    Raml10OperationParser.apply
-
-  override def endpointParser
-    : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
-    Raml10EndpointParser.apply
-
-  override def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml10ParametersParser.apply
 
   override protected def uriParametersKey: String = "uriParameters"
 }
@@ -39,17 +30,8 @@ case class Raml08EndpointParser(entry: YMapEntry,
                                 producer: String => EndPoint,
                                 parent: Option[EndPoint],
                                 collector: mutable.ListBuffer[EndPoint],
-                                parseOptionalOperations: Boolean = false)(implicit ctx: WebApiContext)
+                                parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
     extends RamlEndpointParser(entry, producer, parent, collector, parseOptionalOperations) {
-
-  override def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser =
-    Raml08OperationParser.apply
-
-  override def endpointParser
-    : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
-    Raml08EndpointParser.apply
-
-  override def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml08ParametersParser.apply
 
   override protected def uriParametersKey: String = "BaseUriParameter"
 }
@@ -58,14 +40,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                   producer: String => EndPoint,
                                   parent: Option[EndPoint],
                                   collector: mutable.ListBuffer[EndPoint],
-                                  parseOptionalOperations: Boolean = false)(implicit ctx: WebApiContext) {
-
-  def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser
-
-  def endpointParser
-    : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser
-
-  def parametersParser: (YMap, (String) => Parameter) => RamlParametersParser
+                                  parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext) {
 
   def parse(): Unit = {
 
@@ -130,7 +105,9 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {
-          operations += operationParser(entry, endpoint.withOperation, parseOptionalOperations)
+
+          operations += ctx.factory
+            .operationParser(entry, endpoint.withOperation, parseOptionalOperations)
             .parse()
         })
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
@@ -153,7 +130,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       uriParametersKey,
       entry => {
         val parameters: Seq[Parameter] =
-          parametersParser(entry.value.as[YMap], endpoint.withParameter)
+          RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
             .parse()
             .map(_.withBinding("path"))
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -167,7 +144,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     map.regex(
       "^/.*",
       entries => {
-        entries.foreach(endpointParser(_, producer, Some(endpoint), collector, false).parse())
+        entries.foreach(ctx.factory.endPointParser(_, producer, Some(endpoint), collector, false).parse())
       }
     )
   }
