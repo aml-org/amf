@@ -1,31 +1,40 @@
 #%RAML 1.0
 title: New API
 version: v1
-/resource2:
-  get:
-    is:
-      -
-        SomeTrait:
-          propertyName1 : a
-          propertyName2 : b
-          propertyName3 : c
-    queryParameters:
-      a?:
-        example: 11
-      b?:
-        example: true
-      c?:
-        example: stringValue
-    responses:
-      200:
-        body:
-          application/json:
+securitySchemes:
+  oauth_2_0:
+    description: |
+      Dropbox supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+            Used to send a valid OAuth 2 access token. Do not use
+            with the "access_token" query string parameter.
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+            Used to send a valid OAuth 2 access token. Do not use with
+            the "Authorization" header.
+          type: string
 /test:
   post:
     queryParameters:
       limit?:
-        default: someValue
         type: integer
+        default: someValue
+resourceTypes:
+  Resource:
+    get:
+      queryParameters:
+        b:
+          type: number
+        a:
+          type: boolean
+        c:
+          type: string
 /resource:
   type: Resource
   get:
@@ -40,40 +49,31 @@ version: v1
       200:
         body:
           application/json:
-resourceTypes:
-  Resource:
-    get:
-      queryParameters:
-        b:
-          type: number
-        a:
-          type: boolean
-        c:
-          type: string
 traits:
   SomeTrait:
     queryParameters:
-      <<propertyName2>>:
-        type: boolean
       <<propertyName1>>:
         type: number
+      <<propertyName2>>:
+        type: boolean
       <<propertyName3>>:
         type: string
-securitySchemes:
-  oauth_2_0:
-    type: OAuth 2.0
-    description: |
-      Dropbox supports OAuth 2.0 for authenticating all API requests.
-    describedBy:
-      headers:
-        Authorization:
-          description: |
-             Used to send a valid OAuth 2 access token. Do not use
-             with the "access_token" query string parameter.
-          type: string
-      queryParameters:
-        access_token:
-          description: |
-             Used to send a valid OAuth 2 access token. Do not use with
-             the "Authorization" header.
-          type: string
+/resource2:
+  get:
+    is:
+      -
+        SomeTrait:
+          propertyName1: a
+          propertyName2: b
+          propertyName3: c
+    queryParameters:
+      a?:
+        example: 11
+      b?:
+        example: true
+      c?:
+        example: stringValue
+    responses:
+      200:
+        body:
+          application/json:

@@ -7,19 +7,19 @@ import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Annotations
 import amf.core.remote.Raml
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.YMap
 
 /**
   *
   */
-case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit val ctx: WebApiContext)
+case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit val ctx: RamlWebApiContext)
     extends RamlSpecParser {
 
   def parseFragment(): Option[Fragment] = {

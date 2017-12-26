@@ -2,15 +2,14 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
-import amf.core.parser.Annotations
-import amf.core.parser._
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.domain.webapi.metamodel.OperationModel
-import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{Operation, Request, Response}
+import amf.core.parser.{Annotations, _}
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.webapi.metamodel.OperationModel
+import amf.plugins.domain.webapi.metamodel.OperationModel.Method
+import amf.plugins.domain.webapi.models.{Operation, Response}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -19,7 +18,7 @@ import scala.collection.mutable
   *
   */
 case class Raml10OperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
-    implicit ctx: WebApiContext)
+    implicit ctx: RamlWebApiContext)
     extends RamlOperationParser(entry, producer, parseOptional) {
 
   override def parseMap(map: YMap, operation: Operation): Operation = {
@@ -31,19 +30,11 @@ case class Raml10OperationParser(entry: YMapEntry, producer: (String) => Operati
     })
     operation
   }
-
-  override def requestParser: (YMap, () => Request) => RamlRequestParser = Raml10RequestParser.apply
-
-  override def responseParser: (YMapEntry, (String) => Response) => RamlResponseParser = Raml10ResponseParser.apply
 }
 
 case class Raml08OperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
-    implicit ctx: WebApiContext)
+    implicit ctx: RamlWebApiContext)
     extends RamlOperationParser(entry, producer, parseOptional) {
-
-  override def requestParser: (YMap, () => Request) => RamlRequestParser = Raml08RequestParser.apply
-
-  override def responseParser: (YMapEntry, (String) => Response) => RamlResponseParser = Raml08ResponseParser.apply
 
   override def parse(): Operation = {
     super.parse()
@@ -52,10 +43,7 @@ case class Raml08OperationParser(entry: YMapEntry, producer: (String) => Operati
 }
 
 abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
-    implicit ctx: WebApiContext) {
-
-  def requestParser: (YMap, () => Request) => RamlRequestParser
-  def responseParser: (YMapEntry, (String) => Response) => RamlResponseParser
+    implicit ctx: RamlWebApiContext) {
 
   def parse(): Operation = {
     val method: String = entry.key
@@ -138,7 +126,8 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
       }
     )
 
-    requestParser(map, () => operation.withRequest())
+    ctx.factory
+      .requestParser(map, () => operation.withRequest())
       .parse()
       .map(operation.set(OperationModel.Request, _))
 
@@ -152,7 +141,8 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
             entries => {
               val responses = mutable.ListBuffer[Response]()
               entries.foreach(entry => {
-                responses += responseParser(entry, operation.withResponse)
+                responses += ctx.factory
+                  .responseParser(entry, operation.withResponse)
                   .parse()
               })
               operation.set(OperationModel.Responses,

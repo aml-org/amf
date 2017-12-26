@@ -28,7 +28,7 @@ class AMFCompiler(val rawUrl: String,
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
-  private val ctx: ParserContext                              = baseContext.getOrElse(ParserContext(url, Seq.empty))
+  private val ctx: ParserContext                              = baseContext.getOrElse(ParserContext(url))
 
   def build(): Future[BaseUnit] = {
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
@@ -46,9 +46,11 @@ class AMFCompiler(val rawUrl: String,
       .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
       // if we cannot find a plugin with the resolved media type, we try parsing from file extension
       .orElse {
-      FileMediaType.extension(content.url).flatMap(FileMediaType.mimeFromExtension)
-        .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
-    }
+        FileMediaType
+          .extension(content.url)
+          .flatMap(FileMediaType.mimeFromExtension)
+          .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
+      }
 
     parsed match {
       case Some(document) =>

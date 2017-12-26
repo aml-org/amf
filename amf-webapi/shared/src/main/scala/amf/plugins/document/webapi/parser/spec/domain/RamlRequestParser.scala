@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.Raml10TypeParser
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
@@ -14,7 +14,7 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext)
+case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext)
     extends RamlRequestParser(map, producer) {
 
   override def parse(): Option[Request] = {
@@ -59,10 +59,9 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
     request.option
   }
 
-  override def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml10ParametersParser.apply
 }
 
-case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext)
+case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext)
     extends RamlRequestParser(map, producer) {
   override def parse(): Option[Request] = {
     super.parse()
@@ -73,11 +72,10 @@ case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx:
     request.option
   }
 
-  override def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser = Raml08ParametersParser.apply
 }
 
 case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Payload), accesor: () => DomainElement)(
-    implicit ctx: WebApiContext) {
+    implicit ctx: RamlWebApiContext) {
   def parse(): Unit = {
     val payloads = mutable.ListBuffer[Payload]()
 
@@ -103,10 +101,8 @@ case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Paylo
   }
 }
 
-abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: WebApiContext) {
+abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext) {
   protected val request = new Lazy[Request](producer)
-
-  def parameterParser: (YMap, (String) => Parameter) => RamlParametersParser
 
   def parse(): Option[Request] = {
 
@@ -115,7 +111,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
       entry => {
 
         val parameters: Seq[Parameter] =
-          parameterParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter)
+          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter)
             .parse()
             .map(_.withBinding("query"))
         request.getOrCreate.set(RequestModel.QueryParameters,
@@ -128,7 +124,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          parameterParser(entry.value.as[YMap], request.getOrCreate.withHeader)
+          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withHeader)
             .parse()
             .map(_.withBinding("header"))
         request.getOrCreate.set(RequestModel.Headers,

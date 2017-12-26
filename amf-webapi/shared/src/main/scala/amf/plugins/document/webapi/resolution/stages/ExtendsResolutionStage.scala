@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.ProfileNames
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.{BaseUnit, DeclaresModel}
@@ -8,10 +7,9 @@ import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.ParserContext
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndpointParser, Raml10OperationParser}
-import amf.plugins.document.webapi.parser.spec.raml.RamlSyntax
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
@@ -32,8 +30,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
     extends ResolutionStage(profile)
     with PlatformSecrets {
 
-  implicit val ctx: WebApiContext =
-    new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ParserContext())
+  implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext(ParserContext())
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 

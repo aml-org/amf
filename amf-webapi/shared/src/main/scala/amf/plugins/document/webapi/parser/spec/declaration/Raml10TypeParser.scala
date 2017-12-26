@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.ProfileNames
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -10,12 +9,12 @@ import amf.core.parser.SearchScope.Named
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, RamlSingleExampleParser}
-import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlSyntax, RamlTypeExpressionParser}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{CreativeWork, _}
@@ -32,7 +31,7 @@ object Raml10TypeParser {
             isAnnotation: Boolean = false,
             defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml10TypeParser =
     new Raml10TypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(
-      new WebApiContext(RamlSyntax, ProfileNames.RAML, RamlSpecAwareContext, ctx, Some(ctx.declarations)))
+      new Raml10WebApiContext(ctx, Some(ctx.declarations)))
 }
 
 trait RamlTypeSyntax {
@@ -81,7 +80,7 @@ case class Raml10TypeParser(ast: YPart,
                             node: YNode,
                             adopt: Shape => Shape,
                             isAnnotation: Boolean,
-                            defaultType: DefaultType)(implicit override val ctx: WebApiContext)
+                            defaultType: DefaultType)(implicit override val ctx: RamlWebApiContext)
     extends RamlTypeParser(ast: YPart,
                            name: String,
                            node: YNode,
@@ -98,7 +97,7 @@ case class Raml08TypeParser(ast: YPart,
                             node: YNode,
                             adopt: Shape => Shape,
                             isAnnotation: Boolean = false,
-                            defaultType: DefaultType = StringDefaultType)(implicit override val ctx: WebApiContext)
+                            defaultType: DefaultType = StringDefaultType)(implicit override val ctx: RamlWebApiContext)
     extends RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation, defaultType) {
 
   override def parse(): Option[Shape] = {
@@ -134,7 +133,7 @@ case class Raml08TypeParser(ast: YPart,
   override def typeParser: (YPart, String, YNode, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser =
     Raml08TypeParser.apply
 
-  case class Raml08ReferenceParser(text: String, node: YNode)(implicit ctx: WebApiContext) {
+  case class Raml08ReferenceParser(text: String, node: YNode)(implicit ctx: RamlWebApiContext) {
     def parse(): Some[Shape] = {
       val shape = ctx.declarations.findType(text, SearchScope.All) match {
         case Some(s: Shape) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
@@ -149,7 +148,7 @@ case class Raml08TypeParser(ast: YPart,
     }
   }
 
-  case class Raml08SchemaParser(map: YMap)(implicit ctx: WebApiContext) {
+  case class Raml08SchemaParser(map: YMap)(implicit ctx: RamlWebApiContext) {
     def parse(): Option[Shape] = {
       map.key("schema").flatMap { e =>
         e.value.as[YScalar].text match {
@@ -163,7 +162,7 @@ case class Raml08TypeParser(ast: YPart,
   }
 
 }
-case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(implicit ctx: WebApiContext) {
+case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(implicit ctx: RamlWebApiContext) {
   def parse(): Shape = {
 
     val unionNodes = types.zipWithIndex
@@ -183,7 +182,7 @@ case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(im
   }
 }
 
-case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(implicit val ctx: WebApiContext) {
+case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(implicit val ctx: RamlWebApiContext) {
 
   def parse(): Shape = {
 
@@ -280,7 +279,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
 }
 
 trait RamlExternalTypes {
-  implicit val ctx: WebApiContext
+  implicit val ctx: RamlWebApiContext
 
   protected def parseXMLSchemaExpression(entry: YMapEntry, adopt: Shape => Shape): Shape = {
     entry.value.tagType match {
@@ -355,7 +354,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
                                      node: YNode,
                                      adopt: Shape => Shape,
                                      isAnnotation: Boolean,
-                                     defaultType: DefaultType)(implicit val ctx: WebApiContext)
+                                     defaultType: DefaultType)(implicit val ctx: RamlWebApiContext)
     extends RamlSpecParser
     with RamlExternalTypes {
 

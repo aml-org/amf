@@ -47,12 +47,13 @@ class AMFCompiler private (val url: String,
   def build(): Future[BaseUnit] = {
 
     val actualVendor = hint.vendor match {
-      case Raml      => "RAML 1.0"
-      case Oas       => "OAS 2.0"
-      case Payload   => "AMF Payload"
-      case Amf       => "AMF Graph"
-      case Extension => "RAML Extension"
-      case Unknown   => "Unknown Vendor"
+      case Raml | Raml10 => "RAML 1.0"
+      case Raml08        => "RAML 0.8"
+      case Oas           => "OAS 2.0"
+      case Payload       => "AMF Payload"
+      case Amf           => "AMF Graph"
+      case Extension     => "RAML Extension"
+      case Unknown       => "Unknown Vendor"
     }
 
     val mediaType = hint match {
@@ -92,12 +93,13 @@ class AMFCompiler private (val url: String,
 
   def root(): Future[Root] = {
     val actualVendor = hint.vendor match {
-      case Raml      => "RAML 1.0"
-      case Oas       => "OAS 2.0"
-      case Payload   => "AMF Payload"
-      case Amf       => "AMF Graph"
-      case Extension => "RAML Vocabularies"
-      case Unknown   => "Unknown Vendor"
+      case Raml | Raml10 => "RAML 1.0"
+      case Raml08        => "RAML 0.8"
+      case Oas           => "OAS 2.0"
+      case Payload       => "AMF Payload"
+      case Amf           => "AMF Graph"
+      case Extension     => "RAML Vocabularies"
+      case Unknown       => "Unknown Vendor"
     }
 
     val mediaType = hint match {
@@ -133,14 +135,14 @@ class AMFCompiler private (val url: String,
     }
 
     val hint = root.vendor match {
-      case "RAML 1.0" if mediaType == Yaml    => RamlYamlHint
-      case "RAML 1.0" if mediaType == Json    => RamlJsonHint
-      case "OAS 2.0" if mediaType == Json     => OasJsonHint
-      case "OAS 2.0" if mediaType == Yaml     => OasYamlHint
-      case "AMF Payload" if mediaType == Yaml => PayloadYamlHint
-      case "AMF Payload" if mediaType == Json => PayloadJsonHint
-      case "AMF Extension"                    => ExtensionYamlHint
-      case _                                  => AmfJsonHint
+      case "RAML 1.0" | "RAML 0.8" if mediaType == Yaml => RamlYamlHint
+      case "RAML 1.0" | "RAML 0.8" if mediaType == Json => RamlJsonHint
+      case "OAS 2.0" if mediaType == Json               => OasJsonHint
+      case "OAS 2.0" if mediaType == Yaml               => OasYamlHint
+      case "AMF Payload" if mediaType == Yaml           => PayloadYamlHint
+      case "AMF Payload" if mediaType == Json           => PayloadJsonHint
+      case "AMF Extension"                              => ExtensionYamlHint
+      case _                                            => AmfJsonHint
     }
 
     Root(
@@ -165,16 +167,17 @@ case class Root(parsed: ParsedDocument,
   // TODO: remove me, only for compatibility while refactoring
   def newFormat(): amf.core.Root = {
     val actualVendor = vendor match {
-      case Raml      => "RAML 1.0"
-      case Oas       => "OAS 2.0"
-      case Payload   => "AMF Payload"
-      case Amf       => "AMF Graph"
-      case Extension => "RAML Vocabularies"
-      case Unknown   => "Unknown Vendor"
+      case Raml | Raml10 => "RAML 1.0"
+      case Raml08        => "RAML 0.8"
+      case Oas           => "OAS 2.0"
+      case Payload       => "AMF Payload"
+      case Amf           => "AMF Graph"
+      case Extension     => "RAML Vocabularies"
+      case Unknown       => "Unknown Vendor"
     }
     val mediatype = vendor match {
       case Extension => "application/yaml"
-      case Raml      => "application/yaml"
+      case r: Raml   => "application/yaml"
       case Oas       => "application/json"
       case Payload   => "application/amf+json"
       case Amf       => "application/ld+json"

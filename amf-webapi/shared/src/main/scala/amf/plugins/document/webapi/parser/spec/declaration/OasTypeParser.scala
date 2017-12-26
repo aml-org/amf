@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.ProfileNames
 import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -9,11 +8,11 @@ import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.Inferred
-import amf.plugins.document.webapi.contexts.{OasSpecAwareContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
-import amf.plugins.document.webapi.parser.spec.oas.{OasSpecParser, OasSyntax}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
+import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{CreativeWork, Example, _}
@@ -30,7 +29,7 @@ object OasTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, oasNode: String = "schema")(
       implicit ctx: WebApiContext): OasTypeParser =
     OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(
-      new WebApiContext(OasSyntax, ProfileNames.OAS, OasSpecAwareContext, ctx, Some(ctx.declarations)))
+      new OasWebApiContext(ctx, Some(ctx.declarations)))
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(
