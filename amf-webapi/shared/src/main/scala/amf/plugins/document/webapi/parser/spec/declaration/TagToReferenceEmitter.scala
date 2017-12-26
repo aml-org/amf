@@ -10,7 +10,7 @@ import amf.core.remote.{Oas, Raml, Vendor}
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.document.webapi.parser.spec.raml.RamlSpecEmitter
+import amf.plugins.document.webapi.parser.spec.raml.{Raml10SpecEmitter, RamlSpecEmitter}
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.YDocument.PartBuilder
 
@@ -19,13 +19,12 @@ import org.yaml.model.YDocument.PartBuilder
   */
 class WebApiTagToReferenceEmitter(spec: Vendor) extends TagToReferenceEmitter {
 
-  override def emitter(target: DomainElement,
-                       label: Option[String],
-                       references: Seq[BaseUnit] = Nil): PartEmitter = spec match {
-    case Oas   => OasTagToReferenceEmitter(target, label)
-    case Raml  => RamlTagToReferenceEmitter(target, label.getOrElse(target.id), references)
-    case other => throw new IllegalArgumentException(s"Unsupported vendor $other for tag generation")
-  }
+  override def emitter(target: DomainElement, label: Option[String], references: Seq[BaseUnit] = Nil): PartEmitter =
+    spec match {
+      case Oas   => OasTagToReferenceEmitter(target, label)
+      case Raml  => RamlTagToReferenceEmitter(target, label.getOrElse(target.id), references)
+      case other => throw new IllegalArgumentException(s"Unsupported vendor $other for tag generation")
+    }
 
 }
 
@@ -65,6 +64,7 @@ case class OasRefEmitter(url: String, position: Position = Position.ZERO) extend
 
 case class RamlTagToReferenceEmitter(reference: DomainElement, text: String, references: Seq[BaseUnit])
     extends RamlSpecEmitter
+    with Raml10SpecEmitter
     with PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     references.find {

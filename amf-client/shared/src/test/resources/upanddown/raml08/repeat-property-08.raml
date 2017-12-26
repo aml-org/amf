@@ -1,0 +1,13 @@
+#%RAML 0.8
+title: New API
+/test:
+  post:
+    queryParameters:
+      limit:
+        type: integer
+        default: someValue
+        repeat: true
+      nonRepeatable:
+        type: string
+      common:
+        type: string

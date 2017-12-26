@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Example of Optional Properties
+resourceTypes:
+  auditableResource:
+      delete?:
+          body:
+            deleteAuthority:
+              description: |
+                If the resource has a delete method defined, expect a deleteAuthority
+                property in its body
+      post?:
+        body:
+          createAuthority:
+            description: |
+              If the resource has a post method defined, expect a createAuthority
+              property in its body

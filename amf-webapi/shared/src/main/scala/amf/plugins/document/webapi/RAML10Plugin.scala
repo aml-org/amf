@@ -10,7 +10,7 @@ import amf.core.remote.Platform
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlHeader._
-import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.domain.webapi.models.WebApi
@@ -104,15 +104,11 @@ object RAML08Plugin extends RAMLPlugin {
 
   // fix for 08
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Overlay         => true
-    case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[WebApi]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainElement => true
-        case _                => false
-      }
-    case _: DocumentationItemFragment         => true
+    case _: Overlay                           => false
+    case _: Extension                         => false
+    case document: Document                   => document.encodes.isInstanceOf[WebApi]
+    case module: Module                       => false
+    case _: DocumentationItemFragment         => true // remove raml header and write as external fragment
     case _: DataTypeFragment                  => true
     case _: NamedExampleFragment              => true
     case _: ResourceTypeFragment              => true
@@ -125,8 +121,7 @@ object RAML08Plugin extends RAMLPlugin {
 
   // fix for 08?
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case module: Module     => Some(RamlModuleEmitter(module).emitModule())
-    case document: Document => Some(RamlDocumentEmitter(document).emitDocument())
+    case document: Document => Some(Raml08DocumentEmitter(document).emitDocument())
     case fragment: Fragment => Some(new RamlFragmentEmitter(fragment).emitFragment())
     case _                  => None
   }
@@ -166,7 +161,7 @@ object RAML10Plugin extends RAMLPlugin {
   // fix for 08?
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
     case module: Module     => Some(RamlModuleEmitter(module).emitModule())
-    case document: Document => Some(RamlDocumentEmitter(document).emitDocument())
+    case document: Document => Some(Raml10DocumentEmitter(document).emitDocument())
     case fragment: Fragment => Some(new RamlFragmentEmitter(fragment).emitFragment())
     case _                  => None
   }

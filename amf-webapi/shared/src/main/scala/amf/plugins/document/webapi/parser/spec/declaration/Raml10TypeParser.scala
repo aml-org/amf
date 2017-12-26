@@ -12,6 +12,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{RamlSpecAwareContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, RamlSingleExampleParser}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlSyntax, RamlTypeExpressionParser}
@@ -108,11 +109,12 @@ case class Raml08TypeParser(ast: YPart,
         // has schema or its simple raml type declaration
         val map = node.as[YMap]
         map
-          .key("scheme")
-          .fold(
+          .key("schema")
+          .fold({
             Option(SimpleTypeParser(name, adopt, map).parse())
-          )(entry => {
-            val maybeShape = Raml08TypeParser(entry, "scheme", entry.value, adopt).parse()
+          })(entry => {
+            val maybeShape = Raml08SchemaParser(map).parse()
+
             maybeShape.foreach(s => {
               RamlSingleExampleParser("example", map)
                 .parse()
@@ -125,21 +127,41 @@ case class Raml08TypeParser(ast: YPart,
         Option(Raml08UnionTypeParser(UnionShape(node).withName(name), node.as[Seq[YNode]], node).parse())
       case _ =>
         val text = node.as[YScalar].text
-        val shape = ctx.declarations.findType(text, SearchScope.All) match {
-          case Some(s: Shape) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
-          case None =>
-            val shape = UnresolvedShape(text, node).withName(text)
-            shape.withContext(ctx)
-            adopt(shape)
-            shape.unresolved(text, node)
-            shape
-        }
-        Some(shape)
+        Raml08ReferenceParser(text, node).parse()
     }
   }
 
   override def typeParser: (YPart, String, YNode, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser =
     Raml08TypeParser.apply
+
+  case class Raml08ReferenceParser(text: String, node: YNode)(implicit ctx: WebApiContext) {
+    def parse(): Some[Shape] = {
+      val shape = ctx.declarations.findType(text, SearchScope.All) match {
+        case Some(s: Shape) => s.link(text, Annotations(node.value)).asInstanceOf[Shape].withName(name)
+        case None =>
+          val shape = UnresolvedShape(text, node).withName(text)
+          shape.withContext(ctx)
+          adopt(shape)
+          shape.unresolved(text, node)
+          shape
+      }
+      Some(shape)
+    }
+  }
+
+  case class Raml08SchemaParser(map: YMap)(implicit ctx: WebApiContext) {
+    def parse(): Option[Shape] = {
+      map.key("schema").flatMap { e =>
+        e.value.as[YScalar].text match {
+          case XMLSchema(_)  => Option(parseXMLSchemaExpression(e, adopt))
+          case JSONSchema(_) => Option(parseJSONSchemaExpression(e, adopt))
+          case text =>
+            Raml08ReferenceParser(text, node).parse()
+        }
+      }
+    }
+  }
+
 }
 case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(implicit ctx: WebApiContext) {
   def parse(): Shape = {
@@ -229,11 +251,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
       shape.set(ScalarShapeModel.MaxLength, value.string(), Annotations(entry))
     })
 
-    map.key("maxLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MaxLength, value.string(), Annotations(entry))
-    })
-
     map.key("minimum", entry => {
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
@@ -262,13 +279,85 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
   }
 }
 
+trait RamlExternalTypes {
+  implicit val ctx: WebApiContext
+
+  protected def parseXMLSchemaExpression(entry: YMapEntry, adopt: Shape => Shape): Shape = {
+    entry.value.tagType match {
+      case YType.Map =>
+        val map = entry.value.as[YMap]
+        typeOrSchema(map) match {
+          case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
+            val shape =
+              SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
+            shape.withName(entry.key)
+            adopt(shape)
+            shape
+          case _ =>
+            val shape = SchemaShape()
+            adopt(shape)
+            ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
+            shape
+        }
+      case YType.Seq =>
+        val shape = SchemaShape()
+        adopt(shape)
+        ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
+        shape
+      case _ =>
+        val shape = SchemaShape().withRaw(entry.value.as[YScalar].text).withMediaType("application/xml")
+        shape.withName(entry.key)
+        adopt(shape)
+        shape
+    }
+  }
+
+  protected def parseJSONSchemaExpression(entry: YMapEntry, adopt: Shape => Shape): Shape = {
+    val text = entry.value.tagType match {
+      case YType.Map =>
+        val map = entry.value.as[YMap]
+        typeOrSchema(map) match {
+          case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
+            typeEntry.value.as[YScalar].text
+          case _ =>
+            val shape = SchemaShape()
+            adopt(shape)
+            ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
+            ""
+        }
+      case YType.Seq =>
+        val shape = SchemaShape()
+        adopt(shape)
+        ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
+        ""
+      case _ => entry.value.as[YScalar].text
+    }
+
+    val schemaAst   = YamlParser(text).withIncludeTag("!include").parse(keepTokens = true)
+    val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
+    OasTypeParser(schemaEntry, (shape) => adopt(shape)).parse() match {
+      case Some(shape) =>
+        shape.annotations += ParsedJSONSchema(text)
+        shape
+      case None =>
+        val shape = SchemaShape()
+        adopt(shape)
+        ctx.violation(shape.id, "Cannot parse JSON Schema", entry)
+        shape
+    }
+  }
+  protected def typeOrSchema(map: YMap) = map.key("type").orElse(map.key("schema"))
+
+}
+
 sealed abstract class RamlTypeParser(ast: YPart,
                                      name: String,
                                      node: YNode,
                                      adopt: Shape => Shape,
                                      isAnnotation: Boolean,
                                      defaultType: DefaultType)(implicit val ctx: WebApiContext)
-    extends RamlSpecParser {
+    extends RamlSpecParser
+    with RamlExternalTypes {
 
   def typeParser: (YPart, String, YNode, Shape => Shape, Boolean, DefaultType) => RamlTypeParser
 
@@ -280,8 +369,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
                         node.toOption[YMap].flatMap(m => m.key("(format)").map(_.value.toString())),
                         defaultType)
     val result = info.map {
-      case XMLSchemaType                         => parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry])
-      case JSONSchemaType                        => parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry])
+      case XMLSchemaType                         => parseXMLSchemaExpression(ast.asInstanceOf[YMapEntry], adopt)
+      case JSONSchemaType                        => parseJSONSchemaExpression(ast.asInstanceOf[YMapEntry], adopt)
       case TypeExpressionType                    => parseTypeExpression()
       case UnionType                             => parseUnionType()
       case ObjectType | FileType | UndefinedType => parseObjectType()
@@ -318,73 +407,6 @@ sealed abstract class RamlTypeParser(ast: YPart,
     node.value match {
       case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx).parse()
       case _                                  => // ignore if it is not a map or we haven't been able to parse a shape
-    }
-  }
-
-  private def typeOrSchema(map: YMap) = map.key("type").orElse(map.key("schema"))
-
-  private def parseXMLSchemaExpression(entry: YMapEntry): Shape = {
-    entry.value.tagType match {
-      case YType.Map =>
-        val map = entry.value.as[YMap]
-        typeOrSchema(map) match {
-          case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
-            val shape =
-              SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
-            shape.withName(entry.key)
-            adopt(shape)
-            shape
-          case _ =>
-            val shape = SchemaShape()
-            adopt(shape)
-            ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
-            shape
-        }
-      case YType.Seq =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
-        shape
-      case _ =>
-        val shape = SchemaShape().withRaw(entry.value.as[YScalar].text).withMediaType("application/xml")
-        shape.withName(entry.key)
-        adopt(shape)
-        shape
-    }
-  }
-
-  private def parseJSONSchemaExpression(entry: YMapEntry): Shape = {
-    val text = entry.value.tagType match {
-      case YType.Map =>
-        val map = entry.value.as[YMap]
-        typeOrSchema(map) match {
-          case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
-            typeEntry.value.as[YScalar].text
-          case _ =>
-            val shape = SchemaShape()
-            adopt(shape)
-            ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
-            ""
-        }
-      case YType.Seq =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", entry.value)
-        ""
-      case _ => entry.value.as[YScalar].text
-    }
-
-    val schemaAst   = YamlParser(text).withIncludeTag("!include").parse(keepTokens = true)
-    val schemaEntry = YMapEntry(entry.key, schemaAst.head.asInstanceOf[YDocument].node)
-    OasTypeParser(schemaEntry, (shape) => adopt(shape)).parse() match {
-      case Some(shape) =>
-        shape.annotations += ParsedJSONSchema(text)
-        shape
-      case None =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.violation(shape.id, "Cannot parse JSON Schema", entry)
-        shape
     }
   }
 

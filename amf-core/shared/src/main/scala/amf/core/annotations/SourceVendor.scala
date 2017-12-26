@@ -1,7 +1,7 @@
 package amf.core.annotations
 
 import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, SerializableAnnotation}
-import amf.core.remote.{Amf, Oas, Raml, Unknown, Vendor}
+import amf.core.remote._
 
 case class SourceVendor(vendor: Vendor) extends SerializableAnnotation {
   override val name: String = "source-vendor"
@@ -11,13 +11,14 @@ case class SourceVendor(vendor: Vendor) extends SerializableAnnotation {
 
 object SourceVendor extends AnnotationGraphLoader {
   def apply(vendor: String): SourceVendor = vendor match {
-    case Raml.name => SourceVendor(Raml)
-    case Oas.name  => SourceVendor(Oas)
-    case Amf.name  => SourceVendor(Amf)
-    case "RAML 1.0" => SourceVendor(Raml)
-    case "OAS 2.0" => SourceVendor(Oas)
-    case "AMF Graph" => SourceVendor(Amf)
-    case _         => SourceVendor(Unknown)
+    case Raml.name                => SourceVendor(Raml)
+    case Oas.name                 => SourceVendor(Oas)
+    case Amf.name                 => SourceVendor(Amf)
+    case Raml10.name | "RAML 1.0" => SourceVendor(Raml10)
+    case Raml08.name | "RAML 0.8" => SourceVendor(Raml08)
+    case "OAS 2.0"                => SourceVendor(Oas)
+    case "AMF Graph"              => SourceVendor(Amf)
+    case _                        => SourceVendor(Unknown)
   }
 
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {

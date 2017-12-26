@@ -41,6 +41,16 @@ object XsdTypeDefMapping {
 
 object TypeDefXsdMapping {
 
+  def typeDef08(iri: String): String =
+    iri match {
+      case s if s == (Xsd + "string").iri()   => "string"
+      case s if s == (Xsd + "integer").iri()  => "integer"
+      case s if s == (Xsd + "float").iri()    => "number"
+      case s if s == (Xsd + "boolean").iri()  => "boolean"
+      case s if s == (Xsd + "dateTime").iri() => "date"
+      case s if s == (Shapes + "file").iri()  => "file"
+      case s                                  => throw new RuntimeException(s"Unknown mapping: $s")
+    }
   def typeDef(iri: String): TypeDef =
     iri match {
       case s if s == (Xsd + "string").iri()          => StrType
