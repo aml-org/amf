@@ -95,7 +95,6 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     val baseUnit =
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml").get()
 
-    PlatformDialectRegistry
     val report = AMF.validate(baseUnit, "Eng Demos 0.1").get()
     assert(report.conforms)
 
