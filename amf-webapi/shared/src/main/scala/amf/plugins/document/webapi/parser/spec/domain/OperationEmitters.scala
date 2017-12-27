@@ -52,6 +52,8 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
 
   override protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter =
     Raml10ResponsesEmitter.apply
+
+  override protected val baseUriParameterKey: String = "(baseUriParameters)"
 }
 
 case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -65,6 +67,8 @@ case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, 
 
   override protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter =
     Raml08ResponsesEmitter.apply
+
+  override protected val baseUriParameterKey: String = "baseUriParameters"
 }
 
 abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -76,6 +80,9 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
   protected def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter
 
   protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter
+
+  protected val baseUriParameterKey: String
+
   protected def entries(fs: Fields): Seq[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -111,6 +118,9 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
         .entry(RequestModel.Payloads)
         .map(f => result += payloadsEmitter("body", f, ordering, references))
 
+      fields
+        .entry(RequestModel.BaseUriParameters)
+        .map(f => result += Raml08ParametersEmitter(baseUriParameterKey, f, ordering, references))
     }
 
     fs.entry(OperationModel.Responses)

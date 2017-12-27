@@ -59,6 +59,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
     request.option
   }
 
+  override protected val baseUriParameterKey: String = "(baseUriParameters)"
 }
 
 case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext)
@@ -72,6 +73,7 @@ case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx:
     request.option
   }
 
+  override protected val baseUriParameterKey: String = "baseUriParameters"
 }
 
 case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Payload), accesor: () => DomainElement)(
@@ -104,6 +106,8 @@ case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Paylo
 abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext) {
   protected val request = new Lazy[Request](producer)
 
+  protected val baseUriParameterKey: String
+
   def parse(): Option[Request] = {
 
     map.key(
@@ -133,6 +137,22 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
       }
     )
 
+    // BaseUriParameters here are only valid for 0.8, must support the extention in RAml 1.0
+    map.key(
+      baseUriParameterKey,
+      entry => {
+        val parameters = entry.value.as[YMap].entries.map { paramEntry =>
+          Raml08ParameterParser(paramEntry, request.getOrCreate.withBaseUriParameter)
+            .parse()
+            .withBinding("path")
+        }
+
+        request.getOrCreate.set(RequestModel.BaseUriParameters,
+                                AmfArray(parameters, Annotations(entry.value)),
+                                Annotations(entry))
+
+      }
+    )
     // this has already being parsed in the endpoint
     // AnnotationParser(() => request.getOrCreate, map).parse()
 

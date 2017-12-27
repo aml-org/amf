@@ -20,6 +20,8 @@ object RequestModel extends DomainElementModel {
 
   val QueryString = Field(ShapeModel, Http + "queryString")
 
+  val BaseUriParameters = Field(Array(ParameterModel), Http + "uriParameter")
+
   override val `type`: List[ValueType] = Http + "Request" :: DomainElementModel.`type`
 
   override def fields: List[Field] = List(QueryParameters, Headers, Payloads, QueryString) ++ DomainElementModel.fields

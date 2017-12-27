@@ -1,0 +1,24 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "popes2test",
+    "version": "1.0"
+  },
+  "x-base-uri-parameters": {
+    "Name?": {
+      "type": "string"
+    }
+  },
+  "paths": {
+    "/resource": {
+      "get": {
+        "x-baseUriParameters": {
+          "Name3": {
+            "type": "string"
+          }
+        },
+        "responses": {}
+      }
+    }
+  }
+}

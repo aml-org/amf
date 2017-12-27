@@ -22,12 +22,15 @@ case class Raml10OperationParser(entry: YMapEntry, producer: (String) => Operati
     extends RamlOperationParser(entry, producer, parseOptional) {
 
   override def parseMap(map: YMap, operation: Operation): Operation = {
+    ctx.closedShape(operation.id, map, "operation")
+
     super.parseMap(map, operation)
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)
       operation.set(OperationModel.Description, value.string(), Annotations(entry))
     })
+
     operation
   }
 }
@@ -70,7 +73,6 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
   protected def parseMap(map: YMap, operation: Operation): Operation = {
 
     val map = entry.value.as[YMap]
-    ctx.closedShape(operation.id, map, "operation")
 
     map.key("displayName", entry => {
       val value = ValueNode(entry.value)

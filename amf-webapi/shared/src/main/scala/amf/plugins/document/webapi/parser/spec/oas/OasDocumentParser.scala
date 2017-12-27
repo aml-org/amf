@@ -450,6 +450,19 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           }
         )
 
+      // BaseUriParameters here are only valid for 0.8, must support the extention in RAml 1.0
+      map.key(
+        "x-baseUriParameters",
+        entry => {
+          entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
+            val parameter = Raml08ParameterParser(paramEntry, request.getOrCreate.withQueryParameter)(toRaml(ctx))
+              .parse()
+              .withBinding("path")
+            parameters = parameters.addFromOperation(OasParameters(path = Seq(parameter)))
+          }
+        }
+      )
+
       parameters match {
         case OasParameters(query, path, header, _) =>
           // query parameters and overwritten path parameters
@@ -460,6 +473,11 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           if (header.nonEmpty)
             request.getOrCreate.set(RequestModel.Headers,
                                     AmfArray(header, Annotations(entries.head)),
+                                    Annotations(entries.head))
+
+          if (path.nonEmpty)
+            request.getOrCreate.set(RequestModel.BaseUriParameters,
+                                    AmfArray(path, Annotations(entries.head)),
                                     Annotations(entries.head))
       }
 
