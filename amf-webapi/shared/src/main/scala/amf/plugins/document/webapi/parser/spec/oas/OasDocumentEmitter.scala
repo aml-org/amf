@@ -284,8 +284,9 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       if (payloads.other.nonEmpty)
         result += PayloadsEmitter("x-request-payloads", payloads.other, ordering, references)
 
-      request.fields
-        .entry(RequestModel.QueryString)
+      val fs = request.fields
+
+      fs.entry(RequestModel.QueryString)
         .map { f =>
           Option(f.value.value) match {
             case Some(shape: AnyShape) =>
@@ -293,6 +294,11 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
             case Some(_) => throw new Exception("Cannot emit a non WebApi Shape")
             case None    => // ignore
           }
+        }
+
+      fs.entry(RequestModel.BaseUriParameters)
+        .map { f =>
+          result += Raml08ParametersEmitter("x-baseUriParameters", f, ordering, references)
         }
 
       result ++= AnnotationsEmitter(request, ordering).emitters

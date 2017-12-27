@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: popes2test
+baseUriParameters:
+  Name?:
+    type: string
+/resource:
+    get:
+      (baseUriParameters):
+        Name3:
+          type: string

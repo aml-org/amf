@@ -34,6 +34,12 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
     result
   }
 
+  def withBaseUriParameter(name: String): Parameter = {
+    val result = Parameter().withName(name)
+    add(BaseUriParameters, result)
+    result
+  }
+
   def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()
     mediaType.map(result.withMediaType)

@@ -13,18 +13,7 @@ trait RamlSpecAwareContext extends SpecAwareContext {}
 
 trait SpecVersionFactory {}
 
-//object Raml10SpecAwareContext extends RamlSpecAwareContext {
-//  override def factory(implicit ctx: RamlWebApiContext): RamlSpecVersionFactory = new Raml10VersionFactory
-//}
-//
-//object Raml08SpecAwareContext extends RamlSpecAwareContext {
-//  override def factory(implicit ctx: RamlWebApiContext): RamlSpecVersionFactory = new Raml08VersionFactory
-//}
-
 trait RamlSpecVersionFactory extends SpecVersionFactory {
-
-//  def parserForModel[T](m:DomainElementModel) = ???
-//  def operationParser[
 
   def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser
 
