@@ -31,8 +31,8 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
   }
 
-
-  def forceAdopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
+  def forceAdopted(parent: String): this.type =
+    withId(parent + "/" + (if (Option(name).isDefined) name.urlEncoded else name))
 
   override val fields: Fields = Fields()
 

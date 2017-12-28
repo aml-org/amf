@@ -6,7 +6,6 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
-import amf.core.parser.SearchScope.Named
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
@@ -613,7 +612,7 @@ case class RamlTypeParser(ast: YPart,
                 RamlTypeExpressionParser(adopt, Some(node)).parse(s).get
               case s if wellKnownType(s) => parseWellKnownTypeRef(s)
               case s =>
-                ctx.declarations.findType(s, Named) match {
+                ctx.declarations.findType(s, SearchScope.All) match {
                   case Some(ancestor) => ancestor
                   case _              => unresolved(node)
                 }
@@ -637,7 +636,7 @@ case class RamlTypeParser(ast: YPart,
           val text = entry.value.as[YScalar].text
           // it might be a named type
           // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
-          ctx.declarations.findType(text, SearchScope.Named) match {
+          ctx.declarations.findType(text, SearchScope.All) match {
             case Some(ancestor) =>
               // set without ID!, we keep the ID of the referred element
               shape.fields.setWithoutId(ShapeModel.Inherits,
