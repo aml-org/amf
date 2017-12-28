@@ -1,0 +1,17 @@
+#%RAML 1.0 Trait
+
+responses: 
+  201:
+    headers: 
+      Location:
+        description: URL where the new <<resourcePathName|!singularize>> can be found
+        examples:
+          deployment-location: https://anypoint.mulesoft.com/<<resourcePathName|!singularize>>/3f6b7470-dcba-11e6-bf26-cec0c932ce01
+      ETag:
+        description: The current value of the entity tag for the requested variant
+        examples:
+          UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+    body: 
+      application/json:
+        type: <<itemCreateResponseType>>
+        examples:  <<itemCreateResponseExamples>>

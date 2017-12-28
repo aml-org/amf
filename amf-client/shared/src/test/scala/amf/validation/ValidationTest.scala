@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.validation.{
   ShapeFacetsValidation,
   _
 }
-import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape}
+import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -626,14 +626,23 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  ignore("Some api") {
+  ignore("Type inheritance with enum") {
     val validation = Validation(platform)
     for {
       library <- AMFCompiler(productionPath + "enum-inheritance.raml", platform, RamlYamlHint, validation).build()
       report  <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(library != null)
-      assert(report.results.length == 1)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("Some production api with includes") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(productionPath + "includes-api/api.raml", platform, RamlYamlHint, validation).build()
+      report  <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.isEmpty)
     }
   }
 }
