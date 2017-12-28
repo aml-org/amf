@@ -19,6 +19,8 @@ import scala.concurrent.Future
 
 trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with PlatformSecrets {
 
+  def version: String
+
   override def referenceCollector() = new WebApiReferenceCollector(ID)
 
   override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
@@ -58,5 +60,6 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override def init(): Future[AMFPlugin] = Future.successful(this)
 
-  def validatePayload(shape: Shape, payload: DataNode): Future[AMFValidationReport] = new PayloadValidation(platform, shape).validate(payload)
+  def validatePayload(shape: Shape, payload: DataNode): Future[AMFValidationReport] =
+    new PayloadValidation(platform, shape).validate(payload)
 }
