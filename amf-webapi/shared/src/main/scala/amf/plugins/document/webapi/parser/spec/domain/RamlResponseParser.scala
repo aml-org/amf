@@ -69,8 +69,6 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
     val examples = OasResponseExamplesParser("(examples)", map).parse()
     if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
 
-    ctx.closedShape(response.id, map, "response")
-
     AnnotationParser(() => response, map).parse()
 
   }
@@ -111,6 +109,8 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
             response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           }
         )
+
+        ctx.closedShape(response.id, map, "response")
 
         parseMap(response, map)
     }

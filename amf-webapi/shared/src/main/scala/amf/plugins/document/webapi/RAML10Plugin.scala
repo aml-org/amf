@@ -20,7 +20,6 @@ import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
 
 trait RAMLPlugin extends BaseWebApiPlugin {
-  def version: String
 
   override val ID: String = "RAML " + version
 

@@ -121,7 +121,6 @@ case class Raml08TypeParser(ast: YPart,
             })
             maybeShape
           })
-
       case YType.Seq =>
         Option(Raml08UnionTypeParser(UnionShape(node).withName(name), node.as[Seq[YNode]], node).parse())
       case _ =>
@@ -199,6 +198,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
       val shape = ScalarShape(map).withName(name)
       adopt(shape)
       parseMap(shape)
+      ctx.closedShape(shape.id, map, "stringScalarShape")
       shape.asInstanceOf[Shape]
     }
   }

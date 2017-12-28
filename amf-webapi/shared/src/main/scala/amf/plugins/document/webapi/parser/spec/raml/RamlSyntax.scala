@@ -2,9 +2,8 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 
-object RamlSyntax extends SpecSyntax {
-
-  override val nodes: Map[String, Set[String]] = Map(
+object Raml10Syntax extends RamlSyntax {
+  override val nodes: Map[String, Set[String]] = commonNodes ++ Map(
     "webApi" -> Set(
       "title",
       "description",
@@ -24,10 +23,6 @@ object RamlSyntax extends SpecSyntax {
       "usage",
       "extends",
       "uses"
-    ),
-    "userDocumentation" -> Set(
-      "title",
-      "content"
     ),
     "shape" -> Set(
       "type",
@@ -202,6 +197,121 @@ object RamlSyntax extends SpecSyntax {
       "is",
       "securedBy"
     ),
+    "annotation" -> Set(
+      "displayName",
+      "description",
+      "allowedTargets"
+    )
+  )
+}
+
+object Raml08Syntax extends RamlSyntax {
+  override val nodes: Map[String, Set[String]] = commonNodes ++ Map(
+    "webApi" -> Set(
+      "title",
+      "description",
+      "version",
+      "baseUri",
+      "baseUriParameters",
+      "protocols",
+      "mediaType",
+      "documentation",
+      "schemas",
+      "traits",
+      "resourceTypes",
+      "securitySchemes",
+      "securedBy"
+    ),
+    "shape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "enum",
+      "required",
+      "repeat"
+    ),
+    "stringScalarShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "enum",
+      "required",
+      "repeat",
+      "pattern",
+      "minLength",
+      "maxLength",
+      "required"
+    ),
+    "numberScalarShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "enum",
+      "required",
+      "repeat",
+      "minimum",
+      "maximum",
+      "format",
+      "multipleOf"
+    ),
+    "endPoint" -> Set(
+      "displayName",
+      "description",
+      "get",
+      "patch",
+      "put",
+      "post",
+      "delete",
+      "options",
+      "head",
+      "get?",
+      "patch?",
+      "put?",
+      "post?",
+      "delete?",
+      "options?",
+      "head?",
+      "is",
+      "type",
+      "securedBy",
+      "baseUriParameters"
+    ),
+    "operation" -> Set(
+      "displayName",
+      "queryParameters",
+      "headers",
+      "responses",
+      "body",
+      "protocols",
+      "is",
+      "securedBy",
+      "baseUriParameters"
+    )
+  )
+}
+
+trait RamlSyntax extends SpecSyntax {
+
+  val commonNodes: Map[String, Set[String]] = Map(
+    "userDocumentation" -> Set(
+      "title",
+      "content"
+    ),
     "response" -> Set(
       "displayName",
       "description",
@@ -214,11 +324,6 @@ object RamlSyntax extends SpecSyntax {
       "description",
       "decribedBy",
       "settings"
-    ),
-    "annotation" -> Set(
-      "displayName",
-      "description",
-      "allowedTargets"
     )
   )
 }

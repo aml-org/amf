@@ -18,9 +18,11 @@ import org.yaml.model.YDocument
 
 object OAS20Plugin extends BaseWebApiPlugin {
 
-  override val ID: String = "OAS 2.0"
+  override def version: String = "2.0"
 
-  override val vendors = Seq("OAS 2.0", "OAS")
+  override val ID: String = ("OAS " + version).trim
+
+  override val vendors = Seq(ID, "OAS")
 
   override val validationProfile: String = OAS
 
@@ -94,4 +96,5 @@ object OAS20Plugin extends BaseWebApiPlugin {
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit): BaseUnit = new OasResolutionPipeline().resolve(unit)
+
 }
