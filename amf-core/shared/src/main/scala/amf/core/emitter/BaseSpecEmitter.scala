@@ -2,36 +2,13 @@ package amf.core.emitter
 
 import amf.core.annotations.{LexicalInformation, SingleValueArray}
 import amf.core.metamodel.{Field, Type}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
+import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
-import amf.core.remote.Vendor
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 import scala.collection.mutable
-
-trait TagToReferenceEmitter {
-  def emitter(l: DomainElement, linkLabel: Option[String], references: Seq[BaseUnit]): PartEmitter
-}
-
-trait SpecEmitterContext {
-
-  val tagToReferenceEmitter: TagToReferenceEmitter
-
-  def tagToReference(l: DomainElement, linkLabel: Option[String], references: Seq[BaseUnit]): PartEmitter =
-    tagToReferenceEmitter.emitter(l, linkLabel, references)
-
-  def ref(b: PartBuilder, url: String): Unit
-
-  def localReference(reference: Linkable): PartEmitter
-  val vendor: Vendor
-}
-
-trait BaseSpecEmitter {
-  implicit val spec: SpecEmitterContext
-}
 
 package object BaseEmitters {
 

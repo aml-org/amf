@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.parser.{Fields, Position}
+import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
@@ -18,7 +19,7 @@ import scala.collection.mutable.ListBuffer
   *
   */
 case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends RamlOperationEmitter(operation, ordering, references) {
 
   override protected def entries(fs: Fields): Seq[EntryEmitter] = {
@@ -44,42 +45,19 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
 
   }
 
-  override protected def parametersEmitter
-    : (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter = Raml10ParametersEmitter.apply
-
-  override protected def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter =
-    Raml10PayloadsEmitter.apply
-
-  override protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter =
-    Raml10ResponsesEmitter.apply
-
   override protected val baseUriParameterKey: String = "(baseUriParameters)"
 }
 
 case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends RamlOperationEmitter(operation, ordering, references) {
-  override protected def parametersEmitter
-    : (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter = Raml08ParametersEmitter.apply
-
-  override protected def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter =
-    Raml08PayloadsEmitter.apply
-
-  override protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter =
-    Raml08ResponsesEmitter.apply
 
   override protected val baseUriParameterKey: String = "baseUriParameters"
 }
 
 abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
-
-  protected def parametersEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter
-
-  protected def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter
-
-  protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter
 
   protected val baseUriParameterKey: String
 
@@ -109,22 +87,22 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
       fields
         .entry(RequestModel.QueryParameters)
-        .map(f => result += parametersEmitter("queryParameters", f, ordering, references))
+        .map(f => result += RamlParametersEmitter("queryParameters", f, ordering, references))
 
       fields
         .entry(RequestModel.Headers)
-        .map(f => result += parametersEmitter("headers", f, ordering, references))
+        .map(f => result += RamlParametersEmitter("headers", f, ordering, references))
       fields
         .entry(RequestModel.Payloads)
-        .map(f => result += payloadsEmitter("body", f, ordering, references))
+        .map(f => result += spec.factory.payloadsEmitter("body", f, ordering, references))
 
       fields
         .entry(RequestModel.BaseUriParameters)
-        .map(f => result += Raml08ParametersEmitter(baseUriParameterKey, f, ordering, references))
+        .map(f => result += RamlParametersEmitter(baseUriParameterKey, f, ordering, references))
     }
 
     fs.entry(OperationModel.Responses)
-      .map(f => result += responsesEmitter("responses", f, ordering, references))
+      .map(f => result += RamlResponsesEmitter("responses", f, ordering, references))
 
     fs.entry(OperationModel.Security)
       .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))

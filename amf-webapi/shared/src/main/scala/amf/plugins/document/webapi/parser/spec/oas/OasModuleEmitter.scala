@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
+import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.emitter.BaseEmitters._
 import amf.core.parser.Position
 import amf.core.remote.Oas
+import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -18,7 +18,7 @@ import org.yaml.model.YDocument.EntryBuilder
 /**
   *
   */
-case class OasModuleEmitter(module: Module) extends OasSpecEmitter {
+case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitter {
 
   def emitModule(): YDocument = {
 
@@ -37,7 +37,8 @@ case class OasModuleEmitter(module: Module) extends OasSpecEmitter {
   }
 }
 
-class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment) {
+class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpecEmitterContext)
+    extends OasDocumentEmitter(fragment) {
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
@@ -79,7 +80,8 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
   }
 
-  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering) extends OasFragmentTypeEmitter {
+  case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
+      extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20DataType)
 
@@ -93,7 +95,7 @@ class OasFragmentEmitter(fragment: Fragment) extends OasDocumentEmitter(fragment
     override val header = OasHeaderEmitter(OasHeader.Oas20AnnotationTypeDeclaration)
 
     val emitters: Seq[EntryEmitter] =
-      AnnotationTypeEmitter(annotation.encodes, ordering).emitters() match {
+      spec.factory.annotationTypeEmitter(annotation.encodes, ordering).emitters() match {
         case Left(list)  => list
         case Right(part) => Seq(EntryPartEmitter("type", part))
       }

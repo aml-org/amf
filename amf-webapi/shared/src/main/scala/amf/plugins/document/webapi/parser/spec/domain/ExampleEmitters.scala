@@ -5,6 +5,7 @@ import amf.core.emitter._
 import amf.core.emitter.BaseEmitters._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position, _}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -48,7 +49,8 @@ case class MultipleExampleEmitter(key: String,
         key,
         b => {
           if (examples.head.isLink)
-            examples.head.linkTarget.foreach(l => spec.tagToReference(l, examples.head.linkLabel, references).emit(b))
+            examples.head.linkTarget.foreach(l =>
+              spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel, references).emit(b))
           else {
             val emitters = examples.map(NamedExampleEmitter(_, ordering))
             b.obj(traverse(ordering.sorted(emitters), _))
@@ -108,7 +110,10 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
-    val explicitFielMeta = List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties).filter { f =>
+    val explicitFielMeta = List(ExampleModel.Strict,
+                                ExampleModel.Description,
+                                ExampleModel.DisplayName,
+                                ExampleModel.CustomDomainProperties).filter { f =>
       fs.entry(f) match {
         case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
         case None        => false
@@ -122,7 +127,8 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
       fs.entry(ExampleModel.Description).foreach(f => results += ValueEmitter("description", f))
 
-      if (fs.entry(ExampleModel.Strict).isDefined && !fs.entry(ExampleModel.Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
+      if (fs.entry(ExampleModel.Strict)
+            .isDefined && !fs.entry(ExampleModel.Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
         fs.entry(ExampleModel.Strict).foreach(f => results += ValueEmitter("strict", f))
       }
 

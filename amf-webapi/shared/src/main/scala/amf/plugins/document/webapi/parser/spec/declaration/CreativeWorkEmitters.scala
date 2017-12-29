@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.Position
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

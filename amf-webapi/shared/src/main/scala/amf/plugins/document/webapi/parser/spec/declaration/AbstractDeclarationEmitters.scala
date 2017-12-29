@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.emitter.BaseEmitters._
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
 /**
@@ -37,7 +38,8 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
       name,
       b => {
         if (declaration.isLink)
-          declaration.linkTarget.foreach(l => spec.tagToReference(l, declaration.linkLabel, references).emit(b))
+          declaration.linkTarget.foreach(l =>
+            spec.factory.tagToReferenceEmitter(l, declaration.linkLabel, references).emit(b))
         else
           DataNodeEmitter(declaration.dataNode, ordering).emit(b)
       }

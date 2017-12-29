@@ -28,4 +28,12 @@ package object spec {
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
     new Raml10WebApiContext(ctx, Some(ctx.declarations))
   }
+
+  def toRaml(spec: OasSpecEmitterContext): RamlSpecEmitterContext = {
+    new Raml10SpecEmitterContext(spec.getRefEmitter)
+  }
+
+  def toOas(spec: RamlSpecEmitterContext): OasSpecEmitterContext = {
+    new OasSpecEmitterContext(spec.getRefEmitter)
+  }
 }

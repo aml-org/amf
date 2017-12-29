@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecEmitterContext, SpecOrdering}
 import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.{Oas, Raml}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme}
@@ -19,22 +20,27 @@ case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, order
   override def emit(b: EntryBuilder): Unit = {
     val schemes = f.array.values.collect { case p: ParametrizedSecurityScheme => p }
 
-    b.entry(key, _.list(traverse(ordering.sorted(schemes.map(chooseParametrizedEmitter(_, ordering))), _)))
+    b.entry(key,
+            _.list(traverse(ordering.sorted(schemes.map(spec.factory.parametrizedSecurityEmitter(_, ordering))), _)))
   }
 
   private def chooseParametrizedEmitter(parametrizedSecurityScheme: ParametrizedSecurityScheme,
                                         ordering: SpecOrdering): PartEmitter = {
     spec.vendor match {
-      case Raml  => RamlParametrizedSecuritySchemeEmitter(parametrizedSecurityScheme, ordering)
-      case Oas   => OasParametrizedSecuritySchemeEmitter(parametrizedSecurityScheme, ordering)
-      case other => throw new IllegalArgumentException(s"Unsupported vendor $other for securedBy generation")
+      case r: Raml => RamlParametrizedSecuritySchemeEmitter(parametrizedSecurityScheme, ordering)
+      case Oas     => OasParametrizedSecuritySchemeEmitter(parametrizedSecurityScheme, ordering)
+      case other   => throw new IllegalArgumentException(s"Unsupported vendor $other for securedBy generation")
     }
   }
   override def position(): Position = pos(f.value.annotations)
 }
 
+abstract class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme,
+                                                 ordering: SpecOrdering)
+    extends PartEmitter {}
+
 case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme, ordering: SpecOrdering)
-    extends PartEmitter {
+    extends ParametrizedSecuritySchemeEmitter(parametrizedScheme, ordering) {
   override def emit(b: PartBuilder): Unit = {
     val fs = parametrizedScheme.fields
 
@@ -61,7 +67,7 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
 
 case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme,
                                                  ordering: SpecOrdering)
-    extends PartEmitter {
+    extends ParametrizedSecuritySchemeEmitter(parametrizedScheme, ordering) {
   override def emit(b: PartBuilder): Unit = {
 
     val fs = parametrizedScheme.fields

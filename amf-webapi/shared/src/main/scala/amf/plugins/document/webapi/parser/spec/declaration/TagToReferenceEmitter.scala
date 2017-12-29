@@ -1,44 +1,31 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{PartEmitter, TagToReferenceEmitter}
+import amf.core.emitter.PartEmitter
 import amf.core.model.document.{BaseUnit, Fragment, Module}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.Position
-import amf.core.remote.{Oas, Raml, Vendor}
 import amf.plugins.document.webapi.annotations.DeclaredElement
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.document.webapi.parser.spec.raml.{Raml10SpecEmitter, RamlSpecEmitter}
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.YDocument.PartBuilder
 
 /**
   *
   */
-class WebApiTagToReferenceEmitter(spec: Vendor) extends TagToReferenceEmitter {
-
-  override def emitter(target: DomainElement, label: Option[String], references: Seq[BaseUnit] = Nil): PartEmitter =
-    spec match {
-      case Oas   => OasTagToReferenceEmitter(target, label)
-      case Raml  => RamlTagToReferenceEmitter(target, label.getOrElse(target.id), references)
-      case other => throw new IllegalArgumentException(s"Unsupported vendor $other for tag generation")
-    }
-
-}
-
-case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String])
+case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String], reference: Seq[BaseUnit])(
+    implicit override val spec: OasSpecEmitterContext)
     extends OasSpecEmitter
-    with PartEmitter {
+    with TagToReferenceEmitter {
   def emit(b: PartBuilder): Unit = {
-    val reference = label.getOrElse(target.id)
     follow() match {
       case s: Shape if s.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendDefinitionsPrefix(reference))
+        spec.ref(b, OasDefinitions.appendDefinitionsPrefix(referenceLabel))
       case p: Parameter if p.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(reference))
-      case _ => spec.ref(b, reference)
+        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
+      case _ => spec.ref(b, referenceLabel)
     }
   }
 
@@ -57,26 +44,21 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
   override def position(): Position = pos(target.annotations)
 }
 
-case class OasRefEmitter(url: String, position: Position = Position.ZERO) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
-
-}
-
-case class RamlTagToReferenceEmitter(reference: DomainElement, text: String, references: Seq[BaseUnit])
-    extends RamlSpecEmitter
-    with Raml10SpecEmitter
-    with PartEmitter {
+case class RamlTagToReferenceEmitter(target: DomainElement, label: Option[String], references: Seq[BaseUnit])(
+    implicit val spec: RamlSpecEmitterContext)
+    extends PartEmitter
+    with TagToReferenceEmitter {
   override def emit(b: PartBuilder): Unit = {
     references.find {
-      case m: Module   => m.declares.contains(reference)
-      case f: Fragment => f.encodes == reference
+      case m: Module   => m.declares.contains(target)
+      case f: Fragment => f.encodes == target
     } match {
-      case Some(_: Fragment) => spec.ref(b, text)
-      case _                 => raw(b, text)
+      case Some(_: Fragment) => spec.ref(b, referenceLabel)
+      case _                 => raw(b, referenceLabel)
     }
   }
 
-  override def position(): Position = pos(reference.annotations)
+  override def position(): Position = pos(target.annotations)
 }
 
 case class RamlLocalReferenceEmitter(reference: Linkable) extends PartEmitter {

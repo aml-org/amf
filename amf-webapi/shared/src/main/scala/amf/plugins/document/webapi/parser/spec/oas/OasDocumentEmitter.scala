@@ -13,6 +13,7 @@ import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Fields
 import amf.core.remote.{Oas, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations._
+import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec._
@@ -31,7 +32,8 @@ import scala.collection.mutable.ListBuffer
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
+case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)
+    extends OasSpecEmitter {
 
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
@@ -88,7 +90,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
       fs.entry(WebApiModel.Host).map(f => result += ValueEmitter("host", f))
 
       fs.entry(WebApiModel.BaseUriParameters)
-        .map(f => result += Raml10ParametersEmitter("x-base-uri-parameters", f, ordering, Nil))
+        .map(f => result += RamlParametersEmitter("x-base-uri-parameters", f, ordering, Nil)(toRaml(spec)))
 
       fs.entry(WebApiModel.BasePath).map(f => result += ValueEmitter("basePath", f))
 
@@ -298,7 +300,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
       fs.entry(RequestModel.BaseUriParameters)
         .map { f =>
-          result += Raml08ParametersEmitter("x-baseUriParameters", f, ordering, references)
+          result += RamlParametersEmitter("x-baseUriParameters", f, ordering, references)(toRaml(spec))
         }
 
       result ++= AnnotationsEmitter(request, ordering).emitters
@@ -346,7 +348,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
               .orElse(Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))) // this is mandatory in OAS 2.0
               .map(f => result += ValueEmitter("description", f))
             fs.entry(RequestModel.Headers)
-              .map(f => result += Raml10ParametersEmitter("headers", f, ordering, references))
+              .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(toRaml(spec)))
 
             val payloads = Payloads(response.payloads)
 
@@ -551,9 +553,7 @@ case class OasDocumentEmitter(document: BaseUnit) extends OasSpecEmitter {
 
 }
 
-class OasSpecEmitter extends BaseSpecEmitter {
-
-  override implicit val spec: SpecEmitterContext = OasSpecEmitterContext
+class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecEmitter {
 
   case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
@@ -662,7 +662,7 @@ class OasSpecEmitter extends BaseSpecEmitter {
       b.entry(
         Option(parameter.name).getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
         b => {
-          if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel).emit(b)
+          if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel, Nil).emit(b)
           else ParameterEmitter(parameter, ordering, references).emit(b)
         }
       )
@@ -698,9 +698,9 @@ class OasSpecEmitter extends BaseSpecEmitter {
           .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
           .get,
         b => {
-          if (annotationType.isLink) OasTagToReferenceEmitter(annotationType, annotationType.linkLabel).emit(b)
+          if (annotationType.isLink) OasTagToReferenceEmitter(annotationType, annotationType.linkLabel, Nil).emit(b)
           else
-            AnnotationTypeEmitter(annotationType, ordering).emitters() match {
+            spec.factory.annotationTypeEmitter(annotationType, ordering).emitters() match {
               case Left(emitters) =>
                 b.obj { b =>
                   traverse(ordering.sorted(emitters), b)
@@ -872,15 +872,4 @@ class OasSpecEmitter extends BaseSpecEmitter {
     override def position(): Position = pos(payload.annotations)
   }
 
-}
-
-object OasSpecEmitterContext extends SpecEmitterContext {
-  override def ref(b: PartBuilder, url: String): Unit = OasRefEmitter(url).emit(b)
-
-  override val vendor: Vendor = Oas
-
-  override def localReference(reference: Linkable): PartEmitter =
-    OasTagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel)
-
-  override val tagToReferenceEmitter = new WebApiTagToReferenceEmitter(Oas)
 }

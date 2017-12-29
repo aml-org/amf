@@ -2,10 +2,11 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AnnotationsEmitter,
   Raml08TypePartEmitter,
@@ -23,25 +24,9 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10ParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends RamlParametersEmitter(key, f, ordering, references) {
-  override protected def parameterEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => RamlParameterEmitter =
-    Raml10ParameterEmitter.apply
-}
-
-case class Raml08ParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends RamlParametersEmitter(key, f, ordering, references) {
-  override protected def parameterEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => RamlParameterEmitter =
-    Raml08ParameterEmitter.apply
-}
-
-abstract class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
-
-  protected def parameterEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => RamlParameterEmitter
 
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
@@ -56,7 +41,7 @@ abstract class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecO
   private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
     f.array.values
-      .foreach(e => result += parameterEmitter(e.asInstanceOf[Parameter], ordering, references))
+      .foreach(e => result += spec.factory.parameterEmitter(e.asInstanceOf[Parameter], ordering, references))
 
     ordering.sorted(result)
   }
@@ -168,7 +153,8 @@ abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering
     b.complexEntry(
       emitParameterKey(fs, _),
       b => {
-        parameter.linkTarget.foreach(l => spec.tagToReference(l, parameter.linkLabel, references).emit(b))
+        parameter.linkTarget.foreach(l =>
+          spec.factory.tagToReferenceEmitter(l, parameter.linkLabel, references).emit(b))
       }
     )
   }

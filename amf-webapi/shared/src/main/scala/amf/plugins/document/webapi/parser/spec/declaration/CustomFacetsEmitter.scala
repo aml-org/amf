@@ -1,36 +1,47 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.{Oas, Raml}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
 
+case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends CustomFacetsEmitter(f, ordering, references) {
 
-case class CustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: SpecEmitterContext)
-  extends EntryEmitter {
+  override val key: String = "facets"
+
+  override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter =
+    RamlPropertyShapeEmitter.apply
+}
+
+case class OasCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends CustomFacetsEmitter(f, ordering, references) {
+
+  override val key: String = "x-facets"
+
+  override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter =
+    OasPropertyShapeEmitter.apply
+}
+
+abstract class CustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+
+  val key: String
+  def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter
 
   override def emit(b: EntryBuilder): Unit = {
-    val label = spec.vendor match {
-      case Raml => "facets"
-      case Oas  => "x-facets"
-      case _    => throw new Exception(s"Custom facets not supported for vendor ${spec.vendor}")
-    }
-
 
     b.entry(
-      label,
+      key,
       _.obj { b =>
         val result = f.array.values.map { v =>
-          spec vendor match {
-            case Raml => RamlPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references)
-            case Oas  => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references)
-            case _    => throw new Exception(s"Unsupported vendor for shape facets ${spec.vendor}")
-          }
-
+          shapeEmitter(v.asInstanceOf[PropertyShape], ordering, references)
         }
         traverse(ordering.sorted(result), b)
       }

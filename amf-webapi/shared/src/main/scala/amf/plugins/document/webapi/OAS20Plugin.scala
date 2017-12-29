@@ -7,7 +7,7 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
 import amf.core.remote.Platform
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
@@ -17,6 +17,8 @@ import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YDocument
 
 object OAS20Plugin extends BaseWebApiPlugin {
+
+  override def specContext: OasSpecEmitterContext = new OasSpecEmitterContext()
 
   override def version: String = "2.0"
 
@@ -67,9 +69,9 @@ object OAS20Plugin extends BaseWebApiPlugin {
   }
 
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case module: Module     => Some(OasModuleEmitter(module).emitModule())
-    case document: Document => Some(OasDocumentEmitter(document).emitDocument())
-    case fragment: Fragment => Some(new OasFragmentEmitter(fragment).emitFragment())
+    case module: Module     => Some(OasModuleEmitter(module)(specContext).emitModule())
+    case document: Document => Some(OasDocumentEmitter(document)(specContext).emitDocument())
+    case fragment: Fragment => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
     case _                  => None
   }
 
