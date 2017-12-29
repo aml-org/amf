@@ -1,24 +1,25 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-
+import amf.plugins.document.webapi.parser.spec._
 import scala.collection.mutable.ListBuffer
 
 /**
   *
   */
 case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
+    implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val securityTypes: Map[OasSecuritySchemeType, SecurityScheme] =
@@ -65,7 +66,7 @@ case class RamlSecuritySchemesEmitters(
 
 case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                          mapType: OasSecuritySchemeType,
-                                         ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+                                         ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
   override def position(): Position = pos(securityScheme.annotations)
@@ -79,7 +80,7 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
   private def emitLink(b: PartBuilder): Unit = {
     securityScheme.linkTarget.foreach { l =>
-      OasTagToReferenceEmitter(l, securityScheme.linkLabel).emit(b)
+      OasTagToReferenceEmitter(l, securityScheme.linkLabel, Nil).emit(b)
     }
   }
 
@@ -90,7 +91,7 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 case class Raml10NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                             references: Seq[BaseUnit],
-                                            ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+                                            ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends RamlNamedSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def securitySchemeEmitter
     : (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter = Raml10SecuritySchemeEmitter.apply
@@ -98,7 +99,7 @@ case class Raml10NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 case class Raml08NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                             references: Seq[BaseUnit],
-                                            ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+                                            ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends RamlNamedSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def securitySchemeEmitter
     : (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter = Raml08SecuritySchemeEmitter.apply
@@ -106,7 +107,7 @@ case class Raml08NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                               references: Seq[BaseUnit],
-                                              ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+                                              ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
   protected def securitySchemeEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter
@@ -122,7 +123,7 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
   private def emitLink(b: PartBuilder): Unit = {
     securityScheme.linkTarget.foreach { l =>
-      RamlTagToReferenceEmitter(l, securityScheme.linkLabel.getOrElse(l.id), references).emit(b)
+      RamlTagToReferenceEmitter(l, securityScheme.linkLabel, references).emit(b)
     }
   }
 
@@ -133,7 +134,7 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                     mapType: OasSecuritySchemeType,
-                                    ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+                                    ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val results = ListBuffer[EntryEmitter]()
@@ -148,7 +149,7 @@ case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
     fs.entry(SecuritySchemeModel.DisplayName).map(f => results += ValueEmitter("x-displayName", f))
     fs.entry(SecuritySchemeModel.Description).map(f => results += ValueEmitter("description", f))
 
-    results += Raml10DescribedByEmitter("x-describedBy", securityScheme, ordering, Nil)
+    results += Raml10DescribedByEmitter("x-describedBy", securityScheme, ordering, Nil)(toRaml(spec))
 
     fs.entry(SecuritySchemeModel.Settings).map(f => results ++= OasSecuritySettingsEmitter(f, ordering).emitters())
 
@@ -159,7 +160,7 @@ case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 case class Raml10SecuritySchemeEmitter(securityScheme: SecurityScheme,
                                        references: Seq[BaseUnit],
-                                       ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+                                       ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends RamlSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def describedByEmitter
     : (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter = Raml10DescribedByEmitter.apply
@@ -167,7 +168,7 @@ case class Raml10SecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 case class Raml08SecuritySchemeEmitter(securityScheme: SecurityScheme,
                                        references: Seq[BaseUnit],
-                                       ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+                                       ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends RamlSecuritySchemeEmitter(securityScheme, references, ordering) {
   override protected def describedByEmitter
     : (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter = Raml10DescribedByEmitter.apply
@@ -385,13 +386,8 @@ case class OasSettingsTypeEmitter(settingsEntries: Seq[EntryEmitter], settings: 
 case class Raml10DescribedByEmitter(key: String,
                                     securityScheme: SecurityScheme,
                                     ordering: SpecOrdering,
-                                    references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+                                    references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends DescribedByEmitter(key, securityScheme, ordering, references) {
-  override protected def parametersEmitter
-    : (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter = Raml10ParametersEmitter.apply
-
-  override protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter =
-    Raml10ResponsesEmitter.apply
 
   override def entries(fs: Fields): Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()
@@ -414,14 +410,8 @@ case class Raml10DescribedByEmitter(key: String,
 case class Raml08DescribedByEmitter(key: String,
                                     securityScheme: SecurityScheme,
                                     ordering: SpecOrdering,
-                                    references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+                                    references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends DescribedByEmitter(key, securityScheme, ordering, references) {
-
-  override protected def parametersEmitter
-    : (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter = Raml08ParametersEmitter.apply
-
-  override protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter =
-    Raml08ResponsesEmitter.apply
 
   override def entries(fs: Fields): Seq[EntryEmitter] = {
     fs.entry(SecuritySchemeModel.QueryString)
@@ -436,21 +426,17 @@ case class Raml08DescribedByEmitter(key: String,
 abstract class DescribedByEmitter(key: String,
                                   securityScheme: SecurityScheme,
                                   ordering: SpecOrdering,
-                                  references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+                                  references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
-
-  protected def parametersEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter
-
-  protected def responsesEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlResponsesEmitter
 
   def entries(fs: Fields): Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()
     fs.entry(SecuritySchemeModel.Headers)
-      .foreach(f => results += parametersEmitter("headers", f, ordering, references))
+      .foreach(f => results += RamlParametersEmitter("headers", f, ordering, references))
     fs.entry(SecuritySchemeModel.QueryParameters)
-      .foreach(f => results += parametersEmitter("queryParameters", f, ordering, references))
+      .foreach(f => results += RamlParametersEmitter("queryParameters", f, ordering, references))
     fs.entry(SecuritySchemeModel.Responses)
-      .foreach(f => results += responsesEmitter("responses", f, ordering, references))
+      .foreach(f => results += RamlResponsesEmitter("responses", f, ordering, references))
 
     results
   }

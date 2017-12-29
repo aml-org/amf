@@ -29,6 +29,8 @@ trait RAMLPlugin extends BaseWebApiPlugin {
 
   def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
 
+  override def specContext: RamlSpecEmitterContext
+
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     inlineExternalReferences(root)
 
@@ -123,13 +125,15 @@ object RAML08Plugin extends RAMLPlugin {
 
   // fix for 08?
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case document: Document => Some(Raml08DocumentEmitter(document).emitDocument())
-    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment).emitFragment())
+    case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
     case _                  => None
   }
 
   override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
     new Raml08WebApiContext(wrapped, ds)
+
+  def specContext: RamlSpecEmitterContext = new Raml08SpecEmitterContext
 }
 
 object RAML10Plugin extends RAMLPlugin {
@@ -164,12 +168,14 @@ object RAML10Plugin extends RAMLPlugin {
 
   // fix for 08?
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case module: Module     => Some(RamlModuleEmitter(module).emitModule())
-    case document: Document => Some(Raml10DocumentEmitter(document).emitDocument())
-    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment).emitFragment())
+    case module: Module     => Some(RamlModuleEmitter(module)(specContext).emitModule())
+    case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
     case _                  => None
   }
 
   override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
     new Raml10WebApiContext(wrapped, ds)
+
+  def specContext: RamlSpecEmitterContext = new Raml10SpecEmitterContext
 }

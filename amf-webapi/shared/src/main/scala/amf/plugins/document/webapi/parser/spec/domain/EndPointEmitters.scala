@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecEmitterContext, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Position}
+import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -19,43 +20,31 @@ import scala.collection.mutable
 case class Raml10EndPointEmitter(endpoint: EndPoint,
                                  ordering: SpecOrdering,
                                  children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
-                                 references: Seq[BaseUnit] = Seq())(implicit spec: SpecEmitterContext)
+                                 references: Seq[BaseUnit] = Seq())(implicit spec: RamlSpecEmitterContext)
     extends RamlEndPointEmitter(ordering, children, references) {
-
-  override protected def parameterEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter =
-    Raml10ParametersEmitter.apply
 
   override protected def keyParameter: String = "uriParameters"
 
-  override protected def operationEmitter: (Operation, SpecOrdering, Seq[BaseUnit]) => RamlOperationEmitter =
-    Raml10OperationEmitter.apply
 }
 
 case class Raml08EndPointEmitter(endpoint: EndPoint,
                                  ordering: SpecOrdering,
                                  children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
-                                 references: Seq[BaseUnit] = Seq())(implicit ctx: SpecEmitterContext)
+                                 references: Seq[BaseUnit] = Seq())(implicit ctx: RamlSpecEmitterContext)
     extends RamlEndPointEmitter(ordering, children, references) {
-
-  override protected def parameterEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter =
-    Raml08ParametersEmitter.apply
 
   override protected def keyParameter: String = "baseUriParameters"
 
-  override protected def operationEmitter: (Operation, SpecOrdering, Seq[BaseUnit]) => RamlOperationEmitter =
-    Raml08OperationEmitter.apply
 }
 
 abstract class RamlEndPointEmitter(ordering: SpecOrdering,
                                    children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
-                                   references: Seq[BaseUnit] = Seq())(implicit val spec: SpecEmitterContext)
+                                   references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
   def endpoint: EndPoint
 
-  protected def parameterEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlParametersEmitter
   protected def keyParameter: String
-  protected def operationEmitter: (Operation, SpecOrdering, Seq[BaseUnit]) => RamlOperationEmitter
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = endpoint.fields
@@ -75,7 +64,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
           fs.entry(EndPointModel.UriParameters)
-            .map(f => result += parameterEmitter(keyParameter, f, ordering, references))
+            .map(f => result += RamlParametersEmitter(keyParameter, f, ordering, references))
 
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
@@ -98,7 +87,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
 
   private def operations(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
     f.array.values
-      .map(e => operationEmitter(e.asInstanceOf[Operation], ordering, references))
+      .map(e => spec.factory.operationEmitter(e.asInstanceOf[Operation], ordering, references))
   }
 
   override def position(): Position = pos(endpoint.annotations)

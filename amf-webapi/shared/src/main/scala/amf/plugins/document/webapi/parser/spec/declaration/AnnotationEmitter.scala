@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.emitter._
 import amf.core.emitter.BaseEmitters._
+import amf.core.emitter._
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
-import amf.core.remote.{Oas, Raml}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -19,21 +19,32 @@ import scala.collection.mutable.ListBuffer
   *
   */
 case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
-  def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(AnnotationEmitter(_, ordering))
+  def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(spec.factory.annotationEmitter(_, ordering))
 }
 
-case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
+case class OasAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends AnnotationEmitter(domainExtension, ordering) {
+
+  override val name: String = "x-" + domainExtension.name
+}
+
+case class RamlAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends AnnotationEmitter(domainExtension, ordering) {
+
+  override val name: String = "(" + domainExtension.name + ")"
+}
+
+abstract class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
+  val name: String
+
   override def emit(b: EntryBuilder): Unit = {
     b.complexEntry(
       b => {
-        val name = domainExtension.name
-        spec.vendor match {
-          case Raml  => b += "(" + name + ")"
-          case Oas   => b += "x-" + name
-          case other => throw new IllegalArgumentException(s"Unsupported annotation format $other")
-        }
+        b += name
       },
       b => {
         Option(domainExtension.extension).foreach { DataNodeEmitter(_, ordering).emit(b) }
@@ -46,22 +57,32 @@ case class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrd
 
 case class FacetsEmitter(element: Shape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters: Seq[EntryEmitter] = element.customShapeProperties.map { extension: ShapeExtension =>
-    FacetsInstanceEmitter(extension, ordering)
+    spec.factory.facetsInstanceEmitter(extension, ordering)
   }
 }
 
-case class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
+case class OasFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends FacetsInstanceEmitter(shapeExtension, ordering) {
+
+  override val name: String = "x-facet-" + shapeExtension.definedBy.name
+}
+
+case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends FacetsInstanceEmitter(shapeExtension, ordering) {
+
+  override val name: String = shapeExtension.definedBy.name
+}
+
+abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
+  val name: String
   override def emit(b: EntryBuilder): Unit = {
     b.complexEntry(
       b => {
-        val name = shapeExtension.definedBy.name
-        spec.vendor match {
-          case Raml  => b += name
-          case Oas   => b += "x-facet-" + name
-          case other => throw new IllegalArgumentException(s"Unsupported facet format $other")
-        }
+        b += name
       },
       b => {
         Option(shapeExtension.extension).foreach { DataNodeEmitter(_, ordering).emit(b) }
@@ -151,35 +172,49 @@ case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering:
   override def position(): Position = pos(annotations)
 }
 
-case class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
+    implicit spec: RamlSpecEmitterContext)
+    extends AnnotationTypeEmitter(property, ordering) {
 
   private val fs = property.fields
-  private val shapeEmitters: Seq[Emitter] = fs
+  override protected val shapeEmitters: Seq[Emitter] = fs
     .entry(CustomDomainPropertyModel.Schema)
     .map({ f =>
-      spec.vendor match {
-        case Oas =>
-          // OAS we emit in the 'schema' property
-          Seq(OasSchemaEmitter(f, ordering, Nil))
-        case Raml =>
-          // we merge in the main body
-          Option(f.value.value) match {
-            case Some(shape: AnyShape) =>
-              Raml10TypeEmitter(shape, ordering, Nil, Nil).emitters() match {
-                case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
-                case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
-                case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
-              }
-            case Some(x) => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
-            case _       => Nil // ignore
+      // we merge in the main body
+      Option(f.value.value) match {
+        case Some(shape: AnyShape) =>
+          Raml10TypeEmitter(shape, ordering, Nil, Nil).emitters() match {
+            case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
+            case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
+            case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
           }
-        case other => throw new IllegalArgumentException(s"Unsupported vendor $other for annotation type generation")
+        case Some(x) => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
+        case _       => Nil // ignore
       }
     }) match {
     case Some(emitters) => emitters
     case _              => Nil
   }
+}
+
+case class OasAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
+    implicit spec: OasSpecEmitterContext)
+    extends AnnotationTypeEmitter(property, ordering) {
+
+  private val fs = property.fields
+  override protected val shapeEmitters: Seq[Emitter] = fs
+    .entry(CustomDomainPropertyModel.Schema)
+    .map({ f =>
+      OasSchemaEmitter(f, ordering, Nil)
+    })
+    .toSeq
+}
+
+abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext) {
+
+  private val fs = property.fields
+  protected val shapeEmitters: Seq[Emitter]
 
   def emitters(): Either[Seq[EntryEmitter], PartEmitter] = {
 

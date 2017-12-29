@@ -6,6 +6,7 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{BaseUnit, Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.remote.Raml
+import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
@@ -16,29 +17,25 @@ import org.yaml.model.YDocument
 /**
   *
   */
-case class RamlModuleEmitter(module: Module) extends RamlSpecEmitter with Raml10SpecEmitter {
+case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterContext) {
 
   def emitModule(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, module.annotations)
 
     // TODO ordering??
-    val declares   = declarationsEmitter(module.declares, module.references, ordering)
-    val references = Seq(ReferencesEmitter(module.references, ordering))
-
-    val usage: Option[ValueEmitter] =
-      module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
+    val emitters = spec.factory.rootLevelEmitters(module, ordering).emitters
 
     // TODO invoke traits end resource types
 
     YDocument(b => {
       b.comment(RamlHeader.Raml10Library.text)
-      b.obj(traverse(ordering.sorted(declares ++ usage ++ references), _))
+      b.obj(traverse(ordering.sorted(emitters), _))
     })
   }
 }
 
-class RamlFragmentEmitter(fragment: Fragment) extends Raml10DocumentEmitter(fragment) {
+class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitterContext) {
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.annotations)
@@ -55,7 +52,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends Raml10DocumentEmitter(frag
     }
 
     val usage = fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
-
+    // should ignore for 08?
     val references = Seq(ReferencesEmitter(fragment.references, ordering))
 
     YDocument(b => {
@@ -99,7 +96,7 @@ class RamlFragmentEmitter(fragment: Fragment) extends Raml10DocumentEmitter(frag
     override val header: RamlHeader = RamlFragmentHeader.Raml10AnnotationTypeDeclaration
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
-      AnnotationTypeEmitter(annotation.encodes, ordering).emitters() match {
+      spec.factory.annotationTypeEmitter(annotation.encodes, ordering).emitters() match {
         case Left(emitters) => emitters
         case Right(part)    => Seq(EntryPartEmitter("type", part))
       }
