@@ -20,6 +20,10 @@ object AMF {
 
   def raml10Generator(): Raml10Generator = new Raml10Generator()
 
+  def raml08Parser(): Raml08Parser = new Raml08Parser()
+
+  def raml08Generator(): Raml08Generator = new Raml08Generator()
+
   def oas20Parser(): Oas20Parser = new Oas20Parser()
 
   def oas20Generator(): Oas20Generator = new Oas20Generator()

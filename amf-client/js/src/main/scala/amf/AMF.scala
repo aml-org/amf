@@ -25,6 +25,10 @@ object AMF {
 
   def raml10Generator(): Raml10Generator = new Raml10Generator()
 
+  def raml08Parser(): Raml08Parser = new Raml08Parser()
+
+  def raml08Generator(): Raml08Generator = new Raml08Generator()
+
   def oas20Parser(): Oas20Parser = new Oas20Parser()
 
   def oas20Generator(): Oas20Generator = new Oas20Generator()
@@ -52,14 +56,15 @@ object AMF {
 @JSExportAll
 @JSExportTopLevel("Core")
 object CoreWrapper {
-  def init() = Core.init()
-  def parser(vendor: String, mediaType: String) = amf.Core.parser(vendor, mediaType)
+  def init()                                       = Core.init()
+  def parser(vendor: String, mediaType: String)    = amf.Core.parser(vendor, mediaType)
   def generator(vendor: String, mediaType: String) = amf.Core.generator(vendor, mediaType)
-  def resolver(vendor: String): Resolver = amf.Core.resolver(vendor)
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF") =  amf.Core.validate(model, profileName, messageStyle)
-  def loadValidationProfile(url: String) = amf.Core.loadValidationProfile(url)
+  def resolver(vendor: String): Resolver           = amf.Core.resolver(vendor)
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF") =
+    amf.Core.validate(model, profileName, messageStyle)
+  def loadValidationProfile(url: String)               = amf.Core.loadValidationProfile(url)
   def registerNamespace(alias: String, prefix: String) = amf.Core.registerNamespace(alias, prefix)
-  def registerPlugin(plugin: AMFPlugin) = amf.Core.registerPlugin(plugin)
+  def registerPlugin(plugin: AMFPlugin)                = amf.Core.registerPlugin(plugin)
 }
 
 @JSExportAll
@@ -71,7 +76,7 @@ object PluginsWrapper {
 
 @JSExportAll
 object DocumentPluginsWrapper {
-  val WebApi = amf.plugins.document.WebApi
+  val WebApi       = amf.plugins.document.WebApi
   val Vocabularies = amf.plugins.document.Vocabularies
 }
 
