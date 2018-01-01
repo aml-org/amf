@@ -4,7 +4,7 @@ import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -74,7 +74,7 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
           .entries
           .foreach(e => {
             val alias: String = e.key
-            val url: String   = e.value
+            val url: String   = library(id, e)
             target(url).foreach {
               case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
               case other =>
@@ -85,6 +85,11 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
     )
 
     result
+  }
+
+  private def library(id: String, e: YMapEntry): String = e.value.tagType match {
+    case YType.Include => e.value.as[YScalar].text
+    case _             => e.value
   }
 
   private def collectAlias(module: BaseUnit, alias: (String, String)): BaseUnit = {

@@ -21,6 +21,11 @@
           }
         ],
         "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/extension/wadus": {
+          "http://raml.org/vocabularies/document#name": [
+            {
+              "@value": "wadus"
+            }
+          ],
           "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/wadus/scalar_1",
           "@type": [
             "http://raml.org/vocabularies/data#Scalar"
@@ -55,6 +60,11 @@
           ]
         },
         "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/extension/foo": {
+          "http://raml.org/vocabularies/document#name": [
+            {
+              "@value": "foo"
+            }
+          ],
           "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_1",
           "@type": [
             "http://raml.org/vocabularies/data#Object"

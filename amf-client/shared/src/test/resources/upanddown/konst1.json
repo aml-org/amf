@@ -1,0 +1,54 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/resource": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "x-a": "stringValue5",
+              "type": "object",
+              "required": [
+                "p2"
+              ],
+              "properties": {
+                "p2": {
+                  "x-a": "stringValue6"
+                }
+              }
+            },
+            "x-media-type": "application/json",
+            "in": "body"
+          }
+        ],
+        "responses": {},
+        "x-a": "stringValue4"
+      },
+      "x-a": "stringValue3"
+    }
+  },
+  "definitions": {
+    "MyType": {
+      "x-a": "stringvalue1",
+      "required": [
+        "p1"
+      ],
+      "properties": {
+        "p1": {
+          "x-a": "stringValue2"
+        }
+      }
+    }
+  },
+  "x-annotationTypes": {
+    "a": {
+      "schema": {
+        "type": "string"
+      }
+    }
+  }
+}

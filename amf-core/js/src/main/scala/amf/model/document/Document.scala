@@ -8,17 +8,13 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 /**
   * JS Document model class.
   */
-@JSExportTopLevel("model.document.Document")
 @JSExportAll
-case class Document(private[amf] val document: CoreDocument)
-    extends BaseUnit
-    with EncodesModel
-    with DeclaresModel {
+case class Document(private[amf] val document: CoreDocument) extends BaseUnit with EncodesModel with DeclaresModel {
 
-  @JSExportTopLevel("Document")
+  @JSExportTopLevel("model.document.Document")
   def this() = this(CoreDocument())
 
-  @JSExportTopLevel("Document")
+  @JSExportTopLevel("model.document.Document")
   def this(domainElement: DomainElement) = this(CoreDocument().withEncodes(domainElement.element))
 
   override private[amf] val element = document

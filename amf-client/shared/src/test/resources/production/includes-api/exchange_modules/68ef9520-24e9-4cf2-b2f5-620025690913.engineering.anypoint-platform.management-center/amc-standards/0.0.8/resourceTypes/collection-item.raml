@@ -1,0 +1,61 @@
+#%RAML 1.0 ResourceType
+
+uses: 
+  std: ../common.raml
+
+is: [std.common-errors]
+description: Get an entity representing a <<resourcePathName|!singularize>>
+get?:
+  description: |
+    Get the <<resourcePathName|!singularize>>
+    with id =
+    {<<resourcePathName|!singularize>>Id}
+  responses:
+    200:
+      headers: 
+        ETag:
+          required: false
+          description: The current value of the entity tag for the requested variant
+          examples:
+            UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+      body:
+        application/json:
+          type: <<itemType>>
+          examples: <<itemExamples>>
+    404:
+      body:
+        application/json:
+          type: !include ../dataTypes/error-message.raml
+          example: |
+            {"message": "<<resourcePathName|!singularize>> not found" }
+put?:
+  body:
+    application/json:
+      type: <<itemPutType>>
+      examples: <<itemPutExamples>>
+  responses: 
+    400:
+      description: Bad Request.
+      body:
+        application/json:
+          type: !include ../dataTypes/error-message.raml
+          example: |
+                { "message" : "Your request does not have the correct values"}
+patch?:
+  body:
+    application/json:
+      type: <<itemPatchType>>
+      examples: <<itemPatchExamples>>
+  responses: 
+    400:
+      description: Bad Request.
+      body:
+        application/json:
+          type: !include ../dataTypes/error-message.raml
+          example: |
+                { "message" : "Your request does not have the correct values"}
+
+delete?:
+  responses: 
+    204:
+    

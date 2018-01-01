@@ -56,6 +56,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("resource-type-multi-transformation.raml", RamlYamlHint)
   }
 
+  test("Traits and resourceTypes with complex variables raml to raml test") {
+    cycle("resource-type-complex-variables.raml", RamlYamlHint)
+  }
+
 //  test("Full cycle raml to amf test") {
 //    cycle("full-example.raml", RamlYamlHint, Amf)
 //  }
@@ -776,4 +780,25 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Uber oas to raml") {
     cycle("uber.json", "uber.raml", OasJsonHint, Raml)
   }
+
+  test("konst1 raml to amf") {
+    cycle("konst1.raml", "konst1.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("konst1 raml to raml") {
+    cycle("konst1.raml", "konst1.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("konst1 amf to raml") {
+    cycle("konst1.jsonld", "konst1.jsonld.raml", AmfJsonHint, Raml)
+  }
+
+  test("konst1 raml to oas") {
+    cycle("konst1.raml", "konst1.json", RamlYamlHint, Oas)
+  }
+
+  test("konst1 oas to raml") {
+    cycle("konst1.json", "konst1.json.raml", OasJsonHint, Raml)
+  }
+
 }

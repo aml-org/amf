@@ -12,6 +12,7 @@ import amf.core.vocabulary.Namespace
   */
 class DialectLanguageNode(override val shortName: String, namespace: Namespace = Namespace.Meta)
     extends DialectNode(shortName, namespace) {
+  override def dialect = Some(DialectLanguageDefinition)
   id = Some((namespace + shortName).iri())
 
   def refMap(name: String, isDeclaration: Boolean, required: Boolean = true): DialectPropertyMapping =

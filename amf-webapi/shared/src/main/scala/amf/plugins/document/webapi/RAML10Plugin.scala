@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YDocument, YNode}
+import org.yaml.model.{YDocument, YNode, YScalar}
 import org.yaml.parser.YamlParser
 
 trait RAMLPlugin extends BaseWebApiPlugin {
@@ -168,10 +168,11 @@ object RAML10Plugin extends RAMLPlugin {
 
   // fix for 08?
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case module: Module     => Some(RamlModuleEmitter(module)(specContext).emitModule())
-    case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
-    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                  => None
+    case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
+    case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw)))
+    case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
+    case _                          => None
   }
 
   override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =

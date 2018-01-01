@@ -9,7 +9,6 @@ import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-
 /**
   * Domain element.
   */
@@ -19,7 +18,7 @@ class DomainElement extends AmfObjectWrapper with PlatformSecrets {
 
   private[amf] def element: domain.DomainElement = throw new Exception("DomainElement is abstract")
 
-  def customDomainProperties =  element.customDomainProperties.map(platform.wrap[CustomDomainProperty](_)).toJSArray
+  def customDomainProperties = element.customDomainProperties.map(platform.wrap[CustomDomainProperty](_)).toJSArray
 
   def `extends` = element.extend.map(platform.wrap[DomainElement](_)).toJSArray
 
@@ -41,6 +40,10 @@ class DomainElement extends AmfObjectWrapper with PlatformSecrets {
   // API for direct property manipulation
 
   def getId(): String = element.id
+  def withId(id: String) = {
+    element.withId(id)
+    this
+  }
 
   def getTypeIds(): js.Iterable[String] = element.getTypeIds().toJSArray
 

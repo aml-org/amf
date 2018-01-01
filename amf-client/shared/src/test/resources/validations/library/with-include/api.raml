@@ -1,0 +1,45 @@
+#%RAML 1.0 Library
+uses:
+  core: !include core.raml
+types:
+  Address:
+    type: core.Auditable
+    properties:
+      addressFirstLine: string
+      addressSecondLine?: string
+      city: string
+      country: Country
+      latitude?: number
+      longitude?: number
+      postCode: string
+      stateRegion: string
+  Country:
+    type: core.MasterEntity
+    properties:
+      isoCode:
+        type: string
+        enum: [ES, EN, UK, US, IT, PT, BR]
+    example:
+      id: 1
+      name: "Spain"
+      isoCode: "ES"
+      keyCode: "ES"
+  Email:
+    pattern: "^\\w+(\\.\\w+)?@\\w+(\\.\\w+)?"
+  FunctionalArea:
+    type: core.MasterEntity
+  Industry:
+    type: core.MasterEntity
+    properties:
+      description: string
+      sectors: Sector[]
+  Language:
+    type: core.Entity
+    properties:
+      name: string
+      code: string
+  Sector:
+    type: core.MasterEntity
+    properties:
+      description: string
+      industry: Industry

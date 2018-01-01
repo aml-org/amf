@@ -47,24 +47,44 @@ class RamlParserErrorTest extends AsyncFunSuite with PlatformSecrets {
     validate(
       "custom-facets.raml",
       erroneousTypeShape => {
-        erroneousTypeShape.level should be ("Violation")
-        erroneousTypeShape.targetNode should be ("file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/scalar/ErroneousType")
-        erroneousTypeShape.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+        erroneousTypeShape.level should be("Violation")
+        erroneousTypeShape.targetNode should be(
+          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/scalar/ErroneousType")
+        erroneousTypeShape.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
       },
       incorrect1 => {
-        incorrect1.level should be ("Violation")
-        incorrect1.targetNode should be ("file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect1")
-        incorrect1.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+        incorrect1.level should be("Violation")
+        incorrect1.targetNode should be(
+          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect1")
+        incorrect1.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
       },
       incorrect2 => {
-        incorrect2.level should be ("Violation")
-        incorrect2.targetNode should be ("file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect2")
-        incorrect2.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+        incorrect2.level should be("Violation")
+        incorrect2.targetNode should be(
+          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect2")
+        incorrect2.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
       },
       incorrect3 => {
-        incorrect3.level should be ("Violation")
-        incorrect3.targetNode should be ("file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect3")
-        incorrect3.validationId should be (ParserSideValidations.ClosedShapeSpecification.id())
+        incorrect3.level should be("Violation")
+        incorrect3.targetNode should be(
+          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect3")
+        incorrect3.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
+      }
+    )
+  }
+
+  test("Invalid node parsing type") {
+    validate(
+      "invalid-type.raml",
+      artist => {
+        artist.level should be("Violation")
+        artist.message should be("Expecting !!str and !!seq provided")
+        artist.position.map(_.range) should be(Some(Range((115, 10), (115, 12))))
+      },
+      tracks => {
+        tracks.level should be("Violation")
+        tracks.message should be("Expecting !!str and !!seq provided")
+        tracks.position.map(_.range) should be(Some(Range((120, 10), (120, 12))))
       }
     )
   }
@@ -75,6 +95,7 @@ class RamlParserErrorTest extends AsyncFunSuite with PlatformSecrets {
       .build()
       .map { _ =>
         val report = validation.aggregatedReport
+        if (report.size != fixture.size) report.foreach(println)
         report.size should be(fixture.size)
         fixture.zip(report).foreach {
           case (fn, result) => fn(result)

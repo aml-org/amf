@@ -1,0 +1,138 @@
+#%RAML 1.0
+title: Example API
+
+uses:
+  std: exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913.engineering.anypoint-platform.management-center/amc-standards/0.0.8/standards.raml
+
+securedBy: [std.x-token]
+
+types:
+  RegistrationRequest: !include dataTypes/RegistrationRequest.raml
+  RegistrationResponse: !include dataTypes/RegistrationResponse.raml
+  RegistrationResponses: RegistrationResponse[]
+  InfoResponse:
+    properties:
+      version:
+        description: The version of the microservice
+        type: string
+        required: true
+      registration-response:
+        description: The name of the microservice.
+        type: RegistrationResponse
+        required: true
+      OptionalUnion:
+        description: union type
+        type: string | RegistrationResponse
+        required: false
+  InfoResponseSimplified:
+    properties:
+      version:
+        description: The version of the microservice
+        type: string
+        required: true
+      registration-response:
+        description: The name of the microservice.
+        type: string
+        required: true
+      OptionalUnion:
+        description: union type
+        type: string | number
+        required: false
+
+/api:
+  /json:
+    post:
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "hello": {
+                  "type": "string"
+                }
+              }
+            }
+  /urlencoded:
+    post:
+      body:
+        application/x-www-form-urlencoded:
+          properties:
+            hello:
+              type: string
+              pattern: "[a-z]+"
+  /formdata:
+    post:
+      body:
+        multipart/form-data:
+          properties:
+            hello:
+              type: string
+              pattern: "[a-z]+"
+  /query:
+    post:
+      queryParameters:
+        num:
+          type: number
+          required: true
+    get:
+      queryParameters:
+        hello:
+          type: string
+          pattern: "[a-z]+"
+  /users:
+    get:
+    /{userId}:
+      uriParameters:
+        userId:
+          type: number
+      get: {}
+  /headers:
+    get:
+      headers:
+        x-hello:
+          type: string
+          pattern: "[a-z]+"
+        aaaa:
+          type: string
+          pattern: "[a-z]+"
+          required: false
+        num:
+          type: number
+          required: false
+  /type:
+    post:
+      body:
+        application/json:
+          type: InfoResponseSimplified
+      responses:
+        200: {}
+        400: {}
+  /agents:
+    type:
+      std.collection:
+        itemCreateRequestType : RegistrationRequest
+        itemCreateRequestExamples:
+          mc-deployment-request: !include examples/AgentRegistrationRequest.raml
+    post:
+      description: Entry point to register new Agents
+      is: [
+        std.sync-create: {
+          itemCreateResponseType: RegistrationResponse,
+          itemCreateResponseExamples: {
+            registration-response: !include examples/AgentResponseExample.raml
+          }
+        }
+      ]
+  /info:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: InfoResponse
+  /ping:
+    get:
+      responses:
+        200:

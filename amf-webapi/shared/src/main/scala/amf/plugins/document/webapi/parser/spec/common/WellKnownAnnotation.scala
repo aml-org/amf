@@ -45,6 +45,7 @@ object WellKnownAnnotation {
     "(flow)"                -> true,
     "x-displayName"         -> true,
     "x-describedBy"         -> true,
+    "x-discriminator-value" -> true,
     "x-requestTokenUri"     -> true,
     "x-authorizationUri"    -> true,
     "x-tokenCredentialsUri" -> true,
@@ -55,7 +56,9 @@ object WellKnownAnnotation {
     "x-headers"             -> true,
     "x-queryString"         -> true,
     "(examples)"            -> true,
-    "x-examples"            -> true
+    "x-examples"            -> true,
+    "x-fileTypes"           -> true,
+    "x-schema"              -> true
   )
 
   def normalAnnotation(field: String): Boolean =

@@ -10,6 +10,11 @@
     "type": "git",
     "url": "https://github.com/mulesoft/amf"
   },
+  "bin": {
+    "amf": "./bin/amf"
+  },
+  "types": "./typings/amf-client-js.d.ts",
+  "typings": "./typings/amf-client-js.d.ts",
   "dependencies": {
     "@mulesoft/amf-shacl-node": "1.0.0"
   }

@@ -1,5 +1,6 @@
 package amf.resolution.stages.`extends`
 
+import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.model.domain.templates.Variable
 import amf.plugins.document.webapi.resolution.stages.{Branch, BranchContainer, Key}
 import org.scalatest.FunSuite
@@ -9,11 +10,11 @@ class BranchTest extends FunSuite {
 
   test("Test branch container flatten and merge") {
 
-    val y_a = branch("y", Seq("param" -> "alpha"))
+    val y_a = branch("y", Seq("param" -> ScalarNode("alpha", None)))
     val x   = branch("x")
     val a   = parent("a", Seq(x, y_a))
 
-    val y_b = branch("y", Seq("param" -> "beta"))
+    val y_b = branch("y", Seq("param" -> ScalarNode("beta", None)))
     val z   = branch("z")
     val p   = branch("p")
     val b   = parent("b", Seq(z, p, y_b))
@@ -44,7 +45,7 @@ class BranchTest extends FunSuite {
 
   private def parent(name: String, children: Seq[Branch]) = MockBranch(Key(name, Set[Variable]()), children)
 
-  private def branch(name: String, variables: Seq[(String, String)]): Branch =
+  private def branch(name: String, variables: Seq[(String, DataNode)]): Branch =
     MockBranch(Key(name, variables.map(Variable.tupled).toSet), Seq())
 
   case class MockBranch(key: Key, children: Seq[Branch]) extends Branch

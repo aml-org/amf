@@ -3,6 +3,7 @@ package amf.plugins.document.graph.parser
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
+import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.core.model.document._
@@ -12,6 +13,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.registries.AMFDomainRegistry
 import amf.core.remote.Platform
 import amf.core.unsafe.TrunkPlatform
+import amf.core.vocabulary.Namespace
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
 
@@ -29,7 +31,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
   case class Parser(var nodes: Map[String, AmfElement]) {
     private val unresolvedReferences = mutable.Map[String, Seq[DomainElement with Linkable]]()
-    private val referencesMap = mutable.Map[String, DomainElement with Linkable]()
+    private val referencesMap        = mutable.Map[String, DomainElement with Linkable]()
 
     val dynamicGraphParser = new DynamicGraphParser(nodes)
 
@@ -107,8 +109,11 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             // parsing custom extensions
             instance match {
               case l: DomainElement with Linkable => parseLinkableProperties(map, l)
-              case elm: DomainElement             => parseCustomProperties(map, elm)
               case _                              => // ignore
+            }
+            instance match {
+              case elm: DomainElement => parseCustomProperties(map, elm)
+              case _                  => // ignore
             }
 
             nodes = nodes + (id -> instance)
@@ -131,7 +136,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     private def setLinkTarget(instance: DomainElement with Linkable, targetId: String) = {
       referencesMap.get(targetId) match {
         case Some(target) => instance.linkTarget = Some(target)
-        case None         =>
+        case None =>
           val unresolved: Seq[DomainElement with Linkable] = unresolvedReferences.getOrElse(targetId, Nil)
           unresolvedReferences += (targetId -> (unresolved ++ Seq(instance)))
       }
@@ -150,7 +155,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       map
         .key(LinkableElementModel.Label.value.iri())
         .flatMap(entry => {
-          entry.value.toOption[Seq[YNode]]
+          entry.value
+            .toOption[Seq[YNode]]
             .flatMap(nodes => nodes.head.toOption[YMap])
             .flatMap(map => map.key("@value"))
             .flatMap(_.value.toOption[YScalar].map(_.text))
@@ -175,11 +181,24 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           map
             .key(propertyUri)
             .map(entry => {
-              val parsedNode      = dynamicGraphParser.parseDynamicType(entry.value.as[YMap])
               val domainExtension = DomainExtension()
-              val domainProperty  = CustomDomainProperty()
+              entry.value
+                .as[YMap]
+                .key(CustomDomainPropertyModel.Name.value.iri())
+                .flatMap(entry => {
+                  entry.value
+                    .toOption[Seq[YNode]]
+                    .flatMap(nodes => nodes.head.toOption[YMap])
+                    .flatMap(map => map.key("@value"))
+                    .flatMap(_.value.toOption[YScalar].map(_.text))
+                })
+                .foreach { s =>
+                  domainExtension.withName(s)
+                }
+              val domainProperty = CustomDomainProperty()
               domainProperty.id = propertyUri
               domainExtension.withDefinedBy(domainProperty)
+              val parsedNode = dynamicGraphParser.parseDynamicType(entry.value.as[YMap])
               parsedNode.foreach { pn =>
                 domainExtension.withId(pn.id)
                 domainExtension.withExtension(pn)

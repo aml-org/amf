@@ -1,0 +1,21 @@
+#%RAML 1.0 Library
+
+traits: 
+  sync-create: !include traits/sync-create.raml
+  async-create: !include traits/async-create.raml
+  sync-update: !include traits/sync-update.raml
+  cursor-pagination: !include traits/cursor-paginated.raml
+  offset-pagination: !include traits/offset-paginated.raml
+  etag-cached-get: !include traits/etag-cached-get.raml
+  common-errors: !include traits/common-errors.raml
+  
+types: 
+  error-message: !include dataTypes/error-message.raml
+
+securitySchemes: 
+  x-token: !include securitySchemes/bearer-token.raml
+  
+resourceTypes: 
+  collection: !include resourceTypes/collection.raml
+  collection-item: !include resourceTypes/collection-item.raml
+

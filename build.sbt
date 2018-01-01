@@ -3,7 +3,7 @@ import sbt.Keys.{libraryDependencies, resolvers}
 
 name := "amf"
 
-version in ThisBuild := "1.0.1-SNAPSHOT"
+version in ThisBuild := "1.1.0-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.12.2"
 
@@ -12,6 +12,7 @@ publish := {}
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Common.publish ++ Seq(
+  organization := "org.mule.amf",
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
@@ -35,7 +36,7 @@ lazy val core = crossProject
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mulesoft" %%% "syaml" % "0.0.9"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.0.10"
     ))
   .in(file("./amf-core"))
   .settings(settings: _*)
@@ -121,7 +122,6 @@ lazy val validation = crossProject
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
-    jsDependencies += ProvidedJS / "shacl.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
@@ -151,8 +151,7 @@ lazy val client = crossProject
     aggregate in assembly := true,
     test in assembly := {},
     mainClass in assembly := Some("amf.Main"),
-    assemblyJarName in assembly := "amf.jar",
-    assemblyOutputPath in assembly := new File("./amf.jar"),
+    assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar"),
     assemblyMergeStrategy in assembly := {
       case x if x.toString.endsWith("JS_DEPENDENCIES")             => MergeStrategy.discard
       case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard

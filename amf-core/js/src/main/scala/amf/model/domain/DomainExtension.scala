@@ -6,8 +6,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 @JSExportTopLevel("model.domain.DomainExtension")
-case class DomainExtension(private[amf] val domainExtension: extensions.DomainExtension)
-    extends DomainElement {
+case class DomainExtension(private[amf] val domainExtension: extensions.DomainExtension) extends DomainElement {
 
   def name: String                    = domainExtension.name
   def definedBy: CustomDomainProperty = CustomDomainProperty(domainExtension.definedBy)
@@ -30,5 +29,6 @@ case class DomainExtension(private[amf] val domainExtension: extensions.DomainEx
 
   override def element = domainExtension
 
+  @JSExportTopLevel("model.domain.DomainExtension")
   def this() = this(extensions.DomainExtension())
 }

@@ -5,14 +5,13 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
-import amf.core.parser.SearchScope.Named
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
-import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser}
 import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, RamlSingleExampleParser}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
@@ -396,6 +395,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
     // custom facet properties
     parseCustomShapeFacetInstances(result)
 
+    // parsing annotations
+    node.value match {
+      case map: YMap if result.isDefined => AnnotationParser(() => result.get, map).parse()
+      case _                             => // ignore
+    }
+
     result
   }
 
@@ -727,7 +732,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
-        item <- Raml10TypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), false, AnyDefaultType)
+        item <- Raml10TypeParser(itemsEntry,
+                                 items => items.adopted(shape.id + "/items"),
+                                 isAnnotation = false,
+                                 AnyDefaultType)
           .parse()
       } yield {
         item match {
@@ -817,7 +825,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
                 RamlTypeExpressionParser(adopt, Some(node)).parse(s).get
               case s if wellKnownType(s) => parseWellKnownTypeRef(s)
               case s =>
-                ctx.declarations.findType(s, Named) match {
+                ctx.declarations.findType(s, SearchScope.All) match {
                   case Some(ancestor) => ancestor
                   case _              => unresolved(node)
                 }
@@ -841,7 +849,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
           val text = entry.value.as[YScalar].text
           // it might be a named type
           // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
-          ctx.declarations.findType(text, SearchScope.Named) match {
+          ctx.declarations.findType(text, SearchScope.All) match {
             case Some(ancestor) =>
               // set without ID!, we keep the ID of the referred element
               shape.fields.setWithoutId(ShapeModel.Inherits,
@@ -939,59 +947,65 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
     def parse(): Seq[PropertyShape] = {
       ast.entries
-        .map(entry => PropertyShapeParser(entry, producer).parse())
+        .flatMap(entry => PropertyShapeParser(entry, producer).parse())
     }
   }
 
   case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape) {
 
-    def parse(): PropertyShape = {
+    def parse(): Option[PropertyShape] = {
 
-      val name: String = entry.key
-      val property     = producer(name).add(Annotations(entry))
+      entry.key.to[String] match {
+        case Right(prop) =>
+          val property = producer(prop).add(Annotations(entry))
 
-      var explicitRequired: Option[Value] = None
-      entry.value.to[YMap] match {
-        case Right(map) =>
-          map.key(
-            "required",
-            entry => {
-              val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
-              explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
-              property.set(PropertyShapeModel.MinCount,
-                           AmfScalar(if (required) 1 else 0),
-                           Annotations(entry) += ExplicitField())
+          var explicitRequired: Option[Value] = None
+          entry.value.to[YMap] match {
+            case Right(map) =>
+              map.key(
+                "required",
+                entry => {
+                  val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                  explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
+                  property.set(PropertyShapeModel.MinCount,
+                               AmfScalar(if (required) 1 else 0),
+                               Annotations(entry) += ExplicitField())
+                }
+              )
+            case _ =>
+          }
+
+          if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
+            val required = !prop.endsWith("?")
+
+            property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
+            property.set(PropertyShapeModel.Name, if (required) prop else prop.stripSuffix("?")) // TODO property id is using a name that is not final.
+          }
+
+          property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+
+          Raml10TypeParser(entry, shape => shape.adopted(property.id), isAnnotation = false, StringDefaultType)
+            .parse()
+            .foreach { range =>
+              if (explicitRequired.isDefined) {
+                range.fields.setWithoutId(ShapeModel.RequiredShape,
+                                          explicitRequired.get.value,
+                                          explicitRequired.get.annotations)
+              }
+
+              if (entry.value.tagType == YType.Null) {
+                range.annotations += SynthesizedField()
+              }
+
+              property.set(PropertyShapeModel.Range, range)
             }
-          )
-        case _ =>
+
+          Some(property)
+
+        case Left(error) =>
+          ctx.violation(error.error, Some(entry.key))
+          None
       }
-
-      if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
-        val required = !name.endsWith("?")
-
-        property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
-        property.set(PropertyShapeModel.Name, if (required) name else name.stripSuffix("?")) // TODO property id is using a name that is not final.
-      }
-
-      property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
-
-      Raml10TypeParser(entry, shape => shape.adopted(property.id), false, StringDefaultType)
-        .parse()
-        .foreach { range =>
-          if (explicitRequired.isDefined) {
-            range.fields.setWithoutId(ShapeModel.RequiredShape,
-                                      explicitRequired.get.value,
-                                      explicitRequired.get.annotations)
-          }
-
-          if (entry.value.tagType == YType.Null) {
-            range.annotations += SynthesizedField()
-          }
-
-          property.set(PropertyShapeModel.Range, range)
-        }
-
-      property
     }
   }
 

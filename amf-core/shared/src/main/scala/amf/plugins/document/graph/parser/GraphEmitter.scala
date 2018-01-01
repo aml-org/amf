@@ -113,8 +113,9 @@ object GraphEmitter extends MetaModelTypeMapping {
                   customProperties += propertyUri
                   b.entry(
                     propertyUri,
-                    _.obj {
-                      traverse(extension.extension, parent, _)
+                    _.obj { b =>
+                      b.entry((Namespace.Document + "name").iri(), scalar(_, extension.name))
+                      traverse(extension.extension, parent, b)
                     }
                   )
               }
@@ -166,12 +167,13 @@ object GraphEmitter extends MetaModelTypeMapping {
                 sources(v)
                 val seq = v.value.asInstanceOf[AmfArray]
                 a.element match {
-                  case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach {
-                    case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                      link(b, elementInArray, parent, inArray = true)
-                    case elementInArray =>
-                      obj(b, elementInArray, parent, inArray = true)
-                  }
+                  case _: Obj =>
+                    seq.values.asInstanceOf[Seq[AmfObject]].foreach {
+                      case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                        link(b, elementInArray, parent, inArray = true)
+                      case elementInArray =>
+                        obj(b, elementInArray, parent, inArray = true)
+                    }
                   case Str =>
                     seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(b, e.toString, inArray = true))
                 }
@@ -183,12 +185,13 @@ object GraphEmitter extends MetaModelTypeMapping {
             val seq = v.value.asInstanceOf[AmfArray]
             sources(v)
             a.element match {
-              case _: Obj => seq.values.asInstanceOf[Seq[AmfObject]].foreach {
-                case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                  link(b, elementInArray, parent, inArray = true)
-                case elementInArray =>
-                  obj(b, elementInArray, parent, inArray = true)
-              }
+              case _: Obj =>
+                seq.values.asInstanceOf[Seq[AmfObject]].foreach {
+                  case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                    link(b, elementInArray, parent, inArray = true)
+                  case elementInArray =>
+                    obj(b, elementInArray, parent, inArray = true)
+                }
               case Str =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
                   e.annotations.find(classOf[ScalarType]) match {
@@ -218,7 +221,10 @@ object GraphEmitter extends MetaModelTypeMapping {
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def link(b: PartBuilder, elementWithLink: DomainElement with Linkable, parent: String, inArray: Boolean = false): Unit = {
+    private def link(b: PartBuilder,
+                     elementWithLink: DomainElement with Linkable,
+                     parent: String,
+                     inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder): Unit = {
         b.obj { o =>
           traverse(elementWithLink, parent, o)

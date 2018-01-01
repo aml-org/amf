@@ -1,0 +1,22 @@
+#%RAML 1.0 DataType
+
+properties: 
+  id:
+    description: The Agent Identifier that is going to be used in the platform.
+    type: string
+    required: true
+  certificate:
+    description: The signed Certificate to be added in the agent keystore.
+    type: string
+    required: true
+  issuingCA:
+    description: The public certificate that the agent will trust.
+    type: string
+    required: true
+  region:
+    description: The region in where the Agent has been registered.
+    type: string
+    required: true
+ 
+
+  

@@ -16,10 +16,9 @@ class BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   private[amf] val element: amf.core.model.document.BaseUnit = null
 
-
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   def references(): js.Iterable[BaseUnit] = {
-    val units: Seq[BaseUnit] = element.references map(e => { platform.wrap[BaseUnit](e) })
+    val units: Seq[BaseUnit] = element.references map (e => { platform.wrap[BaseUnit](e) })
     units.toJSArray
   }
 
@@ -37,6 +36,10 @@ class BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   /** Returns the file location for the document that has been parsed to generate this model */
   def location: String = element.location
+  def withLocation(location: String) = {
+    element.withLocation(location)
+    this
+  }
 
   def usage: String = element.usage
 
@@ -48,6 +51,9 @@ class BaseUnit extends AmfObjectWrapper with PlatformSecrets {
   }
 
   def findByType(typeId: String): js.Iterable[amf.model.domain.DomainElement] =
-    element.findByType(Namespace.expand(typeId).iri()).map(e => platform.wrap[amf.model.domain.DomainElement](e)).toJSIterable
+    element
+      .findByType(Namespace.expand(typeId).iri())
+      .map(e => platform.wrap[amf.model.domain.DomainElement](e))
+      .toJSIterable
 
 }

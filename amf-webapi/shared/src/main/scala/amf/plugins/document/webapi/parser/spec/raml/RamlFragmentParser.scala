@@ -32,6 +32,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         YMap.empty
     }
 
+    val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
+
     val optionFragment = fragmentType match {
       case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(rootMap).parse())
       case Raml10DataType                  => Some(DataTypeFragmentParser(rootMap).parse())
@@ -48,7 +50,6 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         fragment.withLocation(root.location)
         UsageParser(rootMap, fragment).parse()
         fragment.add(Annotations(root.parsed.document) += SourceVendor(Raml))
-        val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
         if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
         Some(fragment)
       case _ =>

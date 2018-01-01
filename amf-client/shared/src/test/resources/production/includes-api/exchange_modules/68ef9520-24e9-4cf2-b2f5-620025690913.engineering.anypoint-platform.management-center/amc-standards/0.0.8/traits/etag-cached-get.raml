@@ -1,0 +1,35 @@
+#%RAML 1.0 Trait
+
+description: Etag Caching for GET requests.
+
+headers: 
+  Cache-Control:
+    description: Cache control directive on request
+    required: false
+    examples: 
+      force-refresh: no-cache
+  If-None-Match:
+    description: ETag that is required in the cache
+    examples:
+      UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+responses: 
+  200:
+    headers: 
+      ETag:
+        description: The current value of the entity tag for the requested variant
+        examples:
+          UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+      Cache-Control:
+        description: Cache Control directive
+        examples: 
+          max-age-directive: max-age=120
+  304:
+    headers: 
+      ETag:
+        description: The current value of the entity tag for the requested variant
+        examples:
+          UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+      Cache-Control:
+        description: Cache Control directive
+        examples: 
+          max-age-directive: max-age=120

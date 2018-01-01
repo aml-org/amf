@@ -70,7 +70,7 @@ Gradle example:
 
 ```groovy
 dependencies {
-    compile 'org.mulesoft:amf-client_2.12:1.0.0'
+    compile 'org.mule:amf-client_2.12:1.0.1'
 }
 ```
 
@@ -88,36 +88,23 @@ Maven example:
 
 ```xml
 <dependency>
-    <groupId>org.mulesoft</groupId>
+    <groupId>org.mule</groupId>
     <artifactId>amf-client_2.12</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 ### JS artifacts
 
-##### Getting Started
+Execute the command
 
-Before you get started, you'll want to register with our private npm repository so you can download @mulesoft modules.
-
-```
-npm login --registry=https://nexus3.build.msap.io/repository/npm-internal/ --scope=@mulesoft
-```
-
-When prompted, enter your Mulesoft's jenkins username and password. You may then clone and install the project's dependencies.
-
-If you have 2-factor authentication enabled, you'll get a 401 after attempting to login. Temporarily disable 2FA, login with your github credentials, then re-enable 2FA.
-
-Once you are logged in on the scope @mulesoft just execute the command
-
-Then:
 ```bash
-npm install --save @mulesoft/amf-client-js@1.0.0
+npm install --save amf-client-js@1.0.1
 ```
 
 Using *Node.js* just import it using:
 ```bash
-import amf from '@mulesoft/amf-client-js'
+import amf from 'amf-client-js'
 ```
 
 The *amf* package will contain all exported classes:
@@ -176,5 +163,9 @@ Go to [amf examples repository](https://github.com/mulesoft/amf-byExample) There
 ## Validation
 
 Validation is one of the key features of AMF. Please check the following link to get more information:
+
 [Validation insights](./documentation/validation.md)
+
+## Want to know more?
+[Click here for more documentation and playground](https://mulesoft.github.io/amf/)
 

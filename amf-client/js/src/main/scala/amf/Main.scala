@@ -4,35 +4,61 @@ import amf.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, Valid
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.unsafe.PlatformSecrets
 
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.language.postfixOps
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.Promise
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Main entry point for the application
   */
+@JSExportTopLevel("Main")
 @JSExportAll
 object Main extends PlatformSecrets {
 
-  def main(args: Array[String]): Unit = {
+  def main(rawArgs: js.Array[String]): js.Promise[Any] = {
+    val args = rawArgs.toArray
     CmdLineParser.parse(args) match {
       case Some(cfg) =>
         cfg.mode match {
-          case Some(ParserConfig.REPL)      => println("REPL not supported in the JS client yet")
-          case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
-          case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
-          case Some(ParserConfig.PARSE)     => Await.ready(runParse(cfg), 1 day)
-          case _                            => failCommand()
+          case Some(ParserConfig.REPL) =>
+            println("REPL not supported in the JS client yet")
+            failCommand()
+            throw new Exception("Error executing AMF")
+          case Some(ParserConfig.TRANSLATE) =>
+            val f = runTranslate(cfg)
+            f.failed.foreach(e => failPromise(e))
+            f.toJSPromise
+          case Some(ParserConfig.VALIDATE) =>
+            val f = runValidate(cfg)
+            f.failed.foreach(e => failPromise(e))
+            f.toJSPromise
+          case Some(ParserConfig.PARSE) =>
+            val f = runParse(cfg)
+            f.failed.foreach(e => failPromise(e))
+            f.toJSPromise
+          case _ =>
+            failCommand()
+            throw new Exception("Error executing AMF")
         }
-      case _ => System.exit(ExitCodes.WrongInvocation)
+      case _ =>
+        js.Dynamic.global.process.exit(ExitCodes.WrongInvocation)
+        throw new Exception("Error executing AMF")
     }
-    System.exit(ExitCodes.Success)
   }
 
   def failCommand(): Unit = {
     System.err.println("Wrong command")
-    System.exit(ExitCodes.WrongInvocation)
+    js.Dynamic.global.process.exit(ExitCodes.WrongInvocation)
+  }
+  def failPromise(e: Any): Unit = {
+    System.err.println("Exception")
+    System.err.println(e)
+    js.Dynamic.global.process.exit(ExitCodes.WrongInvocation)
   }
   def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform).run(config)
   def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform).run(config)

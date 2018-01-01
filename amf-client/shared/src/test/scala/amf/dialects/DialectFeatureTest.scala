@@ -29,15 +29,14 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected =
       platform.resolve(basePath + "validation_profile_with_default_example.json", None).map(_.stream.toString)
     val actual = validation
-      .flatMap {
-        unit =>
-          AMFCompiler(basePath + "validation_profile_example.raml",
-            platform,
-            ExtensionYamlHint,
-            Validation(platform),
-            None,
-            None)
-            .build()
+      .flatMap { unit =>
+        AMFCompiler(basePath + "validation_profile_example.raml",
+                    platform,
+                    ExtensionYamlHint,
+                    Validation(platform),
+                    None,
+                    None)
+          .build()
       }
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
@@ -120,12 +119,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-                    platform,
-                    ExtensionYamlHint,
-                    Validation(platform),
-                    None,
-                    None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -137,12 +131,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-                    platform,
-                    ExtensionYamlHint,
-                    Validation(platform),
-                    None,
-                    None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -153,12 +142,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-                    platform,
-                    ExtensionYamlHint,
-                    Validation(platform),
-                    None,
-                    None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -170,16 +154,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-                    platform,
-                    ExtensionYamlHint,
-                    Validation(platform),
-                    None,
-                    None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
-
 
   test("Using library in dialect definition extends") {
     val expectedFile             = "validationFragment.raml"
@@ -188,12 +166,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-          platform,
-          ExtensionYamlHint,
-          Validation(platform),
-          None,
-          None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -205,12 +178,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-          platform,
-          ExtensionYamlHint,
-          Validation(platform),
-          None,
-          None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -222,12 +190,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
     val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val actual: Future[String] = PlatformDialectRegistry.registerDialect(basePath + dialectFile) flatMap [BaseUnit] {
       _ =>
-        AMFCompiler(basePath + exampleFile,
-          platform,
-          ExtensionYamlHint,
-          Validation(platform),
-          None,
-          None).build()
+        AMFCompiler(basePath + exampleFile, platform, ExtensionYamlHint, Validation(platform), None, None).build()
     } map { AMFDumper(_, Raml, Yaml, GenerationOptions()).dumpToString }
     actual.zip(expected).map(checkDiff)
   }
@@ -240,11 +203,11 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .flatMap(
         unit =>
           AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking.raml",
-            platform,
-            ExtensionYamlHint,
-            Validation(platform),
-            None,
-            None).build())
+                      platform,
+                      ExtensionYamlHint,
+                      Validation(platform),
+                      None,
+                      None).build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
@@ -263,11 +226,11 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .flatMap(
         unit =>
           AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking1.raml",
-            platform,
-            ExtensionYamlHint,
-            Validation(platform),
-            None,
-            None).build())
+                      platform,
+                      ExtensionYamlHint,
+                      Validation(platform),
+                      None,
+                      None).build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
@@ -286,11 +249,11 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .flatMap(
         unit =>
           AMFCompiler(basePath + "bruno/examples/EventedAPI_Banking1.raml",
-            platform,
-            ExtensionYamlHint,
-            Validation(platform),
-            None,
-            None).build())
+                      platform,
+                      ExtensionYamlHint,
+                      Validation(platform),
+                      None,
+                      None).build())
     actual
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
@@ -301,13 +264,10 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .map(checkDiff)
   }
 
-
-
   ignore("Register remote dialect") {
-    PlatformDialectRegistry.registerDialect("https://mulesoft-labs.github.io/ABOUT-vocabularies/ABOUT-dialect.raml") map { dialect =>
-    //PlatformDialectRegistry.registerDialect("file:///Users/antoniogarrote/Downloads/ABOUT-dialect.raml") map { dialect =>
-      println("REGISTERED")
-      assert(dialect != null)
+    PlatformDialectRegistry.registerDialect("https://mulesoft-labs.github.io/ABOUT-vocabularies/ABOUT-dialect.raml") map {
+      dialect =>
+        assert(dialect != null)
     }
   }
 }

@@ -1,0 +1,26 @@
+#%RAML 1.0 DataType
+
+type:
+  properties: 
+    region:
+      description: |
+        The region in which the Agent will be running.
+      type: string
+      required: false
+    csr:
+      description: |
+        Certificate Sign request. All the Agent Must connect with the platform with Mutual TLS. For that, they
+        required a certificate. The registration implies a Certificate Signature.
+      type: string
+      required: true
+    type:
+      description: |
+        There are multiple types of Agents, this is defined in this property.
+      type: string
+      enum: [ "BAT", "MuleCloud", "RemoteRuntime", "PCF" ]
+      required: true
+    agentInfo:
+      description: |
+        Blob of information that will depend on the agent type. 
+      type: object
+      required: false
