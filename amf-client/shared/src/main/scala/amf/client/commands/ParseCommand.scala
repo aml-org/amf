@@ -9,14 +9,13 @@ import scala.util.{Failure, Success}
 class ParseCommand(override val platform: Platform) extends TranslateCommand(platform) {
 
   override def run(origConfig: ParserConfig): Future[Any] = {
-
     val config = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some("application/ld+json"))
     val res = for {
-      _          <- AMFInit()
-      _          <- processDialects(config)
-      model      <- parseInput(config)
-      _          <- checkValidation(config, model)
-      generated  <- generateOutput(config, model)
+      _         <- AMFInit()
+      _         <- processDialects(config)
+      model     <- parseInput(config)
+      _         <- checkValidation(config, model)
+      generated <- generateOutput(config, model)
     } yield {
       generated
     }

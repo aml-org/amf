@@ -87,8 +87,11 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
     }
   }
 
-  private def library(entry: YMapEntry) = {
-    references += Reference(entry.value, LibraryReference, entry.value)
+  private def library(entry: YMapEntry) = references += Reference(libraryName(entry), LibraryReference, entry.value)
+
+  private def libraryName(e: YMapEntry): String = e.value.tagType match {
+    case YType.Include => e.value.as[YScalar].text
+    case _             => e.value
   }
 
   def oasLinks(part: YPart, ctx: ParserContext): Unit = {

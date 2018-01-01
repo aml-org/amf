@@ -24,15 +24,14 @@ class JsServerPlatform extends Platform {
   }
 
   /** Resolve specified file. */
-  override protected def fetchFile(path: String): Future[Content] = {
+  override protected def fetchFile(path: String): Future[Content] =
     fs.asyncFile(path)
       .read()
-      .map(content => {
-        Content(new CharSequenceStream(path, content),
-                ensureFileAuthority(path),
-                extension(path).flatMap(mimeFromExtension))
-      })
-  }
+      .map(
+        content =>
+          Content(new CharSequenceStream(path, content),
+                  ensureFileAuthority(path),
+                  extension(path).flatMap(mimeFromExtension)))
 
   /** Resolve specified url. */
   override protected def fetchHttp(url: String): Future[Content] = {
@@ -46,7 +45,7 @@ class JsServerPlatform extends Platform {
 
           // CAREFUL!
           // this is required to avoid undefined behaviours
-          val dataCb: js.Function1[Any,Any] = { (res: Any) =>
+          val dataCb: js.Function1[Any, Any] = { (res: Any) =>
             str += res.toString
           }
           // Another chunk of data has been received, append it to `str`
@@ -70,7 +69,7 @@ class JsServerPlatform extends Platform {
         (response: js.Dynamic) => {
           var str = ""
 
-          val dataCb: js.Function1[Any,Any] = { (res: Any) =>
+          val dataCb: js.Function1[Any, Any] = { (res: Any) =>
             str += res.toString
           }
           // Another chunk of data has been received, append it to `str`
@@ -95,9 +94,17 @@ class JsServerPlatform extends Platform {
   /** Return temporary directory. */
   override def tmpdir(): String = OS.tmpdir() + "/"
 
-  override def resolvePath(uri: String): String = uri match {
-    case File(path)                 => FILE_PROTOCOL + Path.resolve(withTrailingSlash(path)).substring(1)
-    case Http(protocol, host, path) => protocol + host + Path.resolve(withTrailingSlash(path))
+  override def resolvePath(uri: String): String = {
+    uri match {
+      case File(path) =>
+        if (path.startsWith("/")) {
+          FILE_PROTOCOL + Path.resolve(path)
+        } else {
+          FILE_PROTOCOL + Path.resolve(withTrailingSlash(path)).substring(1)
+        }
+
+      case Http(protocol, host, path) => protocol + host + Path.resolve(withTrailingSlash(path))
+    }
   }
 
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path

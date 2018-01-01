@@ -4,6 +4,7 @@ import amf.core.metamodel.domain.templates.ParametrizedDeclarationModel
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import org.yaml.model._
 
 /**
@@ -27,11 +28,12 @@ case class ParametrizedDeclarationParser(
         val variables = entry.value
           .as[YMap]
           .entries
-          .map(
-            variableEntry =>
-              VariableValue(variableEntry)
-                .withName(variableEntry.key.as[YScalar].text)
-                .withValue(variableEntry.value.as[YScalar].text))
+          .map { variableEntry =>
+            val node = DataNodeParser(variableEntry.value, parent = Some(declaration.id)).parse()
+            VariableValue(variableEntry)
+              .withName(variableEntry.key.as[YScalar].text)
+              .withValue(node)
+          }
 
         declaration.withVariables(variables)
       case YType.Str =>

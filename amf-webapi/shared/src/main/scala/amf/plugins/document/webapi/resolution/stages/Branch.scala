@@ -1,11 +1,8 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.ScalarNode
 import amf.core.model.domain.templates.{Variable, VariableValue}
-
-
-
-
 
 trait Branch {
   val key: Key
@@ -24,7 +21,7 @@ object Key {
 
 case class Context(model: BaseUnit, variables: Set[Variable] = Set()) {
 
-  def add(name: String, value: String): Context = copy(variables = variables + Variable(name, value))
+  def add(name: String, value: String): Context = copy(variables = variables + Variable(name, ScalarNode(value, None)))
 
   def add(vs: Seq[VariableValue]): Context = copy(variables = variables ++ vs.map(v => Variable(v.name, v.value)))
 }

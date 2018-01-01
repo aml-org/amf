@@ -14,7 +14,7 @@ case class AnnotationParser(lazyElement: () => DomainElement, map: YMap)(implici
     map.entries.foreach { entry =>
       val key = entry.key.as[YScalar].text
       if (WellKnownAnnotation.normalAnnotation(key)) {
-        domainExtensions += ExtensionParser(key, lazyElement().id, entry).parse()
+        domainExtensions += ExtensionParser(key, lazyElement().id, entry).parse().add(Annotations(entry))
       }
     }
     if (domainExtensions.nonEmpty)
@@ -22,14 +22,16 @@ case class AnnotationParser(lazyElement: () => DomainElement, map: YMap)(implici
   }
 }
 
-case class ExtensionParser(annotationRamlName: String, parent: String, entry: YMapEntry)(implicit val ctx: WebApiContext) {
+case class ExtensionParser(annotationRamlName: String, parent: String, entry: YMapEntry)(
+    implicit val ctx: WebApiContext) {
   def parse(): DomainExtension = {
     val domainExtension = DomainExtension()
     val annotationName  = WellKnownAnnotation.parseName(annotationRamlName)
     val dataNode        = DataNodeParser(entry.value, parent = Some(parent + s"/$annotationName")).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
-    val customDomainProperty = ctx.declarations.annotations.getOrElse(annotationName, CustomDomainProperty(Annotations(entry)).withName(annotationName))
+    val customDomainProperty = ctx.declarations.annotations
+      .getOrElse(annotationName, CustomDomainProperty(Annotations(entry)).withName(annotationName))
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)

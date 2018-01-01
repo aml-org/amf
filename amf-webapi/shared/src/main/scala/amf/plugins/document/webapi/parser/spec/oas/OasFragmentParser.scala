@@ -29,6 +29,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         YMap.empty
     }
 
+    val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
+
     val fragment = (detectType() map {
       case Oas20DocumentationItem         => DocumentationItemFragmentParser(map).parse()
       case Oas20DataType                  => DataTypeFragmentParser(map).parse()
@@ -48,8 +50,6 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       .add(Annotations(root.parsed.document))
 
     UsageParser(map, fragment).parse()
-
-    val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
 
     if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
     fragment

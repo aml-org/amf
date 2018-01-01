@@ -2,10 +2,11 @@ package amf
 
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document.{Document, TraitFragment}
-import amf.model.domain.{ScalarShape, WebApi}
+import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
+import scala.scalajs.js.JSConverters._
 
 class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
@@ -29,13 +30,28 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       assert(post.method == "get")
       assert(post.request.payloads.size == 1)
       assert(post.request.payloads.toSeq.head.mediaType == "application/json")
-      assert(post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#ScalarShape"))
+      assert(
+        post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#ScalarShape"))
       assert(post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#Shape"))
-      assert(post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://raml.org/vocabularies/shapes#Shape"))
-      assert(post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://raml.org/vocabularies/document#DomainElement"))
+      assert(
+        post.request.payloads.toSeq.head.schema
+          .getTypeIds()
+          .toSeq
+          .contains("http://raml.org/vocabularies/shapes#Shape"))
+      assert(
+        post.request.payloads.toSeq.head.schema
+          .getTypeIds()
+          .toSeq
+          .contains("http://raml.org/vocabularies/document#DomainElement"))
 
-      assert(post.responses.toSeq.head.payloads.toSeq.head.schema.asInstanceOf[ScalarShape].dataType == "http://www.w3.org/2001/XMLSchema#string")
-      assert(post.request.payloads.toSeq.head.schema.asInstanceOf[ScalarShape].dataType == "http://www.w3.org/2001/XMLSchema#string")
+      assert(
+        post.responses.toSeq.head.payloads.toSeq.head.schema
+          .asInstanceOf[ScalarShape]
+          .dataType == "http://www.w3.org/2001/XMLSchema#string")
+      assert(
+        post.request.payloads.toSeq.head.schema
+          .asInstanceOf[ScalarShape]
+          .dataType == "http://www.w3.org/2001/XMLSchema#string")
       assert(post.responses.toSeq.head.statusCode == "200")
     }
   }
@@ -52,14 +68,22 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Resolution test") {
-    AMF.init().toFuture flatMap {_ =>
+    AMF.init().toFuture flatMap { _ =>
       val parser = new Raml10Parser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { baseUnit =>
-      AMF.validate(baseUnit, "RAML").toFuture.map{ report => (baseUnit, report) }
-    } flatMap { case(baseUnit, report) =>
-      assert(report.conforms)
-      AMF.loadValidationProfile("file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml").toFuture.map { _ => baseUnit }
+      AMF.validate(baseUnit, "RAML").toFuture.map { report =>
+        (baseUnit, report)
+      }
+    } flatMap {
+      case (baseUnit, report) =>
+        assert(report.conforms)
+        AMF
+          .loadValidationProfile("file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml")
+          .toFuture
+          .map { _ =>
+            baseUnit
+          }
     } flatMap { baseUnit =>
       AMF.validate(baseUnit, "Banking").toFuture
     } flatMap { custom =>
@@ -74,20 +98,23 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       val parser = new Raml10Parser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml").toFuture
     } flatMap { baseUnit =>
-      AMF.validate(baseUnit, "Eng Demos 0.1").toFuture.map { report => (report, baseUnit)}
-    } flatMap { case (report, baseUnit) =>
-      assert(report.conforms)
-      AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
-      val elem = baseUnit.asInstanceOf[Document].encodes
-      val speakers = elem.getObjectByPropertyId("eng-demos:speakers")
-      assert(speakers.toSeq.nonEmpty)
+      AMF.validate(baseUnit, "Eng Demos 0.1").toFuture.map { report =>
+        (report, baseUnit)
+      }
+    } flatMap {
+      case (report, baseUnit) =>
+        assert(report.conforms)
+        AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
+        val elem     = baseUnit.asInstanceOf[Document].encodes
+        val speakers = elem.getObjectByPropertyId("eng-demos:speakers")
+        assert(speakers.toSeq.nonEmpty)
     }
   }
 
   test("world-music-test") {
     amf.plugins.features.AMFValidation.register()
     amf.plugins.document.WebApi.register()
-    amf.Core.init().toFuture flatMap  { _ =>
+    amf.Core.init().toFuture flatMap { _ =>
       val parser = amf.Core.parser("RAML 1.0", "application/yaml")
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/world-music-api/api.raml").toFuture
     } flatMap { model =>
@@ -99,13 +126,13 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
   test("banking-api-test") {
     amf.plugins.features.AMFValidation.register()
     amf.plugins.document.WebApi.register()
-    amf.Core.init().toFuture flatMap   { _ =>
+    amf.Core.init().toFuture flatMap { _ =>
       val parser = amf.Core.parser("RAML 1.0", "application/yaml")
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/banking-api/api.raml").toFuture
-    } flatMap  { model =>
+    } flatMap { model =>
       assert(!model.references().toSeq.map(_.location).contains(null))
-      val traitModel = model.references().toSeq.find( ref => ref.location.endsWith("traits.raml") ).head
-      val traitRefs = traitModel.references()
+      val traitModel    = model.references().toSeq.find(ref => ref.location.endsWith("traits.raml")).head
+      val traitRefs     = traitModel.references()
       val firstFragment = traitRefs.toSeq.head
       assert(firstFragment.location != null)
       assert(firstFragment.asInstanceOf[TraitFragment].encodes != null)
@@ -116,15 +143,97 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
   test("banking-api-test 2") {
     amf.plugins.features.AMFValidation.register()
     amf.plugins.document.WebApi.register()
-    amf.Core.init().toFuture flatMap   { _ =>
+    amf.Core.init().toFuture flatMap { _ =>
       val parser = amf.Core.parser("RAML 1.0", "application/yaml")
-      parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml").toFuture
-    } flatMap  { traitModel =>
-      val traitRefs = traitModel.references()
+      parser
+        .parseFileAsync("file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml")
+        .toFuture
+    } flatMap { traitModel =>
+      val traitRefs     = traitModel.references()
       val firstFragment = traitRefs.toSeq.head
       assert(firstFragment.location != null)
       assert(firstFragment.asInstanceOf[TraitFragment].encodes != null)
       assert(!traitRefs.toSeq.map(_.location).contains(null))
+    }
+  }
+
+  test("Vocabulary generation") {
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().toFuture flatMap { _ =>
+      val vocab = new amf.model.domain.Vocabulary()
+      vocab
+        .withBase("http://test.com/vocab#")
+        .withVersion("1.0")
+        .withUsage("Just a small sample vocabulary")
+        .withExternals(
+          Seq(
+            new amf.model.domain.ExternalVocabularyImport()
+              .withName("other")
+              .withUri("http://test.com/vocabulary/other#")
+          ).toJSArray)
+        .withUses(
+          Seq(
+            new amf.model.domain.VocabularyImport()
+              .withName("raml-doc")
+              .withUri("http://raml.org/vocabularies/doc#")
+          ).toJSArray)
+
+      val doc = new amf.model.document.Document()
+      doc.withLocation("test_vocab.raml")
+      doc.withEncodes(vocab)
+
+      val readVocab = new amf.model.domain.Vocabulary(doc.encodes.asInstanceOf[DomainEntity])
+      assert(readVocab.base() == vocab.base())
+      assert(Option(readVocab.base()).isDefined)
+      assert(readVocab.usage() == vocab.usage())
+      assert(Option(readVocab.usage()).isDefined)
+      assert(readVocab.version() == vocab.version())
+      assert(Option(readVocab.version()).isDefined)
+
+      val propertyTerm = new amf.model.domain.PropertyTerm()
+        .withId("http://raml.org/vocabularies/doc#test")
+        .withRange(Seq("http://www.w3.org/2001/XMLSchema#string").toJSArray)
+
+      val classTerm = new amf.model.domain.ClassTerm()
+        .withId("http://test.com/vocab#Class")
+        .withDescription("A sample class")
+        .withDisplayName("Class")
+        .withTermExtends("http://test.com/vocabulary/other#Class")
+        .withProperties(Seq("http://raml.org/vocabularies/doc#test").toJSArray)
+
+      vocab
+        .withClassTerms(
+          Seq(
+            classTerm
+          ).toJSArray)
+        .withPropertyTerms(
+          Seq(
+            propertyTerm
+          ).toJSArray)
+
+      val generator = amf.Core.generator("RAML Vocabulary", "application/yaml")
+      val text      = generator.generateString(doc)
+      assert(
+        text ==
+          """#%RAML 1.0 Vocabulary
+          |base: http://test.com/vocab#
+          |version: 1.0
+          |usage: Just a small sample vocabulary
+          |external:
+          |  other: http://test.com/vocabulary/other#
+          |uses:
+          |  raml-doc: http://raml.org/vocabularies/doc#
+          |classTerms:
+          |  Class:
+          |    displayName: Class
+          |    description: A sample class
+          |    extends: other.Class
+          |    properties: raml-doc.test
+          |propertyTerms:
+          |  raml-doc.test:
+          |    range: string
+          |""".stripMargin)
     }
   }
 }

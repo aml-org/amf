@@ -147,7 +147,7 @@ object DefaultAMFValidations extends ImportUtils {
     validations.map { validation =>
       val uri = validation.uri match {
         case Some(s) => s.trim
-        case _ => validationId(validation)
+        case _       => validationId(validation)
       }
 
       val spec = ValidationSpecification(
@@ -165,9 +165,9 @@ object DefaultAMFValidations extends ImportUtils {
             ValueType(Namespace.find(strings.head), strings.last)
           } else Namespace.expand(validation.constraint)
           valueType match {
-            case sh@ValueType(Namespace.Shacl, _) =>
+            case sh @ ValueType(Namespace.Shacl, _) =>
               spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh)))
-            case sh@ValueType(Namespace.Shapes, _) =>
+            case sh @ ValueType(Namespace.Shapes, _) =>
               spec.copy(functionConstraint = Option(parseFunctionConstraint(s"$uri/prop", validation, sh)))
             case _ => spec
           }
@@ -228,7 +228,22 @@ object JsCustomValidations {
            |  if ( multipleOf == undefined) return true;
            |  else return parseInt(multipleOf) > 0;
            |}
-        """.stripMargin)
+        """.stripMargin,
+    "maxLengthValidation" ->
+      """|function(shape) {
+           |  var maxLength = shape["shacl:maxLength"];
+           |  if ( maxLength == undefined) return true;
+           |  else return parseInt(maxLength) >= 0;
+           |}
+        """.stripMargin,
+    "minLengthValidation" ->
+      """|function(shape) {
+           |  var minLength = shape["shacl:minLength"];
+           |  if ( minLength == undefined) return true;
+           |  else return parseInt(minLength) >= 0;
+           |}
+        """.stripMargin
+  )
 
   def apply(name: String): Option[String] = functions.get(name)
 }

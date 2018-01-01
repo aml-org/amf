@@ -10,6 +10,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.core.utils._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
@@ -161,7 +162,7 @@ case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering:
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      property,
+      property.urlDecoded,
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
         DataNodeEmitter(propertyValue, ordering).emit(b)

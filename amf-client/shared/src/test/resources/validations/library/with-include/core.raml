@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+types:
+  User:
+    type: Auditable
+    properties:
+      username: string
+      password: string
+      email: string
+      fullName: string
+      active: boolean
+  Auditable:
+    type: Entity
+    properties:
+      version?: number
+      createdBy?: User
+      lastModifiedBy?: User
+  Entity:
+    type: object
+    properties:
+      id: number
+  MasterEntity:
+    type: Entity
+    properties:
+      name: string
+      keyCode: string

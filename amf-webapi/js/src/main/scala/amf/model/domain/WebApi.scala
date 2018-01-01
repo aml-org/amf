@@ -12,24 +12,27 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class WebApi(private val webApi: models.WebApi) extends DomainElement {
 
-  @JSExportTopLevel("WebApi")
+  @JSExportTopLevel("model.domain.WebApi")
   def this() = this(models.WebApi())
 
-  def name: String                                      = webApi.name
-  def description: String                               = webApi.description
-  def host: String                                      = webApi.host
-  def schemes: js.Iterable[String]                      = webApi.schemes.toJSArray
-  def endPoints: js.Iterable[EndPoint]                  = webApi.endPoints.map(amf.model.domain.EndPoint).toJSArray
-  def basePath: String                                  = webApi.basePath
-  def accepts: js.Iterable[String]                      = webApi.accepts.toJSArray
-  def contentType: js.Iterable[String]                  = webApi.contentType.toJSArray
-  def version: String                                   = webApi.version
-  def termsOfService: String                            = webApi.termsOfService
-  def provider: Organization                            = Option(webApi.provider).map(amf.model.domain.Organization).orNull
-  def license: License                                  = Option(webApi.license).map(amf.model.domain.License).orNull
-  def documentations: js.Iterable[CreativeWork]         = Option(webApi.documentations).getOrElse(Nil).map(CreativeWork).toJSArray
-  def baseUriParameters: js.Iterable[Parameter]         = Option(webApi.baseUriParameters).getOrElse(Nil).map(amf.model.domain.Parameter).toJSArray
-  def security: js.Iterable[ParametrizedSecurityScheme] = Option(webApi.security).getOrElse(Nil).map(ParametrizedSecurityScheme).toJSArray
+  def name: String                     = webApi.name
+  def description: String              = webApi.description
+  def host: String                     = webApi.host
+  def schemes: js.Iterable[String]     = webApi.schemes.toJSArray
+  def endPoints: js.Iterable[EndPoint] = webApi.endPoints.map(amf.model.domain.EndPoint).toJSArray
+  def basePath: String                 = webApi.basePath
+  def accepts: js.Iterable[String]     = webApi.accepts.toJSArray
+  def contentType: js.Iterable[String] = webApi.contentType.toJSArray
+  def version: String                  = webApi.version
+  def termsOfService: String           = webApi.termsOfService
+  def provider: Organization           = Option(webApi.provider).map(amf.model.domain.Organization).orNull
+  def license: License                 = Option(webApi.license).map(amf.model.domain.License).orNull
+  def documentations: js.Iterable[CreativeWork] =
+    Option(webApi.documentations).getOrElse(Nil).map(CreativeWork).toJSArray
+  def baseUriParameters: js.Iterable[Parameter] =
+    Option(webApi.baseUriParameters).getOrElse(Nil).map(amf.model.domain.Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] =
+    Option(webApi.security).getOrElse(Nil).map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: models.WebApi = webApi
 

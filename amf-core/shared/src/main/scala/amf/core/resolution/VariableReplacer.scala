@@ -1,12 +1,11 @@
 package amf.core.resolution
 
+import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.model.domain.templates.Variable
 import amf.core.utils.InflectorBase.Inflector
 
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
-
-
 
 object VariableReplacer {
 
@@ -16,19 +15,43 @@ object VariableReplacer {
 
   val VariableRegex: Regex = s"<<\\s*([^<<>>\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
 
+  def replaceVariables(s: ScalarNode, values: Set[Variable]): DataNode = {
+    s.value match {
+      case VariableRegex(name, transformations) =>
+        values.find(_.name == name) match {
+          case Some(Variable(_, _: ScalarNode)) =>
+            s.value = VariableRegex.replaceAllIn(s.value, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
+            s
+          case Some(_) if transformations.nonEmpty =>
+            throw new Exception(s"Cannot apply transformations '$transformations' to variable '$name'.")
+          case Some(Variable(_, node)) => node
+          case None                    => throw new Exception(s"Cannot find variable '$name'.")
+        }
+
+      case text =>
+        s.value = VariableRegex.replaceAllIn(text, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
+        s
+    }
+  }
+
   def replaceVariables(s: String, values: Set[Variable]): String =
     VariableRegex.replaceAllIn(s, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
 
-  private def replaceMatch(values: Map[String, String])(m: Match): String = {
+  private def replaceMatch(values: Map[String, DataNode])(m: Match): String = {
+    val name = m.group(1)
     values
-      .get(m.group(1))
-      .map(v =>
-        Option(m.group(2))
-          .map { transformations =>
-            TransformationsRegex.findAllIn(transformations).foldLeft(v)(variableTransformation)
-          }
-          .getOrElse(v))
-      .getOrElse(m.group(1))
+      .get(name)
+      .map {
+        case v: ScalarNode =>
+          val text = v.value
+          Option(m.group(2))
+            .map { transformations =>
+              TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation)
+            }
+            .getOrElse(text)
+        case node => throw new Exception(s"Variable '$name' cannot be replaced with type $node")
+      }
+      .getOrElse(name)
   }
 
   protected[amf] def variableTransformation(value: String, transformation: String): String = transformation match {

@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{CreativeWork, Example, _}
@@ -563,6 +564,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples").parse()
       if (examples.nonEmpty)
         shape.setArray(AnyShapeModel.Examples, examples)
+
+      // normal annotations
+      AnnotationParser(() => shape, map).parse()
 
       shape
     }

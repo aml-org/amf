@@ -21,9 +21,8 @@ class Context protected (val platform: Platform,
       case RelativeToIncludedFile(s) => Context.stripFile(current) + s
     }))
 
-  private def applyMapping(path: String): String = {
+  private def applyMapping(path: String): String =
     mappings.find(m => path.startsWith(m._1)).fold(path)(m => path.replace(m._1, m._2))
-  }
 }
 
 object Context {

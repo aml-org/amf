@@ -13,11 +13,10 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   private[amf] val element: document.BaseUnit
 
-
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   def references(): java.util.List[BaseUnit] = {
-    val units: Seq[BaseUnit] = element.references map {
-      e => { platform.wrap[BaseUnit](e) }
+    val units: Seq[BaseUnit] = element.references map { e =>
+      { platform.wrap[BaseUnit](e) }
     }
     units.asJava
   }
@@ -36,6 +35,10 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   /** Returns the file location for the document that has been parsed to generate this model */
   def location: String = element.location
+  def withLocation(location: String) = {
+    element.withLocation(location)
+    this
+  }
 
   def usage: String = element.usage
 

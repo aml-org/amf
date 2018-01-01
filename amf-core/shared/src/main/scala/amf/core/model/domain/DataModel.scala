@@ -1,7 +1,7 @@
 package amf.core.model.domain
 
 import amf.core.annotations.ScalarType
-import amf.core.metamodel.Field
+import amf.core.metamodel.{Field, Obj}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel
 import amf.core.metamodel.domain.DataNodeModel._
@@ -21,22 +21,24 @@ import scala.collection.mutable.ListBuffer
 abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
 
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
-  def replaceVariables(values: Set[Variable]): Unit
+  def replaceVariables(values: Set[Variable]): DataNode
 
   def name: String = fields(Name)
 
   def withName(name: String): this.type = set(Name, name)
 
-  override def adopted(parent: String): this.type =
+  override def adopted(parent: String): this.type = {
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
+  }
 
-  def forceAdopted(parent: String): this.type = withId(parent + "/" + name.urlEncoded)
+  def forceAdopted(parent: String): this.type =
+    withId(parent + "/" + (if (Option(name).isDefined) name.urlEncoded else name))
 
   override val fields: Fields = Fields()
 
   def cloneNode(): this.type
 
-  override def meta = DataNodeModel
+  override def meta: Obj = DataNodeModel
 }
 
 /**
@@ -74,22 +76,23 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   override def valueForField(f: Field): Option[AmfElement] = f.value.ns match {
     case Namespace.Data => properties.get(f.value.name)
-    case _              => None //this or fields.get(f)
+    case _              => None // this or fields.get(f)
   }
 
-  override def replaceVariables(values: Set[Variable]): Unit = {
+  override def replaceVariables(values: Set[Variable]): DataNode = {
     properties.keys.foreach { key =>
-      val value = properties(key)
+      val value = properties(key).replaceVariables(values)
       properties.remove(key)
-      value.replaceVariables(values)
-      properties += VariableReplacer.replaceVariables(key, values) -> value
+      properties += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
 
     propertyAnnotations.keys.foreach { key =>
       val value = propertyAnnotations(key)
       propertyAnnotations.remove(key)
-      propertyAnnotations += VariableReplacer.replaceVariables(key, values) -> value
+      propertyAnnotations += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
+
+    this
   }
 
   override def cloneNode(): this.type = {
@@ -143,8 +146,9 @@ class ScalarNode(var value: String,
     case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable]): Unit =
-    value = VariableReplacer.replaceVariables(value, values)
+  override def replaceVariables(values: Set[Variable]): DataNode = {
+    VariableReplacer.replaceVariables(this, values)
+  }
 
   override def cloneNode(): this.type = {
     val cloned = ScalarNode(annotations)
@@ -170,7 +174,7 @@ object ScalarNode {
     apply(value, dataType, Annotations(ast))
 
   def apply(value: String, dataType: Option[String], annotations: Annotations): ScalarNode =
-    new ScalarNode(value: String, dataType: Option[String], Fields(), annotations)
+    new ScalarNode(value, dataType, Fields(), annotations)
 }
 
 /**
@@ -193,7 +197,10 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
     case _      => None
   }
 
-  override def replaceVariables(values: Set[Variable]): Unit = members.foreach(_.replaceVariables(values))
+  override def replaceVariables(values: Set[Variable]): DataNode = {
+    members = members.map(_.replaceVariables(values))
+    this
+  }
 
   override def cloneNode(): this.type = {
     val cloned = ArrayNode(annotations)

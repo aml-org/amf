@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
+import amf.core.utils._
 
 /**
   * We need to generate unique IDs for all data nodes if the name is not set
@@ -22,7 +23,6 @@ class IdCounter {
   // Ideally this should be resetted every single time we parse
   def reset(): Unit = c = 0
 }
-
 
 /**
   * Parse an object as a fully dynamic value.
@@ -91,7 +91,8 @@ case class DataNodeParser(node: YNode,
   }
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast)).withName(idCounter.genId("scalar"))
+    val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast))
+      .withName(idCounter.genId("scalar"))
     parent.foreach(node.adopted)
     parameters.parseVariables(ast)
     node
@@ -117,7 +118,7 @@ case class DataNodeParser(node: YNode,
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key, propertyNode, propertyAnnotations)
+      node.addProperty(key.urlEncoded, propertyNode, propertyAnnotations)
     }
     node
   }
