@@ -1,5 +1,7 @@
 package amf.model.domain
 
+import amf.core.annotations.SourceVendor
+import amf.core.remote.Vendor
 import amf.plugins.domain.webapi.models
 
 import scala.collection.JavaConverters._
@@ -146,4 +148,7 @@ case class WebApi(private val webApi: models.WebApi) extends DomainElement {
     * Name property of the parameter is required.
     */
   def withBaseUriParameter(name: String): Parameter = Parameter(webApi.withBaseUriParameter(name))
+
+  def sourceVendor: Option[Vendor] =
+    element.annotations.find(classOf[SourceVendor]).flatMap(a => Vendor.unapply(a.name))
 }

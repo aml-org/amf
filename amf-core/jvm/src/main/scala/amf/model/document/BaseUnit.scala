@@ -1,10 +1,9 @@
 package amf.model.document
 
-import amf.core.annotations.SourceVendor
-import amf.core.remote.{AmfObjectWrapper, Vendor}
+import amf.core.model.document
+import amf.core.remote.AmfObjectWrapper
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
-import amf.core.model.document
 import amf.model.domain.DomainElement
 
 import scala.collection.JavaConverters._
@@ -52,7 +51,4 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   def findByType(typeId: String): java.util.List[DomainElement] =
     element.findByType(Namespace.expand(typeId).iri()).map(e => platform.wrap[DomainElement](e)).asJava
-
-  def sourceVendor: Option[Vendor] =
-    element.annotations.find(classOf[SourceVendor]).flatMap(a => Vendor.unapply(a.name))
 }
