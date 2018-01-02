@@ -25,8 +25,8 @@ object SpecOrdering {
 
   def ordering(target: Vendor, annotations: Annotations): SpecOrdering = {
     annotations.find(classOf[SourceVendor]) match {
-      case Some(SourceVendor(source)) if source == Amf || source == target => Lexical
-      case _                                                               => Default
+      case Some(SourceVendor(source)) if source == Amf || source.isSameWithoutVersion(target) => Lexical
+      case _                                                                                  => Default
     }
   }
 }
