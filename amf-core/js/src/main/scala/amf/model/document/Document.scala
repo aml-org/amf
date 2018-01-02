@@ -18,5 +18,4 @@ case class Document(private[amf] val document: CoreDocument) extends BaseUnit wi
   def this(domainElement: DomainElement) = this(CoreDocument().withEncodes(domainElement.element))
 
   override private[amf] val element = document
-
 }
