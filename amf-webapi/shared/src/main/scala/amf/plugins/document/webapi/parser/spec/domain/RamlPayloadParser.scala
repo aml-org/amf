@@ -62,9 +62,17 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: (Option[String]) => P
   override def parse(): Payload = {
     val payload = super.parse()
 
-    if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(entry.key.as[YScalar].text)) {
-      Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
-    } else {}
+    entry.value.tagType match {
+      case YType.Null => // Nothing
+      case _ =>
+        if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(entry.key.as[YScalar].text)) {
+          Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
+        } else {
+          Raml08TypeParser(entry, entry.key.as[YScalar].text, entry.value, (shape: Shape) => shape.adopted(payload.id))
+            .parse()
+            .foreach(payload.withSchema)
+        }
+    }
 
     payload
   }
@@ -94,6 +102,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
       })
   }
 }
+
 abstract class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload)(
     implicit ctx: RamlWebApiContext) {
   def parse(): Payload = {

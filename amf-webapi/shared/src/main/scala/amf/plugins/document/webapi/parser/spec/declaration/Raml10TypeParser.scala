@@ -111,7 +111,7 @@ case class Raml08TypeParser(ast: YPart,
           .fold({
             Option(SimpleTypeParser(name, adopt, map).parse())
           })(entry => {
-            val maybeShape = Raml08SchemaParser(map).parse()
+            val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
             maybeShape.foreach(s => {
               RamlSingleExampleParser("example", map)
@@ -146,20 +146,25 @@ case class Raml08TypeParser(ast: YPart,
     }
   }
 
-  case class Raml08SchemaParser(map: YMap)(implicit ctx: RamlWebApiContext) {
+  case class Raml08SchemaParser(map: YMap, adopt: (Shape) => Shape)(implicit ctx: RamlWebApiContext) {
     def parse(): Option[Shape] = {
       map.key("schema").flatMap { e =>
-        e.value.as[YScalar].text match {
-          case XMLSchema(_)  => Option(parseXMLSchemaExpression(e, adopt))
-          case JSONSchema(_) => Option(parseJSONSchemaExpression(e, adopt))
-          case text =>
-            Raml08ReferenceParser(text, node).parse()
+        e.value.tagType match {
+          case YType.Map | YType.Seq => Raml08TypeParser(e, "schema", e.value, adopt).parse()
+          case _ =>
+            e.value.as[YScalar].text match { // json schema and xml schema only in schema tag
+              case XMLSchema(_)  => Option(parseXMLSchemaExpression(e, adopt))
+              case JSONSchema(_) => Option(parseJSONSchemaExpression(e, adopt))
+              case text =>
+                Raml08TypeParser(e, "schema", e.value, adopt).parse()
+            }
         }
       }
     }
   }
 
 }
+
 case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(implicit ctx: RamlWebApiContext) {
   def parse(): Shape = {
 
@@ -344,6 +349,7 @@ trait RamlExternalTypes {
         shape
     }
   }
+
   protected def typeOrSchema(map: YMap) = map.key("type").orElse(map.key("schema"))
 
 }
@@ -1093,4 +1099,5 @@ sealed abstract class RamlTypeParser(ast: YPart,
       typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape).parse())
     }
   }
+
 }
