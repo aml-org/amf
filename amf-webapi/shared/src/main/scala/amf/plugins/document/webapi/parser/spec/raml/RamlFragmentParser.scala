@@ -6,7 +6,7 @@ import amf.core.model.document.Fragment
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Annotations
-import amf.core.remote.Raml
+import amf.core.remote.Raml10
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
@@ -49,7 +49,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case Some(fragment) =>
         fragment.withLocation(root.location)
         UsageParser(rootMap, fragment).parse()
-        fragment.add(Annotations(root.parsed.document) += SourceVendor(Raml))
+        fragment.add(Annotations(root.parsed.document) += SourceVendor(Raml10))
         if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
         Some(fragment)
       case _ =>

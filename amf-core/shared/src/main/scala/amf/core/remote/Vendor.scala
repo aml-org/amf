@@ -22,6 +22,8 @@ object Vendor {
 sealed trait Vendor {
   val name: String
   val defaultSyntax: Syntax
+
+  def isSameWithoutVersion(vendor: Vendor): Boolean = vendor == this
 }
 
 trait Raml extends Vendor {
@@ -32,6 +34,12 @@ trait Raml extends Vendor {
 
   override def toString: String = name.trim
 
+  override def isSameWithoutVersion(vendor: Vendor): Boolean = {
+    vendor match {
+      case o: Raml => true
+      case _       => false
+    }
+  }
 }
 
 object Raml extends Raml {
