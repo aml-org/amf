@@ -1,7 +1,8 @@
 package amf.model.document
 
+import amf.core.annotations.SourceVendor
 import amf.core.model.domain.DomainElement
-import amf.core.remote.AmfObjectWrapper
+import amf.core.remote.{AmfObjectWrapper, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
 
@@ -56,4 +57,6 @@ class BaseUnit extends AmfObjectWrapper with PlatformSecrets {
       .map(e => platform.wrap[amf.model.domain.DomainElement](e))
       .toJSIterable
 
+  def sourceVendor: Option[Vendor] =
+    element.annotations.find(classOf[SourceVendor]).flatMap(a => Vendor.unapply(a.name))
 }
