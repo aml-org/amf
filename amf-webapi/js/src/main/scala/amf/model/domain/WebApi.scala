@@ -17,22 +17,36 @@ case class WebApi(private val webApi: models.WebApi) extends DomainElement {
   @JSExportTopLevel("model.domain.WebApi")
   def this() = this(models.WebApi())
 
-  def name: String                     = webApi.name
-  def description: String              = webApi.description
-  def host: String                     = webApi.host
-  def schemes: js.Iterable[String]     = webApi.schemes.toJSArray
+  def name: String = webApi.name
+
+  def description: String = webApi.description
+
+  def host: String = webApi.host
+
+  def schemes: js.Iterable[String] = webApi.schemes.toJSArray
+
   def endPoints: js.Iterable[EndPoint] = webApi.endPoints.map(amf.model.domain.EndPoint).toJSArray
-  def basePath: String                 = webApi.basePath
-  def accepts: js.Iterable[String]     = webApi.accepts.toJSArray
+
+  def basePath: String = webApi.basePath
+
+  def accepts: js.Iterable[String] = webApi.accepts.toJSArray
+
   def contentType: js.Iterable[String] = webApi.contentType.toJSArray
-  def version: String                  = webApi.version
-  def termsOfService: String           = webApi.termsOfService
-  def provider: Organization           = Option(webApi.provider).map(amf.model.domain.Organization).orNull
-  def license: License                 = Option(webApi.license).map(amf.model.domain.License).orNull
+
+  def version: String = webApi.version
+
+  def termsOfService: String = webApi.termsOfService
+
+  def provider: Organization = Option(webApi.provider).map(amf.model.domain.Organization).orNull
+
+  def license: License = Option(webApi.license).map(amf.model.domain.License).orNull
+
   def documentations: js.Iterable[CreativeWork] =
     Option(webApi.documentations).getOrElse(Nil).map(CreativeWork).toJSArray
+
   def baseUriParameters: js.Iterable[Parameter] =
     Option(webApi.baseUriParameters).getOrElse(Nil).map(amf.model.domain.Parameter).toJSArray
+
   def security: js.Iterable[ParametrizedSecurityScheme] =
     Option(webApi.security).getOrElse(Nil).map(ParametrizedSecurityScheme).toJSArray
 
@@ -152,6 +166,5 @@ case class WebApi(private val webApi: models.WebApi) extends DomainElement {
     */
   def withBaseUriParameter(name: String): Parameter = Parameter(webApi.withBaseUriParameter(name))
 
-  def sourceVendor: Option[Vendor] =
-    element.annotations.find(classOf[SourceVendor]).flatMap(a => Vendor.unapply(a.name))
+  def sourceVendor: Option[Vendor] = element.sourceVendor
 }
