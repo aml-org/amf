@@ -40,6 +40,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
         unit,
         new StringHandler {
           override def error(exception: Throwable): Unit = println(s"An error occurred: $exception")
+
           override def success(generation: String): Unit = out.print(generation)
         }
       )
@@ -76,7 +77,9 @@ class Repl(val in: InputStream, val out: PrintStream) {
   }
 
   private def parser(vendor: Vendor) = vendor match {
-    case Raml    => new Raml10Parser
+    case Raml    => new RamlParser
+    case Raml10  => new Raml10Parser
+    case Raml08  => new Raml08Parser
     case Oas     => new Oas20Parser
     case Amf     => new AmfGraphParser
     case Payload => throw new Exception("Cannot find a parser for Payload vendor")

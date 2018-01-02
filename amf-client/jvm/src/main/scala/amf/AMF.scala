@@ -16,6 +16,8 @@ object AMF {
     amf.Core.init()
   }
 
+  def ramlParser(): RamlParser = new RamlParser()
+
   def raml10Parser(): Raml10Parser = new Raml10Parser()
 
   def raml10Generator(): Raml10Generator = new Raml10Generator()

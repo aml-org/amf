@@ -1,10 +1,9 @@
 package amf
 
 import amf.core.unsafe.PlatformSecrets
-import amf.model.document.{Document, TraitFragment}
+import amf.model.document.{BaseUnit, Document, TraitFragment}
 import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
-import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
-import org.scalatest.AsyncFunSuite
+import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
@@ -13,45 +12,45 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("Parsing test") {
+  test("Parsing autodetect raml 1.0 test") {
     AMF.init().get()
-    val parser   = new Raml10Parser()
-    val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
-    assert(baseUnit.location == "file://amf-client/shared/src/test/resources/api/zencoder.raml")
-    val api      = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
-    val endpoint = api.endPoints.get(0)
-    assert(endpoint.path == "/v3.5/path")
-    assert(api.endPoints.size() == 1)
-    assert(endpoint.operations.size() == 1)
-    val post = endpoint.operations.get(0)
-    assert(post.method == "get")
-    assert(post.request.payloads.size() == 1)
-    assert(post.request.payloads.get(0).mediaType == "application/json")
-    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://www.w3.org/ns/shacl#ScalarShape"))
-    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://www.w3.org/ns/shacl#Shape"))
-    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/shapes#Shape"))
-    assert(
-      post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/document#DomainElement"))
-    assert(
-      post.responses
-        .get(0)
-        .payloads
-        .get(0)
-        .schema
-        .asInstanceOf[ScalarShape]
-        .dataType == "http://www.w3.org/2001/XMLSchema#string")
-    assert(
-      post.request.payloads
-        .get(0)
-        .schema
-        .asInstanceOf[ScalarShape]
-        .dataType == "http://www.w3.org/2001/XMLSchema#string")
-    assert(post.responses.get(0).statusCode == "200")
+    val parser = new RamlParser()
+    assertBaseUnit(
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get(),
+      "file://amf-client/shared/src/test/resources/api/zencoder.raml"
+    )
+  }
+
+  test("Parsing autodetect raml 0.8 test") {
+    AMF.init().get()
+    val parser = new RamlParser()
+    assertBaseUnit(
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder08.raml").get(),
+      "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
+    )
+  }
+
+  test("Parsing raml 1.0 test") {
+    AMF.init().get()
+    val parser = new Raml10Parser()
+    assertBaseUnit(
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get(),
+      "file://amf-client/shared/src/test/resources/api/zencoder.raml"
+    )
+  }
+
+  test("Parsing raml 0.8 test") {
+    AMF.init().get()
+    val parser = new RamlParser()
+    assertBaseUnit(
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder08.raml").get(),
+      "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
+    )
   }
 
   test("Parsing refs test") {
     AMF.init().get()
-    val parser   = new Raml10Parser()
+    val parser   = new RamlParser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/banking.raml").get()
     assert(baseUnit.references().size() == 2)
     assert(Option(baseUnit.references().get(0).location).isDefined)
@@ -59,7 +58,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Generation test") {
     AMF.init().get()
-    val parser   = new Raml10Parser()
+    val parser   = new RamlParser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
     assert(new Raml10Generator().generateString(baseUnit) != "") // TODO: test this properly
     assert(new Oas20Generator().generateString(baseUnit) != "")
@@ -68,7 +67,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Validation test") {
     AMF.init().get()
-    val parser   = new Raml10Parser()
+    val parser   = new RamlParser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
     val report   = AMF.validate(baseUnit, "RAML").get()
     assert(report.conforms)
@@ -79,7 +78,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Resolution test") {
     AMF.init().get()
-    val parser           = new Raml10Parser()
+    val parser           = new RamlParser()
     val baseUnit         = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
     val resolvedBaseUnit = AMF.resolveRaml10(baseUnit) // TODO: test this properly
     val report           = AMF.validate(resolvedBaseUnit, "RAML").get()
@@ -91,7 +90,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
     AMF.registerDialect("file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml").get()
 
-    val parser = new Raml10Parser()
+    val parser = new RamlParser()
     val baseUnit =
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml").get()
 
@@ -106,7 +105,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Raml to oas secutiry scheme pos resolution") {
     AMF.init().get()
-    val parser = new Raml10Parser()
+    val parser = new RamlParser()
 
     val baseUnit =
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml").get()
@@ -221,5 +220,38 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
         |  raml-doc.test:
         |    range: string
         |""".stripMargin)
+  }
+
+  private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
+    assert(baseUnit.location == expectedLocation)
+    val api      = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    val endpoint = api.endPoints.get(0)
+    assert(endpoint.path == "/v3.5/path")
+    assert(api.endPoints.size() == 1)
+    assert(endpoint.operations.size() == 1)
+    val post = endpoint.operations.get(0)
+    assert(post.method == "get")
+    assert(post.request.payloads.size() == 1)
+    assert(post.request.payloads.get(0).mediaType == "application/json")
+    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://www.w3.org/ns/shacl#ScalarShape"))
+    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://www.w3.org/ns/shacl#Shape"))
+    assert(post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/shapes#Shape"))
+    assert(
+      post.request.payloads.get(0).schema.getTypeIds().contains("http://raml.org/vocabularies/document#DomainElement"))
+    assert(
+      post.responses
+        .get(0)
+        .payloads
+        .get(0)
+        .schema
+        .asInstanceOf[ScalarShape]
+        .dataType == "http://www.w3.org/2001/XMLSchema#string")
+    assert(
+      post.request.payloads
+        .get(0)
+        .schema
+        .asInstanceOf[ScalarShape]
+        .dataType == "http://www.w3.org/2001/XMLSchema#string")
+    assert(post.responses.get(0).statusCode == "200")
   }
 }

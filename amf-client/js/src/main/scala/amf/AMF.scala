@@ -23,6 +23,8 @@ object AMF {
 
   def raml10Parser(): Raml10Parser = new Raml10Parser()
 
+  def ramlParser(): RamlParser = new RamlParser()
+
   def raml10Generator(): Raml10Generator = new Raml10Generator()
 
   def raml08Parser(): Raml08Parser = new Raml08Parser()
@@ -56,15 +58,22 @@ object AMF {
 @JSExportAll
 @JSExportTopLevel("Core")
 object CoreWrapper {
-  def init()                                       = Core.init()
-  def parser(vendor: String, mediaType: String)    = amf.Core.parser(vendor, mediaType)
+  def init() = Core.init()
+
+  def parser(vendor: String, mediaType: String) = amf.Core.parser(vendor, mediaType)
+
   def generator(vendor: String, mediaType: String) = amf.Core.generator(vendor, mediaType)
-  def resolver(vendor: String): Resolver           = amf.Core.resolver(vendor)
+
+  def resolver(vendor: String): Resolver = amf.Core.resolver(vendor)
+
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF") =
     amf.Core.validate(model, profileName, messageStyle)
-  def loadValidationProfile(url: String)               = amf.Core.loadValidationProfile(url)
+
+  def loadValidationProfile(url: String) = amf.Core.loadValidationProfile(url)
+
   def registerNamespace(alias: String, prefix: String) = amf.Core.registerNamespace(alias, prefix)
-  def registerPlugin(plugin: AMFPlugin)                = amf.Core.registerPlugin(plugin)
+
+  def registerPlugin(plugin: AMFPlugin) = amf.Core.registerPlugin(plugin)
 }
 
 @JSExportAll

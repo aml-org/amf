@@ -1,9 +1,9 @@
 package amf
 
 import amf.core.unsafe.PlatformSecrets
-import amf.model.document.{Document, TraitFragment}
+import amf.model.document.{BaseUnit, Document, TraitFragment}
 import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
-import org.scalatest.AsyncFunSuite
+import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.JSConverters._
@@ -12,53 +12,37 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("Parsing test") {
+  test("Parsing raml 1.0 detect test") {
+    AMF.init().toFuture.flatMap { _ =>
+      val parser = new RamlParser()
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
+    } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder.raml") }
+  }
+
+  test("Parsing raml 0.8 detect test") {
+    AMF.init().toFuture.flatMap { _ =>
+      val parser = new RamlParser()
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder08.raml").toFuture
+    } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder08.raml") }
+  }
+
+  test("Parsing raml 1.0 test") {
     AMF.init().toFuture.flatMap { _ =>
       val parser = new Raml10Parser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
-    } flatMap { baseUnit =>
-      assert(baseUnit.location == "file://amf-client/shared/src/test/resources/api/zencoder.raml")
+    } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder.raml") }
+  }
 
-      val api = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
-      assert(api != null)
-
-      val endpoint = api.endPoints.toSeq.head
-      assert(endpoint.path == "/v3.5/path")
-      assert(api.endPoints.size == 1)
-      assert(endpoint.operations.size == 1)
-      val post = endpoint.operations.toSeq.head
-      assert(post.method == "get")
-      assert(post.request.payloads.size == 1)
-      assert(post.request.payloads.toSeq.head.mediaType == "application/json")
-      assert(
-        post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#ScalarShape"))
-      assert(post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#Shape"))
-      assert(
-        post.request.payloads.toSeq.head.schema
-          .getTypeIds()
-          .toSeq
-          .contains("http://raml.org/vocabularies/shapes#Shape"))
-      assert(
-        post.request.payloads.toSeq.head.schema
-          .getTypeIds()
-          .toSeq
-          .contains("http://raml.org/vocabularies/document#DomainElement"))
-
-      assert(
-        post.responses.toSeq.head.payloads.toSeq.head.schema
-          .asInstanceOf[ScalarShape]
-          .dataType == "http://www.w3.org/2001/XMLSchema#string")
-      assert(
-        post.request.payloads.toSeq.head.schema
-          .asInstanceOf[ScalarShape]
-          .dataType == "http://www.w3.org/2001/XMLSchema#string")
-      assert(post.responses.toSeq.head.statusCode == "200")
-    }
+  test("Parsing raml 0.8 test") {
+    AMF.init().toFuture.flatMap { _ =>
+      val parser = new Raml08Parser()
+      parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder08.raml").toFuture
+    } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder08.raml") }
   }
 
   test("Generation test") {
     AMF.init().toFuture.flatMap { _ =>
-      val parser = new Raml10Parser()
+      val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { baseUnit =>
       assert(new Raml10Generator().generateString(baseUnit) != "") // TODO: test this properly
@@ -69,7 +53,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Resolution test") {
     AMF.init().toFuture flatMap { _ =>
-      val parser = new Raml10Parser()
+      val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { baseUnit =>
       AMF.validate(baseUnit, "RAML").toFuture.map { report =>
@@ -235,5 +219,44 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
           |    range: string
           |""".stripMargin)
     }
+  }
+
+  private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
+    assert(baseUnit.location == expectedLocation)
+
+    val api = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    assert(api != null)
+
+    val endpoint = api.endPoints.toSeq.head
+    assert(endpoint.path == "/v3.5/path")
+    assert(api.endPoints.size == 1)
+    assert(endpoint.operations.size == 1)
+    val post = endpoint.operations.toSeq.head
+    assert(post.method == "get")
+    assert(post.request.payloads.size == 1)
+    assert(post.request.payloads.toSeq.head.mediaType == "application/json")
+    assert(
+      post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#ScalarShape"))
+    assert(post.request.payloads.toSeq.head.schema.getTypeIds().toSeq.contains("http://www.w3.org/ns/shacl#Shape"))
+    assert(
+      post.request.payloads.toSeq.head.schema
+        .getTypeIds()
+        .toSeq
+        .contains("http://raml.org/vocabularies/shapes#Shape"))
+    assert(
+      post.request.payloads.toSeq.head.schema
+        .getTypeIds()
+        .toSeq
+        .contains("http://raml.org/vocabularies/document#DomainElement"))
+
+    assert(
+      post.responses.toSeq.head.payloads.toSeq.head.schema
+        .asInstanceOf[ScalarShape]
+        .dataType == "http://www.w3.org/2001/XMLSchema#string")
+    assert(
+      post.request.payloads.toSeq.head.schema
+        .asInstanceOf[ScalarShape]
+        .dataType == "http://www.w3.org/2001/XMLSchema#string")
+    assert(post.responses.toSeq.head.statusCode == "200")
   }
 }
