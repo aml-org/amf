@@ -90,7 +90,7 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
           case Some(node: NodeShape) if !node.isLink && node.annotations.find(classOf[ParsedJSONSchema]).isEmpty =>
             p.obj(Raml08FormPropertiesEmitter(node, ordering).emit)
           case Some(anyShape: AnyShape) =>
-            Raml08TypePartEmitter(anyShape, ordering, Seq()).emit(_)
+            Raml08TypePartEmitter(anyShape, ordering, Seq()).emit(p)
           case Some(other) => throw new Exception(s"Cannot emit schema $other in raml 08 body request")
           case None        => p.+=(YNode(YMap.empty)) // ignore
         }

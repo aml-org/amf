@@ -1,0 +1,13 @@
+#%RAML 1.0
+
+title: Example API
+/resource:
+  /{resourceId}:
+    post:
+      body:
+        application/json:
+          type: string
+      responses:
+        200:
+          body:
+            application/yaml:
