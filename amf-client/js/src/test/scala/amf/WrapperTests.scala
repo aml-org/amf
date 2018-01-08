@@ -5,7 +5,8 @@ import amf.model.document.{BaseUnit, Document, TraitFragment}
 import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.ExecutionContext
+import scala.collection.mutable
+import scala.concurrent.{ExecutionContext, Future}
 import scala.scalajs.js.JSConverters._
 
 class WrapperTests extends AsyncFunSuite with PlatformSecrets {
@@ -219,6 +220,40 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
           |    range: string
           |""".stripMargin)
     }
+  }
+
+  test("vocabularies parsing") {
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().toFuture flatMap { _ =>
+      val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
+      parser.parseFileAsync("file://vocabularies/vocabularies/raml_shapes.raml").toFuture
+    } map { parsed =>
+      val vocabulary = amf.model.domain.Vocabulary(parsed.asInstanceOf[Document].encodes.asInstanceOf[DomainEntity])
+      val acc: mutable.HashMap[String, String] = new mutable.HashMap()
+      for {
+        property <- vocabulary.propertyTerms().toSeq
+        range    <- property.range().toSeq
+      } yield {
+        acc.put(property.getId(), range)
+      }
+      assert(acc.size == 14)
+    }
+  }
+
+  test("Vocabularies parsing raml_doc") {
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.document.WebApi.register()
+    val res = amf.Core.init().toFuture flatMap  { _ =>
+      val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
+      val f: Future[amf.model.document.BaseUnit] = parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").toFuture
+      f
+    }
+
+    res map { parsed: amf.model.document.BaseUnit =>
+      assert(parsed.isInstanceOf[amf.model.document.Document])
+    }
+
   }
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
