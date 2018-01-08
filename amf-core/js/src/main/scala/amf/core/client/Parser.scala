@@ -41,6 +41,19 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
       Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   /**
+    * Generates the [[BaseUnit]] from a given string, which should be a valid api.
+    * @param baseUrl: Base URL to used in the graph of information generated for the input stream of data
+    * @param stream: The api as a string.
+    * @param handler Handler object to execute the success or fail functions with the result object model.
+    */
+  @JSExport
+  def parseString(baseUrl: String, stream: String, handler: JsHandler[BaseUnit]): Unit =
+    super.parse(baseUrl,
+      BaseUnitHandlerAdapter(handler),
+      Some(StringContentPlatform(baseUrl, stream, platform)))
+
+
+  /**
     * Asynchronously generate a [[BaseUnit]] from the api located in the given url.
     * @param url : Location of the api.
     * @return A js promise that will have a [[BaseUnit]] or an error to handle the result of such invocation.
@@ -62,9 +75,9 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
       .toJSPromise
 
   @JSExport
-  def parseStringAsync(stream: String, platform: Platform): js.Promise[BaseUnit] =
+  def parseStringAsync(baseUrl: String, stream: String): js.Promise[BaseUnit] =
     super
-      .parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+      .parseAsync(baseUrl, Some(StringContentPlatform(baseUrl, stream, platform)))
       .map(unitScalaToJS)
       .toJSPromise
 
