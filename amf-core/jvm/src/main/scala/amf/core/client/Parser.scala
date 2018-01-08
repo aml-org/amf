@@ -50,14 +50,14 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
 
   /**
     * Generates the [[amf.model.document.BaseUnit]] from a given string, which should be a valid api.
+    * @param baseUrl: Base url for the text of the document to parse
     * @param stream: The api as a string.
-    * @param platform: Platform to wrap
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
-  def parseString(stream: String, platform: Platform, handler: Handler[BaseUnit]): Unit =
-    super.parse(DEFAULT_DOCUMENT_URL,
+  def parseString(baseUrl: String, stream: String, handler: Handler[BaseUnit]): Unit =
+    super.parse(baseUrl,
                 BaseUnitHandlerAdapter(handler),
-                Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+                Some(StringContentPlatform(baseUrl, stream, platform)))
 
   def parseString(url: String, stream: String, platform: Platform, handler: Handler[BaseUnit]): Unit =
     super.parse(url, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(url, stream, platform)))
@@ -95,17 +95,17 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
   /**
     * Asynchronously generate a [[amf.model.document.BaseUnit]] from a given string, which should be a valid api.
     * @param stream: The api as a string
-    * @param platform: Platform to wrap
+    * @param baseUrl: Base URL to be used in the graph parsed form the stream of data
     * @return A java future that will have a [[amf.model.document.BaseUnit]] or an error to handle the result of such invocation.
     */
-  def parseStringAsync(stream: String, platform: Platform): CompletableFuture[BaseUnit] =
+  def parseStringAsync(baseUrl: String, stream: String): CompletableFuture[BaseUnit] =
     super
-      .parseAsync(DEFAULT_DOCUMENT_URL, Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+      .parseAsync(baseUrl, Some(StringContentPlatform(baseUrl, stream, platform)))
       .map(unitScalaToJVM)
       .asJava
 
-  def parseStringAsync(textUrl: String, stream: String, platform: Platform): CompletableFuture[BaseUnit] =
-    super.parseAsync(textUrl, Some(StringContentPlatform(textUrl, stream, platform))).map(unitScalaToJVM).asJava
+  def parseStringAsync(baseUrl: String, stream: String, platform: Platform): CompletableFuture[BaseUnit] =
+    super.parseAsync(baseUrl, Some(StringContentPlatform(baseUrl, stream, platform))).map(unitScalaToJVM).asJava
 
   /**
     * Generates the validation report for the last parsed model.
