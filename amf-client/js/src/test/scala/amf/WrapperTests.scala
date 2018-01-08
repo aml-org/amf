@@ -253,7 +253,33 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     res map { parsed: amf.model.document.BaseUnit =>
       assert(parsed.isInstanceOf[amf.model.document.Document])
     }
+  }
 
+  test("Parsing text document with base url") {
+    val spec = """#%RAML 1.0
+                 |
+                 |title: tes
+                 |version: 0.1
+                 |
+                 |/test:
+                 |  get:
+                 |    responses:
+                 |      200:
+                 |        body:
+                 |          application/json:
+                 |            properties:
+                 |              a: string"""
+
+    val baseUrl = "http://test.com/myApp"
+    amf.plugins.features.AMFValidation.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().toFuture flatMap { _ =>
+      val parser = amf.Core.parser("RAML 1.0", "application/yaml")
+      parser.parseStringAsync(baseUrl, spec).toFuture
+    } flatMap { model =>
+      assert(model.location.startsWith(baseUrl))
+      assert(model.asInstanceOf[Document].encodes.getId().startsWith(baseUrl))
+    }
   }
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
