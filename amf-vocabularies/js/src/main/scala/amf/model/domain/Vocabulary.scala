@@ -131,7 +131,7 @@ case class ClassTerm(private val entity: domain.DomainEntity) extends DomainEnti
 
   private val classTerm: ClassObject = ClassObject(entity)
 
-  override def getId(): String = classTerm.id().orNull
+  override def getId(): String = entity.id
   override def withId(id: String) = {
     entity.withId(id)
     classTerm.withId(id)
@@ -150,7 +150,7 @@ case class ClassTerm(private val entity: domain.DomainEntity) extends DomainEnti
     this
   }
 
-  def termExtends(): String = classTerm.`extends`().head
+  def termExtends(): String = classTerm.`extends`().headOption.orNull
   def withTermExtends(classUri: String) = {
     classTerm.withExtends(classUri)
     this
@@ -177,7 +177,7 @@ case class PropertyTerm(private val entity: domain.DomainEntity) extends DomainE
 
   private val propertyTerm: PropertyObject = PropertyObject(entity)
 
-  override def getId(): String = propertyTerm.id().orNull
+  override def getId(): String = entity.id
   override def withId(id: String) = {
     entity.withId(id)
     propertyTerm.withId(id)
@@ -196,7 +196,7 @@ case class PropertyTerm(private val entity: domain.DomainEntity) extends DomainE
     this
   }
 
-  def termExtends(): String = propertyTerm.`extends`().head
+  def termExtends(): String = propertyTerm.`extends`().headOption.orNull
   def withTermExtends(propertyUri: String) = {
     propertyTerm.withExtends(propertyUri)
     this

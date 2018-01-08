@@ -55,7 +55,7 @@ object RAMLVocabulariesPlugin
 
   override def init(): Future[AMFPlugin] = Future { this }
 
-  val vendors = Seq("RAML Vocabularies", "RAML 1.0")
+  val vendors = Seq("RAML Vocabularies", "RAML Vocabulary", "RAML 1.0")
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
 

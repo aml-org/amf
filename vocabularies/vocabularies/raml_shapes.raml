@@ -120,7 +120,7 @@ classTerms:
 
   PropertyDependencies:
     displayName: Property Dependencies
-    description: Dependencies between
+    description: Dependencies between properties
     properties:
       - propertySource
       - propertyTarget
@@ -138,8 +138,6 @@ propertyTerms:
     displayName: fix point
     description: |
       Link to the base of the recursion for a recursive shape
-
-propertyTerms:
 
   closed:
     description: Indicates that no additional properties can be declared in the target data node
@@ -166,7 +164,7 @@ propertyTerms:
 
   dependencies:
     description: Dependencies between properties, marking the appearance of both of them as mandatory
-    range: PropertyDepenencies
+    range: PropertyDependencies
 
   items:
     description: Shape of the items in an Array Shape
@@ -204,4 +202,3 @@ propertyTerms:
     description: raw value of the external data schema
     extends: raml-doc.raw
     range: string
-

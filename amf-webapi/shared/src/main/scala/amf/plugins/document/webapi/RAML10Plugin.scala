@@ -9,14 +9,15 @@ import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
-import amf.plugins.document.webapi.parser.RamlHeader._
+import amf.plugins.document.webapi.parser.RamlFragmentHeader._
+import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
-import amf.plugins.document.webapi.parser.spec.raml.{RamlFragmentEmitter, RamlModuleEmitter, _}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YDocument, YNode, YScalar}
+import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
 
 trait RAMLPlugin extends BaseWebApiPlugin {
@@ -142,7 +143,9 @@ object RAML10Plugin extends RAMLPlugin {
 
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
-    case _: RamlFragment                                          => true
+    case Raml10DocumentationItem | Raml10NamedExample |
+         Raml10DataType | Raml10ResourceType | Raml10Trait |
+         Raml10AnnotationTypeDeclaration | Raml10SecurityScheme   => true
     case _                                                        => false
   }
 
