@@ -4,10 +4,10 @@ import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.declaration.Raml10TypeParser
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YType}
 
 import scala.collection.mutable
 
@@ -34,25 +34,54 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-        val bodyMap = entry.value.as[YMap]
-        Raml10TypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id))
-          .parse()
-          .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
-        entry.value
-          .as[YMap]
-          .regex(
-            ".*/.*",
-            entries => {
-              entries.foreach(entry => {
-                payloads += Raml10PayloadParser(entry, producer = request.getOrCreate.withPayload)
-                  .parse()
-              })
+        entry.value.tagType match {
+          case YType.Null =>
+            Raml10TypeParser(entry,
+              shape => shape.withName("default").adopted(request.getOrCreate.id),
+              isAnnotation = false,
+              AnyDefaultType)
+              .parse()
+              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+
+          case YType.Str =>
+            Raml10TypeParser(entry,
+              shape => shape.withName("default").adopted(request.getOrCreate.id),
+              isAnnotation = false,
+              AnyDefaultType)
+              .parse()
+              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+
+          case _ =>
+            // This is the case where the body is directly a data type
+            entry.value.to[YMap] match {
+              case Right(bodyMap) =>
+                val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                if (filterMap.entries.nonEmpty) {
+                  Raml10TypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), defaultType = AnyDefaultType)
+                    .parse()
+                    .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+                }
+              case _ =>
             }
-          )
+
+            // Now we parsed potentially nested shapes for different data types
+            entry.value.to[YMap] match {
+              case Right(m) =>
+                m.regex(
+                  ".*/.*",
+                  entries => {
+                    entries.foreach(entry => {
+                      payloads += Raml10PayloadParser(entry, producer = request.getOrCreate.withPayload).parse()
+                    })
+                  }
+                )
+              case _ =>
+            }
+        }
+
         if (payloads.nonEmpty)
-          request.getOrCreate
-            .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+          request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
 

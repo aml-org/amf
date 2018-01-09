@@ -40,14 +40,32 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
               }
             response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
 
-          case _ =>
+          case YType.Str =>
             Raml10TypeParser(entry,
-                             shape => shape.withName("default").adopted(payload.id),
-                             isAnnotation = false,
-                             AnyDefaultType)
+              shape => shape.withName("default").adopted(payload.id),
+              isAnnotation = false,
+              AnyDefaultType)
               .parse()
               .foreach(payloads += payload.withSchema(_))
+            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
 
+          case _ =>
+            // This is the case where the body is directly a data type
+            entry.value.to[YMap] match {
+              case Right(bodyMap) =>
+                val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                if (filterMap.entries.nonEmpty) {
+                  Raml10TypeParser(entry,
+                    shape => shape.withName("default").adopted(payload.id),
+                    isAnnotation = false,
+                    AnyDefaultType)
+                    .parse()
+                    .foreach(payloads += payload.withSchema(_))
+                }
+              case _ =>
+            }
+
+            // Now we parsed potentially nested shapes for different data types
             entry.value.to[YMap] match {
               case Right(m) =>
                 m.regex(
