@@ -100,7 +100,7 @@ case class RamlTypeDetector(parent: String,
         case Some(other)                   => Some(other)
         case None                          => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
       }).orElse(Some(ObjectType)) // this is for forward refferences.
-    else None
+    else Some(defaultType.typeDef)
   }
 
   /** Get type or schema facet. If both are available, default to type facet and throw a validation error. */

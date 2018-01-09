@@ -741,7 +741,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
         item <- Raml10TypeParser(itemsEntry,
                                  items => items.adopted(shape.id + "/items"),
                                  isAnnotation = false,
-                                 AnyDefaultType)
+                                 defaultType = defaultType)
           .parse()
       } yield {
         item match {
