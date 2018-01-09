@@ -25,4 +25,5 @@ class AMFValidationReport(report: validation.AMFValidationReport) {
   val model: String = report.model
   val profile: String = report.profile
   val results: java.util.List[AMFValidationResult] = report.results.map(new AMFValidationResult(_)).asJava
+  override def toString = report.toString
 }
