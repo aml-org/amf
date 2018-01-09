@@ -157,7 +157,8 @@ object Http {
     case url if url.startsWith("http://") || url.startsWith("https://") =>
       val protocol        = url.substring(0, url.indexOf("://") + 3)
       val rightOfProtocol = url.stripPrefix(protocol)
-      val host            = rightOfProtocol.substring(0, rightOfProtocol.indexOf("/"))
+      val host            = if (rightOfProtocol.contains("/")) rightOfProtocol.substring(0, rightOfProtocol.indexOf("/"))
+                            else rightOfProtocol
       val path            = rightOfProtocol.replace(host, "")
       Some(protocol, host, path)
     case _ => None
