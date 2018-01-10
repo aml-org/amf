@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: My API with Types
+types:
+  Admin:
+    properties:
+      clearanceLevel:
+        enum:
+          - low
+          - middle
+          - high
+        type: string
+  AlertableAdmin:
+    type:
+      - Admin

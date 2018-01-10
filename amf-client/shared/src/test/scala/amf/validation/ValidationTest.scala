@@ -626,7 +626,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  ignore("Type inheritance with enum") {
+  test("Type inheritance with enum") {
     val validation = Validation(platform)
     for {
       library <- AMFCompiler(productionPath + "enum-inheritance.raml", platform, RamlYamlHint, validation).build()
