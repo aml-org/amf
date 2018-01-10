@@ -4,12 +4,12 @@ import amf.core.annotations.ScalarType
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
 import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{Annotations, FieldEntry, Value}
+import amf.core.parser.{FieldEntry, Value}
 import amf.core.vocabulary.Namespace.SourceMaps
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -132,6 +132,46 @@ object GraphEmitter extends MetaModelTypeMapping {
         )
     }
 
+    def createSortedArray(b: PartBuilder,
+                          seq: Seq[AmfElement],
+                          parent: String,
+                          element: Type,
+                          sources: (Value) => Unit,
+                          v: Option[Value] = None): Unit = {
+      b.list {
+        _.obj { b =>
+          if (seq.nonEmpty) {
+            val id = s"$parent/list"
+            createIdNode(b, id)
+
+            b.entry(
+              (Namespace.Rdf + "first").iri(),
+              _.list { b =>
+                element match {
+                  case _: Obj =>
+                    seq.asInstanceOf[Seq[AmfObject]].headOption.foreach {
+                      case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                        link(b, elementInArray, parent, inArray = true)
+                      case elementInArray =>
+                        obj(b, elementInArray, parent, inArray = true)
+                    }
+                  case Str =>
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => scalar(b, e.toString, inArray = true))
+                }
+              }
+            )
+
+            b.entry((Namespace.Rdf + "rest").iri(), createSortedArray(_, seq.tail, id, element, sources))
+
+            v.foreach(sources)
+
+          } else {
+            createIdNode(b, (Namespace.Rdf + "nil").iri())
+          }
+        }
+      }
+    }
+
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder): Unit = {
       t match {
         case t: DomainElement with Linkable if t.isLink =>
@@ -145,12 +185,10 @@ object GraphEmitter extends MetaModelTypeMapping {
           sources(v)
         case Str | RegExp =>
           v.annotations.find(classOf[ScalarType]) match {
-            case Some(annotation) => {
+            case Some(annotation) =>
               typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
-            }
-            case None => {
+            case None =>
               scalar(b, v.value.asInstanceOf[AmfScalar].toString)
-            }
           }
           sources(v)
         case Bool =>
@@ -160,26 +198,7 @@ object GraphEmitter extends MetaModelTypeMapping {
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
         case a: SortedArray =>
-          b.obj {
-            _.entry(
-              "@list",
-              _.list { b =>
-                sources(v)
-                val seq = v.value.asInstanceOf[AmfArray]
-                a.element match {
-                  case _: Obj =>
-                    seq.values.asInstanceOf[Seq[AmfObject]].foreach {
-                      case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                        link(b, elementInArray, parent, inArray = true)
-                      case elementInArray =>
-                        obj(b, elementInArray, parent, inArray = true)
-                    }
-                  case Str =>
-                    seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => scalar(b, e.toString, inArray = true))
-                }
-              }
-            )
-          }
+          createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v))
         case a: Array =>
           b.list { b =>
             val seq = v.value.asInstanceOf[AmfArray]
@@ -216,7 +235,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def obj(b: PartBuilder, element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder) = b.obj(traverse(element, parent, _))
+      def emit(b: PartBuilder): Unit = b.obj(traverse(element, parent, _))
 
       if (inArray) emit(b) else b.list(emit)
     }
@@ -241,30 +260,27 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def fixTagIfNeeded(tag: YType, content: String): YType = {
-      var tg: YType = tag match {
-        case YType.Bool => {
+      val tg: YType = tag match {
+        case YType.Bool =>
           if (content != "true" && content != "false") {
             YType.Str
           } else {
             tag
           }
-        }
-        case YType.Int => {
+        case YType.Int =>
           try {
             content.toInt
             tag
           } catch {
-            case e: NumberFormatException => YType.Str
+            case _: NumberFormatException => YType.Str
           }
-        }
-        case YType.Float => {
+        case YType.Float =>
           try {
             content.toDouble
             tag
           } catch {
-            case e: NumberFormatException => YType.Str
+            case _: NumberFormatException => YType.Str
           }
-        }
         case _ => tag
 
       }
@@ -274,7 +290,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder): Unit = {
 
-        var tg: YType = fixTagIfNeeded(tag, content)
+        val tg: YType = fixTagIfNeeded(tag, content)
 
         b.obj(_.entry("@value", raw(_, content, tg)))
       }

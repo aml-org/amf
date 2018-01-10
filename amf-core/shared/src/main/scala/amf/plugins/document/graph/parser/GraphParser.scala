@@ -18,6 +18,7 @@ import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * AMF Graph parser
@@ -59,7 +60,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     }
 
     private def parseList(id: String, listElement: Type, node: YMap): Seq[AmfElement] = {
-      retrieveElements(id, node).flatMap({ (n) =>
+      val elements = ListBuffer[YNode]()
+      retrieveElements(elements, id, node)
+      elements.flatMap({ (n) =>
         listElement match {
           case _: Obj => parse(n.as[YMap])
           case _      => value(listElement, n).toOption[YScalar].map(s => str(s))
@@ -67,12 +70,24 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       })
     }
 
-    private def retrieveElements(id: String, map: YMap): Seq[YNode] = {
-      map.key("@list") match {
-        case Some(entry) => entry.value.as[Seq[YNode]]
-        case _ =>
-          ctx.violation(id, s"No @list declaration on list node $map", map)
-          Nil
+    private def retrieveElements(buffer: ListBuffer[YNode], id: String, map: YMap): Unit = {
+      retrieveId(map, ctx) match {
+        case Some(innerId) if innerId != (Namespace.Rdf + "nil").iri() =>
+          map.key((Namespace.Rdf + "first").iri()) match {
+            case Some(entry) =>
+              buffer += entry.value.as[Seq[YNode]].head
+            case None =>
+              ctx.violation(id, s"Invalid first element for list in $map", map)
+          }
+          map.key((Namespace.Rdf + "rest").iri()) match {
+            case Some(entry) =>
+              retrieveElements(buffer, id, entry.value.as[Seq[YMap]].head)
+            case None =>
+              ctx.violation(id, s"Invalid rest element for list in $map", map)
+          }
+        case Some(_) => // end of the list.
+        case None =>
+          ctx.violation(id, s"No @id on list node $map", map)
       }
     }
 
@@ -121,7 +136,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         }
     }
 
-    private def checkLinkables(instance: AmfObject) = {
+    private def checkLinkables(instance: AmfObject): Unit = {
       instance match {
         case link: DomainElement with Linkable =>
           referencesMap += (link.id -> link)
