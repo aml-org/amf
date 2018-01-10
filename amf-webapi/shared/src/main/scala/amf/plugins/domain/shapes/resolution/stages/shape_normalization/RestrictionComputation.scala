@@ -83,6 +83,16 @@ trait RestrictionComputation {
     }
   }
 
+  protected def stringValue(value: AmfElement): Option[String] = {
+    value match {
+      case scalar: AmfScalar
+        if Option(scalar.value).isDefined && value.isInstanceOf[AmfScalar] && Option(
+          value.asInstanceOf[AmfScalar].value).isDefined =>
+        Some(scalar.toString)
+      case _ => None
+    }
+  }
+
   protected def computeNumericComparison(comparison: String, lvalue: AmfElement, rvalue: AmfElement): Boolean = {
     lvalue match {
       case scalar: AmfScalar
@@ -121,6 +131,17 @@ trait RestrictionComputation {
 
   protected def computeNarrow(field: Field, baseValue: AmfElement, superValue: AmfElement): AmfElement = {
     field match {
+
+      case ShapeModel.Name => {
+        val baseStrValue = stringValue(baseValue)
+        val superStrValue = stringValue(superValue)
+        if (superStrValue.isDefined && (baseStrValue.isEmpty || baseStrValue.get == "schema")) {
+          superValue
+        } else {
+          baseValue
+        }
+      }
+
       case NodeShapeModel.MinProperties =>
         if (computeNumericComparison("<=", superValue, baseValue)) {
           computeNumericRestriction("max", superValue, baseValue)
