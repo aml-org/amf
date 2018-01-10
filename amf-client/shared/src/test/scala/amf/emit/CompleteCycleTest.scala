@@ -801,4 +801,11 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("konst1.json", "konst1.json.raml", OasJsonHint, Raml)
   }
 
+  test("Enum inheritance raml to amf") {
+    cycle("enum-inheritance.raml", "enum-inheritance.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Enum inheritance amf to raml") {
+    cycle("enum-inheritance.raml.jsonld", "enum-inheritance.jsonld.raml", AmfJsonHint, Raml)
+  }
 }

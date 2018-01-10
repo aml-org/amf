@@ -71,7 +71,21 @@
                             "http://www.w3.org/ns/shacl#Shape",
                             "http://raml.org/vocabularies/document#DomainElement"
                           ],
-                          "http://www.w3.org/ns/shacl#in": {"@list":[{"@value": "test"}]}
+                          "http://www.w3.org/ns/shacl#in": [
+                            {
+                              "@id": "https://mulesoft-labs.github.io/amf-playground/raml/world-music-api/api.raml#/api-documentation/end-points/%2Fapi/get/200/payload/list",
+                              "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+                                {
+                                  "@value": "test"
+                                }
+                              ],
+                              "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
+                                {
+                                  "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
