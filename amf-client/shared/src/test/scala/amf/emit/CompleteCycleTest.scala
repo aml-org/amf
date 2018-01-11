@@ -808,4 +808,5 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Enum inheritance amf to raml") {
     cycle("enum-inheritance.raml.jsonld", "enum-inheritance.jsonld.raml", AmfJsonHint, Raml)
   }
+
 }
