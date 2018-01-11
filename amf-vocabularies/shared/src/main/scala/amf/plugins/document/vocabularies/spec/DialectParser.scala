@@ -39,11 +39,16 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
       case DocumentKind => parseDocument
     }
   }
+  private var isDocument=dialect.kind==DocumentKind;
 
   private def parseDocument = {
     val document = Document().adopted(root.location)
     document.withLocation(root.location)
     document.withEncodes(parseEntity(document))
+    var v = this.internalRefs.values.toList;
+    if (!v.isEmpty) {
+      document.withDeclares(v)
+    }
     document
   }
 
@@ -203,8 +208,8 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
         val mappings = domainEntity.definition.mappings()
         val map      = node.as[YMap]
         validateClosedNode(domainEntity, map, mappings, topLevel)
-        val declarationMappings  = mappings.filter(_.isDeclaration)
-        val encodingDeclarations = mappings.filterNot(_.isDeclaration)
+        val declarationMappings  = mappings.filter(if (this.isDocument) _.isDocumentDeclaration else _.isDeclaration)
+        val encodingDeclarations = mappings.filterNot((if (this.isDocument) _.isDocumentDeclaration else _.isDeclaration))
         declarationMappings.foreach { mapping =>
           parseNodeMapping(mapping, map, domainEntity, declaration = true)
         }
