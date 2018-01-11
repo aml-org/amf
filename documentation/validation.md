@@ -113,7 +113,7 @@ This report can be serialised as a JSON-LD document that can be processed by mac
 
 ## Validation Profile syntax
 
-Validation profile documents are defined as a RAML Dialect extension (see the documentation about RAML Vocabulary and Dialect to know how to work with RAML extensions).
+Validation profile documents are defined as a [RAML Dialect extension](https://github.com/mulesoft/amf/blob/master/vocabularies/dialects/validation.raml) (see the documentation about RAML Vocabulary and Dialect to know how to work with RAML extensions).
 
 ### Header and dialect document type
 
