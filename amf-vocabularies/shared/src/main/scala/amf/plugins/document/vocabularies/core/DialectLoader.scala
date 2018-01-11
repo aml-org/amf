@@ -204,7 +204,7 @@ class DialectLoader(val document: BaseUnit) {
           documentDialectNode.map(key,
                                   DialectPropertyMapping("name", Type.Str, namespace = Some(Namespace.Schema)),
                                   declarationMap(key),
-                                  _.copy(isDeclaration = true))
+                                  _.copy(isDocumentDeclaration = true))
         }
       case _ =>
     }
