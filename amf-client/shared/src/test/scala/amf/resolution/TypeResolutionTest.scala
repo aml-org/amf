@@ -157,7 +157,7 @@ class TypeResolutionTest extends BuildCycleTests {
   )
 
   examples.foreach { example =>
-    test(s"HERE_HERE Resolve data types: $example") {
+    test(s"Resolve data types: $example") {
       val validation = Validation(platform)
       validation.loadValidationDialect() flatMap { _ =>
         cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
