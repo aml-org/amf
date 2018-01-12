@@ -17,4 +17,8 @@ class ProductionResolutionTest extends RamlResolutionTest  {
     cycle("googleapis.compredictionv1.2swagger.raml", "googleapis.compredictionv1.2swagger.raml.resolved.raml", RamlYamlHint, Raml)
   }
 
+  test("Resolves channel4.com1.0.0swagger.raml") {
+    cycle("channel4.com1.0.0swagger.raml", "channel4.com1.0.0swagger.resolved.raml", RamlYamlHint, Raml)
+  }
+
 }
