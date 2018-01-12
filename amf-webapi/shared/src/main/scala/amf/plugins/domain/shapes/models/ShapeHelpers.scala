@@ -25,6 +25,7 @@ trait ShapeHelpers { this: Shape =>
       case _: FileShape     => FileShape()
       case _: NilShape      => NilShape()
       case _: NodeShape     => NodeShape()
+      case _: SchemaShape   => SchemaShape()
       case UnresolvedShape(_, annots, reference) => UnresolvedShape(reference, annots)
       case _: AnyShape      => AnyShape()
     }
