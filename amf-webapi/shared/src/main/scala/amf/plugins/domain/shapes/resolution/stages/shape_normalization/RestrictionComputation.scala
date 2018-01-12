@@ -285,10 +285,10 @@ trait RestrictionComputation {
       case NodeShapeModel.Closed =>
         if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, baseValue) ||
             computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, baseValue) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, baseValue)) {
+            computeBooleanComparison(lcomparison = true, rcomparison = false, superValue, baseValue)) {
           baseValue
         } else {
-          throw new Exception("different values for unique items constraint")
+          throw new Exception("closed shapes cannot inherit from open shapes")
         }
 
       case _ => baseValue
