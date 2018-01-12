@@ -3,6 +3,7 @@ package amf
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document.{BaseUnit, Document, TraitFragment}
 import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
+import amf.plugins.document.Vocabularies
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.collection.JavaConverters._
