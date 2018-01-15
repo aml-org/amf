@@ -10,7 +10,7 @@ cd src/main/resources
 
 echo "Current directory: `pwd`"
 
-export DEVELOP_VERSION_BASE=`npm v @mulesoft/amf-shacl-node dist-tags.latest`
+export DEVELOP_VERSION_BASE=`npm v amf-shacl-node dist-tags.latest`
 
 if [[ "$DEVELOP_VERSION_BASE" == "undefined" ]]; then
   DEVELOP_VERSION_BASE='0.0.1-automatic'
