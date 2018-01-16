@@ -20,20 +20,20 @@ object DomainElementMerging {
 
   def merge[T <: DomainElement](main: T, other: T): T = {
     other.fields.fields().filter(ignored).foreach {
-      case entry@FieldEntry(field, value) =>
+      case entry @ FieldEntry(field, value) =>
         main.fields.entry(field) match {
           case None => // Case (2)
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
-              case Type.ArrayLike(element) => setNonOptional(main, field, element, value)
-              case _ => main.set(field, adoptInner(main.id, value.value))
+              case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
+              case _                                                                          => main.set(field, adoptInner(main.id, value.value))
             }
           case Some(existing) => // Case (3)
             field.`type` match {
-              case _: Type.Scalar => // Do nothing (3.a)
+              case _: Type.Scalar          => // Do nothing (3.a)
               case Type.ArrayLike(element) => mergeByValue(main, field, element, existing.value, value)
-              case _: DomainElementModel => merge(existing.domainElement, entry.domainElement)
-              case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+              case _: DomainElementModel   => merge(existing.domainElement, entry.domainElement)
+              case _                       => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
         }
     }
@@ -113,7 +113,7 @@ object DomainElementMerging {
 
   private def isOptional(`type`: Type, obj: DomainElement) =
     `type`.isInstanceOf[OptionalField] && obj.fields
-      .entry(`type`.asInstanceOf[OptionalField].optional)
+      .entry(`type`.asInstanceOf[OptionalField].Optional)
       .exists(_.scalar.toBool)
 
   private def ignored(entry: FieldEntry) = entry.field match {

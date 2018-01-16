@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, ValueNode}
+import amf.core.parser.Annotations
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml08TypeParser, Raml10TypeParser}
@@ -10,6 +10,7 @@ import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model._
 import amf.core.parser.YMapOps
+import amf.plugins.domain.webapi.metamodel.PayloadModel
 
 /**
   *
@@ -55,20 +56,26 @@ case class Raml10PayloadParser(entry: YMapEntry, producer: (Option[String]) => P
   }
 }
 
-case class Raml08PayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload)(
-    implicit ctx: RamlWebApiContext)
-    extends RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload) {
+case class Raml08PayloadParser(entry: YMapEntry,
+                               producer: (Option[String]) => Payload,
+                               parseOptional: Boolean = false)(implicit ctx: RamlWebApiContext)
+    extends RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload, parseOptional) {
 
   override def parse(): Payload = {
     val payload = super.parse()
 
+    if (parseOptional && payload.mediaType.endsWith("?")) {
+      payload.set(PayloadModel.Optional, value = true)
+      payload.set(PayloadModel.MediaType, payload.mediaType.stripSuffix("?"))
+    }
+
     entry.value.tagType match {
       case YType.Null => // Nothing
       case _ =>
-        if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(entry.key.as[YScalar].text)) {
+        if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(payload.mediaType)) {
           Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
         } else {
-          Raml08TypeParser(entry, entry.key.as[YScalar].text, entry.value, (shape: Shape) => shape.adopted(payload.id))
+          Raml08TypeParser(entry, entry.key, entry.value, (shape: Shape) => shape.adopted(payload.id))
             .parse()
             .foreach(payload.withSchema)
         }
@@ -85,7 +92,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
       .key("formParameters")
       .flatMap(entry => {
         val entries = entry.value.as[YMap].entries
-        entries.headOption.map { a =>
+        entries.headOption.map { _ =>
           val webFormShape = NodeShape(entry.value).withName("schema").adopted(parentId)
 
           entries.foreach(e => {
@@ -103,12 +110,9 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
   }
 }
 
-abstract class RamlPayloadParser(entry: YMapEntry, producer: (Option[String]) => Payload)(
-    implicit ctx: RamlWebApiContext) {
-  def parse(): Payload = {
+abstract class RamlPayloadParser(entry: YMapEntry,
+                                 producer: (Option[String]) => Payload,
+                                 parseOptional: Boolean = false)(implicit ctx: RamlWebApiContext) {
 
-    val payload = producer(Some(ValueNode(entry.key).string().value.toString)).add(Annotations(entry))
-
-    payload
-  }
+  def parse(): Payload = producer(Some(entry.key)).add(Annotations(entry))
 }

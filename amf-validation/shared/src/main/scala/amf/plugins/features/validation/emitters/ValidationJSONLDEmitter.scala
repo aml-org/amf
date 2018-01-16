@@ -46,9 +46,9 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       p.entry("@type", (Namespace.Shacl + "NodeShape").iri())
 
       val message = targetProfile match {
-        case "RAML" => validation.ramlMessage.getOrElse(validation.message)
-        case "OAS"  => validation.ramlMessage.getOrElse(validation.message)
-        case _      => validation.message
+        case "RAML" | "RAML08" => validation.ramlMessage.getOrElse(validation.message)
+        case "OAS"             => validation.oasMessage.getOrElse(validation.message)
+        case _                 => validation.message
       }
       if (message != "") {
         p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
@@ -117,7 +117,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
               } else {
                 // this happens when the constraint comes from a profile document
                 // an alias for a model element is all the name we provide
-                val constraintSegment = if (constraint.name.indexOf("#") > -1 ) {
+                val constraintSegment = if (constraint.name.indexOf("#") > -1) {
                   constraint.name.split("#").last.replace(".", "-")
                 } else {
                   constraint.name.replace(".", "-")
@@ -310,7 +310,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
                 if (value.indexOf(".") == -1) {
                   l.obj { o =>
                     o.entry((Namespace.Shacl + constraintName).iri(),
-                      genValue(_, value, Some((Namespace.Xsd + "integer").iri())))
+                            genValue(_, value, Some((Namespace.Xsd + "integer").iri())))
                   }
                 }
 

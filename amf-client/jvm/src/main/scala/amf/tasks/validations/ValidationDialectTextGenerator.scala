@@ -5,14 +5,12 @@ import amf.core.vocabulary.Namespace
 
 class ValidationDialectTextGenerator(profile: ValidationProfile) {
 
-
   def emit(): String = {
-    val extension = if (profile.name == "RAML" || profile.name == "OpenAPI") {
+    val extension = if (profile.name == "RAML" || profile.name == "RAML08" || profile.name == "OpenAPI") {
       "\nextends: AMF\n"
     } else {
       "\n"
     }
-
 
     val effectiveValidations = if (profile.name == "AMF") {
       profile.validations
@@ -20,13 +18,17 @@ class ValidationDialectTextGenerator(profile: ValidationProfile) {
       profile.validations.filter(_.propertyConstraints.nonEmpty)
     }
 
-    val violations = effectiveValidations.map { validation =>
-      s"  - ${compact(validation.name)}"
-    }.mkString("\n")
+    val violations = effectiveValidations
+      .map { validation =>
+        s"  - ${compact(validation.name)}"
+      }
+      .mkString("\n")
 
-    val validations = effectiveValidations.map { validation =>
-      emitValidation(validation)
-    }.mkString("\n\n")
+    val validations = effectiveValidations
+      .map { validation =>
+        emitValidation(validation)
+      }
+      .mkString("\n\n")
 
     s"""#%Validation Profile 1.0
       |
@@ -44,11 +46,11 @@ class ValidationDialectTextGenerator(profile: ValidationProfile) {
   protected def emitValidation(validation: ValidationSpecification): String = {
     val propertyConstraintId = validation.propertyConstraints.headOption match {
       case Some(propertyConstraint) => compact(propertyConstraint.ramlPropertyId)
-      case None => "unknown"
+      case None                     => "unknown"
     }
     validation.propertyConstraints.headOption match {
       case Some(propertyConstraint) if propertyConstraint.node.isEmpty =>
-        val constraintValue =  if (propertyConstraint.minLength.isDefined) {
+        val constraintValue = if (propertyConstraint.minLength.isDefined) {
           s"minLength: ${propertyConstraint.minLength.get}"
         } else if (propertyConstraint.maxLength.isDefined) {
           s"maxLength: ${propertyConstraint.maxLength.get}"
@@ -84,28 +86,32 @@ class ValidationDialectTextGenerator(profile: ValidationProfile) {
            |      $constraintValue
          """.stripMargin
 
-        // non empty-list
+      // non empty-list
       case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
         s"""  ${compact(validation.name)}:g
            |    message: ${validation.message}
            |    targetClass: ${compact(validation.targetClass.head)}
            |    functionConstraint:
-           |      functionName: nonEmptyList_${compact(validation.propertyConstraints.head.ramlPropertyId).replace("-","_").replace(".","_")}
+           |      functionName: nonEmptyList_${compact(validation.propertyConstraints.head.ramlPropertyId)
+             .replace("-", "_")
+             .replace(".", "_")}
         """.stripMargin
       case None =>
         s"""  ${compact(validation.name)}:
            |    message: ${validation.message}
            |    targetClass: schema-org.WebAPI
            |    functionConstraint:
-           |      functionName: parserSide_${compact(validation.name.split("#").last).replace("-","_")}
+           |      functionName: parserSide_${compact(validation.name.split("#").last).replace("-", "_")}
            |      libraries: http://raml.org/amf/validations/parser_side_validations.js
         """.stripMargin
     }
   }
 
-  def compact(uri: String): String = Namespace.compact(uri)
-    .replace(":", ".")
-    .replace("raml-doc.", "doc.")
-    .replace("raml-http.", "http.")
-    .replace("schema-org.", "schema.")
+  def compact(uri: String): String =
+    Namespace
+      .compact(uri)
+      .replace(":", ".")
+      .replace("raml-doc.", "doc.")
+      .replace("raml-http.", "http.")
+      .replace("schema-org.", "schema.")
 }

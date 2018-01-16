@@ -47,6 +47,8 @@ object AMF {
 
   def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
+  def resolveRaml08(unit: BaseUnit): BaseUnit = new Raml08Resolver().resolve(unit)
+
   def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
 
   def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)

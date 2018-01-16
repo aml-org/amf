@@ -38,10 +38,6 @@ object OperationModel extends DomainElementModel with KeyField with OptionalFiel
 
   val Security = Field(Array(DomainElementModel), Namespace.Security + "security")
 
-  val Optional = Field(Bool, Namespace.Http + "optional")
-
-  override val optional: Field = Optional
-
   override val key: Field = Method
 
   override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`

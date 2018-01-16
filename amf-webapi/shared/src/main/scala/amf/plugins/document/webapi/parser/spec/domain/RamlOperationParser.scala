@@ -63,7 +63,7 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
       case YType.Map => parseMap(entry.value.as[YMap], operation)
       // Empty operation
       case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
-      case tagType =>
+      case _ =>
         ctx.violation(operation.id, s"Invalid node ${entry.value} for method $method", entry.value)
         operation
     }
@@ -129,9 +129,11 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
     )
 
     ctx.factory
-      .requestParser(map, () => operation.withRequest())
+      .requestParser(map, () => operation.withRequest(), parseOptional)
       .parse()
-      .map(operation.set(OperationModel.Request, _))
+      .foreach(operation.set(OperationModel.Request, _))
+
+    val optionalMethod = if (parseOptional) "\\??" else ""
 
     map.key(
       "responses",
@@ -139,12 +141,12 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
         entry.value
           .as[YMap]
           .regex(
-            "\\d{3}",
+            s"(\\d{3})$optionalMethod",
             entries => {
               val responses = mutable.ListBuffer[Response]()
               entries.foreach(entry => {
                 responses += ctx.factory
-                  .responseParser(entry, operation.withResponse)
+                  .responseParser(entry, operation.withResponse, parseOptional)
                   .parse()
               })
               operation.set(OperationModel.Responses,

@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
+import amf.ProfileNames
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.{BaseUnit, DeclaresModel}
@@ -7,9 +8,8 @@ import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.ParserContext
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
-import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndpointParser, Raml10OperationParser}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
@@ -30,7 +30,11 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
     extends ResolutionStage(profile)
     with PlatformSecrets {
 
-  implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext(ParserContext())
+  /** Default to raml10 context. */
+  implicit val ctx: RamlWebApiContext = profile match {
+    case ProfileNames.RAML08 => new Raml08WebApiContext(ParserContext())
+    case _                   => new Raml10WebApiContext(ParserContext())
+  }
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 
@@ -59,8 +63,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
         val collector     = ListBuffer[EndPoint]()
 
         declarations(context.model)
-        Raml10EndpointParser(endPointEntry, _ => EndPoint(), None, collector, parseOptionalOperations = true)
-          .parse() // todo must depende in version to resolve?
+        ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
 
         collector.toList match {
           case e :: Nil => e
@@ -237,7 +240,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
       val entry = document.as[YMap].entries.head
       declarations(context.model)
-      Raml10OperationParser(entry, _ => Operation()).parse() // todo must depende in version to resolve?
+      ctx.factory.operationParser(entry, _ => Operation(), true).parse()
     }
   }
 

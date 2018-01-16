@@ -13,7 +13,7 @@ import amf.core.model.domain._
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
@@ -29,12 +29,14 @@ import scala.collection.mutable.ListBuffer
   */
 class ExtensionsResolutionStage(profile: String) extends ResolutionStage(profile) with PlatformSecrets {
 
-// Raml10SpecAwareContext is the default, if we decide to resolve 0.8, must support the two options for context
-
-  implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext(ParserContext())
+  /** Default to raml10 context. */
+  implicit val ctx: RamlWebApiContext = profile match {
+    case ProfileNames.RAML08 => new Raml08WebApiContext(ParserContext())
+    case _                   => new Raml10WebApiContext(ParserContext())
+  }
 
   override def resolve(model: BaseUnit): BaseUnit = {
-    val extendsStage = new ExtendsResolutionStage(ProfileNames.AMF)
+    val extendsStage = new ExtendsResolutionStage(profile)
     model match {
       case overlay: ExtensionLike[_] => resolveOverlay(model, overlay.asInstanceOf[ExtensionLike[WebApi]])
       case _                         => extendsStage.resolve(model)
@@ -63,8 +65,8 @@ class ExtensionsResolutionStage(profile: String) extends ResolutionStage(profile
   private def resolveOverlay(model: BaseUnit, entryPoint: ExtensionLike[WebApi]): BaseUnit = {
     val (document: Document) :: extensions = extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint)
     // Don't remove Extends field from the model when traits and resource types are resolved.
-    val extendsStage   = new ExtendsResolutionStage(ProfileNames.AMF, removeFromModel = false)
-    val referenceStage = new ReferenceResolutionStage(ProfileNames.AMF)
+    val extendsStage   = new ExtendsResolutionStage(profile, removeFromModel = false)
+    val referenceStage = new ReferenceResolutionStage(profile)
 
     // All includes are resolved and applied for both Master Tree and Extension Tree.
     referenceStage.resolve(document)

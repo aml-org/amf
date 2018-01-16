@@ -8,7 +8,7 @@ import amf.plugins.domain.webapi.models.WebApi
 
 /** Apply response examples to payloads schemas matching by media type
   *
-  * MeditaTypeResolution and Shape Normalization stages must already been run
+  * MediaTypeResolution and Shape Normalization stages must already been run
   * for mutate each payload schema
   */
 class ExamplesResolutionStage(profile: String) extends ResolutionStage(profile) {
@@ -29,7 +29,7 @@ class ExamplesResolutionStage(profile: String) extends ResolutionStage(profile) 
           case shape: AnyShape =>
             val exampleOption = mappedExamples.get(p.mediaType)
             exampleOption.foreach(e => { shape.withExamples(shape.examples ++ Seq(e)) })
-          case _ => // ignroe
+          case _ => // ignore
         }
       })
     }

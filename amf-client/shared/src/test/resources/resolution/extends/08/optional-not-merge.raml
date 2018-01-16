@@ -1,0 +1,25 @@
+#%RAML 0.8
+title: RAML spec
+traits:
+   - responding-xml:
+      responses:
+        200:
+          description: OK
+          headers:
+            Access-Key?:
+              type: string
+              description: Some description
+/test:
+  get:
+    is: [
+      responding-xml: {
+        type: string
+      }
+    ]
+    responses:
+      200:
+        headers:
+          Best-Merge-Ever:
+            type: string
+        body:
+          application/json:

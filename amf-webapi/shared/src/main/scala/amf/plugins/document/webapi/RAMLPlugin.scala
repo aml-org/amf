@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.RamlResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{Raml08ResolutionPipeline, Raml10ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
@@ -91,11 +91,6 @@ trait RAMLPlugin extends BaseWebApiPlugin {
     "application/x-yaml",
     "text/vnd.yaml"
   )
-
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit): BaseUnit = new RamlResolutionPipeline().resolve(unit)
 }
 
 object RAML08Plugin extends RAMLPlugin {
@@ -135,6 +130,11 @@ object RAML08Plugin extends RAMLPlugin {
     new Raml08WebApiContext(wrapped, ds)
 
   def specContext: RamlSpecEmitterContext = new Raml08SpecEmitterContext
+
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit): BaseUnit = new Raml08ResolutionPipeline().resolve(unit)
 }
 
 object RAML10Plugin extends RAMLPlugin {
@@ -182,4 +182,9 @@ object RAML10Plugin extends RAMLPlugin {
     new Raml10WebApiContext(wrapped, ds)
 
   def specContext: RamlSpecEmitterContext = new Raml10SpecEmitterContext
+
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  override def resolve(unit: BaseUnit): BaseUnit = new Raml10ResolutionPipeline().resolve(unit)
 }

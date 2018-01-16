@@ -20,10 +20,10 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
 
   override def resolve(model: BaseUnit): BaseUnit = {
     profile match {
-      case ProfileNames.RAML => parametersRaml(model)
-      case ProfileNames.OAS  => parametersOpenApi(model)
-      case ProfileNames.AMF  => parametersAmf(model)
-      case _                 => throw new Exception(s"Unknown profile $profile")
+      case ProfileNames.RAML | ProfileNames.RAML08 => parametersRaml(model)
+      case ProfileNames.OAS                        => parametersOpenApi(model)
+      case ProfileNames.AMF                        => parametersAmf(model)
+      case _                                       => throw new Exception(s"Unknown profile $profile")
     }
   }
 
@@ -37,7 +37,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
     paramsAcc.clear()
     unit match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        // collect baseUri paraemters
+        // collect baseUri parameters
         val webapi            = doc.encodes.asInstanceOf[WebApi]
         val baseUriParameters = Option(webapi.baseUriParameters).getOrElse(Seq())
         webapi.fields.remove(WebApiModel.BaseUriParameters)

@@ -21,7 +21,7 @@ object SecuritySchemeParser {
   def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme)(
       implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
-      case r: Raml => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toRaml(ctx))
+      case _: Raml => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toRaml(ctx))
       case Oas     => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case other   => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
     }
@@ -87,11 +87,6 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
   }
 }
 
-//object RamlDescribedByParser {
-//  def apply(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext): RamlDescribedByParser =
-//    new RamlDescribedByParser(key, map, scheme)(toRaml(ctx))
-//}
-
 case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: RamlWebApiContext) {
   def parse(): Unit = {
     map.key(
@@ -143,7 +138,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                   val responses = mutable.ListBuffer[Response]()
                   entries.foreach(entry => {
                     responses += ctx.factory
-                      .responseParser(entry, scheme.withResponse)
+                      .responseParser(entry, scheme.withResponse, false)
                       .parse() // todo replace in separation
                   })
                   scheme.set(SecuritySchemeModel.Responses,
