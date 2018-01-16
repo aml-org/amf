@@ -3,7 +3,6 @@ package amf
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document.{BaseUnit, Document, TraitFragment}
 import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
-import amf.plugins.document.Vocabularies
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.collection.JavaConverters._
@@ -229,10 +228,9 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     amf.plugins.document.WebApi.register()
     amf.Core.init().get()
 
-
-    val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
-    val parsed = parser.parseFileAsync("file://vocabularies/vocabularies/raml_shapes.raml").get()
-    val vocabulary = amf.model.domain.Vocabulary(parsed.asInstanceOf[Document].encodes.asInstanceOf[DomainEntity])
+    val parser                               = amf.Core.parser("RAML Vocabularies", "application/yaml")
+    val parsed                               = parser.parseFileAsync("file://vocabularies/vocabularies/raml_shapes.raml").get()
+    val vocabulary                           = amf.model.domain.Vocabulary(parsed.asInstanceOf[Document].encodes.asInstanceOf[DomainEntity])
     val acc: mutable.HashMap[String, String] = new mutable.HashMap()
     for {
       property <- vocabulary.propertyTerms().asScala
@@ -244,15 +242,13 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(acc.size == 14)
   }
 
-
   test("Vocabularies parsing raml_doc") {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().get()
 
-
-    val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
-    val parsed = parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").get()
+    val parser     = amf.Core.parser("RAML Vocabularies", "application/yaml")
+    val parsed     = parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").get()
     val vocabulary = amf.model.domain.Vocabulary(parsed.asInstanceOf[Document].encodes.asInstanceOf[DomainEntity])
     assert(vocabulary != null)
   }
@@ -277,7 +273,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     amf.plugins.document.WebApi.register()
     amf.Core.init().get()
     val parser = amf.Core.parser("RAML 1.0", "application/yaml")
-    val model = parser.parseStringAsync(baseUrl, spec).get()
+    val model  = parser.parseStringAsync(baseUrl, spec).get()
     assert(model.location.startsWith(baseUrl))
     assert(model.asInstanceOf[Document].encodes.getId().startsWith(baseUrl))
   }
@@ -302,14 +298,14 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
     amf.plugins.document.WebApi.register()
     amf.Core.init().get()
     val parser = amf.Core.parser("RAML 1.0", "application/yaml")
-    val model = parser.parseStringAsync(baseUrl, spec).get()
+    val model  = parser.parseStringAsync(baseUrl, spec).get()
     assert(model.location.startsWith(baseUrl))
     assert(model.asInstanceOf[Document].encodes.getId().startsWith(baseUrl))
   }
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
     assert(baseUnit.location == expectedLocation)
-    val api = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    val api      = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     val endpoint = api.endPoints.get(0)
     assert(endpoint.path == "/v3.5/path")
     assert(api.endPoints.size() == 1)

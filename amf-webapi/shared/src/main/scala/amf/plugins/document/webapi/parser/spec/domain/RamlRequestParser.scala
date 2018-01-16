@@ -14,8 +14,9 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext)
-    extends RamlRequestParser(map, producer) {
+case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext)
+    extends RamlRequestParser(map, producer, parseOptional) {
 
   override def parse(): Option[Request] = {
     super.parse()
@@ -34,21 +35,20 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
       entry => {
         val payloads = mutable.ListBuffer[Payload]()
 
-
         entry.value.tagType match {
           case YType.Null =>
             Raml10TypeParser(entry,
-              shape => shape.withName("default").adopted(request.getOrCreate.id),
-              isAnnotation = false,
-              AnyDefaultType)
+                             shape => shape.withName("default").adopted(request.getOrCreate.id),
+                             isAnnotation = false,
+                             AnyDefaultType)
               .parse()
               .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
           case YType.Str =>
             Raml10TypeParser(entry,
-              shape => shape.withName("default").adopted(request.getOrCreate.id),
-              isAnnotation = false,
-              AnyDefaultType)
+                             shape => shape.withName("default").adopted(request.getOrCreate.id),
+                             isAnnotation = false,
+                             AnyDefaultType)
               .parse()
               .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
@@ -58,7 +58,9 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
               case Right(bodyMap) =>
                 val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
                 if (filterMap.entries.nonEmpty) {
-                  Raml10TypeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), defaultType = AnyDefaultType)
+                  Raml10TypeParser(entry,
+                                   shape => shape.withName("default").adopted(request.getOrCreate.id),
+                                   defaultType = AnyDefaultType)
                     .parse()
                     .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
                 }
@@ -81,7 +83,9 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
         }
 
         if (payloads.nonEmpty)
-          request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+          request.getOrCreate.set(RequestModel.Payloads,
+                                  AmfArray(payloads, Annotations(entry.value)),
+                                  Annotations(entry))
       }
     )
 
@@ -91,8 +95,9 @@ case class Raml10RequestParser(map: YMap, producer: () => Request)(implicit ctx:
   override protected val baseUriParameterKey: String = "(baseUriParameters)"
 }
 
-case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext)
-    extends RamlRequestParser(map, producer) {
+case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext)
+    extends RamlRequestParser(map, producer, parseOptional) {
   override def parse(): Option[Request] = {
     super.parse()
     Raml08BodyContentParser(map,
@@ -105,8 +110,10 @@ case class Raml08RequestParser(map: YMap, producer: () => Request)(implicit ctx:
   override protected val baseUriParameterKey: String = "baseUriParameters"
 }
 
-case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Payload), accesor: () => DomainElement)(
-    implicit ctx: RamlWebApiContext) {
+case class Raml08BodyContentParser(map: YMap,
+                                   producer: (Option[String] => Payload),
+                                   accessor: () => DomainElement,
+                                   parseOptional: Boolean = false)(implicit ctx: RamlWebApiContext) {
   def parse(): Unit = {
     val payloads = mutable.ListBuffer[Payload]()
 
@@ -119,20 +126,21 @@ case class Raml08BodyContentParser(map: YMap, producer: (Option[String] => Paylo
             ".*/.*",
             entries => {
               entries.foreach(entry => {
-                payloads += Raml08PayloadParser(entry, producer = producer)
+                payloads += Raml08PayloadParser(entry, producer = producer, parseOptional)
                   .parse()
               })
             }
           )
         if (payloads.nonEmpty)
-          accesor()
+          accessor()
             .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
   }
 }
 
-abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ctx: RamlWebApiContext) {
+abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext) {
   protected val request = new Lazy[Request](producer)
 
   protected val baseUriParameterKey: String
@@ -144,7 +152,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
       entry => {
 
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter)
+          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter, parseOptional)
             .parse()
             .map(_.withBinding("query"))
         request.getOrCreate.set(RequestModel.QueryParameters,
@@ -157,7 +165,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
       "headers",
       entry => {
         val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withHeader)
+          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withHeader, parseOptional)
             .parse()
             .map(_.withBinding("header"))
         request.getOrCreate.set(RequestModel.Headers,
@@ -171,7 +179,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
       baseUriParameterKey,
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
-          Raml08ParameterParser(paramEntry, request.getOrCreate.withBaseUriParameter)
+          Raml08ParameterParser(paramEntry, request.getOrCreate.withBaseUriParameter, parseOptional)
             .parse()
             .withBinding("path")
         }
@@ -182,8 +190,6 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request)(implicit ct
 
       }
     )
-    // this has already being parsed in the endpoint
-    // AnnotationParser(() => request.getOrCreate, map).parse()
 
     request.option
   }

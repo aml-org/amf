@@ -13,14 +13,16 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: RamlWebApiContext) {
+case class RamlParametersParser(map: YMap, producer: String => Parameter, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext) {
 
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => ctx.factory.parameterParser(entry, producer).parse())
+      .map(entry => ctx.factory.parameterParser(entry, producer, parseOptional).parse())
 }
 
-case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: RamlWebApiContext)
+case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, producer) {
   override def parse(): Parameter = {
 
@@ -110,12 +112,19 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
   }
 }
 
-case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter)(implicit ctx: RamlWebApiContext)
+case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, producer) {
   def parse(): Parameter = {
 
-    val name: String = entry.key
-    val parameter    = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+    var name: String = entry.key
+    val parameter    = producer(name).add(Annotations(entry))
+
+    if (parseOptional && name.endsWith("?")) {
+      parameter.set(ParameterModel.Optional, value = true)
+      name = name.stripSuffix("?")
+      parameter.set(ParameterModel.Name, name)
+    }
 
     // Named Parameter Parse
     Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))

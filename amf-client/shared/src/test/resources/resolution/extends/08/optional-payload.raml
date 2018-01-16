@@ -1,0 +1,21 @@
+#%RAML 0.8
+title: RAML spec
+traits:
+   - responding-xml:
+      responses:
+        200:
+          description: OK
+          body:
+            application/json?:
+              type: <<type>>
+/test:
+  get:
+    is: [
+      responding-xml: {
+        type: string
+      }
+    ]
+    responses:
+      200:
+        body:
+          application/json:

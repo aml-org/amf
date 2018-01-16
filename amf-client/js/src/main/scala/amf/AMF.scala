@@ -1,6 +1,6 @@
 package amf
 
-import amf.core.client.Resolver
+import amf.core.client.{Generator, Parser, Resolver}
 import amf.core.plugins.AMFPlugin
 import amf.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
@@ -48,32 +48,34 @@ object AMF {
 
   def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
 
-  def resolveRaml10(unit: BaseUnit) = new Raml10Resolver().resolve(unit)
+  def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
-  def resolveOas20(unit: BaseUnit) = new Oas20Resolver().resolve(unit)
+  def resolveRaml08(unit: BaseUnit): BaseUnit = new Raml08Resolver().resolve(unit)
 
-  def resolveAmfGraph(unit: BaseUnit) = new AmfGraphResolver().resolve(unit)
+  def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
+
+  def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)
 }
 
 @JSExportAll
 @JSExportTopLevel("Core")
 object CoreWrapper {
-  def init() = Core.init()
+  def init(): Promise[Unit] = Core.init()
 
-  def parser(vendor: String, mediaType: String) = amf.Core.parser(vendor, mediaType)
+  def parser(vendor: String, mediaType: String): Parser = amf.Core.parser(vendor, mediaType)
 
-  def generator(vendor: String, mediaType: String) = amf.Core.generator(vendor, mediaType)
+  def generator(vendor: String, mediaType: String): Generator = amf.Core.generator(vendor, mediaType)
 
   def resolver(vendor: String): Resolver = amf.Core.resolver(vendor)
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF") =
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] =
     amf.Core.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(url: String) = amf.Core.loadValidationProfile(url)
+  def loadValidationProfile(url: String): Promise[String] = amf.Core.loadValidationProfile(url)
 
-  def registerNamespace(alias: String, prefix: String) = amf.Core.registerNamespace(alias, prefix)
+  def registerNamespace(alias: String, prefix: String): Boolean = amf.Core.registerNamespace(alias, prefix)
 
-  def registerPlugin(plugin: AMFPlugin) = amf.Core.registerPlugin(plugin)
+  def registerPlugin(plugin: AMFPlugin): Unit = amf.Core.registerPlugin(plugin)
 }
 
 @JSExportAll

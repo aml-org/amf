@@ -6,13 +6,15 @@ import scopt.OptionParser
 
 object CmdLineParser {
 
-  def knownSpec(f: String) = {
+  def knownSpec(f: String): Boolean = {
     ProfileNames.RAML == f ||
+    ProfileNames.RAML08 == f ||
     ProfileNames.OAS == f ||
     ProfileNames.AMF == f ||
-      "RAML 1.0" == f ||
-      "OAS 2.0" == f ||
-      "RAML Vocabulary" == f
+    "RAML 1.0" == f ||
+    "RAML 0.8" == f ||
+    "OAS 2.0" == f ||
+    "RAML Vocabulary" == f
 
   }
 
@@ -40,7 +42,7 @@ object CmdLineParser {
         if (knownSpec(f)) {
           success
         } else {
-          failure("Invalid value, values supported: 'RAML 1.0', 'OpenAPI 2.0','AMF'")
+          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0','AMF'")
         }
       })
       .action((f, c) => c.copy(inputFormat = Some(f)))
@@ -57,7 +59,7 @@ object CmdLineParser {
         if (knownSpec(f)) {
           success
         } else {
-          failure("Invalid value, values supported: 'RAML 1.0', 'OpenAPI 2.0', 'AMF'")
+          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AMF'")
         }
       })
       .action((f, c) => c.copy(validationProfile = f))
@@ -99,7 +101,7 @@ object CmdLineParser {
             if (knownSpec(f)) {
               success
             } else {
-              failure("Invalid value, values supported: 'RAML 1.0', 'OpenAPI 2.0', 'AMF'")
+              failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AMF'")
             }
           })
           .action((f, c) => c.copy(outputFormat = Some(f)))

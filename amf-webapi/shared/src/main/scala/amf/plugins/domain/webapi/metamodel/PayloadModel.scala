@@ -1,17 +1,17 @@
 package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
+import amf.core.metamodel.Type.{Bool, Str}
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
-import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.plugins.domain.webapi.models.Payload
 import amf.core.vocabulary.Namespace.Http
-import amf.core.vocabulary.ValueType
+import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
   * Payload metamodel.
   */
-object PayloadModel extends DomainElementModel with KeyField {
+object PayloadModel extends DomainElementModel with KeyField with OptionalField {
 
   val MediaType = Field(Str, Http + "mediaType")
 

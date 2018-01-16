@@ -33,7 +33,7 @@ case class Raml08EndpointParser(entry: YMapEntry,
                                 parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
     extends RamlEndpointParser(entry, producer, parent, collector, parseOptionalOperations) {
 
-  override protected def uriParametersKey: String = "BaseUriParameter"
+  override protected def uriParametersKey: String = "baseUriParameters"
 }
 
 abstract class RamlEndpointParser(entry: YMapEntry,

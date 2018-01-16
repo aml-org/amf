@@ -27,19 +27,17 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
     val parent = root.location + "#/declarations"
     parseSchemaDeclarations(map, parent)
-//    parseAnnotationTypeDeclarations(map, parent)
     parseAbstractDeclarations("resourceTypes", entry => ResourceType(entry), map, parent)
     parseAbstractDeclarations("traits", entry => Trait(entry), map, parent)
 
     parseSecuritySchemeDeclarations(map, parent)
-//    parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")
 
   }
 
   private def parseAbstractDeclarations(key: String,
                                         producer: YMapEntry => AbstractDeclaration,
                                         map: YMap,
-                                        parent: String) = {
+                                        parent: String): Unit = {
     map.key(key).foreach { entry =>
       entry.value.as[Seq[YMap]].flatMap(m => m.entries).foreach { entry =>
         ctx.declarations += AbstractDeclarationParser(producer(entry), parent, entry).parse()

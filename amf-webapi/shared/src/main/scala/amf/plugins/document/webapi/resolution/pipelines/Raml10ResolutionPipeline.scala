@@ -4,7 +4,7 @@ import amf.ProfileNames
 import amf.core.model.document.BaseUnit
 import amf.plugins.domain.webapi.resolution.stages.{ExamplesResolutionStage, MediaTypeResolutionStage, ParametersNormalizationStage}
 
-class RamlResolutionPipeline extends AmfResolutionPipeline {
+class Raml10ResolutionPipeline extends AmfResolutionPipeline {
 
   override val parameters = new ParametersNormalizationStage(ProfileNames.RAML)
   override val mediaTypes = new MediaTypeResolutionStage(ProfileNames.RAML)

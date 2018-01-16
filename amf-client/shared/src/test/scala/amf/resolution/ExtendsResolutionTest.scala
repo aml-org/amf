@@ -2,7 +2,7 @@ package amf.resolution
 
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Amf, Raml, RamlYamlHint}
+import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
 import amf.facades.AMFDumper
 
 import scala.concurrent.ExecutionContext
@@ -66,6 +66,22 @@ class ExtendsResolutionTest extends ResolutionTest {
 
   test("Resolution using libraries to Raml") {
     cycle("traits-using-library.raml", "traits-using-library.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("08 Optional response resolution") {
+    cycle("optional-response.raml", "optional-response.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
+  }
+
+  test("08 Optional payload resolution") {
+    cycle("optional-payload.raml", "optional-payload.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
+  }
+
+  test("08 Optional parameters resolution") {
+    cycle("optional-parameter.raml", "optional-parameter.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
+  }
+
+  test("08 Optional not merge resolution") {
+    cycle("optional-not-merge.raml", "optional-not-merge.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): String = {

@@ -2,16 +2,16 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Bool, Str}
-import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.vocabulary.Namespace.{Http, Hydra, Schema => SchemaNamespace}
-import amf.core.vocabulary.ValueType
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.webapi.models.Parameter
 
 /**
   * Parameter metamodel.
   */
-object ParameterModel extends DomainElementModel with LinkableElementModel with KeyField {
+object ParameterModel extends DomainElementModel with LinkableElementModel with KeyField with OptionalField {
 
   val Name = Field(Str, SchemaNamespace + "name")
 

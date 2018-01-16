@@ -15,8 +15,9 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: RamlWebApiContext)
-    extends RamlResponseParser(entry, producer) {
+case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext)
+    extends RamlResponseParser(entry, producer, parseOptional) {
 
   override def parseMap(response: Response, map: YMap): Unit = {
     map.key(
@@ -42,9 +43,9 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
 
           case YType.Str =>
             Raml10TypeParser(entry,
-              shape => shape.withName("default").adopted(payload.id),
-              isAnnotation = false,
-              AnyDefaultType)
+                             shape => shape.withName("default").adopted(payload.id),
+                             isAnnotation = false,
+                             AnyDefaultType)
               .parse()
               .foreach(payloads += payload.withSchema(_))
             response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
@@ -56,9 +57,9 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
                 val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
                 if (filterMap.entries.nonEmpty) {
                   Raml10TypeParser(entry,
-                    shape => shape.withName("default").adopted(payload.id),
-                    isAnnotation = false,
-                    AnyDefaultType)
+                                   shape => shape.withName("default").adopted(payload.id),
+                                   isAnnotation = false,
+                                   AnyDefaultType)
                     .parse()
                     .foreach(payloads += payload.withSchema(_))
                 }
@@ -92,22 +93,31 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
   }
 }
 
-case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: RamlWebApiContext)
-    extends RamlResponseParser(entry, producer) {
+case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext)
+    extends RamlResponseParser(entry, producer, parseOptional) {
 
   override protected def parseMap(response: Response, map: YMap): Unit = {
-    Raml08BodyContentParser(map, (value: Option[String]) => response.withPayload(value), () => response).parse()
+    Raml08BodyContentParser(map, (value: Option[String]) => response.withPayload(value), () => response, parseOptional)
+      .parse()
   }
 }
 
-abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response)(implicit ctx: RamlWebApiContext) {
+abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
+    implicit ctx: RamlWebApiContext) {
 
   protected def parseMap(response: Response, map: YMap)
 
   def parse(): Response = {
-    val node = ValueNode(entry.key).text()
+    val node     = ValueNode(entry.key).text()
+    val response = producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
 
-    val response = producer(node.value.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
+    if (parseOptional && node.toString.endsWith("?")) {
+      response.set(ResponseModel.Optional, value = true)
+      val name = node.toString.stripSuffix("?")
+      response.set(ResponseModel.Name, name)
+      response.set(ResponseModel.StatusCode, name)
+    }
 
     entry.value.to[YMap] match {
       case Left(_) =>
@@ -121,7 +131,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.as[YMap], response.withHeader)
+              RamlParametersParser(entry.value.as[YMap], response.withHeader, parseOptional)
                 .parse()
                 .map(_.withBinding("header"))
             response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
