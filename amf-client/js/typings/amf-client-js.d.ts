@@ -109,7 +109,7 @@ declare module "amf-client-js" {
               withProperties(properties: string[]): this;
             }
 
-            export class ClassTerm extends DomainEntity {
+            export class PropertyTerm extends DomainEntity {
               getId(): URI;
               withId(id: URI): this;
               displayName(): string|null;
