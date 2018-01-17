@@ -110,7 +110,7 @@ case class Raml08TypeParser(ast: YPart,
           .key("schema")
           .fold({
             Option(SimpleTypeParser(name, adopt, map).parse())
-          })(entry => {
+          })(_ => {
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
             maybeShape.foreach(s => {
@@ -155,7 +155,7 @@ case class Raml08TypeParser(ast: YPart,
             e.value.as[YScalar].text match { // json schema and xml schema only in schema tag
               case XMLSchema(_)  => Option(parseXMLSchemaExpression(e, adopt))
               case JSONSchema(_) => Option(parseJSONSchemaExpression(e, adopt))
-              case text =>
+              case _ =>
                 Raml08TypeParser(e, "schema", e.value, adopt).parse()
             }
         }
@@ -175,7 +175,7 @@ case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(im
                            s"item$index",
                            unionNode,
                            item => item.adopted(shape.id + "/items/" + index),
-                           false,
+                           isAnnotation = false,
                            AnyDefaultType).parse()
       }
       .filter(_.isDefined)
@@ -207,7 +207,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
     }
   }
 
-  private def parseMap(shape: Shape) = {
+  private def parseMap(shape: Shape): Unit = {
     map.key("displayName", entry => {
       val value = ValueNode(entry.value)
       shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
@@ -234,8 +234,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
     })
 
     map.key("enum", entry => {
-      val value  = ArrayNode(entry.value)
-      val values = value.rawMembers()
+      val value = ArrayNode(entry.value)
       shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
     })
 
@@ -350,7 +349,7 @@ trait RamlExternalTypes {
     }
   }
 
-  protected def typeOrSchema(map: YMap) = map.key("type").orElse(map.key("schema"))
+  protected def typeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema"))
 
 }
 
@@ -608,7 +607,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       ctx.closedRamlTypeShape(shape, map, syntaxType, isAnnotation)
 
-      //shape.set(ScalarShapeModel.Repeat, value = false) // 0.8 support, not exists in 1/.0, set default
+      // shape.set(ScalarShapeModel.Repeat, value = false) // 0.8 support, not exists in 1/.0, set default
 
       shape
     }
@@ -738,10 +737,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
-        item <- Raml10TypeParser(itemsEntry,
-                                 items => items.adopted(shape.id + "/items"),
-                                 isAnnotation = false,
-                                 defaultType = defaultType)
+        item <- Raml10TypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), defaultType = defaultType)
           .parse()
       } yield {
         item match {
@@ -1050,8 +1046,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       )
 
       map.key("enum", entry => {
-        val value  = ArrayNode(entry.value)
-        val values = value.rawMembers()
+        val value = ArrayNode(entry.value)
         shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
       })
 
