@@ -49,7 +49,10 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)
       case Right(value) =>
         val variables = AbstractVariables()
-        val dataNode  = DataNodeParser(value, variables, Some(parent + s"/$key")).parse()
+        val parentUri =
+          if (parent.contains("#")) s"$parent/$key"
+          else s"$parent#/$key"
+        val dataNode = DataNodeParser(value, variables, Some(parentUri)).parse()
 
         declaration.withName(key).adopted(parent).withDataNode(dataNode)
 

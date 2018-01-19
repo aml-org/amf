@@ -54,8 +54,8 @@ class ShapeNormalizationStage(profile: String)
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
-      case shape: Shape                       => Some(canonical(expand(shape.cloneShape(Some(element.id)))))
-      case other                              => Some(other)
+      case shape: Shape => Some(canonical(expand(shape.cloneShape(Some(element.id)))))
+      case other        => Some(other)
     }
   }
 
@@ -163,11 +163,12 @@ class ShapeNormalizationStage(profile: String)
   }
 
   protected def expandUnion(union: UnionShape): Shape = {
+    expandInherits(union)
     val oldAnyOf = union.fields.getValue(UnionShapeModel.AnyOf)
     if (Option(oldAnyOf).isDefined) {
       val newAnyOf = union.anyOf.map(shape => expand(shape))
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
-    } else {
+    } else if(Option(union.inherits).isEmpty || union.inherits.isEmpty) {
       throw new Exception(s"Resolution error: Union shape with missing anyof: $union")
     }
 
@@ -338,18 +339,25 @@ class ShapeNormalizationStage(profile: String)
   }
 
   protected def canonicalUnion(union: UnionShape): Shape = {
-    val anyOfAcc: ListBuffer[Shape] = ListBuffer()
-    union.anyOf.foreach { shape =>
-      canonical(shape) match {
-        case union: UnionShape => union.anyOf.foreach(e => anyOfAcc += e)
-        case other: Shape      => anyOfAcc += other
+    if (Option(union.inherits).isDefined && union.inherits.nonEmpty) {
+      canonicalInheritance(union)
+    } else {
+      val anyOfAcc: ListBuffer[Shape] = ListBuffer()
+      Option(union.anyOf).getOrElse(Nil).foreach { shape =>
+        canonical(shape) match {
+          case union: UnionShape => union.anyOf.foreach(e => anyOfAcc += e)
+          case other: Shape => anyOfAcc += other
+        }
       }
-    }
-    union.fields.setWithoutId(UnionShapeModel.AnyOf,
-                              AmfArray(anyOfAcc),
-                              union.fields.getValue(UnionShapeModel.AnyOf).annotations)
+      val anyOfAnnotations = Option(union.fields.getValue(UnionShapeModel.AnyOf)) match {
+        case Some(anyOf) => anyOf.annotations
+        case _           => Annotations()
+      }
 
-    union
+      union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(anyOfAcc), anyOfAnnotations)
+
+      union
+    }
   }
 
   protected def canonicalTuple(tuple: TupleShape): Shape = {

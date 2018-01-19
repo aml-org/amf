@@ -7,6 +7,7 @@ import amf.core.parser.Range
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.models.EndPoint
+import com.sun.org.apache.xerces.internal.impl.xs.opti.DefaultNode
 import org.yaml.model.YPart
 
 case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
@@ -43,8 +44,6 @@ object LocalLinkPath extends AnnotationGraphLoader {
   }
 }
 
-
-
 case class InlineDefinition() extends Annotation
 
 /*
@@ -75,7 +74,7 @@ object WebApiAnnotations {
   private def sourceVendor(value: String, objects: Map[String, AmfElement]) = {
     value match {
       case Vendor(vendor) => SourceVendor(vendor)
-      case _              => throw new RuntimeException(s"Illegal vendor: '$value'")
+      case _ => throw new RuntimeException(s"Illegal vendor: '$value'")
     }
   }
 

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.annotations.{DefaultNode, ExplicitField, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
@@ -364,6 +364,17 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
   def typeParser: (YPart, String, YNode, Shape => Shape, Boolean, DefaultType) => RamlTypeParser
 
+
+  def parseDefaultType(defaultType: DefaultType): Shape = {
+    val defaultShape = defaultType.typeDef match {
+      case typeDef if typeDef.isScalar => parseScalarType(typeDef)
+      case ObjectType                  => parseObjectType()
+      case _                           => parseAnyType() // multiple matches, no disambiguation with default type => any
+    }
+    defaultShape.annotations += DefaultNode()
+    defaultShape
+  }
+
   def parse(): Option[Shape] = {
 
     val info: Option[TypeDef] =
@@ -380,12 +391,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       case ArrayType                             => parseArrayType()
       case AnyType                               => parseAnyType()
       case typeDef if typeDef.isScalar           => parseScalarType(typeDef)
-      case MultipleMatch => // Multiple match, we try to disambiguate using the default type info
-        defaultType.typeDef match {
-          case typeDef if typeDef.isScalar => parseScalarType(typeDef)
-          case ObjectType                  => parseObjectType()
-          case _                           => parseAnyType() // multiple matches, no disambiguation with default type => any
-        }
+      case MultipleMatch                         => parseDefaultType(defaultType)// Multiple match, we try to disambiguate using the default type info
     }
 
     // Add 'inline' annotation for shape
