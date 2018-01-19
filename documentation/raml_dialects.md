@@ -658,6 +658,25 @@ validations:
   - !include validation_fragment.raml
 ```
 
+## Extending Fragments
+
+Sometimes you need/want to reuse an existing fragment, with a little bit of customization.
+For example you may need to add an extra property value, or override an existing property value.
+
+One way to do this is to use `!extends` directive:
+
+```yaml
+  queryValidationNode:
+     !extend : queryNode.raml
+     mapping:
+       hello:
+         propertyTerm: h.name
+         range: string
+```
+
+In this sample we are taking a node defined in `queryNode.raml`
+and customizing it by adding an additional mapping.
+
 ## References
 
 - [RAML 1.0 Spec](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md)
