@@ -2,11 +2,12 @@ package amf.dialects
 
 import amf.common.Tests.checkDiff
 import amf.core.client.GenerationOptions
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote.{Amf, ExtensionYamlHint, Raml}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import org.scalatest.AsyncFunSuite
 
@@ -66,6 +67,31 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
         platform.write(basePath + "validation_profile_with_uses_example.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+
+  test("Unit resolution)") {
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "validation_dialect_uses.raml")
+    val expected =
+      platform.resolve(basePath + "validation_dialect_using_fragments_resolved.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "validation_dialect_using_fragments.raml",
+            platform,
+            ExtensionYamlHint,
+            Validation(platform),
+            None,
+            None)
+            .build())
+    actual
+        .map(x=>RAMLVocabulariesPlugin.resolve(x))
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "validation_dialect_using_fragments_resolved.json", v)
         v
       })
       .zip(expected)
