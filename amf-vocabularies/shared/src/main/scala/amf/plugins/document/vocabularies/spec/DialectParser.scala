@@ -143,7 +143,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                          topLevel: Boolean): Unit = {
     val entriesLabels = entries.map.keys.map(_.value.toString).toSet-"";
     val entityLabels = if (topLevel) {
-      (mappings.map(_.name) ++ Seq("uses", "external","!extends")).toSet
+      (mappings.map(_.name) ++ Seq("uses", "external","!extend")).toSet
     } else {
       mappings.map(_.name).toSet
     }
@@ -209,7 +209,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
         correctEntityNamespace(node, domainEntity)
         val mappings = domainEntity.definition.mappings()
         val map      = node.as[YMap]
-        var extended=node.as[YMap].entries.find(v=>v.key.tag.text=="!extends");
+        var extended=node.as[YMap].entries.find(v=>v.key.tag.text=="!extend");
         if (extended.isDefined){
           extended.get.value.value match {
             case s:YScalar => {
@@ -233,7 +233,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
             case _=>  ctx.violation(
               ParserSideValidations.DialectExtendIssue.id(),
               domainEntity.id,
-              s"Expecting scalar in !extends",
+              s"Expecting scalar in !extend",
               node
             )
           }
