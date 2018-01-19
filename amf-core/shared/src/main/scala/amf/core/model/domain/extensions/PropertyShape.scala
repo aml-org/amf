@@ -1,5 +1,6 @@
 package amf.core.model.domain.extensions
 
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel._
 import amf.core.model.domain.Shape
@@ -18,8 +19,8 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def withPath(path: String): this.type  = set(Path, path)
   def withRange(range: Shape): this.type = set(Range, range)
 
-  def withMinCount(min: Int): this.type  = set(MinCount, min)
-  def withMaxCount(max: Int): this.type  = set(MaxCount, max)
+  def withMinCount(min: Int): this.type = set(MinCount, min)
+  def withMaxCount(max: Int): this.type = set(MaxCount, max)
 
   override def adopted(parent: String): this.type = {
     withId(parent + "/property/" + name)
@@ -29,11 +30,11 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
     this
   }
 
-  override def linkCopy() = PropertyShape().withId(id)
+  override def linkCopy(): PropertyShape = PropertyShape().withId(id)
 
-  override def meta = PropertyShapeModel
+  override def meta: ShapeModel = PropertyShapeModel
 
-  override def cloneShape(withRecursionBase: Option[String], traversed: Set[String]) = {
+  override def cloneShape(withRecursionBase: Option[String], traversed: Set[String]): PropertyShape = {
     val cloned = PropertyShape()
     cloned.id = this.id
     copyFields(cloned, withRecursionBase, traversed)
