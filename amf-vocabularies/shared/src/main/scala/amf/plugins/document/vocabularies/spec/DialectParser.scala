@@ -266,6 +266,9 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                   case Some(entity) =>
                     entity.fields.into(domainEntity.fields)
                     domainEntity.annotations += SynthesizedField()
+                    if (entity.isLink){
+                      domainEntity.withLinkTarget(entity.linkTarget.get)
+                    }
                   // domainEntity.annotations += DomainElementReference(name, Some(entity))
                   case None =>
                     // this is possible internal reference;

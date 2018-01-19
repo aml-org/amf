@@ -17,6 +17,7 @@ import amf.plugins.document.vocabularies.model.document.DialectFragment
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
+import amf.plugins.document.vocabularies.resolution.DialectsResolutionPipeline
 import amf.plugins.document.vocabularies.spec._
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
@@ -151,7 +152,7 @@ object RAMLVocabulariesPlugin
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = unit // we don't support resolution in vocabularies yet
+  override def resolve(unit: BaseUnit): BaseUnit = new DialectsResolutionPipeline().resolve(unit)
 
   /**
     * Registers the dialect located in the provided URL into the platform
@@ -163,5 +164,7 @@ object RAMLVocabulariesPlugin
     */
   def registerDialect(url: String, dialectText: String): Future[Dialect] =
     PlatformDialectRegistry.registerDialect(url, dialectText)
+
+
 
 }
