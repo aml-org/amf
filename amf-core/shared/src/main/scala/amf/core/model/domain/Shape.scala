@@ -74,7 +74,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def cloneShape(recursionBase: Option[String] = None, traversed: Set[String] = Set()): Shape
 
   // Copy fields into a cloned shape
-  protected def copyFields(cloned: Shape, recursionBase: Option[String], traversed: Set[String]) = {
+  protected def copyFields(cloned: Shape, recursionBase: Option[String], traversed: Set[String]): Unit = {
     this.fields.foreach {
       case (f, v) =>
         val clonedValue = v.value match {

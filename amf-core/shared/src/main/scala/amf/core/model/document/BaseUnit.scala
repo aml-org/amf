@@ -27,7 +27,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
   def usage: String
 
   // Set the raw value for the base unit
-  def withRaw(raw: String) = {
+  def withRaw(raw: String): BaseUnit = {
     this.raw = Some(raw)
     this
   }
@@ -68,7 +68,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def findBy(predicate: (DomainElement) => Boolean, cycles: Set[String] = Set.empty): Seq[DomainElement] = {
     findInDeclaredModel(predicate, this, first = false, ListBuffer.empty, cycles) ++
-      findInEncodedModel(predicate, this, first = false, ListBuffer.empty,  cycles)
+      findInEncodedModel(predicate, this, first = false, ListBuffer.empty, cycles)
   }
 
   def transform(selector: (DomainElement) => Boolean,
@@ -119,10 +119,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def findInReferences(id: String): Option[BaseUnit] = references.find(_.id == id)
 
-  private def findInReferencedModels(id: String, units: Seq[BaseUnit], cycles: Set[String]): ListBuffer[DomainElement] = {
+  private def findInReferencedModels(id: String,
+                                     units: Seq[BaseUnit],
+                                     cycles: Set[String]): ListBuffer[DomainElement] = {
     if (units.isEmpty) {
       ListBuffer.empty
-    } else if(cycles.contains(units.head.id)) {
+    } else if (cycles.contains(units.head.id)) {
       findInReferencedModels(id, units.tail, cycles)
     } else {
       units.head.findById(id, cycles) match {
@@ -148,10 +150,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
         // elements are the values in the properties for the not found object
         val elements = element match {
           case dynamicElement: DynamicDomainElement =>
-            val values = dynamicElement.dynamicFields.map(f => dynamicElement.valueForField(f)).filter(_.isDefined).map(_.get)
+            val values =
+              dynamicElement.dynamicFields.map(f => dynamicElement.valueForField(f)).filter(_.isDefined).map(_.get)
             val effectiveValues = values.map {
-              case d: DomainElement => Seq(d)   // set(
-              case a: AmfArray => a.values.filter(_.isInstanceOf[DomainElement]).asInstanceOf[Seq[DomainElement]]      // setArray(
+              case d: DomainElement => Seq(d) // set(
+              case a: AmfArray =>
+                a.values.filter(_.isInstanceOf[DomainElement]).asInstanceOf[Seq[DomainElement]] // setArray(
               case _ => Seq() // ignore literals
             }
             effectiveValues.flatten
@@ -182,7 +186,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
             findModelByConditionInSeq(predicate, elements.tail, first, res, cycles)
           }
 
-        case obj: DomainElement => findModelByConditionInSeq(predicate, elements.tail, first, acc, cycles)
+        case _: DomainElement => findModelByConditionInSeq(predicate, elements.tail, first, acc, cycles)
 
         case arr: AmfArray =>
           val res = findModelByConditionInSeq(predicate, arr.values, first, acc, cycles)
@@ -213,70 +217,81 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
             dataNode.properties.foreach {
               case (prop, value) =>
                 Option(transformByCondition(value, predicate, transformation, cycles + element.id)) match {
-                  case Some(transformed: DataNode) => {
+                  case Some(transformed: DataNode) =>
                     dataNode.properties.put(prop, transformed)
                     dataNode
-                  }
                   case Some(_) => dataNode
-                  case _ => {
+                  case _ =>
                     dataNode.properties.remove(prop)
                     dataNode
-                  }
                 }
             }
 
           case arrayNode: ArrayNode =>
-            val newElements = arrayNode.members.map { elem: DataNode  =>
-              Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
-            }.filter(_.isDefined).map(_.get)
-            arrayNode.members.clear()
-            newElements.foreach{ case m: DataNode => arrayNode.addMember(m) }
+            arrayNode.members = arrayNode.members
+              .flatMap { elem: DataNode =>
+                Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
+              }
+              .map(_.adopted(arrayNode.id))
+              .collect { case d: DataNode => d }
 
           case _ =>
             // we first process declarations, then the encoding
             val effectiveFields: Iterable[FieldEntry] = element match {
-              case doc: DeclaresModel => doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++ doc.fields.fields().filter(f => f.field != DocumentModel.Declares)
+              case doc: DeclaresModel =>
+                doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++ doc.fields
+                  .fields()
+                  .filter(f => f.field != DocumentModel.Declares)
               case _ => element.fields.fields()
             }
-            effectiveFields.map { entry => (entry.field, entry.value) }.foreach {
-              case (f, v: Value) if v.value.isInstanceOf[AmfObject] =>
-                Option(transformByCondition(v.value.asInstanceOf[AmfObject], predicate, transformation, cycles + element.id)) match {
-                  case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
-                  case Some(_) => // ignore
-                  case None => element.fields.remove(f)
-                }
-              case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
-                val newElements = v.value
-                  .asInstanceOf[AmfArray]
-                  .values
-                  .map {
-                    case elem: AmfObject =>
-                      Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
-                    case other =>
-                      Some(other)
+            effectiveFields
+              .map { entry =>
+                (entry.field, entry.value)
+              }
+              .foreach {
+                case (f, v: Value) if v.value.isInstanceOf[AmfObject] =>
+                  Option(
+                    transformByCondition(v.value.asInstanceOf[AmfObject],
+                                         predicate,
+                                         transformation,
+                                         cycles + element.id)) match {
+                    case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
+                    case Some(_)                           => // ignore
+                    case None                              => element.fields.remove(f)
                   }
-                  .filter(_.isDefined)
-                  .map(_.get)
-                element.fields.setWithoutId(f, AmfArray(newElements), v.annotations)
+                case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
+                  val newElements = v.value
+                    .asInstanceOf[AmfArray]
+                    .values
+                    .map {
+                      case elem: AmfObject =>
+                        Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
+                      case other =>
+                        Some(other)
+                    }
+                    .filter(_.isDefined)
+                    .map(_.get)
+                  element.fields.setWithoutId(f, AmfArray(newElements), v.annotations)
 
-              case _ => // ignore
-            }
+                case _ => // ignore
+              }
         }
         element
       }
 
-    } else element match {
-      // target of the link has been traversed, we still visit the link in case a transformer wants to
-      // transform links/references, but we will not traverse to avoid loops
-      case linkable: Linkable if linkable.isLink =>
-        if (predicate(element)) {
-          transformation(element, true).orNull // passing the cycle boolean flat!
-        } else {
-          element
-        }
-      // traversed and not visited
-      case _ => element
-    }
+    } else
+      element match {
+        // target of the link has been traversed, we still visit the link in case a transformer wants to
+        // transform links/references, but we will not traverse to avoid loops
+        case linkable: Linkable if linkable.isLink =>
+          if (predicate(element)) {
+            transformation(element, true).orNull // passing the cycle boolean flat!
+          } else {
+            element
+          }
+        // traversed and not visited
+        case _ => element
+      }
   }
 
 }
