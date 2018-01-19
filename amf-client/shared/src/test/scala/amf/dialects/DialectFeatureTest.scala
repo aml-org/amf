@@ -76,7 +76,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
   test("Unit resolution)") {
     val validation = PlatformDialectRegistry.registerDialect(basePath + "validation_dialect_uses.raml")
     val expected =
-      platform.resolve(basePath + "validation_profile_with_uses_example.json", None).map(_.stream.toString)
+      platform.resolve(basePath + "validation_dialect_using_fragments_resolved.json", None).map(_.stream.toString)
     val actual = validation
       .flatMap(
         unit =>
@@ -91,7 +91,7 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
         .map(x=>RAMLVocabulariesPlugin.resolve(x))
       .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
       .map(v => {
-        platform.write(basePath + "validation_dialect_using_fragments_resolved.raml", v)
+        platform.write(basePath + "validation_dialect_using_fragments_resolved.json", v)
         v
       })
       .zip(expected)

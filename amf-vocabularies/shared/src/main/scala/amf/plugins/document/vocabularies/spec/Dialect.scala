@@ -318,7 +318,9 @@ class BasicResolver(root: Root,
       .orElse(declarationsFromFragments.get(name))
       .map(
         x => {
-          val res: DomainEntity = x.link(name)
+          val res: DomainEntity =  x.linkCopy().asInstanceOf[DomainEntity]
+          res.withLinkTarget(x);
+          res.withLinkLabel(name)
           res
         }
       )
