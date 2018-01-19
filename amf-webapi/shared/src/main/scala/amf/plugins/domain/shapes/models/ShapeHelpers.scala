@@ -13,28 +13,33 @@ trait ShapeHelpers { this: Shape =>
     case _                                    => throw new Exception("Trying to extract non existent type expression")
   }
 
-  def cloneShape(withRecursionBase: Option[String] = None): this.type = {
-    val cloned: Shape = this match {
-      case _: Linkable if this.isLink => buildFixPoint(withRecursionBase, this)
-      case _: UnionShape    => UnionShape()
-      case _: ScalarShape   => ScalarShape()
-      case _: ArrayShape    => ArrayShape()
-      case _: MatrixShape   => MatrixShape()
-      case _: TupleShape    => TupleShape()
-      case _: PropertyShape => PropertyShape()
-      case _: FileShape     => FileShape()
-      case _: NilShape      => NilShape()
-      case _: NodeShape     => NodeShape()
-      case _: SchemaShape   => SchemaShape()
-      case UnresolvedShape(_, annots, reference) => UnresolvedShape(reference, annots)
-      case _: AnyShape      => AnyShape()
+  def cloneShape(withRecursionBase: Option[String] = None, traversed: Set[String] = Set()): this.type = {
+    if (traversed.contains(this.id)) {
+      buildFixPoint(withRecursionBase, this).asInstanceOf[this.type]
+    } else {
+      val cloned: Shape = this match {
+        case _: Linkable if this.isLink => buildFixPoint(withRecursionBase, this)
+        case _: RecursiveShape => RecursiveShape()
+        case _: UnionShape => UnionShape()
+        case _: ScalarShape => ScalarShape()
+        case _: ArrayShape => ArrayShape()
+        case _: MatrixShape => MatrixShape()
+        case _: TupleShape => TupleShape()
+        case _: PropertyShape => PropertyShape()
+        case _: FileShape => FileShape()
+        case _: NilShape => NilShape()
+        case _: NodeShape => NodeShape()
+        case _: SchemaShape => SchemaShape()
+        case UnresolvedShape(_, annots, reference) => UnresolvedShape(reference, annots)
+        case _: AnyShape => AnyShape()
+      }
+      cloned.id = this.id
+      copyFields(cloned, withRecursionBase, traversed + this.id)
+      if (cloned.isInstanceOf[NodeShape]) {
+        cloned.add(ExplicitField())
+      }
+      cloned.asInstanceOf[this.type]
     }
-    cloned.id = this.id
-    copyFields(cloned, withRecursionBase)
-    if (cloned.isInstanceOf[NodeShape]) {
-      cloned.add(ExplicitField())
-    }
-    cloned.asInstanceOf[this.type]
   }
 
   protected def buildFixPoint(id: Option[String], link: Shape): RecursiveShape = {

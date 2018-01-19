@@ -31,8 +31,14 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
     if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
   }
 
-  def forceAdopted(parent: String): this.type =
-    withId(parent + "/" + (if (Option(name).isDefined) name.urlEncoded else name))
+  def forceAdopted(parent: String): this.type = {
+    val adoptedId = parent + "/" + (if (Option(name).isDefined) name.urlEncoded else name)
+    val newId = Option(id) match {
+      case Some(oldId: String) if oldId.endsWith("/included") => adoptedId + "/included"
+      case _                                                  => adoptedId
+    }
+    withId(newId)
+  }
 
   override val fields: Fields = Fields()
 
@@ -220,4 +226,56 @@ object ArrayNode {
   def apply(ast: YSequence): ArrayNode = apply(Annotations(ast))
 
   def apply(annotations: Annotations): ArrayNode = new ArrayNode(Fields(), annotations)
+}
+
+
+/**
+  * Dynamic node representing a link to another dynamic node
+  * @param alias human readable value for the link
+  * @param value actual URI value for the link
+  * @param fields default fields for the dynamic node
+  * @param annotations deafult annotations for the dynamic node
+  */
+class LinkNode(var alias:  String, var value: String, override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
+  val Value: Field = Field(Str, Namespace.Data + "value")
+  val Alias: Field = Field(Str, Namespace.Data + "alias")
+
+  override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
+
+  override def dynamicType = List(LinkNode.builderType)
+
+  override def valueForField(f: Field): Option[AmfElement] = f match {
+    case Value =>
+      Some(AmfScalar(value, annotations))
+    case Alias =>
+      Some(AmfScalar(alias, annotations))
+    case _ => None
+  }
+
+  override def replaceVariables(values: Set[Variable]): DataNode = this
+
+
+  override def cloneNode(): this.type = {
+    val cloned = LinkNode(annotations)
+
+    cloned.value = value
+    cloned.alias = alias
+
+    cloned.asInstanceOf[this.type]
+  }
+}
+
+object LinkNode {
+
+  val builderType: ValueType = Namespace.Data + "Link"
+
+  def apply(): LinkNode = apply(Annotations())
+
+  def apply(annotations: Annotations): LinkNode = apply("", "", annotations)
+
+  def apply(alias: String, value: String): LinkNode =
+    new LinkNode(alias, value, Fields(), Annotations())
+
+  def apply(alias: String, value: String, annotations: Annotations): LinkNode =
+    new LinkNode(alias, value, Fields(), annotations)
 }

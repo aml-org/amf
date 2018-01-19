@@ -136,12 +136,6 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     name.indexOf("/prop") > -1
   }
 
-  private def escapeRegex(v: String): _root_.scala.Predef.String = {
-    v flatMap { c =>
-      if (c == '\\') { Seq('\\', '\\') } else { Seq(c) }
-    }
-  }
-
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
     b.obj { b =>
       b.entry("@id", constraintId)
@@ -155,7 +149,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       constraint.minExclusive.foreach(genPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
       constraint.maxInclusive.foreach(genPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
       constraint.minInclusive.foreach(genPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
-      constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", escapeRegex(v)))
+      constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
       constraint.datatype.foreach { v =>
         if (!v.endsWith("#float") && !v.endsWith("#number")) {

@@ -54,7 +54,9 @@ case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: WebAp
 
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
-        case Left(s) => examples ++= ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
+        case Left(s) =>
+          examples ++= ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
+
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
@@ -72,7 +74,13 @@ case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: WebAp
 case class RamlNamedExampleParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     val name             = ValueNode(entry.key)
-    val example: Example = RamlSingleExampleValueParser(entry.value).parse()
+    val example: Example = ctx.link(entry.value) match {
+      case Left(s)  =>
+        ctx.declarations.findNamedExample(s)
+          .map(e => e.link(s).asInstanceOf[Example])
+          .getOrElse(RamlSingleExampleValueParser(entry.value).parse())
+      case Right(_) => RamlSingleExampleValueParser(entry.value).parse()
+    }
     example.set(ExampleModel.Name, name.string(), Annotations(entry))
   }
 }

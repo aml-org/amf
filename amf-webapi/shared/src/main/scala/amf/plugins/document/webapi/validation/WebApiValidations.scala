@@ -6,6 +6,7 @@ import amf.core.services.RuntimeValidator
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -17,7 +18,10 @@ trait WebApiValidations extends ValidationResultProcessor {
     case (acc, profile) => acc.updated(profile.name, { () => profile })
   }
 
-  protected def validationRequestsForBaseUnit(baseUnit: BaseUnit, profile: String, validations: EffectiveValidations, messageStyle: String, platform: Platform) = {
+  protected def validationRequestsForBaseUnit(unresolvedUnit: BaseUnit, profile: String, validations: EffectiveValidations, messageStyle: String, platform: Platform) = {
+
+    // Before validating we need to resolve to get all the model information
+    val baseUnit = new ValidationResolutionPipeline().resolve(unresolvedUnit)
 
     aggregatedReport = List()
 
