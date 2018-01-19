@@ -43,7 +43,8 @@ object AMFDomainRegistry {
     "source-vendor"      -> SourceVendor,
     "single-value-array" -> SingleValueArray,
     "aliases-array"      -> Aliases,
-    "synthesized-field"  -> SynthesizedField
+    "synthesized-field"  -> SynthesizedField,
+    "default-node"       -> DefaultNode
   )
   val metadataRegistry: mutable.HashMap[String, Obj] = mutable.HashMap(
     defaultIri(DocumentModel)              -> DocumentModel,

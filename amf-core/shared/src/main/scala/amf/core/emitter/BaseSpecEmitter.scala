@@ -5,8 +5,9 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import org.yaml.model
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YMap, YNode, YScalar, YType}
+import org.yaml.model._
 
 import scala.collection.mutable
 
@@ -51,6 +52,16 @@ package object BaseEmitters {
       sourceOr(annotations, {
         b += YNode(new YScalar.Builder(value, tag.tag).scalar, tag)
       })
+
+    override def position(): Position = pos(annotations)
+  }
+
+  case class LinkScalaEmitter(alias: String, annotations: Annotations) extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = {
+      sourceOr(annotations, {
+        b += YNode(new YScalar.Builder(alias, YType.Include.tag).scalar, YType.Include) // YNode(YScalar(alias), YType.Include)
+      })
+    }
 
     override def position(): Position = pos(annotations)
   }

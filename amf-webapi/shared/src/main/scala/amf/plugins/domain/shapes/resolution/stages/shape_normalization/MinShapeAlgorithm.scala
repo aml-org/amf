@@ -220,11 +220,15 @@ trait MinShapeAlgorithm extends RestrictionComputation {
   }
 
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
-    val newUnionItems = for {
-      baseUnionElement  <- baseUnion.anyOf
-      superUnionElement <- superUnion.anyOf
-    } yield {
-      minShape(baseUnionElement, superUnionElement)
+    val newUnionItems = if (Option(baseUnion.anyOf).getOrElse(Nil).isEmpty || Option(superUnion.anyOf).getOrElse(Nil).isEmpty) {
+      Option(baseUnion.anyOf).getOrElse(Nil) ++ Option(superUnion.anyOf).getOrElse(Nil)
+    } else {
+      for {
+        baseUnionElement  <- baseUnion.anyOf
+        superUnionElement <- superUnion.anyOf
+      } yield {
+        minShape(baseUnionElement, superUnionElement)
+      }
     }
 
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,

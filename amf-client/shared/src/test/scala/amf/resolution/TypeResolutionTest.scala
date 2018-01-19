@@ -138,6 +138,7 @@ class TypeResolutionTest extends BuildCycleTests {
     "union3",
     "union4",
     "union5",
+    "union6",
     "inheritance1",
     "inheritance2",
     "inheritance3",
