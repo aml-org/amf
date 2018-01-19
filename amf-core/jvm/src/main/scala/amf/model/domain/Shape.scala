@@ -1,12 +1,13 @@
 package amf.model.domain
 
 import amf.core.model.domain
+import amf.core.model.domain.NamedDomainElement
 import amf.core.unsafe.PlatformSecrets
 
 import scala.collection.JavaConverters._
 
 
-abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
+abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable with NamedDomainElement {
 
   def name: String                       = shape.name
   def displayName: String                = shape.displayName

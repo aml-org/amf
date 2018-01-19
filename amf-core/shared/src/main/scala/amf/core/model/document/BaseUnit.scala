@@ -208,33 +208,59 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
       } else {
         // not matches the predicate, we traverse
 
-        // we first process declarations, then the encoding
-        val effectiveFields: Iterable[FieldEntry] = element match {
-          case doc: DeclaresModel => doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++ doc.fields.fields().filter(f => f.field != DocumentModel.Declares)
-          case _ => element.fields.fields()
-        }
-        effectiveFields.map { entry => (entry.field, entry.value) }.foreach {
-          case (f, v: Value) if v.value.isInstanceOf[AmfObject] =>
-            Option(transformByCondition(v.value.asInstanceOf[AmfObject], predicate, transformation, cycles + element.id)) match {
-              case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
-              case Some(_) => // ignore
-              case None => element.fields.remove(f)
+        element match {
+          case dataNode: ObjectNode =>
+            dataNode.properties.foreach {
+              case (prop, value) =>
+                Option(transformByCondition(value, predicate, transformation, cycles + element.id)) match {
+                  case Some(transformed: DataNode) => {
+                    dataNode.properties.put(prop, transformed)
+                    dataNode
+                  }
+                  case Some(_) => dataNode
+                  case _ => {
+                    dataNode.properties.remove(prop)
+                    dataNode
+                  }
+                }
             }
-          case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
-            val newElements = v.value
-              .asInstanceOf[AmfArray]
-              .values
-              .map {
-                case elem: AmfObject =>
-                  Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
-                case other =>
-                  Some(other)
-              }
-              .filter(_.isDefined)
-              .map(_.get)
-            element.fields.setWithoutId(f, AmfArray(newElements), v.annotations)
 
-          case _ => // ignore
+          case arrayNode: ArrayNode =>
+            val newElements = arrayNode.members.map { elem: DataNode  =>
+              Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
+            }.filter(_.isDefined).map(_.get)
+            arrayNode.members.clear()
+            newElements.foreach{ case m: DataNode => arrayNode.addMember(m) }
+
+          case _ =>
+            // we first process declarations, then the encoding
+            val effectiveFields: Iterable[FieldEntry] = element match {
+              case doc: DeclaresModel => doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++ doc.fields.fields().filter(f => f.field != DocumentModel.Declares)
+              case _ => element.fields.fields()
+            }
+            effectiveFields.map { entry => (entry.field, entry.value) }.foreach {
+              case (f, v: Value) if v.value.isInstanceOf[AmfObject] =>
+                Option(transformByCondition(v.value.asInstanceOf[AmfObject], predicate, transformation, cycles + element.id)) match {
+                  case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
+                  case Some(_) => // ignore
+                  case None => element.fields.remove(f)
+                }
+              case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
+                val newElements = v.value
+                  .asInstanceOf[AmfArray]
+                  .values
+                  .map {
+                    case elem: AmfObject =>
+                      Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
+                    case other =>
+                      Some(other)
+                  }
+                  .filter(_.isDefined)
+                  .map(_.get)
+                element.fields.setWithoutId(f, AmfArray(newElements), v.annotations)
+
+              case _ => // ignore
+            }
         }
         element
       }

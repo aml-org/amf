@@ -11,8 +11,20 @@ import org.yaml.model.{YMap, YNode}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
+/**
+  * Parser that can take a dynamic portion of a model encoded as a generic
+  * JSON-Ld graph and reconstruct the model
+  * @param nodes entry nodes for the parser
+  * @param ctx parsing context
+  */
 class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: ParserContext) extends GraphParserHelpers {
 
+  /**
+    * Finds the type of dynamic node model to build based on the JSON-LD @type information
+    * @param id JSON-LD @type
+    * @param map incoming node map
+    * @return builder function that returns the type of dynamic node
+    */
   def retrieveType(id: String, map: YMap): Option[(Annotations) => AmfObject] = {
     ts(map, ctx, id).find({ t =>
       dynamicBuilders.get(t).isDefined
@@ -22,6 +34,11 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
     }
   }
 
+  /**
+    * Parsed the next dynamic node
+    * @param map syntax node map
+    * @return the parsed dynamic node model
+    */
   def parseDynamicType(map: YMap): Option[DataNode] = {
     retrieveId(map, ctx).map(id => {
       val sources = retrieveSources(id, map)
@@ -70,6 +87,26 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
           }
           scalar
 
+        case link: LinkNode =>
+          link.withId(id)
+          map.entries.foreach {
+            entry =>
+              val uri = entry.key.as[String]
+              uri match {
+
+                case _ if uri == link.Alias.value.iri() =>
+                  val parsedScalar = parseJSONLDScalar(entry.value)
+                  link.alias = parsedScalar.value
+
+                case _ if uri == link.Value.value.iri() =>
+                  val parsedScalar = parseJSONLDScalar(entry.value)
+                  link.value = parsedScalar.value
+
+                case _ => // ignore
+              }
+          }
+          link
+
         case array: ArrayNode =>
           array.withId(id)
           map.entries.foreach { entry =>
@@ -90,12 +127,22 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
     })
   }
 
+  /**
+    * Checks if the node encodes a JSON-LD scalar
+    * @param node
+    * @return
+    */
   private def isJSONLDScalar(node: YNode): Boolean = node.to[Seq[YMap]] match {
     case Right(sequence) if sequence.length == 1 =>
       sequence.head.key("@value").isDefined
     case _ => false
   }
 
+  /**
+    * Parsed a JSON-LD scalar into a dynamic ScalarNode
+    * @param node
+    * @return
+    */
   private def parseJSONLDScalar(node: YNode): ScalarNode = {
     val scalar = node.as[Seq[YMap]].head
     val result = ScalarNode()
@@ -112,12 +159,22 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
     result
   }
 
+  /**
+    * Checks if the node encodes a JSON-LD list
+    * @param node
+    * @return
+    */
   def isJSONLDArray(node: YNode): Boolean = node.to[Seq[YMap]] match {
     case Right(sequence) if sequence.length == 1 =>
       sequence.head.key("@list").isDefined
     case _ => false
   }
 
+  /**
+    * Parsed a JSON-LD @list into an ArrayNode
+    * @param node
+    * @return
+    */
   def parseJSONLDArray(node: YNode): ArrayNode = {
     val array   = node.as[Seq[YNode]].head.as[YMap]
     val maybeId = array.key("@id").flatMap(_ => retrieveId(array, ctx))
@@ -139,7 +196,11 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement])(implicit ctx: Parse
 
   // TODO
   // use ObjectNode as the default value for the map
+  /**
+    * Mapping fro @type URI values to dynamic node builders
+    */
   private val dynamicBuilders: mutable.Map[String, (Annotations) => AmfObject] = mutable.Map(
+    LinkNode.builderType.iri()   -> domain.LinkNode.apply,
     ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
     ScalarNode.builderType.iri() -> domain.ScalarNode.apply,
     ObjectNode.builderType.iri() -> domain.ObjectNode.apply

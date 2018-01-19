@@ -106,6 +106,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
       case scalar: ScalarNode => emitScalar(scalar, b)
       case array: ArrayNode   => emitArray(array, b)
       case obj: ObjectNode    => emitObject(obj, b)
+      case link: LinkNode     => emitLink(link, b)
     }
   }
 
@@ -140,6 +141,10 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
 
   def emitScalar(scalar: ScalarNode, b: PartBuilder): Unit = {
     scalarEmitter(scalar).emit(b)
+  }
+
+  def emitLink(link: LinkNode, b: PartBuilder): Unit = {
+    LinkScalaEmitter(link.alias, link.annotations).emit(b)
   }
 
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {

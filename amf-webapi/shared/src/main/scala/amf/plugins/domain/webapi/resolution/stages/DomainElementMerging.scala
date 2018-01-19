@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.core.annotations.DefaultNode
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
@@ -28,6 +29,14 @@ object DomainElementMerging {
               case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
               case _                                                                          => main.set(field, adoptInner(main.id, value.value))
             }
+          case Some(existing) if Option(existing.value).isDefined && Option(existing.value.value).isDefined
+             && existing.value.value.annotations.contains(classOf[DefaultNode]) =>
+            field.`type` match {
+              case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
+              case Type.ArrayLike(element) => setNonOptional(main, field, element, value)
+              case _ => main.set(field, adoptInner(main.id, value.value))
+            }
+
           case Some(existing) => // Case (3)
             field.`type` match {
               case _: Type.Scalar          => // Do nothing (3.a)

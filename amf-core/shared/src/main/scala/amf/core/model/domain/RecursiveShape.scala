@@ -13,10 +13,10 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
 
   def withFixPoint(shapeId: String): this.type = set(FixPoint, shapeId)
 
-  override def cloneShape(recursionBase: Option[String]): Shape = {
+  override def cloneShape(recursionBase: Option[String], traversed: Set[String]): Shape = {
     val cloned = RecursiveShape()
     cloned.id = this.id
-    copyFields(cloned, None)
+    copyFields(cloned, None, traversed)
     cloned
   }
 

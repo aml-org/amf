@@ -113,6 +113,7 @@ class AMFCompiler(val rawUrl: String,
     val refs               = referenceCollector.traverse(root.parsed, ctx)
 
     refs
+      .distinct
       .filter(_.isRemote)
       .foreach(link => {
         references += link

@@ -135,7 +135,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) &&
     name.indexOf("/prop") > -1
   }
-  
+
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
     b.obj { b =>
       b.entry("@id", constraintId)

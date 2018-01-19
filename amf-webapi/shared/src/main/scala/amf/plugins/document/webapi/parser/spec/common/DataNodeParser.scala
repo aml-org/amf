@@ -1,12 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.model.document.ExternalFragment
-import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
+import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 import amf.core.utils._
+
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * We need to generate unique IDs for all data nodes if the name is not set
@@ -19,8 +22,6 @@ class IdCounter {
     s"${id}_$c"
   }
 
-  // TODO:
-  // Ideally this should be resetted every single time we parse
   def reset(): Unit = c = 0
 }
 
@@ -70,16 +71,10 @@ case class DataNodeParser(node: YNode,
             val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw
             parseIncludedAST(includedText)
           case _ =>
-            ScalarNode(
-              node.value.toString,
-              Some((Namespace.Xsd + "string").iri())
-            ).withId(parent.getOrElse("") + "/included")
+            parseLink(reference.text)
         }
       case _ =>
-        ScalarNode(
-          node.value.toString,
-          Some((Namespace.Xsd + "string").iri())
-        ).withId(parent.getOrElse("") + "/included")
+        parseLink(node.value.toString)
     }
   }
 
@@ -89,6 +84,52 @@ case class DataNodeParser(node: YNode,
       case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
     }
   }
+
+  /**
+    * Generates a new LinkNode base on the text of a label and the fragments in the context
+    * @param linkText local text pointing to fragment
+    * @return the parsed LinkNode
+    */
+  protected def parseLink(linkText: String): LinkNode = {
+    if (linkText.contains(":")) {
+      LinkNode(linkText, linkText).withId(parent.getOrElse("") + "/included")
+    } else {
+      val localUrl = parent.getOrElse("#").split("#").head
+      val leftLink = if(localUrl.endsWith("/")) localUrl else s"${baseUrl(localUrl)}/"
+      val rightLink = if (linkText.startsWith("/")) linkText.drop(1) else linkText
+      val finalLink = normalizeUrl(leftLink + rightLink)
+      LinkNode(linkText, finalLink).withId(parent.getOrElse("") + "/included")
+    }
+  }
+
+  protected def baseUrl(url: String): String = {
+    if (url.contains("://")) {
+      val protocol = url.split("://").head
+      val path = url.split("://").last
+      val remaining =  path.split("/").dropRight(1)
+      s"$protocol://${remaining.mkString("/")}"
+    } else {
+      url.split("/").dropRight(1).mkString("/")
+    }
+  }
+
+  protected def normalizeUrl(url: String): String = {
+    if (url.contains("://")) {
+      val protocol = url.split("://").head
+      val path = url.split("://").last
+      val remaining =  path.split("/")
+      var stack: ListBuffer[String] = new ListBuffer[String]()
+      remaining.foreach {
+        case "."   => // ignore
+        case ".."  => stack = stack.dropRight(1)
+        case other => stack += other
+      }
+      s"$protocol://${stack.mkString("/")}"
+    } else {
+      url
+    }
+  }
+
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
     val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast))
