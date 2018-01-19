@@ -36,13 +36,22 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
 
   private def links(part: YPart): Unit = {
     part match {
-      case node: YNode if node.tagType == YType.Include => ramlInclude(node)
+      case entry: YMapEntry =>{
+        if (entry.key.tag.text=="!extend"){
+            ramlInclude(entry.value);
+        }
+        else{
+          part.children.foreach(links)
+        }
+      }
+      case node: YNode if (node.tagType == YType.Include)  => ramlInclude(node)
       case _                                            => part.children.foreach(links)
     }
   }
 
   private def ramlInclude(node: YNode) = {
     node.value match {
+
       case scalar: YScalar => references += Reference(scalar.text, LinkReference, node)
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
