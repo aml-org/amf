@@ -700,6 +700,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Spec extension") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "extends/extension.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Spec overlay 1") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "extends/overlay1.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Spec overlay 2") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "extends/overlay2.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("08 Validation") {
     val validation = Validation(platform)
     for {
