@@ -364,7 +364,6 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
   def typeParser: (YPart, String, YNode, Shape => Shape, Boolean, DefaultType) => RamlTypeParser
 
-
   def parseDefaultType(defaultType: DefaultType): Shape = {
     val defaultShape = defaultType.typeDef match {
       case typeDef if typeDef.isScalar => parseScalarType(typeDef)
@@ -391,7 +390,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
       case ArrayType                             => parseArrayType()
       case AnyType                               => parseAnyType()
       case typeDef if typeDef.isScalar           => parseScalarType(typeDef)
-      case MultipleMatch                         => parseDefaultType(defaultType)// Multiple match, we try to disambiguate using the default type info
+      case MultipleMatch =>
+        parseDefaultType(defaultType) // Multiple match, we try to disambiguate using the default type info
     }
 
     // Add 'inline' annotation for shape

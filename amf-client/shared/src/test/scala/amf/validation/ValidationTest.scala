@@ -689,6 +689,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Annotation target usage") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "annotations/target-annotations.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("08 Validation") {
     val validation = Validation(platform)
     for {

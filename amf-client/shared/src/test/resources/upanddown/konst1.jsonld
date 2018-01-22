@@ -92,16 +92,16 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/p2",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/scalar/p2",
                                     "@type": [
-                                      "http://www.w3.org/ns/shacl#NodeShape",
+                                      "http://www.w3.org/ns/shacl#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
                                       "http://raml.org/vocabularies/shapes#Shape",
                                       "http://raml.org/vocabularies/document#DomainElement"
                                     ],
-                                    "http://www.w3.org/ns/shacl#closed": [
+                                    "http://www.w3.org/ns/shacl#datatype": [
                                       {
-                                        "@value": false
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
                                       }
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
@@ -115,7 +115,7 @@
                                           "@value": "a"
                                         }
                                       ],
-                                      "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/p2/a/scalar_1",
+                                      "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/scalar/p2/a/scalar_1",
                                       "@type": [
                                         "http://raml.org/vocabularies/data#Scalar"
                                       ],
@@ -127,7 +127,7 @@
                                       ],
                                       "http://raml.org/vocabularies/document-source-maps#sources": [
                                         {
-                                          "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/p2/a/scalar_1/source-map",
+                                          "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/scalar/p2/a/scalar_1/source-map",
                                           "@type": [
                                             "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                           ],
@@ -135,7 +135,7 @@
                                             {
                                               "http://raml.org/vocabularies/document-source-maps#element": [
                                                 {
-                                                  "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/p2/a/scalar_1"
+                                                  "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/scalar/p2/a/scalar_1"
                                                 }
                                               ],
                                               "http://raml.org/vocabularies/document-source-maps#value": [
@@ -155,7 +155,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/p2/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/scalar/p2/source-map",
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -163,7 +163,7 @@
                                           {
                                             "http://raml.org/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/p2"
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/web-api/end-points/%2Fresource/get/request/application/json/schema/property/p2/scalar/p2"
                                               }
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -637,16 +637,16 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1",
                 "@type": [
-                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://raml.org/vocabularies/shapes#Shape",
                   "http://raml.org/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/shacl#closed": [
+                "http://www.w3.org/ns/shacl#datatype": [
                   {
-                    "@value": false
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
                 ],
                 "http://www.w3.org/ns/shacl#name": [
@@ -654,13 +654,13 @@
                     "@value": "p1"
                   }
                 ],
-                "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1/extension/a": {
+                "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1/extension/a": {
                   "http://raml.org/vocabularies/document#name": [
                     {
                       "@value": "a"
                     }
                   ],
-                  "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1/a/scalar_1",
+                  "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1/a/scalar_1",
                   "@type": [
                     "http://raml.org/vocabularies/data#Scalar"
                   ],
@@ -672,7 +672,7 @@
                   ],
                   "http://raml.org/vocabularies/document-source-maps#sources": [
                     {
-                      "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1/a/scalar_1/source-map",
+                      "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1/a/scalar_1/source-map",
                       "@type": [
                         "http://raml.org/vocabularies/document-source-maps#SourceMap"
                       ],
@@ -680,7 +680,7 @@
                         {
                           "http://raml.org/vocabularies/document-source-maps#element": [
                             {
-                              "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1/a/scalar_1"
+                              "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1/a/scalar_1"
                             }
                           ],
                           "http://raml.org/vocabularies/document-source-maps#value": [
@@ -695,12 +695,12 @@
                 },
                 "http://raml.org/vocabularies/document#customDomainProperties": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1/extension/a"
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1/extension/a"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -708,7 +708,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/p1"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/konst1.raml#/declarations/MyType/property/p1/scalar/p1"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [

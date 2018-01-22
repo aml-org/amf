@@ -519,16 +519,16 @@
             ],
             "http://raml.org/vocabularies/http#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/oauth_2_0/parameter/access_token/schema",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/oauth_2_0/parameter/access_token/scalar/schema",
                 "@type": [
-                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://raml.org/vocabularies/shapes#Shape",
                   "http://raml.org/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/shacl#closed": [
+                "http://www.w3.org/ns/shacl#datatype": [
                   {
-                    "@value": false
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
                   }
                 ],
                 "http://www.w3.org/ns/shacl#name": [
@@ -543,7 +543,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/oauth_2_0/parameter/access_token/schema/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/oauth_2_0/parameter/access_token/scalar/schema/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -563,7 +563,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/oauth_2_0/parameter/access_token/schema"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/oauth_2_0/parameter/access_token/scalar/schema"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
