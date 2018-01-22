@@ -1,18 +1,20 @@
 package amf.tasks.validations
 
+import amf.ProfileNames
 import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 
 class ValidationDialectTextGenerator(profile: ValidationProfile) {
 
   def emit(): String = {
-    val extension = if (profile.name == "RAML" || profile.name == "RAML08" || profile.name == "OpenAPI") {
-      "\nextends: AMF\n"
-    } else {
-      "\n"
-    }
+    val extension =
+      if (profile.name == ProfileNames.RAML || profile.name == ProfileNames.RAML08 || profile.name == ProfileNames.OAS) {
+        "\nextends: AMF\n"
+      } else {
+        "\n"
+      }
 
-    val effectiveValidations = if (profile.name == "AMF") {
+    val effectiveValidations = if (profile.name == ProfileNames.AMF) {
       profile.validations
     } else {
       profile.validations.filter(_.propertyConstraints.nonEmpty)

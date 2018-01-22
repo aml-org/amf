@@ -36,7 +36,7 @@ trait Raml extends Vendor {
 
   override def isSameWithoutVersion(vendor: Vendor): Boolean = {
     vendor match {
-      case o: Raml => true
+      case _: Raml => true
       case _       => false
     }
   }

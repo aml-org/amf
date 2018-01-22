@@ -18,16 +18,22 @@ trait ValidationResultProcessor {
     }
 
     var message: String = messageStyle match {
-      case ProfileNames.RAML => spec.ramlMessage.getOrElse(result.message)
-      case ProfileNames.OAS  => spec.oasMessage.getOrElse(result.message)
-      case _                 => spec.message
+      case ProfileNames.RAML | ProfileNames.RAML08 => spec.ramlMessage.getOrElse(result.message)
+      case ProfileNames.OAS                        => spec.oasMessage.getOrElse(result.message)
+      case _                                       => spec.message
     }
     if (message == "") {
       message = "Constraint violation"
     }
 
     val severity = findLevel(spec.id(), validations)
-    new AMFValidationResult(message, severity, result.targetNode, result.targetProperty, spec.id(), result.position, result.source)
+    new AMFValidationResult(message,
+                            severity,
+                            result.targetNode,
+                            result.targetProperty,
+                            spec.id(),
+                            result.position,
+                            result.source)
   }
 
   protected def buildValidationResult(model: BaseUnit,
@@ -68,9 +74,9 @@ trait ValidationResultProcessor {
     maybeTargetSpec match {
       case Some(targetSpec) =>
         var message = messageStyle match {
-          case ProfileNames.RAML => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case ProfileNames.OAS  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case _                 => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
+          case ProfileNames.RAML | ProfileNames.RAML08 => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case ProfileNames.OAS                        => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case _                                       => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
         }
 
         if (Option(message).isEmpty || message == "") {
@@ -85,7 +91,7 @@ trait ValidationResultProcessor {
         val severity = findLevel(idMapping(result.sourceShape), validations)
         Some(
           AMFValidationResult.withShapeId(finalId,
-            AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
+                                          AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
       case _ => None
     }
   }
@@ -99,6 +105,5 @@ trait ValidationResultProcessor {
       SeverityLevels.VIOLATION
     }
   }
-
 
 }

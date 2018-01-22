@@ -305,7 +305,7 @@ object Raml08Syntax extends RamlSyntax {
   )
 }
 
-trait RamlSyntax extends SpecSyntax {
+sealed trait RamlSyntax extends SpecSyntax {
 
   val commonNodes: Map[String, Set[String]] = Map(
     "userDocumentation" -> Set(

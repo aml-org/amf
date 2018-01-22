@@ -57,7 +57,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { baseUnit =>
-      AMF.validate(baseUnit, "RAML").toFuture.map { report =>
+      AMF.validate(baseUnit, ProfileNames.RAML).toFuture.map { report =>
         (baseUnit, report)
       }
     } flatMap {
@@ -168,7 +168,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       doc.withLocation("test_vocab.raml")
       doc.withEncodes(vocab)
 
-      val readVocab = new amf.model.domain.Vocabulary(doc.encodes.asInstanceOf[DomainEntity])
+      val readVocab = amf.model.domain.Vocabulary(doc.encodes.asInstanceOf[DomainEntity])
       assert(readVocab.base() == vocab.base())
       assert(Option(readVocab.base()).isDefined)
       assert(readVocab.usage() == vocab.usage())
@@ -229,7 +229,7 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
       val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
       parser.parseFileAsync("file://vocabularies/vocabularies/raml_shapes.raml").toFuture
     } map { parsed =>
-      val vocabulary = amf.model.domain.Vocabulary(parsed.asInstanceOf[Document].encodes.asInstanceOf[DomainEntity])
+      val vocabulary                           = amf.model.domain.Vocabulary(parsed.asInstanceOf[Document].encodes.asInstanceOf[DomainEntity])
       val acc: mutable.HashMap[String, String] = new mutable.HashMap()
       for {
         property <- vocabulary.propertyTerms().toSeq
@@ -244,9 +244,10 @@ class WrapperTests extends AsyncFunSuite with PlatformSecrets {
   test("Vocabularies parsing raml_doc") {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
-    val res = amf.Core.init().toFuture flatMap  { _ =>
+    val res = amf.Core.init().toFuture flatMap { _ =>
       val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
-      val f: Future[amf.model.document.BaseUnit] = parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").toFuture
+      val f: Future[amf.model.document.BaseUnit] =
+        parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").toFuture
       f
     }
 

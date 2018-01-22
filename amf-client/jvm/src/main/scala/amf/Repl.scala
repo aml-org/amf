@@ -27,9 +27,10 @@ class Repl(val in: InputStream, val out: PrintStream) {
 
   private def generate(unit: BaseUnit, syntax: String): Unit = {
     val generator: Option[Generator] = syntax match {
-      case "raml" => Some(new Raml10Generator)
-      case "oas"  => Some(new Oas20Generator)
-      case "amf"  => Some(new AmfGraphGenerator)
+      case "raml"   => Some(new Raml10Generator)
+      case "raml08" => Some(new Raml08Generator)
+      case "oas"    => Some(new Oas20Generator)
+      case "amf"    => Some(new AmfGraphGenerator)
       case _ =>
         out.println(s"Unsupported generation for: $syntax")
         None
@@ -77,13 +78,13 @@ class Repl(val in: InputStream, val out: PrintStream) {
   }
 
   private def parser(vendor: Vendor) = vendor match {
-    case Raml    => new RamlParser
     case Raml10  => new Raml10Parser
     case Raml08  => new Raml08Parser
+    case Raml    => new RamlParser
     case Oas     => new Oas20Parser
     case Amf     => new AmfGraphParser
     case Payload => throw new Exception("Cannot find a parser for Payload vendor")
-    case Unknown => throw new Exception("Cannot find a parser for Unknown vendor")
+    case _       => throw new Exception("Cannot find a parser for Unknown vendor")
   }
 
   private object Generate {
