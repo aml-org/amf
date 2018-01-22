@@ -198,7 +198,7 @@ case class RamlTypeDetector(parent: String,
       val defs = findEventualShapes(map).toList
       Option(defs.filter(!_.equals("shape")) match {
         case Nil if defs contains "shape"    => StrType
-        case Nil if !(defs contains "shape") => UndefinedType
+        case Nil if !(defs contains "shape") => defaultType.typeDef
         case head :: Nil =>
           head match {
             case "nodeShape"         => ObjectType
