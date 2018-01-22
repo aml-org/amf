@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.ProfileNames
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -133,7 +134,7 @@ object DefaultAMFValidations extends ImportUtils {
 
         ValidationProfile(
           name = profile,
-          baseProfileName = if (profile == "AMF") { None } else { Some("AMF") },
+          baseProfileName = if (profile == ProfileNames.AMF) None else Some(ProfileNames.AMF),
           infoLevel = infoParserSideValidations,
           warningLevel = warningParserSideValidations,
           violationLevel = validations.map(_.name) ++ violationParserSideValidations,

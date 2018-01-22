@@ -39,11 +39,11 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
     val vendorString = vendor match {
       case Amf           => "AMF Graph"
       case Payload       => "AMF Payload"
-      case Raml10 | Raml => "RAML 1.0"
       case Raml08        => "RAML 0.8"
+      case Raml10 | Raml => "RAML 1.0"
       case Oas           => "OAS 2.0"
       case Extension     => "RAML Vocabularies"
-      case Unknown       => "Uknown Vendor"
+      case _             => "Unknown Vendor"
     }
 
     val mediaType = vendor match {
@@ -52,14 +52,10 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
       case Raml10 | Raml08 | Raml => "application/yaml"
       case Oas                    => "application/json"
       case Extension              => "application/yaml"
-      case Unknown                => "text/plain"
+      case _                      => "text/plain"
     }
 
     new AMFSerializer(unit, mediaType, vendorString, options).dumpToString
-  }
-
-  private def unsupported = {
-    throw new RuntimeException(s"Unsupported '$syntax' syntax for '$vendor'")
   }
 }
 

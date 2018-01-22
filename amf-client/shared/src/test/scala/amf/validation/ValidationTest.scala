@@ -12,7 +12,13 @@ import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation, _}
+import amf.plugins.document.webapi.validation.{
+  AnnotationsValidation,
+  ExamplesValidation,
+  PayloadValidation,
+  ShapeFacetsValidation,
+  _
+}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -676,10 +682,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Headers example array validation") {
     val validation = Validation(platform)
     for {
-      doc <- AMFCompiler(validationsPath + "production/headers.raml", platform, RamlYamlHint, validation).build()
+      doc    <- AMFCompiler(validationsPath + "production/headers.raml", platform, RamlYamlHint, validation).build()
       report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("08 Validation") {
+    val validation = Validation(platform)
+    for {
+      library <- AMFCompiler(validationsPath + "08/some.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(report.results.isEmpty)
     }
   }
 }

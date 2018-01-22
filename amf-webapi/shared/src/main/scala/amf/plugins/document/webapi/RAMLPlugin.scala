@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi
 
+import amf.ProfileNames
 import amf.ProfileNames.RAML
 import amf.core.Root
 import amf.core.client.GenerationOptions
@@ -25,8 +26,6 @@ trait RAMLPlugin extends BaseWebApiPlugin {
   override val ID: String = "RAML " + version
 
   override val vendors = Seq(ID, "RAML")
-
-  override val validationProfile: String = RAML
 
   def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
 
@@ -96,6 +95,8 @@ trait RAMLPlugin extends BaseWebApiPlugin {
 object RAML08Plugin extends RAMLPlugin {
   override def version: String = "0.8"
 
+  override val validationProfile: String = ProfileNames.RAML08
+
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml08          => true
     case _: RamlFragment => true
@@ -141,12 +142,14 @@ object RAML10Plugin extends RAMLPlugin {
 
   override def version: String = "1.0"
 
+  override val validationProfile: String = RAML
+
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
-    case Raml10DocumentationItem | Raml10NamedExample |
-         Raml10DataType | Raml10ResourceType | Raml10Trait |
-         Raml10AnnotationTypeDeclaration | Raml10SecurityScheme   => true
-    case _                                                        => false
+    case Raml10DocumentationItem | Raml10NamedExample | Raml10DataType | Raml10ResourceType | Raml10Trait |
+        Raml10AnnotationTypeDeclaration | Raml10SecurityScheme =>
+      true
+    case _ => false
   }
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {

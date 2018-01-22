@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies
 
+import amf.ProfileNames
 import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
@@ -136,7 +137,7 @@ object RAMLVocabulariesPlugin
 
       // adding model-side validations
       val results = shaclReport.results
-        .flatMap(r => buildValidationResult(baseUnit, r, "RAML", validations))
+        .flatMap(r => buildValidationResult(baseUnit, r, ProfileNames.RAML, validations))
 
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
@@ -164,7 +165,5 @@ object RAMLVocabulariesPlugin
     */
   def registerDialect(url: String, dialectText: String): Future[Dialect] =
     PlatformDialectRegistry.registerDialect(url, dialectText)
-
-
 
 }
