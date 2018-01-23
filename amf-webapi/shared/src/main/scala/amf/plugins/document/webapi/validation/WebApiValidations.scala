@@ -14,14 +14,21 @@ trait WebApiValidations extends ValidationResultProcessor {
 
   var aggregatedReport: List[AMFValidationResult] = List()
 
-  val defaultValidationProfiles =  DefaultAMFValidations.profiles().foldLeft(Map[String, () => ValidationProfile]()) {
-    case (acc, profile) => acc.updated(profile.name, { () => profile })
+  val defaultValidationProfiles = DefaultAMFValidations.profiles().foldLeft(Map[String, () => ValidationProfile]()) {
+    case (acc, profile) =>
+      acc.updated(profile.name, { () =>
+        profile
+      })
   }
 
-  protected def validationRequestsForBaseUnit(unresolvedUnit: BaseUnit, profile: String, validations: EffectiveValidations, messageStyle: String, platform: Platform) = {
+  protected def validationRequestsForBaseUnit(unresolvedUnit: BaseUnit,
+                                              profile: String,
+                                              validations: EffectiveValidations,
+                                              messageStyle: String,
+                                              platform: Platform) = {
 
     // Before validating we need to resolve to get all the model information
-    val baseUnit = new ValidationResolutionPipeline().resolve(unresolvedUnit)
+    val baseUnit = new ValidationResolutionPipeline(profile).resolve(unresolvedUnit)
 
     aggregatedReport = List()
 
@@ -121,7 +128,7 @@ trait WebApiValidations extends ValidationResultProcessor {
         val severity = SeverityLevels.VIOLATION
         Some(
           AMFValidationResult.withShapeId(finalId,
-            AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
+                                          AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
       case _ => None
     }
   }
@@ -132,7 +139,5 @@ trait WebApiValidations extends ValidationResultProcessor {
                                                validations: EffectiveValidations): Option[AMFValidationResult] = {
     Some(result.copy(level = findLevel(result.validationId, validations)))
   }
-
-
 
 }
