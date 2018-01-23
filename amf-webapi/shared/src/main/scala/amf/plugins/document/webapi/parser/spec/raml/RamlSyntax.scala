@@ -183,7 +183,8 @@ object Raml10Syntax extends RamlSyntax {
       "is",
       "type",
       "securedBy",
-      "uriParameters"
+      "uriParameters",
+      "usage"
     ),
     "operation" -> Set(
       "displayName",
@@ -195,7 +196,8 @@ object Raml10Syntax extends RamlSyntax {
       "body",
       "protocols",
       "is",
-      "securedBy"
+      "securedBy",
+      "usage"
     ),
     "annotation" -> Set(
       "displayName",
