@@ -6,7 +6,7 @@ title: Example API
       body:
         application/x-www-form-urlencoded:
           properties:
-            name:
+            name?:
               anyOf:
                 -
                   description: The name of the resource to create
@@ -17,7 +17,7 @@ title: Example API
                   type: string
                   example: Comment1
               type: union
-            description:
+            description?:
               description: A description of the resource to create
               type: string
               example: User-generated content pertinent to the associated blog post

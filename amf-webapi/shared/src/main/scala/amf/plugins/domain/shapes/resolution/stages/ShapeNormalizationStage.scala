@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages
 
+import amf.ProfileNames
 import amf.core.annotations.{ExplicitField, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -30,7 +31,11 @@ class ShapeNormalizationStage(profile: String)
 
   var fixPointCount = 0
 
-  override def resolve(model: BaseUnit): BaseUnit = model.transform(findShapesPredicate, transform)
+  override def resolve(model: BaseUnit): BaseUnit =
+    profile match {
+      case ProfileNames.RAML08 => model
+      case _                   => model.transform(findShapesPredicate, transform)
+    }
 
   protected def ensureCorrect(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
@@ -168,7 +173,7 @@ class ShapeNormalizationStage(profile: String)
     if (Option(oldAnyOf).isDefined) {
       val newAnyOf = union.anyOf.map(shape => expand(shape))
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
-    } else if(Option(union.inherits).isEmpty || union.inherits.isEmpty) {
+    } else if (Option(union.inherits).isEmpty || union.inherits.isEmpty) {
       throw new Exception(s"Resolution error: Union shape with missing anyof: $union")
     }
 
@@ -346,7 +351,7 @@ class ShapeNormalizationStage(profile: String)
       Option(union.anyOf).getOrElse(Nil).foreach { shape =>
         canonical(shape) match {
           case union: UnionShape => union.anyOf.foreach(e => anyOfAcc += e)
-          case other: Shape => anyOfAcc += other
+          case other: Shape      => anyOfAcc += other
         }
       }
       val anyOfAnnotations = Option(union.fields.getValue(UnionShapeModel.AnyOf)) match {

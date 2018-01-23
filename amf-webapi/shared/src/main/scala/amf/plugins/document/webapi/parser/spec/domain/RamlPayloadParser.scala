@@ -1,16 +1,16 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, YMapOps}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml08TypeParser, Raml10TypeParser}
 import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model._
-import amf.core.parser.YMapOps
-import amf.plugins.domain.webapi.metamodel.PayloadModel
 
 /**
   *
@@ -92,19 +92,25 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
       .key("formParameters")
       .flatMap(entry => {
         val entries = entry.value.as[YMap].entries
-        entries.headOption.map { _ =>
-          val webFormShape = NodeShape(entry.value).withName("schema").adopted(parentId)
+        entries.headOption.map {
+          _ =>
+            val webFormShape = NodeShape(entry.value).withName("schema").adopted(parentId)
 
-          entries.foreach(e => {
+            entries.foreach(e => {
 
-            Raml08TypeParser(e, e.key.as[YScalar].toString(), e.value, (shape: Shape) => shape)
-              .parse()
-              .foreach(s => {
-                val property = webFormShape.withProperty(s.name)
-                property.withRange(s).adopted(property.id)
-              })
-          })
-          webFormShape
+              Raml08TypeParser(e, e.key.as[YScalar].toString(), e.value, (shape: Shape) => shape)
+                .parse()
+                .foreach(s => {
+                  val property = webFormShape.withProperty(s.name)
+                  s.fields.entry(ShapeModel.RequiredShape) match {
+                    case None                        => property.withMinCount(0)
+                    case Some(f) if !f.scalar.toBool => property.withMinCount(0)
+                    case _                           => property.withMinCount(1)
+                  }
+                  property.withRange(s).adopted(property.id)
+                })
+            })
+            webFormShape
         }
       })
   }
