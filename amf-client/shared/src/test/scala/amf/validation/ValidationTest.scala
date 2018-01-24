@@ -754,4 +754,26 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
+
+  test("Test validate pattern with valid example") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "examples/pattern-valid.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test validate pattern with invalid example") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "examples/pattern-invalid.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
 }

@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Illustrating annotations
+mediaType: application/json
+annotationTypes:
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+/users:
+  (clearanceLevel):
+    level: high
+    signature: 230-ghtwvfrs1itr
