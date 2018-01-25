@@ -809,4 +809,8 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("enum-inheritance.raml.jsonld", "enum-inheritance.jsonld.raml", AmfJsonHint, Raml)
   }
 
+  test("Types declarations with square bracket") {
+    cycle("type-declared-with-square-bracket.raml", "type-declared-with-square-bracket.raml.raml", RamlYamlHint, Raml)
+  }
+
 }
