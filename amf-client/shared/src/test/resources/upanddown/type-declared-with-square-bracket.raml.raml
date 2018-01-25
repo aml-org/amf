@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: Billing Engine APIs
+version: v1
+description: Billing Engine APIs
+/api:
+  displayName: api
+  /DocumentConfigurations:
+    get:
+      displayName: ApiDocumentConfigurationsGetByConfigurationNameByNameGet
+      responses:
+        200:
+          body:
+            text/plain:
+              type: IServiceResponse[adasf]
+          description: Success
+types:
+  IServiceResponse[adasf]:
+    properties:
+      success:
+        type: boolean
+        required: false
+      message:
+        type: string
+        required: false
+        facets:
+          readOnly?:
+            type: boolean
+      warning:
+        type: string
+        required: false
+        facets:
+          readOnly?:
+            type: boolean
