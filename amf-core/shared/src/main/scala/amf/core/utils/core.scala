@@ -89,5 +89,9 @@ package object utils {
     }
 
     def invalidMsg(uri: String): String = s"'$uri' is not a valid template uri."
+
+    val varPattern = "\\{(.[^{]*)\\}".r
+    def variables(path: String): Seq[String] =
+      varPattern.findAllIn(path).toSeq.map(v => v.replace("{","").replace("}",""))
   }
 }

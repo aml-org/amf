@@ -23,6 +23,14 @@
     "/levelzero/some{two}/level-one": {
       "x-displayName": "One display name",
       "x-description": "and this description!",
+      "parameters": [
+        {
+          "name": "two",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
       "get": {
         "operationId": "Some title",
         "parameters": [
