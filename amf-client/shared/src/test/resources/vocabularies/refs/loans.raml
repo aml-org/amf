@@ -1,0 +1,43 @@
+#%RAML 1.0 Dialect
+
+dialect: Loan
+
+version: 1.0
+
+external:
+  fibo: http://fibo.org/
+  schema: http://schema.org/
+
+nodeMappings:
+
+  loan:
+    classTerm: fibo.Loan
+    mapping:
+      amount:
+        propertyTerm: fibo.amount
+        range: number
+      applicant:
+        propertyTerm: fibo.applicant
+        range: applicant
+
+  applicant:
+    classTerm: fibo.Applicant
+    mapping:
+      email:
+        propertyTerm: schema.email
+        range: string
+      age:
+        propertyTerm: schema.age
+        range: integer
+
+raml:
+  document:
+    declares:
+      applicants: applicant
+    encodes: loan
+  fragments:
+    encodes:
+      Applicant: applicant
+  module:
+    declares:
+      applicants: applicant

@@ -141,6 +141,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
   }
 
   test("Parameters - RAML.") {
+
     val endpoints = List(
       EndPoint()
         .withPath("/levelzero/some{two}")
@@ -155,41 +156,46 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       EndPoint()
         .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
-        .withDescription("and this description!")
-        .withOperations(List(
-          Operation()
-            .withMethod("get")
-            .withName("Some title")
-            .withRequest(Request()
-              .withQueryParameters(List(
-                Parameter()
-                  .withName("param1")
+        .withDescription("and this description!").withParameters(Seq(
+        Parameter()
+          .withName("two")
+          .withRequired(true)
+          .withBinding("path")
+          .withSchema(ScalarShape().withName("two").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+      )).withOperations(List(
+        Operation()
+          .withMethod("get")
+          .withName("Some title")
+          .withRequest(Request()
+            .withQueryParameters(List(
+              Parameter()
+                .withName("param1")
+                .withDescription("Some descr")
+                .withRequired(true)
+                .withBinding("query")
+                .withSchema(ScalarShape()
+                  .withName("schema")
                   .withDescription("Some descr")
-                  .withRequired(true)
-                  .withBinding("query")
-                  .withSchema(ScalarShape()
-                    .withName("schema")
-                    .withDescription("Some descr")
-                    .withDataType("http://www.w3.org/2001/XMLSchema#string")),
-                Parameter()
-                  .withName("param2")
-                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  .withRequired(false)
-                  .withBinding("query")
-              ))),
-          Operation()
-            .withMethod("post")
-            .withName("Some title")
-            .withDescription("Some description")
-            .withRequest(Request()
-              .withHeaders(List(
-                Parameter()
-                  .withName("Header-One")
-                  .withRequired(false)
-                  .withBinding("header")
-                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-              )))
-        ))
+                  .withDataType("http://www.w3.org/2001/XMLSchema#string")),
+              Parameter()
+                .withName("param2")
+                .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                .withRequired(false)
+                .withBinding("query")
+            ))),
+        Operation()
+          .withMethod("post")
+          .withName("Some title")
+          .withDescription("Some description")
+          .withRequest(Request()
+            .withHeaders(List(
+              Parameter()
+                .withName("Header-One")
+                .withRequired(false)
+                .withBinding("header")
+                .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+            )))
+      ))
     )
     val api = WebApi()
       .withName("API")

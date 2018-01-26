@@ -813,4 +813,11 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("type-declared-with-square-bracket.raml", "type-declared-with-square-bracket.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("API with implicit parameters raml to amf") {
+    cycle("users_accounts.raml", "users_accounts.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("API with implicit parameters amf to raml") {
+    cycle("users_accounts.jsonld", "users_accounts.raml", AmfJsonHint, Raml)
+  }
 }
