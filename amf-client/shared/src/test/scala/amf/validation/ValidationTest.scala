@@ -745,6 +745,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("08 Validation") {
+
     val validation = Validation(platform)
     for {
       library <- AMFCompiler(validationsPath + "08/some.raml", platform, RamlYamlHint, validation)
@@ -774,6 +775,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
+    }
+  }
+
+  test("Test validate external fragment cast exception") {
+    val validation = Validation(platform)
+    for {
+      doc <- AMFCompiler(validationsPath + "/tck-examples/cast-external-exception.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
     }
   }
 }
