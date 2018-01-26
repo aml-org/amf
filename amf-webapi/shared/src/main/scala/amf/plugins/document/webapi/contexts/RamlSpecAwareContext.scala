@@ -30,7 +30,7 @@ trait RamlSpecVersionFactory extends SpecVersionFactory {
 class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
 
   override def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser =
-    Raml10OperationParser.apply
+    RamlOperationParser.apply
 
   override def endPointParser
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
@@ -50,7 +50,7 @@ class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
 class Raml08VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
 
   override def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser =
-    Raml08OperationParser.apply
+    RamlOperationParser.apply
 
   override def endPointParser
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =

@@ -25,7 +25,6 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
   override protected def entries(fs: Fields): Seq[EntryEmitter] = {
     val emitters = super.entries(fs)
     val results  = ListBuffer[EntryEmitter]()
-    fs.entry(OperationModel.Description).map(f => results += ValueEmitter("description", f))
 
     Option(operation.request).foreach { req =>
       req.fields
@@ -65,6 +64,8 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     val result = mutable.ListBuffer[EntryEmitter]()
 
     fs.entry(OperationModel.Name).map(f => result += ValueEmitter("displayName", f))
+
+    fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
 
     fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("(deprecated)", f))
 
