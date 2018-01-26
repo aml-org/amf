@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
@@ -9,7 +10,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
@@ -64,7 +65,11 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
           fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
 
           fs.entry(EndPointModel.UriParameters)
-            .map(f => result += RamlParametersEmitter(keyParameter, f, ordering, references))
+            .map { f =>
+              if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+                result += RamlParametersEmitter(keyParameter, f, ordering, references)
+              }
+            }
 
           fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
