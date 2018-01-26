@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.TemplateUri
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
@@ -44,7 +46,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
   def parse(): Unit = {
 
-    val path = parent.map(_.path).getOrElse("") + entry.key.as[String]
+    val path = parsePath()
 
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
@@ -126,16 +128,33 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
     )
 
-    map.key(
-      uriParametersKey,
-      entry => {
-        val parameters: Seq[Parameter] =
+    map.key(uriParametersKey) match {
+      case Some(entry) =>
+        val explicitParameters: Seq[Parameter] =
           RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
             .parse()
             .map(_.withBinding("path"))
+        val implicitParameters = TemplateUri.variables(parsePath())
+          .filter(variable => !explicitParameters.exists(_.name == variable))
+          .map { variable =>
+            val implicitParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+            implicitParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+            implicitParam.annotations += SynthesizedField()
+            implicitParam
+          }
+        val parameters = explicitParameters ++ implicitParameters
         endpoint.set(EndPointModel.UriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+      case None =>
+        val implicitParameters = TemplateUri.variables(parsePath())
+          .map { variable =>
+            val implicitParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+            implicitParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+            implicitParam.annotations += SynthesizedField()
+            implicitParam
+          }
+        if (implicitParameters.nonEmpty)
+          endpoint.set(EndPointModel.UriParameters, AmfArray(implicitParameters, Annotations(entry.value)), Annotations(entry))
+    }
 
     collector += endpoint
 
@@ -148,6 +167,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
     )
   }
+
+  protected def parsePath(): String =  parent.map(_.path).getOrElse("") + entry.key.as[String]
 
   protected def uriParametersKey: String
 }

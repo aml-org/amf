@@ -10,6 +10,14 @@
   ],
   "paths": {
     "/users/{userid}/gists": {
+      "parameters": [
+        {
+          "name": "userid",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
       "get": {
         "responses": {},
         "security": [

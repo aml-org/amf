@@ -7,11 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AnnotationsEmitter,
-  Raml08TypePartEmitter,
-  Raml10TypeEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, Raml08TypePartEmitter, Raml10TypeEmitter}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.ParameterModel
@@ -41,6 +37,7 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
     f.array.values
+      .filter(!_.annotations.contains(classOf[SynthesizedField]))
       .foreach(e => result += spec.factory.parameterEmitter(e.asInstanceOf[Parameter], ordering, references))
 
     ordering.sorted(result)
