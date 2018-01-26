@@ -17,34 +17,7 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10OperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends RamlOperationParser(entry, producer, parseOptional) {
-
-  override def parseMap(map: YMap, operation: Operation): Operation = {
-
-    super.parseMap(map, operation)
-
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      operation.set(OperationModel.Description, value.string(), Annotations(entry))
-    })
-
-    operation
-  }
-}
-
-case class Raml08OperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends RamlOperationParser(entry, producer, parseOptional) {
-
-  override def parse(): Operation = {
-    super.parse()
-    // todo add parse baseuriparameters
-  }
-}
-
-abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
+case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext) {
 
   def parse(): Operation = {
@@ -170,6 +143,11 @@ abstract class RamlOperationParser(entry: YMapEntry, producer: (String) => Opera
         operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
     )
+
+    map.key("description", entry => {
+      val value = ValueNode(entry.value)
+      operation.set(OperationModel.Description, value.string(), Annotations(entry))
+    })
 
     AnnotationParser(() => operation, map).parse()
 

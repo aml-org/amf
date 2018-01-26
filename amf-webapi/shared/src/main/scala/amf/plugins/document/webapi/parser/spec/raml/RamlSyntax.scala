@@ -295,6 +295,7 @@ object Raml08Syntax extends RamlSyntax {
     ),
     "operation" -> Set(
       "displayName",
+      "description",
       "queryParameters",
       "headers",
       "responses",

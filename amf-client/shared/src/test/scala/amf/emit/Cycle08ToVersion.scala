@@ -17,7 +17,8 @@ class Cycle08ToVersion extends BuildCycleTests {
     FixtureData("operation base uri parameters",
                 "operation-base-uri-parameters.raml",
                 "operation-base-uri-parameters-10.raml"),
-    FixtureData("named parameters in media type", "named-type.raml", "named-type-10.raml")
+    FixtureData("named parameters in media type", "named-type.raml", "named-type-10.raml"),
+    FixtureData("operation with a description", "operation-description.raml", "operation-description-10.raml")
   )
 
   cycle08to10.foreach(f => {
@@ -33,7 +34,8 @@ class Cycle08ToVersion extends BuildCycleTests {
     FixtureData("operation base uri parameters",
                 "operation-base-uri-parameters.raml",
                 "operation-base-uri-parameters.raml"),
-    FixtureData("named parameters in media type", "named-type.raml", "named-type.raml")
+    FixtureData("named parameters in media type", "named-type.raml", "named-type.raml"),
+    FixtureData("operation with a description", "operation-description.raml", "operation-description.raml")
   )
 
   cycles08.foreach(f => {
