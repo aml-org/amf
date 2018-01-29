@@ -290,6 +290,26 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .map(checkDiff)
   }
 
+  test("Dialect refers on its definition") {
+    val expected =
+      platform.resolve(basePath + "dialect_refers.json", None).map(_.stream.toString)
+
+      val actual=AMFCompiler(basePath + "validation_profile_renamed_example.raml",
+            platform,
+            ExtensionYamlHint,
+            Validation(platform),
+            None,
+            None).build();
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "dialect_refers.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+
   ignore("Register remote dialect") {
     PlatformDialectRegistry.registerDialect("https://mulesoft-labs.github.io/ABOUT-vocabularies/ABOUT-dialect.raml") map {
       dialect =>
