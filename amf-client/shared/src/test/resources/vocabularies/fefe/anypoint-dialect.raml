@@ -1,0 +1,36 @@
+#%RAML Library / RAML 1.0 Dialect
+
+external:
+  schema-org: http://schema.org/
+  anypoint-vocabulary: http://anypoint.com
+  mule-runtime: http://mule-runtime.com/
+
+nodeMappings:
+
+  asset:
+    classTerm: anypoint-vocabulary.Asset
+    mapping:
+      group:
+        propertyTerm: anypoint-vocabulary.group
+        mandatory: true
+        range: string
+      artifact:
+        propertyTerm: anypoint-vocabulary.artifact
+        mandatory: true
+        range: string
+      version:
+        propertyTerm: anypoint-vocabulary.version
+        mandatory: true
+        range: string
+      classifier:
+        propertyTerm: anypoint-vocabulary.classifier
+        mandatory: false
+        range: string
+      packaging:
+        propertyTerm: anypoint-vocabulary.packaging
+        mandatory: true
+        range: string
+      composedBy:
+        propertyTerm: anypoint-vocabulary.asset
+        mandatory: false
+        range: asset
