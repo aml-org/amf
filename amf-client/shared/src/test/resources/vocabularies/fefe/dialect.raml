@@ -1,0 +1,32 @@
+#%RAML 1.0 Dialect
+
+dialect: Mule Agent Configuration
+version: 0.1
+
+uses:
+   anypoint-dialect: ./anypoint-dialect.raml
+
+external:
+  schema-org: http://schema.org/
+  anypoint-vocabulary: http://anypoint.com
+  mule-runtime: http://mule-runtime.com/
+
+raml:
+  document:
+    encodes: muleAgentConfiguration
+    declares:
+      assets: anypoint-dialect.asset
+
+  fragments:
+    encodes:
+      Asset: anypoint-dialect.asset
+
+nodeMappings:
+
+  muleAgentConfiguration:
+    classTerm: mule-runtime.Agent
+    mapping:
+      asset:
+        propertyTerm: anypoint-vocabulary.asset
+        mandatory: false
+        range: anypoint-dialect.asset

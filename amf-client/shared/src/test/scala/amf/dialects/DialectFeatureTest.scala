@@ -290,6 +290,29 @@ class DialectFeatureTest extends AsyncFunSuite with PlatformSecrets {
       .map(checkDiff)
   }
 
+  test("Fefe claims on dialect resolution") {
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "fefe/dialect.raml")
+    val expected =
+      platform.resolve(basePath + "fefe/agentConfiguration.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit =>
+          AMFCompiler(basePath + "fefe/agentConfiguration.raml",
+            platform,
+            ExtensionYamlHint,
+            Validation(platform),
+            None,
+            None).build())
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "fefe/agentConfiguration.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+
   test("Dialect refers on its definition") {
     val expected =
       platform.resolve(basePath + "dialect_refers.json", None).map(_.stream.toString)
