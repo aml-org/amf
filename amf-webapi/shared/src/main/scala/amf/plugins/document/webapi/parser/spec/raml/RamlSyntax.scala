@@ -254,6 +254,20 @@ object Raml08Syntax extends RamlSyntax {
       "maxLength",
       "required"
     ),
+    "dateScalarShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "enum",
+      "required",
+      "repeat",
+      "format"
+    ),
     "numberScalarShape" -> Set(
       "type",
       "default",

@@ -202,7 +202,13 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
       val shape = ScalarShape(map).withName(name)
       adopt(shape)
       parseMap(shape)
-      ctx.closedShape(shape.id, map, "stringScalarShape")
+      val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
+        case "integer" | "float" => "numberScalarShape"
+        case "string"            => "stringScalarShape"
+        case "dateTime"          => "dateScalarShape"
+        case _                   => "shape"
+      }
+      ctx.closedShape(shape.id, map, syntaxType)
       shape.asInstanceOf[Shape]
     }
   }
@@ -210,7 +216,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
   private def parseMap(shape: Shape): Unit = {
     map.key("displayName", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
+      shape.set(ShapeModel.DisplayName, value.text, Annotations(entry))
     })
 
     map
@@ -230,7 +236,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Description, value.string(), Annotations(entry))
+      shape.set(ShapeModel.Description, value.text, Annotations(entry))
     })
 
     map.key("enum", entry => {
@@ -240,27 +246,27 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
 
     map.key("pattern", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
+      shape.set(ScalarShapeModel.Pattern, value.text, Annotations(entry))
     })
 
     map.key("minLength", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MinLength, value.string(), Annotations(entry))
+      shape.set(ScalarShapeModel.MinLength, value.text, Annotations(entry))
     })
 
     map.key("maxLength", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MaxLength, value.string(), Annotations(entry))
+      shape.set(ScalarShapeModel.MaxLength, value.text, Annotations(entry))
     })
 
     map.key("minimum", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+      shape.set(ScalarShapeModel.Minimum, value.text, Annotations(entry))
     })
 
     map.key("maximum", entry => {
       val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+      shape.set(ScalarShapeModel.Maximum, value.text, Annotations(entry))
     })
 
     RamlSingleExampleParser("example", map).parse().foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
