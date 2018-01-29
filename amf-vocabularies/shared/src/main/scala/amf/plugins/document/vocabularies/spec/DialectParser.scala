@@ -1,8 +1,11 @@
 package amf.plugins.document.vocabularies.spec
 
+import java.net.URLDecoder
+
 import amf.core.Root
 import amf.core.annotations.{ExtendsDialectNode, LexicalInformation, SourceAST, SynthesizedField}
 import amf.core.metamodel.Type
+import amf.core.metamodel.Type.Iri
 import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, Fields, _}
@@ -612,9 +615,13 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
   }
 
   private def setScalar(node: DomainEntity, mapping: DialectPropertyMapping, value: YScalar) = {
-
+    var txt=value.text;
+    if (mapping.field().`type`==Iri){
+      txt=URLDecoder.decode(txt,"UTF-8")
+      //we should perform unescaping of percents here
+    }
     node.set(mapping.field(),
-             resolveValue(mapping, AmfScalar(value.text, Annotations(value)), node),
+             resolveValue(mapping, AmfScalar(txt, Annotations(value)), node),
              Annotations(value))
   }
 
