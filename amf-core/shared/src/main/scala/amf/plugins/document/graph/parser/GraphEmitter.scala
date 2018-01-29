@@ -1,5 +1,7 @@
 package amf.plugins.document.graph.parser
 
+import java.net.{URI, URLEncoder}
+
 import amf.core.annotations.ScalarType
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
@@ -253,8 +255,35 @@ object GraphEmitter extends MetaModelTypeMapping {
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def iri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = b.obj(_.entry("@id", raw(_, content)))
+    object URLEncoder {
+      def encode(input: String): String = {
+        val resultStr = new StringBuilder
+        input.foreach(ch=> {
+
+          if (isUnsafe(ch)) {
+            resultStr.append('%')
+            resultStr.append(toHex(ch / 16))
+            resultStr.append(toHex(ch % 16))
+          }
+          else resultStr.append(ch)
+        })
+        resultStr.toString
+      }
+
+      private def toHex(ch: Int) = (if (ch < 10) '0' + ch
+      else 'A' + ch - 10).toChar
+
+      private def isUnsafe(ch: Char) = {
+        if (ch > 128) true
+        " %$&+,;=@<>".indexOf(ch) >= 0 //should we encode %?
+      }
+    }
+
+
+    private def iri(b: PartBuilder, content: String, inArray: Boolean = false) = {
+      //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.
+      //TODO please review it and propose something better
+      def emit(b: PartBuilder) = b.obj(_.entry("@id", raw(_, URLEncoder.encode(content))))
 
       if (inArray) emit(b) else b.list(emit)
     }
