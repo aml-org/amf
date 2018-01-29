@@ -1,6 +1,8 @@
 package amf.plugins.document.vocabularies.references
 
 import amf.core.parser.{AbstractReferenceCollector, LibraryReference, LinkReference, Reference, _}
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin.comment
 import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer
@@ -9,9 +11,13 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
   private val references = new ArrayBuffer[Reference]
 
   override def traverse(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
+    if (parsed.comment.isDefined){
+        if (referencesDialect(parsed.comment.get.metaText)){
+          references+=Reference(RAMLVocabulariesPlugin.dialectDefinitionUrl(parsed.comment.get.metaText),SchemaReference,parsed.document.node)
+        }
+    }
     libraries(parsed.document, ctx)
     links(parsed.document)
-
     references
   }
 
@@ -29,6 +35,19 @@ class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
       case _ =>
     }
   }
+
+  private def referencesDialect(mt:String):Boolean={
+    val io=mt.indexOf("|");
+    if (io>0){
+      var msk=mt.substring(io+1);
+      val si=msk.indexOf("<");
+      val se=msk.lastIndexOf(">");
+      return si>0&&se>si;
+    }
+    false
+  }
+
+
 
   private def library(entry: YMapEntry) = {
     references += Reference(entry.value, LibraryReference, entry.value)

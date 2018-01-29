@@ -623,6 +623,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
 object DialectParser {
 
   def apply(root: Root, header: String, dialects: DialectRegistry)(implicit ctx: DialectContext): DialectParser = {
+
     dialects.get(header) match {
       case Some(dialect) => new DialectParser(dialect, root)
       case _             => throw new Exception(s"Unknown dialect $header")
