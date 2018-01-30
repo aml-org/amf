@@ -799,4 +799,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
+
+  test("Raml 0.8 Null pointer tck case APIMF-429") {
+
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
 }
