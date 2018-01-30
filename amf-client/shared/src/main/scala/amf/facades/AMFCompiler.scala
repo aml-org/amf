@@ -1,22 +1,17 @@
 package amf.facades
 
-import amf.{Core, core}
+import amf.core
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.core.{AMFCompiler => ModularCompiler}
-import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.{RAMLVocabulariesPlugin, RamlHeaderExtractor}
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin}
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.plugins.document.vocabularies.RamlHeaderExtractor
 import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class AMFCompiler private (val url: String,
                            val remote: Platform,
@@ -31,18 +26,6 @@ class AMFCompiler private (val url: String,
   private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location                                   = context.current
   private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
-
-  // initialization
-  Core.init()
-  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   def build(): Future[BaseUnit] = {
 

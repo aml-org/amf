@@ -40,14 +40,15 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
-
-    AMFCompiler(basePath + file, platform, hint, Validation(platform))
-      .build()
-      .map { unit =>
-        val actual = unit.asInstanceOf[Document]
-        AmfObjectMatcher(expected).assert(actual)
-        Succeeded
-      }
+    Validation(platform).map(_.withEnabledValidation(false)).flatMap { v =>
+      AMFCompiler(basePath + file, platform, hint, v)
+        .build()
+        .map { unit =>
+          val actual = unit.asInstanceOf[Document]
+          AmfObjectMatcher(expected).assert(actual)
+          Succeeded
+        }
+    }
   }
 
   private def documentWithTypes(vendor: Vendor): Document = {
