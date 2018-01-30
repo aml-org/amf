@@ -1,0 +1,21 @@
+#%RAML 0.8
+
+# Objective: The following example illustrates the application of resource types and traits.
+# Expected result: no error message
+
+# tags: traits, resource types
+
+title: Example API
+version: v1
+resourceTypes:
+  - collection: !include resources/collection.yml
+    member: !include resources/member.yml
+traits:
+  - secured: !include resources/secured.yml
+    paged: !include resources/paged.yml
+    rateLimited: !include resources/rate-limited.yml
+/users:
+  type: collection
+  is: [ secured ] # if collection defines a post method, that method is also secured
+  get:
+    is: [ paged, rateLimited ]

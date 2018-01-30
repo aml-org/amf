@@ -1,0 +1,10 @@
+description: A collection resource
+usage: Use this to describe a resource that lists items
+get:
+  description: Retrieve all items
+post:
+  description: Add an item
+  responses:
+    201:
+      headers:
+        Location:
