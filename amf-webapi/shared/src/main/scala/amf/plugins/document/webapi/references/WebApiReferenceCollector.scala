@@ -57,11 +57,12 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
     references += Reference(entry.value, ExtensionReference, entry.value)
   }
 
+  // todo: we should use vendor.name in every place instead of match handwrited strings
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case "RAML 1.0" => ramlLinks(part)
-      case "OAS 2.0"  => oasLinks(part, ctx)
-      case _          => // Ignore
+      case "RAML 1.0" | "RAML 0.8" | "RAML" => ramlLinks(part)
+      case "OAS 2.0"                        => oasLinks(part, ctx)
+      case _                                => // Ignore
     }
   }
 
