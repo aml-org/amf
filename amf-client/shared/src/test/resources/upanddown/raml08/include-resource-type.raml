@@ -1,0 +1,12 @@
+#%RAML 0.8
+
+# Objective: The following example shows a RAML fragment file that defines a resource type and a file that includes this fragment file.
+# Expected result: no error message
+
+# tags: include
+---
+title: Example API
+
+version: v1
+resourceTypes: !include resources/resourceTypes_Rv1-0.raml # where resourceTypes_Rv1-0.raml is an array of maps of resource type definitions
+traits: !include resources/traits_Rv1-0.raml  # where traits_Rv1-0.raml is an array of maps of trait definitions
