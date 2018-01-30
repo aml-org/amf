@@ -2,10 +2,11 @@ package amf.emit
 
 import amf.common.ListAssertions
 import amf.common.Tests.checkDiff
+import amf.compiler.CompilerTestBuilder
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.facades.{AMFCompiler, AMFDumper, Validation}
+import amf.facades.AMFDumper
 import amf.io.BuildCycleTests
 import org.mulesoft.common.io.AsyncFile
 
@@ -14,7 +15,7 @@ import scala.concurrent.Future
 /**
   * Created by hernan.najles on 9/19/17.
   */
-class ReferencesCycleTest extends BuildCycleTests with ListAssertions {
+class ReferencesCycleTest extends BuildCycleTests with ListAssertions with CompilerTestBuilder {
 
   override val basePath = "amf-client/shared/src/test/resources/references/"
 
@@ -45,9 +46,8 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions {
   fixture.foreach {
     case ((title, (document, hint)), (reference, vendor)) =>
       test(title) {
-        val validation = Validation(platform)
-        AMFCompiler(s"file://$basePath$document", platform, hint, validation)
-          .build()
+
+        build(s"file://$basePath$document", hint)
           .flatMap(renderReference(reference, vendor, _))
           .flatMap(checkDiff(_, fs.asyncFile(basePath + reference)))
       }

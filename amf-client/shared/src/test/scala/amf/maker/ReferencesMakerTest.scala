@@ -1,14 +1,13 @@
 package amf.maker
 
 import amf.common.AmfObjectTestMatcher
+import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.{Document, Fragment}
-import amf.core.model.domain.{AmfObject, DomainElement}
+import amf.core.model.domain.AmfObject
 import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.shapes.models.DomainExtensions._
+import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -17,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   *
   */
-class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObjectTestMatcher {
+class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with AmfObjectTestMatcher {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Data type fragment test raml") {
@@ -34,8 +33,7 @@ class ReferencesMakerTest extends AsyncFunSuite with PlatformSecrets with AmfObj
 
     val rootExpected = UnitsCreator(hint.vendor).usesDataType
 
-    AMFCompiler(rootFile, platform, hint, Validation(platform))
-      .build()
+    build(rootFile, hint)
       .map({
         case actual: Document => actual
       })

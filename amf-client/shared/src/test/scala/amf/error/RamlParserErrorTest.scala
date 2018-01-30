@@ -1,8 +1,8 @@
 package amf.error
 
+import amf.compiler.CompilerTestBuilder
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
-import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.features.validation.ParserSideValidations
@@ -11,7 +11,7 @@ import org.scalatest.{AsyncFunSuite, Succeeded}
 
 import scala.concurrent.ExecutionContext
 
-class RamlParserErrorTest extends AsyncFunSuite with PlatformSecrets {
+class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -90,17 +90,18 @@ class RamlParserErrorTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
-    val validation = Validation(platform)
-    AMFCompiler(basePath + file, platform, RamlYamlHint, validation)
-      .build()
-      .map { _ =>
-        val report = validation.aggregatedReport
-        if (report.size != fixture.size) report.foreach(println)
-        report.size should be(fixture.size)
-        fixture.zip(report).foreach {
-          case (fn, result) => fn(result)
+    Validation(platform).flatMap { validation =>
+      AMFCompiler(basePath + file, platform, RamlYamlHint, validation)
+        .build()
+        .map { _ =>
+          val report = validation.aggregatedReport
+          if (report.size != fixture.size) report.foreach(println)
+          report.size should be(fixture.size)
+          fixture.zip(report).foreach {
+            case (fn, result) => fn(result)
+          }
+          Succeeded
         }
-        Succeeded
-      }
+    }
   }
 }
