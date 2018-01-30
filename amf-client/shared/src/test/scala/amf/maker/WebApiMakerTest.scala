@@ -1,20 +1,19 @@
 package amf.maker
 
 import amf.common.{AmfObjectTestMatcher, ListAssertions}
-import amf.facades.{AMFCompiler, Validation}
-import amf.core.unsafe.PlatformSecrets
+import amf.compiler.CompilerTestBuilder
 import amf.core.metamodel.Field
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfObject
 import amf.core.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
+import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.shapes.models.{CreativeWork, ScalarShape, XMLSerializer}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.shapes.models.DomainExtensions._
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssertions with AmfObjectTestMatcher {
+class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAssertions with AmfObjectTestMatcher {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -156,46 +155,49 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
       EndPoint()
         .withPath("/levelzero/some{two}/level-one")
         .withName("One display name")
-        .withDescription("and this description!").withParameters(Seq(
-        Parameter()
-          .withName("two")
-          .withRequired(true)
-          .withBinding("path")
-          .withSchema(ScalarShape().withName("two").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-      )).withOperations(List(
-        Operation()
-          .withMethod("get")
-          .withName("Some title")
-          .withRequest(Request()
-            .withQueryParameters(List(
-              Parameter()
-                .withName("param1")
-                .withDescription("Some descr")
-                .withRequired(true)
-                .withBinding("query")
-                .withSchema(ScalarShape()
-                  .withName("schema")
+        .withDescription("and this description!")
+        .withParameters(
+          Seq(
+            Parameter()
+              .withName("two")
+              .withRequired(true)
+              .withBinding("path")
+              .withSchema(ScalarShape().withName("two").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+          ))
+        .withOperations(List(
+          Operation()
+            .withMethod("get")
+            .withName("Some title")
+            .withRequest(Request()
+              .withQueryParameters(List(
+                Parameter()
+                  .withName("param1")
                   .withDescription("Some descr")
-                  .withDataType("http://www.w3.org/2001/XMLSchema#string")),
-              Parameter()
-                .withName("param2")
-                .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                .withRequired(false)
-                .withBinding("query")
-            ))),
-        Operation()
-          .withMethod("post")
-          .withName("Some title")
-          .withDescription("Some description")
-          .withRequest(Request()
-            .withHeaders(List(
-              Parameter()
-                .withName("Header-One")
-                .withRequired(false)
-                .withBinding("header")
-                .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-            )))
-      ))
+                  .withRequired(true)
+                  .withBinding("query")
+                  .withSchema(ScalarShape()
+                    .withName("schema")
+                    .withDescription("Some descr")
+                    .withDataType("http://www.w3.org/2001/XMLSchema#string")),
+                Parameter()
+                  .withName("param2")
+                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                  .withRequired(false)
+                  .withBinding("query")
+              ))),
+          Operation()
+            .withMethod("post")
+            .withName("Some title")
+            .withDescription("Some description")
+            .withRequest(Request()
+              .withHeaders(List(
+                Parameter()
+                  .withName("Header-One")
+                  .withRequired(false)
+                  .withBinding("header")
+                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+              )))
+        ))
     )
     val api = WebApi()
       .withName("API")
@@ -616,8 +618,7 @@ class WebApiMakerTest extends AsyncFunSuite with PlatformSecrets with ListAssert
                             hint: Hint,
                             overridedPath: Option[String] = None): Future[Assertion] = {
 
-    AMFCompiler(overridedPath.getOrElse(basePath) + file, platform, hint, Validation(platform))
-      .build()
+    build(overridedPath.getOrElse(basePath) + file, hint)
       .map { unit =>
         val actual = unit.asInstanceOf[Document].encodes
         AmfObjectMatcher(expected).assert(actual)

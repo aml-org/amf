@@ -51,8 +51,13 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
 
   /** Method to parse unit. Override if necessary. */
   def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
-    val validation = given.getOrElse(Validation(platform).withEnabledValidation(false))
-    AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, validation).build()
+    val validation = given match {
+      case Some(validation: Validation) => Future { validation }
+      case None                         => Validation(platform).map(_.withEnabledValidation(false))
+    }
+    validation.flatMap { v =>
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v).build()
+    }
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
