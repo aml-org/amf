@@ -75,21 +75,25 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     map.key("schemas").foreach { e =>
       e.value.tagType match {
         case YType.Map =>
-          e.value.as[YMap].entries.foreach { entry =>
-            Raml08TypeParser(entry,
-                             entry.key.as[YScalar].toString(),
-                             entry.value,
-                             shape => shape.withName(entry.key).adopted(parent))
-              .parse() match {
-              case Some(shape) =>
-                ctx.declarations += shape.add(DeclaredElement())
-              case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
-            }
-          }
+          parseSchemaEntries(e.value.as[YMap].entries, parent)
         case YType.Null =>
         case YType.Seq =>
-          e.value.as[Seq[YMap]].foreach(m => parseSchemaDeclarations(m, parent))
+          parseSchemaEntries(e.value.as[Seq[YMap]].flatMap(_.entries), parent)
         case t => ctx.violation(parent, s"Invalid type $t for 'types' node.", e.value)
+      }
+    }
+  }
+
+  private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String) = {
+    entries.foreach { entry =>
+      Raml08TypeParser(entry,
+                       entry.key.as[YScalar].toString(),
+                       entry.value,
+                       shape => shape.withName(entry.key).adopted(parent))
+        .parse() match {
+        case Some(shape) =>
+          ctx.declarations += shape.add(DeclaredElement())
+        case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
       }
     }
   }
