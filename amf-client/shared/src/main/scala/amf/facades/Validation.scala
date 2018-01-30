@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.{Core, ProfileNames}
+import amf.ProfileNames
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
@@ -18,32 +18,34 @@ import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Future
 
 class Validation(platform: Platform) {
 
-  amf.Core.init()
-  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+  def init(): Future[Unit] = {
+    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+    amf.core.AMF.init().map { _ =>
+      amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
-  // Temporary
-  RuntimeValidator.validator match {
-    case Some(AMFValidatorPlugin) =>
-      AMFValidatorPlugin.enabled = true
-      AMFValidatorPlugin.reset()
-    case _ =>
-      Core.init()
-      AMFValidatorPlugin.init()
+      RuntimeValidator.validator match {
+        case Some(AMFValidatorPlugin) =>
+          AMFValidatorPlugin.reset()
+        case _ =>
+      }
+    }
   }
-  val validator: AMFValidatorPlugin.type = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin.type]
+
+  lazy val validator: AMFValidatorPlugin.type = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin.type]
   //
 
   val url = "http://raml.org/dialects/profile.raml"
@@ -115,5 +117,8 @@ class Validation(platform: Platform) {
 }
 
 object Validation {
-  def apply(platform: Platform) = new Validation(platform)
+  def apply(platform: Platform): Future[Validation] = {
+    val validation = new Validation(platform)
+    validation.init().map(_ => validation)
+  }
 }

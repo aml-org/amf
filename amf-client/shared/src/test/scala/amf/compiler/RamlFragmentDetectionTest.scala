@@ -2,7 +2,7 @@ package amf.compiler
 
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, Validation}
+import amf.facades.{AMFCompiler, Root, Validation}
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -53,11 +53,15 @@ class RamlFragmentDetectionTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def assertHeader(path: String, expectedOption: Option[RamlHeader]): Future[Assertion] = {
-    AMFCompiler(basePath + path, platform, RamlYamlHint, Validation(platform))
-      .root()
-      .map { root =>
+    Validation(platform)
+      .flatMap { v =>
+        AMFCompiler(basePath + path, platform, RamlYamlHint, v)
+          .root()
+      }
+      .map { root: Root =>
         RamlHeader(root.newFormat()) shouldBe expectedOption
       }
+
   }
 
 }

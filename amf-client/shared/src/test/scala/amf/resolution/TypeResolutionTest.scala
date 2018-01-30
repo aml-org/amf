@@ -1,12 +1,13 @@
 package amf.resolution
 
+import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.ParserContext
 import amf.core.remote.{Raml, RamlYamlHint}
 import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
-import amf.facades.{AMFCompiler, Validation}
+import amf.facades.Validation
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.contexts.Raml10WebApiContext
@@ -16,7 +17,7 @@ import org.scalatest.Matchers._
 
 import scala.util.{Failure, Success}
 
-class TypeResolutionTest extends BuildCycleTests {
+class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
 
   test("TypeExpressions") {
 
@@ -159,10 +160,14 @@ class TypeResolutionTest extends BuildCycleTests {
 
   examples.foreach { example =>
     test(s"Resolve data types: $example") {
-      val validation = Validation(platform)
-      validation.loadValidationDialect() flatMap { _ =>
-        cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
-      }
+      Validation(platform)
+        .flatMap(v => {
+          v.withEnabledValidation(false)
+          v.loadValidationDialect().map(_ => v)
+        })
+        .flatMap { validation =>
+          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
+        }
     }
   }
 
@@ -176,9 +181,7 @@ class TypeResolutionTest extends BuildCycleTests {
 
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      val res = AMFCompiler(s"file://$basePath$example.raml", platform, RamlYamlHint, Validation(platform), None, None)
-      res
-        .build()
+      build(s"file://$basePath$example.raml", RamlYamlHint)
         .map(RAML10Plugin.resolve)
         .transformWith {
           case Success(_) => {

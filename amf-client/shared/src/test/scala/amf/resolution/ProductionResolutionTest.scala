@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Raml, Raml08, RamlYamlHint}
-import amf.facades.{AMFDumper, Validation}
+import amf.facades.AMFDumper
 
 abstract class RamlResolutionTest extends ResolutionTest {
   override def render(unit: BaseUnit, config: CycleConfig): String =
@@ -34,16 +34,14 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   }
 
   test("Resolve Min and Max in header 08 test") {
-    val validation = Validation(platform)
-    cycle("min-max-in-header.raml",
-          "min-max-in-header.resolved.raml",
-          RamlYamlHint,
-          Raml08,
-          validation = Some(validation))
-      .map({
-        case `succeed` =>
-          assert(validation.validator.aggregatedReport.isEmpty)
-        case other => other
-      })
+    cycle("min-max-in-header.raml", "min-max-in-header.resolved.raml", RamlYamlHint, Raml08)
+  }
+
+  test("Test failing with exception") {
+    recoverToExceptionIf[Exception] {
+      cycle("wrong-key.raml", "wrong-key.raml", RamlYamlHint, Raml08)
+    }.map { ex =>
+      assert(ex.getMessage.contains("Message: Property errorKey not supported in a raml 0.8 webApi node"))
+    }
   }
 }
