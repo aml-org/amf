@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
@@ -120,16 +121,23 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
     var name: String = entry.key
     val parameter    = producer(name).add(Annotations(entry))
 
+    // Named Parameter Parse
+    Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))
+      .parse()
+      .foreach(parameter.withSchema)
+
+    parameter.schema.fields.entry(ShapeModel.RequiredShape) match {
+      case Some(e) =>
+        parameter.set(ParameterModel.Required, value = e.scalar.toBool)
+      case None =>
+        parameter.set(ParameterModel.Required, value = false)
+    }
+
     if (parseOptional && name.endsWith("?")) {
       parameter.set(ParameterModel.Optional, value = true)
       name = name.stripSuffix("?")
       parameter.set(ParameterModel.Name, name)
     }
-
-    // Named Parameter Parse
-    Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))
-      .parse()
-      .foreach(parameter.withSchema)
 
     parameter
   }
