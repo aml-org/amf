@@ -36,7 +36,8 @@ class Cycle08ToVersion extends BuildCycleTests {
                 "operation-base-uri-parameters.raml"),
     FixtureData("named parameters in media type", "named-type.raml", "named-type.raml"),
     FixtureData("operation with a description", "operation-description.raml", "operation-description.raml"),
-    FixtureData("Include in documentation content", "include-documentation.raml", "include-documentation-08.raml")
+    FixtureData("Include in documentation content", "include-documentation.raml", "include-documentation-08.raml"),
+    FixtureData("Include in resource types and traits", "include-resource-type.raml", "include-resource-type-08.raml")
   )
 
   cycles08.foreach(f => {
