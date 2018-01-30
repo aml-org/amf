@@ -787,8 +787,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Raml 0.8 Parameter") {
 
-    val validation = Validation(platform)
     for {
+      validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/query-parameter.raml",
                              platform,
                              RamlYamlHint,
