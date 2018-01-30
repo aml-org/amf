@@ -1,0 +1,81 @@
+#%RAML 0.8
+schemas:
+  account: |
+      {
+        "type": "object",
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "required": true,
+        "properties": {
+          "accountName": {
+            "description": "The account name",
+            "type": "string",
+            "required": true
+          },
+          "federalTaxId": {
+            "description": "The merchant federal tax ID",
+            "type": "string",
+            "required": true
+          },
+          "posApplicationName": {
+            "description": "The name of the POS application",
+            "type": "string",
+            "required": true
+          },
+          "contactInfo": { "$ref": "contact" },
+        }
+      }
+
+  contact: |-
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "required": true,
+      "properties": {
+        "firstName": {
+          "description": "The contact's first name",
+          "type": "string",
+          "required": true
+        },
+        "lastName": {
+          "description": "The contact's last name",
+          "type": "string",
+          "required": true
+        },
+        "title": {
+          "description": "The contact's title",
+          "type": "string"
+        },
+        "emailAddress": {
+          "description": "The contact's email address",
+          "type": "string",
+          "required": true
+        },
+        "primaryPhone": {
+          "description": "The contact's primary phone number",
+          "type": "string",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "secondaryPhone": {
+          "description": "The contact's secondary phone number",
+          "type": "string",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "fax": {
+          "description": "The contact's fax number",
+          "type": "string",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 10
+        }
+      }
+    }
+title: Filesystem API
+version: 0.1
+/files:
+  get:
+    responses:
+      200:
