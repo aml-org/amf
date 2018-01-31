@@ -1,0 +1,26 @@
+#%RAML 1.0
+
+title: negative test case for the JSON API profile
+
+/test1:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          a: string
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              b: integer
+/test2:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          c: number

@@ -114,7 +114,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |  for (var i=0; i<paths.length; i++) {
        |    var nextPath = paths[i];
        |    var newAcc = [];
-       |    for (var j=0; j<acc.length; acc++) {
+       |    for (var j=0; j<acc.length; j++) {
        |      var nextNode = acc[j];
        |      newAcc = newAcc.concat(nextNode[nextPath] || [])
        |    }
