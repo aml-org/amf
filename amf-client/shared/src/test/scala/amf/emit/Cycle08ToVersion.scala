@@ -40,7 +40,8 @@ class Cycle08ToVersion extends BuildCycleTests {
     FixtureData("Include in resource types and traits", "include-resource-type.raml", "include-resource-type-08.raml"),
     FixtureData("include in anonymous seq of schemas declaration",
                 "include-anonymous-schema.raml",
-                "include-anonymous-schema-08.raml")
+                "include-anonymous-schema-08.raml"),
+    FixtureData("Include xsd schema", "include-xsd-schema.raml", "include-xsd-schema-08.raml")
   )
 
   cycles08.foreach(f => {
