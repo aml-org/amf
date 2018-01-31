@@ -805,13 +805,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
+        platform,
+        RamlYamlHint,
+        validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML08)
     } yield {
       assert(report.results.isEmpty)
+    }
+  }
+
+  test("JSON API Validation positive case") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      _          <- validation.loadValidationProfile(examplesPath + "jsonapi/jsonapi_profile.raml")
+      model      <- AMFCompiler(examplesPath + "jsonapi/correct.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, "JSON API")
+    } yield {
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("JSON API Validation negative case") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      _          <- validation.loadValidationProfile(examplesPath + "jsonapi/jsonapi_profile.raml")
+      model      <- AMFCompiler(examplesPath + "jsonapi/incorrect.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, "JSON API")
+    } yield {
+      assert(report.results.length == 9)
+      assert(!report.conforms)
     }
   }
 }

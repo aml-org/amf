@@ -1,0 +1,66 @@
+#%Validation Profile 1.0
+
+
+description: Profile that enforces JSON API constraints over the API descriptiion
+
+
+profile: JSON API
+
+violation:
+  - json-api-content-type-content-headers-request
+  - json-api-content-type-content-headers-response
+  - json-api-content-media-type
+  - json-api-valid-payload
+
+validations:
+
+  json-api-content-type-content-headers-request:
+    message: Clients request must at least specify the content-type header
+    targetClass: raml-http.Request
+    functionConstraint:
+      code: |
+        function(request) {
+          var headerNames = path(request, 'http:header / schema:name');
+          for (var i=0; i<headerNames.length; i++) {
+            if(headerNames[i] == "Content-type")
+              return true;
+          }
+          return false;
+        }
+
+  json-api-content-type-content-headers-response:
+    message: Server responses must at least specify the content-type header
+    targetClass: raml-http.Response
+    functionConstraint:
+      code: |
+        function(response) {
+          var headerNames = path(response, 'http:header / schema:name');
+          for (var i=0; i<headerNames.length; i++) {
+            if(headerNames[i] == "Content-type")
+              return true;
+          }
+          return false;
+        }
+
+
+  json-api-content-media-type:
+    message: Application/vnd.api+json must be the media type of all responses
+    targetClass: raml-http.Payload
+    propertyConstraints:
+      raml-http.mediaType:
+        in: [ "application/vnd.api_json" ]
+
+  json-api-valid-payload:
+    message: A document MUST contain at least one of the following top-level members data, errors or meta
+    targetClass: raml-http.Payload
+    functionConstraint:
+      code: |
+        function(payload) {
+          var propertyNames = path(payload, 'http:schema / shacl:property / shacl:name');
+          for (var i=0; i<propertyNames.length; i++) {
+            var name = propertyNames[i];
+            if (name === 'data' || name === 'errors' || name === 'meta')
+              return true;
+          }
+          return false;
+        }
