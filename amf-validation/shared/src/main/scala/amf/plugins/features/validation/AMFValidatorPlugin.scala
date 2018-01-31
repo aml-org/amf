@@ -125,7 +125,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     println("===========================")
     println(jsLibrary)
     println("===========================")
-     */
+    */
 
     ValidationMutex.synchronized {
       PlatformValidator.instance.report(
