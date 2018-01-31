@@ -1,0 +1,40 @@
+#%RAML 1.0
+
+title: positive test case for the JSON API profile
+
+/test1:
+  post:
+    headers:
+      Content-type: string
+      X-Authentication: string
+    body:
+      application/vnd.api_json:
+        type: object
+        properties:
+          meta:
+            type: object
+  get:
+    headers:
+      Content-type: string
+    responses:
+      200:
+        headers:
+          "Content-type": string
+        body:
+          application/vnd.api_json:
+            type: object
+            properties:
+              data:
+                type: object
+
+/test2:
+  post:
+    headers:
+      Content-type: string
+      X-Authentication: string
+    body:
+      application/vnd.api_json:
+        type: object
+        properties:
+          errors:
+            type: object
