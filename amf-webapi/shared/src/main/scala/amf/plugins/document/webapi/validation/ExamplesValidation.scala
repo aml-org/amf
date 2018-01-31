@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, ScalarExampleTagType}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
 import amf.core.remote.Platform
@@ -9,6 +9,7 @@ import amf.core.unsafe.TrunkPlatform
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.PayloadPlugin
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import amf.plugins.features.validation.ParserSideValidations
 
@@ -64,7 +65,16 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
                                 example: Example,
                                 mediaType: String): Future[Option[AMFValidationResult]] = {
     RuntimeValidator.reset()
-    val overridePlatform = TrunkPlatform(example.value)
+
+    val value = example.fields
+      .entry(ExampleModel.Value)
+      .flatMap(fe => fe.value.value.annotations.find(classOf[ScalarExampleTagType])) match {
+      case Some(tag) =>
+        tag.tagtype + " " + example.value
+      case None => example.value
+    }
+
+    val overridePlatform = TrunkPlatform(value)
     try {
       RuntimeCompiler("http://amfparser.org/test_payload", overridePlatform, Option(mediaType), PayloadPlugin.ID) flatMap {
         payload =>
