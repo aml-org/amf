@@ -514,6 +514,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
                 .asInstanceOf[Shape]
                 .withName(name) // we setup the local reference in the name
                 .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+            case (text: String, _) if RamlTypeDefMatcher.matchType(text, default = UndefinedType) == ObjectType =>
+              shape.annotations += ExplicitField()
+              shape
             case (text: String, _) =>
               val shape = UnresolvedShape(text, node).withName(text)
               shape.withContext(ctx)

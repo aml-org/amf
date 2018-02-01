@@ -820,4 +820,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("API with implicit parameters amf to raml") {
     cycle("users_accounts.jsonld", "users_accounts.raml", AmfJsonHint, Raml)
   }
+
+  test("API with implicit object definition APIMF-376") {
+    cycle("implicitly-defined-object.raml", "implicitly-defined-object.raml.raml", RamlYamlHint, Raml)
+  }
 }
