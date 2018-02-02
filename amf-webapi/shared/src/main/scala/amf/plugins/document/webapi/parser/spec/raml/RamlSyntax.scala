@@ -305,7 +305,8 @@ object Raml08Syntax extends RamlSyntax {
       "is",
       "type",
       "securedBy",
-      "baseUriParameters"
+      "baseUriParameters",
+      "uriParameters"
     ),
     "operation" -> Set(
       "displayName",
