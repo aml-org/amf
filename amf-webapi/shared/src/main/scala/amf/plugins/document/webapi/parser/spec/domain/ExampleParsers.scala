@@ -9,7 +9,6 @@ import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model._
-import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable.ListBuffer

@@ -824,4 +824,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("API with implicit object definition APIMF-376") {
     cycle("implicitly-defined-object.raml", "implicitly-defined-object.raml.raml", RamlYamlHint, Raml)
   }
+
+  test("API with uriParameters in endpoint raml to raml") {
+    cycle("define-uri-parameters.raml", "define-uri-parameters.raml.raml", RamlYamlHint, Raml08)
+  }
 }
