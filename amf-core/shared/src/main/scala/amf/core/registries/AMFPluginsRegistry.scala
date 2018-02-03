@@ -36,10 +36,17 @@ object AMFPluginsRegistry {
     }
   }
 
+  def cleanMediaType(mediaType: String) = if (mediaType.contains(";")) {
+    mediaType.split(";").head
+  } else {
+    mediaType
+  }
+
   def syntaxPluginForMediaType(mediaType: String): Option[AMFSyntaxPlugin] = {
+    val normalizedMediaType = cleanMediaType(mediaType)
     syntaxPluginRegistry.get(mediaType) match {
       case Some(plugin) => Some(plugin)
-      case _ => syntaxPluginRegistry.get(simpleMediaType(mediaType))
+      case _ => syntaxPluginRegistry.get(simpleMediaType(normalizedMediaType))
     }
   }
 
