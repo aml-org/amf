@@ -47,15 +47,20 @@ class DialectLoader(val document: BaseUnit) {
 
   def loadDialect(): Dialect = loadDialect(retrieveDomainEntity(document), document)
 
-  private def registerType(n: NodeDefinitionObject, dialectMap: mutable.Map[String, DialectNode]) =
-    NamespaceMap(n.classTerm().get) match {
+  var nmb=0;
+
+  private def registerType(n: NodeDefinitionObject, dialectMap: mutable.Map[String, DialectNode]) = {
+    val ts = n.classTerm().getOrElse("http://raml.org/anonimous#"+(nmb+1))
+    nmb=nmb+1;
+    NamespaceMap(ts) match {
       case Some(ns) =>
         val node = new DialectNode(ns.name, ns.namespace)
+        node.hasClazz=n.classTerm().isDefined
         node.id = Some(n.entity.id)
         dialectMap.put(n.entity.id, node)
       case _ => // ignore
     }
-
+  }
   /**
     * This is loading all declared entities in the referenced libraries library
     * and loading them lazily into imports
