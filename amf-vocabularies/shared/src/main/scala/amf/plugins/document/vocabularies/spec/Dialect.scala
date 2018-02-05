@@ -615,6 +615,10 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
 
   var id: Option[String] = None
 
+  var hasProps=false
+
+  var hasClazz=true
+
   def mappings(): List[DialectPropertyMapping] = props.values.toList
 
   def obj(propertyMapping: String,
@@ -678,11 +682,16 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
   def fields: List[Field] = props.values.toList.map(_.field())
 
   def calcTypes(domainEntity: DomainEntity): List[ValueType] = {
-    val calculated = typeCalculator match {
-      case Some(calculator) => extraTypes.toList ++ calculator.calcTypes(domainEntity)
-      case None             => extraTypes.toList
+    if (!hasClazz){
+      List()
     }
-    (calculated ++ domainEntity.definition.`type`).distinct
+    else {
+      val calculated = typeCalculator match {
+        case Some(calculator) => extraTypes.toList ++ calculator.calcTypes(domainEntity)
+        case None => extraTypes.toList
+      }
+      (calculated ++ domainEntity.definition.`type`).distinct
+    }
   }
 
   def withGlobalIdField(field: String): this.type = {
