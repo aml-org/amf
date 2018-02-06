@@ -21,7 +21,7 @@ class DialectEntityModel(domainEntity: DomainEntity) extends DomainElementModel 
     }
   }
 
-  override val `type`: List[ValueType] = domainEntity.definition.`type`
+  override val `type`: List[ValueType] = if (domainEntity.definition.hasClazz) domainEntity.definition.`type` else List()
 
   def element: DomainElement = domainEntity
 

@@ -248,6 +248,41 @@ class DialectFeatureTest extends AsyncFunSuite with CompilerTestBuilder {
       .map(checkDiff)
   }
 
+  test("No class term") {
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialectWithoutClassTerm.raml")
+    val expected =
+      platform.resolve(basePath + "bruno/EventedAPI_Banking3.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit => build(basePath + "bruno/examples/EventedAPI_Banking1.raml", ExtensionYamlHint)
+      )
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "bruno/EventedAPI_Banking3.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+  test("No properties term") {
+    val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialectWithoutProperties.raml")
+    val expected =
+      platform.resolve(basePath + "bruno/EventedAPI_Banking4.json", None).map(_.stream.toString)
+    val actual = validation
+      .flatMap(
+        unit => build(basePath + "bruno/examples/EventedAPI_Banking1.raml", ExtensionYamlHint)
+      )
+    actual
+      .map(AMFDumper(_, Amf, Json, GenerationOptions()).dumpToString)
+      .map(v => {
+        platform.write(basePath + "bruno/EventedAPI_Banking4.json", v)
+        v
+      })
+      .zip(expected)
+      .map(checkDiff)
+  }
+
   test("Bruno problems in sequences 3") {
     val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
     val expected =
