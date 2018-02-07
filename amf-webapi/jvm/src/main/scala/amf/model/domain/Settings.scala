@@ -5,7 +5,7 @@ import amf.plugins.domain.webapi.models.security
 import scala.collection.JavaConverters._
 
 /**
-  * JS Settings model class.
+  * JVM Settings model class.
   */
 class Settings private[model] (private val settings: security.Settings) extends DomainElement {
   def this() = this(security.Settings())
@@ -21,13 +21,12 @@ class Settings private[model] (private val settings: security.Settings) extends 
   }
 }
 
-case class OAuth1Settings private[model] (private val settings: security.OAuth1Settings)
-    extends Settings(settings) {
+case class OAuth1Settings private[model] (private val settings: security.OAuth1Settings) extends Settings(settings) {
   def this() = this(security.OAuth1Settings())
 
-  def requestTokenUri: String         = settings.requestTokenUri
-  def authorizationUri: String        = settings.authorizationUri
-  def tokenCredentialsUri: String     = settings.tokenCredentialsUri
+  def requestTokenUri: String            = settings.requestTokenUri
+  def authorizationUri: String           = settings.authorizationUri
+  def tokenCredentialsUri: String        = settings.tokenCredentialsUri
   def signatures: java.util.List[String] = Option(settings.signatures).getOrElse(Nil).asJava
 
   /** Set requestTokenUri property of this [[OAuth1Settings]]. */
@@ -58,14 +57,13 @@ case class OAuth1Settings private[model] (private val settings: security.OAuth1S
   override private[amf] def element: security.OAuth1Settings = settings
 }
 
-case class OAuth2Settings private[model] (private val settings: security.OAuth2Settings)
-    extends Settings(settings) {
+case class OAuth2Settings private[model] (private val settings: security.OAuth2Settings) extends Settings(settings) {
   def this() = this(security.OAuth2Settings())
 
-  def authorizationUri: String                 = settings.authorizationUri
-  def accessTokenUri: String                   = settings.accessTokenUri
+  def authorizationUri: String                    = settings.authorizationUri
+  def accessTokenUri: String                      = settings.accessTokenUri
   def authorizationGrants: java.util.List[String] = Option(settings.authorizationGrants).getOrElse(Nil).asJava
-  def flow: String                             = settings.flow
+  def flow: String                                = settings.flow
   def scopes: java.util.List[Scope]               = Option(settings.scopes).getOrElse(Nil).map(Scope).asJava
 
   /** Set authorizationUri property of this [[OAuth2Settings]]. */
@@ -101,8 +99,7 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
   override private[amf] def element: amf.plugins.domain.webapi.models.security.OAuth2Settings = settings
 }
 
-case class ApiKeySettings private[model] (private val settings: security.ApiKeySettings)
-    extends Settings(settings) {
+case class ApiKeySettings private[model] (private val settings: security.ApiKeySettings) extends Settings(settings) {
   def this() = this(security.ApiKeySettings())
 
   def name: String = settings.name
@@ -130,6 +127,6 @@ object Settings {
       case oauth2: amf.plugins.domain.webapi.models.security.OAuth2Settings => Some(OAuth2Settings(oauth2))
       case apiKey: amf.plugins.domain.webapi.models.security.ApiKeySettings => Some(ApiKeySettings(apiKey))
       case s: amf.plugins.domain.webapi.models.security.Settings            => Some(Settings(s))
-      case _                                          => None
+      case _                                                                => None
     }).orNull
 }
