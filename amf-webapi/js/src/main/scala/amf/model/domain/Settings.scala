@@ -4,12 +4,14 @@ import amf.plugins.domain.webapi.models.security
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+
 /**
   * JS Settings model class.
   */
+@JSExportTopLevel("model.domain.Settings")
 @JSExportAll
-class Settings private[model] (private val settings: security.Settings) extends DomainElement {
+class Settings(private[model] val settings: security.Settings) extends DomainElement {
   def this() = this(security.Settings())
 
   def additionalProperties: DataNode = DataNode(settings.additionalProperties)
@@ -23,10 +25,11 @@ class Settings private[model] (private val settings: security.Settings) extends 
   }
 }
 
+@JSExportTopLevel("model.domain.OAuth1Settings")
+@JSExportAll
+case class OAuth1Settings(override private[model] val settings: security.OAuth1Settings) extends Settings(settings) {
 
-
-case class OAuth1Settings private[model] (private val settings: security.OAuth1Settings)
-    extends Settings(settings) {
+  @JSExportTopLevel("model.domain.OAuth1Settings")
   def this() = this(security.OAuth1Settings())
 
   def requestTokenUri: String         = settings.requestTokenUri
@@ -62,8 +65,11 @@ case class OAuth1Settings private[model] (private val settings: security.OAuth1S
   override private[amf] def element: security.OAuth1Settings = settings
 }
 
-case class OAuth2Settings private[model] (private val settings: security.OAuth2Settings)
-    extends Settings(settings) {
+@JSExportTopLevel("model.domain.OAuth2Settings")
+@JSExportAll
+case class OAuth2Settings(override private[model] val settings: security.OAuth2Settings) extends Settings(settings) {
+
+  @JSExportTopLevel("model.domain.OAuth2Settings")
   def this() = this(security.OAuth2Settings())
 
   def authorizationUri: String                 = settings.authorizationUri
@@ -105,8 +111,11 @@ case class OAuth2Settings private[model] (private val settings: security.OAuth2S
   override private[amf] def element: amf.plugins.domain.webapi.models.security.OAuth2Settings = settings
 }
 
-case class ApiKeySettings private[model] (private val settings: security.ApiKeySettings)
-    extends Settings(settings) {
+@JSExportTopLevel("model.domain.ApiKeySettings")
+@JSExportAll
+case class ApiKeySettings(override private[model] val settings: security.ApiKeySettings) extends Settings(settings) {
+
+  @JSExportTopLevel("model.domain.ApiKeySettings")
   def this() = this(security.ApiKeySettings())
 
   def name: String = settings.name
@@ -123,10 +132,10 @@ case class ApiKeySettings private[model] (private val settings: security.ApiKeyS
     settings.withIn(in)
     this
   }
-
   override private[amf] def element: amf.plugins.domain.webapi.models.security.ApiKeySettings = settings
 }
 
+@JSExportAll
 object Settings {
   def apply(settings: amf.plugins.domain.webapi.models.security.Settings): Settings =
     (settings match {
@@ -134,6 +143,6 @@ object Settings {
       case oauth2: amf.plugins.domain.webapi.models.security.OAuth2Settings => Some(OAuth2Settings(oauth2))
       case apiKey: amf.plugins.domain.webapi.models.security.ApiKeySettings => Some(ApiKeySettings(apiKey))
       case s: amf.plugins.domain.webapi.models.security.Settings            => Some(Settings(s))
-      case _                                          => None
+      case _                                                                => None
     }).orNull
 }
