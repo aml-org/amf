@@ -70,7 +70,7 @@ Gradle example:
 
 ```groovy
 dependencies {
-    compile 'org.mule:amf-client_2.12:1.0.1'
+    compile 'org.mule.amf:amf-client_2.12:1.0.1'
 }
 ```
 
@@ -88,7 +88,7 @@ Maven example:
 
 ```xml
 <dependency>
-    <groupId>org.mule</groupId>
+    <groupId>org.mule.amf</groupId>
     <artifactId>amf-client_2.12</artifactId>
     <version>1.0.1</version>
 </dependency>
