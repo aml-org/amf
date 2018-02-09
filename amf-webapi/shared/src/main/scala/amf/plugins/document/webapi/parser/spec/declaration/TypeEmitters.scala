@@ -184,7 +184,7 @@ case class Raml10TypeEmitter(shape: AnyShape,
     }
   }
 
-  def entries(): Seq[EntryEmitter] = emitters() map { case e: EntryEmitter => e }
+  def entries(): Seq[EntryEmitter] = emitters() collect { case e: EntryEmitter => e }
 }
 
 abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(

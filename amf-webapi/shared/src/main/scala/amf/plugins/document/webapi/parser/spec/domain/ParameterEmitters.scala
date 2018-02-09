@@ -2,12 +2,16 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, Raml08TypePartEmitter, Raml10TypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AnnotationsEmitter,
+  Raml08TypePartEmitter,
+  Raml10TypeEmitter
+}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.ParameterModel
@@ -70,6 +74,13 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
             .map(f => result += ValueEmitter("required", f))
 
           Option(parameter.schema) match {
+            case Some(shape: AnyShape) if shape.isLink =>
+              Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
+                .emitters()
+                .headOption
+                .foreach { h =>
+                  result += EntryPartEmitter("type", h.asInstanceOf[PartEmitter])
+                }
             case Some(shape: AnyShape) =>
               result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
             case Some(_) => throw new Exception("Cannot emit parameter for a non WebAPI shape")
