@@ -71,7 +71,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |    }
        |}
        |
-      |function amfCompactProperty(prop) {
+       |function amfCompactProperty(prop) {
        |    var prefixes = $prefixes;
        |    for (var p in prefixes) {
        |        if (prop.indexOf(prefixes[p]) === 0) {
@@ -79,10 +79,10 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |        }
        |    }
        |
-      |    return prop;
+       |    return prop;
        |}
        |
-      |function amfFindNode(node, cache) {
+       |function amfFindNode(node, cache) {
        |    var acc = {"@id": amfCompactProperty(node.value)};
        |    var pairs = $$data.query().match(node, "?p", "?o");
        |    cache[node.value] = acc;
@@ -92,7 +92,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |            prop = "@type"
        |        }
        |
-      |        var value = acc[prop] || [];
+       |        var value = acc[prop] || [];
        |        acc[prop] = value;
        |        if(prop === "@type") {
        |            value.push(amfCompactProperty(pair.o.value));
@@ -105,11 +105,14 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |        }
        |    }
        |
-      |    return acc;
+       |    return acc;
        |}
        |
-      |function path(node, path) {
+       |function path(node, path) {
        |  var acc = [node]
+       |  if (node.constructor === Array) {
+       |    acc = node;
+       |  }
        |  var paths = path.replace(new RegExp(" ","g"), "").split("/") || [];
        |  for (var i=0; i<paths.length; i++) {
        |    var nextPath = paths[i];
@@ -121,16 +124,54 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |    acc = newAcc;
        |  }
        |
-      |  return acc;
+       |  return acc;
        |}
        |
-      |if (typeof(console) === "undefined") {
+       |function value(node, propertyPath, value) {
+       |  var values = path(node, propertyPath);
+       |  for (var i=0; i<values.length; i++) {
+       |    if (values[i] === value)
+       |      return true;
+       |  }
+       |  return false;
+       |}
+       |
+       |function filterByPropertyValue(nodes, propertyPath, val) {
+       |  var acc = [];
+       |  for (var i=0; i<nodes.length; i++) {
+       |    if (value(nodes[i], propertyPath, val)) {
+       |      acc.push(nodes[i]);
+       |    }
+       |  }
+       |  return acc;
+       |}
+       |
+       |
+       |
+       |function isModelType(node, type) {
+       |  if (node == null) {
+       |    return false;
+       |  }
+       |  if (node.constructor === Array && node.length == 1) {
+       |    node = node[0]
+       |  }
+       |  var types = node['@type'] || [];
+       |  for(var i=0; i<types.length; i++) {
+       |    if (types[i] === type) {
+       |      return true;
+       |    }
+       |  }
+       |
+       |  return false;
+       |}
+       |
+       |if (typeof(console) === "undefined") {
        |  console = {
        |    log: function(x) { print(x) }
        |  };
        |}
        |
-      |if (typeof(accumulators) == "undefined") {
+       |if (typeof(accumulators) == "undefined") {
        |  accumulators = {};
        |}
        |for (var p in accumulators) {
