@@ -834,9 +834,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       _          <- validation.loadValidationDialect()
       _          <- validation.loadValidationProfile(examplesPath + "jsonapi/jsonapi_profile.raml")
       model      <- AMFCompiler(examplesPath + "jsonapi/incorrect.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, "JSON API")
+      report     <- validation.validate(model, "JSON API 1.0")
     } yield {
-      assert(report.results.length == 9)
+      assert(report.results.length == 51)
       assert(!report.conforms)
     }
   }
