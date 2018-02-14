@@ -43,9 +43,8 @@ class ShapeNormalizationStage(profile: String)
     }
   }
 
-  protected def cleanLexicalInfo(shape: Shape): Shape = {
-    shape.annotations.reject(_.isInstanceOf[LexicalInformation])
-    shape.annotations.reject(_.isInstanceOf[ParsedFromTypeExpression])
+  protected def cleanUnnecessarySyntax(shape: Shape): Shape = {
+    shape.annotations.reject(! _.isInstanceOf[LexicalInformation])
     shape
   }
 
@@ -66,7 +65,7 @@ class ShapeNormalizationStage(profile: String)
 
   protected def expand(shape: Shape): Shape = {
     ensureCorrect(shape)
-    cleanLexicalInfo(shape)
+    cleanUnnecessarySyntax(shape)
     shape match {
       case union: UnionShape         => expandUnion(union)
       case scalar: ScalarShape       => scalar
