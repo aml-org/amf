@@ -58,19 +58,12 @@ description: Lets you access a cloud hosted machine learning service that makes 
                 type: object
                 additionalProperties: true
                 properties:
-                  kind:
-                    default: prediction#output
-                    type: string
-                    required: false
                   id:
                     type: string
                     required: false
-                  selfLink:
+                  kind:
+                    default: prediction#output
                     type: string
-                    required: false
-                  outputValue:
-                    format: double
-                    type: number
                     required: false
                   outputLabel:
                     type: string
@@ -89,6 +82,13 @@ description: Lets you access a cloud hosted machine learning service that makes 
                           format: double
                           type: number
                           required: false
+                  outputValue:
+                    format: double
+                    type: number
+                    required: false
+                  selfLink:
+                    type: string
+                    required: false
             description: Successful response
         queryParameters:
           alt:
@@ -142,14 +142,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
               type: object
               additionalProperties: true
               properties:
-                kind:
-                  default: prediction#training
-                  type: string
-                  required: false
                 id:
                   type: string
                   required: false
-                selfLink:
+                kind:
+                  default: prediction#training
                   type: string
                   required: false
                 modelInfo:
@@ -168,6 +165,9 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     modelType:
                       type: string
                       required: false
+                selfLink:
+                  type: string
+                  required: false
                 trainingStatus:
                   type: string
                   required: false
@@ -237,14 +237,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
               type: object
               additionalProperties: true
               properties:
-                kind:
-                  default: prediction#training
-                  type: string
-                  required: false
                 id:
                   type: string
                   required: false
-                selfLink:
+                kind:
+                  default: prediction#training
                   type: string
                   required: false
                 modelInfo:
@@ -263,6 +260,9 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     modelType:
                       type: string
                       required: false
+                selfLink:
+                  type: string
+                  required: false
                 trainingStatus:
                   type: string
                   required: false
@@ -319,14 +319,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
         type: object
         additionalProperties: true
         properties:
-          kind:
-            default: prediction#training
-            type: string
-            required: false
           id:
             type: string
             required: false
-          selfLink:
+          kind:
+            default: prediction#training
             type: string
             required: false
           modelInfo:
@@ -345,6 +342,9 @@ description: Lets you access a cloud hosted machine learning service that makes 
               modelType:
                 type: string
                 required: false
+          selfLink:
+            type: string
+            required: false
           trainingStatus:
             type: string
             required: false
@@ -355,14 +355,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
             type: object
             additionalProperties: true
             properties:
-              kind:
-                default: prediction#training
-                type: string
-                required: false
               id:
                 type: string
                 required: false
-              selfLink:
+              kind:
+                default: prediction#training
                 type: string
                 required: false
               modelInfo:
@@ -381,6 +378,9 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   modelType:
                     type: string
                     required: false
+              selfLink:
+                type: string
+                required: false
               trainingStatus:
                 type: string
                 required: false
@@ -448,19 +448,12 @@ description: Lets you access a cloud hosted machine learning service that makes 
                 type: object
                 additionalProperties: true
                 properties:
-                  kind:
-                    default: prediction#output
-                    type: string
-                    required: false
                   id:
                     type: string
                     required: false
-                  selfLink:
+                  kind:
+                    default: prediction#output
                     type: string
-                    required: false
-                  outputValue:
-                    format: double
-                    type: number
                     required: false
                   outputLabel:
                     type: string
@@ -479,6 +472,13 @@ description: Lets you access a cloud hosted machine learning service that makes 
                           format: double
                           type: number
                           required: false
+                  outputValue:
+                    format: double
+                    type: number
+                    required: false
+                  selfLink:
+                    type: string
+                    required: false
             description: Successful response
         (oas-tags):
           - hostedmodels
