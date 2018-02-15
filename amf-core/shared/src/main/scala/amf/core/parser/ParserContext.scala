@@ -3,8 +3,8 @@ package amf.core.parser
 import amf.core.annotations
 import amf.core.annotations.LexicalInformation
 import amf.core.services.RuntimeValidator
-import amf.plugins.features.validation.ParserSideValidations.ParsingErrorSpecification
-import amf.core.validation.SeverityLevels.VIOLATION
+import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
+import amf.plugins.features.validation.ParserSideValidations.{ParsingErrorSpecification, ParsingWarningSpecification}
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
@@ -18,13 +18,22 @@ class ErrorHandler extends IllegalTypeHandler {
     defaultValue
   }
 
+  private def reportConstraint(id: String,
+                               node: String,
+                               property: Option[String],
+                               message: String,
+                               lexical: Option[LexicalInformation],
+                               level: String): Unit = {
+    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical)
+  }
+
   /** Report constraint failure of severity violation. */
   def violation(id: String,
                 node: String,
                 property: Option[String],
                 message: String,
                 lexical: Option[LexicalInformation]): Unit = {
-    RuntimeValidator.reportConstraintFailure(VIOLATION, id, node, property, message, lexical)
+    reportConstraint(id, node, property, message, lexical, VIOLATION)
   }
 
   def violation(message: String, ast: Option[YPart]): Unit = {
@@ -44,6 +53,34 @@ class ErrorHandler extends IllegalTypeHandler {
   /** Report constraint failure of severity violation. */
   def violation(node: String, message: String, ast: YPart): Unit = {
     violation(ParsingErrorSpecification.id(), node, message, ast)
+  }
+
+  /** Report constraint failure of severity warning. */
+  def warning(id: String,
+              node: String,
+              property: Option[String],
+              message: String,
+              lexical: Option[LexicalInformation]): Unit = {
+    reportConstraint(id, node, property, message, lexical, WARNING)
+  }
+
+  def warning(message: String, ast: Option[YPart]): Unit = {
+    warning(ParsingWarningSpecification.id(), "", None, message, ast.flatMap(lexical))
+  }
+
+  /** Report constraint failure of severity warning. */
+  def warning(id: String, node: String, property: Option[String], message: String, ast: YPart): Unit = {
+    warning(id, node, property, message, lexical(ast))
+  }
+
+  /** Report constraint failure of severity warning. */
+  def warning(id: String, node: String, message: String, ast: YPart): Unit = {
+    warning(id, node, None, message, ast)
+  }
+
+  /** Report constraint failure of severity warning. */
+  def warning(node: String, message: String, ast: YPart): Unit = {
+    warning(ParsingErrorSpecification.id(), node, message, ast)
   }
 
   private def part(error: YError): YPart = {

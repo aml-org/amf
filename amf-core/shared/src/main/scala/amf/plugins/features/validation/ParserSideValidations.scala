@@ -77,6 +77,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val ParsingWarningSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "parsing-warning").iri(),
+    "Parsing warning",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val levels: Map[String, Map[String, String]] = Map(
     ClosedShapeSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
@@ -113,6 +121,11 @@ object ParserSideValidations {
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
+    ParsingWarningSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.WARNING,
+      ProfileNames.OAS  -> SeverityLevels.WARNING,
+      ProfileNames.AMF  -> SeverityLevels.WARNING
+    ),
     UnsupportedExampleMediaTypeErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.WARNING,
       ProfileNames.OAS  -> SeverityLevels.WARNING,
@@ -124,6 +137,7 @@ object ParserSideValidations {
     ClosedShapeSpecification,
     DialectAmbiguousRangeSpecification,
     ParsingErrorSpecification,
+    ParsingWarningSpecification,
     ExampleValidationErrorSpecification,
     UnsupportedExampleMediaTypeErrorSpecification,
     DialectExpectingMap,

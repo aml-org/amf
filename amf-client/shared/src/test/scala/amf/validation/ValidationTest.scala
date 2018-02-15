@@ -465,7 +465,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 2)
+      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
+      assert(violations.lengthCompare(2) == 0)
     }
   }
 
@@ -476,8 +477,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
+      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
       report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 1)
+      assert(violations.lengthCompare(1) == 0)
     }
   }
 
@@ -635,7 +637,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       library    <- AMFCompiler(productionPath + "includes-api/api.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(report.results.size == 1) // TODO: Check the example that is failing here, gray area
+      val (violations, others) =
+        report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
+      assert(violations.lengthCompare(1) == 0) // TODO: Check the example that is failing here, gray area
+      assert(others.lengthCompare(1) == 0)
+      assert(others.head.level == SeverityLevels.WARNING)
+      assert(others.head.message.equals("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))
     }
   }
 
@@ -805,9 +812,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
-        platform,
-        RamlYamlHint,
-        validation)
+                             platform,
+                             RamlYamlHint,
+                             validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML08)
     } yield {
@@ -846,7 +853,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val validation = Validation(platform)
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/tck-examples/examples.raml", platform, RamlYamlHint, validation).build()
+      library <- AMFCompiler(validationsPath + "/tck-examples/examples.raml", platform, RamlYamlHint, validation)
+        .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.results.isEmpty)
