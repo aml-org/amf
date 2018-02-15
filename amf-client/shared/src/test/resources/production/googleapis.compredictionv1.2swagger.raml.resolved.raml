@@ -50,7 +50,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   csvInstance:
                     required: false
                     type: array
-                    items:
+                    items: {}
         responses:
           200:
             body:
@@ -116,7 +116,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
           userIp:
             description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
             type: string
-        securedBy:
+        securedBy: []
     put:
       displayName: prediction.training.update
       description: Add new data to a trained model
@@ -134,7 +134,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
               description: The input features for this instance
               required: false
               type: array
-              items:
+              items: {}
       responses:
         200:
           body:
@@ -200,7 +200,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
         userIp:
           description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
           type: string
-      securedBy:
+      securedBy: []
     get:
       queryParameters:
         alt:
@@ -269,7 +269,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
           description: Successful response
       (oas-tags):
         - training
-      securedBy:
+      securedBy: []
     delete:
       queryParameters:
         alt:
@@ -304,7 +304,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
           description: Successful response
       (oas-tags):
         - training
-      securedBy:
+      securedBy: []
     uriParameters:
       data:
         description: mybucket/mydata resource in Google Storage
@@ -416,7 +416,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
         type: string
     (oas-tags):
       - training
-    securedBy:
+    securedBy: []
 /hostedmodels:
   displayName: hostedmodels
   /{hostedModelName}:
@@ -440,7 +440,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   csvInstance:
                     required: false
                     type: array
-                    items:
+                    items: {}
         responses:
           200:
             body:
@@ -508,4 +508,4 @@ description: Lets you access a cloud hosted machine learning service that makes 
           userIp:
             description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
             type: string
-        securedBy:
+        securedBy: []

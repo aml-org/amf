@@ -12,6 +12,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   Raml08TypePartEmitter,
   Raml10TypeEmitter
 }
+import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.ParameterModel
@@ -131,7 +132,7 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
       parameter.schema match {
         case anyShape: AnyShape =>
           Raml08TypePartEmitter(anyShape, ordering, references).emit
-        case other => throw new Exception(s"Cannot emit $other type of shape in raml 08")
+        case other => CommentEmitter(other, s"Cannot emit ${other.getClass.toString} type of shape in raml 08").emit
       }
     )
 

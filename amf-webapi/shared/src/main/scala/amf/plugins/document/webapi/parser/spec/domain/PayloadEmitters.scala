@@ -12,6 +12,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   Raml10TypeEmitter,
   Raml10TypePartEmitter
 }
+import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
@@ -91,8 +92,9 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
             p.obj(Raml08FormPropertiesEmitter(node, ordering).emit)
           case Some(anyShape: AnyShape) =>
             Raml08TypePartEmitter(anyShape, ordering, Seq()).emit(p)
-          case Some(other) => throw new Exception(s"Cannot emit schema $other in raml 08 body request")
-          case None        => p.+=(YNode(YMap.empty)) // ignore
+          case Some(other) =>
+            CommentEmitter(other, s"Cannot emit schema ${other.getClass.toString} in raml 08 body request").emit(p)
+          case None => p.+=(YNode(YMap.empty)) // ignore
         }
       }
     )
@@ -112,7 +114,11 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
             p.range match {
               case anyShape: AnyShape =>
                 ob.entry(p.name, Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emit(_))
-              case other => throw new Exception(s"Cannot emit property $other in raml 08 form properties")
+              case other =>
+                ob.entry(p.name,
+                         CommentEmitter(
+                           other,
+                           s"Cannot emit property ${other.getClass.toString} in raml 08 form properties").emit(_))
             }
 
           }
