@@ -115,6 +115,9 @@ case class RamlTypeDetector(parent: String,
       ctx.violation("'schema' and 'type' properties are mutually exclusive", Some(s.key))
     }
 
+    schema.foreach(s =>
+      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", Some(s.key)))
+
     `type`.orElse(schema)
   }
 

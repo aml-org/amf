@@ -368,6 +368,9 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       ctx.violation("'schemas' and 'types' properties are mutually exclusive", Some(s.key))
     }
 
+    schemas.foreach(s =>
+      ctx.warning("'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead", Some(s.key)))
+
     types.orElse(schemas)
   }
 
