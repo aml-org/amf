@@ -19,6 +19,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
   SingleExampleEmitter,
   StringToAstEmitter
 }
+import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.document.webapi.parser.{
   OasTypeDefMatcher,
   OasTypeDefStringValueMatcher,
@@ -1254,11 +1255,12 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case scalar: ScalarShape =>
         SimpleTypeEmitter(scalar, ordering).emitters()
       case array: ArrayShape =>
-        (array.items match {
+        array.items match {
           case sc: ScalarShape =>
             SimpleTypeEmitter(sc, ordering).emitters()
-          case other => throw new Exception(s"Cannot emit array shape with items $other in raml 08")
-        }) :+ MapEntryEmitter("repeat", "true")
+          case other =>
+            Seq(CommentEmitter(other, s"Cannot emit array shape with items ${other.getClass.toString} in raml 08"))
+        }
       case union: UnionShape =>
         Seq(new PartEmitter {
           override def emit(b: PartBuilder): Unit = {
@@ -1276,7 +1278,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema))
       case node: NodeShape if node.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(node))
-      case other => throw new Exception(s"Unsupported shape class for emit raml 08 spec $other")
+      case other =>
+        Seq(CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec ${other.getClass.toString}`"))
     }
   }
 

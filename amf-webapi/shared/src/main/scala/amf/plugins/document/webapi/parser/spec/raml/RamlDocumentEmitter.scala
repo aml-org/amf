@@ -19,8 +19,9 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YNode}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -260,7 +261,6 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
     case document: Document => document.encodes.asInstanceOf[WebApi]
     case _                  => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
-
   def apiEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()
     val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
@@ -487,4 +487,14 @@ case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
   }
 
   override def position(): Position = pos(f.value.annotations)
+}
+
+case class CommentEmitter(element: AmfElement, message: String) extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = {
+    b += YNode.Empty
+    b.comment(message)
+    element.annotations.find(classOf[SourceAST]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
+  }
+
+  override def position(): Position = Position.ZERO
 }
