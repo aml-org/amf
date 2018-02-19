@@ -56,7 +56,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       e => {
         e.value.tagType match {
           case YType.Seq =>
-            parseEntries(e.value.as[Seq[YMap]].flatMap(m => m.entries), parent)
+            e.value.as[Seq[YMap]].foreach(map => parseEntries(map.entries, parent))
           case YType.Map  => parseEntries(e.value.as[YMap].entries, parent)
           case YType.Null =>
           case t          => ctx.violation(parent, s"Invalid type $t for 'securitySchemes' node.", e.value)
@@ -65,7 +65,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     )
   }
 
-  private def parseEntries(entries: Seq[YMapEntry], parent: String) = entries.foreach { entry =>
+  private def parseEntries(entries: Seq[YMapEntry], parent: String): Unit = entries.foreach { entry =>
     ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
       .parse()
       .add(DeclaredElement())
@@ -84,7 +84,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     }
   }
 
-  private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String) = {
+  private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String): Unit = {
     entries.foreach { entry =>
       Raml08TypeParser(entry,
                        entry.key.as[YScalar].toString(),

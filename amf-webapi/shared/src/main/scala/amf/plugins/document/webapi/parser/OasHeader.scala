@@ -2,7 +2,6 @@ package amf.plugins.document.webapi.parser
 
 import amf.core.Root
 import amf.core.parser._
-import amf.plugins.document.webapi.parser.FragmentTypes._
 import org.yaml.model.YMap
 
 /**
@@ -47,7 +46,6 @@ object OasHeader {
         .orElse(map.key(extensionType))
         .orElse(map.key(swagger))
         .flatMap(extension => OasHeader(extension.value))
-        .orElse(toOasType(FragmentTypes(map)))
     case Left(_) => None
   }
 
@@ -64,17 +62,4 @@ object OasHeader {
     case Oas20Overlay.value                   => Some(Oas20Overlay)
     case _                                    => None
   }
-
-  def toOasType(fragmentType: FragmentType): Option[OasHeader] =
-    fragmentType match {
-      case DataTypeFragment          => Some(Oas20DataType)
-      case ResourceTypeFragment      => Some(Oas20ResourceType)
-      case TraitFragment             => Some(Oas20Trait)
-      case AnnotationTypeFragment    => Some(Oas20AnnotationTypeDeclaration)
-      case DocumentationItemFragment => Some(Oas20DocumentationItem)
-      case SecuritySchemeFragment    => Some(Oas20SecurityScheme)
-      case NamedExampleFragment      => Some(Oas20NamedExample)
-      case _                         => None // UnknownFragment
-    }
-
 }

@@ -14,12 +14,12 @@ import scala.concurrent.{Future, Promise}
 trait FileMediaType {
   def mimeFromExtension(extension: String): Option[String] =
     extension match {
-      case "json"           => Option(Mimes.`APPLICATION/JSON`)
-      case "yaml" | "yam"   => Option(Mimes.`APPLICATION/YAML`)
-      case "raml"           => Option(Mimes.`APPLICATION/RAML+YAML`)
-      case "openapi"        => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
-      case "jsonld" | "amf" => Option(Mimes.`APPLICATION/LD+JSONLD`)
-      case _                => None
+      case "json"                 => Option(Mimes.`APPLICATION/JSON`)
+      case "yaml" | "yam" | "yml" => Option(Mimes.`APPLICATION/YAML`)
+      case "raml"                 => Option(Mimes.`APPLICATION/RAML+YAML`)
+      case "openapi"              => Option(Mimes.`APPLICATION/OPENAPI+JSON`)
+      case "jsonld" | "amf"       => Option(Mimes.`APPLICATION/LD+JSONLD`)
+      case _                      => None
     }
 
   def extension(path: String): Option[String] = {
@@ -157,9 +157,10 @@ object Http {
     case url if url.startsWith("http://") || url.startsWith("https://") =>
       val protocol        = url.substring(0, url.indexOf("://") + 3)
       val rightOfProtocol = url.stripPrefix(protocol)
-      val host            = if (rightOfProtocol.contains("/")) rightOfProtocol.substring(0, rightOfProtocol.indexOf("/"))
-                            else rightOfProtocol
-      val path            = rightOfProtocol.replace(host, "")
+      val host =
+        if (rightOfProtocol.contains("/")) rightOfProtocol.substring(0, rightOfProtocol.indexOf("/"))
+        else rightOfProtocol
+      val path = rightOfProtocol.replace(host, "")
       Some(protocol, host, path)
     case _ => None
   }

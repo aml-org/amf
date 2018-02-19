@@ -59,8 +59,9 @@ trait RAMLPlugin extends BaseWebApiPlugin {
   }
 
   private def inlineYNode(ref: MutRef, raw: String): Unit = {
-    YamlParser(raw).parse() match {
-      case Seq(document: YDocument) => ref.target = Some(document.node)
+    val parts = YamlParser(raw).parse()
+    parts.collectFirst({ case document: YDocument => document }) match {
+      case Some(document: YDocument) => ref.target = Some(document.node)
     }
   }
 
