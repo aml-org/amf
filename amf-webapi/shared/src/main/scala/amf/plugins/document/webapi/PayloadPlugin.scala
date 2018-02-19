@@ -33,9 +33,9 @@ object PayloadPlugin extends AMFDocumentPlugin {
   // Fallback option should be an external fragment.
   override def documentSyntaxes = Seq(
     "application/amf+json",
-    "application/amf+yaml",
+    "application/amf+yaml" /*,
     "application/json",
-    "application/yaml"
+    "application/yaml"*/
   )
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform) = {
@@ -53,7 +53,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
       case map: YMap => {
         !map.entries.exists(_.key.value.asInstanceOf[YScalar].text.startsWith("swagger"))
       }
-      case _         => true
+      case _ => true
     }
   }
 

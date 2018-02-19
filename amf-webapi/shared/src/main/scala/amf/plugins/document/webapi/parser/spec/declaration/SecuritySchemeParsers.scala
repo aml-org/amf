@@ -79,7 +79,7 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
                       annotations: Annotations,
                       adopt: (SecurityScheme) => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
-      .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
+      .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.All)
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
     adopt(copied)
