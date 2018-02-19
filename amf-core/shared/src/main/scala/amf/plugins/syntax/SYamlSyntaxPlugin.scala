@@ -1,6 +1,6 @@
 package amf.plugins.syntax
 
-import amf.core.parser.ParsedDocument
+import amf.core.parser.{ParsedDocument, ParserContext}
 import amf.core.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
@@ -28,8 +28,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     "text/vnd.yaml"
   )
 
-  override def parse(mediaType: String, text: CharSequence) = {
-    val parser = YamlParser(text).withIncludeTag("!include")
+  override def parse(mediaType: String, text: CharSequence, ctx: ParserContext) = {
+    val parser = YamlParser(text)(ctx).withIncludeTag("!include")
     val parts  = parser.parse(true)
 
     if (parts.exists(v => v.isInstanceOf[YDocument])) {

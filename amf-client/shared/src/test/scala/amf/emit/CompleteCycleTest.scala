@@ -832,5 +832,4 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Message for model objects not supported in 08") {
     cycle("array-of-node.raml", "array-of-node-unsupported08.raml", RamlYamlHint, Raml08)
   }
-
 }
