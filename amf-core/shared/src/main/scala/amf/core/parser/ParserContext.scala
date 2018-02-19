@@ -11,7 +11,7 @@ import org.yaml.model._
 /**
   * Parser context
   */
-class ErrorHandler extends IllegalTypeHandler {
+class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   override def handle[T](error: YError, defaultValue: T): T = {
     violation("", error.error, part(error))
@@ -98,6 +98,8 @@ class ErrorHandler extends IllegalTypeHandler {
       case range           => Some(annotations.LexicalInformation(Range(range)))
     }
   }
+
+  override def handle(node: YPart, e: YScalar.ParseException): Unit = violation(e.getMessage, Some(node))
 }
 
 object EmptyFutureDeclarations {

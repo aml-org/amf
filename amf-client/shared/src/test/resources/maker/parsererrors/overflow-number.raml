@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: SpectroCoin Merchant
+version: 1.0.0
+types:
+  Order_request_class_used_to_provide_order_specific_information:
+    properties:
+      apiId:
+        description: API ID of specific API you have configured on your merchant account
+        format: int64
+        maximum: 9223372036854776000
+        minimum: 0
+        type: integer
