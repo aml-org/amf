@@ -3,15 +3,18 @@ package amf.compiler
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.{UnspecifiedReference, _}
+import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
+import amf.core.services.RuntimeCompiler
 import amf.facades.Root
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.concurrent.ExecutionContext
+import scala.collection.mutable
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   *
@@ -90,21 +93,53 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
-  /*
-  test("Parse payloads") {
-    val path = "file://amf-client/shared/src/test/resources/payloads/a_valid.json"
-    build(path`, PayloadJsonHint)
-        .build() map { parsed: BaseUnit =>
-      assert(parsed != null)
-      parsed
-    } flatMap  { parsed =>
-      new AMFDumper(parsed, Payload, Json, GenerationOptions()).dumpToString map { actual =>
-        println(actual)
-        assert(actual != null)
+  test("Feature plugin test") {
+    val url = "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml"
+    amf.core.AMF.init()
+    val featurePlugin = new AMFFeaturePlugin {
+
+      override def init(): Future[AMFPlugin] = Future { this }
+
+      var invocations: mutable.ListBuffer[String] = mutable.ListBuffer()
+
+      override def dependencies(): Seq[AMFPlugin] = Nil
+
+      override val ID: String = "Test Feature Plugin"
+
+      override def onBeginParsingInvocation(url: String, mediaType: Option[String], vendor: String): Unit = {
+        invocations += "begin_parsing_invocation"
+      }
+
+      override def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind, vendor: String): Content = {
+        invocations += "begin_document_parsing"
+        content
+      }
+
+      override def onSyntaxParsed(url: String, ast: ParsedDocument): ParsedDocument = {
+        invocations += "syntax_parsed"
+        ast
+      }
+
+      override def onModelParsed(url: String, unit: BaseUnit): BaseUnit = {
+        invocations += "model_parsed"
+        unit
+      }
+
+      override def onFinishedParsingInvocation(url: String, unit: BaseUnit): BaseUnit = {
+        invocations += "finished_parsing"
+        unit
+      }
+    }
+    amf.core.AMF.registerPlugin(featurePlugin)
+    featurePlugin.init() flatMap { _ =>
+      RuntimeCompiler(url, platform, Some("application/yaml"), "RAML 1.0") map { _ =>
+        val allPhases = Seq("begin_parsing_invocation", "begin_document_parsing", "syntax_parsed", "model_parsed", "finished_parsing").foldLeft(true) { case (acc, phase) =>
+          acc && featurePlugin.invocations.contains(phase)
+        }
+        assert(allPhases)
       }
     }
   }
-   */
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {
     case d: Document =>
