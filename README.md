@@ -42,6 +42,7 @@ To use AMF you should first generate or get the right distribution for your proj
 
 #### Test
 * Tests on jvm and js
+
 ```sh
 sbt test
 ```

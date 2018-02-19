@@ -40,7 +40,12 @@ class AMFCompiler(val rawUrl: String,
 
   private def compile() = resolve().map(parseSyntax).flatMap(parseDomain)
 
-  private def parseSyntax(content: Content): Either[Content, Root] = {
+  private def parseSyntax(inputContent: Content): Either[Content, Root] = {
+
+    val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) { case (content, plugin) =>
+      plugin.onBeginDocumentParsing(url, content, referenceKind, vendor)
+    }
+
     val parsed = content.mime
       .orElse(mediaType)
       .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream)))
@@ -53,7 +58,10 @@ class AMFCompiler(val rawUrl: String,
       }
 
     parsed match {
-      case Some(document) =>
+      case Some(inputDocument) =>
+        val document = AMFPluginsRegistry.featurePlugins().foldLeft(inputDocument) { case (doc, plugin) =>
+          plugin.onSyntaxParsed(url, doc)
+        }
         Right(
           Root(document,
                content.url,
@@ -86,7 +94,7 @@ class AMFCompiler(val rawUrl: String,
       case None               => AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document))
     }
 
-    domainPluginOption match {
+    val futureDocument = domainPluginOption match {
       case Some(domainPlugin) =>
         parseReferences(document, domainPlugin) map { documentWithReferences =>
           domainPlugin.parse(documentWithReferences, ctx, remote) match {
@@ -105,6 +113,12 @@ class AMFCompiler(val rawUrl: String,
           .withId(document.location)
           .withEncodes(ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
         Future.successful(fragment)
+    }
+
+    futureDocument map { baseUnit: BaseUnit =>
+      AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) { case (unit, plugin) =>
+        plugin.onModelParsed(url, unit)
+      }
     }
   }
 
