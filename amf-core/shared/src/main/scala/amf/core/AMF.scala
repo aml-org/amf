@@ -1,6 +1,6 @@
 package amf.core
 
-import amf.core.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin, AMFSyntaxPlugin}
+import amf.core.plugins._
 import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.features.validation.ParserSideValidationPlugin
@@ -40,7 +40,7 @@ object AMF {
     case syntax: AMFSyntaxPlugin     => AMFPluginsRegistry.registerSyntaxPlugin(syntax)
     case document: AMFDocumentPlugin => AMFPluginsRegistry.registerDocumentPlugin(document)
     case domain: AMFDomainPlugin     => AMFPluginsRegistry.registerDomainPlugin(domain)
-    case feature: AMFPlugin          => AMFPluginsRegistry.registerFeaturePlugin(feature)
+    case feature: AMFFeaturePlugin   => AMFPluginsRegistry.registerFeaturePlugin(feature)
   }
 
   protected def processInitializations(plugins: Seq[AMFPlugin]): Future[Unit] = {
