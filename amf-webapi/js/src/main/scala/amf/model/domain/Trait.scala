@@ -1,6 +1,9 @@
 package amf.model.domain
 
+import amf.ProfileNames
+import amf.model.document.BaseUnit
 import amf.plugins.domain.webapi.models.templates
+
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportTopLevel("model.domain.Trait")
@@ -13,4 +16,7 @@ case class Trait(private[amf] val trt: templates.Trait) extends AbstractDeclarat
     trt.linkTarget.map({ case l: templates.Trait => Trait(l) })
 
   override def linkCopy(): DomainElement with Linkable = Trait(trt.linkCopy())
+
+  def asOperation[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): Operation =
+    Operation(trt.asOperation(unit.element, profile))
 }
