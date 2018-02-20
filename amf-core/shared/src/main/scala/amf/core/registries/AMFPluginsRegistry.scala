@@ -1,6 +1,6 @@
 package amf.core.registries
 
-import amf.core.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin, AMFSyntaxPlugin}
+import amf.core.plugins._
 
 import scala.collection.mutable
 
@@ -12,8 +12,8 @@ object AMFPluginsRegistry {
   private val documentPluginIDRegistry: mutable.HashMap[String, AMFDocumentPlugin] = mutable.HashMap()
   private val documentPluginVendorsRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]] = mutable.HashMap()
   private val domainPluginRegistry: mutable.HashMap[String, AMFDomainPlugin] = mutable.HashMap()
-  private val featurePluginIDRegistry: mutable.HashMap[String, AMFPlugin] = mutable.HashMap()
-  private val featurePlugin: mutable.HashMap[String, AMFPlugin] = mutable.HashMap()
+  private val featurePluginIDRegistry: mutable.HashMap[String, AMFFeaturePlugin] = mutable.HashMap()
+  private val featurePlugin: mutable.HashMap[String, AMFFeaturePlugin] = mutable.HashMap()
 
 
   def plugins = syntaxPluginIDRegistry.values ++ documentPluginIDRegistry.values ++ domainPluginRegistry.values ++ featurePluginIDRegistry.values
@@ -50,7 +50,7 @@ object AMFPluginsRegistry {
     }
   }
 
-  def registerFeaturePlugin(featurePlugin: AMFPlugin) = {
+  def registerFeaturePlugin(featurePlugin: AMFFeaturePlugin) = {
     featurePluginIDRegistry.get(featurePlugin.ID) match {
       case Some(_)  => // ignore
       case None     =>
@@ -58,6 +58,8 @@ object AMFPluginsRegistry {
         registerDependencies(featurePlugin)
     }
   }
+
+  def featurePlugins(): Seq[AMFFeaturePlugin] = featurePluginIDRegistry.values.toSeq
 
   def registerDocumentPlugin(documentPlugin: AMFDocumentPlugin) = {
     documentPluginIDRegistry.get(documentPlugin.ID) match {

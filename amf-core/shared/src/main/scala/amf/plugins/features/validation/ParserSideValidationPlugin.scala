@@ -3,7 +3,7 @@ package amf.plugins.features.validation
 import amf.ProfileNames
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.core.plugins.AMFPlugin
+import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.services.RuntimeValidator
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult}
@@ -11,7 +11,7 @@ import amf.core.validation.core.{ValidationProfile, ValidationReport, Validation
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class ParserSideValidationPlugin extends AMFPlugin with RuntimeValidator with ValidationResultProcessor {
+class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator with ValidationResultProcessor {
 
   override val ID: String = "Parser side AMF Validation"
 
