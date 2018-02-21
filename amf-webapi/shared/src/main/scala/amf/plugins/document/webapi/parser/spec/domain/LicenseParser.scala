@@ -29,7 +29,7 @@ class LicenseParser(map: YMap)(implicit ctx: WebApiContext) {
       license.set(LicenseModel.Name, value.string(), Annotations(entry))
     })
 
-    AnnotationParser(() => license, map).parse()
+    AnnotationParser(license, map).parse()
 
     ctx.closedShape(license.id, map, "license")
 

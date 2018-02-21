@@ -135,7 +135,7 @@ case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: WebApiContext
             RamlExampleValueAsString(entry.value, example, Option(example.strict).getOrElse(true)).populate()
           }
 
-        AnnotationParser(() => example, map).parse()
+        AnnotationParser(example, map).parse()
 
       case _ =>
         RamlExampleValueAsString(node, example, strict = true).populate()

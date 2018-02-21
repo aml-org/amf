@@ -88,7 +88,7 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
     val examples = OasResponseExamplesParser("(examples)", map).parse()
     if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
 
-    AnnotationParser(() => response, map).parse()
+    AnnotationParser(response, map).parse()
 
   }
 }

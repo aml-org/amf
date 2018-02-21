@@ -68,7 +68,7 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
           }
         )
 
-        AnnotationParser(() => scheme, map).parse()
+        AnnotationParser(scheme, map).parse()
 
         scheme
     }
@@ -194,7 +194,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           .parse()
           .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(ast)))
 
-        AnnotationParser(() => scheme, map).parse()
+        AnnotationParser(scheme, map).parse()
 
         scheme
     }
@@ -213,7 +213,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       }
 
       result.map(ss => {
-        AnnotationParser(() => ss, map).parse()
+        AnnotationParser(ss, map).parse()
         ss.add(Annotations(map))
       })
     }
@@ -229,7 +229,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
         settings.set(SettingsModel.AdditionalProperties, node)
       }
 
-      AnnotationParser(() => scheme, xSettings).parse()
+      AnnotationParser(scheme, xSettings).parse()
 
       settings
     }
@@ -284,7 +284,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           val scopes =
             scopeMap.entries.filterNot(entry => WellKnownAnnotation.isOasAnnotation(entry.key)).map(parseScope)
 
-          AnnotationParser(() => scheme, scopeMap).parse()
+          AnnotationParser(scheme, scopeMap).parse()
 
           settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(entry))
         }

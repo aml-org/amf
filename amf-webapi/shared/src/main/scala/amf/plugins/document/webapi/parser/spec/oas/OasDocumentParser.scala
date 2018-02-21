@@ -226,7 +226,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       }
     )
 
-    AnnotationParser(() => api, map).parse()
+    AnnotationParser(api, map).parse()
 
     ctx.closedShape(api.id, map, "webApi")
 
@@ -378,7 +378,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
 
           collector += endpoint
 
-          AnnotationParser(() => endpoint, map).parse()
+          AnnotationParser(endpoint, map).parse()
 
           map.key(
             "x-security",
@@ -503,9 +503,6 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         }
       )
 
-      // This has already being parsed in the operation
-      // AnnotationParser(() => request.getOrCreate, map).parse()
-
       request.option
     }
   }
@@ -611,7 +608,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         }
       )
 
-      AnnotationParser(() => operation, map).parse()
+      AnnotationParser(operation, map).parse()
 
       ctx.closedShape(operation.id, map, "operation")
 
@@ -665,7 +662,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       val examples = OasResponseExamplesParser("examples", map).parse()
       if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
 
-      AnnotationParser(() => response, map).parse()
+      AnnotationParser(response, map).parse()
 
       ctx.closedShape(response.id, map, "response")
 
@@ -714,7 +711,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         }
       )
 
-      AnnotationParser(() => payload, map).parse()
+      AnnotationParser(payload, map).parse()
 
       payload
     }
@@ -942,7 +939,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
         }
       )
 
-      AnnotationParser(() => custom, map).parse()
+      AnnotationParser(custom, map).parse()
 
       custom
     }
@@ -1030,7 +1027,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
               .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
           }
 
-          AnnotationParser(() => parameter.parameter, map).parse()
+          AnnotationParser(parameter.parameter, map).parse()
 
           parameter
       }
@@ -1151,7 +1148,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
         }
       )
 
-      AnnotationParser(() => parameter, map).parse()
+      AnnotationParser(parameter, map).parse()
 
       parameter
     }

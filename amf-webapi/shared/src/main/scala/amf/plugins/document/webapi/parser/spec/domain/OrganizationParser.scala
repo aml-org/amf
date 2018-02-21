@@ -35,7 +35,7 @@ class OrganizationParser(map: YMap)(implicit ctx: WebApiContext) {
       organization.set(OrganizationModel.Email, value.string(), Annotations(entry))
     })
 
-    AnnotationParser(() => organization, map).parse()
+    AnnotationParser(organization, map).parse()
 
     ctx.closedShape(organization.id, map, "contact")
 

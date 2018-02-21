@@ -26,7 +26,7 @@ case class Raml10PayloadParser(entry: YMapEntry, producer: (Option[String]) => P
       case YType.Map => // ignore, in this case it will be parsed in the shape
       case _ =>
         entry.value.to[YMap] match {
-          case Right(map) => AnnotationParser(() => payload, map).parse()
+          case Right(map) => AnnotationParser(payload, map).parse()
           case _          =>
         }
     }
