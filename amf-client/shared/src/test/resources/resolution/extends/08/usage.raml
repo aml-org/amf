@@ -1,0 +1,20 @@
+#%RAML 0.8
+baseUri: http://mocksvc.mulesoft.com/mocks/a31eb1d1-8ba1-4948-ad76-90c06340c8e7
+title: Portal Application Management Service API
+version: 2
+mediaType: application/json
+
+traits:
+  - secured:
+      usage: Apply this to any method that needs to be secured
+      description: Requests requiring authentication.
+      headers:
+        Authorization:
+          example: Bearer y6MpdQ3=
+
+/prehook/api:
+  is: [secured]
+  post:
+    responses: &responses
+       200:
+         description: OK, the original request can go ahead
