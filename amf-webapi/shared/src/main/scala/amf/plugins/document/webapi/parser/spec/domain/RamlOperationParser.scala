@@ -149,7 +149,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
       operation.set(OperationModel.Description, value.string(), Annotations(entry))
     })
 
-    AnnotationParser(() => operation, map).parse()
+    AnnotationParser(operation, map).parse()
 
     operation
   }

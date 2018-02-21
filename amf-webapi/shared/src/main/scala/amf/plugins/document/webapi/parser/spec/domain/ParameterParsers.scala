@@ -55,7 +55,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
           .parse()
           .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 
-        AnnotationParser(() => parameter, map).parse()
+        AnnotationParser(parameter, map).parse()
 
         parameter
       case _ =>

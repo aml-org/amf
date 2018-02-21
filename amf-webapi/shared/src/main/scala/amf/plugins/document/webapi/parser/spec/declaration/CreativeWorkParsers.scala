@@ -10,8 +10,7 @@ import org.yaml.model.YMap
 /**
   *
   */
-case class OasCreativeWorkParser(map: YMap)(
-  implicit val ctx: WebApiContext) {
+case class OasCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) {
   def parse(): CreativeWork = {
 
     val creativeWork = CreativeWork(map)
@@ -31,14 +30,13 @@ case class OasCreativeWorkParser(map: YMap)(
       creativeWork.set(CreativeWorkModel.Title, value.string(), Annotations(entry))
     })
 
-    AnnotationParser(() => creativeWork, map).parse()
+    AnnotationParser(creativeWork, map).parse()
 
     creativeWork
   }
 }
 
-case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(
-  implicit val ctx: ParserContext) {
+case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(implicit val ctx: ParserContext) {
   def parse(): CreativeWork = {
 
     val documentation = CreativeWork(Annotations(map))
