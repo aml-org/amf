@@ -9,6 +9,8 @@ case class Hint(vendor: Vendor, syntax: Syntax, kind: ReferenceKind = Unspecifie
 
 object RamlYamlHint extends Hint(Raml, Yaml)
 
+object VocabularyYamlHint extends Hint(RamlVocabulary, Yaml)
+
 object RamlJsonHint extends Hint(Raml, Json)
 
 object OasYamlHint extends Hint(Oas, Yaml)

@@ -9,6 +9,7 @@ import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies2.{ RAMLVocabulariesPlugin => RAMLVocabularies2Plugin }
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
@@ -36,6 +37,7 @@ class Validation(platform: Platform) {
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabularies2Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 

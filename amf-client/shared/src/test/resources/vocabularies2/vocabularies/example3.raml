@@ -1,0 +1,22 @@
+#%RAML 1.0 Vocabulary
+
+vocabulary: test2
+
+base: "http://raml.org/vocabularies/test2#"
+
+classTerms:
+
+  C:
+    displayName: class C
+    description: C
+    extends:
+      - A
+      - B
+  A:
+    displayName: class A
+    description: description
+
+  B:
+    displayName: class B
+    description: B
+    extends: A
