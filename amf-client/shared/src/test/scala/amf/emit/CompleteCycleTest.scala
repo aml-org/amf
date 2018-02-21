@@ -352,6 +352,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("annotations.raml", RamlYamlHint)
   }
 
+  test("Annotations Full raml to raml test") {
+    cycle("annotations-full.raml", RamlYamlHint)
+  }
+
   test("Annotations raml to jsonld test") {
     cycle("annotations.raml", "annotations.raml.jsonld", RamlYamlHint, Amf)
   }

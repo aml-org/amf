@@ -27,7 +27,7 @@ case class ExtensionParser(annotationRamlName: String, parent: String, entry: YM
   def parse(): DomainExtension = {
     val domainExtension = DomainExtension()
     val annotationName  = WellKnownAnnotation.parseName(annotationRamlName)
-    val dataNode        = DataNodeParser(entry.value, parent = Some(parent + s"/$annotationName")).parse()
+    val dataNode        = DataNodeParser(entry.value, parent = Some(s"$parent/$annotationName")).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
     val customDomainProperty = ctx.declarations.annotations
