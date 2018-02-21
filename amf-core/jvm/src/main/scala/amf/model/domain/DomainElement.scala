@@ -16,14 +16,14 @@ trait DomainElement extends AmfObjectWrapper with PlatformSecrets {
 
   def customDomainProperties = element.customDomainProperties.map(platform.wrap[CustomDomainProperty](_)).asJava
 
-  def `extends` = element.extend.map(platform.wrap[DomainElement](_)).asJava
+  def extendsNode = element.extend.map(platform.wrap[DomainElement](_)).asJava
 
   def withCustomDomainProperties(customProperties: java.util.List[DomainExtension]) = {
     element.withCustomDomainProperties(customProperties.asScala.map(_.element))
     this
   }
 
-  def withExtends(extend: java.util.List[ParametrizedDeclaration]) = {
+  def withExtendsNode(extend: java.util.List[ParametrizedDeclaration]) = {
     element.withExtends(extend.asScala.map(_.element))
     this
   }

@@ -20,14 +20,14 @@ class DomainElement extends AmfObjectWrapper with PlatformSecrets {
 
   def customDomainProperties = element.customDomainProperties.map(platform.wrap[CustomDomainProperty](_)).toJSArray
 
-  def `extends` = element.extend.map(platform.wrap[DomainElement](_)).toJSArray
+  def extendsNode = element.extend.map(platform.wrap[DomainElement](_)).toJSArray
 
   def withCustomDomainProperties(customProperties: js.Iterable[DomainExtension]) = {
     element.withCustomDomainProperties(customProperties.map(_.element).toSeq)
     this
   }
 
-  def withExtends(extend: js.Iterable[ParametrizedDeclaration]) = {
+  def withExtendsNode(extend: js.Iterable[ParametrizedDeclaration]) = {
     element.withExtends(extend.map(_.element).toSeq)
     this
   }
