@@ -1,0 +1,19 @@
+#%RAML 1.0 Vocabulary
+
+vocabulary: test6
+
+base: "http://raml.org/vocabularies/test6#"
+
+uses:
+  test: "./example3.raml"
+
+classTerms:
+  D:
+    extends: test.C
+
+propertyTerms:
+
+  d:
+    displayName: property d
+    description: d
+    range: test.A
