@@ -9,7 +9,12 @@ import org.yaml.model.YMap
 
 case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainElement {
   override def meta: Obj = ClassTermModel
-  override def adopted(parent: String): ClassTerm.this.type = withId(parent)
+  override def adopted(parent: String): ClassTerm.this.type = {
+    if (Option(id).isEmpty) {
+      withId(parent)
+    }
+    this
+  }
 
   def name: String            = fields(Name)
   def displayName: String     = fields(DisplayName)

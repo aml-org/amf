@@ -10,8 +10,10 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
+import amf.plugins.document.vocabularies2.emitters.RamlVocabularyEmitter
 import amf.plugins.document.vocabularies2.metamodel.document.VocabularyModel
-import amf.plugins.document.vocabularies2.metamodel.domain.{ClassTermModel, DatatypePropertyTermModel, ExternalModel, ObjectPropertyTermModel}
+import amf.plugins.document.vocabularies2.metamodel.domain._
+import amf.plugins.document.vocabularies2.model.document.Vocabulary
 import amf.plugins.document.vocabularies2.parser.ExtensionHeader
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
 import org.yaml.model.YDocument
@@ -30,6 +32,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
   override def modelEntities: Seq[Obj] = Seq(
     VocabularyModel,
     ExternalModel,
+    VocabularyReferenceModel,
     ClassTermModel,
     ObjectPropertyTermModel,
     DatatypePropertyTermModel
@@ -73,7 +76,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
   /**
     * Unparses a model base unit and return a document AST
     */
-  override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = throw new Exception("Not supported yet")
+  override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
+    case vocabulary: Vocabulary => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
+    case _                      => None
+  }
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -89,7 +95,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     * to decide which one will unparse the document base on information from
     * the instance type and properties
     */
-  override def canUnparse(unit: BaseUnit): Boolean = false // TODO
+  override def canUnparse(unit: BaseUnit): Boolean = unit match {
+    case _: Vocabulary => true
+    case _             => false
+  }
 
   override def referenceCollector(): AbstractReferenceCollector = new RAMLExtensionsReferenceCollector()
 

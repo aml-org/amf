@@ -1,14 +1,9 @@
 #%RAML 1.0 Vocabulary
-
+base: http://raml.org/vocabularies/test4#
 vocabulary: test4
-
-base: "http://raml.org/vocabularies/test4#"
-
 classTerms:
   D:
-
 propertyTerms:
-
   c:
     displayName: property c
     description: c
@@ -16,18 +11,15 @@ propertyTerms:
       - a
       - b
     range: string
-
   a:
     displayName: property a
     description: description
     range: uri
-
   b:
     displayName: property b
     description: b
     extends: a
     range: any
-
   d:
     displayName: property d
     description: d

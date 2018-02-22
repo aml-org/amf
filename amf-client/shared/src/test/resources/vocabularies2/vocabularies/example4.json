@@ -2,7 +2,7 @@
   {
     "@id": "http://raml.org/vocabularies/test4#",
     "@type": [
-      "http://www.w3.org/2002/07/owl#Ontology",
+      "http://www.w3.org/2002/07/owl#Ontology2",
       "http://raml.org/vocabularies/meta#Vocabulary",
       "http://raml.org/vocabularies/document#Unit"
     ],
@@ -33,7 +33,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,2)-(10,0)]"
+                    "@value": "[(5,2)-(6,0)]"
                   }
                 ]
               }
@@ -86,7 +86,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(12,2)-(20,0)]"
+                    "@value": "[(7,2)-(14,0)]"
                   }
                 ]
               }
@@ -131,7 +131,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(20,2)-(25,0)]"
+                    "@value": "[(14,2)-(18,0)]"
                   }
                 ]
               }
@@ -181,7 +181,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(25,2)-(31,0)]"
+                    "@value": "[(18,2)-(23,0)]"
                   }
                 ]
               }
@@ -226,13 +226,18 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(31,2)-(34,12)]"
+                    "@value": "[(23,2)-(27,0)]"
                   }
                 ]
               }
             ]
           }
         ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#location": [
+      {
+        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/vocabularies/example4.raml"
       }
     ],
     "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -250,7 +255,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(5,0)]"
+                "@value": "[(3,0)-(4,0)]"
               }
             ]
           },
@@ -262,7 +267,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(34,12)]"
+                "@value": "[(2,0)-(27,0)]"
               }
             ]
           }

@@ -8,7 +8,13 @@ import amf.plugins.document.vocabularies2.metamodel.domain.ObjectPropertyTermMod
 import org.yaml.model.YMap
 
 abstract class PropertyTerm extends DomainElement {
-  override def adopted(parent: String): this.type = withId(parent)
+
+  override def adopted(parent: String): PropertyTerm.this.type = {
+    if (Option(id).isEmpty) {
+      withId(parent)
+    }
+    this
+  }
 
   def name: String               = fields(Name)
   def displayName: String        = fields(DisplayName)

@@ -6,7 +6,7 @@ import amf.core.model.domain.DomainElement
 import amf.plugins.document.vocabularies2.metamodel.document.VocabularyModel._
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies2.metamodel.document.VocabularyModel
-import amf.plugins.document.vocabularies2.model.domain.External
+import amf.plugins.document.vocabularies2.model.domain.{External, VocabularyReference}
 
 case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel {
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
@@ -19,12 +19,14 @@ case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit
   override def declares: Seq[DomainElement] = fields(Declares)
 
   // Vocabulary specific fields
-  def name: String = fields(Name)
-  def base: String = fields(Base)
-  def imports: Seq[Vocabulary] = fields(Imports)
-  def externals: Seq[External] = fields(Externals)
+  def name: String                      = fields(Name)
+  def base: String                      = fields(Base)
+  def imports: Seq[VocabularyReference] = fields(Imports)
+  def externals: Seq[External]          = fields(Externals)
 
-  def withExternals(externals: Seq[External]) = setArray(Externals, externals)
+  def withBase(base: String)                              = set(Base, base)
+  def withExternals(externals: Seq[External])             = setArray(Externals, externals)
+  def withImports(vocabularies: Seq[VocabularyReference]) = setArray(Imports, vocabularies)
 
   /** Meta data for the document */
   override def meta: Obj = VocabularyModel

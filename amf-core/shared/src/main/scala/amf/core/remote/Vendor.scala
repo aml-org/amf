@@ -91,9 +91,7 @@ object Raml extends Raml {
   override def version: String = ""
 }
 
-object RamlVocabulary extends RamlVocabulary {
-  def version: String = ""
-}
+object RamlVocabulary extends RamlVocabulary
 
 object Raml10 extends Raml {
   override def version: String = "1.0"
