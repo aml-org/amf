@@ -6,7 +6,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, YMapOps}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml08TypeParser, Raml10TypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
@@ -75,7 +75,11 @@ case class Raml08PayloadParser(entry: YMapEntry,
         if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(payload.mediaType)) {
           Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
         } else {
-          Raml08TypeParser(entry, entry.key, entry.value, (shape: Shape) => shape.adopted(payload.id))
+          Raml08TypeParser(entry,
+                           entry.key,
+                           entry.value,
+                           (shape: Shape) => shape.adopted(payload.id),
+                           defaultType = NilDefaultType)
             .parse()
             .foreach(payload.withSchema)
         }
