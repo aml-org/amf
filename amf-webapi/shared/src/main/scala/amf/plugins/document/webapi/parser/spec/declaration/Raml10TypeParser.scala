@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{DefaultNode, ExplicitField, SynthesizedField}
+import amf.core.annotations.{DefaultNode, ExplicitField, SourceAST, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
@@ -75,6 +75,11 @@ object AnyDefaultType extends DefaultType {
   override val typeDef: TypeDef = TypeDef.AnyType
 }
 
+// In a body or body / application/json context raml 08 it its nil
+object NilDefaultType extends DefaultType {
+  override val typeDef: TypeDef = TypeDef.NilType
+}
+
 case class Raml10TypeParser(ast: YPart,
                             name: String,
                             node: YNode,
@@ -110,7 +115,7 @@ case class Raml08TypeParser(ast: YPart,
         map
           .key("schema")
           .fold({
-            Option(SimpleTypeParser(name, adopt, map).parse())
+            Option(SimpleTypeParser(name, adopt, map, defaultType).parse())
           })(_ => {
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
@@ -123,7 +128,7 @@ case class Raml08TypeParser(ast: YPart,
           })
       case YType.Seq =>
         Option(Raml08UnionTypeParser(UnionShape(node).withName(name), node.as[Seq[YNode]], node).parse())
-      case _ => Raml08TextParser(node, adopt, name).parse()
+      case _ => Raml08TextParser(node, adopt, name, defaultType).parse()
     }
   }
 
@@ -145,17 +150,12 @@ case class Raml08TypeParser(ast: YPart,
     }
   }
 
-  case class Raml08TextParser(value: YNode, adopt: (Shape) => Shape, name: String)(implicit ctx: RamlWebApiContext) {
+  case class Raml08TextParser(value: YNode, adopt: (Shape) => Shape, name: String, defaultType: DefaultType)(
+      implicit ctx: RamlWebApiContext) {
     def parse(): Option[Shape] = {
       value.tagType match {
         case YType.Null =>
-          val shape = ScalarShape(value)
-            .withName(name)
-            .set(ScalarShapeModel.DataType,
-                 AmfScalar(XsdTypeDefMapping.xsd(TypeDef.StrType)),
-                 Annotations() += Inferred())
-          adopt(shape)
-          Option(shape)
+          Raml08DefaultTypeParser(defaultType, name, adopt).parse().map(s => s.add(SourceAST(value)))
         case _ =>
           value.as[YScalar].text match {
             case XMLSchema(_)  => Option(parseXMLSchemaExpression(name, value, adopt))
@@ -171,12 +171,32 @@ case class Raml08TypeParser(ast: YPart,
       map.key("schema").flatMap { e =>
         e.value.tagType match {
           case YType.Map | YType.Seq => Raml08TypeParser(e, "schema", e.value, adopt).parse()
-          case _                     => Raml08TextParser(e.value, adopt, "schema").parse()
+          case _                     => Raml08TextParser(e.value, adopt, "schema", defaultType).parse()
         }
       }
     }
   }
 
+}
+
+case class Raml08DefaultTypeParser(defaultType: DefaultType, name: String, adopt: (Shape) => Shape)(
+    implicit ctx: RamlWebApiContext) {
+  def parse(): Option[Shape] = {
+    val product = defaultType match {
+      case NilDefaultType =>
+        Option(NilShape().withName(name).add(Inferred()))
+      case StringDefaultType =>
+        Option(
+          ScalarShape()
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(defaultType.typeDef)),
+                 Annotations() += Inferred()))
+      case _ =>
+        ctx.violation(s"Cannot set default type ${defaultType.typeDef} in raml 08", None)
+        None
+    }
+    product.map(adopt)
+  }
 }
 
 case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(implicit ctx: RamlWebApiContext) {
@@ -199,7 +219,8 @@ case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(im
   }
 }
 
-case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(implicit val ctx: RamlWebApiContext) {
+case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defaultType: DefaultType)(
+    implicit val ctx: RamlWebApiContext) {
 
   def parse(): Shape = {
 
@@ -209,14 +230,38 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
       val items =
         SimpleTypeParser("items",
                          (s: Shape) => s.adopted(shape.id),
-                         YMap(map.entries.filter(entry => !entry.key.as[YScalar].text.equals("repeat")))).parse()
+                         YMap(map.entries.filter(entry => !entry.key.as[YScalar].text.equals("repeat"))),
+                         defaultType).parse()
       shape.withItems(items)
       shape
     } else {
-      val shape = ScalarShape(map).withName(name)
+      val shape = map
+        .key("type")
+        .flatMap(e => {
+          e.value.tagType match {
+            case YType.Null => None
+            case _          => e.value.toOption[YScalar]
+          }
+        })
+        .fold(Raml08DefaultTypeParser(defaultType, name, adopt).parse())(value => {
+          XsdTypeDefMapping.xsdFromString(value.text) match {
+            case (iri: String, format: Option[String]) =>
+              val shape = ScalarShape(value).set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
+              format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))
+              Some(shape.withName(name))
+            case _ => None
+          }
+        })
+        .getOrElse(ScalarShape(map).withName(name))
+
       adopt(shape)
       parseMap(shape)
-      val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
+      val str = shape match {
+        case scalar: ScalarShape => scalar.dataType
+        case _                   => "#shape"
+      }
+
+      val syntaxType = str.split("#").last match {
         case "integer" | "float" => "numberScalarShape"
         case "string"            => "stringScalarShape"
         case "dateTime"          => "dateScalarShape"
@@ -232,27 +277,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
       val value = ValueNode(entry.value)
       shape.set(ShapeModel.DisplayName, value.text, Annotations(entry))
     })
-
-    map
-      .key("type")
-      .flatMap(e => {
-        e.value.tagType match {
-          case YType.Null => None
-          case _          => e.value.toOption[YScalar]
-        }
-      })
-      .fold(
-        shape
-          .set(ScalarShapeModel.DataType,
-               AmfScalar(XsdTypeDefMapping.xsd(TypeDef.StrType)),
-               Annotations() += Inferred()))(value => {
-        XsdTypeDefMapping.xsdFromString(value.text) match {
-          case (iri: String, format: Option[String]) =>
-            shape.set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
-            format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))
-        }
-        shape
-      })
 
     map.key("description", entry => {
       val value = ValueNode(entry.value)

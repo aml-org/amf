@@ -871,4 +871,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
+
+  test("Empty payload with example validation") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/08/empty-payload-with-example.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
 }

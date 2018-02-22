@@ -1,0 +1,16 @@
+#%RAML 0.8
+title: American Flights API
+version: 1.0
+baseUri: http://apdev-american-ws-hearn.cloudhub.io/api
+
+/flights:
+  post:
+    body:
+      application/json:
+
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {"message": "Flight added (but not really)"}
