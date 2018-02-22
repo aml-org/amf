@@ -55,7 +55,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
           .parse()
           .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
 
-        AnnotationParser(() => parameter, map).parse()
+        AnnotationParser(parameter, map).parse()
 
         parameter
       case _ =>
@@ -121,10 +121,21 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
     var name: String = entry.key
     val parameter    = producer(name).add(Annotations(entry))
 
-    // Named Parameter Parse
-    Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))
-      .parse()
-      .foreach(parameter.withSchema)
+    entry.value.tagType match {
+      case YType.Null =>
+        Raml10TypeParser(
+          entry,
+          shape => shape.withName("schema").adopted(parameter.id)
+        ).parse().foreach { schema =>
+          schema.annotations += SynthesizedField()
+          parameter.set(ParameterModel.Schema, schema, Annotations(entry))
+        }
+      case _ =>
+        // Named Parameter Parse
+        Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))
+          .parse()
+          .foreach(parameter.withSchema)
+    }
 
     parameter.schema.fields.entry(ShapeModel.RequiredShape) match {
       case Some(e) =>

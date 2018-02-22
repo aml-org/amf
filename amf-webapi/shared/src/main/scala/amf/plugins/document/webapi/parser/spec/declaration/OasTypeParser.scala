@@ -566,7 +566,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         shape.setArray(AnyShapeModel.Examples, examples)
 
       // normal annotations
-      AnnotationParser(() => shape, map).parse()
+      AnnotationParser(shape, map).parse()
 
       shape
     }

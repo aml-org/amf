@@ -85,10 +85,9 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
             case Some(shape: AnyShape) =>
               result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
             case Some(_) => throw new Exception("Cannot emit parameter for a non WebAPI shape")
-            case None    => // ignore
+            // Emit annotations for parameter only if those have not been emitted by shape
+            case None => result ++= AnnotationsEmitter(parameter, ordering).emitters
           }
-
-          result ++= AnnotationsEmitter(parameter, ordering).emitters
 
           Option(parameter.fields.getValue(ParameterModel.Binding)) match {
             case Some(v) =>
