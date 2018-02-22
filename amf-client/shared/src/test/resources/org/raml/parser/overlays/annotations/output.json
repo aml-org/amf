@@ -1,0 +1,59 @@
+{
+    "title": {
+        "value": "master"
+    },
+    "annotationTypes": {
+        "scalar": {
+            "type": "string",
+            "displayName": {
+                "value": "scalar"
+            }
+        },
+        "object": {
+            "properties": {
+                "lat": {
+                    "type": "number",
+                    "displayName": {
+                        "value": "lat"
+                    }
+                },
+                "long": {
+                    "type": "number",
+                    "displayName": {
+                        "value": "long"
+                    }
+                }
+            },
+            "type": "object",
+            "displayName": {
+                "value": "object"
+            }
+        },
+        "another-scalar": {
+            "type": "string",
+            "displayName": {
+                "value": "another-scalar"
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/home",
+            "displayName": {
+                "value": "/home"
+            },
+            "annotations": {
+                
+                "object": {
+                    "lat": "-34.6",
+                    "long": "-58.4"
+                }
+            }
+        }
+    ],
+    "annotations": {
+        
+        "scalar": "plain",
+        "another-scalar": "overlay"
+    }
+}

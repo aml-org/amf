@@ -51,7 +51,7 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
 
   /** Method to parse unit. Override if necessary. */
   def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
-    val validation = given match {
+    val validation: Future[Validation] = given match {
       case Some(validation: Validation) => Future { validation }
       case None                         => Validation(platform).map(_.withEnabledValidation(false))
     }
@@ -71,12 +71,12 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
   }
 
-  private def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {
+  protected def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {
     val actual = fs.asyncFile(tmp(s"$golden.tmp"))
     actual.write(content).map(_ => actual)
   }
 
-  private def assertDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
+  protected def assertDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
     val expected = fs.asyncFile(golden)
     expected.read().flatMap(_ => checkDiff(actual, expected))
   }

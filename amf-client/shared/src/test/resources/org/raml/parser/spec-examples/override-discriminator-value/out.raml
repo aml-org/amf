@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    discriminator: kind
+    properties:
+      name:
+        type: string
+      kind:
+        type: string
+    type: object
+  Employee:
+    type: Person
+    discriminatorValue: employee
+    properties:
+      employeeId:
+        type: string
+  User:
+    type: Person
+    discriminatorValue: user
+    properties:
+      userId:
+        type: string

@@ -1,0 +1,54 @@
+#%RAML 1.0
+title: arrays tests example
+types:
+  Person:
+    properties:
+      name: string
+      email:
+        type: string
+        pattern: ^.+@.+\..+$
+      age:
+        type: integer
+        minimum: 0
+  Office:
+    properties:
+      employees:
+        type: array
+        items: Person
+    example: |
+      {
+        "employees": [
+            {
+              "name": "john",
+              "email": "john@raml.org",
+              "age": -1
+            },
+            {
+              "name": "jane",
+              "email": "john@",
+              "age": 5
+            },
+            {
+              "name": 10,
+              "email": "john@mule.com",
+              "age": 5
+            },
+            {
+               "name": "Mike",
+               "email": "mike@mule.com",
+               "age": 18
+            }
+          ]
+      }
+  Colors:
+    type: string[]
+    minItems: 2
+    maxItems: 3
+    examples:
+      ok: [blue, red]
+      bad-min: [blue]
+      bad-max: [blue, red, gray, black]
+      bad-type: blue
+      bad-type2:
+        object:
+            no: way

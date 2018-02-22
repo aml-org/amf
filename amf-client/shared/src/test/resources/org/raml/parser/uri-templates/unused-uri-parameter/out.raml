@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Test
+protocols:
+  - http
+baseUri: {a}.myapi.org/{c}
+baseUriParameters:
+  a:
+    type: string
+  b:
+    type: boolean
+/resource/{id}:
+  uriParameters:
+    gid:
+      type: number
+    id:
+      type: number
+    pid:
+      type: number

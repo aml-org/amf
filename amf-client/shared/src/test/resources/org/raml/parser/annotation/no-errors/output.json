@@ -1,0 +1,34 @@
+{
+    "title": {
+        "value": "Illustrating annotations"
+    },
+    "mediaType": "application/json",
+    "annotationTypes": {
+        "image": {
+            "type": "string",
+            "displayName": {
+                "value": "image"
+            }
+        },
+        "foo": {
+            "type": "string",
+            "maxLength": 2,
+            "displayName": {
+                "value": "foo"
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/groups",
+            "displayName": {
+                "value": "/groups"
+            },
+            "annotations": {
+                
+                "image": "don.png",
+                "foo": "Ba"
+            }
+        }
+    ]
+}

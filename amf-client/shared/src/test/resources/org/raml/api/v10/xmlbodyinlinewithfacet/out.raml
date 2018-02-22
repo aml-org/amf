@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: xml body inline
+/top:
+  get:
+    body:
+      application/xml:
+        xml:
+          name: Homer
+        properties:
+          firstname:
+            type: string
+          lastname:
+            type: string
+          age:
+            type: integer
+            minimum: 0
+            maximum: 144

@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Email:
+    properties:
+      name:
+        type: string
+    type: object
+  emails:
+    type: Email[]
+    minItems: 1
+    uniqueItems: true
