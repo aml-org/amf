@@ -17,7 +17,7 @@ class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Lin
   def name: String                    = shape.name
   def displayName: String             = shape.displayName
   def description: String             = shape.description
-  def default: String                 = shape.default
+  def defaultValue: String            = shape.default
   def values: js.Iterable[String]     = Option(shape.values).getOrElse(Seq()).toJSArray
   def inherits: js.Iterable[Shape]    = Option(shape.inherits).getOrElse(Seq()).map(Shape(_)).toJSArray
 
@@ -33,7 +33,7 @@ class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Lin
     shape.withDescription(description)
     this
   }
-  def withDefault(default: String): this.type = {
+  def withDefaultValue(default: String): this.type = {
     shape.withDefault(default)
     this
   }

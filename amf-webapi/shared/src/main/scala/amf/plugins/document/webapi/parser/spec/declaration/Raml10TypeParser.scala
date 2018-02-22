@@ -417,7 +417,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
     // parsing annotations
     node.value match {
-      case map: YMap if result.isDefined => AnnotationParser(() => result.get, map).parse()
+      case map: YMap if result.isDefined => AnnotationParser(result.get, map).parse()
       case _                             => // ignore
     }
 

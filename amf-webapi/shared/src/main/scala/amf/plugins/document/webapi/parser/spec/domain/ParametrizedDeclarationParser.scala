@@ -20,39 +20,45 @@ case class ParametrizedDeclarationParser(
         // TODO is it always the first child?
         val entry = node.as[YMap].entries.head
 
-        val name = entry.key.as[YScalar].text
-        val declaration =
-          producer(name)
-            .add(Annotations(node.value))
-        declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
-        val variables = entry.value
-          .as[YMap]
-          .entries
-          .map { variableEntry =>
-            val node = DataNodeParser(variableEntry.value, parent = Some(declaration.id)).parse()
-            VariableValue(variableEntry)
-              .withName(variableEntry.key.as[YScalar].text)
-              .withValue(node)
-          }
-
-        declaration.withVariables(variables)
-      case YType.Str =>
-        ctx.link(node) match {
-          case Left(value) => // in oas links $ref always are maps
-            producer(value)
-              .add(Annotations(node.value))
-              .set(ParametrizedDeclarationModel.Target, declarations(value, SearchScope.Fragments))
-          case Right(n) =>
-            val text = n.as[YScalar].text
-            producer(text)
-              .add(Annotations(node.value))
-              .set(ParametrizedDeclarationModel.Target, declarations(text, SearchScope.All))
+        entry.value.tagType match {
+          case YType.Null => fromStringNode(entry.key)
+          case _ =>
+            val name = entry.key.as[YScalar].text
+            val declaration =
+              producer(name)
+                .add(Annotations(node.value))
+            declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
+            val variables = entry.value
+              .as[YMap]
+              .entries
+              .map { variableEntry =>
+                val node = DataNodeParser(variableEntry.value, parent = Some(declaration.id)).parse()
+                VariableValue(variableEntry)
+                  .withName(variableEntry.key.as[YScalar].text)
+                  .withValue(node)
+              }
+            declaration.withVariables(variables)
         }
 
+      case YType.Str => fromStringNode(node)
       case _ =>
         val declaration = producer("") // todo : review with pedro
         ctx.violation(declaration.id, "Invalid model extension.", node)
         declaration
+    }
+  }
+
+  private def fromStringNode(node: YNode): ParametrizedDeclaration = {
+    ctx.link(node) match {
+      case Left(value) => // in oas links $ref always are maps
+        producer(value)
+          .add(Annotations(node.value))
+          .set(ParametrizedDeclarationModel.Target, declarations(value, SearchScope.Fragments))
+      case Right(n) =>
+        val text = n.as[YScalar].text
+        producer(text)
+          .add(Annotations(node.value))
+          .set(ParametrizedDeclarationModel.Target, declarations(text, SearchScope.All))
     }
   }
 }

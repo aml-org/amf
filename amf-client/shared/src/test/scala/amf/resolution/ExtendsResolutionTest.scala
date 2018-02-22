@@ -84,6 +84,10 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("optional-not-merge.raml", "optional-not-merge.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
   }
 
+  test("08 Usage in traits.") {
+    cycle("usage.raml", "usage.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString

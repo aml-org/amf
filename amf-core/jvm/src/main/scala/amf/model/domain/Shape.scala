@@ -12,7 +12,7 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
   def name: String                       = shape.name
   def displayName: String                = shape.displayName
   def description: String                = shape.description
-  def default: String                    = shape.default
+  def defaultValue: String               = shape.default
   def values: java.util.List[String]     = Option(shape.values).getOrElse(Nil).asJava
   def inherits: java.util.List[Shape]    = Option(shape.inherits).getOrElse(Nil).map(platform.wrap[Shape](_)).asJava
 
@@ -28,7 +28,7 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
     shape.withDescription(description)
     this
   }
-  def withDefault(default: String): this.type = {
+  def withDefaultValue(default: String): this.type = {
     shape.withDefault(default)
     this
   }

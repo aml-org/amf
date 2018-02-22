@@ -246,7 +246,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    AnnotationParser(() => api, map).parse()
+    AnnotationParser(api, map).parse()
 
     api
   }
@@ -510,7 +510,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
             custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
           })
 
-          AnnotationParser(() => custom, map).parse()
+          AnnotationParser(custom, map).parse()
 
           custom
         case None =>

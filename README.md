@@ -22,7 +22,7 @@ The API Modeling Framework (AMF) allows users to formally describe different kin
 
 ## General scope
 The library supports many of the required uses cases:
-- Parse a 1.0 RAML, 2.0 OAS and JSON-LD AMF model.
+- Parse a 1.0 RAML, 0.8 RAML, 2.0 OAS and JSON-LD AMF model.
 - AMF API design model creation.
 - Model edition.
 - Export to any of the mentioned standards.
@@ -42,6 +42,7 @@ To use AMF you should first generate or get the right distribution for your proj
 
 #### Test
 * Tests on jvm and js
+
 ```sh
 sbt test
 ```

@@ -169,7 +169,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     collector += endpoint
 
-    AnnotationParser(() => endpoint, map).parse()
+    AnnotationParser(endpoint, map).parse()
 
     map.regex(
       "^/.*",
