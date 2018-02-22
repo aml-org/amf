@@ -1,0 +1,9 @@
+#%RAML 1.0 Overlay
+extends: master.raml
+title: overlay
+description: some overlaid description
+
+/master:
+    displayName: overlaid display name
+    /child:
+        displayName: child overlaid display name over default

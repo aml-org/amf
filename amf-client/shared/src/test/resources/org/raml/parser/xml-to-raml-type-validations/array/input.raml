@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name: string
+      friends: Friend[]
+    additionalProperties: false
+  Friend:
+    type: object
+    properties:
+      name: string
+    additionalProperties: true
+/res:
+  get:
+    body:
+      application/xml:
+          type: root
+          example: |
+            <root>
+              <name>robert</name>
+              <Friend>
+                <name>daenerys</name>
+              </Friend>
+              <Friend>
+                <name>stannis</name>
+              </Friend>
+              <Friend>
+                <name>jon</name>
+                <night-watch>true</night-watch>
+              </Friend>
+            </root>

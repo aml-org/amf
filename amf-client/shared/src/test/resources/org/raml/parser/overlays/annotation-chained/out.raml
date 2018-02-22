@@ -1,0 +1,10 @@
+#%RAML 1.0 Overlay
+title: Overlay 2
+extends: file://amf-client/shared/src/test/resources/org/raml/parser/overlays/annotation-chained/overlay.raml
+/servers:
+  (lib.TestAnnotationType): TestAnnotationType2
+  (lib.AnotherAnnotationType):
+    firstProp: firstProp2
+    secondProp: 101
+uses:
+  lib: lib.raml

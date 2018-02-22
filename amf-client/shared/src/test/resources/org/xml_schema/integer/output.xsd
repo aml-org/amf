@@ -1,0 +1,13 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://validationnamespace.raml.org" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://validationnamespace.raml.org">
+    <element name="root" type="tns:root"/>
+    <complexType name="root">
+        <sequence>
+            <element name="age">
+                <simpleType>
+                    <restriction base="integer"/>
+                </simpleType>
+            </element>
+            <any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+        </sequence>
+    </complexType>
+</schema>

@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name:
+        type: string
+/res:
+  get:
+    body:
+      application/xml:
+        type: root
+        example: <root> <name>robert</name> </root>

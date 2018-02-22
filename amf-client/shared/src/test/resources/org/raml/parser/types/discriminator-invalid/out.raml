@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: Discriminator
+types:
+  Person:
+    properties:
+      name:
+        type: string
+    type: object
+  Employee:
+    type: Person
+    properties:
+      employeeId:
+        type: string
+  User:
+    type: Person
+    properties:
+      userId:
+        type: string
+/person:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            discriminator: lala
+            properties:
+              lala:
+                type: string

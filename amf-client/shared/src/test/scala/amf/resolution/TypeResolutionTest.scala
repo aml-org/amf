@@ -109,6 +109,25 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
       union.anyOf.last.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "string")
         .iri())
 
+    val caught = intercept[Exception] { // Result type: Assertion
+      res = RamlTypeExpressionParser(adopt).parse("[]string")
+      assert(res != null)
+      assert(res.get.isInstanceOf[UnionShape])
+      union = res.get.asInstanceOf[UnionShape]
+      assert(union.anyOf.length == 2)
+      assert(union.anyOf.head.isInstanceOf[ScalarShape])
+      assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+      assert(union.anyOf.last.isInstanceOf[ArrayShape])
+      assert(
+        union.anyOf.last
+          .asInstanceOf[ArrayShape]
+          .items
+          .asInstanceOf[ScalarShape]
+          .dataType == (Namespace.Xsd + "string")
+          .iri())
+    }
+    assert(caught.getMessage.contains("Error parsing type expression, cannot accept type ScalarShape"))
+
     res = RamlTypeExpressionParser(adopt).parse("integer | string[]")
     assert(res != null)
     assert(res.get.isInstanceOf[UnionShape])
@@ -140,6 +159,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
     "union4",
     "union5",
     "union6",
+    "union7",
     "inheritance1",
     "inheritance2",
     "inheritance3",
