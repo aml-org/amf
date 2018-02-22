@@ -2,13 +2,18 @@
   {
     "@id": "http://raml.org/vocabularies/test1#",
     "@type": [
-      "http://www.w3.org/2002/07/owl#Ontology",
+      "http://www.w3.org/2002/07/owl#Ontology2",
       "http://raml.org/vocabularies/meta#Vocabulary",
       "http://raml.org/vocabularies/document#Unit"
     ],
     "http://schema.org/name": [
       {
         "@value": "test1"
+      }
+    ],
+    "http://raml.org/vocabularies/document#location": [
+      {
+        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/vocabularies/example1.raml"
       }
     ],
     "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -26,7 +31,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(5,0)]"
+                "@value": "[(3,0)-(4,0)]"
               }
             ]
           },
@@ -38,7 +43,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(5,43)]"
+                "@value": "[(2,0)-(4,0)]"
               }
             ]
           }

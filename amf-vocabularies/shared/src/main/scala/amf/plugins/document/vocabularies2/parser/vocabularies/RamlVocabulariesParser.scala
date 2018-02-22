@@ -112,6 +112,13 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
   extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
     with VocabularySyntax {
 
+  var imported: Map[String,Vocabulary] = Map()
+
+  def registerVocabulary(alias: String, vocabulary: Vocabulary) = {
+    imported += (alias -> vocabulary)
+  }
+
+
   var pendingLocal: Seq[(String, String, YPart)] = Nil
 
   def register(alias: String, classTerm: ClassTerm): Unit = {
@@ -142,7 +149,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
         case Some(external) => Some(s"${external.base}$value")
         case None => declarations.libraries.get(prefix) match {
           case Some(vocab: VocabularyDeclarations) => vocab.getPropertyTermId(value)
-          case None => None
+          case _                                   => None
         }
       }
     } else {
@@ -163,7 +170,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
         case Some(external) => Some(s"${external.base}$value")
         case None => declarations.libraries.get(prefix) match {
           case Some(vocab: VocabularyDeclarations) => vocab.getClassTermId(value)
-          case None => None
+          case _                                   => None
         }
       }
     } else {
@@ -200,6 +207,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     val library = ctx.declarations.getOrCreateLibrary(alias)
     unit match {
       case d: Vocabulary =>
+        ctx.registerVocabulary(alias, d)
         d.declares.foreach {
           case prop: PropertyTerm => library.registerTerm(prop)
           case cls: ClassTerm     => library.registerTerm(cls)
@@ -276,7 +284,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
 class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext) extends BaseSpecParser {
 
   val map = root.parsed.document.as[YMap]
-  val vocabulary = Vocabulary(Annotations(map))
+  val vocabulary = Vocabulary(Annotations(map)).withLocation(root.location)
 
   def parseDocument(): BaseUnit = {
 
@@ -312,6 +320,11 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
 
 
     val declarables = ctx.terms()
+    val imported = ctx.imported map { case (alias, library) =>
+        VocabularyReference().withAlias(alias).withReference(library.id).adopted(vocabulary.id)
+    }
+    if (imported.nonEmpty)
+      vocabulary.withImports(imported.toSeq)
     if (declarables.nonEmpty) vocabulary.withDeclares(declarables)
     if (references.references.nonEmpty) vocabulary.withReferences(references.baseUnitReferences())
     // we raise exceptions for missing terms
