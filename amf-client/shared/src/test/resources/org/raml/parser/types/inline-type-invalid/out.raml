@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: inline type inheritance
+version: v1
+protocols:
+  - http
+baseUri: api.samplehost.com/{version}
+/teams:
+  get:
+    body:
+      application/xml:
+        type:
+          properties:
+            prop1:
+              type: string
+            prop2:
+              type: number
+        example:
+          prop1: hola
+          prop2: true

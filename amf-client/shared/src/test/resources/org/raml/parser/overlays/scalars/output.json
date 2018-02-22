@@ -1,0 +1,27 @@
+{
+    "title": {
+        "value": "overlay"
+    },
+    "baseUri": {
+        "value": "http://api.com/master"
+    },
+    "description": {
+        "value": "some overlaid description"
+    },
+    "resources": [
+        {
+            "relativeUri": "/master",
+            "displayName": {
+                "value": "overlaid display name"
+            },
+            "resources": [
+                {
+                    "relativeUri": "/child",
+                    "displayName": {
+                        "value": "child overlaid display name over default"
+                    }
+                }
+            ]
+        }
+    ]
+}

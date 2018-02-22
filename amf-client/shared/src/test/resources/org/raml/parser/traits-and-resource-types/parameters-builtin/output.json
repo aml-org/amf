@@ -1,0 +1,69 @@
+{
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
+    "traits": {
+        "builtin": {
+            "description": "resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>> and methodName <<methodName>>"
+        }
+    },
+    "resourceTypes": {
+        "builtin": {
+            "description": "resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>>",
+            "get": {
+                "is": ["builtin"]
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "type": "builtin",
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "resourcePath /users and resourcePathName users"
+            },
+            "methods": [
+                {
+                    "method": "get",
+                    "is": ["builtin"],
+                    "displayName": {
+                        "value": "get"
+                    },
+                    "description": {
+                        "value": "resourcePath /users and resourcePathName users and methodName get"
+                    }
+                }
+            ],
+            "resources": [
+                {
+                    "relativeUri": "/{userId}",
+                    "type": "builtin",
+                    "displayName": {
+                        "value": "/{userId}"
+                    },
+                    "description": {
+                        "value": "resourcePath /users/{userId} and resourcePathName users"
+                    },
+                    "methods": [
+                        {
+                            "method": "get",
+                            "is": ["builtin"],
+                            "displayName": {
+                                "value": "get"
+                            },
+                            "description": {
+                                "value": "resourcePath /users/{userId} and resourcePathName users and methodName get"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

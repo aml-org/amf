@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Test
+resourceTypes:
+  first:
+    usage: first usage
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: <<schemaItem>>
+/top:
+  description: top description
+  type:
+    first:
+      schemaItem: UserJson

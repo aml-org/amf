@@ -1,0 +1,56 @@
+#%RAML 0.8
+title: api title
+
+schemas:
+    -
+        UserJson: |
+          {
+             "$schema": "http://json-schema.org/draft-04/schema",
+             "type": "object",
+             "properties": {
+               "firstname":  { "type": "string" },
+               "lastname":  { "type": "string" },
+               "age":  { "type": "integer" }
+             },
+             "required": [ "firstname", "lastname" ]
+          }
+
+        UserXml: |
+           <xs:schema attributeFormDefault="unqualified"
+                      elementFormDefault="qualified"
+                      xmlns:xs="http://www.w3.org/2001/XMLSchema">
+             <xs:element name="api-request">
+               <xs:complexType>
+                 <xs:sequence>
+                   <xs:element type="xs:string" name="input"/>
+                 </xs:sequence>
+               </xs:complexType>
+             </xs:element>
+           </xs:schema>
+
+traits:
+    - one:
+        description: method description from trait one
+    - two:
+        description: method description from trait two
+
+resourceTypes:
+    - first:
+        usage: first usage
+    -
+        second:
+            usage: second usage
+        third:
+            usage: third usage
+
+securitySchemes:
+    - one:
+        type: Basic Authentication
+      two:
+        type: Digest Authentication
+
+/top:
+    type: third
+    get:
+        is: [one, two]
+

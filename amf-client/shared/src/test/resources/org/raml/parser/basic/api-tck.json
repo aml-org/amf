@@ -1,0 +1,41 @@
+{
+    "document": {
+        "title": {
+            "value": "hola"
+        },
+        "resources": [
+            {
+                "relativeUri": "/top",
+                "displayName": {
+                    "value": "/top"
+                },
+                "methods": [
+                    {
+                        "method": "get",
+                        "description": {
+                            "value": "get something"
+                        },
+                        "displayName": {
+                            "value": "get"
+                        }
+                    },
+                    {
+                        "method": "post",
+                        "displayName": {
+                            "value": "post"
+                        }
+                    }
+                ],
+                "resources": [
+                    {
+                        "relativeUri": "/child",
+                        "displayName": {
+                            "value": "/child"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "errors": []
+}

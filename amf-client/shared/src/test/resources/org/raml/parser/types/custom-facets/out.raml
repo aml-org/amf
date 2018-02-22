@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: A
+types:
+  myDate:
+    (reader): myReaader.ts
+    (writer): myWiter.ts
+    type: string
+    facets:
+      format:
+        type: string
+  year:
+    type: myDate
+    format: YYYY
+    (format): YYYY
+/q:
+  get:
+    queryParameters:
+      y:
+        type: year
+annotationTypes:
+  reader:
+    type: string
+  writer:
+    type: string

@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name: string
+      friends:
+        type: Friend[]
+        xml:
+          wrapped: true
+    additionalProperties: false
+  Friend:
+    type: object
+    properties:
+      name: string

@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: Illustrating annotations
+mediaType: application/json
+annotationTypes:
+  user:
+    properties:
+      name:
+        type: string
+      lastName?:
+        type: string
+      alive:
+        type: boolean
+    type: object
+/good:
+  (user):
+    name: Don
+    lastName: Johnson
+    alive: false
+/bad0:
+  (user):
+    name: Don
+/bad1:
+  (user):
+    name: Don
+    alive: 23

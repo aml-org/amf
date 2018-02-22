@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name:
+        type: string
+      children:
+        uniqueItems: true
+        required: false
+        type: array
+        items:
+          type: root

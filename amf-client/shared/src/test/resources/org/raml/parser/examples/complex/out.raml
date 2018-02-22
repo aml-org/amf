@@ -1,0 +1,65 @@
+#%RAML 1.0
+title: My API with Types
+mediaType: application/json
+types:
+  Org:
+    properties:
+      onCall: Alertable
+      Head: Manager
+    type: object
+  Person:
+    discriminator: kind
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      title?:
+        type: string
+      kind:
+        type: string
+    type: object
+  Phone:
+    type: string
+    pattern: ^[0-9|-]+$
+  Manager:
+    type: Person
+    properties:
+      reports: Person[]
+      phone: Phone
+  Admin:
+    type: Person
+    properties:
+      clearanceLevel:
+        enum:
+          - low
+          - high
+  AlertableAdmin:
+    type: Admin
+    properties:
+      phone: Phone
+  Alertable: Manager | AlertableAdmin
+/orgs/{orgId}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Org
+            example:
+              onCall:
+                firstname: first
+                lastname: last
+                kind: Admin
+                clearanceLevel: low
+                phone: 12321
+              Head:
+                firstname: second
+                lastname: name
+                kind: Manager
+                reports:
+                  -
+                    firstname: nico
+                    lastname: ark
+                    kind: Admin
+                phone: 123+23

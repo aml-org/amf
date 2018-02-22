@@ -52,6 +52,15 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     assertCycles(Yaml, RamlYamlHint)
   }
 
+  test("Simple cicle (yaml)") {
+    recoverToExceptionIf[CyclicReferenceException] {
+      build(s"file://amf-client/shared/src/test/resources/reference-itself.raml", RamlYamlHint)
+    } map { ex =>
+      assert(ex.getMessage ==
+        s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml")
+    }
+  }
+
   test("Cache duplicate imports") {
     val cache = new TestCache()
     build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json",

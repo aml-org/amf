@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Test
+/resource:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            properties:
+              name:
+                type: string
+              age:
+                type: integer
+            example:
+              age: 23
+              name: Pepe
+              age: 20
+            type: object
