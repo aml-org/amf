@@ -1,0 +1,155 @@
+{
+ "annotations": [
+  {
+   "annotation": {
+    "allowedTargets": [],
+    "annotations": [],
+    "defaultValue": null,
+    "description": null,
+    "displayName": {
+     "annotations": [],
+     "value": "StringAnnotation"
+    },
+    "example": null,
+    "examples": [],
+    "facets": [],
+    "name": "StringAnnotation",
+    "parentTypes": [
+     {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "displayName": null,
+      "enumValues": [],
+      "example": null,
+      "examples": [],
+      "facets": [],
+      "maxLength": null,
+      "minLength": null,
+      "name": "string",
+      "parentTypes": [],
+      "pattern": null,
+      "required": true,
+      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "type": null,
+      "xml": null
+     }
+    ],
+    "required": true,
+    "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"StringAnnotation\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+    "type": "string",
+    "xml": null
+   },
+   "name": "(lib.StringAnnotation)",
+   "structuredValue": {
+    "isScalar": true,
+    "properties": [],
+    "value": "stringAnnotationValue"
+   }
+  },
+  {
+   "annotation": {
+    "allowedTargets": [],
+    "annotations": [],
+    "defaultValue": null,
+    "description": null,
+    "displayName": {
+     "annotations": [],
+     "value": "ObjectAnnotation"
+    },
+    "example": null,
+    "examples": [],
+    "facets": [],
+    "name": "ObjectAnnotation",
+    "parentTypes": [
+     {
+      "additionalProperties": true,
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "discriminator": null,
+      "discriminatorValue": null,
+      "displayName": null,
+      "example": null,
+      "examples": [],
+      "facets": [],
+      "maxProperties": null,
+      "minProperties": null,
+      "name": "object",
+      "parentTypes": [],
+      "properties": [],
+      "required": true,
+      "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+      "type": null,
+      "xml": null
+     }
+    ],
+    "required": true,
+    "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"p1\":{\"type\":\"string\"},\"p2\":{\"type\":\"number\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ObjectAnnotation\">\n        <complexType>\n            <sequence>\n                <element name=\"p1\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"p2\">\n                    <simpleType>\n                        <restriction base=\"double\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+    "type": "object",
+    "xml": null
+   },
+   "name": "(lib.ObjectAnnotation)",
+   "structuredValue": {
+    "isScalar": false,
+    "properties": [
+     {
+      "isArray": false,
+      "name": "p1",
+      "value": {
+       "isScalar": true,
+       "properties": [],
+       "value": "stringValue"
+      },
+      "values": []
+     },
+     {
+      "isArray": false,
+      "name": "p2",
+      "value": {
+       "isScalar": true,
+       "properties": [],
+       "value": 10
+      },
+      "values": []
+     }
+    ],
+    "value": null
+   }
+  }
+ ],
+ "name": null,
+ "structuredValue": {
+  "isScalar": false,
+  "properties": [
+   {
+    "isArray": false,
+    "name": "property1",
+    "value": {
+     "isScalar": true,
+     "properties": [],
+     "value": "string value"
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "property2",
+    "value": {
+     "isScalar": true,
+     "properties": [],
+     "value": 1
+    },
+    "values": []
+   }
+  ],
+  "value": null
+ },
+ "value": "{\n\"property1\" : \"string value\",\n\"property2\" : 1\n}"
+}

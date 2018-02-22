@@ -1,0 +1,92 @@
+{
+ "allowedTargets": [],
+ "annotations": [],
+ "defaultValue": null,
+ "description": null,
+ "displayName": null,
+ "example": {
+  "annotations": [],
+  "name": null,
+  "structuredValue": {
+   "isScalar": false,
+   "properties": [
+    {
+     "isArray": false,
+     "name": "prop1",
+     "value": {
+      "isScalar": true,
+      "properties": [],
+      "value": 10
+     },
+     "values": []
+    },
+    {
+     "isArray": false,
+     "name": "prop2",
+     "value": {
+      "isScalar": false,
+      "properties": [
+       {
+        "isArray": false,
+        "name": "objProp1",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": "some"
+        },
+        "values": []
+       },
+       {
+        "isArray": false,
+        "name": "objProp2",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": 20
+        },
+        "values": []
+       }
+      ],
+      "value": null
+     },
+     "values": []
+    }
+   ],
+   "value": null
+  },
+  "value": "{\n\"prop1\" : 10,\n\"prop2\" : {\n\"objProp1\" : \"some\",\n\"objProp2\" : 20\n}\n}"
+ },
+ "examples": [],
+ "facets": [],
+ "name": "__DataType_Fragment__",
+ "parentTypes": [
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": null,
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "object",
+   "parentTypes": [],
+   "properties": [],
+   "required": true,
+   "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+   "type": null,
+   "xml": null
+  }
+ ],
+ "required": true,
+ "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"prop1\":{\"type\":\"number\"},\"prop2\":{\"$ref\":\"#/definitions/ObjectType\"}},\"definitions\":{\"ObjectType\":{\"type\":\"object\",\"properties\":{\"objProp1\":{\"type\":\"string\"},\"objProp2\":{\"type\":\"number\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+ "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"__DataType_Fragment__\">\n        <complexType>\n            <sequence>\n                <element name=\"prop1\">\n                    <simpleType>\n                        <restriction base=\"double\"/>\n                    </simpleType>\n                </element>\n                <element name=\"prop2\" type=\"tns:ObjectType\"/>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n    <complexType name=\"ObjectType\">\n        <sequence>\n            <element name=\"objProp1\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"objProp2\">\n                <simpleType>\n                    <restriction base=\"double\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+ "type": "object",
+ "xml": null
+}

@@ -1,0 +1,106 @@
+{
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
+    "resourceTypes": {
+        "main": {
+            "usage": {
+                "value": "how to use this resource type"
+            },
+            "description": {
+                "value": "this is the main type"
+            },
+            "is": [{
+                    "paged": {
+                        "header2": "<<header2>>"
+                    }
+                }],
+            "get": {
+                "is": [{
+                        "secured": {
+                            "header3": "h3"
+                        }
+                    }],
+                "headers": {
+                    "<<header1>>": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "traits": {
+        "secured": {
+            "headers": {
+                "<<header3>>": {
+                    "type": "string"
+                }
+            }
+        },
+        "paged": {
+            "headers": {
+                "<<header2>>": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "type": {
+                "main": {
+                    "header1": "h1",
+                    "header2": "h2"
+                }
+            },
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "this is the main type"
+            },
+            "is": [{
+                    "paged": {
+                        "header2": "h2"
+                    }
+                }],
+            "methods": [
+                {
+                    "method": "get",
+                    "is": [{
+                            "secured": {
+                                "header3": "h3"
+                            }
+                        }],
+                    "headers": {
+                        "h1": {
+                            "type": "string",
+                            "displayName": {
+                                "value": "h1"
+                            }
+                        },
+                        "h3": {
+                            "type": "string",
+                            "displayName": {
+                                "value": "h3"
+                            }
+                        },
+                        "h2": {
+                            "type": "integer",
+                            "displayName": {
+                                "value": "h2"
+                            }
+                        }
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "title": {
+        "value": "hola"
+    },
+    "resources": [
+        {
+            "relativeUri": "/top",
+            "displayName": {
+                "value": "/top"
+            },
+            "methods": [
+                {
+                    "method": "get",
+                    "description": {
+                        "value": "some description"
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
+                }
+            ],
+            "resources": [
+                {
+                    "relativeUri": "/{id}",
+                    "displayName": {
+                        "value": "/{id}"
+                    },
+                    "methods": [
+                        {
+                            "method": "put",
+                            "displayName": {
+                                "value": "put"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+RamlDocumentNode (Start: 11 , End: 187, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 35, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "API with Examples" (Start: 18 , End: 35, On: input.raml)
+    TypesNode (Start: 36 , End: 187, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 36 , End: 41, On: input.raml)
+        SYObjectNode (Start: 45 , End: 187, On: input.raml)
+            TypeDeclarationField (Start: 45 , End: 187, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
+                TypeDeclarationNode (Start: 55 , End: 187, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 55 , End: 78, On: input.raml)
+                        SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="User" type="UserType"/>
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="lastName"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>" (Start: 61 , End: 78, On: input.raml, Source: StringNodeImpl)
+                    ExampleDeclarationNode (Start: 83 , End: 187, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "example" (Start: 83 , End: 90, On: input.raml)
+                        ErrorNode: "Error validating XML. Error: cvc-complex-type.2.4.a: Invalid content was found starting with element 'name1'. One of '{name}' is expected." (Start: 92 , End: 187, On: input.raml, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "User" (Start: -1 , End: -1, Source: SYStringNode)

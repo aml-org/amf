@@ -1,0 +1,38 @@
+{
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
+    "traits": {
+        "functional": {
+            "description": "there were two <<param1 | !pluralize>> and one <<param2|!singularize>>"
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "displayName": {
+                "value": "/users"
+            },
+            "methods": [
+                {
+                    "method": "get",
+                    "is": [{
+                            "functional": {
+                                "param1": "mouse",
+                                "param2": "cats"
+                            }
+                        }],
+                    "displayName": {
+                        "value": "get"
+                    },
+                    "description": {
+                        "value": "there were two mice and one cat"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+RamlDocumentNode (Start: 11 , End: 126, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 35, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "API with Examples" (Start: 18 , End: 35, On: input.raml)
+    TypesNode (Start: 36 , End: 126, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 36 , End: 41, On: input.raml)
+        SYObjectNode (Start: 45 , End: 126, On: input.raml)
+            TypeDeclarationField (Start: 45 , End: 126, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
+                TypeDeclarationNode (Start: 55 , End: 126, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 55 , End: 79, On: input.raml)
+                        SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "name": {
+      "id": "http://jsonschema.net/name",
+      "type": "string"
+    },
+    "age": {
+      "id": "http://jsonschema.net/age",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "name",
+    "age"
+  ]
+}" (Start: 61 , End: 79, On: input.raml, Source: StringNodeImpl)
+                    ExampleDeclarationNode (Start: 84 , End: 126, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "example" (Start: 84 , End: 91, On: input.raml)
+                        ErrorNode: "Error validating JSON. Error: {
+error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"user.json#","pointer":"/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+,
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"user.json#","pointer":"/properties/name"}
+    instance: {"pointer":"/name"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
+}" (Start: 99 , End: 126, On: input.raml, Source: SYObjectNode)
+                            KeyValueNodeImpl (Start: 99 , End: 107, On: input.raml)
+                                SYStringNode: "name" (Start: 99 , End: 103, On: input.raml)
+                                SYIntegerNode: 16 (Start: 105 , End: 107, On: input.raml)
+                            KeyValueNodeImpl (Start: 114 , End: 125, On: input.raml)
+                                SYStringNode: "age" (Start: 114 , End: 117, On: input.raml)
+                                SYStringNode: "Marley" (Start: 119 , End: 125, On: input.raml)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "User" (Start: -1 , End: -1, Source: SYStringNode)
