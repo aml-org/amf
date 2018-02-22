@@ -147,10 +147,21 @@ case class Raml08TypeParser(ast: YPart,
 
   case class Raml08TextParser(value: YNode, adopt: (Shape) => Shape, name: String)(implicit ctx: RamlWebApiContext) {
     def parse(): Option[Shape] = {
-      value.as[YScalar].text match {
-        case XMLSchema(_)  => Option(parseXMLSchemaExpression(name, value, adopt))
-        case JSONSchema(_) => Option(parseJSONSchemaExpression(name, value, adopt))
-        case t             => Raml08ReferenceParser(t, node, name).parse()
+      value.tagType match {
+        case YType.Null =>
+          val shape = ScalarShape(value)
+            .withName(name)
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(TypeDef.StrType)),
+                 Annotations() += Inferred())
+          adopt(shape)
+          Option(shape)
+        case _ =>
+          value.as[YScalar].text match {
+            case XMLSchema(_)  => Option(parseXMLSchemaExpression(name, value, adopt))
+            case JSONSchema(_) => Option(parseJSONSchemaExpression(name, value, adopt))
+            case t             => Raml08ReferenceParser(t, node, name).parse()
+          }
       }
     }
   }
@@ -224,14 +235,20 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap)(impl
 
     map
       .key("type")
+      .flatMap(e => {
+        e.value.tagType match {
+          case YType.Null => None
+          case _          => e.value.toOption[YScalar]
+        }
+      })
       .fold(
         shape
           .set(ScalarShapeModel.DataType,
                AmfScalar(XsdTypeDefMapping.xsd(TypeDef.StrType)),
-               Annotations() += Inferred()))(entry => {
-        XsdTypeDefMapping.xsdFromString(entry.value.as[YScalar].text) match {
+               Annotations() += Inferred()))(value => {
+        XsdTypeDefMapping.xsdFromString(value.text) match {
           case (iri: String, format: Option[String]) =>
-            shape.set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(entry))
+            shape.set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
             format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))
         }
         shape
