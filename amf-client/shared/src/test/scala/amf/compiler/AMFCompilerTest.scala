@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.ProfileNames
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.{UnspecifiedReference, _}
@@ -7,7 +8,7 @@ import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
-import amf.facades.Root
+import amf.facades.{Root, Validation}
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -102,6 +103,26 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
+  test("Non existing included file") {
+    Validation(platform)
+      .flatMap(v => {
+
+        build("file://amf-client/shared/src/test/resources/non-exists-include.raml",
+              RamlYamlHint,
+              validation = Some(v))
+          .flatMap(bu => {
+            v.validate(bu, ProfileNames.RAML, ProfileNames.RAML)
+          })
+      })
+      .map(r => {
+        assert(!r.conforms)
+        assert(r.results.lengthCompare(2) == 0)
+        assert(
+          r.results.head.message
+            .contains("amf-client/shared/src/test/resources/nonExists.raml (No such file or directory)"))
+      })
+  }
+
   test("Feature plugin test") {
     val url = "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml"
     amf.core.AMF.init()
@@ -119,7 +140,10 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         invocations += "begin_parsing_invocation"
       }
 
-      override def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind, vendor: String): Content = {
+      override def onBeginDocumentParsing(url: String,
+                                          content: Content,
+                                          referenceKind: ReferenceKind,
+                                          vendor: String): Content = {
         invocations += "begin_document_parsing"
         content
       }
@@ -142,8 +166,13 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     amf.core.AMF.registerPlugin(featurePlugin)
     featurePlugin.init() flatMap { _ =>
       RuntimeCompiler(url, platform, Some("application/yaml"), "RAML 1.0") map { _ =>
-        val allPhases = Seq("begin_parsing_invocation", "begin_document_parsing", "syntax_parsed", "model_parsed", "finished_parsing").foldLeft(true) { case (acc, phase) =>
-          acc && featurePlugin.invocations.contains(phase)
+        val allPhases = Seq("begin_parsing_invocation",
+                            "begin_document_parsing",
+                            "syntax_parsed",
+                            "model_parsed",
+                            "finished_parsing").foldLeft(true) {
+          case (acc, phase) =>
+            acc && featurePlugin.invocations.contains(phase)
         }
         assert(allPhases)
       }

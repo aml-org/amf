@@ -3,19 +3,17 @@ package amf.plugins.document.vocabularies
 import amf.ProfileNames
 import amf.core.Root
 import amf.core.client.GenerationOptions
-import amf.core.metamodel.Type.Iri
+import amf.core.metamodel.Obj
 import amf.core.metamodel.document.BaseUnitModel
-import amf.core.metamodel.{Field, Obj}
 import amf.core.model.document._
 import amf.core.model.domain.{AmfObject, AmfScalar, AnnotationGraphLoader}
-import amf.core.parser.{Annotations, ParsedReference, ParserContext}
+import amf.core.parser.{Annotations, ParserContext}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation._
 import amf.core.validation.core.ValidationProfile
-import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.core.DialectLoader
 import amf.plugins.document.vocabularies.metamodel.document.DialectNodeFragmentModel
 import amf.plugins.document.vocabularies.model.document.DialectFragment
@@ -27,7 +25,6 @@ import amf.plugins.document.vocabularies.spec._
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -70,46 +67,46 @@ object RAMLVocabulariesPlugin
     implicit val ctx: DialectContext = new DialectContext(parentContext)
 
     comment(root)
-      .filter(c => PlatformDialectRegistry.knowsHeader(c.metaText)||referencesDialect(c.metaText))
+      .filter(c => PlatformDialectRegistry.knowsHeader(c.metaText) || referencesDialect(c.metaText))
       .map(c => {
-        if (referencesDialect(c.metaText)){
-          val dialectDefinition= root.references.head.unit;
-          root.references.asInstanceOf[ListBuffer[ParsedReference]].remove(0);
-          val dialect = new DialectLoader(dialectDefinition).loadDialect()
-          val reg=new DialectRegistry();
+        if (referencesDialect(c.metaText)) {
+          val dialectDefinition = root.references.head.unit;
+          val dialect           = new DialectLoader(dialectDefinition).loadDialect()
+          val reg               = new DialectRegistry();
           reg.add(dialect);
-          val unit=DialectParser(root, c.metaText.substring(0,c.metaText.indexOf('|')).trim, reg).parseUnit()
-          unit.fields.setWithoutId(BaseUnitModel.DescribedBy,AmfScalar(dialectDefinitionUrl(c.metaText)));
-          val i=unit.meta.fields.indexOf(BaseUnitModel.DescribedBy)
+          //          root.references.asInstanceOf[ArrayBuffer[ParsedReference]].remove(0);
+          val unit = DialectParser(root.copy(references = root.references.tail),
+                                   c.metaText.substring(0, c.metaText.indexOf('|')).trim,
+                                   reg).parseUnit()
+          unit.fields.setWithoutId(BaseUnitModel.DescribedBy, AmfScalar(dialectDefinitionUrl(c.metaText)));
+          val i = unit.meta.fields.indexOf(BaseUnitModel.DescribedBy)
           print(i)
           unit
-        }
-        else DialectParser(root, c.metaText, PlatformDialectRegistry).parseUnit()
+        } else DialectParser(root, c.metaText, PlatformDialectRegistry).parseUnit()
       })
   }
 
-   def dialectDefinitionUrl(mt:String):String={
-    val io=mt.indexOf("|");
-    if (io>0){
-      var msk=mt.substring(io+1);
-      val si=msk.indexOf("<");
-      val se=msk.lastIndexOf(">");
-      return msk.substring(si+1,se);
+  def dialectDefinitionUrl(mt: String): String = {
+    val io = mt.indexOf("|");
+    if (io > 0) {
+      var msk = mt.substring(io + 1);
+      val si  = msk.indexOf("<");
+      val se  = msk.lastIndexOf(">");
+      return msk.substring(si + 1, se);
     }
     ""
   }
 
-  private def referencesDialect(mt:String):Boolean={
-    val io=mt.indexOf("|");
-    if (io>0){
-      var msk=mt.substring(io+1);
-      val si=msk.indexOf("<");
-      val se=msk.lastIndexOf(">");
-      return si>0&&se>si;
+  private def referencesDialect(mt: String): Boolean = {
+    val io = mt.indexOf("|");
+    if (io > 0) {
+      var msk = mt.substring(io + 1);
+      val si  = msk.indexOf("<");
+      val se  = msk.lastIndexOf(">");
+      return si > 0 && se > si;
     }
     false
   }
-
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case document: Document => document.encodes.isInstanceOf[DomainEntity]
