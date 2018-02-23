@@ -9,13 +9,14 @@ import amf.plugins.domain.shapes.models.TypeDef._
 object RamlTypeDefMatcher {
 
   val knownFormats: Set[String] = Set("byte", "binary", "password", "int32", "int64", "double", "float")
-  def match08Type(value: String): TypeDef = value match {
-    case "number"  => NumberType
-    case "integer" => IntType
-    case "date"    => DateTimeType
-    case "boolean" => BoolType
-    case "file"    => FileType
-    case _         => TypeDef.StrType
+  def match08Type(value: String): Option[TypeDef] = value match {
+    case "number"  => Some(NumberType)
+    case "integer" => Some(IntType)
+    case "date"    => Some(DateTimeType)
+    case "boolean" => Some(BoolType)
+    case "file"    => Some(FileType)
+    case "string"  => Some(StrType)
+    case _         => None
   }
 
   def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef =
