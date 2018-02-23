@@ -365,28 +365,34 @@ trait RamlExternalTypes {
   }
 
   protected def parseJSONSchemaExpression(name: String, value: YNode, adopt: Shape => Shape): Shape = {
-    val text = value.tagType match {
+    val (text, valueAST) = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
         typeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
-            typeEntry.value.as[YScalar].text
+            (typeEntry.value.as[YScalar].text, typeEntry.value)
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
             ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
-            ""
+            ("", value)
         }
       case YType.Seq =>
         val shape = SchemaShape()
         adopt(shape)
         ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
-        ""
-      case _ => value.as[YScalar].text
+        ("", value)
+      case _ => (value.as[YScalar].text, value)
     }
 
-    val schemaAst   = YamlParser(text).withIncludeTag("!include").parse(keepTokens = true)
-    val schemaEntry = YMapEntry(name, schemaAst.head.asInstanceOf[YDocument].node)
+    val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+    val schemaEntry = schemaAst.head match {
+      case d: YDocument => YMapEntry(name, d.node)
+      case _ =>
+        ctx.violation("invalid json schema expression", Some(valueAST))
+        YMapEntry(name, YNode.Null)
+    }
+
     OasTypeParser(schemaEntry, (shape) => adopt(shape))(toOas(ctx)).parse() match {
       case Some(shape) =>
         shape.annotations += ParsedJSONSchema(text)
