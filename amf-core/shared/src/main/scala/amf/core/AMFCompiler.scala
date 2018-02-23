@@ -1,5 +1,7 @@
 package amf.core
 
+import java.io.FileNotFoundException
+
 import amf.core
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
@@ -10,7 +12,6 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
@@ -24,11 +25,10 @@ class AMFCompiler(val rawUrl: String,
                   private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None) {
 
-  val url                                                     = new java.net.URI(rawUrl).normalize().toString
-  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
-  private lazy val location                                   = context.current
-  private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
-  private val ctx: ParserContext                              = baseContext.getOrElse(ParserContext(url))
+  val url                           = new java.net.URI(rawUrl).normalize().toString
+  private lazy val context: Context = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
+  private lazy val location         = context.current
+  private val ctx: ParserContext    = baseContext.getOrElse(ParserContext(url))
 
   def build(): Future[BaseUnit] = {
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
@@ -42,8 +42,9 @@ class AMFCompiler(val rawUrl: String,
 
   private def parseSyntax(inputContent: Content): Either[Content, Root] = {
 
-    val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) { case (content, plugin) =>
-      plugin.onBeginDocumentParsing(url, content, referenceKind, vendor)
+    val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
+      case (content, plugin) =>
+        plugin.onBeginDocumentParsing(url, content, referenceKind, vendor)
     }
 
     val parsed = content.mime
@@ -60,8 +61,9 @@ class AMFCompiler(val rawUrl: String,
 
     parsed match {
       case Some(inputDocument) =>
-        val document = AMFPluginsRegistry.featurePlugins().foldLeft(inputDocument) { case (doc, plugin) =>
-          plugin.onSyntaxParsed(url, doc)
+        val document = AMFPluginsRegistry.featurePlugins().foldLeft(inputDocument) {
+          case (doc, plugin) =>
+            plugin.onSyntaxParsed(url, doc)
         }
         Right(
           Root(document,
@@ -117,8 +119,9 @@ class AMFCompiler(val rawUrl: String,
     }
 
     futureDocument map { baseUnit: BaseUnit =>
-      AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) { case (unit, plugin) =>
-        plugin.onModelParsed(url, unit)
+      AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
+        case (unit, plugin) =>
+          plugin.onModelParsed(url, unit)
       }
     }
   }
@@ -127,15 +130,19 @@ class AMFCompiler(val rawUrl: String,
     val referenceCollector = domainPlugin.referenceCollector()
     val refs               = referenceCollector.traverse(root.parsed, ctx)
 
-    refs.distinct
+    val units = refs.distinct
       .filter(_.isRemote)
-      .foreach(link => {
-        references += link
+      .map(link => {
+        link
           .resolve(remote, Some(context), None, domainPlugin.ID, cache, ctx)
-          .map(ParsedReference(_, link))
+          .map(u => Some(ParsedReference(u, link)))
+          .recover {
+            case e: FileNotFoundException => // only file not found? or all exceptions??
+              ctx.violation(e.getMessage, Some(link.ast))
+              None
+          }
       })
-
-    Future.sequence(references).map(rs => root.copy(references = rs, vendor = domainPlugin.ID))
+    Future.sequence(units).map(rs => root.copy(references = rs.flatten, vendor = domainPlugin.ID))
   }
 
   private def resolve(): Future[Content] = remote.resolve(location, base)
