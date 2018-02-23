@@ -252,7 +252,7 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
   }
 }
 
-case class RamlJsonShapeEmitter(shape: NodeShape) extends PartEmitter {
+case class RamlJsonShapeEmitter(shape: Shape) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     shape.annotations.find(classOf[ParsedJSONSchema]) match {
       case Some(json) => raw(b, json.rawText)
@@ -1276,8 +1276,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
           override def position(): Position = pos(union.annotations)
         })
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema))
-      case node: NodeShape if node.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
-        Seq(RamlJsonShapeEmitter(node))
+      case shape: Shape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
+        Seq(RamlJsonShapeEmitter(shape))
       case other =>
         Seq(CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec ${other.getClass.toString}`"))
     }

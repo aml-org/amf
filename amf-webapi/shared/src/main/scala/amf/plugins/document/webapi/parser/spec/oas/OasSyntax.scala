@@ -173,7 +173,10 @@ object OasSyntax extends SpecSyntax {
       "dependencies",
       "multipleOf",
       "default",
-      "example"
+      "example",
+      "id",
+      "name",
+      "patternProperties"
     )
   )
 }
