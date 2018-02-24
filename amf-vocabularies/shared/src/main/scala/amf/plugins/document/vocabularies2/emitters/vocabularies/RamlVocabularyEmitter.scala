@@ -1,4 +1,4 @@
-package amf.plugins.document.vocabularies2.emitters
+package amf.plugins.document.vocabularies2.emitters.vocabularies
 
 import amf.core.annotations.LexicalInformation
 import amf.core.emitter.BaseEmitters._
