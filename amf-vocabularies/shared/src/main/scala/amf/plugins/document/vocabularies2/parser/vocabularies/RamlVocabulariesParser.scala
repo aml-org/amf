@@ -5,13 +5,12 @@ import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{BaseSpecParser, ParserContext, _}
-import amf.core.validation.core.ValidationSpecification
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies2.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.plugins.document.vocabularies2.model.document.Vocabulary
 import amf.plugins.document.vocabularies2.model.domain._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
 import org.yaml.model.{YMap, YMapEntry, YPart, YType}
 
 import scala.collection.mutable
@@ -110,7 +109,7 @@ trait VocabularySyntax { this: VocabularyContext =>
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
   extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
-    with VocabularySyntax {
+    with VocabularySyntax with SyntaxErrorReporter {
 
   var imported: Map[String,Vocabulary] = Map()
 
@@ -130,15 +129,6 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
     pendingLocal = pendingLocal.filter(_._1 != propertyTerm.id)
     declarations.propertyTerms += (alias -> propertyTerm)
   }
-
-
-  protected val MissingTermSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "missing-vocabulary-term").iri(),
-    "Missing vocabulary term",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
 
 
   def resolvePropertyTermAlias(base: String, propertyTermAlias: String, where: YPart, strictLocal: Boolean): Option[String] = {
@@ -186,18 +176,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
   val declarations: VocabularyDeclarations =
     ds.getOrElse(new VocabularyDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
-  def missingTermViolation(term: String, node: String, ast: YPart) = {
-    violation(MissingTermSpecification.id(), node, s"Cannot find vocabulary term $term", ast)
-  }
 
-  def closedNodeViolation(id: String, property: String, nodeType: String, ast: YPart) = {
-    violation(
-      ParserSideValidations.ClosedShapeSpecification.id(),
-      id,
-      s"Property: '$property' not supported in a $nodeType node",
-      ast
-    )
-  }
   def terms(): Seq[DomainElement] = declarations.classTerms.values.toSeq ++ declarations.propertyTerms.values.toSeq
 }
 

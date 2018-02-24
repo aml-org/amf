@@ -10,11 +10,13 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
-import amf.plugins.document.vocabularies2.emitters.RamlVocabularyEmitter
-import amf.plugins.document.vocabularies2.metamodel.document.VocabularyModel
+import amf.plugins.document.vocabularies2.emitters.dialects.RamlDialectEmitter
+import amf.plugins.document.vocabularies2.emitters.vocabularies.RamlVocabularyEmitter
+import amf.plugins.document.vocabularies2.metamodel.document.{DialectModel, VocabularyModel}
 import amf.plugins.document.vocabularies2.metamodel.domain._
-import amf.plugins.document.vocabularies2.model.document.Vocabulary
+import amf.plugins.document.vocabularies2.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.vocabularies2.parser.ExtensionHeader
+import amf.plugins.document.vocabularies2.parser.dialects.{DialectContext, RamlDialectsParser}
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
 import org.yaml.model.YDocument
 
@@ -35,7 +37,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     VocabularyReferenceModel,
     ClassTermModel,
     ObjectPropertyTermModel,
-    DatatypePropertyTermModel
+    DatatypePropertyTermModel,
+    DialectModel,
+    NodeMappingModel,
+    PropertyMappingModel
   ) // TODO
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
@@ -67,6 +72,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
       case Some(comment) =>
         comment.metaText match {
           case ExtensionHeader.VocabularyHeader => Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
+          case ExtensionHeader.DialectHeader    => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument())
           case _ => None
         }
       case _ => None
@@ -78,6 +84,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     */
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
     case vocabulary: Vocabulary => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
+    case dialect: Dialect       => Some(RamlDialectEmitter(dialect).emitDialect())
     case _                      => None
   }
 
@@ -97,6 +104,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     */
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case _: Vocabulary => true
+    case _: Dialect    => true
     case _             => false
   }
 

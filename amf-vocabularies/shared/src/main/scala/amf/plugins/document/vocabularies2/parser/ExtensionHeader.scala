@@ -4,4 +4,6 @@ object ExtensionHeader {
 
   val VocabularyHeader = "%RAML 1.0 Vocabulary"
 
+  val DialectHeader = "%RAML 1.0 Dialect"
+
 }
