@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.validation
 import amf.core.annotations.{LexicalInformation, ScalarExampleTagType}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
-import amf.core.remote.Platform
+import amf.core.remote.{Context, Platform}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.TrunkPlatform
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
@@ -76,32 +76,34 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
 
     val overridePlatform = TrunkPlatform(value)
     try {
-      RuntimeCompiler("http://amfparser.org/test_payload", overridePlatform, Option(mediaType), PayloadPlugin.ID) flatMap {
-        payload =>
-          // we are parsing using Payload hint, this MUST be a payload fragment encoding a data node
-          val payloadDataNode = payload match {
-            case d: DataNode   => d
-            case doc: Document => doc.encodes.asInstanceOf[DataNode]
-            case _             => ScalarNode("", None).withId(example.id + "/null")
-          }
-          //        val payloadDataNode = payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode]
-          PayloadValidation(platform, shape).validate(payloadDataNode) map { report =>
-            if (report.conforms) {
-              None
-            } else {
-              Some(
-                new AMFValidationResult(
-                  message = report.toString, // TODO: provide a better description here
-                  level = SeverityLevels.VIOLATION,
-                  targetNode = example.id,
-                  targetProperty = Some((Namespace.Document + "value").iri()),
-                  ParserSideValidations.ExampleValidationErrorSpecification.id(),
-                  position = example.annotations.find(classOf[LexicalInformation]),
-                  source = example
-                )
+      RuntimeCompiler("http://amfparser.org/test_payload",
+                      Option(mediaType),
+                      PayloadPlugin.ID,
+                      Context(overridePlatform)) flatMap { payload =>
+        // we are parsing using Payload hint, this MUST be a payload fragment encoding a data node
+        val payloadDataNode = payload match {
+          case d: DataNode   => d
+          case doc: Document => doc.encodes.asInstanceOf[DataNode]
+          case _             => ScalarNode("", None).withId(example.id + "/null")
+        }
+        //        val payloadDataNode = payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode]
+        PayloadValidation(platform, shape).validate(payloadDataNode) map { report =>
+          if (report.conforms) {
+            None
+          } else {
+            Some(
+              new AMFValidationResult(
+                message = report.toString, // TODO: provide a better description here
+                level = SeverityLevels.VIOLATION,
+                targetNode = example.id,
+                targetProperty = Some((Namespace.Document + "value").iri()),
+                ParserSideValidations.ExampleValidationErrorSpecification.id(),
+                position = example.annotations.find(classOf[LexicalInformation]),
+                source = example
               )
-            }
+            )
           }
+        }
       }
     } catch {
       case e: Exception => payloadParsingException(e, example)

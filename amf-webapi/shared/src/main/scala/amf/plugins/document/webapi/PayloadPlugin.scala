@@ -3,11 +3,10 @@ package amf.plugins.document.webapi
 import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ParserContext
+import amf.core.parser.{ParserContext, SimpleReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.parser.PayloadParser
-import amf.plugins.document.webapi.references.PayloadReferenceCollector
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -44,7 +43,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   }
 
   override def canParse(root: Root) = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
-  override def referenceCollector() = new PayloadReferenceCollector
+  override def referenceHandler()   = SimpleReferenceHandler
 
   private def notRAML(root: Root) = root.parsed.comment.isEmpty || !root.parsed.comment.get.metaText.startsWith("%")
 

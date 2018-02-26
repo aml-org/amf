@@ -28,7 +28,8 @@ class AMFCompiler(val rawUrl: String,
   val url                           = new java.net.URI(rawUrl).normalize().toString
   private lazy val context: Context = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location         = context.current
-  private val ctx: ParserContext    = baseContext.getOrElse(ParserContext(url))
+  private val ctx: ParserContext =
+    baseContext.getOrElse(ParserContext(url))
 
   def build(): Future[BaseUnit] = {
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
@@ -43,8 +44,8 @@ class AMFCompiler(val rawUrl: String,
   private def parseSyntax(inputContent: Content): Either[Content, Root] = {
 
     val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
-      case (content, plugin) =>
-        plugin.onBeginDocumentParsing(url, content, referenceKind, vendor)
+      case (input, plugin) =>
+        plugin.onBeginDocumentParsing(url, input, referenceKind, vendor)
     }
 
     val parsed = content.mime
@@ -127,17 +128,20 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
-    val referenceCollector = domainPlugin.referenceCollector()
-    val refs               = referenceCollector.traverse(root.parsed, ctx)
+    val handler = domainPlugin.referenceHandler()
+    val refs    = handler.collect(root.parsed, ctx)
 
     val units = refs.distinct
       .filter(_.isRemote)
       .map(link => {
         link
-          .resolve(remote, Some(context), None, domainPlugin.ID, cache, ctx)
-          .map(u => Some(ParsedReference(u, link)))
+          .resolve(context, None, domainPlugin.ID, cache, ctx)
+          .flatMap(u => {
+            val reference = ParsedReference(u, link)
+            handler.update(reference, ctx, context).map(Some(_))
+          })
           .recover {
-            case e: FileNotFoundException => // only file not found? or all exceptions??
+            case e: FileNotFoundException =>
               ctx.violation(e.getMessage, Some(link.ast))
               None
           }
@@ -168,14 +172,13 @@ object AMFCompiler {
     if (RuntimeCompiler.compiler.isEmpty) {
       RuntimeCompiler.register(
         (url: String,
-         remote: Platform,
-         base: Option[Context],
+         base: Context,
          mediaType: Option[String],
          vendor: String,
          referenceKind: ReferenceKind,
          cache: Cache,
          ctx: Option[ParserContext]) => {
-          new AMFCompiler(url, remote, base, mediaType, vendor, referenceKind, cache, ctx).build()
+          new AMFCompiler(url, base.platform, Some(base), mediaType, vendor, referenceKind, cache, ctx).build()
         })
     }
   }

@@ -66,6 +66,9 @@ trait ModelTest extends ResolutionTest with DirectoryTest {
           val future = AMFCompiler(s"file://$d/$inputFileName", platform, RamlYamlHint, v).build()
           future
         })
+//        .map(bu => {
+//          AMFDumper(bu, Raml10, Yaml,GenerationOptions()).dumpToString
+//        })
         .map(_ => succeed)
     }
   })

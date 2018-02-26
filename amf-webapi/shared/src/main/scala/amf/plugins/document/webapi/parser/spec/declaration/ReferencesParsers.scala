@@ -52,9 +52,9 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
     val result: ReferenceDeclarations = parseLibraries(location)
 
     references.foreach {
-      case ParsedReference(f: Fragment, origin: Reference) => result += (origin.url, f)
-      case ParsedReference(d: Document, origin: Reference) => result += (origin.url, d)
-      case _                                               =>
+      case ParsedReference(f: Fragment, origin: Reference, _) => result += (origin.url, f)
+      case ParsedReference(d: Document, origin: Reference, _) => result += (origin.url, d)
+      case _                                                  =>
     }
 
     result
