@@ -140,6 +140,10 @@ or
 ```bash
 java -jar amf.jar validate -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
 ```
+or
+```bash
+java -jar amf.jar translate  yourAPIOASfile --format-in "OAS 2.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
+```
 To get all available options:
 ```bash
 java -jar amf.jar

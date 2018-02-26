@@ -60,14 +60,16 @@ trait CommandHelper {
     if (config.withSourceMaps) {
       generateOptions.withSourceMaps
     }
+    val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat)
+    val vendor = effectiveVendor(config.outputMediaType, config.outputFormat)
     config.output match {
       case Some(f) =>
         RuntimeSerializer.dumpToFile(
           platform,
           f,
           unit,
-          effectiveMediaType(config.inputMediaType, config.inputFormat),
-          effectiveVendor(config.inputMediaType, config.inputFormat),
+          mediaType,
+          vendor,
           generateOptions
         )
       case None =>
@@ -75,8 +77,8 @@ trait CommandHelper {
           config.stdout.print(
             RuntimeSerializer(
               unit,
-              effectiveMediaType(config.outputMediaType, config.inputFormat),
-              effectiveVendor(config.outputMediaType, config.inputFormat),
+              mediaType,
+              vendor,
               generateOptions
             )
           )
