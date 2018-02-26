@@ -1,89 +1,56 @@
 #%RAML 1.0 Library
 types:
   A:
-    type: union
-    anyOf:
-      -
-        type: array
-        items:
-          type: object
-          additionalProperties: true
-          properties:
-            a:
-              required: true
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      properties:
+        a:
+          required: true
+          type: union
+          anyOf:
+            -
               type: string
-            b:
-              required: true
-              type: any
-      -
-        type: array
-        items:
-          type: object
-          additionalProperties: true
-          properties:
-            a:
-              required: true
+            -
               type: integer
-            b:
-              required: true
-              type: any
+        b:
+          required: true
+          type: any
   B:
-    type: union
-    anyOf:
-      -
-        type: array
-        items:
-          type: object
-          additionalProperties: true
-          properties:
-            a:
-              required: true
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      properties:
+        a:
+          required: true
+          type: union
+          anyOf:
+            -
               type: string
-            b:
-              required: true
-              type: any
-      -
-        type: array
-        items:
-          type: object
-          additionalProperties: true
-          properties:
-            a:
-              required: true
+            -
               type: integer
-            b:
-              required: true
-              type: any
+        b:
+          required: true
+          type: any
   C:
-    type: union
-    anyOf:
-      -
-        type: array
-        items:
-          type: object
-          additionalProperties: true
-          properties:
-            a:
-              required: true
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      properties:
+        a:
+          required: true
+          type: union
+          anyOf:
+            -
               type: string
-            b:
-              required: true
-              type: any
-            c:
-              required: true
-              type: number
-      -
-        type: array
-        items:
-          type: object
-          additionalProperties: true
-          properties:
-            a:
-              required: true
+            -
               type: integer
-            b:
-              required: true
-              type: any
-            c:
-              required: true
-              type: number
+        b:
+          required: true
+          type: any
+        c:
+          required: true
+          type: number
