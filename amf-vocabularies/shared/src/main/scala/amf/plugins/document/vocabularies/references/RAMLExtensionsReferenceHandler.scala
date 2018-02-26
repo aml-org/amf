@@ -1,16 +1,15 @@
 package amf.plugins.document.vocabularies.references
 
-import amf.core.parser.{AbstractReferenceCollector, LibraryReference, LinkReference, Reference, _}
+import amf.core.parser.{LibraryReference, LinkReference, Reference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin.comment
 import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer
 
-class RAMLExtensionsReferenceCollector extends AbstractReferenceCollector {
+class RAMLExtensionsReferenceHandler extends ReferenceHandler {
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
     if (parsed.comment.isDefined){
         if (referencesDialect(parsed.comment.get.metaText)){
           references+=Reference(RAMLVocabulariesPlugin.dialectDefinitionUrl(parsed.comment.get.metaText),SchemaReference,parsed.document.node)

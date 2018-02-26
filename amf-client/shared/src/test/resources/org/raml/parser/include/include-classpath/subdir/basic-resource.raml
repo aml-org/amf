@@ -1,3 +1,6 @@
 get: !include sub2/action.raml
 /{id}:
     put:
+      description: !include description.txt
+      queryParameters:
+        person: !include dataType.raml

@@ -5,7 +5,7 @@ import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{AbstractReferenceCollector, ParserContext}
+import amf.core.parser.{ParserContext, ReferenceHandler}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import org.yaml.model.YDocument
@@ -57,6 +57,5 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
     */
   def canUnparse(unit: BaseUnit): Boolean
 
-  def referenceCollector(): AbstractReferenceCollector
-
+  def referenceHandler(): ReferenceHandler
 }

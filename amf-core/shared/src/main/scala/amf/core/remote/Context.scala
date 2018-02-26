@@ -34,6 +34,8 @@ object Context {
 
   def apply(platform: Platform, root: String): Context = Context(platform, root, Map.empty)
 
+  def apply(platform: Platform): Context = Context(platform, "", Map.empty)
+
   def apply(platform: Platform, root: String, mapping: Map[String, String]): Context =
     new Context(platform, Option(root).filter(_.nonEmpty).map(List(_)).getOrElse(Nil), mapping)
 

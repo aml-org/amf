@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.annotations.{DeclaredElement, LocalLinkPath, 
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
-import amf.plugins.document.webapi.references.WebApiReferenceCollector
+import amf.plugins.document.webapi.references.WebApiReferenceHandler
 import amf.plugins.document.webapi.validation.{PayloadValidation, WebApiValidations}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -22,7 +22,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   def version: String
 
-  override def referenceCollector() = new WebApiReferenceCollector(ID)
+  override def referenceHandler() = new WebApiReferenceHandler(ID, this)
 
   override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
 
