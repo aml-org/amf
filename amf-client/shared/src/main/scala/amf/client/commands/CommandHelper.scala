@@ -49,9 +49,9 @@ trait CommandHelper {
     val inputFormat = config.inputFormat.get
     RuntimeCompiler(
       inputFile,
-      platform,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
-      effectiveVendor(config.inputMediaType, config.inputFormat)
+      effectiveVendor(config.inputMediaType, config.inputFormat),
+      Context(platform)
     )
   }
 

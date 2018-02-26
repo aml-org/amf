@@ -1,22 +1,39 @@
 package amf.plugins.document.webapi.references
 
+import amf.core.annotations.SourceAST
+import amf.core.model.document.{BaseUnit, ExternalFragment}
+import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
+import amf.core.remote.{Cache, Context}
+import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
+import org.yaml.model.YNode.MutRef
 import org.yaml.model._
+import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ArrayBuffer
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollector {
+class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
 
   private val references = new ArrayBuffer[Reference]
 
-  override def traverse(parsed: ParsedDocument, ctx: ParserContext): ArrayBuffer[Reference] = {
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
     libraries(parsed.document, ctx)
     links(parsed.document, ctx)
     if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(parsed.document, ctx)
     references
   }
+
+  /** Update parsed reference if needed. */
+  override def update(reference: ParsedReference, ctx: ParserContext, context: Context): Future[ParsedReference] =
+    vendor match {
+      case "RAML 1.0" | "RAML 0.8" if reference.isExternalFragment =>
+        handleRamlExternalFragment(reference, ctx, context)
+      case _ => Future.successful(reference)
+    }
 
   // TODO take this away when dialects don't use 'extends' keyword.
   def isRamlOverlayOrExtension(vendor: String, parsed: ParsedDocument): Boolean = {
@@ -131,4 +148,52 @@ class WebApiReferenceCollector(vendor: String) extends AbstractReferenceCollecto
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
   }
+
+  private def handleRamlExternalFragment(reference: ParsedReference,
+                                         ctx: ParserContext,
+                                         context: Context): Future[ParsedReference] = {
+    resolveUnitDocument(reference) match {
+      case Right(document) =>
+        val parsed = ParsedDocument(None, document)
+
+        val refs = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
+        val updated = context.update(reference.unit.id) // ??
+
+        val externals = refs.map((r: Reference) => {
+          r.resolve(updated, None, vendor, Cache(), ctx)
+            .flatMap(u => {
+              val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated)
+
+              resolved.map(res => {
+                val result = r.ast match {
+                  case mut: MutRef =>
+                    mut.target = res.ast
+                  case _ => throw new Exception("Damn it!")
+                }
+                result
+              })
+            })
+        })
+
+        Future.sequence(externals).map(_ => reference.copy(ast = Some(document.node)))
+      case Left(raw) => Future.successful(reference.copy(ast = Some(YNode(raw))))
+    }
+  }
+
+  private def isRamlOrYaml(encodes: ExternalDomainElement) = plugin.documentSyntaxes.contains(encodes.mediaType)
+
+  private def resolveUnitDocument(reference: ParsedReference): Either[String, YDocument] = {
+    reference.unit match {
+      case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
+        Right(YamlParser(e.encodes.raw).withIncludeTag("!include").documents().head)
+      case e: ExternalFragment =>
+        Left(e.encodes.raw)
+      case o if hasDocumentAST(o) =>
+        Right(o.annotations.find(classOf[SourceAST]).map(_.ast.asInstanceOf[YDocument]).get)
+      case _ => Left("")
+    }
+  }
+
+  private def hasDocumentAST(other: BaseUnit) =
+    other.annotations.find(classOf[SourceAST]).exists(_.ast.isInstanceOf[YDocument])
 }
