@@ -165,7 +165,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
     amf.core.AMF.registerPlugin(featurePlugin)
     featurePlugin.init() flatMap { _ =>
-      RuntimeCompiler(url, platform, Some("application/yaml"), "RAML 1.0") map { _ =>
+      RuntimeCompiler(url, Some("application/yaml"), "RAML 1.0", Context(platform)) map { _ =>
         val allPhases = Seq("begin_parsing_invocation",
                             "begin_document_parsing",
                             "syntax_parsed",

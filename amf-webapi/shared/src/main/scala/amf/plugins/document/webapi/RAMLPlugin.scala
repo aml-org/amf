@@ -19,7 +19,6 @@ import amf.plugins.document.webapi.resolution.pipelines.{Raml08ResolutionPipelin
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
-import org.yaml.parser.YamlParser
 
 trait RAMLPlugin extends BaseWebApiPlugin {
 
@@ -49,27 +48,23 @@ trait RAMLPlugin extends BaseWebApiPlugin {
     }
   }
 
-  private def inlineFragment(ast: YNode, encodes: ExternalDomainElement): Unit = {
+  private def inlineExternalReferences(root: Root): Unit = {
+    root.references.foreach { ref =>
+      ref.unit match {
+        case e: ExternalFragment => inlineFragment(ref.origin.ast, ref.ast, e.encodes)
+        case _                   =>
+      }
+    }
+  }
+
+  private def inlineFragment(ast: YNode, document: Option[YNode], encodes: ExternalDomainElement): Unit = {
     ast match {
       case mut: MutRef =>
-        if (isRamlOrYaml(encodes)) inlineYNode(mut, encodes.raw)
-        else inlineYScalar(mut, encodes.raw)
+        document match {
+          case None => mut.target = Some(YNode(encodes.raw))
+          case _    => mut.target = document
+        }
       case _ =>
-    }
-  }
-
-  private def inlineYNode(ref: MutRef, raw: String): Unit = {
-    val parts = YamlParser(raw).parse()
-    parts.collectFirst({ case document: YDocument => document }) match {
-      case Some(document: YDocument) => ref.target = Some(document.node)
-    }
-  }
-
-  def inlineExternalReferences(root: Root): Unit = {
-    root.references.filter(_.isExternalFragment).foreach { ref =>
-      ref.unit match {
-        case e: ExternalFragment => inlineFragment(ref.origin.ast, e.encodes)
-      }
     }
   }
 

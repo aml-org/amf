@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.registries
 
+import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
@@ -76,7 +77,7 @@ object PlatformDialectRegistry extends DialectRegistry with PlatformSecrets {
 
   def registerDialect(uri: String): Future[Dialect] = {
     RuntimeValidator.disableValidationsAsync() { reenableValidations =>
-      RuntimeCompiler(uri, platform, Option("application/yaml"), RAMLVocabulariesPlugin.ID)
+      RuntimeCompiler(uri, Option("application/yaml"), RAMLVocabulariesPlugin.ID, Context(platform))
         .map { compiled =>
           reenableValidations()
           val dialect = new DialectLoader(compiled).loadDialect()

@@ -18,7 +18,7 @@ import amf.plugins.document.vocabularies.core.DialectLoader
 import amf.plugins.document.vocabularies.metamodel.document.DialectNodeFragmentModel
 import amf.plugins.document.vocabularies.model.document.DialectFragment
 import amf.plugins.document.vocabularies.model.domain.DomainEntity
-import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
+import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.registries.{DialectRegistry, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.resolution.DialectsResolutionPipeline
 import amf.plugins.document.vocabularies.spec._
@@ -147,7 +147,7 @@ object RAMLVocabulariesPlugin
     "application/x-yaml"
   )
 
-  override def referenceCollector() = new RAMLExtensionsReferenceCollector()
+  override def referenceHandler() = new RAMLExtensionsReferenceHandler()
 
   /**
     * Validation profiles supported by this plugin by default

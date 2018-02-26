@@ -21,7 +21,7 @@ abstract class PlatformParser extends PlatformSecrets {
                            overridePlatForm: Option[Platform] = None,
                            parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
     RuntimeValidator.reset()
-    RuntimeCompiler(url, overridePlatForm.getOrElse(platform), Option(mediaType), vendor) map { model =>
+    RuntimeCompiler(url, Option(mediaType), vendor, Context(overridePlatForm.getOrElse(platform))) map { model =>
       parsedModel = Some(model)
       model
     }

@@ -1,7 +1,7 @@
 package amf.core.parser
 
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Cache, Context, Platform}
+import amf.core.remote.{Cache, Context}
 import amf.core.services.RuntimeCompiler
 import org.yaml.model.YNode
 
@@ -11,12 +11,11 @@ case class Reference(url: String, kind: ReferenceKind, ast: YNode) {
 
   def isRemote: Boolean = !url.startsWith("#")
 
-  def resolve(remote: Platform,
-              base: Option[Context],
+  def resolve(base: Context,
               mediaType: Option[String],
               vendor: String,
               cache: Cache,
               ctx: ParserContext): Future[BaseUnit] = {
-    RuntimeCompiler(url, remote, mediaType, vendor, base, kind, cache, Some(ctx))
+    RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx))
   }
 }

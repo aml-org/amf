@@ -11,14 +11,14 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
 import org.yaml.model.YMap
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object AMFGraphPlugin extends AMFDocumentPlugin {
 
   override def init(): Future[AMFPlugin] = Future { this }
 
-  override val ID = "AMF Graph"
+  override val ID             = "AMF Graph"
   override def dependencies() = Seq()
 
   val vendors = Seq("AMF JSON-LD", "AMF Graph")
@@ -35,14 +35,14 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
 
   override def canParse(root: Root) = {
     val maybeMaps = root.parsed.document.node.toOption[Seq[YMap]]
-    val maybeMap         = maybeMaps.flatMap(s => s.headOption)
+    val maybeMap  = maybeMaps.flatMap(s => s.headOption)
     maybeMap match {
       case Some(m: YMap) => m.key((Namespace.Document + "encodes").iri()).isDefined
       case _             => false
     }
 
   }
-  override def parse(root: Root, ctx: ParserContext,  platform: Platform) =
+  override def parse(root: Root, ctx: ParserContext, platform: Platform) =
     Some(GraphParser(platform).parse(root.parsed.document, root.location))
 
   override def canUnparse(unit: BaseUnit) = true
@@ -50,12 +50,10 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions) =
     Some(GraphEmitter.emit(unit, options))
 
-  override def referenceCollector() = new AMFGraphReferenceCollector()
+  override def referenceHandler() = SimpleReferenceHandler
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit) = new BasicResolutionPipeline().resolve(unit)
 }
-
-
