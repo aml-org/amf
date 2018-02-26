@@ -16,6 +16,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def name(): String                              = fields(Name)
   def withNodePropertyMapping(propertyId: String) = set(NodePropertyMapping, propertyId)
   def nodePropertyMapping(): String               = fields(NodePropertyMapping)
+  def withLiteralRange(range: String)             = set(LiteralRange, range)
+  def literalRange(): String                      = fields(LiteralRange)
+  def withObjectRange(range: String)              = set(ObjectRange, range)
+  def objectRange(): String                       = fields(ObjectRange)
 }
 
 object PropertyMapping {

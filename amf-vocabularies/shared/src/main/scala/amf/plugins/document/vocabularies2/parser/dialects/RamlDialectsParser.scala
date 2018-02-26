@@ -1,14 +1,17 @@
 package amf.plugins.document.vocabularies2.parser.dialects
 
 import amf.core.Root
-import amf.core.annotations.Aliases
+import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.utils._
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.parser.SearchScope.All
 import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclarations, ParserContext, _}
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
+import amf.plugins.document.vocabularies2.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies2.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.vocabularies2.model.domain.{ClassTerm, NodeMapping, PropertyMapping, PropertyTerm}
+import amf.plugins.document.vocabularies2.model.domain._
 import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
 import amf.plugins.document.vocabularies2.parser.vocabularies.VocabularyDeclarations
 import org.yaml.model._
@@ -62,7 +65,8 @@ trait DialectSyntax {this: DialectContext =>
     "version" -> "string",
     "usage" -> "string",
     "uses" -> "DeclaresModel[]",
-    "nodeMappings" -> "NodeMapping[]"
+    "nodeMappings" -> "NodeMapping[]",
+    "documents" -> "PublicNodeMapping"
   )
 
   val nodeMapping: Map[String,String] = Map(
@@ -71,7 +75,14 @@ trait DialectSyntax {this: DialectContext =>
   )
 
   val propertyMapping: Map[String,String] = Map(
-    "propertyTerm" -> "string"
+    "propertyTerm" -> "string",
+    "range"        -> "string"
+  )
+
+  val documentsMapping: Map[String,String] = Map(
+    "root" -> "DocumentMapping",
+    "fragments" -> "DocumentMapping[]",
+    "library" -> "DocumentMapping[]"
   )
 
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
@@ -79,6 +90,7 @@ trait DialectSyntax {this: DialectContext =>
       case "dialect"         => dialect
       case "nodeMapping"     => nodeMapping
       case "propertyMapping" => propertyMapping
+      case "documentsMapping" => documentsMapping
     }
     map.map.keySet.map(_.as[String]).foreach { property =>
       allowedProps.get(property) match {
@@ -233,8 +245,26 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     parseDeclarations(root, map)
 
     val declarables = ctx.declarations.declarables()
+    declarables.foreach {
+      case nodeMapping: NodeMapping =>
+        nodeMapping.propertiesMapping().foreach { propertyMapping =>
+          Option(propertyMapping.objectRange()) match {
+            case Some(nodeMappingRef) => ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+              case Some(mapping) => propertyMapping.withObjectRange(mapping.id)
+              case _             => ctx.missingPropertyRangeViolation(
+                nodeMappingRef,
+                nodeMapping.id,
+                propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+              )
+            }
+            case _                   => // ignore
+          }
+        }
+    }
     if (declarables.nonEmpty) dialect.withDeclares(declarables)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
+
+    parseDocumentsMapping(map, dialect.id)
 
     dialect
   }
@@ -259,6 +289,17 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           propertyMapping.withNodePropertyMapping(propertyTerm.id)
         case _ =>
           ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+      }
+    })
+
+    map.key("range", entry => {
+      val value = ValueNode(entry.value)
+      val range = value.string().toString
+      range match {
+        case "string" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
+        case "uri" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
+        case "any" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
+        case nodeMappingId => propertyMapping.withObjectRange(nodeMappingId) // temporary until we can resolve all nodeMappings after finishing parsing declarations
       }
     })
 
@@ -343,6 +384,107 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         case t          => ctx.violation(parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
       }
     }
+  }
+
+  def parseRootDocumentMapping(value: YNode, parent: String): Option[DocumentMapping] = {
+    value.as[YMap].key("root") match {
+      case Some(entry: YMapEntry) if entry.value.tagType == YType.Map =>
+        val name = s"${dialect.name()} ${dialect.version()}"
+        val rootMap = entry.value.as[YMap]
+        val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/root")
+        rootMap.key("encodes", entry => {
+          val nodeId = entry.value.as[String]
+          ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
+            case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
+            case _                 => None // TODO: violation here
+          }
+        })
+        rootMap.key("declares", entry => {
+          val declaresMap = entry.value.as[YMap]
+          val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map { declarationEntry =>
+            val declarationId = declarationEntry.value.as[String]
+            val declarationName = declarationEntry.key.as[String]
+            val declarationMapping = PublicNodeMapping(declarationEntry).withName(declarationName).withId(parent + "/declaration/" + declarationName.urlEncoded)
+            ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
+              case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
+              case _                 => None // TODO: violation here
+            }
+          }
+          documentsMapping.withDeclaredNodes(declarations.collect{ case m: Some[PublicNodeMapping] => m.get})
+        })
+        Some(documentsMapping)
+      case _ => None
+    }
+  }
+
+  def parseFragmentsMapping(value: YNode, parent: String): Option[Seq[DocumentMapping]] = {
+    value.as[YMap].key("fragments") match {
+      case Some(entry: YMapEntry) =>
+        entry.value.as[YMap].key("encodes") match {
+          case Some(entry: YMapEntry) =>
+            val docs = entry.value.as[YMap].entries.map { fragmentEntry =>
+              val fragmentName = fragmentEntry.key.as[String]
+              val nodeId = fragmentEntry.value.as[String]
+              val documentsMapping = DocumentMapping(fragmentEntry.value).withDocumentName(fragmentName).withId(parent + s"/fragments/${fragmentName.urlEncoded}")
+              ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
+                case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
+                case _                 =>
+                  ctx.missingTermViolation(nodeId, parent, fragmentEntry)
+                  None
+              }
+            }
+            Some(docs.filter(_.isDefined).map(_.get).asInstanceOf[Seq[DocumentMapping]])
+          case _ => None
+        }
+      case _ => None
+    }
+  }
+
+  def parseLibraries(value: YNode, parent: String): Option[DocumentMapping] = {
+    value.as[YMap].key("library") match {
+      case Some(entry: YMapEntry) =>
+        val name = s"${dialect.name()} ${dialect.version()} / Library"
+        val rootMap = entry.value.as[YMap]
+        val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/modules")
+        entry.value.as[YMap].key("declares") match {
+          case Some(libraryEntry) =>
+            val declaresMap = libraryEntry.value.as[YMap]
+            val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map { declarationEntry =>
+              val declarationId = declarationEntry.value.as[String]
+              val declarationName = declarationEntry.key.as[String]
+              val declarationMapping = PublicNodeMapping(declarationEntry).withName(declarationName).withId(parent + "/modules/" + declarationName.urlEncoded)
+              ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
+                case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
+                case _                 =>
+                  ctx.missingTermViolation(declarationId, parent, libraryEntry)
+                  None
+              }
+            }
+            Some(documentsMapping.withDeclaredNodes(declarations.collect{ case m: Some[PublicNodeMapping] => m.get}))
+          case _ => None
+        }
+
+      case _ => None
+    }
+  }
+
+
+  private def parseDocumentsMapping(map: YMap, parent: String): Unit = {
+    val documentsMapping = DocumentsModel().withId(parent + "/documents")
+    map.key("documents").foreach { e =>
+      ctx.closedNode("documentsMapping", documentsMapping.id, e.value.as[YMap])
+      parseRootDocumentMapping(e.value, documentsMapping.id) foreach { rootMapping: DocumentMapping =>
+        documentsMapping.withRoot(rootMapping)
+      }
+      parseFragmentsMapping(e.value, documentsMapping.id) map { fragmentMappings: Seq[DocumentMapping] =>
+          documentsMapping.withFragments(fragmentMappings)
+      }
+      parseLibraries(e.value, documentsMapping.id) foreach { case libraryMapping: DocumentMapping =>
+        documentsMapping.withLibrary(libraryMapping)
+      }
+    }
+
+    dialect.withDocuments(documentsMapping)
   }
 
 }

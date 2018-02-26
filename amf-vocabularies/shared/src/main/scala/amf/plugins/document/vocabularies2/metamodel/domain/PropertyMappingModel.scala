@@ -11,8 +11,10 @@ object PropertyMappingModel extends DomainElementModel {
 
   val Name                = Field(Str, Namespace.Schema + "name")
   val NodePropertyMapping = Field(Iri, Namespace.Shacl + "path")
+  val LiteralRange        = Field(Iri, Namespace.Shacl + "datatype")
+  val ObjectRange         = Field(Iri, Namespace.Shacl + "node")
 
-  override def fields: List[Field] = NodePropertyMapping :: Name :: DomainElementModel.fields
+  override def fields: List[Field] = NodePropertyMapping :: Name :: LiteralRange :: ObjectRange :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = PropertyMapping()
 
