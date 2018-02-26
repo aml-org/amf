@@ -1,15 +1,11 @@
 package amf.org.raml.api
 
-import amf.common.Tests
 import amf.core.client.GenerationOptions
-import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
-import amf.core.unsafe.TrunkPlatform
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
-
-import scala.concurrent.Future
 
 class ApiModelParserTestCase extends ModelTest {
   override val basePath: String = path
@@ -44,21 +40,22 @@ trait ModelTest extends ResolutionTest with DirectoryTest {
         .map(_.withEnabledValidation(false))
         .flatMap(v => {
           val future = AMFCompiler(s"file://$d/$inputFileName", platform, RamlYamlHint, v).build()
-          val eventualString: Future[String] = future
-            .map(bu => {
-              AMFDumper(bu, Amf, Json, GenerationOptions()).dumpToString
-            })
-            .flatMap(s => {
-              AMFCompiler(s"file://$d/amf-model.jsonld", TrunkPlatform(s, Some(platform)), AmfJsonHint, v).build()
-            })
+          future
+//            .map(bu => {
+//              AMFDumper(bu, Amf, Json, GenerationOptions()).dumpToString
+//            })
+//            .flatMap(s => {
+//              AMFCompiler(s"file://$d/amf-model.jsonld", TrunkPlatform(s, Some(platform)), AmfJsonHint, v).build()
+//            })
             .map(bu => {
               AMFDumper(bu, Raml10, Yaml, GenerationOptions()).dumpToString
             })
-          eventualString.flatMap(out => {
-            fs.asyncFile(s"$d/$outputFileName").read().map(expected => (out, expected.toString))
-          })
+            .flatMap(s => {
+              writeTemporaryFile(outputFileName)(s)
+            })
+            .flatMap(assertDifferences(_, s"$d/$outputFileName"))
         })
-        .map(Tests.checkDiffIgnoreAllSpaces)
+//        .map(Tests.checkDiffIgnoreAllSpaces)
     }
 
   })
