@@ -1,23 +1,15 @@
 #%RAML 1.0 DataType
-type: union
-anyOf:
-  -
-    type: object
-    additionalProperties: true
-    properties:
-      a:
+type: object
+additionalProperties: true
+properties:
+  a:
+    type: string
+    required: true
+  b:
+    anyOf:
+      -
         type: string
-        required: true
-      b:
-        type: string
-        required: true
-  -
-    type: object
-    additionalProperties: true
-    properties:
-      a:
-        type: string
-        required: true
-      b:
+      -
         type: integer
-        required: true
+    required: true
+    type: union
