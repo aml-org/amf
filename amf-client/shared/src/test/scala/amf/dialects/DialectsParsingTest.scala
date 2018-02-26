@@ -11,20 +11,28 @@ class DialectsParsingTest extends BuildCycleTests {
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 
-  test("HERE_HERE parse 1 test") {
+  test("parse 1 test") {
     cycle("example1.raml", "example1.json", VocabularyYamlHint, Amf)
   }
 
-  test("HERE_HERE_HERE parse 2 test") {
+  test("parse 2 test") {
     cycle("example2.raml", "example2.json", VocabularyYamlHint, Amf)
   }
 
-  test("HERE_HERE generate 1 test") {
+  test("parse 3 test") {
+    cycle("example3.raml", "example3.json", VocabularyYamlHint, Amf)
+  }
+
+  test("generate 1 test") {
     cycle("example1.json", "example1.raml",  AmfJsonHint, RamlVocabulary)
   }
 
-  test("HERE_HERE_HERE generate 2 test") {
-    cycle("example2.json", "example2.raml",  AmfJsonHint, RamlVocabulary)
+  test("generate 2 test") {
+    cycle("example2.json", "example2.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 3 test") {
+    cycle("example3.json", "example3.raml", AmfJsonHint, RamlVocabulary)
   }
 
 }

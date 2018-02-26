@@ -40,7 +40,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     DatatypePropertyTermModel,
     DialectModel,
     NodeMappingModel,
-    PropertyMappingModel
+    PropertyMappingModel,
+    DocumentsModelModel,
+    PublicNodeMappingModel,
+    DocumentMappingModel
   ) // TODO
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
