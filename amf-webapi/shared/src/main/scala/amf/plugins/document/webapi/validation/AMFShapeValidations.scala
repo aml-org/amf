@@ -38,9 +38,16 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  def validationId(shape: Shape) = shape match {
-    case recursive: RecursiveShape => shape.id + "_recursive_validation"
-    case _                         => shape.id + "_validation"
+  def validationId(shape: Shape) = {
+    val name = shape match {
+      case recursive: RecursiveShape => shape.id + "_recursive_validation"
+      case _                         => shape.id + "_validation"
+    }
+    if (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) {
+      name
+    } else {
+      (Namespace.Data + name).iri()
+    }
   }
 
   protected def canonicalShape(): Shape = CanonicalShapePipeline(shape)

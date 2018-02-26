@@ -283,7 +283,7 @@ class DialectFeatureTest extends AsyncFunSuite with CompilerTestBuilder {
       .map(checkDiff)
   }
 
-  test("Bruno problems in sequences 3") {
+  ignore("Bruno problems in sequences 3") {
     val validation = PlatformDialectRegistry.registerDialect(basePath + "bruno/Dialects/EventDialect.raml")
     val expected =
       platform.resolve(basePath + "bruno/EventedAPI_Banking2.json", None).map(_.stream.toString)
