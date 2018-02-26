@@ -6,7 +6,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel._
-import amf.plugins.document.vocabularies2.model.domain.DocumentsModel
+import amf.plugins.document.vocabularies2.model.domain.{DocumentsModel, External}
 
 case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel  {
   def meta: Obj = DialectModel
@@ -21,8 +21,10 @@ case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit wi
   def withName(name: String) = set(Name, name)
   def version(): String = fields(Version)
   def withVersion(version: String) = set(Version, version)
-  def withDocuments(documentsMapping: DocumentsModel) = set(Documents, documentsMapping)
+  def externals: Seq[External]          = fields(Externals)
+  def withExternals(externals: Seq[External])             = setArray(Externals, externals)
   def documents(): DocumentsModel = fields(Documents)
+  def withDocuments(documentsMapping: DocumentsModel) = set(Documents, documentsMapping)
 }
 
 object Dialect {

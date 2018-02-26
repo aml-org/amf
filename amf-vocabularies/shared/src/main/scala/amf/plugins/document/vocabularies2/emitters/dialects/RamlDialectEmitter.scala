@@ -8,13 +8,11 @@ import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies2.emitters.common.IdCounter
+import amf.plugins.document.vocabularies2.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.domain.DocumentMappingModel
 import amf.plugins.document.vocabularies2.model.document.Dialect
-import amf.plugins.document.vocabularies2.model.domain.DocumentMapping._
-import amf.plugins.document.vocabularies2.model.domain.DocumentsModel._
-import amf.plugins.document.vocabularies2.model.domain.{DocumentMapping, NodeMapping, PropertyMapping, PublicNodeMapping}
+import amf.plugins.document.vocabularies2.model.domain._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -292,7 +290,7 @@ case class RamlDialectEmitter(dialect: Dialect) {
       }
     }.getOrElse(Map())
     val idCounter = new IdCounter()
-    dialect.references.foldLeft(Map[String,(String,String)]()) {
+    val dialectReferences = dialect.references.foldLeft(Map[String,(String,String)]()) {
       case (acc: Map[String,(String,String)], m: DeclaresModel) =>
         val importLocation: String = if (m.location.contains(vocabFilePrefix)) {
           m.location.replace(vocabFilePrefix, "")
@@ -309,11 +307,40 @@ case class RamlDialectEmitter(dialect: Dialect) {
         }
       case (acc: Map[String,(String,String)], _) => acc
     }
+    dialect.externals.foldLeft(dialectReferences) {
+      case (acc: Map[String,(String,String)], e: External) =>
+        acc + (e.base -> (e.alias, ""))
+    }
   }
 
   def rootLevelEmitters(ordering: SpecOrdering) =
     Seq(ReferencesEmitter(dialect.references, ordering, aliases)) ++
-    nodeMappingDeclarationEmitters(dialect, ordering, aliases)
+    nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
+    externalEmitters(ordering)
+
+  def externalEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
+    if (dialect.externals.nonEmpty) {
+      Seq(new EntryEmitter {
+        override def emit(b: YDocument.EntryBuilder): Unit = {
+          b.entry("external", _.obj({ b =>
+            traverse(ordering.sorted(dialect.externals.map(external => ExternalEmitter(external, ordering))), b)
+          }))
+        }
+
+        override def position(): Position = {
+          dialect.externals
+            .map(e => e.annotations.find(classOf[LexicalInformation]).map(_.range.start))
+            .filter(_.nonEmpty)
+            .map(_.get)
+            .sortBy(_.line)
+            .headOption
+            .getOrElse(ZERO)
+        }
+      })
+    } else {
+      Nil
+    }
+  }
 
   def dialectEmitters(ordering: SpecOrdering) =
     dialectPropertiesEmitter(ordering)

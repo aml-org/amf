@@ -46,14 +46,36 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
     }
 
   def findClassTerm(key: String, scope: SearchScope.Scope): Option[ClassTerm] =
-    findForType(key, _.asInstanceOf[DialectDeclarations].classTerms, scope) collect {
-      case ct: ClassTerm => ct
+    findForType(key, _.asInstanceOf[DialectDeclarations].classTerms, scope) match {
+      case Some(ct: ClassTerm) => Some(ct)
+      case None => resolveExternal(key) match {
+        case Some(externalId: String) => Some(ClassTerm().withId(externalId))
+        case None                     => None
+      }
     }
 
   def findPropertyTerm(key: String, scope: SearchScope.Scope): Option[PropertyTerm] =
-    findForType(key, _.asInstanceOf[DialectDeclarations].propertyTerms, scope) collect {
-      case pt: PropertyTerm => pt
+    findForType(key, _.asInstanceOf[DialectDeclarations].propertyTerms, scope) match {
+      case Some(pt: PropertyTerm) => Some(pt)
+      case None => resolveExternal(key) match {
+        case Some(externalId: String) => Some(DatatypePropertyTerm().withId(externalId))
+        case None                     => None
+      }
     }
+
+
+  def resolveExternal(key: String): Option[String] = {
+    if (key.contains(".")) {
+      val prefix = key.split("\\.").head
+      val value = key.split("\\.").last
+      externals.get(prefix) match {
+        case Some(external) => Some(s"${external.base}$value")
+        case _              => None
+      }
+    } else {
+      None
+    }
+  }
 
   override def declarables(): Seq[DomainElement] = nodeMappings.values.toSeq
 
@@ -64,6 +86,7 @@ trait DialectSyntax {this: DialectContext =>
     "dialect" -> "string",
     "version" -> "string",
     "usage" -> "string",
+    "external" -> "libraries",
     "uses" -> "DeclaresModel[]",
     "nodeMappings" -> "NodeMapping[]",
     "documents" -> "PublicNodeMapping"
@@ -135,12 +158,10 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     }
   }
 
-  /*
   def += (external: External): Unit = {
     references += (external.alias -> external)
     ctx.declarations.externals += (external.alias -> external)
   }
-  */
 
   def baseUnitReferences(): Seq[BaseUnit] = references.values.toSet.filter(_.isInstanceOf[BaseUnit]).toSeq.asInstanceOf[Seq[BaseUnit]]
 }
@@ -150,7 +171,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
   def parse(location: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()
     parseLibraries(dialect, result, location)
-    // parseExternals(result, location)
+    parseExternals(result, location)
     result
   }
 
@@ -184,7 +205,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     case _             => e.value
   }
 
-  /*
+
   private def parseExternals(result: ReferenceDeclarations, id: String): Unit = {
     map.key(
       "external",
@@ -200,7 +221,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
           })
     )
   }
-  */
+
 
   private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (String, String)): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
@@ -242,6 +263,11 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     ctx.closedNode("dialect", dialect.id, map)
 
     val references = DialectsReferencesParser(dialect, map, root.references).parse(dialect.location)
+
+    if (ctx.declarations.externals.nonEmpty)
+      dialect.withExternals(ctx.declarations.externals.values.toSeq)
+
+
     parseDeclarations(root, map)
 
     val declarables = ctx.declarations.declarables()

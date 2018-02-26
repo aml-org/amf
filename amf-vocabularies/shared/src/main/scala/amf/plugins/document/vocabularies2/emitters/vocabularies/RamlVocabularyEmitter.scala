@@ -8,6 +8,7 @@ import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.remote.Raml
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies2.emitters.common.ExternalEmitter
 import amf.plugins.document.vocabularies2.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies2.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.plugins.document.vocabularies2.model.document.Vocabulary
@@ -147,14 +148,6 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm, ordering: Spe
 
   override def position(): Position =
     propertyTerm.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
-}
-
-private case class ExternalEmitter(external: External, ordering: SpecOrdering) extends EntryEmitter {
-  override def emit(b: YDocument.EntryBuilder): Unit =
-    MapEntryEmitter(external.alias, external.base).emit(b)
-
-    override def position(): Position =
-      external.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 }
 
 private case class ImportEmitter(vocabularyReference: VocabularyReference, vocabulary: Vocabulary, ordering: SpecOrdering) extends EntryEmitter {
