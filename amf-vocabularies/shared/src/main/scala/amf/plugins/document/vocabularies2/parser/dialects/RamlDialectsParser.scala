@@ -118,7 +118,16 @@ trait DialectSyntax {this: DialectContext =>
 
   val propertyMapping: Map[String,String] = Map(
     "propertyTerm" -> "string",
-    "range"        -> "string"
+    "range"        -> "string",
+    "mapKey"       -> "string",
+    "mapValue"     -> "string",
+    "mandatory"    -> "string",
+    "pattern"      -> "string",
+    "sorted"       -> "boolean",
+    "minimum"      -> "integer",
+    "maximum"      -> "integer",
+    "allowMultiple" -> "boolean",
+    "enum"          -> "any[]"
   )
 
   val documentsMapping: Map[String,String] = Map(
@@ -413,7 +422,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
 
     val fragment = toFragment(dialect)
 
-    parseNodeMapping(YMapEntry(YNode("fragment"), map), (mapping) => mapping.withId(fragment.id + "/fragment"), fragment = true) match {
+    parseNodeMapping(YMapEntry(YNode("fragment"), map), (mapping) => mapping.withId(fragment.id + "/fragment").withName("fragment"), fragment = true) match {
       case Some(encoded) => {
         fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
       }
@@ -489,6 +498,68 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         case nodeMappingId => propertyMapping.withObjectRange(nodeMappingId) // temporary until we can resolve all nodeMappings after finishing parsing declarations
       }
     })
+
+    map.key("mapKey", entry => {
+      val propertyTermId = ValueNode(entry.value).string().toString
+      ctx.declarations.findPropertyTerm(propertyTermId, All) match {
+        case Some(term) => propertyMapping.withMapKeyProperty(term.id)
+        case _         => ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+      }
+    })
+
+    map.key("mapValue", entry => {
+      val propertyTermId = ValueNode(entry.value).string().toString
+      ctx.declarations.findPropertyTerm(propertyTermId, All) match {
+        case Some(term) => propertyMapping.withMapValueProperty(term.id)
+        case _         => ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+      }
+    })
+
+    map.key("mandatory", entry => {
+      val required = ValueNode(entry.value).boolean().toBool
+      val value = if (required) 1 else 0
+      propertyMapping.withMinCount(value)
+    })
+
+    map.key("pattern", entry => {
+      val value = ValueNode(entry.value).string().toString
+      propertyMapping.withPattern(value)
+    })
+
+    map.key("minimum", entry => {
+      val value = ValueNode(entry.value).integer().toNumber
+      propertyMapping.withMinimum(value.intValue())
+    })
+
+    map.key("maximum", entry => {
+      val value = ValueNode(entry.value).integer().toNumber
+      propertyMapping.withMaximum(value.intValue())
+    })
+
+    map.key("allowMultiple", entry => {
+      val value = ValueNode(entry.value).boolean().toBool
+      propertyMapping.withAllowMultiple(value)
+    })
+
+    map.key("sorted", entry => {
+      val sorted = ValueNode(entry.value).boolean().toBool
+      propertyMapping.withSorted(sorted)
+    })
+
+    map.key("enum", entry => {
+      val values = entry.value.as[YSequence].nodes.map { node =>
+          node.value match {
+            case scalar: YScalar => Some(scalar.value)
+            case _               => {
+              ctx.violation("Cannot create enumeration constraint from not scalar value", Some(node))
+              None
+            }
+          }
+      }
+      propertyMapping.withEnum(values.collect { case Some(v) => v})
+    })
+
+    // TODO: check dependencies among properties
 
     propertyMapping
   }
