@@ -36,8 +36,6 @@ class Annotations {
   /** Return [[SerializableAnnotation]]s only. */
   def serializables(): Seq[SerializableAnnotation] =
     annotations.filter(_.isInstanceOf[SerializableAnnotation]).map(_.asInstanceOf[SerializableAnnotation])
-
-  def unapply[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz)
 }
 
 object Annotations {
