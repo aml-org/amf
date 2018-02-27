@@ -1,5 +1,6 @@
 package amf.core.remote
 
+import java.io.FileNotFoundException
 import java.net.{HttpURLConnection, URI}
 
 import amf.core.lexer.{CharArraySequence, CharSequenceStream, FileStream}
@@ -41,7 +42,12 @@ class JvmPlatform extends Platform {
 
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = Future {
-    Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
+    try {
+
+      Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
+    } catch {
+      case e: FileNotFoundException => throw FileNotFound(e)
+    }
   }
 
   /** Return temporary directory. */
