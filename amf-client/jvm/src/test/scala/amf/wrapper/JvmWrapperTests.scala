@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext
 
-class WrapperTests extends AsyncFunSuite with PlatformSecrets {
+class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
