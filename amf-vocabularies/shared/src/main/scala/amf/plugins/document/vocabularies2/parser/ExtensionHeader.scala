@@ -6,4 +6,7 @@ object ExtensionHeader {
 
   val DialectHeader = "%RAML 1.0 Dialect"
 
+  val DialectLibraryHeader = "%RAML Library / RAML 1.0 Dialect"
+
+  val DialectFragmentHeader = "%Node Mapping / RAML 1.0 Dialect"
 }

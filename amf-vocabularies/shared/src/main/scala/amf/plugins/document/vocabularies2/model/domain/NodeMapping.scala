@@ -21,6 +21,11 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
   def withPropertiesMapping(props: Seq[PropertyMapping]) = setArrayWithoutId(PropertiesMapping, props)
 
   override def linkCopy(): Linkable = NodeMapping().withId(id)
+
+  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
+    val unresolvedNodeMapping = unresolved.asInstanceOf[NodeMapping]
+    unresolvedNodeMapping.link(label, annotations).asInstanceOf[NodeMapping].withId(unresolvedNodeMapping.id).withName(unresolvedNodeMapping.name).asInstanceOf[T]
+  }
 }
 
 object NodeMapping {

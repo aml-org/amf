@@ -1,0 +1,10 @@
+#%RAML 1.0 Dialect
+dialect: Test
+version: 1.0
+nodeMappings:
+  Local: !include mapping_fragment.raml
+documents:
+  root:
+    encodes: Local
+external:
+  v2: http://test.com/v2#
