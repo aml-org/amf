@@ -1,33 +1,11 @@
-package amf.org.raml.api
+package amf.javaparser.org.raml
 
 import amf.core.client.GenerationOptions
+import amf.core.remote.{Raml10, RamlYamlHint}
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote._
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
-
-class ApiModelParserTestCase extends ModelTest {
-  override val basePath: String = path
-  override def path: String     = "amf-client/shared/src/test/resources/org/raml/api"
-}
-
-class TypeToJsonSchemaTest extends ModelTest {
-  override val basePath: String = path
-  override def path: String     = "amf-client/shared/src/test/resources/org/raml/json_schema"
-
-}
-
-class ApiTckTestCase extends ModelTest {
-  override val basePath: String = path
-  override def path: String     = "amf-client/shared/src/test/resources/org/raml/parser"
-
-}
-
-class Raml08BuilderTestCase extends ModelTest {
-  override val basePath: String = path
-  override def path: String     = "amf-client/shared/src/test/resources/org/raml/v08/parser"
-}
 
 trait ModelTest extends ResolutionTest with DirectoryTest {
 
@@ -41,21 +19,21 @@ trait ModelTest extends ResolutionTest with DirectoryTest {
         .flatMap(v => {
           val future = AMFCompiler(s"file://$d/$inputFileName", platform, RamlYamlHint, v).build()
           future
-//            .map(bu => {
-//              AMFDumper(bu, Amf, Json, GenerationOptions()).dumpToString
-//            })
-//            .flatMap(s => {
-//              AMFCompiler(s"file://$d/amf-model.jsonld", TrunkPlatform(s, Some(platform)), AmfJsonHint, v).build()
-//            })
+            //            .map(bu => {
+            //              AMFDumper(bu, Amf, Json, GenerationOptions()).dumpToString
+            //            })
+            //            .flatMap(s => {
+            //              AMFCompiler(s"file://$d/amf-model.jsonld", TrunkPlatform(s, Some(platform)), AmfJsonHint, v).build()
+            //            })
             .map(bu => {
-              AMFDumper(bu, Raml10, Yaml, GenerationOptions()).dumpToString
-            })
+            AMFDumper(bu, Raml10, Yaml, GenerationOptions()).dumpToString
+          })
             .flatMap(s => {
               writeTemporaryFile(outputFileName)(s)
             })
             .flatMap(assertDifferences(_, s"$d/$outputFileName"))
         })
-//        .map(Tests.checkDiffIgnoreAllSpaces)
+      //        .map(Tests.checkDiffIgnoreAllSpaces)
     }
 
   })
