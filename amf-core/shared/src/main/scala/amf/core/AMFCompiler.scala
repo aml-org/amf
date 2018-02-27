@@ -141,7 +141,7 @@ class AMFCompiler(val rawUrl: String,
             handler.update(reference, ctx, context).map(Some(_))
           })
           .recover {
-            case e: FileNotFoundException =>
+            case e: FileNotFound =>
               ctx.violation(e.getMessage, Some(link.ast))
               None
           }

@@ -1,9 +1,11 @@
 package amf.core.remote.server
 
+import java.io.IOException
+
 import amf.core.interop.{OS, Path}
 import amf.core.lexer.CharSequenceStream
 import amf.core.remote.File.FILE_PROTOCOL
-import amf.core.remote.{Content, File, Http, Platform}
+import amf.core.remote._
 import org.mulesoft.common.io.{FileSystem, Fs}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -32,6 +34,9 @@ class JsServerPlatform extends Platform {
           Content(new CharSequenceStream(path, content),
                   ensureFileAuthority(path),
                   extension(path).flatMap(mimeFromExtension)))
+      .recover {
+        case io: IOException => throw FileNotFound(io)
+      }
 
   /** Resolve specified url. */
   override protected def fetchHttp(url: String): Future[Content] = {

@@ -243,3 +243,5 @@ object UnsupportedFileSystem extends FileSystem {
 
   private def unsupported = throw new Exception(s"Unsupported operation")
 }
+
+case class FileNotFound(cause: Exception) extends Exception(cause)
