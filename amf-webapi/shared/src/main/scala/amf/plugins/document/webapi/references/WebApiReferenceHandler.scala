@@ -156,7 +156,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
       case Right(document) =>
         val parsed = ParsedDocument(None, document)
 
-        val refs = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
+        val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.map((r: Reference) => {
@@ -185,7 +185,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   private def resolveUnitDocument(reference: ParsedReference): Either[String, YDocument] = {
     reference.unit match {
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
-        Right(YamlParser(e.encodes.raw).withIncludeTag("!include").documents().head)
+        Right(
+          YamlParser(e.encodes.raw).withIncludeTag("!include").parse().collectFirst({ case d: YDocument => d }).head)
       case e: ExternalFragment =>
         Left(e.encodes.raw)
       case o if hasDocumentAST(o) =>
