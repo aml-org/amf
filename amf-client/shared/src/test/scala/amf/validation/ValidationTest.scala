@@ -778,6 +778,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Test validate union ex 1 with valid example a)") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "examples/union1a-valid.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test validate union ex 1 with valid example b)") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "examples/union1b-valid.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test failed union ex 1 with invalid example") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "examples/union1-invalid.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
   test("Test validate external fragment cast exception") {
     for {
       validation <- Validation(platform)

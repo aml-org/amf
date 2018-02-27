@@ -1,21 +1,18 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
-import amf.core.annotations.Aliases
-import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
-import amf.core.model.domain.{DataNode, DomainElement, NamedDomainElement}
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.ParserContext
-import amf.core.resolution.stages.{ResolutionStage, ResolvedNamedEntity}
+import amf.core.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
-import org.yaml.model.{YDocument, YMap}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -39,78 +36,13 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
 
-  def declarations(model: BaseUnit): Unit = {
-    model match {
-      case d: DeclaresModel => d.declares.foreach { declaration =>
-        ctx.declarations += declaration
-        processDeclaration(declaration, ctx, model)
-      }
-      case _                =>
-    }
-    nestedDeclarations(model)
-  }
-
-  protected def nestedDeclarations(model: BaseUnit): Unit = {
-    model.references.foreach {
-      case f: Fragment =>
-        ctx.declarations += (f.location, f)
-        nestedDeclarations(f)
-      case m: Module  if m.annotations.find(classOf[Aliases]).isDefined =>
-        val nestedCtx = new Raml10WebApiContext(ParserContext())
-        m.declares.foreach { declaration => processDeclaration(declaration, nestedCtx, m) }
-        m.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.map(_._1).foreach { alias =>
-          ctx.declarations.libraries += (alias -> nestedCtx.declarations)
-        }
-        nestedDeclarations(m)
-    }
-  }
-
-  protected def processDeclaration(declaration: DomainElement, nestedCtx: RamlWebApiContext, model: BaseUnit): Unit = {
-    declaration.annotations.find(classOf[ResolvedNamedEntity]) match {
-      case Some(resolvedNamedEntity) =>
-        resolvedNamedEntity.vals.foreach { case (prefix, namedEntities) =>
-          val inContext = namedEntities.find(entity => entity.isInstanceOf[DomainElement] && entity.asInstanceOf[DomainElement].id.contains(model.location))
-          declaration match {
-            // we recover the local alias we removed when resolving
-            case element: NamedDomainElement if inContext.isDefined =>
-              val localName = inContext.get.name
-              val realName = element.name
-              element.withName(localName)
-              nestedCtx.declarations += declaration
-              element.withName(realName)
-            case _ =>
-              nestedCtx.declarations += declaration
-          }
-        }
-      case _ => nestedCtx.declarations += declaration
-    }
-  }
-
   def asEndPoint(r: ParametrizedResourceType, context: Context): EndPoint = {
     Option(r.target) match {
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables)
 
-        val document = YDocument {
-          _.obj {
-            _.entry(
-              "/endpoint",
-              DataNodeEmitter(node, SpecOrdering.Default).emit(_)
-            )
-          }
-        }
-        val endPointEntry = document.as[YMap].entries.head
-        val collector     = ListBuffer[EndPoint]()
-
-        declarations(context.model)
-        ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
-
-        collector.toList match {
-          case e :: Nil => e
-          case Nil      => throw new Exception(s"Couldn't parse an endpoint from resourceType '${r.name}'.")
-          case _        => throw new Exception(s"Nested endpoints found in resourceType '${r.name}'.")
-        }
+        ExtendsHelper.asEndpoint(context.model, profile, node, r.name, Some(ctx))
 
       case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
     }
@@ -260,28 +192,13 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)
 
-          val op = dataNodeToOperation(node, context)
+          val op = ExtendsHelper.asOperation(profile, node, context.model, Some(ctx))
 
           val children = op.traits.map(resolve(_, context))
 
           TraitBranch(key, op, children)
         case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")
       }
-    }
-
-    private def dataNodeToOperation(node: DataNode, context: Context): Operation = {
-      val document = YDocument {
-        _.obj {
-          _.entry(
-            "extends",
-            DataNodeEmitter(node, SpecOrdering.Default).emit(_)
-          )
-        }
-      }
-
-      val entry = document.as[YMap].entries.head
-      declarations(context.model)
-      ctx.factory.operationParser(entry, _ => Operation(), true).parse()
     }
   }
 

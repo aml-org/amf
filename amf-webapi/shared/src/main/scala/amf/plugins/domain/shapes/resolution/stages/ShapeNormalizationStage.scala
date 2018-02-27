@@ -68,7 +68,7 @@ class ShapeNormalizationStage(profile: String)
     cleanUnnecessarySyntax(shape)
     shape match {
       case union: UnionShape         => expandUnion(union)
-      case scalar: ScalarShape       => scalar
+      case scalar: ScalarShape       => expandScalar(scalar)
       case array: ArrayShape         => expandArray(array)
       case matrix: MatrixShape       => expandMatrix(matrix)
       case tuple: TupleShape         => expandTuple(tuple)
@@ -87,6 +87,11 @@ class ShapeNormalizationStage(profile: String)
       val newInherits = shape.inherits.map(expand)
       shape.setArrayWithoutId(ShapeModel.Inherits, newInherits, oldInherits.annotations)
     }
+  }
+
+  protected def expandScalar(scalar: ScalarShape): ScalarShape = {
+    expandInherits(scalar)
+    scalar
   }
 
   protected def expandArray(array: ArrayShape): ArrayShape = {
@@ -283,55 +288,13 @@ class ShapeNormalizationStage(profile: String)
       canonicalInheritance(node)
     } else {
       // We start processing the properties by cloning the base node shape
-      val properties = node.properties
-      var acc        = Seq(node.withProperties(Seq()) cloneShape ())
-
-      // We expand each property in the node
-      properties.foreach { propertyShape =>
+      val canonicalProperties: Seq[PropertyShape] = node.properties.map { propertyShape =>
         canonical(propertyShape) match {
-
-          // The output of the canonical property is a Union
-          // we need to expand each element in the union for each accum node in the accumulator
-          case canonicalProperty: PropertyShape if canonicalProperty.range.isInstanceOf[UnionShape] =>
-            val union = canonicalProperty.range.asInstanceOf[UnionShape]
-
-            val requiredUnion = Option(union.fields.get(ShapeModel.RequiredShape)) match {
-              case Some(f) if f.isInstanceOf[AmfScalar] => Some(f.asInstanceOf[AmfScalar].toBool)
-              case _                                    => None
-            }
-
-            acc = for {
-              unionElement <- union.anyOf
-              accNode      <- acc
-            } yield {
-              canonicalProperty.fields.remove(PropertyShapeModel.Range)
-              val newProperty = canonicalProperty.cloneShape()
-              if (requiredUnion.isDefined) {
-                checkRequiredShape(unionElement, requiredUnion.get)
-              }
-
-              newProperty.fields.setWithoutId(PropertyShapeModel.Range, unionElement)
-              accNode.cloneShape().withProperties(accNode.properties ++ Seq(newProperty))
-            }
-
-          // The canonical property is still a property shape, we just add the property
-          // to each of the new shapes in the accumulator
-          case canonicalProperty: PropertyShape =>
-            acc = for {
-              accNode <- acc
-            } yield {
-              accNode.withProperties(accNode.properties ++ Seq(propertyShape))
-            }
-
-          // error case
-          case other => throw new Exception(s"Resolution error: Expecting property shape or union, found $other")
+          case canonicalProperty: PropertyShape => canonicalProperty
+          case other => throw new Exception(s"Resolution error: Expecting property shape, found $other")
         }
       }
-      if (acc.toSet.size == 1) {
-        acc.head
-      } else {
-        UnionShape().withId(node.id + "/resolved").setArrayWithoutId(UnionShapeModel.AnyOf, acc).withName(node.name)
-      }
+      node.withProperties(canonicalProperties)
     }
   }
 
