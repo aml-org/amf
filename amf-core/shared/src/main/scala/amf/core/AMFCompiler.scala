@@ -1,7 +1,5 @@
 package amf.core
 
-import java.io.FileNotFoundException
-
 import amf.core
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
@@ -141,7 +139,7 @@ class AMFCompiler(val rawUrl: String,
             handler.update(reference, ctx, context).map(Some(_))
           })
           .recover {
-            case e: FileNotFoundException =>
+            case e: FileNotFound =>
               ctx.violation(e.getMessage, Some(link.ast))
               None
           }
