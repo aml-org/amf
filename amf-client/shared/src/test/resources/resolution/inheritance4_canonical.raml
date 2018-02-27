@@ -8,25 +8,17 @@ types:
         required: true
         type: string
   Cat:
-    type: union
-    anyOf:
-      -
-        type: object
-        additionalProperties: true
-        properties:
-          address:
-            required: true
-            type: string
-          age:
-            required: true
+    type: object
+    additionalProperties: true
+    properties:
+      address:
+        required: true
+        type: string
+      age:
+        required: true
+        type: union
+        anyOf:
+          -
             type: integer
-      -
-        type: object
-        additionalProperties: true
-        properties:
-          address:
-            required: true
-            type: string
-          age:
-            required: true
+          -
             type: number

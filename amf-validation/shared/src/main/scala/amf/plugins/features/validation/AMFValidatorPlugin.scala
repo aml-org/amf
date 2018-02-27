@@ -127,6 +127,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
     val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", GenerationOptions())
 
+
     /*
     println("\n\nGRAPH")
     println(modelJSON)
