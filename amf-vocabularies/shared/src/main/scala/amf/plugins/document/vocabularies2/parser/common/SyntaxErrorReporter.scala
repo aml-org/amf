@@ -27,9 +27,21 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  protected val MissingFragmentSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "missing-dialect-fragment").iri(),
+    "Missing dialect fragment",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
 
   def missingTermViolation(term: String, node: String, ast: YPart) = {
     violation(MissingTermSpecification.id(), node, s"Cannot find vocabulary term $term", ast)
+  }
+
+  def missingFragmentViolation(fragment: String, node: String, ast: YPart) = {
+    violation(MissingFragmentSpecification.id(), node, s"Cannot find fragment $fragment", ast)
   }
 
   def missingPropertyRangeViolation(term: String, node: String, lexical: Option[LexicalInformation]) = {

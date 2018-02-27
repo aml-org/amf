@@ -10,11 +10,11 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
-import amf.plugins.document.vocabularies2.emitters.dialects.RamlDialectEmitter
+import amf.plugins.document.vocabularies2.emitters.dialects.{RamlDialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies2.emitters.vocabularies.RamlVocabularyEmitter
-import amf.plugins.document.vocabularies2.metamodel.document.{DialectModel, VocabularyModel}
+import amf.plugins.document.vocabularies2.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel, VocabularyModel}
 import amf.plugins.document.vocabularies2.metamodel.domain._
-import amf.plugins.document.vocabularies2.model.document.{Dialect, Vocabulary}
+import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies2.parser.ExtensionHeader
 import amf.plugins.document.vocabularies2.parser.dialects.{DialectContext, RamlDialectsParser}
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
@@ -43,7 +43,9 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     PropertyMappingModel,
     DocumentsModelModel,
     PublicNodeMappingModel,
-    DocumentMappingModel
+    DocumentMappingModel,
+    DialectLibraryModel,
+    DialectFragmentModel
   ) // TODO
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
@@ -74,8 +76,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     comment(document) match {
       case Some(comment) =>
         comment.metaText match {
-          case ExtensionHeader.VocabularyHeader => Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
-          case ExtensionHeader.DialectHeader    => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument())
+          case ExtensionHeader.VocabularyHeader      => Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
+          case ExtensionHeader.DialectHeader         => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument())
+          case ExtensionHeader.DialectLibraryHeader  => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
+          case ExtensionHeader.DialectFragmentHeader => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseFragment())
           case _ => None
         }
       case _ => None
@@ -86,9 +90,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     * Unparses a model base unit and return a document AST
     */
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case vocabulary: Vocabulary => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
-    case dialect: Dialect       => Some(RamlDialectEmitter(dialect).emitDialect())
-    case _                      => None
+    case vocabulary: Vocabulary  => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
+    case dialect: Dialect        => Some(RamlDialectEmitter(dialect).emitDialect())
+    case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
+    case _                       => None
   }
 
   /**
@@ -106,9 +111,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     * the instance type and properties
     */
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Vocabulary => true
-    case _: Dialect    => true
-    case _             => false
+    case _: Vocabulary     => true
+    case _: Dialect        => true
+    case _: DialectLibrary => true
+    case _                 => false
   }
 
   override def referenceCollector(): AbstractReferenceCollector = new RAMLExtensionsReferenceCollector()

@@ -2,15 +2,16 @@ package amf.plugins.document.vocabularies2.parser.dialects
 
 import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
+import amf.core.metamodel.document.FragmentModel
 import amf.core.utils._
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
 import amf.core.parser.SearchScope.All
 import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclarations, ParserContext, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.domain.PropertyMappingModel
-import amf.plugins.document.vocabularies2.model.document.{Dialect, Vocabulary}
+import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies2.model.domain._
 import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
 import amf.plugins.document.vocabularies2.parser.vocabularies.VocabularyDeclarations
@@ -35,7 +36,12 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
   }
 
 
-  def +=(nodeMapping: NodeMapping): Declarations = {
+  def +=(nodeMapping: NodeMapping): DialectDeclarations = {
+    nodeMappings += (nodeMapping.name -> nodeMapping)
+    this
+  }
+
+  def registerNodeMapping(nodeMapping: NodeMapping): DialectDeclarations = {
     nodeMappings += (nodeMapping.name -> nodeMapping)
     this
   }
@@ -92,10 +98,23 @@ trait DialectSyntax {this: DialectContext =>
     "documents" -> "PublicNodeMapping"
   )
 
+  val library: Map[String,String] = Map(
+    "usage" -> "string",
+    "external" -> "libraries",
+    "uses" -> "DeclaresModel[]",
+    "nodeMappings" -> "NodeMapping[]"
+  )
+
   val nodeMapping: Map[String,String] = Map(
     "classTerm" -> "string",
     "mapping" -> "propertyMapping"
   )
+
+  val fragment: Map[String,String] = Map(
+    "usage" -> "string",
+    "external" -> "libraries",
+    "uses" -> "DeclaresModel[]"
+  ) ++ nodeMapping
 
   val propertyMapping: Map[String,String] = Map(
     "propertyTerm" -> "string",
@@ -111,6 +130,8 @@ trait DialectSyntax {this: DialectContext =>
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
     val allowedProps = nodeType match {
       case "dialect"         => dialect
+      case "library"         => library
+      case "fragment"        => fragment
       case "nodeMapping"     => nodeMapping
       case "propertyMapping" => propertyMapping
       case "documentsMapping" => documentsMapping
@@ -154,7 +175,12 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
         }
       case m: DeclaresModel =>
         val library = ctx.declarations.getOrCreateLibrary(alias)
-        m.declares.foreach { library += _ }
+        m.declares.foreach {
+          case nodeMapping: NodeMapping => library.registerNodeMapping(nodeMapping)
+          case decl                     => library += decl
+        }
+      case f: DialectFragment =>
+        ctx.declarations.fragments += (alias -> f.encodes)
     }
   }
 
@@ -172,6 +198,12 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     val result = ReferenceDeclarations()
     parseLibraries(dialect, result, location)
     parseExternals(result, location)
+
+    references.foreach {
+      case ParsedReference(f: DialectFragment, origin: Reference) => result += (origin.url, f)
+      case _                                                      =>
+    }
+
     result
   }
 
@@ -292,7 +324,136 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
 
     parseDocumentsMapping(map, dialect.id)
 
+    // resolve unresolved references
+    dialect.declares.foreach {
+      case dec: NodeMapping =>
+        if (!dec.isUnresolved) {
+          ctx.futureDeclarations.resolveRef(dec.name, dec)
+        }
+      case _ => //
+    }
+    ctx.futureDeclarations.resolve()
+
     dialect
+  }
+
+  def parseLibrary(): BaseUnit = {
+    map.key("usage", entry => {
+      val value = ValueNode(entry.value)
+      dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
+    })
+
+
+
+    // closed node validation
+    ctx.closedNode("library", dialect.id, map)
+
+    val references = DialectsReferencesParser(dialect, map, root.references).parse(dialect.location)
+
+    if (ctx.declarations.externals.nonEmpty)
+      dialect.withExternals(ctx.declarations.externals.values.toSeq)
+
+
+    parseDeclarations(root, map)
+
+    val declarables = ctx.declarations.declarables()
+    declarables.foreach {
+      case nodeMapping: NodeMapping =>
+        nodeMapping.propertiesMapping().foreach { propertyMapping =>
+          Option(propertyMapping.objectRange()) match {
+            case Some(nodeMappingRef) => ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+              case Some(mapping) => propertyMapping.withObjectRange(mapping.id)
+              case _             => ctx.missingPropertyRangeViolation(
+                nodeMappingRef,
+                nodeMapping.id,
+                propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+              )
+            }
+            case _                   => // ignore
+          }
+        }
+    }
+    if (declarables.nonEmpty) dialect.withDeclares(declarables)
+    if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
+
+    // resolve unresolved references
+    dialect.declares.foreach {
+      case dec: NodeMapping =>
+        if (!dec.isUnresolved) {
+          ctx.futureDeclarations.resolveRef(dec.name, dec)
+        }
+      case _ => //
+    }
+    ctx.futureDeclarations.resolve()
+
+    toLibrary(dialect)
+  }
+
+  def parseFragment(): BaseUnit = {
+
+    map.key("usage", entry => {
+      val value = ValueNode(entry.value)
+      dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
+    })
+
+
+
+    // closed node validation
+    ctx.closedNode("fragment", dialect.id, map)
+
+    val references = DialectsReferencesParser(dialect, map, root.references).parse(dialect.location)
+
+    if (ctx.declarations.externals.nonEmpty)
+      dialect.withExternals(ctx.declarations.externals.values.toSeq)
+
+
+    parseDeclarations(root, map)
+
+    if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
+
+    val fragment = toFragment(dialect)
+
+    parseNodeMapping(YMapEntry(YNode("fragment"), map), (mapping) => mapping.withId(fragment.id + "/fragment"), fragment = true) match {
+      case Some(encoded) => {
+        fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
+      }
+      case _             => // ignore
+    }
+
+    fragment
+  }
+
+  protected def toFragment(dialect: Dialect): DialectFragment = {
+    val fragment = DialectFragment(dialect.annotations)
+      .withId(dialect.id)
+      .withLocation(dialect.location)
+      .withReferences(dialect.references)
+
+    if (Option(dialect.usage).isDefined)
+      fragment.withUsage(dialect.usage)
+
+    if (Option(dialect.externals).isDefined)
+      fragment.withExternals(dialect.externals)
+
+    fragment
+  }
+
+  protected def toLibrary(dialect: Dialect): DialectLibrary = {
+    val library = DialectLibrary(dialect.annotations)
+      .withId(dialect.id)
+      .withLocation(dialect.location)
+      .withReferences(dialect.references)
+
+    if (Option(dialect.usage).isDefined)
+      library.withUsage(dialect.usage)
+
+    if (Option(dialect.declares).isDefined)
+      library.withDeclares(dialect.declares)
+
+    if (Option(dialect.externals).isDefined)
+      library.withExternals(dialect.externals)
+
+    library
   }
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
@@ -332,14 +493,16 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     propertyMapping
   }
 
-  def parseNodeMapping(entry: YMapEntry, adopt: NodeMapping => Any): Option[NodeMapping] = {
+  def parseNodeMapping(entry: YMapEntry, adopt: NodeMapping => Any, fragment: Boolean = false): Option[NodeMapping] = {
     entry.value.tagType match {
       case YType.Map =>
         val map = entry.value.as[YMap]
         val nodeMapping = NodeMapping(map)
 
         adopt(nodeMapping)
-        ctx.closedNode("nodeMapping", nodeMapping.id, map)
+
+        if (!fragment)
+          ctx.closedNode("nodeMapping", nodeMapping.id, map)
 
         map.key("classTerm", entry => {
           val value = ValueNode(entry.value)
@@ -371,28 +534,42 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         }
         refTuple match {
           case (text: String, Some(s)) =>
-            // TODO: Make nodeMappings linkable here
-            throw new Exception("mappings references not supported yet")
-            /*
-            s.link(text, Annotations(node.value))
-              .asInstanceOf[Shape]
-              .withName(name) // we setup the local reference in the name
-              .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-            */
+            val linkedNode = s.link(text, Annotations(entry.value))
+              .asInstanceOf[NodeMapping]
+              .withName(text) // we setup the local reference in the name
+            adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+            Some(linkedNode)
           case (text: String, _) =>
-            // TODO: Unresolved reference here
-            throw new Exception("mappings references not supported yet")
-            /*
-            val shape = UnresolvedShape(text, node).withName(text)
-            shape.withContext(ctx)
-            adopt(shape)
-            shape.unresolved(text, node)
-            shape
-            */
+            val linkedNode = NodeMapping(map)
+            adopt(linkedNode)
+            linkedNode.unresolved(text, map)
+            Some(linkedNode)
         }
       }
 
-      case _ => None
+      case YType.Include if entry.value.toOption[YScalar].isDefined =>
+        val refTuple = ctx.link(entry.value) match {
+          case Left(key) =>
+            (key, ctx.declarations.findNodeMapping(key, SearchScope.Fragments))
+          case _ =>
+            val text = entry.value.as[YScalar].text
+            (text, ctx.declarations.findNodeMapping(text, SearchScope.Named))
+        }
+        refTuple match {
+          case (text: String, Some(s)) =>
+            val linkedNode = s.link(text, Annotations(entry.value))
+              .asInstanceOf[NodeMapping]
+              .withName(text) // we setup the local reference in the name
+            adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+            Some(linkedNode)
+          case (text: String, _) =>
+            val nodeMappingTmp = adopt(NodeMapping()).asInstanceOf[NodeMapping]
+            val suffix = nodeMappingTmp.id.split("#").head
+            ctx.missingFragmentViolation(text, nodeMappingTmp.id.replace(suffix, ""), entry.value)
+            None
+        }
+
+      case other => None
     }
   }
 

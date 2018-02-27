@@ -31,6 +31,26 @@ class DialectsParsingTest extends BuildCycleTests {
     cycle("example5.raml", "example5.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 6 test") {
+    cycle("example6.raml", "example6.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 7 test") {
+    cycle("example7.raml", "example7.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 8 test") {
+    cycle("example8.raml", "example8.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 9 test") {
+    cycle("example9.raml", "example9.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse mappings_lib test") {
+    cycle("mappings_lib.raml", "mappings_lib.json", VocabularyYamlHint, Amf)
+  }
+
   test("generate 1 test") {
     cycle("example1.json", "example1.raml",  AmfJsonHint, RamlVocabulary)
   }
@@ -49,6 +69,22 @@ class DialectsParsingTest extends BuildCycleTests {
 
   test("generate 5 test") {
     cycle("example5.json", "example5.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 6 test") {
+    cycle("example6.json", "example6.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 7 test") {
+    cycle("example7.json", "example7.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 8 test") {
+    cycle("example8.json", "example8.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate mappings_lib test") {
+    cycle("mappings_lib.json", "mappings_lib.raml", AmfJsonHint, RamlVocabulary)
   }
 
 }

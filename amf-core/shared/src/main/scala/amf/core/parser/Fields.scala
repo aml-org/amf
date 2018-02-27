@@ -204,7 +204,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
       // in the declarations of the parser context
       // to be executed when a reference is resolved
       linkable.toFutureRef((resolved) => {
-        value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+        value = resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, linkable) // mutation of the field value
       })
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
@@ -213,7 +213,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
           linkable.toFutureRef((resolved) => {
             value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map { element =>
               if (element == linkable) {
-                resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+                resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, element) // mutation of the field value
               } else {
                 element
               }

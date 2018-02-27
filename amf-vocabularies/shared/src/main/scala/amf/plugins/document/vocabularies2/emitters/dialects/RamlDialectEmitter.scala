@@ -3,7 +3,7 @@ package amf.plugins.document.vocabularies2.emitters.dialects
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Lexical
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
@@ -11,7 +11,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.domain.DocumentMappingModel
-import amf.plugins.document.vocabularies2.model.document.Dialect
+import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectLibrary}
 import amf.plugins.document.vocabularies2.model.domain._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -25,7 +25,10 @@ trait AliasesConsumer {
     } else {
       aliases.keySet.find(id.contains(_)) map { key =>
         val alias = aliases(key)._1
-        val postfix = id.split(key).last
+        val postfix = id.split(key).last match {
+          case id if id.contains("/declarations/") => id.replace("/declarations/", "")
+          case nonLibraryDeclaration               => nonLibraryDeclaration
+        }
         alias + "." + postfix
       }
     }
@@ -86,7 +89,7 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
       case _ => // ignore
     }
     Option(mapping.declaredNodes()) match {
-      case Some(declarations) =>
+      case Some(declarations) if declarations.nonEmpty =>
         val declaredNodes = declarations
           .map { declaration =>
             aliasFor(declaration.mappedNode()) match {
@@ -103,7 +106,9 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
             })
           }
 
-          override def position(): Position = sortedNodes.head.position
+          override def position(): Position = {
+            sortedNodes.head.position
+          }
         })
       case _ => // ignore
     }
@@ -218,18 +223,22 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
 
 case class NodeMappingEmitter(dialect: Dialect, nodeMapping: NodeMapping, ordering: SpecOrdering, aliases: Map[String,(String, String)]) extends EntryEmitter with AliasesConsumer {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(nodeMapping.name, _.obj { b =>
-      aliasFor(nodeMapping.nodetypeMapping) match {
-        case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
-        case None                 => nodeMapping.nodetypeMapping
-      }
-    })
-    b.entry("mapping", _.obj { b =>
-      val propertiesEmitters: Seq[PropertyMappingEmitter] = nodeMapping.propertiesMapping().map { pm: PropertyMapping =>
-        PropertyMappingEmitter(dialect, pm, ordering, aliases)
-      }
-      traverse(propertiesEmitters, b)
-    })
+    if (nodeMapping.isLink) {
+      b.entry(nodeMapping.name, nodeMapping.linkLabel.get)
+    } else {
+      b.entry(nodeMapping.name, _.obj { b =>
+        aliasFor(nodeMapping.nodetypeMapping) match {
+          case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
+          case None => nodeMapping.nodetypeMapping
+        }
+      })
+      b.entry("mapping", _.obj { b =>
+        val propertiesEmitters: Seq[PropertyMappingEmitter] = nodeMapping.propertiesMapping().map { pm: PropertyMapping =>
+          PropertyMappingEmitter(dialect, pm, ordering, aliases)
+        }
+        traverse(propertiesEmitters, b)
+      })
+    }
   }
 
   override def position(): Position = nodeMapping.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
@@ -263,22 +272,10 @@ case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases
   override def position(): Position = ZERO
 }
 
+trait RamlDialectDocumentsEmitters {
 
-case class RamlDialectEmitter(dialect: Dialect) {
-
-  val ordering: SpecOrdering = Lexical
-  val aliases = collectAliases()
-
-  def emitDialect(): YDocument = {
-    val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
-
-    YDocument(b => {
-      b.comment("%RAML 1.0 Dialect")
-      b.obj { b =>
-        traverse(ordering.sorted(content), b)
-      }
-    })
-  }
+  val dialect: Dialect
+  val aliases:  Map[String,(String, String)]
 
   def collectAliases(): Map[String,(String, String)] = {
     val vocabFile = dialect.location.split("/").last
@@ -315,8 +312,8 @@ case class RamlDialectEmitter(dialect: Dialect) {
 
   def rootLevelEmitters(ordering: SpecOrdering) =
     Seq(ReferencesEmitter(dialect.references, ordering, aliases)) ++
-    nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
-    externalEmitters(ordering)
+      nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
+      externalEmitters(ordering)
 
   def externalEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
     if (dialect.externals.nonEmpty) {
@@ -340,6 +337,47 @@ case class RamlDialectEmitter(dialect: Dialect) {
     } else {
       Nil
     }
+  }
+
+  def nodeMappingDeclarationEmitters(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
+    val nodeMappingDeclarations = dialect.declares.collect { case nm : NodeMapping => nm }
+    if (nodeMappingDeclarations.nonEmpty) {
+      Seq(new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit = {
+          b.entry("nodeMappings", _.obj { b =>
+            val nodeMappingEmitters: Seq[EntryEmitter]= nodeMappingDeclarations.map { n => NodeMappingEmitter(dialect, n, ordering, aliases) }
+            traverse(ordering.sorted(nodeMappingEmitters), b)
+          })
+        }
+
+        override def position(): Position = {
+          nodeMappingDeclarations.map(_.annotations.find(classOf[LexicalInformation])
+            .map(_.range.start).getOrElse(ZERO))
+            .filter(_ != ZERO)
+            .sorted
+            .headOption.getOrElse(ZERO)
+        }
+      })
+    } else {
+      Nil
+    }
+  }
+}
+
+case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmitters {
+
+  val ordering: SpecOrdering = Lexical
+  val aliases = collectAliases()
+
+  def emitDialect(): YDocument = {
+    val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
+
+    YDocument(b => {
+      b.comment("%RAML 1.0 Dialect")
+      b.obj { b =>
+        traverse(ordering.sorted(content), b)
+      }
+    })
   }
 
   def dialectEmitters(ordering: SpecOrdering) =
@@ -382,28 +420,49 @@ case class RamlDialectEmitter(dialect: Dialect) {
     emitters
   }
 
-  def nodeMappingDeclarationEmitters(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
-    val nodeMappingDeclarations = dialect.declares.collect { case nm : NodeMapping => nm }
-    if (nodeMappingDeclarations.nonEmpty) {
-      Seq(new EntryEmitter {
-        override def emit(b: EntryBuilder): Unit = {
-          b.entry("nodeMappings", _.obj { b =>
-            val nodeMappingEmitters: Seq[EntryEmitter]= nodeMappingDeclarations.map { n => NodeMappingEmitter(dialect, n, ordering, aliases) }
-            traverse(ordering.sorted(nodeMappingEmitters), b)
-          })
-        }
 
-        override def position(): Position = {
-          nodeMappingDeclarations.map(_.annotations.find(classOf[LexicalInformation])
-            .map(_.range.start).getOrElse(ZERO))
-            .filter(_ != ZERO)
-            .sorted
-            .headOption.getOrElse(ZERO)
-        }
-      })
-    } else {
-      Nil
-    }
+}
+
+case class RamlDialectLibraryEmitter(library: DialectLibrary) extends RamlDialectDocumentsEmitters {
+
+  val ordering: SpecOrdering = Lexical
+  override val dialect: Dialect = toDialect(library)
+  val aliases = collectAliases()
+
+
+  def emitDialectLibrary(): YDocument = {
+    val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
+
+    YDocument(b => {
+      b.comment("%RAML Library / RAML 1.0 Dialect")
+      b.obj { b =>
+        traverse(ordering.sorted(content), b)
+      }
+    })
   }
+
+  protected def toDialect(library: DialectLibrary): Dialect = Dialect(library.fields, library.annotations).withId(library.id)
+
+
+  def dialectEmitters(ordering: SpecOrdering) =
+    dialectPropertiesEmitter(ordering)
+
+
+  def dialectPropertiesEmitter(ordering: SpecOrdering) = {
+    var emitters: Seq[EntryEmitter] = Nil
+
+
+    if (Option(dialect.usage).isDefined) {
+      emitters ++= Seq(new EntryEmitter {
+        override def emit(b: YDocument.EntryBuilder): Unit = MapEntryEmitter("usage", dialect.usage).emit(b)
+
+        override def position(): Position =
+          dialect.fields.entry(DialectModel.Usage).get.value.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+      })
+    }
+
+    emitters
+  }
+
 }
 
