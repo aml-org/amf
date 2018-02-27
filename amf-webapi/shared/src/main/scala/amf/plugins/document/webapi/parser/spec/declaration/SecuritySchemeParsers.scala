@@ -5,6 +5,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.security._
@@ -221,7 +222,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
     def dynamicSettings(xSettings: YMap, settings: Settings, properties: String*): Settings = {
       val entries = xSettings.entries.filterNot { entry =>
         val key: String = entry.key
-        properties.contains(key) || WellKnownAnnotation.isOasAnnotation(key)
+        properties.contains(key) || isOasAnnotation(key)
       }
 
       if (entries.nonEmpty) {
@@ -282,7 +283,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
         entry => {
           val scopeMap = entry.value.as[YMap]
           val scopes =
-            scopeMap.entries.filterNot(entry => WellKnownAnnotation.isOasAnnotation(entry.key)).map(parseScope)
+            scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope)
 
           AnnotationParser(scheme, scopeMap).parse()
 

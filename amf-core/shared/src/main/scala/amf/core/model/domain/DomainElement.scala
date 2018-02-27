@@ -20,6 +20,9 @@ trait DomainElement extends AmfObject {
   def withCustomDomainProperties(customProperties: Seq[DomainExtension]): this.type =
     setArray(CustomDomainProperties, customProperties)
 
+  def withCustomDomainProperty(customProperty: DomainExtension): this.type =
+    add(CustomDomainProperties, customProperty)
+
   def withExtends(extend: Seq[DomainElement]): this.type = setArray(Extends, extend)
 
   def getTypeIds(): List[String] = (dynamicTypes().toList ++ `type`.map(_.iri()) ++ meta.`type`.map(_.iri())).distinct

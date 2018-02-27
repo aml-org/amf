@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -28,6 +28,7 @@ import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
 import amf.plugins.document.webapi.parser.spec._
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 

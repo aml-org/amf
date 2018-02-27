@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.parser.{Annotations, _}
+import amf.core.parser.{Annotations, ValueNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel

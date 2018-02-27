@@ -1,17 +1,11 @@
 package amf.core.parser
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import org.yaml.model._
 
 /**
-  * Base spec parser.
+  * ArrayNode helper.
   */
-trait BaseSpecParser {
-
-  implicit val ctx: ParserContext
-
-}
-
 case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
 
   def strings(): AmfArray = {
@@ -31,7 +25,34 @@ case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
   private def annotations() = Annotations(ast.value)
 }
 
-case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
+/** Scalar node. */
+trait ValueNode {
+
+  /** Returns string amf scalar of string node. */
+  def string(): AmfScalar
+
+  /** Returns string amf scalar of any scalar node. */
+  def text(): AmfScalar
+
+  /** Returns integer amf scalar of integer node. */
+  def integer(): AmfScalar
+
+  /** Returns boolean amf scalar of boolean node. */
+  def boolean(): AmfScalar
+
+  /** Returns negated boolean amf scalar of boolean node. */
+  def negated(): AmfScalar
+
+  /** Collect custom domain properties of scalar (if any) to parent element. */
+  def collectCustomDomainProperties(parent: DomainElement): Unit = {}
+}
+
+object ValueNode {
+  def apply(node: YNode): ValueNode = ScalarNode(node)
+}
+
+/** Simple scalar node. */
+case class ScalarNode(node: YNode)(implicit iv: IllegalTypeHandler) extends ValueNode {
 
   def string(): AmfScalar = {
     val content = node.as[String]

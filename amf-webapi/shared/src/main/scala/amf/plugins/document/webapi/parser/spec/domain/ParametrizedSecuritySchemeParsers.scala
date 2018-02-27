@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
@@ -66,7 +67,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
   def dynamicSettings(settings: Settings, properties: String*): Settings = {
     val entries = map.entries.filterNot { entry =>
       val key: String = entry.key
-      properties.contains(key) || WellKnownAnnotation.isRamlAnnotation(key)
+      properties.contains(key) || isRamlAnnotation(key)
     }
 
     if (entries.nonEmpty) {

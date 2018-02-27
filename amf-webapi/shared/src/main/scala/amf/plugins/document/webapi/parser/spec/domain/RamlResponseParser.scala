@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, _}
+import amf.core.parser.{Annotations, ValueNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
