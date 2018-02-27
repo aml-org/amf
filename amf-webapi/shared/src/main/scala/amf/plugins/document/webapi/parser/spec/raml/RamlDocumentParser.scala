@@ -20,7 +20,7 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model._
@@ -100,7 +100,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     ctx.closedShape(api.id, map, "webApi")
 
     map.key("title", entry => {
-      val value = ValueNode(entry.value)
+      val value = RamlValueNode(entry.value)
       api.set(WebApiModel.Name, value.string(), Annotations(entry))
     })
 

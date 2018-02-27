@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, _}
+import amf.core.parser.{Annotations, ValueNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax}

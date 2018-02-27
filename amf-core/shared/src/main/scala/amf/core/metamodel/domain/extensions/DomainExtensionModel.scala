@@ -17,7 +17,7 @@ import amf.core.vocabulary.ValueType
   * They are parsed as RDF graphs using a default transformation from a set of nested
   * records into RDF
   */
-object DomainExtensionModel extends DomainElementModel with KeyField {
+trait DomainExtensionModel extends DomainElementModel with KeyField {
 
   val Name      = Field(Str, Document + "name")
   val DefinedBy = Field(CustomDomainPropertyModel, Document + "definedBy")
@@ -28,6 +28,8 @@ object DomainExtensionModel extends DomainElementModel with KeyField {
   override def fields: List[Field] = List(Name, DefinedBy, Extension) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Http + "DomainExtension" :: DomainElementModel.`type`
+}
 
+object DomainExtensionModel extends DomainExtensionModel {
   override def modelInstance = DomainExtension()
 }

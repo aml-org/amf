@@ -1,78 +1,89 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import scala.util.matching.Regex
+
 object WellKnownAnnotation {
 
-  private val annotations = Set(
-    "(termsOfService)",
-    "(parameters)",
-    "(binding)",
-    "(contact)",
-    "(externalDocs)",
-    "(license)",
-    "x-base-uri-parameters",
-    "(base-uri-parameters)",
-    "x-annotationTypes",
-    "(deprecated)",
-    "(summary)",
-    "(externalDocs)",
-    "x-request-payloads",
-    "(request-payloads)",
-    "x-response-payloads",
-    "x-uses",
-    "(response-payloads)",
-    "x-media-type",
-    "(media-type)",
-    "(readOnly)",
-    "(dependencies)",
-    "(tuple)",
-    "(format)",
-    "(exclusiveMaximum)",
-    "(exclusiveMinimum)",
-    "x-traits",
-    "x-resourceTypes",
-    "x-is",
-    "x-type",
-    "(consumes)",
-    "(produces)",
-    "x-extension-type",
-    "x-fragment-type",
-    "x-usage",
-    "x-title",
-    "x-user-documentation",
-    "x-description",
-    "x-displayName",
-    "x-extends",
-    "(flow)",
-    "x-displayName",
-    "x-describedBy",
-    "x-discriminator-value",
-    "x-requestTokenUri",
-    "x-authorizationUri",
-    "x-tokenCredentialsUri",
-    "x-signatures",
-    "x-settings",
-    "x-securitySchemes",
-    "x-queryParameters",
-    "x-headers",
-    "x-queryString",
-    "(examples)",
-    "x-examples",
-    "x-fileTypes",
-    "x-schema"
+  private val ramlKnownAnnotations = Set(
+    "termsOfService",
+    "parameters",
+    "binding",
+    "contact",
+    "externalDocs",
+    "license",
+    "base-uri-parameters",
+    "deprecated",
+    "summary",
+    "externalDocs",
+    "request-payloads",
+    "response-payloads",
+    "media-type",
+    "readOnly",
+    "dependencies",
+    "tuple",
+    "format",
+    "exclusiveMaximum",
+    "exclusiveMinimum",
+    "consumes",
+    "produces",
+    "flow",
+    "examples"
   )
 
-  def normalAnnotation(field: String): Boolean =
-    if (isRamlAnnotation(field) || isOasAnnotation(field)) {
-      !field.startsWith("x-facets") && !annotations.contains(field)
-    } else {
-      false
+  private val oasKnownAnnotations = Set(
+    "base-uri-parameters",
+    "annotationTypes",
+    "request-payloads",
+    "response-payloads",
+    "uses",
+    "media-type",
+    "traits",
+    "resourceTypes",
+    "is",
+    "type",
+    "extension-type",
+    "fragment-type",
+    "usage",
+    "title",
+    "user-documentation",
+    "description",
+    "displayName",
+    "extends",
+    "displayName",
+    "describedBy",
+    "discriminator-value",
+    "requestTokenUri",
+    "authorizationUri",
+    "tokenCredentialsUri",
+    "signatures",
+    "settings",
+    "securitySchemes",
+    "queryParameters",
+    "headers",
+    "queryString",
+    "examples",
+    "fileTypes",
+    "schema"
+  )
+
+  def resolveAnnotation(field: String): Option[String] = {
+    field match {
+      case ramlAnnotation(value) => Some(value).filterNot(ramlKnownAnnotations.contains)
+      case oasAnnotation(value)  => Some(value).filterNot(oasKnownAnnotations.contains).filterNot(_.equals("facets"))
+      case _                     => None
     }
+  }
 
-  def isOasAnnotation(field: String): Boolean  = field.startsWith("x-") || field.startsWith("X-")
-  def isRamlAnnotation(field: String): Boolean = field.startsWith("(") && field.endsWith(")")
+  def isOasAnnotation(field: String): Boolean = field match {
+    case oasAnnotation(_) => true
+    case _                => false
+  }
 
-  def parseRamlName(s: String): String = s.replace("(", "").replace(")", "")
-  def parseOasName(s: String): String  = s.replace("x-", "").replace("X-", "")
+  def isRamlAnnotation(field: String): Boolean = field match {
+    case ramlAnnotation(_) => true
+    case _                 => false
+  }
 
-  def parseName(s: String): String = parseOasName(parseRamlName(s))
+  private val ramlAnnotation: Regex = "^\\((.+)\\)$".r
+  private val oasAnnotation: Regex  = "^[xX]-(.+)".r
 }
