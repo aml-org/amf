@@ -1,0 +1,38 @@
+#%RAML 1.0 Dialect
+dialect: Test
+version: 1.0
+nodeMappings:
+  nodeB:
+    classTerm: v2.A
+    mapping:
+      za:
+        propertyTerm: v2.a
+        range: nodeA
+        mapKey: v2.t
+      zb:
+        propertyTerm: v2.a
+        range: nodeA
+        mapKey: v2.t
+        mapValue: v2.q
+  nodeA:
+    classTerm: v2.A
+    mapping:
+      a:
+        propertyTerm: v2.a
+        range: string
+        mandatory: true
+        pattern: a-z
+        minimum: 1
+        maximum: 10
+        allowMultiple: true
+        sorted: true
+        enum:
+          - hey
+          - ho
+documents:
+  root:
+    encodes: nodeA
+    declares:
+      DecB: nodeB
+external:
+  v2: http://test.com/v2#

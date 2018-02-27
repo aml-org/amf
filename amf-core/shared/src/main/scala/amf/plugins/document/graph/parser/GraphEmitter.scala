@@ -2,7 +2,7 @@ package amf.plugins.document.graph.parser
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.client.GenerationOptions
-import amf.core.metamodel.Type.{Array, Bool, Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Any, Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
@@ -177,6 +177,18 @@ object GraphEmitter extends MetaModelTypeMapping {
                     }
                   case Str =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => scalar(b, e.toString, inArray = true))
+
+                  case Any =>
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach { scalarElement =>
+                      scalarElement.value match {
+                        case bool: Boolean => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                        case str: String   => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
+                        case i: Int        => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
+                        case f: Float      => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                        case d: Double     => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                        case other         => scalar(b, other.toString, inArray = true)
+                      }
+                    }
                 }
               }
             )
@@ -248,6 +260,17 @@ object GraphEmitter extends MetaModelTypeMapping {
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
                   .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
+              case Any =>
+                seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
+                  scalarElement.value match {
+                    case bool: Boolean => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                    case str: String   => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
+                    case i: Int        => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
+                    case f: Float      => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                    case d: Double     => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                    case other         => scalar(b, other.toString, inArray = true)
+                  }
+                }
               case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
             }
           }
