@@ -1,7 +1,7 @@
 package amf.core.remote.browser
 
 import amf.core.lexer.CharSequenceStream
-import amf.core.remote.{Content, Platform, UnsupportedFileSystem}
+import amf.core.remote.{Content, FileNotFound, Platform, UnsupportedFileSystem}
 import org.mulesoft.common.io.FileSystem
 import org.scalajs.dom.ext.Ajax
 
@@ -23,7 +23,7 @@ class JsBrowserPlatform extends Platform {
       .flatMap(xhr =>
         xhr.status match {
           case 200 => Future { Content(new CharSequenceStream(xhr.responseText), url) }
-          case s   => Future.failed(new Exception(s"Unhandled status code $s with ${xhr.statusText}"))
+          case s   => Future.failed(FileNotFound(new Exception(s"Unhandled status code $s with ${xhr.statusText}")))
       })
   }
 

@@ -1,9 +1,10 @@
-package amf
+package amf.wrapper
 
+import _root_.org.scalatest.{Assertion, AsyncFunSuite}
+import amf._
 import amf.core.unsafe.PlatformSecrets
 import amf.model.document.{BaseUnit, Document, TraitFragment}
 import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
-import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
