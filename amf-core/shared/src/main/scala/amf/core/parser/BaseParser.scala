@@ -48,7 +48,7 @@ trait ValueNode {
 }
 
 object ValueNode {
-  def apply(node: YNode): ValueNode = ScalarNode(node)
+  def apply(node: YNode)(implicit iv: IllegalTypeHandler): ValueNode = ScalarNode(node)
 }
 
 /** Simple scalar node. */
