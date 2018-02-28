@@ -32,6 +32,8 @@ object Type {
 
   object Int extends Scalar("int")
 
+  object Float extends Scalar("float")
+
   object Iri extends Scalar("url")
 
   object Bool extends Scalar("boolean")

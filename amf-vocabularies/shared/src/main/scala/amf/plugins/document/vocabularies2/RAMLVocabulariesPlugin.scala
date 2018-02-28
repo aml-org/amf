@@ -12,11 +12,12 @@ import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceColle
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
 import amf.plugins.document.vocabularies2.emitters.dialects.{RamlDialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies2.emitters.vocabularies.RamlVocabularyEmitter
-import amf.plugins.document.vocabularies2.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel, VocabularyModel}
+import amf.plugins.document.vocabularies2.metamodel.document._
 import amf.plugins.document.vocabularies2.metamodel.domain._
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies2.parser.ExtensionHeader
 import amf.plugins.document.vocabularies2.parser.dialects.{DialectContext, RamlDialectsParser}
+import amf.plugins.document.vocabularies2.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
 import org.yaml.model.YDocument
 
@@ -24,6 +25,8 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor {
+
+  val registry = new DialectsRegistry
 
   override val ID: String = "RAML Vocabularies2"
 
@@ -45,7 +48,9 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     PublicNodeMappingModel,
     DocumentMappingModel,
     DialectLibraryModel,
-    DialectFragmentModel
+    DialectFragmentModel,
+    DialectInstanceModel,
+    DialectDomainElementModel
   ) // TODO
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
@@ -77,10 +82,10 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
       case Some(comment) =>
         comment.metaText match {
           case ExtensionHeader.VocabularyHeader      => Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
-          case ExtensionHeader.DialectHeader         => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument())
           case ExtensionHeader.DialectLibraryHeader  => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
           case ExtensionHeader.DialectFragmentHeader => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseFragment())
-          case _ => None
+          case ExtensionHeader.DialectHeader         => parseAndRegisterDialect(document, parentContext)
+          case header                                => parseDialectInstance(header, document, parentContext)
         }
       case _ => None
     }
@@ -120,5 +125,20 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
   override def referenceCollector(): AbstractReferenceCollector = new RAMLExtensionsReferenceCollector()
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
+
+  protected def parseAndRegisterDialect(document: Root, parentContext: ParserContext) = {
+    new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument() match {
+      case dialect: Dialect =>
+        registry.register(dialect)
+        Some(dialect)
+      case unit => Some(unit)
+    }
+  }
+
+  protected def parseDialectInstance(header: String, document: Root, parentContext: ParserContext): Option[BaseUnit] = {
+    registry.withRegisteredDialect(header) { dialect =>
+      new RamlDialectInstanceParser(document, dialect)(new DialectInstanceContext(parentContext)).parseDocument()
+    }
+  }
 
 }

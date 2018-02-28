@@ -226,12 +226,24 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
           emitters ++= Seq(MapEntryEmitter("range", literal.split(Namespace.Xsd.base).last, YType.Str, pos))
       }
 
-      Option(propertyMapping.objectRange()).foreach { nodeId =>
+      Option(propertyMapping.objectRange()).foreach { nodeIds =>
         val pos = fieldPos(propertyMapping, PropertyMappingModel.ObjectRange)
-        aliasFor(nodeId) match {
-          case Some(nodeMappingAlias) => emitters ++= Seq(MapEntryEmitter("range", nodeMappingAlias, YType.Str, pos))
-          case _                      =>
-        }
+        val targets = nodeIds.map { nodeId =>
+          aliasFor(nodeId) match {
+            case Some(nodeMappingAlias) => Some(nodeMappingAlias)
+            case _                      => None
+          }
+        }.collect { case Some(alias) => alias}
+
+        if (targets.size == 1)
+          emitters ++= Seq(MapEntryEmitter("range", targets.head, YType.Str, pos))
+        else if (targets.size > 1)
+          emitters ++= Seq(new EntryEmitter {
+            override def emit(b: EntryBuilder): Unit = b.entry("range", _.list { b =>
+              targets.foreach( target => ScalarEmitter(AmfScalar(target)).emit(b))
+            })
+            override def position(): Position = pos
+          })
       }
 
       Option(propertyMapping.mapKeyProperty()).foreach { value =>
@@ -291,6 +303,29 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
 
       propertyMapping.fields.entry(PropertyMappingModel.Enum) foreach { entry =>
         emitters ++= Seq(ArrayEmitter("enum", entry, ordering))
+      }
+
+      propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminator) foreach { entry =>
+        val pos = fieldPos(propertyMapping, entry.field)
+        val typesMapping = propertyMapping.typeDiscrminator()
+        emitters ++= Seq(new EntryEmitter {
+          override def emit(b: EntryBuilder): Unit = b.entry("typeDiscriminator", _.obj { b =>
+            typesMapping.foreach { case (alias, nodeMappingId) =>
+              aliasFor(nodeMappingId) match {
+                case Some(nodeMapping) => b.entry(nodeMapping, alias)
+                case _                 => b.entry(nodeMappingId, alias)
+              }
+            }
+          })
+
+          override def position(): Position = pos
+        })
+      }
+
+      propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminatorName) foreach { entry =>
+        val value = entry.value.value.asInstanceOf[AmfScalar].value.toString
+        val pos = fieldPos(propertyMapping, entry.field)
+        emitters ++= Seq(MapEntryEmitter("typeDiscriminatorName", value, YType.Str, pos))
       }
 
       ordering.sorted(emitters).foreach(_.emit(b))
