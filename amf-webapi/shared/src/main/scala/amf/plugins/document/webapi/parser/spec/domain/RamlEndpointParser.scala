@@ -6,7 +6,7 @@ import amf.core.parser.{Annotations, ValueNode, _}
 import amf.core.utils.TemplateUri
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlValueNode}
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
@@ -71,7 +71,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     ctx.closedShape(endpoint.id, map, "endPoint")
 
     map.key("displayName", entry => {
-      val value = ValueNode(entry.value)
+      val value = RamlValueNode(entry.value)
       endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
     })
 
