@@ -1,14 +1,23 @@
 package amf.plugins.document.vocabularies2.parser.common
 
 import amf.core.annotations.LexicalInformation
-import amf.core.parser.ErrorHandler
+import amf.core.parser.{Annotations, ErrorHandler}
 import amf.core.validation.core.ValidationSpecification
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.metamodel.domain.PropertyMappingModel
+import amf.plugins.document.vocabularies2.model.domain.PropertyMapping
 import amf.plugins.features.validation.ParserSideValidations
-import org.yaml.model.YPart
+import org.yaml.model.{YNode, YPart}
 
 trait SyntaxErrorReporter { this: ErrorHandler =>
+
+  protected val InconsistentPropertyRangeValueSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "inconsistent-property-range-value").iri(),
+    "Range value does not match the expectd type",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
 
   protected val MissingPropertyRangeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "missing-node-mapping-range-term").iri(),
@@ -51,6 +60,15 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
       Some(PropertyMappingModel.ObjectRange.value.iri()),
       s"Cannot find property range term $term",
       lexical)
+  }
+
+  def inconsistentPropertyRangeValueViolation(node: String, property: PropertyMapping, expected: String, found: String, valueNode: YNode) = {
+    violation(
+      InconsistentPropertyRangeValueSpecification.id(),
+      node,
+      Some(property.nodePropertyMapping()),
+      s"Cannot find expected range for property ${property.nodePropertyMapping()} (${property.name()})",
+      Annotations(valueNode).find(classOf[LexicalInformation]))
   }
 
   def closedNodeViolation(id: String, property: String, nodeType: String, ast: YPart) = {

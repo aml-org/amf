@@ -529,7 +529,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           val value = ValueNode(entry.value)
           val range = value.string().toString
           range match {
-            case "string" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
+            case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
             case "uri" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
             case "any" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
             case nodeMappingId => propertyMapping.withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
