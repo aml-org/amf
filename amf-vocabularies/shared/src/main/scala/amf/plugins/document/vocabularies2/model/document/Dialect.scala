@@ -25,6 +25,17 @@ case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit wi
   def withExternals(externals: Seq[External])             = setArray(Externals, externals)
   def documents(): DocumentsModel = fields(Documents)
   def withDocuments(documentsMapping: DocumentsModel) = set(Documents, documentsMapping)
+
+  def header = s"%${name()} ${version()}".replace(" ","")
+  def libraryHeaders = Option(documents().library()) match {
+    case Some(library) => Seq(s"%RAMLLibrary/$header")
+    case None          => Nil
+  }
+  def fragmentHeaders = Option(documents().fragments()) match {
+    case Some(fragments) => fragments.map { fragment => s"%${fragment.documentName()}/$header".replace(" ", "") }
+    case None          => Nil
+  }
+  def allHeaders = Seq(header) ++ libraryHeaders ++ fragmentHeaders
 }
 
 object Dialect {

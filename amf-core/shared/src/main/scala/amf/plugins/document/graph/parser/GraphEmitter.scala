@@ -178,6 +178,9 @@ object GraphEmitter extends MetaModelTypeMapping {
                   case Str =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => scalar(b, e.toString, inArray = true))
 
+                  case Iri =>
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => iri(b, e.toString, inArray = true))
+
                   case Any =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach { scalarElement =>
                       scalarElement.value match {

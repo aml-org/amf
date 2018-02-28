@@ -3,11 +3,11 @@ package amf.plugins.document.vocabularies2.parser.dialects
 import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.metamodel.document.FragmentModel
-import amf.core.utils._
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
+import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
 import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclarations, ParserContext, _}
+import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.domain.PropertyMappingModel
@@ -126,8 +126,10 @@ trait DialectSyntax {this: DialectContext =>
     "sorted"       -> "boolean",
     "minimum"      -> "integer",
     "maximum"      -> "integer",
-    "allowMultiple" -> "boolean",
-    "enum"          -> "any[]"
+    "allowMultiple"         -> "boolean",
+    "enum"                  -> "any[]",
+    "typeDiscriminatorName" -> "string",
+    "typeDiscriminator"     -> "Map[String,String]"
   )
 
   val documentsMapping: Map[String,String] = Map(
@@ -316,18 +318,28 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       case nodeMapping: NodeMapping =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           Option(propertyMapping.objectRange()) match {
-            case Some(nodeMappingRef) => ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-              case Some(mapping) => propertyMapping.withObjectRange(mapping.id)
-              case _             => ctx.missingPropertyRangeViolation(
-                nodeMappingRef,
-                nodeMapping.id,
-                propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-              )
-            }
-            case _                   => // ignore
+            case Some(nodeMappingRefs) =>
+              val mapped = nodeMappingRefs.map { nodeMappingRef =>
+                ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                  case Some(mapping) => Some(mapping.id)
+                  case _ =>
+                    ctx.missingPropertyRangeViolation(
+                      nodeMappingRef,
+                      nodeMapping.id,
+                      propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                    )
+                    None
+                }
+              }
+              val refs = mapped.collect { case Some(ref) => ref }
+              if (refs.nonEmpty)
+                propertyMapping.withObjectRange(refs)
+
+            case _ => // ignore
           }
         }
     }
+
     if (declarables.nonEmpty) dialect.withDeclares(declarables)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
@@ -370,15 +382,36 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       case nodeMapping: NodeMapping =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           Option(propertyMapping.objectRange()) match {
-            case Some(nodeMappingRef) => ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-              case Some(mapping) => propertyMapping.withObjectRange(mapping.id)
-              case _             => ctx.missingPropertyRangeViolation(
-                nodeMappingRef,
-                nodeMapping.id,
-                propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-              )
-            }
+            case Some(nodeMappingRefs) =>
+              val mapped = nodeMappingRefs.map { nodeMappingRef =>
+                ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                  case Some(mapping) => Some(mapping.id)
+                  case _             => ctx.missingPropertyRangeViolation(
+                    nodeMappingRef,
+                    nodeMapping.id,
+                    propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                  )
+                    None
+                }
+              }
+              val refs = mapped.collect { case Some(ref: String) => ref}
+              if (refs.nonEmpty)
+                propertyMapping.withObjectRange(refs)
             case _                   => // ignore
+          }
+          Option(propertyMapping.typeDiscrminator()).foreach { typeMapping =>
+            val updatedTypeMapping = typeMapping.foldLeft(Map[String,String]()) { case (acc, (key, nodeMappingRef)) =>
+              ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                case Some(mapping) => acc + (key -> mapping.id)
+                case _             => ctx.missingPropertyRangeViolation(
+                  nodeMappingRef,
+                  nodeMapping.id,
+                  propertyMapping.fields.entry(PropertyMappingModel.ObjectRange).flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                )
+                acc
+              }
+            }
+            propertyMapping.withTypeDiscriminator(updatedTypeMapping)
           }
         }
     }
@@ -489,13 +522,18 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     })
 
     map.key("range", entry => {
-      val value = ValueNode(entry.value)
-      val range = value.string().toString
-      range match {
-        case "string" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-        case "uri" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
-        case "any" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
-        case nodeMappingId => propertyMapping.withObjectRange(nodeMappingId) // temporary until we can resolve all nodeMappings after finishing parsing declarations
+      entry.value.tagType match {
+        case YType.Seq =>
+          propertyMapping.withObjectRange(entry.value.as[Seq[String]])
+        case _ =>
+          val value = ValueNode(entry.value)
+          val range = value.string().toString
+          range match {
+            case "string" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
+            case "uri" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
+            case "any" =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
+            case nodeMappingId => propertyMapping.withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
+          }
       }
     })
 
@@ -557,6 +595,20 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           }
       }
       propertyMapping.withEnum(values.collect { case Some(v) => v})
+    })
+
+    map.key("typeDiscriminator", entry => {
+      val types = entry.value.as[YMap]
+      val typeMapping = types.entries.foldLeft(Map[String,String]()) { case (acc,entry) =>
+        val nodeMappingId = entry.value.as[String]
+        acc + (entry.key.as[String] -> nodeMappingId )
+      }
+      propertyMapping.withTypeDiscriminator(typeMapping)
+    })
+
+    map.key("typeDiscriminatorName", entry => {
+      val name = ValueNode(entry.value).string().toString
+      propertyMapping.withTypeDiscriminatorName(name)
     })
 
     // TODO: check dependencies among properties

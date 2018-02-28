@@ -18,8 +18,8 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def nodePropertyMapping(): String               = fields(NodePropertyMapping)
   def withLiteralRange(range: String)             = set(LiteralRange, range)
   def literalRange(): String                      = fields(LiteralRange)
-  def withObjectRange(range: String)              = set(ObjectRange, range)
-  def objectRange(): String                       = fields(ObjectRange)
+  def withObjectRange(range: Seq[String])         = set(ObjectRange, range)
+  def objectRange(): Seq[String]                  = fields(ObjectRange)
   def mapKeyProperty(): String                    = fields(MapKeyProperty)
   def withMapKeyProperty(key: String)             = set(MapKeyProperty, key)
   def mapValueProperty(): String                  = fields(MapValueProperty)
@@ -38,6 +38,17 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def withEnum(values: Seq[Any])                  = setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
   def sorted(): Boolean                           = fields(Sorted)
   def withSorted(sorted: Boolean)                 = set(Sorted, sorted)
+  def typeDiscrminator(): Map[String,String]     = Option(fields(TypeDiscriminator)).map { disambiguator: String =>
+    disambiguator.split(",").foldLeft(Map[String,String]()){ case (acc, typeMapping) =>
+      val pair = typeMapping.split("->")
+      acc + (pair(1) -> pair(0))
+    }
+  }.orNull
+  def withTypeDiscriminator(typesMapping: Map[String,String]) = set(TypeDiscriminator, typesMapping.map {  case (a,b) => s"$a->$b" }.mkString(","))
+  def typeDiscriminatorName(): String                         = fields(TypeDiscriminatorName)
+  def withTypeDiscriminatorName(name: String)                 = set(TypeDiscriminatorName, name)
+
+
 }
 
 object PropertyMapping {
