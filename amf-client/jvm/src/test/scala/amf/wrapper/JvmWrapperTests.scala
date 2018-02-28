@@ -126,6 +126,9 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
     val model =
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/production/world-music-api/api.raml").get()
     assert(!model.references().asScala.map(_.location).contains(null))
+
+//    val report   = AMF.validate(model, "RAML", "RAML").get()
+//    assert(report.conforms)
   }
 
   test("banking-api-test") {

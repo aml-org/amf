@@ -13,7 +13,7 @@ object VariableReplacer {
     "singularize|pluralize|uppercase|lowercase|lowercamelcase|uppercamelcase|lowerunderscorecase|upperunderscorecase|lowerhyphencase|upperhyphencase"
   private val TransformationsRegex = Transformations.r
 
-  val VariableRegex: Regex = s"<<\\s*([^<<>>\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
+  val VariableRegex: Regex = s"<<\\s*([^<<>>|\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
 
   def replaceVariables(s: ScalarNode, values: Set[Variable]): DataNode = {
     s.value match {

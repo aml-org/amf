@@ -1,13 +1,15 @@
 package amf.resolution.stages
 
+import amf.core.model.domain.ScalarNode
+import amf.core.model.domain.templates.Variable
 import amf.core.resolution.VariableReplacer
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Inspectors, Matchers}
 import org.scalatest.Matchers._
 
 /**
   *
   */
-class VariableReplacerTest extends FunSuite {
+class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
 
   case class ReplacerExamples(transformation: String, base: String, result: String)
 
@@ -27,6 +29,33 @@ class VariableReplacerTest extends FunSuite {
   examples.foreach { example =>
     test(s"Test transformation : ${example.transformation} of Raml spec example") {
       VariableReplacer.variableTransformation(example.base, example.transformation) should be(example.result)
+    }
+  }
+
+  test("Replace Variables") {
+
+    case class Replacement(expression: String, variable: (String, String), expected: String)
+
+    val replacements = Set(
+      Replacement("<<resourcePathName|!singularize|!uppercamelcase>>",
+                  "resourcePathName" -> "preferredCustomers",
+                  "PreferredCustomer"),
+      Replacement("<<resourcePathName | !singularize | !uppercamelcase>>",
+                  "resourcePathName" -> "preferredCustomers",
+                  "PreferredCustomer"),
+      Replacement("<<resourcePathName|!singularize>>",
+                  "resourcePathName" -> "preferredCustomers",
+                  "preferredCustomer"),
+      Replacement("<<resourcePathName| !singularize>>",
+                  "resourcePathName" -> "preferredCustomers",
+                  "preferredCustomer")
+    )
+
+    forAll(replacements) { replacement =>
+      val node      = ScalarNode(replacement.expression, None)
+      val variables = Set(Variable(replacement.variable._1, ScalarNode(replacement.variable._2, None)))
+      val result    = VariableReplacer.replaceVariables(node, variables)
+      result.asInstanceOf[ScalarNode].value should be(replacement.expected)
     }
   }
 }
