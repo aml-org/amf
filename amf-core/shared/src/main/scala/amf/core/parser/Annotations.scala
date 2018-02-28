@@ -4,13 +4,11 @@ import amf.core.annotations.{LexicalInformation, SourceAST}
 import amf.core.model.domain.{Annotation, SerializableAnnotation}
 import org.yaml.model.YPart
 
-import scala.collection.mutable
-
 /**
   * Element annotations
   */
 class Annotations {
-  private val annotations: mutable.ListBuffer[Annotation] = mutable.ListBuffer()
+  private var annotations: Seq[Annotation] = Seq()
 
   def foreach(fn: (Annotation) => Unit): Unit = annotations.foreach(fn)
 
@@ -19,17 +17,17 @@ class Annotations {
   def contains[T <: Annotation](clazz: Class[T]): Boolean = find(clazz).isDefined
 
   def +=(annotation: Annotation): this.type = {
-    annotations += annotation
+    annotations = annotations :+ annotation
     this
   }
 
   def ++=(other: Annotations): this.type = {
-    annotations ++= other.annotations
+    annotations = annotations ++ other.annotations
     this
   }
 
   def reject(p: (Annotation) => Boolean): this.type = {
-    annotations --= annotations.filter(p)
+    annotations = annotations.filter(a => !p(a))
     this
   }
 
