@@ -1,0 +1,187 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#",
+    "@type": [
+      "http://raml.org/vocabularies/meta#DialectInstance",
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#"
+      }
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/",
+        "@type": [
+          "http://test.com/tmp#Test",
+          "http://raml.org/vocabularies/meta#DialectDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/RootNode/property/str": [
+          {
+            "@value": "go"
+          }
+        ],
+        "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/RootNode/property/a": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a",
+            "@type": [
+              "http://test.com/tmp#A",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/A/property/a1": [
+              {
+                "@value": "hey"
+              }
+            ],
+            "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/A/property/a2": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a/a2",
+                "@type": [
+                  "http://test.com/tmp#B",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/B/property/b1": [
+                  {
+                    "@value": "ho"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a/a2/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a/a2"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(5,0)-(6,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,0)-(6,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/RootNode/property/b": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/b",
+            "@type": [
+              "http://test.com/tmp#B",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/B/property/b1": [
+              {
+                "@value": "let's"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/b/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/b"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,0)-(8,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(8,7)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#lexical": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(8,7)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

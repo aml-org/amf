@@ -51,7 +51,12 @@ object GraphEmitter extends MetaModelTypeMapping {
 
       createCustomExtensions(element, b)
 
-      createSourcesNode(id + "/source-map", sources, b)
+      val sourceMapId = if (id.endsWith("/")) {
+        id + "source-map"
+      } else {
+        id + "/source-map"
+      }
+      createSourcesNode(sourceMapId, sources, b)
     }
 
     def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder): Unit = {

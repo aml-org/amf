@@ -17,6 +17,18 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect1.raml", "example1.raml", "example1.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 2 test") {
+    withDialect("dialect2.raml", "example2.raml", "example2.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 3 test") {
+    withDialect("dialect3.raml", "example3.raml", "example3.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 4 test") {
+    withDialect("dialect4.raml", "example4.raml", "example4.json", VocabularyYamlHint, Amf)
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,
