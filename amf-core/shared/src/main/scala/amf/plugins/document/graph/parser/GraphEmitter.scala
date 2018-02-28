@@ -232,6 +232,9 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Type.Int =>
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
+        case Type.Float =>
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
+          sources(v)
         case a: SortedArray =>
           createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v))
         case a: Array =>
@@ -259,6 +262,10 @@ object GraphEmitter extends MetaModelTypeMapping {
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
                   .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Int, inArray = true))
+              case Type.Float =>
+                seq.values
+                  .asInstanceOf[Seq[AmfScalar]]
+                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Float, inArray = true))
               case Bool =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]

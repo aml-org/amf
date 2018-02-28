@@ -111,7 +111,7 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Seq[Any]) = {
+  def setLiteralField(property: PropertyMapping, value: Seq[_]) = {
     literalProperties.put(property.id, value)
     this
   }
