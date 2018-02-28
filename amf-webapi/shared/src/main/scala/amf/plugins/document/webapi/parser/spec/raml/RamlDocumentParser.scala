@@ -116,7 +116,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     )
 
     map.key("description", entry => {
-      val value = ValueNode(entry.value)
+      val value = RamlValueNode(entry.value)
       api.set(WebApiModel.Description, value.string(), Annotations(entry))
     })
 
@@ -145,7 +145,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     )
 
     map.key("version", entry => {
-      val value = ValueNode(entry.value)
+      val value = RamlValueNode(entry.value)
       api.set(WebApiModel.Version, value.text(), Annotations(entry))
     })
 
@@ -198,7 +198,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key(
       "baseUri",
       entry => {
-        val value = entry.value.as[String]
+        val value = RamlValueNode(entry.value).string().toString
         val uri   = BaseUriSplitter(value)
 
         if (!TemplateUri.isValid(value))

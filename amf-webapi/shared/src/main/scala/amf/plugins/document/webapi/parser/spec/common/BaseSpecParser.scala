@@ -14,9 +14,7 @@ trait BaseSpecParser {
 }
 
 /** Scalar valued raml node (based on obj node). */
-private case class RamlScalarValuedNode(obj: YMap)(implicit iv: WebApiContext) extends ValueNode {
-
-  private val scalar = ScalarNode(obj.key("value").get.value)
+private case class RamlScalarValuedNode(obj: YMap, scalar: ValueNode)(implicit iv: WebApiContext) extends ValueNode {
 
   override def string(): AmfScalar = scalar.string()
 
@@ -61,7 +59,7 @@ object RamlValueNode {
       }
     }
 
-    null
+    RamlScalarValuedNode(obj, ValueNode(values.headOption.map(_.value).getOrElse(YNode.Null)))
   }
 
   private def unexpected(key: YNode)(implicit iv: WebApiContext): Unit =

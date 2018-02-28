@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, RamlValueNode}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -301,7 +301,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
           ctx.closedShape(endpoint.id, map, "pathItem")
 
           map.key("x-displayName", entry => {
-            val value = ValueNode(entry.value)
+            val value = RamlValueNode(entry.value)
             endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
           })
 
