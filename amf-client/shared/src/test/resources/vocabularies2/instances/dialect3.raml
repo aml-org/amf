@@ -1,0 +1,25 @@
+#%RAML 1.0 Dialect
+dialect: Test
+version: 1.0
+nodeMappings:
+  RootNode:
+    classTerm: tmp.Test
+    mapping:
+      str:
+        propertyTerm: tmp.str
+        range: string
+        allowMultiple: true
+      int:
+        propertyTerm: tmp.int
+        range: integer
+      float:
+        propertyTerm: tmp.float
+        range: float
+      boolean:
+        propertyTerm: tmp.boolean
+        range: boolean
+documents:
+  root:
+    encodes: RootNode
+external:
+  tmp: http://test.com/tmp#

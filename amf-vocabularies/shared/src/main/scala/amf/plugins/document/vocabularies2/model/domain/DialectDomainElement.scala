@@ -20,7 +20,7 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
   // Types of the instance
   protected var instanceTypes: Seq[String] = Nil
   def withInstanceTypes(types: Seq[String]) = instanceTypes = types
-  override def dynamicType: List[ValueType] = (instanceTypes.distinct.map(ValueType(_)) ++ DialectDomainElementModel.`type`).toList
+  override def dynamicType: List[ValueType] = (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel.`type`).toList
 
   // Dialect mapping defining the instance
   protected var instanceDefinedBy: Option[NodeMapping] = None
@@ -31,10 +31,25 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
   def definedBy: NodeMapping = instanceDefinedBy.orNull
 
 
+  def iriToValue(iri: String): ValueType = {
+    if (iri.contains("#")) {
+      val pair = iri.split("#")
+      val name = pair.last
+      val ns = pair.head + "#"
+      new ValueType(Namespace(ns), name)
+    } else if (iri.replace("://","_").contains("/")) {
+      val name = iri.split("/").last
+      val ns = iri.replace(name, "")
+      new ValueType(Namespace(ns), name)
+    } else {
+      new ValueType(Namespace(iri), "")
+    }
+  }
+
   override def dynamicFields: List[Field] = {
     (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
       val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
-      val propertyIdValue = ValueType(property.id)
+      val propertyIdValue = iriToValue(property.id)
       Option(property.objectRange()).map { objProp =>
         if (property.allowMultiple()) {
           Field(Type.Array(DialectDomainElementModel), propertyIdValue)

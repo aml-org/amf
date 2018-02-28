@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies2.parser.instances
 
 import amf.core.Root
+import amf.core.utils._
 import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParserContext}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance}
@@ -17,7 +18,7 @@ protected object LiteralPropertyCollection extends PropertyType
 
 class DialectInstanceDeclarations(errorHandler: Option[ErrorHandler],
                                   futureDeclarations: FutureDeclarations)
-  extends Declarations(Map(), Map(), Map(), errorHandler, futureDeclarations){
+  extends Declarations(Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): DialectInstanceDeclarations = {
@@ -82,12 +83,55 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
 
   def parseProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     propertyMappingType(property) match {
-      case LiteralProperty => parseLiteralProperty(id, propertyEntry, property, node)
+      case LiteralProperty           => parseLiteralProperty(id, propertyEntry, property, node)
       case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
-      // TODO: HERE!
-      // case ObjectProperty => parseObjectProperty(id, propertyEntry, property, node)
-      // case ObjectPropertyCollection => pasrseObjectCollectionProperty(id, propertyEntry, property, node)
+      case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
+      case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
       case _ => // TODO: throw exception
+    }
+  }
+
+  def parseObjectProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    property.objectRange() match {
+      case range: Seq[String] if range.size > 1  => // TODO: parse unions
+      case range: Seq[String] if range.size == 1 =>
+        dialect.declares.find(_.id == range.head) match {
+          case Some(nodeMapping: NodeMapping) =>
+            val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded)
+            parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
+              case Some(dialectDomainElement) => node.setObjectField(property, dialectDomainElement)
+              case None                       => // ignore
+            }
+        }
+      case _ => // TODO: throw exception, illegal range
+    }
+  }
+
+  def parseObjectCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    val res = propertyEntry.value.as[YSequence].nodes.zipWithIndex.map { case (node, nextElem) =>
+      property.objectRange() match {
+        case range: Seq[String] if range.size > 1  => // TODO: parse unions
+        case range: Seq[String] if range.size == 1 =>
+          dialect.declares.find(_.id == range.head) match {
+            case Some(nodeMapping: NodeMapping) =>
+              val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/$nextElem"
+              parseNestedNode(nestedObjectId, node, nodeMapping) match {
+                case Some(dialectDomainElement) => Some(dialectDomainElement)
+                case None                       => None
+              }
+          }
+        case _ => None
+      }
+    }
+    val elems: Seq[DialectDomainElement] = res.collect { case Some(x: DialectDomainElement) => x}
+    node.setObjectField(property, elems)
+  }
+
+  def pathSegment(parent: String, next: String): String = {
+    if (parent.endsWith("/")) {
+      parent + next.urlEncoded
+    } else {
+      parent + "/" + next.urlEncoded
     }
   }
 
@@ -144,12 +188,12 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
   def parseLiteralCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     propertyEntry.value.tagType match {
       case YType.Seq =>
-        val values = propertyEntry.value.as[YSequence].nodes.map { elemValue => parseLiteralValue(elemValue, property, node) }
+        val values = propertyEntry.value.as[YSequence].nodes.map { elemValue => parseLiteralValue(elemValue, property, node) }.collect { case Some(v) => v }
         node.setLiteralField(property, values)
       case _ =>
         parseLiteralValue(propertyEntry.value, property, node) match {
           case Some(v) => node.setLiteralField(property, Seq(v))
-          case _                => // ignore
+          case _       => // ignore
         }
     }
   }
@@ -167,6 +211,17 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
       ObjectProperty
     else
       ObjectPropertyCollection
+  }
+
+  protected def parseNestedNode(id: String, entry: YNode, mapping: NodeMapping): Option[DialectDomainElement] = {
+    entry.tagType match {
+      case YType.Map     => parseNode(id, entry.as[YMap], mapping)
+      case YType.Include => throw new Exception("Node includes not supported yet")   // TODO not supported yet
+      case YType.Str     => throw new Exception("Node references not supported yet") // TODO not supported yet
+      case _             => {
+        throw new Exception("Error in reference")
+      }                // TODO violation here instead of exception
+    }
   }
 
   protected def parseNode(id: String, map: YMap, mapping: NodeMapping): Option[DialectDomainElement] = {
