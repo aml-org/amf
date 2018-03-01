@@ -14,6 +14,7 @@ protected class PropertyType
 protected object LiteralProperty extends PropertyType
 protected object ObjectProperty extends PropertyType
 protected object ObjectPropertyCollection extends PropertyType
+protected object ObjectMapProperty extends PropertyType
 protected object LiteralPropertyCollection extends PropertyType
 
 class DialectInstanceDeclarations(errorHandler: Option[ErrorHandler],
@@ -87,7 +88,15 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
       case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
       case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
+      case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry,property, node)
       case _ => // TODO: throw exception
+    }
+  }
+
+  def checkHashProperties(node: DialectDomainElement, propertyMapping: PropertyMapping, propertyEntry: YMapEntry): DialectDomainElement = {
+    Option(propertyMapping.mapKeyProperty()) match {
+        case Some(propId) => node.setMapKeyField(propId, propertyEntry.key.as[String])
+        case None         => node
     }
   }
 
@@ -105,6 +114,25 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
         }
       case _ => // TODO: throw exception, illegal range
     }
+  }
+
+  def parseObjectMapProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    val nested = propertyEntry.value.as[YMap].entries.zipWithIndex.map { case (keyEntry, elemId) =>
+        property.objectRange() match {
+          case range: Seq[String] if range.size > 1  => // TODO: parse unions
+          case range: Seq[String] if range.size == 1 =>
+            dialect.declares.find(_.id == range.head) match {
+              case Some(nodeMapping: NodeMapping) =>
+                val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/$elemId"
+                parseNestedNode(nestedObjectId, keyEntry.value, nodeMapping) match {
+                  case Some(dialectDomainElement) => Some(checkHashProperties(dialectDomainElement, property, keyEntry))
+                  case None                       => None
+                }
+            }
+          case _ => None
+        }
+    }
+    node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node })
   }
 
   def parseObjectCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
@@ -171,9 +199,7 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
 
   def setLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement) = {
     parseLiteralValue(value, property, node) match {
-      case Some(b: Boolean) => {
-        node.setLiteralField(property, b)
-      }
+      case Some(b: Boolean) => node.setLiteralField(property, b)
       case Some(i: Int)     => node.setLiteralField(property, i)
       case Some(f: Float)   => node.setLiteralField(property, f)
       case Some(s: String)  => node.setLiteralField(property, s)
@@ -202,11 +228,14 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
     val isLiteral = Option(mapping.literalRange()).isDefined
     val isObject = Option(mapping.objectRange()).isDefined && mapping.objectRange().nonEmpty
     val multiple = Option(mapping.allowMultiple()).getOrElse(false)
+    val isMap = Option(mapping.mapKeyProperty()).isDefined
 
     if (isLiteral && !multiple)
       LiteralProperty
     else if (isLiteral)
       LiteralPropertyCollection
+    else if (isObject && isMap)
+      ObjectMapProperty
     else if (isObject && !multiple)
       ObjectProperty
     else
@@ -218,9 +247,7 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
       case YType.Map     => parseNode(id, entry.as[YMap], mapping)
       case YType.Include => throw new Exception("Node includes not supported yet")   // TODO not supported yet
       case YType.Str     => throw new Exception("Node references not supported yet") // TODO not supported yet
-      case _             => {
-        throw new Exception("Error in reference")
-      }                // TODO violation here instead of exception
+      case _             => throw new Exception("Error in reference")                // TODO violation here instead of exception
     }
   }
 

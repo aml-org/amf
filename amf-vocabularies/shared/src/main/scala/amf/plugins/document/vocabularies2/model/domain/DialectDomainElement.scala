@@ -13,6 +13,7 @@ import scala.collection.mutable
 case class DialectDomainElement(override val fields: Fields, val annotations: Annotations) extends DynamicDomainElement {
 
   val literalProperties: mutable.Map[String, Any] = mutable.HashMap()
+  val mapKeyProperties: mutable.Map[String, Any] = mutable.HashMap()
   val objectProperties: mutable.Map[String, DialectDomainElement] = mutable.HashMap()
   val objectCollectionProperties: mutable.Map[String, Seq[DialectDomainElement]] = mutable.HashMap()
   val propertyAnnotations: mutable.Map[String, Annotations] = mutable.HashMap()
@@ -47,11 +48,15 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
   }
 
   override def dynamicFields: List[Field] = {
-    (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
+    val mapKeyFields = mapKeyProperties.keys map { propertyId =>
+        Field(Type.Str, iriToValue(propertyId))
+    }
+
+     (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
       val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
-      val propertyIdValue = iriToValue(property.id)
+      val propertyIdValue = iriToValue(property.nodePropertyMapping())
       Option(property.objectRange()).map { objProp =>
-        if (property.allowMultiple()) {
+        if (property.allowMultiple() || Option(property.mapKeyProperty()).isDefined) {
           Field(Type.Array(DialectDomainElementModel), propertyIdValue)
         } else {
           Field(DialectDomainElementModel, propertyIdValue)
@@ -75,14 +80,21 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
           Field(fieldType, propertyIdValue)
         }
       }
-    }.toList
+    }.toList ++ mapKeyFields
   }
 
+  def findPropertyByTermPropertyId(termPropertyId: String) =
+    definedBy.propertiesMapping().find(_.nodePropertyMapping() == termPropertyId).map(_.id).getOrElse(termPropertyId)
+
+
   override def valueForField(f: Field): Option[AmfElement] = {
-    val propertyId = f.value.iri()
+    val termPropertyId = f.value.iri()
+    val propertyId = findPropertyByTermPropertyId(termPropertyId)
     val annotations = propertyAnnotations.getOrElse(propertyId, Annotations())
 
-    objectProperties.get(propertyId) map { dialectDomainElement =>
+    mapKeyProperties.get(propertyId) map { stringValue =>
+      AmfScalar(stringValue)
+    } orElse objectProperties.get(propertyId) map { dialectDomainElement =>
       dialectDomainElement
     } orElse  {
       objectCollectionProperties.get(propertyId) map { seqElements =>
@@ -133,6 +145,11 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
 
   def setLiteralField(property: PropertyMapping, value: String) = {
     literalProperties.put(property.id, value)
+    this
+  }
+
+  def setMapKeyField(propertyId: String, value: String) = {
+    mapKeyProperties.put(propertyId, value)
     this
   }
 
