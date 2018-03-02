@@ -18,12 +18,12 @@ object ValidationDialectText {
       |    classTerm: shacl.JSConstraint
       |    mapping:
       |      message:
-      |        propertyTerm: shacl.message
-      |        range: string
+      |         propertyTerm: shacl.message
+      |         range: string
       |      code:
-      |        propertyTerm: validation.jsCode
       |        range: string
-      |        #pattern: "^function\(.+\)\s*\{.+\}$"
+      |        propertyTerm: validation.jsCode
+      |        #pattern: '^function\(.+\)\s*\{.+\}$'
       |      libraries:
       |        propertyTerm: shacl.jsLibrary
       |        range: string

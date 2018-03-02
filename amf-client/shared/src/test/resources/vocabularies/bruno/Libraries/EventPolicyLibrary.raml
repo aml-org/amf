@@ -32,29 +32,30 @@ nodeMappings:
          propertyTerm: policies.eventVolume
          range:  integer
 
-
-   EventConstraintPolicyNode:
-     classTerm: policies.EventConstraintPolicy
-     mapping:
-       eventList:
-         propertyTerm: events.baseEvent
-         allowMultiple: true
-
-
-   EventVolumePolicyNode:
-    classTerm: policies.EventVolumeConstraintPolicy
-    mapping:
-      metric:
-        propertyTerm: policies.eventVolumeMetric
-        range:  string
-        enum:
-          -minute
-          -second
-          -hour
-      volumeConstraintList:
-        propertyTerm: policies.volumeConstraintPolicy
-        range: VolumeConstraintNode
-        allowMultiple: true
+# Before syaml changes, this was not being parsed (YNonContent Node).
+# Now throws error because of the identention. If i fix the indententions there's some errors in the dialect logic.
+#  EventConstraintPolicyNode:
+#     classTerm: policies.EventConstraintPolicy
+#     mapping:
+#       eventList:
+#         propertyTerm: events.baseEvent
+#         allowMultiple: true
+#
+#
+#  EventVolumePolicyNode:
+#    classTerm: policies.EventVolumeConstraintPolicy
+#    mapping:
+#      metric:
+#        propertyTerm: policies.eventVolumeMetric
+#        range:  string
+#        enum:
+#          -minute
+#          -second
+#          -hour
+#      volumeConstraintList:
+#        propertyTerm: policies.volumeConstraintPolicy
+#        range: VolumeConstraintNode
+#        allowMultiple: true
 
 
   #EventACLPolicyNode:

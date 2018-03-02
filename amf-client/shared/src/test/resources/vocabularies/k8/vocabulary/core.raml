@@ -92,7 +92,8 @@ propertyTerms:
 
   restartPolicy:
     displayName: restart policy
-    description: Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+    description: |
+      Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
     range: string
 
   schedulerName:
@@ -102,7 +103,8 @@ propertyTerms:
 
   volumes:
     displayName: volumes
-    description: List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
+    description: |
+      List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
     range: Volume
 
   affinity:
@@ -127,12 +129,14 @@ propertyTerms:
 
   command:
     displayName: command
-    description: Entrypoint array. Not executed within a shell. The docker image ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+    description: |
+      Entrypoint array. Not executed within a shell. The docker image ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
     range: string
 
   argument:
     displayName: argument
-    description: Arguments to the entrypoint. The docker image CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+    description: |
+      Arguments to the entrypoint. The docker image CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
     range: string
 
   environment:
@@ -147,12 +151,14 @@ propertyTerms:
 
   image:
     displayName: image
-    description: Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets
+    description: |
+      Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets
     range: string
 
   imagePullPolicy:
     displayName: image pull policy
-    description: Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
+    description: |
+      Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
     range: string
 
   lifecycle:
@@ -172,12 +178,14 @@ propertyTerms:
 
   readOnly:
     displayName: read only
-    description: Specify \"true\" to force and set the ReadOnly property in VolumeMounts to \"true\". If omitted, the default is \"false\". More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+    description: |
+      Specify \"true\" to force and set the ReadOnly property in VolumeMounts to \"true\". If omitted, the default is \"false\". More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
     range: boolean
 
   volumeID:
     displayName: volume ID
-    description: Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
+    description: |
+      Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
     extends: schema-org.identifier
     range: string
 

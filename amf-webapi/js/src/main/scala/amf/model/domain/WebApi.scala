@@ -1,6 +1,5 @@
 package amf.model.domain
 
-import amf.core.annotations.SourceVendor
 import amf.core.remote.Vendor
 import amf.plugins.domain.webapi.models
 
