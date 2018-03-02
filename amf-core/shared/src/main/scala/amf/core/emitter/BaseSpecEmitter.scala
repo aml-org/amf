@@ -1,6 +1,6 @@
 package amf.core.emitter
 
-import amf.core.annotations.{LexicalInformation, SingleValueArray}
+import amf.core.annotations.{DomainExtensionAnnotation, LexicalInformation, SingleValueArray}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
@@ -77,11 +77,33 @@ package object BaseEmitters {
     }
 
     override def emit(b: EntryBuilder): Unit = {
-      sourceOr(f.value,
-               b.entry(
-                 key,
-                 YNode(YScalar(f.scalar.value), tag)
-               ))
+      sourceOr(
+        f.value, {
+          val extensions = f.element.annotations.collect(classOf[DomainExtensionAnnotation])
+          if (extensions.isEmpty) {
+            simpleScalar(b)
+          } else {
+            annotatedScalar(b, extensions)
+          }
+        }
+      )
+    }
+
+    private def simpleScalar(b: EntryBuilder): Unit = {
+      b.entry(
+        key,
+        YNode(YScalar(f.scalar.value), tag)
+      )
+    }
+
+    private def annotatedScalar(b: EntryBuilder, extensions: Seq[DomainExtensionAnnotation]): Unit = {
+      b.entry(
+        key,
+        _.obj { b =>
+          b.value = YNode(YScalar(f.scalar.value), tag)
+        // dump extensions...
+        }
+      )
     }
 
     override def position(): Position = pos(f.value.annotations)

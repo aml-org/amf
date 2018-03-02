@@ -25,13 +25,9 @@ class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
         invalid.message should be("Unexpected key 'invalid'. Options are 'value' or annotations \\(.+\\)")
         invalid.position.map(_.range) should be(Some(Range((3, 4), (3, 11))))
       },
-      title => {
-        title.level should be("Violation")
-        title.message should be("Expecting !!str and !!null provided")
-      },
       description => {
         description.level should be("Violation")
-        description.message should be("Expecting !!str and !!seq provided")
+        description.message should be("Expected scalar but found: [invalid]")
         description.position.map(_.range) should be(Some(Range((4, 13), (4, 24))))
       },
       protocols => {
@@ -39,7 +35,7 @@ class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
         protocols.message should be("WebAPI 'protocols' property must be a scalar or sequence value")
         protocols.position.map(_.range) should be(Some(Range((5, 10), (7, 0))))
       },
-      securedBy => {
+      securedBy => { // todo should not be an error after APIMF-483!
         securedBy.level should be("Violation")
         securedBy.message should be("Not a YSequence")
         securedBy.position.map(_.range) should be(Some(Range((7, 11), (7, 16))))

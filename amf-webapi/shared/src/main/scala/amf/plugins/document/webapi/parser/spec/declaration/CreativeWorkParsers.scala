@@ -41,8 +41,7 @@ case class OasCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) {
   }
 }
 
-case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(implicit val ctx: WebApiContext)
-    extends SpecParserOps {
+case class RamlCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) extends SpecParserOps {
   def parse(): CreativeWork = {
 
     val documentation = CreativeWork(Annotations(map))
@@ -53,6 +52,7 @@ case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(implicit va
     val url = ctx.vendor match {
       case Oas             => "url"
       case Raml08 | Raml10 => "(url)"
+      case other           => throw new Exception(s"Unexpected vendor '$other'")
     }
 
     map.key(url, CreativeWorkModel.Url in documentation)

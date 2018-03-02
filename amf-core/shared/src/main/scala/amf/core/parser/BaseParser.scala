@@ -42,9 +42,6 @@ trait ValueNode {
 
   /** Returns negated boolean amf scalar of boolean node. */
   def negated(): AmfScalar
-
-  /** Collect custom domain properties of scalar (if any) to parent element. */
-  def collectCustomDomainProperties(parent: DomainElement): Unit = {}
 }
 
 object ValueNode {
