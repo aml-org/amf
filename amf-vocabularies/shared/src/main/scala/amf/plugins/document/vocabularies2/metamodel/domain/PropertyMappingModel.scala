@@ -7,6 +7,7 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies2.model.domain.PropertyMapping
 
+
 object PropertyMappingModel extends DomainElementModel {
 
   val Name                 = Field(Str, Namespace.Schema + "name")
@@ -32,4 +33,5 @@ object PropertyMappingModel extends DomainElementModel {
   override def modelInstance: AmfObject = PropertyMapping()
 
   override val `type`: List[ValueType] = Namespace.Meta + "NodePropertyMapping" :: Namespace.Shacl + "PropertyShape" :: DomainElementModel.`type`
+
 }

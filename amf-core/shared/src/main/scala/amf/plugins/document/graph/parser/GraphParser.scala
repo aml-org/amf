@@ -66,7 +66,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       elements.flatMap({ (n) =>
         listElement match {
           case _: Obj => parse(n.as[YMap])
-          case _      => value(listElement, n).toOption[YScalar].map(s => str(s))
+          case _      => try { Some(str(value(listElement, n))) } catch { case e: Exception => None }
         }
       })
     }
@@ -245,16 +245,17 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case _: Obj =>
           parse(node.as[YMap]).foreach(n => instance.set(f, n, annotations(nodes, sources, key)))
           instance
-        case Str | Iri => instance.set(f, str(node.as[YScalar]), annotations(nodes, sources, key))
-        case Bool      => instance.set(f, bool(node.as[YScalar]), annotations(nodes, sources, key))
-        case Type.Int  => instance.set(f, int(node.as[YScalar]), annotations(nodes, sources, key))
+        case Str | RegExp | Iri => instance.set(f, str(node), annotations(nodes, sources, key))
+        case Bool               => instance.set(f, bool(node), annotations(nodes, sources, key))
+        case Type.Int           => instance.set(f, int(node), annotations(nodes, sources, key))
+        case Type.Float         => instance.set(f, float(node), annotations(nodes, sources, key))
         case l: SortedArray =>
           instance.setArray(f, parseList(instance.id, l.element, node.as[YMap]), annotations(nodes, sources, key))
         case a: Array =>
           val items = node.as[Seq[YNode]]
           val values: Seq[AmfElement] = a.element match {
             case _: Obj    => items.flatMap(n => parse(n.as[YMap]))
-            case Str | Iri => items.map(n => str(value(a.element, n).as[YScalar]))
+            case Str | Iri => items.map(n => str(value(a.element, n)))
           }
           a.element match {
             case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
@@ -269,11 +270,55 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       .key(field.value.iri())
       .map(entry => value(field.`type`, entry.value).as[YScalar].text)
 
-  private def str(node: YScalar) = AmfScalar(node.text)
+  private def str(node: YNode) = {
+    val value = node.tagType match {
+      case YType.Map =>
+        node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => entry.value.as[YScalar].text
+          case _           => node.as[YScalar].text
+        }
+      case _ =>  node.as[YScalar].text
+    }
+    AmfScalar(value)
+  }
 
-  private def bool(node: YScalar) = AmfScalar(node.text.toBoolean)
+  private def bool(node: YNode) = {
+    val value = node.tagType match {
+      case YType.Map =>
+        node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => entry.value.as[YScalar].text.toBoolean
+          case _           => node.as[YScalar].text.toBoolean
+        }
+      case _ =>  node.as[YScalar].text.toBoolean
+    }
+    AmfScalar(value)
+  }
 
-  private def int(node: YScalar) = AmfScalar(node.text.toInt)
+  private def int(node: YNode) = {
+    val value = node.tagType match {
+      case YType.Map =>
+        node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => entry.value.as[YScalar].text.toInt
+          case _           => node.as[YScalar].text.toInt
+        }
+      case _ =>  node.as[YScalar].text.toInt
+    }
+    AmfScalar(value)
+  }
+
+  private def float(node: YNode) = {
+    val value = node.tagType match {
+      case YType.Map =>
+        node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => {
+            entry.value.as[YScalar].text.toFloat
+          }
+          case _           => node.as[YScalar].text.toFloat
+        }
+      case _ =>  node.as[YScalar].text.toFloat
+    }
+    AmfScalar(value)
+  }
 
   private val types: Map[String, Obj] = Map.empty ++ AMFDomainRegistry.metadataRegistry
 

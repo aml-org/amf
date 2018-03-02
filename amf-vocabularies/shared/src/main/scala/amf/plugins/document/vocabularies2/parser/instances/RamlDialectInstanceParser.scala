@@ -10,13 +10,6 @@ import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
 import org.yaml.convert.YRead
 import org.yaml.model._
 
-protected class PropertyType
-protected object LiteralProperty extends PropertyType
-protected object ObjectProperty extends PropertyType
-protected object ObjectPropertyCollection extends PropertyType
-protected object ObjectMapProperty extends PropertyType
-protected object LiteralPropertyCollection extends PropertyType
-
 class DialectInstanceDeclarations(errorHandler: Option[ErrorHandler],
                                   futureDeclarations: FutureDeclarations)
   extends Declarations(Map(), Map(), Map(), errorHandler, futureDeclarations) {
@@ -83,7 +76,7 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
   }
 
   def parseProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
-    propertyMappingType(property) match {
+    property.classification() match {
       case LiteralProperty           => parseLiteralProperty(id, propertyEntry, property, node)
       case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
       case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
@@ -224,23 +217,7 @@ class RamlDialectInstanceParser(root: Root, dialect: Dialect)(implicit override 
     }
   }
 
-  def propertyMappingType(mapping: PropertyMapping): PropertyType = {
-    val isLiteral = Option(mapping.literalRange()).isDefined
-    val isObject = Option(mapping.objectRange()).isDefined && mapping.objectRange().nonEmpty
-    val multiple = Option(mapping.allowMultiple()).getOrElse(false)
-    val isMap = Option(mapping.mapKeyProperty()).isDefined
 
-    if (isLiteral && !multiple)
-      LiteralProperty
-    else if (isLiteral)
-      LiteralPropertyCollection
-    else if (isObject && isMap)
-      ObjectMapProperty
-    else if (isObject && !multiple)
-      ObjectProperty
-    else
-      ObjectPropertyCollection
-  }
 
   protected def parseNestedNode(id: String, entry: YNode, mapping: NodeMapping): Option[DialectDomainElement] = {
     entry.tagType match {
