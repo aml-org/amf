@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: scalar types
+
+
+resourceTypes:
+  collection:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      description: Create a new <<resourcePathName | !singularize>>
+      <<some>>: some
+      responses:
+         200:
+           body:
+             properties:
+               p1: string
+               p2: <<propParam>>
+
+/test:
+  get:
+    responses:
+      200:
+        headers:
+          date:
+            type: integer
+            example: 2
+            required: true

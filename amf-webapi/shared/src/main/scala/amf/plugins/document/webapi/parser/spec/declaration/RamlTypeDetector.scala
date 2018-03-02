@@ -49,6 +49,10 @@ case class RamlTypeDetector(parent: String,
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {
+        case t: String if t.startsWith("<<") && t.endsWith(">>") =>
+          ctx.violation("Trait/Resource Type parameter in type", Some(node))
+          None
+
         case RamlTypeDefMatcher.TypeExpression(text) =>
           RamlTypeExpressionParser(shape => shape, Some(node.as[YScalar]), checking = true)
             .parse(text)
@@ -57,6 +61,7 @@ case class RamlTypeDetector(parent: String,
               case (TypeDef.UnionType | TypeDef.ArrayType) if !recursive => TypeExpressionType
               case other                                                 => other
             } // exception case when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
+
         case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
