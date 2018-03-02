@@ -1,7 +1,6 @@
 package amf.model.domain
 
 import amf.core.model.domain.extensions
-
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll

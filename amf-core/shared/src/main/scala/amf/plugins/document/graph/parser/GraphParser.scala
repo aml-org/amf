@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableEle
 import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.core.model.document._
 import amf.core.model.domain._
-import amf.core.model.domain.extensions.{BaseDomainExtension, CustomDomainProperty, DomainExtension}
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
 import amf.core.registries.AMFDomainRegistry
 import amf.core.remote.Platform
@@ -191,7 +191,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case _ => Seq()
       }
 
-      val domainExtensions: Seq[BaseDomainExtension] = customProperties
+      val domainExtensions: Seq[DomainExtension] = customProperties
         .flatMap { propertyUri =>
           map
             .key(propertyUri)
