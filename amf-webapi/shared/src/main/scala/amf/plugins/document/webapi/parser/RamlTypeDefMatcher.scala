@@ -56,7 +56,7 @@ object RamlTypeDefMatcher {
 
   object XMLSchema {
     def unapply(str: String): Option[String] =
-      if (str.startsWith("<")) Some(str)
+      if (str.startsWith("<") && !(str.startsWith("<<") && str.endsWith(">>"))) Some(str)
       else None
   }
 
