@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField}
 import amf.core.metamodel.{Field, Type}
-import amf.core.model.domain.extensions.BaseDomainExtension
+import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{AmfElement, AmfScalar, Annotation, DomainElement}
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -21,7 +21,7 @@ trait SpecParserOps {
 
     private val annotations: Annotations = Annotations()
 
-    private var factory: YNode => (ValueNode, Seq[BaseDomainExtension]) = node => (ValueNode(node), Nil)
+    private var factory: YNode => (ValueNode, Seq[DomainExtension]) = node => (ValueNode(node), Nil)
 
     /** Expects int, bool or defaults to *text* scalar. */
     private var toElement: YNode => AmfElement = { (node: YNode) =>
@@ -38,7 +38,7 @@ trait SpecParserOps {
       }
     }
 
-    private def toAnnotations(extensions: Seq[BaseDomainExtension]) =
+    private def toAnnotations(extensions: Seq[DomainExtension]) =
       Annotations(extensions.map(DomainExtensionAnnotation))
 
     def allowingAnnotations: ObjectField = {
@@ -112,7 +112,7 @@ object RamlValueNode {
     }
   }
 
-  def collectDomainExtensions(parent: String, n: ValueNode)(implicit ctx: WebApiContext): Seq[BaseDomainExtension] = {
+  def collectDomainExtensions(parent: String, n: ValueNode)(implicit ctx: WebApiContext): Seq[DomainExtension] = {
     n match {
       case n: RamlScalarValuedNode =>
         AnnotationParser.parseExtensions(s"$parent/oooooo", n.obj)

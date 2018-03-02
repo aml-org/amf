@@ -22,10 +22,11 @@ trait DomainExtensionModel extends DomainElementModel with KeyField {
   val Name      = Field(Str, Document + "name")
   val DefinedBy = Field(CustomDomainPropertyModel, Document + "definedBy")
   val Extension = Field(DataNodeModel, Document + "extension")
+  val Element   = Field(Str, Document + "element")
 
   override val key: Field = Name
 
-  override def fields: List[Field] = List(Name, DefinedBy, Extension) ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, DefinedBy, Extension, Element) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Http + "DomainExtension" :: DomainElementModel.`type`
 }

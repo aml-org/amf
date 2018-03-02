@@ -6,7 +6,7 @@ import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.model.domain.extensions.{BaseDomainExtension, CustomDomainProperty, ShapeExtension}
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.FieldEntry
 import amf.core.remote._
@@ -51,7 +51,7 @@ trait SpecEmitterFactory {
 
   def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter
 
-  def annotationEmitter: (BaseDomainExtension, SpecOrdering) => AnnotationEmitter
+  def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter
 
   def parametrizedSecurityEmitter: (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter
 
@@ -71,7 +71,7 @@ trait BaseSpecEmitter {
 }
 
 /** Scalar valued raml node (emit as obj node). */
-private case class RamlScalarValueEmitter(key: String, f: FieldEntry, extensions: Seq[BaseDomainExtension])(
+private case class RamlScalarValueEmitter(key: String, f: FieldEntry, extensions: Seq[DomainExtension])(
     implicit spec: SpecEmitterContext)
     extends BaseValueEmitter {
 
@@ -111,7 +111,7 @@ class OasSpecEmitterFactory()(implicit val spec: OasSpecEmitterContext) extends 
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter =
     OasFacetsInstanceEmitter.apply
 
-  override def annotationEmitter: (BaseDomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
+  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 
   override def parametrizedSecurityEmitter
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
@@ -185,7 +185,7 @@ class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter =
     RamlFacetsInstanceEmitter.apply
 
-  override def annotationEmitter: (BaseDomainExtension, SpecOrdering) => AnnotationEmitter =
+  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter =
     RamlAnnotationEmitter.apply
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
@@ -232,7 +232,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter =
     throw new Exception(s"Facerts not supported for vendor ${spec.vendor}")
 
-  override def annotationEmitter: (BaseDomainExtension, SpecOrdering) => AnnotationEmitter =
+  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter =
     throw new Exception(s"Annotations not supported for vendor ${spec.vendor}")
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
