@@ -3,6 +3,7 @@ package amf.ls
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.Document
 import amf.core.remote.RamlYamlHint
+import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
@@ -54,6 +55,23 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .map { rt =>
             val op = rt.asOperation(model)
             op.request.queryParameters shouldNot be(empty)
+            succeed
+          }
+          .getOrElse(succeed)
+      }
+  }
+
+  test("Parse variable in nested type") {
+    val file = "file://amf-client/shared/src/test/resources/ls/trait_error2.raml"
+    build(file, RamlYamlHint)
+      .map(_.asInstanceOf[Document])
+      .map { model =>
+        model.declares
+          .collectFirst { case rt: ResourceType => rt }
+          .map { rt =>
+            val op = rt.asEndpoint(model)
+            val props = op.operations.last.responses.head.payloads.head.schema.asInstanceOf[NodeShape].properties
+            assert(Option(props.find(_.name == "p2").get.range).isEmpty)
             succeed
           }
           .getOrElse(succeed)
