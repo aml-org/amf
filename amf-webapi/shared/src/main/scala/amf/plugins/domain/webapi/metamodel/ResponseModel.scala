@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Bool, Str}
+import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.vocabulary.Namespace._
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.models.Response
 

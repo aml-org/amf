@@ -4,7 +4,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.OperationModel
@@ -18,7 +18,8 @@ import scala.collection.mutable
   *
   */
 case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext) {
+    implicit ctx: RamlWebApiContext)
+    extends SpecParserOps {
 
   def parse(): Operation = {
     val method: String = entry.key
@@ -144,10 +145,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
       }
     )
 
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      operation.set(OperationModel.Description, value.string(), Annotations(entry))
-    })
+    map.key("description", (OperationModel.Description in operation).allowingAnnotations)
 
     AnnotationParser(operation, map).parse()
 

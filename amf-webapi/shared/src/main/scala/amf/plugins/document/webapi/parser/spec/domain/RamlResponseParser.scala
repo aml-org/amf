@@ -4,7 +4,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ValueNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
@@ -104,7 +104,8 @@ case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response
 }
 
 abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext) {
+    implicit ctx: RamlWebApiContext)
+    extends SpecParserOps {
 
   protected def parseMap(response: Response, map: YMap)
 
@@ -122,10 +123,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
     entry.value.to[YMap] match {
       case Left(_) =>
       case Right(map) =>
-        map.key("description", entry => {
-          val value = ValueNode(entry.value)
-          response.set(ResponseModel.Description, value.string(), Annotations(entry))
-        })
+        map.key("description", (ResponseModel.Description in response).allowingAnnotations)
 
         map.key(
           "headers",

@@ -29,7 +29,7 @@ object SecuritySchemeParser {
 
 }
 
-trait SecuritySchemeParser {
+trait SecuritySchemeParser extends SpecParserOps {
   def parse(): SecurityScheme
 }
 case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
@@ -43,31 +43,14 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
 
         val map = value.as[YMap]
 
-        map.key("type", entry => {
-          val value = ValueNode(entry.value)
-          scheme.set(SecuritySchemeModel.Type, value.string(), Annotations(entry))
-        })
+        map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
 
-        map.key("displayName", entry => {
-          val value = ValueNode(entry.value)
-          scheme.set(SecuritySchemeModel.DisplayName, value.string(), Annotations(entry))
-        })
-
-        map.key("description", entry => {
-          val value = ValueNode(entry.value)
-          scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
-        })
+        map.key("displayName", (SecuritySchemeModel.DisplayName in scheme).allowingAnnotations)
+        map.key("description", (SecuritySchemeModel.Description in scheme).allowingAnnotations)
 
         RamlDescribedByParser("describedBy", map, scheme).parse()
 
-        map.key(
-          "settings",
-          entry => {
-            val settings = RamlSecuritySettingsParser(entry.value.as[YMap], scheme.`type`, scheme).parse()
-
-            scheme.set(SecuritySchemeModel.Settings, settings, Annotations(entry))
-          }
-        )
+        map.key("settings", SecuritySchemeModel.Settings in scheme using RamlSecuritySettingsParser.parse(scheme))
 
         AnnotationParser(scheme, map).parse()
 
@@ -179,15 +162,8 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           }
         )
 
-        map.key("x-displayName", entry => {
-          val value = ValueNode(entry.value)
-          scheme.set(SecuritySchemeModel.DisplayName, value.string(), Annotations(entry))
-        })
-
-        map.key("description", entry => {
-          val value = ValueNode(entry.value)
-          scheme.set(SecuritySchemeModel.Description, value.string(), Annotations(entry))
-        })
+        map.key("x-displayName", SecuritySchemeModel.DisplayName in scheme)
+        map.key("description", SecuritySchemeModel.Description in scheme)
 
         RamlDescribedByParser("x-describedBy", map, scheme)(toRaml(ctx)).parse()
 
@@ -259,15 +235,8 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
     private def oauth2() = {
       val settings = scheme.withOAuth2Settings()
 
-      map.key("authorizationUrl", entry => {
-        val value = ValueNode(entry.value)
-        settings.set(OAuth2SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
-      })
-
-      map.key("tokenUrl", entry => {
-        val value = ValueNode(entry.value)
-        settings.set(OAuth2SettingsModel.AccessTokenUri, value.string(), Annotations(entry))
-      })
+      map.key("authorizationUrl", OAuth2SettingsModel.AuthorizationUri in settings)
+      map.key("tokenUrl", OAuth2SettingsModel.AccessTokenUri in settings)
 
       // TODO we should find similarity between raml authorizationGrants and this to map between values.
       map.key(
@@ -326,34 +295,18 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       map.key(
         "x-settings",
         entry => {
-          val xSettings = entry.value.as[YMap]
+          val map = entry.value.as[YMap]
 
-          xSettings.key("requestTokenUri", entry => {
-            val value = ValueNode(entry.value)
-            settings.set(OAuth1SettingsModel.RequestTokenUri, value.string(), Annotations(entry))
-          })
+          map.key("requestTokenUri", OAuth1SettingsModel.RequestTokenUri in settings)
+          map.key("authorizationUri", OAuth1SettingsModel.AuthorizationUri in settings)
+          map.key("tokenCredentialsUri", OAuth1SettingsModel.TokenCredentialsUri in settings)
 
-          xSettings.key("authorizationUri", entry => {
-            val value = ValueNode(entry.value)
-            settings.set(OAuth1SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
-          })
-
-          xSettings.key("tokenCredentialsUri", entry => {
-            val value = ValueNode(entry.value)
-            settings.set(OAuth1SettingsModel.TokenCredentialsUri, value.string(), Annotations(entry))
-          })
-
-          xSettings.key("signatures", entry => {
+          map.key("signatures", entry => {
             val value = ArrayNode(entry.value)
             settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
           })
 
-          dynamicSettings(xSettings,
-                          settings,
-                          "requestTokenUri",
-                          "authorizationUri",
-                          "tokenCredentialsUri",
-                          "signatures")
+          dynamicSettings(map, settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
         }
       )
 

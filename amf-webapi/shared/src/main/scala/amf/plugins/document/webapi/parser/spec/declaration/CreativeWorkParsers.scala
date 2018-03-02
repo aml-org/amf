@@ -1,11 +1,16 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.parser.{Annotations, ValueNode, _}
+import amf.core.remote.{Oas, Raml08, Raml10}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YNode}
+
+object OasCreativeWorkParser {
+  def parse(node: YNode)(implicit ctx: WebApiContext): CreativeWork = OasCreativeWorkParser(node.as[YMap]).parse()
+}
 
 /**
   *
@@ -36,31 +41,22 @@ case class OasCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) {
   }
 }
 
-case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(implicit val ctx: ParserContext) {
+case class RamlCreativeWorkParser(map: YMap, withExtention: Boolean)(implicit val ctx: WebApiContext)
+    extends SpecParserOps {
   def parse(): CreativeWork = {
 
     val documentation = CreativeWork(Annotations(map))
 
-    map.key("title", entry => {
-      val value = ValueNode(entry.value)
-      documentation.set(CreativeWorkModel.Title, value.string(), Annotations(entry))
-    })
+    map.key("title", (CreativeWorkModel.Title in documentation).allowingAnnotations)
+    map.key("content", (CreativeWorkModel.Description in documentation).allowingAnnotations)
 
-    map.key("content", entry => {
-      val value = ValueNode(entry.value)
-      documentation.set(CreativeWorkModel.Description, value.string(), Annotations(entry))
-    })
+    val url = ctx.vendor match {
+      case Oas             => "url"
+      case Raml08 | Raml10 => "(url)"
+    }
 
-    if (withExtention)
-      map.key("(url)", entry => {
-        val value = ValueNode(entry.value)
-        documentation.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
-      })
-    else
-      map.key("url", entry => {
-        val value = ValueNode(entry.value)
-        documentation.set(CreativeWorkModel.Url, value.string(), Annotations(entry))
-      })
+    map.key(url, CreativeWorkModel.Url in documentation)
+
     documentation
   }
 }

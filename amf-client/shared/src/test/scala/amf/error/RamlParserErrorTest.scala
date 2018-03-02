@@ -20,10 +20,14 @@ class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Test unexpected node types") {
     validate(
       "unexpected-nodes.raml",
+      invalid => {
+        invalid.level should be("Violation")
+        invalid.message should be("Unexpected key 'invalid'. Options are 'value' or annotations \\(.+\\)")
+        invalid.position.map(_.range) should be(Some(Range((3, 4), (3, 11))))
+      },
       title => {
         title.level should be("Violation")
-        title.message should be("Expecting !!str and !!map provided")
-        title.position.map(_.range) should be(Some(Range((2, 6), (4, 0))))
+        title.message should be("Expecting !!str and !!null provided")
       },
       description => {
         description.level should be("Violation")

@@ -7,22 +7,21 @@ import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.core.parser.Annotations
-import amf.core.parser._
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -99,15 +98,12 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     ctx.closedShape(api.id, map, "webApi")
 
-    map.key("title", entry => {
-      val value = RamlValueNode(entry.value)
-      api.set(WebApiModel.Name, value.string(), Annotations(entry))
-    })
+    map.key("title", (WebApiModel.Name in api).allowingAnnotations)
 
     map.key(
       "baseUriParameters",
       entry => {
-        val parameters: Seq[Parameter] =
+        val parameters =
           RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
             .parse()
             .map(_.withBinding("path"))
@@ -115,44 +111,27 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    map.key("description", entry => {
-      val value = RamlValueNode(entry.value)
-      api.set(WebApiModel.Description, value.string(), Annotations(entry))
-    })
+    map.key("description", (WebApiModel.Description in api).allowingAnnotations)
 
     map.key(
       "mediaType",
       entry => {
         val annotations = Annotations(entry)
-        val value: Option[AmfElement] = entry.value.tagType match {
+        val value = entry.value.tagType match {
           case YType.Seq =>
-            Some(ArrayNode(entry.value).strings())
-          case YType.Map =>
-            ctx.violation(api.id, "WebAPI 'mediaType' property must be a scalar or sequence value", entry.value)
-            None
+            ArrayNode(entry.value).strings()
           case _ =>
             annotations += SingleValueArray()
-            Some(AmfArray(Seq(ValueNode(entry.value).string())))
+            AmfArray(Seq(RamlValueNode(entry.value).text()))
         }
 
-        value match {
-          case Some(mediaType) =>
-            api.set(WebApiModel.ContentType, mediaType, annotations)
-            api.set(WebApiModel.Accepts, mediaType, annotations)
-          case None => // ignore
-        }
+        api.set(WebApiModel.ContentType, value, annotations)
+        api.set(WebApiModel.Accepts, value, annotations)
       }
     )
 
-    map.key("version", entry => {
-      val value = RamlValueNode(entry.value)
-      api.set(WebApiModel.Version, value.text(), Annotations(entry))
-    })
-
-    map.key("(termsOfService)", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
-    })
+    map.key("version", (WebApiModel.Version in api).allowingAnnotations)
+    map.key("(termsOfService)", WebApiModel.TermsOfService in api)
 
     map.key(
       "protocols",
@@ -170,21 +149,8 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    map.key(
-      "(contact)",
-      entry => {
-        val organization: Organization = OrganizationParser(entry.value.as[YMap]).parse()
-        api.set(WebApiModel.Provider, organization, Annotations(entry))
-      }
-    )
-
-    map.key(
-      "(license)",
-      entry => {
-        val license: License = LicenseParser(entry.value.as[YMap]).parse()
-        api.set(WebApiModel.License, license, Annotations(entry))
-      }
-    )
+    map.key("(contact)", WebApiModel.Provider in api using OrganizationParser.parse)
+    map.key("(license)", WebApiModel.License in api using LicenseParser.parse)
 
     map.regex(
       "^/.*",
@@ -250,7 +216,6 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     api
   }
-
 }
 
 // todo pass to ctx. declaration parser?
@@ -396,7 +361,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
       seq.foreach(n =>
         n.tagType match {
           case YType.Map => results += RamlCreativeWorkParser(n.as[YMap], withExtention = true).parse()
-          case YType.Seq =>
+          case YType.Seq => ctx.violation(parent, s"Unexpected sequence. Options are object or scalar ", n)
           case _ =>
             val scalar = n.as[YScalar]
             declarations.findDocumentations(scalar.text, SearchScope.Fragments) match {

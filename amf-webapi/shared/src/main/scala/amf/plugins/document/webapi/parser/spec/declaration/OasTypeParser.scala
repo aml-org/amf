@@ -149,50 +149,24 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape): Unit = {
-      map.key("pattern", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
-      })
+      map.key("pattern", ScalarShapeModel.Pattern in shape)
+      map.key("minLength", ScalarShapeModel.MinLength in shape)
+      map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
-      map.key("minLength", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MinLength, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxLength", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MaxLength, value.integer(), Annotations(entry))
-      })
-
-      map.key("minimum", entry => {
+      map.key("minimum", entry => { // todo pope
         val value = ValueNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.integer(), Annotations(entry))
       })
 
-      map.key("maximum", entry => {
+      map.key("maximum", entry => { // todo pope
         val value = ValueNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.integer(), Annotations(entry))
       })
 
-      map.key("exclusiveMinimum", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.ExclusiveMinimum, value.string(), Annotations(entry))
-      })
-
-      map.key("exclusiveMaximum", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.ExclusiveMaximum, value.string(), Annotations(entry))
-      })
-
-      map.key("format", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
-      })
-
-      map.key("multipleOf", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
-      })
+      map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
+      map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+      map.key("format", ScalarShapeModel.Format in shape)
+      map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
 
 //      shape.set(ScalarShapeModel.Repeat, value = false)
 
@@ -283,20 +257,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       super.parse()
 
-      map.key("minItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("uniqueItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
-      })
+      map.key("minItems", ArrayShapeModel.MinItems in shape)
+      map.key("maxItems", ArrayShapeModel.MaxItems in shape)
+      map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
 
       map.key(
         "items",
@@ -324,20 +287,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       super.parse()
 
-      map.key("minItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("uniqueItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
-      })
+      map.key("minItems", ArrayShapeModel.MinItems in shape)
+      map.key("maxItems", ArrayShapeModel.MaxItems in shape)
+      map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
 
       val finalShape = for {
         entry <- map.key("items")
@@ -379,37 +331,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
-      map.key("minProperties", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.MinProperties, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxProperties", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.MaxProperties, value.integer(), Annotations(entry))
-      })
+      map.key("minProperties", NodeShapeModel.MinProperties in shape)
+      map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
 
       shape.set(NodeShapeModel.Closed, value = false)
+      map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
 
-      map.key("additionalProperties", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.Closed, value.negated(), Annotations(entry) += ExplicitField())
-      })
-
-      map.key("discriminator", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.Discriminator, value.string(), Annotations(entry))
-      })
-
-      map.key("x-discriminator-value", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.DiscriminatorValue, value.string(), Annotations(entry))
-      })
-
-      map.key("readOnly", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.ReadOnly, value.boolean(), Annotations(entry))
-      })
+      map.key("discriminator", NodeShapeModel.Discriminator in shape)
+      map.key("x-discriminator-value", NodeShapeModel.DiscriminatorValue in shape)
+      map.key("readOnly", NodeShapeModel.ReadOnly in shape)
 
       val requiredFields = map
         .key("required")
@@ -506,15 +436,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
     def parse(): Shape = {
 
-      map.key("title", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
-      })
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ShapeModel.Description, value.string(), Annotations(entry))
-      })
+      map.key("title", ShapeModel.DisplayName in shape)
+      map.key("description", ShapeModel.Description in shape)
 
       map.key(
         "default",

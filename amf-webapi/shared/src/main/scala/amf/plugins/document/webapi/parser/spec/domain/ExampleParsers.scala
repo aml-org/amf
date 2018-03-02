@@ -5,7 +5,7 @@ import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, ValueNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model._
@@ -102,32 +102,15 @@ case class RamlSingleExampleParser(key: String, map: YMap)(implicit ctx: WebApiC
   }
 }
 
-case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: WebApiContext) {
+case class RamlSingleExampleValueParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParserOps {
   def parse(): Example = {
     val example = Example(node)
 
     node.to[YMap] match {
       case Right(map) if map.regex("""displayName|description|strict|value|\(.+\)""").nonEmpty =>
-        map
-          .key("displayName")
-          .foreach { entry =>
-            val value = ValueNode(entry.value)
-            example.set(ExampleModel.DisplayName, value.string(), Annotations(entry))
-          }
-
-        map
-          .key("description")
-          .foreach { entry =>
-            val value = ValueNode(entry.value)
-            example.set(ExampleModel.Description, value.string(), Annotations(entry))
-          }
-
-        map
-          .key("strict")
-          .foreach { entry =>
-            val value = ValueNode(entry.value)
-            example.set(ExampleModel.Strict, value.boolean(), Annotations(entry))
-          }
+        map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
+        map.key("description", (ExampleModel.Description in example).allowingAnnotations)
+        map.key("strict", (ExampleModel.Strict in example).allowingAnnotations)
 
         map
           .key("value")

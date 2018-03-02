@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, RamlValueNode}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, RamlValueNode, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -105,48 +105,16 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
 
         ctx.closedShape(api.id, info, "info")
 
-        info.key("title", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.Name, value.string(), Annotations(entry))
-        })
-
-        info.key("description", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.Description, value.string(), Annotations(entry))
-        })
-
-        info.key("termsOfService", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.TermsOfService, value.string(), Annotations(entry))
-        })
-
-        info.key("version", entry => {
-          val value = ValueNode(entry.value)
-          api.set(WebApiModel.Version, value.string(), Annotations(entry))
-        })
-
-        info.key(
-          "contact",
-          entry => {
-            val organization: Organization = OrganizationParser(entry.value.as[YMap]).parse()
-            api.set(WebApiModel.Provider, organization, Annotations(entry))
-          }
-        )
-
-        info.key(
-          "license",
-          entry => {
-            val license: License = LicenseParser(entry.value.as[YMap]).parse()
-            api.set(WebApiModel.License, license, Annotations(entry))
-          }
-        )
+        info.key("title", WebApiModel.Name in api)
+        info.key("description", WebApiModel.Description in api)
+        info.key("termsOfService", WebApiModel.TermsOfService in api)
+        info.key("version", WebApiModel.Version in api)
+        info.key("contact", WebApiModel.Provider in api using OrganizationParser.parse)
+        info.key("license", WebApiModel.License in api using LicenseParser.parse)
       }
     )
 
-    map.key("host", entry => {
-      val value = ValueNode(entry.value)
-      api.set(WebApiModel.Host, value.string(), Annotations(entry))
-    })
+    map.key("host", WebApiModel.Host in api)
 
     map.key(
       "x-base-uri-parameters",
@@ -157,13 +125,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       }
     )
 
-    map.key(
-      "basePath",
-      entry => {
-        val value = ValueNode(entry.value)
-        api.set(WebApiModel.BasePath, value.string(), Annotations(entry))
-      }
-    )
+    map.key("basePath", WebApiModel.BasePath in api)
 
     map.key("consumes", entry => {
       val value = ArrayNode(entry.value)
@@ -204,7 +166,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
     map.key(
       "x-user-documentation",
       entry => {
-        documentations ++= UserDocumentationParser(entry.value.as[Seq[YNode]], withExtention = false)
+        documentations ++= UserDocumentationParser(entry.value.as[Seq[YNode]])
           .parse()
       }
     )
@@ -300,15 +262,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         case Right(map) =>
           ctx.closedShape(endpoint.id, map, "pathItem")
 
-          map.key("x-displayName", entry => {
-            val value = RamlValueNode(entry.value)
-            endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
-          })
-
-          map.key("x-description", entry => {
-            val value = ValueNode(entry.value)
-            endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
-          })
+          map.key("x-displayName", EndPointModel.Name in endpoint)
+          map.key("x-description", EndPointModel.Description in endpoint)
 
           var parameters = OasParameters()
           val entries    = ListBuffer[YMapEntry]()
@@ -514,33 +469,12 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       val operation = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry))
       val map       = entry.value.as[YMap]
 
-      map.key("operationId", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Name, value.string(), Annotations(entry))
-      })
+      map.key("operationId", OperationModel.Name in operation)
+      map.key("description", OperationModel.Description in operation)
+      map.key("deprecated", OperationModel.Deprecated in operation)
+      map.key("summary", OperationModel.Summary in operation)
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Description, value.string(), Annotations(entry))
-      })
-
-      map.key("deprecated", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
-      })
-
-      map.key("summary", entry => {
-        val value = ValueNode(entry.value)
-        operation.set(OperationModel.Summary, value.string(), Annotations(entry))
-      })
-
-      map.key(
-        "externalDocs",
-        entry => {
-          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.as[YMap]).parse()
-          operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
-        }
-      )
+      map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
 
       map.key(
         "schemes",
@@ -631,10 +565,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         response.set(ResponseModel.StatusCode, node.string())
       }
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        response.set(ResponseModel.Description, value.string(), Annotations(entry))
-      })
+      map.key("description", ResponseModel.Description in response)
 
       map.key(
         "headers",
@@ -696,12 +627,11 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
     def parse(): Payload = {
 
       val payload = producer(
-        map.key("mediaType").map(entry => ValueNode(entry.value).string().value.toString)
+        map.key("mediaType").map(entry => ValueNode(entry.value).text().value.toString)
       ).add(Annotations(map))
 
       // todo set again for not lose annotations?
-      map.key("mediaType",
-              entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), Annotations(entry)))
+      map.key("mediaType", PayloadModel.MediaType in payload)
 
       map.key(
         "schema",
@@ -719,7 +649,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
   }
 }
 
-abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser {
+abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser with SpecParserOps {
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
@@ -946,17 +876,17 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
     }
   }
 
-  case class UserDocumentationParser(seq: Seq[YNode], withExtention: Boolean) {
+  case class UserDocumentationParser(seq: Seq[YNode]) {
     def parse(): Seq[CreativeWork] =
       seq.map(n =>
         n.tagType match {
-          case YType.Map => RamlCreativeWorkParser(n.as[YMap], withExtention).parse()
+          case YType.Map => RamlCreativeWorkParser(n.as[YMap]).parse()
           case YType.Str =>
             val text = n.as[YScalar].text
             ctx.declarations.findDocumentations(text, SearchScope.All) match {
               case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
               case _ =>
-                val documentation = RamlCreativeWorkParser(YMap.empty, withExtention).parse()
+                val documentation = RamlCreativeWorkParser(YMap.empty).parse()
                 ctx.violation(documentation.id, s"not supported scalar $n.text for documentation item", n)
                 documentation
             }
@@ -968,69 +898,49 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
       map.key("$ref") match {
         case Some(ref) => parseParameterRef(ref, parentId)
         case None =>
-          val parameter = OasParameter(map)
+          val p         = OasParameter(map)
+          val parameter = p.parameter
 
-          parameter.parameter.set(ParameterModel.Required, value = false)
+          parameter.set(ParameterModel.Required, value = false)
 
-          map.key("name", entry => {
-            val value = ValueNode(entry.value)
-            parameter.parameter.set(ParameterModel.Name, value.string(), Annotations(entry))
-          })
-
-          map.key("description", entry => {
-            val value = ValueNode(entry.value)
-            parameter.parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-          })
-
-          map.key(
-            "required",
-            entry => {
-              val value = ValueNode(entry.value)
-              parameter.parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-            }
-          )
-
-          map.key("in", entry => {
-            val value = ValueNode(entry.value)
-            parameter.parameter.set(ParameterModel.Binding, value.string(), Annotations(entry))
-          })
+          map.key("name", ParameterModel.Name in parameter)
+          map.key("description", ParameterModel.Description in parameter)
+          map.key("required", (ParameterModel.Required in parameter).explicit)
+          map.key("in", ParameterModel.Binding in parameter)
 
           // TODO generate parameter with parent id or adopt
-          if (parameter.isBody) {
-            parameter.payload.adopted(parentId)
+          if (p.isBody) {
+            p.payload.adopted(parentId)
             map.key(
               "schema",
               entry => {
-                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.payload.id))
+                OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
                   .parse()
-                  .map(parameter.payload.set(PayloadModel.Schema, _, Annotations(entry)))
+                  .map(p.payload.set(PayloadModel.Schema, _, Annotations(entry)))
               }
             )
 
-            map.key("x-media-type", entry => {
-              val value = ValueNode(entry.value)
-              parameter.payload.set(PayloadModel.MediaType, value.string(), Annotations(entry))
-            })
+            map.key("x-media-type", PayloadModel.MediaType in p.payload)
 
           } else {
             // type
-            parameter.parameter.adopted(parentId)
+            parameter.adopted(parentId)
 
-            ctx.closedShape(parameter.parameter.id, map, "parameter")
+            ctx.closedShape(parameter.id, map, "parameter")
 
             OasTypeParser(
               map,
               "",
               map,
-              shape => shape.withName("schema").adopted(parameter.parameter.id),
+              shape => shape.withName("schema").adopted(parameter.id),
               "parameter"
             ).parse()
-              .map(parameter.parameter.set(ParameterModel.Schema, _, Annotations(map)))
+              .map(parameter.set(ParameterModel.Schema, _, Annotations(map)))
           }
 
-          AnnotationParser(parameter.parameter, map).parse()
+          AnnotationParser(parameter, map).parse()
 
-          parameter
+          p
       }
     }
 
@@ -1130,15 +1040,8 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
 
       val map = entry.value.as[YMap]
 
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-      })
-
-      map.key("required", entry => {
-        val value = ValueNode(entry.value)
-        parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-      })
+      map.key("description", ParameterModel.Description in parameter)
+      map.key("required", (ParameterModel.Required in parameter).explicit)
 
       map.key(
         "type",

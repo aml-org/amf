@@ -1,16 +1,78 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.annotations.ExplicitField
+import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.extensions.DomainScalarExtension
+import amf.core.model.domain.{AmfElement, AmfScalar, Annotation, DomainElement}
 import amf.core.parser._
-import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
-trait BaseSpecParser {
+trait BaseSpecParser extends SpecParserOps {
   implicit val ctx: ParserContext
+}
+
+trait SpecParserOps {
+  class ObjectField(elem: DomainElement, field: Field)(implicit iv: WebApiContext) extends Function1[YMapEntry, Unit] {
+
+    private val annotations: Annotations = Annotations()
+
+    private var factory: (YNode) => ValueNode = ValueNode(_)
+
+    /** Expects int, bool or defaults to *text* scalar. */
+    private var toElement: YNode => AmfElement = { (node: YNode) =>
+      {
+        val s: ValueNode = factory(node)
+        field.`type` match {
+          case Type.Int  => s.integer()
+          case Type.Bool => s.boolean()
+          case _         => s.text()
+        }
+      }
+    }
+
+    def allowingAnnotations: ObjectField = {
+      factory = node => {
+        val value = RamlValueNode(node)
+        value.collectCustomDomainProperties(elem)
+        value
+      }
+      this
+    }
+
+    def string: ObjectField = {
+      this.toElement = n => factory(n).string()
+      this
+    }
+
+    def negated: ObjectField = {
+      this.toElement = n => factory(n).negated()
+      this
+    }
+
+    def using(fn: (YNode) => AmfElement): ObjectField = {
+      toElement = fn
+      this
+    }
+
+    def explicit: ObjectField = withAnnotation(ExplicitField())
+
+    def withAnnotation(a: Annotation): ObjectField = {
+      annotations += a
+      this
+    }
+
+    override def apply(entry: YMapEntry): Unit = {
+      elem.set(field, toElement(entry.value), Annotations(entry) ++= annotations)
+    }
+  }
+
+  implicit class FieldOps(field: Field)(implicit iv: WebApiContext) {
+    def in(elem: DomainElement): ObjectField = new ObjectField(elem, field)
+  }
 }
 
 /** Scalar valued raml node (based on obj node). */
