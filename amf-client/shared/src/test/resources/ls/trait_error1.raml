@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: scalar types
+
+
+traits:
+  MyTrait:
+    queryParameters:
+      queryParam: <<paramDefinition>>
+
+
+/test:
+  get:
+    responses:
+      200:
+        headers:
+          date:
+            type: integer
+            example: 2
+            required: true
