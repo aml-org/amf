@@ -10,7 +10,7 @@ import org.yaml.model.YMap
 
 import scala.collection.mutable
 
-case class DialectDomainElement(override val fields: Fields, val annotations: Annotations) extends DynamicDomainElement {
+case class DialectDomainElement(override val fields: Fields, annotations: Annotations) extends DynamicDomainElement {
 
   val literalProperties: mutable.Map[String, Any] = mutable.HashMap()
   val mapKeyProperties: mutable.Map[String, Any] = mutable.HashMap()
@@ -20,8 +20,11 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
 
   // Types of the instance
   protected var instanceTypes: Seq[String] = Nil
-  def withInstanceTypes(types: Seq[String]) = instanceTypes = types
-  override def dynamicType: List[ValueType] = (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel.`type`).toList
+  def withInstanceTypes(types: Seq[String]) = {
+    instanceTypes = types
+    this
+  }
+  override def dynamicType: List[ValueType] = (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel().`type`).toList
 
   // Dialect mapping defining the instance
   protected var instanceDefinedBy: Option[NodeMapping] = None
@@ -32,20 +35,7 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
   def definedBy: NodeMapping = instanceDefinedBy.orNull
 
 
-  def iriToValue(iri: String): ValueType = {
-    if (iri.contains("#")) {
-      val pair = iri.split("#")
-      val name = pair.last
-      val ns = pair.head + "#"
-      new ValueType(Namespace(ns), name)
-    } else if (iri.replace("://","_").contains("/")) {
-      val name = iri.split("/").last
-      val ns = iri.replace(name, "")
-      new ValueType(Namespace(ns), name)
-    } else {
-      new ValueType(Namespace(iri), "")
-    }
-  }
+  def iriToValue(iri: String) = ValueType(iri)
 
   override def dynamicFields: List[Field] = {
     val mapKeyFields = mapKeyProperties.keys map { propertyId =>
@@ -53,35 +43,11 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
     }
 
      (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
-      val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
-      val propertyIdValue = iriToValue(property.nodePropertyMapping())
-      Option(property.objectRange()).map { objProp =>
-        if (property.allowMultiple() || Option(property.mapKeyProperty()).isDefined) {
-          Field(Type.Array(DialectDomainElementModel), propertyIdValue)
-        } else {
-          Field(DialectDomainElementModel, propertyIdValue)
-        }
-      }.getOrElse {
-        val fieldType = property.literalRange() match {
-          case literal if literal.endsWith("anyUri")  => Type.Iri
-          case literal if literal.endsWith("anyType") => Type.Any
-          case literal if literal == (Namespace.Xsd + "integer").iri() => Type.Int
-          case literal if literal == (Namespace.Xsd + "float").iri() => Type.Float
-          case literal if literal == (Namespace.Xsd + "boolean").iri() => Type.Bool
-          case literal if literal == (Namespace.Xsd + "decimal").iri() => Type.Int
-          case literal if literal == (Namespace.Xsd + "time").iri() => Type.Time
-          case literal if literal == (Namespace.Xsd + "date").iri() => Type.Date
-          case _ => Type.Str
-        }
-
-        if (property.allowMultiple()) {
-          Field(Type.Array(fieldType), propertyIdValue)
-        } else {
-          Field(fieldType, propertyIdValue)
-        }
-      }
-    }.toList ++ mapKeyFields
+       val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
+       property.toField()
+    }.toList ++ mapKeyFields ++ fields.fields().map(_.field)
   }
+
 
   def findPropertyByTermPropertyId(termPropertyId: String) =
     definedBy.propertiesMapping().find(_.nodePropertyMapping() == termPropertyId).map(_.id).getOrElse(termPropertyId)
@@ -110,6 +76,8 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
             AmfScalar(other)
         }
       }
+    } orElse {
+      fields.fields().find(_.field == f).map(_.element)
     }
   }
 
@@ -153,7 +121,11 @@ case class DialectDomainElement(override val fields: Fields, val annotations: An
     this
   }
 
-  override def meta: Obj = DialectDomainElementModel
+  override def meta: Obj = if (instanceTypes.isEmpty) {
+    DialectDomainElementModel()
+  } else {
+    new DialectDomainElementModel(instanceTypes.head, dynamicFields, Option(definedBy))
+  }
 
   override def adopted(newId: String): DialectDomainElement.this.type = if (Option(this.id).isEmpty) withId(newId) else this
 }
@@ -164,4 +136,5 @@ object DialectDomainElement {
   def apply(ast: YMap): DialectDomainElement = apply(Annotations(ast))
 
   def apply(annotations: Annotations): DialectDomainElement = DialectDomainElement(Fields(), annotations)
+
 }

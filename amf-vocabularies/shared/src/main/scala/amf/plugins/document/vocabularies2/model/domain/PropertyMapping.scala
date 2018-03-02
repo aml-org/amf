@@ -1,11 +1,19 @@
 package amf.plugins.document.vocabularies2.model.domain
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.vocabularies2.metamodel.domain.PropertyMappingModel
+import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.vocabularies2.metamodel.domain.{DialectDomainElementModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies2.metamodel.domain.PropertyMappingModel._
 import org.yaml.model.YMap
+
+class PropertyClassification
+object LiteralProperty extends PropertyClassification
+object ObjectProperty extends PropertyClassification
+object ObjectPropertyCollection extends PropertyClassification
+object ObjectMapProperty extends PropertyClassification
+object LiteralPropertyCollection extends PropertyClassification
 
 case class PropertyMapping(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -48,7 +56,54 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def typeDiscriminatorName(): String                         = fields(TypeDiscriminatorName)
   def withTypeDiscriminatorName(name: String)                 = set(TypeDiscriminatorName, name)
 
+  def classification(): PropertyClassification = {
+    val isLiteral = Option(literalRange()).isDefined
+    val isObject = Option(objectRange()).isDefined && objectRange().nonEmpty
+    val multiple = Option(allowMultiple()).getOrElse(false)
+    val isMap = Option(mapKeyProperty()).isDefined
 
+    if (isLiteral && !multiple)
+      LiteralProperty
+    else if (isLiteral)
+      LiteralPropertyCollection
+    else if (isObject && isMap)
+      ObjectMapProperty
+    else if (isObject && !multiple)
+      ObjectProperty
+    else
+      ObjectPropertyCollection
+  }
+
+  def isUnion = Option(objectRange()).exists(_.size > 1)
+
+  def toField(): Field = {
+    val propertyIdValue = ValueType(nodePropertyMapping())
+    Option(objectRange()).map { objProp =>
+      if (allowMultiple() || Option(mapKeyProperty()).isDefined) {
+        Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
+      } else {
+        Field(DialectDomainElementModel(), propertyIdValue)
+      }
+    }.getOrElse {
+      val fieldType = literalRange() match {
+        case literal if literal.endsWith("anyUri")  => Type.Iri
+        case literal if literal.endsWith("anyType") => Type.Any
+        case literal if literal == (Namespace.Xsd + "integer").iri() => Type.Int
+        case literal if literal == (Namespace.Xsd + "float").iri() => Type.Float
+        case literal if literal == (Namespace.Xsd + "boolean").iri() => Type.Bool
+        case literal if literal == (Namespace.Xsd + "decimal").iri() => Type.Int
+        case literal if literal == (Namespace.Xsd + "time").iri() => Type.Time
+        case literal if literal == (Namespace.Xsd + "date").iri() => Type.Date
+        case _ => Type.Str
+      }
+
+      if (allowMultiple()) {
+        Field(Type.Array(fieldType), propertyIdValue)
+      } else {
+        Field(fieldType, propertyIdValue)
+      }
+    }
+  }
 }
 
 object PropertyMapping {

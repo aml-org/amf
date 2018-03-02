@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
+import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.BuildCycleTests
 
@@ -31,6 +31,26 @@ class DialectInstancesParsingTest extends BuildCycleTests {
 
   test("parse 5 test") {
     withDialect("dialect5.raml", "example5.raml", "example5.json", VocabularyYamlHint, Amf)
+  }
+
+  test("generate 1 test") {
+    withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 2 test") {
+    withDialect("dialect2.raml", "example2.json", "example2.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 3 test") {
+    withDialect("dialect3.raml", "example3.json", "example3.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 4 test") {
+    withDialect("dialect4.raml", "example4.json", "example4.raml", AmfJsonHint, RamlVocabulary)
+  }
+
+  test("generate 5 test") {
+    withDialect("dialect5.raml", "example5.json", "example5.raml", AmfJsonHint, RamlVocabulary)
   }
 
   protected def withDialect(dialect: String,
