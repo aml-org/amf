@@ -918,4 +918,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
+
+  test("Invalid yaml with scalar an map as value") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/invalid-yaml.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.lengthCompare(2) == 0)
+      assert(!report.results.exists(_.level != SeverityLevels.VIOLATION))
+      assert(report.results.head.message == "Error node ' name'")
+      assert(report.results.last.message == "Error node '  get:\n  post:'")
+    }
+  }
 }

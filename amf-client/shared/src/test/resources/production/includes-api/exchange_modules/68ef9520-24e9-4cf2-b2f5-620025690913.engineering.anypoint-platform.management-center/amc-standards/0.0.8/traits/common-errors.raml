@@ -8,7 +8,7 @@ responses:
         example: |
           { "message" : "Not Supported  Content-Type"}
   429:
-    headers: 
+    headers:
       Retry-After:
         type: number
         examples:
@@ -18,5 +18,4 @@ responses:
       application/json:
         type: !include ../dataTypes/error-message.raml
         example: |
-          { "message" : "Too Many Requests"}
-        
+          {"message" : "Too Many Request" }

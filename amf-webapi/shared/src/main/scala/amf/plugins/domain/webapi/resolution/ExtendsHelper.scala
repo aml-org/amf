@@ -10,7 +10,6 @@ import amf.core.resolution.stages.ResolvedNamedEntity
 import amf.core.services.RuntimeValidator
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
-import amf.plugins.document.webapi.resolution.stages.Context
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import org.yaml.model._
 
@@ -138,8 +137,8 @@ class CustomRaml08WebApiContext extends Raml08WebApiContext(ParserContext()) {
                        node: String,
                        property: Option[String],
                        message: String,
-                       lexical: Option[LexicalInformation]): Unit   = {}
-  override def handle(node: YPart, e: YScalar.ParseException): Unit = {}
+                       lexical: Option[LexicalInformation]): Unit = {}
+  override def handle(node: YPart, e: SyamlException): Unit       = {}
 }
 
 class CustomRaml10WebApiContext extends Raml10WebApiContext(ParserContext()) {
@@ -154,6 +153,6 @@ class CustomRaml10WebApiContext extends Raml10WebApiContext(ParserContext()) {
                        node: String,
                        property: Option[String],
                        message: String,
-                       lexical: Option[LexicalInformation]): Unit   = {}
-  override def handle(node: YPart, e: YScalar.ParseException): Unit = {}
+                       lexical: Option[LexicalInformation]): Unit = {}
+  override def handle(node: YPart, e: SyamlException): Unit       = {}
 }

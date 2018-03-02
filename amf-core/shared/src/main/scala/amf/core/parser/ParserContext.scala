@@ -98,8 +98,8 @@ class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
       case range           => Some(annotations.LexicalInformation(Range(range)))
     }
   }
-
-  override def handle(node: YPart, e: YScalar.ParseException): Unit = violation(e.getMessage, Some(node))
+  override def handle(node: YPart, e: SyamlException): Unit =
+    violation(e.getMessage, Some(node))
 }
 
 object EmptyFutureDeclarations {
