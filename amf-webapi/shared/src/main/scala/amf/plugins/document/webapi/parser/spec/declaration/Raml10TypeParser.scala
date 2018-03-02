@@ -55,7 +55,7 @@ trait RamlTypeSyntax {
 
   def wellKnownType(str: String): Boolean =
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
-          .indexOf("}") > -1) {
+          .indexOf("}") > -1 || (str.startsWith("<<") && str.endsWith(">>"))) {
       false
     } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
 }

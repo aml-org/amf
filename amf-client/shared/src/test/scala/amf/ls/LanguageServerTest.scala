@@ -43,4 +43,20 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .getOrElse(succeed)
       }
   }
+
+  test("Parse variable in query param") {
+    val file = "file://amf-client/shared/src/test/resources/ls/trait_error1.raml"
+    build(file, RamlYamlHint)
+      .map(_.asInstanceOf[Document])
+      .map { model =>
+        model.declares
+          .collectFirst { case tr: Trait => tr }
+          .map { rt =>
+            val op = rt.asOperation(model)
+            op.request.queryParameters shouldNot be(empty)
+            succeed
+          }
+          .getOrElse(succeed)
+      }
+  }
 }
