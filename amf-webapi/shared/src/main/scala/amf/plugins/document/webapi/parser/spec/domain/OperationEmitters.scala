@@ -5,7 +5,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{Fields, Position}
-import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
@@ -65,7 +65,7 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
     fs.entry(OperationModel.Name).map(f => result += ValueEmitter("displayName", f))
 
-    fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
+    fs.entry(OperationModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
     fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("(deprecated)", f))
 

@@ -12,7 +12,12 @@ import amf.core.model.domain.{AmfScalar, Linkable, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{
   MultipleExampleEmitter,
@@ -206,9 +211,8 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
       case None => // ignore
     }
 
-    fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
-
-    fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
+    fs.entry(ShapeModel.DisplayName).map(f => result += RamlScalarEmitter("displayName", f))
+    fs.entry(ShapeModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
     fs.entry(ShapeModel.Default)
       .map(f => {
@@ -316,9 +320,8 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
     val fs                               = node.fields
 
-    fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
-
-    fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
+    fs.entry(NodeShapeModel.MinProperties).map(f => result += RamlScalarEmitter("minProperties", f))
+    fs.entry(NodeShapeModel.MaxProperties).map(f => result += RamlScalarEmitter("maxProperties", f))
 
     fs.entry(NodeShapeModel.Closed)
       .foreach(f => {
@@ -329,9 +332,8 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
         }
       })
 
-    fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
-
-    fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("discriminatorValue", f))
+    fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
+    fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
 
     fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
 
@@ -417,10 +419,10 @@ case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, referenc
 }
 
 trait RamlCommonOASFieldsEmitter {
-  def emitOASFields(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
-    fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
+  def emitOASFields(fs: Fields, result: ListBuffer[EntryEmitter])(implicit spec: SpecEmitterContext): Unit = {
+    fs.entry(ScalarShapeModel.MinLength).map(f => result += RamlScalarEmitter("minLength", f))
 
-    fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
+    fs.entry(ScalarShapeModel.MaxLength).map(f => result += RamlScalarEmitter("maxLength", f))
 
     fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("(exclusiveMinimum)", f))
 
@@ -457,20 +459,20 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     emitOASFields(fs, result)
 
-    fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
+    fs.entry(ScalarShapeModel.Pattern).map(f => result += RamlScalarEmitter("pattern", f))
 
     fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum", f))
 
     fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("maximum", f))
 
-    fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("multipleOf", f))
+    fs.entry(ScalarShapeModel.MultipleOf).map(f => result += RamlScalarEmitter("multipleOf", f))
 
     result ++= emitFormat(rawTypeDef, fs, format)
 
     result
   }
 
-  def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: String): Seq[EntryEmitter] = {
+  def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: String): Option[EntryEmitter] = {
     val formatKey =
       if (rawTypeDef.isNumber | rawTypeDef.isDate) "format"
       else "(format)"
@@ -503,14 +505,14 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     }
 
     if (finalFormat.nonEmpty && finalFormat != "float" && finalFormat != "int32") {
-      Seq(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
+      Some(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
     } else if (finalFormat.nonEmpty && (finalFormat == "float" || finalFormat == "int32") && explictFormatFound) {
       // we always mapping 'number' in RAML to xsd:float, if we are to emit 'float'
       // as the format must be because it has been explicitly set in this way, not because
       // we are adding that through the number -> xsd:float mapping
-      Seq(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
+      Some(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
     } else {
-      Seq()
+      None
     }
   }
 
@@ -637,11 +639,11 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
         result += RamlItemsShapeEmitter(array, ordering, references)
       })
 
-    fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
+    fs.entry(ArrayShapeModel.MaxItems).map(f => result += RamlScalarEmitter("maxItems", f))
 
-    fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
+    fs.entry(ArrayShapeModel.MinItems).map(f => result += RamlScalarEmitter("minItems", f))
 
-    fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+    fs.entry(ArrayShapeModel.UniqueItems).map(f => result += RamlScalarEmitter("uniqueItems", f))
 
     result
   }
@@ -660,11 +662,11 @@ case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, refe
     result += RamlTupleItemsShapeEmitter(tuple, ordering, references)
     result += MapEntryEmitter("(tuple)", "true")
 
-    fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
+    fs.entry(ArrayShapeModel.MaxItems).map(f => result += RamlScalarEmitter("maxItems", f))
 
-    fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
+    fs.entry(ArrayShapeModel.MinItems).map(f => result += RamlScalarEmitter("minItems", f))
 
-    fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+    fs.entry(ArrayShapeModel.UniqueItems).map(f => result += RamlScalarEmitter("uniqueItems", f))
 
     result
   }

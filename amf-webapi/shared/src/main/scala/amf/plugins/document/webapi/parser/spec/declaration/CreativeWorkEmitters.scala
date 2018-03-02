@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterContext}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -22,9 +22,9 @@ case class RamlCreativeWorkItemsEmitter(documentation: CreativeWork, ordering: S
 
     fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter(if (withExtention) "(url)" else "url", f))
 
-    fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("content", f))
+    fs.entry(CreativeWorkModel.Description).map(f => result += RamlScalarEmitter("content", f))
 
-    fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("title", f))
+    fs.entry(CreativeWorkModel.Title).map(f => result += RamlScalarEmitter("title", f))
 
     result ++= AnnotationsEmitter(documentation, ordering).emitters
     ordering.sorted(result)

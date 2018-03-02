@@ -6,6 +6,7 @@ import amf.core.model.domain.extensions.BaseDomainExtension
 import amf.core.model.domain.{AmfElement, AmfScalar, Annotation, DomainElement}
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.RamlValueNode.collectDomainExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import org.yaml.model._
 
@@ -42,12 +43,8 @@ trait SpecParserOps {
 
     def allowingAnnotations: ObjectField = {
       factory = node => {
-        RamlValueNode(node) match {
-          case n: RamlScalarValuedNode =>
-            (n, AnnotationParser.parseExtensions(s"${elem.id}/oooooo", n.obj))
-          case n: ScalarNode =>
-            (n, Nil)
-        }
+        val n = RamlValueNode(node)
+        (n, collectDomainExtensions(elem.id, n))
       }
       this
     }
@@ -112,6 +109,15 @@ object RamlValueNode {
     node.value match {
       case obj: YMap => createScalarValuedNode(obj)
       case _         => ValueNode(node)
+    }
+  }
+
+  def collectDomainExtensions(parent: String, n: ValueNode)(implicit ctx: WebApiContext): Seq[BaseDomainExtension] = {
+    n match {
+      case n: RamlScalarValuedNode =>
+        AnnotationParser.parseExtensions(s"$parent/oooooo", n.obj)
+      case n: ScalarNode =>
+        Nil
     }
   }
 

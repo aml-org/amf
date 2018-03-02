@@ -66,7 +66,7 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
 }
 
 case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme,
-                                                 ordering: SpecOrdering)
+                                                 ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends ParametrizedSecuritySchemeEmitter(parametrizedScheme, ordering) {
   override def emit(b: PartBuilder): Unit = {
 

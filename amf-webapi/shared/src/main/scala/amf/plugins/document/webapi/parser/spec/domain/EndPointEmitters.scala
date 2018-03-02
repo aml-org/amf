@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
@@ -60,9 +60,9 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
         _.obj { b =>
           val result = mutable.ListBuffer[EntryEmitter]()
 
-          fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName", f))
+          fs.entry(EndPointModel.Name).map(f => result += RamlScalarEmitter("displayName", f))
 
-          fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description", f))
+          fs.entry(EndPointModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
           fs.entry(EndPointModel.UriParameters)
             .map { f =>

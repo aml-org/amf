@@ -690,10 +690,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
         shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
       })
 
-      map.key("(format)", (ScalarShapeModel.Format in shape).allowingAnnotations)
+      map.key("(format)", ScalarShapeModel.Format in shape)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("(multipleOf)", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
+      map.key("(multipleOf)", ScalarShapeModel.MultipleOf in shape)
 
       ctx.closedRamlTypeShape(shape, map, "fileShape", isAnnotation)
 

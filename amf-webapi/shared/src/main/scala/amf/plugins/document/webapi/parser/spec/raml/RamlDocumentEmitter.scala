@@ -3,15 +3,17 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.annotations._
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter._
+import amf.core.metamodel.{Field, Type}
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Fields, Position}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Fields, Position, Value}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
-import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
+import amf.core.vocabulary.ValueType
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -19,8 +21,8 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
-import org.yaml.model.{YDocument, YNode}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
@@ -290,16 +292,16 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      fs.entry(WebApiModel.Name).map(f => result += ValueEmitter("title", f))
+      fs.entry(WebApiModel.Name).map(f => result += RamlScalarEmitter("title", f))
 
       fs.entry(WebApiModel.BaseUriParameters)
         .map(f => result += RamlParametersEmitter("baseUriParameters", f, ordering, references))
 
-      fs.entry(WebApiModel.Description).map(f => result += ValueEmitter("description", f))
+      fs.entry(WebApiModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
       fs.entry(WebApiModel.ContentType).map(f => result += ArrayEmitter("mediaType", f, ordering))
 
-      fs.entry(WebApiModel.Version).map(f => result += ValueEmitter("version", f))
+      fs.entry(WebApiModel.Version).map(f => result += RamlScalarEmitter("version", f))
 
       fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("(termsOfService)", f))
 
@@ -315,7 +317,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, vendor))
 
-      result += BaseUriEmitter(fs)
+      result += BaseUriEmitter(fs, api.annotations.find(classOf[BaseUriAnnotation]))
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 
@@ -361,7 +363,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
     }
 
-    private case class BaseUriEmitter(fs: Fields) extends EntryEmitter {
+    private case class BaseUriEmitter(fs: Fields, annotation: Option[BaseUriAnnotation]) extends EntryEmitter {
       override def emit(b: EntryBuilder): Unit = {
         val protocol: String = fs
           .entry(WebApiModel.Schemes)
@@ -384,7 +386,14 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
         val uri = BaseUriSplitter(protocol, domain, basePath)
 
-        if (uri.nonEmpty) b.entry("baseUri", uri.url())
+        if (uri.nonEmpty) {
+          val Empty = Annotations()
+          RamlScalarEmitter(
+            "baseUri",
+            FieldEntry(WebApiModel.BasePath, // Ignore :S
+                       Value(AmfScalar(uri.url(), annotation.map(_.extensions).getOrElse(Empty)), Empty)))
+            .emit(b)
+        }
       }
 
       override def position(): Position =

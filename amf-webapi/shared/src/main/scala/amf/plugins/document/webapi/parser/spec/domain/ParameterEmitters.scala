@@ -6,7 +6,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AnnotationsEmitter,
   Raml08TypePartEmitter,
@@ -68,11 +68,11 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
         _.obj { b =>
           val result = mutable.ListBuffer[EntryEmitter]()
 
-          fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
+          fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
           fs.entry(ParameterModel.Required)
             .filter(_.value.annotations.contains(classOf[ExplicitField]))
-            .map(f => result += ValueEmitter("required", f))
+            .map(f => result += RamlScalarEmitter("required", f))
 
           Option(parameter.schema) match {
             case Some(shape: AnyShape) if shape.isLink =>
