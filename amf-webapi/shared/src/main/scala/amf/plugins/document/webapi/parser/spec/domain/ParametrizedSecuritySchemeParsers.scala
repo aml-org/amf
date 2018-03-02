@@ -5,7 +5,7 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Scope, Settings, WithSettings}
+import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.{YMap, YNode, YType}
 
 /**
@@ -50,7 +50,14 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => Pa
   }
 }
 
-case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings)(implicit val ctx: WebApiContext) {
+object RamlSecuritySettingsParser {
+  def parse(scheme: SecurityScheme)(node: YNode)(implicit ctx: WebApiContext): Settings = {
+    RamlSecuritySettingsParser(node.as[YMap], scheme.`type`, scheme).parse()
+  }
+}
+
+case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings)(implicit val ctx: WebApiContext)
+    extends SpecParserOps {
   def parse(): Settings = {
     val result = `type` match {
       case "OAuth 1.0" => oauth1()
@@ -94,20 +101,10 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
 
   private def oauth2() = {
     val settings = scheme.withOAuth2Settings()
-    map.key("authorizationUri", entry => {
-      val value = ValueNode(entry.value)
-      settings.set(OAuth2SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
-    })
 
-    map.key("accessTokenUri", entry => {
-      val value = ValueNode(entry.value)
-      settings.set(OAuth2SettingsModel.AccessTokenUri, value.string(), Annotations(entry))
-    })
-
-    map.key("(flow)", entry => {
-      val value = ValueNode(entry.value)
-      settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
-    })
+    map.key("authorizationUri", OAuth2SettingsModel.AuthorizationUri in settings)
+    map.key("accessTokenUri", (OAuth2SettingsModel.AccessTokenUri in settings).allowingAnnotations)
+    map.key("(flow)", OAuth2SettingsModel.Flow in settings)
 
     map.key(
       "authorizationGrants",
@@ -133,20 +130,10 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
 
   private def oauth1() = {
     val settings = scheme.withOAuth1Settings()
-    map.key("requestTokenUri", entry => {
-      val value = ValueNode(entry.value)
-      settings.set(OAuth1SettingsModel.RequestTokenUri, value.string(), Annotations(entry))
-    })
 
-    map.key("authorizationUri", entry => {
-      val value = ValueNode(entry.value)
-      settings.set(OAuth1SettingsModel.AuthorizationUri, value.string(), Annotations(entry))
-    })
-
-    map.key("tokenCredentialsUri", entry => {
-      val value = ValueNode(entry.value)
-      settings.set(OAuth1SettingsModel.TokenCredentialsUri, value.string(), Annotations(entry))
-    })
+    map.key("requestTokenUri", (OAuth1SettingsModel.RequestTokenUri in settings).allowingAnnotations)
+    map.key("authorizationUri", (OAuth1SettingsModel.AuthorizationUri in settings).allowingAnnotations)
+    map.key("tokenCredentialsUri", (OAuth1SettingsModel.TokenCredentialsUri in settings).allowingAnnotations)
 
     map.key("signatures", entry => {
       val value = ArrayNode(entry.value)

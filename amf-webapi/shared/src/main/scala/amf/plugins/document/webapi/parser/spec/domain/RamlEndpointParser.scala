@@ -6,7 +6,7 @@ import amf.core.parser.{Annotations, ValueNode, _}
 import amf.core.utils.TemplateUri
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlValueNode}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlValueNode, SpecParserOps}
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
@@ -42,7 +42,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                   producer: String => EndPoint,
                                   parent: Option[EndPoint],
                                   collector: mutable.ListBuffer[EndPoint],
-                                  parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext) {
+                                  parseOptionalOperations: Boolean = false)(implicit ctx: RamlWebApiContext)
+    extends SpecParserOps {
 
   def parse(): Unit = {
 
@@ -70,15 +71,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   protected def parseEndpoint(endpoint: EndPoint, map: YMap): Unit = {
     ctx.closedShape(endpoint.id, map, "endPoint")
 
-    map.key("displayName", entry => {
-      val value = RamlValueNode(entry.value)
-      endpoint.set(EndPointModel.Name, value.string(), Annotations(entry))
-    })
-
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      endpoint.set(EndPointModel.Description, value.string(), Annotations(entry))
-    })
+    map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
+    map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)
 
     map.key(
       "type",

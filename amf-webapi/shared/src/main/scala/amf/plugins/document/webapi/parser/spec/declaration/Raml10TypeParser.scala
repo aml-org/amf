@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, RamlSingleExampleParser}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
@@ -220,7 +220,8 @@ case class Raml08UnionTypeParser(shape: Shape, types: Seq[YNode], ast: YPart)(im
 }
 
 case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defaultType: TypeDef)(
-    implicit val ctx: RamlWebApiContext) {
+    implicit val ctx: RamlWebApiContext)
+    extends SpecParserOps {
 
   def parse(): Shape = {
 
@@ -273,61 +274,33 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
   }
 
   private def parseMap(shape: Shape): Unit = {
-    map.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.DisplayName, value.text, Annotations(entry))
-    })
 
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ShapeModel.Description, value.text, Annotations(entry))
-    })
+    map.key("displayName", ShapeModel.DisplayName in shape)
+    map.key("description", ShapeModel.Description in shape)
 
     map.key("enum", entry => {
       val value = ArrayNode(entry.value)
       shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
     })
 
-    map.key("pattern", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.Pattern, value.text(), Annotations(entry))
-    })
+    map.key("pattern", ScalarShapeModel.Pattern in shape)
+    map.key("minLength", ScalarShapeModel.MinLength in shape)
+    map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
-    map.key("minLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MinLength, value.text(), Annotations(entry))
-    })
-
-    map.key("maxLength", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.MaxLength, value.text(), Annotations(entry))
-    })
-
-    map.key("minimum", entry => {
+    map.key("minimum", entry => { // todo pope
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
     })
 
-    map.key("maximum", entry => {
+    map.key("maximum", entry => { // todo pope
       val value = ValueNode(entry.value)
       shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
     })
 
     RamlSingleExampleParser("example", map).parse().foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
-    map.key("required", entry => {
-      val value = ValueNode(entry.value)
-      shape.set(ScalarShapeModel.RequiredShape, value.boolean(), Annotations(entry))
-    })
-
-    map.key(
-      "default",
-      entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ShapeModel.Default, value.text(), Annotations(entry))
-
-      }
-    )
+    map.key("required", ScalarShapeModel.RequiredShape in shape)
+    map.key("default", ShapeModel.Default in shape)
   }
 }
 
@@ -592,30 +565,11 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
   trait CommonScalarParsingLogic {
     def parseOASFields(map: YMap, shape: Shape): Unit = {
-      map.key("pattern", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Pattern, value.string(), Annotations(entry))
-      })
-
-      map.key("minLength", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MinLength, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxLength", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MaxLength, value.integer(), Annotations(entry))
-      })
-
-      map.key("(exclusiveMinimum)", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.ExclusiveMinimum, value.text(), Annotations(entry))
-      })
-
-      map.key("(exclusiveMaximum)", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.ExclusiveMaximum, value.text(), Annotations(entry))
-      })
+      map.key("pattern", (ScalarShapeModel.Pattern in shape).allowingAnnotations)
+      map.key("minLength", (ScalarShapeModel.MinLength in shape).allowingAnnotations)
+      map.key("maxLength", (ScalarShapeModel.MaxLength in shape).allowingAnnotations)
+      map.key("(exclusiveMinimum)", ScalarShapeModel.ExclusiveMinimum in shape)
+      map.key("(exclusiveMaximum)", ScalarShapeModel.ExclusiveMaximum in shape)
     }
   }
 
@@ -641,27 +595,20 @@ sealed abstract class RamlTypeParser(ast: YPart,
             .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
-      map.key("minimum", entry => {
+      map.key("minimum", entry => { // todo pope
         val value = ValueNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
-      map.key("maximum", entry => {
+      map.key("maximum", entry => { // todo pope
         val value = ValueNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
-      map.key("format", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
-      })
-
+      map.key("format", (ScalarShapeModel.Format in shape).allowingAnnotations)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("multipleOf", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
-      })
+      map.key("multipleOf", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
 
       val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
         case "integer" | "float" => "numberScalarShape"
@@ -733,27 +680,20 @@ sealed abstract class RamlTypeParser(ast: YPart,
         }
       )
 
-      map.key("(minimum)", entry => {
+      map.key("(minimum)", entry => { // todo pope
         val value = ValueNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
       })
 
-      map.key("(maximum)", entry => {
+      map.key("(maximum)", entry => { // todo pope
         val value = ValueNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
       })
 
-      map.key("(format)", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.Format, value.string(), Annotations(entry))
-      })
-
+      map.key("(format)", (ScalarShapeModel.Format in shape).allowingAnnotations)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("(multipleOf)", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ScalarShapeModel.MultipleOf, value.integer(), Annotations(entry))
-      })
+      map.key("(multipleOf)", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
 
       ctx.closedRamlTypeShape(shape, map, "fileShape", isAnnotation)
 
@@ -795,10 +735,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       super.parse()
 
-      map.key("uniqueItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
-      })
+      map.key("uniqueItems", (ArrayShapeModel.UniqueItems in shape).allowingAnnotations)
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
@@ -845,20 +782,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       parseInheritance()
 
-      map.key("minItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("uniqueItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.UniqueItems, value.boolean(), Annotations(entry))
-      })
+      map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
+      map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
+      map.key("uniqueItems", (ArrayShapeModel.UniqueItems in shape).allowingAnnotations)
 
       map.key(
         "items",
@@ -947,37 +873,16 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       super.parse()
 
-      map.key("minProperties", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.MinProperties, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxProperties", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.MaxProperties, value.integer(), Annotations(entry))
-      })
+      map.key("minProperties", (NodeShapeModel.MinProperties in shape).allowingAnnotations)
+      map.key("maxProperties", (NodeShapeModel.MaxProperties in shape).allowingAnnotations)
 
       shape.set(NodeShapeModel.Closed, value = false)
+      map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
 
-      map.key("additionalProperties", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.Closed, value.negated(), Annotations(entry) += ExplicitField())
-      })
+      map.key("discriminator", (NodeShapeModel.Discriminator in shape).allowingAnnotations)
+      map.key("discriminatorValue", (NodeShapeModel.DiscriminatorValue in shape).allowingAnnotations)
 
-      map.key("discriminator", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.Discriminator, value.string(), Annotations(entry))
-      })
-
-      map.key("discriminatorValue", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.DiscriminatorValue, value.string(), Annotations(entry))
-      })
-
-      map.key("(readOnly)", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(NodeShapeModel.ReadOnly, value.boolean(), Annotations(entry))
-      })
+      map.key("(readOnly)", NodeShapeModel.ReadOnly in shape)
 
       map.key(
         "properties",
@@ -1085,15 +990,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       parseInheritance()
 
-      map.key("displayName", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ShapeModel.DisplayName, value.string(), Annotations(entry))
-      })
-
-      map.key("description", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ShapeModel.Description, value.string(), Annotations(entry))
-      })
+      map.key("displayName", (ShapeModel.DisplayName in shape).allowingAnnotations)
+      map.key("description", (ShapeModel.Description in shape).allowingAnnotations)
 
       map.key(
         "default",
@@ -1115,23 +1013,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
         shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
       })
 
-      map.key("minItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MinItems, value.integer(), Annotations(entry))
-      })
-
-      map.key("maxItems", entry => {
-        val value = ValueNode(entry.value)
-        shape.set(ArrayShapeModel.MaxItems, value.integer(), Annotations(entry))
-      })
-
-      map.key(
-        "(externalDocs)",
-        entry => {
-          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.as[YMap]).parse()
-          shape.set(AnyShapeModel.Documentation, creativeWork, Annotations(entry))
-        }
-      )
+      map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
+      map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
+      map.key("(externalDocs)", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
 
       map.key(
         "xml",

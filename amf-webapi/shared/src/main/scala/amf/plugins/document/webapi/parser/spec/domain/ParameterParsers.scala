@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ValueNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
@@ -32,24 +32,9 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
 
     val p = entry.value.to[YMap] match {
       case Right(map) =>
-        map.key("required", entry => {
-          val value = ValueNode(entry.value)
-          parameter.set(ParameterModel.Required, value.boolean(), Annotations(entry) += ExplicitField())
-        })
-
-        map.key("description", entry => {
-          val value = ValueNode(entry.value)
-          parameter.set(ParameterModel.Description, value.string(), Annotations(entry))
-        })
-
-        map.key(
-          "(binding)",
-          entry => {
-            val value                    = ValueNode(entry.value)
-            val annotations: Annotations = Annotations(entry) += ExplicitField()
-            parameter.set(ParameterModel.Binding, value.string(), annotations)
-          }
-        )
+        map.key("required", (ParameterModel.Required in parameter).explicit.allowingAnnotations)
+        map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
+        map.key("(binding)", (ParameterModel.Binding in parameter).explicit)
 
         Raml10TypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
           .parse()
@@ -156,6 +141,7 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
 
 abstract class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
     implicit val ctx: RamlWebApiContext)
-    extends RamlTypeSyntax {
+    extends RamlTypeSyntax
+    with SpecParserOps {
   def parse(): Parameter
 }
