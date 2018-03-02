@@ -2,8 +2,7 @@ package amf.model.domain
 
 import amf.core.model.domain.extensions
 
-case class DomainExtension(private[amf] val domainExtension: extensions.DomainExtension)
-    extends DomainElement {
+case class DomainExtension(private[amf] val domainExtension: extensions.BaseDomainExtension) extends DomainElement {
 
   def name: String                    = domainExtension.name
   def definedBy: CustomDomainProperty = CustomDomainProperty(domainExtension.definedBy)

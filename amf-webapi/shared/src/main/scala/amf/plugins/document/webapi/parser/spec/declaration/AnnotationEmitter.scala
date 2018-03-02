@@ -4,7 +4,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.model.domain.extensions.{BaseDomainExtension, CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
@@ -23,21 +23,21 @@ case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering)(im
   def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(spec.factory.annotationEmitter(_, ordering))
 }
 
-case class OasAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
+case class OasAnnotationEmitter(domainExtension: BaseDomainExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends AnnotationEmitter(domainExtension, ordering) {
 
   override val name: String = "x-" + domainExtension.name
 }
 
-case class RamlAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
+case class RamlAnnotationEmitter(domainExtension: BaseDomainExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends AnnotationEmitter(domainExtension, ordering) {
 
   override val name: String = "(" + domainExtension.name + ")"
 }
 
-abstract class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
+abstract class AnnotationEmitter(domainExtension: BaseDomainExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   val name: String

@@ -62,7 +62,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
       val item = DocumentationItemFragment().adopted(root.location)
 
-      item.withEncodes(RamlCreativeWorkParser(map, withExtention = true).parse())
+      item.withEncodes(RamlCreativeWorkParser(map).parse())
 
       item
     }

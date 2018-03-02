@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField}
 import amf.core.metamodel.{Field, Type}
-import amf.core.model.domain.extensions.DomainScalarExtension
+import amf.core.model.domain.extensions.BaseDomainExtension
 import amf.core.model.domain.{AmfElement, AmfScalar, Annotation, DomainElement}
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -20,36 +20,51 @@ trait SpecParserOps {
 
     private val annotations: Annotations = Annotations()
 
-    private var factory: (YNode) => ValueNode = ValueNode(_)
+    private var factory: YNode => (ValueNode, Seq[BaseDomainExtension]) = node => (ValueNode(node), Nil)
 
     /** Expects int, bool or defaults to *text* scalar. */
     private var toElement: YNode => AmfElement = { (node: YNode) =>
       {
-        val s: ValueNode = factory(node)
-        field.`type` match {
-          case Type.Int  => s.integer()
-          case Type.Bool => s.boolean()
-          case _         => s.text()
+        factory(node) match {
+          case (v, ext) =>
+            val e = toAnnotations(ext)
+            field.`type` match {
+              case Type.Int  => v.integer().add(e)
+              case Type.Bool => v.boolean().add(e)
+              case _         => v.text().add(e)
+            }
         }
       }
     }
 
+    private def toAnnotations(extensions: Seq[BaseDomainExtension]) =
+      Annotations(extensions.map(DomainExtensionAnnotation))
+
     def allowingAnnotations: ObjectField = {
       factory = node => {
-        val value = RamlValueNode(node)
-        value.collectCustomDomainProperties(elem)
-        value
+        RamlValueNode(node) match {
+          case n: RamlScalarValuedNode =>
+            (n, AnnotationParser.parseExtensions(s"${elem.id}/oooooo", n.obj))
+          case n: ScalarNode =>
+            (n, Nil)
+        }
       }
       this
     }
 
     def string: ObjectField = {
-      this.toElement = n => factory(n).string()
+      this.toElement = n =>
+        factory(n) match {
+          case (v, e) => v.string().add(toAnnotations(e))
+      }
       this
     }
 
     def negated: ObjectField = {
-      this.toElement = n => factory(n).negated()
+      this.toElement = n =>
+        factory(n) match {
+          case (v, e) => v.negated().add(toAnnotations(e))
+      }
       this
     }
 
@@ -76,25 +91,20 @@ trait SpecParserOps {
 }
 
 /** Scalar valued raml node (based on obj node). */
-private case class RamlScalarValuedNode(obj: YMap, scalar: ValueNode)(implicit iv: WebApiContext) extends ValueNode {
+private case class RamlScalarValuedNode(obj: YMap, scalar: Option[ValueNode])(implicit iv: WebApiContext)
+    extends ValueNode {
 
-  override def string(): AmfScalar = scalar.string()
+  override def string(): AmfScalar = as(_.string())
 
-  override def text(): AmfScalar = scalar.text()
+  override def text(): AmfScalar = as(_.text())
 
-  override def integer(): AmfScalar = scalar.integer()
+  override def integer(): AmfScalar = as(_.integer())
 
-  override def boolean(): AmfScalar = scalar.boolean()
+  override def boolean(): AmfScalar = as(_.boolean())
 
-  override def negated(): AmfScalar = scalar.negated()
+  override def negated(): AmfScalar = as(_.negated())
 
-  /** Add custom domain properties of scalar to parent element (if any). */
-  override def collectCustomDomainProperties(parent: DomainElement): Unit = {
-    AnnotationParser.parseExtensions(s"${parent.id}/titleponele", obj).map { extension =>
-      parent.withCustomDomainProperty(
-        DomainScalarExtension(extension.fields, extension.annotations).withElement("title"))
-    }
-  }
+  private def as(fn: ValueNode => AmfScalar) = scalar.map(fn).getOrElse(AmfScalar(null))
 }
 
 object RamlValueNode {
@@ -106,22 +116,25 @@ object RamlValueNode {
   }
 
   private def createScalarValuedNode(obj: YMap)(implicit iv: WebApiContext): RamlScalarValuedNode = {
-    var values      = ListBuffer[YMapEntry]()
-    var annotations = ListBuffer[YMapEntry]()
+    var values = ListBuffer[YMapEntry]()
 
     obj.entries.foreach { entry =>
       entry.key.value match {
         case scalar: YScalar =>
           scalar.text match {
             case "value"                      => values += entry
-            case key if isRamlAnnotation(key) => annotations += entry
+            case key if isRamlAnnotation(key) => // Valid annotation ;)
             case _                            => unexpected(entry.key)
           }
         case _ => unexpected(entry.key)
       }
     }
 
-    RamlScalarValuedNode(obj, ValueNode(values.headOption.map(_.value).getOrElse(YNode.Null)))
+    if (values.nonEmpty) {
+      values.tail.foreach(d => iv.violation(s"Duplicated key 'value'.", Some(d)))
+    }
+
+    RamlScalarValuedNode(obj, values.headOption.map(entry => ValueNode(entry.value)))
   }
 
   private def unexpected(key: YNode)(implicit iv: WebApiContext): Unit =

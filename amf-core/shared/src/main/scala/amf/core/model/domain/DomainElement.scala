@@ -3,7 +3,7 @@ package amf.core.model.domain
 import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.DomainElementModel._
-import amf.core.model.domain.extensions.DomainExtension
+import amf.core.model.domain.extensions.{BaseDomainExtension, DomainExtension}
 import amf.core.parser.{FieldEntry, Range}
 import amf.core.vocabulary.Namespace
 
@@ -14,13 +14,13 @@ trait DomainElement extends AmfObject {
 
   def meta: Obj
 
-  def customDomainProperties: Seq[DomainExtension] = fields(CustomDomainProperties)
-  def extend: Seq[DomainElement]                   = fields(Extends)
+  def customDomainProperties: Seq[BaseDomainExtension] = fields(CustomDomainProperties)
+  def extend: Seq[DomainElement]                       = fields(Extends)
 
-  def withCustomDomainProperties(customProperties: Seq[DomainExtension]): this.type =
+  def withCustomDomainProperties(customProperties: Seq[BaseDomainExtension]): this.type =
     setArray(CustomDomainProperties, customProperties)
 
-  def withCustomDomainProperty(customProperty: DomainExtension): this.type =
+  def withCustomDomainProperty(customProperty: BaseDomainExtension): this.type =
     add(CustomDomainProperties, customProperty)
 
   def withExtends(extend: Seq[DomainElement]): this.type = setArray(Extends, extend)

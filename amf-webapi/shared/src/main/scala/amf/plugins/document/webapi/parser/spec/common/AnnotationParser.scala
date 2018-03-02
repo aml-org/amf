@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.model.domain.DomainElement
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
+import amf.core.model.domain.extensions.{BaseDomainExtension, CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser.parseExtensions
@@ -16,7 +16,7 @@ case class AnnotationParser(element: DomainElement, map: YMap)(implicit val ctx:
 }
 
 object AnnotationParser {
-  def parseExtensions(parent: String, map: YMap)(implicit ctx: WebApiContext): Seq[DomainExtension] =
+  def parseExtensions(parent: String, map: YMap)(implicit ctx: WebApiContext): Seq[BaseDomainExtension] =
     map.entries.flatMap { entry =>
       val key = entry.key.as[YScalar].text
       resolveAnnotation(key).map(ExtensionParser(_, parent, entry).parse().add(Annotations(entry)))
@@ -25,7 +25,7 @@ object AnnotationParser {
 
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry)(
     implicit val ctx: WebApiContext) {
-  def parse(): DomainExtension = {
+  def parse(): BaseDomainExtension = {
     val domainExtension = DomainExtension()
     val dataNode        = DataNodeParser(entry.value, parent = Some(s"$parent/$annotation")).parse()
     // TODO

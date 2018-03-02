@@ -164,7 +164,9 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key(
       "baseUri",
       entry => {
-        val value = RamlValueNode(entry.value).string().toString
+        val node = RamlValueNode(entry.value)
+
+        val value = node.text().toString
         val uri   = BaseUriSplitter(value)
 
         if (!TemplateUri.isValid(value))
@@ -360,7 +362,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
 
       seq.foreach(n =>
         n.tagType match {
-          case YType.Map => results += RamlCreativeWorkParser(n.as[YMap], withExtention = true).parse()
+          case YType.Map => results += RamlCreativeWorkParser(n.as[YMap]).parse()
           case YType.Seq => ctx.violation(parent, s"Unexpected sequence. Options are object or scalar ", n)
           case _ =>
             val scalar = n.as[YScalar]

@@ -14,6 +14,10 @@ class Annotations {
 
   def find[T <: Annotation](clazz: Class[T]): Option[T] = annotations.find(clazz.isInstance(_)).map(_.asInstanceOf[T])
 
+  def collect[T <: Annotation](clazz: Class[T]): Seq[T] = annotations.collect {
+    case a: T => a
+  }
+
   def contains[T <: Annotation](clazz: Class[T]): Boolean = find(clazz).isDefined
 
   def +=(annotation: Annotation): this.type = {
@@ -32,8 +36,7 @@ class Annotations {
   }
 
   /** Return [[SerializableAnnotation]]s only. */
-  def serializables(): Seq[SerializableAnnotation] =
-    annotations.filter(_.isInstanceOf[SerializableAnnotation]).map(_.asInstanceOf[SerializableAnnotation])
+  def serializables(): Seq[SerializableAnnotation] = annotations.collect { case s: SerializableAnnotation => s }
 
   def unapply[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz)
 }
@@ -43,4 +46,10 @@ object Annotations {
   def apply(): Annotations = new Annotations()
 
   def apply(ast: YPart): Annotations = apply() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
+
+  def apply(annotations: Seq[Annotation]): Annotations = {
+    val result = apply()
+    result.annotations = annotations
+    result
+  }
 }

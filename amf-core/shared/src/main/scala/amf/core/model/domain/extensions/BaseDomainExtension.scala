@@ -1,9 +1,9 @@
 package amf.core.model.domain.extensions
 
 import amf.core.metamodel.domain.extensions.DomainExtensionModel.{DefinedBy, Extension, Name}
-import amf.core.model.domain.{AmfObject, DataNode}
+import amf.core.model.domain.{DataNode, DomainElement}
 
-trait BaseDomainExtension extends AmfObject {
+trait BaseDomainExtension extends DomainElement {
 
   def name: String = fields(Name)
 
