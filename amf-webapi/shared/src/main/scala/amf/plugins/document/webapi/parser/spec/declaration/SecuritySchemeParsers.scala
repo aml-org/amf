@@ -44,7 +44,6 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
         val map = value.as[YMap]
 
         map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
-
         map.key("displayName", (SecuritySchemeModel.DisplayName in scheme).allowingAnnotations)
         map.key("description", (SecuritySchemeModel.Description in scheme).allowingAnnotations)
 

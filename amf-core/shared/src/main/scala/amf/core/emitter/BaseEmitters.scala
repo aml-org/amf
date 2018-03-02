@@ -5,7 +5,6 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
-import org.yaml.model
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
 
@@ -66,9 +65,12 @@ package object BaseEmitters {
     override def position(): Position = pos(annotations)
   }
 
-  case class ValueEmitter(key: String, f: FieldEntry) extends EntryEmitter {
+  trait BaseValueEmitter extends EntryEmitter {
 
-    private val tag: YType = {
+    val key: String
+    val f: FieldEntry
+
+    val tag: YType = {
       f.field.`type` match {
         case Type.Int  => YType.Int
         case Type.Bool => YType.Bool
@@ -76,18 +78,12 @@ package object BaseEmitters {
       }
     }
 
-    override def emit(b: EntryBuilder): Unit = {
-      sourceOr(
-        f.value, {
-          val extensions = f.element.annotations.collect(classOf[DomainExtensionAnnotation])
-          if (extensions.isEmpty) {
-            simpleScalar(b)
-          } else {
-            annotatedScalar(b, extensions)
-          }
-        }
-      )
-    }
+    override def position(): Position = pos(f.value.annotations)
+  }
+
+  case class ValueEmitter(key: String, f: FieldEntry) extends BaseValueEmitter {
+
+    override def emit(b: EntryBuilder): Unit = sourceOr(f.value, simpleScalar(b))
 
     private def simpleScalar(b: EntryBuilder): Unit = {
       b.entry(
@@ -95,18 +91,6 @@ package object BaseEmitters {
         YNode(YScalar(f.scalar.value), tag)
       )
     }
-
-    private def annotatedScalar(b: EntryBuilder, extensions: Seq[DomainExtensionAnnotation]): Unit = {
-      b.entry(
-        key,
-        _.obj { b =>
-          b.value = YNode(YScalar(f.scalar.value), tag)
-        // dump extensions...
-        }
-      )
-    }
-
-    override def position(): Position = pos(f.value.annotations)
   }
 
   object RawValueEmitter {

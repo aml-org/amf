@@ -14,9 +14,7 @@ class Annotations {
 
   def find[T <: Annotation](clazz: Class[T]): Option[T] = annotations.find(clazz.isInstance(_)).map(_.asInstanceOf[T])
 
-  def collect[T <: Annotation](clazz: Class[T]): Seq[T] = annotations.collect {
-    case a: T => a
-  }
+  def collect[T <: Annotation](pf: PartialFunction[Annotation, T]): Seq[T] = annotations.collect(pf)
 
   def contains[T <: Annotation](clazz: Class[T]): Boolean = find(clazz).isDefined
 
@@ -36,7 +34,7 @@ class Annotations {
   }
 
   /** Return [[SerializableAnnotation]]s only. */
-  def serializables(): Seq[SerializableAnnotation] = annotations.collect { case s: SerializableAnnotation => s }
+  def serializables(): Seq[SerializableAnnotation] = collect { case s: SerializableAnnotation => s }
 
   def unapply[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz)
 }

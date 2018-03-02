@@ -5,7 +5,7 @@ import amf.core.emitter._
 import amf.core.emitter.BaseEmitters._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position, _}
-import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -123,13 +123,13 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
       .contains("value")
 
     if (isExpanded) {
-      fs.entry(ExampleModel.DisplayName).foreach(f => results += ValueEmitter("displayName", f))
+      fs.entry(ExampleModel.DisplayName).foreach(f => results += RamlScalarEmitter("displayName", f))
 
-      fs.entry(ExampleModel.Description).foreach(f => results += ValueEmitter("description", f))
+      fs.entry(ExampleModel.Description).foreach(f => results += RamlScalarEmitter("description", f))
 
       if (fs.entry(ExampleModel.Strict)
             .isDefined && !fs.entry(ExampleModel.Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
-        fs.entry(ExampleModel.Strict).foreach(f => results += ValueEmitter("strict", f))
+        fs.entry(ExampleModel.Strict).foreach(f => results += RamlScalarEmitter("strict", f))
       }
 
       fs.entry(ExampleModel.Value)

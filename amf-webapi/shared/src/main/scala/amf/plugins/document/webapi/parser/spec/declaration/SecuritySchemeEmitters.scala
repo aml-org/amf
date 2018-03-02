@@ -5,7 +5,12 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
 import amf.plugins.domain.shapes.models.AnyShape
@@ -13,6 +18,7 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.plugins.document.webapi.parser.spec._
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -184,9 +190,9 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
     val results = ListBuffer[EntryEmitter]()
     val fs      = securityScheme.fields
 
-    fs.entry(SecuritySchemeModel.Type).map(f => results += ValueEmitter("type", f))
-    fs.entry(SecuritySchemeModel.DisplayName).map(f => results += ValueEmitter("displayName", f))
-    fs.entry(SecuritySchemeModel.Description).map(f => results += ValueEmitter("description", f))
+    fs.entry(SecuritySchemeModel.Type).map(f => results += RamlScalarEmitter("type", f))
+    fs.entry(SecuritySchemeModel.DisplayName).map(f => results += RamlScalarEmitter("displayName", f))
+    fs.entry(SecuritySchemeModel.Description).map(f => results += RamlScalarEmitter("description", f))
 
     results += describedByEmitter("describedBy", securityScheme, ordering, references)
 
@@ -197,14 +203,15 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
   }
 }
 
-case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry("settings", _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _)))
   }
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering) {
+case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters: Seq[EntryEmitter] = {
     val settings = f.value.value.asInstanceOf[Settings]
     val results  = ListBuffer[EntryEmitter]()
@@ -223,7 +230,7 @@ case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrder
   }
 }
 
-case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering) {
+case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val settings = f.value.value.asInstanceOf[Settings]
@@ -273,7 +280,7 @@ case class RamlApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrde
   }
 }
 
-case class OasOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering) {
+case class OasOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
     val fs      = o1.fields
     val results = ListBuffer[EntryEmitter]() ++= RamlOAuth1SettingsEmitters(o1, ordering).emitters()
@@ -287,17 +294,13 @@ case class OasOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering)
 
 }
 
-case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering) {
+case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
     val fs      = o1.fields
     val results = ListBuffer[EntryEmitter]()
-
-    fs.entry(OAuth1SettingsModel.RequestTokenUri).map(f => results += ValueEmitter("requestTokenUri", f))
-
-    fs.entry(OAuth1SettingsModel.AuthorizationUri).map(f => results += ValueEmitter("authorizationUri", f))
-
-    fs.entry(OAuth1SettingsModel.TokenCredentialsUri).map(f => results += ValueEmitter("tokenCredentialsUri", f))
-
+    fs.entry(OAuth1SettingsModel.RequestTokenUri).map(f => results += RamlScalarEmitter("requestTokenUri", f))
+    fs.entry(OAuth1SettingsModel.AuthorizationUri).map(f => results += RamlScalarEmitter("authorizationUri", f))
+    fs.entry(OAuth1SettingsModel.TokenCredentialsUri).map(f => results += RamlScalarEmitter("tokenCredentialsUri", f))
     fs.entry(OAuth1SettingsModel.Signatures).map(f => results += ArrayEmitter("signatures", f, ordering))
     results
   }
@@ -333,19 +336,16 @@ case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)
 
 }
 
-case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering) {
+case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val fs      = o2.fields
     val results = ListBuffer[EntryEmitter]()
 
     fs.entry(OAuth2SettingsModel.AuthorizationUri).map(f => results += ValueEmitter("authorizationUri", f))
-
-    fs.entry(OAuth2SettingsModel.AccessTokenUri).map(f => results += ValueEmitter("accessTokenUri", f))
-
+    fs.entry(OAuth2SettingsModel.AccessTokenUri).map(f => results += RamlScalarEmitter("accessTokenUri", f))
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
       .map(f => results += ArrayEmitter("authorizationGrants", f, ordering))
-
     fs.entry(OAuth2SettingsModel.Scopes).map(f => { results += RamlOAuth2ScopeEmitter("scopes", f, ordering) })
 
     results

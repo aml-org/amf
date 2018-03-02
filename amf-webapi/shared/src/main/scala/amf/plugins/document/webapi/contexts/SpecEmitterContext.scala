@@ -1,13 +1,15 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
+import amf.core.annotations.DomainExtensionAnnotation
+import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.model.domain.extensions.{BaseDomainExtension, CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.model.domain.extensions.{BaseDomainExtension, CustomDomainProperty, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.FieldEntry
-import amf.core.remote.{Oas, Raml08, Raml10, Vendor}
+import amf.core.remote._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -20,8 +22,8 @@ import amf.plugins.document.webapi.parser.spec.raml.{
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, Response}
-import org.yaml.model.YDocument.PartBuilder
-import org.yaml.model.YNode
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.{YNode, YScalar}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -66,6 +68,37 @@ trait TagToReferenceEmitter extends PartEmitter {
 
 trait BaseSpecEmitter {
   implicit val spec: SpecEmitterContext
+}
+
+/** Scalar valued raml node (emit as obj node). */
+private case class RamlScalarValueEmitter(key: String, f: FieldEntry, extensions: Seq[BaseDomainExtension])(
+    implicit spec: SpecEmitterContext)
+    extends BaseValueEmitter {
+
+  override def emit(b: EntryBuilder): Unit = sourceOr(f.value, annotatedScalar(b))
+
+  private def annotatedScalar(b: EntryBuilder): Unit = {
+    b.entry(
+      key,
+      _.obj { b =>
+        b.value = YNode(YScalar(f.scalar.value), tag)
+        extensions.foreach { e =>
+          spec.factory.annotationEmitter(e, Default).emit(b)
+        }
+      }
+    )
+  }
+}
+
+object RamlScalarEmitter {
+  def apply(key: String, f: FieldEntry)(implicit spec: SpecEmitterContext): EntryEmitter = {
+    val extensions = f.element.annotations.collect({ case e: DomainExtensionAnnotation => e })
+    if (extensions.nonEmpty && spec.vendor == Raml10) {
+      RamlScalarValueEmitter(key, f, extensions.map(_.extension))
+    } else {
+      ValueEmitter(key, f)
+    }
+  }
 }
 
 class OasSpecEmitterFactory()(implicit val spec: OasSpecEmitterContext) extends SpecEmitterFactory {
@@ -122,8 +155,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
   def operationEmitter: (Operation, SpecOrdering, Seq[BaseUnit]) => RamlOperationEmitter
 }
 
-class Raml10EmitterVersionFactory()(implicit override val spec: RamlSpecEmitterContext)
-    extends RamlEmitterVersionFactory {
+class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) extends RamlEmitterVersionFactory {
   override def retrieveHeader(document: BaseUnit): String = document match {
     case _: Extension => RamlHeader.Raml10Extension.text
     case _: Overlay   => RamlHeader.Raml10Overlay.text

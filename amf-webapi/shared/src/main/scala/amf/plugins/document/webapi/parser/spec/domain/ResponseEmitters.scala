@@ -4,7 +4,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.Response
@@ -62,7 +62,7 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
   protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
 
-    fs.entry(ResponseModel.Description).map(f => result += ValueEmitter("description", f))
+    fs.entry(ResponseModel.Description).map(f => result += RamlScalarEmitter("description", f))
     fs.entry(RequestModel.Headers).map(f => result += RamlParametersEmitter("headers", f, ordering, references))
     fs.entry(RequestModel.Payloads).map(f => result += spec.factory.payloadsEmitter("body", f, ordering, references))
     result

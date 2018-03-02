@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
-import amf.core.annotations.{SingleValueArray, SourceVendor, SynthesizedField}
+import amf.core.annotations._
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.common.RamlValueNode.collectDomainExtensions
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -164,10 +165,13 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key(
       "baseUri",
       entry => {
-        val node = RamlValueNode(entry.value)
-
+        val node  = RamlValueNode(entry.value)
         val value = node.text().toString
-        val uri   = BaseUriSplitter(value)
+
+        val extensions = collectDomainExtensions(api.id, node).map(DomainExtensionAnnotation)
+        api.annotations += BaseUriAnnotation(value, Annotations(extensions))
+
+        val uri = BaseUriSplitter(value)
 
         if (!TemplateUri.isValid(value))
           ctx.violation(api.id, TemplateUri.invalidMsg(value), entry.value)
@@ -186,7 +190,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
         if (uri.path.nonEmpty) {
           api.set(WebApiModel.BasePath,
-                  AmfScalar(uri.path, Annotations(entry.value) += SynthesizedField()),
+                  AmfScalar(uri.path, (Annotations(entry.value) += SynthesizedField()) ++= Annotations(extensions)),
                   Annotations(entry))
         }
       }
