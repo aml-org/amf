@@ -2,7 +2,7 @@ package amf.plugins.document.graph.parser
 
 import java.net.{URI, URLEncoder}
 
-import amf.core.annotations.ScalarType
+import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
@@ -105,6 +105,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def createCustomExtensions(element: AmfObject, parent: String, b: EntryBuilder): Unit = {
       val customProperties: ListBuffer[String] = ListBuffer()
 
+      // Collect element custom annotations
       element.fields.entry(DomainElementModel.CustomDomainProperties) foreach {
         case FieldEntry(_, v) =>
           v.value match {
@@ -124,6 +125,17 @@ object GraphEmitter extends MetaModelTypeMapping {
             case _ => // ignore
           }
       }
+
+      // Collect element scalar fields custom annotations
+      element.fields.foreach({
+        case (f, v) =>
+          v.annotations
+            .collect({ case e: DomainExtensionAnnotation => e })
+            .foreach(e => {
+              val extension: DomainExtension = e.extension
+              println(e.extension.name)
+            })
+      })
 
       if (customProperties.nonEmpty)
         b.entry(
@@ -258,27 +270,26 @@ object GraphEmitter extends MetaModelTypeMapping {
     object URLEncoder {
       def encode(input: String): String = {
         val resultStr = new StringBuilder
-        input.foreach(ch=> {
+        input.foreach(ch => {
 
           if (isUnsafe(ch)) {
             resultStr.append('%')
             resultStr.append(toHex(ch / 16))
             resultStr.append(toHex(ch % 16))
-          }
-          else resultStr.append(ch)
+          } else resultStr.append(ch)
         })
         resultStr.toString
       }
 
-      private def toHex(ch: Int) = (if (ch < 10) '0' + ch
-      else 'A' + ch - 10).toChar
+      private def toHex(ch: Int) =
+        (if (ch < 10) '0' + ch
+         else 'A' + ch - 10).toChar
 
       private def isUnsafe(ch: Char) = {
         if (ch > 128) true
         " %$&+,;=@<>".indexOf(ch) >= 0 //should we encode %?
       }
     }
-
 
     private def iri(b: PartBuilder, content: String, inArray: Boolean = false) = {
       //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.

@@ -21,47 +21,34 @@ trait SpecParserOps {
 
     private val annotations: Annotations = Annotations()
 
-    private var factory: YNode => (ValueNode, Seq[DomainExtension]) = node => (ValueNode(node), Nil)
+    private var factory: YNode => ValueNode = ValueNode(_)
 
     /** Expects int, bool or defaults to *text* scalar. */
-    private var toElement: YNode => AmfElement = { (node: YNode) =>
-      {
-        factory(node) match {
-          case (v, ext) =>
-            val e = toAnnotations(ext)
-            field.`type` match {
-              case Type.Int  => v.integer().add(e)
-              case Type.Bool => v.boolean().add(e)
-              case _         => v.text().add(e)
-            }
-        }
+    private var toElement: YNode => AmfElement = (node: YNode) => {
+      val n = factory(node)
+      field.`type` match {
+        case Type.Int  => n.integer()
+        case Type.Bool => n.boolean()
+        case _         => n.text()
       }
     }
 
-    private def toAnnotations(extensions: Seq[DomainExtension]) =
-      Annotations(extensions.map(DomainExtensionAnnotation))
-
     def allowingAnnotations: ObjectField = {
       factory = node => {
-        val n = RamlValueNode(node)
-        (n, collectDomainExtensions(elem.id, n))
+        val result = RamlValueNode(node)
+        annotations ++= Annotations(collectDomainExtensions(elem.id, result).map(DomainExtensionAnnotation))
+        result
       }
       this
     }
 
     def string: ObjectField = {
-      this.toElement = n =>
-        factory(n) match {
-          case (v, e) => v.string().add(toAnnotations(e))
-      }
+      this.toElement = factory(_).string()
       this
     }
 
     def negated: ObjectField = {
-      this.toElement = n =>
-        factory(n) match {
-          case (v, e) => v.negated().add(toAnnotations(e))
-      }
+      this.toElement = factory(_).negated()
       this
     }
 
