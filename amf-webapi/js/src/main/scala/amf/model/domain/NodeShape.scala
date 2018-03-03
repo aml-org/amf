@@ -9,14 +9,17 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class NodeShape(private val node: models.NodeShape) extends AnyShape(node) {
 
-  def minProperties: Int                              = node.minProperties
-  def maxProperties: Int                              = node.maxProperties
-  def closed: Boolean                                 = node.closed
-  def discriminator: String                           = node.discriminator
-  def discriminatorValue: String                      = node.discriminatorValue
-  def readOnly: Boolean                               = node.readOnly
-  def properties: js.Iterable[PropertyShape]          = Option(node.properties).getOrElse(Nil).map(PropertyShape).toJSArray
-  def dependencies: js.Iterable[PropertyDependencies] = Option(node.dependencies).getOrElse(Nil).map(PropertyDependencies).toJSArray
+  def this() = this(models.NodeShape())
+
+  def minProperties: Int                     = node.minProperties
+  def maxProperties: Int                     = node.maxProperties
+  def closed: Boolean                        = node.closed
+  def discriminator: String                  = node.discriminator
+  def discriminatorValue: String             = node.discriminatorValue
+  def readOnly: Boolean                      = node.readOnly
+  def properties: js.Iterable[PropertyShape] = Option(node.properties).getOrElse(Nil).map(PropertyShape).toJSArray
+  def dependencies: js.Iterable[PropertyDependencies] =
+    Option(node.dependencies).getOrElse(Nil).map(PropertyDependencies).toJSArray
 
   def withMinProperties(min: Int): this.type = {
     node.withMinProperties(min)

@@ -7,6 +7,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class SchemaShape(private[amf] val schema: models.SchemaShape) extends AnyShape(schema) {
 
+  def this() = this(models.SchemaShape())
   def mediaType: String = schema.mediaType
   def raw: String       = schema.raw
 

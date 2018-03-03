@@ -2,8 +2,9 @@ package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
-
 case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends AnyShape(scalar) {
+
+  def this() = this(models.ScalarShape())
 
   def dataType: String         = scalar.dataType
   def pattern: String          = scalar.pattern

@@ -6,16 +6,18 @@ import scala.collection.JavaConverters._
 
 case class FileShape(private val file: models.FileShape) extends AnyShape(file) {
 
+  def this() = this(models.FileShape())
+
   def fileTypes: java.util.List[String] = file.fileTypes.asJava
-  def pattern: String                = file.pattern
-  def minLength: Int                 = file.minLength
-  def maxLength: Int                 = file.maxLength
-  def minimum: String                = file.minimum
-  def maximum: String                = file.maximum
-  def exclusiveMinimum: String       = file.exclusiveMinimum
-  def exclusiveMaximum: String       = file.exclusiveMaximum
-  def format: String                 = file.format
-  def multipleOf: Int                = file.multipleOf
+  def pattern: String                   = file.pattern
+  def minLength: Int                    = file.minLength
+  def maxLength: Int                    = file.maxLength
+  def minimum: String                   = file.minimum
+  def maximum: String                   = file.maximum
+  def exclusiveMinimum: String          = file.exclusiveMinimum
+  def exclusiveMaximum: String          = file.exclusiveMaximum
+  def format: String                    = file.format
+  def multipleOf: Int                   = file.multipleOf
 
   def withFileTypes(fileTypes: java.util.List[String]): this.type = {
     file.withFileTypes(fileTypes.asScala)

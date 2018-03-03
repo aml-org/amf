@@ -28,6 +28,9 @@ abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) ex
 }
 
 case class ArrayShape(private[amf] override val array: models.ArrayShape) extends DataArrangeShape(array) {
+
+  def this() = this(models.ArrayShape())
+
   def items: Shape = Shape(array.items)
 
   def withItems(items: Shape): this.type = {
