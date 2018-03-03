@@ -1,0 +1,46 @@
+#%RAML 1.0
+title:
+  value: ACME Banking HTTP API
+  (AnnotationInTitle): sjf
+(AnnotationInRoot): sjf
+version:
+  value: 1.0
+  (AnnotationInVersion): sjf
+documentation:
+  -
+    title:
+      value: Documentation title
+      (AnnotationInDocumentationTitle): sjf
+    content:
+      value: Documentation content
+      (AnnotationInDocumentationContent): sjf
+mediaType: application/json
+baseUri:
+  value: acme-banking.com/apis
+  (AnnotationInBaseUri): sjf
+/customers:
+  displayName:
+    value: EndPoint display name
+    (AnnotationInEndPointDisplayName): sjf
+  description:
+    value: EndPoint description
+    (AnnotationInEndPointDescription): sjf
+  (AnnotationInEndPointAlpha): alpha
+  (AnnotationInEndPointBeta): beta
+  /{customer_id}:
+    uriParameters:
+      customer_id:
+        (AnnotationInParameter): sjf
+        required: true
+    get:
+      description:
+        value: Returns Customer data
+        (AnnotationInOperationDescription): sjf
+      (AnnotationInOperation): sjf
+      responses:
+        200:
+          description:
+            value: Response description
+            (AnnotationInResponseDescription): sjf
+          body:
+            application/json:

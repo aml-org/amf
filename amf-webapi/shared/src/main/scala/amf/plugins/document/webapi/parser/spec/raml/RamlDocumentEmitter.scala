@@ -388,10 +388,9 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
         if (uri.nonEmpty) {
           val Empty = Annotations()
-          RamlScalarEmitter(
-            "baseUri",
-            FieldEntry(WebApiModel.BasePath, // Ignore :S
-                       Value(AmfScalar(uri.url(), annotation.map(_.extensions).getOrElse(Empty)), Empty)))
+          RamlScalarEmitter("baseUri",
+                            FieldEntry(WebApiModel.BasePath, // Ignore :S
+                                       Value(AmfScalar(uri.url()), annotation.map(_.extensions).getOrElse(Empty))))
             .emit(b)
         }
       }
