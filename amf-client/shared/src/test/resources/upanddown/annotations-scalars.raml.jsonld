@@ -62,6 +62,102 @@
                 "@value": "Documentation content"
               }
             ],
+            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInDocumentationTitle": {
+              "http://raml.org/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInDocumentationTitle"
+                }
+              ],
+              "http://raml.org/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/title"
+                }
+              ],
+              "@id": "null/oooooo/AnnotationInDocumentationTitle/scalar_1",
+              "@type": [
+                "http://raml.org/vocabularies/data#Scalar"
+              ],
+              "http://raml.org/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://raml.org/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "null/oooooo/AnnotationInDocumentationTitle/scalar_1/source-map",
+                  "@type": [
+                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://raml.org/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "null/oooooo/AnnotationInDocumentationTitle/scalar_1"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(13,40)-(13,43)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInDocumentationContent": {
+              "http://raml.org/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInDocumentationContent"
+                }
+              ],
+              "http://raml.org/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/description"
+                }
+              ],
+              "@id": "null/oooooo/AnnotationInDocumentationContent/scalar_1",
+              "@type": [
+                "http://raml.org/vocabularies/data#Scalar"
+              ],
+              "http://raml.org/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://raml.org/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "null/oooooo/AnnotationInDocumentationContent/scalar_1/source-map",
+                  "@type": [
+                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://raml.org/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "null/oooooo/AnnotationInDocumentationContent/scalar_1"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(16,42)-(16,45)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://raml.org/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInDocumentationTitle"
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInDocumentationContent"
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation title/source-map",
@@ -210,12 +306,106 @@
                 }
               ]
             },
+            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInEndPointDisplayName": {
+              "http://raml.org/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInEndPointDisplayName"
+                }
+              ],
+              "http://raml.org/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/name"
+                }
+              ],
+              "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/oooooo/AnnotationInEndPointDisplayName/scalar_1",
+              "@type": [
+                "http://raml.org/vocabularies/data#Scalar"
+              ],
+              "http://raml.org/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://raml.org/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/oooooo/AnnotationInEndPointDisplayName/scalar_1/source-map",
+                  "@type": [
+                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://raml.org/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/oooooo/AnnotationInEndPointDisplayName/scalar_1"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(24,39)-(24,42)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInEndPointDescription": {
+              "http://raml.org/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInEndPointDescription"
+                }
+              ],
+              "http://raml.org/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/description"
+                }
+              ],
+              "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/oooooo/AnnotationInEndPointDescription/scalar_1",
+              "@type": [
+                "http://raml.org/vocabularies/data#Scalar"
+              ],
+              "http://raml.org/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://raml.org/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/oooooo/AnnotationInEndPointDescription/scalar_1/source-map",
+                  "@type": [
+                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://raml.org/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/oooooo/AnnotationInEndPointDescription/scalar_1"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(27,39)-(27,42)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
             "http://raml.org/vocabularies/document#customDomainProperties": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%252Fcustomers/extension/AnnotationInEndPointAlpha"
               },
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%252Fcustomers/extension/AnnotationInEndPointBeta"
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInEndPointDisplayName"
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInEndPointDescription"
               }
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -402,6 +592,55 @@
                         ]
                       }
                     ],
+                    "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInResponseDescription": {
+                      "http://raml.org/vocabularies/document#name": [
+                        {
+                          "@value": "AnnotationInResponseDescription"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document#element": [
+                        {
+                          "@value": "http://schema.org/description"
+                        }
+                      ],
+                      "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/oooooo/AnnotationInResponseDescription/scalar_1",
+                      "@type": [
+                        "http://raml.org/vocabularies/data#Scalar"
+                      ],
+                      "http://raml.org/vocabularies/data#value": [
+                        {
+                          "@value": "sjf",
+                          "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/oooooo/AnnotationInResponseDescription/scalar_1/source-map",
+                          "@type": [
+                            "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#lexical": [
+                            {
+                              "http://raml.org/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/oooooo/AnnotationInResponseDescription/scalar_1"
+                                }
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(44,47)-(44,50)]"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "http://raml.org/vocabularies/document#customDomainProperties": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%252Fcustomers%252F%257Bcustomer_id%257D/get/scalar-valued/1/AnnotationInResponseDescription"
+                      }
+                    ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/source-map",
@@ -489,9 +728,56 @@
                     }
                   ]
                 },
+                "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/scalar-valued/1/AnnotationInOperationDescription": {
+                  "http://raml.org/vocabularies/document#name": [
+                    {
+                      "@value": "AnnotationInOperationDescription"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/document#element": [
+                    {
+                      "@value": "http://schema.org/description"
+                    }
+                  ],
+                  "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/oooooo/AnnotationInOperationDescription/scalar_1",
+                  "@type": [
+                    "http://raml.org/vocabularies/data#Scalar"
+                  ],
+                  "http://raml.org/vocabularies/data#value": [
+                    {
+                      "@value": "sjf",
+                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/oooooo/AnnotationInOperationDescription/scalar_1/source-map",
+                      "@type": [
+                        "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://raml.org/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/oooooo/AnnotationInOperationDescription/scalar_1"
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(38,44)-(38,47)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
                 "http://raml.org/vocabularies/document#customDomainProperties": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%252Fcustomers%252F%257Bcustomer_id%257D/get/extension/AnnotationInOperation"
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%252Fcustomers%252F%257Bcustomer_id%257D/scalar-valued/1/AnnotationInOperationDescription"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -846,9 +1132,103 @@
             }
           ]
         },
+        "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml/scalar-valued/1/AnnotationInTitle": {
+          "http://raml.org/vocabularies/document#name": [
+            {
+              "@value": "AnnotationInTitle"
+            }
+          ],
+          "http://raml.org/vocabularies/document#element": [
+            {
+              "@value": "http://schema.org/name"
+            }
+          ],
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/oooooo/AnnotationInTitle/scalar_1",
+          "@type": [
+            "http://raml.org/vocabularies/data#Scalar"
+          ],
+          "http://raml.org/vocabularies/data#value": [
+            {
+              "@value": "sjf",
+              "@type": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://raml.org/vocabularies/document-source-maps#sources": [
+            {
+              "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/oooooo/AnnotationInTitle/scalar_1/source-map",
+              "@type": [
+                "http://raml.org/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://raml.org/vocabularies/document-source-maps#lexical": [
+                {
+                  "http://raml.org/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/oooooo/AnnotationInTitle/scalar_1"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(4,23)-(4,26)]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml/scalar-valued/2/AnnotationInVersion": {
+          "http://raml.org/vocabularies/document#name": [
+            {
+              "@value": "AnnotationInVersion"
+            }
+          ],
+          "http://raml.org/vocabularies/document#element": [
+            {
+              "@value": "http://schema.org/version"
+            }
+          ],
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/oooooo/AnnotationInVersion/scalar_1",
+          "@type": [
+            "http://raml.org/vocabularies/data#Scalar"
+          ],
+          "http://raml.org/vocabularies/data#value": [
+            {
+              "@value": "sjf",
+              "@type": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://raml.org/vocabularies/document-source-maps#sources": [
+            {
+              "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/oooooo/AnnotationInVersion/scalar_1/source-map",
+              "@type": [
+                "http://raml.org/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://raml.org/vocabularies/document-source-maps#lexical": [
+                {
+                  "http://raml.org/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/oooooo/AnnotationInVersion/scalar_1"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(8,25)-(8,28)]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
         "http://raml.org/vocabularies/document#customDomainProperties": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/extension/AnnotationInRoot"
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml/scalar-valued/1/AnnotationInTitle"
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml/scalar-valued/2/AnnotationInVersion"
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [

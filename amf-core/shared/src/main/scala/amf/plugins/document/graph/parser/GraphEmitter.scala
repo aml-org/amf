@@ -6,6 +6,7 @@ import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
 import amf.core.model.document.{BaseUnit, SourceMap}
@@ -117,7 +118,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                   b.entry(
                     propertyUri,
                     _.obj { b =>
-                      b.entry((Namespace.Document + "name").iri(), scalar(_, extension.name))
+                      b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
                       traverse(extension.extension, parent, b)
                     }
                   )
@@ -127,13 +128,24 @@ object GraphEmitter extends MetaModelTypeMapping {
       }
 
       // Collect element scalar fields custom annotations
+      var count = 1
       element.fields.foreach({
         case (f, v) =>
           v.annotations
             .collect({ case e: DomainExtensionAnnotation => e })
             .foreach(e => {
               val extension: DomainExtension = e.extension
-              println(e.extension.name)
+              val uri                        = s"$parent/scalar-valued/$count/${extension.name}"
+              customProperties += uri
+              b.entry(
+                uri,
+                _.obj { b =>
+                  b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
+                  b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri()))
+                  traverse(extension.extension, uri, b)
+                }
+              )
+              count += 1
             })
       })
 
