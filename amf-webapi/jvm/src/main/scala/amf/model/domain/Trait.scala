@@ -5,6 +5,9 @@ import amf.model.document.BaseUnit
 import amf.plugins.domain.webapi.models.templates
 
 case class Trait(private[amf] val trt: templates.Trait) extends AbstractDeclaration(trt) {
+
+  def this() = this(templates.Trait())
+
   override def linkTarget: Option[DomainElement with Linkable] =
     trt.linkTarget.map({ case l: templates.Trait => Trait(l) })
 

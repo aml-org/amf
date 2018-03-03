@@ -6,7 +6,7 @@ import amf.core.unsafe.PlatformSecrets
 import scala.language.postfixOps
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 trait DeclaresModel extends PlatformSecrets {
@@ -15,8 +15,18 @@ trait DeclaresModel extends PlatformSecrets {
 
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   lazy val declares: js.Iterable[amf.model.domain.DomainElement] = {
-    val declarations = element.declares.map { e => platform.wrap[amf.model.domain.DomainElement](e) }
+    val declarations = element.declares.map { e =>
+      platform.wrap[amf.model.domain.DomainElement](e)
+    }
     declarations.toJSArray
+  }
+
+  def withDeclaredElement(declared: DomainElement): this.type = {
+    declared.meta match {
+      case domainElement: DomainElement => element.withDeclaredElement(domainElement)
+      case _                            => throw new Exception("Only can declare domain elements") // todo js errors?
+    }
+    this
   }
 
 }

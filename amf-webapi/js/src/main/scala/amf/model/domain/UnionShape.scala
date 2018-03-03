@@ -10,7 +10,15 @@ import scala.scalajs.js.JSConverters._
 @JSExportTopLevel("model.domain.UnionShape")
 case class UnionShape(private[amf] val schema: models.UnionShape) extends AnyShape(schema) {
 
-  def anyOf: js.Iterable[AnyShape] = Option(schema.anyOf).getOrElse(Seq()).map { s => platform.wrap[AnyShape](s) }.toJSIterable
+  def this() = this(models.UnionShape())
+
+  def anyOf: js.Iterable[AnyShape] =
+    Option(schema.anyOf)
+      .getOrElse(Seq())
+      .map { s =>
+        platform.wrap[AnyShape](s)
+      }
+      .toJSIterable
   def withAnyOf(anyOf: js.Iterable[AnyShape]) = {
     schema.withAnyOf(anyOf.toSeq.map(_.element))
     this

@@ -10,6 +10,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Trait(private[amf] val trt: templates.Trait) extends AbstractDeclaration(trt) {
 
+  def this() = this(templates.Trait())
+
   override private[amf] def element = trt
 
   override def linkTarget: Option[DomainElement with Linkable] =

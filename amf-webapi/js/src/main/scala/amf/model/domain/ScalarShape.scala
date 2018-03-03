@@ -8,6 +8,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("model.domain.ScalarShape")
 case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends AnyShape(scalar) {
 
+  def this() = this(models.ScalarShape())
+
   def dataType: String         = scalar.dataType
   def pattern: String          = scalar.pattern
   def minLength: Int           = scalar.minLength

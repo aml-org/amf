@@ -9,6 +9,8 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class FileShape(private val file: models.FileShape) extends AnyShape(file) {
 
+  def this() = this(models.FileShape())
+
   def fileTypes: js.Iterable[String] = file.fileTypes.toJSArray
   def pattern: String                = file.pattern
   def minLength: Int                 = file.minLength

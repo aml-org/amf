@@ -12,6 +12,8 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class PropertyDependencies(private[amf] val property: models.PropertyDependencies) extends DomainElement {
 
+  def this() = this(models.PropertyDependencies())
+
   def propertySource: String              = property.propertySource
   def propertyTarget: js.Iterable[String] = Option(property.propertyTarget).getOrElse(Nil).toJSArray
 

@@ -34,6 +34,8 @@ trait DeclaresModel extends AmfObject {
   def declares: Seq[DomainElement]
 
   def withDeclares(declarations: Seq[DomainElement]): this.type = setArrayWithoutId(Declares, declarations)
+
+  def withDeclaredElement(element: DomainElement): this.type = add(Declares, element)
 }
 
 object Module {

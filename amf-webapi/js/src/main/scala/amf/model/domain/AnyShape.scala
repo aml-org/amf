@@ -1,14 +1,17 @@
 package amf.model.domain
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 @JSExportTopLevel("model.domain.AnyShape")
 class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
+
+  def this() = this(models.AnyShape())
+
   override private[amf] def element = any
 
   override def linkTarget: Option[DomainElement with Linkable] =
