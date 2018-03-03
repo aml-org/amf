@@ -5,6 +5,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.{Field, Type}
+import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{FieldEntry, Value}
 
@@ -29,12 +30,13 @@ object DomainElementMerging {
               case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
               case _                                                                          => main.set(field, adoptInner(main.id, value.value))
             }
-          case Some(existing) if Option(existing.value).isDefined && Option(existing.value.value).isDefined
-             && existing.value.value.annotations.contains(classOf[DefaultNode]) =>
+          case Some(existing)
+              if Option(existing.value).isDefined && Option(existing.value.value).isDefined
+                && existing.value.value.annotations.contains(classOf[DefaultNode]) =>
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
-              case Type.ArrayLike(element) => setNonOptional(main, field, element, value)
-              case _ => main.set(field, adoptInner(main.id, value.value))
+              case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
+              case _                                                                          => main.set(field, adoptInner(main.id, value.value))
             }
 
           case Some(existing) => // Case (3)
@@ -152,7 +154,7 @@ object DataNodeMerging {
     for { (key, value) <- right.properties } {
       left.properties.get(key) match {
         case Some(property) => merge(property, value)
-        case None           => left.addProperty(key, adoptInner(left.id, value), right.propertyAnnotations(key))
+        case None           => left.addProperty(key, adoptTree(left.id, value), right.propertyAnnotations(key))
       }
     }
 
@@ -164,19 +166,7 @@ object DataNodeMerging {
       case scalar: ScalarNode =>
         if (!existing.contains(scalar.value)) main.addMember(scalar)
       case node =>
-        main.addMember(adoptInner(main.id, node))
+        main.addMember(adoptTree(main.id, node))
     }
-  }
-
-  def adoptInner(id: String, target: DataNode): DataNode = {
-    target.forceAdopted(id)
-    target match {
-      case array: ArrayNode =>
-        array.members.foreach(adoptInner(array.id, _))
-      case obj: ObjectNode =>
-        obj.properties.values.foreach(adoptInner(obj.id, _))
-      case _ =>
-    }
-    target
   }
 }

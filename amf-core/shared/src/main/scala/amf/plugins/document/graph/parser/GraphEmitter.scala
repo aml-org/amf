@@ -1,7 +1,5 @@
 package amf.plugins.document.graph.parser
 
-import java.net.{URI, URLEncoder}
-
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
@@ -10,6 +8,7 @@ import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
 import amf.core.model.document.{BaseUnit, SourceMap}
+import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Value}
@@ -134,15 +133,15 @@ object GraphEmitter extends MetaModelTypeMapping {
           v.annotations
             .collect({ case e: DomainExtensionAnnotation => e })
             .foreach(e => {
-              val extension: DomainExtension = e.extension
-              val uri                        = s"$parent/scalar-valued/$count/${extension.name}"
+              val extension = e.extension
+              val uri       = s"${element.id}/scalar-valued/$count/${extension.name}"
               customProperties += uri
               b.entry(
                 uri,
                 _.obj { b =>
                   b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
                   b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri()))
-                  traverse(extension.extension, uri, b)
+                  traverse(adoptTree(uri, extension.extension), uri, b)
                 }
               )
               count += 1
@@ -151,7 +150,7 @@ object GraphEmitter extends MetaModelTypeMapping {
 
       if (customProperties.nonEmpty)
         b.entry(
-          (Namespace.Document + "customDomainProperties").iri(),
+          DomainElementModel.CustomDomainProperties.value.iri(),
           _.list { b =>
             customProperties.foreach(iri(b, _, inArray = true))
           }

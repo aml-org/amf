@@ -9,6 +9,7 @@ import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
+import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
@@ -255,7 +256,7 @@ class ExtensionsResolutionStage(profile: String) extends ResolutionStage(profile
     case array: AmfArray =>
       AmfArray(array.values.map(adoptInner(id, _)), array.annotations)
     case dataNode: DataNode =>
-      DataNodeMerging.adoptInner(id, dataNode)
+      adoptTree(id, dataNode)
     case element: DomainElement =>
       element.adopted(id)
 
