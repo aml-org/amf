@@ -47,6 +47,22 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   override def meta: Obj = DataNodeModel
 }
 
+object DataNodeOps {
+
+  /** Adopt entire data node hierarchy. */
+  def adoptTree(id: String, node: DataNode): DataNode = {
+    node.forceAdopted(id)
+    node match {
+      case array: ArrayNode =>
+        array.members.foreach(adoptTree(array.id, _))
+      case obj: ObjectNode =>
+        obj.properties.values.foreach(adoptTree(obj.id, _))
+      case _ =>
+    }
+    node
+  }
+}
+
 /**
   * Data records, with a list of properties
   */
@@ -228,7 +244,6 @@ object ArrayNode {
   def apply(annotations: Annotations): ArrayNode = new ArrayNode(Fields(), annotations)
 }
 
-
 /**
   * Dynamic node representing a link to another dynamic node
   * @param alias human readable value for the link
@@ -236,7 +251,8 @@ object ArrayNode {
   * @param fields default fields for the dynamic node
   * @param annotations deafult annotations for the dynamic node
   */
-class LinkNode(var alias:  String, var value: String, override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
+class LinkNode(var alias: String, var value: String, override val fields: Fields, val annotations: Annotations)
+    extends DataNode(annotations) {
   val Value: Field = Field(Str, Namespace.Data + "value")
   val Alias: Field = Field(Str, Namespace.Data + "alias")
 
@@ -253,7 +269,6 @@ class LinkNode(var alias:  String, var value: String, override val fields: Field
   }
 
   override def replaceVariables(values: Set[Variable]): DataNode = this
-
 
   override def cloneNode(): this.type = {
     val cloned = LinkNode(annotations)
