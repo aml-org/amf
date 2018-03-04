@@ -184,6 +184,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
   private def resolveUnitDocument(reference: ParsedReference): Either[String, YDocument] = {
     reference.unit match {
+
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
         Right(
           YamlParser(e.encodes.raw).withIncludeTag("!include").parse().collectFirst({ case d: YDocument => d }).head)
