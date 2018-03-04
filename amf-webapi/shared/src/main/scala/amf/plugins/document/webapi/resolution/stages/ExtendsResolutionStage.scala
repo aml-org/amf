@@ -8,6 +8,7 @@ import amf.core.parser.ParserContext
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorDeclaration
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
@@ -188,6 +189,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
       val local = context.add(parameterized.variables)
 
       Option(parameterized.target) match {
+        case Some(t: ErrorDeclaration) => TraitBranch(key, Operation(), Seq())
         case Some(t: Trait) =>
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)

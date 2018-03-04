@@ -2,13 +2,21 @@ package amf.plugins.document.webapi.parser.spec
 
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.{Annotations, Declarations, EmptyFutureDeclarations, ErrorHandler, Fields, FutureDeclarations, SearchScope}
+import amf.core.parser.{
+  Annotations,
+  Declarations,
+  EmptyFutureDeclarations,
+  ErrorHandler,
+  Fields,
+  FutureDeclarations,
+  SearchScope
+}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YPart
-
 
 /**
   * Declarations object.
@@ -24,7 +32,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
                          errorHandler: Option[ErrorHandler],
                          futureDeclarations: FutureDeclarations)
-  extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
+    extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
@@ -43,19 +51,19 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
       case ss: SecurityScheme =>
         futureDeclarations.resolveRef(ss.name, ss)
         securitySchemes = securitySchemes + (ss.name -> ss)
-      case _  => super.+=(element)
+      case _ => super.+=(element)
     }
     this
   }
 
   /** Find domain element with the same name. */
   override def findEquivalent(element: DomainElement): Option[DomainElement] = element match {
-    case r: ResourceType         => findResourceType(r.name, SearchScope.All)
-    case t: Trait                => findTrait(t.name, SearchScope.All)
-    case s: Shape                => findType(s.name, SearchScope.All)
-    case p: Parameter            => findParameter(p.name, SearchScope.All)
-    case ss: SecurityScheme      => findSecurityScheme(ss.name, SearchScope.All)
-    case _                       => super.findEquivalent(element)
+    case r: ResourceType    => findResourceType(r.name, SearchScope.All)
+    case t: Trait           => findTrait(t.name, SearchScope.All)
+    case s: Shape           => findType(s.name, SearchScope.All)
+    case p: Parameter       => findParameter(p.name, SearchScope.All)
+    case ss: SecurityScheme => findSecurityScheme(ss.name, SearchScope.All)
+    case _                  => super.findEquivalent(element)
   }
 
   def registerParameter(parameter: Parameter, payload: Payload): Unit = {
@@ -70,14 +78,17 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
     libraries.get(alias) match {
       case Some(lib: WebApiDeclarations) => lib
       case _ =>
-        val result = new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
+        val result =
+          new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
         libraries = libraries + (alias -> result)
         result
     }
   }
 
   override def declarables(): Seq[DomainElement] =
-    super.declarables().toList ++ (shapes.values ++  resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toList
+    super
+      .declarables()
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -122,9 +133,10 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
       case t: Trait => t
     }
 
-  def findType(key: String, scope: SearchScope.Scope): Option[Shape] = findForType(key, _.asInstanceOf[WebApiDeclarations].shapes, scope) collect {
-    case s: Shape => s
-  }
+  def findType(key: String, scope: SearchScope.Scope): Option[Shape] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].shapes, scope) collect {
+      case s: Shape => s
+    }
 
   def findSecuritySchemeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): SecurityScheme =
     findSecurityScheme(key, scope) match {
@@ -148,22 +160,24 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
 
   def findNamedExample(key: String): Option[Example] = fragments.get(key) collect { case e: Example => e }
 
-  trait ErrorDeclaration
-
-  object ErrorTrait                extends Trait(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorResourceType         extends ResourceType(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorSecurityScheme       extends SecurityScheme(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorNamedExample         extends Example(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorCreativeWork         extends CreativeWork(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorParameter            extends Parameter(Fields(), Annotations()) with ErrorDeclaration
-
 }
 
 object WebApiDeclarations {
 
-  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler], futureDeclarations: FutureDeclarations): WebApiDeclarations = {
+  def apply(declarations: Seq[DomainElement],
+            errorHandler: Option[ErrorHandler],
+            futureDeclarations: FutureDeclarations): WebApiDeclarations = {
     val result = new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
   }
+
+  trait ErrorDeclaration
+
+  object ErrorTrait          extends Trait(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorResourceType   extends ResourceType(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorSecurityScheme extends SecurityScheme(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorNamedExample   extends Example(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorCreativeWork   extends CreativeWork(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorParameter      extends Parameter(Fields(), Annotations()) with ErrorDeclaration
 }
