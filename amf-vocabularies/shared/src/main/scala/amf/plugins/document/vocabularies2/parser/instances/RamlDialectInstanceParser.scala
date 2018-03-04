@@ -28,6 +28,9 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
 
   def registerDialectDomainElement(name: String, dialectDomainElement: DialectDomainElement): DialectInstanceDeclarations = {
     dialectDomainElements += (name -> dialectDomainElement)
+    if (!dialectDomainElement.isUnresolved) {
+      futureDeclarations.resolveRef(name, dialectDomainElement)
+    }
     this
   }
 
@@ -88,7 +91,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseDocument(): Option[DialectInstance] = {
     parseDeclarations()
-    parseEncoded() match {
+    val document = parseEncoded() match {
 
       case Some(dialectDomainElement) =>
         val encoded = dialectInstance.withEncodes(dialectDomainElement)
@@ -99,6 +102,11 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case _ => None
 
     }
+
+    // resolve unresolved references
+    ctx.futureDeclarations.resolve()
+
+    document
   }
 
   protected def parseDeclarations(): Unit = {
@@ -109,7 +117,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
             val id = declarationsId + "/" + declarationEntry.key.as[String].urlEncoded
             parseNode(id, declarationEntry.value, nodeMapping) match {
               case Some(node) => ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
-              case _          => // TODO: violation here
+              case other      => // TODO: violation here
             }
           }
         }
@@ -143,7 +151,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   def checkHashProperties(node: DialectDomainElement, propertyMapping: PropertyMapping, propertyEntry: YMapEntry): DialectDomainElement = {
     // TODO: check if the node already has a value and that it matches (maybe coming from a declaration)
     Option(propertyMapping.mapKeyProperty()) match {
-        case Some(propId) => node.setMapKeyField(propId, propertyEntry.key.as[String])
+        case Some(propId) => node.setMapKeyField(propId, propertyEntry.key.as[String], propertyEntry.key)
         case None         => node
     }
   }
@@ -156,7 +164,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           case Some(nodeMapping: NodeMapping) =>
             val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded)
             parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
-              case Some(dialectDomainElement) => node.setObjectField(property, dialectDomainElement)
+              case Some(dialectDomainElement) => node.setObjectField(property, dialectDomainElement, propertyEntry.value)
               case None                       => // ignore
             }
         }
@@ -180,7 +188,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           case _ => None
         }
     }
-    node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node })
+    node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node }, propertyEntry.value)
   }
 
   def parseObjectCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
@@ -200,7 +208,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       }
     }
     val elems: Seq[DialectDomainElement] = res.collect { case Some(x: DialectDomainElement) => x}
-    node.setObjectField(property, elems)
+    node.setObjectField(property, elems, propertyEntry.value)
   }
 
   def pathSegment(parent: String, next: String): String = {
@@ -247,10 +255,10 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def setLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement) = {
     parseLiteralValue(value, property, node) match {
-      case Some(b: Boolean) => node.setLiteralField(property, b)
-      case Some(i: Int)     => node.setLiteralField(property, i)
-      case Some(f: Float)   => node.setLiteralField(property, f)
-      case Some(s: String)  => node.setLiteralField(property, s)
+      case Some(b: Boolean) => node.setLiteralField(property, b, value)
+      case Some(i: Int)     => node.setLiteralField(property, i, value)
+      case Some(f: Float)   => node.setLiteralField(property, f, value)
+      case Some(s: String)  => node.setLiteralField(property, s, value)
       case _                => // ignore
     }
   }
@@ -263,10 +271,10 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     propertyEntry.value.tagType match {
       case YType.Seq =>
         val values = propertyEntry.value.as[YSequence].nodes.map { elemValue => parseLiteralValue(elemValue, property, node) }.collect { case Some(v) => v }
-        node.setLiteralField(property, values)
+        node.setLiteralField(property, values, propertyEntry.value)
       case _ =>
         parseLiteralValue(propertyEntry.value, property, node) match {
-          case Some(v) => node.setLiteralField(property, Seq(v))
+          case Some(v) => node.setLiteralField(property, Seq(v), propertyEntry.value)
           case _       => // ignore
         }
     }
