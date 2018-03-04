@@ -86,7 +86,7 @@ case class LibraryDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering,
 }
 
 case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)]) extends EntryEmitter with AliasesConsumer {
-  val mapping =  dialect.documents.root()
+  val mapping =  dialect.documents().root()
   var emitters: Seq[EntryEmitter] = Seq()
 
   override def emit(b: EntryBuilder): Unit = {

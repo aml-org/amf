@@ -1,12 +1,11 @@
 package amf.plugins.document.vocabularies2.model.domain
 
-import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
 import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies2.metamodel.domain.DialectDomainElementModel
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable
 
@@ -34,6 +33,21 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
   def definedBy: NodeMapping = instanceDefinedBy.orNull
 
+  def localRefName: String = {
+    if (isLink)
+      linkTarget.map(_.id.split("#").last.split("/").last).getOrElse {
+        throw new Exception(s"Cannot produce local reference without linked element at elem $id")
+      }
+    else
+      throw new Exception(s"Cannot produce local reference without linked element at elem $id")
+  }
+
+  def includeName: String = {
+    if (isLink)
+      linkLabel.getOrElse(linkTarget.map(_.id.split("#").head).getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
+    else
+      throw new Exception(s"Cannot produce include reference without linked element at elem $id")
+  }
 
   def iriToValue(iri: String) = ValueType(iri)
 
@@ -61,7 +75,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     // Warning, mapKey has the term property id, no the property mapping id because
     // there's no real propertyMapping for it
     mapKeyProperties.get(termPropertyId) map { stringValue =>
-      AmfScalar(stringValue)
+      AmfScalar(stringValue, annotations)
     } orElse objectProperties.get(propertyId) map { dialectDomainElement =>
       dialectDomainElement
     } orElse  {
@@ -72,51 +86,86 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       literalProperties.get(propertyId) map {
         case vs: Seq[_] =>
           val scalars = vs.map { s => AmfScalar(s) }
-          AmfArray(scalars)
+          AmfArray(scalars, annotations)
         case other =>
-          AmfScalar(other)
+          AmfScalar(other, annotations)
       }
     } orElse {
       fields.fields().find(_.field == f).map(_.element)
     }
   }
 
-  def setObjectField(property: PropertyMapping, value: DialectDomainElement) = {
+
+  def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode) = {
     objectProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
+    if (value.isUnresolved) {
+      value.toFutureRef {
+        case resolvedDialectDomainElement: DialectDomainElement =>
+          objectProperties.put(property.id,
+            resolveUnreferencedLink(value.refName, value.annotations, resolvedDialectDomainElement)
+              .withId(value.id)
+          )
+        case resolved => throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
+      }
+    }
     this
   }
 
-  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement]) = {
+  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode) = {
     objectCollectionProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
+    value.foreach {
+      case linkable: Linkable if linkable.isUnresolved =>
+        linkable.toFutureRef((resolved) => {
+          objectCollectionProperties.get(property.id) map { oldValues =>
+            oldValues map { oldValue =>
+              if (oldValue.id == resolved.id) {
+                resolved
+              } else {
+                oldValue
+              }
+            }
+          } foreach { case updatedValues: Seq[DialectDomainElement] =>
+            objectCollectionProperties.put(property.id, updatedValues)
+          }
+        })
+      case _ => // ignore
+    }
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Int) = {
+  def setLiteralField(property: PropertyMapping, value: Int, node: YNode) = {
     literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Float) = {
+  def setLiteralField(property: PropertyMapping, value: Float, node: YNode) = {
     literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Boolean) = {
+  def setLiteralField(property: PropertyMapping, value: Boolean, node: YNode) = {
     literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Seq[_]) = {
+  def setLiteralField(property: PropertyMapping, value: Seq[_], node: YNode) = {
     literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: String) = {
+  def setLiteralField(property: PropertyMapping, value: String, node: YNode) = {
     literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setMapKeyField(propertyId: String, value: String) = {
+  def setMapKeyField(propertyId: String, value: String, node: YNode) = {
     mapKeyProperties.put(propertyId, value)
     this
   }
@@ -129,11 +178,11 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   override def adopted(newId: String): DialectDomainElement.this.type = if (Option(this.id).isEmpty) withId(newId) else this
 
-  override def linkCopy(): Linkable = DialectDomainElement().withId(id).withDefinedBy(definedBy)
+  override def linkCopy(): Linkable = DialectDomainElement().withId(id).withDefinedBy(definedBy).withInstanceTypes(instanceTypes)
 
   override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]
-    unresolvedNodeMapping.link(label, annotations).asInstanceOf[NodeMapping].withId(unresolvedNodeMapping.id).asInstanceOf[T]
+    unresolvedNodeMapping.link(label, annotations).asInstanceOf[DialectDomainElement].asInstanceOf[T]
   }
 }
 
