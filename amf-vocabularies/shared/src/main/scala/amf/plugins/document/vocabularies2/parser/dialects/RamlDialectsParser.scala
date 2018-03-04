@@ -211,8 +211,8 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     parseExternals(result, location)
 
     references.foreach {
-      case ParsedReference(f: DialectFragment, origin: Reference) => result += (origin.url, f)
-      case _                                                      =>
+      case ParsedReference(f: DialectFragment, origin: Reference, None) => result += (origin.url, f)
+      case _                                                            =>
     }
 
     result

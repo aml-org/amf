@@ -1,16 +1,16 @@
 package amf.plugins.document.vocabularies2.model.domain
 
-import amf.core.metamodel.Type
-import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DynamicDomainElement}
+import amf.core.metamodel.domain.LinkableElementModel
+import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies2.metamodel.domain.DialectDomainElementModel
 import org.yaml.model.YMap
 
 import scala.collection.mutable
 
-case class DialectDomainElement(override val fields: Fields, annotations: Annotations) extends DynamicDomainElement {
+case class DialectDomainElement(override val fields: Fields, annotations: Annotations) extends DynamicDomainElement with Linkable {
 
   val literalProperties: mutable.Map[String, Any] = mutable.HashMap()
   val mapKeyProperties: mutable.Map[String, Any] = mutable.HashMap()
@@ -42,10 +42,10 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         Field(Type.Str, iriToValue(propertyId))
     }
 
-     (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
+    (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
        val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
        property.toField()
-    }.toList ++ mapKeyFields ++ fields.fields().map(_.field)
+    }.toList ++ mapKeyFields ++ fields.fields().map(_.field)// ++ LinkableElementModel.fields
   }
 
 
@@ -58,7 +58,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     val propertyId = findPropertyByTermPropertyId(termPropertyId)
     val annotations = propertyAnnotations.getOrElse(propertyId, Annotations())
 
-    mapKeyProperties.get(propertyId) map { stringValue =>
+    // Warning, mapKey has the term property id, no the property mapping id because
+    // there's no real propertyMapping for it
+    mapKeyProperties.get(termPropertyId) map { stringValue =>
       AmfScalar(stringValue)
     } orElse objectProperties.get(propertyId) map { dialectDomainElement =>
       dialectDomainElement
@@ -67,14 +69,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         AmfArray(seqElements, annotations)
       }
     } orElse {
-      literalProperties.get(propertyId) map { elems =>
-        elems match {
-          case vs: Seq[_] =>
-            val scalars = vs.map { s => AmfScalar(s) }
-            AmfArray(scalars)
-          case other =>
-            AmfScalar(other)
-        }
+      literalProperties.get(propertyId) map {
+        case vs: Seq[_] =>
+          val scalars = vs.map { s => AmfScalar(s) }
+          AmfArray(scalars)
+        case other =>
+          AmfScalar(other)
       }
     } orElse {
       fields.fields().find(_.field == f).map(_.element)
@@ -128,6 +128,13 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   override def adopted(newId: String): DialectDomainElement.this.type = if (Option(this.id).isEmpty) withId(newId) else this
+
+  override def linkCopy(): Linkable = DialectDomainElement().withId(id).withDefinedBy(definedBy)
+
+  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
+    val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]
+    unresolvedNodeMapping.link(label, annotations).asInstanceOf[NodeMapping].withId(unresolvedNodeMapping.id).asInstanceOf[T]
+  }
 }
 
 object DialectDomainElement {

@@ -5,11 +5,11 @@ import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{AbstractReferenceCollector, ParserContext}
+import amf.core.parser.{ParserContext, ReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
-import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceCollector
+import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
 import amf.plugins.document.vocabularies2.emitters.dialects.{RamlDialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies2.emitters.instances.RamlDialectInstancesEmitter
@@ -23,8 +23,8 @@ import amf.plugins.document.vocabularies2.parser.instances.{DialectInstanceConte
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
 import org.yaml.model.YDocument
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor {
 
@@ -125,7 +125,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     case _                         => false
   }
 
-  override def referenceCollector(): AbstractReferenceCollector = new RAMLExtensionsReferenceCollector()
+  override def referenceHandler(): ReferenceHandler = new RAMLExtensionsReferenceHandler()
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
@@ -142,7 +142,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
 
   protected def parseDialectInstance(header: String, document: Root, parentContext: ParserContext): Option[BaseUnit] = {
     registry.withRegisteredDialect(header) { dialect =>
-      new RamlDialectInstanceParser(document, dialect)(new DialectInstanceContext(parentContext)).parseDocument()
+      new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
     }
   }
 
