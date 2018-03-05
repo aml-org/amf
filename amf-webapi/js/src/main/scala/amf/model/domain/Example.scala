@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * Js example model class
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Example private[model] (private val example: models.Example) extends DomainElement with Linkable {
 
+  @JSExportTopLevel("model.domain.Example")
   def this() = this(models.Example())
 
   def name: String        = element.name

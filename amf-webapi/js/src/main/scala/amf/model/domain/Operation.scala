@@ -4,7 +4,7 @@ import amf.plugins.domain.webapi.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Operation model class.
@@ -12,6 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Operation private[model] (private val operation: models.Operation) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.Operation")
   def this() = this(models.Operation())
 
   def method: String                       = operation.method

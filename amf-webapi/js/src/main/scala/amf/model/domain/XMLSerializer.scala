@@ -2,15 +2,15 @@ package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS XMLSerializer model class.
   */
 @JSExportAll
-case class XMLSerializer private[model] (private[amf] val xmlSerializer: models.XMLSerializer)
-    extends DomainElement {
+case class XMLSerializer private[model] (private[amf] val xmlSerializer: models.XMLSerializer) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.XMLSerializer")
   def this() = this(models.XMLSerializer())
 
   def attribute: Boolean = xmlSerializer.attribute

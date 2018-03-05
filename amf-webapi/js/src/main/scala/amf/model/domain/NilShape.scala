@@ -2,11 +2,12 @@ package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 case class NilShape(private[amf] val nil: models.NilShape) extends AnyShape(nil) {
 
+  @JSExportTopLevel("model.domain.NilShape")
   def this() = this(models.NilShape())
 
   override private[amf] def element = nil

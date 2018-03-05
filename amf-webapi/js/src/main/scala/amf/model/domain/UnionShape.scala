@@ -7,9 +7,9 @@ import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 
 @JSExportAll
-@JSExportTopLevel("model.domain.UnionShape")
 case class UnionShape(private[amf] val schema: models.UnionShape) extends AnyShape(schema) {
 
+  @JSExportTopLevel("model.domain.UnionShape")
   def this() = this(models.UnionShape())
 
   def anyOf: js.Iterable[AnyShape] =

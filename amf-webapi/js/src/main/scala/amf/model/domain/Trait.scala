@@ -6,10 +6,10 @@ import amf.plugins.domain.webapi.models.templates
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-@JSExportTopLevel("model.domain.Trait")
 @JSExportAll
 case class Trait(private[amf] val trt: templates.Trait) extends AbstractDeclaration(trt) {
 
+  @JSExportTopLevel("model.domain.Trait")
   def this() = this(templates.Trait())
 
   override private[amf] def element = trt

@@ -4,11 +4,12 @@ import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 case class NodeShape(private val node: models.NodeShape) extends AnyShape(node) {
 
+  @JSExportTopLevel("model.domain.NodeShape")
   def this() = this(models.NodeShape())
 
   def minProperties: Int                     = node.minProperties

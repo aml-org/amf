@@ -9,9 +9,10 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 /**
   * JS Settings model class.
   */
-@JSExportTopLevel("model.domain.Settings")
 @JSExportAll
 class Settings(private[model] val settings: security.Settings) extends DomainElement {
+
+  @JSExportTopLevel("model.domain.Settings")
   def this() = this(security.Settings())
 
   def additionalProperties: DataNode = DataNode(settings.additionalProperties)
@@ -25,7 +26,6 @@ class Settings(private[model] val settings: security.Settings) extends DomainEle
   }
 }
 
-@JSExportTopLevel("model.domain.OAuth1Settings")
 @JSExportAll
 case class OAuth1Settings(override private[model] val settings: security.OAuth1Settings) extends Settings(settings) {
 
@@ -65,7 +65,6 @@ case class OAuth1Settings(override private[model] val settings: security.OAuth1S
   override private[amf] def element: security.OAuth1Settings = settings
 }
 
-@JSExportTopLevel("model.domain.OAuth2Settings")
 @JSExportAll
 case class OAuth2Settings(override private[model] val settings: security.OAuth2Settings) extends Settings(settings) {
 
@@ -111,7 +110,6 @@ case class OAuth2Settings(override private[model] val settings: security.OAuth2S
   override private[amf] def element: amf.plugins.domain.webapi.models.security.OAuth2Settings = settings
 }
 
-@JSExportTopLevel("model.domain.ApiKeySettings")
 @JSExportAll
 case class ApiKeySettings(override private[model] val settings: security.ApiKeySettings) extends Settings(settings) {
 

@@ -5,9 +5,9 @@ import amf.plugins.domain.shapes.models
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-@JSExportTopLevel("model.domain.ScalarShape")
 case class ScalarShape(private[amf] val scalar: models.ScalarShape) extends AnyShape(scalar) {
 
+  @JSExportTopLevel("model.domain.ScalarShape")
   def this() = this(models.ScalarShape())
 
   def dataType: String         = scalar.dataType

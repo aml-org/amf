@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.webapi.models.security
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS ParametrizedSecurityScheme model class.
@@ -10,6 +10,8 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class ParametrizedSecurityScheme private[model] (private val s: security.ParametrizedSecurityScheme)
     extends DomainElement {
+
+  @JSExportTopLevel("model.domain.ParametrizedSecurityScheme")
   def this() = this(security.ParametrizedSecurityScheme())
 
   def name: String           = s.name

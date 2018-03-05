@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS CreativeWork model class.
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class CreativeWork private[model] (private val creativeWork: models.CreativeWork) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.CreativeWork")
   def this() = this(models.CreativeWork())
 
   def url: String         = creativeWork.url

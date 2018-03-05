@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.webapi.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS License model class.
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class License private[model] (private val license: models.License) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.License")
   def this() = this(models.License())
 
   def url: String  = license.url

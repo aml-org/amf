@@ -4,7 +4,7 @@ import amf.plugins.domain.webapi.models.security
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS SecurityScheme model class.
@@ -13,6 +13,8 @@ import scala.scalajs.js.annotation.JSExportAll
 case class SecurityScheme private[model] (private val scheme: security.SecurityScheme)
     extends DomainElement
     with Linkable {
+
+  @JSExportTopLevel("model.domain.SecurityScheme")
   def this() = this(security.SecurityScheme())
 
   def name: String                            = scheme.name

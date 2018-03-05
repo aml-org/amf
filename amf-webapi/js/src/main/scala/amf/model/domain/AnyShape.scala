@@ -7,9 +7,9 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-@JSExportTopLevel("model.domain.AnyShape")
 class AnyShape(private[amf] val any: models.AnyShape) extends Shape(any) {
 
+  @JSExportTopLevel("model.domain.AnyShape")
   def this() = this(models.AnyShape())
 
   override private[amf] def element = any

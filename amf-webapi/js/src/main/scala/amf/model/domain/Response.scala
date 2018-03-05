@@ -4,7 +4,7 @@ import amf.plugins.domain.webapi.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Response model class.
@@ -12,6 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Response private[model] (private val response: models.Response) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.Response")
   def this() = this(models.Response())
 
   def name: String                    = response.name

@@ -4,7 +4,7 @@ import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   *
@@ -12,6 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class PropertyDependencies(private[amf] val property: models.PropertyDependencies) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.PropertyDependencies")
   def this() = this(models.PropertyDependencies())
 
   def propertySource: String              = property.propertySource
