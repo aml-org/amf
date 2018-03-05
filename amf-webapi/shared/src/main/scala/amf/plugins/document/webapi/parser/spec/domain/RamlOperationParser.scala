@@ -6,7 +6,6 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
-import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
@@ -25,7 +24,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     val method: String = entry.key
 
     val operation = producer(method).add(Annotations(entry))
-    operation.set(Method, ValueNode(entry.key).string())
+    operation.set(Method, ScalarNode(entry.key).string())
 
     if (parseOptional && method.endsWith("?")) {
       operation.set(OperationModel.Optional, value = true)
@@ -48,46 +47,13 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     val map = entry.value.as[YMap]
     ctx.closedShape(operation.id, map, "operation")
 
-    map.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      operation.set(OperationModel.Name, value.string(), Annotations(entry))
-    })
-
-    map.key("(deprecated)", entry => {
-      val value = ValueNode(entry.value)
-      operation.set(OperationModel.Deprecated, value.boolean(), Annotations(entry))
-    })
-
-    map.key("(summary)", entry => {
-      val value = ValueNode(entry.value)
-      operation.set(OperationModel.Summary, value.string(), Annotations(entry))
-    })
-
-    map.key(
-      "(externalDocs)",
-      entry => {
-        val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.as[YMap]).parse()
-        operation.set(OperationModel.Documentation, creativeWork, Annotations(entry))
-      }
-    )
-
-    map.key(
-      "protocols",
-      entry => {
-        val value = ArrayNode(entry.value)
-        operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
-      }
-    )
-
-    map.key("(consumes)", entry => {
-      val value = ArrayNode(entry.value)
-      operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
-    })
-
-    map.key("(produces)", entry => {
-      val value = ArrayNode(entry.value)
-      operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
-    })
+    map.key("displayName", OperationModel.Name in operation)
+    map.key("(deprecated)", OperationModel.Deprecated in operation)
+    map.key("(summary)", OperationModel.Summary in operation)
+    map.key("(externalDocs)", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
+    map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
+    map.key("(consumes)", OperationModel.Accepts in operation)
+    map.key("(produces)", OperationModel.ContentType in operation)
 
     map.key(
       "is",
@@ -131,19 +97,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
       }
     )
 
-    map.key(
-      "securedBy",
-      entry => {
-        // TODO check for empty array for resolution ?
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .map(s =>
-            RamlParametrizedSecuritySchemeParser(s, operation.withSecurity)
-              .parse())
-
-        operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(operation.withSecurity) _
+    map.key("securedBy", (OperationModel.Security in operation using SchemeParser).allowingSingleValue)
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)
 

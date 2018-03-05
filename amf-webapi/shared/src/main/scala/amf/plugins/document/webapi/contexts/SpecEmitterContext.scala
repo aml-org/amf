@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.core.annotations.DomainExtensionAnnotation
+import amf.core.annotations.{DomainExtensionAnnotation, SingleValueArray}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
@@ -8,7 +8,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.FieldEntry
+import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.remote._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader

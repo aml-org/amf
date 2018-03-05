@@ -214,12 +214,12 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       val settings = scheme.withApiKeySettings()
 
       map.key("name", entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         settings.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
       })
 
       map.key("in", entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         settings.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
       })
 
@@ -241,7 +241,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       map.key(
         "flow",
         entry => {
-          val value = ValueNode(entry.value)
+          val value = ScalarNode(entry.value)
           settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
         }
       )
@@ -264,13 +264,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
         entry => {
           val xSettings = entry.value.as[YMap]
 
-          xSettings.key(
-            "authorizationGrants",
-            entry => {
-              val value = ArrayNode(entry.value)
-              settings.set(OAuth2SettingsModel.AuthorizationGrants, value.strings(), Annotations(entry))
-            }
-          )
+          xSettings.key("authorizationGrants", OAuth2SettingsModel.AuthorizationGrants in settings)
 
           dynamicSettings(xSettings, settings, "authorizationGrants")
         }
@@ -299,11 +293,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           map.key("requestTokenUri", OAuth1SettingsModel.RequestTokenUri in settings)
           map.key("authorizationUri", OAuth1SettingsModel.AuthorizationUri in settings)
           map.key("tokenCredentialsUri", OAuth1SettingsModel.TokenCredentialsUri in settings)
-
-          map.key("signatures", entry => {
-            val value = ArrayNode(entry.value)
-            settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
-          })
+          map.key("signatures", OAuth1SettingsModel.Signatures in settings)
 
           dynamicSettings(map, settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
         }

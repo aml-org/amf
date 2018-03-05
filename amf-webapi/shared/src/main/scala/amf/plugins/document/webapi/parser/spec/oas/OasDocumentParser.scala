@@ -14,10 +14,10 @@ import amf.core.utils.{Lazy, TemplateUri}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, RamlValueNode, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, _}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
@@ -27,7 +27,6 @@ import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
-import amf.plugins.document.webapi.parser.spec._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -126,29 +125,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
     )
 
     map.key("basePath", WebApiModel.BasePath in api)
-
-    map.key("consumes", entry => {
-      val value = ArrayNode(entry.value)
-      api.set(WebApiModel.Accepts, value.strings(), Annotations(entry))
-    })
-
-    map.key("produces", entry => {
-      val value = ArrayNode(entry.value)
-      api.set(WebApiModel.ContentType, value.strings(), Annotations(entry))
-    })
-
-    map.key("schemes", entry => {
-      val value = ArrayNode(entry.value)
-      api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
-    })
-
-    val documentations = ListBuffer[CreativeWork]()
-    map.key(
-      "externalDocs",
-      entry => {
-        documentations += OasCreativeWorkParser(entry.value.as[YMap]).parse()
-      }
-    )
+    map.key("consumes", WebApiModel.Accepts in api)
+    map.key("produces", WebApiModel.ContentType in api)
+    map.key("schemes", WebApiModel.Schemes in api)
 
     map.key(
       "security",
@@ -163,6 +142,13 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       }
     )
 
+    val documentations = ListBuffer[CreativeWork]()
+    map.key(
+      "externalDocs",
+      entry => {
+        documentations += OasCreativeWorkParser(entry.value.as[YMap]).parse()
+      }
+    )
     map.key(
       "x-user-documentation",
       entry => {
@@ -466,33 +452,17 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
   case class OperationParser(entry: YMapEntry, global: OasParameters, producer: String => Operation) {
     def parse(): Operation = {
 
-      val operation = producer(ValueNode(entry.key).string().value.toString).add(Annotations(entry))
+      val operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
       val map       = entry.value.as[YMap]
 
       map.key("operationId", OperationModel.Name in operation)
       map.key("description", OperationModel.Description in operation)
       map.key("deprecated", OperationModel.Deprecated in operation)
       map.key("summary", OperationModel.Summary in operation)
-
       map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
-
-      map.key(
-        "schemes",
-        entry => {
-          val value = ArrayNode(entry.value)
-          operation.set(OperationModel.Schemes, value.strings(), Annotations(entry))
-        }
-      )
-
-      map.key("consumes", entry => {
-        val value = ArrayNode(entry.value)
-        operation.set(OperationModel.Accepts, value.strings(), Annotations(entry))
-      })
-
-      map.key("produces", entry => {
-        val value = ArrayNode(entry.value)
-        operation.set(OperationModel.ContentType, value.strings(), Annotations(entry))
-      })
+      map.key("schemes", OperationModel.Schemes in operation)
+      map.key("consumes", OperationModel.Accepts in operation)
+      map.key("produces", OperationModel.ContentType in operation)
 
       map.key(
         "x-is",
@@ -556,7 +526,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
 
       val map = entry.value.as[YMap]
 
-      val node     = ValueNode(entry.key)
+      val node     = ScalarNode(entry.key)
       val response = producer(node.string().value.toString).add(Annotations(entry))
 
       if (response.name == "default") {
@@ -605,7 +575,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       val payload = Payload().add(DefaultPayload())
 
       entries.key("x-media-type",
-                  entry => payload.set(PayloadModel.MediaType, ValueNode(entry.value).string(), Annotations(entry)))
+                  entry => payload.set(PayloadModel.MediaType, ScalarNode(entry.value).string(), Annotations(entry)))
       // TODO add parent id to payload?
       payload.adopted(parentId)
 
@@ -627,7 +597,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
     def parse(): Payload = {
 
       val payload = producer(
-        map.key("mediaType").map(entry => ValueNode(entry.value).text().value.toString)
+        map.key("mediaType").map(entry => ScalarNode(entry.value).text().value.toString)
       ).add(Annotations(map))
 
       // todo set again for not lose annotations?
@@ -760,7 +730,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
       map.key("x-usage", entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })
     }
@@ -831,9 +801,9 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
           val targets: AmfArray = entry.value.value match {
             case _: YScalar =>
               annotations += SingleValueArray()
-              AmfArray(Seq(ValueNode(entry.value).string()))
+              AmfArray(Seq(ScalarNode(entry.value).text()))
             case sequence: YSequence =>
-              ArrayNode(sequence).strings()
+              ArrayNode(sequence).text()
           }
 
           val targetUris = targets.values.map({
@@ -850,12 +820,12 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
       )
 
       map.key("displayName", entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         custom.set(CustomDomainPropertyModel.DisplayName, value.string(), Annotations(entry))
       })
 
       map.key("description", entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
       })
 
@@ -1036,7 +1006,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
 
       parameter
         .set(ParameterModel.Required, !name.endsWith("?"))
-        .set(ParameterModel.Name, ValueNode(entry.key).string())
+        .set(ParameterModel.Name, ScalarNode(entry.key).string())
 
       val map = entry.value.as[YMap]
 

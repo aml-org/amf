@@ -154,12 +154,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
       map.key("minimum", entry => { // todo pope
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.integer(), Annotations(entry))
       })
 
       map.key("maximum", entry => { // todo pope
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.integer(), Annotations(entry))
       })
 
@@ -448,33 +448,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                         AmfScalar(YamlRender.render(entry.value), Annotations(entry.value)),
                         Annotations(entry))
             case _ =>
-              val value = ValueNode(entry.value)
+              val value = ScalarNode(entry.value)
               shape.set(ShapeModel.Default, value.string(), Annotations(entry))
           }
         }
       )
 
-      map.key("enum", entry => {
-        val value = ArrayNode(entry.value)
-        shape.set(ShapeModel.Values, value.strings(), Annotations(entry))
-      })
-
-      map.key(
-        "externalDocs",
-        entry => {
-          val creativeWork: CreativeWork = OasCreativeWorkParser(entry.value.as[YMap]).parse()
-          shape.set(AnyShapeModel.Documentation, creativeWork, Annotations(entry))
-        }
-      )
-
-      map.key(
-        "xml",
-        entry => {
-          val xmlSerializer: XMLSerializer =
-            XMLSerializerParser(shape.name, entry.value.as[YMap]).parse()
-          shape.set(AnyShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
-        }
-      )
+      map.key("enum", ShapeModel.Values in shape)
+      map.key("externalDocs", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
+      map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name))
 
       map.key(
         "x-facets",
@@ -503,16 +485,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       parseScalar(map, shape)
 
-      map.key(
-        "x-fileTypes", { entry =>
-          entry.value.to[Seq[YNode]] match {
-            case Right(_) =>
-              val value = ArrayNode(entry.value)
-              shape.set(FileShapeModel.FileTypes, value.strings(), Annotations(entry.value))
-            case _ =>
-          }
-        }
-      )
+      map.key("x-fileTypes", FileShapeModel.FileTypes in shape)
 
       shape
     }

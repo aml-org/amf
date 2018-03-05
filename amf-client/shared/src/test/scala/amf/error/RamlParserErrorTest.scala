@@ -32,12 +32,12 @@ class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
       },
       protocols => {
         protocols.level should be("Violation")
-        protocols.message should be("WebAPI 'protocols' property must be a scalar or sequence value")
+        protocols.message should be("Expected scalar but found: {invalid: http}")
         protocols.position.map(_.range) should be(Some(Range((5, 10), (7, 0))))
       },
       securedBy => { // todo should not be an error after APIMF-483!
         securedBy.level should be("Violation")
-        securedBy.message should be("Not a YSequence")
+        securedBy.message should be("Security scheme 'oauth' not found in declarations.")
         securedBy.position.map(_.range) should be(Some(Range((7, 11), (7, 16))))
       }
     )

@@ -8,16 +8,20 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.{YMap, YNode, YType}
 
-/**
-  *
-  */
-case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => ParametrizedSecurityScheme)(
+object RamlParametrizedSecuritySchemeParser {
+  def parse(producer: String => ParametrizedSecurityScheme)(node: YNode)(
+      implicit ctx: WebApiContext): ParametrizedSecurityScheme = {
+    RamlParametrizedSecuritySchemeParser(node, producer).parse()
+  }
+}
+
+case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme)(
     implicit ctx: WebApiContext) {
-  def parse(): ParametrizedSecurityScheme = s.tagType match {
-    case YType.Null => producer("null").add(Annotations(s))
+  def parse(): ParametrizedSecurityScheme = node.tagType match {
+    case YType.Null => producer("null").add(Annotations(node))
     case YType.Str =>
-      val name: String = s
-      val scheme       = producer(name).add(Annotations(s))
+      val name: String = node
+      val scheme       = producer(name).add(Annotations(node))
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
         case Some(declaration) => {
@@ -25,14 +29,14 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => Pa
           scheme
         }
         case None =>
-          ctx.violation(scheme.id, s"Security scheme '$name' not found in declarations.", s)
+          ctx.violation(scheme.id, s"Security scheme '$name' not found in declarations.", node)
           scheme
       }
 
     case YType.Map =>
-      val schemeEntry = s.as[YMap].entries.head
+      val schemeEntry = node.as[YMap].entries.head
       val name        = schemeEntry.key
-      val scheme      = producer(name).add(Annotations(s))
+      val scheme      = producer(name).add(Annotations(node))
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
         case Some(declaration) =>
@@ -42,11 +46,11 @@ case class RamlParametrizedSecuritySchemeParser(s: YNode, producer: String => Pa
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
-          ctx.violation("", s"Security scheme '$name' not found in declarations (and name cannot be 'null').", s)
+          ctx.violation("", s"Security scheme '$name' not found in declarations (and name cannot be 'null').", node)
       }
 
       scheme
-    case _ => throw new Exception(s"Invalid type ${s.tagType}")
+    case _ => throw new Exception(s"Invalid type ${node.tagType}")
   }
 }
 
@@ -87,12 +91,12 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
   private def apiKey() = {
     val s = scheme.withApiKeySettings()
     map.key("name", entry => {
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       s.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
     })
 
     map.key("in", entry => {
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       s.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
     })
 
@@ -105,20 +109,13 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key("authorizationUri", OAuth2SettingsModel.AuthorizationUri in settings)
     map.key("accessTokenUri", (OAuth2SettingsModel.AccessTokenUri in settings).allowingAnnotations)
     map.key("(flow)", OAuth2SettingsModel.Flow in settings)
-
-    map.key(
-      "authorizationGrants",
-      entry => {
-        val value = ArrayNode(entry.value)
-        settings.set(OAuth2SettingsModel.AuthorizationGrants, value.strings(), Annotations(entry))
-      }
-    )
+    map.key("authorizationGrants", OAuth2SettingsModel.AuthorizationGrants in settings)
 
     map.key(
       "scopes",
       entry => {
         val value = ArrayNode(entry.value)
-          .strings()
+          .text()
           .values
           .map(v => Scope().set(ScopeModel.Name, v).adopted(scheme.id))
         settings.setArray(OAuth2SettingsModel.Scopes, value, Annotations(entry))
@@ -134,11 +131,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key("requestTokenUri", (OAuth1SettingsModel.RequestTokenUri in settings).allowingAnnotations)
     map.key("authorizationUri", (OAuth1SettingsModel.AuthorizationUri in settings).allowingAnnotations)
     map.key("tokenCredentialsUri", (OAuth1SettingsModel.TokenCredentialsUri in settings).allowingAnnotations)
-
-    map.key("signatures", entry => {
-      val value = ArrayNode(entry.value)
-      settings.set(OAuth1SettingsModel.Signatures, value.strings(), Annotations(entry))
-    })
+    map.key("signatures", OAuth1SettingsModel.Signatures in settings)
 
     dynamicSettings(settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
   }

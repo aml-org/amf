@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.metamodel.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.plugins.domain.shapes.models.{PropertyDependencies, XMLSerializer}
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 import scala.collection.mutable
 
@@ -34,10 +34,15 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
 
   private def targets(): Seq[AmfScalar] = {
     ArrayNode(entry.value)
-      .strings()
+      .text()
       .scalars
       .flatMap(v => properties.get(v.value.toString).map(p => AmfScalar(p.id, v.annotations)))
   }
+}
+
+object XMLSerializerParser {
+  def parse(defaultName: String)(node: YNode)(implicit ctx: WebApiContext): XMLSerializer =
+    XMLSerializerParser(defaultName, node.as[YMap]).parse()
 }
 
 case class XMLSerializerParser(defaultName: String, map: YMap)(implicit ctx: WebApiContext) {
@@ -50,28 +55,28 @@ case class XMLSerializerParser(defaultName: String, map: YMap)(implicit ctx: Web
     map.key(
       "attribute",
       entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         serializer.set(XMLSerializerModel.Attribute, value.boolean(), Annotations(entry) += ExplicitField())
       }
     )
 
     map.key("wrapped", entry => {
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       serializer.set(XMLSerializerModel.Wrapped, value.boolean(), Annotations(entry) += ExplicitField())
     })
 
     map.key("name", entry => {
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       serializer.set(XMLSerializerModel.Name, value.string(), Annotations(entry) += ExplicitField())
     })
 
     map.key("namespace", entry => {
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       serializer.set(XMLSerializerModel.Namespace, value.string(), Annotations(entry))
     })
 
     map.key("prefix", entry => {
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
     })
 

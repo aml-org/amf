@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: test title
+description: test description
+protocols: HTTP
+baseUri: api.example.com/path
+securitySchemes:
+  oauth_2_0:
+    displayName: OAuth2
+    description: oauth 2.0
+    type: OAuth 2.0
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants:
+        - authorization_code
+        - implicit
+/top:
+  description: top description
+  get:
+    description: get something
+    protocols: HTTPS
+    securedBy: oauth_2_0
