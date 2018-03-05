@@ -3,9 +3,8 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SingleValueArray
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfElement, AmfScalar}
 import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
@@ -15,37 +14,48 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 /**
   *
   */
-case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+trait SingleValueArrayEmitter extends EntryEmitter {
+
+  type Element <: AmfElement
+
+  val key: String
+  val f: FieldEntry
+  val ordering: SpecOrdering
 
   override def emit(b: EntryBuilder): Unit = {
-    val single = f.value.annotations.contains(classOf[SingleValueArray]) ||
-      f.value.value.annotations.contains(classOf[SingleValueArray])
+    val single = f.value.value.annotations.contains(classOf[SingleValueArray])
 
     sourceOr(
       f.value, {
-        val schemes = f.array.values.collect { case p: ParametrizedSecurityScheme => p }
+        val elements = collect(f.array.values)
+
         if (single) {
-          b.entry(key, spec.factory.parametrizedSecurityEmitter(schemes.head, ordering).emit(_))
+          b.entry(key, emit(elements.head).emit(_))
         } else {
-          b.entry(
-            key,
-            _.list(traverse(ordering.sorted(schemes.map(spec.factory.parametrizedSecurityEmitter(_, ordering))), _)))
+          b.entry(key, _.list(traverse(ordering.sorted(elements.map(emit)), _)))
         }
       }
     )
   }
 
-  private def chooseParametrizedEmitter(parametrizedSecurityScheme: ParametrizedSecurityScheme,
-                                        ordering: SpecOrdering): PartEmitter = {
-    spec.vendor match {
-      case r: Raml => RamlParametrizedSecuritySchemeEmitter(parametrizedSecurityScheme, ordering)
-      case Oas     => OasParametrizedSecuritySchemeEmitter(parametrizedSecurityScheme, ordering)
-      case other   => throw new IllegalArgumentException(s"Unsupported vendor $other for securedBy generation")
-    }
-  }
+  protected def collect(elements: Seq[AmfElement]): Seq[Element]
+
+  def emit(element: Element): PartEmitter
+
   override def position(): Position = pos(f.value.annotations)
+}
+
+case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends SingleValueArrayEmitter {
+
+  override type Element = ParametrizedSecurityScheme
+
+  override def emit(scheme: ParametrizedSecurityScheme): PartEmitter =
+    spec.factory.parametrizedSecurityEmitter(scheme, ordering)
+
+  override protected def collect(elements: Seq[AmfElement]): Seq[ParametrizedSecurityScheme] =
+    f.array.values.collect { case p: ParametrizedSecurityScheme => p }
 }
 
 abstract class ParametrizedSecuritySchemeEmitter(parametrizedScheme: ParametrizedSecurityScheme,

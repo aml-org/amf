@@ -28,6 +28,7 @@ trait SpecParserOps {
 
     private var single    = false
     private var annotated = false
+    private var dry       = false
 
     /** Allow scalar-valued annotations. */
     def allowingAnnotations: ObjectField = {
@@ -38,6 +39,12 @@ trait SpecParserOps {
     /** Allow parsing a single node when expecting array. */
     def allowingSingleValue: ObjectField = {
       single = true
+      this
+    }
+
+    /** Dry run: do not update object, only parse element. */
+    def parseOnly: ObjectField = {
+      dry = true
       this
     }
 
@@ -70,7 +77,7 @@ trait SpecParserOps {
         case ArrayLike(element)         => parseArray(node, element)
         case element                    => parseScalar(node, element)
       }
-      elem.set(field, value, Annotations(entry) ++= annotations)
+      if (!dry) elem.set(field, value, Annotations(entry) ++= annotations)
     }
 
     private def parseScalar(node: YNode, element: Type): AmfElement = {

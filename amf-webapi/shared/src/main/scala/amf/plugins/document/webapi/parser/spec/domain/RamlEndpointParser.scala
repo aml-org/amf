@@ -2,16 +2,16 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.parser.{Annotations, _}
 import amf.core.utils.TemplateUri
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import org.yaml.model.{YMap, YMapEntry, YNode, YType}
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable
 
@@ -74,6 +74,10 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
     map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)
 
+    map.key("is",
+            (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
+              .parse(endpoint.withTrait)).allowingSingleValue)
+
     map.key(
       "type",
       entry =>
@@ -81,17 +85,6 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       endpoint.withResourceType,
                                       ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
-    )
-
-    map.key(
-      "is",
-      entry => {
-        entry.value
-          .as[Seq[YNode]]
-          .map(value =>
-            ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value))
-              .parse())
-      }
     )
 
     val optionalMethod = if (parseOptionalOperations) "\\??" else ""
@@ -110,17 +103,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
     )
 
-    map.key(
-      "securedBy",
-      entry => {
-        // TODO check for empty array for resolution ?
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .map(s => RamlParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
-
-        endpoint.set(EndPointModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(endpoint.withSecurity) _
+    map.key("securedBy", (EndPointModel.Security in endpoint using SchemeParser).allowingSingleValue)
 
     // TODO refactor this changes for baseUriParameters/UriParameters
     val entries = map.regex(uriParametersKey)
