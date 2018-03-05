@@ -11,12 +11,33 @@ securitySchemes:
     settings:
       authorizationUri: https://www.dropbox.com/1/oauth2/authorize
       accessTokenUri: https://api.dropbox.com/1/oauth2/token
-      authorizationGrants:
-        - authorization_code
-        - implicit
+      authorizationGrants: authorization_code
+resourceTypes:
+  searchableCollection:
+    get:
+      queryParameters:
+        <<queryParamName>>:
+          description: Return <<resourcePathName>> that have their <<queryParamName>> matching the given value
+traits:
+  secured:
+    description: blabla
+  parameterized:
+    queryParameters:
+      <<tokenName>>:
+        description: A valid <<tokenName>> is required
+  descr:
+      description: Some requests require authentication.
 /top:
-  description: top description
+  type:
+    searchableCollection:
+      queryParamName: title
+  securedBy: oauth_2_0
+  is: descr
   get:
-    description: get something
+    is: secured
     protocols: HTTPS
     securedBy: oauth_2_0
+  post:
+    is:
+      parameterized:
+        tokenName: access_token

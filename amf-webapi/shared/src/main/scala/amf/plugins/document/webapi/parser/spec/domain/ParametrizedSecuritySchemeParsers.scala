@@ -89,18 +89,10 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
   }
 
   private def apiKey() = {
-    val s = scheme.withApiKeySettings()
-    map.key("name", entry => {
-      val value = ScalarNode(entry.value)
-      s.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
-    })
-
-    map.key("in", entry => {
-      val value = ScalarNode(entry.value)
-      s.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
-    })
-
-    dynamicSettings(s, "name", "in")
+    val settings = scheme.withApiKeySettings()
+    map.key("name", ApiKeySettingsModel.Name in settings)
+    map.key("in", ApiKeySettingsModel.In in settings)
+    dynamicSettings(settings, "name", "in")
   }
 
   private def oauth2() = {
@@ -109,18 +101,10 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key("authorizationUri", OAuth2SettingsModel.AuthorizationUri in settings)
     map.key("accessTokenUri", (OAuth2SettingsModel.AccessTokenUri in settings).allowingAnnotations)
     map.key("(flow)", OAuth2SettingsModel.Flow in settings)
-    map.key("authorizationGrants", OAuth2SettingsModel.AuthorizationGrants in settings)
+    map.key("authorizationGrants", (OAuth2SettingsModel.AuthorizationGrants in settings).allowingSingleValue)
 
-    map.key(
-      "scopes",
-      entry => {
-        val value = ArrayNode(entry.value)
-          .text()
-          .values
-          .map(v => Scope().set(ScopeModel.Name, v).adopted(scheme.id))
-        settings.setArray(OAuth2SettingsModel.Scopes, value, Annotations(entry))
-      }
-    )
+    val ScopeParser = (n: YNode) => Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+    map.key("scopes", OAuth2SettingsModel.Scopes in settings using ScopeParser)
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
   }

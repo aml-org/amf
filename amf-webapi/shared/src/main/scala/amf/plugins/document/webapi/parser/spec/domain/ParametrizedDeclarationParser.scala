@@ -7,13 +7,17 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import org.yaml.model._
 
-/**
-  *
-  */
+object ParametrizedDeclarationParser {
+  def parse(producer: String => ParametrizedDeclaration)(node: YNode)(
+      implicit ctx: WebApiContext): ParametrizedDeclaration =
+    ParametrizedDeclarationParser(node, producer, ctx.declarations.findTraitOrError(node)).parse()
+}
+
 case class ParametrizedDeclarationParser(
     node: YNode,
     producer: String => ParametrizedDeclaration,
-    declarations: (String, SearchScope.Scope) => AbstractDeclaration)(implicit ctx: WebApiContext) {
+    declarations: (String, SearchScope.Scope) => AbstractDeclaration
+)(implicit ctx: WebApiContext) {
   def parse(): ParametrizedDeclaration = {
     node.tagType match {
       case YType.Map =>

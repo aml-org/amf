@@ -54,19 +54,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("(consumes)", OperationModel.Accepts in operation)
     map.key("(produces)", OperationModel.ContentType in operation)
-
-    map.key(
-      "is",
-      entry => {
-        val traits = entry.value
-          .as[Seq[YNode]]
-          .map(value => {
-            ParametrizedDeclarationParser(value, operation.withTrait, ctx.declarations.findTraitOrError(value))
-              .parse()
-          })
-        if (traits.nonEmpty) operation.setArray(DomainElementModel.Extends, traits, Annotations(entry))
-      }
-    )
+    val DeclarationParser = ParametrizedDeclarationParser.parse(operation.withTrait) _
+    map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue)
 
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)

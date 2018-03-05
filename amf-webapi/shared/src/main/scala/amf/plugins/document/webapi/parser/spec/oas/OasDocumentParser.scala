@@ -298,6 +298,10 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
             case _ =>
           }
 
+          map.key("x-is",
+                  (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
+                    .parse(endpoint.withTrait)).allowingSingleValue)
+
           map.key(
             "x-type",
             entry =>
@@ -305,17 +309,6 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
                                             endpoint.withResourceType,
                                             ctx.declarations.findResourceTypeOrError(entry.value))
                 .parse()
-          )
-
-          map.key(
-            "x-is",
-            entry => {
-              entry.value
-                .as[Seq[YNode]]
-                .map(value =>
-                  ParametrizedDeclarationParser(value, endpoint.withTrait, ctx.declarations.findTraitOrError(value))
-                    .parse())
-            }
           )
 
           collector += endpoint

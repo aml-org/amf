@@ -2,8 +2,10 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.model.domain.AmfElement
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{FieldEntry, Position}
+import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -22,22 +24,21 @@ case class ExtendsEmitter(prefix: String, field: FieldEntry, ordering: SpecOrder
     if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(prefix, resourceTypes, ordering)
 
     val traits: Seq[ParametrizedTrait] = field.array.values.collect { case a: ParametrizedTrait => a }
-    if (traits.nonEmpty) result += TraitExtendsEmitter(prefix, traits, ordering)
+    if (traits.nonEmpty) result += TraitExtendsEmitter(prefix, field, ordering)
 
     result
   }
 }
 
-case class TraitExtendsEmitter(prefix: String, traits: Seq[ParametrizedTrait], ordering: SpecOrdering)
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-    b.entry(
-      prefix + "is",
-      _.list(traverse(ordering.sorted(traits.map(ParametrizedDeclarationEmitter(_, ordering))), _))
-    )
+case class TraitExtendsEmitter(prefix: String, f: FieldEntry, ordering: SpecOrdering) extends SingleValueArrayEmitter {
+  override type Element = ParametrizedTrait
+  override val key: String = prefix + "is"
+
+  override protected def collect(elements: Seq[AmfElement]): Seq[ParametrizedTrait] = elements.collect {
+    case a: ParametrizedTrait => a
   }
 
-  override def position(): Position = traits.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
+  override def emit(element: ParametrizedTrait): PartEmitter = ParametrizedDeclarationEmitter(element, ordering)
 }
 
 case class EndPointExtendsEmitter(prefix: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)
