@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.webapi.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Organization model class.
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Organization private[model] (private val organization: models.Organization) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.Organization")
   def this() = this(models.Organization())
 
   def url: String   = organization.url

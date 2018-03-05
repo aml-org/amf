@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.webapi.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Payload model class.
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Payload private[model] (private val payload: models.Payload) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.Payload")
   def this() = this(models.Payload())
 
   def mediaType: String = payload.mediaType

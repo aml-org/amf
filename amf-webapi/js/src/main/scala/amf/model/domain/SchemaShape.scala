@@ -2,11 +2,12 @@ package amf.model.domain
 
 import amf.plugins.domain.shapes.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 case class SchemaShape(private[amf] val schema: models.SchemaShape) extends AnyShape(schema) {
 
+  @JSExportTopLevel("model.domain.SchemaShape")
   def this() = this(models.SchemaShape())
   def mediaType: String = schema.mediaType
   def raw: String       = schema.raw

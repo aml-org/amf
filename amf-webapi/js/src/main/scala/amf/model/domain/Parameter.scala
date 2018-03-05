@@ -2,7 +2,7 @@ package amf.model.domain
 
 import amf.plugins.domain.webapi.models
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS Parameter model class.
@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class Parameter private[model] (private val parameter: models.Parameter) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.Parameter")
   def this() = this(models.Parameter())
 
   val name: String        = parameter.name

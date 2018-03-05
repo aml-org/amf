@@ -4,7 +4,7 @@ import amf.plugins.domain.webapi.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * JS EndPoint model class.
@@ -12,14 +12,16 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 case class EndPoint private[model] (private val endPoint: models.EndPoint) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.EndPoint")
   def this() = this(models.EndPoint())
 
-  def name: String                                      = endPoint.name
-  def description: String                               = endPoint.description
-  def path: String                                      = endPoint.path
-  def operations: js.Iterable[Operation]                = Option(endPoint.operations).getOrElse(Nil).map(Operation).toJSArray
-  def parameters: js.Iterable[Parameter]                = Option(endPoint.parameters).getOrElse(Nil).map(Parameter).toJSArray
-  def security: js.Iterable[ParametrizedSecurityScheme] = Option(endPoint.security).getOrElse(Nil).map(ParametrizedSecurityScheme).toJSArray
+  def name: String                       = endPoint.name
+  def description: String                = endPoint.description
+  def path: String                       = endPoint.path
+  def operations: js.Iterable[Operation] = Option(endPoint.operations).getOrElse(Nil).map(Operation).toJSArray
+  def parameters: js.Iterable[Parameter] = Option(endPoint.parameters).getOrElse(Nil).map(Parameter).toJSArray
+  def security: js.Iterable[ParametrizedSecurityScheme] =
+    Option(endPoint.security).getOrElse(Nil).map(ParametrizedSecurityScheme).toJSArray
 
   override private[amf] def element: models.EndPoint = endPoint
 

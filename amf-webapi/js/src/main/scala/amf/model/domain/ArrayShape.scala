@@ -5,7 +5,7 @@ import amf.plugins.domain.shapes.models.DataArrangementShape
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) extends AnyShape(array) {
 
@@ -32,6 +32,7 @@ abstract class DataArrangeShape(private[amf] val array: DataArrangementShape) ex
 @JSExportAll
 case class ArrayShape(private[amf] override val array: models.ArrayShape) extends DataArrangeShape(array) {
 
+  @JSExportTopLevel("model.domain.ArrayShape")
   def this() = this(models.ArrayShape())
 
   val items: Shape = Shape(array.items)
@@ -52,6 +53,7 @@ case class ArrayShape(private[amf] override val array: models.ArrayShape) extend
 @JSExportAll
 class MatrixShape(private[amf] override val array: models.ArrayShape) extends ArrayShape(array) {
 
+  @JSExportTopLevel("model.domain.MatrixShape")
   def this() = this(models.ArrayShape())
 
   override def withItems(items: Shape): this.type = {
@@ -71,6 +73,7 @@ object MatrixShape {
 @JSExportAll
 case class TupleShape(private[amf] override val array: models.TupleShape) extends DataArrangeShape(array) {
 
+  @JSExportTopLevel("model.domain.TupleShape")
   def this() = this(models.TupleShape())
 
   def items: js.Iterable[Shape] = Option(array.items).getOrElse(Nil).map(Shape(_)).toJSArray

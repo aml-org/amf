@@ -4,11 +4,12 @@ import amf.plugins.domain.shapes.models
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 case class FileShape(private val file: models.FileShape) extends AnyShape(file) {
 
+  @JSExportTopLevel("model.domain.FileShape")
   def this() = this(models.FileShape())
 
   def fileTypes: js.Iterable[String] = file.fileTypes.toJSArray
