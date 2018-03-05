@@ -104,7 +104,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                 case extension: DomainExtension =>
                   val uri = extension.definedBy.id
                   customProperties += uri
-                  createCustomExtensionNode(b, uri, extension)
+                  createCustomExtension(b, uri, extension)
               }
             case _ => // ignore
           }
@@ -121,7 +121,7 @@ object GraphEmitter extends MetaModelTypeMapping {
               val uri       = s"${element.id}/scalar-valued/$count/${extension.name}"
               customProperties += uri
               adoptTree(uri, extension.extension) // Fix ids
-              createCustomExtensionNode(b, uri, extension, Some(f))
+              createCustomExtension(b, uri, extension, Some(f))
               count += 1
             })
       }
@@ -135,10 +135,10 @@ object GraphEmitter extends MetaModelTypeMapping {
         )
     }
 
-    private def createCustomExtensionNode(b: EntryBuilder,
-                                          uri: String,
-                                          extension: DomainExtension,
-                                          field: Option[Field] = None): Unit = {
+    private def createCustomExtension(b: EntryBuilder,
+                                      uri: String,
+                                      extension: DomainExtension,
+                                      field: Option[Field] = None): Unit = {
       val encoded = URLEncoder.encode(uri)
       b.entry(
         encoded,

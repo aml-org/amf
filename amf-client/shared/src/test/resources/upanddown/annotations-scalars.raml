@@ -2,7 +2,6 @@
 title:
   value: ACME Banking HTTP API
   (AnnotationInTitle): sjf
-(AnnotationInRoot): sjf
 version:
   value: 1.0
   (AnnotationInVersion): sjf
@@ -15,9 +14,7 @@ documentation:
       value: Documentation content
       (AnnotationInDocumentationContent): sjf
 mediaType: application/json
-baseUri:
-  value: acme-banking.com/apis
-  (AnnotationInBaseUri): sjf
+baseUri: acme-banking.com/apis
 /customers:
   displayName:
     value: EndPoint display name
@@ -25,18 +22,15 @@ baseUri:
   description:
     value: EndPoint description
     (AnnotationInEndPointDescription): sjf
-  (AnnotationInEndPointAlpha): alpha
-  (AnnotationInEndPointBeta): beta
   /{customer_id}:
     uriParameters:
       customer_id:
+        type: string
         (AnnotationInParameter): sjf
-        required: true
     get:
       description:
         value: Returns Customer data
         (AnnotationInOperationDescription): sjf
-      (AnnotationInOperation): sjf
       responses:
         200:
           description:
@@ -44,3 +38,7 @@ baseUri:
             (AnnotationInResponseDescription): sjf
           body:
             application/json:
+      (AnnotationInOperation): sjf
+  (AnnotationInEndPointAlpha): alpha
+  (AnnotationInEndPointBeta): beta
+(AnnotationInRoot): sjf
