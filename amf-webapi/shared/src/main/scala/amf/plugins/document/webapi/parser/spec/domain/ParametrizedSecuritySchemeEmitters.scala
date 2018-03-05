@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SingleValueArray
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.AmfScalar
@@ -17,11 +18,23 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 case class ParametrizedSecuritiesSchemeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-    val schemes = f.array.values.collect { case p: ParametrizedSecurityScheme => p }
 
-    b.entry(key,
+  override def emit(b: EntryBuilder): Unit = {
+    val single = f.value.annotations.contains(classOf[SingleValueArray]) ||
+      f.value.value.annotations.contains(classOf[SingleValueArray])
+
+    sourceOr(
+      f.value, {
+        val schemes = f.array.values.collect { case p: ParametrizedSecurityScheme => p }
+        if (single) {
+          b.entry(key, spec.factory.parametrizedSecurityEmitter(schemes.head, ordering).emit(_))
+        } else {
+          b.entry(
+            key,
             _.list(traverse(ordering.sorted(schemes.map(spec.factory.parametrizedSecurityEmitter(_, ordering))), _)))
+        }
+      }
+    )
   }
 
   private def chooseParametrizedEmitter(parametrizedSecurityScheme: ParametrizedSecurityScheme,

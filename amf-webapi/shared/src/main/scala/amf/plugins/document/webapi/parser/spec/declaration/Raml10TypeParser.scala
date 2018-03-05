@@ -11,17 +11,17 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, RamlSingleExampleParser}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models.{CreativeWork, _}
+import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
-import amf.plugins.document.webapi.parser.spec._
 
 import scala.collection.mutable
 
@@ -277,23 +277,18 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
 
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
-
-    map.key("enum", entry => {
-      val value = ArrayNode(entry.value)
-      shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
-    })
-
+    map.key("enum", ShapeModel.Values in shape)
     map.key("pattern", ScalarShapeModel.Pattern in shape)
     map.key("minLength", ScalarShapeModel.MinLength in shape)
     map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
     map.key("minimum", entry => { // todo pope
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
     })
 
     map.key("maximum", entry => { // todo pope
-      val value = ValueNode(entry.value)
+      val value = ScalarNode(entry.value)
       shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
     })
 
@@ -596,12 +591,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
       map.key("minimum", entry => { // todo pope
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
       map.key("maximum", entry => { // todo pope
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
@@ -669,24 +664,15 @@ sealed abstract class RamlTypeParser(ast: YPart,
       super.parse()
       parseOASFields(map, shape)
 
-      map.key(
-        "fileTypes", { entry =>
-          entry.value.tagType match {
-            case YType.Seq =>
-              val value = ArrayNode(entry.value)
-              shape.set(FileShapeModel.FileTypes, value.strings(), Annotations(entry.value))
-            case _ =>
-          }
-        }
-      )
+      map.key("fileTypes", FileShapeModel.FileTypes in shape)
 
       map.key("(minimum)", entry => { // todo pope
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
       })
 
       map.key("(maximum)", entry => { // todo pope
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
       })
 
@@ -937,7 +923,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
               map.key(
                 "required",
                 entry => {
-                  val required = ValueNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                  val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                   explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
                   property.set(PropertyShapeModel.MinCount,
                                AmfScalar(if (required) 1 else 0),
@@ -1002,17 +988,13 @@ sealed abstract class RamlTypeParser(ast: YPart,
                         AmfScalar(YamlRender.render(entry.value), Annotations(entry.value)),
                         Annotations(entry))
             case _ =>
-              val value = ValueNode(entry.value)
+              val value = ScalarNode(entry.value)
               shape.set(ShapeModel.Default, value.text(), Annotations(entry))
           }
         }
       )
 
-      map.key("enum", entry => {
-        val value = ArrayNode(entry.value)
-        shape.set(ShapeModel.Values, value.rawMembers(), Annotations(entry))
-      })
-
+      map.key("enum", ShapeModel.Values in shape)
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
       map.key("(externalDocs)", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)

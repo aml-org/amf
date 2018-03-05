@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ScalarExampleTagType, SingleValueArray, SynthesizedField}
 import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, ValueNode, _}
+import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -74,7 +74,7 @@ case class RamlMultipleExampleParser(key: String, map: YMap)(implicit ctx: WebAp
 
 case class RamlNamedExampleParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Example = {
-    val name = ValueNode(entry.key)
+    val name = ScalarNode(entry.key)
     val example: Example = ctx.link(entry.value) match {
       case Left(s) =>
         ctx.declarations

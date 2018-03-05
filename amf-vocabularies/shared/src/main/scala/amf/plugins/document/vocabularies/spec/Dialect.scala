@@ -318,7 +318,7 @@ class BasicResolver(root: Root,
       .orElse(declarationsFromFragments.get(name))
       .map(
         x => {
-          val res: DomainEntity =  x.linkCopy().asInstanceOf[DomainEntity]
+          val res: DomainEntity = x.linkCopy().asInstanceOf[DomainEntity]
           res.withLinkTarget(x);
           res.withLinkLabel(name)
           res
@@ -407,7 +407,7 @@ class BasicResolver(root: Root,
 
       for {
         entry <- entries.find(_.key.as[YScalar].text == "base")
-        node = ValueNode(entry.value).string().value
+        node = ScalarNode(entry.value).string().value
         if node.isInstanceOf[String]
       } yield {
         base = fixBase(node.asInstanceOf[String])
@@ -615,9 +615,9 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
 
   var id: Option[String] = None
 
-  var hasProps=false
+  var hasProps = false
 
-  var hasClazz=true
+  var hasClazz = true
 
   def mappings(): List[DialectPropertyMapping] = props.values.toList
 
@@ -682,13 +682,12 @@ class DialectNode(val shortName: String, val namespace: Namespace) extends Obj {
   def fields: List[Field] = props.values.toList.map(_.field())
 
   def calcTypes(domainEntity: DomainEntity): List[ValueType] = {
-    if (!hasClazz){
+    if (!hasClazz) {
       List()
-    }
-    else {
+    } else {
       val calculated = typeCalculator match {
         case Some(calculator) => extraTypes.toList ++ calculator.calcTypes(domainEntity)
-        case None => extraTypes.toList
+        case None             => extraTypes.toList
       }
       (calculated ++ domainEntity.definition.`type`).distinct
     }

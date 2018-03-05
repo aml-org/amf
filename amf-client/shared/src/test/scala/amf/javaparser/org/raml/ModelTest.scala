@@ -58,7 +58,7 @@ trait ModelResolutionTest extends ModelValidationTest {
     transform(unit, CycleConfig("", "", hintFromTarget(target), target, d))
 
   private def hintFromTarget(t: Vendor) = t match {
-    case x: Raml => RamlYamlHint
+    case _: Raml => RamlYamlHint
     case Oas     => OasJsonHint
     case _       => AmfJsonHint
   }
@@ -92,7 +92,7 @@ trait DirectoryTest extends ResolutionTest {
       outputFileName concat ignorableExtention))
   }
 
-  private def testFuntion(d: String): Future[Assertion] = {
+  private def testFunction(d: String): Future[Assertion] = {
     runDirectory(d).flatMap { t =>
       writeTemporaryFile(outputFileName)(t)
         .flatMap(assertDifferences(_, s"${d + outputFileName}"))
@@ -101,11 +101,11 @@ trait DirectoryTest extends ResolutionTest {
   directories.foreach(d => {
     if (ignoreDir(d)) {
       ignore("DirectoryTest for dir: " + d) {
-        testFuntion(d)
+        testFunction(d)
       }
     } else {
       test("DirectoryTest for dir: " + d) {
-        testFuntion(d)
+        testFunction(d)
       }
     }
   })

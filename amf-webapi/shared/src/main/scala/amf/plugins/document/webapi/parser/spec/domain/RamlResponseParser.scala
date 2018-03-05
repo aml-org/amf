@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, ValueNode, _}
+import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
@@ -110,7 +110,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
   protected def parseMap(response: Response, map: YMap)
 
   def parse(): Response = {
-    val node     = ValueNode(entry.key).text()
+    val node     = ScalarNode(entry.key).text()
     val response = producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
 
     if (parseOptional && node.toString.endsWith("?")) {

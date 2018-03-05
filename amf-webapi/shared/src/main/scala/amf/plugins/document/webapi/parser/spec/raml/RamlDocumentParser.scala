@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.RamlValueNode.collectDomainExtensions
+import amf.plugins.document.webapi.parser.spec.common.RamlScalarNode.collectDomainExtensions
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -120,10 +120,10 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
         val annotations = Annotations(entry)
         val value = entry.value.tagType match {
           case YType.Seq =>
-            ArrayNode(entry.value).strings()
+            ArrayNode(entry.value).text()
           case _ =>
             annotations += SingleValueArray()
-            AmfArray(Seq(RamlValueNode(entry.value).text()))
+            AmfArray(Seq(RamlScalarNode(entry.value).text()))
         }
 
         api.set(WebApiModel.ContentType, value, annotations)
@@ -133,23 +133,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     map.key("version", (WebApiModel.Version in api).allowingAnnotations)
     map.key("(termsOfService)", WebApiModel.TermsOfService in api)
-
-    map.key(
-      "protocols",
-      entry => {
-        entry.value.tagType match {
-          case YType.Seq =>
-            val value = ArrayNode(entry.value)
-            api.set(WebApiModel.Schemes, value.strings(), Annotations(entry))
-          case YType.Map =>
-            ctx.violation(api.id, "WebAPI 'protocols' property must be a scalar or sequence value", entry.value)
-          case YType.Str =>
-            api.set(WebApiModel.Schemes, AmfArray(Seq(ValueNode(entry.value).string())), Annotations(entry))
-          case _ => // Empty protocols node.
-        }
-      }
-    )
-
+    map.key("protocols", (WebApiModel.Schemes in api).allowingSingleValue)
     map.key("(contact)", WebApiModel.Provider in api using OrganizationParser.parse)
     map.key("(license)", WebApiModel.License in api using LicenseParser.parse)
 
@@ -165,7 +149,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key(
       "baseUri",
       entry => {
-        val node  = RamlValueNode(entry.value)
+        val node  = RamlScalarNode(entry.value)
         val value = node.text().toString
 
         val extensions = collectDomainExtensions(api.id, node).map(DomainExtensionAnnotation)
@@ -196,18 +180,8 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    map.key(
-      "securedBy",
-      entry => {
-        val nodes = entry.value.as[Seq[YNode]]
-        // TODO check for empty array for resolution ?
-        val securedBy =
-          nodes
-            .map(s => RamlParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
-
-        api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(api.withSecurity) _
+    map.key("securedBy", (WebApiModel.Security in api using SchemeParser).allowingSingleValue)
 
     map.key(
       "documentation",
@@ -354,7 +328,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
       map.key("usage", entry => {
-        val value = ValueNode(entry.value)
+        val value = ScalarNode(entry.value)
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })
     }
@@ -451,7 +425,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
               val annotations = Annotations(entry)
               val targets: AmfArray = entry.value.tagType match {
                 case YType.Seq =>
-                  ArrayNode(entry.value).strings()
+                  ArrayNode(entry.value).string()
                 case YType.Map =>
                   ctx.violation(
                     custom.id,
@@ -460,7 +434,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
                   AmfArray(Seq())
                 case _ =>
                   annotations += SingleValueArray()
-                  AmfArray(Seq(ValueNode(entry.value).string()))
+                  AmfArray(Seq(ScalarNode(entry.value).string()))
               }
 
               val targetUris = targets.values.map({
@@ -477,7 +451,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecP
           )
 
           map.key("description", entry => {
-            val value = ValueNode(entry.value)
+            val value = ScalarNode(entry.value)
             custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
           })
 

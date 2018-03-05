@@ -1,80 +1,74 @@
 package amf.core.parser
 
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import org.yaml.model._
 
-/**
-  * ArrayNode helper.
-  */
-case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
+trait TypedNode {
 
-  def strings(): AmfArray = {
-    val nodes    = ast.as[Seq[String]]
-    val elements = nodes.map(child => AmfScalar(child, annotations()))
+  type Element <: AmfElement
 
-    AmfArray(elements, annotations())
-  }
+  /** Returns string AmfScalar of string node. */
+  def string(): Element
 
-  def rawMembers(): AmfArray = {
-    val nodes    = ast.as[Seq[YNode]]
-    val elements = nodes.map(child => AmfScalar(child.toString, annotations()))
+  /** Returns string AmfScalar of any scalar node. */
+  def text(): Element
 
-    AmfArray(elements, annotations())
-  }
+  /** Returns integer AmfScalar of integer node. */
+  def integer(): Element
 
-  private def annotations() = Annotations(ast.value)
+  /** Returns boolean AmfScalar of boolean node. */
+  def boolean(): Element
+
+  /** Returns negated boolean AmfScalar of boolean node. */
+  def negated(): Element
 }
 
 /** Scalar node. */
-trait ValueNode {
-
-  /** Returns string amf scalar of string node. */
-  def string(): AmfScalar
-
-  /** Returns string amf scalar of any scalar node. */
-  def text(): AmfScalar
-
-  /** Returns integer amf scalar of integer node. */
-  def integer(): AmfScalar
-
-  /** Returns boolean amf scalar of boolean node. */
-  def boolean(): AmfScalar
-
-  /** Returns negated boolean amf scalar of boolean node. */
-  def negated(): AmfScalar
+trait ScalarNode extends TypedNode {
+  override type Element = AmfScalar
 }
 
-object ValueNode {
-  def apply(node: YNode)(implicit iv: IllegalTypeHandler): ValueNode = ScalarNode(node)
+object ScalarNode {
+  def apply(node: YNode)(implicit iv: IllegalTypeHandler): ScalarNode = DefaultScalarNode(node)
 }
 
-/** Simple scalar node. */
-case class ScalarNode(node: YNode)(implicit iv: IllegalTypeHandler) extends ValueNode {
+/** Array node. */
+trait ArrayNode extends TypedNode {
+  override type Element = AmfArray
 
-  def string(): AmfScalar = {
-    val content = node.as[String]
-    AmfScalar(content, annotations())
+  def obj(fn: YNode => AmfElement): AmfArray
+}
+
+object ArrayNode {
+  def apply(node: YNode)(implicit iv: IllegalTypeHandler): ArrayNode = DefaultArrayNode(node)
+}
+
+/** Default scalar node. */
+case class DefaultScalarNode(node: YNode)(implicit iv: IllegalTypeHandler) extends ScalarNode {
+
+  override def string(): AmfScalar  = scalar(_.as[String])
+  override def text(): AmfScalar    = scalar(_.as[YScalar].text)
+  override def integer(): AmfScalar = scalar(_.as[Int])
+  override def boolean(): AmfScalar = scalar(_.as[Boolean])
+  override def negated(): AmfScalar = scalar(!_.as[Boolean])
+
+  private def scalar(fn: YNode => Any) = AmfScalar(fn(node), Annotations(node.value))
+}
+
+/** Default array node. */
+case class DefaultArrayNode(node: YNode)(implicit iv: IllegalTypeHandler) extends ArrayNode {
+
+  override def string(): AmfArray                     = array(scalar(_.as[String]))
+  override def text(): AmfArray                       = array(scalar(_.as[YScalar].text))
+  override def integer(): AmfArray                    = array(scalar(_.as[Int]))
+  override def boolean(): AmfArray                    = array(scalar(_.as[Boolean]))
+  override def negated(): AmfArray                    = array(scalar(!_.as[Boolean]))
+  override def obj(fn: YNode => AmfElement): AmfArray = array(fn)
+
+  private def array(fn: YNode => AmfElement) = {
+    val elements = node.as[Seq[YNode]].map(fn(_))
+    AmfArray(elements, Annotations(node.value))
   }
 
-  def text(): AmfScalar = {
-    val content = node.as[YScalar].text
-    AmfScalar(content, annotations())
-  }
-
-  def integer(): AmfScalar = {
-    val content = node.as[Int]
-    AmfScalar(content, annotations())
-  }
-
-  def boolean(): AmfScalar = {
-    val content = node.as[Boolean]
-    AmfScalar(content, annotations())
-  }
-
-  def negated(): AmfScalar = {
-    val content = node.as[Boolean]
-    AmfScalar(!content, annotations())
-  }
-
-  private def annotations() = Annotations(node.value)
+  private def scalar(fn: YNode => Any)(e: YNode): AmfScalar = AmfScalar(fn(e), Annotations(e.value))
 }

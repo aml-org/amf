@@ -148,7 +148,8 @@ package object BaseEmitters {
   case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, force: Boolean = false)
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      val single = f.value.annotations.contains(classOf[SingleValueArray])
+      val single = f.value.annotations.contains(classOf[SingleValueArray]) ||
+        f.value.value.annotations.contains(classOf[SingleValueArray])
 
       sourceOr(
         f.value,
