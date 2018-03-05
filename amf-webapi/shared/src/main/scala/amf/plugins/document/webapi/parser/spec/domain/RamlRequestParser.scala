@@ -53,20 +53,6 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
               .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
           case _ =>
-            // This is the case where the body is directly a data type
-            entry.value.to[YMap] match {
-              case Right(bodyMap) =>
-                val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
-                if (filterMap.entries.nonEmpty) {
-                  Raml10TypeParser(entry,
-                                   shape => shape.withName("default").adopted(request.getOrCreate.id),
-                                   defaultType = AnyDefaultType)
-                    .parse()
-                    .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
-                }
-              case _ =>
-            }
-
             // Now we parsed potentially nested shapes for different data types
             entry.value.to[YMap] match {
               case Right(m) =>
@@ -78,6 +64,19 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
                     })
                   }
                 )
+                val others = YMap(m.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                if (others.entries.nonEmpty) {
+                  if (payloads.isEmpty) {
+                    Raml10TypeParser(entry,
+                                     shape => shape.withName("default").adopted(request.getOrCreate.id),
+                                     defaultType = AnyDefaultType)
+                      .parse()
+                      .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+                  } else {
+                    others.entries.foreach(e =>
+                      ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", Some(e)))
+                  }
+                }
               case _ =>
             }
         }

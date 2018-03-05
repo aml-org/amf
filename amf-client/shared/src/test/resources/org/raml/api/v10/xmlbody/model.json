@@ -4,15 +4,6 @@ title: xml body
   get:
     body:
       application/xml:
-        examples:
-          batman:
-            firstname: bruce
-            lastname: wayne
-            age: 77
-          daredevil:
-            firstname: matt
-            lastname: murdock
-            age: 52
         type: object
         additionalProperties: true
         properties:
@@ -31,15 +22,6 @@ title: xml body
       200:
         body:
           application/xml:
-            examples:
-              batman:
-                firstname: bruce
-                lastname: wayne
-                age: 77
-              daredevil:
-                firstname: matt
-                lastname: murdock
-                age: 52
             type: object
             additionalProperties: true
             properties:

@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: name
+types:
+    User:
+        type: object
+        properties:
+            firstname: string
+            lastname: string
+            age:
+                type: integer
+                minimum: 0
+                maximum: 144
+            height?: number
+            goggles?: boolean
+        examples:
+            batman:
+                firstname: bruce
+                lastname: wayne
+                age: 77
+                height: 1.82
+            daredevil:
+                firstname: matt
+                lastname: murdock
+                age: 52
+            quicksilver: |
+                {"firstname": "pietro",
+                 "lastname": "maximoff",
+                 "age": 104,
+                 "height": 1.563,
+                 "goggles": true}
+    SuperUser:
+        type: User
+        properties:
+            skills:
+                type: string[]
+                maxItems: 3

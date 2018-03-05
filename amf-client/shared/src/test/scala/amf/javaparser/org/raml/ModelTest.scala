@@ -3,7 +3,7 @@ package amf.javaparser.org.raml
 import amf.ProfileNames
 import amf.core.annotations.SourceVendor
 import amf.core.client.GenerationOptions
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, EncodesModel}
 import amf.core.parser.Position
 import amf.core.remote._
 import amf.core.validation.AMFValidationResult
@@ -24,9 +24,10 @@ trait ModelValidationTest extends DirectoryTest {
       model      <- AMFCompiler(s"file://${d + inputFileName}", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(model, profileFromModel(model))
     } yield {
-      if (report.conforms)
-        AMFDumper(transform(model, d), target, target.defaultSyntax, GenerationOptions()).dumpToString
-      else {
+      if (report.conforms) {
+        val vendor = target(model)
+        AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, GenerationOptions()).dumpToString
+      } else {
         val ordered = report.results.sorted(new Ordering[AMFValidationResult] {
           override def compare(x: AMFValidationResult, y: AMFValidationResult): Int = {
             transform(x).compareTo(transform(y))
@@ -40,7 +41,7 @@ trait ModelValidationTest extends DirectoryTest {
     }
   }
 
-  def transform(unit: BaseUnit, d: String): BaseUnit =
+  def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     unit
 
   private def profileFromModel(unit: BaseUnit): String = {
@@ -49,13 +50,20 @@ trait ModelValidationTest extends DirectoryTest {
       case _                 => ProfileNames.RAML
     }
   }
-  val target: Vendor
+
+  def target(model: BaseUnit): Vendor = model match {
+    case d: EncodesModel =>
+      d.encodes.annotations
+        .find(classOf[SourceVendor])
+        .map(_.vendor)
+        .getOrElse(throw new Exception("Source vendor annotation not found in model"))
+  }
 }
 
 trait ModelResolutionTest extends ModelValidationTest {
 
-  override def transform(unit: BaseUnit, d: String): BaseUnit =
-    transform(unit, CycleConfig("", "", hintFromTarget(target), target, d))
+  override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
+    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d))
 
   private def hintFromTarget(t: Vendor) = t match {
     case _: Raml => RamlYamlHint
