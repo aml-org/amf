@@ -32,13 +32,13 @@ object GraphEmitter extends MetaModelTypeMapping {
       YDocument {
         _.list {
           _.obj {
-            traverse(unit, unit.location, _)
+            traverse(unit, _)
           }
         }
       }
     }
 
-    def traverse(element: AmfObject, parent: String, b: EntryBuilder): Unit = {
+    def traverse(element: AmfObject, b: EntryBuilder): Unit = {
       val id = element.id
       createIdNode(b, id)
 
@@ -46,20 +46,15 @@ object GraphEmitter extends MetaModelTypeMapping {
 
       val obj = metaModel(element)
 
-      if (obj.dynamic) traverseDynamicMetaModel(id, element, sources, obj, parent, b)
-      else traverseStaticMetamodel(id, element, sources, obj, parent, b)
+      if (obj.dynamic) traverseDynamicMetaModel(id, element, sources, obj, b)
+      else traverseStaticMetamodel(id, element, sources, obj, b)
 
-      createCustomExtensions(element, parent, b)
+      createCustomExtensions(element, b)
 
       createSourcesNode(id + "/source-map", sources, b)
     }
 
-    def traverseDynamicMetaModel(id: String,
-                                 element: AmfObject,
-                                 sources: SourceMap,
-                                 obj: Obj,
-                                 parent: String,
-                                 b: EntryBuilder): Unit = {
+    def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder): Unit = {
       val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
       createDynamicTypeNode(schema, b)
@@ -74,12 +69,7 @@ object GraphEmitter extends MetaModelTypeMapping {
       }
     }
 
-    def traverseStaticMetamodel(id: String,
-                                element: AmfObject,
-                                sources: SourceMap,
-                                obj: Obj,
-                                parent: String,
-                                b: EntryBuilder): Unit = {
+    def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder): Unit = {
       createTypeNode(b, obj, Some(element))
 
       // workaround for lazy values in shape
@@ -102,7 +92,7 @@ object GraphEmitter extends MetaModelTypeMapping {
       }
     }
 
-    private def createCustomExtensions(element: AmfObject, parent: String, b: EntryBuilder): Unit = {
+    private def createCustomExtensions(element: AmfObject, b: EntryBuilder): Unit = {
       val customProperties: ListBuffer[String] = ListBuffer()
 
       // Collect element custom annotations
@@ -112,15 +102,9 @@ object GraphEmitter extends MetaModelTypeMapping {
             case AmfArray(values, _) =>
               values.foreach {
                 case extension: DomainExtension =>
-                  val propertyUri = extension.definedBy.id
-                  customProperties += propertyUri
-                  b.entry(
-                    propertyUri,
-                    _.obj { b =>
-                      b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
-                      traverse(extension.extension, parent, b)
-                    }
-                  )
+                  val uri = extension.definedBy.id
+                  customProperties += uri
+                  createCustomExtensionNode(b, uri, extension)
               }
             case _ => // ignore
           }
@@ -128,7 +112,7 @@ object GraphEmitter extends MetaModelTypeMapping {
 
       // Collect element scalar fields custom annotations
       var count = 1
-      element.fields.foreach({
+      element.fields.foreach {
         case (f, v) =>
           v.annotations
             .collect({ case e: DomainExtensionAnnotation => e })
@@ -136,17 +120,11 @@ object GraphEmitter extends MetaModelTypeMapping {
               val extension = e.extension
               val uri       = s"${element.id}/scalar-valued/$count/${extension.name}"
               customProperties += uri
-              b.entry(
-                uri,
-                _.obj { b =>
-                  b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
-                  b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri()))
-                  traverse(adoptTree(uri, extension.extension), uri, b)
-                }
-              )
+              adoptTree(uri, extension.extension) // Fix ids
+              createCustomExtensionNode(b, uri, extension, Some(f))
               count += 1
             })
-      })
+      }
 
       if (customProperties.nonEmpty)
         b.entry(
@@ -155,6 +133,21 @@ object GraphEmitter extends MetaModelTypeMapping {
             customProperties.foreach(iri(b, _, inArray = true))
           }
         )
+    }
+
+    private def createCustomExtensionNode(b: EntryBuilder,
+                                          uri: String,
+                                          extension: DomainExtension,
+                                          field: Option[Field] = None): Unit = {
+      val encoded = URLEncoder.encode(uri)
+      b.entry(
+        encoded,
+        _.obj { b =>
+          b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
+          field.foreach(f => b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri())))
+          traverse(extension.extension, b)
+        }
+      )
     }
 
     def createSortedArray(b: PartBuilder,
@@ -176,9 +169,9 @@ object GraphEmitter extends MetaModelTypeMapping {
                   case _: Obj =>
                     seq.asInstanceOf[Seq[AmfObject]].headOption.foreach {
                       case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                        link(b, elementInArray, parent, inArray = true)
+                        link(b, elementInArray, inArray = true)
                       case elementInArray =>
-                        obj(b, elementInArray, parent, inArray = true)
+                        obj(b, elementInArray, inArray = true)
                     }
                   case Str =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => scalar(b, e.toString, inArray = true))
@@ -200,10 +193,10 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder): Unit = {
       t match {
         case t: DomainElement with Linkable if t.isLink =>
-          link(b, t, parent)
+          link(b, t)
           sources(v)
         case _: Obj =>
-          obj(b, v.value.asInstanceOf[AmfObject], parent)
+          obj(b, v.value.asInstanceOf[AmfObject])
           sources(v)
         case Iri =>
           iri(b, v.value.asInstanceOf[AmfScalar].toString)
@@ -232,9 +225,9 @@ object GraphEmitter extends MetaModelTypeMapping {
               case _: Obj =>
                 seq.values.asInstanceOf[Seq[AmfObject]].foreach {
                   case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                    link(b, elementInArray, parent, inArray = true)
+                    link(b, elementInArray, inArray = true)
                   case elementInArray =>
-                    obj(b, elementInArray, parent, inArray = true)
+                    obj(b, elementInArray, inArray = true)
                 }
               case Str =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
@@ -259,19 +252,16 @@ object GraphEmitter extends MetaModelTypeMapping {
       }
     }
 
-    private def obj(b: PartBuilder, element: AmfObject, parent: String, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = b.obj(traverse(element, parent, _))
+    private def obj(b: PartBuilder, element: AmfObject, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder): Unit = b.obj(traverse(element, _))
 
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def link(b: PartBuilder,
-                     elementWithLink: DomainElement with Linkable,
-                     parent: String,
-                     inArray: Boolean = false): Unit = {
+    private def link(b: PartBuilder, elementWithLink: DomainElement with Linkable, inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder): Unit = {
         b.obj { o =>
-          traverse(elementWithLink, parent, o)
+          traverse(elementWithLink, o)
         }
       }
 
