@@ -3,7 +3,6 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.annotations._
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter._
-import amf.core.metamodel.{Field, Type}
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.model.document._
 import amf.core.model.domain._
@@ -12,7 +11,6 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Fields, Position, Value}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
-import amf.core.vocabulary.ValueType
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.IdCounter

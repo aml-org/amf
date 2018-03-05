@@ -214,22 +214,23 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     computeNarrowRestrictions(NodeShapeModel.fields,
                               baseNode,
                               superNode,
-                              filteredFields = Seq(NodeShapeModel.Properties))
+                              filteredFields = Seq(NodeShapeModel.Properties, NodeShapeModel.Examples))
 
     baseNode
   }
 
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
-    val newUnionItems = if (Option(baseUnion.anyOf).getOrElse(Nil).isEmpty || Option(superUnion.anyOf).getOrElse(Nil).isEmpty) {
-      Option(baseUnion.anyOf).getOrElse(Nil) ++ Option(superUnion.anyOf).getOrElse(Nil)
-    } else {
-      for {
-        baseUnionElement  <- baseUnion.anyOf
-        superUnionElement <- superUnion.anyOf
-      } yield {
-        minShape(baseUnionElement, superUnionElement)
+    val newUnionItems =
+      if (Option(baseUnion.anyOf).getOrElse(Nil).isEmpty || Option(superUnion.anyOf).getOrElse(Nil).isEmpty) {
+        Option(baseUnion.anyOf).getOrElse(Nil) ++ Option(superUnion.anyOf).getOrElse(Nil)
+      } else {
+        for {
+          baseUnionElement  <- baseUnion.anyOf
+          superUnionElement <- superUnion.anyOf
+        } yield {
+          minShape(baseUnionElement, superUnionElement)
+        }
       }
-    }
 
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
                                   AmfArray(newUnionItems),

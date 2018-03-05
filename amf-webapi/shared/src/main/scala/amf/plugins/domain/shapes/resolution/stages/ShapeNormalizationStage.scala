@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages
 
 import amf.ProfileNames
-import amf.core.annotations.{ExplicitField, LexicalInformation}
+import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
@@ -11,7 +11,6 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.MinShapeAlgorithm
@@ -44,7 +43,7 @@ class ShapeNormalizationStage(profile: String)
   }
 
   protected def cleanUnnecessarySyntax(shape: Shape): Shape = {
-    shape.annotations.reject(! _.isInstanceOf[LexicalInformation])
+    shape.annotations.reject(!_.isInstanceOf[PerpetualAnnotation])
     shape
   }
 
@@ -291,7 +290,7 @@ class ShapeNormalizationStage(profile: String)
       val canonicalProperties: Seq[PropertyShape] = node.properties.map { propertyShape =>
         canonical(propertyShape) match {
           case canonicalProperty: PropertyShape => canonicalProperty
-          case other => throw new Exception(s"Resolution error: Expecting property shape, found $other")
+          case other                            => throw new Exception(s"Resolution error: Expecting property shape, found $other")
         }
       }
       node.withProperties(canonicalProperties)

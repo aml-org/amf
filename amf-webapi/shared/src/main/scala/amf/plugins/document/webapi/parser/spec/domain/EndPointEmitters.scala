@@ -3,14 +3,13 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
@@ -71,7 +70,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
               }
             }
 
-          fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
+          fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
 
           fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 

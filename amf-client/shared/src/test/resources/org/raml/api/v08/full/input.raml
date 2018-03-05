@@ -55,9 +55,9 @@ traits:
 resourceTypes:
     first:
         usage: first usage
+        description: top description
 
 /top:
-    description: top description
     type: first
     baseUriParameters:
         param1:
@@ -117,6 +117,7 @@ resourceTypes:
         post:
             body:
                 schema: UserJson
+
         /{childId}:
             uriParameters:
                 childId:

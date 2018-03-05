@@ -4,6 +4,8 @@ import amf.core.registries.AMFDomainRegistry
 
 trait Annotation
 
+trait PerpetualAnnotation extends Annotation
+
 trait SerializableAnnotation extends Annotation {
 
   /** Extension name. */
@@ -21,6 +23,6 @@ object Annotation {
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     AMFDomainRegistry.annotationsRegistry.get(annotation) match {
       case Some(annotationLoader) => Some(annotationLoader.unparse)
-      case _                     => None
+      case _                      => None
     }
 }

@@ -2,20 +2,18 @@ package amf.plugins.document.webapi.annotations
 
 import amf.core.annotations._
 import amf.core.model.domain._
-import amf.core.remote._
 import amf.core.parser.Range
+import amf.core.remote._
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.models.EndPoint
-import com.sun.org.apache.xerces.internal.impl.xs.opti.DefaultNode
-import org.yaml.model.YPart
 
-case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation {
+case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "parsed-json-schema"
   override val value: String = rawText
 }
 
-object ParsedJSONSchema extends AnnotationGraphLoader  {
+object ParsedJSONSchema extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
     ParsedJSONSchema(annotatedValue)
   }
@@ -34,7 +32,7 @@ object DeclaredElement extends AnnotationGraphLoader {
 }
 
 case class LocalLinkPath(rawPath: String) extends SerializableAnnotation {
-  override val name: String = "local-link-path"
+  override val name: String  = "local-link-path"
   override val value: String = rawPath
 }
 
@@ -54,9 +52,7 @@ case class DomainElementReference(name: String, ref: Option[DomainEntity]) exten
 object DomainElementReference extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = ???
 }
-*/
-
-
+ */
 
 case class EndPointBodyParameter() extends Annotation
 
@@ -74,7 +70,7 @@ object WebApiAnnotations {
   private def sourceVendor(value: String, objects: Map[String, AmfElement]) = {
     value match {
       case Vendor(vendor) => SourceVendor(vendor)
-      case _ => throw new RuntimeException(s"Illegal vendor: '$value'")
+      case _              => throw new RuntimeException(s"Illegal vendor: '$value'")
     }
   }
 
@@ -85,7 +81,6 @@ object WebApiAnnotations {
   private def singleValueArray(value: String, objects: Map[String, AmfElement]) = {
     SingleValueArray()
   }
-
 
   private def aliases(value: String, objects: Map[String, AmfElement]) = {
     Aliases.unparse(value, objects)
