@@ -1,9 +1,10 @@
 package amf.plugins.document.graph.parser
 
+import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
-import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.core.model.document._
@@ -179,51 +180,55 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         .foreach(s => instance.withLinkLabel(s))
     }
 
-    private def parseCustomProperties(map: YMap, instance: DomainElement) = {
-      val customProperties: Seq[String] = map.key(DomainElementModel.CustomDomainProperties.value.iri()) match {
-        case Some(entry) =>
-          entry.value
-            .toOption[Seq[YNode]]
-            .map(nodes => {
-              nodes.flatMap(n => n.toOption[YMap]).flatMap(_.key("@id")).flatMap(_.value.toOption[YScalar].map(_.text))
-            })
-            .getOrElse(Nil)
-        case _ => Seq()
-      }
+    private def parseCustomProperties(map: YMap, instance: DomainElement): Unit = {
+      val properties = map
+        .key(DomainElementModel.CustomDomainProperties.value.iri())
+        .map(_.value.as[Seq[YNode]].map(value(Iri, _).as[YScalar].text))
+        .getOrElse(Nil)
 
-      val domainExtensions: Seq[DomainExtension] = customProperties
-        .flatMap { propertyUri =>
+      val extensions = properties
+        .flatMap { uri =>
           map
-            .key(propertyUri)
+            .key(uri)
             .map(entry => {
-              val domainExtension = DomainExtension()
-              entry.value
-                .as[YMap]
-                .key(CustomDomainPropertyModel.Name.value.iri())
-                .flatMap(entry => {
-                  entry.value
-                    .toOption[Seq[YNode]]
-                    .flatMap(nodes => nodes.head.toOption[YMap])
-                    .flatMap(map => map.key("@value"))
-                    .flatMap(_.value.toOption[YScalar].map(_.text))
-                })
-                .foreach { s =>
-                  domainExtension.withName(s)
-                }
-              val domainProperty = CustomDomainProperty()
-              domainProperty.id = propertyUri
-              domainExtension.withDefinedBy(domainProperty)
-              val parsedNode = dynamicGraphParser.parseDynamicType(entry.value.as[YMap])
-              parsedNode.foreach { pn =>
-                domainExtension.withId(pn.id)
-                domainExtension.withExtension(pn)
+              val extension = DomainExtension()
+              val obj       = entry.value.as[YMap]
+
+              parseScalarProperty(obj, DomainExtensionModel.Name).map(extension.withName)
+              parseScalarProperty(obj, DomainExtensionModel.Element).map(extension.withElement)
+
+              val definition = CustomDomainProperty()
+              definition.id = uri
+              extension.withDefinedBy(definition)
+
+              dynamicGraphParser.parseDynamicType(obj).foreach { pn =>
+                extension.withId(pn.id)
+                extension.withExtension(pn)
               }
-              domainExtension
+
+              extension
             })
         }
 
-      if (domainExtensions.nonEmpty) {
-        instance.withCustomDomainProperties(domainExtensions)
+      if (extensions.nonEmpty) {
+        extensions.partition(_.isScalarExtension) match {
+          case (scalars, objects) =>
+            instance.withCustomDomainProperties(objects)
+            applyScalarDomainProperties(instance, scalars)
+        }
+      }
+    }
+
+    private def applyScalarDomainProperties(instance: DomainElement, scalars: Seq[DomainExtension]): Unit = {
+      scalars.foreach { e =>
+        instance.fields
+          .fieldsMeta()
+          .find(_.value.iri() == e.element)
+          .foreach(f => {
+            instance.fields.entry(f).foreach {
+              case FieldEntry(_, value) => value.annotations += DomainExtensionAnnotation(e)
+            }
+          })
       }
     }
 
@@ -255,6 +260,11 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       }
     }
   }
+
+  private def parseScalarProperty(definition: YMap, field: Field) =
+    definition
+      .key(field.value.iri())
+      .map(entry => value(field.`type`, entry.value).as[YScalar].text)
 
   private def str(node: YScalar) = AmfScalar(node.text)
 

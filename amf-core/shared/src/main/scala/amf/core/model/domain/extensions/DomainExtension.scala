@@ -22,7 +22,9 @@ case class DomainExtension(fields: Fields, annotations: Annotations) extends Dom
 
   def withExtension(extension: DataNode): this.type = set(Extension, extension)
 
-  def withElement(element: String): this.type = set(Element, name)
+  def withElement(element: String): this.type = set(Element, element)
+
+  def isScalarExtension: Boolean = fields.?[String](Element).isDefined
 
   // This element will never be serialised in the JSON-LD graph, it is just a placeholder
   // for the extension point. ID is not required for serialisation
