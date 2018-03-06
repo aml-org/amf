@@ -50,8 +50,10 @@ declare module "amf-client-js" {
             export class DomainElement {
                 customDomainProperties(): CustomDomainProperty[]
                 withCustomDomainProperties(customDomainProperties: CustomDomainProperty[]): DomainElement
+                _extends: DomainElement[];
                 position(): core.parser.Range
                 getId(): URI;
+                withId(id: string): this;
                 getTypeIds(): URI[];
                 getPropertyIds(): URI[];
                 getScalarByPropertyId(propertyId: URI): any[]
@@ -160,7 +162,57 @@ declare module "amf-client-js" {
                 withMaxCount(maxCount: number): this;
             }
 
-            export class AnyShape extends Shape {}
+            export class AnyShape extends Shape {
+                documentation: CreativeWork;
+                xmlSerialization: XMLSerializer;
+                examples: Example[];
+                withDocumentation(documentation: CreativeWork): this;
+                withXMLSerialization(xmlSerialization: XMLSerializer): this;
+                withExamples(examples: Example[]): this;
+            }
+
+            export class XMLSerializer extends DomainElement {
+                attribute: boolean;
+                wrapped: boolean;
+                name: string;
+                namespace: string;
+                prefix: string;
+                withAttribute(attribute: boolean): this;
+                withWrapped(wrapped: boolean): this;
+                withName(name: string): this;
+                withNamespace(namespace: string): this;
+                withPrefix(prefix: string): this;
+            }
+
+            export class ApiKeySettings extends Settings {
+                name: string;
+                _in: string;
+                withName(name: string): this;
+                withIn(_in: string): this;
+            }
+
+            export class ArrayShape extends DataArrangeShape {
+                items: Shape;
+                withItems(items: Shape): this;
+            }
+
+            export class DataArrangeShape extends AnyShape {
+                minItems: number;
+                maxItems: number;
+                uniqueItems: boolean;
+                withMinItems(minItems: number): this;
+                withMaxItems(maxItems: number): this;
+                withUniqueItems(uniqueItems: boolean): this;
+            }
+
+            export class CreativeWork extends DomainElement {
+                url: string;
+                description: string;
+                title: string;
+                withUrl(url: string): this;
+                withTitle(title: string): this;
+                withDescription(description: string): this;
+            }
 
             export class UnionShape extends AnyShape {
                 anyOf(): AnyShape[];
@@ -218,6 +270,339 @@ declare module "amf-client-js" {
                 value(): string;
                 withName(name: string): this;
                 withValue(value: string): this;
+            }
+
+            export class EndPoint extends DomainElement {
+                name: string;
+                description: string;
+                path: string;
+                operations: Operation[];
+                parameters: Parameter[];
+                security: ParametrizedSecurityScheme[];
+                relativePath: string;
+                withName(name: string): this;
+                withDescription(description: string): this;
+                withPath(path: string): this;
+                withOperations(operations: Operation[]): this;
+                withParameters(parameters: Parameter[]): this;
+                withSecurity(security: ParametrizedSecurityScheme[]): this;
+                withOperation(method: string): Operation;
+                withParameter(name: string): Parameter;
+            }
+
+            export class ParametrizedSecurityScheme extends DomainElement {
+                name: string;
+                scheme: SecurityScheme;
+                settings: Settings;
+                withName(name: string): this;
+                withScheme(scheme: SecurityScheme): this;
+                withSettings(settings: Settings): this;
+                withDefaultSettings(): Settings;
+                withOAuth1Settings(): OAuth1Settings;
+                withOAuth2Settings(): OAuth2Settings;
+                withApiKeySettings(): ApiKeySettings;
+            }
+
+            export class SecurityScheme extends DomainElement {
+                name: string;
+                type: string;
+                displayName: string;
+                description: string;
+                headers: Parameter[];
+                queryParameters: Parameter[];
+                responses: Response[];
+                settings: Settings;
+                queryString: Shape;
+                withName(name: string): this;
+                withType(type: string): this;
+                withDisplayName(displayName: string): this;
+                withDescription(description: string): this;
+                withHeaders(headers: Parameter[]): this;
+                withQueryParameters(queryParameters: Parameter[]): this;
+                withResponses(responses: Response[]): this;
+                withSettings(settings: Settings): this;
+                withQueryString(queryString: Shape): this;
+                withHeader(name: string): Parameter;
+                withQueryParameter(name: string): Parameter;
+                withResponse(name: string): Response;
+                withDefaultSettings(): Settings;
+                withOAuth1Settings(): OAuth1Settings;
+                withOAuth2Settings(): OAuth2Settings;
+                withApiKeySettings(): ApiKeySettings;
+            }
+
+            export class ParametrizedResourceType extends ParametrizedDeclaration {}
+            export class ParametrizeTrait extends ParametrizedDeclaration {}
+
+            export class Parameter extends DomainElement {
+                name: string;
+                description: string;
+                required: boolean;
+                binding: string;
+                schema: Shape;
+                withName(name: string): this
+                withDescription(description: string): this
+                withRequired(required: boolean): this
+                withBinding(binding: string): this
+                withObjectSchema(name: string): NodeShape
+                withScalarSchema(name: string): ScalarShape
+            }
+
+            export class Example extends DomainElement {
+                name: string;
+                displayName: string;
+                description: string;
+                value: string;
+                strict: boolean;
+                mediaType: string;
+                withName(name: string): this;
+                withDisplayName(displayName: string): this;
+                withDescription(description: string): this;
+                withValue(value: string): this;
+                withStrict(strict: boolean): this;
+                withMediaType(mediaType: string): this;
+            }
+
+            export class FileShape extends AnyShape {
+                fileTypes: string[];
+                pattern: string;
+                minLength: number;
+                maxLength: number;
+                minimum: string;
+                maximum: string;
+                exclusiveMinimum: string;
+                exclusiveMaximum: string;
+                format: string;
+                multipleOf: number;
+                withFileTypes(fileTypes: string[]): this;
+                withPattern(pattern: string): this;
+                withMinLength(min: number): this;
+                withMaxLength(max: number): this;
+                withMinimum(min: string): this;
+                withMaximum(max: string): this;
+                withExclusiveMinimum(min: string): this;
+                withExclusiveMaximum(max: string): this;
+                withFormat(format: string): this;
+                withMultipleOf(multiple: number): this;
+            }
+
+            export class License extends DomainElement {
+                url: string;
+                name: string;
+                withUrl(url: string): this;
+                withName(name: string): this;
+            }
+
+            export class NilShape extends AnyShape {}
+
+            export class NodeShape extends AnyShape {
+                minProperties: number;
+                maxProperties: number;
+                closed: boolean;
+                discriminator: string;
+                discriminatorValue: string;
+                readOnly: boolean;
+                properties: PropertyShape[];
+                dependencies: PropertyDependencies[];
+                withMinProperties(min: number): this;
+                withMaxProperties(max: number): this;
+                withClosed(closed: boolean): this;
+                withDiscriminator(discriminator: string): this;
+                withDiscriminatorValue(value: string): this;
+                withReadOnly(readOnly: boolean): this;
+                withProperties(properties: PropertyShape[]): this;
+                withProperty(name: string): PropertyShape;
+                withDependencies(dependencies: PropertyDependencies[]): this;
+                withDependency(): PropertyDependencies;
+                withInheritsObject(name: string): NodeShape;
+                withInheritsScalar(name: string): ScalarShape;
+            }
+
+            export class PropertyDependencies extends DomainElement {
+                propertySource: string;
+                propertyTarget: string[];
+                withPropertySource(propertySource: string): this;
+                withPropertyTarget(propertyTarget: string[]): this;
+            }
+
+            export class Request extends DomainElement {
+                queryParameters: Parameter[];
+                headers: Parameter[];
+                payloads: Payload[];
+                queryString: Shape;
+                withQueryParameters(parameters: Parameter[]): this;
+                withHeaders(headers: Parameter[]): this;
+                withPayloads(payloads: Payload[]): this;
+                withQueryParameter(name: string): Parameter;
+                withHeader(name: string): Parameter;
+                withPayload(): Payload;
+                withPayload(mediaType: string): Payload;
+                withQueryString(queryString: Shape): this;
+            }
+
+            export class OAuth1Settings extends Settings {
+                requestTokenUri: string;
+                authorizationUri: string;
+                tokenCredentialsUri: string;
+                signatures: string[];
+                withRequestTokenUri(requestTokenUri: string): this;
+                withAuthorizationUri(authorizationUri: string): this;
+                withTokenCredentialsUri(tokenCredentialsUri: string): this;
+                withSignatures(signatures: string[]): this;
+            }
+
+            export class Settings extends DomainElement {
+                additionalProperties: DataNode;
+                withAdditionalProperties(additionalProperties: DataNode): this;
+            }
+
+            export class OAuth2Settings extends Settings {
+                authorizationUri: string;
+                accessTokenUri: string;
+                authorizationGrants: string[];
+                flow: string;
+                scopes: Scope[];
+                withAuthorizationUri(authorizationUri: string): this;
+                withAccessTokenUri(accessTokenUri: string): this;
+                withAuthorizationGrants(authorizationGrants: string[]): this;
+                withFlow(flow: string): this;
+                withScopes(scopes: Scope[]): this;
+            }
+
+            export class Scope extends DomainElement {
+                name: string;
+                description: string;
+                withName(name: string): this;
+                withDescription(description: string): this;
+            }
+
+            export class Operation extends DomainElement {
+                method: string;
+                name: string;
+                description: string;
+                deprecated: boolean;
+                summary: string;
+                documentation: CreativeWork;
+                schemes: string[];
+                accepts: string[];
+                contentType: string[];
+                request: Request;
+                responses: Response[];
+                security: DomainElement[];
+                withMethod(method: string): this;
+                withName(name: string): this;
+                withDescription(description: string): this;
+                withDeprecated(deprecated: boolean): this;
+                withSummary(summary: string): this;
+                withDocumentation(documentation: CreativeWork): this;
+                withSchemes(schemes: string[]): this;
+                withAccepts(accepts: string[]): this;
+                withContentType(contentType: string[]): this;
+                withRequest(request: Request): this;
+                withResponses(responses: Response[]): this;
+                withSecurity(security: DomainElement[]): this;
+                withResponse(name: string): Response
+            }
+
+            export class Response extends DomainElement {
+                name: string;
+                description: string;
+                statusCode: string;
+                headers: Parameter[];
+                payloads: Payload[];
+                examples: Example[];
+                withName(name: string): this;
+                withDescription(description: string): this;
+                withStatusCode(statusCode: string): this;
+                withHeaders(headers: Parameter[]): this;
+                withPayloads(payloads: Parameter[]): this;
+                withExamples(examples: Example[]): this;
+                withHeader(name: string): Parameter;
+                withPayload(): Payload;
+                withPayload(mediaType: string): Payload;
+            }
+
+            export class Organization extends DomainElement {
+                url: string;
+                name: string;
+                email: string;
+                withUrl(url: string): this;
+                withName(name: string): this;
+                withEmail(email: string): this;
+            }
+            export class Payload extends DomainElement {
+                mediaType: string;
+                schema: Shape;
+                withMediaType(mediaType: string): this;
+                withObjectSchema(name: string): NodeShape;
+                withScalarSchema(name: string): ScalarShape;
+            }
+
+            export class ScalarShape extends AnyShape {
+                dataType: string;
+                pattern: string;
+                minLength: number;
+                maxLength: number;
+                minimum: string;
+                maximum: string;
+                exclusiveMinimum: string;
+                exclusiveMaximum: string;
+                format: string;
+                multipleOf: number;
+                withDataType(dataType: string): this;
+                withPattern(pattern: string): this;
+                withMinLength(min: number): this;
+                withMaxLength(max: number): this;
+                withMinimum(min: string): this;
+                withMaximum(max: string): this;
+                withExclusiveMinimum(min: string): this;
+                withExclusiveMaximum(max: string): this;
+                withFormat(format: string): this;
+                withMultipleOf(multiple: number): this;
+            }
+
+            export class SchemaShape extends AnyShape {
+                mediaType: string;
+                raw: string;
+                withMediatype(mediaType: string): this;
+                withRaw(text: string): this;
+            }
+
+            export class WebApi extends DomainElement {
+                name: string;
+                description: string;
+                host: string;
+                basePath: string;
+                version: string;
+                termsOfService: string;
+                schemes: string[];
+                accepts: string[];
+                contentType: string[];
+                endPoints: EndPoint[];
+                provider: Organization;
+                license: License;
+                documentations: CreativeWork[];
+                baseUriParameters: Parameter[];
+                security: ParametrizedSecurityScheme[];
+                withName(name: string): this;
+                withDescription(description: string): this;
+                withHost(host: string): this;
+                withBasePath(path: string): this;
+                withVersion(version: string): this;
+                withTermsOfService(terms: string): this;
+                withSchemes(schemes: string[]): this;
+                withAccepts(accepts: string[]): this;
+                withContentType(contentType: string[]): this;
+                withEndPoints(endPoints: EndPoint[]): this;
+                withProvider(provider: Organization): this;
+                withLicense(license: License): this;
+                withDocumentation(documentations: CreativeWork[]): this;
+                withSecurity(security: ParametrizedSecurityScheme[]): this;
+                withDocumentationTitle(title: string): CreativeWork;
+                withDocumentationUrl(url: string): CreativeWork;
+                withBaseUriParameters(parameters: Parameter[]): this;
+                withEndPoint(path: string): EndPoint;
+                withBaseUriParameter(name: string): Parameter;
             }
         }
     }
