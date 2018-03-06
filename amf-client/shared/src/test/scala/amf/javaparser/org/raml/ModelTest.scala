@@ -51,12 +51,14 @@ trait ModelValidationTest extends DirectoryTest {
     }
   }
 
+  val defaultTarget: Vendor = Raml10
+
   def target(model: BaseUnit): Vendor = model match {
     case d: EncodesModel =>
       d.encodes.annotations
         .find(classOf[SourceVendor])
         .map(_.vendor)
-        .getOrElse(throw new Exception("Source vendor annotation not found in model"))
+        .getOrElse(Raml10)
   }
 }
 
