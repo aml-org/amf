@@ -1,7 +1,5 @@
 package amf.core
 
-import java.io.FileNotFoundException
-
 import amf.core
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
@@ -106,6 +104,7 @@ class AMFCompiler(val rawUrl: String,
               baseUnit.withRaw(document.raw)
             case None =>
               ExternalFragment()
+                .withId(document.location)
                 .withEncodes(
                   ExternalDomainElement()
                     .withRaw(document.raw)
