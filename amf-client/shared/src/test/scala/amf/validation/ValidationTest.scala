@@ -457,6 +457,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  ignore("Invalid mediaType validations test") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(examplesPath + "webapi/invalid_media_type.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      assert(report.results.length == 1)
+    }
+  }
+
   test("Mutually exclusive 'type' and 'schema' facets validations test") {
     for {
       validation <- Validation(platform)
