@@ -3,13 +3,13 @@ type: object
 additionalProperties: true
 properties:
   a:
-    type: string
     required: true
+    type: string
   b:
+    required: true
+    type: union
     anyOf:
       -
         type: string
       -
         type: integer
-    required: true
-    type: union

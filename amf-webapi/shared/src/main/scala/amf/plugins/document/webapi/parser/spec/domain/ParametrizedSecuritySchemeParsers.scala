@@ -104,7 +104,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key("authorizationGrants", (OAuth2SettingsModel.AuthorizationGrants in settings).allowingSingleValue)
 
     val ScopeParser = (n: YNode) => Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
-    map.key("scopes", OAuth2SettingsModel.Scopes in settings using ScopeParser)
+    map.key("scopes", (OAuth2SettingsModel.Scopes in settings using ScopeParser).allowingSingleValue)
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
   }

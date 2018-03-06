@@ -49,7 +49,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case Some(fragment) =>
         fragment.withLocation(root.location)
         UsageParser(rootMap, fragment).parse()
-        fragment.add(Annotations(root.parsed.document) += SourceVendor(Raml10))
+        fragment.add(Annotations(root.parsed.document))
+        fragment.encodes.add(SourceVendor(Raml10))
         if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
         Some(fragment)
       case _ =>
