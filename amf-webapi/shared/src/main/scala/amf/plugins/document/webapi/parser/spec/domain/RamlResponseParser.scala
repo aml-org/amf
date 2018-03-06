@@ -91,22 +91,6 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                 response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
 
               case _ =>
-                // This is the case where the body is directly a data type
-                entry.value.to[YMap] match {
-                  case Right(bodyMap) =>
-                    val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
-                    if (filterMap.entries.nonEmpty) {
-                      ctx.factory
-                        .typeParser(entry,
-                                    shape => shape.withName("default").adopted(payload.id),
-                                    false,
-                                    AnyDefaultType)
-                        .parse()
-                        .foreach(payloads += payload.withSchema(_))
-                    }
-                  case _ =>
-                }
-
                 // Now we parsed potentially nested shapes for different data types
                 entry.value.to[YMap] match {
                   case Right(m) =>
@@ -118,6 +102,21 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                         })
                       }
                     )
+                    val others = YMap(m.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                    if (others.entries.nonEmpty) {
+                      if (payloads.isEmpty) {
+                        ctx.factory
+                          .typeParser(entry,
+                                      shape => shape.withName("default").adopted(response.id),
+                                      false,
+                                      AnyDefaultType)
+                          .parse()
+                          .foreach(payloads += response.withPayload(None).withSchema(_)) // todo
+                      } else {
+                        others.entries.foreach(e =>
+                          ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", Some(e)))
+                      }
+                    }
                   case _ =>
                 }
                 if (payloads.nonEmpty)
