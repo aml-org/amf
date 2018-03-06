@@ -8,7 +8,12 @@ import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{Raml10WebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  WebApiContext
+}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -97,12 +102,21 @@ case class Raml10TypeParser(ast: YPart,
 
 }
 
+object Raml08TypeParser {
+  def apply(ast: YMapEntry,
+            adopt: Shape => Shape,
+            isAnnotation: Boolean = false,
+            defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml08TypeParser =
+    new Raml08TypeParser(ast, ast.key.as[YScalar].text, ast.value, adopt, isAnnotation, defaultType)(
+      new Raml08WebApiContext(ctx, Some(ctx.declarations)))
+}
+
 case class Raml08TypeParser(ast: YPart,
                             name: String,
                             node: YNode,
                             adopt: Shape => Shape,
-                            isAnnotation: Boolean = false,
-                            defaultType: DefaultType = StringDefaultType)(implicit override val ctx: RamlWebApiContext)
+                            isAnnotation: Boolean,
+                            defaultType: DefaultType)(implicit override val ctx: RamlWebApiContext)
     extends RamlTypeParser(ast: YPart, name: String, node: YNode, adopt: Shape => Shape, isAnnotation, defaultType) {
 
   override def parse(): Option[Shape] = {
@@ -173,8 +187,9 @@ case class Raml08TypeParser(ast: YPart,
     def parse(): Option[Shape] = {
       map.key("schema").flatMap { e =>
         e.value.tagType match {
-          case YType.Map | YType.Seq => Raml08TypeParser(e, "schema", e.value, adopt).parse()
-          case _                     => Raml08TextParser(e.value, adopt, "schema", defaultType).parse()
+          case YType.Map | YType.Seq =>
+            Raml08TypeParser(e, "schema", e.value, adopt, isAnnotation = false, StringDefaultType).parse()
+          case _ => Raml08TextParser(e.value, adopt, "schema", defaultType).parse()
         }
       }
     }

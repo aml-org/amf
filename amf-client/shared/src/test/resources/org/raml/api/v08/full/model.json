@@ -122,7 +122,19 @@ baseUriParameters:
         }
   /children:
     description: child description
-    post: {}
+    post:
+      body:
+        application/json: |
+          {
+             "$schema": "http://json-schema.org/draft-04/schema",
+             "type": "object",
+             "properties": {
+               "firstname":  { "type": "string" },
+               "lastname":  { "type": "string" },
+               "age":  { "type": "integer" }
+             },
+             "required": [ "firstname", "lastname" ]
+          }
     /{childId}:
       baseUriParameters:
         childId:

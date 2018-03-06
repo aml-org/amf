@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 /**
   * Raml 0.8 spec parser
@@ -86,10 +86,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String): Unit = {
     entries.foreach { entry =>
-      Raml08TypeParser(entry,
-                       entry.key.as[YScalar].toString(),
-                       entry.value,
-                       shape => shape.withName(entry.key).adopted(parent))
+      Raml08TypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
         .parse() match {
         case Some(shape) =>
           ctx.declarations += shape.add(DeclaredElement())

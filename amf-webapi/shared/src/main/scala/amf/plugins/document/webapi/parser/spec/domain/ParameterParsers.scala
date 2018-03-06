@@ -1,12 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  Raml08TypeParser,
+  Raml10TypeParser,
+  RamlTypeSyntax,
+  StringDefaultType
+}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
@@ -117,7 +122,12 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
         }
       case _ =>
         // Named Parameter Parse
-        Raml08TypeParser(entry, name, entry.value, (s: Shape) => s.withName(name).adopted(parameter.id))
+        Raml08TypeParser(entry,
+                         name,
+                         entry.value,
+                         (s: Shape) => s.withName(name).adopted(parameter.id),
+                         isAnnotation = false,
+                         StringDefaultType)
           .parse()
           .foreach(parameter.withSchema)
     }

@@ -1,6 +1,13 @@
 package amf.plugins.document.webapi.contexts
 
 import amf.core.Root
+import amf.core.model.domain.Shape
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  DefaultType,
+  Raml08TypeParser,
+  Raml10TypeParser,
+  RamlTypeParser
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08DocumentParser, Raml10DocumentParser, RamlDocumentParser}
 import amf.plugins.domain.webapi.models._
@@ -25,6 +32,10 @@ trait RamlSpecVersionFactory extends SpecVersionFactory {
   def requestParser: (YMap, () => Request, Boolean) => RamlRequestParser
 
   def documentParser: (Root) => RamlDocumentParser
+
+  def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser
+
+  def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser
 }
 
 class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
@@ -45,6 +56,11 @@ class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
   override def requestParser: (YMap, () => Request, Boolean) => RamlRequestParser = Raml10RequestParser.apply
 
   override def documentParser: (Root) => RamlDocumentParser = Raml10DocumentParser.apply
+
+  override def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser = Raml10TypeParser.apply
+
+  override def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser =
+    Raml10PayloadParser.apply
 }
 
 class Raml08VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
@@ -65,4 +81,10 @@ class Raml08VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
   override def requestParser: (YMap, () => Request, Boolean) => RamlRequestParser = Raml08RequestParser.apply
 
   override def documentParser: (Root) => RamlDocumentParser = Raml08DocumentParser.apply
+
+  override def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser = Raml08TypeParser.apply
+
+  override def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser =
+    Raml08PayloadParser.apply
+
 }
