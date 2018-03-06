@@ -1,12 +1,14 @@
 package amf.javaparser.org.raml.parser
 
-class RamlBuilderTestCase { /*extends ModelResolutionTest {
-  override val basePath: String = path
-  override def path: String     = "amf-client/shared/src/test/resources/org/raml/parser"
+//import amf.javaparser.org.raml.ModelResolutionTest
 
-  override val target: Vendor = Raml10
+class RamlBuilderTestCase /*extends ModelResolutionTest*/ {
 
-  override def inputFileName: String = "input.raml"
+//  override val basePath: String = path
+//  override def path: String     = "amf-client/shared/src/test/resources/org/raml/parser"
+//
+//  override def inputFileName: String = "input.raml"
+//
+//  override def outputFileName: String = "output.txt"
 
-  override def outputFileName: String = "output.txt"
-}*/ }
+}
